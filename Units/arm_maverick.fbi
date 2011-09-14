@@ -1,0 +1,132 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Arm;
+	name=Maverick;
+	description=Gun-slinging Kbot;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=ARM KBOT WEAPON NOTAIR NOTSUB;
+	tedclass=KBOT;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=arm_maverick;
+	unitnumber=235;
+	objectname=arm_maverick.3do;
+	corpse=arm_maverick_dead;
+	buildpic=arm_maverick.DDS;
+	soundcategory=MAVERICK;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=1200;
+	healtime=30;
+	buildcostmetal=590;
+	buildcostenergy=13097;
+	buildtime=8193;
+	footprintx=2;
+	footprintz=2;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=0.4;
+	energyuse=0.4;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canattack=1;
+	canguard=1;
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+	upright=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementclass=KBOTSF2;
+	turnrate=1016;
+	acceleration=1.0;
+	brakerate=1.5;
+	maxvelocity=1.4;
+	maxslope=14;
+	maxwaterdepth=0;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=435;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=ARMMAV_WEAPON;
+	nochasecategory=VTOL;
+	badtargetcategory=VTOL;
+	wpri_badtargetcategory=VTOL;
+	explodeas=BIG_UNITEX;
+	selfdestructas=BIG_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	firestandorders=1;
+	mobilestandorders=1;
+	standingfireorder=2;
+	standingmoveorder=1;
+	defaultmissiontype=Standby;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	ai_limit=limit ARMMAV 20;
+	ai_weight=weight ARMMAV 0.5;
+	bmcode=1;
+	designation=ARM-SS;
+	downloadable=1;
+	maneuverleashlength=640;
+	shootme=1;
+	smoothanim=1;
+	steeringmode=2;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	collisionVolumeType = box;
+	collisionVolumeScales =30 34 16;
+	collisionVolumeOffsets = 0 -1 0;
+	collisionVolumeTest = 1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+	[SFXTypes]
+	{
+	explosiongenerator0=custom:POPUPFLAREFAST;
+	}
+
+}

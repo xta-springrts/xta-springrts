@@ -1,0 +1,128 @@
+[ElectricFlare]//In works of experiemtsn
+{
+	[ElectricalWeb] 
+	{
+	    class=CExpGenSpawner;
+		[properties]
+		{
+		pos=5 r-10, 1 r-2, 5 r-10;  
+		delay=0 r6;				  
+		explosionGenerator=custom:Sparks;
+		}
+	air=1;
+	water=1;
+	ground=1;
+	count=2;
+	}
+	[glow]
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+			sizeGrowth=0;
+			sizeMod=1.0;
+			pos=0, 4, 0;
+			emitVector=-0, 1, 0;
+			gravity=0, 0.0, 0;
+			colorMap= 1 1 1 0.1   1 1 1 0  1 1 1 0.1   1 1 1 0  1 1 1 0.1   1 1 1 0;
+			Texture=diamondstar;
+			airdrag=0.88;
+			particleLife=15;
+			particleLifeSpread=0;
+			numParticles=1;
+			particleSpeed=1;
+			particleSpeedSpread=0;
+			particleSize=55;
+			particleSizeSpread=10;
+			emitRot=0;
+			emitRotSpread=180;
+			directional=1;
+			alwaysVisible=0;
+		}
+		air=1;
+		water=1;
+		ground=1;
+		count=1;
+	}
+}
+[ElectricSequence]//New Zeus Effect
+{
+	[ElectricalStrike] 
+	{
+	    class=CExpGenSpawner;
+		[properties]
+		{
+		pos=0, 0, 0;  
+		delay=0 r1;				  
+		explosionGenerator=custom:LIGHTNING_NEW;
+		}
+	air=1;
+	water=1;
+	ground=1;
+	count=1;
+	}
+	[ElectricalWebOuter] 
+	{
+	    class=CExpGenSpawner;
+		[properties]
+		{
+		pos=75 r-150, 15 r-30, 75 r-150;  
+		delay=30 r15;				  
+		explosionGenerator=custom:Sparks;
+		}
+	air=1;
+	water=1;
+	ground=1;
+	count=10;
+	}
+
+	[ElectricalWebINNER] 
+	{
+	    class=CExpGenSpawner;
+		[properties]
+		{
+		pos=25 r-50, 10 r-20, 25 r-50;  
+		delay=15 r15;				  
+		explosionGenerator=custom:Sparks;
+		}
+	air=1;
+	water=1;
+	ground=1;
+	count=20;
+	}
+
+	[glow]
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+			sizeGrowth=-3;
+			sizeMod=1.0;
+			pos=0, 50, 0;
+			emitVector=-0, 1, 0;
+			gravity=0, 0.01, 0;
+			colorMap= 1 1 1 0.1   1 1 1 0  1 1 1 0.1   1 1 1 0  1 1 1 0.1   1 1 1 0;
+			Texture=diamondstar;
+			airdrag=0.88;
+			particleLife=5;
+			particleLifeSpread=15;
+			numParticles=1;
+			particleSpeed=1;
+			particleSpeedSpread=0;
+			particleSize=15;
+			particleSizeSpread=85;
+			emitRot=0;
+			emitRotSpread=180;
+			directional=1;
+			alwaysVisible=0;
+		}
+		air=1;
+		water=1;
+		ground=1;
+		count=1;
+	}
+}
+
+[ElectricSTOMP]//New Zeus Effect
+{//Empty
+}

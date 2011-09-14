@@ -1,0 +1,119 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Arm;
+	name=Annihilator;
+	description=Heavy Energy Weapon;
+	icontype=building;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=ARM WEAPON NOTAIR NOTSUB;
+	tedclass=FORT;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=arm_annihilator;
+	unitnumber=7;
+	objectname=arm_annihilator.3do;
+	corpse=arm_annihilator_dead;
+	buildpic=arm_annihilator.DDS;
+	soundcategory=ARM_ANNI;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=6000;
+	healtime=11;
+	buildcostmetal=6500;
+	buildcostenergy=40000;
+	buildtime=70000;
+	footprintx=4;
+	footprintz=4;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=0;
+	energyuse=0;
+	energystorage=2500;
+
+	//************************************************************
+	//  Building
+	//************
+	buildangle=40000;
+	yardmap=oooo oooo oooo oooo;
+	activatewhenbuilt=0;
+	collisionVolumeType = box;
+	collisionVolumeScales =50 35 50;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canattack=1;
+	canguard=1;
+	canstop=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	maxslope=10;
+	maxwaterdepth=33;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=896;
+	radardistance=2100;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=ARM_TOTAL_ANNIHILATOR;
+	wpri_badtargetcategory=VTOL;
+	explodeas=ATOMIC_BLASTPEN;
+	selfdestructas=ATOMIC_BLAST;
+
+	//************************************************************
+	//  Orders
+	//**********
+	firestandorders=1;
+	standingfireorder=2;
+	defaultmissiontype=GUARD_NOMOVE;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=0;
+	damagemodifier=0.5;
+	designation=ARM-ANN1;
+	downloadable=1;
+	shootme=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+	[customParams] 
+	{
+		canAreaAttack=1;
+	}
+
+}

@@ -1,0 +1,270 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+piece  base, float1, float2, float3, float4, float5, float6, door1,
+       door2, door3, door4, glow, ground;
+
+static-var  statechg_DesiredState, statechg_StateChanging, floating;
+
+SetDirection(heading)
+{
+	var spd;
+	spd = get ABS(heading);
+	turn ground to y-axis heading speed spd;
+	turn base to y-axis 0-heading speed spd;
+}
+
+RockOnWaves()
+{
+	while(floating)
+	{
+		turn ground to x-axis <1.0> speed <1.5>;
+		move ground to y-axis [0.0] speed [0.15];
+		wait-for-turn ground around x-axis;
+		turn ground to x-axis <-1.0> speed <1.5>;
+		move ground to y-axis [-0.1] speed [0.15];
+		wait-for-move ground along y-axis;
+		move ground to y-axis [0.0] speed [0.15];
+		wait-for-turn ground around x-axis;
+		turn ground to x-axis <1.0> speed <1.5>;
+		move ground to y-axis [-0.1] speed [0.15];
+		wait-for-move ground along y-axis;
+	}
+}
+
+activatescr()
+{
+	move float1 to y-axis [0.000000] now;
+	move float1 to z-axis [0.000000] now;
+	move float1 to z-axis [-2.150000] speed [2.232605];
+	move float2 to x-axis [0.000000] now;
+	move float2 to x-axis [-1.799994] speed [1.869153];
+	move float2 to y-axis [0.000000] now;
+	move float2 to z-axis [0.000000] now;
+	move float2 to z-axis [-1.050000] speed [1.090338];
+	move float3 to x-axis [0.000000] now;
+	move float3 to x-axis [-1.750000] speed [1.817236];
+	move float3 to y-axis [0.000000] now;
+	move float3 to z-axis [0.000000] now;
+	move float3 to z-axis [0.999994] speed [1.038416];
+	move float4 to y-axis [0.000000] now;
+	move float4 to z-axis [0.000000] now;
+	move float4 to z-axis [2.150000] speed [2.232605];
+	move float5 to x-axis [0.000000] now;
+	move float5 to x-axis [1.849994] speed [1.921075];
+	move float5 to y-axis [0.000000] now;
+	move float5 to z-axis [0.000000] now;
+	move float5 to z-axis [1.100000] speed [1.142261];
+	move float6 to x-axis [0.000000] now;
+	move float6 to x-axis [1.850000] speed [1.921075];
+	move float6 to y-axis [0.000000] now;
+	move float6 to z-axis [0.000000] now;
+	move float6 to z-axis [-1.050000] speed [1.090338];
+	sleep 963;
+
+	turn door1 to x-axis <-90.021978> speed <92.994505>;
+	turn door2 to x-axis <90.021978> speed <92.994505>;
+	turn door3 to z-axis <90.021978> speed <92.994505>;
+	turn door4 to z-axis <-90.021978> speed <92.994505>;
+	sleep 987;
+}
+
+deactivatescr()
+{
+	move float1 to y-axis [0.000000] now;
+	move float1 to z-axis [-2.150000] now;
+	move float2 to x-axis [-1.799994] now;
+	move float2 to y-axis [0.000000] now;
+	move float2 to z-axis [-1.050000] now;
+	move float3 to x-axis [-1.750000] now;
+	move float3 to y-axis [0.000000] now;
+	move float3 to z-axis [0.999994] now;
+	move float4 to y-axis [0.000000] now;
+	move float4 to z-axis [2.150000] now;
+	move float5 to x-axis [1.849994] now;
+	move float5 to y-axis [0.000000] now;
+	move float5 to z-axis [1.100000] now;
+	move float6 to x-axis [1.850000] now;
+	move float6 to y-axis [0.000000] now;
+	move float6 to z-axis [-1.050000] now;
+	turn door1 to x-axis <0.000000> speed <90.197802>;
+	turn door2 to x-axis <0.000000> speed <90.197802>;
+	turn door3 to z-axis <0.000000> speed <90.197802>;
+	turn door4 to z-axis <0.000000> speed <90.197802>;
+	sleep 998;
+
+	move float1 to z-axis [-0.727332] speed [1.411377];
+	move float2 to x-axis [-0.608923] speed [1.181616];
+	move float2 to z-axis [-0.355206] speed [0.689276];
+	move float3 to x-axis [-0.592010] speed [1.148792];
+	move float3 to z-axis [0.338287] speed [0.656451];
+	move float4 to z-axis [0.727325] speed [1.411377];
+	move float5 to x-axis [0.625842] speed [1.214441];
+	move float5 to z-axis [0.372119] speed [0.722095];
+	move float6 to x-axis [0.625842] speed [1.214441];
+	move float6 to z-axis [-0.355206] speed [0.689276];
+	sleep 1040;
+}
+
+#include "SmokeUnit.bos"
+
+Go()
+{
+	call-script activatescr();
+	move base to y-axis [0.000000] speed [5.000000];
+	floating = 1;
+	set ARMORED to 0;
+	start-script RockOnWaves();
+}
+
+Stop()
+{
+	floating = 0;
+	call-script deactivatescr();
+	move base to y-axis [-5.000000] speed [5.000000];
+	set ARMORED to 1;
+}
+
+RequestState(requestedstate, currentstate)
+{
+	if( statechg_StateChanging )
+	{
+		statechg_DesiredState = requestedstate;
+		return (0);
+	}
+	statechg_StateChanging = TRUE;
+	currentstate = statechg_DesiredState;
+	statechg_DesiredState = requestedstate;
+	while( statechg_DesiredState != currentstate )
+	{
+		if( statechg_DesiredState )
+		{
+			call-script Stop();
+			currentstate = 1;
+		}
+		else
+		{
+			call-script Go();
+			currentstate = 0;
+		}
+	}
+	statechg_StateChanging = FALSE;
+}
+
+Create()
+{
+	dont-shade base;
+	dont-shade door1;
+	dont-shade door2;
+	dont-shade door3;
+	dont-shade door4;
+	dont-shade float1;
+	dont-shade float2;
+	dont-shade float3;
+	dont-shade float4;
+	dont-shade float5;
+	dont-shade float6;
+	dont-cache base;
+	dont-cache door1;
+	dont-cache door2;
+	dont-cache door3;
+	dont-cache door4;
+	dont-cache float1;
+	dont-cache float2;
+	dont-cache float3;
+	dont-cache float4;
+	dont-cache float5;
+	dont-cache float6;
+	dont-cache glow;
+	dont-shade glow;
+	floating = 1;
+	statechg_DesiredState = TRUE;
+	statechg_StateChanging = FALSE;
+	start-script SmokeUnit();
+	start-script RockOnWaves();
+}
+
+Activate()
+{
+	start-script RequestState(0);
+}
+
+Deactivate()
+{
+	start-script RequestState(1);
+}
+
+SweetSpot(piecenum)
+{
+	piecenum = base;
+}
+
+Killed(severity, corpsetype)
+{
+	if( severity <= 25 )
+	{
+		corpsetype = 1;
+		explode base type BITMAPONLY | BITMAP1;
+		explode door1 type BITMAPONLY | BITMAP2;
+		explode door2 type BITMAPONLY | BITMAP3;
+		explode door3 type BITMAPONLY | BITMAP4;
+		explode door4 type BITMAPONLY | BITMAP5;
+		explode float1 type BITMAPONLY | BITMAP1;
+		explode float2 type BITMAPONLY | BITMAP2;
+		explode float3 type BITMAPONLY | BITMAP3;
+		explode float4 type BITMAPONLY | BITMAP4;
+		explode float5 type BITMAPONLY | BITMAP5;
+		explode float6 type BITMAPONLY | BITMAP1;
+		explode glow type BITMAPONLY | BITMAP2;
+		return (0);
+	}
+	if( severity <= 50 )
+	{
+		corpsetype = 2;
+		explode base type BITMAPONLY | BITMAP1;
+		explode door1 type FALL | BITMAP2;
+		explode door2 type FALL | BITMAP3;
+		explode door3 type FALL | BITMAP4;
+		explode door4 type FALL | BITMAP5;
+		explode float1 type FALL | BITMAP1;
+		explode float2 type FALL | BITMAP2;
+		explode float3 type FALL | BITMAP3;
+		explode float4 type FALL | BITMAP4;
+		explode float5 type FALL | BITMAP5;
+		explode float6 type FALL | BITMAP1;
+		explode glow type SHATTER | BITMAP2;
+		return (0);
+	}
+	if( severity <= 99 )
+	{
+		corpsetype = 3;
+		explode base type BITMAPONLY | BITMAP1;
+		explode door1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+		explode door2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+		explode door3 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+		explode door4 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+		explode float1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+		explode float2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+		explode float3 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+		explode float4 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+		explode float5 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+		explode float6 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+		explode glow type SHATTER | BITMAP2;
+		return (0);
+	}
+	corpsetype = 3;
+	explode base type BITMAPONLY | BITMAP1;
+	explode door1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode door2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+	explode door3 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+	explode door4 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+	explode float1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+	explode float2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode float3 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+	explode float4 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+	explode float5 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+	explode float6 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+	explode glow type SHATTER | EXPLODE_ON_HIT | BITMAP2;
+}

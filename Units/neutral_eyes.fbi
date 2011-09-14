@@ -1,0 +1,62 @@
+[UNITINFO]
+{
+	Name=Dragon's Eye;
+	UnitName=neutral_EYES;
+	BUILDPIC=Neutral_EYES.PCX;
+	
+	//    Required Tags
+	BuildCostEnergy=343;
+	BuildCostMetal=23;
+	BuildTime=587;
+	Category=ARM NOWEAPON NOTAIR NOTSUB NOTSHIP NOTLAND ALL;
+	Description=Submersible Perimeter Camera;
+	FootprintX=1;
+	FootprintZ=1;
+	MaxDamage=278;
+	ObjectName=Neutral_EYES;
+	Side=Neutral;
+	SoundCategory=MINE;
+	TEDClass=FORT;
+	
+	//    Movement
+	BrakeRate=0;
+	Acceleration=0;
+	MaxVelocity=0;
+	MaxSlope=20;
+	TurnRate=0;
+	
+	//    Airplane Moventment
+	
+	//    Buildings
+	YardMap=o;
+	
+	//    Construction
+	Builder=0;
+	WorkerTime=0;
+	
+	//    Resources
+	EnergyMake=0;
+	EnergyStorage=5;
+	EnergyUse=0;
+	MetalStorage=0;
+	
+	//    Abilities
+	
+	//    Sight/Radar
+	RadarDistance=0;
+	SightDistance=500;
+	Stealth=1;
+	Init_Cloaked=1;
+	CloakCost=5;
+	MinCloakDistance=1;
+	
+	//    Weapons
+	
+	//    Tracks/Flares
+	
+	//    Watersettings
+	MaxWaterDepth=9999;
+	
+	//    Misc
+	SmoothAnim=1;
+}

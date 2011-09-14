@@ -1,0 +1,119 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Arm;
+	name=Seaplane Platform;
+	description=Builds Seaplanes;
+	icontype=plant;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=ARM PLANT NOWEAPON NOTAIR NOTSUB;
+	tedclass=PLANT;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=arm_seaplane_platform;
+	unitnumber=242;
+	objectname=arm_seaplane_platform.3do;
+	corpse=arm_seaplane_platform_dead;
+	buildpic=arm_seaplane_platform.DDS;
+	soundcategory=ARM_SEAPLN_PLANT;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=1820;
+	healtime=30;
+	buildcostmetal=1823;
+	buildcostenergy=5396;
+	buildtime=19248;
+	footprintx=7;
+	footprintz=7;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalmake=1;
+	metalstorage=900;
+	energyuse=0;
+	energystorage=200;
+	windgenerator=0.001;
+
+	//************************************************************
+	//  Building
+	//************
+	yardmap=wwwwwww wCCCCCw wCCCCCw wCCCCCw wCCCCCw wCCCCCw wwwwwww;
+	collisionVolumeType = box;
+	collisionVolumeScales =105 44 105;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=1;
+	workertime=200;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	maxwaterdepth=0;
+	minwaterdepth=30;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=227.5;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeas=LARGE_BUILDINGEX;
+	selfdestructas=LARGE_BUILDING;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	firestandorders=1;
+	mobilestandorders=1;
+	standingfireorder=2;
+	standingmoveorder=2;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=0;
+	designation=ARM-SED;
+	downloadable=1;
+	noshadow=1;
+	threed=1;
+	version=1.2;
+	waterline=55;
+	zbuffer=1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+	[SFXTypes]
+	{
+	explosiongenerator0=custom:Nano;
+	explosiongenerator1=custom:UNITFIRE;
+	}
+}

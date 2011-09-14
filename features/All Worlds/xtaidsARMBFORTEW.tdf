@@ -1,0 +1,60 @@
+[ARMBFORTEW]
+	{
+	world=allworld;
+	description=E/W Bertha Shelter;
+	category=ARMBFORTEW;
+	object=ARMBFORTEW;
+	footprintx=8;
+	footprintz=3;
+	height=125;
+	blocking=1;
+	hitdensity=97;
+	metal=500;
+	damage=35000;
+	reclaimable=1;
+	autoreclaimable=0;
+	featurereclamate=ARMBFORTEW_DEAD;
+	featuredead=ARMBFORTEW_DEAD;
+	seqnamereclamate=tree1reclamate;
+	nodrawundergray=1;
+	}
+
+[ARMBFORTEW_DEAD]
+	{
+	world=allworld;
+	description=Rubble;
+	category=ARMBFORTEW;
+	object=ARMBFORTEW_DEAD;
+	featuredead=ARMBFORTEW_HEAP;
+	footprintx=8;
+	footprintz=3;
+	height=55;
+	blocking=1;
+	hitdensity=97;
+	metal=200;
+	damage=15000;
+	reclaimable=1;
+	autoreclaimable=0;
+	featurereclamate=ARMBFORTEW_HEAP;
+	seqnamereclamate=tree1reclamate;
+	nodrawundergray=1;
+	}
+
+[ARMBFORTEW_HEAP]
+	{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=2x8EW_HEAP;
+	footprintx=8;
+	footprintz=3;
+	height=4;
+	blocking=0;
+	hitdensity=1000;
+	metal=100;
+	damage=1250;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	nodrawundergray=1;
+	}

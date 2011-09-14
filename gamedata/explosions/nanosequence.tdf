@@ -1,0 +1,112 @@
+[SmallNano]//In works of experiemtsn
+{
+	[groundflash]
+	{
+		flashSize = 150;
+		flashAlpha = 0.35;
+		circleGrowth = 12.5;
+		circleAlpha = 0.1;
+		ttl = 25;
+		color = 0.1,1.0,0.1;
+
+	}
+	usedefaultexplosions=0;	
+	[SpewGreen] 
+	{
+	    class=CExpGenSpawner;
+		[properties]
+		{
+		pos=2 r-4, 2 r-2, 2 r-4;  
+		delay=0 r25;				  
+		explosionGenerator=custom:NanoSurprise;
+		}
+	air=1;
+	water=1;
+	ground=1;
+	count=5;
+	}
+	[SpewFire] 
+	{
+	    class=CExpGenSpawner;
+		[properties]
+		{
+		pos=2 r-4, 2 r-2, 2 r-4;  
+		delay=0 r1;				  
+		explosionGenerator=custom:raven;
+		}
+	air=1;
+	water=1;
+	ground=1;
+	count=1;
+	}
+}
+[LongNano]//In works of experiemtsn
+{
+	[groundflash]
+	{
+		flashSize = 150;
+		flashAlpha = 0.35;
+		circleGrowth = 12.5;
+		circleAlpha = 0.1;
+		ttl = 25;
+		color = 0.1,1.0,0.1;
+
+	}
+	usedefaultexplosions=0;	
+	[SpewGreen] 
+	{
+	    class=CExpGenSpawner;
+		[properties]
+		{
+		pos=2 r-4, 2 r-2, 2 r-4;  
+		delay=0 r250;				  
+		explosionGenerator=custom:NanoSurprise;
+		}
+	air=1;
+	water=1;
+	ground=1;
+	count=50;
+	}
+}
+[AtomicNano]//In works of experiemtsn
+{
+	[groundflash]
+	{
+		flashSize = 150;
+		flashAlpha = 0.35;
+		circleGrowth = 12.5;
+		circleAlpha = 0.1;
+		ttl = 25;
+		color = 0.1,1.0,0.1;
+
+	}
+	usedefaultexplosions=0;	
+	[SpewGreen] 
+	{
+	    class=CExpGenSpawner;
+		[properties]
+		{
+		pos=2 r-4, 2 r-2, 2 r-4;  
+		delay=0 r25;				  
+		explosionGenerator=custom:NanoSurprise;
+		}
+	air=1;
+	water=1;
+	ground=1;
+	count=5;
+	}
+	[SpewRed] 
+	{
+	    class=CExpGenSpawner;
+		[properties]
+		{
+		pos=2 r-4, 2 r-2, 2 r-4;  
+		delay=0 r1;				  
+		explosionGenerator=custom:SMALL_NUKE_EXPLOSION_INIATE;
+		}
+	air=1;
+	water=1;
+	ground=1;
+	count=1;
+	}
+}

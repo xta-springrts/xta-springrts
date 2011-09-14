@@ -1,0 +1,114 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Arm;
+	name=Adv. Kbot Lab;
+	description=Produces Kbots;
+	icontype=plant;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=ARM PLANT NOWEAPON NOTAIR NOTSUB;
+	tedclass=PLANT;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=arm_adv_kbot_lab;
+	unitnumber=5;
+	objectname=arm_adv_kbot_lab.3do;
+	corpse=arm_adv_kbot_lab_dead;
+	buildpic=arm_adv_kbot_lab.DDS;
+	soundcategory=KBOTPLANT;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=3831;
+	healtime=30;
+	buildcostmetal=2507;
+	buildcostenergy=4077;
+	buildtime=13520;
+	footprintx=5;
+	footprintz=6;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=200;
+	energyuse=0;
+	energystorage=200;
+
+	//************************************************************
+	//  Building
+	//************
+	buildangle=2048;
+	yardmap=occco occco occco occco occco occco;
+	collisionVolumeType=Box;
+	collisionVolumeScales=75 32 91;
+	collisionVolumeTest = 1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=1;
+	workertime=200;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	maxslope=10;
+	maxwaterdepth=11;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=385;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeas=LARGE_BUILDINGEX;
+	selfdestructas=LARGE_BUILDING;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	firestandorders=1;
+	mobilestandorders=1;
+	standingfireorder=2;
+	standingmoveorder=2;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=0;
+	designation=ARM-KL2;
+	downloadable=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+	[SFXTypes]
+	{
+	explosiongenerator0=custom:Nano;
+	}
+}

@@ -1,0 +1,108 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Core;
+	name=Radar Jamming Tower;
+	description=Hides your Radar blips from the enemy;
+	icontype=building;
+
+	//************************************************************
+	//  Categories
+	//**************
+	Category=CORE RAD  NOTAIR NOTSUB;
+	tedclass=SPECIAL;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=core_radar_jamming_tower;
+	unitnumber=1126;
+	objectname=core_radar_jamming_tower.3do;
+	corpse=core_radar_jamming_tower_dead;
+	buildpic=core_radar_jamming_tower.DDS;
+	soundcategory=CORE_JAM;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=1170;
+	buildcostmetal=441;
+	buildcostenergy=7747;
+	buildtime=28242;
+	footprintx=3;
+	footprintz=3;
+	collisionVolumeType = CylY;
+	collisionVolumeScales =48 73 48;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=6;
+	energyuse=6;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	buildangle=16384;
+	yardmap=oooo;
+	activatewhenbuilt=1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	onoffable=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	maxslope=10;
+	maxwaterdepth=22;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=612.5;
+	sonardistance=0;
+	radardistancejam=882;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeas=SMALL_BUILDINGEX;
+	selfdestructas=SMALL_BUILDING;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=0;
+	designation=FR-34;
+	downloadable=1;
+	shootme=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+}

@@ -1,0 +1,105 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Arm;
+	name=Geothermal Powerplant;
+	description=Produces Energy;
+	icontype=building;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=ARM ENERGY NOWEAPON NOTAIR NOTSUB;
+	tedclass=metal;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=arm_geothermal_powerplant;
+	unitnumber=35;
+	objectname=arm_geothermal_powerplant.3do;
+	corpse=arm_geothermal_powerplant_dead;
+	buildpic=arm_geothermal_powerplant.DDS;
+	soundcategory=ARM_GEO;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=880;
+	buildcostmetal=520;
+	buildcostenergy=9568;
+	buildtime=13078;
+	footprintx=4;
+	footprintz=4;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=250;
+	energyuse=0;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	buildangle=32768;
+	yardmap=GGGGGGGGGGGGGGGG;
+	activatewhenbuilt=1;
+	collisionVolumeType=Box;
+	collisionVolumeScales=60 50 60;
+	collisionVolumeOffsets=0 -2 0;
+	collisionVolumeTest = 1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+
+	//************************************************************
+	//  Movement
+	//************
+	maxslope=30;
+	maxwaterdepth=0;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=367.5;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeas=LARGE_BUILDINGEX;
+	selfdestructas=armmine5;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=0;
+	designation=AE-GPG;
+	downloadable=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+}

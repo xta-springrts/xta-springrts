@@ -1,0 +1,93 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Arm;
+	name=Armoured Peewee;
+	description=[AP];
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=ARM KBOT WEAPON NOTAIR NOTSUB;
+	tedclass=KBOT;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=ap_peewee;
+	unitnumber=55;
+	objectname=ap_peewee.3do;
+	corpse=arm_peewee_dead;
+	buildpic=arm_peewee.DDS;
+	soundcategory=ARMPW;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=2765; // was 600
+	healtime=30;
+	buildcostmetal=554; //96//
+	buildcostenergy=6697;
+	buildtime=8432;
+	footprintx=2;
+	footprintz=2;
+
+	metalstorage=0;
+	energymake=0.3;
+	energyuse=0.3;
+	energystorage=0;
+
+
+	builder=0;
+	workertime=0;
+
+	canattack=1;
+	canguard=1;
+	canmove=1.1;
+	canpatrol=1;
+	canstop=1;
+	upright=1;
+
+	movementclass=KBOTSS2;
+	turnrate=1232; // was 1120
+	acceleration=1.1;
+	brakerate=18.0;
+	maxvelocity=2.3; //was 1.8//
+	maxslope=17;
+	maxwaterdepth=12;
+
+	sightdistance=520;
+	radardistance=0;
+
+	weapon1=PEEWEEH_EMG;
+	nochasecategory=VTOL;
+	badtargetcategory=VTOL;
+	wpri_badtargetcategory=VTOL;
+	explodeas=SMALL_UNITEX;
+	selfdestructas=SMALL_UNIT;
+
+	noautofire=0;
+	firestandorders=1;
+	mobilestandorders=1;
+	standingfireorder=2;
+	standingmoveorder=1;
+	defaultmissiontype=Standby;
+
+	bmcode=1;
+	designation=ARM-KI;
+	downloadable=1;
+	maneuverleashlength=640;
+	shootme=1;
+	smoothanim=1;
+	steeringmode=2;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	[SFXTypes]
+	{
+	explosiongenerator0=custom:POPUPFLAREFAST;
+	}
+
+}

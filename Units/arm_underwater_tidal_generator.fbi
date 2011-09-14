@@ -1,0 +1,104 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Arm;
+	name=Underwater Tidal Generator;
+	description=Produces Energy;
+	icontype=sea;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=ARM ENERGY  NOWEAPON NOTAIR;
+	tedclass=WATER;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=arm_tidal_generator;
+	unitnumber=291;
+	objectname=arm_tidal_generator.3do;
+	corpse=arm_tidal_generator_dead;
+	buildpic=arm_underwater_tidal_generator.jpg;
+	soundcategory=ARM_TIDE;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=206;
+	buildcostmetal=107;
+	buildcostenergy=568;
+	buildtime=2888;
+	footprintx=3;
+	footprintz=3;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energyuse=0;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	buildangle=8192;
+	yardmap=wwwwwwwwwwwwwwww;
+	activatewhenbuilt=1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+
+	//************************************************************
+	//  Movement
+	//************
+	maxslope=10;
+	minwaterdepth=40;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=175;
+	radardistance=0;
+	sonardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeas=SMALL_BUILDINGEX;
+	selfdestructas=SMALL_BUILDING;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=0;
+	designation=AE-TPG;
+	downloadable=1;
+	noshadow=1;
+	threed=1;
+	tidalgenerator=1;
+	version=1.2;
+	waterline=40;
+	zbuffer=1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+}

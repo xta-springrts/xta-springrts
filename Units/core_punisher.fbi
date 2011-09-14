@@ -1,0 +1,122 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Core;
+	name=Punisher;
+	description=Plasma Battery;
+	icontype=building;
+
+	//************************************************************
+	//  Categories
+	//**************
+	Category=CORE STRATEGIC WEAPON NOTAIR NOTSUB;
+	tedclass=FORT;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=core_punisher;
+	unitnumber=124;
+	objectname=core_punisher.3do;
+	corpse=core_punisher_dead;
+	buildpic=core_punisher.DDS;
+	soundcategory=COR_KBOT;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=4445;
+	healtime=11;
+	buildcostmetal=2081;
+	buildcostenergy=45099;
+	buildtime=35411;
+	footprintx=4;
+	footprintz=4;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energyuse=0;
+	energystorage=200;
+
+	//************************************************************
+	//  Building
+	//************
+	buildangle=2048;
+	yardmap=oooo oooo oooo oooo;
+	collisionVolumeType=CylY;
+	collisionVolumeScales=62 36 62;
+	collisionVolumeOffsets=0 0 0;
+	//collisionVolumeTest = 1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canattack=1;
+	canguard=1;
+	canstop=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	maxslope=10;
+	maxwaterdepth=22;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=612.5;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=CORFIXED_GUN;
+	wpri_badtargetcategory=VTOL;
+	onlytargetcategory1=NOTAIR;
+	explodeas=MEDIUM_BUILDINGEX;
+	selfdestructas=MEDIUM_BUILDING;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	firestandorders=1;
+	standingfireorder=2;
+	defaultmissiontype=GUARD_NOMOVE;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=0;
+	designation=COR-PUN;
+	downloadable=1;
+	shootme=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+	[SFXTypes]
+	{
+	explosiongenerator0=custom:dgunflare;
+	}
+	[customParams] 
+	{
+    canAreaAttack=1;
+	}
+}

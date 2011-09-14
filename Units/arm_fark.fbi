@@ -1,0 +1,133 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Arm;
+	name=FARK;
+	description=Resurrection Fast-Builder Kbot;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=ARM KBOT CONSTR NOWEAPON NOTAIR NOTSUB;
+	tedclass=KBOT;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=arm_fark;
+	unitnumber=244;
+	objectname=arm_fark.3do;
+	corpse=arm_fark_dead;
+	buildpic=arm_fark.DDS;
+	soundcategory=ARM_KBOT;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=553;
+	healtime=20;
+	buildcostmetal=1200;
+	buildcostenergy=25752;
+	buildtime=29564;
+	footprintx=2;
+	footprintz=2;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalmake=0.5;
+	metalstorage=300;
+	energymake=17;
+	energyuse=0.4;
+	energystorage=300;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=1;
+	builddistance=170;
+	workertime=640;
+	RepairSpeed=480;
+	ReclaimSpeed=860;
+	ResurrectSpeed=1000;//max rez speed
+	TerraformSpeed=1290;//speed up terraforming
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canguard=1;
+	canmove=1;
+	canpatrol=1;
+	canreclamate=1;
+	canresurrect=1;
+	canstop=1;
+	upright=1;
+	autoheal=2;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementclass=KBOTSS2;
+	turnrate=1010;
+	acceleration=1.8;
+	brakerate=21.0;
+	maxvelocity=2.1;
+	maxslope=14;
+	maxwaterdepth=22;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=435;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeas=NANO_UNITEX;
+	selfdestructas=NANO_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	mobilestandorders=1;
+	standingmoveorder=1;
+	defaultmissiontype=Standby;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=1;
+	designation=ARM-MED;
+	downloadable=1;
+	maneuverleashlength=640;
+	ovradjust=1;
+	shootme=1;
+	smoothanim=1;
+	steeringmode=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	collisionVolumeType = box;
+	collisionVolumeScales =25 22 25;
+	collisionVolumeOffsets = 0 -1 0;
+	collisionVolumeTest = 1;
+	pieceTrailCEGTag=NanoDebree;//bleh
+	pieceTrailCEGRange = 2;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+	[SFXTypes]
+	{
+	explosiongenerator0=custom:NANOFARK;
+	}
+}

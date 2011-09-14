@@ -1,0 +1,168 @@
+[DGUNTRACE]
+{
+	[groundflash]
+	{
+		flashSize = 60;
+		flashAlpha = 0.25;
+		circleGrowth = 0;
+		circleAlpha = 0.1;
+		ttl = 15;
+		color = 0.8, 1.0, 1.0;
+
+	}
+	usedefaultexplosions=0;	
+	[spikes]
+	{
+		class=explspike;
+		[properties]
+		{
+			dir=-20 r40,-20 r40,-20 r40;
+			width=22;
+			length=1; //60;
+			alpha=1;
+			alphadecay=0.1;
+			color=1.0, 0.7, 0.2;
+			alwaysVisible=1;
+
+		}
+		air=1;
+		water=1;
+		ground=1;
+  		count=3; 
+	}	
+	[glow]
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+			sizeGrowth=0;
+			sizeMod=1.0;
+			pos=0, 4, 0;
+			emitVector=-0, 1, 0;
+			gravity=0, 0.00, 0;
+			colorMap= 1 0.9 0.8 0.01   0.9 0.7 0.7 0.9 0 0 0 0.01;
+			Texture=diamondstar;
+			airdrag=1;
+			particleLife=5;
+			particleLifeSpread=0;
+			numParticles=1;
+			particleSpeed=1;
+			particleSpeedSpread=0;
+			particleSize=50;
+			particleSizeSpread=1;
+			emitRot=0;
+			emitRotSpread=180;
+			directional=1;
+			alwaysVisible=0;
+		}
+		air=1;
+		water=1;
+		ground=1;
+		count=2;
+	}
+[CRAZY]
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+		sizeGrowth=0.2;
+		sizeMod=1.0;
+		pos=0, 2, 0; 
+		gravity=0, 0.04, 0;  //middle = Y axis//
+		colorMap=1.0 1.0 0.8 0.1 0.3 0.3 0.3 0.1 0.15 0.15 0.15 0.2 0.15 0.15 0.15 0.2 0.0 0.0 0.0 0.01;
+		Texture=smoke;
+		airdrag=0.8;
+		
+		particleLifeSpread=0.1; //random decay//
+		particleSpeedSpread=0.39;  //random speed//
+		particleSizeSpread=0.5;   //random sise//
+		
+		particleLife=60; 
+		numParticles=3; 
+		particleSpeed=3.1;
+		particleSize=15;
+		
+		
+		emitVector=dir; 
+		emitRot=33; //angle verticly//
+		emitRotSpread=40; //angle spread width horosontaly//
+		directional=1; //forces particles in direction of weapon//
+		useAirLos=1;
+		}
+	air=1;
+	water=0;
+	ground=1;
+	count=1;
+	}
+[watercloud]
+   	{
+   	class=heatcloud;
+      		[properties]
+      		{
+      		heat = 15;
+		Texture=water;
+      		maxheat = 15;
+      		heatFalloff = 0.6;
+      		size = 2.45;
+      		sizeGrowth = 2.9;
+      		sizemod = 0;
+      		sizemodmod = 0;
+      		speed = -0.4 r0.8, -0.5 r0.4, -0.4 r0.8;
+      		pos = 0.1 r-0.2, 0.1 r-0.2, 0.1 r-0.2;
+      		}
+	air=0;
+      	water=1;
+      	ground=0;
+      	count=2;
+	}
+
+[Spark_sprey]
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+		sizeGrowth=-0.1;
+		sizeMod=1.0;
+		pos=0, 2, 0; 
+		gravity=0, -0.03, 0; 
+		ColorMap=1 1 1 0.01   1 1 0.5 0.01   1 1 0 0.01   1 1 0 0.01; 
+		Texture=flamespark;
+		airdrag=1.0;
+		
+		particleLifeSpread=0.2; //random decay//
+		particleSpeedSpread=0.16;  //random speed//
+		particleSizeSpread=0.5;   //random sise//
+		
+		particleLife=85;
+		numParticles=4; 
+		particleSpeed=3.1;
+		particleSize=7;
+		
+		
+		emitVector=dir; //direction of particles//
+		emitRot=33;
+		emitRotSpread=18; 
+		directional=1; 
+		useAirLos=1;
+		}
+	air=1;
+	water=0;
+	ground=1;
+	count=1;
+	}
+	[dirt]
+	{
+		[properties]
+		{
+			color = 1, 1, 1;
+			size = 10;
+			sizeExpansion = 0.5;
+			slowdown=1;
+			lifetime=160;
+			pos = -2 r4,-2 r4, -2 r4;
+			speed=0.75 r-1.5, 1.5 r3.0, 0.75 r-1.5;
+		}
+		water=1;
+		count=10;
+	}
+}

@@ -1,0 +1,122 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Core;
+	name=Weasel;
+	description=Fast Scout Vehicle;
+
+	//************************************************************
+	//  Categories
+	//**************
+	Category=CORE TANK WEAPON NOTAIR NOTSUB;
+	tedclass=TANK;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=core_weasel;
+	unitnumber=103;
+	objectname=core_weasel.s3o;
+	corpse=core_weasel_dead;
+	buildpic=core_weasel.DDS;
+	soundcategory=CORE_VEHICLE;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=440;//reduced by 60
+	healtime=30;
+	buildcostmetal=76;
+	buildcostenergy=1150;
+	buildtime=2954;
+	footprintx=2;
+	footprintz=2;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=0.3;
+	energyuse=0.3;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canattack=1;
+	canguard=1;
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementclass=TANKSH2;
+	turnrate=500;
+	acceleration=0.072;
+	brakerate=0.086;
+	maxvelocity=3.724;
+	maxslope=18;
+	maxwaterdepth=12;
+	turninplace=0;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=485;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=ARM_LASER;
+	explodeas=SMALL_UNITEX;
+	selfdestructas=SMALL_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	firestandorders=1;
+	mobilestandorders=1;
+	standingfireorder=2;
+	standingmoveorder=1;
+	defaultmissiontype=Standby;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=1;
+	designation=MA-L8;
+	downloadable=1;
+	maneuverleashlength=640;
+	shootme=1;
+	steeringmode=1;
+	threed=1;
+	version=1.2;
+	zbuffer=0;
+	collisionVolumeType = box;
+	collisionVolumeScales =30 20 35;
+	collisionVolumeOffsets = 0 0 5;
+	collisionVolumeTest = 1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+}

@@ -1,0 +1,124 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Arm;
+	name=Vulcan;
+	description=Rapid Fire Long Range Plasma Cannon;
+	icontype=vulcan;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=ARM STRATEGIC WEAPON NOTAIR NOTSUB;
+	tedclass=FORT;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=arm_vulcan;
+	unitnumber=289;
+	objectname=arm_vulcan.3do;
+	corpse=arm_vulcan_dead;
+	buildpic=arm_vulcan.DDS;
+	soundcategory=ARM_BRTHA;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=9800;
+	buildcostmetal=26545;
+	buildcostenergy=556473;//First Digit of Energy Cut in HALF
+	buildtime=465589;
+	footprintx=5;
+	footprintz=5;
+	usePieceCollisionVolumes=1;
+	//collisionVolumeType = CylY;
+	//collisionVolumeScales =84 109 84;
+	//collisionVolumeOffsets = 0 1 0;
+	//collisionVolumeTest = 1;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=0;
+	energyuse=0;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	buildangle=29096;
+	yardmap=yoooy ooooo ooooo ooooo yoooy;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canattack=1;
+	canguard=1;
+	canstop=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	maxslope=10;
+	maxwaterdepth=22;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=367.5;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=ARMVULC_WEAPON;
+	wpri_badtargetcategory=VTOL;
+	onlytargetcategory1=NOTAIR;
+	explodeas=ATOMIC_BLAST;
+	selfdestructas=ATOMIC_BLAST;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	firestandorders=1;
+	standingfireorder=2;
+	defaultmissiontype=GUARD_NOMOVE;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=0;
+	designation=ARM-QLRC;
+	downloadable=1;
+	hightrajectory=2;
+	shootme=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+	[SFXTypes]
+	{
+	explosiongenerator0=custom:vulcanflare;
+	}
+	[customParams] 
+	{
+    canAreaAttack=1;
+	}
+}

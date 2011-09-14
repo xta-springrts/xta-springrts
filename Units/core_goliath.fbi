@@ -1,0 +1,139 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Core;
+	name=Goliath;
+	description=Very Heavy Assault Tank;
+
+	//************************************************************
+	//  Categories
+	//**************
+	Category=CORE TANK WEAPON NOTAIR NOTSUB;
+	tedclass=TANK;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=core_goliath;
+	unitnumber=110;
+	objectname=corgol.s3o;
+	corpse=core_goliath_dead;
+	buildpic=core_goliath.DDS;
+	soundcategory=CORE_TANK;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=22920;
+	healtime=30;
+	buildcostmetal=4650;
+	buildcostenergy=26560;
+	buildtime=33786;
+	footprintx=4;
+	footprintz=4;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=0.5;
+	energyuse=0.5;
+	energystorage=800;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canattack=1;
+	canguard=1;
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementclass=TANKDTCRUSH; //TANKSH4//
+	turnrate=309;
+	acceleration=0.3;
+	brakerate=0.3;
+	maxvelocity=1.1;
+	maxslope=16;
+	maxwaterdepth=12;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=480;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=COR_GOL;
+	nochasecategory=VTOL;
+	badtargetcategory=VTOL;
+	wpri_badtargetcategory=VTOL;
+	weapon2=GATOR_Goliath_LASER;
+	explodeas=ATOMIC_BLASTPEN;
+	selfdestructas=ATOMIC_BLASTSML;
+	onlytargetcategory1=NOTAIR; //Added 8.2 By Gizmo
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	firestandorders=1;
+	mobilestandorders=1;
+	standingfireorder=2;
+	standingmoveorder=1;
+	defaultmissiontype=Standby;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=1;
+	designation=PS20;
+	downloadable=1;
+	leavetracks=1;
+	maneuverleashlength=640;
+	shootme=1;
+	steeringmode=1;
+	threed=1;
+	trackoffset=8;
+	trackstrength=10;
+	trackstretch=1;
+	tracktype=StdTank;
+	trackwidth=48;
+	version=1.2;
+	zbuffer=1;
+	mass=75000;
+	collisionVolumeType = box;
+	collisionVolumeScales =66 33 66;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+	[SFXTypes]
+	{
+	explosiongenerator0=custom:berthaflare;
+	explosiongenerator1=custom:redflare;
+	explosiongenerator2=custom:UnitFire;
+	}
+}

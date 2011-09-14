@@ -1,0 +1,47 @@
+[UNITINFO] // Generated with TAS Modit v2.2 Beta
+{
+	name=Underwater Moho Mine;
+	unitname=ARM_Underwater_moho_mine;
+	buildcostenergy=5123;
+	buildcostmetal=906;
+	buildtime=41938;
+	category=ARM METAL NOWEAPON NOTAIR NOTSUB NOTSHIP NOTLAND ALL;
+	description=UnderWater MohoMine;
+	footprintx=5;
+	footprintz=5;
+	maxdamage=1879;
+	objectname=ARM_Underwater_moho_mine;
+	side=ARM;
+	soundcategory=ARM_UWMEX;
+	tedclass=METAL;
+	brakerate=0;
+	acceleration=0;
+	maxvelocity=0;
+	maxslope=10;
+	turnrate=0;
+	yardmap=ooooooooooooooooooooooooo;
+	builder=0;
+	workertime=0;
+	energystorage=0; //0;
+	energyuse=325;
+	extractsmetal=0.0059;
+	metalstorage=0; //1000;
+	onoffable=1;
+	idletime=1800;
+	idleautoheal=5;
+	activatewhenbuilt=1;
+	sightdistance=367;
+	explodeas=SMALL_BUILDINGEX;
+	selfdestructas=SMALL_BUILDING;
+	minwaterdepth=22;
+	corpse=ARM_Underwater_moho_mine_DEAD;
+	smoothanim=1;
+	buildpic=ARM_Underwater_moho_mine.DDS;
+	icontype=building;
+	bmcode=0;
+	noautofire=0;
+	buildangle=32768;
+	seismicsignature=0;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+}

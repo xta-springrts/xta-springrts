@@ -1,0 +1,132 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Arm;
+	name=Fibber;
+	description=Sonar Stealthy Torpedo Boat;
+	icontype=sea;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=ARM SHIP JAM NOWEAPON NOTAIR NOTSUB;
+	tedclass=SHIP;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=arm_fibber;
+	unitnumber=245;
+	objectname=arm_fibber.3do;
+	corpse=arm_fibber_dead;
+	buildpic=arm_fibber.DDS;
+	soundcategory=ARM_JAMSUB;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=1443;
+	healtime=30;
+	buildcostmetal=895; //was 295//
+	buildcostenergy=13897; //was 2897//
+	buildtime=15048;
+	footprintx=4;
+	footprintz=4;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=1;
+	energyuse=1;
+	energystorage=0;
+	windgenerator=0.001;
+
+	//************************************************************
+	//  Building
+	//************
+	activatewhenbuilt=1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canguard=1;
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+	floater=1;
+	onoffable=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementclass=Smallboat;
+	turnrate=400;
+	acceleration=0.015;
+	brakerate=0.0056;
+	maxvelocity=2.7;
+	minwaterdepth=3;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=425;
+	sonardistance=900;
+	sonarStealth=1;
+	//sonardistancejam=480; //was 975//
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=Fibby_Torpedo;
+	nochasecategory=VTOL;
+	badtargetcategory=VTOL;
+	wpri_badtargetcategory=VTOL;
+	explodeas=SMALL_UNITEX;
+	selfdestructas=SMALL_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	mobilestandorders=1;
+	standingmoveorder=1;
+	defaultmissiontype=Standby;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=1;
+	designation=ASD-SK;
+	downloadable=1;
+	maneuverleashlength=640;
+	shootme=1;
+	steeringmode=1;
+	threed=1;
+	version=1.2;
+	waterline=3;
+	zbuffer=1;
+	collisionVolumeType = box;
+	collisionVolumeScales =30 30 60;
+	collisionVolumeOffsets = 0 -10 0;
+	collisionVolumeTest = 1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+	[SFXTypes]
+	{
+	explosiongenerator0=custom:UNITFIRE;
+	}
+
+}

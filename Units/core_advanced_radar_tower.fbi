@@ -1,0 +1,107 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Core;
+	name=Advanced Radar Tower;
+	description=Long Range Radar;
+	icontype=building;
+
+	//************************************************************
+	//  Categories
+	//**************
+	Category=CORE NOWEAPON NOTAIR NOTSUB;
+	tedclass=SPECIAL;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=core_advanced_radar_tower;
+	unitnumber=86;
+	objectname=core_advanced_radar_tower.3do;
+	corpse=core_advanced_radar_tower_dead;
+	buildpic=core_advanced_radar_tower.DDS;
+	soundcategory=CORE_ADVRADAR;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=130;
+	buildcostmetal=122;
+	buildcostenergy=1920;
+	buildtime=4960;
+	footprintx=2;
+	footprintz=2;
+	collisionVolumeType = CylY;
+	collisionVolumeScales =28 63 28;
+	collisionVolumeOffsets = 0 3 0;
+	collisionVolumeTest = 1;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=17;
+	energyuse=17;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	buildangle=8192;
+	yardmap=oooo;
+	activatewhenbuilt=1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	onoffable=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	maxslope=15;
+	maxwaterdepth=22;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=612.5;
+	airsightdistance=920;
+	radardistance=2880;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeas=SMALL_BUILDINGEX;
+	selfdestructas=SMALL_BUILDING;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=0;
+	designation=AS-EWDL2;
+	downloadable=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+}

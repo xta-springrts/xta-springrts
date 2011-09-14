@@ -1,0 +1,25 @@
+[FakeShield]
+{
+	name=SuperShield;
+	isshield=1;
+	shieldrepulser=0;
+	range=250;
+	smartshield=1;
+	exteriorshield=1;
+	visibleshield=1;
+	visibleshieldrepulse=0;
+	shieldradius=100;
+	shieldpower=1;
+	shieldpowerregen=1;
+	shieldpowerregenenergy=1;
+	shieldintercepttype=1;
+	shieldgoodcolor=0.5 1 0.5;
+	shieldbadcolor=0.5 1 0.5;
+	shieldalpha=0.8;
+        CollideFriendly=1;
+        AvoidFriendly=1;
+	[DAMAGE]
+	{
+		default=10;
+	}
+}
