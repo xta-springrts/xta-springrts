@@ -1,0 +1,116 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Core;
+	name=Shrimper;
+	description=Depth Charge Launcher;
+	icontype=sea;
+
+	//************************************************************
+	//  Categories
+	//**************
+	Category=CORE WEAPON TORP NOTAIR NOTSUB;
+	tedclass=WATER;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=core_torpedo_launcher;
+	unitnumber=145;
+	objectname=core_torpedo_launcher.3do;
+	corpse=core_torpedo_launcher_dead;
+	buildpic=core_torpedo_launcher.DDS;
+	soundcategory=CORE_SHIP;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=1267;
+	healtime=30; //was 11//
+	buildcostmetal=354;
+	buildcostenergy=1539;
+	buildtime=4233;
+	footprintx=3;
+	footprintz=3;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=0.2;
+	energyuse=0.2;
+	energystorage=0;
+	windgenerator=0.001;
+
+	//************************************************************
+	//  Building
+	//************
+	buildangle=16384;
+	yardmap=www www www;
+	activatewhenbuilt=1;
+	collisionVolumeType = Box;
+	collisionVolumeScales =32 18 32;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canattack=1;
+	canguard=1;
+	canstop=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	maxslope=10;
+	minwaterdepth=11;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=385;  //was 525//
+	radardistance=0;
+	sonardistance=600; //was 640//
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=COAX_TORPEDO;
+	explodeas=BIG_UNITEX;
+	selfdestructas=BIG_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	firestandorders=1;
+	standingfireorder=2;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=0;
+	downloadable=1;
+	noshadow=1;
+	shootme=1;
+	threed=1;
+	version=1.2;
+	waterline=13;
+	zbuffer=1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+}

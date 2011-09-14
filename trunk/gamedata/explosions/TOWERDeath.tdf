@@ -1,0 +1,822 @@
+[LaunchRAPEDEATH]//Gives better effect
+{
+	useAirLos=0;
+	usedefaultexplosions=0;
+[heatcloud]// Fire burst
+   		{
+      		[properties]
+      		{
+      		heat = 25;
+		Texture=Light;
+      		maxheat = 25;
+      		heatFalloff = 0.29;
+      		size = 2000.0 r1;
+      		sizeGrowth = -15;
+      		sizemod = 0;
+      		sizemodmod = 0;
+      		speed = 0.05 r-0.1, 22, 0.05 r-0.1;
+      		pos = 0, 10.0, 0;
+		useAirLos=0;
+      		}
+	air=1;
+      	water=0;
+      	ground=1;
+      	count=2;
+	useAirLos=0;
+   	}
+
+[GROUNDRING]
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+		sizeGrowth=5;
+		sizeMod=1.0;
+		pos=0, -100, 0; 
+		gravity=0, 0.3, 0;
+		
+		colorMap=0.1 0.05 0.0 0.6 0.0 0.0 0.0 0.0;
+
+		Texture=smokesmall; //smokesmall;
+		airdrag=0.9;
+		
+		particleLifeSpread=1; 
+		particleSpeedSpread=140;  
+		particleSizeSpread=50;   
+		
+		particleLife=50;
+		numParticles=200; 
+		particleSpeed=60; 
+		particleSize=150;
+		
+		
+		
+		emitVector=0.0, 1, 0.0; 
+		emitRot=80;
+		emitRotSpread=5; 
+		directional=0; 
+
+		}
+	air=1;
+	water=1;
+	ground=1;
+	count=1;
+	}
+
+[THEBOTTOMRING]
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+		sizeGrowth=1;
+		sizeMod=1.0;
+		pos=0, 250, 0; 
+		gravity=0, -0.2, 0;
+		
+		colorMap=0.0 0.0 0.0 0.0 1.0 1.0 0.5 0.1 0.5 0.5 0.5 0.2 0.0 0.0 0.0 0.01;
+
+		Texture=smokesmall; //smokesmall;
+		airdrag=0.9;
+		
+		particleLifeSpread=1; 
+		particleSpeedSpread=10;  
+		particleSizeSpread=50;   
+		
+		particleLife=40;
+		numParticles=100; 
+		particleSpeed=400; 
+		particleSize=200;
+		
+		
+		
+		emitVector=0.0, 1, 0.0; 
+		emitRot=80;
+		emitRotSpread=5; 
+		directional=0; 
+
+		}
+	air=1;
+	water=1;
+	ground=1;
+	count=1;
+	}
+
+[THETOPRING]
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+		sizeGrowth=1;
+		sizeMod=1.0;
+		pos=0, 750, 0; 
+		gravity=0, -0.2, 0;
+		
+		colorMap=0.0 0.0 0.0 0.0 1.0 1.0 0.5 0.1 0.5 0.5 0.5 0.2 0.0 0.0 0.0 0.01;
+		Texture=smokesmall; //smokesmall;
+		airdrag=0.9;
+		
+		particleLifeSpread=1; 
+		particleSpeedSpread=10;  
+		particleSizeSpread=50;   
+		
+		particleLife=40;
+		numParticles=100; 
+		particleSpeed=300; 
+		particleSize=100;
+		
+		
+		
+		emitVector=0.0, 1, 0.0; 
+		emitRot=80;
+		emitRotSpread=5; 
+		directional=0; 
+
+		}
+	air=1;
+	water=1;
+	ground=1;
+	count=1;
+	}
+
+[THEMIDDLEING]
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+		sizeGrowth=1;
+		sizeMod=1.0;
+		pos=0, 1500, 0; 
+		gravity=0, -0.2, 0;
+		
+		colorMap=0.0 0.0 0.0 0.0 1.0 1.0 0.5 0.1 0.5 0.5 0.5 0.2 0.0 0.0 0.0 0.01;
+		Texture=smokesmall; //smokesmall;
+		airdrag=0.9;
+		
+		particleLifeSpread=1; 
+		particleSpeedSpread=5;  
+		particleSizeSpread=50;   
+		
+		particleLife=40;
+		numParticles=100; 
+		particleSpeed=200; 
+		particleSize=75;
+		
+		
+		
+		emitVector=0.0, 1, 0.0; 
+		emitRot=80;
+		emitRotSpread=5; 
+		directional=0; 
+
+		}
+	air=1;
+	water=1;
+	ground=1;
+	count=1;
+	}
+[InitialBlastWave]
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+		sizeGrowth=-2.32;
+		sizeMod=1.0;
+		pos=0, 1, 0; 
+		gravity=0, 0, 0;
+		
+			colorMap=1 0.3 0.2 0.01 	1 0.5 0.2 0.01	 0.1 0.1 0.1 0.01 	0.1 0.1 0.1 0.01 	0 0 0 0.01;
+
+		Texture=YELLOWBLAST3; //YELLOWBLAST3
+		airdrag=0.89;
+		
+		particleLifeSpread=1; 
+		particleSpeedSpread=22;  
+		particleSizeSpread=1;   
+		
+		particleLife=144;
+		numParticles=100; 
+		particleSpeed=58; 
+		particleSize=66;
+		
+		
+		emitVector=0.0, 1, 0.0; 
+		emitRot=80;
+		emitRotSpread=5; 
+		directional=0; 
+
+		}
+	air=1;
+	water=1;
+	ground=1;
+	count=1;
+	}
+	[BUTTWAVE] 
+	{
+	    class=CExpGenSpawner;
+		[properties]
+		{
+		pos=200 r-400, -90, 200 r-400;  
+		delay=0;				  
+		explosionGenerator=custom:LingeringtowerSmoke;
+		}
+	air=1;
+	water=1;
+	ground=1;
+	count=10;
+	}
+	[SHOCKEWAVE1] 
+	{
+	    class=CExpGenSpawner;
+		[properties]
+		{
+		pos=100 r-200, 1, 100 r-200;  
+		delay=5;				  
+		explosionGenerator=custom:LingeringtowerSmoke;
+		}
+	air=1;
+	water=1;
+	ground=1;
+	count=5;
+	}
+	[SHOCKEWAVE4] 
+	{
+	    class=CExpGenSpawner;
+		[properties]
+		{
+		pos=0, 350, 0;  
+		delay=40;				  
+		explosionGenerator=custom:LingeringtowerWAISTSmoke;
+		}
+	air=1;
+	water=1;
+	ground=1;
+	count=1;
+	}
+	[SHOCKEWAVE5] 
+	{
+	    class=CExpGenSpawner;
+		[properties]
+		{
+		pos=0, 500, 0;  
+		delay=25;				  
+		explosionGenerator=custom:LingeringtowerWAISTSmoke;
+		}
+	air=1;
+	water=1;
+	ground=1;
+	count=1;
+	}
+	[SHOCKEWAVE6] 
+	{
+	    class=CExpGenSpawner;
+		[properties]
+		{
+		pos=0, 650, 0;  
+		delay=30;				  
+		explosionGenerator=custom:LingeringtowerWAISTSmoke;
+		}
+	air=1;
+	water=1;
+	ground=1;
+	count=1;
+	}
+	[SHOCKEWAVE7] 
+	{
+	    class=CExpGenSpawner;
+		[properties]
+		{
+		pos=0, 850, 0;  
+		delay=35;				  
+		explosionGenerator=custom:LingeringtowerWAISTSmoke;
+		}
+	air=1;
+	water=1;
+	ground=1;
+	count=1;
+	}
+	[SHOCKEWAVE8] 
+	{
+	    class=CExpGenSpawner;
+		[properties]
+		{
+		pos=0, 1100, 0;  
+		delay=50;				  
+		explosionGenerator=custom:LingeringtowerWAISTSmoke;
+		}
+	air=1;
+	water=1;
+	ground=1;
+	count=1;
+	}
+	[SHOCKEWAVE9] 
+	{
+	    class=CExpGenSpawner;
+		[properties]
+		{
+		pos=0, 1300, 0;  
+		delay=60;				  
+		explosionGenerator=custom:LingeringtowerWAISTSmoke;
+		}
+	air=1;
+	water=1;
+	ground=1;
+	count=1;
+	}
+	[SHOCKEWAVE10] 
+	{
+	    class=CExpGenSpawner;
+		[properties]
+		{
+		pos=600 r-1200, 1337 r50, 600 r-1200;  
+		delay=70;				  
+		explosionGenerator=custom:LingeringtowerWAISTSmoke;
+		}
+	air=1;
+	water=1;
+	ground=1;
+	count=12;
+	}
+	[SHOCKEWAVE11] 
+	{
+	    class=CExpGenSpawner;
+		[properties]
+		{
+		pos=0, 1537, 0;  
+		delay=75;				  
+		explosionGenerator=custom:LingeringtowerWAISTSmoke;
+		}
+	air=1;
+	water=1;
+	ground=1;
+	count=5;
+	}
+	[HEATPEAKING] 
+	{
+	    class=CExpGenSpawner;
+		[properties]
+		{
+		pos=0, 1537, 0;  
+		delay=65 r 95;				  
+		explosionGenerator=custom:LingeringtowerTOPAIRING;
+		}
+	air=1;
+	water=1;
+	ground=1;
+	count=480;
+	}
+	[HEATFLARE] 
+	{
+	    class=CExpGenSpawner;
+		[properties]
+		{
+		pos=0, 1537, 0;  
+		delay=65 r 95;				  
+		explosionGenerator=custom:LingeringtowerTOPFLARE;
+		}
+	air=1;
+	water=1;
+	ground=1;
+	count=50;
+	}
+	[ENDFLARE] 
+	{
+	    class=CExpGenSpawner;
+		[properties]
+		{
+		pos=0, 1537, 0;  
+		delay=150;				  
+		explosionGenerator=custom:LingeringtowerTOPEND;
+		}
+	air=1;
+	water=1;
+	ground=1;
+	count=1;
+	}
+	[HEATRISING] 
+	{
+	    class=CExpGenSpawner;
+		[properties]
+		{
+		pos=0, -70, 0;  
+		delay=0 r 115;				  
+		explosionGenerator=custom:LingeringtowerDOWNAIRING;
+		}
+	air=1;
+	water=1;
+	ground=1;
+	count=720;
+	}
+}
+
+[LingeringtowerWAISTSmoke]//Gives better effect
+{
+	useAirLos=0;
+	usedefaultexplosions=0;
+	[spikes]
+	{
+		class=explspike;
+		[properties]
+		{
+			dir=-40 r80,-40 r80,-40 r80;
+			width=22;
+			length=1; //60;
+			alpha=1;
+			alphadecay=0.15;
+			color=1.0, 0.5, 0.2;
+			alwaysVisible=1;
+
+		}
+		air=1;
+		water=1;
+		ground=1;
+  		count=4; 
+	}
+[heatcloud]// Fire burst
+   		{
+      		[properties]
+      		{
+      		heat = 5;
+		Texture=Light;
+      		maxheat = 5;
+      		heatFalloff = 0.3;
+      		size = 1.0 r500;
+      		sizeGrowth = -16 r-32;
+      		sizemod = 0;
+      		sizemodmod = 0;
+      		speed = 0.05 r-0.1, 0.05 r-0.1, 0.05 r-0.1;
+      		pos = 0, 10.0, 0;
+		useAirLos=0;
+      		}
+	air=1;
+      	water=0;
+      	ground=1;
+      	count=1;
+	useAirLos=0;
+   	}
+[InitialBlastWave]
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+		sizeGrowth=1;
+		sizeMod=1.0;
+		pos=0, 1, 0; 
+		gravity=0, -0.1, 0;
+		
+		colorMap=0.4 0.2 0.1 0.3 0.4 0.3 0.1 0.3 0.05 0.05 0.05 0.5 0.0 0.0 0.0 0.01;
+
+		Texture=smokesmall; //smokesmall;
+		airdrag=0.8;
+		
+		particleLifeSpread=1; 
+		particleSpeedSpread=-50;  
+		particleSizeSpread=50;   
+		
+		particleLife=250;//150
+		numParticles=3; 
+		particleSpeed=50; 
+		particleSize=250;
+		
+		
+		
+		emitVector=0.0, 1, 0.0; 
+		emitRot=80;
+		emitRotSpread=5; 
+		directional=0; 
+
+		}
+	air=1;
+	water=1;
+	ground=1;
+	count=1;
+	}
+}
+
+[LingeringtowerSmoke]//Gives better effect
+{
+	useAirLos=0;
+	usedefaultexplosions=0;
+	[spikes]
+	{
+		class=explspike;
+		[properties]
+		{
+			dir=-10 r20,-10 r20,-10 r20;
+			width=22;
+			length=1; //60;
+			alpha=1;
+			alphadecay=0.15;
+			color=1.0, 0.5, 0.2;
+			alwaysVisible=1;
+
+		}
+		air=1;
+		water=1;
+		ground=1;
+  		count=4; 
+	}
+[heatcloud]// Fire burst
+   		{
+      		[properties]
+      		{
+      		heat = 5;
+		Texture=Light;
+      		maxheat = 5;
+      		heatFalloff = 0.25;
+      		size = 500.0 r1;
+      		sizeGrowth = 0.08 r.16;
+      		sizemod = 0;
+      		sizemodmod = 0;
+      		speed = 0.05 r-0.1, 0.05 r-0.1, 0.05 r-0.1;
+      		pos = 0, 10.0, 0;
+		useAirLos=0;
+      		}
+	air=1;
+      	water=0;
+      	ground=1;
+      	count=1;
+	useAirLos=0;
+   	}
+[InitialBlastWave]
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+		sizeGrowth=1;
+		sizeMod=1.0;
+		pos=0, 1, 0; 
+		gravity=0, -0.1, 0;
+		
+		colorMap=0.5 0.3 0.1 0.2 0.05 0.05 0.05 0.4 0.0 0.0 0.0 0.01;
+		Texture=smokesmall; //smokesmall;
+		airdrag=0.8;
+		
+		particleLifeSpread=1; 
+		particleSpeedSpread=30;  
+		particleSizeSpread=80;   
+		
+		particleLife=340;//150
+		numParticles=4; 
+		particleSpeed=60; 
+		particleSize=120;
+		
+		
+		
+		emitVector=0.0, 1, 0.0; 
+		emitRot=80;
+		emitRotSpread=5; 
+		directional=0; 
+
+		}
+	air=1;
+	water=1;
+	ground=1;
+	count=1;
+	}
+}
+
+[ButtNOTUSEDSmoke]//Gives better effect
+{
+	useAirLos=0;
+	usedefaultexplosions=0;
+	[spikes]
+	{
+		class=explspike;
+		[properties]
+		{
+			dir=-10 r20,-10 r20,-10 r20;
+			width=22;
+			length=1; //60;
+			alpha=1;
+			alphadecay=0.15;
+			color=1.0, 0.5, 0.2;
+			alwaysVisible=1;
+
+		}
+		air=1;
+		water=1;
+		ground=1;
+  		count=4; 
+	}
+[InitialBlastWave]
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+		sizeGrowth=1;
+		sizeMod=1.0;
+		pos=0, 1, 0; 
+		gravity=0, -0.1, 0;
+		
+		colorMap=0.7 0.5 0.2 0.1 0.15 0.15 0.15 0.2 0.0 0.0 0.0 0.01;
+
+		Texture=minismoke; //smokesmall;
+		airdrag=0.8;
+		
+		particleLifeSpread=1; 
+		particleSpeedSpread=-12;  
+		particleSizeSpread=2;   
+		
+		particleLife=76;
+		numParticles=32; 
+		particleSpeed=15; 
+		particleSize=16;
+		
+		
+		
+		emitVector=0.2, 1, 0.2; 
+		emitRot=80;
+		emitRotSpread=5; 
+		directional=0; 
+
+		}
+	air=1;
+	water=1;
+	ground=1;
+	count=1;
+	}
+}
+
+[LingeringtowerTOPFLARE]//Gives better effect
+{
+	useAirLos=0;
+	usedefaultexplosions=0;
+
+[heatcloud]// Fire burst
+   		{
+      		[properties]
+      		{
+      		heat = 15;
+		Texture=Light;
+      		maxheat = 15;
+      		heatFalloff = 0.9;
+      		size = 500.0 r700;
+      		sizeGrowth = 60 r-120;
+      		sizemod = 0;
+      		sizemodmod = 0;
+      		speed = 0.05 r-0.1, 0.05 r-0.1, 0.05 r-0.1;
+      		pos = 0, 10.0, 0;
+		useAirLos=0;
+      		}
+	air=1;
+      	water=0;
+      	ground=1;
+      	count=1;
+	useAirLos=0;
+   	}
+
+}
+
+[LingeringtowerTOPEND]//Gives better effect
+{
+	useAirLos=0;
+	usedefaultexplosions=0;
+
+[heatcloud]// Fire burst
+   		{
+      		[properties]
+      		{
+      		heat = 25;
+		Texture=Light;
+      		maxheat = 25;
+      		heatFalloff = 0.25;
+      		size = 850.0 r1;
+      		sizeGrowth = 0.08 r.16;
+      		sizemod = 0;
+      		sizemodmod = 0;
+      		speed = 0.05 r-0.1, 0.05 r-0.1, 0.05 r-0.1;
+      		pos = 0, 10.0, 0;
+		useAirLos=0;
+      		}
+	air=1;
+      	water=0;
+      	ground=1;
+      	count=1;
+	useAirLos=0;
+   	}
+
+}
+[LingeringtowerTOPAIRING]//Gives better effect
+{
+	useAirLos=0;
+	usedefaultexplosions=0;
+
+[InitialBlastWave]
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+		sizeGrowth=0.25;
+		sizeMod=1.0;
+		pos=0, 1, 0; 
+		gravity=0, -0.05, 0;
+		
+		colorMap=0.4 0.3 0.2 0.3 0.05 0.05 0.05 0.3 0.0 0.0 0.0 0.00;
+
+		Texture=smokesmall; //smokesmall;
+		airdrag=0.95;
+		
+		particleLifeSpread=10; 
+		particleSpeedSpread=35; //80 
+		particleSizeSpread=50;   
+		
+		particleLife=200;
+		numParticles=1; 
+		particleSpeed=15; //130
+		particleSize=80;
+		
+		
+		
+		emitVector=0.0, 1, 0.0; 
+		emitRot=80;
+		emitRotSpread=5; 
+		directional=0; 
+
+		}
+	air=1;
+	water=1;
+	ground=1;
+	count=1;
+	}
+}
+
+[LingeringtowerDOWNAIRING]//Gives better effect
+{
+	useAirLos=0;
+	usedefaultexplosions=0;
+[UPPERRING]
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+		sizeGrowth=1;
+		sizeMod=1.0;
+		pos=0, -100, 0; 
+		gravity=0, 0.5, 0;
+		
+		colorMap=0.8 0.7 0.5 0.1 0.4 0.3 0.2 0.2 0.15 0.125 0.1 0.1 0.01 0.01 0.01 0.2  0.0 0.0 0.0 0.01;
+
+		Texture=firecloud2; //smokesmall;
+		airdrag=0.8;
+		
+		particleLifeSpread=200; 
+		particleSpeedSpread=35;  
+		particleSizeSpread=50;   
+		
+		particleLife=1;
+		numParticles=1; 
+		particleSpeed=125; 
+		particleSize=50;
+		
+		
+		
+		emitVector=0.0, 1, 0.0; 
+		emitRot=80;
+		emitRotSpread=5; 
+		directional=0; 
+
+		}
+	air=1;
+	water=1;
+	ground=1;
+	count=1;
+	}
+
+[INNARRING]
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+		sizeGrowth=1;
+		sizeMod=1.0;
+		pos=0, 1, 0; 
+		gravity=0, 5.5, 0;
+		
+		colorMap=0.5 0.3 0.1 0.2 0.4 0.3 0.2 0.3 0.0 0.0 0.0 0.01;
+
+		Texture=smokesmall; //smokesmall;
+		airdrag=0.8;
+		
+		particleLifeSpread=80; 
+		particleSpeedSpread=20;  
+		particleSizeSpread=50;   
+		
+		particleLife=1;
+		numParticles=1; 
+		particleSpeed=30; 
+		particleSize=50;
+		
+		
+		
+		emitVector=0.0, 1, 0.0; 
+		emitRot=80;
+		emitRotSpread=5; 
+		directional=0; 
+
+		}
+	air=1;
+	water=1;
+	ground=1;
+	count=1;
+	}
+}

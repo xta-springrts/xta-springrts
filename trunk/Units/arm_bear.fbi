@@ -1,0 +1,127 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Arm; 
+	name=Bear;
+	description=Transport Hovercraft;
+	icontype=hover;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=ARM HOVER TPORT NOWEAPON NOTAIR NOTSUB;
+	tedclass=TANK;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=arm_bear;
+	unitnumber=183;
+	objectname=arm_bear.3do;
+	corpse=arm_bear_dead;
+	buildpic=arm_bear.DDS;
+	soundcategory=ARM_HOVER_BIG;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=1920;//+1000 hp
+	healtime=30;
+	buildcostmetal=522;//+300 metal
+	buildcostenergy=7646;//+2000 Energy
+	buildtime=11780;
+	footprintx=4;
+	footprintz=4;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=2.4;
+	energyuse=2.4;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	buildangle=16384;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canguard=1;
+	canhover=1;
+	canload=1;
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementclass=TANKHOVER4;
+	turnrate=320;
+	acceleration=0.1;
+	brakerate=0.18;
+	maxvelocity=2.6;
+	minwaterdepth=12;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=375;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeas=BIG_UNITEX;
+	selfdestructas=BIG_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	firestandorders=0;
+	mobilestandorders=0;
+	standingmoveorder=1;
+	defaultmissiontype=Standby;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=1;
+	designation=ARM-THC;
+	downloadable=1;
+	maneuverleashlength=640;
+	scale=0.5;
+	shootme=1;
+	steeringmode=1;
+	threed=1;
+	transportcapacity=15;
+	transportmaxunits=16;
+	transportsize=3;
+	loadingradius=212;
+	version=1.2;
+	waterline=4;
+	zbuffer=1;
+	collisionVolumeType = box;
+	collisionVolumeScales =55 32 70;
+	collisionVolumeOffsets = 0 5 0;
+	collisionVolumeTest = 1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+}

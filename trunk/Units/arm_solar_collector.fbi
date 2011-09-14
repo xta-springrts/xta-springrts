@@ -1,0 +1,106 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Arm;
+	name=Solar Collector;
+	description=Produces Energy;
+	icontype=building;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=ARM ENERGY  NOWEAPON NOTAIR NOTSUB;
+	tedclass=ENERGY;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=arm_solar_collector;
+	unitnumber=63;
+	objectname=arm_solar_collector.3do;
+	corpse=arm_solar_collector_dead;
+	buildpic=arm_solar_collector.DDS;
+	soundcategory=ARM_SOLAR;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=489;
+	buildcostmetal=145;
+	buildcostenergy=0;
+	buildtime=2495;
+	footprintx=5;
+	footprintz=5;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energyuse=-20;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	buildangle=16384;
+	yardmap=yycyy yoooy coooc yoooy yycyy;
+	activatewhenbuilt=1;
+	collisionVolumeType=Ell;
+	collisionVolumeScales=83 78 83;
+	collisionVolumeOffsets=0 -18 1;
+	//collisionVolumeTest = 1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	onoffable=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	maxslope=10;
+	maxwaterdepth=11;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=367.5;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeas=SMALL_BUILDINGEX;
+	selfdestructas=SMALL_BUILDING;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=0;
+	damagemodifier=0.66; //was 0.33333=66%bouns now 33%//
+	designation=AE-SC;
+	downloadable=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	pieceTrailCEGTag=NanoDebree;//bleh
+	pieceTrailCEGRange = 1;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+}

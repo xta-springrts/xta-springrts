@@ -1,0 +1,112 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Core;
+	name=Stinger;
+	description=Missile Tower - Naval Series;
+	icontype=sea;
+
+	//************************************************************
+	//  Categories
+	//**************
+	Category=CORE WEAPON NOTAIR NOTSUB;
+	tedclass=WATER;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=core_stinger;
+	unitnumber=172;
+	objectname=core_stinger.3do;
+	corpse=core_stinger_dead;
+	buildpic=core_stinger.DDS;
+	soundcategory=COR_KBOT;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=498;
+	healtime=11;
+	buildcostmetal=108;
+	buildcostenergy=1581;
+	buildtime=2357;
+	footprintx=3;
+	footprintz=3;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energyuse=0.1;
+	energystorage=0;
+	windgenerator=0.001;
+
+	//************************************************************
+	//  Building
+	//************
+	buildangle=16384;
+	yardmap=wwwwwwwww;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canattack=1;
+	canguard=1;
+	canstop=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	minwaterdepth=2;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=630;
+	radardistance=0;
+	sonardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=CORRL_MISSILE;
+	explodeas=BIG_UNITEX;
+	selfdestructas=BIG_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	firestandorders=1;
+	standingfireorder=2;
+	defaultmissiontype=GUARD_NOMOVE;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	ai_limit=limit CORFRT 6;
+	bmcode=0;
+	designation=FF-R8;
+	downloadable=1;
+	noshadow=1;
+	shootme=1;
+	threed=1;
+	version=1.2;
+	waterline=4.99;
+	zbuffer=1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+}

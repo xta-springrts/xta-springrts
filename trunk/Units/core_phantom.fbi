@@ -1,0 +1,128 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Core;
+	name=Phantom;
+	description=Radar Jammer Ship;
+	icontype=sea;
+
+	//************************************************************
+	//  Categories
+	//**************
+	Category=CORE SHIP NOWEAPON JAM NOTAIR NOTSUB;
+	tedclass=SHIP;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=core_phantom;
+	unitnumber=192;
+	objectname=core_phantom.3do;
+	corpse=core_phantom_dead;
+	buildpic=core_phantom.DDS;
+	soundcategory=CORE_SHIP;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=1283;
+	healtime=30;
+	buildcostmetal=804; //was 304//
+	buildcostenergy=10144; //was 5072//
+	buildtime=15806;
+	footprintx=4;
+	footprintz=4;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=20;
+	energyuse=20;
+	energystorage=0;
+	windgenerator=0.001;
+
+	//************************************************************
+	//  Building
+	//************
+	activatewhenbuilt=1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canguard=1;
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+	floater=1;
+	onoffable=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementclass=Smallboat;
+	turnrate=375;
+	acceleration=0.08;
+	brakerate=0.01;
+	maxvelocity=2.5;
+	minwaterdepth=6;
+	waterline=2;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=465;
+	radardistance=0;
+	sonardistance=0;
+	radardistancejam=650; //was 1095//
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeas=;
+	selfdestructas=MEDIUM_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	mobilestandorders=1;
+	standingmoveorder=1;
+	defaultmissiontype=Standby;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	ai_limit=limit CORSJAM 2;
+	bmcode=1;
+	designation=SA-AR2;
+	downloadable=1;
+	maneuverleashlength=640;
+	shootme=1;
+	steeringmode=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	collisionVolumeType = box;
+	collisionVolumeScales =30 30 60;
+	collisionVolumeOffsets = 0 -10 0;
+	collisionVolumeTest = 1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+	[SFXTypes]
+	{
+	explosiongenerator0=custom:UNITFIRE;
+	}
+}

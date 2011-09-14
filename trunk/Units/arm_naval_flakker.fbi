@@ -1,0 +1,122 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Arm;
+	name=Naval Flakker;
+	description=Floating Anti-Air Flak Gun;
+	icontype=sea;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=ARM STRATEGIC WEAPON NOTAIR NOTSUB;
+	tedclass=WATER;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=arm_naval_flakker;
+	unitnumber=1160;
+	objectname=arm_naval_flakker.3do;
+	corpse=arm_naval_flakker_dead;
+	buildpic=arm_naval_flakker.DDS;
+	soundcategory=GUARD;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=2286;
+	healtime=11;
+	buildcostmetal=1069;
+	buildcostenergy=17425;
+	buildtime=28508;
+	footprintx=4;
+	footprintz=4;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energyuse=0;
+	energystorage=0;
+	windgenerator=0.001;
+
+	//************************************************************
+	//  Building
+	//************
+	buildangle=8192;
+	yardmap=wwwww wwwww wwwww wwwww wwwww;
+	activatewhenbuilt=1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canattack=1;
+	canguard=1;
+	canstop=1;
+	onoffable=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	maxslope=10;
+	maxwaterdepth=0;
+	minwaterdepth=2;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=896;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=ARMFLAK_GUN;
+	badtargetcategory=NOTAIR;
+	wpri_badtargetcategory=NOTAIR;
+	explodeas=LARGE_BUILDINGEX;
+	selfdestructas=MEDIUM_BUILDING;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	firestandorders=1;
+	standingfireorder=2;
+	defaultmissiontype=GUARD_NOMOVE;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	ai_limit=limit ARMFLAK 20;
+	ai_weight=weight ARMFLAK 0.5;
+	bmcode=0;
+	designation=armflaknaval;
+	downloadable=1;
+	noshadow=1;
+	shootme=1;
+	threed=1;
+	version=1.2;
+	waterline=4.99;
+	zbuffer=1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+	[SFXTypes]
+	{
+	explosiongenerator0=custom:FLAKFLARE;
+	}
+
+}

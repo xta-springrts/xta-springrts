@@ -1,0 +1,136 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Core;
+	name=Copperhead;
+	description=Mobile Flak Vehicle;
+
+	//************************************************************
+	//  Categories
+	//**************
+	Category=CORE TANK WEAPON NOTAIR NOTSUB;
+	tedclass=TANK;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=core_copperhead;
+	unitnumber=314;
+	objectname=core_copperhead.3do;
+	corpse=core_copperhead_dead;
+	buildpic=core_copperhead.DDS;
+	soundcategory=;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=1910;
+	healtime=30;
+	buildcostmetal=886;
+	buildcostenergy=12487;
+	buildtime=14385;
+	footprintx=2;
+	footprintz=2;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=0.3;
+	energyuse=0.8;
+	energystorage=100;
+
+	//************************************************************
+	//  Building
+	//************
+	activatewhenbuilt=1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canattack=1;
+	canguard=1;
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+	onoffable=1;
+	upright=0;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementclass=TANKSH3;
+	turnrate=489;
+	acceleration=0.4;
+	brakerate=1.0;
+	maxvelocity=1.3;
+	maxslope=14;
+	maxwaterdepth=12;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=480;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=CORSENT_GUN;
+	nochasecategory=vtol;
+	wpri_badtargetcategory=NOTAIR;
+	explodeas=BIG_UNITEX;
+	selfdestructas=BIG_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	firestandorders=1;
+	mobilestandorders=1;
+	standingfireorder=2;
+	standingmoveorder=0;
+	defaultmissiontype=Standby;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=1;
+	designation=KG-EHL;
+	downloadable=1;
+	leavetracks=1;
+	maneuverleashlength=640;
+	shootme=1;
+	steeringmode=1;
+	threed=1;
+	trackoffset=3;
+	trackstrength=6;
+	trackstretch=1;
+	tracktype=StdTank;
+	trackwidth=36;
+	version=1.2;
+	zbuffer=1;
+	collisionVolumeType = box;
+	collisionVolumeScales =27 27 27;
+	collisionVolumeOffsets = 0 -1 0;
+	collisionVolumeTest = 1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+	[SFXTypes]
+	{
+	explosiongenerator0=custom:FLAKFLARE;
+	}
+
+}

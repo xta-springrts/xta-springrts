@@ -1,0 +1,104 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Core;
+	name=Radar Tower;
+	description=Radar Tower;
+	icontype=building;
+
+	//************************************************************
+	//  Categories
+	//**************
+	Category=CORE RAD  NOTAIR NOTSUB;
+	tedclass=SPECIAL;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=core_radar_tower;
+	unitnumber=126;
+	objectname=core_radar_tower.3do;
+	corpse=core_radar_tower_dead;
+	buildpic=core_radar_tower.DDS;
+	soundcategory=CORE_RADAR;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=51;
+	buildcostmetal=50;
+	buildcostenergy=800;
+	buildtime=1137;
+	footprintx=2;
+	footprintz=2;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=6;
+	energyuse=6;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	buildangle=16384;
+	yardmap=oooo;
+	activatewhenbuilt=1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	onoffable=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	maxslope=15;
+	maxwaterdepth=22;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=612.5;
+	airsightdistance=920;
+	radardistance=1600;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeas=SMALL_BUILDINGEX;
+	selfdestructas=SMALL_BUILDING;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=0;
+	designation=FR-3;
+	downloadable=1;
+	shootme=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+}

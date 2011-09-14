@@ -1,0 +1,121 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Core;
+	name=Doomsday Machine;
+	description=Anti-Swarm Energy Weapon;
+	icontype=building;
+
+	//************************************************************
+	//  Categories
+	//**************
+	Category=CORE WEAPON NOTAIR NOTSUB;
+	tedclass=FORT;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=core_doomsday_machine;
+	unitnumber=99;
+	objectname=core_doomsday_machine.3do;
+	corpse=core_doomsday_machine_dead;
+	buildpic=core_doomsday_machine.DDS;
+	soundcategory=COR_DOOM;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=9925;
+	healtime=11;
+	buildcostmetal=5537;
+	buildcostenergy=36858;
+	buildtime=66201;
+	footprintx=4;
+	footprintz=4;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energyuse=0;
+	energystorage=2000;
+
+	//************************************************************
+	//  Building
+	//************
+	buildangle=65535;
+	yardmap=oooo oooo oooo oooo;
+	collisionVolumeType=Box;
+	collisionVolumeScales=48 86 48;
+	collisionVolumeOffsets=0 -15 0;
+	collisionVolumeTest = 1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canattack=1;
+	canguard=1;
+	canstop=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	maxslope=10;
+	maxwaterdepth=33;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=896;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=CORE_DOOMSDAY;
+	weapon2=CORFHLT_LASER;
+	weapon3=CORE_LASERH1;
+	badtargetcategory=VTOL;
+	wpri_badtargetcategory=VTOL;
+	wsec_badtargetcategory=VTOL;
+	explodeas=LARGE_BUILDINGEX;
+	selfdestructas=CRAWL_BLASTSML;
+
+	//************************************************************
+	//  Orders
+	//**********
+	firestandorders=1;
+	standingfireorder=2;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=0;
+	damagemodifier=0.45; //was 0.25 (75% increase in health when closed) now 75%//
+	designation=COR-ANN1;
+	downloadable=1;
+	shootme=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+	[SFXTypes]
+	{
+	explosiongenerator0=custom:greenflare;
+	explosiongenerator1=custom:UNITFIRE;
+	}
+}

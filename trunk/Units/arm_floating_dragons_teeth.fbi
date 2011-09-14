@@ -1,0 +1,101 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Arm;
+	name=Floating Dragon's Teeth;
+	description=Floating Perimeter Defense;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=ARM NOWEAPON NOTAIR NOTSUB;
+	tedclass=FORT;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=arm_floating_dragons_teeth;
+	unitnumber=166;
+	objectname=arm_floating_dragons_teeth.3do;
+	corpse=arm_floating_dragons_teeth_dead;
+	buildpic=arm_floating_dragons_teeth.DDS;
+	soundcategory=;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=3500;
+	buildcostmetal=20;
+	buildcostenergy=600;
+	buildtime=930;
+	footprintx=2;
+	footprintz=2;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=0;
+	energyuse=0;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	buildangle=0;
+	yardmap=w;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	isfeature=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	maxslope=32;
+	maxwaterdepth=0;
+	minwaterdepth=1;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=175;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeas=;
+	selfdestructas=;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=0;
+	designation=A-F24-C;
+	downloadable=1;
+	threed=1;
+	version=1.2;
+	waterline=16;
+	zbuffer=1;
+	upright=1;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+}

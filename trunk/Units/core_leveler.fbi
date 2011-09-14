@@ -1,0 +1,135 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Core;
+	name=Leveler;
+	description=Riot Tank;
+
+	//************************************************************
+	//  Categories
+	//**************
+	Category=CORE TANK WEAPON NOTAIR NOTSUB;
+	tedclass=TANK;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=core_leveler;
+	unitnumber=266;
+	objectname=corleveler_512.s3o;
+	corpse=core_leveler_dead;
+	buildpic=core_leveler.DDS;
+	soundcategory=CORE_TANK;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=5769;
+	healtime=30;
+	buildcostmetal=730;
+	buildcostenergy=4718;
+	buildtime=12627;
+	footprintx=3;
+	footprintz=3;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=0.3;
+	energyuse=0.3;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canattack=1;
+	canguard=1;
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementclass=TANKSH3;
+	turnrate=440;
+	acceleration=0.4;
+	brakerate=1.9;
+	maxvelocity=1.85; //was 1.65 now faster than reaper barely//
+	maxslope=17;
+	maxwaterdepth=12;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=495;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=CORLEVLR_WEAPON;
+	nochasecategory=VTOL;
+	wpri_badtargetcategory=VTOL;
+	explodeas=CORPYRO_BLAST;
+	selfdestructas=MEDIUM_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	firestandorders=1;
+	mobilestandorders=1;
+	standingfireorder=2;
+	standingmoveorder=1;
+	defaultmissiontype=Standby;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=1;
+	designation=TB-LG;
+	downloadable=1;
+	leavetracks=1;
+	maneuverleashlength=640;
+	noselfdamage=1;
+	shootme=1;
+	steeringmode=1;
+	threed=1;
+	trackoffset=7;
+	trackstrength=6;
+	trackstretch=1;
+	tracktype=StdTank;
+	trackwidth=38;
+	version=1.2;
+	zbuffer=1;
+	collisionVolumeType = box;
+	collisionVolumeScales =38 19 38;
+	collisionVolumeOffsets = 0 -1 0;
+	collisionVolumeTest = 1;
+	pieceTrailCEGTag=NanoDebree;//bleh
+	pieceTrailCEGRange = 1;
+
+	[SFXTypes]
+	{
+	//explosiongenerator0=custom:UNITFIRE;
+	explosiongenerator0=custom:FireFlare;
+	}
+	//************************************************************
+	//  To be removed
+	//*****************
+
+}

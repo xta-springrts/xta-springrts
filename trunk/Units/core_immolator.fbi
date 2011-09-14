@@ -1,0 +1,122 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Core;
+	name=Immolator;
+	description=Plasma Tower;
+	icontype=building;
+
+	//************************************************************
+	//  Categories
+	//**************
+	Category=CORE WEAPON NOTAIR NOTSUB;
+	tedclass=FORT;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=core_immolator;
+	unitnumber=124;
+	objectname=core_immolator.3do;
+	corpse=core_immolator_dead;
+	buildpic=core_immolator.DDS;
+	soundcategory=COR_KBOT;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=6736;
+	healtime=11;
+	buildcostmetal=3152;//reduced by 800
+	buildcostenergy=45165; //13920////reduced by 30000 hp
+	buildtime=43900;
+	footprintx=4;
+	footprintz=4;
+	collisionVolumeType = CylY;
+	collisionVolumeScales =56 33 56;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energyuse=0;
+	energystorage=1200;
+
+	//************************************************************
+	//  Building
+	//************
+	buildangle=8192;
+	yardmap=yyoo oooo oooo yyoo;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canattack=1;
+	canguard=1;
+	canstop=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	maxslope=10;
+	maxwaterdepth=0;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=665;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=CORPLAS_WEAPON;
+	wpri_badtargetcategory=VTOL;
+	onlytargetcategory1=NOTAIR;
+	explodeas=MEDIUM_BUILDINGEX;
+	selfdestructas=MEDIUM_BUILDING;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	firestandorders=1;
+	standingfireorder=2;
+	defaultmissiontype=GUARD_NOMOVE;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=0;
+	designation=COR-PLAS;
+	downloadable=1;
+	shootme=1;
+	threed=1;
+	version=3;
+	zbuffer=1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+	[SFXTypes]
+	{
+	explosiongenerator0=custom:berthaflare;
+	}
+	[customParams] 
+	{
+    canAreaAttack=1;
+	}
+}

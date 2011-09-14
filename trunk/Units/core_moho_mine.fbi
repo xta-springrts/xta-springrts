@@ -1,0 +1,102 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Core;
+	name=Moho Mine;
+	description=Advanced Metal Extractor;
+	icontype=metal;
+
+	//************************************************************
+	//  Categories
+	//**************
+	Category=CORE METAL EXTRACTOR NOWEAPON NOTAIR NOTSUB;
+	tedclass=METAL;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=core_moho_mine;
+	unitnumber=120;
+	objectname=core_moho_mine.3do;
+	corpse=core_moho_mine_dead;
+	buildpic=core_moho_mine.DDS;
+	soundcategory=CORE_MOHO;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=1465;
+	buildcostmetal=725;
+	buildcostenergy=4561;
+	buildtime=32500;
+	footprintx=5;
+	footprintz=5;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energyuse=300;
+	energystorage=0;
+	extractsmetal=0.006;
+
+	//************************************************************
+	//  Building
+	//************
+	buildangle=2048;
+	yardmap=yoooy ooooo ooooo ooooo yoooy;
+	activatewhenbuilt=1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	onoffable=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	maxslope=15;
+	maxwaterdepth=22;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=367.5;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeas=SMALL_BUILDINGEX;
+	selfdestructas=SMALL_BUILDING;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=0;
+	designation=MD-2;
+	downloadable=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+}

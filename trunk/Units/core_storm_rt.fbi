@@ -1,0 +1,131 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Core;
+	name=Storm;
+	description=Rocket Kbot;
+
+	//************************************************************
+	//  Categories
+	//**************
+	Category=CORE KBOT WEAPON NOTAIR NOTSUB;
+	tedclass=KBOT;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=core_storm_rt;
+	unitnumber=139;
+	objectname=core_storm.3do;
+	corpse=core_storm_dead;
+	buildpic=core_storm.DDS;
+	soundcategory=COR_KBOT;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=875;
+	healtime=30;
+	buildcostmetal=165;
+	buildcostenergy=1379;
+	buildtime=2362;
+	footprintx=2;
+	footprintz=2;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=0.6;
+	energyuse=0.6;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canattack=1;
+	canguard=1;
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+	upright=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementclass=KBOTSS2;
+	turnrate=1003;
+	acceleration=0.915527;
+	brakerate=1.5;
+	maxvelocity=1.7;
+	maxslope=14;
+	maxwaterdepth=21;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=397.5;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=CORKBOT_ROCKET;
+	weapon2=CORKBOT_ROCKET_LR;
+	nochasecategory=VTOL;
+	badtargetcategory=VTOL;
+	wpri_badtargetcategory=VTOL;
+	explodeas=BIG_UNITEX;
+	selfdestructas=BIG_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	firestandorders=1;
+	mobilestandorders=1;
+	standingfireorder=2;
+	standingmoveorder=1;
+	defaultmissiontype=Standby;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=1;
+	designation=KA-R3;
+	downloadable=1;
+	maneuverleashlength=640;
+	shootme=1;
+	smoothanim=1;
+	steeringmode=2;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	collisionVolumeType = box;
+	collisionVolumeScales =25 27 20;
+	collisionVolumeOffsets = 0 -1 0;
+	collisionVolumeTest = 1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+	[SFXTypes]
+	{
+	explosiongenerator0=custom:KBOTrocketflare;
+	}
+}

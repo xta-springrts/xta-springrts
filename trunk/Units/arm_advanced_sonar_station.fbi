@@ -1,0 +1,116 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Arm;
+	name=Advanced Sonar Station;
+	description=Advanced stealth sonar;
+	icontype=sea;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=ARM SONAR NOTAIR NOTSUB;
+	tedclass=WATER;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=arm_advanced_sonar_station;
+	unitnumber=202;
+	objectname=arm_advanced_sonar_station.3do;
+	corpse=arm_advanced_sonar_station_dead;
+	buildpic=arm_advanced_sonar_station.DDS;
+	soundcategory=ARM_SONAR;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=320;
+	buildcostmetal=263; //was 163//
+	buildcostenergy=9876; //was 2469//
+	buildtime=6152;
+	footprintx=4;
+	footprintz=4;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=22;
+	energyuse=22;
+	energystorage=0;
+	windgenerator=0.001;
+
+	//************************************************************
+	//  Building
+	//************
+	buildangle=8192;
+	yardmap=wwww wwww wwww wwww;
+	activatewhenbuilt=1;
+	collisionVolumeType=Ell;
+	collisionVolumeScales=63 70 63;
+	collisionVolumeOffsets=0 -7 0;
+	//collisionVolumeTest = 1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	onoffable=1;
+	stealth=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	maxslope=10;
+	minwaterdepth=26;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=323.75;
+	sonardistance=1550; //was 2250//
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeas=SMALL_BUILDINGEX;
+	selfdestructas=SMALL_BUILDING;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=0;
+	damagemodifier=0.46;
+	designation=AS-ERS;
+	downloadable=1;
+	noshadow=1;
+	threed=1;
+	version=1.2;
+	waterline=43;
+	zbuffer=1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+	[SFXTypes]
+	{
+	explosiongenerator0=custom:Normallight;
+	explosiongenerator1=custom:Normallight;
+	}
+
+}

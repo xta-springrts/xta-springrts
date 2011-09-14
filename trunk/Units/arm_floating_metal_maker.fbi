@@ -1,0 +1,109 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Arm;
+	name=Floating Metal Maker;
+	description=Floating Metal Maker;
+	icontype=metal;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=ARM METAL NOWEAPON NOTAIR NOTSUB;
+	tedclass=METAL;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=arm_floating_metal_maker;
+	unitnumber=178;
+	objectname=arm_floating_metal_maker.3do;
+	buildpic=arm_floating_metal_maker.DDS;
+	soundcategory=ARM_MAKER;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=110;
+	buildcostmetal=0;
+	buildcostenergy=1480;
+	buildtime=2958;
+	footprintx=3;
+	footprintz=3;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energyuse=180;
+	energystorage=0;
+	makesmetal=3;
+	windgenerator=0.001;
+
+	//************************************************************
+	//  Building
+	//************
+	buildangle=8192;
+	yardmap=w;
+	activatewhenbuilt=1;
+	collisionVolumeType = CylY;
+	collisionVolumeScales =38 25 38;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	onoffable=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	maxslope=10;
+	maxwaterdepth=0;
+	minwaterdepth=11;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=367.5;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeas=SMALL_BUILDINGEX;
+	selfdestructas=SMALL_BUILDING;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=0;
+	designation=ARM-MRJ;
+	downloadable=1;
+	noshadow=1;
+	threed=1;
+	version=1.2;
+	waterline=4;
+	zbuffer=1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+}

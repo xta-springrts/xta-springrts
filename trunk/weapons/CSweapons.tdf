@@ -1,0 +1,292 @@
+[CSARM_DISINTEGRATOR]
+	{
+	name=Sniper Shot;
+	energypershot=425;
+	rendertype=4;
+	turret=1;
+	range=600;
+	reloadtime=6;
+	weaponvelocity=1100;
+	areaofeffect=260;
+	impulsefactor=2.0;
+	soundstart=armcomgun;
+	soundhit=armcomhit;
+	tolerance=1000;
+	commandfire=1;
+	pitchtolerance=5000;
+	targetMoveErro=0.5;
+	startsmoke=1;
+	accuracy=1;
+	movingaccuracy=500;
+	interceptedbyshieldtype=1;
+	cegTag=DGUNTRAIL;
+	explosiongenerator=custom:BERTHASHOTSLOW;
+	[DAMAGE]
+		{
+		default=2500;
+		ARMCOM=2000;
+		CORCOM=1800;
+		}
+	}
+[CSARMCOMLASER]
+	{
+	ID=20;
+	name=Auto Laser;
+	rendertype=0;
+	lineofsight=1;
+	turret=1;
+	impulsefactor=0;
+	impulseBoost=0; 
+	craterMult=0; 
+	craterBoost=0;
+
+	beamlaser=1;
+	beamtime=0.15;
+	range=500;
+	reloadtime=0.8;
+	weaponvelocity=400;
+	areaofeffect=16;
+	duration=.03;
+	soundtrigger=0;//1
+
+  	explosiongenerator=custom:ZIPPERDICKER_EFFECT;
+	soundstart=lasrfir1;
+	soundhit=lasrhit2;
+
+	firestarter=70;
+	beamweapon=1;
+	color=232;	/* GREEN */
+	color2=234;
+
+	explosiongaf=fx;
+	explosionart=explode5;
+
+	waterexplosiongaf=fx;
+	waterexplosionart=h2oboom1;
+
+	lavaexplosiongaf=fx;
+	lavaexplosionart=lavasplashsm;
+	tolerance=2000;
+	guidance=1;
+	[DAMAGE]
+		{
+		default=120;
+		}
+	}
+[CSCORE_DISINTEGRATOR]
+	{
+	name=Machine Gun;
+	rendertype=4;
+	commandfire=1;
+	turret=1;
+	range=600;
+	energypershot=35;
+	reloadtime=0.15;
+	weaponvelocity=1000;
+	areaofeffect=65;
+	soundstart=corcomgun;
+	soundhit=corcomhit;
+	tolerance=1000;
+	pitchtolerance=5000;
+	targetMoveErro=0.5;
+	startsmoke=1;
+	accuracy=0;
+	movingaccuracy=100;
+	sprayangle=200;
+	impulsefactor=5;
+	Burst=2;
+	Burstrate=0.2;
+	impulseBoost=2; 
+	craterMult=3; 
+	explosiongenerator=custom:DGUNTRACE;
+	cegTag=FIREBALL;
+	craterBoost=2;
+	interceptedbyshieldtype=1;
+	[DAMAGE]
+		{
+		default=110;
+		ARMCOM=60;
+		CORCOM=60;
+		}
+	}
+[CSCORCOMLASER]
+	{
+	ID=21;
+	name=Auto Laser;
+	rendertype=0;
+	lineofsight=1;
+	turret=1;
+	impulsefactor=0;
+	impulseBoost=0; 
+	craterMult=0; 
+	craterBoost=0;
+
+  	explosiongenerator=custom:ZIPPERDICKER_EFFECT;
+	beamlaser=1;
+	beamtime=0.15;
+	range=400;
+	reloadtime=0.8;
+	weaponvelocity=400;
+	areaofeffect=16;
+	duration=.03;
+	soundtrigger=0;//1
+
+	soundstart=lasrfir1;
+	soundhit=lasrhit2;
+
+	firestarter=70;
+	beamweapon=1;
+	color=232;	/* GREEN */
+	color2=234;
+
+	explosiongaf=fx;
+	explosionart=explode5;
+
+	waterexplosiongaf=fx;
+	waterexplosionart=h2oboom1;
+
+	lavaexplosiongaf=fx;
+	lavaexplosionart=lavasplashsm;
+	tolerance=2000;
+	guidance=1;
+	[DAMAGE]
+		{
+		default=120;
+		}
+	}
+[CSCOMMANDER_BLAST]
+	{
+	name=Atomic Blast;
+	rendertype=1;
+	lineofsight=1;
+	vlaunch=1;
+	range=32000;
+	reloadtime=60;
+	noautorange=1;
+	weapontimer=7;
+	flighttime=120;
+	weaponvelocity=350;
+	weaponacceleration=100;
+	turnrate=28000;
+	areaofeffect=900;
+	energypershot=120000;
+	stockpile=1;
+	targetable=1;
+	commandfire=1;
+	soundstart=xtanewnuke;
+	soundhit=xtanewnuke;
+	firestarter=100;
+	smokedelay=0.05;
+	selfprop=1;
+	smoketrail=1;
+	twophase=1;
+	guidance=1;
+	tolerance=4000;
+	shakemagnitude=24;
+	shakeduration=1.5;
+	explosiongaf=commboom;
+	explosionart=commboom;
+	waterexplosiongaf=h2obboom;
+	waterexplosionart=h2obboom;
+	lavaexplosiongaf=fx;
+	lavaexplosionart=lavasplashlg;
+	startsmoke=1;
+	impulsefactor=18;
+	impulseBoost=1; 
+	craterMult=3; 
+	craterBoost=2;
+        explosiongenerator=custom:SMALL_NUKE_EXPLOSION_FX;
+	[DAMAGE]
+		{
+		default=600;
+		}
+	}
+[CSDEATH]
+	{
+	name=Nuclear Missile;
+	rendertype=1;
+	lineofsight=1;
+	range=32000;
+	reloadtime=1;
+	noautorange=1;
+	weapontimer=7;
+	flighttime=120;
+	weaponvelocity=350;
+	weaponacceleration=100;
+	turnrate=28000;
+	areaofeffect=1800;
+	energypershot=120000;
+	explosiongenerator=custom:NUKE_EXPLOSION_FX_COM;
+	stockpile=1;
+	targetable=1;
+	commandfire=1;
+	soundstart=xtanewnuke;
+	soundhit=xtanewnuke;
+	firestarter=100;
+	smokedelay=0.05;
+	selfprop=1;
+	smoketrail=1;
+	twophase=1;
+	guidance=1;
+	tolerance=4000;
+	shakemagnitude=24;
+	shakeduration=1.5;
+	startsmoke=1;
+	impulsefactor=14;
+	impulseBoost=1; 
+	craterMult=3; 
+	craterBoost=2;
+	[DAMAGE]
+		{
+		default=2000;
+		}
+	}
+
+[NORUASSWORDOFJUSTICE]
+	{
+	ID=20;
+	name=Sword of Justice;
+	rendertype=0;
+	lineofsight=1;
+	turret=1;
+	impulsefactor=0;
+	impulseBoost=0; 
+	craterMult=0; 
+	craterBoost=0;
+
+	beamlaser=1;
+	beamtime=2;
+	range=60;
+	reloadtime=1.0;
+	weaponvelocity=400;
+	areaofeffect=16;
+	duration=.03;
+	soundtrigger=0;//1
+
+  	//explosiongenerator=custom:ZIPPERDICKER_EFFECT;
+	soundstart=lasrfir1;
+	soundhit=lasrhit2;
+
+	firestarter=70;
+	beamweapon=1;
+	color=153;	/* GREEN */
+	color2=154;
+
+	explosiongaf=fx;
+	explosionart=explode5;
+
+	waterexplosiongaf=fx;
+	waterexplosionart=h2oboom1;
+	thickness=2.2;
+	laserflaresize=6;
+        SweepFire=1; // added by Myg in v9 for .75b2 release
+
+	lavaexplosiongaf=fx;
+	lavaexplosionart=lavasplashsm;
+	tolerance=2000;
+	guidance=1;
+	[DAMAGE]
+		{
+		default=360;
+		}
+	}

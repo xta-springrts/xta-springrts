@@ -1,0 +1,124 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Arm;
+	name=Eraser;
+	description=Radar Jammer;
+	icontype=building;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=ARM KBOT NOWEAPON JAM NOTAIR NOTSUB;
+	tedclass=KBOT;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=arm_eraser;
+	unitnumber=10;
+	objectname=arm_eraser.3do;
+	corpse=arm_eraser_dead;
+	buildpic=arm_eraser.DDS;
+	soundcategory=ARM_JAM;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=686;
+	healtime=30;
+	buildcostmetal=164;
+	buildcostenergy=2983;
+	buildtime=11108;
+	footprintx=2;
+	footprintz=2;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=10;
+	energyuse=10;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	activatewhenbuilt=1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canguard=1;
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+	onoffable=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementclass=KBOTSS2;
+	turnrate=950;
+	acceleration=10;
+	brakerate=1.0;
+	maxvelocity=1;
+	maxslope=32;
+	maxwaterdepth=112;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=300;
+	radardistance=0;
+	radardistancejam=750;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeas=BIG_UNITEX;
+	selfdestructas=BIG_UNIT;
+	canattack=0; //added
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	mobilestandorders=1;
+	standingmoveorder=1;
+	defaultmissiontype=Standby;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=1;
+	designation=ARM-CB;
+	downloadable=1;
+	maneuverleashlength=100; //640//
+	ovradjust=1;
+	shootme=1;
+	smoothanim=1;
+	steeringmode=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	collisionVolumeType = box;
+	collisionVolumeScales =25 22 25;
+	collisionVolumeOffsets = 0 -1 0;
+	collisionVolumeTest = 1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+}

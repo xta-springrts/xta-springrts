@@ -1,0 +1,131 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Arm;
+	name=Rocko;
+	description=Rocket Kbot;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=ARM KBOT WEAPON NOTAIR NOTSUB;
+	tedclass=KBOT;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=arm_rocko_rt;
+	unitnumber=58;
+	objectname=arm_rocko.3do;
+	corpse=arm_rocko_dead;
+	buildpic=arm_rocko.DDS;
+	soundcategory=ARM_KBOT;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=854;
+	healtime=30;
+	buildcostmetal=164;
+	buildcostenergy=1350;
+	buildtime=2335;
+	footprintx=2;
+	footprintz=2;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=0.6;
+	energyuse=0.6;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canattack=1;
+	canguard=1;
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+	upright=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementclass=KBOTSS2;
+	turnrate=1005;
+	acceleration=1.0;
+	brakerate=1.5;
+	maxvelocity=1.65;
+	maxslope=14;
+	maxwaterdepth=12;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=390;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=KBOT_ROCKET;
+	weapon2=KBOT_ROCKET_LR;
+	nochasecategory=VTOL;
+	badtargetcategory=VTOL;
+	wpri_badtargetcategory=VTOL;
+	explodeas=BIG_UNITEX;
+	selfdestructas=BIG_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	firestandorders=1;
+	mobilestandorders=1;
+	standingfireorder=2;
+	standingmoveorder=1;
+	defaultmissiontype=Standby;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=1;
+	designation=ARM-KRL;
+	downloadable=1;
+	maneuverleashlength=640;
+	shootme=1;
+	smoothanim=1;
+	steeringmode=2;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	collisionVolumeType = box;
+	collisionVolumeScales =25 27 20;
+	collisionVolumeOffsets = 0 -1 0;
+	collisionVolumeTest = 1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+	[SFXTypes]
+	{
+	explosiongenerator0=custom:KBOTrocketflare;
+	}
+}

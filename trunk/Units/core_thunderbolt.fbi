@@ -1,0 +1,122 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Core;
+	name=Thunderbolt;
+	description=Floating Heavy Laser Tower;
+	icontype=sea;
+
+	//************************************************************
+	//  Categories
+	//**************
+	Category=CORE WEAPON NOTAIR NOTSUB;
+	tedclass=WATER;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=core_thunderbolt;
+	unitnumber=188;
+	objectname=core_thunderbolt.3do;
+	corpse=core_thunderbolt_dead;
+	buildpic=core_thunderbolt.DDS;
+	soundcategory=;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=2923;
+	healtime=11;
+	buildcostmetal=912;
+	buildcostenergy=11624;
+	buildtime=16502;
+	footprintx=4;
+	footprintz=4;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energyuse=0.1;
+	energystorage=200;
+	windgenerator=0.001;
+
+	//************************************************************
+	//  Building
+	//************
+	buildangle=16384;
+	yardmap=wwww wwww wwww wwww;
+	activatewhenbuilt=1;
+	collisionVolumeType=CylY;
+	collisionVolumeScales=44 48 44;
+	//collisionVolumeOffsets=0 0 0;
+	collisionVolumeTest = 1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canattack=1;
+	canguard=1;
+	canstop=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	minwaterdepth=2;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=896;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=CORFHLT_LASER;
+	badtargetcategory=NOTAIR;
+	wpri_badtargetcategory=NOTAIR;
+	explodeas=BIG_UNITEX;
+	selfdestructas=BIG_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	firestandorders=1;
+	standingfireorder=2;
+	defaultmissiontype=GUARD_NOMOVE;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	ai_limit=limit CORFHLT 4;
+	bmcode=0;
+	designation=FF-ML4;
+	downloadable=1;
+	noshadow=1;
+	shootme=1;
+	threed=1;
+	version=1.2;
+	waterline=4.99;
+	zbuffer=1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+	[SFXTypes]
+	{
+	explosiongenerator0=custom:greenflare;
+	}
+}

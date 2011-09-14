@@ -1,0 +1,106 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Arm;
+	name=Targeting Facility;
+	description=Radar Targeting Upgrade and Increases Armor of units with radar;
+	icontype=building;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=ARM NOWEAPON NOTAIR NOTSUB;
+	tedclass=SPECIAL;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=arm_targeting_facility;
+	unitnumber=248;
+	objectname=arm_targeting_facility.3do;
+	corpse=arm_targeting_facility_dead;
+	buildpic=arm_targeting_facility.DDS;
+	soundcategory=ARM_TARG;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=1895; //4504; //was 1900 Modded by Giz// (0.8 Gizmomiter)
+	buildcostmetal=572;   //772; //5630; //was 15130 Modded by Gizmo//
+	buildcostenergy=7484; //36058; //was 36058//
+	buildtime=19542; //154785;
+	footprintx=4;
+	footprintz=4;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energyuse=195; //1000//
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	buildangle=4096;
+	yardmap=oooy oooo oooo yooo;
+	activatewhenbuilt=1;
+	collisionVolumeType=Ell;
+	collisionVolumeScales=55 78 55;
+	collisionVolumeOffsets=0 -19.5 0;
+	collisionVolumeTest = 1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	istargetingupgrade=1;
+	onoffable=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	maxslope=10;
+	maxwaterdepth=0;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=367.5;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeas=LARGE_BUILDINGEX;
+	selfdestructas=LARGE_BUILDING;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=0;
+	damagemodifier=0.7;
+	designation=V-SED2;
+	downloadable=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+}

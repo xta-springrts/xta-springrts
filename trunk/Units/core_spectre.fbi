@@ -1,0 +1,124 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Core;
+	name=Spectre;
+	description=Radar Jammer;
+
+	//************************************************************
+	//  Categories
+	//**************
+	Category=CORE KBOT NOWEAPON JAM NOTAIR NOTSUB;
+	tedclass=KBOT;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=core_spectre;
+	unitnumber=138;
+	objectname=core_spectre.3do;
+	corpse=core_spectre_dead;
+	buildpic=core_spectre.DDS;
+	soundcategory=CORE_JAM;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=698;
+	healtime=30;
+	buildcostmetal=158;
+	buildcostenergy=3269;
+	buildtime=12238;
+	footprintx=1;
+	footprintz=1;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=10;
+	energyuse=10;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	activatewhenbuilt=1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canguard=1;
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+	onoffable=1;
+	upright=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementclass=KBOTSS2;
+	turnrate=945;
+	acceleration=1.0;
+	brakerate=1.2;
+	maxvelocity=1;
+	maxslope=32;
+	maxwaterdepth=112;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=300;
+	radardistance=0;
+	radardistancejam=735;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeas=BIG_UNITEX;
+	selfdestructas=BIG_UNIT;
+	canattack=0; //added
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	mobilestandorders=1;
+	standingmoveorder=1;
+	defaultmissiontype=Standby;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=1;
+	designation=UV-2-AB;
+	downloadable=1;
+	maneuverleashlength=100; //640;
+	ovradjust=1;
+	shootme=1;
+	smoothanim=1;
+	steeringmode=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	collisionVolumeType = box;
+	collisionVolumeScales =25 22 25;
+	collisionVolumeOffsets = 0 -1 0;
+	collisionVolumeTest = 1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+}

@@ -1,0 +1,112 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Core;
+	name=Fortitude Missile Defense;
+	description=Anti Missile Defense System;
+	icontype=building;
+
+	//************************************************************
+	//  Categories
+	//**************
+	Category=CORE WEAPON  metal  NOTAIR NOTSUB;
+	tedclass=SPECIAL;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=core_fortitude_missile_defense;
+	unitnumber=156;
+	objectname=core_fortitude_missile_defense.3do;
+	corpse=core_fortitude_missile_defense_dead;
+	buildpic=core_fortitude_missile_defense.DDS;
+	soundcategory=COR_FMD;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=3240; //WAS 3120;
+	buildcostmetal=1508;
+	buildcostenergy=92321;
+	buildtime=96450;
+	footprintx=4;
+	footprintz=4;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energyuse=0;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	buildangle=4096;
+	yardmap=oooo oooo oooo oooo;
+	collisionVolumeType=Box;
+	collisionVolumeScales=44 46 44;
+	collisionVolumeTest = 1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=1;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+
+	//************************************************************
+	//  Movement
+	//************
+	maxslope=10;
+	maxwaterdepth=0;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=262.5;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=FMD_ROCKET;
+	badtargetcategory=NOTAIR;
+	wpri_badtargetcategory=NOTAIR;
+	explodeas=ATOMIC_BLASTSML;
+	selfdestructas=ATOMIC_BLAST;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=1;
+	firestandorders=1;
+	standingfireorder=2;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	antiweapons=1;
+	bmcode=0;
+	cloakcost=1500;
+	damagemodifier=1;
+	designation=COR-FMD1;
+	downloadable=1;
+	mincloakdistance=10;
+	shootme=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+}

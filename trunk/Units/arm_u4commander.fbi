@@ -1,0 +1,166 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Arm;
+	name=Satelight Commander;
+	description=Satellite Support;
+	icontype=arm_commander;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=ARM COMMANDER WEAPON NOTAIR NOTSUB;
+	tedclass=COMMANDER;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=arm_U4commander;
+	unitnumber=21;
+	objectname=arm_commander.3do;
+	buildpic=arm_commander.DDS;
+	soundcategory=ARM_COM;
+	script=arm_U2commander.cob;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=3750;
+	healtime=50;
+	buildcostmetal=9568;//1231
+	buildcostenergy=101432;//
+	buildtime=36072;
+	footprintx=2;
+	footprintz=2;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalmake=8;
+	//metalstorage=20;
+	metalstorage=10000;
+	energymake=200;
+	energyuse=0;
+	//energystorage=20;
+	energystorage=10000;
+
+	//************************************************************
+	//  Building
+	//************
+	activatewhenbuilt=1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=1;
+	builddistance=250;
+	workertime=700;
+	RepairSpeed=700;
+	ReclaimSpeed=700;
+	ResurrectSpeed=0;
+	TerraformSpeed=720;//speed up terraforming
+	capturespeed=2200;//maxout
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canattack=1;
+	canResurrect=0;
+	cancapture=1;
+	candgun=1;
+	canguard=1;
+	canmove=1;
+	canpatrol=1;
+	canreclamate=1;
+	canstop=1;
+	upright=1;
+	autoheal=25;//just like ota
+
+	//************************************************************
+	//  Movement
+	//************
+	movementclass=KBOTDS2;
+	turnrate=1044;
+	acceleration=0.15;
+	brakerate=0.3;
+	maxvelocity=1.5;
+	maxslope=20;
+	maxwaterdepth=35;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=768;
+	radardistance=6000;
+	sonardistance=6000;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=ARMCOMPARALASER;
+	weapon2=SAT_HEAVYROCKET;
+	weapon3=CORE_UDISINTEGRATOR;
+	nochasecategory=WEAPON;
+	badtargetcategory=VTOL;
+	wpri_badtargetcategory=VTOL;
+	wspe_badtargetcategory=VTOL;
+	explodeas=COMMANDER_BLAST;
+	selfdestructas=COMMANDER_SELF_D;
+
+	//************************************************************
+	//  Orders
+	//**********
+	firestandorders=1;
+	mobilestandorders=1;
+	standingfireorder=2;
+	standingmoveorder=0;
+	defaultmissiontype=Standby;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=1;
+	cloakcost=200;
+	cloakcostmoving=700;
+	commander=1;
+	designation=ARM-WM;
+	downloadable=1;
+	hidedamage=1;
+	immunetoparalyzer=1;
+	leavetracks=1;
+	maneuverleashlength=640;
+	mincloakdistance=40;
+	norestrict=1;
+	shootme=1;
+	showplayername=1;
+	smoothanim=1;
+	steeringmode=2;
+	threed=1;
+	trackoffset=0;
+	trackstrength=8;
+	trackstretch=1;
+	tracktype=ComTrack;
+	trackwidth=22;
+	version=1.2;
+	CanSelfRepair=1;
+	zbuffer=1;
+	MinCollisionSpeed=2.5;//weight
+	collisionVolumeType = box;
+	collisionVolumeScales =28 45 20;
+	collisionVolumeOffsets = 0 -2 0;
+	collisionVolumeTest = 1;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+	[SFXTypes]
+	{
+	explosiongenerator0=custom:dgunflare;
+	explosiongenerator1=custom:Nano;
+	explosiongenerator2=custom:ElectricSTOMP;
+	explosiongenerator3=custom:DGUNREADYFLARE;
+	}
+
+}

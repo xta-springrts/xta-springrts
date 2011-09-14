@@ -1,0 +1,65 @@
+//CORE "Limiter" Mine Laying Ship
+
+[UNITINFO]
+	{
+	UnitName=Core_Limiter;
+	Version=1.0;
+	Side=CORE;
+	Objectname=Core_Limiter;
+	Designation=COR-MLS;
+	Name=Limiter;
+	Description=Mine Laying Sub;
+	FootprintX=3;
+	FootprintZ=3;
+	BuildCostEnergy=1302;
+	BuildCostMetal=178;
+	MaxDamage=1438;
+	EnergyUse=0.5;
+	BuildTime=2352;
+	WorkerTime=115;
+	BMcode=1;
+	Builder=1;
+	ThreeD=1;
+	ZBuffer=1;
+	NoAutoFire=0;
+	SightDistance=100;
+	RadarDistance=0;
+	SoundCategory=CORE_CSHIP;
+	EnergyStorage=0;
+	MetalStorage=0;
+	explodeas=NANO_UNITEX;
+	selfdestructas=NANO_UNIT;
+	Category=CORE SHIP MINELAYER NOWEAPON NOTAIR NOTSUB;
+	TEDClass=SHIP;
+	Copyright=Copyright 1997 Humongous Entertainment. All rights reserved.;
+	Corpse=Core_Limiter_dead;
+	UnitNumber=622;
+	mobilestandorders=1;
+	StandingMoveOrder=1;
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+	canguard=1;
+	MaxVelocity=1.54;
+	BrakeRate=0.03;
+	Acceleration=0.0073;
+	TurnRate=139;
+	SteeringMode=1;
+	ShootMe=1;
+	Builddistance=235;
+	CanReclamate=1;
+	EnergyMake=0.5;
+	DefaultMissionType=Standby;
+	maneuverleashlength=640;
+	MovementClass=BOATSUB;
+	MinWaterDepth=15;
+	Floater=1;
+	SonarDistance=700;
+	waterline=40;
+	collisionVolumeType = box;
+	collisionVolumeScales =35 18 38;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	pieceTrailCEGTag=NanoDebree;//bleh
+	pieceTrailCEGRange = 2;
+	}

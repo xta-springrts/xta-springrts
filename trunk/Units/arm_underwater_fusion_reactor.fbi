@@ -1,0 +1,101 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Arm;
+	name=Underwater Fusion Reactor;
+	description=Produces Energy;
+	icontype=sea;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=ARM ENERGY NOWEAPON NOTAIR NOTSUB;
+	tedclass=ENERGY;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=arm_underwater_fusion_reactor;
+	unitnumber=184;
+	objectname=arm_underwater_fusion_reactor.3do;
+	corpse=arm_underwater_fusion_reactor_dead;
+	buildpic=arm_underwater_fusion_reactor.DDS;
+	soundcategory=ARM_UWFUSION;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=3462;
+	buildcostmetal=4085;
+	buildcostenergy=34287;
+	buildtime=87255;
+	footprintx=5;
+	footprintz=4;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=850;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	buildangle=8192;
+	yardmap=ooooooooo;
+	activatewhenbuilt=1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+
+	//************************************************************
+	//  Movement
+	//************
+	maxslope=20;
+	maxwaterdepth=255;
+	minwaterdepth=40;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=192.5;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeas=CRAWL_BLAST; 
+	selfdestructas=armmine5; 
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=0;
+	designation=AE-FPW;
+	downloadable=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+}

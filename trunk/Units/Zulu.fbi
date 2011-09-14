@@ -1,0 +1,146 @@
+
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Core;
+	name=Zulu;
+	description=Amphibious Boat;
+	icontype=sea;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=ARM SHIP WEAPON ANTISUB NOTAIR NOTSUB;
+	tedclass=SHIP;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=Zulu;
+	unitnumber=23;
+	objectname=Zulu.3do;
+	corpse=core_Zulu_dead;
+	buildpic=Zulu.DDS;
+	soundcategory=CORE_SHIP;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=14532; //was 9100//
+	healtime=30;
+	buildcostmetal=4054; //was 2292//
+	buildcostenergy=58212; //was 11477//
+	buildtime=62543; //was 17789//
+	footprintx=4;
+	footprintz=4;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=2.5;
+	energyuse=2.5;
+	energystorage=0;
+	windgenerator=0.001;
+
+	//************************************************************
+	//  Building
+	//************
+	buildangle=16384;
+	activatewhenbuilt=1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	Upright=0;
+	canattack=1;
+	canguard=1;
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+	//floater=1;
+	//canhover=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementclass=TANKHOVER4;//TANKDH3
+	//movementclass=TANKDH3;//TANKDH3
+	turnrate=165;
+	acceleration=0.005;
+	brakerate=0.005;
+	maxvelocity=1.5;
+	maxwaterdepth=1000;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=610; //was 630//
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=LANDBOAT_GUN;
+	weapon2=LANDBOAT_GUN;
+	weapon3=LANDBOAT_MISSILE;
+	nochasecategory=VTOL;
+	badtargetcategory=VTOL;
+	wpri_badtargetcategory=VTOL;
+	wspe_badtargetcategory=NOTSUB;
+	explodeas=ATOMIC_BLASTPEN;
+	selfdestructas=CRAWL_BLASTSML;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	firestandorders=1;
+	mobilestandorders=1;
+	standingfireorder=2;
+	standingmoveorder=1;
+	defaultmissiontype=Standby;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=1;
+	designation=ASD-SC;
+	downloadable=1;
+	maneuverleashlength=640;
+	scale=0.5;
+	shootme=1;
+	steeringmode=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	collisionVolumeType = box;
+	collisionVolumeScales =45 40 90;
+	collisionVolumeOffsets = 0 -15 0;
+	collisionVolumeTest = 1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+	waterline=14;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+	[SFXTypes]
+	{
+	explosiongenerator0=custom:dgunflare;
+	explosiongenerator1=custom:UNITFIRE;
+	}
+	[customParams] 
+	{
+	canAreaAttack=1;
+	}
+}
