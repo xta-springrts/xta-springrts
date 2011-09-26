@@ -323,7 +323,7 @@ do
 
   local brightClr = {}
   function DrawUnitBar(offsetY,percent,color)
-    if (barShader) then
+    if (barShader and percent > 0) then			--do not draw bars that "go to the left"
       glMultiTexCoord(1,color)
       glMultiTexCoord(2,percent,offsetY)
       glCallList(barDList)
@@ -585,7 +585,9 @@ do
         _,reloaded,reloadFrame = GetUnitWeaponState(unitID,ci.primaryWeapon)
         if (reloaded==false) then
           reload = 1 - ((reloadFrame-gameFrame)/30) / ci.reloadTime;
-          AddBar("reload",reload,"reload",(fullText and floor(reload*100)..'%') or '')
+          if (reload >= 0) then
+			AddBar("reload",reload,"reload",(fullText and floor(reload*100)..'%') or '')
+		end
         end
       end
 
