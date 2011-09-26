@@ -53,7 +53,8 @@ Updated start unit spawner and a few widgets for next Spring release
 Updated several widgets and gadgets to support Spring 0.83
 Tweaked "Ally Resource Bars" widget to work with MT build, at least until first team dies
 Updated CustomFormations2 to v3.3
-Added Jools' gadget for comnapp sneer music
+Added Jools' gadget for comnapp sneer music and lead tracker gadget
+Replaced Fleabowl music with much higher quality OGG version, instead of unit sounds it's played as background sound stream
 Fixed some typos and grammar in changelog
 Converted modrules.tdf to lua
 Updated Dynamic Collision Volume gadget to support per piece collision volumes, used for Bertha and Vulcan (2 volumes for those units instead of 1)
