@@ -1,0 +1,527 @@
+#define TAK			// This is a TAK script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+piece  body, turret, flare, barrel, lfupleg, lrupleg, rrupleg, head,
+       rfupleg, rrleg, rfleg, lrleg, lfleg, missilebase1, missilebase2, sleeve,
+       sleeve2, flare2, flare3, barrel2, barrel3;
+
+static-var  Static_Var_1, Static_Var_2, Static_Var_3, Static_Var_4, Static_Var_5,
+            Static_Var_6, Static_Var_7, Static_Var_8;
+
+
+walk()
+{
+	if( TRUE )
+	{
+		move lfupleg to y-axis [0.] now;
+		move lfupleg to y-axis [1.] speed [6.];
+		move lrupleg to y-axis [0.] now;
+		move lrupleg to y-axis [2.] speed [20.];
+		move rrupleg to y-axis [0.] now;
+		move rrupleg to y-axis [2.] speed [18.];
+		turn body to x-axis <12.> now;
+		turn body to x-axis <22.> speed <95.>;
+		turn head to x-axis <9.> now;
+		turn head to x-axis <20.> speed <108.>;
+		turn lfupleg to x-axis <-50.> now;
+		turn lfupleg to x-axis <-22.> speed <254.>;
+		turn lrupleg to x-axis <23.> now;
+		turn lrupleg to x-axis <-29.> speed <474.>;
+		turn rfupleg to x-axis <-49.> now;
+		turn rfupleg to x-axis <-33.> speed <151.>;
+		turn rrupleg to x-axis <27.> now;
+		turn rrupleg to x-axis <-21.> speed <439.>;
+		turn rrleg to x-axis <45.> now;
+		turn rrleg to x-axis <-25.> speed <633.>;
+		turn rfleg to x-axis <0.> now;
+		turn rfleg to x-axis <12.> speed <112.>;
+		turn lrleg to x-axis <45.> now;
+		turn lrleg to x-axis <-10.> speed <495.>;
+		sleep 110;
+	}
+	if( TRUE )
+	{
+		move lfupleg to y-axis [2.] speed [11.];
+		move lrupleg to y-axis [4.] speed [15.];
+		move rfupleg to y-axis [2.] speed [19.];
+		move rrupleg to y-axis [4.] speed [14.];
+		turn body to x-axis <1.> speed <189.>;
+		turn lfupleg to x-axis <54.> speed <671.>;
+		turn lrupleg to x-axis <-40.> speed <96.>;
+		turn rfupleg to x-axis <51.> speed <742.>;
+		turn rrupleg to x-axis <-32.> speed <101.>;
+		turn rrleg to x-axis <15.> speed <348.>;
+		turn rfleg to x-axis <-52.> speed <570.>;
+		turn lrleg to x-axis <26.> speed <314.>;
+		turn lfleg to x-axis <-53.> speed <465.>;
+		sleep 113;
+	}
+	if( TRUE )
+	{
+		move lrupleg to y-axis [5.] speed [10.];
+		move rrupleg to y-axis [4.] speed [12.];
+		turn body to x-axis <-13.> speed <241.>;
+		turn lfupleg to x-axis <87.> speed <605.>;
+		turn lrupleg to x-axis <-61.> speed <381.>;
+		turn rfupleg to x-axis <83.> speed <563.>;
+		turn rrupleg to x-axis <-62.> speed <529.>;
+		turn rrleg to x-axis <73.> speed <1036.>;
+		turn rfleg to x-axis <-58.> speed <106.>;
+		turn lrleg to x-axis <72.> speed <821.>;
+		sleep 56;
+	}
+	if( TRUE )
+	{
+		move lrupleg to y-axis [4.] speed [8.];
+		move rrupleg to y-axis [4.] speed [1.];
+		turn body to x-axis <-26.> speed <233.>;
+		turn lfupleg to x-axis <121.> speed <584.>;
+		turn lrupleg to x-axis <-32.> speed <498.>;
+		turn rfupleg to x-axis <114.> speed <543.>;
+		turn rrupleg to x-axis <-31.> speed <527.>;
+		turn rrleg to x-axis <55.> speed <306.>;
+		turn rfleg to x-axis <-64.> speed <102.>;
+		turn lrleg to x-axis <57.> speed <245.>;
+		sleep 58;
+	}
+	if( TRUE )
+	{
+		move lrupleg to y-axis [2.] speed [16.];
+		move rrupleg to y-axis [3.] speed [13.];
+		turn body to x-axis <0.> speed <233.>;
+		turn head to x-axis <0.> speed <182.>;
+		turn lfupleg to x-axis <60.> speed <546.>;
+		turn lrupleg to x-axis <4.> speed <322.>;
+		turn rfupleg to x-axis <53.> speed <546.>;
+		turn rrupleg to x-axis <-3.> speed <250.>;
+		turn rrleg to x-axis <30.> speed <220.>;
+		turn rfleg to x-axis <27.> speed <808.>;
+		turn lrleg to x-axis <23.> speed <309.>;
+		turn lfleg to x-axis <13.> speed <588.>;
+		sleep 112;
+	}
+	sleep 113;
+}
+
+walklegs()
+{
+	if( TRUE )
+	{
+		move lrupleg to y-axis [3.] now;
+		move lrupleg to y-axis [2.] speed [7.];
+		move rfupleg to y-axis [2.] now;
+		move rfupleg to y-axis [3.] speed [11.];
+		move rrupleg to y-axis [2.] now;
+		move rrupleg to y-axis [3.] speed [6.];
+		turn head to x-axis <1.> now;
+		turn head to x-axis <9.> speed <53.>;
+		turn lfupleg to x-axis <-12.> now;
+		turn lfupleg to x-axis <0.> speed <91.>;
+		turn lrupleg to x-axis <-56.> now;
+		turn lrupleg to x-axis <-45.> speed <88.>;
+		turn rfupleg to x-axis <56.> now;
+		turn rfupleg to x-axis <88.> speed <232.>;
+		turn rrupleg to x-axis <-47.> now;
+		turn rrupleg to x-axis <-66.> speed <140.>;
+		turn rrleg to x-axis <13.> now;
+		turn rrleg to x-axis <40.> speed <200.>;
+		turn rfleg to x-axis <-39.> now;
+		turn lrleg to x-axis <76.> now;
+		turn lrleg to x-axis <70.> speed <42.>;
+		turn lfleg to x-axis <0.> now;
+		sleep 135;
+	}
+	if( TRUE )
+	{
+		move lfupleg to y-axis [2.] speed [14.];
+		move lrupleg to y-axis [1.] speed [5.];
+		turn head to x-axis <-7.> speed <111.>;
+		turn lfupleg to x-axis <50.> speed <366.>;
+		turn lrupleg to x-axis <-9.> speed <261.>;
+		turn rfupleg to x-axis <29.> speed <429.>;
+		turn rrupleg to x-axis <-50.> speed <122.>;
+		turn rrleg to x-axis <48.> speed <63.>;
+		turn rfleg to x-axis <22.> speed <449.>;
+		turn lrleg to x-axis <71.> speed <3.>;
+		turn lfleg to x-axis <-47.> speed <348.>;
+		sleep 136;
+	}
+	if( TRUE )
+	{
+		move lrupleg to y-axis [3.] speed [15.];
+		move rfupleg to y-axis [1.] speed [16.];
+		move rrupleg to y-axis [2.] speed [7.];
+		turn head to x-axis <1.> speed <58.>;
+		turn lfupleg to x-axis <57.> speed <51.>;
+		turn lrupleg to x-axis <-45.> speed <264.>;
+		turn rfupleg to x-axis <-22.> speed <371.>;
+		turn rrupleg to x-axis <-40.> speed <69.>;
+		turn rrleg to x-axis <46.> speed <17.>;
+		turn rfleg to x-axis <5.> speed <127.>;
+		turn lrleg to x-axis <51.> speed <141.>;
+		turn lfleg to x-axis <-50.> speed <21.>;
+		sleep 138;
+	}
+	if( TRUE )
+	{
+		move lfupleg to y-axis [2.] speed [3.];
+		move rrupleg to y-axis [2.] speed [2.];
+		turn head to x-axis <4.> speed <21.>;
+		turn lfupleg to x-axis <81.> speed <181.>;
+		turn lrupleg to x-axis <-61.> speed <115.>;
+		turn rfupleg to x-axis <15.> speed <272.>;
+		turn rrupleg to x-axis <-38.> speed <14.>;
+		turn rrleg to x-axis <49.> speed <24.>;
+		turn rfleg to x-axis <-33.> speed <279.>;
+		turn lrleg to x-axis <26.> speed <185.>;
+		turn lfleg to x-axis <-80.> speed <223.>;
+		sleep 136;
+	}
+	if( TRUE )
+	{
+		move lrupleg to y-axis [4.] speed [5.];
+		move rrupleg to y-axis [1.] speed [4.];
+		turn head to x-axis <8.> speed <24.>;
+		turn lfupleg to x-axis <87.> speed <42.>;
+		turn lrupleg to x-axis <-78.> speed <125.>;
+		turn rfupleg to x-axis <32.> speed <122.>;
+		turn rrupleg to x-axis <-32.> speed <49.>;
+		turn rrleg to x-axis <56.> speed <49.>;
+		turn lrleg to x-axis <78.> speed <383.>;
+		turn lfleg to x-axis <-29.> speed <376.>;
+		sleep 136;
+	}
+	if( TRUE )
+	{
+		move lfupleg to y-axis [3.] speed [4.];
+		move lrupleg to y-axis [3.] speed [5.];
+		move rfupleg to y-axis [2.] speed [6.];
+		move rrupleg to y-axis [2.] speed [6.];
+		turn head to x-axis <5.> speed <17.>;
+		turn lfupleg to x-axis <44.> speed <318.>;
+		turn lrupleg to x-axis <-71.> speed <55.>;
+		turn rfupleg to x-axis <52.> speed <145.>;
+		turn rrupleg to x-axis <-24.> speed <59.>;
+		turn rrleg to x-axis <59.> speed <24.>;
+		turn rfleg to x-axis <-52.> speed <135.>;
+		turn lfleg to x-axis <1.> speed <221.>;
+		sleep 137;
+	}
+	if( TRUE )
+	{
+		move lfupleg to y-axis [1.] speed [10.];
+		move lrupleg to y-axis [3.] speed [4.];
+		turn head to x-axis <0.> speed <38.>;
+		turn lfupleg to x-axis <16.> speed <202.>;
+		turn lrupleg to x-axis <-66.> speed <35.>;
+		turn rfupleg to x-axis <78.> speed <195.>;
+		turn rrupleg to x-axis <-4.> speed <143.>;
+		turn rrleg to x-axis <-20.> speed <585.>;
+		turn rfleg to x-axis <-74.> speed <164.>;
+		turn lrleg to x-axis <75.> speed <21.>;
+		turn lfleg to x-axis <-42.> speed <317.>;
+		sleep 136;
+	}
+	sleep 136;
+}
+
+SmokeUnit(Func_Var_1, Func_Var_2, Func_Var_3)
+{
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 400;
+	}
+	while( TRUE )
+	{
+		Func_Var_1 = get HEALTH;
+		if( Func_Var_1 < 66 )
+		{
+			Func_Var_3 = 256 | 2;
+			if( Rand( 1, 66 ) < Func_Var_1 )
+			{
+				Func_Var_3 = 256 | 1;
+			}
+			emit-sfx Func_Var_3 from turret;
+		}
+		Func_Var_2 = Func_Var_1 * 50;
+		if( Func_Var_2 < 200 )
+		{
+			Func_Var_2 = 200;
+		}
+		sleep Func_Var_2;
+	}
+}
+
+MotionControl()
+{
+	var Func_Var_1, Func_Var_2, Func_Var_3;
+	Func_Var_3 = 1;
+	while( TRUE )
+	{
+		Func_Var_1 = Static_Var_1;
+		Func_Var_2 = Static_Var_2;
+		if( Func_Var_1 )
+		{
+			if( Func_Var_2 )
+			{
+				Static_Var_3 = 1;
+				call-script walklegs();
+			}
+			if( !Func_Var_2 )
+			{
+				Static_Var_3 = 0;
+				call-script walk();
+			}
+			Func_Var_3 = 1;
+		}
+		if( !Func_Var_1 )
+		{
+			Static_Var_3 = 1;
+			if( Func_Var_3 )
+			{
+				move lrupleg to y-axis [0.] speed [13.];
+				move rfupleg to y-axis [0.] speed [13.];
+				move rrupleg to y-axis [0.] speed [13.];
+				turn head to x-axis <0.> speed <200.>;
+				turn lfupleg to x-axis <0.> speed <200.>;
+				turn lrupleg to x-axis <0.> speed <200.>;
+				turn rfupleg to x-axis <0.> speed <200.>;
+				turn rrupleg to x-axis <0.> speed <200.>;
+				turn rrleg to x-axis <0.> speed <200.>;
+				turn lrleg to x-axis <0.> speed <200.>;
+				Func_Var_3 = 0;
+			}
+			sleep 100;
+		}
+	}
+}
+
+Create()
+{
+	play-sound( "fleabossattack", 9999 );
+	play-sound( "fleabossattack", 9999 );
+	play-sound( "fleabossattack", 9999 );
+	play-sound( "fleabossattack", 9999 );
+	hide flare;
+	hide flare2;
+	hide flare3;
+	Static_Var_1 = 0;
+	Static_Var_2 = 0;
+	Static_Var_3 = 1;
+	Static_Var_4 = 3000;
+	start-script MotionControl();
+	start-script SmokeUnit();
+}
+
+SetMaxReloadTime(time)
+{
+	Static_Var_4 = time * 2;
+}
+
+StartMoving()
+{
+	Static_Var_1 = 1;
+}
+
+StopMoving()
+{
+	Static_Var_1 = 0;
+}
+
+SweetSpot(piecenum)
+{
+	piecenum = body;
+}
+
+RestoreAfterDelay()
+{
+	sleep Static_Var_4;
+	turn turret to y-axis <0.> speed <150.>;
+	wait-for-turn turret around y-axis;
+	Static_Var_2 = 0;
+}
+
+AimFromPrimary(Func_Var_1)
+{
+	Func_Var_1 = 1;
+}
+
+QueryPrimary(Func_Var_1)
+{
+	Func_Var_1 = 2;
+}
+
+AimPrimary(Func_Var_1, Func_Var_2)
+{
+	signal 2;
+	set-signal-mask 2;
+	Static_Var_2 = 1;
+	while( !Static_Var_3 )
+	{
+		sleep 100;
+	}
+	turn turret to y-axis Func_Var_1 speed <2500.>;
+	wait-for-turn turret around y-axis;
+	start-script RestoreAfterDelay();
+	return (1);
+}
+
+FirePrimary()
+{
+	show flare;
+	sleep 100;
+	hide flare;
+}
+
+AimWeapon2(heading, pitch)
+{
+	signal 4;
+	set-signal-mask 4;
+	turn sleeve to y-axis heading speed <350.>;
+	turn sleeve to x-axis <0.> - pitch speed <150.>;
+	wait-for-turn sleeve around y-axis;
+	wait-for-turn sleeve around x-axis;
+	start-script RestoreAfterDelay();
+	return (1);
+}
+
+FireWeapon2()
+{
+	if( Static_Var_7 == 1 )
+	{
+		sleep 100;
+		turn barrel2 to z-axis <90.> speed <600.>;
+	}
+	if( Static_Var_7 == 2 )
+	{
+		sleep 100;
+		turn barrel2 to z-axis <180.> speed <600.>;
+	}
+	if( Static_Var_7 == 3 )
+	{
+		sleep 100;
+		turn barrel2 to z-axis <270.> speed <600.>;
+	}
+	if( Static_Var_7 == 4 )
+	{
+		sleep 100;
+		turn barrel2 to z-axis <0.> speed <600.>;
+	}
+	if( Static_Var_7 == 5 )
+	{
+		Static_Var_7 = 1;
+	}
+	++Static_Var_7;
+}
+
+AimFromWeapon2(piecenum)
+{
+	piecenum = flare2;
+}
+
+QueryWeapon2(piecenum)
+{
+	piecenum = flare2;
+}
+
+AimWeapon3(heading, pitch)
+{
+	signal 8;
+	set-signal-mask 8;
+	turn sleeve2 to y-axis heading speed <350.>;
+	turn sleeve2 to x-axis <0.> - pitch speed <150.>;
+	wait-for-turn sleeve2 around y-axis;
+	wait-for-turn sleeve2 around x-axis;
+	start-script RestoreAfterDelay();
+	return (1);
+}
+
+AimFromWeapon3(piecenum)
+{
+	piecenum = flare3;
+}
+
+QueryWeapon3(piecenum)
+{
+	piecenum = flare3;
+}
+
+FireWeapon3()
+{
+	if( Static_Var_8 == 1 )
+	{
+		sleep 100;
+		turn barrel3 to z-axis <90.> speed <600.>;
+	}
+	if( Static_Var_8 == 2 )
+	{
+		sleep 100;
+		turn barrel3 to z-axis <180.> speed <600.>;
+	}
+	if( Static_Var_8 == 3 )
+	{
+		sleep 100;
+		turn barrel3 to z-axis <270.> speed <600.>;
+	}
+	if( Static_Var_8 == 4 )
+	{
+		sleep 100;
+		turn barrel3 to z-axis <0.> speed <600.>;
+	}
+	if( Static_Var_8 == 5 )
+	{
+		Static_Var_8 = 1;
+	}
+	++Static_Var_8;
+}
+
+Killed(Func_Var_1, Func_Var_2)
+{
+	hide flare;
+	if( Func_Var_1 <= 25 )
+	{
+		Func_Var_2 = 1;
+		explode turret type FALL | 8 | 16 | 2 | EXPTYPE_BLOODEXPLOSION;
+		explode barrel type BITMAPONLY | EXPTYPE_XLARGEEXPLOSION;
+		explode rrleg type BITMAPONLY | EXPTYPE_BLOODEXPLOSION;
+		explode rfleg type BITMAPONLY | EXPTYPE_XLARGEEXPLOSION;
+		explode lrleg type BITMAPONLY | EXPTYPE_XLARGEEXPLOSION;
+		explode lfleg type BITMAPONLY | EXPTYPE_XLARGEEXPLOSION;
+		explode body type BITMAPONLY | EXPTYPE_BLOODEXPLOSION;
+		return (0);
+	}
+	if( Func_Var_1 <= 50 )
+	{
+		Func_Var_2 = 2;
+		explode turret type FALL | 8 | 16 | 2 | EXPTYPE_BLOODEXPLOSION;
+		explode barrel type FALL | EXPTYPE_LARGEEXPLOSION;
+		explode rrleg type FALL | EXPTYPE_XLARGEEXPLOSION;
+		explode rfleg type FALL | EXPTYPE_BLOODEXPLOSION;
+		explode lrleg type FALL | EXPTYPE_LARGEEXPLOSION;
+		explode lfleg type FALL | EXPTYPE_XLARGEEXPLOSION;
+		explode body type FALL | EXPTYPE_XLARGEEXPLOSION;
+		return (0);
+	}
+	if( Func_Var_1 <= 99 )
+	{
+		Func_Var_2 = 3;
+		explode turret type FALL | 8 | 16 | 2 | EXPTYPE_BLOODEXPLOSION;
+		explode barrel type FALL | 8 | 16 | 2 | EXPTYPE_LARGEEXPLOSION;
+		explode rrleg type FALL | 8 | 16 | 2 | EXPTYPE_XLARGEEXPLOSION;
+		explode rfleg type FALL | 8 | 16 | 2 | EXPTYPE_BLOODEXPLOSION;
+		explode lrleg type FALL | 8 | 16 | 2 | EXPTYPE_XLARGEEXPLOSION;
+		explode lfleg type FALL | 8 | 16 | 2 | EXPTYPE_XLARGEEXPLOSION;
+		explode body type FALL | 8 | 16 | 2 | EXPTYPE_LARGEEXPLOSION;
+		return (0);
+	}
+	Func_Var_2 = 3;
+	explode turret type FALL | 8 | 16 | 2 | EXPTYPE_BLOODEXPLOSION;
+	explode barrel type FALL | 8 | 16 | 2 | EXPTYPE_XLARGEEXPLOSION;
+	explode rrleg type FALL | 8 | 16 | 2 | EXPTYPE_BLOODEXPLOSION;
+	explode rfleg type FALL | 8 | 16 | 2 | EXPTYPE_BLOODEXPLOSION;
+	explode lrleg type FALL | 8 | 16 | 2 | EXPTYPE_XLARGEEXPLOSION;
+	explode lfleg type FALL | 8 | 16 | 2 | EXPTYPE_LARGEEXPLOSION;
+	explode body type 1 | 2 | EXPTYPE_XLARGEEXPLOSION;
+}

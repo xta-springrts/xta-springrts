@@ -36,7 +36,7 @@ if (gadgetHandler:IsSyncedCode()) then
 	local bestKills = nil
 	local killCounters = {}
 	local soundsOn = true -- change if you want sounds
-	local snd = "sounds/ding.ogg" --path to sound file
+	local snd = "sounds/ding.wav" --path to sound file
 	local function isUnitComplete(UnitID)
 		local health,maxHealth,paralyzeDamage,captureProgress,buildProgress=Spring.GetUnitHealth(UnitID)
 		if buildProgress and buildProgress>=1 then
