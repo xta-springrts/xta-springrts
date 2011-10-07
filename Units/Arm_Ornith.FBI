@@ -10,6 +10,7 @@
 	icontype=air;
 	FootprintX=3;
 	FootprintZ=3;
+	ModelCenterOffset=0 -2 0;
 	BuildCostEnergy=7097;
 	BuildCostMetal=559;
 	MaxDamage=1687;
@@ -29,7 +30,6 @@
 	SelfDestructAs=TRANSPORT_UNIT;
 	Category=TLL VTOL TPORT WEAPON NOTSUB;
 	TEDClass=VTOL;
-	Copyright=Copyright 1997 Humongous Entertainment. All rights reserved.;
 	UnitNumber=944;
 	firestandorders=1;
 	StandingFireOrder=2;

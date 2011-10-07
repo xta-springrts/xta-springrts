@@ -49,8 +49,9 @@
 	yardmap=oooo;
 	collisionVolumeType = CylY;
 	collisionVolumeScales =28 63 28;
-	collisionVolumeOffsets = 0 3 0;
+	collisionVolumeOffsets = 0 8 0;
 	collisionVolumeTest = 1;
+	ModelCenterOffset=0 -5 0;
 
 	//************************************************************
 	//  Constructor
