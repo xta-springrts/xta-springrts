@@ -33,6 +33,7 @@
 	buildtime=12228;
 	footprintx=2;
 	footprintz=2;
+	ModelCenterOffset=0 -2 0;
 
 	//************************************************************
 	//  Resources

@@ -10,10 +10,11 @@ function gadget:GetInfo()
   }
 end
 
-
+-- Pop-up style unit and per piece collision volume definitions
 local popupUnits = {}		--list of pop-up style units
-local unitCollisionVolume, pieceCollisionVolume = include("LuaRules/Configs/CollisionVolumes.lua")	--pop-up style unit and per piece collision volume definitions
+local unitCollisionVolume, pieceCollisionVolume = include("LuaRules/Configs/CollisionVolumes.lua")
 
+-- Localization and speedups
 local spGetPieceCollisionData = Spring.GetUnitPieceCollisionVolumeData
 local spSetPieceCollisionData = Spring.SetUnitPieceCollisionVolumeData
 local spGetUnitCollisionData = Spring.GetUnitCollisionVolumeData
@@ -21,17 +22,27 @@ local spSetUnitCollisionData = Spring.SetUnitCollisionVolumeData
 local spGetFeatureCollisionData = Spring.GetFeatureCollisionVolumeData
 local spSetFeatureCollisionData = Spring.SetFeatureCollisionVolumeData
 local spArmor = Spring.GetUnitArmored
+local spActive = Spring.GetUnitIsActive
+local airScalX, airScalY, airScalZ
 local pairs = pairs	
 
---[[
 function gadget:Initialize()
+	-- Spring 0.83 doesn't scale collision volumes of aircraft by additional 0.5 like Spring 0.82 does
+	if spGetFeatureCollisionData then
+		airScalX, airScalY, airScalZ = 0.375, 0.225, 0.45
+	else
+		airScalX, airScalY, airScalZ = 0.75, 0.45, 0.9
+	end
+	--Spring.Echo(airScalX, airScalY, airScalZ)
+--[[ Print all feature defs
  for id,featureDef in pairs(FeatureDefs) do
    for name,param in featureDef:pairs() do
      Spring.Echo(name,param)
    end
  end
+]]--
 end
-]]--	
+
 	
 if (gadgetHandler:IsSyncedCode()) then
 
@@ -66,7 +77,7 @@ if (gadgetHandler:IsSyncedCode()) then
 					elseif (not UnitDefs[unitDefID].canFly) then
 						spSetUnitCollisionData(unitID, xs*0.75, ys*0.75, zs*0.75,  xo, yo, zo,  vtype, htype, axis)
 					else
-						spSetUnitCollisionData(unitID, xs*0.375, ys*0.36, zs*0.44,  xo, yo, zo,  vtype, htype, axis)
+						spSetUnitCollisionData(unitID, xs*airScalX, ys*airScalY, zs*airScalZ,  xo, yo, zo,  vtype, htype, axis)
 					end
 				end
 			end
@@ -74,22 +85,25 @@ if (gadgetHandler:IsSyncedCode()) then
 	end
 
 
-	-- Requires Spring 0.83 and up, same as for 3DO units, but for features
+	-- Requires Spring 0.83 and up, same as for 3DO units, but for features,
+	-- disabled on Spring <0.83
+	if spGetFeatureCollisionData then
+	--Spring.Echo("Using feature collision scaling")
 	function gadget:FeatureCreated(featureID, allyTeam)
 		local featureModel = FeatureDefs[Spring.GetFeatureDefID(featureID)].modelname
 		featureModel = featureModel:lower()
 		if featureModel:find(".3do") then
-			local xs, ys, zs, xo, yo, zo, vtype, htype, axis, _ = Spring.GetFeatureCollisionVolumeData(featureID)
+			local xs, ys, zs, xo, yo, zo, vtype, htype, axis, _ = spGetFeatureCollisionData(featureID)
 			if (vtype==4 and xs==ys and ys==zs) then
 				if (xs>47) then
 					spSetFeatureCollisionData(featureID, xs*0.68, ys*0.60, zs*0.68,  xo, yo, zo,  vtype, htype, axis)
 				else
-					spSetFeatureCollisionData(featureID, xs*0.75, ys*0.70, zs*0.75,  xo, yo, zo,  vtype, htype, axis)
+					spSetFeatureCollisionData(featureID, xs*0.75, ys*0.67, zs*0.75,  xo, yo, zo,  vtype, htype, axis)
 				end
 			end
 		end
 	end
-	--
+	end
 
 
 	--check if a unit is pop-up type (the list must be entered manually)
@@ -130,7 +144,7 @@ if (gadgetHandler:IsSyncedCode()) then
 					popupUnits[unitID].state = 1
 				end
 				--[[ if units don't use ARMORED variable, uncomment this block to make it use ACTIVATION as well
-				if ( Spring.GetUnitIsActive(unitID) ) then
+				if ( spActive(unitID) ) then
 					p = unitCollisionVolume[name].on
 				else
 					p = unitCollisionVolume[name].off
