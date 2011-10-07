@@ -28,14 +28,14 @@ Separated large ships into it's own armour category, they recieve more damage fr
 Guardian and Punisher E cost reduced by 20%, AoE doubled, edge effectiveness set to 0 from 0.5, so same damage as before only some small amount to units outside previous AoE
 Doomsday Machine cost and buildtime increased by 15%
 All AA units and buildings now have AirSightDistance equal to their weapon range, and use cylinder targeting.
-T2 gunship weapon DPS increased ~25% as equal M value of T1 gunships do much more DPS
+T2 gunship weapon DPS increased ~25% as equal M value of T1 gunships do much more DPS (also behave more OTA style)
 ARM Plesiosaur and CORE Zulu land speed increased from 1/2 to 2/3 of sail speed
 Removed sonars from scout boats
 T2 gunships can target all units, not only non-air
-T1 gunships can throw AA missile flares (3 flares every 3 seconds, 40% efficency)
+T1 gunships can throw AA missile flares (3 flares every 3 seconds, 40% efficency per flare)
 
 Realistic scaling mode added, adjusts all sight, weapon, radar, sonar and other ranges to realistical scale compared to unit sizes
-No weapon collision with allied units mode added, units can shoot through friendly units like in TA
+No weapon collision with allied units mode added, units can shoot through friendly units like in TA (default off)
 Immunity against kidnaping can be selected - default for each unit, immune commandes + defaults, all units immune
 
 All aircraft are stackable (collide=0), improves game performance at the expense of aircraft vs AA
@@ -48,13 +48,12 @@ Snipers "broken rifle" finaly fixed
 Some more optimizations in Kbot animations
 Improved the way construction units open/close their nanolathe rig, makes building walls, wind farms, minefields and other cheap buildings slightly faster
 Added weapon types in many weapon definitions (overrides autodetect, better)
-Cleaned lots of useless unit categories, and lots of useless weapondef tags
+Cleaned lots of useless unit categories, and lots of useless weapondef tags (still more to go)
 Updated start unit spawner and a few widgets for next Spring release
-Updated several widgets and gadgets to support Spring 0.83
+Updated several widgets and gadgets to support Spring 0.83, DynCollVol is also backwards compatible (as some new functions where added to 0.83)
 Tweaked "Ally Resource Bars" widget to work with MT build, at least until first team dies
 Updated CustomFormations2 to v3.3
-Added Jools' gadget for comnapp sneer music and lead tracker gadget
-Replaced Fleabowl music with much higher quality OGG version, instead of unit sounds it's played as background sound stream
+Added Jools' gadget for comnapp sneer music
 Fixed some typos and grammar in changelog
 Converted modrules.tdf to lua
 Updated Dynamic Collision Volume gadget to support per piece collision volumes, used for Bertha and Vulcan (2 volumes for those units instead of 1)
