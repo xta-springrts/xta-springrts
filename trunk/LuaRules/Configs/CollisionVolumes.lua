@@ -119,8 +119,8 @@ local pieceCollisionVolume = {}		--per piece collision volume definitions
 		off={44,8,44,0,-9,0,2,1,0},
 	}
 	unitCollisionVolume["core_viper"] = {
-		on={67,136,67,0,-21,0,0,1,0},
-		off={51,20,53,0,-11,0,2,1,0},
+		on={67,136,67,0,-8,0,0,1,0},
+		off={51,14,53,0,-3,0,2,1,0},
 	}
 	
 	pieceCollisionVolume["arm_big_bertha"] = {
