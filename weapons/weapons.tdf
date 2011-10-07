@@ -6263,13 +6263,13 @@
 	color=1;
 	turret=1;
 	range=450;
-	reloadtime=0.9;
+	reloadtime=0.1;
 	weapontimer=2;
 	weaponvelocity=650;
-	sprayangle=0;
+	sprayangle=910;
 	areaofeffect=8;
-	burst=5;
-	burstrate=0.07;
+//	burst=5;
+//	burstrate=0.07;
 	soundstart=armsml3;
 	soundhit=lasrhit1;
 	soundtrigger=0;
@@ -6279,10 +6279,10 @@
 	endsmoke=0;
 	explosiongenerator=custom:EMGFLASH;
 	turnrate=1024;
-	tracks=1;
+//	tracks=1;
 	[DAMAGE]
 	{
-		default=19;
+		default=11;
 		group_invincible=1;
 	}
 }
@@ -6319,9 +6319,9 @@
 	model=missile.s3o;
 	Weapontype=MissileLauncher;
 	range=450;
-	reloadtime=1.2;
+	reloadtime=2.0;
 	weapontimer=0.1;
-	flighttime=2.0;
+	flighttime=2.27;
 	weaponvelocity=520;
 	startvelocity=220;
 	weaponacceleration=130;
@@ -6329,6 +6329,8 @@
 	areaofeffect=48;
 	explosiongenerator=custom:KBOTROCKETHIT;
 	cegTag=KBOTROCKETTRAIL;
+	burst=2;
+	burstrate=0.2;
 	Texture1=null;
 	Texture2=null;
 	Texture3=null;
@@ -6345,8 +6347,8 @@
 	CollideFriendly=0;
 	[DAMAGE]
 	{
-		default=110;
-		group_landair=65;
+		default=125;
+		group_landair=55;
 		group_invincible=1;
 	}
 }
@@ -6391,9 +6393,9 @@
 	range=700;
 	reloadtime=2;
 	weapontimer=5;
-	weaponvelocity=650;
-	startvelocity=460;
-	weaponacceleration=152;
+	weaponvelocity=700;
+	startvelocity=470;
+	weaponacceleration=230;
 	turnrate=41660;
 	areaofeffect=48;
 	cylindertargetting=1;
@@ -6411,7 +6413,7 @@
 	startsmoke=1;
 	[DAMAGE]
 	{
-		default=44;
+		default=46;
 		group_invincible=1;
 		group_landair=120;
 	}
