@@ -71,6 +71,18 @@ local options = {
 		}
 	},
 	{
+      key="teamdeathmode",
+      name="Team Game End Mode",
+      desc="What it takes to eliminate a Team",
+      type="list",
+	  --section= 'xtagame',
+      def="allyzerounits",
+      items={
+         {key="none", name="Never Die", desc="All Teams will stay alive regardless of what happends, gameover will never arrive."},
+         {key="teamzerounits", name="Team Death on Zero Units", desc="The Team will die when it has 0 units."},
+         {key="allyzerounits", name="AllyTeam Death on Zero units", desc="The Team will die when every Team in his AllyTeam have 0 units."},
+      }
+   },	{
 		key  = "comm",
 		name = "Starting Commander",
 		desc = "Adjusts Starting Commander type or level",
