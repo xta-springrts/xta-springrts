@@ -40,9 +40,29 @@ CMD_BUILDSPEED = 33455
 local buildspeedlist = {}
 
 local factoryDefs = {
-  tarm_kbot_lab = true,
-  tcore_kbot_lab = true,
-
+  arm_kbot_lab = true,
+  arm_adv_kbot_lab = true,
+  arm_aircraft_plant = true,
+  arm_adv_aircraft_plant = true,
+  arm_vehicle_plant = true,
+  arm_adv_vehicle_plant = true,
+  arm_hovercraft_platform = true,
+  arm_shipyard = true,
+  arm_adv_shipyard = true,
+  arm_seaplane_platform = true,
+  arm_sub_pen = true,
+  core_kbot_lab = true,
+  core_adv_kbot_lab = true,
+  core_aircraft_plant = true,
+  core_adv_aircraft_plant = true,
+  core_vehicle_plant = true,
+  core_adv_vehicle_plant = true,
+  core_hovercraft_platform = true,
+  core_shipyard = true,
+  core_adv_shipyard = true,
+  core_seaplane_platform = true,
+  core_sub_pen = true,
+  core_krogoth_gantry = true,
 }
 
 local buildspeedCmdDesc = {

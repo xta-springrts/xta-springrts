@@ -33,7 +33,6 @@ function gadget:Initialize()
 	else
 		airScalX, airScalY, airScalZ = 0.75, 0.45, 0.9
 	end
-	--Spring.Echo(airScalX, airScalY, airScalZ)
 --[[ Print all feature defs
  for id,featureDef in pairs(FeatureDefs) do
    for name,param in featureDef:pairs() do
@@ -88,17 +87,19 @@ if (gadgetHandler:IsSyncedCode()) then
 	-- Requires Spring 0.83 and up, same as for 3DO units, but for features,
 	-- disabled on Spring <0.83
 	if spGetFeatureCollisionData then
-	--Spring.Echo("Using feature collision scaling")
 	function gadget:FeatureCreated(featureID, allyTeam)
 		local featureModel = FeatureDefs[Spring.GetFeatureDefID(featureID)].modelname
 		featureModel = featureModel:lower()
 		if featureModel:find(".3do") then
 			local xs, ys, zs, xo, yo, zo, vtype, htype, axis, _ = spGetFeatureCollisionData(featureID)
 			if (vtype==4 and xs==ys and ys==zs) then
+				local yrs
 				if (xs>47) then
-					spSetFeatureCollisionData(featureID, xs*0.68, ys*0.60, zs*0.68,  xo, yo, zo,  vtype, htype, axis)
+					yrs = ys*0.60
+					spSetFeatureCollisionData(featureID, xs*0.68, yrs, zs*0.68,  xo, yo-yrs*0.15, zo,  vtype, htype, axis)
 				else
-					spSetFeatureCollisionData(featureID, xs*0.75, ys*0.67, zs*0.75,  xo, yo, zo,  vtype, htype, axis)
+					yrs = ys*0.67
+					spSetFeatureCollisionData(featureID, xs*0.75, yrs, zs*0.75,  xo, yo-yrs*0.15, zo,  vtype, htype, axis)
 				end
 			end
 		end

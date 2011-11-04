@@ -12,7 +12,7 @@
 piece  torso, ruparm, luparm, rbigflash, nanospray, pelvis, lfirept, head,
        lthigh, rthigh, nanolath, biggun, rleg, lleg, orbit, orbitfire, dong, cum;
 
-static-var  bMoving, aiming, bAiming, DGunning, singing, building, currentSpeed, UW,
+static-var  bMoving, aiming, bAiming, DGunning, singing, building, currentSpeed,
 			moveSpeed, speedFactor, LOS, AirLOS, radarRange, sonarRange, wRange, wFactor, 
             weapon1Disabled, weapon2Disabled, weapon4Disabled, weapon5Disabled,
             weapon6Disabled, idling;
@@ -76,7 +76,7 @@ Experience()
 		if(speedFactor>150) speedFactor=150;
 		wFactor = XP*2/3 + 100;
 		if(wFactor>250) wFactor=250;
-		set MAX_SPEED to moveSpeed*speedFactor*UW/100;
+		set MAX_SPEED to moveSpeed*speedFactor/100;
 		set LOS_RADIUS to LOS*speedFactor/100;
 		set AIR_LOS_RADIUS to AirLOS*speedFactor/100;
 		set RADAR_RADIUS to radarRange*((speedFactor - 100)*4+100)/100;
@@ -602,12 +602,6 @@ MotionControl()
 	}
 }
 
-setSFXoccupy(terraintype)
-{
-	if(terraintype==1 OR terraintype==2) UW = 2; else UW=1;
-	set MAX_SPEED to moveSpeed*speedFactor*UW/100;
-}
-
 Create()
 {
 	hide rbigflash;
@@ -617,7 +611,6 @@ Create()
 	hide dong;
 	weapon1Disabled = 0;
 	moveSpeed = get MAX_SPEED;
-	UW=1;
 	currentSpeed = 100;
 	LOS = get LOS_RADIUS;
 	AirLOS = get AIR_LOS_RADIUS;

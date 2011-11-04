@@ -109,6 +109,7 @@
 	MaxSlope=32;
 	CrushStrength=150;
 	heatmapping=0;
+	depthmod=0;
 }
 [CLASS11]
 {
