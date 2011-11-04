@@ -329,8 +329,12 @@ function unregisterUnit(unitID, unitDefID, unitTeam, destroyed)
   elseif builder then 
     if getUnitPhase(unitID, unitTeam) == RECLAIMING then 
       local mex = mexes[unitTeam][builder.targetMex] 
-      mexes[unitTeam][builder.targetMex].assignedBuilder = nil 
-      assignClosestBuilder(builder.targetMex, mex, unitTeam) 
+      if mexes[unitTeam][builder.targetMex] then
+        mexes[unitTeam][builder.targetMex].assignedBuilder = nil
+      end
+      if mex then
+		assignClosestBuilder(builder.targetMex, mex, unitTeam) 
+	  end
     end 
     
     builders[unitTeam][unitID] = nil 

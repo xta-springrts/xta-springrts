@@ -70,6 +70,10 @@ local pieceCollisionVolume = {}		--per piece collision volume definitions
 		on={50,55,50,0,10,0,2,1,0},
 		off={50,35,50,0,0,0,2,1,0},
 	}
+	unitCollisionVolume["arm_kbot_lab"] = {
+		on={95,24,95,0,0,0,2,1,0},
+		off={95,18,99,0,-3,0,1,1,1},
+	}
 	unitCollisionVolume["arm_moho_metal_maker"] = {
 		on={60,78,60,0,10,0,1,1,1},
 		off={60,50,60,0,-4,0,1,1,1},
@@ -89,6 +93,10 @@ local pieceCollisionVolume = {}		--per piece collision volume definitions
 	unitCollisionVolume["arm_targeting_facility"] = {
 		on={62,34,62,0,0,0,2,1,0},
 		off={55,78,55,0,-19.5,0,0,1,0},
+	}
+	unitCollisionVolume["arm_vehicle_plant"] = {
+		on={120,34,92,0,0,0,2,1,0},
+		off={92,74,92,0,-18,0,1,1,2},
 	}
 	unitCollisionVolume["core_doomsday_machine"] = {
 		on={55,112,55,0,-3,0,2,1,0},

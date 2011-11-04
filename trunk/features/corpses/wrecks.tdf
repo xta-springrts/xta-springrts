@@ -231,6 +231,10 @@
 	reclaimable=1;
 	featurereclamate=smudge01;
 	seqnamereclamate=tree1reclamate;
+	collisionvolumeoffsets=0 -17 -23;
+	collisionvolumescales=106 40 48;
+	collisionvolumetest=1;
+	collisionvolumetype=Box;
 }
 [arm_adv_aircraft_plant_heap]
 {
@@ -423,6 +427,10 @@
 	reclaimable=1;
 	featurereclamate=smudge01;
 	seqnamereclamate=tree1reclamate;
+	collisionvolumeoffsets=0 -17 -1;
+	collisionvolumescales=73 56 89;
+	collisionvolumetest=1;
+	collisionvolumetype=CylZ;
 }
 [arm_adv_kbot_lab_heap]
 {
@@ -687,6 +695,10 @@
 	reclaimable=1;
 	featurereclamate=smudge01;
 	seqnamereclamate=tree1reclamate;
+	collisionvolumeoffsets=11 -17 -23;
+	collisionvolumescales=85 39 49;
+	collisionvolumetest=1;
+	collisionvolumetype=Box;
 }
 [arm_aircraft_plant_heap]
 {
@@ -843,6 +855,10 @@
 	reclaimable=1;
 	featurereclamate=smudge01;
 	seqnamereclamate=tree1reclamate;
+	collisionvolumeoffsets=-2 -3 -3;
+	collisionvolumescales=116 63 116;
+	collisionvolumetest=1;
+	collisionvolumetype=Box;
 }
 [arm_advanced_torpedo_launcher_dead]
 {
@@ -878,6 +894,10 @@
 	reclaimable=1;
 	featurereclamate=smudge01;
 	seqnamereclamate=tree1reclamate;
+	collisionvolumeoffsets=0 -1 2;
+	collisionvolumescales=96 34 90;
+	collisionvolumetest=1;
+	collisionvolumetype=Box;
 }
 [arm_adv_vehicle_plant_heap]
 {
@@ -1751,6 +1771,10 @@
 	reclaimable=1;
 	featurereclamate=smudge01;
 	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=CylY;
+	collisionVolumeScales=43 72 43;
+	collisionVolumeOffsets=0 0 0;
+	collisionVolumeTest = 1;
 }
 [arm_sentinel_heap]
 {
@@ -1786,6 +1810,10 @@
 	reclaimable=1;
 	featurereclamate=smudge01;
 	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=Box;
+	collisionVolumeScales=118 28 106;
+	collisionVolumeOffsets=0 0 0;
+	collisionVolumeTest = 1;
 }
 [arm_hovercraft_platform_heap]
 {
@@ -1891,6 +1919,10 @@
 	reclaimable=1;
 	featurereclamate=smudge01;
 	seqnamereclamate=tree1reclamate;
+	collisionvolumeoffsets=0 -7 0;
+	collisionvolumescales=95 22 95;
+	collisionvolumetest=1;
+	collisionvolumetype=Box;
 }
 [arm_kbot_lab_heap]
 {
@@ -1961,6 +1993,10 @@
 	reclaimable=1;
 	featurereclamate=smudge01;
 	seqnamereclamate=tree1reclamate;
+	collisionVolumeType = CylY;
+	collisionVolumeScales =28 35 28;
+	collisionVolumeOffsets = 0 -2 0;
+	collisionVolumeTest = 1;
 }
 [arm_light_laser_tower_heap]
 {
@@ -2555,6 +2591,10 @@
 	reclaimable=1;
 	featurereclamate=smudge01;
 	seqnamereclamate=tree1reclamate;
+	collisionVolumeType = CylY;
+	collisionVolumeScales =28 45 28;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
 }
 [arm_defender_heap]
 {
@@ -3094,6 +3134,10 @@
 	reclaimable=1;
 	featurereclamate=smudge01;
 	seqnamereclamate=tree1reclamate;
+	collisionvolumeoffsets=-2 -3 -3;
+	collisionvolumescales=116 63 116;
+	collisionvolumetest=1;
+	collisionvolumetype=Box;
 }
 [arm_targeting_facility_dead]
 {
@@ -3426,6 +3470,10 @@
 	reclaimable=1;
 	featurereclamate=smudge01;
 	seqnamereclamate=tree1reclamate;
+	collisionvolumeoffsets=-5 0 0;
+	collisionvolumescales=110 34 92;
+	collisionvolumetest=1;
+	collisionvolumetype=Box;
 }
 [arm_vehicle_plant_heap]
 {
@@ -3601,6 +3649,10 @@
 	reclaimable=1;
 	featurereclamate=smudge01;
 	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=Box;
+	collisionVolumeScales=98 32 52;
+	collisionVolumeOffsets=0 -12 -22;
+	collisionVolumeTest = 1;
 }
 [core_adv_aircraft_plant_heap]
 {
@@ -3811,6 +3863,10 @@
 	reclaimable=1;
 	featurereclamate=smudge01;
 	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=CylZ;
+	collisionVolumeScales=98 52 88;
+	collisionVolumeOffsets=0 -17 0;
+	collisionVolumeTest = 1;
 }
 [core_adv_kbot_lab_heap]
 {
@@ -3899,6 +3955,10 @@
 	reclaimable=1;
 	featurereclamate=smudge01;
 	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=Box;
+	collisionVolumeScales=110 33 50;
+	collisionVolumeOffsets=0 -14 -23;
+	collisionVolumeTest = 1;
 }
 [core_aircraft_plant_heap]
 {
@@ -4037,6 +4097,10 @@
 	reclaimable=1;
 	featurereclamate=smudge01;
 	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=Box;
+	collisionVolumeScales=116 56 120;
+	collisionVolumeOffsets=0 -10 -4;
+	collisionVolumeTest = 1;
 }
 [core_advanced_torpedo_launcher_dead]
 {
@@ -4072,6 +4136,10 @@
 	reclaimable=1;
 	featurereclamate=smudge01;
 	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=Box;
+	collisionVolumeScales=124 30 104;
+	collisionVolumeOffsets=0 -6 0;
+	collisionVolumeTest = 1;
 }
 [core_adv_vehicle_plant_heap]
 {
@@ -4822,6 +4890,10 @@
 	reclaimable=1;
 	featurereclamate=smudge01;
 	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=CylY;
+	collisionVolumeScales=43 74 43;
+	collisionVolumeOffsets=0 0 0;
+	collisionVolumeTest = 1;
 }
 [core_gaat_gun_heap]
 {
@@ -4857,6 +4929,10 @@
 	reclaimable=1;
 	featurereclamate=smudge01;
 	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=Box;
+	collisionVolumeScales=120 26 108;
+	collisionVolumeOffsets=0 0 0;
+	collisionVolumeTest = 1;
 }
 [core_hovercraft_platform_heap]
 {
@@ -4997,6 +5073,10 @@
 	reclaimable=1;
 	featurereclamate=smudge01;
 	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=Box;
+	collisionVolumeScales=88 28 88;
+	collisionVolumeOffsets=0 0 0;
+	collisionVolumeTest = 1;
 }
 [core_kbot_lab_heap]
 {
@@ -5067,6 +5147,10 @@
 	reclaimable=1;
 	featurereclamate=smudge01;
 	seqnamereclamate=tree1reclamate;
+	collisionVolumeType = CylY;
+	collisionVolumeScales =28 38 28;
+	collisionVolumeOffsets = 0 -2 0;
+	collisionVolumeTest = 1;
 }
 [core_light_laser_tower_heap]
 {
@@ -5765,6 +5849,10 @@
 	reclaimable=1;
 	featurereclamate=smudge01;
 	seqnamereclamate=tree1reclamate;
+	collisionVolumeType = CylY;
+	collisionVolumeScales =28 49 28;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
 }
 [core_pulverizer_heap]
 {
@@ -6288,6 +6376,10 @@
 	reclaimable=1;
 	featurereclamate=smudge01;
 	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=Box;
+	collisionVolumeScales=116 56 120;
+	collisionVolumeOffsets=0 -10 -4;
+	collisionVolumeTest = 1;
 }
 [core_targeting_facility_dead]
 {

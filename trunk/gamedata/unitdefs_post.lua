@@ -21,6 +21,16 @@ local function tobool(val)
 end
 
 --------------------------------------------------------------------------------
+-- Tanks and hovers don't slow down when turning
+
+for name, ud in pairs(UnitDefs) do
+	if ud.category and (ud.category:find("TANK",1,true) or ud.category:find("HOVER",1,true)) then
+		if (ud.maxvelocity) then
+			--ud.turninplace = 0
+			ud.turninplacespeedlimit = ud.maxvelocity or 0
+		end
+	end
+end 
 
 -------------------------------------------------------------------------------
 -- Starting resource storage adjustment
@@ -248,10 +258,10 @@ end
 
 if (modOptions and not tobool(modOptions.xtaidunits)) then
   disableunits({
-	"yeomen", "armona",  "arm_evaperator", "paci", "armsparkle", "walker",
+	"yeomen", "armona", "arm_evaperator", "paci", "armsparkle", "walker",
 	"neutral_eyes", "armpur", "armbfortew", "armarch", "armbugger", "boa",
 	"armfff", "mercury", "tadg07", "armraz", "armhyren", "demolish",
-	"armrebel", "arm_tor",	"tadg05", "armraz", "arm_infinite",
+	"armrebel", "arm_tor","tadg05", "arm_infinite",
 
 	"corbyp", "justice", "corpur", "astank", "corjar", "core_egg_shell",
 	"corscrew", "corcrw", "corfff", "screamer", "corebfortns", "corhback",
