@@ -3,7 +3,7 @@ function gadget:GetInfo()
 		name = "Announce kills",
 		desc = "Announce Leader",
 		author = "Jools, zwzsg",
-		date = "14 july 2011",
+		date = "8 august 2011",
 		license = "Free",
 		layer = 0,
 		enabled = true
@@ -22,7 +22,10 @@ function friendlyName(teamID)
 	else
 		names=nil
 		for _,pid in ipairs(Spring.GetPlayerList(teamID,true)) do
-			names=(names and names.."," or "").."<PLAYER"..pid..">"
+			local name,active,spectator,_,_,_,_,_,_ = Spring.GetPlayerInfo(pid)
+			if not spectator then
+				names=(names and names.."," or "").."<PLAYER"..pid..">"
+			end
 		end
 		if names == nil or #names < 1 then return ("Team " .. teamID) end
 		return (names and names or "")
@@ -36,7 +39,7 @@ if (gadgetHandler:IsSyncedCode()) then
 	local bestKills = nil
 	local killCounters = {}
 	local soundsOn = true -- change if you want sounds
-	local snd = "sounds/ding.wav" --path to sound file
+	local snd = "sounds/ding.ogg" --path to sound file
 	local function isUnitComplete(UnitID)
 		local health,maxHealth,paralyzeDamage,captureProgress,buildProgress=Spring.GetUnitHealth(UnitID)
 		if buildProgress and buildProgress>=1 then
