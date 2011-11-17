@@ -12,7 +12,7 @@ end
 
 -- Pop-up style unit and per piece collision volume definitions
 local popupUnits = {}		--list of pop-up style units
-local unitCollisionVolume, pieceCollisionVolume = include("LuaRules/Configs/CollisionVolumes.lua")
+local unitCollisionVolume, pieceCollisionVolume, dynamicPieceCollisionVolume = include("LuaRules/Configs/CollisionVolumes.lua")
 
 -- Localization and speedups
 local spGetPieceCollisionData = Spring.GetUnitPieceCollisionVolumeData
@@ -47,7 +47,7 @@ if (gadgetHandler:IsSyncedCode()) then
 
 	--Reduces the diameter of default (unspecified) collision volume for 3DO models,
 	--for S3O models it's not needed and will in fact result in wrong collision volume
-	--also handles per piece collision volume definitions, can't be dynamic ATM (and usually doesn't need to be)
+	--also handles per piece collision volume definitions
 	function gadget:UnitCreated(unitID, unitDefID, unitTeam)
 		if (pieceCollisionVolume[UnitDefs[unitDefID].name]) then
 			--[[  ment for per piece collision volumes for XTA commanders 
@@ -67,6 +67,14 @@ if (gadgetHandler:IsSyncedCode()) then
 					end
 				end
 			--end
+		elseif dynamicPieceCollisionVolume[UnitDefs[unitDefID].name] then
+			for pieceIndex, p in pairs(dynamicPieceCollisionVolume[UnitDefs[unitDefID].name].on) do
+				if (p[1]==true) then
+					spSetPieceCollisionData(unitID, pieceIndex, p[1], p[1],p[1],p[1], p[2], p[3], p[4], p[5], p[6], p[7], p[8], p[9])
+				else
+					spSetPieceCollisionData(unitID, pieceIndex, false, false,false,false, 1, 1, 1, 0, 0, 0, 1, 1)
+				end
+			end
 		else
 			if UnitDefs[unitDefID].model.type=="3do" then
 				local xs, ys, zs, xo, yo, zo, vtype, htype, axis, _ = spGetUnitCollisionData(unitID)
@@ -111,7 +119,9 @@ if (gadgetHandler:IsSyncedCode()) then
 	function gadget:UnitFinished(unitID, unitDefID, unitTeam)
 		local un = UnitDefs[unitDefID].name
 		if unitCollisionVolume[un] then
-			popupUnits[unitID]={name=un, state=-1}
+			popupUnits[unitID]={name=un, state=-1, perPiece=false}
+		elseif dynamicPieceCollisionVolume[un] then
+			popupUnits[unitID]={name=un, state=-1, perPiece=true}
 		end
 	end
 
@@ -133,16 +143,42 @@ if (gadgetHandler:IsSyncedCode()) then
 		local p
 		for unitID,defs in pairs(popupUnits) do
 			if spArmor(unitID) then
-				if (defs.state ~= 0) then
-					p = unitCollisionVolume[defs.name].off
-					spSetUnitCollisionData(unitID, p[1], p[2], p[3], p[4], p[5], p[6], p[7], p[8], p[9])
-					popupUnits[unitID].state = 0
+				if defs.perPiece then
+					if (defs.state ~= 0) then
+						for pieceIndex, p in pairs(dynamicPieceCollisionVolume[defs.name].off) do
+							if (p[1]==true) then
+								spSetPieceCollisionData(unitID, pieceIndex, p[1], p[1],p[1],p[1], p[2], p[3], p[4], p[5], p[6], p[7], p[8], p[9])
+							else
+								spSetPieceCollisionData(unitID, pieceIndex, false, false,false,false, 1, 1, 1, 0, 0, 0, 1, 1)
+							end
+						end
+						popupUnits[unitID].state = 0
+					end
+				else
+					if (defs.state ~= 0) then
+						p = unitCollisionVolume[defs.name].off
+						spSetUnitCollisionData(unitID, p[1], p[2], p[3], p[4], p[5], p[6], p[7], p[8], p[9])
+						popupUnits[unitID].state = 0
+					end
 				end
 			else
-				if (defs.state ~= 1) then
-					p = unitCollisionVolume[defs.name].on
-					spSetUnitCollisionData(unitID, p[1], p[2], p[3], p[4], p[5], p[6], p[7], p[8], p[9])
-					popupUnits[unitID].state = 1
+				if defs.perPiece then
+					if (defs.state ~= 1) then
+						for pieceIndex, p in pairs(dynamicPieceCollisionVolume[defs.name].on) do
+							if (p[1]==true) then
+								spSetPieceCollisionData(unitID, pieceIndex, p[1], p[1],p[1],p[1], p[2], p[3], p[4], p[5], p[6], p[7], p[8], p[9])
+							else
+								spSetPieceCollisionData(unitID, pieceIndex, false, false,false,false, 1, 1, 1, 0, 0, 0, 1, 1)
+							end
+						end
+						popupUnits[unitID].state = 1
+					end		
+				else
+					if (defs.state ~= 1) then
+						p = unitCollisionVolume[defs.name].on
+						spSetUnitCollisionData(unitID, p[1], p[2], p[3], p[4], p[5], p[6], p[7], p[8], p[9])
+						popupUnits[unitID].state = 1
+					end
 				end
 				--[[ if units don't use ARMORED variable, uncomment this block to make it use ACTIVATION as well
 				if ( spActive(unitID) ) then
