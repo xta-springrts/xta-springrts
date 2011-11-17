@@ -11,7 +11,7 @@
 	//************************************************************
 	//  Categories
 	//**************
-	category=ARM VTOL WEAPON BOMB NOTSUB;
+	category=ARM VTOL MOBILE WEAPON NOTLAND NOTSEA NOTSUB;
 	tedclass=VTOL;
 
 	//************************************************************
@@ -96,7 +96,7 @@
 	//***********
 	weapon1=ARMBOMB;
 	weapon3=ARM_THUNDERANOMALY;
-	nochasecategory=UNDERWATER;
+	nochasecategory=SUB;
 	explodeas=LIGHTNING;
 	selfdestructas=BIG_UNIT;
 

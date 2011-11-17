@@ -10,8 +10,8 @@
 	//************************************************************
 	//  Categories
 	//**************
-	Category=CORE KBOT  NOTAIR;
-	tedclass=KBOT;
+	Category=CORE KBOT CONSTR MOBILE NOWEAPON NOTAIR NOTSEA NOTSUB;
+	tedclass=CONSTR;
 
 	//************************************************************
 	//  External Specs

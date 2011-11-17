@@ -5,7 +5,7 @@
 	buildcostenergy=5123;
 	buildcostmetal=906;
 	buildtime=41938;
-	category=ARM METAL NOWEAPON NOTAIR NOTSUB NOTSHIP NOTLAND ALL;
+	category=ARM METAL STATIC NOWEAPON NOTLAND NOTAIR NOTSEA;
 	description=UnderWater MohoMine;
 	footprintx=5;
 	footprintz=5;

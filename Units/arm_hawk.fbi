@@ -11,7 +11,7 @@
 	//************************************************************
 	//  Categories
 	//**************
-	category=ARM VTOL WEAPON STEALTH NOTSUB;
+	category=ARM VTOL MOBILE WEAPON STEALTH NOTLAND NOTSEA NOTSUB;
 	tedclass=VTOL;
 
 	//************************************************************

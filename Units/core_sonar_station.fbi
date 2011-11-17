@@ -11,8 +11,8 @@
 	//************************************************************
 	//  Categories
 	//**************
-	Category=CORE SONAR NOTAIR NOTSUB;
-	tedclass=WATER;
+	Category=CORE STATIC NOWEAPON SONAR NOTLAND NOTAIR NOTSUB;
+	tedclass=SONAR;
 
 	//************************************************************
 	//  External Specs

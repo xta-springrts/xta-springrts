@@ -28,7 +28,7 @@
 	SoundCategory=ARM_VTOL;
 	ExplodeAs=TRANSPORT_UNITEX;
 	SelfDestructAs=TRANSPORT_UNIT;
-	Category=TLL VTOL TPORT WEAPON NOTSUB;
+	Category=ARM VTOL TPORT MOBILE WEAPON NOTLAND NOTSEA NOTSUB;
 	TEDClass=VTOL;
 	UnitNumber=944;
 	firestandorders=1;

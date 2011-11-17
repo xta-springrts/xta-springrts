@@ -29,8 +29,8 @@
 	MetalStorage=0;
 	explodeas=NANO_UNITEX;
 	selfdestructas=NANO_UNIT;
-	Category=CORE SHIP MINELAYER NOWEAPON NOTAIR NOTSUB;
-	TEDClass=SHIP;
+	Category=CORE SUB CONSTR MOBILE NOWEAPON NOTLAND NOTAIR NOTSEA;
+	TEDClass=SUB;
 	Copyright=Copyright 1997 Humongous Entertainment. All rights reserved.;
 	Corpse=Core_Limiter_dead;
 	UnitNumber=622;

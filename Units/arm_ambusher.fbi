@@ -11,8 +11,8 @@
 	//************************************************************
 	//  Categories
 	//**************
-	category=ARM STRATEGIC WEAPON NOTAIR NOTSUB;
-	tedclass=FORT;
+	category=ARM DEFENSIVE STATIC WEAPON NOTAIR NOTSEA NOTSUB;
+	tedclass=DEFENSIVE;
 
 	//************************************************************
 	//  External Specs
@@ -49,8 +49,9 @@
 	yardmap=ooo ooo ooo;
 	collisionVolumeType=Ell;
 	collisionVolumeScales=49 45 49;
-	collisionVolumeOffsets=-0.5 -14 0;
-	//collisionVolumeTest = 1;
+	collisionVolumeOffsets=-0.5 -11 0;
+	collisionVolumeTest = 1;
+	ModelCenterOffset=0 -3 0;
 
 	//************************************************************
 	//  Constructor

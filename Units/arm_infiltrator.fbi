@@ -10,7 +10,7 @@
 	//************************************************************
 	//  Categories
 	//**************
-	category=ARM KBOT SPY NOWEAPON NOTAIR NOTSUB;
+	category=ARM KBOT MOBILE STEALTH NOWEAPON NOTAIR NOTSEA NOTSUB;
 	tedclass=KBOT;
 
 	//************************************************************

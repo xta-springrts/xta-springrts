@@ -13,7 +13,7 @@
 	BuildCostEnergy=1;
 	BuildCostMetal=2200;
 	BuildTime=4000;
-	Category=ARM commander WEAPON NOTAIR NOTSUB ALL;
+	Category=ARM commander WEAPON NOTAIR NOTSUB;
 	Description=Sniper;
 	FootprintX=2;
 	FootprintZ=2;

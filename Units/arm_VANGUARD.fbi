@@ -67,9 +67,9 @@
 	{
 	explosiongenerator0=custom:UNITFIRE;
 	}
-	collisionVolumeType = box;
-	collisionVolumeScales =25 30 50;
-	collisionVolumeOffsets = 0 -10 0;
+	collisionVolumeType = CylY;
+	collisionVolumeScales =21 26 76;
+	collisionVolumeOffsets = 0 -5 -1;
 	collisionVolumeTest = 1;
 	pieceTrailCEGTag=Debree;//bleh
 	pieceTrailCEGRange = 4;

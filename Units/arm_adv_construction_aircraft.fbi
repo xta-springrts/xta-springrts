@@ -11,8 +11,8 @@
 	//************************************************************
 	//  Categories
 	//**************
-	category=ARM VTOL CONSTR NOWEAPON NOTSUB;
-	tedclass=CNSTR;
+	category=ARM VTOL CONSTR MOBILE NOWEAPON STORAGE NOTLAND NOTSEA NOTSUB;
+	tedclass=CONSTR;
 
 	//************************************************************
 	//  External Specs

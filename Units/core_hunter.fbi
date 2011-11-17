@@ -11,7 +11,7 @@
 	//************************************************************
 	//  Categories
 	//**************
-	Category=CORE VTOL WEAPON TORP NOTSUB;
+	Category=CORE VTOL PHIB MOBILE NOWEAPON SONAR NOTLAND NOTSEA NOTSUB;
 	tedclass=VTOL;
 
 	//************************************************************

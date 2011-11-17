@@ -11,8 +11,8 @@
 	//************************************************************
 	//  Categories
 	//**************
-	category=ARM ENERGY  NOWEAPON NOTAIR;
-	tedclass=WATER;
+	category=ARM ENERGY STATIC NOWEAPON NOTLAND NOTAIR NOTSEA;
+	tedclass=ENERGY;
 
 	//************************************************************
 	//  External Specs

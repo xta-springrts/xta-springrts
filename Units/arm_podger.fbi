@@ -11,7 +11,7 @@
 	//  Categories
 	//**************
 	category=ARM  CONSTR NOWEAPON TANK NOTAIR NOTSUB;
-	tedclass=CNSTR;
+	tedclass=CONSTR;
 
 	//************************************************************
 	//  External Specs

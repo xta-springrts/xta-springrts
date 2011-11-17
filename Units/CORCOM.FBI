@@ -13,7 +13,7 @@
 	BuildCostEnergy=1;
 	BuildCostMetal=2400;
 	BuildTime=3000;
-	Category=CORE COMMANDER WEAPON NOTAIR NOTSUB ALL;
+	Category=CORE COMMANDER WEAPON NOTAIR NOTSUB;
 	Description=Gunner;
 	FootprintX=2;
 	FootprintZ=2;

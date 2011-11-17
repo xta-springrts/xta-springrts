@@ -11,8 +11,8 @@
 	//************************************************************
 	//  Categories
 	//**************
-	Category=CORE ENERGY  NOWEAPON NOTAIR NOTSUB;
-	tedclass=WATER;
+	Category=CORE ENERGY STATIC NOWEAPON NOTLAND NOTAIR NOTSUB;
+	tedclass=ENERGY;
 
 	//************************************************************
 	//  External Specs
@@ -49,6 +49,10 @@
 	buildangle=4096;
 	yardmap=www www www;
 	activatewhenbuilt=1;
+	collisionVolumeType=CylY;
+	collisionVolumeScales=40 29 40;
+	collisionVolumeOffsets=-3 -1 -3;
+	collisionVolumeTest = 1;
 
 	//************************************************************
 	//  Constructor

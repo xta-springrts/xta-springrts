@@ -11,7 +11,7 @@
 	//************************************************************
 	//  Categories
 	//**************
-	Category=CORE VTOL NOWEAPON NOTSUB;
+	Category=CORE VTOL MOBILE NOWEAPON RADAR NOTLAND NOTSEA NOTSUB;
 	tedclass=VTOL;
 
 	//************************************************************
@@ -83,7 +83,7 @@
 	//************************************************************
 	//  Weapons
 	//***********
-	nochasecategory=UNDERWATER;
+	nochasecategory=SUB;
 	wsec_badtargetcategory=NOTAIR;
 	explodeas=BIG_UNITEX;
 	selfdestructas=BIG_UNIT;

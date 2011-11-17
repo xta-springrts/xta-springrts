@@ -11,7 +11,7 @@
 	//************************************************************
 	//  Categories
 	//**************
-	category=ARM METAL EXTRACTOR  NOWEAPON NOTAIR NOTSUB;
+	category=ARM METAL STATIC NOWEAPON NOTLAND NOTAIR NOTSEA;
 	tedclass=METAL;
 
 	//************************************************************
@@ -48,6 +48,10 @@
 	buildangle=8192;
 	yardmap=ooooooooo;
 	activatewhenbuilt=1;
+	collisionVolumeType=CylY;
+	collisionVolumeScales=43 46 43;
+	collisionVolumeOffsets=0 0 0;
+	collisionVolumeTest = 1;
 
 	//************************************************************
 	//  Constructor

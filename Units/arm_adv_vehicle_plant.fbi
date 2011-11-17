@@ -11,7 +11,7 @@
 	//************************************************************
 	//  Categories
 	//**************
-	category=ARM PLANT NOWEAPON NOTAIR NOTSUB;
+	category=ARM PLANT STATIC NOWEAPON STORAGE NOTAIR NOTSEA NOTSUB;
 	tedclass=PLANT;
 
 	//************************************************************

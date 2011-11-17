@@ -11,8 +11,8 @@
 	//************************************************************
 	//  Categories
 	//**************
-	category=ARM ENERGY  NOWEAPON NOTAIR NOTSUB;
-	tedclass=WATER;
+	category=ARM ENERGY STATIC NOWEAPON NOTLAND NOTAIR NOTSUB;
+	tedclass=ENERGY;
 
 	//************************************************************
 	//  External Specs
@@ -47,8 +47,12 @@
 	//  Building
 	//************
 	buildangle=8192;
-	yardmap=wwwwwwwwwwwwwwww;
+	yardmap=wwwwwwwww;
 	activatewhenbuilt=1;
+	collisionVolumeType=Box;
+	collisionVolumeScales=28 25 45;
+	collisionVolumeOffsets=0 -3 -1.5;
+	collisionVolumeTest = 1;
 
 	//************************************************************
 	//  Constructor

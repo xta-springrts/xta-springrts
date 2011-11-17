@@ -10,7 +10,7 @@
 	//************************************************************
 	//  Categories
 	//**************
-	Category=CORE TANK NOWEAPON JAM NOTAIR NOTSUB;
+	Category=CORE TANK MOBILE NOWEAPON JAMMER NOTAIR NOTSEA NOTSUB;
 	tedclass=TANK;
 
 	//************************************************************

@@ -10,7 +10,7 @@
 	//************************************************************
 	//  Categories
 	//**************
-	Category=CORE KBOT NOWEAPON NOTAIR NOTSUB;
+	Category=CORE KBOT MOBILE NOWEAPON RADAR NOTAIR NOTSEA NOTSUB;
 	tedclass=KBOT;
 
 	//************************************************************
@@ -28,9 +28,9 @@
 	//********************
 	maxdamage=350;
 	healtime=30;
-	buildcostmetal=93;
-	buildcostenergy=1283;
-	buildtime=3945;
+	buildcostmetal=135;
+	buildcostenergy=2022;
+	buildtime=4960;
 	footprintx=2;
 	footprintz=2;
 

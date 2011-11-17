@@ -11,8 +11,8 @@
 	//************************************************************
 	//  Categories
 	//**************
-	category=ARM WEAPON NOTAIR NOTSUB;
-	tedclass=WATER;
+	category=ARM DEFENSIVE STATIC WEAPON NOTLAND NOTAIR NOTSUB;
+	tedclass=DEFENSIVE;
 
 	//************************************************************
 	//  External Specs

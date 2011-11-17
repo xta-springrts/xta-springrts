@@ -5,7 +5,7 @@
 	buildcostenergy=5654;
 	buildcostmetal=887;
 	buildtime=45125;
-	Category=CORE METAL NOWEAPON NOTAIR NOTSUB NOTSHIP NOTLAND ALL;
+	Category=CORE METAL STATIC NOWEAPON NOTLAND NOTAIR NOTSEA;
 	description=Advanced Metal Extractor / Storage;
 	footprintx=5;
 	footprintz=5;

@@ -11,7 +11,7 @@
 	//************************************************************
 	//  Categories
 	//**************
-	Category=CORE SHIP WEAPON ANTISUB NOTAIR NOTSUB;
+	Category=CORE SHIP MOBILE WEAPON NOTLAND NOTAIR NOTSUB;
 	tedclass=SHIP;
 
 	//************************************************************

@@ -11,8 +11,8 @@
 	//************************************************************
 	//  Categories
 	//**************
-	category=ARM REPAIRPAD NOWEAPON NOTAIR NOTSUB;
-	tedclass=SPECIAL;
+	category=ARM PLANT STATIC NOWEAPON STRATEGIC STORAGE NOTAIR NOTSEA NOTSUB;
+	tedclass=STRATEGIC;
 
 	//************************************************************
 	//  External Specs

@@ -1,0 +1,43 @@
+[UNITINFO]
+{
+  unitname=block;
+  name=Artifical Land;
+  description=Raise Land;
+  acceleration=0;
+  brakerate=0;
+  buildcostenergy=0;
+  buildcostmetal=25;
+  builder=0;
+  buildinggrounddecaldecayspeed=0.001;
+  buildinggrounddecalsizex=8;
+  buildinggrounddecalsizey=8;
+  buildinggrounddecaltype=squares.tga;
+  buildpic=block.bmp;
+  buildtime=750;
+  canattack=0;
+  category=ARM NOWEAPON NOTAIR NOTSUB NOTSEA NOTLAND;
+  energymake=0;
+  energystorage=0;
+  energyuse=0;
+  footprintx=4;
+  footprintz=4;
+  idleautoheal=5;
+  idletime=1800;
+  isfeature=1;
+  levelground=0;
+  maxdamage=25000;
+  maxslope=76;
+  maxvelocity=0;
+  maxwaterdepth=100;
+  //minwaterdepth=10;
+  metalstorage=0;
+  objectname=2x2A;
+  seismicsignature=0;
+  side=ARM;
+  sightdistance=1;
+  turnrate=0;
+  upright=0;
+  usebuildinggrounddecal=1;
+  workertime=0;
+  yardmap=ffff;
+}

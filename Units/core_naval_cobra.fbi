@@ -11,8 +11,8 @@
 	//************************************************************
 	//  Categories
 	//**************
-	Category=CORE STRATEGIC WEAPON NOTAIR NOTSUB;
-	tedclass=WATER;
+	Category=CORE DEFENSIVE STATIC WEAPON NOTLAND NOTAIR NOTSUB;
+	tedclass=DEFENSIVE;
 
 	//************************************************************
 	//  External Specs

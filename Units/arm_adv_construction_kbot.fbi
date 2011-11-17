@@ -10,8 +10,8 @@
 	//************************************************************
 	//  Categories
 	//**************
-	category=ARM KBOT CONSTR NOWEAPON NOTAIR NOTSUB;
-	tedclass=CNSTR;
+	category=ARM KBOT CONSTR MOBILE NOWEAPON STORAGE NOTAIR NOTSEA NOTSUB;
+	tedclass=CONSTR;
 
 	//************************************************************
 	//  External Specs

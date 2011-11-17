@@ -11,8 +11,8 @@
 	//************************************************************
 	//  Categories
 	//**************
-	Category=CORE RAD  NOTAIR NOTSUB;
-	tedclass=SPECIAL;
+	Category=CORE STATIC NOWEAPON RADAR NOTAIR NOTSEA NOTSUB;
+	tedclass=RADAR;
 
 	//************************************************************
 	//  External Specs
@@ -33,6 +33,10 @@
 	buildtime=1137;
 	footprintx=2;
 	footprintz=2;
+	collisionVolumeType = CylY;
+	collisionVolumeScales = 28 96 28;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
 
 	//************************************************************
 	//  Resources

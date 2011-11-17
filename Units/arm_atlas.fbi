@@ -11,7 +11,7 @@
 	//************************************************************
 	//  Categories
 	//**************
-	category=ARM VTOL TPORT  NOWEAPON NOTSUB;
+	category=ARM VTOL TPORT MOBILE NOWEAPON NOTLAND NOTSEA NOTSUB;
 	tedclass=VTOL;
 
 	//************************************************************

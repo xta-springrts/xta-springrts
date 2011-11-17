@@ -27,8 +27,8 @@
 	MetalStorage=0;
 	ExplodeAs=ATOMIC_BLAST;
 	SelfDestructAs=CRAWL_BLASTSML;
-	Category=ARM DEFENSIVE WEAPON NOTAIR NOTSUB;
-	TEDClass=WATER;
+	Category=ARM DEFENSIVE STRATEGIC STATIC WEAPON NOTLAND NOTAIR NOTSUB;
+	TEDClass=STRATEGIC;
 	YardMap=wwwwwwwww;
 	Corpse=ARM_Repulsor_dead;
 	UnitNumber=11996;

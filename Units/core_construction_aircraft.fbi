@@ -12,7 +12,7 @@
 	//  Categories
 	//**************
 	Category=CORE VTOL  CONSTR NOWEAPON NOTSUB;
-	tedclass=CNSTR;
+	tedclass=CONSTR;
 
 	//************************************************************
 	//  External Specs

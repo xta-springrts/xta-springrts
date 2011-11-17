@@ -11,8 +11,8 @@
 	//************************************************************
 	//  Categories
 	//**************
-	Category=CORE REPAIRPAD NOWEAPON NOTAIR NOTSUB;
-	tedclass=SPECIAL;
+	Category=CORE PLANT STATIC NOWEAPON STRATEGIC STORAGE NOTAIR NOTSEA NOTSUB;
+	tedclass=STRATEGIC;
 
 	//************************************************************
 	//  External Specs

@@ -5,7 +5,7 @@
 	buildcostenergy=2321;
 	buildcostmetal=155;
 	buildtime=3447;
-	category=ARM SHIP NOWEAPON NOTAIR  ALL;
+	category=ARM SUB CONSTR MOBILE NOWEAPON NOTLAND NOTAIR NOTSEA;
 	description=Tech Level 1;
 	footprintx=2;
 	footprintz=2;
@@ -13,7 +13,7 @@
 	objectname=arm_construction_sub;
 	side=ARM;
 	soundcategory=ARM_CSHIP;
-	tedclass=SHIP;
+	tedclass=SUB;
 	canmove=1;
 	movementclass=BOATSUB;
 	turnrate=343;

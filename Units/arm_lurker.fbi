@@ -11,8 +11,8 @@
 	//************************************************************
 	//  Categories
 	//**************
-	category=ARM UNDERWATER  TORP WEAPON NOTAIR;
-	tedclass=WATER;
+	category=ARM SUB MOBILE WEAPON SONAR NOTLAND NOTAIR NOTSEA;
+	tedclass=SUB;
 
 	//************************************************************
 	//  External Specs

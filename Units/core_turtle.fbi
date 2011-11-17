@@ -11,8 +11,8 @@
 	//************************************************************
 	//  Categories
 	//**************
-	Category=CORE SHIP TPORT  NOWEAPON NOTAIR NOTSUB;
-	tedclass=TANK;
+	Category=CORE HOVER TPORT MOBILE NOWEAPON NOTAIR NOTSUB;
+	tedclass=HOVER;
 
 	//************************************************************
 	//  External Specs

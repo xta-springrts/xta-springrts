@@ -5,7 +5,7 @@
 	buildcostenergy=2502;
 	buildcostmetal=151;
 	buildtime=3352;
-	Category=CORE SHIP NOWEAPON NOTAIR NOTSUB  ALL;
+	Category=CORE SHIP NOWEAPON NOTAIR NOTSUB ;
 	description==- Tech Level 1;
 	footprintx=2;
 	footprintz=2;

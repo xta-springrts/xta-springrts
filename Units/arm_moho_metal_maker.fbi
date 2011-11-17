@@ -11,7 +11,7 @@
 	//************************************************************
 	//  Categories
 	//**************
-	category=ARM METAL NOWEAPON NOTAIR NOTSUB;
+	category=ARM METAL STATIC NOWEAPON NOTAIR NOTSEA NOTSUB;
 	tedclass=METAL;
 
 	//************************************************************
@@ -38,9 +38,9 @@
 	//  Resources
 	//*************
 	metalstorage=0;
-	energyuse=960;
+	energyuse=0;
 	energystorage=0;
-	makesmetal=16;
+	makesmetal=0;
 
 	//************************************************************
 	//  Building
@@ -60,7 +60,7 @@
 	//************************************************************
 	//  Abilities
 	//*************
-	onoffable=1;
+	onoffable=0;
 
 	//************************************************************
 	//  Movement

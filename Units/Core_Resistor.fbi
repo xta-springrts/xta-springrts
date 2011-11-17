@@ -26,8 +26,8 @@
 	MetalStorage=0;
 	ExplodeAs=ATOMIC_BLAST;
 	SelfDestructAs=CRAWL_BLASTSML;
-	Category=CORE WEAPON NOTAIR NOTSUB;
-	TEDClass=WATER;
+	Category=CORE STRATEGIC DEFENSIVE STATIC WEAPON NOTLAND NOTAIR NOTSUB;
+	TEDClass=STRATEGIC;
 	YardMap=wwwwwwwww;
 	Corpse=Core_Resistor_dead;
 	UnitNumber=11992;

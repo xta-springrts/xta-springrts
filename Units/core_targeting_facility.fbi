@@ -11,8 +11,8 @@
 	//************************************************************
 	//  Categories
 	//**************
-	Category=CORE NOWEAPON NOTAIR NOTSUB;
-	tedclass=SPECIAL;
+	Category=CORE STRATEGIC STATIC NOWEAPON NOTAIR NOTSEA NOTSUB;
+	tedclass=STRATEGIC;
 
 	//************************************************************
 	//  External Specs

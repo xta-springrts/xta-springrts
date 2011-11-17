@@ -5,7 +5,7 @@
 	buildcostenergy=1742;
 	buildcostmetal=265;
 	buildtime=5024;//2512
-	Category=CORE  CONSTR NOWEAPON NOTAIR NOTSUB ALL;
+	Category=CORE  CONSTR NOWEAPON NOTAIR NOTSUB;
 	description=Assists Lab Construction;
 	footprintx=3;
 	footprintz=3;
@@ -13,7 +13,7 @@
 	objectname=core_nano_tower;
 	side=core;
 	soundcategory=cor_CVEHICLE;
-	tedclass=CNSTR;
+	tedclass=CONSTR;
 	brakerate=1.5;
 	movementclass=KBOT1;
 	acceleration=0;

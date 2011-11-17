@@ -11,7 +11,7 @@
 	//************************************************************
 	//  Categories
 	//**************
-	Category=CORE VTOL WEAPON STEALTH NOTSUB;
+	Category=CORE VTOL MOBILE WEAPON STEALTH NOTLAND NOTSEA NOTSUB;
 
 	//************************************************************
 	//  External Specs

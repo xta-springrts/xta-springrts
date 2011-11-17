@@ -11,7 +11,7 @@
 	//************************************************************
 	//  Categories
 	//**************
-	Category=CORE VTOL WEAPON BOMB NOTSUB;
+	Category=CORE VTOL MOBILE WEAPON NOTLAND NOTSEA NOTSUB;
 	tedclass=VTOL;
 
 	//************************************************************
@@ -95,7 +95,7 @@
 	//  Weapons
 	//***********
 	weapon1=CORBOMB;
-	nochasecategory=UNDERWATER;
+	nochasecategory=SUB;
 	explodeas=BIG_UNITEX;
 	selfdestructas=BIG_UNIT;
 
