@@ -11,7 +11,7 @@
 	//************************************************************
 	//  Categories
 	//**************
-	category=ARM KBOT NOWEAPON JAM NOTAIR NOTSUB;
+	category=ARM KBOT MOBILE NOWEAPON JAMMER NOTAIR NOTSEA NOTSUB;
 	tedclass=KBOT;
 
 	//************************************************************

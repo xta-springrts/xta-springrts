@@ -5,7 +5,7 @@
 	buildcostenergy=1542;
 	buildcostmetal=254;
 	buildtime=4624;//2312
-	category=ARM  CONSTR NOWEAPON NOTAIR NOTSUB ALL;
+	category=ARM  CONSTR NOWEAPON NOTAIR NOTSUB;
 	description=Assists Lab construction;
 	footprintx=3;
 	footprintz=3;
@@ -13,7 +13,7 @@
 	objectname=arm_nano_tower;
 	side=ARM;
 	soundcategory=ARM_CVEHICLE;
-	tedclass=CNSTR;
+	tedclass=CONSTR;
 	brakerate=1.5;
 	movementclass=KBOT1;
 	acceleration=0;

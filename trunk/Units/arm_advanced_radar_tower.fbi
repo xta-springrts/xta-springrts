@@ -11,8 +11,8 @@
 	//************************************************************
 	//  Categories
 	//**************
-	category=ARM NOWEAPON NOTAIR NOTSUB;
-	tedclass=SPECIAL;
+	category=ARM STATIC NOWEAPON RADAR NOTAIR NOTSEA NOTSUB;
+	tedclass=RADAR;
 
 	//************************************************************
 	//  External Specs
@@ -28,9 +28,9 @@
 	//  Health/Cost/Size
 	//********************
 	maxdamage=120;
-	buildcostmetal=125;
-	buildcostenergy=1830;
-	buildtime=4800;
+	buildcostmetal=85;
+	buildcostenergy=941;
+	buildtime=3186;
 	footprintx=2;
 	footprintz=2;
 

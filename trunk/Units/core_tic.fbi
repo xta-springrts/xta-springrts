@@ -30,7 +30,7 @@
 	explodeas=DECOY_COMMANDER_BLAST;
 	selfdestructas=DECOY_BLAST;
 	selfdestructcountdown=0;
-	Category=ARM KBOT WEAPON NOTAIR NOTSUB KAMIKAZE;
+	Category=CORE KBOT MINE MOBILE WEAPON NOTAIR NOTSEA NOTSUB;
 	TEDClass=KBOT;
 	Copyright=Copyright 1997 Humongous Entertainment. All rights reserved.;
 	UnitNumber=100001;

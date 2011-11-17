@@ -10,8 +10,8 @@
 	//************************************************************
 	//  Categories
 	//**************
-	Category=CORE MINE WEAPON NOTAIR NOTSUB KAMIKAZE;
-	tedclass=SPECIAL;
+	Category=CORE MINE DEFENSIVE STATIC WEAPON NOTAIR NOTSEA NOTSUB;
+	tedclass=MINE;
 
 	//************************************************************
 	//  External Specs

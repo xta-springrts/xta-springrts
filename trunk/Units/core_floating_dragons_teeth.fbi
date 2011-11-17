@@ -11,7 +11,7 @@
 	//  Categories
 	//**************
 	Category=CORE NOWEAPON NOTAIR NOTSUB;
-	tedclass=FORT;
+	tedclass=DEFENSIVE;
 
 	//************************************************************
 	//  External Specs

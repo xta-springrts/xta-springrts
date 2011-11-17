@@ -24,7 +24,7 @@
 	SoundCategory=CORE_CSHIP;
 	ExplodeAs=StupidSubs;
 	SelfDestructAs=StupidSubs;
-	Category=ARM UNDERWATER WEAPON KAMIKAZE;
+	Category=ARM SUB MINE MOBILE WEAPON NOTLAND NOTAIR NOTSEA;
 	Copyright=Copyright 1997 Humongous Entertainment. All rights reserved.;
 	UnitNumber=324;
 	firestandorders=1;

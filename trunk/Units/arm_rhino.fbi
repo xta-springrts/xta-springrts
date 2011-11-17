@@ -10,7 +10,7 @@
 	//************************************************************
 	//  Categories
 	//**************
-	category=ARM WEAPON NOTAIR NOTSUB;
+	category=ARM KBOT MOBILE WEAPON RADAR NOTAIR NOTSEA NOTSUB;
 	tedclass=KBOT;
 
 	//************************************************************

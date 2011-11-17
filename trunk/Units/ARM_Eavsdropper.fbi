@@ -30,8 +30,8 @@
 	MetalStorage=0;
 	ExplodeAs=SMALL_UNITEX;
 	SelfDestructAs=SMALL_UNIT;
-	Category=ARM UNDERWATER NOWEAPON NOTAIR;
-	TEDClass=SHIP;
+	Category=ARM SUB MOBILE NOWEAPON SONAR NOTLAND NOTAIR NOTSEA;
+	TEDClass=SUB;
 	Copyright=Copyright 1997 Humongous Entertainment. All rights reserved.;
 	Corpse=Arm_Eavsdropper_dead;
 	UnitNumber=602;

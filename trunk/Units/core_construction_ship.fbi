@@ -12,7 +12,7 @@
 	//  Categories
 	//**************
 	Category=CORE SHIP CONSTR NOWEAPON NOTAIR NOTSUB;
-	tedclass=CNSTR;
+	tedclass=CONSTR;
 
 	//************************************************************
 	//  External Specs

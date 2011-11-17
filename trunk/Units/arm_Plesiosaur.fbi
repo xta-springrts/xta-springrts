@@ -11,7 +11,7 @@
 	//************************************************************
 	//  Categories
 	//**************
-	category=ARM SHIP WEAPON ANTISUB NOTAIR NOTSUB;
+	category=ARM SHIP MOBILE WEAPON PHIB NOTLAND NOTAIR NOTSUB;
 	tedclass=SHIP;
 
 	//************************************************************

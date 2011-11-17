@@ -24,7 +24,7 @@
 	SoundCategory=CORE_CSHIP;
 	ExplodeAs=StupidSubs;
 	SelfDestructAs=StupidSubs;
-	Category=CORE UNDERWATER WEAPON KAMIKAZE;
+	Category=CORE SUB MINE MOBILE WEAPON NOTLAND NOTAIR NOTSEA;
 	Copyright=Copyright 1997 Humongous Entertainment. All rights reserved.;
 	UnitNumber=702;
 	firestandorders=1;
@@ -40,7 +40,8 @@
 	Acceleration=0.05;
 	TurnRate=320;
 	SteeringMode=1;
-	ShootMe=1;	DefaultMissionType=Standby;
+	ShootMe=1;
+	DefaultMissionType=Standby;
 	MovementClass=BOATSUB;
 	canattack=1;
 	MinWaterDepth=20;

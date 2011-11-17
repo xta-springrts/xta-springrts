@@ -11,7 +11,7 @@
 	//************************************************************
 	//  Categories
 	//**************
-	category=ARM SHIP NOWEAPON JAM NOTAIR NOTSUB;
+	category=ARM SHIP MOBILE NOWEAPON JAMMER NOTAIR NOTLAND NOTSUB;
 	tedclass=SHIP;
 
 	//************************************************************

@@ -11,7 +11,7 @@
 	//************************************************************
 	//  Categories
 	//**************
-	Category=CORE PLANT NOWEAPON NOTAIR NOTSUB;
+	Category=CORE PLANT STATIC NOWEAPON RADAR NOTAIR NOTSEA NOTSUB;
 	tedclass=PLANT;
 
 	//************************************************************

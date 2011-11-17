@@ -10,8 +10,8 @@
 	//************************************************************
 	//  Categories
 	//**************
-	category=ARM TANK CONSTR NOWEAPON NOTAIR NOTSUB;
-	tedclass=CNSTR;
+	category=ARM TANK CONSTR MOBILE NOWEAPON STORAGE NOTAIR NOTSEA NOTSUB;
+	tedclass=CONSTR;
 
 	//************************************************************
 	//  External Specs

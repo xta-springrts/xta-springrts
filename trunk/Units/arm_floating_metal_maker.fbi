@@ -11,7 +11,7 @@
 	//************************************************************
 	//  Categories
 	//**************
-	category=ARM METAL NOWEAPON NOTAIR NOTSUB;
+	category=ARM METAL STATIC NOWEAPON NOTLAND NOTAIR NOTSUB;
 	tedclass=METAL;
 
 	//************************************************************
@@ -37,9 +37,9 @@
 	//  Resources
 	//*************
 	metalstorage=0;
-	energyuse=180;
+	energyuse=0;
 	energystorage=0;
-	makesmetal=3;
+	makesmetal=0;
 	windgenerator=0.001;
 
 	//************************************************************
@@ -62,14 +62,14 @@
 	//************************************************************
 	//  Abilities
 	//*************
-	onoffable=1;
+	onoffable=0;
 
 	//************************************************************
 	//  Movement
 	//************
 	maxslope=10;
 	maxwaterdepth=0;
-	minwaterdepth=11;
+	minwaterdepth=4;
 
 	//************************************************************
 	//  Sight/Radar/Sonar

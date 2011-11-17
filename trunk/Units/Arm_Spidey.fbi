@@ -30,8 +30,8 @@
 	explodeas=DECOY_COMMANDER_BLAST;
 	selfdestructas=DECOY_BLAST;
 	selfdestructcountdown=0;
-	Category=ARM TANK PARAL WEAPON NOTAIR NOTSUB KAMIKAZE;
-	TEDClass=TANK;
+	Category=ARM KBOT MOBILE WEAPON STEALTH NOTAIR NOTSEA NOTSUB;
+	TEDClass=KBOT;
 	Copyright=Copyright 1997 Humongous Entertainment. All rights reserved.;
 	//Copyright 1998-2002 by Silencer for Ta-Power. All rights reserved.;
 	UnitNumber=74;

@@ -12,7 +12,7 @@
 	//  Categories
 	//**************
 	category=ARM HOVER TPORT NOWEAPON NOTAIR NOTSUB;
-	tedclass=TANK;
+	tedclass=HOVER;
 
 	//************************************************************
 	//  External Specs

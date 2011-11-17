@@ -11,7 +11,7 @@
 	//************************************************************
 	//  Categories
 	//**************
-	Category=CORE SHIP CARRY NOWEAPON NOTAIR NOTSUB;
+	Category=CORE SHIP MOBILE NOWEAPON RADAR NOTLAND NOTAIR NOTSUB;
 	tedclass=SHIP;
 
 	//************************************************************

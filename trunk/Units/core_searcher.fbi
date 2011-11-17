@@ -11,7 +11,7 @@
 	//************************************************************
 	//  Categories
 	//**************
-	Category=CORE SHIP WEAPON NOTAIR NOTSUB;
+	Category=CORE SHIP WEAPON MOBILE NOTAIR NOTLAND NOTSUB;
 	tedclass=SHIP;
 
 	//************************************************************
@@ -114,9 +114,9 @@
 	threed=1;
 	version=1.2;
 	zbuffer=1;
-	collisionVolumeType = box;
-	collisionVolumeScales =17 25 33;
-	collisionVolumeOffsets = 0 -10 0;
+	collisionVolumeType = CylY;
+	collisionVolumeScales =21 22 53;
+	collisionVolumeOffsets = 0 -4 -1;
 	collisionVolumeTest = 1;
 	pieceTrailCEGTag=Debree;//bleh
 	pieceTrailCEGRange = 4;

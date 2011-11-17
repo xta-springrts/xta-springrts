@@ -10,7 +10,7 @@
 	//************************************************************
 	//  Categories
 	//**************
-	Category=CORE MINE KBOT WEAPON NOTAIR NOTSUB KAMIKAZE;
+	Category=CORE MINE KBOT PHIB MOBILE WEAPON NOTAIR NOTSEA NOTSUB;
 	tedclass=KBOT;
 
 	//************************************************************

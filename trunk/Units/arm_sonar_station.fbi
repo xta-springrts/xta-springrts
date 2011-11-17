@@ -11,8 +11,8 @@
 	//************************************************************
 	//  Categories
 	//**************
-	category=ARM SONAR NOTAIR NOTSUB;
-	tedclass=WATER;
+	category=ARM STATIC NOWEAPON SONAR NOTLAND NOTAIR NOTSUB;
+	tedclass=SONAR;
 
 	//************************************************************
 	//  External Specs
@@ -49,6 +49,10 @@
 	buildangle=8192;
 	yardmap=wwww;
 	activatewhenbuilt=1;
+	collisionVolumeType=Ell;
+	collisionVolumeScales=29 47 20;
+	collisionVolumeOffsets=0 -2 0;
+	collisionVolumeTest = 1;
 
 	//************************************************************
 	//  Constructor

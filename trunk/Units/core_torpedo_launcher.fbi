@@ -11,8 +11,8 @@
 	//************************************************************
 	//  Categories
 	//**************
-	Category=CORE WEAPON TORP NOTAIR NOTSUB;
-	tedclass=WATER;
+	Category=CORE DEFENSIVE STATIC WEAPON NOTLAND NOTAIR NOTSUB;
+	tedclass=DEFENSIVE;
 
 	//************************************************************
 	//  External Specs
@@ -72,7 +72,7 @@
 	//  Movement
 	//************
 	maxslope=10;
-	minwaterdepth=11;
+	minwaterdepth=13;
 
 	//************************************************************
 	//  Sight/Radar/Sonar

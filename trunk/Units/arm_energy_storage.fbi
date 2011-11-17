@@ -34,7 +34,7 @@
 	footprintx=4;
 	footprintz=4;
 	collisionVolumeType=CylY;
-	collisionVolumeScales=58 44 58;
+	collisionVolumeScales=57 45 57;
 
 	//************************************************************
 	//  Resources

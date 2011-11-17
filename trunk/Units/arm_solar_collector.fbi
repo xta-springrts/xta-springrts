@@ -11,7 +11,7 @@
 	//************************************************************
 	//  Categories
 	//**************
-	category=ARM ENERGY  NOWEAPON NOTAIR NOTSUB;
+	category=ARM ENERGY STATIC NOWEAPON NOTAIR NOTSEA NOTSUB;
 	tedclass=ENERGY;
 
 	//************************************************************

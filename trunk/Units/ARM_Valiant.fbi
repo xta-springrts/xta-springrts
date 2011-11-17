@@ -29,8 +29,8 @@
 	MetalStorage=0;
 	explodeas=NANO_UNITEX;
 	selfdestructas=NANO_UNIT;
-	Category=ARM SHIP MINELAYER NOWEAPON NOTAIR NOTSUB;
-	TEDClass=SHIP;
+	Category=ARM SUB CONSTR MOBILE NOWEAPON NOTLAND NOTAIR NOTSEA;
+	TEDClass=SUB;
 	Copyright=Copyright 1997 Humongous Entertainment. All rights reserved.;
 	Corpse=Arm_Valiant_dead;
 	UnitNumber=617;

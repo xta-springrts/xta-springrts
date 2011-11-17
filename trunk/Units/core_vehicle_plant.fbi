@@ -32,8 +32,8 @@
 	buildcostmetal=600;
 	buildcostenergy=1100;
 	buildtime=6700;
-	footprintx=7;
-	footprintz=7;
+	footprintx=6;
+	footprintz=6;
 
 	//************************************************************
 	//  Resources
@@ -46,10 +46,10 @@
 	//  Building
 	//************
 	buildangle=2048;
-	yardmap=yyoooyy yyoooyy ooooooo oocccoo oocccoo oocccoo oocccoo;
-	collisionVolumeType=Box;
-	collisionVolumeScales=96 32 96;
-	collisionVolumeOffsets=0 11 0;
+	yardmap=yooooy yooooy occcco occcco occcco occcco;
+	collisionVolumeType=CylZ;
+	collisionVolumeScales=90 50 90;
+	collisionVolumeOffsets=0 0 0;
 	collisionVolumeTest = 1;
 
 	//************************************************************

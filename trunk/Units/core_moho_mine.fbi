@@ -11,7 +11,7 @@
 	//************************************************************
 	//  Categories
 	//**************
-	Category=CORE METAL EXTRACTOR NOWEAPON NOTAIR NOTSUB;
+	Category=CORE METAL STATIC NOWEAPON NOTAIR NOTSEA NOTSUB;
 	tedclass=METAL;
 
 	//************************************************************

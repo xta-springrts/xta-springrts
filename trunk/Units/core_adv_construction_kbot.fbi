@@ -11,7 +11,7 @@
 	//  Categories
 	//**************
 	Category=CORE KBOT CONSTR NOWEAPON NOTAIR NOTSUB;
-	tedclass=CNSTR;
+	tedclass=CONSTR;
 
 	//************************************************************
 	//  External Specs

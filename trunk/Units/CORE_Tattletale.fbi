@@ -30,8 +30,8 @@
 	MetalStorage=0;
 	ExplodeAs=SMALL_UNITEX;
 	SelfDestructAs=SMALL_UNIT;
-	Category=CORE UNDERWATER NOWEAPON NOTAIR;
-	TEDClass=SHIP;
+	Category=CORE SUB MOBILE NOWEAPON SONAR NOTLAND NOTAIR NOTSEA;
+	TEDClass=SUB;
 	Copyright=Copyright 1997 Humongous Entertainment. All rights reserved.;
 	Corpse=CORE_Tattletale_dead;
 	UnitNumber=619;

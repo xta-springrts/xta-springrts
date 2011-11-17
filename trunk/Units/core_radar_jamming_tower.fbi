@@ -11,8 +11,8 @@
 	//************************************************************
 	//  Categories
 	//**************
-	Category=CORE RAD  NOTAIR NOTSUB;
-	tedclass=SPECIAL;
+	Category=CORE STATIC NOWEAPON JAMMER NOTAIR NOTSEA NOTSUB;
+	tedclass=JAMMER;
 
 	//************************************************************
 	//  External Specs

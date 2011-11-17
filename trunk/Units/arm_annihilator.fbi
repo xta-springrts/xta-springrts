@@ -11,8 +11,8 @@
 	//************************************************************
 	//  Categories
 	//**************
-	category=ARM WEAPON NOTAIR NOTSUB;
-	tedclass=FORT;
+	category=ARM DEFENSIVE STATIC WEAPON RADAR NOTAIR NOTSEA NOTSUB;
+	tedclass=DEFENSIVE;
 
 	//************************************************************
 	//  External Specs

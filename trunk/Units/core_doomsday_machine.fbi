@@ -12,7 +12,7 @@
 	//  Categories
 	//**************
 	Category=CORE WEAPON NOTAIR NOTSUB;
-	tedclass=FORT;
+	tedclass=DEFENSIVE;
 
 	//************************************************************
 	//  External Specs
@@ -29,9 +29,9 @@
 	//********************
 	maxdamage=9925;
 	healtime=11;
-	buildcostmetal=5537;
-	buildcostenergy=36858;
-	buildtime=66201;
+	buildcostmetal=5855;
+	buildcostenergy=38973;
+	buildtime=70000;
 	footprintx=4;
 	footprintz=4;
 
@@ -48,8 +48,8 @@
 	buildangle=65535;
 	yardmap=oooo oooo oooo oooo;
 	collisionVolumeType=Box;
-	collisionVolumeScales=48 86 48;
-	collisionVolumeOffsets=0 -15 0;
+	collisionVolumeScales=46 86 46;
+	collisionVolumeOffsets=0 0 0;
 	collisionVolumeTest = 1;
 
 	//************************************************************

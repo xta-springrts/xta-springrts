@@ -11,7 +11,7 @@
 	//************************************************************
 	//  Categories
 	//**************
-	Category=CORE VTOL WEAPON TORP NOTSUB;
+	Category=CORE VTOL MOBILE WEAPON NOTLAND NOTSEA NOTSUB;
 	tedclass=VTOL;
 
 	//************************************************************
@@ -90,7 +90,7 @@
    	WeaponMainDir3=0 0 1;
    	MaxAngleDif3=120;
    	WeaponSlaveto3=1;
-	nochasecategory=UNDERWATER;
+	nochasecategory=SUB;
 	wsec_badtargetcategory=NOTAIR;
 	explodeas=BIG_UNITEX;
 	selfdestructas=BIG_UNIT;

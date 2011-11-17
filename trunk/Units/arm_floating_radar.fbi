@@ -11,8 +11,8 @@
 	//************************************************************
 	//  Categories
 	//**************
-	category=ARM RAD  NOTAIR NOTSUB;
-	tedclass=SPECIAL;
+	category=ARM STATIC NOWEAPON RADAR NOTAIR NOTLAND NOTSUB;
+	tedclass=RADAR;
 
 	//************************************************************
 	//  External Specs

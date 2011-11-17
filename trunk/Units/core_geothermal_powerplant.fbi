@@ -12,7 +12,7 @@
 	//  Categories
 	//**************
 	Category=CORE ENERGY NOWEAPON NOTAIR NOTSUB;
-	tedclass=metal;
+	tedclass=ENERGY;
 
 	//************************************************************
 	//  External Specs

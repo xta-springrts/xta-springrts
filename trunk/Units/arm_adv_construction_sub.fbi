@@ -11,8 +11,8 @@
 	//************************************************************
 	//  Categories
 	//**************
-	category=ARM UNDERWATER CONSTR NOWEAPON NOTAIR;
-	tedclass=SHIP;
+	category=ARM SUB CONSTR MOBILE NOWEAPON STORAGE NOTLAND NOTAIR NOTSEA;
+	tedclass=CONSTR;
 
 	//************************************************************
 	//  External Specs

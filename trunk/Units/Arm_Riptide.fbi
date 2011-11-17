@@ -32,8 +32,8 @@
 	ExplodeAs=ARMMINE4;
 	SelfDestructAs=ARMMINE4;
 	selfdestructcountdown=0;
-	Category=ARM MINE WEAPON NOTAIR NOTSUB KAMIKAZE;
-	TEDClass=SPECIAL;
+	Category=ARM MINE DEFENSIVE STATIC WEAPON NOTLAND NOTAIR NOTSUB;
+	TEDClass=MINE;
 	yardmap=o;
 	stealth=1;
 	sonarStealth=1;

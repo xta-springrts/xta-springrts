@@ -11,7 +11,7 @@
 	//************************************************************
 	//  Categories
 	//**************
-	category=ARM SHIP CARRY NOWEAPON NOTAIR NOTSUB;
+	category=ARM SHIP RADAR MOBILE NOWEAPON NOTAIR NOTLAND NOTSUB;
 	tedclass=SHIP;
 
 	//************************************************************

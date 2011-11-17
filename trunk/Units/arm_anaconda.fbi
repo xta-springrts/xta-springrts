@@ -11,8 +11,8 @@
 	//************************************************************
 	//  Categories
 	//**************
-	category=ARM HOVER WEAPON NOTAIR NOTSUB;
-	tedclass=TANK;
+	category=ARM HOVER MOBILE WEAPON NOTAIR NOTSUB;
+	tedclass=HOVER;
 
 	//************************************************************
 	//  External Specs
