@@ -50,9 +50,9 @@ Spring.SetUnitPieceCollisionVolumeData ( number unitID, number pieceIndex, boole
 
 
 --Collision volume definitions, ones entered here are for XTA, for other mods modify apropriatly
-
-local unitCollisionVolume = {}		--dynamic collision volume definitions
-local pieceCollisionVolume = {}		--per piece collision volume definitions
+local unitCollisionVolume = {}			--dynamic collision volume definitions
+local pieceCollisionVolume = {}			--per piece collision volume definitions
+local dynamicPieceCollisionVolume = {}	--dynamic per piece collision volume definitions
 
 	unitCollisionVolume["arm_advanced_radar_tower"] = {
 		on={60,80,60,0,15,0,0,1,0},
@@ -63,8 +63,8 @@ local pieceCollisionVolume = {}		--per piece collision volume definitions
 		off={24,40,24,0,-5,0,0,1,0},
 	}
 	unitCollisionVolume["arm_ambusher"] = {
-		on={49,45,49,-0.5,-14,0,0,1,0},
-		off={49,26,49,-0.5,-14,0,0,1,0},
+		on={49,45,49,-0.5,-11,0,0,1,0},
+		off={49,26,49,-0.5,-11,0,0,1,0},
 	}
 	unitCollisionVolume["arm_annihilator"] = {
 		on={50,55,50,0,10,0,2,1,0},
@@ -99,8 +99,8 @@ local pieceCollisionVolume = {}		--per piece collision volume definitions
 		off={92,74,92,0,-18,0,1,1,2},
 	}
 	unitCollisionVolume["core_doomsday_machine"] = {
-		on={55,112,55,0,-3,0,2,1,0},
-		off={48,86,48,0,-15,0,2,1,0},
+		on={55,116,55,0,15,0,2,1,0},
+		off={45,86,45,0,0,0,2,1,0},
 	}
 	unitCollisionVolume["core_floating_metal_maker"] = {
 		on={48,46,48,0,0,0,0,1,0},
@@ -123,12 +123,8 @@ local pieceCollisionVolume = {}		--per piece collision volume definitions
 		off={38,20,38,0,0,0,1,1,1},
 	}
 	unitCollisionVolume["core_toaster"] = {
-		on={44,23,44,0,0,0,2,1,0},
-		off={44,8,44,0,-9,0,2,1,0},
-	}
-	unitCollisionVolume["core_viper"] = {
-		on={67,136,67,0,-8,0,0,1,0},
-		off={51,14,53,0,-3,0,2,1,0},
+		on={44,23,44,0,6,0,2,1,0},
+		off={44,8,44,0,-3,0,2,1,0},
 	}
 	
 	pieceCollisionVolume["arm_big_bertha"] = {
@@ -159,5 +155,33 @@ local pieceCollisionVolume = {}		--per piece collision volume definitions
 		["14"]={false},
 	}
 
+	dynamicPieceCollisionVolume["core_viper"] = {
+		on = {
+			["0"]={true,51,12,53,0,4,0,2,0},
+			["5"]={true,25,66,25,0,-14,0,1,1},
+			["1"]={false},
+			["2"]={false},
+			["3"]={false},
+			["4"]={false},
+			["6"]={false},
+			["7"]={false},
+			["8"]={false},
+			["9"]={false},
+			["10"]={false},
+		},
+		off = {
+			["0"]={true,51,12,53,0,4,0,2,0},
+			["1"]={false},
+			["2"]={false},
+			["3"]={false},
+			["4"]={false},
+			["5"]={false},
+			["6"]={false},
+			["7"]={false},
+			["8"]={false},
+			["9"]={false},
+			["10"]={false},
+		}
+	}
 
-return unitCollisionVolume, pieceCollisionVolume
+return unitCollisionVolume, pieceCollisionVolume, dynamicPieceCollisionVolume

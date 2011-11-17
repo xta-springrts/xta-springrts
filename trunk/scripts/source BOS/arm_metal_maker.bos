@@ -5,8 +5,36 @@
 
 piece  base, sphereOn, sphereOff;
 
-static-var  statechg_DesiredState, statechg_StateChanging;
+static-var  statechg_DesiredState, statechg_StateChanging, mmState;
 
+#define OPERATING 1024
+
+ImAMetalMaker()
+{
+	mmState = -1;
+	while( TRUE )
+	{
+		if ((get OPERATING) == 1)
+		{
+			if (mmState != 1) {
+				show sphereOn;
+				hide sphereOff;
+				//move sphere to y-axis [1.600000] speed [1.600000];
+				mmState = 1;
+			}
+		}
+		else
+		{
+			if (mmState != 0) {
+				hide sphereOn;
+				show sphereOff;
+				//move sphere to y-axis [0.000000] speed [1.600000];
+				mmState = 0;
+			}
+		}
+		sleep 1000;
+	}
+}
 
 SmokeUnit(healthpercent, sleeptime, smoketype)
 {
@@ -14,6 +42,7 @@ SmokeUnit(healthpercent, sleeptime, smoketype)
 	{
 		sleep 500;
 	}
+	start-script ImAMetalMaker();
 	while( TRUE )
 	{
 		healthpercent = get HEALTH;
@@ -35,6 +64,7 @@ SmokeUnit(healthpercent, sleeptime, smoketype)
 	}
 }
 
+/*
 Go()
 {
 	show sphereOn;
@@ -72,16 +102,17 @@ RequestState(requestedstate, currentstate)
 	}
 	statechg_StateChanging = FALSE;
 }
-
+*/
 Create()
 {
 	dont-shade sphereOn;
 	dont-shade sphereOff;
-	statechg_DesiredState = TRUE;
-	statechg_StateChanging = FALSE;
+	//statechg_DesiredState = TRUE;
+	//statechg_StateChanging = FALSE;
 	start-script SmokeUnit();
 }
 
+/*
 Activate()
 {
 	start-script RequestState(0);
@@ -91,6 +122,7 @@ Deactivate()
 {
 	start-script RequestState(1);
 }
+*/
 
 SweetSpot(piecenum)
 {
