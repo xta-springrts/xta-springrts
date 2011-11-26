@@ -38,14 +38,31 @@ Spring.SetUnitPieceCollisionVolumeData ( number unitID, number pieceIndex, boole
 		off={32,48,32,0,-10,0,0,1,0},
 	}
 	pieceCollisionVolume["arm_big_bertha"] = {
-		["1"]={true,       -- [pieceIndexNumber]={enabled,
+		["0"]={true,       -- [pieceIndexNumber]={enabled,
 			   48,74,48,   --              Volume X scale, Volume Y scale, Volume Z scale,
 		       0,0,0,      --              Volume X offset, Volume Y offset, Volume Z offset,
 			   1,1}        --              vType, axis},
-		["2"]={false},
-		....
+		....               -- All undefined pieces will be treated as disabled for collision detection
 	}
-
+	dynamicPieceCollisionVolume["core_viper"] = {	--same as with pieceCollisionVolume only uses "on" and "off" tables
+		on = {
+			["0"]={true,51,12,53,0,4,0,2,0},
+			["5"]={true,25,66,25,0,-14,0,1,1},
+		},
+		off = {
+			["0"]={true,51,12,53,0,4,0,2,0},
+		}
+	}
+	
+	Q: How am I supposed to guess the piece index number?
+	A: Open the model in UpSpring and locate your piece. Count all pieces above it in the piece tree.
+	   Piece index number is equal to number of pieces above it in tree. Root piece has index 0.
+	   Or start counting from tree top till your piece starting from 0. Count lines in Upspring
+	   not along the tree hierarchy.
+	Q: I defined all per piece volumes in here but unit still uses only one collision volume!
+	A: Edit unit's definition file and add:
+		usePieceCollisionVolumes=1;    (FBI)
+		usePieceCollisionVolumes=true, (LUA)
 ]]--
 
 
@@ -71,7 +88,7 @@ local dynamicPieceCollisionVolume = {}	--dynamic per piece collision volume defi
 		off={50,35,50,0,0,0,2,1,0},
 	}
 	unitCollisionVolume["arm_kbot_lab"] = {
-		on={95,24,95,0,0,0,2,1,0},
+		on={90,24,95,0,0,0,2,1,0},
 		off={95,18,99,0,-3,0,1,1,1},
 	}
 	unitCollisionVolume["arm_moho_metal_maker"] = {
@@ -130,9 +147,6 @@ local dynamicPieceCollisionVolume = {}	--dynamic per piece collision volume defi
 	pieceCollisionVolume["arm_big_bertha"] = {
 		["0"]={true,28,74,28,0,34,0,1,1},
 		["2"]={true,15,15,113,0,0,30,1,2},
-		["1"]={false},
-		["3"]={false},
-		["4"]={false},
 	}
 	--pieceCollisionVolume["arm_commander"] = {
 	--	["0"]={true,28,74,28,0,34,0,1,1},
@@ -140,48 +154,24 @@ local dynamicPieceCollisionVolume = {}	--dynamic per piece collision volume defi
 	pieceCollisionVolume["arm_vulcan"] = {
 		["1"]={true,60,94,60,0,47,-1,1,1},
 		["6"]={true,36,36,106,0,0,27,1,2},
-		["0"]={false},
-		["2"]={false},
-		["3"]={false},
-		["5"]={false},
-		["4"]={false},
-		["7"]={false},
-		["8"]={false},
-		["9"]={false},
-		["10"]={false},
-		["11"]={false},
-		["12"]={false},
-		["13"]={false},
-		["14"]={false},
 	}
 
 	dynamicPieceCollisionVolume["core_viper"] = {
 		on = {
 			["0"]={true,51,12,53,0,4,0,2,0},
 			["5"]={true,25,66,25,0,-14,0,1,1},
-			["1"]={false},
-			["2"]={false},
-			["3"]={false},
-			["4"]={false},
-			["6"]={false},
-			["7"]={false},
-			["8"]={false},
-			["9"]={false},
-			["10"]={false},
 		},
 		off = {
 			["0"]={true,51,12,53,0,4,0,2,0},
-			["1"]={false},
-			["2"]={false},
-			["3"]={false},
-			["4"]={false},
-			["5"]={false},
-			["6"]={false},
-			["7"]={false},
-			["8"]={false},
-			["9"]={false},
-			["10"]={false},
 		}
 	}
-
+	dynamicPieceCollisionVolume["core_krogoth_gantry"] = {
+		on = {
+			["0"]={true,142,77,136,0,0,0,1,2},
+			["23"]={true,108,49,108,0,14,36,1,2},
+		},
+		off = {
+			["0"]={true,142,77,136,0,0,0,1,2},
+		}
+	}
 return unitCollisionVolume, pieceCollisionVolume, dynamicPieceCollisionVolume
