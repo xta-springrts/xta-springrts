@@ -70,7 +70,8 @@ local spDestroyUnit        = Spring.DestroyUnit
 local spCreateUnit         = Spring.CreateUnit
 
 local mcSetRotationVelocity = MoveCtrl.SetRotationVelocity
-local mcSetLeaveTracks      = MoveCtrl.SetLeaveTracks
+--local mcSetLeaveTracks      = MoveCtrl.SetLeaveTracks
+spSetUnitLeaveTracks		= Spring.SetUnitLeaveTracks	--changed in 84.0
 local mcSetPosition         = MoveCtrl.SetPosition
 local mcSetRotation         = MoveCtrl.SetRotation
 local mcDisable             = MoveCtrl.Disable
@@ -226,7 +227,8 @@ local function Jump(unitID, finish)
   
   mcEnable(unitID)
 
-  mcSetLeaveTracks(unitID, false)
+  --mcSetLeaveTracks(unitID, false)
+  spSetUnitLeaveTracks (unitID, false)
   
   mcSetRotation(unitID, 0, (startHeading - 2^15)/rotUnit, 0) -- keep current heading
   mcSetRotationVelocity(unitID, 0, turn/rotUnit*step, 0)
@@ -261,6 +263,7 @@ local function Jump(unitID, finish)
     end
 
     mcDisable(unitID)
+	spSetUnitLeaveTracks (unitID, true)
     if (fakeUnitID) then spDestroyUnit(fakeUnitID, false, true) end
     spCallCOBScript(unitID, "EndJump", 0)
     jumping[unitID] = nil
