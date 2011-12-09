@@ -275,7 +275,7 @@ function getSingleFactory()
 	selUnits = Spring.GetSelectedUnits()
   
   --only do something when exactly ONE factory is selected to avoid execution by mistake
-  if ( selUnits.n ~= 1 ) then
+  if ( #selUnits ~= 1 ) then
   	return nil, nil
 	end
   
@@ -325,7 +325,7 @@ function loadQueue( unitId, unitDef, groupNo )
 	end
 							
 	queue = savedQueues[curModId][unitDef.id][groupNo]
-	if (queue ~= nil and queue.n > 0 ) then
+	if (queue ~= nil and #queue > 0 ) then
 	 	ClearFactoryQueues()
 		modifiedGroup = groupNo
 		modifiedGroupTime = Spring.GetGameSeconds()

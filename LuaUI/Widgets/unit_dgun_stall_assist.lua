@@ -38,7 +38,7 @@ local spGetTeamUnits = Spring.GetTeamUnits
 local spGetUnitDefID = Spring.GetUnitDefID
 local spGetSpectatingState = Spring.GetSpectatingState
 
-local CMD_DGUN = CMD.DGUN
+local CMD_DGUN = CMD.MANUALFIRE
 local CMD_WAIT = CMD.WAIT
 
 ----------------------------------------------------------------

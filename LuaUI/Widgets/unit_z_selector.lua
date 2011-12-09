@@ -50,7 +50,7 @@ end
 function widget:KeyPress(key, mods, isRepeat)
   if (key == 0x07A) and (not isRepeat) then
     local newSelDefs = Spring.GetSelectedUnitsCounts()
-    if (newSelDefs.n > 0) then
+    if (#newSelDefs > 0) then
       selDefs = newSelDefs
     end
     zDown = true
