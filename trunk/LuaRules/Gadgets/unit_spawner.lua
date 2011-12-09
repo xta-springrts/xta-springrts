@@ -638,14 +638,14 @@ local function SpawnBurrow(number)
       local vicinity = Spring.GetUnitsInCylinder(x, z, maxBaseDistance)
       local humanUnitsInVicinity = false
       local humanUnitsInProximity = false
-      for i=1,vicinity['n'],1 do
+      for i=1,#vicinity,1 do
         if (Spring.GetUnitTeam(vicinity[i]) ~= chickenTeamID) then
           humanUnitsInVicinity = true
           break
         end
       end
 
-      for i=1,proximity['n'],1 do
+      for i=1,#proximity,1 do
         if (Spring.GetUnitTeam(proximity[i]) ~= chickenTeamID) then
           humanUnitsInProximity = true
           break
@@ -687,14 +687,14 @@ local function SpawnQueen()
       local vicinity = Spring.GetUnitsInCylinder(x, z, maxBaseDistance)
       local humanUnitsInVicinity = false
       local humanUnitsInProximity = false
-      for i=1,vicinity['n'],1 do
+      for i=1,#vicinity,1 do
         if (Spring.GetUnitTeam(vicinity[i]) ~= chickenTeamID) then
           humanUnitsInVicinity = true
           break
         end
       end
 
-      for i=1,proximity['n'],1 do
+      for i=1,#proximity,1 do
         if (Spring.GetUnitTeam(proximity[i]) ~= chickenTeamID) then
           humanUnitsInProximity = true
           break
