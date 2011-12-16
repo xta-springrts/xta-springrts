@@ -298,7 +298,6 @@ end
 -- works together with unit_transportcomfix.lua
 -- http://springrts.com/mantis/view.php?id=2791 Can probally be removed with 85.0
 for name, ud in pairs(UnitDefs) do
-	--if ud.category and (ud.category:find("TANK",1,true) or ud.category:find("HOVER",1,true)) then
 	--Spring.Echo ("releaseHeld for " .. (ud.unitname or "nil unitname"))
 	--Spring.Echo ("id:" .. (ud.unitDefId or "nil"))	
 	if (ud.transportsize) then	--refuses to load without this
