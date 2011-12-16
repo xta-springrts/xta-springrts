@@ -24,11 +24,12 @@ end
 -- Tanks and hovers don't slow down when turning
 
 for name, ud in pairs(UnitDefs) do
-	if ud.category and (ud.category:find("TANK",1,true) or ud.category:find("HOVER",1,true)) then
-		if (ud.maxvelocity) then
-			--ud.turninplace = 0
-			ud.turninplacespeedlimit = ud.maxvelocity or 0
-		end
+	if ud.maxvelocity and ud.category and ((ud.category:find("TANK",1,true) or ud.category:find("HOVER",1,true))) and (not ud.turninplace) then
+		ud.turninplace = 0
+		ud.turninplacespeedlimit = 0.4 * ud.maxvelocity
+		ud.turnrate = ud.turnrate * 1.2
+	else
+		ud.turninplacespeedlimit = ud.maxvelocity or 0
 	end
 end 
 
@@ -72,6 +73,41 @@ if (modOptions) then
 	end
    end
 end
+
+--------------------------------------------------------------------------------
+-- Decoy commander setup
+if (modOptions and modOptions.comm) then
+	-- Maps 'comm' mod option to ARM start unit.
+	local arm_start_unit = {
+		zeroupgrade = "arm_commander",
+		halfupgrade = "arm_u2commander",
+		fullupgrade = "arm_u4commander",
+		noupgrade = "arm_u0commander",
+		comshooter = "armcom",
+		decoystart = "arm_decoy_commander",
+		capturethebase = "arm_base",
+		nincom = "arm_nincommander",
+	}
+	-- Maps 'comm' mod option to CORE start unit.
+	local core_start_unit = {
+		zeroupgrade = "core_commander",
+		halfupgrade = "core_u2commander",
+		fullupgrade = "core_u4commander",
+		noupgrade = "core_u0commander",
+		comshooter = "corcom",
+		decoystart = "core_decoy_commander",
+		capturethebase = "core_base",
+		nincom = "core_nincommander",
+	}
+	for name, ud in pairs(UnitDefs) do  
+		if (ud.unitname == "arm_decoy_commander") then
+			ud.decoyfor = arm_start_unit[modOptions.comm]
+		elseif (ud.unitname == "core_decoy_commander") then
+			ud.decoyfor = core_start_unit[modOptions.comm]		
+		end
+	end
+end
+
 --------------------------------------------------------------------------------
 -- Unit napping settings
 if (modOptions and modOptions.mo_transportenemy) then
@@ -164,6 +200,14 @@ if (modOptions and modOptions.energymult) then
     local em = UnitDefs[name].energymake
     if (em) then
       UnitDefs[name].energymake = em * modOptions.energymult
+    end
+    em = UnitDefs[name].windgenerator
+    if (em) then
+      UnitDefs[name].windgenerator = em * modOptions.energymult
+    end
+    em = UnitDefs[name].energyuse
+    if (em and (em+0)<0) then
+      UnitDefs[name].energyuse = em * modOptions.energymult
     end
   end
 end
@@ -291,7 +335,6 @@ else
 	"core_diplomat_rt", "core_missile_frigate_rt"
   })
 end
-end
 
 ---Transport/Commander Fix------------
 -- this is to work around engine crash when commanders die in air transports
@@ -312,4 +355,5 @@ for name, ud in pairs(UnitDefs) do
 		end
 	end
 	--Spring.Echo ("-------")	
+end
 end
