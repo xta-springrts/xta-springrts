@@ -335,7 +335,7 @@ else
 	"core_diplomat_rt", "core_missile_frigate_rt"
   })
 end
-
+end
 ---Transport/Commander Fix------------
 -- this is to work around engine crash when commanders die in air transports
 -- works together with unit_transportcomfix.lua
@@ -355,5 +355,4 @@ for name, ud in pairs(UnitDefs) do
 		end
 	end
 	--Spring.Echo ("-------")	
-end
 end
