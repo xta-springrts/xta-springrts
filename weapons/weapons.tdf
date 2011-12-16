@@ -36,28 +36,30 @@
 	model=weapon_exphvyrock;
 	range=1300;
 	reloadtime=6.5;
-	weapontimer=6;
+	weapontimer=0.5;
+	flighttime=2.5;
 	weaponvelocity=700;
 	startvelocity=400;
-	weaponacceleration=100;
-	areaofeffect=80;
+	weaponacceleration=150;
+	areaofeffect=160;
 	Burst=3;
 	Burstrate=0.1;
 	Wobble=6000;
-	turnrate=600;
-	edgeeffectiveness=0.75;
+	turnrate=1200;
+	//edgeeffectiveness=0.75;
 	soundstart=;
 	soundhit=rockhit;
 	firestarter=70;
 	smokedelay=0.1;
 	smoketrail=0;
 	startsmoke=0;
+	tracks=1;
 	holdtime=1;
  	tolerance=10000;
 	noselfdamage=1;
 	[DAMAGE]
 	{
-		default=800;
+		default=500;
 		group_invincible=1;
 	}
 }
@@ -83,12 +85,12 @@
 	BounceRebound=0.8;
 	bounceExplosionGenerator=custom:BERTHASHOT;
 	reloadtime=6.5;
-	weaponvelocity=600;
+	weaponvelocity=1000;
 	areaofeffect=192;
 	soundstart=cannhvy2;
 	soundhit=xplonuk1;
-	accuracy=2000;
-	minbarrelangle=-40;
+	accuracy=1000;
+	//minbarrelangle=-40;
 	startsmoke=1;
 	edgeeffectiveness=0.25;
 	energypershot=750;
@@ -179,15 +181,12 @@
 	turret=1;
 	tolerance=5000;
 	pitchtolerance=5000;
-
 	Noselfdamage=1;
 	explosiongenerator=custom:KBOTROCKETHIT;
-
 	collidefriendly=0;
 	burst=4;
 	burstrate=0.12;
 	sprayangle=6000;
-
 	model=weapon_bomb;
 	cegTag=REDLIGHTBOMB;
 	range=300;
@@ -219,7 +218,6 @@
 	Intensity=0.4;
 	duration=0.03;	
 	rgbcolor=1 0.8 0.4;
-
 	turret=1;
 	range=666;
 	explosiongenerator=custom:LightFlylaser;
@@ -247,7 +245,6 @@
 	Intensity=0.4;
 	duration=0.03;	
 	rgbcolor=1 0.8 0.4;
-
 	turret=1;
 	range=830;
 	explosiongenerator=custom:LightFlylaser;
@@ -263,34 +260,6 @@
 		default=6;
 		group_invincible=1;
 		group_landair=11;
-	}
-}
-[AIR2AIRFlak]
-{
-	name=Guided Missiles;
-	turret=1;
-	toairweapon=1;
-	range=400;
-	reloadtime=0.8;
-	weapontimer=7;
-	weaponvelocity=1000;
-	startvelocity=990;
-	weaponacceleration=131;
-	turnrate=5000;
-	areaofeffect=48;
-	soundstart=armsml4;
-	soundhit=xplosml2;
-	tracks=1;
-	tolerance=8000;
-	pitchtolerance=8000;
-	color=1;
-	startsmoke=1;
-	burst=3;
-	[DAMAGE]
-	{
-		default=7;
-		group_invincible=1;
-		group_landair=19;
 	}
 }
 [AMD_ROCKET]
@@ -353,7 +322,7 @@
 	startvelocity=530;
 	weaponacceleration=121;
 	turnrate=60000;
-	trajectoryHeight=0.06;
+	trajectoryHeight=0.08;
 	dance=30;
 	areaofeffect=48;
 	burst=3;
@@ -377,13 +346,15 @@
 [ARMAAS_WEAPON3]
 {
 	name=Flak Cannon;
+	weaponType=Cannon;
 	turret=1;
 	range=750;
 	reloadtime=0.6;
 	weapontimer=0.78;
-	weaponvelocity=950;
+	weaponvelocity=1250;
 	areaofeffect=150;
 	edgeeffectiveness=0;
+	cylindertargetting = 1;
 	soundstart=canlite2;
 	soundhit=xplomed2;
 	minbarrelangle=-24;
@@ -455,7 +426,7 @@
 	startvelocity=420;
 	weaponacceleration=164;
 	turnrate=50000;
-	trajectoryHeight=0.06;
+	trajectoryHeight=0.08;
 	dance=30;
 	areaofeffect=48;
 	cylindertargetting = 1;
@@ -478,6 +449,7 @@
 {
 	name=Torpedo Launcher;
 	model=weapon_Advtorpedo;
+	Weapontype=TorpedoLauncher;
 	range=400;
 	reloadtime=5.7;
 	weapontimer=15;
@@ -539,6 +511,7 @@
 [ARMAMPH_WEAPON1]
 {
 	name=Energy Laser;
+	weaponType=LaserCannon;
 	explosiongenerator=custom:Gator;
 	cegTag=REDCRAP;
 	duration=0.12;
@@ -603,10 +576,11 @@
 	name=Light Guass;
 	weaponType=Cannon;
 	turret=1;
-	minbarrelangle=-35;
+	//minbarrelangle=-35;
 	range=400;
 	reloadtime=1.5;
 	weaponvelocity=350;
+	mygravity=0.24;
 	areaofeffect=48;
 	soundstart=canlite3;
 	soundhit=xplomed3;
@@ -713,6 +687,7 @@
 [ARMDEPTHCHARGE]
 {
 	name=Depth Charge;
+	Weapontype=TorpedoLauncher;
 	turret=1;
 	minbarrelangle=-90;
 	model=weapon_DEPTHCHARGE;
@@ -840,7 +815,6 @@
 	reloadtime=3;
 	weaponvelocity=550;
 	areaofeffect=128;
-	edgeeffectiveness=0;
 	soundstart=cannhvy5;
 	soundhit=xplomed2;
 	startsmoke=1;
@@ -856,6 +830,7 @@
 [ARMFLAK_GUN]
 {
 	name=Flak Cannon;
+	weaponType=Cannon;
 	turret=1;
 	range=700;
 	reloadtime=0.6;
@@ -971,7 +946,7 @@
 	startvelocity=550;
 	weaponacceleration=101;
 	turnrate=50000;
-	trajectoryHeight=0.06;
+	trajectoryHeight=0.08;
 	dance=30;
 	areaofeffect=48;
 	soundstart=rocklit1;
@@ -1047,6 +1022,7 @@
 [ARMMAV_WEAPON]
 {
 	name=Gauss Cannon;
+	weaponType=Cannon;
 	explosiongenerator=custom:WindkbotRocket;
 	turret=1;
 	minbarrelangle=-45;
@@ -1341,7 +1317,7 @@
 	smoketrail=0;
 	tolerance=10000;
 	startsmoke=1;
-	trajectoryHeight=0.06;
+	trajectoryHeight=0.08;
 	dance=30;	
 	[DAMAGE]
 	{
@@ -1436,6 +1412,7 @@
 [ARMSEAP_WEAPON1]
 {
 	name=Torpedo Launcher;
+	Weapontype=TorpedoLauncher;
 	waterweapon=1;
 	minbarrelangle=-90;
 	model=weapon_torpedo;
@@ -1467,6 +1444,7 @@
 [ARMSEAP_WEAPON2]
 {
 	name=Torpedo Launcher;
+	Weapontype=TorpedoLauncher;
 	model=weapon_torpedo;
 	propeller=1;
 	range=300;
@@ -1549,6 +1527,7 @@
 {
 	name=Light Guass;
 	explosiongenerator=custom:EMGFLASH;
+	weaponType=Cannon;
 	cegTag=PEEWEESHINE;
 	Texture1=emg;
 	Texture2=null;
@@ -1682,7 +1661,9 @@
 	name=Guided Torpedo;
 	collidefriendly=0;
 	model=weapon_torpedo;
-	propeller=1;
+	weapontype=TorpedoLauncher;
+	waterweapon=1;
+	flighttime=4.1;
 	range=950;
 	reloadtime=4;
 	weapontimer=9.5;
@@ -1694,7 +1675,6 @@
 	soundstart=torpedo1;
 	soundhit=xplodep1;
 	tracks=1;
-	waterweapon=1;
 	burnblow=1;
 	tolerance=32767;
 	noautorange=1;
@@ -1755,7 +1735,7 @@
 	startvelocity=550;
 	weaponacceleration=141;
 	turnrate=41660;
-	trajectoryHeight=0.06;
+	trajectoryHeight=0.08;
 	dance=30;
 	areaofeffect=48;
 	cylindertargetting = 1;
@@ -1847,28 +1827,6 @@
 		group_landair=110;
 	}
 }
-[ARMVTOL_ADVMISSILE2]
-{
-	name=Guided Missiles;
-	model=weapon_ingenting;
-	range=400;
-	reloadtime=3;
-	weapontimer=7;
-	weaponvelocity=554;
-	startvelocity=450;
-	weaponacceleration=130;
-	turnrate=24384;
-	areaofeffect=48;
-	tracks=1;
-	tolerance=500;
-	collidefriendly=0;
-	avoidfriendly=0;
-	[DAMAGE]
-	{
-		default=1;
-		group_invincible=1;
-	}
-}
 [ARMVULC_WEAPON]
 {
 	name=Bertha Cannon;
@@ -1908,33 +1866,6 @@
 		group_invincible=1;
 	}
 }
-[ARMWAR_EMG]
-{
-	name=E.M.G.;
-	explosiongenerator=custom:EMGFLASH;
-	Weapontype=EmgCannon;
-	color=1;
-	turret=1;
-	range=190;
-	reloadtime=0.48;
-	weapontimer=1;
-	weaponvelocity=400;
-	sprayangle=1024;
-	areaofeffect=8;
-	burst=2;
-	burstrate=0.2;
-	soundstart=armsml2;
-	soundhit=lasrhit1;
-	soundtrigger=1;
-	tolerance=2000;
-	startsmoke=0;
-	endsmoke=0;
-	[DAMAGE]
-	{
-		default=12;
-		group_invincible=1;
-	}
-}
 [ARMWAR_LCANNON]
 {
 	name=Light Cannon;
@@ -1958,6 +1889,7 @@
 [ARMyork_GUN]
 {
 	name=Flak Cannon;
+	weaponType=Cannon;
 	turret=1;
 	range=680;
 	reloadtime=0.46;
@@ -2007,13 +1939,15 @@
 	energypershot=143;
 	reloadtime=1;
 	weaponvelocity=600;
+	mygravity=0.24;
 	areaofeffect=64;
 	explosiongenerator=custom:WindkbotRocket;
 	soundstart=cannhvy2;
 	soundhit=xplomed4;
 	accuracy=1000;
 	movingaccuracy=1500;
-	minbarrelangle=-40;
+	tolerance=500;
+	//minbarrelangle=-40;
 	startsmoke=1;
 	startsmoke=1;
 	[DAMAGE]
@@ -2120,6 +2054,7 @@
 	explosiongenerator=custom:WindkbotRocket;
 	reloadtime=1.8;
 	weaponvelocity=355;
+	mygravity=0.24;
 	areaofeffect=64;
 	soundstart=cannon3;
 	soundhit=xplomed2;
@@ -2204,12 +2139,13 @@
 	weaponType=Cannon;
 	turret=1;
 	explosiongenerator=custom:WindkbotRocket;
-	minbarrelangle=-40;
-	Range=454;
+	//minbarrelangle=-40;
+	Range=454; //454
+	myGravity=1.2;
 	accuracy=920;
 	movingaccuracy=1620;
 	reloadtime=2.0;
-	weaponvelocity=260;
+	weaponvelocity=700; //350
 	areaofeffect=48;
 	soundstart=cannon1;
 	soundhit=xplomed3;
@@ -2292,6 +2228,7 @@
 	explosiongenerator=custom:WindkbotMissle;
 	reloadtime=1.53;
 	weaponvelocity=328;
+	mygravity=0.24;
 	areaofeffect=48;
 	soundstart=canlite3;
 	soundhit=xplosml3;
@@ -2365,7 +2302,8 @@
 }
 [ARM_PARALYZER]
 {
-	name=E.M.G.;
+	name=Paralyzer Beam;
+	weaponType=BeamLaser;
 	color=2;
 	turret=1;
 	beamtime=0.1;
@@ -2406,11 +2344,12 @@
 	name=Heavy Cannon;
 	weaponType=Cannon;
 	turret=1;
-	minbarrelangle=-25;
-	range=860;
-	reloadtime=6;
-	weaponvelocity=470;
-	areaofeffect=64;
+	//minbarrelangle=-25;
+	range=950;
+	reloadtime=5;
+	weaponvelocity=500;
+	areaofeffect=96;
+	edgeeffectiveness=0.25;
 	soundstart=cannon3;
 	soundhit=xplomed2;
 	startsmoke=1;
@@ -2438,6 +2377,8 @@
 	name=Unguided Torpedo;
 	CollideFriendly=0;
 	model=weapon_torpedo;
+	weapontype=TorpedoLauncher;
+	flighttime = 6.88;
 	propeller=1;
 	range=860;
 	reloadtime=5.5;
@@ -2649,6 +2590,7 @@
 [COAX_TORPEDO]
 {
 	name=Torpedo Launcher;
+	WeaponType=TorpedoLauncher;
 	turret=1;
 	collidefriendly=0;
 	model=weapon_DEPTHCHARGE;
@@ -2798,7 +2740,7 @@
 	startvelocity=470;
 	weaponacceleration=154;
 	turnrate=50000;
-	trajectoryHeight=0.06;
+	trajectoryHeight=0.08;
 	dance=30;
 	areaofeffect=48;
 	cylindertargetting = 1;
@@ -2850,6 +2792,7 @@
 [CORAIR_TORPEDO]
 {
 	name=Torpedo Launcher;
+	Weapontype=TorpedoLauncher;
 	model=weapon_Advtorpedo;
 	propeller=1;
 	range=400;
@@ -2897,104 +2840,10 @@
 		group_invincible=1;
 	}
 }
-[CORAMPH_WEAPON2]
-{
-	name=Low Energy Laser;
-	turret=1;
-	range=400;
-	reloadtime=1;
-	weaponvelocity=700;
-	areaofeffect=12;
-	soundstart=lasrlit3;
-	soundhit=lasrhit2;
-	firestarter=90;
-	color=232;
-	color2=234;
-	tolerance=1000;
-	pitchtolerance=10000;
-	[DAMAGE]
-	{
-		default=65;
-		group_invincible=1;
-	}
-}
-[CORARCH_WEAPON1]
-{
-	name=Missiles;
-	turret=1;
-	model=missile.s3o;
-	Texture1=null;
-	explosiongenerator=custom:KBOTMISSILEHIT;
-	range=710;
-	reloadtime=2;
-	weapontimer=5;
-	weaponvelocity=450;
-	startvelocity=430;
-	weaponacceleration=121;
-	turnrate=30000;
-	areaofeffect=48;
-	soundstart=rockhvy2;
-	soundhit=xplomed2;
-	firestarter=70;
-	smokedelay=0.1;
-	tracks=1;
-	smoketrail=0;
-	cegTag=KBOTMISSILETRAIL;
-	Weapontype=MissileLauncher;
-	tolerance=8000;
-	startsmoke=1;
-	WaterBounce=0;
-	NumBounce=1;
-	GroundBounce=1;
-	BounceSlip=1.01;
-	BounceRebound=0.8;
-	[DAMAGE]
-	{
-		default=57;
-		group_landair=119;
-		group_invincible=1;
-	}
-}
-[CORARCH_WEAPON2]
-{
-	name=Missiles;
-	turret=1;
-	model=missile.s3o;
-	Texture1=null;
-	explosiongenerator=custom:KBOTMISSILEHIT;
-	range=710;
-	reloadtime=2;
-	weapontimer=5;
-	weaponvelocity=450;
-	startvelocity=430;
-	weaponacceleration=121;
-	turnrate=30000;
-	areaofeffect=48;
-	soundstart=rockhvy2;
-	soundhit=xplomed2;
-	firestarter=70;
-	smokedelay=0.1;
-	tracks=1;
-	smoketrail=0;
-	cegTag=KBOTMISSILETRAIL;
-	Weapontype=MissileLauncher;
-	tolerance=8000;
-	startsmoke=1;
-	WaterBounce=0;
-	NumBounce=1;
-	GroundBounce=1;
-	BounceSlip=1.01;
-	BounceRebound=0.8;
-	[DAMAGE]
-	{
-		default=57;
-		group_landair=119;
-		group_invincible=1;
-	}
-}
 [CORATL_TORPEDO]
 {
 	name=Unguided Torpedo;
+	Weapontype=TorpedoLauncher;
 	CollideFriendly=0;
 	model=weapon_torpedo;
 	propeller=1;
@@ -3064,7 +2913,6 @@
 	sizedecay=-0.15;
 	nogap=1;
 	size=3;
-
 	GroundBounce=0;
 	WaterBounce=0;
 	NumBounce=2;
@@ -3086,7 +2934,6 @@
 	tolerance=8000;
 	explosiongenerator=custom:BERTHASHOT;
 	cegTag=VULCANFX;
-		
 	startsmoke=1;
 	soundtrigger=1;
 	weapontimer=20;
@@ -3150,6 +2997,7 @@
 [COREDEPTHCHARGE]
 {
 	name=Depth Charge;
+	Weapontype=TorpedoLauncher;
 	turret=1;
 	minbarrelangle=-90;
 	model=weapon_DEPTHCHARGE;
@@ -3231,9 +3079,10 @@
 	areaofeffect=144;
 	soundstart=cannhvy2;
 	soundhit=xplonuk1;
-	accuracy=1300;
-	movingaccuracy=1900;
-	minbarrelangle=-40;
+	accuracy=1200;
+	movingaccuracy=1700;
+	tolerance=500;
+	//minbarrelangle=-40;
 	startsmoke=1;
 	edgeeffectiveness=0.25;
 	energypershot=750;
@@ -3251,19 +3100,17 @@
 {
 	explosiongenerator=custom:GreenLaser;
 	cegTag=GREENCRAP;
-
 	duration=0.11;
 	thickness=1.2;
 	CoreThickness=1;
 	Intensity=0.9;
-
 	name=High Energy Laser;
 	Weapontype=LaserCannon;
 	turret=1;
 	range=1600;
 	reloadtime=1.0;
 	energypershot=200;
-	weaponvelocity=1050;
+	weaponvelocity=1650;
 	areaofeffect=8;
 	soundstart=Lasrmas2;
 	soundhit=lasrhit1;
@@ -3285,11 +3132,9 @@
 	Weapontype=LaserCannon;
 	explosiongenerator=custom:Gator;
 	cegTag=REDCRAP;
-
 	duration=0.08;
 	thickness=1.2;
 	Intensity=0.9;
-
 	turret=1;
 	range=400;
 	reloadtime=1;
@@ -3365,7 +3210,6 @@
 		group_invincible=1;
 	}
 }
-
 [UBER_DISINTEGRATOR]
 {
 	Weapontype=DGun;
@@ -3465,31 +3309,6 @@
 		group_invincible=1;
 	}
 }
-[CORE_LASER]
-{
-	name=Laser;
-	Weapontype=LaserCannon;
-	turret=1;
-	range=180;
-	cegTag=PINKCRAP;
-	reloadtime=0.865;
-	weaponvelocity=400;
-	areaofeffect=8;
-	burstrate=0.2;
-	duration=0.02;
-	soundtrigger=0;
-	soundstart=lasrfir1;
-	soundhit=lasrhit2;
-	firestarter=50;
-	color=208;
-	color2=0;
-	tolerance=2000;
-	[DAMAGE]
-	{
-		default=30;
-		group_invincible=1;
-	}
-}
 [CORE_LASERH1]
 {
 	name=High Energy Laser;
@@ -3519,47 +3338,6 @@
 		group_invincible=1;
 	}
 }
-[CORE_LIGHTCANNON]
-{
-	name=Light Cannon;
-	weaponType=Cannon;
-	turret=1;
-	minbarrelangle=-40;
-	range=240;
-	reloadtime=1.53;
-	weaponvelocity=170;
-	areaofeffect=32;
-	soundstart=canlite3;
-	soundhit=xplosml3;
-	startsmoke=1;
-	[DAMAGE]
-	{
-		default=50;
-		group_invincible=1;
-	}
-}
-[CORE_LIGHTLASER]
-{
-	name=Light Laser;
-	turret=1;
-	range=300;
-	reloadtime=0.52;
-	weaponvelocity=800;
-	energypershot=10;
-	areaofeffect=8;
-	soundtrigger=0;
-	soundstart=lasrfir3;
-	soundhit=lasrhit2;
-	firestarter=30;
-	color=232;
-	color2=234;
-	tolerance=700;
-	[DAMAGE]
-	{
-		default=60;
-		group_invincible=1;
-	}
-}
 [CORE_MEDIUMCANNON]
 {
 	name=Plasma Cannon;
@@ -3585,11 +3363,12 @@
 	name=Plasma Cannon;
 	weaponType=Cannon;
 	turret=1;
-	minbarrelangle=-35;
+	//minbarrelangle=-35;
 	range=875;
 	explosiongenerator=custom:WindkbotRocket;
 	reloadtime=1.45;
 	weaponvelocity=512;
+	mygravity=0.24;
 	areaofeffect=48;
 	soundstart=cannon1;
 	soundhit=xplomed3;
@@ -3610,6 +3389,7 @@
 	reloadtime=2;
 	explosiongenerator=custom:WindkbotRocket;
 	weaponvelocity=365;
+	mygravity=0.24;
 	areaofeffect=92;
 	soundstart=cannon3;
 	soundhit=xplomed2;
@@ -3634,11 +3414,12 @@
 	name=Heavy Cannon;
 	weaponType=Cannon;
 	turret=1;
-	minbarrelangle=-25;
-	range=860;
-	reloadtime=6;
+	//minbarrelangle=-25;
+	range=950;
+	reloadtime=5;
 	weaponvelocity=500;
-	areaofeffect=64;
+	areaofeffect=96;
+	edgeeffectiveness=0.25;
 	explosiongenerator=custom:popupcannon;
 	soundstart=cannhvy1;
 	soundhit=xplomed2;
@@ -3665,12 +3446,13 @@
 	name=Plasma Cannon;
 	weaponType=Cannon;
 	turret=1;
-	minbarrelangle=-40;
-	range=444;
+	//minbarrelangle=-40;
+	range=444; //444
 	accuracy=920;
 	movingaccuracy=1620;
 	reloadtime=2;
-	weaponvelocity=265;
+	weaponvelocity=730;  //365
+	mygravity=1.2;
 	explosiongenerator=custom:WindkbotRocket;
 	areaofeffect=48;
 	soundstart=cannon1;
@@ -3692,8 +3474,10 @@
 {
 	name=Unguided Torpedo;
 	CollideFriendly=0;
+	weapontype=TorpedoLauncher;
 	model=weapon_torpedo;
-	propeller=1;
+	flighttime=6.54;
+	waterweapon=1;
 	range=850;
 	reloadtime=4.4;
 	weapontimer=10;
@@ -3705,7 +3489,6 @@
 	soundstart=torpedo2;
 	soundhit=xplodep3;
 	tracks=1;
-	waterweapon=1;
 	tolerance=32767;
 	noautorange=1;
 	explosiongenerator=custom:Torpedo;
@@ -3785,8 +3568,7 @@
 	range=1900;
 	reloadtime=2.8;
 	weaponvelocity=550;
-	areaofeffect=170;
-	edgeeffectiveness=0;
+	areaofeffect=160;
 	soundstart=cannhvy5;
 	soundhit=xplomed2;
 	tolerance=500;
@@ -3797,30 +3579,6 @@
 		default=400;
 		group_ships=600;
 		group_large_ships=666;
-		group_invincible=1;
-	}
-}
-[corflakgun]
-{
-	name=Flak Cannon;
-	weaponType=Cannon;
-	turret=1;
-	range=750;
-	reloadtime=0.7;
-	weapontimer=1;
-	weaponvelocity=400;
-	areaofeffect=68;
-	edgeeffectiveness=0;
-	soundstart=canlite2;
-	soundhit=xplomed2;
-	minbarrelangle=-24;
-	color=1;
-	startsmoke=1;
-	craterboost=0.25;
-	cratermult=0.25;
-	[DAMAGE]
-	{
-		default=50;
 		group_invincible=1;
 	}
 }
@@ -3858,43 +3616,6 @@
 	{
 		default=76;
 		group_landair=294;
-		group_invincible=1;
-	}
-}
-[CORFRT_MISSILE]
-{
-	name=Missiles;
-	turret=1;
-	model=missile.s3o;
-	Texture1=null;
-	range=700;
-	explosiongenerator=custom:KBOTMISSILEHIT;
-	reloadtime=2;
-	weapontimer=5;
-	weaponvelocity=660;
-	startvelocity=460;
-	weaponacceleration=152;
-	turnrate=50000;
-	areaofeffect=48;
-	soundstart=rockhvy2;
-	soundhit=xplomed2;
-	firestarter=70;
-	smokedelay=0.1;
-	tracks=1;
-	smoketrail=0;
-	cegTag=KBOTMISSILETRAIL;
-	Weapontype=MissileLauncher;
-	tolerance=10000;
-	startsmoke=1;
-	WaterBounce=0;
-	NumBounce=1;
-	GroundBounce=1;
-	BounceSlip=1.01;
-	BounceRebound=0.8;
-	[DAMAGE]
-	{
-		default=45;
-		group_landair=105;
 		group_invincible=1;
 	}
 }
@@ -3949,43 +3670,6 @@
 	[DAMAGE]
 	{
 		default=112;
-		group_invincible=1;
-	}
-}
-[CORKBOT_MISSILE]
-{
-	name=Missiles;
-	turret=1;
-	model=missile.s3o;
-	Texture1=null;
-	range=690;
-	explosiongenerator=custom:KBOTMISSILEHIT;
-	reloadtime=1.9;
-	weapontimer=5;
-	weaponvelocity=750;
-	startvelocity=550;
-	weaponacceleration=104;
-	turnrate=50000;
-	areaofeffect=48;
-	soundstart=rocklit1;
-	soundhit=xplosml2;
-	firestarter=70;
-	smokedelay=0.1;
-	tracks=1;
-	smoketrail=0;
-	cegTag=KBOTMISSILETRAIL;
-	Weapontype=MissileLauncher;
-	tolerance=9000;
-	startsmoke=1;
-	WaterBounce=0;
-	NumBounce=1;
-	GroundBounce=1;
-	BounceSlip=1.01;
-	BounceRebound=0.8;
-	[DAMAGE]
-	{
-		default=32;
-		group_landair=99;
 		group_invincible=1;
 	}
 }
@@ -4141,7 +3825,6 @@
 	Texture2=null;
 	Texture3=null;
 	Texture4=null;
-
 	turret=1;
 	range=360;
 	reloadtime=0.5;
@@ -4288,7 +3971,6 @@
 		group_invincible=1;
 	}
 }
-
 [cormine1]
 {
 	name=Level 1 Mine;
@@ -4463,7 +4145,6 @@
 	sizedecay=-0.15;
 	nogap=1;
 	size=4;
-
 	weaponType=Cannon;
 	turret=1;
 	color=4;
@@ -4539,122 +4220,13 @@
 	Weapontype=MissileLauncher;
 	tolerance=10000;
 	startsmoke=1;
-	trajectoryHeight=0.06;
+	trajectoryHeight=0.08;
 	dance=30;	
 	[DAMAGE]
 	{
 		default=35;
 		group_invincible=1;
 		group_landair=120;
-	}
-}
-[CORSCORP_WEAPON]
-{
-	name=Paralyzer;
-	turret=1;
-	minbarrelangle=0;
-	range=320;
-	reloadtime=1.2;
-	weaponvelocity=600;
-	areaofeffect=8;
-	duration=0.04;
-	soundtrigger=0;
-	soundstart=Lasrmas2;
-	soundhit=lasrhit1;
-	color=209;
-	color2=211;
-	[DAMAGE]
-	{
-		default=10;
-		group_invincible=1;
-	}
-}
-[CORSEAP_WEAPON1]
-{
-	name=Torpedo Launcher;
-	model=weapon_torpedo;
-	propeller=1;
-	range=300;
-	reloadtime=6;
-	weapontimer=5;
-	weaponvelocity=100;
-	startvelocity=100;
-	weaponacceleration=15;
-	turnrate=15000;
-	areaofeffect=16;
-	soundstart=bombrel;
-	soundhit=xplodep2;
-	tracks=1;
-	waterweapon=1;
-	burnblow=1;
-	tolerance=12000;
-	explosiongenerator=custom:DepthCharge;
-	[DAMAGE]
-	{
-		default=400;
-		group_invincible=1;
-	}
-}
-[CORSEAP_WEAPON2]
-{
-	name=Torpedo Launcher;
-	model=weapon_torpedo;
-	propeller=1;
-	range=300;
-	reloadtime=6;
-	weapontimer=5;
-	weaponvelocity=100;
-	startvelocity=100;
-	weaponacceleration=15;
-	turnrate=15000;
-	areaofeffect=16;
-	soundstart=bombrel;
-	soundhit=xplodep2;
-	tracks=1;
-	waterweapon=1;
-	burnblow=1;
-	tolerance=12000;
-	explosiongenerator=custom:DepthCharge;
-	[DAMAGE]
-	{
-		default=400;
-		group_invincible=1;
-	}
-}
-[CORSEAP_WEAPON3]
-{
-	name=Guided Missiles;
-	model=missile.s3o;
-	Texture1=null;
-	explosiongenerator=custom:KBOTMISSILEHIT;
-	range=510;
-	reloadtime=3;
-	weapontimer=5;
-	weaponvelocity=480;
-	startvelocity=420;
-	weaponacceleration=146;
-	turnrate=16384;
-	areaofeffect=48;
-	soundstart=Rocklit3;
-	soundhit=xplosml2;
-	firestarter=70;
-	smokedelay=0.1;
-	tracks=1;
-	smoketrail=0;
-	cegTag=KBOTMISSILETRAIL;
-	Weapontype=MissileLauncher;
-	tolerance=8000;
-	startsmoke=1;
-	WaterBounce=0;
-	NumBounce=1;
-	GroundBounce=1;
-	BounceSlip=1.01;
-	BounceRebound=0.8;
-	[DAMAGE]
-	{
-		default=44;
-		group_invincible=1;
-		group_landair=143;
 	}
 }
 [CORSENT_GUN]
@@ -4720,41 +4292,6 @@
 	{
 		default=42;
 		group_invincible=1;
-	}
-}
-[CORSFIG_WEAPON2]
-{
-	name=Guided Missiles;
-	model=missile.s3o;
-	Texture1=null;
-	range=510;
-	reloadtime=3;
-	weapontimer=6;
-	weaponvelocity=522;
-	startvelocity=420;
-	weaponacceleration=146;
-	turnrate=19384;
-	areaofeffect=48;
-	soundstart=Rocklit3;
-	soundhit=xplosml2;
-	firestarter=70;
-	smokedelay=0.1;
-	tracks=1;
-	smoketrail=0;
-	cegTag=KBOTMISSILETRAIL;
-	Weapontype=MissileLauncher;
-	tolerance=8000;
-	startsmoke=1;
-	WaterBounce=0;
-	NumBounce=1;
-	GroundBounce=1;
-	BounceSlip=1.01;
-	BounceRebound=0.8;
-	[DAMAGE]
-	{
-		default=50;
-		group_invincible=1;
-		group_landair=154;
 	}
 }
 [CORSHIP_MISSILE]
@@ -4831,7 +4368,9 @@
 {
 	name=Guided Torpedo;
 	model=weapon_torpedo;
-	propeller=1;
+	weapontype=TorpedoLauncher;
+	flighttime=5.3;
+	waterweapon=1;
 	range=900;
 	collidefriendly=0;
 	reloadtime=3;
@@ -4844,7 +4383,6 @@
 	soundstart=torpedo2;
 	soundhit=xplodep3;
 	tracks=1;
-	waterweapon=1;
 	burnblow=1;
 	tolerance=32767;
 	noautorange=1;
@@ -4865,11 +4403,12 @@
 	name=Plasma Cannon;
 	weaponType=Cannon;
 	turret=1;
-	minbarrelangle=-35;
+	//minbarrelangle=-35;
 	explosiongenerator=custom:WindkbotRocket;
 	range=390;
 	reloadtime=1.5;
-	weaponvelocity=350;
+	weaponvelocity=370;
+	mygravity=0.24;
 	areaofeffect=48;
 	soundstart=cannon2;
 	soundhit=xplomed4;
@@ -4886,6 +4425,7 @@
 [CORSSUB_WEAPON]
 {
 	name=Unguided Torpedo;
+	WeaponType=TorpedoLauncher;
 	turret=1;
 	model=weapon_Advtorpedo;
 	propeller=1;
@@ -4924,7 +4464,6 @@
 	duration=0.06;
 	thickness=1.6;
 	Intensity=0.9; 	
-
 	turret=1;
 	range=780;
 	reloadtime=0.7;
@@ -5029,7 +4568,7 @@
 	weaponacceleration=136;
 	explosiongenerator=custom:KBOTMISSILEHIT;
 	turnrate=41660;
-	trajectoryHeight=0.06;
+	trajectoryHeight=0.08;
 	dance=30;
 	areaofeffect=48;
 	cylindertargetting = 1;
@@ -5154,75 +4693,6 @@
 		group_landair=112;
 	}
 }
-[CORVTOL_ADVMISSILE2]
-{
-	explosiongenerator=custom:WindkbotMissle;
-	name=Guided Missiles;
-	turret=1;
-	toairweapon=1;
-	range=500;
-	reloadtime=0.5;
-	weapontimer=7;
-	weaponvelocity=1000;
-	startvelocity=990;
-	weaponacceleration=131;
-	turnrate=5000;
-	areaofeffect=48;
-	soundstart=armsml4;
-	soundhit=xplosml2;
-	tracks=1;
-	tolerance=8000;
-	pitchtolerance=8000;
-	color=1;
-	startsmoke=1;
-	collidefriendly=0;
-	avoidfriendly=0;
-	[DAMAGE]
-	{
-		default=17;
-		group_invincible=1;
-		group_landair=86;
-	}
-}
-[CORVTOL_MISSILE]
-{
-	explosiongenerator=custom:KBOTMISSILEHIT;
-	name=Guided Missiles;
-	model=missile.s3o;
-	Texture1=null;
-	range=502;
-	reloadtime=3;
-	weapontimer=5;
-	weaponvelocity=470;
-	startvelocity=425;
-	weaponacceleration=149;
-	turnrate=16384;
-	areaofeffect=48;
-	soundstart=Rocklit3;
-	soundhit=xplosml2;
-	firestarter=70;
-	smokedelay=0.1;
-	tracks=1;
-	smoketrail=0;
-	cegTag=KBOTMISSILETRAIL;
-	Weapontype=MissileLauncher;
-	tolerance=8000;
-	startsmoke=1;
-	collidefriendly=0;
-	avoidfriendly=0;
-	WaterBounce=0;
-	NumBounce=1;
-	GroundBounce=1;
-	BounceSlip=1.01;
-	BounceRebound=0.8;
-	[DAMAGE]
-	{
-		group_commanders=25;
-		default=50;
-		group_invincible=1;
-		group_landair=165;
-	}
-}
 [COR_BATS]
 {
 	name=BattleShip Cannon;
@@ -5276,7 +4746,6 @@
 	sizedecay=-0.15;
 	nogap=1;
 	size=5;
-
 	weaponType=Cannon;
 	turret=1;
 	range=600;
@@ -5471,7 +4940,6 @@
 		group_invincible=1;
 	}
 }
-
 [ARMPT_LASER]
 {
 	name=E.M.G.;
@@ -5508,38 +4976,6 @@
 	[DAMAGE]
 	{
 		default=11;
-		group_invincible=1;
-	}
-}
-[ARMPT_LASEROLD]
-{
-	name=E.M.G.;
-	Texture1=emg;
-	Texture2=null;
-	Texture3=null;
-	Texture4=null;
-	explosiongenerator=custom:EMGFLASH;
-	Weapontype=EmgCannon;
-	cegTag=PEEWEESHINE;
-
-	turret=1;
-	range=300;
-	reloadtime=0.5;
-	weapontimer=1;
-	weaponvelocity=600;
-	sprayangle=2048;
-	areaofeffect=8;
-	burst=3;
-	burstrate=0.1;
-	soundstart=armsml2;
-	soundhit=lasrhit1;
-	soundtrigger=0;
-	tolerance=1000;
-	startsmoke=0;
-	endsmoke=0;
-	[DAMAGE]
-	{
-		default=5;
 		group_invincible=1;
 	}
 }
@@ -5599,19 +5035,20 @@
 	model=weapon_exphvyrock;
 	range=1400;
 	reloadtime=18;
-	weapontimer=6;
+	weapontimer=0.33; //6
 	weaponvelocity=300;
 	startvelocity=100;
 	weaponacceleration=120;
-	areaofeffect=80;
+	areaofeffect=160;  //80
 	energypershot=900;
-	Burst=6;
-	Burstrate=0.3;
+	Burst=12;
+	Burstrate=0.133;
 	Trajectoryheight=1;
-	Wobble=14000;
+	Wobble=12000; //14000
+	Dance=100;
 	flighttime=8;
-	turnrate=4000;
-	edgeeffectiveness=0.75;
+	turnrate=5000;	//4000
+	//edgeeffectiveness=0.75;
 	soundstart=RavenHvyRock;
 	soundhit=rockhit;
 	firestarter=70;
@@ -5620,7 +5057,7 @@
 	startsmoke=0;
 	[DAMAGE]
 	{
-		default=800;
+		default=300;	//800
 		group_invincible=1;
 	}
 }
@@ -5635,7 +5072,6 @@
 	Texture2=null;
 	Texture3=null;
 	Texture4=null;
-
 	turret=1;
 	range=300;
 	reloadtime=0.5;
@@ -5705,7 +5141,6 @@
 		group_invincible=1;
 	}
 }
-
 [GATOR_Goliath_LASER]
 {
 	explosiongenerator=custom:Gator;
@@ -6037,8 +5472,6 @@
 [NUCLEAR_MISSILE]
 {
 	name=Nuclear Missile;
-
-	vlaunch=1;
 	Weapontype=StarburstLauncher;
 	model=weapon_ballmiss;
 	range=32000;
@@ -6083,7 +5516,6 @@
 [SBMISSILE]
 {
 	name=Starburst Missile;
-	vlaunch=1;
 	Weapontype=StarburstLauncher;
 	model=missile.s3o;
 	Texture1=null;
@@ -6267,7 +5699,7 @@
 	weapontimer=2;
 	weaponvelocity=650;
 	sprayangle=910;
-	areaofeffect=8;
+	areaofeffect=12;
 //	burst=5;
 //	burstrate=0.07;
 	soundstart=armsml3;
@@ -6286,32 +5718,6 @@
 		group_invincible=1;
 	}
 }
-[VTOL_EMG2]
-{
-	name=E.M.G.;
-	Weapontype=EmgCannon;
-	color=1;
-	range=510;
-	reloadtime=0.6;
-	weapontimer=1;
-	weaponvelocity=400;
-	sprayangle=1024;
-	areaofeffect=8;
-	burst=3;
-	burstrate=0.1;
-	soundstart=emgpuls1;
-	soundhit=lasrhit1;
-	soundtrigger=0;
-	tolerance=11000;
-	startsmoke=1;
-	explosiongenerator=custom:EMGFLASH;
-	cegTag=PEEWEESHINE;
-	[DAMAGE]
-	{
-		default=12;
-		group_invincible=1;
-	}
-}
 [VTOL_ROCKET]
 {
 	name=Rockets;
@@ -6319,7 +5725,7 @@
 	model=missile.s3o;
 	Weapontype=MissileLauncher;
 	range=450;
-	reloadtime=2.0;
+	reloadtime=2.273;
 	weapontimer=0.1;
 	flighttime=2.27;
 	weaponvelocity=520;
@@ -6348,38 +5754,7 @@
 	[DAMAGE]
 	{
 		default=125;
-		group_landair=55;
-		group_invincible=1;
-	}
-}
-[VTOL_ROCKET2]
-{
-	name=Rockets;
-	model=missile.s3o;
-	Weapontype=MissileLauncher;
-	cegTag=KBOTROCKETTRAIL;
-	Texture1=null;
-	Texture2=null;
-	Texture3=null;
-	Texture4=null;
-	range=450;
-	reloadtime=2;
-	weapontimer=5;
-	weaponvelocity=350;
-	startvelocity=250;
-	weaponacceleration=131;
-	turnrate=7680;
-	areaofeffect=48;
-	soundstart=rocklit3;
-	soundhit=explode;
-	firestarter=70;
-	smokedelay=0.1;
-	smoketrail=0;
-	tolerance=8000;
-	startsmoke=1;
-	[DAMAGE]
-	{
-		default=125;
+		group_landair=42;
 		group_invincible=1;
 	}
 }
@@ -6584,7 +5959,9 @@
 	name=Unguided Torpedo;
 	CollideFriendly=0;
 	model=weapon_Advtorpedo;
-	propeller=1;
+	weapontype=TorpedoLauncher;
+	waterweapon=1;
+	flighttime=2.5;
 	range=1000;
 	reloadtime=6.8;
 	weapontimer=20;
@@ -6596,7 +5973,6 @@
 	soundstart=TORPEDO2;
 	soundhit=DEPTH3;
 	tracks=1;
-	waterweapon=1;
 	tolerance=92767;
 	noautorange=1;
 	explosiongenerator=custom:popupcannon;
@@ -6653,6 +6029,7 @@
 	startsmoke=1;
 	accuracy=900;
 	movingaccuracy=1800;
+	tolerance=300;
 	[DAMAGE]
 	{
 		default=444;
@@ -6679,6 +6056,7 @@
 	startsmoke=1;
 	accuracy=900;
 	movingaccuracy=1800;
+	tolerance=300;	
 	[DAMAGE]
 	{
 		default=422;
@@ -6818,7 +6196,6 @@
 	thickness=1.2;
 	CoreThickness=0.5;
 	Intensity=5.0; 	
-
 	turret=1;
 	range=300;
 	reloadtime=0.6;
@@ -6879,7 +6256,7 @@
 	weapontimer=6;
 	flighttime=4;
 	weaponvelocity=750;
-	startvelocity=150;
+	startvelocity=525;
 	weaponacceleration=225;
 	turnrate=50000;
 	areaofeffect=24;
@@ -6900,7 +6277,7 @@
 	{
 		default=28;
 		group_landair=68;
-	group_invincible=1;
+		group_invincible=1;
 	}
 }
 [LANDBOAT_MISSILE]
@@ -7008,6 +6385,7 @@
 [BOAT_TORPEDO]
 {
 	name=Unguided Torpedo;
+	Weapontype=TorpedoLauncher;
 	CollideFriendly=0;
 	model=weapon_torpedo;
 	propeller=1;
@@ -7021,7 +6399,7 @@
 	areaofeffect=16;
 	soundstart=torpedo1;
 	soundhit=xplodep1;
-	tracks=1;
+	//tracks=1;
 	waterweapon=1;
 	tolerance=32767;
 	noautorange=1;
@@ -7041,6 +6419,7 @@
 [TANK_TORPEDO]
 {
 	name=Unguided Torpedo;
+	Weapontype=TorpedoLauncher;
 	CollideFriendly=0;
 	model=weapon_DEPTHCHARGE;
 	propeller=1;
@@ -7054,7 +6433,7 @@
 	areaofeffect=32;
 	soundstart=torpedo1;
 	soundhit=xplodep1;
-	tracks=1;
+	//tracks=1;
 	waterweapon=1;
 	tolerance=32767;
 	noautorange=1;
@@ -7243,7 +6622,6 @@
 	impulseboost=0.0;
 	cratermult=0;
 	impulsefactor=0.0;	
-
 	GroundBounce=0;
 	WaterBounce=0;
 	NumBounce=2;
@@ -7279,6 +6657,7 @@
 [Fibby_Torpedo]
 {
 	name=Unguided Torpedo;
+	Weapontype=TorpedoLauncher;
 	CollideFriendly=0;
 	model=weapon_Advtorpedo;
 	propeller=1;
@@ -7292,7 +6671,7 @@
 	areaofeffect=64;
 	soundstart=TORPEDO2;
 	soundhit=DEPTH3;
-	tracks=1;
+	//tracks=1;
 	waterweapon=1;
 	tolerance=92767;
 	noautorange=1;
@@ -7394,7 +6773,6 @@
 	Texture4=null;
 	rgbcolor=0.6 0.4 0.9;
 	rgbcolor2=0.6 0.4 0.9;
-
 	turret=1;
 	range=720;
 	reloadtime=0.2;
@@ -7547,7 +6925,7 @@
 	impulsefactor=0.0;	
 	[DAMAGE]
 	{
-	default=687;
+		default=687;
 		group_spiders=324;
 	}
 }

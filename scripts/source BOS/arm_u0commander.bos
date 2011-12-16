@@ -7,7 +7,7 @@
 #define SIG_BUILD 8
 
 piece  torso, ruparm, luparm, rbigflash, nanospray, pelvis, lfirept, head,
-       lthigh, rthigh, nanolath, biggun, rleg, lleg, orbit, orbitfire, dong, cum;
+       lthigh, rthigh, nanolath, biggun, rleg, lleg, dong, cum; //orbit, orbitfire, 
 
 static-var  Static_Var_1, building, Static_Var_3, Static_Var_4, Static_Var_5,
             Static_Var_6, DGunning, moveSpeed, currentSpeed;
@@ -475,9 +475,9 @@ Create()
 	Static_Var_4 = 0;
 	moveSpeed = get MAX_SPEED;
 	currentSpeed = 100;
-	move orbit to y-axis [750.000000] now;
-	move orbitfire to x-axis [375.000000] now;
-	spin orbit around y-axis speed <54.890110>;
+	//move orbit to y-axis [750.000000] now;
+	//move orbitfire to x-axis [375.000000] now;
+	//spin orbit around y-axis speed <54.890110>;
 	start-script UnitSpeed();
 	start-script MotionControl();
 }
@@ -497,9 +497,9 @@ SweetSpot(piecenum)
 	piecenum = torso;
 }
 
-QueryNanoPiece(Func_Var_1)
+QueryNanoPiece(piecenum)
 {
-	Func_Var_1 = 4;
+	piecenum = nanospray;
 }
 
 RestorePosition()
@@ -515,17 +515,17 @@ RestorePosition()
 	building = FALSE;
 }
 
-AimFromPrimary(Func_Var_1)
+AimFromPrimary(piecenum)
 {
-	Func_Var_1 = 0;
+	piecenum = torso;
 }
 
-QueryPrimary(Func_Var_1)
+QueryPrimary(piecenum)
 {
-	Func_Var_1 = 6;
+	piecenum = lfirept;
 }
 
-AimPrimary(Func_Var_1, Func_Var_2)
+AimPrimary(heading, pitch)
 {
 	if( Static_Var_4 )
 	{
@@ -538,10 +538,14 @@ AimPrimary(Func_Var_1, Func_Var_2)
 	{
 		sleep 100;
 	}
-	turn torso to y-axis Func_Var_1 speed <300.093407>;
-	turn luparm to x-axis <-60.000000> - Func_Var_2 speed <95.000000>;
+	var ang;
+	ang = 0-(<90>+pitch)/2;
+	turn torso to y-axis heading speed <360.000000>;
+	turn luparm to x-axis ang speed <180.000000>;
+	turn nanolath to x-axis ang speed <180.000000>;
 	wait-for-turn torso around y-axis;
 	wait-for-turn luparm around x-axis;
+	wait-for-turn nanolath around x-axis;
 	return (1);
 }
 
@@ -550,32 +554,17 @@ FirePrimary()
 	emit-sfx UNIT_SFX3 from lfirept;
 }
 
-AimFromSecondary(Func_Var_1)
+AimFromTertiary(piecenum)
 {
-	Func_Var_1 = 14;
+	piecenum = torso;
 }
 
-QuerySecondary(Func_Var_1)
+QueryTertiary(piecenum)
 {
-	Func_Var_1 = 15;
+	piecenum = rbigflash;
 }
 
-AimSecondary()
-{
-	return (1);
-}
-
-AimFromTertiary(Func_Var_1)
-{
-	Func_Var_1 = 0;
-}
-
-QueryTertiary(Func_Var_1)
-{
-	Func_Var_1 = 3;
-}
-
-AimTertiary(Func_Var_1, Func_Var_2)
+AimTertiary(heading, pitch)
 {
 	signal SIG_AIM1;
 	set-signal-mask SIG_AIM1;
@@ -587,10 +576,14 @@ AimTertiary(Func_Var_1, Func_Var_2)
 	{
 		sleep 100;
 	}
-	turn torso to y-axis Func_Var_1 speed <300.093407>;
-	turn ruparm to x-axis <-49.000000> - Func_Var_2 speed <110.000000>;
+	var ang;
+	ang = 0-(<90>+pitch)/2;
+	turn torso to y-axis heading speed <360.000000>;
+	turn ruparm to x-axis ang speed <180.000000>;
+	turn biggun to x-axis ang speed <180.000000>;
 	wait-for-turn torso around y-axis;
 	wait-for-turn ruparm around x-axis;
+	wait-for-turn biggun around x-axis;
 	return (1);
 }
 
@@ -599,17 +592,21 @@ FireTertiary()
 	emit-sfx UNIT_SFX1 from rbigflash;
 }
 
-StartBuilding(Func_Var_1, Func_Var_2)
+StartBuilding(heading, pitch)
 {
 	building = TRUE;
 	while( !Static_Var_3 )
 	{
 		sleep 100;
 	}
-	turn torso to y-axis Func_Var_1 speed <300.093407>;
-	turn luparm to x-axis <-30.000000> - Func_Var_2 speed <50.000000>;
+	var ang;
+	ang = 0-(<90>+pitch)/2;
+	turn torso to y-axis heading speed <360.000000>;
+	turn luparm to x-axis ang speed <90.000000>;
+	turn nanolath to x-axis ang speed <90.000000>;
 	wait-for-turn torso around y-axis;
 	wait-for-turn luparm around x-axis;
+	wait-for-turn nanolath around x-axis;
 	set INBUILDSTANCE to 1;
 	emit-sfx UNIT_SFX2 from nanospray;
 	Static_Var_5 = 1;

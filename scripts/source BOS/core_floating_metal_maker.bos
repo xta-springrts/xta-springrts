@@ -6,7 +6,10 @@
 piece  base, float1, float2, float3, float4, float5, float6, door1,
        door2, door3, door4, glow, ground;
 
-static-var  statechg_DesiredState, statechg_StateChanging, floating;
+static-var  floating, mmState;
+
+#define OPERATING 1024
+#define SIG_ROCK 32
 
 SetDirection(heading)
 {
@@ -18,6 +21,8 @@ SetDirection(heading)
 
 RockOnWaves()
 {
+	signal SIG_ROCK;
+	set-signal-mask SIG_ROCK;
 	while(floating)
 	{
 		turn ground to x-axis <1.0> speed <1.5>;
@@ -69,10 +74,16 @@ activatescr()
 	turn door3 to z-axis <90.021978> speed <92.994505>;
 	turn door4 to z-axis <-90.021978> speed <92.994505>;
 	sleep 987;
+
+	move base to y-axis [0.000000] speed [5.000000];
+	floating = 1;
+	set ARMORED to 0;
+	start-script RockOnWaves();
 }
 
 deactivatescr()
 {
+	floating = 0;
 	move float1 to y-axis [0.000000] now;
 	move float1 to z-axis [-2.150000] now;
 	move float2 to x-axis [-1.799994] now;
@@ -106,51 +117,60 @@ deactivatescr()
 	move float6 to x-axis [0.625842] speed [1.214441];
 	move float6 to z-axis [-0.355206] speed [0.689276];
 	sleep 1040;
-}
 
-#include "SmokeUnit.bos"
-
-Go()
-{
-	call-script activatescr();
-	move base to y-axis [0.000000] speed [5.000000];
-	floating = 1;
-	set ARMORED to 0;
-	start-script RockOnWaves();
-}
-
-Stop()
-{
-	floating = 0;
-	call-script deactivatescr();
 	move base to y-axis [-5.000000] speed [5.000000];
 	set ARMORED to 1;
 }
 
-RequestState(requestedstate, currentstate)
+ImAMetalMaker()
 {
-	if( statechg_StateChanging )
+	mmState = -1;
+	while( TRUE )
 	{
-		statechg_DesiredState = requestedstate;
-		return (0);
-	}
-	statechg_StateChanging = TRUE;
-	currentstate = statechg_DesiredState;
-	statechg_DesiredState = requestedstate;
-	while( statechg_DesiredState != currentstate )
-	{
-		if( statechg_DesiredState )
+		if ((get OPERATING) == 1)
 		{
-			call-script Stop();
-			currentstate = 1;
+			if (mmState != 1) {
+				call-script activatescr();
+				mmState = 1;
+			}
 		}
 		else
 		{
-			call-script Go();
-			currentstate = 0;
+			if (mmState != 0) {
+				call-script deactivatescr();
+				mmState = 0;
+			}
 		}
+		sleep 1000;
 	}
-	statechg_StateChanging = FALSE;
+}
+
+SmokeUnit(healthpercent, sleeptime, smoketype)
+{
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 500;
+	}
+	start-script ImAMetalMaker();
+	while( TRUE )
+	{
+		healthpercent = get HEALTH;
+		if( healthpercent < 66 )
+		{
+			smoketype = SFXTYPE_BLACKSMOKE;
+			if( Rand( 1, 66 ) < healthpercent )
+			{
+				smoketype = SFXTYPE_WHITESMOKE;
+			}
+			emit-sfx smoketype from base;
+		}
+		sleeptime = healthpercent * 50;
+		if( sleeptime < 200 )
+		{
+			sleeptime = 200;
+		}
+		sleep sleeptime;
+	}
 }
 
 Create()
@@ -180,20 +200,8 @@ Create()
 	dont-cache glow;
 	dont-shade glow;
 	floating = 1;
-	statechg_DesiredState = TRUE;
-	statechg_StateChanging = FALSE;
 	start-script SmokeUnit();
 	start-script RockOnWaves();
-}
-
-Activate()
-{
-	start-script RequestState(0);
-}
-
-Deactivate()
-{
-	start-script RequestState(1);
 }
 
 SweetSpot(piecenum)

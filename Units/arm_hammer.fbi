@@ -10,7 +10,7 @@
 	//************************************************************
 	//  Categories
 	//**************
-	category=ARM KBOT WEAPON NOTAIR NOTSUB;
+	category=ARM KBOT WEAPON MOBILE NOTAIR NOTSEA NOTSUB;
 	tedclass=KBOT;
 
 	//************************************************************
@@ -66,7 +66,7 @@
 	//  Movement
 	//************
 	movementclass=KBOTSS2;
-	turnrate=446; // was 995//was 700 sumthin NORUAS
+	turnrate=700; // was 995//was 446
 	acceleration=1.0;
 	brakerate=1.83105;
 	maxvelocity=1.5; //1.32;

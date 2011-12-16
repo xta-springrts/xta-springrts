@@ -1,7 +1,7 @@
 [CLASS0]
 {
 	Name=SMALLBOAT;
-	FootprintX=3;
+	FootprintX=2;
 	FootprintZ=3;
 	MinWaterDepth=5;
 	CrushStrength=50;
@@ -10,7 +10,7 @@
 [CLASS1]
 {
 	Name=MEDIUMBOAT;
-	FootprintX=4;
+	FootprintX=3;
 	FootprintZ=4;
 	MinWaterDepth=25;
 	CrushStrength=200;
@@ -19,7 +19,7 @@
 [CLASS2]
 {
 	Name=LARGEBOAT;
-	FootprintX=6;
+	FootprintX=4;
 	FootprintZ=6;
 	MinWaterDepth=50;
 	CrushStrength=1600;

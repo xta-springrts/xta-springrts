@@ -1,5 +1,5 @@
 --------------------------------------------------------------------------------
--- Unit Definitions Post-processing
+-- Weapon Definitions Post-processing
 --------------------------------------------------------------------------------
 
 local function tobool(val)
@@ -14,6 +14,37 @@ local function tobool(val)
     return ((val ~= '0') and (val ~= 'false'))
   end
   return false
+end
+
+for id in pairs(WeaponDefs) do
+	if WeaponDefs[id].range then
+		if tonumber(WeaponDefs[id].range) < 550 then
+			WeaponDefs[id].avoidfeature = false
+		end
+		if WeaponDefs[id].edgeeffectiveness and tonumber(WeaponDefs[id].edgeeffectiveness)>0 then
+			if (WeaponDefs[id].weapontype == "MissileLauncher" or WeaponDefs[id].weapontype == "StarburstLauncher" or
+				WeaponDefs[id].weapontype == "TorpedoLauncher" or WeaponDefs[id].weapontype == "Cannon" or
+				WeaponDefs[id].weapontype == "AircraftBomb") and tonumber(WeaponDefs[id].areaofeffect)<145 then
+					WeaponDefs[id].areaofeffect = math.min(WeaponDefs[id].areaofeffect / (1 - WeaponDefs[id].edgeeffectiveness), 160)
+					WeaponDefs[id].edgeeffectiveness = 0
+					Spring.Echo(id)
+			end
+		end
+	end
+	if WeaponDefs[id].weapontype == "LaserCannon" or WeaponDefs[id].weapontype == "BeamLaser" or WeaponDefs[id].weapontype == "EmgCannon" or WeaponDefs[id].weapontype == "LightningCannon" then
+		WeaponDefs[id].impulseboost = 0
+		WeaponDefs[id].impulsefactor = 0
+	end
+	if WeaponDefs[id].cratermult then 
+		WeaponDefs[id].cratermult = WeaponDefs[id].cratermult * 0.4
+	else
+		WeaponDefs[id].cratermult = 0.4
+	end
+	if WeaponDefs[id].craterboost then
+		WeaponDefs[id].craterboost = WeaponDefs[id].craterboost * 0.4
+	else
+		WeaponDefs[id].craterboost = 0
+	end
 end
 
 

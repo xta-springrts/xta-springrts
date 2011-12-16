@@ -8,8 +8,7 @@
 piece  base, turret, barrel1, barrel2, flare1, flare2, leg1, leg2,
        leg3, leg4, leg5, leg6, glowsource, shinesource;
 
-static-var  bMoving, restore_delay, gun_1, empOverload, justMoved,
-			moveSpeed, currentSpeed;
+static-var  bMoving, restore_delay, gun_1, empOverload, justMoved, moveSpeed;
 
 
 ON()
@@ -96,7 +95,7 @@ walk2()
 		turn leg6 to y-axis <0.000000> now;
 		turn leg6 to y-axis <-30.390110> speed <258.5588>;
 		turn leg6 to z-axis <-45.000000> now;
-		sleep 11800 / currentSpeed;
+		sleep 118;
 	}
 	if( bMoving )
 	{
@@ -108,7 +107,7 @@ walk2()
 		turn leg4 to y-axis <0.000000> speed <341.1769>;
 		turn leg5 to z-axis <-31.000000> speed <263.6588>;
 		turn leg6 to z-axis <2.390110> speed <403.2269>;
-		sleep 11800 / currentSpeed;
+		sleep 118;
 	}
 	if( bMoving )
 	{
@@ -122,7 +121,7 @@ walk2()
 		turn leg5 to y-axis <-31.593407> speed <268.7588>;
 		turn leg5 to z-axis <-31.000000> speed <0>;
 		turn leg6 to y-axis <3.000000> speed <284.3951>;
-		sleep 11800 / currentSpeed;
+		sleep 118;
 	}
 	if( bMoving )
 	{
@@ -138,7 +137,7 @@ walk2()
 		turn leg5 to z-axis <0.000000> speed <263.6588>;
 		turn leg6 to y-axis <0.000000> speed <25.82693>;
 		turn leg6 to z-axis <-45.000000> speed <403.2269>;
-		sleep 11800 / currentSpeed;
+		sleep 118;
 	}
 }
 
@@ -194,23 +193,12 @@ MotionControl()
 	}
 }
 
-UnitSpeed()
-{
-	while(TRUE)
-	{
-		currentSpeed = (get CURRENT_SPEED)*100/moveSpeed;
-		if (currentSpeed<20) currentSpeed=20;
-		sleep 142;
-	}
-}
-
 SmokeUnit(healthpercent, sleeptime, smoketype)
 {
 	while( get BUILD_PERCENT_LEFT )
 	{
 		sleep 500;
 	}
-	start-script UnitSpeed();
 	start-script MotionControl();
 	while( TRUE )
 	{
@@ -235,14 +223,13 @@ SmokeUnit(healthpercent, sleeptime, smoketype)
 
 Create()
 {
-	justMoved = FALSE;
 	hide flare1;
 	hide flare2;
 	bMoving = 0;
+	justMoved = FALSE;
+	moveSpeed = get MAX_SPEED;
 	gun_1 = 0;
 	restore_delay = 3000;
-	moveSpeed = get MAX_SPEED;
-	currentSpeed = 100;
 	start-script SmokeUnit();
 }
 
@@ -309,21 +296,14 @@ FirePrimary()
 	gun_1 = !gun_1;
 }
 
-AimFromPrimary(Func_Var_1)
+AimFromPrimary(piecenum)
 {
-	Func_Var_1 = 1;
+	piecenum = 1;
 }
 
-QueryPrimary(Func_Var_1)
+QueryPrimary(piecenum)
 {
-	if( gun_1 )
-	{
-		Func_Var_1 = 5;
-	}
-	else
-	{
-		Func_Var_1 = 4;
-	}
+	piecenum = 4 + gun_1;
 }
 
 Killed(Func_Var_1, Func_Var_2)

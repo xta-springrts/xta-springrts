@@ -5,8 +5,9 @@
 
 piece  base2, lid2, lid3, mmakercore, lid1, lid4, glowingthing;
 
-static-var  statechg_DesiredState, statechg_StateChanging;
+static-var  mmState;
 
+#define OPERATING 1024
 
 activatescr()
 {
@@ -50,12 +51,36 @@ deactivatescr()
 	sleep 684;
 }
 
+ImAMetalMaker()
+{
+	mmState = -1;
+	while( TRUE )
+	{
+		if ((get OPERATING) == 1)
+		{
+			if (mmState != 1) {
+				call-script activatescr();
+				mmState = 1;
+			}
+		}
+		else
+		{
+			if (mmState != 0) {
+				call-script deactivatescr();
+				mmState = 0;
+			}
+		}
+		sleep 1000;
+	}
+}
+
 SmokeUnit(healthpercent, sleeptime, smoketype)
 {
 	while( get BUILD_PERCENT_LEFT )
 	{
 		sleep 500;
 	}
+	start-script ImAMetalMaker();
 	while( TRUE )
 	{
 		healthpercent = get HEALTH;
@@ -77,49 +102,6 @@ SmokeUnit(healthpercent, sleeptime, smoketype)
 	}
 }
 
-Go()
-{
-	dont-cache lid1;
-	dont-cache lid2;
-	dont-cache lid3;
-	dont-cache lid4;
-	call-script activatescr();
-}
-
-Stop()
-{
-	call-script deactivatescr();
-	cache lid1;
-	cache lid2;
-	cache lid3;
-	cache lid4;
-}
-
-RequestState(requestedstate, currentstate)
-{
-	if( statechg_StateChanging )
-	{
-		statechg_DesiredState = requestedstate;
-		return (0);
-	}
-	statechg_StateChanging = TRUE;
-	currentstate = statechg_DesiredState;
-	statechg_DesiredState = requestedstate;
-	while( statechg_DesiredState != currentstate )
-	{
-		if( statechg_DesiredState )
-		{
-			call-script Stop();
-			currentstate = 1;
-		}
-		else
-		{
-			call-script Go();
-			currentstate = 0;
-		}
-	}
-	statechg_StateChanging = FALSE;
-}
 
 Create()
 {
@@ -131,20 +113,8 @@ Create()
 	dont-shade lid3;
 	dont-shade lid4;
 	dont-shade mmakercore;
-	statechg_DesiredState = TRUE;
-	statechg_StateChanging = FALSE;
 	set ARMORED to 0;
 	start-script SmokeUnit();
-}
-
-Activate()
-{
-	start-script RequestState(0);
-}
-
-Deactivate()
-{
-	start-script RequestState(1);
 }
 
 SweetSpot(piecenum)

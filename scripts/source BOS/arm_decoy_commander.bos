@@ -531,7 +531,7 @@ QueryPrimary(Func_Var_1)
 	Func_Var_1 = 6;
 }
 
-AimPrimary(Func_Var_1, Func_Var_2)
+AimPrimary(heading, pitch)
 {
 	if( Static_Var_4 == 1 )
 	{
@@ -544,10 +544,14 @@ AimPrimary(Func_Var_1, Func_Var_2)
 	{
 		sleep 100;
 	}
-	turn torso to y-axis Func_Var_1 speed <300.093407>;
-	turn luparm to x-axis <0.000000> - Func_Var_2 - <60.000000> speed <95.000000>;
+	var ang;
+	ang = 0-(<90>+pitch)/2;
+	turn torso to y-axis heading speed <360.000000>;
+	turn luparm to x-axis ang speed <180.000000>;
+	turn nanolath to x-axis ang speed <180.000000>;
 	wait-for-turn torso around y-axis;
 	wait-for-turn luparm around x-axis;
+	wait-for-turn nanolath around x-axis;
 	return (1);
 }
 
@@ -581,7 +585,7 @@ QueryTertiary(Func_Var_1)
 	Func_Var_1 = 3;
 }
 
-AimTertiary(Func_Var_1, Func_Var_2)
+AimTertiary(heading, pitch)
 {
 	signal 2;
 	set-signal-mask 2;
@@ -592,10 +596,14 @@ AimTertiary(Func_Var_1, Func_Var_2)
 	{
 		sleep 100;
 	}
-	turn torso to y-axis Func_Var_1 speed <300.093407>;
-	turn ruparm to x-axis <0.000000> - Func_Var_2 - <49.000000> speed <110.000000>;
+	var ang;
+	ang = 0-(<90>+pitch)/2;
+	turn torso to y-axis heading speed <360.000000>;
+	turn ruparm to x-axis ang speed <180.000000>;
+	turn biggun to x-axis ang speed <180.000000>;
 	wait-for-turn torso around y-axis;
 	wait-for-turn ruparm around x-axis;
+	wait-for-turn biggun around x-axis;
 	return (1);
 }
 
@@ -604,17 +612,21 @@ FireTertiary()
 	emit-sfx UNIT_SFX1 from rbigflash;
 }
 
-StartBuilding(Func_Var_1, Func_Var_2)
+StartBuilding(heading, pitch)
 {
 	building = TRUE;
 	while( !Static_Var_3 )
 	{
 		sleep 100;
 	}
-	turn torso to y-axis Func_Var_1 speed <300.093407>;
-	turn luparm to x-axis <0.000000> - Func_Var_2 - <30.000000> speed <50.000000>;
+	var ang;
+	ang = 0-(<90>+pitch)/2;
+	turn torso to y-axis heading speed <360.000000>;
+	turn luparm to x-axis ang speed <90.000000>;
+	turn nanolath to x-axis ang speed <90.000000>;
 	wait-for-turn torso around y-axis;
 	wait-for-turn luparm around x-axis;
+	wait-for-turn nanolath around x-axis;
 	set INBUILDSTANCE to 1;
 	emit-sfx 1024 + 1 from nanospray;
 	Static_Var_5 = 1;

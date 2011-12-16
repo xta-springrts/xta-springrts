@@ -3,50 +3,27 @@
 #include "sfxtype.h"
 #include "exptype.h"
 
-piece  base, dome, ground;
+piece  base, glow, plug;
 
-static-var  mmState;
+static-var  statechg_DesiredState, statechg_StateChanging, mmState;
 
 #define OPERATING 1024
 
-SetDirection(heading)
+Go()
 {
-	var spd;
-	spd = get ABS(heading);
-	turn ground to y-axis heading speed spd;
-	turn base to y-axis 0-heading speed spd;
+	dont-cache glow;
+	turn plug to z-axis <0.000000> speed <50.010989>;
+	wait-for-turn plug around z-axis;
+	cache plug;
 }
 
-RockOnWaves()
+Stop()
 {
-	while(1)
-	{
-		turn ground to x-axis <1.0> speed <1.5>;
-		move ground to y-axis [0.0] speed [0.15];
-		wait-for-turn ground around x-axis;
-		turn ground to x-axis <-1.0> speed <1.5>;
-		move ground to y-axis [-0.1] speed [0.15];
-		wait-for-move ground along y-axis;
-		move ground to y-axis [0.0] speed [0.15];
-		wait-for-turn ground around x-axis;
-		turn ground to x-axis <1.0> speed <1.5>;
-		move ground to y-axis [-0.1] speed [0.15];
-		wait-for-move ground along y-axis;
-	}
-}
-
-activatescr()
-{
-	turn dome to x-axis <0.000000> now;
-	turn dome to x-axis <180.285714> speed <112.467033>;
-	sleep 1676;
-}
-
-deactivatescr()
-{
-	turn dome to x-axis <180.285714> now;
-	turn dome to x-axis <0.000000> speed <112.467033>;
-	sleep 1676;
+	cache plug;
+	turn plug to z-axis <180.043956> speed <50.010989>;
+	wait-for-turn plug around z-axis;
+	cache plug;
+	cache glow;
 }
 
 ImAMetalMaker()
@@ -57,14 +34,14 @@ ImAMetalMaker()
 		if ((get OPERATING) == 1)
 		{
 			if (mmState != 1) {
-				call-script activatescr();
+				call-script Go();
 				mmState = 1;
 			}
 		}
 		else
 		{
 			if (mmState != 0) {
-				call-script deactivatescr();
+				call-script Stop();
 				mmState = 0;
 			}
 		}
@@ -102,11 +79,10 @@ SmokeUnit(healthpercent, sleeptime, smoketype)
 
 Create()
 {
-	dont-cache dome;
-	dont-shade dome;
-	move base to y-axis [-1.0] now;
+	dont-shade plug;
+	dont-shade glow;
+	dont-cache glow;
 	start-script SmokeUnit();
-	start-script RockOnWaves();
 }
 
 SweetSpot(piecenum)
@@ -120,24 +96,28 @@ Killed(severity, corpsetype)
 	{
 		corpsetype = 1;
 		explode base type BITMAPONLY | BITMAP1;
-		explode dome type BITMAPONLY | BITMAP2;
+		explode glow type BITMAPONLY | BITMAP2;
+		explode plug type BITMAPONLY | BITMAP3;
 		return (0);
 	}
 	if( severity <= 50 )
 	{
 		corpsetype = 2;
 		explode base type BITMAPONLY | BITMAP1;
-		explode dome type BITMAPONLY | BITMAP2;
+		explode glow type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+		explode plug type BITMAPONLY | BITMAP3;
 		return (0);
 	}
 	if( severity <= 99 )
 	{
 		corpsetype = 3;
 		explode base type BITMAPONLY | BITMAP1;
-		explode dome type BITMAPONLY | BITMAP2;
+		explode glow type SHATTER | BITMAP2;
+		explode plug type BITMAPONLY | BITMAP3;
 		return (0);
 	}
 	corpsetype = 3;
 	explode base type BITMAPONLY | BITMAP1;
-	explode dome type BITMAPONLY | BITMAP2;
+	explode glow type SHATTER | EXPLODE_ON_HIT | BITMAP2;
+	explode plug type BITMAPONLY | BITMAP3;
 }

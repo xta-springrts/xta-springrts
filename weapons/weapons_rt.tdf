@@ -34,7 +34,7 @@
 [ARMMSHIP_ROCKET_GUIDED]
 {
 	name=Rocket;
-	vlaunch=1;
+	WeaponType=StarburstLauncher;
 	model=weapon_rocket;
 	range=1450;
 	cegTag=RAVENTRAIL;
@@ -135,7 +135,7 @@
 [ARMTRUCK_ROCKET_GUIDED]
 {
 	name=Rocket;
-	vlaunch=1;
+	WeaponType=StarburstLauncher;
 	explosiongenerator=custom:PUFFY;
 	model=weapon_rocket;
 	range=1300;
@@ -268,7 +268,7 @@
 [CORMSHIP_ROCKET_GUIDED]
 {
 	name=Rocket;
-	vlaunch=1;
+	WeaponType=StarburstLauncher;
 	model=weapon_corvrocket;
 	explosiongenerator=custom:PUFFY;
 	cegTag=RAVENTRAIL;
@@ -371,7 +371,7 @@
 [CORTRUCK_ROCKET_GUIDED]
 {
 	name=Rocket;
-	vlaunch=1;
+	WeaponType=StarburstLauncher;
 	model=weapon_corvrocket;
 	cegTag=RAVENTRAIL;
 	explosiongenerator=custom:PUFFY;
