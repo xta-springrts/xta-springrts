@@ -292,3 +292,25 @@ else
   })
 end
 end
+
+---Transport/Commander Fix------------
+-- this is to work around engine crash when commanders die in air transports
+-- works together with unit_transportcomfix.lua
+-- http://springrts.com/mantis/view.php?id=2791 Can probally be removed with 85.0
+for name, ud in pairs(UnitDefs) do
+	--if ud.category and (ud.category:find("TANK",1,true) or ud.category:find("HOVER",1,true)) then
+	--Spring.Echo ("releaseHeld for " .. (ud.unitname or "nil unitname"))
+	--Spring.Echo ("id:" .. (ud.unitDefId or "nil"))	
+	if (ud.transportsize) then	--refuses to load without this
+		--Spring.Echo ("its a transport")
+		if (ud.releaseheld)  then
+			--Spring.Echo ("passenger survives the death of this transport")
+			if (not ud.customParams) then ud.customParams = {} end
+			ud.customParams.releaseheld = true	--this custom param is checked by gadget to manually kill passengers
+		else			
+			--Spring.Echo ("this transport kills its passenger on death")			
+			ud.releaseheld = true
+		end
+	end
+	--Spring.Echo ("-------")	
+end
