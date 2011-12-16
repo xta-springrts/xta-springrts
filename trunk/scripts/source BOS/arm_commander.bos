@@ -28,61 +28,66 @@ ON()
 
 Experience()
 {
-	var XP;
+	var XP, oldXP;
+	oldXP = -1;
 	while( TRUE )
 	{
 		XP=get VETERAN_LEVEL;
-		if( XP <= 15 ) 
+		if (XP != oldXP)
 		{
-			weapon2Disabled = 1;
-			weapon4Disabled = 1;
-			weapon5Disabled = 1;
-			weapon6Disabled = 1;
-			set ARMORED to 0;
+			if( XP <= 15 ) 
+			{
+				weapon2Disabled = 1;
+				weapon4Disabled = 1;
+				weapon5Disabled = 1;
+				weapon6Disabled = 1;
+				set ARMORED to 0;
+			}
+			else if( XP <= 30 )
+			{
+				weapon2Disabled = 0;
+				weapon4Disabled = 1;
+				weapon5Disabled = 1;
+				weapon6Disabled = 1;
+				set ARMORED to 1;
+			}
+			else if( XP <= 60 )
+			{
+				weapon2Disabled = 0;
+				weapon4Disabled = 0;
+				weapon5Disabled = 1;
+				weapon6Disabled = 1;
+				set ARMORED to 1;
+			}
+			else if( XP <= 120 )
+			{
+				weapon2Disabled = 0;
+				weapon4Disabled = 0;
+				weapon5Disabled = 1;
+				weapon6Disabled = 0;
+				set ARMORED to 1;
+			}
+			else if( XP > 120 )
+			{
+				weapon2Disabled = 0;
+				weapon4Disabled = 0;
+				weapon5Disabled = 0;
+				weapon6Disabled = 0;
+				set ARMORED to 1;
+			}
+			speedFactor = XP/3 + 100;
+			if(speedFactor>150) speedFactor=150;
+			wFactor = XP*2/3 + 100;
+			if(wFactor>250) wFactor=250;
+			set MAX_SPEED to moveSpeed*speedFactor/100;
+			set LOS_RADIUS to LOS*speedFactor/100;
+			set AIR_LOS_RADIUS to AirLOS*speedFactor/100;
+			set RADAR_RADIUS to radarRange*((speedFactor - 100)*4+100)/100;
+			set SONAR_RADIUS to sonarRange*((speedFactor - 100)*2+100)/100;
+			get WEAPON_RANGE(-1, wRange/100*wFactor );
+			get WEAPON_RANGE(-2, get WEAPON_RANGE(1) );
+			oldXP = XP;
 		}
-		else if( XP <= 30 )
-		{
-			weapon2Disabled = 0;
-			weapon4Disabled = 1;
-			weapon5Disabled = 1;
-			weapon6Disabled = 1;
-			set ARMORED to 1;
-		}
-		else if( XP <= 60 )
-		{
-			weapon2Disabled = 0;
-			weapon4Disabled = 0;
-			weapon5Disabled = 1;
-			weapon6Disabled = 1;
-			set ARMORED to 1;
-		}
-		else if( XP <= 120 )
-		{
-			weapon2Disabled = 0;
-			weapon4Disabled = 0;
-			weapon5Disabled = 0;
-			weapon6Disabled = 1;
-			set ARMORED to 1;
-		}
-		else if( XP > 120 )
-		{
-			weapon2Disabled = 0;
-			weapon4Disabled = 0;
-			weapon5Disabled = 0;
-			weapon6Disabled = 0;
-			set ARMORED to 1;
-		}
-		speedFactor = XP/3 + 100;
-		if(speedFactor>150) speedFactor=150;
-		wFactor = XP*2/3 + 100;
-		if(wFactor>250) wFactor=250;
-		set MAX_SPEED to moveSpeed*speedFactor/100;
-		set LOS_RADIUS to LOS*speedFactor/100;
-		set AIR_LOS_RADIUS to AirLOS*speedFactor/100;
-		set RADAR_RADIUS to radarRange*((speedFactor - 100)*4+100)/100;
-		set SONAR_RADIUS to sonarRange*((speedFactor - 100)*2+100)/100;
-		get WEAPON_RANGE(-1, wRange/100*wFactor );
-		get WEAPON_RANGE(-2, get WEAPON_RANGE(1) );
 		sleep 1000;
 	}	
 }
@@ -626,9 +631,7 @@ Create()
 	start-script Experience();
 	start-script UnitSpeed();
 	start-script Idle();
-	move orbit to y-axis [750.000000] now;
-	move orbitfire to x-axis [375.000000] now;
-	spin orbit around y-axis speed <54.890110>;
+	move orbit to y-axis [1250.000000] now;
 }
 
 StartMoving()
@@ -661,6 +664,7 @@ RestorePosition()
 {
 	DGunning = 0;
 	weapon1Disabled = 0;
+	sleep 2000;
 	turn torso to y-axis <0.000000> speed <90.000000>;
 	turn ruparm to x-axis <0.000000> speed <45.000000>;
 	turn luparm to x-axis <0.000000> speed <45.000000>;
@@ -680,7 +684,7 @@ QueryWeapon1(Func_Var_1)
 	Func_Var_1 = lfirept;
 }
 
-AimWeapon1(Func_Var_1, Func_Var_2)
+AimWeapon1(heading, pitch)
 {
 	if(DGunning OR weapon1Disabled) return 0;
 	signal SIG_AIM1IDLE;
@@ -691,10 +695,14 @@ AimWeapon1(Func_Var_1, Func_Var_2)
 	{
 		sleep 100;
 	}
-	turn torso to y-axis Func_Var_1 speed <300.093407>;
-	turn luparm to x-axis <-60.000000> - Func_Var_2 speed <95.000000>;
+	var ang;
+	ang = 0-(<90>+pitch)/2;
+	turn torso to y-axis heading speed <360.000000>;
+	turn luparm to x-axis ang speed <180.000000>;
+	turn nanolath to x-axis ang speed <180.000000>;
 	wait-for-turn torso around y-axis;
 	wait-for-turn luparm around x-axis;
+	wait-for-turn nanolath around x-axis;
 	return (1);
 }
 
@@ -713,7 +721,7 @@ QueryWeapon2(Func_Var_1)
 	Func_Var_1 = rbigflash;
 }
 
-AimWeapon2(Func_Var_1, Func_Var_2)
+AimWeapon2(heading, pitch)
 {
 	if( DGunning OR weapon2Disabled )
 	{
@@ -727,10 +735,14 @@ AimWeapon2(Func_Var_1, Func_Var_2)
 	{
 		sleep 100;
 	}
-	turn torso to y-axis Func_Var_1 speed <300.093407>;
-	turn ruparm to x-axis <-30.000000> - Func_Var_2 speed <95.000000>;
+	var ang;
+	ang = 0-(<90>+pitch)/2;
+	turn torso to y-axis heading speed <360.000000>;
+	turn ruparm to x-axis ang speed <180.000000>;
+	turn biggun to x-axis ang speed <180.000000>;
 	wait-for-turn torso around y-axis;
 	wait-for-turn ruparm around x-axis;
+	wait-for-turn biggun around x-axis;
 	return (1);
 }
 
@@ -749,7 +761,7 @@ QueryWeapon3(Func_Var_1)
 	Func_Var_1 = rbigflash;
 }
 
-AimWeapon3(Func_Var_1, Func_Var_2)
+AimWeapon3(heading, pitch)
 {
 	signal SIG_AIM2IDLE;
 	set-signal-mask SIG_AIM2;
@@ -761,10 +773,14 @@ AimWeapon3(Func_Var_1, Func_Var_2)
 	{
 		sleep 100;
 	}
-	turn torso to y-axis Func_Var_1 speed <300.093407>;
-	turn ruparm to x-axis <-49.000000> - Func_Var_2 speed <110.000000>;
+	var ang;
+	ang = 0-(<90>+pitch)/2;
+	turn torso to y-axis heading speed <360.000000>;
+	turn ruparm to x-axis ang speed <180.000000>;
+	turn biggun to x-axis ang speed <180.000000>;
 	wait-for-turn torso around y-axis;
 	wait-for-turn ruparm around x-axis;
+	wait-for-turn biggun around x-axis;
 	return (1);
 }
 
@@ -783,7 +799,7 @@ QueryWeapon4(Func_Var_1)
 	Func_Var_1 = lfirept;
 }
 
-AimWeapon4(Func_Var_1, Func_Var_2)
+AimWeapon4(heading, pitch)
 {
 	if(DGunning OR weapon4Disabled) return 0;
 	signal SIG_AIM1IDLE;
@@ -795,10 +811,14 @@ AimWeapon4(Func_Var_1, Func_Var_2)
 	{
 		sleep 100;
 	}
-	turn torso to y-axis Func_Var_1 speed <300.093407>;
-	turn luparm to x-axis <-60.000000> - Func_Var_2 speed <95.000000>;
+	var ang;
+	ang = 0-(<90>+pitch)/2;
+	turn torso to y-axis heading speed <360.000000>;
+	turn luparm to x-axis ang speed <180.000000>;
+	turn nanolath to x-axis ang speed <180.000000>;
 	wait-for-turn torso around y-axis;
 	wait-for-turn luparm around x-axis;
+	wait-for-turn nanolath around x-axis;
 	return (1);
 }
 
@@ -817,9 +837,13 @@ QueryWeapon5(Func_Var_1)
 	Func_Var_1 = orbitfire;
 }
 
-AimWeapon5(Func_Var_1, Func_Var_2)
+AimWeapon5(heading, pitch)
 {
 	if(weapon5Disabled) return 0;
+	var length;
+	length = [12.5]*(get KTAN(<90>+pitch))/1024*100;
+	turn orbit to y-axis heading now;
+	move orbitfire to z-axis length now;
 	return (1);
 }
 
@@ -833,7 +857,7 @@ QueryWeapon6(Func_Var_1)
 	Func_Var_1 = rbigflash;
 }
 
-AimWeapon6(Func_Var_1, Func_Var_2)
+AimWeapon6(heading, pitch)
 {
 	if(DGunning OR weapon6Disabled OR (get WEAPON_RELOADSTATE(6) > get GAME_FRAME)) return 0;
 	signal SIG_AIM2IDLE;
@@ -844,10 +868,14 @@ AimWeapon6(Func_Var_1, Func_Var_2)
 	{
 		sleep 100;
 	}
-	turn torso to y-axis Func_Var_1 speed <300.093407>;
-	turn ruparm to x-axis <-49.000000> - Func_Var_2 speed <110.000000>;
+	var ang;
+	ang = 0-(<90>+pitch)/2;
+	turn torso to y-axis heading speed <360.000000>;
+	turn ruparm to x-axis ang speed <180.000000>;
+	turn biggun to x-axis ang speed <180.000000>;
 	wait-for-turn torso around y-axis;
 	wait-for-turn ruparm around x-axis;
+	wait-for-turn biggun around x-axis;
 	return (1);
 }
 
@@ -856,25 +884,30 @@ FireWeapon6()
 	emit-sfx UNIT_SFX5 from rbigflash;
 }
 
-StartBuilding(Func_Var_1, Func_Var_2)
+StartBuilding(heading, pitch)
 {
-	signal SIG_IDLE;
+	signal SIG_AIM1IDLE;
 	if(idling) call-script StopIdle();
 	aiming = TRUE;
 	while( !bAiming )
 	{
 		sleep 100;
 	}
-	turn torso to y-axis Func_Var_1 speed <300.093407>;
-	turn luparm to x-axis <-30.000000> - Func_Var_2 speed <50.000000>;
+	var ang;
+	ang = 0-(<90>+pitch)/2;
+	turn torso to y-axis heading speed <360.000000>;
+	turn luparm to x-axis ang speed <90.000000>;
+	turn nanolath to x-axis ang speed <90.000000>;
 	wait-for-turn torso around y-axis;
 	wait-for-turn luparm around x-axis;
+	wait-for-turn nanolath around x-axis;
 	set INBUILDSTANCE to 1;
 	emit-sfx UNIT_SFX2 from nanospray;
 	building = 1;
 	start-script Build();
 }
 
+/*
 TargetCleared(weaponnum)
 {
 	signal SIG_AIM1IDLE;
@@ -885,20 +918,18 @@ TargetCleared(weaponnum)
 		//get PRINT(777);
 	}
 }
+*/
 
 StopBuilding()
 {
 	set INBUILDSTANCE to 0;
+	building = 0;
 	signal SIG_AIM1IDLE;
 	set-signal-mask SIG_AIM1;
 	call-script RestorePosition();
-	building = 0;
-/*
 	if (!idling AND !bMoving AND !aiming AND !(get CLOAKED)){
 		start-script Idle();
-		//get PRINT(666);
 	}
-*/
 }
 
 Killed(Func_Var_1, Func_Var_2)

@@ -1,0 +1,325 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+piece  frame, flare, turret, pillartops, barrel2, turretback, barrel1, door2,
+       door1, barrel3, hole, turretssides, ground;
+
+static-var  Static_Var_1, restore_delay, openState, bAiming, statechg_DesiredState, statechg_StateChanging;
+
+// Signal definitions
+#define SIG_AIM			2
+#define SIG_OPEN		16
+
+
+activatescr()
+{
+	move pillartops to y-axis [-26.500000] now;
+	move barrel2 to z-axis [-6.125000] now;
+	move turretback to z-axis [3.250000] now;
+	move barrel1 to z-axis [-31.375000] now;
+	move door2 to y-axis [0.000000] now;
+	move door2 to y-axis [0.000000] speed [0.000031];
+	turn door1 to z-axis <0.000000> now;
+	turn door1 to z-axis <-88.615385> speed <300.390110>;
+	turn door2 to z-axis <0.000000> now;
+	turn door2 to z-axis <89.313187> speed <302.769231>;
+	sleep 295;
+
+	move pillartops to y-axis [0.000000] speed [43.159607];
+	move door1 to y-axis [-19.249985] speed [31.351761];
+	move door2 to y-axis [-19.249985] speed [31.351791];
+	sleep 614;
+
+	move barrel2 to z-axis [0.000000] speed [19.382904];
+	move turretback to z-axis [0.000000] speed [10.284790];
+	move barrel1 to z-axis [0.000000] speed [99.287979];
+	sleep 316;
+}
+
+deactivatescr()
+{
+	move barrel2 to z-axis [0.000000] now;
+	move barrel2 to z-axis [-6.125000] speed [22.032364];
+	move turretback to z-axis [0.000000] now;
+	move turretback to z-axis [3.250000] speed [11.690628];
+	move barrel1 to z-axis [0.000000] now;
+	move barrel1 to z-axis [-31.375000] speed [112.859695];
+	move door1 to y-axis [-19.249985] now;
+	move door2 to y-axis [-19.249985] now;
+	turn door1 to z-axis <-88.615385> now;
+	turn door2 to z-axis <89.313187> now;
+	sleep 278;
+
+	move pillartops to y-axis [-26.500000] speed [46.328674];
+	move door1 to y-axis [0.000000] speed [33.653839];
+	move door2 to y-axis [0.000000] speed [33.653839];
+	sleep 572;
+
+	move door2 to y-axis [0.000000] speed [0.000015];
+	turn door1 to z-axis <0.000000> speed <236.934066>;
+	turn door2 to z-axis <0.000000> speed <238.813187>;
+	sleep 374;
+}
+
+SmokeUnit(healthpercent, sleeptime, smoketype)
+{
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 500;
+	}
+	set ARMORED to 1;
+	while( TRUE )
+	{
+		healthpercent = get HEALTH;
+		if( healthpercent < 66 )
+		{
+			smoketype = 258;
+			if( Rand( 1, 66 ) < healthpercent )
+			{
+				smoketype = 257;
+			}
+			emit-sfx smoketype from frame;
+		}
+		sleeptime = healthpercent * 50;
+		if( sleeptime < 200 )
+		{
+			sleeptime = 200;
+		}
+		sleep sleeptime;
+	}
+}
+
+Go()
+{
+	if( !Static_Var_1 )
+	{
+		call-script activatescr();
+	}
+	Static_Var_1 = 1;
+	set ARMORED to 0;
+}
+
+Stop()
+{
+	set ARMORED to 1;
+	Static_Var_1 = 0;
+	call-script deactivatescr();
+}
+
+RequestState(requestedstate, currentstate)
+{
+	if( statechg_StateChanging )
+	{
+		statechg_DesiredState = requestedstate;
+		return (0);
+	}
+	statechg_StateChanging = TRUE;
+	currentstate = statechg_DesiredState;
+	statechg_DesiredState = requestedstate;
+	while( statechg_DesiredState != currentstate )
+	{
+		if( statechg_DesiredState )
+		{
+			call-script Stop();
+			currentstate = 1;
+		}
+		else
+		{
+			call-script Go();
+			currentstate = 0;
+		}
+	}
+	statechg_StateChanging = FALSE;
+}
+
+RestoreAfterDelay()
+{
+	sleep restore_delay;
+	bAiming = 0;
+	if (!openState)
+	{
+		turn pillartops to y-axis <0.000000> speed <100.016484>;
+		turn turret to x-axis <0.000000> speed <50.005495>;
+		wait-for-turn pillartops around y-axis;
+		wait-for-turn turret around x-axis;
+		if (openState) return;
+		set-signal-mask 0;
+		start-script RequestState(1);
+	}
+}
+
+OpenClose(state)
+{
+	signal SIG_OPEN;
+	set-signal-mask SIG_OPEN;
+	openState = state;
+	if (state != Static_var_1)
+	{
+		if (state)
+		{
+			if (!bAiming) start-script RequestState(0);
+		}
+		else
+		{
+			if (bAiming) return;
+			turn pillartops to y-axis <0.000000> speed <100.016484>;
+			turn turret to x-axis <0.000000> speed <50.005495>;
+			wait-for-turn pillartops around y-axis;
+			wait-for-turn turret around x-axis;
+			start-script RequestState(1);
+		}
+	}
+}
+
+Create()
+{
+	hide flare;
+	Static_Var_1 = 1;
+	bAiming = 0;
+	restore_delay = 3000;
+	statechg_DesiredState = TRUE;
+	statechg_StateChanging = FALSE;
+	start-script SmokeUnit();
+	call-script Stop();
+	set ARMORED to 0;
+}
+
+SetMaxReloadTime(Func_Var_1)
+{
+	restore_delay = Func_Var_1 * 2;
+}
+
+AimPrimary(heading, pitch)
+{
+	start-script RequestState(0);
+	signal SIG_AIM;
+	set-signal-mask SIG_AIM;
+	while( !Static_Var_1 )
+	{
+		sleep 250;
+	}
+	bAiming = 1;
+	turn pillartops to y-axis heading speed <100.016484>;
+	turn turret to x-axis <0.000000> - pitch speed <50.005495>;
+	wait-for-turn pillartops around y-axis;
+	wait-for-turn turret around x-axis;
+	start-script RestoreAfterDelay();
+	return (1);
+}
+
+FirePrimary()
+{
+	emit-sfx 1024 + 0 from flare;
+	move barrel3 to z-axis [-12.500000] speed [1250.000000];
+	sleep 250;
+	move barrel3 to z-axis [0.000000] speed [7.500000];
+}
+
+AimFromPrimary(piecenum)
+{
+	piecenum = turret;
+}
+
+QueryPrimary(piecenum)
+{
+	piecenum = flare;
+}
+
+SweetSpot(piecenum)
+{
+	piecenum = frame;
+}
+
+Killed(severity, corpsetype)
+{
+	hide flare;
+	if( severity <= 25 )
+	{
+		if( Static_Var_1 )
+		{
+			corpsetype = 1;
+		}
+		if( !Static_Var_1 )
+		{
+			corpsetype = 2;
+		}
+		explode barrel1 type BITMAPONLY | BITMAP1;
+		explode barrel2 type BITMAPONLY | BITMAP2;
+		explode door1 type BITMAPONLY | BITMAP3;
+		explode door2 type BITMAPONLY | BITMAP4;
+		explode frame type BITMAPONLY | BITMAP5;
+		explode ground type BITMAPONLY | BITMAP1;
+		explode hole type BITMAPONLY | BITMAP2;
+		explode pillartops type BITMAPONLY | BITMAP3;
+		explode turret type BITMAPONLY | BITMAP4;
+		explode turretback type BITMAPONLY | BITMAP5;
+		explode turretssides type BITMAPONLY | BITMAP1;
+		return (0);
+	}
+	if( severity <= 50 )
+	{
+		if( Static_Var_1 )
+		{
+			corpsetype = 2;
+		}
+		if( !Static_Var_1 )
+		{
+			corpsetype = 3;
+		}
+		explode barrel1 type BITMAPONLY | BITMAP1;
+		explode barrel2 type FALL | BITMAP2;
+		explode barrel3 type FALL | BITMAP3;
+		explode door1 type FALL | BITMAP4;
+		explode door2 type FALL | BITMAP5;
+		explode flare type FALL | BITMAP1;
+		explode frame type BITMAPONLY | BITMAP2;
+		explode ground type BITMAPONLY | BITMAP3;
+		explode hole type BITMAPONLY | BITMAP4;
+		explode pillartops type SHATTER | BITMAP5;
+		explode turret type FALL | BITMAP1;
+		explode turretback type FALL | BITMAP2;
+		explode turretssides type FALL | BITMAP3;
+		return (0);
+	}
+	if( severity <= 99 )
+	{
+		if( Static_Var_1 )
+		{
+			corpsetype = 3;
+		}
+		if( !Static_Var_1 )
+		{
+			corpsetype = 4;
+		}
+		explode barrel1 type BITMAPONLY | BITMAP1;
+		explode barrel2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+		explode barrel3 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+		explode door1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+		explode door2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+		explode flare type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+		explode frame type BITMAPONLY | BITMAP2;
+		explode ground type BITMAPONLY | BITMAP3;
+		explode hole type BITMAPONLY | BITMAP4;
+		explode pillartops type SHATTER | BITMAP5;
+		explode turret type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+		explode turretback type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+		explode turretssides type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+		return (0);
+	}
+	corpsetype = 4;
+	explode barrel1 type BITMAPONLY | BITMAP1;
+	explode barrel2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode barrel3 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+	explode door1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+	explode door2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+	explode flare type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+	explode frame type BITMAPONLY | BITMAP2;
+	explode ground type BITMAPONLY | BITMAP3;
+	explode hole type BITMAPONLY | BITMAP4;
+	explode pillartops type SHATTER | EXPLODE_ON_HIT | BITMAP5;
+	explode turret type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+	explode turretback type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode turretssides type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+}

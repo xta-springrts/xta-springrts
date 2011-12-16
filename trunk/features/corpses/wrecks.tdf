@@ -2852,7 +2852,7 @@
 	height=40;
 	blocking=1;
 	hitdensity=100;
-	metal=734;
+	metal=2734;
 	damage=1840;
 	reclaimable=1;
 	featurereclamate=smudge01;
@@ -2869,7 +2869,7 @@
 	height=4;
 	blocking=0;
 	hitdensity=100;
-	metal=367;
+	metal=1367;
 	damage=1840;
 	reclaimable=1;
 	featurereclamate=smudge01;
@@ -6040,7 +6040,7 @@
 	height=20;
 	blocking=1;
 	hitdensity=100;
-	metal=780;
+	metal=2780;
 	damage=2048;
 	reclaimable=1;
 	featurereclamate=smudge01;
@@ -6057,7 +6057,7 @@
 	height=4;
 	blocking=0;
 	hitdensity=100;
-	metal=390;
+	metal=1390;
 	damage=2048;
 	reclaimable=1;
 	featurereclamate=smudge01;

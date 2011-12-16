@@ -6,8 +6,8 @@
 piece  pelvis, rfirept, lfirept, lcannon, rcannon, locase, lthigh, rthigh,
        torso, rleg, rfoot, lleg, lfoot, upcase2, canbase, ground;
 
-static-var  gun_1, bMoving, bAiming, Static_Var_4, Static_Var_5,
-            Static_Var_6, Static_Var_7, restore_delay, moveSpeed, currentSpeed;
+static-var  gun_1, bMoving, bAiming, cantShoot, statechg_DesiredState, statechg_StateChanging,
+            RackClosed, gun, restore_delay, moveSpeed, currentSpeed;
 
 // Signal definitions
 #define SIG_AIM				2
@@ -365,67 +365,69 @@ walklegs()
 
 open()
 {
-		move lcannon to y-axis [0.000000] now;
-		move lcannon to z-axis [0.000000] now;
-		move rcannon to y-axis [0.000000] now;
-		move rcannon to z-axis [0.000000] now;
-		move locase to y-axis [0.000000] now;
-		move locase to z-axis [0.000000] now;
-		move locase to z-axis [-1.874985] speed [2.382446];
-		move rfirept to y-axis [-0.099930] now;
-		move rfirept to z-axis [0.549957] now;
-		move lfirept to y-axis [-0.099930] now;
-		move lfirept to z-axis [0.549957] now;
-		turn upcase2 to x-axis <0.000000> now;
-		turn upcase2 to x-axis <-43.945055> speed <55.846154>;
-		turn locase to x-axis <0.000000> now;
-		turn locase to x-axis <61.538462> speed <78.192308>;
-		sleep 787;
+	move lcannon to y-axis [0.000000] now;
+	move lcannon to z-axis [0.000000] now;
+	move rcannon to y-axis [0.000000] now;
+	move rcannon to z-axis [0.000000] now;
+	move locase to y-axis [0.000000] now;
+	move locase to z-axis [0.000000] now;
+	move locase to z-axis [-1.874985] speed [2.382446];
+	move rfirept to y-axis [-0.099930] now;
+	move rfirept to z-axis [0.549957] now;
+	move lfirept to y-axis [-0.099930] now;
+	move lfirept to z-axis [0.549957] now;
+	turn upcase2 to x-axis <0.000000> now;
+	turn upcase2 to x-axis <-43.945055> speed <55.846154>;
+	turn locase to x-axis <0.000000> now;
+	turn locase to x-axis <61.538462> speed <78.192308>;
+	sleep 787;
 
-		move upcase2 to z-axis [-10.999985] speed [111.111084];
-		turn upcase2 to x-axis <-47.115385> speed <31.967033>;
-		sleep 99;
+	RackClosed=0;
+	move upcase2 to z-axis [-10.999985] speed [111.111084];
+	turn upcase2 to x-axis <-47.115385> speed <31.967033>;
+	sleep 99;
 
-		turn upcase2 to x-axis <-122.016484> speed <687.159341>;
-		sleep 109;
+	turn upcase2 to x-axis <-122.016484> speed <687.159341>;
+	sleep 109;
 
-		turn upcase2 to x-axis <-45.714286> speed <451.516484>;
-		sleep 169;
+	turn upcase2 to x-axis <-45.714286> speed <451.516484>;
+	sleep 169;
 
-		turn upcase2 to x-axis <-19.692308> speed <377.126374>;
-		sleep 69;
+	turn upcase2 to x-axis <-19.692308> speed <377.126374>;
+	sleep 69;
 
-		turn upcase2 to x-axis <-47.115385> speed <1443.604396>;
-		sleep 19;
+	turn upcase2 to x-axis <-47.115385> speed <1443.604396>;
+	sleep 19;
 }
 
 close()
 {
-		move lcannon to y-axis [0.000000] now;
-		move lcannon to z-axis [0.000000] now;
-		move rcannon to y-axis [0.000000] now;
-		move rcannon to z-axis [0.000000] now;
-		move upcase2 to z-axis [-10.999985] now;
-		move upcase2 to z-axis [2.375000] speed [29.266937];
-		move locase to y-axis [0.000000] now;
-		move locase to z-axis [-1.874985] now;
-		move rfirept to y-axis [-0.099930] now;
-		move rfirept to z-axis [0.549957] now;
-		move lfirept to y-axis [-0.099930] now;
-		move lfirept to z-axis [0.549957] now;
-		turn upcase2 to x-axis <-47.115385> now;
-		turn locase to x-axis <61.538462> now;
-		sleep 457;
+	RackClosed=1;
+	move lcannon to y-axis [0.000000] now;
+	move lcannon to z-axis [0.000000] now;
+	move rcannon to y-axis [0.000000] now;
+	move rcannon to z-axis [0.000000] now;
+	move upcase2 to z-axis [-10.999985] now;
+	move upcase2 to z-axis [2.375000] speed [29.266937];
+	move locase to y-axis [0.000000] now;
+	move locase to z-axis [-1.874985] now;
+	move rfirept to y-axis [-0.099930] now;
+	move rfirept to z-axis [0.549957] now;
+	move lfirept to y-axis [-0.099930] now;
+	move lfirept to z-axis [0.549957] now;
+	turn upcase2 to x-axis <-47.115385> now;
+	turn locase to x-axis <61.538462> now;
+	sleep 457;
 
-		move upcase2 to z-axis [4.250000] speed [17.523407];
-		turn upcase2 to x-axis <-41.137363> speed <55.868132>;
-		sleep 107;
+	move upcase2 to z-axis [4.250000] speed [17.523407];
+	turn upcase2 to x-axis <-41.137363> speed <55.868132>;
+	sleep 107;
 
-		move upcase2 to z-axis [0.000000] speed [250.000427];
-		move locase to z-axis [0.000000] speed [110.293777];
-		turn upcase2 to x-axis <0.000000> speed <2420.159341>;
-		turn locase to x-axis <0.000000> speed <3619.901099>;
-		sleep 17;
+	move upcase2 to z-axis [0.000000] speed [250.000427];
+	move locase to z-axis [0.000000] speed [110.293777];
+	turn upcase2 to x-axis <0.000000> speed <2420.159341>;
+	turn locase to x-axis <0.000000> speed <3619.901099>;
+	sleep 17;
 }
 
 MotionControl(moving, aiming, justmoved)
@@ -439,19 +441,19 @@ MotionControl(moving, aiming, justmoved)
 		{
 			if( aiming )
 			{
-				Static_Var_4 = 1;
+				cantShoot = 1;
 				call-script walklegs();
 			}
 			else
 			{
-				Static_Var_4 = 0;
+				cantShoot = 0;
 				call-script walk();
 			}
 			justmoved = TRUE;
 		}
 		else
 		{
-			Static_Var_4 = 1;
+			cantShoot = 0;
 			if( justmoved )
 			{
 				move pelvis to y-axis [0.000000] speed [2.500000];
@@ -469,6 +471,32 @@ MotionControl(moving, aiming, justmoved)
 			sleep 100;
 		}
 	}
+}
+
+RequestState(requestedstate, currentstate)
+{
+	if( statechg_StateChanging )
+	{
+		statechg_DesiredState = requestedstate;
+		return (0);
+	}
+	statechg_StateChanging = TRUE;
+	currentstate = statechg_DesiredState;
+	statechg_DesiredState = requestedstate;
+	while( statechg_DesiredState != currentstate )
+	{
+		if( statechg_DesiredState )
+		{
+			call-script close();
+			currentstate = 1;
+		}
+		else
+		{
+			call-script open();
+			currentstate = 0;
+		}
+	}
+	statechg_StateChanging = FALSE;
 }
 
 UnitSpeed()
@@ -518,29 +546,15 @@ Create()
 	turn lfirept to y-axis <180.000000> now;
 	bMoving = FALSE;
 	bAiming = FALSE;
-	Static_Var_4 = 1;
-	Static_Var_5 = 1;
-	Static_Var_6 = 0;
-	dont-shade locase;
-	dont-shade lcannon;
-	dont-shade rcannon;
-	Static_Var_7 = 0;
+	cantShoot = 0;
+	RackClosed = 1;
+	statechg_DesiredState = TRUE;
+	statechg_StateChanging = FALSE;
+	gun = 0;
 	restore_delay = 3000;
 	moveSpeed = get MAX_SPEED;
 	currentSpeed = 100;
 	start-script SmokeUnit();
-}
-
-Reload1()
-{
-	sleep 1250;
-	gun_1 = pelvis;
-}
-
-Reload2()
-{
-	sleep 1250;
-	gun_1 = pelvis;
 }
 
 SetMaxReloadTime(Func_Var_1)
@@ -569,67 +583,38 @@ RestoreAfterDelay()
 	turn torso to y-axis <0.000000> speed <90.016484>;
 	turn canbase to x-axis <0.000000> speed <45.005495>;
 	set-signal-mask 0;
-	Static_Var_6 = 1;
-	call-script close();
-	sleep 1000;
-	Static_Var_5 = 1;
-	gun_1 = pelvis;
-	Static_Var_6 = 0;
+	start-script RequestState(1);
 	wait-for-turn torso around y-axis;
 	bAiming = FALSE;
 }
 
 AimPrimary(heading, pitch)
 {
-	var Func_Var_3;
-	Func_Var_3 = 0;
+	if (pitch >= 10012) return (0);
+	start-script RequestState(0);
 	signal SIG_AIM;
 	set-signal-mask SIG_AIM;
-	if( pitch >= 10012 OR gun_1 == 1 )
-	{
-		return (0);
-	}
 	bAiming = TRUE;
-	while( ( !Static_Var_4 ) OR Static_Var_6 )
+	while( cantShoot OR RackClosed )
 	{
-		if( Static_Var_6 )
-		{
-			Func_Var_3 = 1;
-		}
 		sleep 100;
 	}
-	if( Func_Var_3 )
-	{
-		set-signal-mask 0;
-		signal 4;
-		set-signal-mask 4;
-	}
-	turn torso to y-axis heading speed <120.000000>;
+	turn torso to y-axis heading speed <160.000000>;
 	turn canbase to x-axis <0.000000> - pitch speed <40.000000>;
 	wait-for-turn torso around y-axis;
 	wait-for-turn canbase around x-axis;
-	if( Static_Var_5 )
-	{
-		set-signal-mask 0;
-		Static_Var_6 = 1;
-		call-script open();
-		sleep 1000;
-		Static_Var_5 = 0;
-		Static_Var_6 = 0;
-		set-signal-mask 4;
-	}
 	start-script RestoreAfterDelay();
 	return (1);
 }
 
 AimFromPrimary(piecenum)
 {
-	piecenum = pelvis;
+	piecenum = canbase;
 }
 
 QueryPrimary(piecenum)
 {
-	if( Static_Var_7 )
+	if( gun )
 	{
 		piecenum = rfirept;
 	}
@@ -641,9 +626,7 @@ QueryPrimary(piecenum)
 
 FirePrimary()
 {
-	gun_1 = rfirept;
-	start-script Reload1();
-	if( Static_Var_7)
+	if( gun)
 	{
 		emit-sfx UNIT_SFX1 from lfirept;
 		move lcannon to z-axis [-5.000000] speed [62.500000];
@@ -657,57 +640,32 @@ FirePrimary()
 		sleep 100;
 		move rcannon to z-axis [0.000000] speed [1.875000];
 	}
-	Static_Var_7 = !Static_Var_7;
+	gun = !gun;
 }
 
 AimWeapon2(heading, pitch)
 {
-	var Func_Var_3;
-	Func_Var_3 = 0;
-	signal 4;
-	set-signal-mask 4;
-	if( pitch < 10012 OR gun_1 == 1 )
-	{
-		return (0);
-	}
+	if (pitch < 10012) return (0);
 	bAiming = TRUE;
-	while( ( !Static_Var_4 ) OR Static_Var_6 )
+	start-script RequestState(0);
+	signal SIG_AIM;
+	set-signal-mask SIG_AIM;
+	bAiming = TRUE;
+	while( cantShoot OR RackClosed )
 	{
-		if( Static_Var_6 )
-		{
-			Func_Var_3 = 1;
-		}
 		sleep 100;
 	}
-	if( Func_Var_3 )
-	{
-		set-signal-mask 0;
-		signal 4;
-		set-signal-mask 4;
-	}
-	turn torso to y-axis heading speed <120.000000>;
+	turn torso to y-axis heading speed <160.000000>;
 	turn canbase to x-axis <0.000000> - pitch speed <40.000000>;
 	wait-for-turn torso around y-axis;
 	wait-for-turn canbase around x-axis;
-	if( Static_Var_5 )
-	{
-		set-signal-mask 0;
-		Static_Var_6 = 1;
-		call-script open();
-		sleep 1000;
-		Static_Var_5 = 0;
-		Static_Var_6 = 0;
-		set-signal-mask 4;
-	}
 	start-script RestoreAfterDelay();
 	return (1);
 }
 
 FireWeapon2()
 {
-	gun_1 = rfirept;
-	start-script Reload2();
-	if( Static_Var_7)
+	if( gun)
 	{
 		emit-sfx UNIT_SFX1 from lfirept;
 		move lcannon to z-axis [-5.000000] speed [62.500000];
@@ -721,12 +679,12 @@ FireWeapon2()
 		sleep 100;
 		move rcannon to z-axis [0.000000] speed [1.875000];
 	}
-	Static_Var_7 = !Static_Var_7;
+	gun = !gun;
 }
 
 QueryWeapon2(piecenum)
 {
-	if( Static_Var_7 )
+	if( gun )
 	{
 		piecenum = lfirept;
 	}
@@ -738,7 +696,7 @@ QueryWeapon2(piecenum)
 
 AimFromWeapon2(piecenum)
 {
-	piecenum = pelvis;
+	piecenum = canbase;
 }
 
 Killed(severity, corpsetype)

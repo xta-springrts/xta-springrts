@@ -531,7 +531,7 @@ QueryPrimary(Func_Var_1)
 	Func_Var_1 = 6;
 }
 
-AimPrimary(Func_Var_1, Func_Var_2)
+AimPrimary(heading, pitch)
 {
 	if( Static_Var_4 == 1 )
 	{
@@ -544,10 +544,12 @@ AimPrimary(Func_Var_1, Func_Var_2)
 	{
 		sleep 100;
 	}
-	turn torso to y-axis Func_Var_1 speed <300.093407>;
-	turn luparm to x-axis <0.000000> - Func_Var_2 - <30.000000> speed <45.000000>;
+	turn torso to y-axis heading speed <360.000000>;
+	turn luparm to x-axis <-30> speed <180.000000>;
+	turn nanolathe to x-axis <30>-pitch speed <180.000000>;
 	wait-for-turn torso around y-axis;
 	wait-for-turn luparm around x-axis;
+	wait-for-turn nanolathe around x-axis;
 	return (1);
 }
 
@@ -581,7 +583,7 @@ QueryTertiary(Func_Var_1)
 	Func_Var_1 = 3;
 }
 
-AimTertiary(Func_Var_1, Func_Var_2)
+AimTertiary(heading, pitch)
 {
 	signal 2;
 	set-signal-mask 2;
@@ -592,10 +594,12 @@ AimTertiary(Func_Var_1, Func_Var_2)
 	{
 		sleep 100;
 	}
-	turn torso to y-axis Func_Var_1 speed <300.093407>;
-	turn ruparm to x-axis <0.000000> - Func_Var_2 - <30.000000> speed <45.000000>;
+	turn torso to y-axis heading speed <360.000000>;
+	turn ruparm to x-axis <-30> speed <180.000000>;
+	turn biggun to x-axis <30>-pitch speed <180.000000>;
 	wait-for-turn torso around y-axis;
 	wait-for-turn ruparm around x-axis;
+	wait-for-turn biggun around x-axis;
 	return (1);
 }
 
@@ -603,23 +607,23 @@ FireTertiary()
 {
 	emit-sfx UNIT_SFX1 from rbigflash;
 	move biggun to z-axis [-5.000000] now;
-	move pelvis to z-axis [-5.000000] now;
-	move biggun to z-axis [0.000000] speed [150.000000];
-	move pelvis to z-axis [0.000000] speed [150.000000];
 	sleep 100;
+	move biggun to z-axis [0.000000] speed [20.000000];
 }
 
-StartBuilding(Func_Var_1, Func_Var_2)
+StartBuilding(heading, pitch)
 {
 	building = TRUE;
 	while( !Static_Var_3 )
 	{
 		sleep 100;
 	}
-	turn torso to y-axis Func_Var_1 speed <300.093407>;
-	turn luparm to x-axis <0.000000> - Func_Var_2 - <25.000000> speed <45.000000>;
+	turn torso to y-axis heading speed <360.000000>;
+	turn luparm to x-axis <-30> speed <90.000000>;
+	turn nanolathe to x-axis <30>-pitch speed <90.000000>;
 	wait-for-turn torso around y-axis;
 	wait-for-turn luparm around x-axis;
+	wait-for-turn nanolathe around x-axis;
 	set INBUILDSTANCE to 1;
 	Static_Var_5 = 1;
 	start-script Build();

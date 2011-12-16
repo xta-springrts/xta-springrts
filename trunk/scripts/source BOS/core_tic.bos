@@ -8,7 +8,7 @@
 piece  base, body, top, leg1, leg2, leg3, leg4, leg5,
        leg6;
 
-static-var  bMoving, justMoved, moveSpeed, currentSpeed;
+static-var  bMoving, justMoved;
 
 
 walk2()
@@ -36,7 +36,7 @@ walk2()
 		turn leg6 to y-axis <0.000000> now;
 		turn leg6 to y-axis <-30.395604> speed <304.1978>;
 		turn leg6 to z-axis <-45.000000> now;
-		sleep 5000/currentSpeed;
+		sleep 50;
 	}
 	if( bMoving )
 	{
@@ -48,7 +48,7 @@ walk2()
 		turn leg4 to y-axis <0.000000> speed <401.3956>;
 		turn leg5 to z-axis <-31.000000> speed <310.1978>;
 		turn leg6 to z-axis <2.395604> speed <474.3956>;
-		sleep 5000/currentSpeed;
+		sleep 50;
 	}
 	if( bMoving )
 	{
@@ -62,7 +62,7 @@ walk2()
 		turn leg5 to y-axis <-31.598901> speed <316.1978>;
 		turn leg5 to z-axis <-31.000000> speed <0>;
 		turn leg6 to y-axis <3.000000> speed <334.5934>;
-		sleep 5000/currentSpeed;
+		sleep 50;
 	}
 	turn leg1 to y-axis <43.796703> speed <121.5934>;
 	turn leg1 to z-axis <0.598901> speed <304.1978>;
@@ -76,7 +76,7 @@ walk2()
 	turn leg5 to z-axis <0.000000> speed <310.1978>;
 	turn leg6 to y-axis <0.000000> speed <30.3956>;
 	turn leg6 to z-axis <-45.000000> speed <474.3956>;
-	sleep 5000/currentSpeed;
+	sleep 50;
 }
 
 stand()
@@ -116,23 +116,12 @@ MotionControl(Func_Var_1)
 	}
 }
 
-UnitSpeed()
-{
-	while(TRUE)
-	{
-		currentSpeed = (get CURRENT_SPEED)*100/moveSpeed;
-		if (currentSpeed<20) currentSpeed=20;
-		sleep 142;
-	}
-}
-
 SmokeUnit(healthpercent, sleeptime, smoketype)
 {
 	while( get BUILD_PERCENT_LEFT )
 	{
 		sleep 500;
 	}
-	start-script UnitSpeed();
 	start-script MotionControl();
 	while( TRUE )
 	{
@@ -159,8 +148,6 @@ Create()
 {
 	bMoving = FALSE;
 	justMoved = FALSE;
-	moveSpeed = get MAX_SPEED;
-	currentSpeed = 100;
 	start-script SmokeUnit();
 }
 

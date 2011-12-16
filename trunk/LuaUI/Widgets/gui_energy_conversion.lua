@@ -88,7 +88,7 @@ function widget:DrawScreen()
             glText('Hover:', 5, 37, 12, 'd')
             glText('E usage:', 5, 21, 12, 'd')
             glText('M production:', 5, 5, 12, 'd')
-            glText(format('%i / %i', curUsage, curCapacity*32), 135, 21, 12, 'dr')
+            glText(format('%i / %i', curUsage, curCapacity), 135, 21, 12, 'dr')
             glText(display, 135, 5, 12, 'dr')
         glEndText()
         

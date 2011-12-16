@@ -3,11 +3,9 @@
 #include "sfxtype.h"
 #include "exptype.h"
 
-#define SPEEDUP_FACTOR 400
-
 piece  base, body, leg1, leg2, leg3, leg4, leg5, leg6;
 
-static-var  bMoving, Static_Var_2, justMoved, moveSpeed, currentSpeed, animSpeed;
+static-var  bMoving, justMoved;
 
 
 HitByWeapon(Func_Var_1, Func_Var_2)
@@ -45,7 +43,7 @@ walk2()
 		turn leg6 to y-axis <0.000000> now;
 		turn leg6 to y-axis <-52.010989> speed <320>;
 		turn leg6 to x-axis <-30.005495> now;
-		sleep animSpeed;
+		sleep 50;
 	}
 	if( bMoving )
 	{	
@@ -57,7 +55,7 @@ walk2()
 		turn leg4 to y-axis <0.000000> speed <800>;
 		turn leg5 to z-axis <-31.005495> speed <620>;
 		turn leg6 to x-axis <4.000000> speed <560>;
-		sleep animSpeed;
+		sleep 50;
 	}
 	if( bMoving )
 	{	
@@ -71,7 +69,7 @@ walk2()
 		turn leg5 to y-axis <-34.000000> speed <632>;
 		turn leg5 to z-axis <-31.005495> speed <4>;
 		turn leg6 to y-axis <12.000000> speed <532>;
-		sleep animSpeed;
+		sleep 50;
 	}
 	turn leg1 to y-axis <43.000000> speed <240>;
 	turn leg1 to z-axis <0.000000> speed <608>;
@@ -85,7 +83,7 @@ walk2()
 	turn leg5 to z-axis <0.000000> speed <620>;
 	turn leg6 to y-axis <0.000000> speed <28>;
 	turn leg6 to x-axis <-30.005495> speed <640>;
-	sleep animSpeed;
+	sleep 50;
 }
 
 stand()
@@ -139,24 +137,12 @@ MotionControl(Func_Var_1, Func_Var_2)
 	}
 }
 
-UnitSpeed()
-{
-	while(TRUE)
-	{
-		currentSpeed = (get CURRENT_SPEED)*100/moveSpeed;
-		if (currentSpeed<20) currentSpeed=20;
-		animSpeed = 5000 / currentSpeed;
-		sleep 142;
-	}
-}
-
 SmokeUnit(healthpercent, sleeptime, smoketype)
 {
 	while( get BUILD_PERCENT_LEFT )
 	{
 		sleep 500;
 	}
-	start-script UnitSpeed();
 	start-script MotionControl();
 	while( TRUE )
 	{
@@ -183,9 +169,6 @@ Create()
 {
 	bMoving = FALSE;
 	justMoved = FALSE;	
-	Static_Var_2 = 1000;
-	moveSpeed = get MAX_SPEED;
-	animSpeed = 50;
 	start-script SmokeUnit();
 }
 
@@ -198,11 +181,6 @@ StopMoving()
 {
 	bMoving = FALSE;
 	justMoved = TRUE;
-}
-
-RestoreAfterDelay()
-{
-	sleep Static_Var_2;
 }
 
 SweetSpot(piecenum)

@@ -11,7 +11,7 @@
 	//************************************************************
 	//  Categories
 	//**************
-	Category=CORE WEAPON NOTAIR NOTSUB;
+	Category=CORE DEFENSIVE STATIC WEAPON NOTAIR NOTSEA NOTSUB;
 	tedclass=DEFENSIVE;
 
 	//************************************************************
@@ -74,7 +74,7 @@
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=896;
+	sightdistance=920;
 	radardistance=0;
 
 	//************************************************************

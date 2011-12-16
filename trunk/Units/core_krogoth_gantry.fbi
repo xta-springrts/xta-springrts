@@ -34,10 +34,11 @@
 	buildtime=41937;
 	footprintx=9;
 	footprintz=9;
-	collisionVolumeType = Box;
-	collisionVolumeScales =96 63 96;
-	collisionVolumeOffsets = 0 0 0;
-	collisionVolumeTest = 1;
+	usePieceCollisionVolumes=1;
+	//collisionVolumeType = Box;
+	//collisionVolumeScales =96 63 96;
+	//collisionVolumeOffsets = 0 0 0;
+	//collisionVolumeTest = 1;
 
 	//************************************************************
 	//  Resources

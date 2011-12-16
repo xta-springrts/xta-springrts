@@ -5,7 +5,7 @@
 
 piece  base, sphereOn, sphereOff;
 
-static-var  statechg_DesiredState, statechg_StateChanging, mmState;
+static-var  mmState;
 
 #define OPERATING 1024
 

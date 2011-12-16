@@ -75,7 +75,7 @@
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=285;
+	sightdistance=320;
 
 	//************************************************************
 	//  Weapons
@@ -95,8 +95,8 @@
 	//  Miscellaneous
 	//*****************
 	bmcode=1;
-	cloakcost=200;
-	cloakcostmoving=400;
+	cloakcost=125;
+	cloakcostmoving=275;
 	designation=ARM-KML;
 	downloadable=1;
 	maneuverleashlength=640;

@@ -16,8 +16,8 @@
 	featuredead=rock_teeth;
 	seqnamereclamate=tree1reclamate;
 	collisionVolumeType = Box;
-	collisionVolumeScales =32 34 32;
-	collisionVolumeOffsets = 0 1 0;
+	collisionVolumeScales =32 32 32;
+	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
 }
 [core_dragons_teeth_dead]
@@ -38,8 +38,8 @@
 	featuredead=rock_teeth;
 	seqnamereclamate=tree1reclamate;
 	collisionVolumeType = Box;
-	collisionVolumeScales =32 38 32;
-	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeScales =32 34 32;
+	collisionVolumeOffsets = 0 -1 0;
 	collisionVolumeTest = 1;
 }
 [rock_teeth]
@@ -83,7 +83,7 @@
 	nodrawundergray=1;
 	collisionVolumeType = box;
 	collisionVolumeScales =32 30 32;
-	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeOffsets = 0 -4 0;
 	collisionVolumeTest = 1;
 }
 [core_floating_dragons_teeth_dead]

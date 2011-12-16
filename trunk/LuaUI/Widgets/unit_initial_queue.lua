@@ -3,7 +3,7 @@ function widget:GetInfo()
 	return {
 		name      = "Initial Queue - XTA",
 		desc      = "Allows you to queue buildings before game start",
-		author    = "Niobium", -- Modified by Deadnight Warrior
+		author    = "Niobium", -- Modified for XTA by Deadnight Warrior
 		version   = "1.3",
 		date      = "7 April 2010",
 		license   = "GNU GPL, v2 or later",
@@ -83,6 +83,9 @@ local start_unit_table = {
     arm = arm_start_unit,
     core = core_start_unit,
 }
+
+-- Maps units that could get disabled because of map conditions
+local disablable = {}
 
 local modOptions = Spring.GetModOptions()
 local commType = modOptions.comm
@@ -234,6 +237,30 @@ function widget:Initialize()
 		return
 	end
 	
+	--Determine if certain units got disabled
+	local disableWind = Game.windMax < 9.1
+	local map = Game.mapHumanName:lower()
+	local disableAir = Game.windMin <= 1 and Game.windMax <= 4 or map:find("comet") or map:find("moon")
+	local disableHovers = disableAir
+	disableAir = disableAir or Game.windMin >= 30 or Game.windMax >= 35
+	if disableWind then
+		disablable["arm_wind_generator"] = true
+		disablable["core_wind_generator"] = true
+	end
+	if disableAir then
+		disablable["arm_aircraft_plant"] = true
+		disablable["arm_adv_aircraft_plant"] = true
+		disablable["arm_seaplane_platform"] = true
+		disablable["core_aircraft_plant"] = true
+		disablable["core_adv_aircraft_plant"] = true
+		disablable["core_seaplane_platform"] = true
+	end
+	if disableHovers then
+		disablable["arm_hovercraft_platform"] = true
+		disablable["core_hovercraft_platform"] = true
+	end
+
+	
 	-- Get our starting unit
 	local myTeamID = Spring.GetMyTeamID()
 	local _, _, _, _, mySide = Spring.GetTeamInfo(myTeamID)
@@ -261,11 +288,13 @@ function widget:Initialize()
 	for i = 1, #sBuilds do
 		local uDefID = sBuilds[i]
 		local uDef = UnitDefs[uDefID]
-		buildNameToID[uDef.name] = uDefID
-		if uDef.minWaterDepth <= 0 then
-			newBuilds[#newBuilds + 1] = uDefID
-		else
-			waterBuilds[#waterBuilds + 1] = uDefID
+		if not disablable[uDef.name] then
+			buildNameToID[uDef.name] = uDefID
+			if uDef.minWaterDepth <= 0 then
+				newBuilds[#newBuilds + 1] = uDefID
+			else
+				waterBuilds[#waterBuilds + 1] = uDefID
+			end
 		end
 	end
 	for i = 1, #waterBuilds do

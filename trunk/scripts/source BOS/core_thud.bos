@@ -6,8 +6,7 @@
 piece  torso, gun, rfirept, lfirept, rgun, lgun, pelvis, rleg,
        rfoot, lleg, lfoot, lthigh, rthigh, ground;
 
-static-var  Static_Var_1, gun_1, bMoving, Static_Var_4, Static_Var_5,
-            Static_Var_6, moveSpeed, currentSpeed;
+static-var  Static_Var_1, gun_1, bMoving, bAiming, moveSpeed, currentSpeed;
 
 
 walk()
@@ -374,24 +373,21 @@ MotionControl(moving, aiming, justmoved)
 	while( TRUE )
 	{
 		moving = bMoving;
-		aiming = Static_Var_4;
+		aiming = bAiming;
 		if( moving )
 		{
 			if( aiming )
 			{
-				Static_Var_5 = 1;
 				call-script walklegs();
 			}
 			else
 			{
-				Static_Var_5 = 0;
 				call-script walk();
 			}
 			justmoved = TRUE;
 		}
 		else
 		{
-			Static_Var_5 = 1;
 			if( justmoved )
 			{
 				move pelvis to y-axis [0.000000] speed [2.500000];
@@ -459,26 +455,12 @@ Create()
 	turn rfirept to y-axis <180.000000> now;
 	turn lfirept to y-axis <180.000000> now;
 	bMoving = FALSE;
-	Static_Var_4 = 0;
-	Static_Var_5 = 1;
-	Static_Var_6 = 0;
+	bAiming = 0;
+	gun_1 = 0;
 	Static_Var_1 = 0;
-	gun_1 = torso;
 	moveSpeed = get MAX_SPEED;
 	currentSpeed = 100;
 	start-script SmokeUnit();
-}
-
-Reload1()
-{
-	sleep 1250;
-	gun_1 = torso;
-}
-
-Reload2()
-{
-	sleep 2600;
-	gun_1 = torso;
 }
 
 StartMoving()
@@ -498,19 +480,12 @@ SweetSpot(piecenum)
 
 AimFromPrimary(piecenum)
 {
-	piecenum = torso;
+	piecenum = gun;
 }
 
 QueryPrimary(piecenum)
 {
-	if( Static_Var_6 )
-	{
-		piecenum = lfirept;
-	}
-	else
-	{
-		piecenum = rfirept;
-	}
+	piecenum = rfirept + gun_1;
 }
 
 RestoreAfterDelay()
@@ -518,18 +493,15 @@ RestoreAfterDelay()
 	sleep 2750;
 	turn torso to y-axis <0.000000> speed <90.016484>;
 	turn gun to x-axis <0.000000> speed <45.005495>;
-	Static_Var_4 = 0;
+	bAiming = 0;
 }
 
 AimWeapon1(heading, pitch)
 {
+	if( pitch >= 10012) return (0);
 	signal 2;
 	set-signal-mask 2;
-	if( pitch >= 10012 OR gun_1 == 1 )
-	{
-		return (0);
-	}
-	turn torso to y-axis heading speed <90.000000>;
+	turn torso to y-axis heading speed <130.000000>;
 	turn gun to x-axis <0.000000> - pitch speed <35.000000>;
 	wait-for-turn torso around y-axis;
 	wait-for-turn gun around x-axis;
@@ -538,9 +510,7 @@ AimWeapon1(heading, pitch)
 
 FirePrimary()
 {
-	gun_1 = gun;
-	start-script Reload1();
-	if( Static_Var_6 )
+	if( gun_1 )
 	{
 		move lgun to z-axis [-5.000000] speed [150.000000];
 		emit-sfx UNIT_SFX1 from lfirept;
@@ -558,18 +528,15 @@ FirePrimary()
 		move rgun to z-axis [0.000000] speed [10.000000];
 		wait-for-move rgun along z-axis;
 	}
-	Static_Var_6 = !Static_Var_6;
+	gun_1 = !gun_1;
 }
 
 AimWeapon2(heading, pitch)
 {
-	signal 4;
-	set-signal-mask 4;
-	if( pitch < 10012 OR gun_1 == 1 )
-	{
-		return (0);
-	}
-	turn torso to y-axis heading speed <90.000000>;
+	if (pitch < 10012) return (0);
+	signal 2;
+	set-signal-mask 2;
+	turn torso to y-axis heading speed <130.000000>;
 	turn gun to x-axis <0.000000> - pitch speed <35.000000>;
 	wait-for-turn torso around y-axis;
 	wait-for-turn gun around x-axis;
@@ -578,9 +545,7 @@ AimWeapon2(heading, pitch)
 
 FireWeapon2()
 {
-	gun_1 = gun;
-	start-script Reload2();
-	if( Static_Var_6 )
+	if( gun_1 )
 	{
 		move lgun to z-axis [-5.000000] speed [150.000000];
 		emit-sfx UNIT_SFX1 from lfirept;
@@ -598,24 +563,17 @@ FireWeapon2()
 		move rgun to z-axis [0.000000] speed [10.000000];
 		wait-for-move rgun along z-axis;
 	}
-	Static_Var_6 = !Static_Var_6;
+	gun_1 = !gun_1;
 }
 
 QueryWeapon2(piecenum)
 {
-	if( Static_Var_6 )
-	{
-		piecenum = lfirept;
-	}
-	else
-	{
-		piecenum = rfirept;
-	}
+	piecenum = rfirept + gun_1;
 }
 
 AimFromWeapon2(piecenum)
 {
-	piecenum = torso;
+	piecenum = gun;
 }
 
 Killed(severity, corpsetype)

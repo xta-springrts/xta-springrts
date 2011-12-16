@@ -28,9 +28,9 @@
 	//********************
 	maxdamage=270;
 	healtime=30;
-	buildcostmetal=128;
-	buildcostenergy=9219;
-	buildtime=22631;
+	buildcostmetal=148;
+	buildcostenergy=12219;
+	buildtime=27631;
 	footprintx=2;
 	footprintz=2;
 
@@ -75,7 +75,7 @@
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=315;
+	sightdistance=375;
 
 	//************************************************************
 	//  Weapons
@@ -95,8 +95,8 @@
 	//  Miscellaneous
 	//*****************
 	bmcode=1;
-	cloakcost=210;
-	cloakcostmoving=420;
+	cloakcost=150;
+	cloakcostmoving=300;
 	mincloakdistance=30;
 	designation=ARM-KML;
 	downloadable=1;
