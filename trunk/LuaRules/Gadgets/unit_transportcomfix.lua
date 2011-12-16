@@ -18,15 +18,6 @@ end
 
 if (not gadgetHandler:IsSyncedCode()) then return end
 
-transportedBy = {} -- [passengerID]  = transporterID
-
-transporting = {} -- [transportID] = [pID]=true [pID2]=true
-
-
---function gadget:UnitDestroyed(unitID, unitDefID, teamID, attackerID, attackerDefID, attackerTeamID)
-	--Spring.Echo ("unit " .. unitID .. " kaputt")
---end
-
 toKill = {} -- [frame] [1]=unitID
 currentFrame = 0
 function gadget:GameFrame (f)
