@@ -28,7 +28,7 @@ function gadget:GameFrame (f)
 			if (Spring.ValidUnitID (i))	then	--just in case the unit got killed during that 1-frame-wait by other means
 			--***FIXME: copy more closely how units normaly die in destroyed transports: normal explosion + no wreck
 			--Spring.AddUnitDamage (i, math.huge) --this makes it use normal death epxlo but leave wreck. -> would change balance
-				Spring.DestroyUnit (i, true, true) --this uses selfd explo but no wreck. good compromise?
+				Spring.DestroyUnit (i, true, false)
 			end
 		end
 	toKill[f] = nil
