@@ -97,13 +97,14 @@
 		canbuild27=arm_adv_aircraft_plant;
 		canbuild28=arm_shipyard;
 		canbuild29=arm_adv_shipyard;
-		canbuild30=arm_hovercraft_platform; 
-		canbuild31=arm_stunner;
-		canbuild32=arm_retaliator;
-	 	canbuild33=ARMFFF;//xtaids
-	 	canbuild34=MERCURY;//xtaids
-		canbuild35=arm_vulcan;
-		canbuild36=arm_nano_tower;
+		canbuild30=arm_hovercraft_platform;
+		canbuild31=arm_mech_lab; //xtaids
+		canbuild32=arm_stunner;
+		canbuild33=arm_retaliator;
+	 	canbuild34=ARMFFF;//xtaids
+	 	canbuild35=MERCURY;//xtaids
+		canbuild36=arm_vulcan;
+		canbuild37=arm_nano_tower;
 	}
 	[arm_adv_construction_sub]
 	{
@@ -447,8 +448,9 @@
 	[arm_mech_lab]
 	{
 		canbuild1=arm_adv_construction_kbot;
-		canbuild2=armraz;
-		canbuild3=arm_rhino;
+		canbuild2=arm_orcone;
+		canbuild3=armraz;
+		canbuild4=arm_rhino;
 	}
 	[arm_u0commander]
 	{

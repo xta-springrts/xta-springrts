@@ -1611,6 +1611,22 @@
 	count0=count6;
 	canceldestruct=cancel2;
 }
+[ORCONE]
+{  
+	select1=Orcsel1;
+	select2=Orcsel2;
+	ok1=Orcmove;
+	arrived1=Orcthere;
+	cant1=Orcant;
+	underattack=Orcua;
+	count5=count1;
+	count4=count2;
+	count3=count3;
+	count2=count4;
+	count1=count5;
+	count0=count6;
+	canceldestruct=cancel2;
+}
 [LLT]
 {
 	select1=servmed2;
