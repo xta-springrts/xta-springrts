@@ -59,7 +59,7 @@
 	canattack=1;
 	MinWaterDepth=15;
 	Weapon2=CORE_ROY;
-	Floater=1;
+	floatOnWater=1;
 	waterline=4.99;
 	windgenerator=0.001;
 	NoChaseCategory=VTOL;

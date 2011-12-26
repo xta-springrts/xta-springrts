@@ -24,7 +24,6 @@ local spGetFeatureCollisionData = Spring.GetFeatureCollisionVolumeData
 local spSetFeatureCollisionData = Spring.SetFeatureCollisionVolumeData
 local spArmor = Spring.GetUnitArmored
 local spActive = Spring.GetUnitIsActive
-local airScalX, airScalY, airScalZ
 local pairs = pairs	
 
 
@@ -47,9 +46,9 @@ if (gadgetHandler:IsSyncedCode()) then
 				for pieceIndex=0, #spGetPieceList(unitID)-1 do
 					local p = t[tostring(pieceIndex)]
 					if p then
-						spSetPieceCollisionData(unitID, pieceIndex, p[1], p[1],p[1],p[1], p[2], p[3], p[4], p[5], p[6], p[7], p[8], p[9])
+						spSetPieceCollisionData(unitID, pieceIndex, true, p[1], p[2], p[3], p[4], p[5], p[6], p[7], p[8])
 					else
-						spSetPieceCollisionData(unitID, pieceIndex, false, false,false,false, 1, 1, 1, 0, 0, 0, 1, 1)
+						spSetPieceCollisionData(unitID, pieceIndex, false, 1, 1, 1, 0, 0, 0, 1, 1)
 					end
 				end
 			--end
@@ -58,9 +57,9 @@ if (gadgetHandler:IsSyncedCode()) then
 			for pieceIndex=0, #spGetPieceList(unitID)-1 do
 				local p = t[tostring(pieceIndex)]
 				if p then
-					spSetPieceCollisionData(unitID, pieceIndex, p[1], p[1],p[1],p[1], p[2], p[3], p[4], p[5], p[6], p[7], p[8], p[9])
+					spSetPieceCollisionData(unitID, pieceIndex, true, p[1], p[2], p[3], p[4], p[5], p[6], p[7], p[8])
 				else
-					spSetPieceCollisionData(unitID, pieceIndex, false, false,false,false, 1, 1, 1, 0, 0, 0, 1, 1)
+					spSetPieceCollisionData(unitID, pieceIndex, false, 1, 1, 1, 0, 0, 0, 1, 1)
 				end
 			end
 		else
@@ -72,7 +71,7 @@ if (gadgetHandler:IsSyncedCode()) then
 					elseif (not UnitDefs[unitDefID].canFly) then
 						spSetUnitCollisionData(unitID, xs*0.75, ys*0.75, zs*0.75,  xo, yo, zo,  vtype, htype, axis)
 					else
-						spSetUnitCollisionData(unitID, xs*0.375, ys*0.225, zs*0.45,  xo, yo, zo,  vtype, htype, axis)
+						spSetUnitCollisionData(unitID, xs*0.375, ys*0.225, zs*0.48,  xo, yo, zo,  vtype, htype, axis)
 					end
 				end
 			end
@@ -82,18 +81,14 @@ if (gadgetHandler:IsSyncedCode()) then
 
 	-- Same as for 3DO units, but for features,
 	function gadget:FeatureCreated(featureID, allyTeam)
-		local featureModel = FeatureDefs[Spring.GetFeatureDefID(featureID)].modelname
-		featureModel = featureModel:lower()
+		local featureModel = FeatureDefs[Spring.GetFeatureDefID(featureID)].modelname:lower()
 		if featureModel:find(".3do") then
 			local xs, ys, zs, xo, yo, zo, vtype, htype, axis, _ = spGetFeatureCollisionData(featureID)
 			if (vtype==4 and xs==ys and ys==zs) then
-				local yrs
 				if (xs>47) then
-					yrs = ys*0.60
-					spSetFeatureCollisionData(featureID, xs*0.68, yrs, zs*0.68,  xo, yo-yrs*0.15, zo,  vtype, htype, axis)
+					spSetFeatureCollisionData(featureID, xs*0.68, ys*0.60, zs*0.68,  xo, yo-ys*0.09, zo,  vtype, htype, axis)
 				else
-					yrs = ys*0.67
-					spSetFeatureCollisionData(featureID, xs*0.75, yrs, zs*0.75,  xo, yo-yrs*0.15, zo,  vtype, htype, axis)
+					spSetFeatureCollisionData(featureID, xs*0.75, ys*0.67, zs*0.75,  xo, yo-ys*0.1005, zo,  vtype, htype, axis)
 				end
 			end
 		end
@@ -134,9 +129,9 @@ if (gadgetHandler:IsSyncedCode()) then
 						for pieceIndex=0, defs.numPieces do
 							p = t[tostring(pieceIndex)]
 							if p then
-								spSetPieceCollisionData(unitID, pieceIndex, p[1], p[1],p[1],p[1], p[2], p[3], p[4], p[5], p[6], p[7], p[8], p[9])
+								spSetPieceCollisionData(unitID, pieceIndex, true, p[1], p[2], p[3], p[4], p[5], p[6], p[7], p[8])
 							else
-								spSetPieceCollisionData(unitID, pieceIndex, false, false,false,false, 1, 1, 1, 0, 0, 0, 1, 1)
+								spSetPieceCollisionData(unitID, pieceIndex, false, 1, 1, 1, 0, 0, 0, 1, 1)
 							end
 						end	
 					else
@@ -152,9 +147,9 @@ if (gadgetHandler:IsSyncedCode()) then
 						for pieceIndex=0, defs.numPieces do
 							p = t[tostring(pieceIndex)]
 							if p then
-								spSetPieceCollisionData(unitID, pieceIndex, p[1], p[1],p[1],p[1], p[2], p[3], p[4], p[5], p[6], p[7], p[8], p[9])
+								spSetPieceCollisionData(unitID, pieceIndex, true, p[1], p[2], p[3], p[4], p[5], p[6], p[7], p[8])
 							else
-								spSetPieceCollisionData(unitID, pieceIndex, false, false,false,false, 1, 1, 1, 0, 0, 0, 1, 1)
+								spSetPieceCollisionData(unitID, pieceIndex, false, 1, 1, 1, 0, 0, 0, 1, 1)
 							end
 						end
 					else

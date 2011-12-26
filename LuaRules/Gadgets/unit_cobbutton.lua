@@ -47,6 +47,7 @@ local spGetUnitCmdDescs = Spring.GetUnitCmdDescs
 local spEditUnitCmdDesc = Spring.EditUnitCmdDesc
 local spRemoveUnitCmdDesc = Spring.RemoveUnitCmdDesc
 local spCallCOBScript = Spring.CallCOBScript
+local spGetUnitDefID = Spring.GetUnitDefID
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
@@ -115,8 +116,8 @@ end
 function gadget:GameFrame(n)
 	local s = n/30
 	for unitID, unitButtons in pairs(reloads) do
-		local status,udfid = pcall(Spring.GetUnitDefID,unitID)
-		if (not status or udfid==nil) then
+		local udfid = spGetUnitDefID(unitID)
+		if (udfid==nil) then
 			reloads[unitID] = nil
 		else
 			local unitName = UnitDefs[udfid].name

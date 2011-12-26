@@ -53,7 +53,7 @@
 	maneuverleashlength=640;
 	MovementClass=BOATSUB;
 	MinWaterDepth=15;
-	Floater=1;
+	floatOnWater=1;
 	SonarDistance=700;
 	waterline=40;
 	pieceTrailCEGTag=NanoDebree;//bleh

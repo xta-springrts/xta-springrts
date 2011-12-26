@@ -17,6 +17,28 @@ end
 --------------------------------------------------------------------------------
 local team = Spring.GetMyTeamID()
 
+local commanderList = {
+	arm_commander = true,
+	arm_decoy_commander = true,
+	arm_u0commander = true,
+	arm_ucommander = true,
+	arm_u2commander = true,
+	arm_u3commander = true,
+	arm_u4commander = true,
+	armcom = true,
+	arm_base = true,
+	arm_nincommander = true,
+	core_commander = true,
+	core_decoy_commander = true,
+	core_u0commander = true,
+	core_ucommander = true,
+	core_u2commander = true,
+	core_u3commander = true,
+	core_u4commander = true,
+	corcom = true,
+	core_base = true,
+	core_nincommander = true,
+}
 
 -- Speedups
 local GiveOrderToUnit  = Spring.GiveOrderToUnit
@@ -51,6 +73,26 @@ function widget:UnitDecloaked(unitID, unitDefID, teamID)
 		GiveOrderToUnit(unitID, CMD.FIRE_STATE, {targetState}, {})	--revert to last state
 		--Spring.Echo("Unit compromised - weapons free!")
 	end
+end
+
+function widget:CommandNotify(commandID, params, options)
+  if (commandID == CMD.CLOAK) then
+    local selUnits = GetSelectedUnits()
+    for i,unitID in pairs(selUnits) do
+      local unitDef = GetUnitDefID(unitID)
+      if (unitDef ~= nil) and commanderList[UnitDefs[unitDef].name] then
+        local states = GetUnitStates(unitID)
+        if (not states) then
+          return
+        end
+        if states.cloak then
+          GiveOrderToUnit(unitID, CMD.FIRE_STATE, {2}, {})
+        else
+          GiveOrderToUnit(unitID, CMD.FIRE_STATE, {0}, {}) 
+        end
+      end
+    end
+  end   
 end
 
 local function CheckSpecState()
@@ -89,59 +131,3 @@ end
 function widget:UnitDestroyed(unitID, unitDefID, unitTeam)
     cloakUnit[unitID] = nil
 end
-
---[[
-function widget:CommandNotify(commandID, params, options)
-  if (commandID == CMD.FIRE_STATE) then
-    local selUnits = GetSelectedUnits()
-	if selUnits then
-		for i,unitID in pairs(selUnits) do    
-			if not GetUnitIsCloaked(unitID) then
-				cloakUnit[unitID] = params[1]
-				Spring.Echo("Cloak unit entry for unitID "..unitID.." updated to "..params[1])
-			end
-		end
-	end
-  end   
-end
-]]--
-
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-
---dinosaur code
---[[
-local function CheckCloakedUnits()
-	for unitID in pairs(cloakUnit) do
-		local states = GetUnitStates(unitID)
-		if GetUnitIsCloaked(unitID) and states.firestate == 2 then
-			GiveOrderToUnit(unitID, CMD.FIRE_STATE, {0}, {})
-			Spring.Echo("Unit holding fire")
-		elseif (not GetUnitIsCloaked(unitID)) and states.firestate == 0 then
-			GiveOrderToUnit(unitID, CMD.FIRE_STATE, {2}, {})
-			Spring.Echo("Unit compromised - weapons free!")
-		end
-	end
-end
-function widget:UnitCreated(unitID, unitDefID, unitTeam)
-  if (unitTeam == team) then
-	local ud = UnitDefs[unitDefID]
-    if ud.initCloaked == true or ud.cloakCost > 0 or ud.name == "armflea" then
-	  cloakUnit[unitID] = true
-	  --Spring.Echo(ud.humanName .. " (unit ID " .. unitID .. ") added to cloak list")
-    end
-  elseif (cloakUnit[unitID]) then
-    cloakUnit[unitID] = nil
-  end
-end
-
-function widget:UnitGiven(unitID, unitDefID, unitTeam)
-  widget:UnitCreated(unitID, unitDefID, unitTeam)
-end
-
-function widget:UnitDestroyed(unitID, unitDefID, unitTeam)
-    cloakUnit[unitID] = nil
-	local ud = UnitDefs[unitDefID]
-	--Spring.Echo(ud.humanName .. " (unit ID " .. unitID .. ") removed from cloak list")
-end
-]]--

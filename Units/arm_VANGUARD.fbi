@@ -61,7 +61,7 @@
 	MinWaterDepth=12;
 	waterline=4.99;
 	windgenerator=0.001;
-	Floater=1;
+	floatOnWater=1;
 	Corpse=arm_VANGUARD_dead;
 	[SFXTypes]
 	{

@@ -122,17 +122,14 @@ end
 
 
 local function BuildspeedCommand(unitID, unitDefID, cmdParams, teamID)
-
   local ud = UnitDefs[unitDefID]
   if (factoryDefs[ud.name]) then
-
     local status
     if cmdParams[1] == 1 then
       status = '1'
       Spring.SetUnitBuildSpeed(unitID, buildspeedlist[unitID]*.5)
     elseif cmdParams[1] == 2 then
       status = '2'
-
       Spring.SetUnitBuildSpeed(unitID, buildspeedlist[unitID]*.75)
      elseif cmdParams[1] == 3 then
       status = '3'
@@ -171,9 +168,6 @@ function gadget:Initialize()
   end
 end
 
-
-
-
 function gadget:AllowCommand(unitID, unitDefID, teamID, cmdID, cmdParams, _)
   local returnvalue
   if cmdID ~= CMD_BUILDSPEED then
@@ -191,8 +185,6 @@ function gadget:Shutdown()
     end
   end
 end
-
-
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------

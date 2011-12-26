@@ -60,6 +60,6 @@
 	MinWaterDepth=12;
 	Weapon2=SEACRUISE_MISSILEFAST;
 	wsec_badTargetCategory=NOTAIR;
-	Floater=1;
+	floatOnWater=1;
 	Waterline=-3;
 	}
