@@ -60,7 +60,7 @@
 	MinWaterDepth=28;
 	Weapon2=ARMAAS_WEAPON1;
 	wsec_badTargetCategory=VTOL;
-	Floater=1;
+	floatOnWater=1;
 	NoChaseCategory=VTOL;
 	pieceTrailCEGTag=Debree;//bleh
 	pieceTrailCEGRange = 4;

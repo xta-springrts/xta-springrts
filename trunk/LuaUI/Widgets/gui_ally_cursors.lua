@@ -302,7 +302,7 @@ function widget:DrawWorldPreUnit()
         glBeginEnd(GL_QUADS,DrawGroundquad,wx,gy,wz)
 		
 		--draw player name -- added by vbs
-		if ( meta ) then
+		if ( meta and playerNames[playerID] ) then
 			glPushMatrix()
 			glTranslate( wx, gy , wz )
 			glBillboard()

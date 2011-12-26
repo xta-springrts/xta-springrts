@@ -63,7 +63,7 @@
 	icontype=sea;
 	Weapon2=ARM_ROY;
 	wsec_badTargetCategory=VTOL;
-	Floater=1;
+	floatOnWater=1;
 	NoChaseCategory=VTOL;
 	collisionVolumeType = box;
 	collisionVolumeScales =45 40 70;
