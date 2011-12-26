@@ -1,4 +1,3 @@
-
 [ARM_Rhino_Shield]
 {
 	name=PlasmaRepulsor;
@@ -63,8 +62,8 @@
 	[DAMAGE]
 	{
 		default=1765;
-    group_invincible=1;
-            group_ships=2380;
+		group_invincible=1;
+		group_ships=2380;
 	}
 }
 [JANUS_ROCKET]
@@ -106,7 +105,7 @@
 	[DAMAGE]
 	{
 		default=211;
-    group_invincible=1;
+		group_invincible=1;
 	}
 }
 [VTOLANTI]
@@ -148,7 +147,7 @@
 	{
 		default=31;
 		group_landair=101;
-    group_invincible=1;
+		group_invincible=1;
 	}
 }
 [SEACRUISE_MISSILEFAST]
@@ -188,10 +187,11 @@
 	startsmoke=1;
 	[DAMAGE]
 	{
-	group_landair=400;
-	group_skyair=503;
-	default=187;
+		group_landair=400;
+		group_skyair=503;
+		default=187;
         group_ships=265;
+		group_invincible=1;
 	}
 }
 [SEACRUISE_MISSILESLOW]
@@ -231,10 +231,11 @@
 	startsmoke=1;
 	[DAMAGE]
 	{
-	group_landair=400;
-	group_skyair=503;
-	default=187;
+		group_landair=400;
+		group_skyair=503;
+		default=187;
         group_ships=265;
+		group_invincible=1;
 	}
 }
 [AATOMIC_BLAST]
@@ -259,10 +260,11 @@
 	explosiongenerator=custom:SMALL_NUKE_EXPLOSION_FX;
 	[DAMAGE]
 	{
-	default=2200;
-	group_landair=900;
-	group_skyair=600;
+		default=2200;
+		group_landair=900;
+		group_skyair=600;
     	group_invincible=1;
+		group_invincible=1;
 	}
 }
 [RAPIDBATS1]
@@ -292,7 +294,8 @@
 	[DAMAGE]
 	{
 		default=444;
-            group_ships=888;
+		group_ships=888;
+		group_invincible=1;
 	}
 }
 [RAPIDBATS2]
@@ -322,7 +325,8 @@
 	[DAMAGE]
 	{
 		default=444;
-            group_ships=888;
+		group_ships=888;
+		group_invincible=1;
 	}
 }
 [SCORP_LASER]
@@ -363,6 +367,7 @@
 	[DAMAGE]
 	{
 		default=33;
+		group_invincible=1;
 	}
 }
 [ScorpLaser]
@@ -403,6 +408,7 @@
 	[DAMAGE]
 	{
 		default=177;//27 dps per second
+		group_invincible=1;
 	}
 }
 [BOATSAM]
@@ -443,7 +449,8 @@
 	[DAMAGE]
 	{
 		default=482;
-            group_ships=865;
+		group_ships=865;
+		group_invincible=1;
 	}
 }
 [EMPBOMB]
@@ -476,6 +483,7 @@
 	[DAMAGE]
 	{
 		default=7500;
+		group_invincible=1;
 	}
 }
 
@@ -517,6 +525,7 @@
 	{
 		default=532;
 		group_landair=198;
+		group_invincible=1;
 	}
 }
 [GuidedBomb]
@@ -559,6 +568,7 @@
 		default=243;
 		group_landair=107;
 		group_skyair=376;
+		group_invincible=1;
 	}
 }
 [FAKEBOMB]
@@ -615,6 +625,7 @@
 	[DAMAGE]
 	{
 		default=84;
+		group_invincible=1;
 	}
 }
 [COMMANDOLAS]
@@ -648,6 +659,7 @@
 	[DAMAGE]
 	{
 		default=3900;
+		group_invincible=1;
 	}
 }
 
@@ -676,6 +688,7 @@
 	[DAMAGE]
 	{
 		default=70;
+		group_invincible=1;
 	}
 }
 [EGG_LIGHTCANNON] //EGGMAN tank//
@@ -704,6 +717,7 @@
 	[DAMAGE]
 	{
 		default=66.6;
+		group_invincible=1;
 	}
 }
 [VTOL_KrowROCKET]
@@ -741,6 +755,7 @@
 	[DAMAGE]
 	{
 		default=107.5;
+		group_invincible=1;
 	}
 }
 [CORKrow_MainWEAPON]
@@ -772,6 +787,7 @@
 	[DAMAGE]
 	{
 		default=200;
+		group_invincible=1;
 	}
 }
 [RAZLASER]
@@ -806,6 +822,7 @@
 	{
 		default=144;
 		group_landair=111;
+		group_invincible=1;
 	}
 }
 
@@ -849,6 +866,7 @@
 		group_landair=387;
 		group_skyair=682;
 		default=247;
+		group_invincible=1;
 	}
 }
 [ADVSAM]
@@ -891,6 +909,7 @@
 		group_landair=400;
 		group_skyair=653;
 		default=287;
+		group_invincible=1;
 	}
 }
 [ARM_HLIGHTNING]
@@ -932,6 +951,7 @@
 	[DAMAGE]
 	{
 		default=22;
+		group_invincible=1;
 	}
 }
 [HEAVYLANDFLYING_MISSILE]
@@ -977,6 +997,7 @@
 		group_landair=251;
 		group_skyair=321;
 		default=187;
+		group_invincible=1;
 	}
 }
 [CORE_TOTAL_ANNIHILATOR]
@@ -1021,6 +1042,7 @@
 		default=1425;
 		group_skyair=1900;
 		group_landair=2000;
+		group_invincible=1;
 	}
 }
 [LIGHTSKYCRUISERANNI]
@@ -1058,6 +1080,7 @@
 	[DAMAGE]
 	{
 		default=13;
+		group_invincible=1;
 	}
 }
 [LIGHTSKYCRUISER_EMG]
@@ -1099,6 +1122,7 @@
 	[DAMAGE]
 	{
 		default=15;
+		group_invincible=1;
 	}
 }
 [HEAVYFLYING_MISSILE]
@@ -1140,6 +1164,7 @@
 		group_landair=551;
 		group_skyair=421;
 		default=221;
+		group_invincible=1;
 	}
 }
 [SKYCRUISERANNI]
@@ -1177,6 +1202,7 @@
 	[DAMAGE]
 	{
 		default=28;
+		group_invincible=1;
 	}
 }
 [SKYCRUISER_EMG]
@@ -1216,6 +1242,7 @@
 	[DAMAGE]
 	{
 		default=15;
+		group_invincible=1;
 	}
 }
 [FLYING_MISSILE]
@@ -1257,6 +1284,7 @@
 		group_landair=551;
 		group_skyair=421;
 		default=221;
+		group_invincible=1;
 	}
 }
 [FHLASER]
@@ -1289,6 +1317,7 @@
 	[DAMAGE]
 	{
 		default=37;
+		group_invincible=1;
 	}
 }
 [Butter]
@@ -1320,6 +1349,7 @@
 	[DAMAGE]
 	{
 		default=13;
+		group_invincible=1;
 	}
 }
 [Armlatnk_Lightning]
@@ -1351,6 +1381,7 @@
 	[DAMAGE]
 	{
 		default=91;
+		group_invincible=1;
 	}
 }
 [ARM_Parlay]
@@ -1390,57 +1421,60 @@
 	[DAMAGE]
 	{
 		default=20;//was 17
+		group_invincible=1;
 	}
 }
 [SHIELD2]
 {
-name=Plasmashield;
-IsShield=1;
-ShieldRepulsor=1;
-SmartShield=1;
-ExteriorShield=0;
-VisibleShield=1;
-VisibleShieldRepulse=1;
-ShieldEnergyUse=25;
-ShieldForce=100;
-ShieldRadius=60;
-ShieldMaxSpeed=500;
-ShieldPower=3000;
-ShieldPowerRegen=30;
-ShieldPowerRegenEnergy=25;
-ShieldInterceptType=3;
-ShieldGoodColor=0.0 0.7 0.9;
-ShieldBadColor=0.5 0.5 0.5;
-ShieldAlpha=0.5;
-[DAMAGE]
-{
-default=10;
-}
+	name=Plasmashield;
+	IsShield=1;
+	ShieldRepulsor=1;
+	SmartShield=1;
+	ExteriorShield=0;
+	VisibleShield=1;
+	VisibleShieldRepulse=1;
+	ShieldEnergyUse=25;
+	ShieldForce=100;
+	ShieldRadius=60;
+	ShieldMaxSpeed=500;
+	ShieldPower=3000;
+	ShieldPowerRegen=30;
+	ShieldPowerRegenEnergy=25;
+	ShieldInterceptType=3;
+	ShieldGoodColor=0.0 0.7 0.9;
+	ShieldBadColor=0.5 0.5 0.5;
+	ShieldAlpha=0.5;
+	[DAMAGE]
+	{
+		default=10;
+		group_invincible=1;
+	}
 }
 [SHIELD1]
 {
-name=Plasmashield;
-IsShield=1;
-ShieldRepulsor=1;
-SmartShield=1;
-ExteriorShield=0;
-VisibleShield=1;
-VisibleShieldRepulse=1;
-ShieldEnergyUse=25;
-ShieldForce=500;
-ShieldRadius=80;
-ShieldMaxSpeed=500;
-ShieldPower=6666;
-ShieldPowerRegen=60;
-ShieldPowerRegenEnergy=100;
-ShieldInterceptType=3;
-ShieldGoodColor=0.0 0.65 1;
-ShieldBadColor=0.5 0.5 0.5;
-ShieldAlpha=0.45;
-[DAMAGE]
-{
-default=10;
-}
+	name=Plasmashield;
+	IsShield=1;
+	ShieldRepulsor=1;
+	SmartShield=1;
+	ExteriorShield=0;
+	VisibleShield=1;
+	VisibleShieldRepulse=1;
+	ShieldEnergyUse=25;
+	ShieldForce=500;
+	ShieldRadius=80;
+	ShieldMaxSpeed=500;
+	ShieldPower=6666;
+	ShieldPowerRegen=60;
+	ShieldPowerRegenEnergy=100;
+	ShieldInterceptType=3;
+	ShieldGoodColor=0.0 0.65 1;
+	ShieldBadColor=0.5 0.5 0.5;
+	ShieldAlpha=0.45;
+	[DAMAGE]
+	{
+		default=10;
+		group_invincible=1;
+	}
 }
 [ARM_REB]
 {
@@ -1463,6 +1497,7 @@ default=10;
 	[DAMAGE]
 	{
 		default=176;
+		group_invincible=1;
 	}
 }
 [ARM_SNUB]
@@ -1486,6 +1521,7 @@ default=10;
 	[DAMAGE]
 	{
 		default=400;
+		group_invincible=1;
 	}
 }
 
@@ -1509,7 +1545,8 @@ default=10;
 	rgbcolor=1 0.6 0.3;
 	[DAMAGE]
 	{
-	default=287;
+		default=287;
+		group_invincible=1;
 	}
 }
 [NUCLEAR_MISSILEX3]
@@ -1555,6 +1592,7 @@ default=10;
 	{
 		default=6470;
 		COMMANDER=2400;
+		group_invincible=1;
 	}
 }
 [CORJAR_WEAPON]
@@ -1579,6 +1617,7 @@ default=10;
 	[DAMAGE]
 	{
 		default=100;
+		group_invincible=1;
 	}
 }
 
@@ -1613,5 +1652,123 @@ default=10;
 	[DAMAGE]
 	{
 		default=11;//12.5
+		group_invincible=1;
+	}
+}
+[ORCONE_GUN]
+{
+	accuracy=500;
+	areaofeffect=48;
+	burnblow=1;
+	explosiongenerator=custom:WindkbotRocket;
+	lineofsight=1;
+	name=SuperGaussCannon;
+	noexplode=1;
+	noselfdamage=1;
+	range=530;
+	reloadtime=1;
+	soundhit=xplomed2;
+	soundstart=Krogun1;
+	turret=1;
+	weapontype=Cannon;
+	weaponvelocity=796;
+	[DAMAGE]
+	{
+		default=250;
+		group_invincible=1;
+	}
+}
+[ORCONE_HEAD]
+{
+	areaofeffect=8;
+	beamdecay=0.9;
+	beamtime=0.65;
+	beamttl=15;
+	corethickness=0.5;
+	energypershot=500;
+	explosiongenerator=custom:ANNILAHATORLASER;
+	hardstop=false;
+	intensity=0.001;
+	largebeamlaser=1;
+	laserflaresize=22;
+	name=Mobile Annihilator;
+	noselfdamage=1;
+	pulsespeed=7.0;
+	range=1000;
+	reloadtime=6.666;
+	rgbcolor=0.2 0.2 1;
+	soundhit=xplosml3;
+	soundstart=annigun1;
+	targetmoveerror=0.30000001192093;
+	thickness=5;
+	tolerance=10000;
+	turret=1;
+	weapontype=BeamLaser;
+	weaponvelocity=1500;
+	[DAMAGE]
+	{
+		group_commanders=1400;
+		group_ships=3500;
+		group_large_ships=3500;
+		default=4250;
+		group_subs=5;
+		group_invincible=1;
+	}
+}
+[ORCONE_ROCKET]
+{
+	areaofeffect=165;
+	explosiongenerator=custom:WindkbotRocket;
+	firestarter=70;
+	flighttime=6;
+	metalpershot=0;
+	model=weapon_fmdmisl;
+	name=HeavyRockets;
+	noselfdamage=1;
+	proximitypriority=-5;
+	range=1000;
+	reloadtime=5;
+	smoketrail=1;
+	soundhit=xplosml2;
+	soundstart=rocklit1;
+	startvelocity=300;
+	texture2=coresmoketrail;
+	tolerance=9000;
+	tracks=1;
+	turnrate=50000;
+	weaponacceleration=230;
+	weapontimer=0.8;
+	weapontype=StarburstLauncher;
+	weaponvelocity=3000;
+	[DAMAGE]
+	{
+		default=800;
+		group_subs=5;
+		group_invincible=1;
+	}
+}
+[ORCONE_SHIELD]
+{
+	isshield=1;
+	name=PersonalShield;
+	shieldalpha=0.45;
+	shieldbadcolor=0.05 0.05 0.05;
+	shieldenergyuse=100;
+	shieldgoodcolor=0.8 0.8 1;
+	shieldintercepttype=-1;
+	shieldpower=40666;
+	shieldpowerregen=200;
+	shieldpowerregenenergy=624.375;
+	shieldradius=102;
+	shieldrepulser=0;
+	shieldstartingpower=40666;
+	smartshield=1;
+	visibleshield=1;	
+	visibleshieldhitframes=70;
+	visibleshieldrepulse=1;
+	weapontype=Shield;
+	[DAMAGE]
+	{
+		default=100;
 	}
 }
