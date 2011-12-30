@@ -35,7 +35,7 @@
 	EnergyUse=0;
 	MetalMake=0.6;
 	CanAttack=0;
-	candgun=0;
+	canManualFire=0;
 	CanCapture=1;
 	CanStop=1;
 	ActivateWhenBuilt=1;
@@ -43,6 +43,7 @@
 	SightDistance=4000;
 	energystorage=1000;
 	SeismicSignature=16;
+	cancloak=1;
 	CloakCost=40;
 	CloakCostMoving=100;
 	MinCloakDistance=40;

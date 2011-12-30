@@ -63,7 +63,7 @@
 	canmove=1;
 	canpatrol=1;
 	canstop=1;
-	floatOnWater=1;
+	floater=1;
 	isairbase=1;
 	onoffable=1;
 

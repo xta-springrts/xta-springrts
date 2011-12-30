@@ -95,6 +95,7 @@
 	//  Miscellaneous
 	//*****************
 	bmcode=1;
+	cancloak=1;
 	cloakcost=125;
 	cloakcostmoving=275;
 	designation=ARM-KML;

@@ -93,7 +93,7 @@
 	wspe_badtargetcategory=VTOL;
 	explodeas=DECOY_COMMANDER_BLAST;
 	selfdestructas=DECOY_COMMANDER_BLAST;
-	candgun=1;
+	canManualFire=1;
 
 	//************************************************************
 	//  Orders

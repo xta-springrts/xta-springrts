@@ -30,7 +30,7 @@
 	metalstorage=50;
 	metalmake=0.1;
 	canstop=1;
-	floatOnWater=1;
+	floater=1;
 	waterline=35;
 	autoheal=2;
 	sightdistance=160;

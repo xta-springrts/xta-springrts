@@ -98,6 +98,7 @@
 	//  Miscellaneous
 	//*****************
 	bmcode=0;
+	cancloak=1;
 	cloakcost=3;
 	designation=GTK4;
 	downloadable=1;

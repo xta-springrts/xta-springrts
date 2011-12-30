@@ -95,6 +95,7 @@
 	//  Miscellaneous
 	//*****************
 	bmcode=1;
+	cancloak=1;
 	cloakcost=150;
 	cloakcostmoving=300;
 	mincloakdistance=30;

@@ -31,7 +31,7 @@
 	metalstorage=50;
 	metalmake=0.1;
 	canstop=1;
-	floatOnWater=1;
+	floater=1;
 	sightdistance=160;
 	explodeas=NANO_UNITEX;
 	selfdestructas=NANO_UNIT;

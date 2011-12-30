@@ -68,7 +68,7 @@
 	canattack=1;
 	canResurrect=0;
 	cancapture=1;
-	candgun=1;
+	canManualFire=1;
 	canguard=1;
 	canmove=1;
 	canpatrol=1;
