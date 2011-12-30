@@ -47,6 +47,7 @@
 	SightDistance=500;
 	Stealth=1;
 	Init_Cloaked=1;
+	cancloak=1;
 	CloakCost=5;
 	MinCloakDistance=1;
 	

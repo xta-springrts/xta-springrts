@@ -1668,7 +1668,7 @@
 	range=530;
 	reloadtime=1;
 	soundhit=xplomed2;
-	soundstart=Krogun1;
+	soundstart=orcfire;
 	turret=1;
 	weapontype=Cannon;
 	weaponvelocity=796;

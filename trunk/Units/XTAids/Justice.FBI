@@ -62,6 +62,6 @@
 	Weapon2=SEACRUISE_MISSILESLOW;
 	Weapon3=SEACRUISE_MISSILESLOW;
 	wsec_badTargetCategory=NOTAIR;
-	floatOnWater=1;
+	floater=1;
 	Waterline=-3;
 	}

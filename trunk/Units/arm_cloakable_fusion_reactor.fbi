@@ -89,6 +89,7 @@
 	//  Miscellaneous
 	//*****************
 	bmcode=0;
+	cancloak=1;
 	cloakcost=125;
 	designation=AE-CKF;
 	downloadable=1;

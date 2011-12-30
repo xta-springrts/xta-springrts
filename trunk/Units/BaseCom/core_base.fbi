@@ -47,7 +47,7 @@
 	CanStop=1;
 	canreclamate=1;
 	CantBeTransported=1;
-	//candgun=1;
+	//canManualFire=1;
 	ActivateWhenBuilt=1;
 	
 	//    Sight/Radar

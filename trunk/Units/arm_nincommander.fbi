@@ -69,7 +69,7 @@
 	//*************
 	canattack=1;
 	cancapture=1;
-	candgun=1;
+	canManualFire=1;
 	canguard=1;
 	canmove=1;
 	canpatrol=1;
@@ -123,6 +123,7 @@
 	//  Miscellaneous
 	//*****************
 	bmcode=1;
+	cancloak=1;
 	cloakcost=200;
 	cloakcostmoving=1000;
 	commander=1;

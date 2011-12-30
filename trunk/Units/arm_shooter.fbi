@@ -105,6 +105,7 @@
 	ai_limit=limit ARMsnipe 20;
 	ai_weight=weight ARMsnipe 0.5;
 	bmcode=1;
+	cancloak=1;
 	cloakcost=400;
 	cloakcostmoving=400;
 	designation=BK-CD4;

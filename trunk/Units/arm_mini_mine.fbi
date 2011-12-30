@@ -99,6 +99,7 @@
 	//  Miscellaneous
 	//*****************
 	bmcode=0;
+	cancloak=1;
 	cloakcost=1;
 	designation=EG-2;
 	downloadable=1;

@@ -70,7 +70,7 @@
 	canreclamate=1;
 	canstop=1;
 	upright=1;
-	candgun=1;
+	canManualFire=1;
 	cancapture=1;
 
 	//************************************************************
@@ -116,6 +116,7 @@
 	//*****************
 	ai_limit=limit CORDECOM 2;
 	bmcode=1;
+	cancloak=1;
 	cloakcost=200;
 	cloakcostmoving=500;
 	designation=COR-DWM;

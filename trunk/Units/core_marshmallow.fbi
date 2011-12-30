@@ -98,6 +98,7 @@
 	//  Miscellaneous
 	//*****************
 	bmcode=0;
+	cancloak=1;
 	cloakcost=2;
 	designation=ETK3;
 	downloadable=1;

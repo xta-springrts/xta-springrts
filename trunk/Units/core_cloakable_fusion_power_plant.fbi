@@ -88,6 +88,7 @@
 	//  Miscellaneous
 	//*****************
 	bmcode=0;
+	cancloak=1;
 	cloakcost=150;
 	designation=EF-CK2;
 	downloadable=1;

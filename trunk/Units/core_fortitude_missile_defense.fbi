@@ -93,6 +93,7 @@
 	//*****************
 	antiweapons=1;
 	bmcode=0;
+	cancloak=1;
 	cloakcost=1500;
 	damagemodifier=1;
 	designation=COR-FMD1;

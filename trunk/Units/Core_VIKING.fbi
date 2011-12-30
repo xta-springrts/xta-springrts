@@ -60,7 +60,7 @@
 	canattack=1;
 	ActivateWhenBuilt=1;
 	MinWaterDepth=12;
-	floatOnWater=1;
+	floater=1;
 	waterline=4.99;
 	windgenerator=0.001;
 	Corpse=core_viking_dead;

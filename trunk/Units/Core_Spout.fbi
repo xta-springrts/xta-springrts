@@ -48,6 +48,7 @@
 	canattack=0;
 	downloadable=1;
 	kamikaze=1;
+	cancloak=1;
 	CloakCost=2;
 	init_cloaked=1;
 	mincloakdistance=20;
