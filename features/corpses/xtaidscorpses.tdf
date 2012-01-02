@@ -621,6 +621,46 @@ Featurereclamate=smudge01;
 Seqnamereclamate=tree1reclamate;
 }
 
+[armjanus_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=arm_corpses;
+	object=armjanus_dead;
+	featuredead=armjanus_heap;
+	footprintx=2;
+	footprintz=2;
+	height=20;
+	blocking=1;
+	hitdensity=100;
+	metal=85;
+	damage=500;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+}
+[armjanus_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=2x2c;
+	footprintx=2;
+	footprintz=2;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	metal=43;
+	damage=500;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+}
+
+
+
+
+
 [armrebel_dead]
 	{
 	world=All Worlds;
