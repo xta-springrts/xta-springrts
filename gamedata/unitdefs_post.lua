@@ -33,6 +33,51 @@ for name, ud in pairs(UnitDefs) do
 	end
 end 
 
+--------------------------------------------------------------------------------
+-- Adjustment of Model Center height of towers
+--[[
+local offset = 15
+local t = {}
+for name, ud in pairs(UnitDefs) do
+	local i=1
+	if not ud.movementclass and ud.badtargetcategory then
+		if ud.modelcenteroffset and ud.collisionvolumeoffsets then
+			for w in string.gmatch(ud.modelcenteroffset, "%S+") do
+				t[i]=w
+				i=i+1
+			end
+			ud.modelcenteroffset = tostring(t[1]) .. " " .. tostring(t[2]+offset) .. " " .. tostring(t[3])
+			i=1
+			for w in string.gmatch(ud.collisionvolumeoffsets, "%S+") do
+				t[i]=w
+				i=i+1
+			end
+			ud.collisionvolumeoffsets =	tostring(t[1]) .. " " .. tostring(t[2]-offset) .. " " .. tostring(t[3])
+		elseif ud.collisionvolumeoffsets then
+			ud.modelcenteroffset = "0 " .. tostring(offset) .. " 0"
+			for w in string.gmatch(ud.collisionvolumeoffsets, "%S+") do
+				t[i]=w
+				i=i+1
+			end
+			ud.collisionvolumeoffsets =	tostring(t[1]) .. " " .. tostring(t[2]-offset) .. " " .. tostring(t[3])
+		elseif ud.modelcenteroffset then
+			for w in string.gmatch(ud.modelcenteroffset, "%S+") do
+				t[i]=w
+				i=i+1
+			end
+			ud.modelcenteroffset = tostring(t[1]) .. " " .. tostring(t[2]+offset) .. " " .. tostring(t[3])
+			ud.collisionvolumeoffsets = "0 " .. tostring(-offset) .. " 0"
+		else
+			ud.modelcenteroffset = "0 " .. tostring(offset) .. " 0"
+			ud.collisionvolumeoffsets = "0 " .. tostring(-offset) .. " 0"
+			if not ud.collisionvolumetype then
+				ud.collisionvolumetype = "Ell"
+			end
+		end
+	end
+	--Spring.Echo(ud.name, ud.modelcenteroffset, ud.collisionvolumeoffsets)
+end 
+]]--
 -------------------------------------------------------------------------------
 -- Starting resource storage adjustment
 
@@ -138,7 +183,7 @@ local commanderList = {
   if (modOptions.mo_transportenemy == "com") then
     for name,ud in pairs(UnitDefs) do  
       if (commanderList[name]) then
-	ud.transportbyenemy = false
+        ud.transportbyenemy = false
       end
     end
   elseif (modOptions.mo_transportenemy == "all") then
@@ -305,7 +350,7 @@ if (modOptions and not tobool(modOptions.xtaidunits)) then
 	"yeomen", "armona", "arm_evaperator", "paci", "armsparkle", "walker",
 	"neutral_eyes", "armpur", "armbfortew", "armarch", "armbugger", "boa",
 	"armfff", "mercury", "tadg07", "armraz", "armhyren", "demolish",
-	"armrebel", "arm_tor","tadg05", "arm_infinite",
+	"armrebel", "arm_tor","tadg05", "arm_infinite", "arm_mech_lab",
 
 	"corbyp", "justice", "corpur", "astank", "corjar", "core_egg_shell",
 	"corscrew", "corcrw", "corfff", "screamer", "corebfortns", "corhback",
@@ -340,6 +385,7 @@ end
 -- this is to work around engine crash when commanders die in air transports
 -- works together with unit_transportcomfix.lua
 -- http://springrts.com/mantis/view.php?id=2791 Can probally be removed with 85.0
+--[[
 for name, ud in pairs(UnitDefs) do
 	--Spring.Echo ("releaseHeld for " .. (ud.unitname or "nil unitname"))
 	--Spring.Echo ("id:" .. (ud.unitDefId or "nil"))	
@@ -356,3 +402,4 @@ for name, ud in pairs(UnitDefs) do
 	end
 	--Spring.Echo ("-------")	
 end
+]]--
