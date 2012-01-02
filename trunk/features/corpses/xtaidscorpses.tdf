@@ -656,11 +656,6 @@ Seqnamereclamate=tree1reclamate;
 	featurereclamate=smudge01;
 	seqnamereclamate=tree1reclamate;
 }
-
-
-
-
-
 [armrebel_dead]
 	{
 	world=All Worlds;
