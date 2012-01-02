@@ -16,6 +16,9 @@ local function tobool(val)
   return false
 end
 
+-- Adjustment of terrain damage, area of effect, kinetic force of weapons and cannon trajectory height
+local customGravity = 1.0
+local velGravFactor = customGravity * 900
 for id in pairs(WeaponDefs) do
 	if WeaponDefs[id].range then
 		if tonumber(WeaponDefs[id].range) < 550 then
@@ -27,9 +30,12 @@ for id in pairs(WeaponDefs) do
 				WeaponDefs[id].weapontype == "AircraftBomb") and tonumber(WeaponDefs[id].areaofeffect)<145 then
 					WeaponDefs[id].areaofeffect = math.min(WeaponDefs[id].areaofeffect / (1 - WeaponDefs[id].edgeeffectiveness), 160)
 					WeaponDefs[id].edgeeffectiveness = 0
-					Spring.Echo(id)
 			end
 		end
+	end
+	if WeaponDefs[id].weapontype == "Cannon" and WeaponDefs[id].range and not WeaponDefs[id].mygravity and not WeaponDefs[id].cylindertargetting then
+		WeaponDefs[id].mygravity = customGravity
+		WeaponDefs[id].weaponvelocity = math.sqrt(WeaponDefs[id].range * velGravFactor)
 	end
 	if WeaponDefs[id].weapontype == "LaserCannon" or WeaponDefs[id].weapontype == "BeamLaser" or WeaponDefs[id].weapontype == "EmgCannon" or WeaponDefs[id].weapontype == "LightningCannon" then
 		WeaponDefs[id].impulseboost = 0
@@ -59,7 +65,7 @@ if (modOptions and modOptions.realscale and tobool(modOptions.realscale)) then
   local rngMul, velMul, stVelMul, acclMul, fltMul, durMul
   for id in pairs(WeaponDefs) do
 	if (WeaponDefs[id].weapontype == "LaserCannon" or WeaponDefs[id].weapontype == "BeamLaser" or WeaponDefs[id].weapontype == "EmgCannon" or WeaponDefs[id].weapontype == "LightningCannon") then
-		rngMul, velMul, stVelMul, acclMul, fltMul, durMul = 5, 4, 4, 1, 1, 0.5
+		rngMul, velMul, stVelMul, acclMul, fltMul, durMul = 5, 4, 4, 0.5, 1, 0.5
 		if (WeaponDefs[id].cegtag) then
 			WeaponDefs[id].cegtag = ""
 		end
@@ -69,18 +75,18 @@ if (modOptions and modOptions.realscale and tobool(modOptions.realscale)) then
 			WeaponDefs[id].cegtag = ""
 		end
 	elseif (WeaponDefs[id].weapontype == "MissileLauncher") then 
-		rngMul, velMul, stVelMul, acclMul, fltMul, durMul = 9, 3, 3, 2, 5, 1
+		rngMul, velMul, stVelMul, acclMul, fltMul, durMul = 9, 3, 3, 1, 5, 1
 		if (WeaponDefs[id].cegtag) then
 			WeaponDefs[id].cegtag = ""
 		end
 	elseif (WeaponDefs[id].weapontype == "TorpedoLauncher") then 
 		rngMul, velMul, stVelMul, acclMul, fltMul, durMul = 7, 2, 2, 1.3, 3, 1
 	elseif (WeaponDefs[id].weapontype == "Flame" or WeaponDefs[id].weapontype == "DGun" or WeaponDefs[id].weapontype == "AircraftBomb") then 
-		rngMul, velMul, stVelMul, acclMul, fltMul, durMul = 2, 2, 2, 2, 1, 2
+		rngMul, velMul, stVelMul, acclMul, fltMul, durMul = 2, 2, 2, 0.5, 1, 2
 	elseif (WeaponDefs[id].weapontype == "Melee") then 
 		rngMul, velMul, stVelMul, acclMul, fltMul, durMul = 1, 1, 1, 1, 1, 1
 	else
-		rngMul, velMul, stVelMul, acclMul, fltMul, durMul = 9, 6, 6, 5, 1, 1
+		rngMul, velMul, stVelMul, acclMul, fltMul, durMul = 9, 3, 3, 0.333, 1, 1
 	end
 	if (WeaponDefs[id].range) then
 		WeaponDefs[id].range = rngMul * WeaponDefs[id].range
