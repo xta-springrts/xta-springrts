@@ -1,16 +1,18 @@
-local versionNumber = "1.1"
+local versionNumber = "1.2"
 
 function widget:GetInfo()
   return {
     name      = "Commander Name Tags" .. versionNumber,
     desc      = "Displays a name tag above each commander.",
     author    = "Evil4Zerggin, Jools",
-    date      = "12 July 2011",
+    date      = "6 Jan 2012",
     license   = "GNU GPL, v2 or later",
     layer     = -10,
     enabled   = true  --  loaded by default?
   }
 end
+
+-- Changelog: 1.2: Modified commander detection due to change in spring 85.0. Decoys also get the tag to avoid detection.
 
 --------------------------------------------------------------------------------
 -- constants
@@ -79,8 +81,10 @@ function widget:DrawWorld()
     local unitID    = visibleUnits[i]
     local unitDefID = GetUnitDefID(unitID)
     local unitDef   = UnitDefs[unitDefID or -1]
+	local cp 		= unitDef.customParams or nil
     local height    = unitDef.height+heightOffset
-    if (unitDef and unitDef.isCommander) then
+	 
+	if unitDef and cp and (cp.iscommander or cp.isdecoycommander) then
       DrawUnitPlayerName(unitID, height)
     end
   end
