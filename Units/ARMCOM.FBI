@@ -90,4 +90,13 @@
 	collisionVolumeScales =28 35 20;
 	collisionVolumeOffsets = 0 1 0;
 	collisionVolumeTest = 1;
+	
+	//************************************************************
+	//  Custom params
+	//*****************
+	[customparams] 	
+	{
+	iscommander=1;
+	}
+	
 }
