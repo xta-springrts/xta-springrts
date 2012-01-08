@@ -93,4 +93,13 @@
 	CanReclaim=1;
 	CanSelfRepair=1;
 	MinCollisionSpeed=4.5;
+	
+	//************************************************************
+	//  Custom params
+	//*****************
+	[customparams] 	
+	{
+	iscommander=1;
+	}
+	
 }
