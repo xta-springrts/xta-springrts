@@ -28,11 +28,9 @@ local modrules  = {
     energyCostFactor = 0,  -- defaults to 0
   },
 
-
   resurrect = {
     energyCostFactor = 0.5,  -- defaults to 0.5
   },
-
 
   capture = {
     energyCostFactor = 0,  -- defaults to 0
@@ -94,7 +92,11 @@ local modrules  = {
     transportShip   = 0,  -- defaults to 0
     transportAir    = 0,  -- defaults to 0
   },
-
+  
+  system = {
+    pathFinderSystem = 1,
+  },
+  
 }
 
 -----------------------------------------------------------------
