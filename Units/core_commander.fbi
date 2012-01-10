@@ -104,6 +104,7 @@
 	weapon4=CORECOMIONLASER;
 	weapon5=SAT_ARTILLERY;
 	weapon6=CORSUMO_WEAPON;
+	weapon7=BOGUS_DISINTEGRATOR;
 	nochasecategory=WEAPON;
 	badtargetcategory=VTOL;
 	wpri_badtargetcategory=VTOL;
