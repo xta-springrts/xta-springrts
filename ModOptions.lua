@@ -71,18 +71,19 @@ local options = {
 		}
 	},
 	{
-      key="teamdeathmode",
-      name="Team Game End Mode",
-      desc="What it takes to eliminate a Team",
-      type="list",
-	  --section= 'xtagame',
-      def="allyzerounits",
-      items={
-         {key="none", name="Never Die", desc="All Teams will stay alive regardless of what happends, gameover will never arrive."},
-         {key="teamzerounits", name="Team Death on Zero Units", desc="The Team will die when it has 0 units."},
-         {key="allyzerounits", name="AllyTeam Death on Zero units", desc="The Team will die when every Team in his AllyTeam have 0 units."},
-      }
-   },	{
+		key="teamdeathmode",
+		name="Team Game End Mode",
+		desc="What it takes to eliminate a Team",
+		type="list",
+		--section= 'xtagame',
+		def="allyzerounits",
+		items={
+			{key="none", name="Never Die", desc="All Teams will stay alive regardless of what happends, gameover will never arrive."},
+			{key="teamzerounits", name="Team Death on Zero Units", desc="The Team will die when it has 0 units."},
+			{key="allyzerounits", name="AllyTeam Death on Zero units", desc="The Team will die when every Team in his AllyTeam have 0 units."},
+		}
+	},
+	{
 		key  = "comm",
 		name = "Starting Commander",
 		desc = "Adjusts Starting Commander type or level",
@@ -110,6 +111,18 @@ local options = {
 			{key="none", name="Allow All", desc="All enemy units can be napped"},
 			{key="com", name="All But Commanders", desc="Only commanders are immune to napping"},
 			{key="all", name="Disallow All", desc="No enemy units can be napped"},
+		}
+	},
+	{
+		key="qtpfs",
+		name="Pathfinding system",
+		desc="Which pathfinding system to use",
+		type="list",
+		--section= 'xtagame',
+		def="qtpfs",
+		items={
+			{key="0", name="Default", desc="Default Spring path finding engine"},
+			{key="1", name="QTPFS", desc="Quick/Tesellating Path Finding System"},
 		}
 	},
 	{
