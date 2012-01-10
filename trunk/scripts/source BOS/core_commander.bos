@@ -542,7 +542,7 @@ Idle()
 		tmp=rand(3,6);
 		while(tmp)
 		{
-			emit-sfx FIRE_W3 from rbigflash;
+			emit-sfx FIRE_W7 from rbigflash;
 			--tmp;
 			sleep rand(400,800);
 		}
@@ -609,7 +609,7 @@ Create()
 	hide lfirept;
 	hide nanospray;
 	weapon1Disabled = 0;
-	moveSpeed = get MAX_SPEED;
+	moveSpeed = 70124;
 	LOS = get LOS_RADIUS;
 	AirLOS = get AIR_LOS_RADIUS;
 	radarRange = get RADAR_RADIUS;

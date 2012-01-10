@@ -20,6 +20,7 @@ local spDiffTimers                  = Spring.DiffTimers
 local spIsUnitInView                = Spring.IsUnitInView
 local spGetUnitPosition             = Spring.GetUnitPosition
 local spSetLastMessagePosition      = Spring.SetLastMessagePosition
+local spGetSpectatingState   		= Spring.GetSpectatingState
 local random                        = math.random
 ----------------------------------------------------------------------------
 local lastAlarmTime                 = nil
@@ -63,16 +64,27 @@ function widget:UnitDamaged (unitID, unitDefID, unitTeam, damage, paralyzer, wea
     if (x and y and z) then spSetLastMessagePosition(x,y,z) end
 end
 
---function widget:UnitMoveFailed(unitID, unitDefID, unitTeam)
---    local udef = UnitDefs[unitDefID]
---    spEcho( udef.humanName  .. ": Can't reach destination!" )
---end 
+function widget:UnitMoveFailed(unitID, unitDefID, unitTeam)
+    local udef = UnitDefs[unitDefID]
+    spEcho( udef.humanName  .. ": Can't reach destination!" )
+end 
 
 function setTeamId()
     localTeamID = spGetLocalTeamID()    
 end
 
 --changing teams, rejoin, becoming spec etc
-function widget:PlayerChanged (playerID)
-    setTeamId()    
+function widget:PlayerChanged(playerID)
+    setTeamId()
+	CheckSpecState()
+end
+
+
+function CheckSpecState()
+	if ( spGetSpectatingState() == tue ) then
+		widgetHandler:RemoveWidget()
+		return false
+	end
+	
+	return true	
 end

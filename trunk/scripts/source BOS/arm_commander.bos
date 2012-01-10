@@ -546,7 +546,7 @@ Idle()
 		tmp=rand(3,6);
 		while(tmp)
 		{
-			emit-sfx FIRE_W3 from cum;
+			emit-sfx FIRE_W7 from cum;
 			--tmp;
 			sleep rand(400,800);
 		}
@@ -615,7 +615,7 @@ Create()
 	hide cum;
 	hide dong;
 	weapon1Disabled = 0;
-	moveSpeed = get MAX_SPEED;
+	moveSpeed = 78643;
 	currentSpeed = 100;
 	LOS = get LOS_RADIUS;
 	AirLOS = get AIR_LOS_RADIUS;

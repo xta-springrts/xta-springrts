@@ -659,7 +659,7 @@ function widget:UnitCreated(unitID, unitDefID, unitTeam)
     return
   end
 
-  if UnitDefs[unitDefID].isFactory then
+  if UnitDefs[unitDefID].isFactory and #UnitDefs[unitDefID].buildOptions>0 then
     push(facs,{ unitID=unitID, unitDefID=unitDefID, buildList=UnitDefs[unitDefID].buildOptions })
   end
   unfinished_facs[unitID] = true

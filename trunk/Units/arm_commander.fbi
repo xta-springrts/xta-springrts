@@ -106,6 +106,7 @@
 	weapon4=ARMCOMPARALASER;
 	weapon5=SAT_HEAVYROCKET;
 	weapon6=ARMSNIPE_WEAPON;
+	weapon7=BOGUS_DISINTEGRATOR;
 	nochasecategory=WEAPON;
 	badtargetcategory=VTOL;
 	wpri_badtargetcategory=VTOL;
