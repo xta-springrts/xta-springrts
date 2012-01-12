@@ -23,7 +23,7 @@ if (gadgetHandler:IsSyncedCode()) then
 	end
 
 	function gadget:UnitLoaded(unitID, unitDefID, unitTeam, transportID, transportTeam)
-		if not Spring.AreTeamsAllied (unitTeam, transportTeam) and UnitDefs[unitDefID].isCommander then
+		if not Spring.AreTeamsAllied (unitTeam, transportTeam) and (UnitDefs[unitDefID].customParams.iscommander or UnitDefs[unitDefID].customParams.isdecoycommander) then
 			Spring.PlaySoundFile(snd)
 			--Spring.Echo("A commander is napped!")
 		end
