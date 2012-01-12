@@ -85,7 +85,7 @@
 	weaponvelocity=1000;
 	areaofeffect=65;
 	soundstart=corcomgun;
-	soundhit=corcomhit;
+	soundhit=xplomas2;  //corcomhit;
 	tolerance=1000;
 	pitchtolerance=5000;
 	targetMoveErro=0.5;

@@ -47,6 +47,7 @@ local maxTries            = 100
 local computerTeams       = {}
 local humanTeams          = {}
 local lagging             = false
+local gameOver            = false
 local cpuUsages           = {}
 local chickenBirths       = {}
 local kills               = {}
@@ -395,7 +396,7 @@ end
 
 local function ChooseTarget()
   local humanTeamList = SetToList(humanTeams)
-  if (#humanTeamList == 0) then
+  if (#humanTeamList == 0) or gameOver then
     return
   end
   local teamID = humanTeamList[math.random(#humanTeamList)]
@@ -427,7 +428,7 @@ end
 
 
 local function SpawnChicken(burrowID, spawnNumber, chickenName)
-  local x, z
+  local x, y, z
   local bx, by, bz    = Spring.GetUnitPosition(burrowID)
   if (not bx or not by or not bz) then
     return
@@ -444,8 +445,8 @@ local function SpawnChicken(burrowID, spawnNumber, chickenName)
       s = s + spawnSquareIncrement
       tries = tries + 1
     until (not Spring.GetGroundBlocked(x, z) or tries > spawnNumber + maxTries)
-    
-    local unitID = Spring.CreateUnit(chickenName, x, 0, z, "n", chickenTeamID)
+    y = GetGroundHeight(x,z)
+    local unitID = Spring.CreateUnit(chickenName, x, y, z, "n", chickenTeamID)
     if (targetCache) then
       Spring.GiveOrderToUnit(unitID, CMD.FIGHT, targetCache, {})
     end
@@ -465,8 +466,8 @@ local sec = Spring.GetGameSeconds()
       s = s + spawnSquareIncrement
       tries = tries + 1
     until (not Spring.GetGroundBlocked(x, z) or tries > spawnNumber + maxTries)
-    
-    local unitID = Spring.CreateUnit("armflea", x, 0, z, "n", chickenTeamID)
+    y = GetGroundHeight(x,z)
+    local unitID = Spring.CreateUnit("armflea", x, y, z, "n", chickenTeamID)
     if (targetCache) then
       Spring.GiveOrderToUnit(unitID, CMD.FIGHT, targetCache, {})
     end
@@ -493,8 +494,8 @@ local sec = Spring.GetGameSeconds()
       	s = s + spawnSquareIncrement
       	tries = tries + 1
     		until (not Spring.GetGroundBlocked(x, z) or tries > spawnNumber + maxTries)
-    
-    		local unitID = Spring.CreateUnit("mflea", x, 0, z, "n", chickenTeamID)
+			y = GetGroundHeight(x,z)
+    		local unitID = Spring.CreateUnit("mflea", x, y, z, "n", chickenTeamID)
     		if (targetCache) then
       	Spring.GiveOrderToUnit(unitID, CMD.FIGHT, targetCache, {})
     		end
@@ -517,8 +518,8 @@ local sec = Spring.GetGameSeconds()
       	s = s + spawnSquareIncrement
       	tries = tries + 1
     		until (not Spring.GetGroundBlocked(x, z) or tries > spawnNumber + maxTries)
-    
-    		local unitID = Spring.CreateUnit("mflea", x, 0, z, "n", chickenTeamID)
+			y = GetGroundHeight(x,z)
+    		local unitID = Spring.CreateUnit("mflea", x, y, z, "n", chickenTeamID)
             armflea = unitID
     		if (targetCache) then
       	Spring.GiveOrderToUnit(unitID, CMD.FIGHT, targetCache, {})
@@ -534,8 +535,8 @@ local sec = Spring.GetGameSeconds()
       	s = s + spawnSquareIncrement
       	tries = tries + 1
     		until (not Spring.GetGroundBlocked(x, z) or tries > spawnNumber + maxTries)
-    
-    		local unitID = Spring.CreateUnit("mflea", x, 0, z, "n", chickenTeamID)
+			y = GetGroundHeight(x,z)
+    		local unitID = Spring.CreateUnit("mflea", x, y, z, "n", chickenTeamID)
     		if (targetCache) then
       	Spring.GiveOrderToUnit(unitID, CMD.GUARD, {armflea}, {})
     		end
@@ -559,8 +560,8 @@ local sec = Spring.GetGameSeconds()
       s = s + spawnSquareIncrement
       tries = tries + 1
     	until (not Spring.GetGroundBlocked(x, z) or tries > spawnNumber + maxTries)
-    
-    	local unitID = Spring.CreateUnit("mflea", x, 0, z, "n", chickenTeamID)
+		y = GetGroundHeight(x,z)
+    	local unitID = Spring.CreateUnit("mflea", x, y, z, "n", chickenTeamID)
     	if (targetCache) then
       Spring.GiveOrderToUnit(unitID, CMD.PATROL, {hiveposx, 0, hiveposz}, {})
     	end
@@ -590,7 +591,7 @@ local function SpawnTurret(burrowID, turret)
     return
   end
   
-  local x, z
+  local x, y, z
   local bx, by, bz    = Spring.GetUnitPosition(burrowID)
   local tries         = 0
   local s             = spawnSquare
@@ -605,7 +606,8 @@ local function SpawnTurret(burrowID, turret)
       tries = tries + 1
     until (not Spring.GetGroundBlocked(x, z) or tries > spawnNumber + maxTries)
     
-    local unitID = Spring.CreateUnit(turret, x, 0, z, "n", chickenTeamID) -- FIXME
+	y = GetGroundHeight(x,z)
+    local unitID = Spring.CreateUnit(turret, x, y, z, "n", chickenTeamID) -- FIXME
     Spring.SetUnitBlocking(unitID, false)
     turrets[unitID] = Spring.GetGameSeconds()
     
@@ -624,13 +626,13 @@ local function SpawnBurrow(number)
   local unitDefID = UnitDefNames[burrowName].id
     
   for i=1, 1 do
-    local x, z
+    local x, y, z
     local tries = 0
 
   repeat
     x = math.random(spawnSquare, Game.mapSizeX - spawnSquare)
     z = math.random(spawnSquare, Game.mapSizeZ - spawnSquare)
-    local y = Spring.GetGroundHeight(x, z)
+    y = Spring.GetGroundHeight(x, z)
     tries = tries + 1
     local blocking = Spring.TestBuildOrder(UnitDefNames["arm_metal_maker"].id, x, y, z, 1)
     if (blocking == 2) then
@@ -658,7 +660,7 @@ local function SpawnBurrow(number)
     end
   until (blocking == 2 or tries > maxTries)
 
-    local unitID = Spring.CreateUnit(burrowName, x, 0, z, "n", chickenTeamID)
+    local unitID = Spring.CreateUnit(burrowName, x, y, z, "n", chickenTeamID)
     hiveposx = x
     hiveposz = z
     burrows[unitID] = true
@@ -673,13 +675,13 @@ end
 
 local function SpawnQueen()
   
-  local x, z
+  local x, y, z
   local tries = 0
  
  repeat
     x = math.random(spawnSquare, Game.mapSizeX - spawnSquare)
     z = math.random(spawnSquare, Game.mapSizeZ - spawnSquare)
-    local y = Spring.GetGroundHeight(x, z)
+    y = Spring.GetGroundHeight(x, z)
     tries = tries + 1
     local blocking = Spring.TestBuildOrder(UnitDefNames["arm_peewee"].id, x, y, z, 1)
     if (blocking == 2 and tries < maxTries - 10) then
@@ -707,13 +709,14 @@ local function SpawnQueen()
     end
   until (blocking == 2 or tries > maxTries)
   
-  return Spring.CreateUnit(queenName, x, 0, z, "n", chickenTeamID)
+  return Spring.CreateUnit(queenName, x, y, z, "n", chickenTeamID)
  
 end
 
 
 local function Wave()
   
+  if gameOver then return end
   local t = Spring.GetGameSeconds()
   
   if (Spring.GetTeamUnitCount(chickenTeamID) > maxChicken or lagging or t < gracePeriod) then
@@ -793,6 +796,7 @@ end
 
 
 function gadget:GameFrame(n)
+  if gameOver then return end
   local t = Spring.GetGameSeconds()
 
   if (n == 1) then
@@ -879,6 +883,7 @@ end
 
 
 function gadget:UnitDestroyed(unitID, unitDefID, unitTeam)
+  if gameOver then return end
   chickenBirths[unitID] = nil
   burrowBirths[unitID] = nil
   commanders[unitID] = nil
@@ -931,6 +936,10 @@ function gadget:AllowCommand(unitID, unitDefID, teamID,
 --    end
 --  end
   return true  -- command was not used
+end
+
+function gadget:GameOver()
+  gameOver=true
 end
 
 --------------------------------------------------------------------------------

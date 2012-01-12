@@ -3838,7 +3838,7 @@
 	sprayangle=2048;
 	randomdecay=0;
 	soundstart=Flamhvy1;
-	soundhit=0;
+	//soundhit=0;
 	firestarter=100;
 	groundbounce=1;
 	smokedelay=1;
@@ -6784,7 +6784,7 @@
 	sprayangle=8048;
 	randomdecay=0;
 	soundstart=Flamhvy1;
-	soundhit=0;
+	//soundhit=0;
 	firestarter=100;
 	groundbounce=1;
 	smokedelay=1;
