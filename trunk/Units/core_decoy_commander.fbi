@@ -147,6 +147,7 @@
 	//*****************
 	[customparams] 	
 	{
+	iscommander=1;
 	isdecoycommander=1;
 	}
 	
