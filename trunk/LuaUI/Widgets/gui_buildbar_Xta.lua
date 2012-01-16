@@ -674,7 +674,7 @@ function widget:UnitDestroyed(unitID, unitDefID, unitTeam)
     return
   end
 
-  if UnitDefs[unitDefID].isFactory then
+  if UnitDefs[unitDefID].isFactory and #UnitDefs[unitDefID].buildOptions>0 then
     for i,facInfo in ipairs(facs) do
       if unitID==facInfo.unitID then
         if (openedMenu+1==i)and(openedMenu > #facs-2) then
