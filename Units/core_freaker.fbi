@@ -113,8 +113,8 @@
 	threed=1;
 	version=1.2;
 	zbuffer=1;
-	collisionVolumeType = box;
-	collisionVolumeScales =21 22 21;
+	collisionVolumeType = CylY;
+	collisionVolumeScales =21 34 19;
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
 	pieceTrailCEGTag=Debree;//bleh

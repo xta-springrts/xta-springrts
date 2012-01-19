@@ -27,7 +27,7 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=2753;
+	maxdamage=2903;
 	healtime=30;
 	buildcostmetal=765; //was 1197//
 	buildcostenergy=4425;
@@ -70,9 +70,9 @@
 	//  Movement
 	//************
 	movementclass=Smallboat;
-	turnrate=263;
-	acceleration=0.04;
-	brakerate=0.008;
+	turnrate=343;
+	acceleration=0.08;
+	brakerate=0.016;
 	maxvelocity=2.9;
 	minwaterdepth=12;
 	waterline=4.99;
@@ -80,9 +80,9 @@
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=495; //was 495//
+	sightdistance=555; //was 495//
 	radardistance=0;
-	sonardistance=300; //was 485//
+	sonardistance=350; //was 485//
 
 	//************************************************************
 	//  Weapons

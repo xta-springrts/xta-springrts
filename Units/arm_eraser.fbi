@@ -79,7 +79,7 @@
 	//*********************
 	sightdistance=300;
 	radardistance=0;
-	radardistancejam=750;
+	radardistancejam=600;//600
 
 	//************************************************************
 	//  Weapons

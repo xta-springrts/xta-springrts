@@ -119,7 +119,7 @@
 	waterline=15;
 	zbuffer=1;
 	collisionVolumeType = box;
-	collisionVolumeScales =28 26 28;
+	collisionVolumeScales =24 26 28;
 	collisionVolumeOffsets = 0 -1 0;
 	collisionVolumeTest = 1;
 	pieceTrailCEGTag=Debree;//bleh

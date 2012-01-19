@@ -6763,6 +6763,7 @@
 [KROGPISS]
 {
 	name=IT BURNS;
+	weaponType=Flame;
 	explosiongenerator=custom:SNIPELASER;
 	NoSelfDamage=1;
 	SoundTrigger=1;

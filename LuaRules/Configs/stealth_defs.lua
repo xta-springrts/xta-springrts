@@ -18,13 +18,13 @@ local stealthDefs = {
   arm_infiltrator = {
     draw   = true,
     init   = false,
-    energy = 1000,
+    energy = 600,
     delay  = 30,
   },
   core_parasite = {
     draw   = true,
     init   = false,
-    energy = 1300,
+    energy = 550,
     delay  = 30,
   },
   core_freaker = {

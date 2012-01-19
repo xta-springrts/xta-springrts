@@ -78,7 +78,7 @@
 	//  Sight/Radar/Sonar
 	//*********************
 	sightdistance=345;
-	radardistancejam=630;
+	radardistancejam=735;//630
 
 	//************************************************************
 	//  Weapons

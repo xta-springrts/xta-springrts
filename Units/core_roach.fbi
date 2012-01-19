@@ -64,7 +64,7 @@
 	//************************************************************
 	//  Movement
 	//************
-	movementclass=KBOTUW3;
+	movementclass=CRAWLBOMB;
 	turnrate=1370;
 	acceleration=1.0;
 	brakerate=1.2;
@@ -112,7 +112,7 @@
 	threed=1;
 	version=1.2;
 	zbuffer=1;
-	mass=70000;
+	mass=2000;  //70000
 	collisionVolumeType = box;
 	collisionVolumeScales =8 10 8;
 	collisionVolumeOffsets = 0 0 0;

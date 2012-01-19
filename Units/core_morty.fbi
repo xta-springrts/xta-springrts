@@ -10,7 +10,7 @@
 	//************************************************************
 	//  Categories
 	//**************
-	Category=CORE KBOT WEAPON NOTAIR NOTSUB;
+	Category=CORE KBOT MOBILE WEAPON NOTAIR NOTSEA NOTSUB;
 	tedclass=KBOT;
 
 	//************************************************************

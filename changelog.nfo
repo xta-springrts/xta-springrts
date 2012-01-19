@@ -20,6 +20,52 @@
     ºÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜº
     ÈÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ¼ by ElementalGizmo
 
+------------------- Change Log of XTA v9.70 beta (85.0 and next version) ------------------ by Deadnight Warrior
+Cleaned up all excess unit categories, needs finetunning for each individual unit now
+Added missing  WeaponType=TorpedoLauncher;  to all torpedo weapons and fixed some other weapon defs missing WeaponType tag
+Fixed amphibious units crawling through water and giving up on moving eventualy
+Fixed a nasty bug in Autoupgradable Commanders that increasingly ate CPU when commanders where not moving
+Fixed a border case that can crash unit_cobbutton.lua gadget
+Fixed various widgets and gadgets to reflect changes in 84.0 engine (mostly .n removal and CMD.DGUN renamed to CMD.MANUALFIRE)
+Many other small fixes and tweakes in gadgets/widgets for better stability and compatibility for Spring 85.0
+Added engine default widgets that where removed from engine default list
+Added "Low Performance" game mode that removes all CEG trails and increases reload time and damage of fast fire weapons (this mode is for slow CPUs or playing against many AIs)
+Buildbar widget no longer treats repair pads as factories
+Engine Pathfinding system can be chosen in mod options
+Added custom collision volumes for wrecks that cause aiming problems (towers and factories mostly)
+Finetuned Dynamic Collision Volume gadget for 3DO wreck scaling (for smaller units it's almost spot on), works only on Spring 84.0 and up, added support for dynamic PerPieceCollisionVolumes
+Replaced metal maker control widget with gadget, gives better control over metal makers and reduces net traffic, makers themselves no longer produce M, it's all controled via gadget rules, keep the "Energy Conversion" info panel on for conversion details
+Separated /Units/ folder into categories, easier to see which unit belongs to which game option / unit pack
+Removed unused widgets (bloom and chili) from release, they are still available on XTA on-line repository
+Massive cleanup of release archive from all files not needed to play the game, they are still available on XTA on-line repository
+
+Swaped costs of mobile and stationary T2 radars as stationary where more expensive and more fragile than mobile ones
+Swaped radar jamming distance of kbot and vehicle jammers as vehicle jammers are more expensive and vehicles are generaly larger than kbots
+Some unit script fixes and optimizations and collision volume adjustments
+"Sweetspot" of all land defence towers is now line with DT height which covers them from straight line fire from ground level
+ARM & CORE Destroyer ship's range increased to match FHLT and reload time reduced by 16.7%
+Increased speed of T1 fighters by ~15%, makes them better against bombers and less good against ground
+CORE Doomsday Machine increased buildtime to match ARM Annihilator, increased cost by same factor (5.74%)
+CORE Rapier reload time increased so that it's DPS matches that of ARM Brawler
+Commanders are now almost as fast in water as they are on land
+Adv. construction subs can now build Adv. shipyards
+Crawling bombs now have their own moveDef (amphibious 1x1) are have better slope tollerance
+Heavy tanks use 3x3 and not 4x4 moveDef footprint, less traffic jams and those units are 3x3 and not 4x4 in size to begin with
+T2 transport aircraft can now load T2 crawling bombs (max 4)
+Increased ARM Infiltrator cost to match CORE Parasite, cloak, moving cloak & stealth costs now 150/300/600 for Infiltrator, 125/275/550 for Parasite, Infiltrator LoS set to 375, Parasite 320
+Cannon weapons have a nice arc trajectory (relative to target range, at max range it's always 45ø elevation)
+All weapons that cause an explosion when impacting on target, now have increased AoE and edgeEffectiveness=0 if their edgeEffectiveness was > 0 and AoE<145, AoE increase is to 160 max
+Some floating and underwater buildings have their min water depth increased to prevent them from sinking into sea bottom
+Added Open/Close mode selection for all pop-up style units (Ambusher, Annihilator, Doomsday Machine, Toaster, Viper)
+Added fire rate control for ARM Vulcan and CORE Buzzsaw
+Added "Active/Passive" control to all construction units, "Passive" wont build when stalling
+Added production speed control to all factories, can adjust build speed from 25% to 100% in 25% steps
+
+These are still under probation, might not hang around for long:
+ - Disabled Aircraft and hovercraft on maps with no atmosphere, disabled Aircraft on maps with extreme wind (min>30 or max>35)
+ - ARM Ravens fire twice as many rockets per salvo that do half the damage each, AoE +50%, edgeEffectiveness=0, accuracy slightly increased, this gives Ravens a better area coverage with more evently distributed damage and less random strayed rockets
+
+
 ------------------- Change Log of XTA v9.666 (0.82.7 and next version) ------------------ by Deadnight Warrior
 Wombats and Nixers range reduced from 1300 to 1150
 Merls and Diplomats reload time reduced by 1 sec, increased mobility by 20%

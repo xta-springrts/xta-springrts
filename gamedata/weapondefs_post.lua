@@ -21,8 +21,10 @@ local customGravity = 1.0
 local velGravFactor = customGravity * 900
 for id in pairs(WeaponDefs) do
 	if WeaponDefs[id].range then
-		if tonumber(WeaponDefs[id].range) < 550 then
-			WeaponDefs[id].avoidfeature = false
+		if tonumber(WeaponDefs[id].range) < 550 or WeaponDefs[id].weapontype == "MissileLauncher" or WeaponDefs[id].weapontype == "StarburstLauncher" or
+			WeaponDefs[id].weapontype == "TorpedoLauncher" or WeaponDefs[id].weapontype == "Cannon" or
+			WeaponDefs[id].weapontype == "AircraftBomb" then
+				WeaponDefs[id].avoidfeature = false
 		end
 		if WeaponDefs[id].edgeeffectiveness and tonumber(WeaponDefs[id].edgeeffectiveness)>0 then
 			if (WeaponDefs[id].weapontype == "MissileLauncher" or WeaponDefs[id].weapontype == "StarburstLauncher" or
@@ -30,14 +32,14 @@ for id in pairs(WeaponDefs) do
 				WeaponDefs[id].weapontype == "AircraftBomb") and tonumber(WeaponDefs[id].areaofeffect)<145 then
 					WeaponDefs[id].areaofeffect = math.min(WeaponDefs[id].areaofeffect / (1 - WeaponDefs[id].edgeeffectiveness), 160)
 					WeaponDefs[id].edgeeffectiveness = 0
+					WeaponDefs[id].avoidfeature = false
 			end
 		end
 	end
 	if WeaponDefs[id].weapontype == "Cannon" and WeaponDefs[id].range and not WeaponDefs[id].mygravity and not WeaponDefs[id].cylindertargetting then
 		WeaponDefs[id].mygravity = customGravity
 		WeaponDefs[id].weaponvelocity = math.sqrt(WeaponDefs[id].range * velGravFactor)
-	end
-	if WeaponDefs[id].weapontype == "LaserCannon" or WeaponDefs[id].weapontype == "BeamLaser" or WeaponDefs[id].weapontype == "EmgCannon" or WeaponDefs[id].weapontype == "LightningCannon" then
+	elseif WeaponDefs[id].weapontype == "LaserCannon" or WeaponDefs[id].weapontype == "BeamLaser" or WeaponDefs[id].weapontype == "EmgCannon" or WeaponDefs[id].weapontype == "LightningCannon" then
 		WeaponDefs[id].impulseboost = 0
 		WeaponDefs[id].impulsefactor = 0
 	end
@@ -118,6 +120,22 @@ end
 if (modOptions and modOptions.nocollide and modOptions.nocollide==true) then
   for id in pairs(WeaponDefs) do
 	WeaponDefs[id].collidefriendly = false
+  end
+end
+
+-- Low performance computer mode
+if (modOptions and modOptions.lowcpu and tobool(modOptions.lowcpu)) then
+  for id in pairs(WeaponDefs) do
+	WeaponDefs[id].cegtag = "" 
+	if WeaponDefs[id].reloadtime and tonumber(WeaponDefs[id].reloadtime)<0.5 then
+		WeaponDefs[id].reloadtime = WeaponDefs[id].reloadtime * 2
+		if WeaponDefs[id].energypershot then WeaponDefs[id].energypershot = WeaponDefs[id].energypershot * 2 end
+		if WeaponDefs[id].metalpershot then WeaponDefs[id].metalpershot = WeaponDefs[id].metalpershot * 2 end
+		if WeaponDefs[id].beamtime then WeaponDefs[id].beamtime = WeaponDefs[id].beamtime * 2 end
+		for weap, dmg in pairs(WeaponDefs[id].damage) do
+			WeaponDefs[id].damage[weap] = dmg * 2
+		end
+	end
   end
 end
 

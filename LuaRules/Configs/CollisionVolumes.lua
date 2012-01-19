@@ -71,10 +71,12 @@ local unitCollisionVolume = {}			--dynamic collision volume definitions
 local pieceCollisionVolume = {}			--per piece collision volume definitions
 local dynamicPieceCollisionVolume = {}	--dynamic per piece collision volume definitions
 
+	--[[
 	unitCollisionVolume["arm_advanced_radar_tower"] = {
 		on={60,80,60,0,15,0,0,1,0},
 		off={32,48,32,0,-10,0,0,1,0},
 	}
+	]]--
 	unitCollisionVolume["arm_advanced_sonar_station"] = {
 		on={63,70,63,0,-7,0,0,1,0},
 		off={24,40,24,0,-5,0,0,1,0},
@@ -145,33 +147,42 @@ local dynamicPieceCollisionVolume = {}	--dynamic per piece collision volume defi
 	}
 	
 	pieceCollisionVolume["arm_big_bertha"] = {
-		["0"]={true,28,74,28,0,34,0,1,1},
-		["2"]={true,15,15,113,0,0,30,1,2},
+		["0"]={28,74,28,0,34,0,1,1},
+		["2"]={15,15,113,0,0,30,1,2},
 	}
 	--pieceCollisionVolume["arm_commander"] = {
 	--	["0"]={true,28,74,28,0,34,0,1,1},
 	--}	
 	pieceCollisionVolume["arm_vulcan"] = {
-		["1"]={true,60,94,60,0,47,-1,1,1},
-		["6"]={true,36,36,106,0,0,27,1,2},
+		["1"]={60,94,60,0,47,-1,1,1},
+		["6"]={36,36,106,0,0,27,1,2},
 	}
 
-	dynamicPieceCollisionVolume["core_viper"] = {
+	dynamicPieceCollisionVolume["arm_advanced_radar_tower"] = {
 		on = {
-			["0"]={true,51,12,53,0,4,0,2,0},
-			["5"]={true,25,66,25,0,-14,0,1,1},
+			["0"]={25,45,25,0,22,0,1,1},
+			["2"]={76,29,29,0,3,0,1,0},
 		},
 		off = {
-			["0"]={true,51,12,53,0,4,0,2,0},
+			["0"]={32,51,32,0,8,1,0,0},
+		}
+	}
+	dynamicPieceCollisionVolume["core_viper"] = {
+		on = {
+			["0"]={51,12,53,0,4,0,2,0},
+			["5"]={25,66,25,0,-14,0,1,1},
+		},
+		off = {
+			["0"]={51,12,53,0,4,0,2,0},
 		}
 	}
 	dynamicPieceCollisionVolume["core_krogoth_gantry"] = {
 		on = {
-			["0"]={true,142,77,136,0,0,0,1,2},
-			["23"]={true,108,49,108,0,14,36,1,2},
+			["0"]={142,77,136,0,0,0,1,2},
+			["23"]={108,49,108,0,14,36,1,2},
 		},
 		off = {
-			["0"]={true,142,77,136,0,0,0,1,2},
+			["0"]={142,77,136,0,0,0,1,2},
 		}
 	}
 return unitCollisionVolume, pieceCollisionVolume, dynamicPieceCollisionVolume

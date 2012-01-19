@@ -52,6 +52,7 @@
 	DefaultMissionType=Standby;
 	maneuverleashlength=640;
 	MovementClass=TANKHOVER9;
+	canhover=1;
 	Upright=1;
 	downloadable=1;
 	canattack=1;

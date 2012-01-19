@@ -1555,7 +1555,7 @@
 	rendertype=1;
 	lineofsight=1;
 	vlaunch=1;
-	model=ballmiss;
+	model=weapon_ballmiss;
 	range=32000;
 	reloadtime=60;
 	noautorange=1;
