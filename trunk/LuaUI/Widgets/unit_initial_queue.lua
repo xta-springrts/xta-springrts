@@ -346,7 +346,7 @@ function widget:Initialize()
 	
 	for uDefID, uDef in pairs(UnitDefs) do
 		
-		if uDef.isMetalExtractor then
+		if uDef.extractsMetal > 0 then
 			isMex[uDefID] = true
 		end
 		

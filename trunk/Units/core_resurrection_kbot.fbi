@@ -123,7 +123,7 @@
 	pieceTrailCEGTag=NanoDebree;//bleh
 	pieceTrailCEGRange = 2;
 	collisionVolumeType = box;
-	collisionVolumeScales =25 22 25;
+	collisionVolumeScales =28 28 23;
 	collisionVolumeOffsets = 0 -1 0;
 	collisionVolumeTest = 1;
 

@@ -126,10 +126,11 @@
 		canbuild16=arm_naval_flakker;
 		canbuild17=arm_sub_pen;
 		canbuild18=arm_shipyard;
-		canbuild19=arm_seaplane_platform;
-		canbuild20=arm_hovercraft_platform; 
-	  canbuild21=arm_floating_radar;
-		canbuild22=arm_nano_tower;
+		canbuild19=arm_adv_shipyard;
+		canbuild20=arm_seaplane_platform;
+		canbuild21=arm_hovercraft_platform; 
+		canbuild22=arm_floating_radar;
+		canbuild23=arm_nano_tower;
 	}
 	[arm_adv_construction_vehicle]
 	{
@@ -1090,10 +1091,11 @@
 		canbuild17=core_advanced_torpedo_launcher;
 		canbuild18=core_aircraft_plant;
 		canbuild19=core_shipyard;
-		canbuild20=core_seaplane_platform;
-		canbuild21=core_hovercraft_platform;
-		canbuild22=core_nano_tower;
-		canbuild23=core_krogoth_gantry;
+		canbuild20=core_adv_shipyard;
+		canbuild21=core_seaplane_platform;
+		canbuild22=core_hovercraft_platform;
+		canbuild23=core_nano_tower;
+		canbuild24=core_krogoth_gantry;
 	}
 	[core_adv_construction_vehicle]
 	{

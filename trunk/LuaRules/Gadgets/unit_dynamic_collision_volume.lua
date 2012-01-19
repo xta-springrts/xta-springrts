@@ -62,24 +62,22 @@ if (gadgetHandler:IsSyncedCode()) then
 					spSetPieceCollisionData(unitID, pieceIndex, false, 1, 1, 1, 0, 0, 0, 1, 1)
 				end
 			end
-		else
-			if UnitDefs[unitDefID].model.type=="3do" then
-				local xs, ys, zs, xo, yo, zo, vtype, htype, axis, _ = spGetUnitCollisionData(unitID)
-				if (vtype==4 and xs==ys and ys==zs) then
-					if (xs>47 and not UnitDefs[unitDefID].canFly) then
-						spSetUnitCollisionData(unitID, xs*0.68, ys*0.68, zs*0.68,  xo, yo, zo,  vtype, htype, axis)
-					elseif (not UnitDefs[unitDefID].canFly) then
-						spSetUnitCollisionData(unitID, xs*0.75, ys*0.75, zs*0.75,  xo, yo, zo,  vtype, htype, axis)
-					else
-						spSetUnitCollisionData(unitID, xs*0.375, ys*0.225, zs*0.48,  xo, yo, zo,  vtype, htype, axis)
-					end
+		elseif UnitDefs[unitDefID].model.type=="3do" then
+			local xs, ys, zs, xo, yo, zo, vtype, htype, axis, _ = spGetUnitCollisionData(unitID)
+			if (vtype==4 and xs==ys and ys==zs) then
+				if (xs>47 and not UnitDefs[unitDefID].canFly) then
+					spSetUnitCollisionData(unitID, xs*0.68, ys*0.68, zs*0.68,  xo, yo, zo,  vtype, htype, axis)
+				elseif (not UnitDefs[unitDefID].canFly) then
+					spSetUnitCollisionData(unitID, xs*0.75, ys*0.75, zs*0.75,  xo, yo, zo,  vtype, htype, axis)
+				else
+					spSetUnitCollisionData(unitID, xs*0.375, ys*0.225, zs*0.48,  xo, yo, zo,  vtype, htype, axis)
 				end
 			end
 		end
 	end
 
 
-	-- Same as for 3DO units, but for features,
+	-- Same as for 3DO units, but for features
 	function gadget:FeatureCreated(featureID, allyTeam)
 		local featureModel = FeatureDefs[Spring.GetFeatureDefID(featureID)].modelname:lower()
 		if featureModel:find(".3do") then

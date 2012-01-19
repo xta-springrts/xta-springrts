@@ -51,7 +51,7 @@
 	EnergyMake=0.1;
 	DefaultMissionType=Standby;
 	maneuverleashlength=640;
-	movementclass=SPID3;
+	movementclass=CRAWLBOMB;
 	canattack=1;
 	kamikaze=1;
 	Ovradjust=1;
