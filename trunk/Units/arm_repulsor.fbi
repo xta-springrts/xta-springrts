@@ -29,6 +29,7 @@
 	SelfDestructAs=CRAWL_BLASTSML;
 	Category=ARM DEFENSIVE STRATEGIC STATIC WEAPON NOTLAND NOTAIR NOTSUB;
 	TEDClass=STRATEGIC;
+	buildpic=arm_repulsor;
 	YardMap=wwwwwwwww;
 	Corpse=ARM_Repulsor_dead;
 	UnitNumber=11996;

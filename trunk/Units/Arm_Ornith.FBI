@@ -30,6 +30,7 @@
 	SelfDestructAs=TRANSPORT_UNIT;
 	Category=ARM VTOL TPORT MOBILE WEAPON NOTLAND NOTSEA NOTSUB;
 	TEDClass=VTOL;
+	buildpic=arm_ornith;
 	UnitNumber=944;
 	firestandorders=1;
 	StandingFireOrder=2;

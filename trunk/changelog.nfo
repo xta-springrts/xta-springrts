@@ -52,6 +52,7 @@ Adv. construction subs can now build Adv. shipyards
 Crawling bombs now have their own moveDef (amphibious 1x1) are have better slope tollerance
 Heavy tanks use 3x3 and not 4x4 moveDef footprint, less traffic jams and those units are 3x3 and not 4x4 in size to begin with
 T2 transport aircraft can now load T2 crawling bombs (max 4)
+Slightly increased metal extractor and moho mine slope tolerance
 Increased ARM Infiltrator cost to match CORE Parasite, cloak, moving cloak & stealth costs now 150/300/600 for Infiltrator, 125/275/550 for Parasite, Infiltrator LoS set to 375, Parasite 320
 Cannon weapons have a nice arc trajectory (relative to target range, at max range it's always 45ø elevation)
 All weapons that cause an explosion when impacting on target, now have increased AoE and edgeEffectiveness=0 if their edgeEffectiveness was > 0 and AoE<145, AoE increase is to 160 max

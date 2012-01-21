@@ -31,6 +31,7 @@
 	SelfDestructAs=SMALL_UNIT;
 	Category=CORE SHIP WEAPON NOTAIR NOTSUB;
 	TEDClass=SHIP;
+	buildpic=core_viking;
 	Copyright=Copyright 1997 Humongous Entertainment. All rights reserved.;
 	UnitNumber=7544334;
 	firestandorders=1;

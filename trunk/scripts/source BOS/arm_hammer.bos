@@ -6,7 +6,7 @@
 piece  pelvis, rfirept, lfirept, lcannon, rcannon, locase, lthigh, rthigh,
        torso, rleg, rfoot, lleg, lfoot, upcase2, canbase, ground;
 
-static-var  gun_1, bMoving, bAiming, cantShoot, statechg_DesiredState, statechg_StateChanging,
+static-var  gun_1, bMoving, bAiming, statechg_DesiredState, statechg_StateChanging, //cantShoot,
             RackClosed, gun, restore_delay, moveSpeed, currentSpeed;
 
 // Signal definitions
@@ -441,19 +441,19 @@ MotionControl(moving, aiming, justmoved)
 		{
 			if( aiming )
 			{
-				cantShoot = 1;
+				//cantShoot = 1;
 				call-script walklegs();
 			}
 			else
 			{
-				cantShoot = 0;
+				//cantShoot = 0;
 				call-script walk();
 			}
 			justmoved = TRUE;
 		}
 		else
 		{
-			cantShoot = 0;
+			//cantShoot = 0;
 			if( justmoved )
 			{
 				move pelvis to y-axis [0.000000] speed [2.500000];
@@ -546,7 +546,7 @@ Create()
 	turn lfirept to y-axis <180.000000> now;
 	bMoving = FALSE;
 	bAiming = FALSE;
-	cantShoot = 0;
+	//cantShoot = 0;
 	RackClosed = 1;
 	statechg_DesiredState = TRUE;
 	statechg_StateChanging = FALSE;
@@ -595,7 +595,7 @@ AimPrimary(heading, pitch)
 	signal SIG_AIM;
 	set-signal-mask SIG_AIM;
 	bAiming = TRUE;
-	while( cantShoot OR RackClosed )
+	while( RackClosed ) //cantShoot OR RackClosed )
 	{
 		sleep 100;
 	}
@@ -626,7 +626,7 @@ QueryPrimary(piecenum)
 
 FirePrimary()
 {
-	if( gun)
+	if( gun )
 	{
 		emit-sfx UNIT_SFX1 from lfirept;
 		move lcannon to z-axis [-5.000000] speed [62.500000];
@@ -651,7 +651,7 @@ AimWeapon2(heading, pitch)
 	signal SIG_AIM;
 	set-signal-mask SIG_AIM;
 	bAiming = TRUE;
-	while( cantShoot OR RackClosed )
+	while( RackClosed ) //cantShoot OR RackClosed )
 	{
 		sleep 100;
 	}
