@@ -31,6 +31,7 @@
 	selfdestructas=NANO_UNIT;
 	Category=ARM SUB CONSTR MOBILE NOWEAPON NOTLAND NOTAIR NOTSEA;
 	TEDClass=SUB;
+	buildpic=arm_valiant;
 	Copyright=Copyright 1997 Humongous Entertainment. All rights reserved.;
 	Corpse=Arm_Valiant_dead;
 	UnitNumber=617;
