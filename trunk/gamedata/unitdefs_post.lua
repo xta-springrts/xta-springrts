@@ -21,9 +21,9 @@ local function tobool(val)
 end
 
 --------------------------------------------------------------------------------
--- Tanks and hovers don't slow down when turning
-
+-- General postprocessing
 for name, ud in pairs(UnitDefs) do
+-- Tanks and hovers don't slow down when turning
 	if ud.maxvelocity and ud.category and ((ud.category:find("TANK",1,true) or ud.category:find("HOVER",1,true))) and (not ud.turninplace) then
 		ud.turninplace = 0
 		ud.turninplacespeedlimit = 0.4 * ud.maxvelocity
@@ -31,7 +31,22 @@ for name, ud in pairs(UnitDefs) do
 	else
 		ud.turninplacespeedlimit = ud.maxvelocity or 0
 	end
+-- convert from the pre-0.83 representation (pieceTrailCEGTag, pieceTrailCEGRange)
+	if (ud.piecetrailcegtag ~= nil) then
+		if (ud.sfxtypes == nil) then
+			ud.sfxtypes = {}
+		end
+		if (ud.piecetrailcegrange == nil) then
+			ud.piecetrailcegrange = 1
+		end
+		ud.sfxtypes["pieceExplosionGenerators"] = {}
+		for n = 1, ud.piecetrailcegrange do
+			ud.sfxtypes["pieceExplosionGenerators"][n] = ud.piecetrailcegtag .. (n - 1)
+		end
+	end
 end 
+
+--------------------------------------------------------------------------------
 
 --------------------------------------------------------------------------------
 -- Adjustment of Model Center height of towers

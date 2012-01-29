@@ -211,7 +211,7 @@
 {
 	name=Long Energy Laser;
 	Weapontype=LaserCannon;
-	minbarrelangle=-30;
+	//minbarrelangle=-30;
 	duration=0.06;
 	thickness=0.75;
 	CoreThickness=1.0;
@@ -357,7 +357,7 @@
 	cylindertargetting = 1;
 	soundstart=canlite2;
 	soundhit=xplomed2;
-	minbarrelangle=-24;
+	//minbarrelangle=-24;
 	tolerance=767;
 	burnblow=1;
 	explosiongenerator=custom:FlakCloud;
@@ -383,7 +383,7 @@
 {
 	name=Bombs;
 	weapontype=AircraftBomb;
-	minbarrelangle=-90;
+	//minbarrelangle=-90;
 	projectiles=3;
 	sprayangle=4000;
 	burst=4;
@@ -492,7 +492,7 @@
 	areaofeffect=100;
 	soundstart=cannhvy5;
 	soundhit=xplomed2;
-	minbarrelangle=-35;
+	//minbarrelangle=-35;
 	startsmoke=1;
 	size=3.45;
 	rgbcolor=1 0.50 0.1;
@@ -631,7 +631,7 @@
 {
 	name=Bombs;
 	weapontype=AircraftBomb;
-	minbarrelangle=-90;
+	//minbarrelangle=-90;
 	projectiles=3;
 	sprayangle=4000;
 	burst=4;
@@ -689,7 +689,7 @@
 	name=Depth Charge;
 	Weapontype=TorpedoLauncher;
 	turret=1;
-	minbarrelangle=-90;
+	//minbarrelangle=-90;
 	model=weapon_DEPTHCHARGE;
 	propeller=1;
 	range=350;
@@ -842,7 +842,7 @@
 	cylindertargetting = 1;
 	soundstart=canlite2;
 	soundhit=xplomed2;
-	minbarrelangle=-40;
+	//minbarrelangle=-40;
 	tolerance=2000;
 	burnblow=1;
 	explosiongenerator=custom:FlakCloud;
@@ -1025,7 +1025,8 @@
 	weaponType=Cannon;
 	explosiongenerator=custom:WindkbotRocket;
 	turret=1;
-	minbarrelangle=-45;
+	//minbarrelangle=-45;
+	cylindertargetting = 1;
 	range=600;
 	reloadtime=0.8;
 	weaponvelocity=900;
@@ -1373,7 +1374,7 @@
 	name=Paralyzer;
 	Weapontype=LightningCannon;
 	turret=1;
-	minbarrelangle=0;
+	//minbarrelangle=0;
 	range=320;
 	reloadtime=2.4;
 	weaponvelocity=600;
@@ -1414,7 +1415,7 @@
 	name=Torpedo Launcher;
 	Weapontype=TorpedoLauncher;
 	waterweapon=1;
-	minbarrelangle=-90;
+	//minbarrelangle=-90;
 	model=weapon_torpedo;
 	propeller=1;
 	range=550;
@@ -1900,7 +1901,7 @@
 	cylindertargetting = 1;
 	soundstart=canlite2;
 	soundhit=xplomed2;
-	minbarrelangle=-40;
+	//minbarrelangle=-40;
 	tolerance=1560;
 	burnblow=1;
 	explosiongenerator=custom:FlakCloud;
@@ -2234,7 +2235,7 @@
 	soundhit=xplosml3;
 	tolerance=500;
 	startsmoke=1;
-	minbarrelangle=-40;
+	//minbarrelangle=-40;
 	size=1.5;
 	rgbcolor=0.9 0.6 0.35;
 	stages=5;
@@ -2260,7 +2261,7 @@
 	explosiongenerator=custom:Gator;
 	cegTag=REDCRAP;
 	tolerance=500;
-	minbarrelangle=-40;
+	//minbarrelangle=-40;
 	duration=0.06;
 	thickness=1.6;
 	Intensity=0.88;
@@ -2411,7 +2412,7 @@
 	name=Annihilator Weapon;
 	Weapontype=BeamLaser;
 	turret=1;
-	minbarrelangle=-40;
+	//minbarrelangle=-40;
 	pulseSpeed=7.0;
 	SoundTrigger=1;
 	LargeBeamLaser=1;
@@ -2699,7 +2700,7 @@
 {
 	name=Bombs;
 	weapontype=AircraftBomb;
-	minbarrelangle=-90;
+	//minbarrelangle=-90;
 	projectiles=4;
 	sprayangle=4000;
 	burst=3;
@@ -2826,7 +2827,7 @@
 	name=Plasma Cannon;
 	weaponType=Cannon;
 	turret=1;
-	minbarrelangle=-35;
+	//minbarrelangle=-35;
 	range=450;
 	reloadtime=1.5;
 	weaponvelocity=370;
@@ -2876,7 +2877,7 @@
 {
 	name=Bombs;
 	weapontype=AircraftBomb;
-	minbarrelangle=-90;
+	//minbarrelangle=-90;
 	projectiles=4;
 	sprayangle=3000;
 	burst=3;
@@ -2999,7 +3000,7 @@
 	name=Depth Charge;
 	Weapontype=TorpedoLauncher;
 	turret=1;
-	minbarrelangle=-90;
+	//minbarrelangle=-90;
 	model=weapon_DEPTHCHARGE;
 	propeller=1;
 	range=400;
@@ -3372,7 +3373,7 @@
 	areaofeffect=48;
 	soundstart=cannon1;
 	soundhit=xplomed3;
-	minbarrelangle=-55;
+	//minbarrelangle=-55;
 	startsmoke=1;
 	[DAMAGE]
 	{
@@ -3595,7 +3596,7 @@
 	cylindertargetting = 1;
 	soundstart=canlite2;
 	soundhit=xplomed2;
-	minbarrelangle=-40;
+	//minbarrelangle=-40;
 	tolerance=2000;
 	burnblow=1;
 	explosiongenerator=custom:FlakCloud;
@@ -3721,7 +3722,7 @@
 	BounceSlip=1.01;
 	BounceRebound=0.8;
 	turret=1;
-	minbarrelangle=-15;
+	//minbarrelangle=-15;
 	color=3;
 	range=600;
 	reloadtime=1.6;
@@ -4164,7 +4165,7 @@
 	bounceExplosionGenerator=custom:BERTHASHOT;
 	energypershot=1200;
 	startsmoke=1;
-	minbarrelangle=-50;
+	//minbarrelangle=-50;
 	[DAMAGE]
 	{
 		default=1028;
@@ -4242,7 +4243,7 @@
 	cylindertargetting = 1;
 	soundstart=canlite2;
 	soundhit=xplomed2;
-	minbarrelangle=-40;
+	//minbarrelangle=-40;
 	tolerance=2000;
 	burnblow=1;
 	explosiongenerator=custom:FlakCloud;
@@ -4498,7 +4499,7 @@
 	areaofeffect=105;
 	soundstart=cannhvy5;
 	soundhit=xplomed2;
-	minbarrelangle=-40;
+	//minbarrelangle=-40;
 	startsmoke=1;
 	size=3.45;
 	rgbcolor=1 0.50 0.1;
@@ -5092,7 +5093,7 @@
 	startsmoke=0;
 	endsmoke=1;
 	tolerance=8000;
-	minbarrelangle=-90;
+	//minbarrelangle=-90;
 	[DAMAGE]
 	{
 		default=6;
@@ -5230,7 +5231,7 @@
 	explosiongenerator=custom:WindkbotRocket;
 	weaponType=Cannon;
 	turret=1;
-	minbarrelangle=-90;
+	//minbarrelangle=-90;
 	range=770;
 	reloadtime=2.6;
 	weaponvelocity=480;
@@ -5698,7 +5699,7 @@
 	reloadtime=0.1;
 	weapontimer=2;
 	weaponvelocity=650;
-	sprayangle=910;
+	sprayangle=546;
 	areaofeffect=12;
 //	burst=5;
 //	burstrate=0.07;
@@ -5798,7 +5799,7 @@
 	name=Plasma Cannon;
 	weaponType=Cannon;
 	turret=1;
-	minbarrelangle=-35;
+	//minbarrelangle=-35;
 	range=875;
 	reloadtime=2.2;
 	weaponvelocity=412;
@@ -5806,7 +5807,7 @@
 	soundstart=cannon1;
 	explosiongenerator=custom:WindkbotRocket;
 	soundhit=xplomed3;
-	minbarrelangle=-55;
+	//minbarrelangle=-55;
 	startsmoke=1;
 	accuracy=300;
 	movingaccuracy=600;
@@ -5821,7 +5822,7 @@
 	name=Plasma Cannon;
 	weaponType=Cannon;
 	turret=1;
-	minbarrelangle=-40;
+	//minbarrelangle=-40;
 	range=444;
 	accuracy=240;
 	movingaccuracy=420;
@@ -5850,7 +5851,7 @@
 	weaponType=Cannon;
 	turret=1;
 	explosiongenerator=custom:WindkbotRocket;
-	minbarrelangle=-40;
+	//minbarrelangle=-40;
 	Range=452;
 	accuracy=220;
 	movingaccuracy=400;
@@ -6494,7 +6495,7 @@
 	soundhit=xplosml3;
 	tolerance=500;
 	startsmoke=1;
-	minbarrelangle=-40;
+	//minbarrelangle=-40;
 	size=1.5;
 	rgbcolor=0.9 0.6 0.35;
 	stages=6;
@@ -6513,7 +6514,7 @@
 	name=Heavy Cannon;
 	weaponType=Cannon;
 	turret=1;
-	minbarrelangle=-25;
+	//minbarrelangle=-25;
 	range=500;
 	reloadtime=2.3;
 	weaponvelocity=470;
@@ -6545,7 +6546,7 @@
 	name=Heavy Cannon;
 	weaponType=Cannon;
 	turret=1;
-	minbarrelangle=-25;
+	//minbarrelangle=-25;
 	range=500;
 	reloadtime=2.3;
 	weaponvelocity=500;
@@ -6860,7 +6861,7 @@
 	soundhit=xplomed4;
 	accuracy=700;
 	movingaccuracy=1000;
-	minbarrelangle=-40;
+	//minbarrelangle=-40;
 	startsmoke=1;
 	startsmoke=1;
 	[DAMAGE]
@@ -6934,7 +6935,7 @@
 {
 	name=Bombs;
 	Weapontype=AircraftBomb;
-	minbarrelangle=-90;
+	//minbarrelangle=-90;
 	projectiles=1;
 	sprayangle=20000;
 	burst=3;
@@ -6966,7 +6967,7 @@
 {
 	name=Bombs;
 	Weapontype=AircraftBomb;
-	minbarrelangle=-90;
+	//minbarrelangle=-90;
 	projectiles=1;
 	sprayangle=15000;
 	burst=2;
@@ -7076,7 +7077,7 @@
 	weaponvelocity=400;
 	texture1=testlightning;
 	laserflaresize=40;
-	minbarrelangle=-55;
+	//minbarrelangle=-55;
 	areaofeffect=32;
 	SoundStart=lashit2;
 	soundhit=lashit2;
