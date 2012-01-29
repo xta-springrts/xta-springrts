@@ -32,7 +32,7 @@
 	selfdestructcountdown=0;
 	Category=CORE KBOT MINE MOBILE WEAPON NOTAIR NOTSEA NOTSUB;
 	TEDClass=KBOT;
-	buildpic=core_tic;
+	buildpic=core_tic.pcx;
 	Copyright=Copyright 1997 Humongous Entertainment. All rights reserved.;
 	UnitNumber=100001;
 	firestandorders=1;

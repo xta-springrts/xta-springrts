@@ -28,7 +28,7 @@
 	SelfDestructAs=CRAWL_BLASTSML;
 	Category=CORE STRATEGIC DEFENSIVE STATIC WEAPON NOTLAND NOTAIR NOTSUB;
 	TEDClass=STRATEGIC;
-	buildpic=core_resistor;
+	buildpic=core_resistor.pcx;
 	YardMap=wwwwwwwww;
 	Corpse=Core_Resistor_dead;
 	UnitNumber=11992;

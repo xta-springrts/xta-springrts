@@ -32,7 +32,7 @@
 	selfdestructcountdown=0;
 	Category=ARM KBOT MOBILE WEAPON STEALTH NOTAIR NOTSEA NOTSUB;
 	TEDClass=KBOT;
-	buildpic=arm_spidey;
+	buildpic=arm_spidey.pcx;
 	Copyright=Copyright 1997 Humongous Entertainment. All rights reserved.;
 	//Copyright 1998-2002 by Silencer for Ta-Power. All rights reserved.;
 	UnitNumber=74;

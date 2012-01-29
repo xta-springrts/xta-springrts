@@ -29,7 +29,7 @@
 	SelfDestructAs=TRANSPORT_UNIT;
 	Category=CORE VTOL TPORT WEAPON NOTSUB;
 	TEDClass=VTOL;
-	buildpic=core_zeppelin;
+	buildpic=core_zeppelin.pcx;
 	Copyright=Copyright 1997 Humongous Entertainment. All rights reserved.;
 	UnitNumber=944;
 	firestandorders=1;
