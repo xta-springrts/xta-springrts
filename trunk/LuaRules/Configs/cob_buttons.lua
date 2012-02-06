@@ -62,7 +62,6 @@ return {
   arm_podger = {
     {
       name     = "Self-Charge",
-
       tooltip  = "5 second timer 3 seconds to cancel, 4th second will minesweep Destruction after the 5th second!",
       cob      = "SelfD",  -- only this is required
       endcob   = "SelfD",
@@ -93,6 +92,51 @@ return {
       duration = 1,                 
     },
   },
+  arm_annihilator = {
+    {
+	name     = "OpenState",
+	tooltip  = "Select Annihilator's state when idle",
+	cob      = "OpenClose",  -- only this is required
+	type = CMDTYPE.ICON_MODE,
+	params = {'0', 'Closed', 'Open'},
+	},
+  },
+  core_doomsday_machine = {
+    {
+	name     = "OpenState",
+	tooltip  = "Select Doomsday Machine's state when idle",
+	cob      = "OpenClose",  -- only this is required
+	type = CMDTYPE.ICON_MODE,
+	params = {'0', 'Closed', 'Open'},
+	},
+  },
+  arm_ambusher = {
+    {
+	name     = "OpenState",
+	tooltip  = "Select Ambusher's state when idle",
+	cob      = "OpenClose",  -- only this is required
+	type = CMDTYPE.ICON_MODE,
+	params = {'0', 'Closed', 'Open'},
+	},
+  },
+  core_toaster = {
+    {
+	name     = "OpenState",
+	tooltip  = "Select Toaster's state when idle",
+	cob      = "OpenClose",  -- only this is required
+	type = CMDTYPE.ICON_MODE,
+	params = {'0', 'Closed', 'Open'},
+	},
+  },
+  core_viper = {
+    {
+	name     = "OpenState",
+	tooltip  = "Select Viper's state when idle",
+	cob      = "OpenClose",  -- only this is required
+	type = CMDTYPE.ICON_MODE,
+	params = {'0', 'Closed', 'Open'},
+	},
+  },
   core_nin2commander = {
     {
       name     = "Shield",
@@ -106,19 +150,19 @@ return {
   },
   arm_nin2commander = {
     {
-     name     = "Shield",
-      tooltip  = "Invulnerable for 10 seconds!",
-      cob      = "ShieldStart",  -- only this is required
-      endcob   = "ShieldEnd",  -- called at the end of duration
-      reload   = 60,   -- button is disabled until the reload time has passed
-      duration = 10, --how long it calls the function
-      --position = 500,              
+    name     = "Shield",
+    tooltip  = "Invulnerable for 10 seconds!",
+    cob      = "ShieldStart",  -- only this is required
+    endcob   = "ShieldEnd",  -- called at the end of duration
+    reload   = 60,   -- button is disabled until the reload time has passed
+    duration = 10, --how long it calls the function
+    --position = 500,              
     },
   },
   arm_raven_rt = {
     {
 	name     = "Rocket type",
-	tooltip  = "Select rocket type",
+	tooltip  = "Select Raven's rocket type",
 	cob      = "RocketType",  -- only this is required
 	type = CMDTYPE.ICON_MODE,
 	params = {'1', 'S.W.A.R.M', 'HE Rockets'},
@@ -127,7 +171,7 @@ return {
   core_dominator_rt = {
     {
 	name     = "Rocket type",
-	tooltip  = "Select rocket type",
+	tooltip  = "Select Dominator's rocket type",
 	cob      = "RocketType",  -- only this is required
 	type = CMDTYPE.ICON_MODE,
 	params = {'1', 'Guided', 'V Launch'},
@@ -136,7 +180,7 @@ return {
   core_crasher_rt = {
     {
 	name     = "Rocket type",
-	tooltip  = "Select rocket type",
+	tooltip  = "Select Crasher's rocket type",
 	cob      = "RocketType",  -- only this is required
 	type = CMDTYPE.ICON_MODE,
 	params = {'1', 'S.S.M', 'U.G.M'},
@@ -145,7 +189,7 @@ return {
   core_storm_rt = {
     {
 	name     = "Rocket type",
-	tooltip  = "Select rocket type",
+	tooltip  = "Select Storm's rocket type",
 	cob      = "RocketType",  -- only this is required
 	type = CMDTYPE.ICON_MODE,
 	params = {'1', 'LR Rocket', 'HD Rocket'},
@@ -154,7 +198,7 @@ return {
   arm_jethro_rt = {
     {
 	name     = "Rocket type",
-	tooltip  = "Select rocket type",
+	tooltip  = "Select Jethro's rocket type",
 	cob      = "RocketType",  -- only this is required
 	type = CMDTYPE.ICON_MODE,
 	params = {'1', 'S.S.M', 'U.G.M'},
@@ -163,7 +207,7 @@ return {
   arm_rocko_rt = {
     {
 	name     = "Rocket type",
-	tooltip  = "Select rocket type",
+	tooltip  = "Select Rocko's rocket type",
 	cob      = "RocketType",  -- only this is required
 	type = CMDTYPE.ICON_MODE,
 	params = {'1', 'LR Rocket', 'HD Rocket'},
@@ -172,7 +216,7 @@ return {
   arm_samson_rt = {
     {
 	name     = "Rocket type",
-	tooltip  = "Select rocket type",
+	tooltip  = "Select Samson's rocket type",
 	cob      = "RocketType",  -- only this is required
 	type = CMDTYPE.ICON_MODE,
 	params = {'1', 'S.S.M', 'U.G.M'},
@@ -181,7 +225,7 @@ return {
   core_slasher_rt = {
     {
 	name     = "Rocket type",
-	tooltip  = "Select rocket type",
+	tooltip  = "Select Slasher's rocket type",
 	cob      = "RocketType",  -- only this is required
 	type = CMDTYPE.ICON_MODE,
 	params = {'1', 'S.S.M', 'U.G.M'},
@@ -190,7 +234,7 @@ return {
   arm_swatter_rt = {
     {
 	name     = "Rocket type",
-	tooltip  = "Select rocket type",
+	tooltip  = "Select Swatter's rocket type",
 	cob      = "RocketType",  -- only this is required
 	type = CMDTYPE.ICON_MODE,
 	params = {'1', 'S.S.M', 'U.G.M'},
@@ -199,7 +243,7 @@ return {
   core_slinger_rt = {
     {
 	name     = "Rocket type",
-	tooltip  = "Select rocket type",
+	tooltip  = "Select Slinger's rocket type",
 	cob      = "RocketType",  -- only this is required
 	type = CMDTYPE.ICON_MODE,
 	params = {'1', 'S.S.M', 'U.G.M'},
@@ -208,7 +252,7 @@ return {
   core_diplomat_rt = {
     {
 	name     = "Rocket type",
-	tooltip  = "Select rocket type",
+	tooltip  = "Select Diplomat's rocket type",
 	cob      = "RocketType",  -- only this is required
 	type = CMDTYPE.ICON_MODE,
 	params = {'1', 'Guided', 'V Launch'},
@@ -217,7 +261,7 @@ return {
   core_missile_frigate_rt = {
     {
 	name     = "Rocket type",
-	tooltip  = "Select rocket type",
+	tooltip  = "Select Rocket Frigate's rocket type",
 	cob      = "RocketType",  -- only this is required
 	type = CMDTYPE.ICON_MODE,
 	params = {'1', 'Guided', 'V Launch'},
@@ -226,7 +270,7 @@ return {
   arm_merl_rt = {
     {
 	name     = "Rocket type",
-	tooltip  = "Select rocket type",
+	tooltip  = "Select Merl's rocket type",
 	cob      = "RocketType",  -- only this is required
 	type = CMDTYPE.ICON_MODE,
 	params = {'1', 'Guided', 'V Launch'},
@@ -235,7 +279,7 @@ return {
   arm_ranger_rt = {
     {
 	name     = "Rocket type",
-	tooltip  = "Select rocket type",
+	tooltip  = "Select Ranger's rocket type",
 	cob      = "RocketType",  -- only this is required
 	type = CMDTYPE.ICON_MODE,
 	params = {'1', 'Guided', 'V Launch'},

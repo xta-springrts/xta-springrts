@@ -527,7 +527,7 @@ AimFromPrimary(piecenum)
 
 QueryPrimary(piecenum)
 {
-	piecenum = lfire + gun_1;
+	piecenum = rfire + gun_1;
 }
 
 AimPrimary(heading, pitch)
@@ -553,11 +553,11 @@ FirePrimary()
 {
 	if( gun_1 )
 	{
-		emit-sfx UNIT_SFX1 from rfire;
+		emit-sfx UNIT_SFX1 from lfire;
 	}
 	else
 	{
-		emit-sfx UNIT_SFX1 from lfire;
+		emit-sfx UNIT_SFX1 from rfire;
 	}
 	gun_1 = !gun_1;
 }
