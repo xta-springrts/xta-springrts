@@ -72,7 +72,7 @@
 	maxslope=10;
 	maxwaterdepth=0;
 	minwaterdepth=11;
-	waterline=-2;
+	waterline=0.6;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
