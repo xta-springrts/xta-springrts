@@ -16,16 +16,12 @@ end
 --------------------------------------------------------------------------------
 local alterLevelFormat = string.char(137) .. '%i'
 
+local X, Y = Spring.GetViewGeometry()
 local px, py = 500, 100
 local sx, sy = 140, 72
+local scaling, fontSize, col1, col2, row1, row2, row3, row4
 
-local hoverLeft = 49
-local hoverRight = 135
-local hoverBottom = 39
-local hoverTop = 51
-local barBottom = 44
-local barTop = 46
-
+local hoverLeft, hoverRight, hoverBottom, hoverTop, barBottom, barTop
 --------------------------------------------------------------------------------
 -- Speedups
 --------------------------------------------------------------------------------
@@ -57,6 +53,15 @@ function widget:Initialize()
 		Spring.Echo("<Energy Conversion Info> Spectator mode. Widget removed.")
 		widgetHandler:RemoveWidget()
 	end
+	scaling = Y/1200
+	sx, sy, fontSize = sx*scaling, sy*scaling, 12*scaling
+	col1, col2, row1, row2, row3, row4 = 135*scaling, 69*scaling, 5*scaling, 21*scaling,37*scaling,53*scaling
+	hoverLeft = 49*scaling
+	hoverRight = 135*scaling
+	hoverBottom = 39*scaling
+	hoverTop = 51*scaling
+	barBottom = 44*scaling
+	barTop = 46*scaling
 end
 
 function widget:DrawScreen()
@@ -66,10 +71,10 @@ function widget:DrawScreen()
     local curLevel = spGetTeamRulesParam(myTeamID, 'mmLevel')
     local curUsage = spGetTeamRulesParam(myTeamID, 'mmUse')
     local curCapacity = spGetTeamRulesParam(myTeamID, 'mmCapacity')
-	local Eprod = curUsage/60
+	local Mprod = curUsage/60
 	local display
-	if Eprod >= 1 then 
-		display = format('%i.', Eprod) .. floor((Eprod-floor(Eprod))*10)
+	if Mprod >= 1 then 
+		display = format('%i.', Mprod) .. floor((Mprod-floor(Mprod))*10)
     else
 		display = format('0.%i', curUsage/6)
 	end
@@ -84,12 +89,12 @@ function widget:DrawScreen()
         -- Text
         glColor(1, 1, 1, 1)
         glBeginText()
-            glText('Energy Conversion', 69, 53, 12, 'cd')
-            glText('Hover:', 5, 37, 12, 'd')
-            glText('E usage:', 5, 21, 12, 'd')
-            glText('M production:', 5, 5, 12, 'd')
-            glText(format('%i / %i', curUsage, curCapacity), 135, 21, 12, 'dr')
-            glText(display, 135, 5, 12, 'dr')
+            glText('Energy Conversion', col2, row4, fontSize, 'cd')
+            glText('Hover:', row1, row3, fontSize, 'd')
+            glText('E usage:', row1, row2, fontSize, 'd')
+            glText('M production:', row1, row1, fontSize, 'd')
+            glText(format('%i / %i', curUsage, curCapacity), col1, row2, fontSize, 'dr')
+            glText(display, col1, row1, fontSize, 'dr')
         glEndText()
         
         -- Bar
@@ -121,8 +126,8 @@ end
 function widget:MouseMove(mx, my, dx, dy, mButton)
     -- Dragging
     if mButton == 2 or mButton == 3 then
-        px = px + dx
-        py = py + dy
+		if px+dx>=0 and px+sx+dx<=X then px = px + dx end
+        if py+dy>=0 and py+sy+dy<=Y then py = py + dy end
     end
 end
 
