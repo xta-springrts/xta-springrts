@@ -46,53 +46,7 @@ for name, ud in pairs(UnitDefs) do
 	end
 end 
 
---------------------------------------------------------------------------------
 
---------------------------------------------------------------------------------
--- Adjustment of Model Center height of towers
---[[
-local offset = 15
-local t = {}
-for name, ud in pairs(UnitDefs) do
-	local i=1
-	if not ud.movementclass and ud.badtargetcategory then
-		if ud.modelcenteroffset and ud.collisionvolumeoffsets then
-			for w in string.gmatch(ud.modelcenteroffset, "%S+") do
-				t[i]=w
-				i=i+1
-			end
-			ud.modelcenteroffset = tostring(t[1]) .. " " .. tostring(t[2]+offset) .. " " .. tostring(t[3])
-			i=1
-			for w in string.gmatch(ud.collisionvolumeoffsets, "%S+") do
-				t[i]=w
-				i=i+1
-			end
-			ud.collisionvolumeoffsets =	tostring(t[1]) .. " " .. tostring(t[2]-offset) .. " " .. tostring(t[3])
-		elseif ud.collisionvolumeoffsets then
-			ud.modelcenteroffset = "0 " .. tostring(offset) .. " 0"
-			for w in string.gmatch(ud.collisionvolumeoffsets, "%S+") do
-				t[i]=w
-				i=i+1
-			end
-			ud.collisionvolumeoffsets =	tostring(t[1]) .. " " .. tostring(t[2]-offset) .. " " .. tostring(t[3])
-		elseif ud.modelcenteroffset then
-			for w in string.gmatch(ud.modelcenteroffset, "%S+") do
-				t[i]=w
-				i=i+1
-			end
-			ud.modelcenteroffset = tostring(t[1]) .. " " .. tostring(t[2]+offset) .. " " .. tostring(t[3])
-			ud.collisionvolumeoffsets = "0 " .. tostring(-offset) .. " 0"
-		else
-			ud.modelcenteroffset = "0 " .. tostring(offset) .. " 0"
-			ud.collisionvolumeoffsets = "0 " .. tostring(-offset) .. " 0"
-			if not ud.collisionvolumetype then
-				ud.collisionvolumetype = "Ell"
-			end
-		end
-	end
-	--Spring.Echo(ud.name, ud.modelcenteroffset, ud.collisionvolumeoffsets)
-end 
-]]--
 -------------------------------------------------------------------------------
 -- Starting resource storage adjustment
 
@@ -396,25 +350,4 @@ else
   })
 end
 end
----Transport/Commander Fix------------
--- this is to work around engine crash when commanders die in air transports
--- works together with unit_transportcomfix.lua
--- http://springrts.com/mantis/view.php?id=2791 Can probally be removed with 85.0
---[[
-for name, ud in pairs(UnitDefs) do
-	--Spring.Echo ("releaseHeld for " .. (ud.unitname or "nil unitname"))
-	--Spring.Echo ("id:" .. (ud.unitDefId or "nil"))	
-	if (ud.transportsize) then	--refuses to load without this
-		--Spring.Echo ("its a transport")
-		if (ud.releaseheld)  then
-			--Spring.Echo ("passenger survives the death of this transport")
-			if (not ud.customParams) then ud.customParams = {} end
-			ud.customParams.releaseheld = true	--this custom param is checked by gadget to manually kill passengers
-		else			
-			--Spring.Echo ("this transport kills its passenger on death")			
-			ud.releaseheld = true
-		end
-	end
-	--Spring.Echo ("-------")	
-end
-]]--
+
