@@ -57,6 +57,7 @@ local options = {
 		desc = 'Use Ai Bots to set Flea difficulty.',
 		type = "section",
 	},
+	--[[ deprecated
 	{
 		key  = "deathmode",
 		name = "Game end mode",
@@ -70,6 +71,7 @@ local options = {
 			{key="comcontrol", name="No Commander, No Control *Could be broken*", desc="A player without a Commander cannot issue orders"},
 		}
 	},
+	]]--
 	{
 		key="teamdeathmode",
 		name="Team Game End Mode",
@@ -105,7 +107,7 @@ local options = {
 		name="Enemy Transporting",
 		desc="Toggle which enemy units you can kidnap with a transport vessel",
 		type="list",
-		def="com",
+		def="none",
 		section="xtagame",
 		items={
 			{key="none", name="Allow All", desc="All enemy units can be napped"},
