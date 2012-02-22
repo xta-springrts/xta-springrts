@@ -42,8 +42,8 @@
 	canguard=1;
 	MaxVelocity=1.54;
 	BrakeRate=0.03;
-	Acceleration=0.0073;
-	TurnRate=139;
+	Acceleration=0.01;
+	TurnRate=189;
 	SteeringMode=1;
 	ShootMe=1;
 	Builddistance=235;
@@ -53,7 +53,7 @@
 	maneuverleashlength=640;
 	MovementClass=BOATSUB;
 	MinWaterDepth=15;
-	floater=1;
+	//floater=1;
 	SonarDistance=700;
 	waterline=40;
 	collisionVolumeType = box;

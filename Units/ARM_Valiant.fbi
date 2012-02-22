@@ -43,8 +43,8 @@
 	canguard=1;
 	MaxVelocity=1.7;
 	BrakeRate=0.03;
-	Acceleration=0.0096;
-	TurnRate=167;
+	Acceleration=0.011;
+	TurnRate=207;
 	SteeringMode=1;
 	ShootMe=1;
 	Builddistance=225;
@@ -54,7 +54,7 @@
 	maneuverleashlength=640;
 	MovementClass=BOATSUB;
 	MinWaterDepth=15;
-	floater=1;
+	//floater=1;
 	SonarDistance=700;
 	waterline=40;
 	pieceTrailCEGTag=NanoDebree;//bleh
