@@ -580,7 +580,7 @@
 	range=400;
 	reloadtime=1.5;
 	weaponvelocity=350;
-	mygravity=0.24;
+	//mygravity=0.24;
 	areaofeffect=48;
 	soundstart=canlite3;
 	soundhit=xplomed3;
@@ -1940,7 +1940,7 @@
 	energypershot=143;
 	reloadtime=1;
 	weaponvelocity=600;
-	mygravity=0.24;
+	//mygravity=0.24;
 	areaofeffect=64;
 	explosiongenerator=custom:WindkbotRocket;
 	soundstart=cannhvy2;
@@ -2055,7 +2055,7 @@
 	explosiongenerator=custom:WindkbotRocket;
 	reloadtime=1.8;
 	weaponvelocity=355;
-	mygravity=0.24;
+	//mygravity=0.24;
 	areaofeffect=64;
 	soundstart=cannon3;
 	soundhit=xplomed2;
@@ -2142,7 +2142,7 @@
 	explosiongenerator=custom:WindkbotRocket;
 	//minbarrelangle=-40;
 	Range=454; //454
-	myGravity=1.2;
+	//myGravity=1.2;
 	accuracy=920;
 	movingaccuracy=1620;
 	reloadtime=2.0;
@@ -2229,7 +2229,7 @@
 	explosiongenerator=custom:WindkbotMissle;
 	reloadtime=1.53;
 	weaponvelocity=328;
-	mygravity=0.24;
+	//mygravity=0.24;
 	areaofeffect=48;
 	soundstart=canlite3;
 	soundhit=xplosml3;
@@ -3369,7 +3369,7 @@
 	explosiongenerator=custom:WindkbotRocket;
 	reloadtime=1.45;
 	weaponvelocity=512;
-	mygravity=0.24;
+	//mygravity=0.24;
 	areaofeffect=48;
 	soundstart=cannon1;
 	soundhit=xplomed3;
@@ -3390,7 +3390,7 @@
 	reloadtime=2;
 	explosiongenerator=custom:WindkbotRocket;
 	weaponvelocity=365;
-	mygravity=0.24;
+	//mygravity=0.24;
 	areaofeffect=92;
 	soundstart=cannon3;
 	soundhit=xplomed2;
@@ -3453,7 +3453,7 @@
 	movingaccuracy=1620;
 	reloadtime=2;
 	weaponvelocity=730;  //365
-	mygravity=1.2;
+	//mygravity=1.2;
 	explosiongenerator=custom:WindkbotRocket;
 	areaofeffect=48;
 	soundstart=cannon1;
@@ -4409,7 +4409,7 @@
 	range=390;
 	reloadtime=1.5;
 	weaponvelocity=370;
-	mygravity=0.24;
+	//mygravity=0.24;
 	areaofeffect=48;
 	soundstart=cannon2;
 	soundhit=xplomed4;
@@ -5040,15 +5040,15 @@
 	weaponvelocity=300;
 	startvelocity=100;
 	weaponacceleration=120;
-	areaofeffect=160;  //80
+	areaofeffect=120;  //80
 	energypershot=900;
 	Burst=12;
-	Burstrate=0.133;
+	Burstrate=0.1666;
 	Trajectoryheight=1;
-	Wobble=12000; //14000
-	Dance=100;
-	flighttime=8;
-	turnrate=5000;	//4000
+	Wobble=2700; //14000
+	Dance=40;
+	flighttime=5;
+	//turnrate=5000;	//4000
 	//edgeeffectiveness=0.75;
 	soundstart=RavenHvyRock;
 	soundhit=rockhit;
@@ -5240,7 +5240,7 @@
 	soundhit=xplomed2;
 	tolerance=500;
 	startsmoke=1;
-	myGravity=0.3;
+	//myGravity=0.3;
 	size=3;
 	rgbcolor=0.9 0.4 0.2;
 	stages=5;
@@ -7019,7 +7019,7 @@
 	startsmoke=1;
 	accuracy=450;
 	movingaccuracy=900;
-	myGravity=0.22;
+	//myGravity=0.22;
 	[DAMAGE]
 	{
 		default=650;
@@ -7052,7 +7052,7 @@
 	startsmoke=1;
 	accuracy=350;
 	movingaccuracy=700;
-	myGravity=0.22;
+	//myGravity=0.22;
 	[DAMAGE]
 	{
 		default=630;
