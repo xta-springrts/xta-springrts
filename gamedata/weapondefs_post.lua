@@ -16,8 +16,11 @@ local function tobool(val)
   return false
 end
 
+local modOptions = Spring.GetModOptions()
+
 -- Adjustment of terrain damage, area of effect, kinetic force of weapons and cannon trajectory height
-local customGravity = 1.0
+local customGravity = 0.8
+if modOptions and modOptions.gravity then customGravity=modOptions.gravity end
 local velGravFactor = customGravity * 900
 for id in pairs(WeaponDefs) do
 	if WeaponDefs[id].range then
@@ -56,14 +59,13 @@ for id in pairs(WeaponDefs) do
 end
 
 
-local modOptions
-if (Spring.GetModOptions) then
-  modOptions = Spring.GetModOptions()
+
+if (modOptions) then
 
 --------------------------------------------------------------------------------
 -- Relistical scaling
 
-if (modOptions and modOptions.realscale and tobool(modOptions.realscale)) then
+if (modOptions.realscale and tobool(modOptions.realscale)) then
   local rngMul, velMul, stVelMul, acclMul, fltMul, durMul
   for id in pairs(WeaponDefs) do
 	if (WeaponDefs[id].weapontype == "LaserCannon" or WeaponDefs[id].weapontype == "BeamLaser" or WeaponDefs[id].weapontype == "EmgCannon" or WeaponDefs[id].weapontype == "LightningCannon") then
@@ -117,14 +119,14 @@ end
 --------------------------------------------------------------------------------
 -- Don't Collide with friendlies for all weapons
 
-if (modOptions and modOptions.nocollide and modOptions.nocollide==true) then
+if (modOptions.nocollide and tobool(modOptions.nocollide)) then
   for id in pairs(WeaponDefs) do
 	WeaponDefs[id].collidefriendly = false
   end
 end
 
 -- Low performance computer mode
-if (modOptions and modOptions.lowcpu and tobool(modOptions.lowcpu)) then
+if (modOptions.lowcpu and tobool(modOptions.lowcpu)) then
   for id in pairs(WeaponDefs) do
 	WeaponDefs[id].cegtag = "" 
 	if WeaponDefs[id].reloadtime and tonumber(WeaponDefs[id].reloadtime)<0.5 then

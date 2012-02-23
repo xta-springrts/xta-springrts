@@ -51,31 +51,18 @@ local options = {
 		desc = 'Settings for multipliers.',
 		type = "section",
 	},
+	--[[ Removed till spawner is fixed
 	{
 		key  = 'Fleabowl',
 		name = 'Fleabowl Stuff',
 		desc = 'Use Ai Bots to set Flea difficulty.',
 		type = "section",
 	},
-	--[[ deprecated
-	{
-		key  = "deathmode",
-		name = "Game end mode",
-		desc = "What it takes to eliminate a team",
-		type = "list",
-		def  = "killall",
-		items = {
-			{key="killall", name="Kill Everything *Default works*", desc="Every last unit must be eliminated, no exceptions!"},
-		--{key="minors", name="Nothing of value left", desc="The team has no factories and no units left, just defenses and economy"},
-			{key="com", name="Kill all enemy Commanders *Could be broken*", desc="When a team has no Commanders left it loses"},
-			{key="comcontrol", name="No Commander, No Control *Could be broken*", desc="A player without a Commander cannot issue orders"},
-		}
-	},
 	]]--
 	{
 		key="teamdeathmode",
 		name="Team Game End Mode",
-		desc="What it takes to eliminate a Team",
+		desc="What it takes to eliminate a Team\nkey: teamdeathmode",
 		type="list",
 		--section= 'xtagame',
 		def="allyzerounits",
@@ -88,7 +75,7 @@ local options = {
 	{
 		key  = "comm",
 		name = "Starting Commander",
-		desc = "Adjusts Starting Commander type or level",
+		desc = "Adjusts Starting Commander type or level\nkey: comm",
 		type = "list",
 		def  = "zeroupgrade",
 		items = {
@@ -105,7 +92,7 @@ local options = {
 	{
 		key="mo_transportenemy",
 		name="Enemy Transporting",
-		desc="Toggle which enemy units you can kidnap with a transport vessel",
+		desc="Toggle which enemy units you can kidnap with a transport vessel\nkey: mo_transportenemy",
 		type="list",
 		def="none",
 		section="xtagame",
@@ -118,7 +105,7 @@ local options = {
 	{
 		key="qtpfs",
 		name="Pathfinding system",
-		desc="Which pathfinding system to use",
+		desc="Which pathfinding system to use\nkey: qtpfs",
 		type="list",
 		--section= 'xtagame',
 		def="qtpfs",
@@ -128,9 +115,28 @@ local options = {
 		}
 	},
 	{
+		key    = "gravity",
+		name   = "Cannon Velocity",
+		desc   = "Set the projectile velocity for cannon weapons\nkey: gravity",
+		type   = "number",
+		--section= "xtagame",
+		def    = 0.8,
+		min    = 0,
+		max    = 2,
+		step   = 0.05,
+	},
+	{
+		key    = "space_mode",
+		name   = "Allow aircraft and hovercraft on maps with no atmosphere",
+		desc   = "If enabled map atmosphere condition will be ignored for aircraft and hovercraft\nkey: space_mode",
+		type   = "bool",
+		def    = false,
+		section= "xtagame",
+	},
+	{
 		key    = "mo_nowrecks",
 		name   = "No Unit Wrecks",
-		desc   = "Removes all unit wrecks from the game",
+		desc   = "Removes all unit wrecks from the game\nkey: mo_nowrecks",
 		type   = "bool",
 		def    = false,
 		section= "xtagame",
@@ -138,7 +144,7 @@ local options = {
 	{
 		key    = "NewUnits",
 		name   = "Disable Xta Expansion Pack?",
-		desc   = "** Offical ** Disables the newer units that belong in xta versions past 8.1.",
+		desc   = "** Offical ** Disables the newer units that belong in xta versions past 8.1.\nkey: NewUnits",
 		type   = "bool",
 		def    = false,
 		section= "xtagame",
@@ -146,7 +152,7 @@ local options = {
 	{
 		key    = "xtaidUnits",
 		name   = 'Enable "XTAids" Unit Pack?',
-		desc   = "** ThirdParty ** Adds Xtaids unitpack. Submit your own unitpack or modification! Author: Noruas",
+		desc   = "** ThirdParty ** Adds Xtaids unitpack. Submit your own unitpack or modification! Author: Noruas\nkey: xtaidUnits",
 		type   = "bool",
 		def    = false,
 		section= "xtagame",
@@ -154,7 +160,7 @@ local options = {
 	{
 		key    = "rockettoggle",
 		name   = "Enable togglable rocket type?",
-		desc   = "** ThirdParty ** Enable additional rocket type for several rocket/missile units  Author: Deadnight Warrior",
+		desc   = "** ThirdParty ** Enable additional rocket type for several rocket/missile units  Author: Deadnight Warrior\nkey: rockettoggle",
 		type   = "bool",
 		def    = false,
 		section= "xtagame",
@@ -162,7 +168,7 @@ local options = {
 	{
 		key    = "realscale",
 		name   = "Use realistical size and range scale?",
-		desc   = "** ThirdParty ** Make all sight, radar, sonar, jammer and weapon ranges and unit max velocities to realistical values. Not recomended on maps smaller than 30x30  Author: Deadnight Warrior",
+		desc   = "** ThirdParty ** Make all sight, radar, sonar, jammer and weapon ranges and unit max velocities to realistical values. Not recomended on maps smaller than 30x30  Author: Deadnight Warrior\nkey: realscale",
 		type   = "bool",
 		def    = false,
 		section= "xtagame",
@@ -170,7 +176,15 @@ local options = {
 	{
 		key    = "nocollide",
 		name   = "Projectiles don't collide with friendly units",
-		desc   = "** ThirdParty ** Author: Deadnight Warrior",
+		desc   = "** ThirdParty ** Author: Deadnight Warrior\nkey: nocollide",
+		type   = "bool",
+		def    = false,
+		section= "xtagame",
+	},
+	{
+		key    = "lowcpu",
+		name   = "Low performance mode",
+		desc   = "Reduces effects and makes fast fire weapons slower with more damage in order to reduce simulation requirements\nkey: lowcpu",
 		type   = "bool",
 		def    = false,
 		section= "xtagame",
@@ -185,7 +199,7 @@ local options = {
 	{
 		key    = "kingofthehill",
 		name   = "King of the Hill Mode",
-		desc   = "Control the hill for a set amount of time to win! See King of the Hill section.",
+		desc   = "Control the hill for a set amount of time to win! See King of the Hill section.\nkey: kingofthehill",
 		type   = "bool",
 		def    = false,
 		section= "koth",
@@ -195,10 +209,10 @@ local options = {
 		name   = "Hill control time",
 		desc   = "Set how long a team has to control the hill for (in minutes) \nkey: hilltime",
 		type   = "number",
-		def    = 10,
-		min    = 0,
-		max    = 60,
-		step   = 1.0,
+		def    = 3,
+		min    = 0.5,
+		max    = 15,
+		step   = 0.5,
 		section= "koth",
 	},
 	{
@@ -296,6 +310,7 @@ local options = {
 		step   = 1,  -- quantization is aligned to the def value
 					-- (step <= 0) means that there is no quantization
 	},
+	--[[ Removed till spawner is fixed
 	{
 		key    = "BOSSES",
 		name   = "Spawn Bosses",
@@ -340,6 +355,7 @@ local options = {
 						-- (step <= 0) means that there is no quantization
 		section= "Fleabowl",
 	},
+	]]--
 }
 
 return options
