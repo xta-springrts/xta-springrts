@@ -73,7 +73,7 @@ function widget:Initialize()
 end
 
 
-function widget:UnitFinished(unitID, unitDefID, unitTeam)
+function widget:UnitFromFactory(unitID, unitDefID, unitTeam)
   local ud = UnitDefs[unitDefID]
   if ((ud ~= nil) and (unitTeam == Spring.GetMyTeamID())) then
     if (unitSet[ud.name]) then
