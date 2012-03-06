@@ -77,16 +77,17 @@ local options = {
 		name = "Starting Commander",
 		desc = "Adjusts Starting Commander type or level\nkey: comm",
 		type = "list",
-		def  = "zeroupgrade",
+		def  = "choose",
 		items = {
+			{ key = "choose", name = "Let players choose in game", desc = "Let users choose in game between automatical and manual types" },
+			{ key = "zeroupgrade", name = "Automatic upgrades", desc = "Commander with automatical upgrades based on experience" },
+			{ key = "noupgrade", name = "Manual upgrades, level 0 ", desc = "Commander with manual upgrades. Starting at base level" },
+			{ key = "halfupgrade", name = "Manual upgrades, level 2", desc = "Commander with manual upgrades. Powerful lasers are added." },
+			{ key = "fullupgrade", name = "Manual upgrades, level 4", desc = "Commander with manual upgrades. Insanely powerful (max upgrade)!" },
 			{ key = "comshooter", name = "Mini Com Shooter Game 0.1", desc = "Play Commander Shooter v0.1" },
 			{ key = "decoystart", name = "Start With Decoy", desc = "Start with fake commander" },
 			{ key = "capturethebase", name = "Capture the base", desc = "Capture the thing!" },
-			{ key = "nincom", name = "Ninja Commanders!", desc = "Micro advised! JOKE START OPTION" },
-			{ key = "zeroupgrade", name = "Auto-upgradable Commander", desc = "Automatic upgrades based on commander's experience, default setting" },
-			{ key = "noupgrade", name = "Upgradable Level 0 Commander", desc = "Default commander with upgrades available." },
-			{ key = "halfupgrade", name = "Upgradable Level 2 Commander", desc = "Powerful lasers are added." },
-			{ key = "fullupgrade", name = "Upgradable Level 4 Commander", desc = "Commanders are insanely powerful. (Max upgrade)" }
+			{ key = "nincom", name = "Ninja Commanders!", desc = "Micro advised! JOKE START OPTION" }
 		},
 	},
 	{

@@ -80,9 +80,9 @@ if enabled ~= 0 then
 end
 ]]--
 
---  Always use non-upgradeable com when no modoptions present
+--  Always use manual upgrade com when no modoptions present. Reason: easier for testing.
 if not commType then
-    commType = "zeroupgrade"
+    commType = "noupgrade"
 end
 
 
