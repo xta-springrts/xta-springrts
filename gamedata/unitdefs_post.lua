@@ -95,6 +95,7 @@ end
 if (modOptions and modOptions.comm) then
 	-- Maps 'comm' mod option to ARM start unit.
 	local arm_start_unit = {
+		choose		= "arm_commander",
 		zeroupgrade = "arm_commander",
 		halfupgrade = "arm_u2commander",
 		fullupgrade = "arm_u4commander",
@@ -106,6 +107,7 @@ if (modOptions and modOptions.comm) then
 	}
 	-- Maps 'comm' mod option to CORE start unit.
 	local core_start_unit = {
+		choose		= "core_commander",	
 		zeroupgrade = "core_commander",
 		halfupgrade = "core_u2commander",
 		fullupgrade = "core_u4commander",
