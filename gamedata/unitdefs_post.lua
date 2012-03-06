@@ -24,12 +24,14 @@ end
 -- General postprocessing
 for name, ud in pairs(UnitDefs) do
 -- Tanks and hovers don't slow down when turning
-	if ud.maxvelocity and ud.category and ((ud.category:find("TANK",1,true) or ud.category:find("HOVER",1,true))) and (not ud.turninplace) then
-		ud.turninplace = 0
-		ud.turninplacespeedlimit = 0.4 * ud.maxvelocity
-		ud.turnrate = ud.turnrate * 1.2
-	else
-		ud.turninplacespeedlimit = ud.maxvelocity or 0
+	if ud.maxvelocity and ud.category and ((ud.category:find("TANK",1,true) or ud.category:find("HOVER",1,true))) then
+		if not ud.turninplace then
+			ud.turninplace = 0
+			ud.turninplacespeedlimit = ud.maxvelocity * 0.4
+			ud.turnrate = ud.turnrate * 1.2
+		elseif not tobool(ud.turninplace) then
+			ud.turninplacespeedlimit = ud.maxvelocity * 0.75
+		end
 	end
 -- convert from the pre-0.83 representation (pieceTrailCEGTag, pieceTrailCEGRange)
 	if (ud.piecetrailcegtag ~= nil) then
