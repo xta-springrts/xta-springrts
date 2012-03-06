@@ -225,8 +225,6 @@ function widget:MousePress(mx, my, mButton)
             
 			local suid = spGetTeamRulesParam(myTeamID, 'startUnit')
 			-- Which button?
-			Spring.Echo("Commander is:",suid)
-			
 			if my >= py+sidep+infop then -- commander type
 				if mx < px + middle then  -- M TO A
 					if suid ~= 30 and suid ~= 236 then	-- is 166 or 375
@@ -274,9 +272,6 @@ function widget:MousePress(mx, my, mButton)
 	elseif (mButton == 2 or mButton == 3) and mx < px + sizex then
 		if mx >= px and my >= py and my < py + sizey then
 			-- Dragging
-			local suid = spGetTeamRulesParam(myTeamID, 'startUnit')
-			-- Which button?
-			Spring.Echo("Commander2 is:",suid)
 			return true
 		end
 	end
