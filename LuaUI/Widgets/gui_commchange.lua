@@ -15,17 +15,17 @@ end
 -- Var
 --------------------------------------------------------------------------------
 local px, py = 300, 300
-local sizex, sizey, t, sidep, infop, labelp = 460, 300, 20, 80, 60, 120
+local sizex, sizey, t, sidep, infop, labelp = 440, 260, 18, 60, 60, 100
 local middle = labelp+(sizex-labelp)/2
 
-local imgComAA = "LuaUI/Images/ComAA.png"
-local imgComAM = "LuaUI/Images/ComAM.png"
-local imgComAAD = "LuaUI/Images/ComAAD.png"
-local imgComAMD = "LuaUI/Images/ComAMD.png"
-local imgComCA = "LuaUI/Images/ComCA.png"
-local imgComCM = "LuaUI/Images/ComCM.png"
-local imgComCAD = "LuaUI/Images/ComCAD.png"
-local imgComCMD = "LuaUI/Images/ComCMD.png"
+local imgComAA = "LuaUI/Images/commchange/ComAA.png"
+local imgComAM = "LuaUI/Images/commchange/ComAM.png"
+local imgComAAD = "LuaUI/Images/commchange/ComAAD.png"
+local imgComAMD = "LuaUI/Images/commchange/ComAMD.png"
+local imgComCA = "LuaUI/Images/commchange/ComCA.png"
+local imgComCM = "LuaUI/Images/commchange/ComCM.png"
+local imgComCAD = "LuaUI/Images/commchange/ComCAD.png"
+local imgComCMD = "LuaUI/Images/commchange/ComCMD.png"
 
 
 --------------------------------------------------------------------------------
@@ -86,10 +86,10 @@ function widget:DrawWorld()
         if tsx and tsx > 0 then
             local teamStartUnit = spGetTeamRulesParam(teamID, 'startUnit')
             if (teamStartUnit == 30) or (teamStartUnit == 166) then
-                glTexture('LuaUI/Images/arm.png')
+                glTexture('LuaUI/Images/commchange/arm.png')
                 glBeginEnd(GL_QUADS, QuadVerts, tsx, spGetGroundHeight(tsx, tsz), tsz, 80)
             elseif (teamStartUnit == 236) or (teamStartUnit == 375) then
-                glTexture('LuaUI/Images/core.png')
+                glTexture('LuaUI/Images/commchange/core.png')
                 glBeginEnd(GL_QUADS, QuadVerts, tsx, spGetGroundHeight(tsx, tsz), tsz, 64)
             end
         end
@@ -167,47 +167,54 @@ function widget:DrawScreen()
 		
 		-- Faction Icons
 		glColor(1, 1, 1, 1)
-        glTexture('LuaUI/Images/ARM.png')
+        glTexture('LuaUI/Images/commchange/ARM.png')
         glTexRect(labelp+2*t, infop + t, middle-2*t, sidep+infop-t)
-        glTexture('LuaUI/Images/CORE.png')
+        glTexture('LuaUI/Images/commchange/CORE.png')
         glTexRect(middle+2*t, infop + t, sizex-2*t, sidep+infop-t)
         glTexture(false)
 		
 		-- Text
 		glBeginText()
 		-- Labelpanel
-        glText('Type', 40, sidep+infop + 70, 16, 'd')
-        glText('Faction', 40, infop + 30, 16, 'd')
-        glText('Info', 40, 30, 16, 'd')
+        glText('Type', 40, sidep+infop + 70, 14, 'd')
+        glText('Faction', 40, infop + 30, 14, 'd')
+        glText('Info', 40, 30, 14, 'd')
 		-- Labels
         glText('Choose Your Commander:', sizex/2, sizey, 16, 'cd')
-        glText('Automatic', labelp + (sizex-labelp)/4, sidep+infop, 14, 'cd')
-        glText('Manual', middle + (sizex-labelp)/4, sidep+infop, 14, 'cd')
+        glText('Automatic', labelp + (sizex-labelp)/4, sidep+infop, 12, 'cd')
+        glText('Manual', middle + (sizex-labelp)/4, sidep+infop, 12, 'cd')
         --Info
 		local txt1, txt2, txt3
 		if suid == 30 then
-			txt1 = "*Arm Commander is faster than Core."
-			txt2 = "*Will be upgraded automatically based on combat xp."
-			txt3 = ""
+			txt1 = "*Type-A, Arm Commander is faster than Core."
+			txt2 = "*Will get longer radar, speed and laser range with more XP"
+			txt3 = "*Paralyser beam at 0.3, Sniper Laser at 0.6 and Sat. Strike at 1.2 XP"
 		elseif suid == 166 then
-			txt1 = "*Arm Commander is faster than Core, has wider D-Gun."
-			txt2 = "*Will get a paralyser laser when upgraded to level 2"
-			txt3 = "*Will be equipped with Raven-rockets when reaching Level 4."
+			txt1 = "*Type-M, Arm Commander is faster than Core."
+			txt2 = "*Paralyser laser and longer D-Gun at level 2"
+			txt3 = "*Self-repair at level 3, Raven-rockets and at Level 4."
 		elseif suid == 236 then
-			txt1 = "*Core Commander is slower than Arm, so start is hard."
-			txt2 = "*The D-Gun of Core is a bit longer though."
-			txt3 = ""
+			txt1 = "*Type-A, Core is slow in the beginning."
+			txt2 = "*Will get longer radar, speed and laser range with more XP"
+			txt3 = "*Ion Beam at 0.3, Sumo Laser at 0.6, and Sat. Strike at 1.2 XP."
 		elseif suid == 375 then
-			txt1 = "*Core Commander is slow in beginning, so early morph can be good."
+			txt1 = "*Type-M, Core Commander is slower, but has longer D-Gun."
 			txt2 = "*Gets a longer D-Gun when upgraded, and laser beam at level 2."
 			txt3 = "*A level 4 Commander will have a Mobile Artillery shot."
 		end
-		glText(txt1, labelp+t, 45, 10, 'd')
-		glText(txt2, labelp+t, 25, 10, 'd')
-		glText(txt3, labelp+t, 5, 10, 'd')
+		glText(txt1, labelp, 45, 10, 'd')
+		glText(txt2, labelp, 25, 10, 'd')
+		glText(txt3, labelp, 5, 10, 'd')
 		glEndText()
 		glPopMatrix()
 end
+
+-- function widget:MapDrawCmd(playerID, cmdType, px, py, pz, labeltext)
+	-- if playerID == myTeamID then
+		-- local tsx, tsy, tsz = spGetTeamStartPosition(teamID)
+		-- if tsx and tsx > 0 then widgetHandler:RemoveWidget(self) end
+	-- end
+-- end
 
 function widget:MousePress(mx, my, mButton)
     
