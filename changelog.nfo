@@ -19,6 +19,10 @@
     º°°°°°°°°°°°°°°°°±²²ÛÛ°°°°°°±²ÛÛÛ²±²ÛÛÛ²±°°°°°°°°°°°°°°°±²ÛÛ²±°°°°º
     ºÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜº
     ÈÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ¼ by ElementalGizmo
+------------------- Change Log of XTA v9.72 beta (85.0 and next version) ------------------ by Deadnight Warrior and Jools
+* fixed King of the hill mode, no cloaked or stunned units, or units not on ground can maintain control. 
+* Added reminder and countdown sound when 30 secs left
+* Added support for changing Commanders in-game. New modoption: let users choose in game. Renamed Commander options to Automatic and Manual Commanders.
 
 ------------------- Change Log of XTA v9.70 beta (85.0 and next version) ------------------ by Deadnight Warrior
 Cleaned up all excess unit categories, needs finetunning for each individual unit now
