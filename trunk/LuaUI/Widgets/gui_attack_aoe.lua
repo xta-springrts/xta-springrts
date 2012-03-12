@@ -1,13 +1,15 @@
+-- $Id: gui_attack_aoe.lua 3823 2009-01-19 23:40:49Z evil4zerggin $
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
+local versionNumber = "v3.1c"
 
 function widget:GetInfo()
   return {
-    name      = "Attack AoE - Xta",
-    desc      = "v3.0 Cursor indicator for area of effect and scatter when giving attack command.",
+    name      = "Attack AoE",
+    desc      = versionNumber .. " Cursor indicator for area of effect and scatter when giving attack command.",
     author    = "Evil4Zerggin",
-    date      = "14 September 2008",
-    license   = "GNU GPL, v2 or later",
+    date      = "26 September 2008",
+    license   = "GNU LGPL, v2.1 or later",
     layer     = 1, 
     enabled   = true  --  loaded by default?
   }
@@ -31,7 +33,7 @@ local pointSizeMult        = 2048
 --------------------------------------------------------------------------------
 local aoeDefInfo = {}
 local dgunInfo = {}
-local hasSelectionCallin = false
+local hasSelection = false
 local aoeUnitDefID
 local dgunUnitDefID
 local aoeUnitID
@@ -199,14 +201,18 @@ local function SetupUnitDef(unitDefID, unitDef)
   if (maxWeaponDef.cylinderTargetting >= 100) then
     aoeDefInfo[unitDefID] = {type = "orbital", scatter = scatter}
   elseif (weaponType == "Cannon") then
-    aoeDefInfo[unitDefID] = {type = "ballistic", scatter = scatter, v = maxWeaponDef.maxVelocity, range = maxWeaponDef.range}
+    aoeDefInfo[unitDefID] = {type = "ballistic", scatter = scatter, v = maxWeaponDef.projectilespeed, range = maxWeaponDef.range}
   elseif (weaponType == "MissileLauncher") then
     local turnRate = 0
     if (maxWeaponDef.tracks) then
       turnRate = maxWeaponDef.turnRate
     end
-    if (maxWeaponDef.wobble > turnRate) then
-      scatter = (maxWeaponDef.wobble - maxWeaponDef.turnRate) * 10 * (maxWeaponDef.range + maxWeaponDef.maxVelocity)
+    if (maxWeaponDef.wobble > turnRate * 1.4) then
+      scatter = (maxWeaponDef.wobble - maxWeaponDef.turnRate) * maxWeaponDef.projectilespeed * 16
+      local rangeScatter = (8 * maxWeaponDef.wobble - maxWeaponDef.turnRate)
+      aoeDefInfo[unitDefID] = {type = "wobble", scatter = scatter, rangeScatter = rangeScatter, range = maxWeaponDef.range}
+    elseif (maxWeaponDef.wobble > turnRate) then
+      scatter = (maxWeaponDef.wobble - maxWeaponDef.turnRate) * maxWeaponDef.projectilespeed * 16
       aoeDefInfo[unitDefID] = {type = "wobble", scatter = scatter}
     elseif (maxWeaponDef.tracks) then
       aoeDefInfo[unitDefID] = {type = "tracking"}
@@ -257,17 +263,19 @@ end
 
 local function UpdateSelection()
   local sel = GetSelectedUnitsSorted()
-  
+    
   local maxCost = 0
   dgunUnitDefID = nil
   aoeUnitDefID = nil
   dgunUnitID = nil
   aoeUnitID = nil
+  hasSelection = false
   
   for unitDefID, unitIDs in pairs(sel) do
     if (dgunInfo[unitDefID]) then 
       dgunUnitDefID = unitDefID
       dgunUnitID = unitIDs[1]
+      hasSelection = true
     end
   
     if (aoeDefInfo[unitDefID]) then
@@ -276,6 +284,7 @@ local function UpdateSelection()
         maxCost = currCost
         aoeUnitDefID = unitDefID
         aoeUnitID = GetRepUnitID(unitIDs)
+        hasSelection = true
       end
     end
   end
@@ -467,10 +476,22 @@ end
 --------------------------------------------------------------------------------
 --wobble
 --------------------------------------------------------------------------------
-local function DrawWobbleScatter(scatter, tx, ty, tz)
+local function DrawWobbleScatter(scatter, fx, fy, fz, tx, ty, tz, rangeScatter, range)
+  local dx = tx - fx
+  local dy = ty - fy
+  local dz = tz - fz
+  
+  local bx, by, bz, d = Normalize(dx, dy, dz)
+  
   glColor(scatterColor)
   glLineWidth(scatterLineWidthMult / mouseDistance)
-  DrawCircle(tx, ty, tz, scatter)
+  if d and range then
+    if d <= range then
+      DrawCircle(tx, ty, tz, rangeScatter * d + scatter)
+    end
+  else
+    DrawCircle(tx, ty, tz, scatter)
+  end
   glColor(1,1,1,1)
   glLineWidth(1)
 end
@@ -550,6 +571,14 @@ end
 --callins
 --------------------------------------------------------------------------------
 
+function widget:MousePress()
+  UpdateSelection()
+end
+
+function widget:KeyPress()
+  UpdateSelection()
+end
+
 function widget:Initialize()
   for unitDefID, unitDef in pairs(UnitDefs) do
     SetupUnitDef(unitDefID, unitDef)
@@ -562,30 +591,37 @@ function widget:Shutdown()
 end
 
 function widget:DrawWorld()
-  if (not hasSelectionCallin) then
-    UpdateSelection()
-  end
-  
-  mouseDistance = GetMouseDistance() or 1000
-  
-  local tx, ty, tz = GetMouseTargetPosition()
-  if (not tx) then return end
+ 
+  if not hasSelection then return end
   local _, cmd, _ = GetActiveCommand()
   
   if (cmd == CMD_DGUN and dgunUnitDefID) then
+    mouseDistance = GetMouseDistance() or 1000
+    local tx, ty, tz = GetMouseTargetPosition()
+    if (not tx) then return end
     local info = dgunInfo[dgunUnitDefID]
-    local fx, fy, fz = GetUnitPosition(dgunUnitID)
+    local fx, fy, fz = GetUnitPosition(dgunUnitID)   
     if (not fx) then return end
-    
-    DrawNoExplode(info.aoe, fx, fy, fz, tx, ty, tz, info.range)
+    local angle = math.atan2(fx-tx,fz-tz) + (math.pi/2.1)
+    local dx = fx+(sin(angle)*13)
+    local dz = fz+(cos(angle)*13)
+    local angle2 = math.atan2(dx-tx,dz-tz)
+    DrawNoExplode(info.aoe, dx, fy, dz, dx-(sin(angle2)*125), ty,dz-(cos(angle2)*125), info.range)
     glColor(1, 0, 0, 0.75)
     glLineWidth(1)
-    glDrawGroundCircle(fx, fy, fz, info.range, circleDivs)
+    glDrawGroundCircle(dx, fy, dz, info.range, circleDivs)
     glColor(1,1,1,1)
     return
   end
   
-  if (cmd ~= CMD_ATTACK or not aoeUnitDefID) then return end
+  if (cmd ~= CMD_ATTACK or not aoeUnitDefID) then 
+    UpdateSelection()
+    return 
+  end
+  
+  mouseDistance = GetMouseDistance() or 1000
+  local tx, ty, tz = GetMouseTargetPosition()
+  if (not tx) then return end
   
   local info = aoeDefInfo[aoeUnitDefID]
   
@@ -618,7 +654,7 @@ function widget:DrawWorld()
     DrawDroppedScatter(info.aoe, info.ee, info.scatter, info.v, fx, info.h, fz, tx, ty, tz, info.salvoSize, info.salvoDelay)
   elseif (weaponType == "wobble") then
     DrawAoE(tx, ty, tz, info.aoe, info.ee)
-    DrawWobbleScatter(info.scatter, tx, ty, tz)
+    DrawWobbleScatter(info.scatter, fx, fy, fz, tx, ty, tz, info.rangeScatter, info.range)
   elseif (weaponType == "orbital") then
     DrawAoE(tx, ty, tz, info.aoe, info.ee)
     DrawOrbitalScatter(info.scatter, tx, ty, tz)
@@ -628,8 +664,9 @@ function widget:DrawWorld()
 end
 
 function widget:SelectionChanged(sel)
-  hasSelectionCallin = true
   UpdateSelection()
+  widgetHandler:RemoveCallIn("MousePress")
+  widgetHandler:RemoveCallIn("KeyPress")
 end
 
 function widget:Update(dt)
