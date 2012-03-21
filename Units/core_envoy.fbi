@@ -80,6 +80,8 @@
 	//*********************
 	sightdistance=375;
 	radardistance=0;
+	losemitheight=64;
+	radaremitheight=64;
 
 	//************************************************************
 	//  Weapons
