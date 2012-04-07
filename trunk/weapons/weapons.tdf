@@ -5041,11 +5041,11 @@
 	startvelocity=100;
 	weaponacceleration=120;
 	areaofeffect=120;  //80
-	energypershot=900;
+	energypershot=1200;
 	Burst=12;
 	Burstrate=0.1666;
 	Trajectoryheight=1;
-	Wobble=2700; //14000
+	Wobble=2900; //14000
 	Dance=40;
 	flighttime=5;
 	//turnrate=5000;	//4000
