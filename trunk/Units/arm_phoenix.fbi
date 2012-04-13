@@ -116,7 +116,7 @@
 	downloadable=1;
 	flaredelay=0.3;
 	flaredropvector=0 0 -1;
-	flareefficieny=0.3;
+	FlareEfficiency=0.3;
 	flarereload=4;
 	maneuverleashlength=1280;
 	scale=1;

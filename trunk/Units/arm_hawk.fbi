@@ -53,7 +53,7 @@
 	//  Abilities
 	//*************
 	canattack=1;
-	candropflare=0;
+	candropflare=1;
 	canfly=1;
 	canguard=1;
 	canmove=1;
@@ -109,7 +109,7 @@
 	downloadable=1;
 	flaredelay=0.3;
 	flaredropvector=0 0 -1;
-	flareefficieny=0.3;
+	FlareEfficiency=0.3;
 	flarereload=5;
 	hoverattack=0;
 	maneuverleashlength=1280;
