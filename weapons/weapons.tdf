@@ -813,7 +813,7 @@
 	turret=1;
 	range=1950;
 	reloadtime=3;
-	weaponvelocity=550;
+	weaponvelocity=650; //550
 	areaofeffect=128;
 	soundstart=cannhvy5;
 	soundhit=xplomed2;
@@ -2025,11 +2025,11 @@
 	BounceRebound=0.8;
 	bounceExplosionGenerator=custom:BERTHASHOT;
 	range=4750;
-	reloadtime=4.67;
-	weaponvelocity=800;
+	reloadtime=5.14; //4.67
+	weaponvelocity=1200; //800
 	energypershot=1300;
-	areaofeffect=114;
-	accuracy=800;
+	areaofeffect=96; //114
+	accuracy=600; //800
 	aimrate=500;
 	soundstart=xplonuk4;
 	soundhit=xplonuk1;
@@ -2040,10 +2040,10 @@
 	edgeeffectiveness=0.09;
 	[DAMAGE]
 	{
-		default=742;
+		default=950;//742
 		group_invincible=1;
-		group_ships=1120;
-		group_large_ships=1120;
+		group_ships=1430; //1120 
+		group_large_ships=1430; //1120
 	}
 }
 [ARM_BULL]
@@ -2146,7 +2146,7 @@
 	accuracy=920;
 	movingaccuracy=1620;
 	reloadtime=2.0;
-	weaponvelocity=700; //350
+	weaponvelocity=350; //350
 	areaofeffect=48;
 	soundstart=cannon1;
 	soundhit=xplomed3;
@@ -3076,7 +3076,7 @@
 	BounceRebound=0.8;
 	bounceExplosionGenerator=custom:BERTHASHOT;
 	reloadtime=6.66;
-	weaponvelocity=400;
+	weaponvelocity=600; //400
 	areaofeffect=144;
 	soundstart=cannhvy2;
 	soundhit=xplonuk1;
@@ -3289,14 +3289,14 @@
 	turret=1;
 	color=3;
 	range=5040;
-	reloadtime=5.34;
-	weaponvelocity=850;
+	reloadtime=5.87; //5.34 = +10%
+	weaponvelocity=1300; //850 = + 27%
 	energypershot=1200;
-	areaofeffect=144;
+	areaofeffect=122; // -16%
 	soundstart=xplonuk3;
 	soundhit=xplonuk1;
 	firestarter=50;
-	accuracy=1000;
+	accuracy=800; //1000
 	aimrate=650;
 	tolerance=300;
 	holdtime=1;
@@ -3304,9 +3304,9 @@
 	edgeeffectiveness=0.1;
 	[DAMAGE]
 	{
-		default=673;
-		group_ships=1003;
-		group_large_ships=1003;
+		default=864; //+27%
+		group_ships=1280; //+27%
+		group_large_ships=1280; //+27%
 		group_invincible=1;
 	}
 }
@@ -3452,7 +3452,7 @@
 	accuracy=920;
 	movingaccuracy=1620;
 	reloadtime=2;
-	weaponvelocity=730;  //365
+	weaponvelocity=365;  //365
 	//mygravity=1.2;
 	explosiongenerator=custom:WindkbotRocket;
 	areaofeffect=48;
@@ -3568,7 +3568,7 @@
 	turret=1;
 	range=1900;
 	reloadtime=2.8;
-	weaponvelocity=550;
+	weaponvelocity=650; //550
 	areaofeffect=160;
 	soundstart=cannhvy5;
 	soundhit=xplomed2;
@@ -5634,6 +5634,50 @@
 		group_invincible=1;
 	}
 }
+
+[AIR_UNITEX]
+{
+	name=air expl;
+	weaponType=Cannon;
+	turret=1;
+	range=480;
+	reloadtime=3.6;
+	weaponvelocity=250;
+	areaofeffect=35;
+	soundstart=;
+	soundhit=XPLOSML6;
+	shakemagnitude=0;
+	shakeduration=0;
+	explosiongenerator=custom:fireballbloom;
+	[DAMAGE]
+	{
+		default=60;
+		group_invincible=1;
+	}
+}
+
+[AIR_BIG_UNITEX]
+{
+	name=Big Kbot;
+	weaponType=Cannon;
+	turret=1;
+	range=480;
+	reloadtime=3.6;
+	weaponvelocity=250;
+	areaofeffect=110;
+	soundstart=largegun;
+	soundhit=xplolrg2;
+	shakemagnitude=8;
+	shakeduration=0.3;
+	explosiongenerator=custom:fireballbloom;
+	[DAMAGE]
+	{
+		default=100;
+		group_invincible=1;
+	}
+}
+
+
 [NANO_UNIT]
 {
 	name=Small tank;
