@@ -90,7 +90,7 @@
 	wpri_badtargetcategory=VTOL;
 	//wsec_badtargetcategory=NOTAIR;
 	//onlytargetcategory1=NOTAIR;
-	explodeas=BIG_UNITEX;
+	explodeas=AIR_BIG_UNITEX;
 	selfdestructas=BIG_UNIT;
 
 	//************************************************************

@@ -62,6 +62,7 @@
 	canmove=1;
 	canpatrol=1;
 	canstop=1;
+	CanDropFlare=0;
 
 	//************************************************************
 	//  Movement
@@ -88,9 +89,8 @@
 	badtargetcategory=VTOL;
 	wpri_badtargetcategory=VTOL;
 	onlytargetcategory1=NOTAIR;
-	explodeas=;
+	explodeas=AIR_UNITEX;
 	selfdestructas=MEDIUM_UNIT;
-	CanDropFlare=1;
 	FlareDelay=0.1;
 	FlareSalvoSize=3;
 	FlareDropVector=0 0 -1;
