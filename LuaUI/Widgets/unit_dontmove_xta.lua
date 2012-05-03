@@ -59,6 +59,12 @@ local unitArray = {
   "arm_millenium",
   "arm_commander",
   "core_commander",
+  "arm_podger",
+  "core_spoiler",
+  "arm_eraser",
+  "core_spectre",
+  "arm_jammer",
+  "core_deleter",
 }
 
 
