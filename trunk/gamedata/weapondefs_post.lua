@@ -19,7 +19,7 @@ end
 local modOptions = Spring.GetModOptions()
 
 -- Adjustment of terrain damage, area of effect, kinetic force of weapons and cannon trajectory height
-local customGravity = 0.8
+local customGravity = 0.7
 if modOptions and modOptions.gravity then customGravity=modOptions.gravity end
 local velGravFactor = customGravity * 900
 for id in pairs(WeaponDefs) do

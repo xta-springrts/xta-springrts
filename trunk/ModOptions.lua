@@ -61,7 +61,7 @@ local options = {
 	]]--
 	{
 		key="teamdeathmode",
-		name="Team Game End Mode",
+		name="Game End Mode",
 		desc="What it takes to eliminate a Team\nkey: teamdeathmode",
 		type="list",
 		--section= 'xtagame',
@@ -121,17 +121,25 @@ local options = {
 		desc   = "Set the projectile velocity for cannon weapons\nkey: gravity",
 		type   = "number",
 		--section= "xtagame",
-		def    = 0.8,
-		min    = 0,
-		max    = 2,
+		def    = 0.7,
+		min    = 0.05,
+		max    = 1.6,
 		step   = 0.05,
+	},
+	{
+		key    = "airnocollide",
+		name   = "Aircraft don't collide with each other",
+		desc   = "Improves game performance and aircraft control at the expense of aircraft vs AA\nkey: airnocollide",
+		type   = "bool",
+		def    = true,
+		section= "xtagame",
 	},
 	{
 		key    = "space_mode",
 		name   = "Allow aircraft and hovercraft on maps with no atmosphere",
 		desc   = "If enabled map atmosphere condition will be ignored for aircraft and hovercraft\nkey: space_mode",
 		type   = "bool",
-		def    = false,
+		def    = true,
 		section= "xtagame",
 	},
 	{

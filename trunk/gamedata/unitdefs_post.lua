@@ -23,7 +23,7 @@ end
 --------------------------------------------------------------------------------
 -- General postprocessing
 for name, ud in pairs(UnitDefs) do
--- Tanks and hovers don't slow down when turning
+	-- Tanks and hovers don't slow down when turning
 	if ud.maxvelocity and ud.category and ((ud.category:find("TANK",1,true) or ud.category:find("HOVER",1,true))) then
 		if not ud.turninplace then
 			ud.turninplace = 0
@@ -33,7 +33,15 @@ for name, ud in pairs(UnitDefs) do
 			ud.turninplacespeedlimit = ud.maxvelocity * 0.75
 		end
 	end
--- convert from the pre-0.83 representation (pieceTrailCEGTag, pieceTrailCEGRange)
+	-- Do aircraft collide with each other or they don't?
+	if ud.canfly and tonumber(ud.canfly) == 1 then
+		if modOptions and modOptions.airnocollide and not tobool(modOptions.airnocollide) then
+			ud.collide = 1
+		else
+			ud.collide = 0
+		end
+	end
+	-- convert from the pre-0.83 representation (pieceTrailCEGTag, pieceTrailCEGRange)
 	if (ud.piecetrailcegtag ~= nil) then
 		if (ud.sfxtypes == nil) then
 			ud.sfxtypes = {}

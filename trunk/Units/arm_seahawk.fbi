@@ -108,6 +108,7 @@
 	maneuverleashlength=1280;
 	scale=1;
 	shootme=1;
+	collide=0;
 	steeringmode=1;
 	threed=1;
 	version=1.2;
