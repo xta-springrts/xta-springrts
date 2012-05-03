@@ -7,7 +7,7 @@ piece  GP, Base, Box, Flare1, Flare2, Flare3, Wake1, Wake2,
        Wake3, Wake4, Wake5, Wake6, Wake7, Wake8, exhaust;
 
 static-var  gun_1, restore_delay, Static_Var_3, bAiming, Static_Var_5,
-            Static_Var_6, RocketTypeSelect;
+            Static_Var_6, RocketTypeSelect, WeapRange;
 
 // Signal definitions
 #define SIG_AIM				2
@@ -184,6 +184,14 @@ setSFXoccupy(Func_Var_1)
 RocketType(select)
 {
 	RocketTypeSelect = select;
+	if (select)
+	{
+		get WEAPON_RANGE(-1, WeapRange);
+	}
+	else
+	{
+		get WEAPON_RANGE(-1, get WEAPON_RANGE(2));
+	}
 }
 
 Create()
@@ -193,6 +201,7 @@ Create()
 	gun_1 = 0;
 	Static_Var_3 = 0;
 	RocketTypeSelect = 1;
+	WeapRange = get WEAPON_RANGE(1);
 	bAiming = FALSE;
 	start-script SmokeUnit();
 }

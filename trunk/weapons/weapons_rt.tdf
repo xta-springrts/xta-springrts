@@ -420,18 +420,18 @@
 	range=1400;
 	reloadtime=0.333;	
 	stockpile=1;
-	stockpiletime=5;
-	weapontimer=6;
+	stockpiletime=4;
+	weapontimer=0.33;
 	weaponvelocity=300;
 	startvelocity=150;
 	weaponacceleration=150;
-	areaofeffect=95;
-	energypershot=1171.875;	
+	areaofeffect=90;
+	energypershot=937.5;	
 	Trajectoryheight=1;
-	Wobble=12000;
-	flighttime=8;
-	turnrate=4500;
-	edgeeffectiveness=0.2;
+	Wobble=2900;
+	dance=40;
+	flighttime=5;
+	//turnrate=4500;
 	soundstart=RavenHvyRock;
 	soundhit=rockhit;
 	firestarter=70;
@@ -440,7 +440,7 @@
 	startsmoke=0;
 	[DAMAGE]
 	{
-		default=500;
+		default=250;
 		group_invincible=1;
 	}
 }

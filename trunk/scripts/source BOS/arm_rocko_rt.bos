@@ -6,7 +6,7 @@
 piece  torso, lbarrel, lmisspod, rshield, pelvis, rfoot, lfoot, lthigh,
        rthigh, lleg, rleg, ground, lfirept2, exhaust;
 
-static-var  bMoving, bAiming, Static_Var_3, restore_delay,
+static-var  bMoving, bAiming, Static_Var_3, restore_delay, WeapRange,
 			moveSpeed, currentSpeed, RocketTypeSelect;
 
 // Signal definitions
@@ -455,6 +455,14 @@ SmokeUnit(healthpercent, sleeptime, smoketype)
 RocketType(select)
 {
 	RocketTypeSelect = select;
+	if (select)
+	{
+		get WEAPON_RANGE(-1, WeapRange);
+	}
+	else
+	{
+		get WEAPON_RANGE(-1, get WEAPON_RANGE(2));
+	}
 }
 
 Create()
@@ -463,6 +471,7 @@ Create()
 	bMoving = FALSE;
 	bAiming = FALSE;
 	RocketTypeSelect = 1;
+	WeapRange = get WEAPON_RANGE(1);
 	Static_Var_3 = 1;
 	restore_delay = 3000;
 	moveSpeed = get MAX_SPEED;

@@ -5,7 +5,7 @@
 	//********************
 	side=Core;
 	name=Rocket Frigate;
-	description=Rocket Launcher Ship;
+	description=Rocket Launcher Ship (has Vertical Launch and Guided rockets);
 	icontype=sea;
 
 	//************************************************************

@@ -5,7 +5,7 @@
 	//********************
 	side=Core;
 	name=Dominator;
-	description=Heavy Rocket Kbot;
+	description=Heavy Rocket Kbot (has Vertical Launch and Guided rockets);
 
 	//************************************************************
 	//  Categories

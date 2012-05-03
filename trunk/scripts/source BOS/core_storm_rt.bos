@@ -6,7 +6,7 @@
 piece  torso, rfirept, lfirept, pelvis, rfoot, lfoot, launcher, lthigh,
        rthigh, rleg, lleg, turret, ground, lexhaust, rexhaust;
 
-static-var  gun_1, moveSpeed, currentSpeed, RocketTypeSelect, animSpeed;
+static-var  gun_1, moveSpeed, currentSpeed, RocketTypeSelect, animSpeed, WeapRange;
 
 // Signal definitions
 #define SIG_MOVE			2
@@ -220,11 +220,20 @@ StopMoving()
 RocketType(select)
 {
 	RocketTypeSelect = select;
+	if (select)
+	{
+		get WEAPON_RANGE(-1, WeapRange);
+	}
+	else
+	{
+		get WEAPON_RANGE(-1, get WEAPON_RANGE(2));
+	}
 }
 
 Create()
 {
 	RocketTypeSelect = 1;
+	WeapRange = get WEAPON_RANGE(1);
 	gun_1 = torso;
 	hide lexhaust;
 	hide rexhaust;
