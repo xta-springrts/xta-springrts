@@ -5,7 +5,7 @@
 	//********************
 	side=Arm;
 	name=Jethro;
-	description=Missile Kbot;
+	description=Missile Kbot (has Universal Guided and Surface to Surface Missiles);
 
 	//************************************************************
 	//  Categories

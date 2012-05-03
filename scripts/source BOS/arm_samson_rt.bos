@@ -41,6 +41,14 @@ SmokeUnit(healthpercent, sleeptime, smoketype)
 RocketType(select)
 {
 	RocketTypeSelect = select;
+	if (select)
+	{
+		get WEAPON_RANGE(-1, get WEAPON_RANGE(3));
+	}
+	else
+	{
+		get WEAPON_RANGE(-1, get WEAPON_RANGE(4));
+	}
 }
 
 Create()

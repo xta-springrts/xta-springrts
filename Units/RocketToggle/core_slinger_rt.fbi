@@ -5,7 +5,7 @@
 	//********************
 	side=Core;
 	name=Slinger;
-	description=Anti-Air Hovercraft;
+	description=Anti-Air Hovercraft (has Universal Guided and Surface to Surface Missiles);
 	icontype=hover;
 
 	//************************************************************

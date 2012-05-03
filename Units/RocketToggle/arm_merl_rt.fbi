@@ -5,7 +5,7 @@
 	//********************
 	side=Arm;
 	name=Merl;
-	description=Mobile Rocket Launcher;
+	description=Mobile Rocket Launcher (has Vertical Launch and Guided rockets);
 
 	//************************************************************
 	//  Categories
