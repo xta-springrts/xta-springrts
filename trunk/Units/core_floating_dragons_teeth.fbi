@@ -45,7 +45,7 @@
 	//  Building
 	//************
 	buildangle=0;
-	yardmap=w;
+	yardmap=oo oo;
 
 	//************************************************************
 	//  Constructor

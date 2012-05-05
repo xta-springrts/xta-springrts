@@ -36,7 +36,7 @@
 	Category=CORE PLANT NOWEAPON NOTAIR NOTSUB;
 	TEDClass=PLANT;
 	Copyright=Copyright 1997 Humongous Entertainment. All rights reserved.;
-	YardMap=oooooooooooo oyyyyyyyyyyo oyyyyyyyyyyo oyyyyyyyyyyo oyyyyyyyyyyo oyyyyyyyyyyo oyyyyyyyyyyo oyyyyyyyyyyo oyyyyyyyyyyo oyyyyyyyyyyo oooooooooooo;
+	YardMap=oooooooooooo oyyyyyyyyyyo oyyyyyyyyyyo oyyyyyyyyyyo oyyyyyyyyyyo oyyyyyyyyyyo oyyyyyyyyyyo oyyyyyyyyyyo oyyyyyyyyyyo oyyyyyyyyyyo oyyyyyyyyyyo oooooooooooo;
 	corpse=corfff_dead;
 	UnitNumber=2537;
 	firestandorders=1;

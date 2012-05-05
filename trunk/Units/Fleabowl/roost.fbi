@@ -39,7 +39,7 @@
 	upright	   = 0;
 	waterline	 = 0;
 	workerTime	= 0;
-	yardMap	   = ooooooooo;
+	yardMap	   = ooooo ooooo ooooo ooooo ooooo;
 	mincloakdistance=0;
 	[SFXTypes]
 	{
