@@ -39,5 +39,5 @@
   upright=0;
   usebuildinggrounddecal=1;
   workertime=0;
-  yardmap=ffff;
+  yardmap=yyyy yyyy yyyy yyyy;
 }

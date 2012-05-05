@@ -50,7 +50,7 @@
 	//  Building
 	//************
 	buildangle=8192;
-	yardmap=ooooooooo;
+	yardmap=oooo oooo oooo oooo;
 
 	//************************************************************
 	//  Constructor

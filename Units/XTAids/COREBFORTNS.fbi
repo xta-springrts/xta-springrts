@@ -31,7 +31,7 @@
 	Category=CORE METAL NOWEAPON NOTAIR NOTSUB;
 	TEDClass=DEFENSIVE;
 	Copyright=Copyright 1997 Humongous Entertainment. All rights reserved.;
-	YardMap=f;
+	YardMap=oooooooo oooooooo oooooooo;
 	Corpse=COREBFORTNS_DEAD;
 	UnitNumber=641;
 	EnergyMake=0;

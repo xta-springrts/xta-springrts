@@ -33,7 +33,7 @@
 	Category=ARM NOWEAPON NOTAIR NOTSEA NOTSUB;
 	TEDClass=DEFENSIVE;
 	Copyright=Copyright 1997 Humongous Entertainment. All rights reserved.;
-	YardMap=f;
+	YardMap=oooooooo oooooooo oooooooo;
 	Corpse=ARMBFORTEW_DEAD;
 	UnitNumber=636;
 	EnergyMake=0;

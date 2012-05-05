@@ -47,7 +47,7 @@
 	//  Building
 	//************
 	buildangle=8192;
-	yardmap=www;
+	yardmap=ooo ooo ooo;
 	activatewhenbuilt=1;
 
 	//************************************************************

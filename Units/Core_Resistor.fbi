@@ -29,7 +29,7 @@
 	Category=CORE STRATEGIC DEFENSIVE STATIC WEAPON NOTLAND NOTAIR NOTSUB;
 	TEDClass=STRATEGIC;
 	buildpic=core_resistor.pcx;
-	YardMap=wwwwwwwww;
+	YardMap=ooooo ooooo ooooo ooooo ooooo;
 	Corpse=Core_Resistor_dead;
 	UnitNumber=11992;
 	firestandorders=1;

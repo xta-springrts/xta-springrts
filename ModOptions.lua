@@ -79,7 +79,7 @@ local options = {
 		type = "list",
 		def  = "choose",
 		items = {
-			{ key = "choose", name = "Let players choose in game", desc = "Let users choose in game between automatical and manual types" },
+			{ key = "choose", name = "Let players choose in game", desc = "Let users choose in game between automatical and manual types *EXPERIMENTAL*" },
 			{ key = "zeroupgrade", name = "Automatic upgrades", desc = "Commander with automatical upgrades based on experience" },
 			{ key = "noupgrade", name = "Manual upgrades, level 0 ", desc = "Commander with manual upgrades. Starting at base level" },
 			{ key = "halfupgrade", name = "Manual upgrades, level 2", desc = "Commander with manual upgrades. Powerful lasers are added." },

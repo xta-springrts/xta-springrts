@@ -18,7 +18,7 @@
 	SoundCategory=CORE_COM;
 	TEDClass=CONSTR;
 	Commander=1;
-	YardMap=OOOOOOOO OOOOOOOO OOOOOOOO OOOOOOOO OOOOOOOO OOOOOOOO OOOOOOOO OOOOOOOO;
+	YardMap=oooo oooo oooo oooo;
 	
 	//    Movement
 	//BrakeRate=1.5;

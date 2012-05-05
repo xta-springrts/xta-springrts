@@ -30,7 +30,7 @@
 	Category=ARM DEFENSIVE STRATEGIC STATIC WEAPON NOTLAND NOTAIR NOTSUB;
 	TEDClass=STRATEGIC;
 	buildpic=arm_repulsor.pcx;
-	YardMap=wwwwwwwww;
+	YardMap=oooo oooo oooo oooo;
 	Corpse=ARM_Repulsor_dead;
 	UnitNumber=11996;
 	firestandorders=1;
