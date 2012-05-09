@@ -170,7 +170,7 @@ local function DetectCard(vendor,renderer)
                  (renderer:find("quadro fx 5[678]%d%d") and 10) or
                  (renderer:find("quadro fx 5[234]%d%d") and 8) or
                  (renderer:find("quadro fx [1-4]%d%d%d") and 8) or
-                 (renderer:find(" gf[xs]* 4%d%d") and 11) or  --// Fermi (GF100)
+                 (renderer:find(" gf[xs]* [456]%d%d") and 11) or  --// Fermi (GF100)
                  (renderer:find(" g[txs]* %d%d%d") and 10) or --// GTX280
                  (renderer:find(" 9") and 9) or	--// G90,G92,G94
                  (renderer:find(" 8") and 8) or	--// G80,G82,G84
