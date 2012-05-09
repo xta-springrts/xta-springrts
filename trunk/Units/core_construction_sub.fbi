@@ -6,7 +6,7 @@
 	buildcostmetal=151;
 	buildtime=3352;
 	Category=CORE SHIP NOWEAPON NOTAIR NOTSUB ;
-	description==- Tech Level 1;
+	description=Tech Level 1;
 	footprintx=2;
 	footprintz=2;
 	maxdamage=685;
