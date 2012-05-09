@@ -17,6 +17,7 @@ end
 local px, py = 300, 300
 local sizex, sizey, t, sidep, infop, labelp = 440, 260, 18, 60, 60, 100
 local middle = labelp+(sizex-labelp)/2
+local scale = 1
 
 local imgComAA = "LuaUI/Images/commchange/ComAA.png"
 local imgComAM = "LuaUI/Images/commchange/ComAM.png"
@@ -70,11 +71,15 @@ end
 -- Callins
 --------------------------------------------------------------------------------
 function widget:Initialize()
-    if spGetSpectatingState() or
-       Spring.GetGameFrame() > 0 or
-		(Spring.GetModOptions() or {}).comm ~= "choose" then
+    if spGetSpectatingState() or Spring.GetGameFrame() > 0 or (Spring.GetModOptions() or {}).comm ~= "choose" then
         widgetHandler:RemoveWidget(self)
     end
+	local X, Y = Spring.GetViewGeometry()
+	scale = Y/1200
+	px, py = 300*scale, 300*scale
+	sizex, sizey, t, sidep, infop, labelp = 440*scale, 260*scale, 18*scale, 60*scale, 60*scale, 100*scale
+	middle = labelp+(sizex-labelp)/2
+
 end
 
 function widget:DrawWorld()
@@ -176,13 +181,14 @@ function widget:DrawScreen()
 		-- Text
 		glBeginText()
 		-- Labelpanel
-        glText('Type', 40, sidep+infop + 70, 14, 'd')
-        glText('Faction', 40, infop + 30, 14, 'd')
-        glText('Info', 40, 30, 14, 'd')
+		local indent, font1, font2, font3 = 40*scale, 14*scale, 12*scale, 10*scale
+        glText('Type', indent, sidep+infop + 70*scale, font1, 'd')
+        glText('Faction', indent, infop + 30*scale, font1, 'd')
+        glText('Info', indent, 30*scale, font1, 'd')
 		-- Labels
-        glText('Choose Your Commander:', sizex/2, sizey, 16, 'cd')
-        glText('Automatic', labelp + (sizex-labelp)/4, sidep+infop, 12, 'cd')
-        glText('Manual', middle + (sizex-labelp)/4, sidep+infop, 12, 'cd')
+        glText('Choose Your Commander:', sizex/2, sizey, 16*scale, 'cd')
+        glText('Automatic', labelp + (sizex-labelp)/4, sidep+infop, font2, 'cd')
+        glText('Manual', middle + (sizex-labelp)/4, sidep+infop, font2, 'cd')
         --Info
 		local txt1, txt2, txt3
 		if suid == 30 then
@@ -202,9 +208,9 @@ function widget:DrawScreen()
 			txt2 = "*Gets a longer D-Gun when upgraded, and laser beam at level 2."
 			txt3 = "*A level 4 Commander will have a Mobile Artillery shot."
 		end
-		glText(txt1, labelp, 45, 10, 'd')
-		glText(txt2, labelp, 25, 10, 'd')
-		glText(txt3, labelp, 5, 10, 'd')
+		glText(txt1, labelp, 45*scale, font3, 'd')
+		glText(txt2, labelp, 25*scale, font3, 'd')
+		glText(txt3, labelp, 5*scale, font3, 'd')
 		glEndText()
 		glPopMatrix()
 end
