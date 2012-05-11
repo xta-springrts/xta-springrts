@@ -15,7 +15,7 @@ piece  torso, ruparm, luparm, rbigflash, nanospray, pelvis, lfirept, head,
 static-var  bMoving, aiming, bAiming, DGunning, singing, building, currentSpeed,
 			moveSpeed, speedFactor, LOS, AirLOS, radarRange, sonarRange, wRange, wFactor, DRange,
             weapon1Disabled, weapon2Disabled, weapon4Disabled, weapon5Disabled,
-            weapon6Disabled, idling;
+            weapon6Disabled, idling, satStrikeRange;
 
 ON()
 {
@@ -73,6 +73,7 @@ Experience()
 				weapon4Disabled = 0;
 				weapon5Disabled = 0;
 				weapon6Disabled = 0;
+				get WEAPON_RANGE(-5, satStrikeRange);
 				set ARMORED to 1;
 			}
 			speedFactor = XP/3 + 100;
@@ -615,6 +616,8 @@ Create()
 	radarRange = get RADAR_RADIUS;
 	sonarRange = get SONAR_RADIUS;
 	wRange = get WEAPON_RANGE(1);
+	satStrikeRange = get WEAPON_RANGE(5);
+	get WEAPON_RANGE(-5, wRange);
 	bMoving = 0;
 	building = FALSE;
 	aiming = 0;
@@ -633,6 +636,7 @@ StartMoving()
 {
 	signal SIG_IDLE;
 	if(idling) call-script StopIdle();
+	set MAX_SPEED to moveSpeed*speedFactor/100;
 	bMoving = 1;
 }
 
