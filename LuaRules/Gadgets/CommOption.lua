@@ -35,6 +35,11 @@ end
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
+local startUnitParamName = 'startUnit'
+local spGetTeamRulesParam = Spring.GetTeamRulesParam
+local spSetTeamRulesParam = Spring.SetTeamRulesParam
+
+
 -- Maps 'comm' mod option to ARM start unit.
 local arm_start_unit = {
     zeroupgrade = "arm_commander",
@@ -87,27 +92,35 @@ end
 
 
 local function GetStartUnit(teamID)
-    local side = select(5, Spring.GetTeamInfo(teamID))
-    if (side == "") then
-        -- startscript didn't specify a side for this team
-        local sidedata = Spring.GetSideData()
-        if (sidedata and #sidedata > 0) then
-            side = sidedata[1 + teamID % #sidedata].sideName
-        end
-    end
-    local startUnit
-    if start_unit_table[side] then
-        -- Arm or Core.
-        startUnit = start_unit_table[side][commType]
-    else
-        -- Unknown side.
-        startUnit = Spring.GetSideData(side)
-    end
-    return startUnit
+
+	local defaultStartUnit = spGetTeamRulesParam(teamID, startUnitParamName)
+	
+	if (Spring.GetModOptions() or {}).comm == 'choose' and defaultStartUnit then
+		return defaultStartUnit
+	else	
+		local side = select(5, Spring.GetTeamInfo(teamID))
+		if (side == "") then
+			-- startscript didn't specify a side for this team
+			local sidedata = Spring.GetSideData()
+			if (sidedata and #sidedata > 0) then
+				side = sidedata[1 + teamID % #sidedata].sideName
+			end
+		end
+		local startUnit
+		if start_unit_table[side] then
+			-- Arm or Core.
+			startUnit = start_unit_table[side][commType]
+		else
+			-- Unknown side.
+			startUnit = Spring.GetSideData(side)
+		end
+		return startUnit
+	end
 end
 
 local function SpawnStartUnit(teamID)
 	local startUnit = GetStartUnit(teamID)
+	Spring.Echo("Spawning start unit for team ",teamID, startUnit)
 	if (startUnit and startUnit ~= "") then
 		Spring.SetTeamResource(teamID, "ms", 0)
 		Spring.SetTeamResource(teamID, "es", 0)
@@ -121,9 +134,11 @@ local function SpawnStartUnit(teamID)
 			and ((x>Game.mapSizeX/2) and "west" or "east")
 			or ((z>Game.mapSizeZ/2) and "north" or "south")
 		local commanderID = Spring.CreateUnit(startUnit, x, y, z, facing, teamID)
-		if commType=="zeroupgrade" then
+		Spring.Echo("Create start unit for team ",teamID, commanderID)
+		--if commType=="zeroupgrade" then
 			Spring.GiveOrderToUnit(commanderID, CMD.MOVE_STATE, { 0 }, {})
-		end
+			Spring.Echo("Set move state")
+		--end
 
 		-- set start resources, either from mod options or custom team keys
 		local teamOptions = select(7, Spring.GetTeamInfo(teamID))
