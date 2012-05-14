@@ -95,24 +95,3 @@ if (Spring.GetModOptions() or {}).comm == 'choose' then
         end
     end
 end
-
-local function SpawnTeamStartUnit(teamID, allyID, x, z)
-    local startUnit = spGetTeamRulesParam(teamID, startUnitParamName)
-    if x <= 0 or z <= 0 then
-        local xmin, zmin, xmax, zmax = spGetAllyTeamStartBox(allyID)
-        x = 0.5 * (xmin + xmax)
-        z = 0.5 * (zmin + zmax)
-    end
-    local unitID = spCreateUnit(startUnit, x, spGetGroundHeight(x, z), z, 0, teamID)
-    if (comStorage) then
-      Spring.AddUnitResource(unitID, 'm', startMetal)
-      Spring.AddUnitResource(unitID, 'e', startEnergy)
-    end
-end
-
-function gadget:GameStart()
-    for teamID, allyID in pairs(spawnTeams) do
-        local startX, _, startZ = Spring.GetTeamStartPosition(teamID)
-        SpawnTeamStartUnit(teamID, allyID, startX, startZ)
-    end
-end
