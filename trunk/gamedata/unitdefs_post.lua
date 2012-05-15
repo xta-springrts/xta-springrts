@@ -65,35 +65,35 @@ if (modOptions) then
    local stMe = modOptions.startmetal or 1000
    for name, ud in pairs(UnitDefs) do  
 	if (ud.unitname == "arm_commander" or ud.unitname == "core_commander") then
-		ud.energyStorage = stEn + 50
-		ud.metalStorage = stMe + 50
+		ud.energystorage = stEn + 50
+		ud.metalstorage = stMe + 50
 	elseif (ud.unitname == "arm_u0commander" or ud.unitname == "core_u0commander") then
-		ud.energyStorage = stEn + 50
-		ud.metalStorage = stMe + 50
+		ud.energystorage = stEn + 50
+		ud.metalstorage = stMe + 50
 	elseif (ud.unitname == "arm_ucommander" or ud.unitname == "core_ucommander") then
-		ud.energyStorage = stEn + 1000
-		ud.metalStorage = stMe + 1000
+		ud.energystorage = stEn + 1000
+		ud.metalstorage = stMe + 1000
 	elseif (ud.unitname == "arm_u2commander" or ud.unitname == "core_u2commander") then
-		ud.energyStorage = stEn + 1500
-		ud.metalStorage = stMe + 1500
+		ud.energystorage = stEn + 1500
+		ud.metalstorage = stMe + 1500
 	elseif (ud.unitname == "arm_u3commander" or ud.unitname == "core_u3commander") then
-		ud.energyStorage = stEn + 4000
-		ud.metalStorage = stMe + 4000
+		ud.energystorage = stEn + 4000
+		ud.metalstorage = stMe + 4000
 	elseif (ud.unitname == "arm_u4commander" or ud.unitname == "core_u4commander") then
-		ud.energyStorage = stEn + 9000
-		ud.metalStorage = stMe + 9000
+		ud.energystorage = stEn + 9000
+		ud.metalstorage = stMe + 9000
 	elseif (ud.unitname == "armcom" or ud.unitname == "corcom") then
-		ud.energyStorage = stEn + 200
-		ud.metalStorage = stMe
+		ud.energystorage = stEn + 200
+		ud.metalstorage = stMe
 	elseif (ud.unitname == "arm_decoy_commander" or ud.unitname == "core_decoy_commander") then
-		ud.energyStorage = stEn
-		ud.metalStorage = stMe
+		ud.energystorage = stEn
+		ud.metalstorage = stMe
 	elseif (ud.unitname == "arm_base" or ud.unitname == "core_base") then
-		ud.energyStorage = stEn
-		ud.metalStorage = stMe
+		ud.energystorage = stEn
+		ud.metalstorage = stMe
 	elseif (ud.unitname == "arm_nincommander" or ud.unitname == "core_nincommander") then
-		ud.energyStorage = stEn + 50
-		ud.metalStorage = stMe + 9000
+		ud.energystorage = stEn + 50
+		ud.metalstorage = stMe + 9000
 	end
    end
 end
