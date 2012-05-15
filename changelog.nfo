@@ -19,12 +19,35 @@
     º°°°°°°°°°°°°°°°°±²²ÛÛ°°°°°°±²ÛÛÛ²±²ÛÛÛ²±°°°°°°°°°°°°°°°±²ÛÛ²±°°°°º
     ºÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜº
     ÈÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ¼ by ElementalGizmo
-------------------- Change Log of XTA v9.72 beta (85.0 and next version) ------------------ by Deadnight Warrior and Jools
-* fixed King of the hill mode, no cloaked or stunned units, or units not on ground can maintain control. 
-* Added reminder and countdown sound when 30 secs left
-* Added support for changing Commanders in-game. New modoption: let users choose in game. Renamed Commander options to Automatic and Manual Commanders.
+	
+------------------- Change Log of XTA v9.714 beta (85.0 and next version) ------------------ by Deadnight Warrior and Jools
+* Fixed "King of The Hill" mode, no cloaked or stunned units, or units not on ground can maintain control. Added reminder and countdown sound when 30 secs left in KoTH mode.
+* Added support for changing Commanders in-game. New modoption: let users choose in game. Renamed Commander options to Automatic and Manual Commanders. Still WIP
+* Commander selection menu scales with resolution so that it's always the same size, it might have too small fonts on low res screens
+* Fixed many unwanted reverts that happened when releasing 9.71 (Raven, and Hammer/Thud are affected mostly)
+* Added RadarEmitHeight and LOSEmitHeight values to all towers, commanders and big ships, makes them see better on bumpy terrain or when climbing hills
+* Added option to adjust custom gravity of cannon weapons (effectivly it changes their projectile speed, smaller number -> slower cannon, default 0.7)
+* Added option do enable or disable aircraft vs aircraft collision, default no collision
+* Expanded unit description for rocket toggle units so players can see which units can toggle rockets (and what type of rockets) before building them
+* Togglable rocket units now show attack range properly
+* Radar jammers and mine layers set to hold position by default
+* Fixed many yardmaps that caused warnings in the develop build, improves compatibility with upcoming Spring release
+* Fixed CORE Construction sub description having excess delimiters
+* Fixed Auto-upg. commanders wandering off into battle when set on maneuver
+* Fixed starting resources always set to 1000/1000
+* Some updates in LUPS modules
+* Fixed lag when Flebowl boss is killed (not that it matters as the fleabowl gadget is still broken)
 
-------------------- Change Log of XTA v9.70 beta (85.0 and next version) ------------------ by Deadnight Warrior
+
+------------------- Change Log of XTA v9.71 (85.0 and next version) ------------------ by Deadnight Warrior
+When cleaning the game archive from useless files some unit build icons got cleaned in the process, now back
+Hammers can now shoot while moving
+Brawler spray angle reduced from 5° to 3°
+Given custom collision volumes to 13 wrecks that had interfered with proper aiming
+Slightly lowered the collision volumes (vertical offset -1) of Dragon Teeth
+
+
+------------------- Change Log of XTA v9.70 (85.0 and next version) ------------------ by Deadnight Warrior
 Cleaned up all excess unit categories, needs finetunning for each individual unit now
 Added missing  WeaponType=TorpedoLauncher;  to all torpedo weapons and fixed some other weapon defs missing WeaponType tag
 Fixed amphibious units crawling through water and giving up on moving eventualy
@@ -42,6 +65,7 @@ Replaced metal maker control widget with gadget, gives better control over metal
 Separated /Units/ folder into categories, easier to see which unit belongs to which game option / unit pack
 Removed unused widgets (bloom and chili) from release, they are still available on XTA on-line repository
 Massive cleanup of release archive from all files not needed to play the game, they are still available on XTA on-line repository
+Temporarly disabled Fleabowl mode till the spawner gadget gets fixed
 
 Swaped costs of mobile and stationary T2 radars as stationary where more expensive and more fragile than mobile ones
 Swaped radar jamming distance of kbot and vehicle jammers as vehicle jammers are more expensive and vehicles are generaly larger than kbots
@@ -53,12 +77,12 @@ CORE Doomsday Machine increased buildtime to match ARM Annihilator, increased co
 CORE Rapier reload time increased so that it's DPS matches that of ARM Brawler
 Commanders are now almost as fast in water as they are on land
 Adv. construction subs can now build Adv. shipyards
-Crawling bombs now have their own moveDef (amphibious 1x1) are have better slope tollerance
+Crawling bombs now have their own moveDef (amphibious 1x1) are have better slope tolerance
 Heavy tanks use 3x3 and not 4x4 moveDef footprint, less traffic jams and those units are 3x3 and not 4x4 in size to begin with
 T2 transport aircraft can now load T2 crawling bombs (max 4)
 Slightly increased metal extractor and moho mine slope tolerance
 Increased ARM Infiltrator cost to match CORE Parasite, cloak, moving cloak & stealth costs now 150/300/600 for Infiltrator, 125/275/550 for Parasite, Infiltrator LoS set to 375, Parasite 320
-Cannon weapons have a nice arc trajectory (relative to target range, at max range it's always 45ø elevation)
+Cannon weapons have a nice arc trajectory (relative to target range, at max range it's always 45° elevation)
 All weapons that cause an explosion when impacting on target, now have increased AoE and edgeEffectiveness=0 if their edgeEffectiveness was > 0 and AoE<145, AoE increase is to 160 max
 Some floating and underwater buildings have their min water depth increased to prevent them from sinking into sea bottom
 Added Open/Close mode selection for all pop-up style units (Ambusher, Annihilator, Doomsday Machine, Toaster, Viper)

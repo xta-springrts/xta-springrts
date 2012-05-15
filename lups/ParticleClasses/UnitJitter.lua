@@ -262,7 +262,7 @@ function UnitJitter:CreateParticle()
 end
 
 function UnitJitter:Visible()
-  if self.allyTeam == LocalAllyTeamID then
+  if Spring.AreTeamsAllied(self.team,LocalAllyTeamID) then
     return Spring.IsUnitVisible(self.unit)
   end
 
