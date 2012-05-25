@@ -44,9 +44,9 @@ else
 	end
 	
 	function gadget:Initialize()
-		Spring.SendCommands ("cheat") 
-		Spring.SendCommands ("globallos")
-		Spring.SendCommands ("nocost")
+		--Spring.SendCommands ("cheat") 
+		--Spring.SendCommands ("globallos")
+		--Spring.SendCommands ("nocost")
 	
 		for id,Def in pairs(WeaponDefs) do
 			local weaponID
