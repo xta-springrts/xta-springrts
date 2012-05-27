@@ -79,11 +79,12 @@ local options = {
 		type = "list",
 		def  = "choose",
 		items = {
-			{ key = "choose", name = "Let players choose in game", desc = "Let users choose in game between automatical and manual types *EXPERIMENTAL*" },
+			{ key = "choose", name = "Let players choose in game", desc = "Let users choose in game between automatical and manual types"},
 			{ key = "zeroupgrade", name = "Automatic upgrades", desc = "Commander with automatical upgrades based on experience" },
 			{ key = "noupgrade", name = "Manual upgrades, level 0 ", desc = "Commander with manual upgrades. Starting at base level" },
 			{ key = "halfupgrade", name = "Manual upgrades, level 2", desc = "Commander with manual upgrades. Powerful lasers are added." },
 			{ key = "fullupgrade", name = "Manual upgrades, level 4", desc = "Commander with manual upgrades. Insanely powerful (max upgrade)!" },
+			{ key = "static", name = "Static commander, no upgrades available", desc = "Commander can not be upgraded" },
 			{ key = "comshooter", name = "Mini Com Shooter Game 0.1", desc = "Play Commander Shooter v0.1" },
 			{ key = "decoystart", name = "Start With Decoy", desc = "Start with fake commander" },
 			{ key = "capturethebase", name = "Capture the base", desc = "Capture the thing!" },
