@@ -50,6 +50,7 @@ local arm_start_unit = {
     decoystart = "arm_decoy_commander",
     capturethebase = "arm_base",
     nincom = "arm_nincommander",
+	static = "arm_commander",
 }
 
 -- Maps 'comm' mod option to CORE start unit.
@@ -62,6 +63,7 @@ local core_start_unit = {
     decoystart = "core_decoy_commander",
     capturethebase = "core_base",
     nincom = "core_nincommander",
+	static = "core_commander",
 }
 
 -- Maps sideName (as specified in side data) to table of start units.
@@ -120,7 +122,7 @@ end
 
 local function SpawnStartUnit(teamID)
 	local startUnit = GetStartUnit(teamID)
-	Spring.Echo("Spawning start unit for team ",teamID, startUnit)
+	--Spring.Echo("Spawning start unit for team ",teamID, startUnit)
 	if (startUnit and startUnit ~= "") then
 		Spring.SetTeamResource(teamID, "ms", 0)
 		Spring.SetTeamResource(teamID, "es", 0)
@@ -134,10 +136,10 @@ local function SpawnStartUnit(teamID)
 			and ((x>Game.mapSizeX/2) and "west" or "east")
 			or ((z>Game.mapSizeZ/2) and "north" or "south")
 		local commanderID = Spring.CreateUnit(startUnit, x, y, z, facing, teamID)
-		Spring.Echo("Create start unit for team ",teamID, commanderID)
+		--Spring.Echo("Create start unit for team ",teamID, commanderID)
 		--if commType=="zeroupgrade" then
 			Spring.GiveOrderToUnit(commanderID, CMD.MOVE_STATE, { 0 }, {})
-			Spring.Echo("Set move state")
+			--Spring.Echo("Set move state")
 		--end
 
 		-- set start resources, either from mod options or custom team keys
@@ -165,7 +167,6 @@ function gadget:GameStart()
 	local excludeTeams = {}
 
 	if (coopMode == 1) then
-
 		for _, teamID in ipairs(Spring.GetTeamList()) do
 			local playerCount = 0
 			for _, playerID in ipairs(Spring.GetPlayerList(teamID)) do
