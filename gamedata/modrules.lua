@@ -5,6 +5,13 @@
 
 local modrules  = {
 
+  movement = {
+    allowAirPlanesToLeaveMap = true;  -- defaults to true
+    allowPushingEnemyUnits   = true; -- defaults to false
+    allowCrushingAlliedUnits = false; -- defaults to false
+    allowUnitCollisionDamage = true; -- defaults to false
+  },
+
   construction = {
     constructionDecay      = true, -- defaults to true
     constructionDecayTime  = 6.66,  -- defaults to 6.66
@@ -13,7 +20,7 @@ local modrules  = {
 
   reclaim = {
     multiReclaim  = 1,   -- defaults to 0
-    reclaimMethod = 1,   -- defaults to 1
+    reclaimMethod = 0,   -- defaults to 1
     unitMethod    = 1,   -- defaults to 1
 
     unitEnergyCostFactor    = 0,  -- defaults to 0
@@ -79,7 +86,7 @@ local modrules  = {
   },
 
   flankingbonus = {
-    defaultMode = 1,  -- defaults to 1
+    defaultMode = 0,  -- defaults to 1
                     -- 0: no flanking bonus  
                     -- 1: global coords, mobile  
                     -- 2: unit coords, mobile  
@@ -90,7 +97,7 @@ local modrules  = {
     transportGround = 1,  -- defaults to 1
     transportHover  = 0,  -- defaults to 0
     transportShip   = 0,  -- defaults to 0
-    transportAir    = 0,  -- defaults to 0
+    transportAir    = 1,  -- defaults to 0
   },
   
   system = {
