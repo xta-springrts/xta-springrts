@@ -4,13 +4,13 @@
 
 function gadget:GetInfo()
 	return {
-		name			= "Disable Buildoptions",
-		desc			= "Disables wind if wind is too low, units if waterdepth is not appropriate.",
-		author		= "quantum",
-		date			= "May 11, 2008",
-		license	 = "GNU GPL, v2 or later",
-		layer		 = 0,
-		enabled	 = true	--	loaded by default?
+		name	= "Disable Buildoptions",
+		desc	= "Disables units if wind is too low/high, or if waterdepth is not appropriate.",
+		author	= "quantum", -- modified for XTA by Deadnight Warrior
+		date	= "May 11, 2008",
+		license = "GNU GPL, v2 or later",
+		layer	= 0,
+		enabled = true	--	loaded by default?
 	}
 end
 
@@ -19,7 +19,11 @@ end
 --------------------------------------------------------------------------------
 
 local breakEvenWind = 9.1
-
+local modOptions = Spring.GetModOptions()
+local windLowMess = "Wind generator disabled: Wind is too weak on this map."
+local hovAtmLowMess = "Hovercrafts disabled: Atmosphere pressure too low on this map."
+local airAtmLowMess = "Aircrafts disabled: Atmosphere pressure too low on this map."
+local windExtrMess = "Aircrafts disabled: Wind speed too extreme on this map."
 --------------------------------------------------------------------------------
 --speedups
 --------------------------------------------------------------------------------
@@ -29,6 +33,8 @@ local GetUnitPosition = Spring.GetUnitPosition
 local GetGroundHeight = Spring.GetGroundHeight
 local GetUnitPosition = Spring.GetUnitPosition
 local disableWind
+local disableAir = 0
+local disableHovers = false
 --values: {unitID, reason,}
 local alwaysDisableTable = {}
 
@@ -54,10 +60,41 @@ end
 
 function gadget:Initialize()
 	disableWind = Game.windMax < breakEvenWind
-	
+	if not modOptions.space_mode or (modOptions.space_mode and modOptions.space_mode=="0") then
+		local map = Game.mapHumanName:lower()
+		if Game.windMin <= 1 and Game.windMax <= 4 then
+			disableAir = 1
+			disableHovers = true
+		elseif map:find("comet") or map:find("moon") then
+			disableAir = 1
+			disableHovers = true
+		end
+		if Game.windMin >= 30 or Game.windMax >= 35 then
+			disableAir = 2
+		end
+	end
 	if (disableWind) then
-		table.insert(alwaysDisableTable, {UnitDefNames["arm_wind_generator"].id, "Unit disabled: Wind is too weak on this map.",})
-		table.insert(alwaysDisableTable, {UnitDefNames["core_wind_generator"].id, "Unit disabled: Wind is too weak on this map.",})
+		table.insert(alwaysDisableTable, {UnitDefNames["arm_wind_generator"].id, windLowMess,})
+		table.insert(alwaysDisableTable, {UnitDefNames["core_wind_generator"].id, windLowMess,})
+	end
+	if (disableHovers) then
+		table.insert(alwaysDisableTable, {UnitDefNames["arm_hovercraft_platform"].id, hovAtmLowMess,})
+		table.insert(alwaysDisableTable, {UnitDefNames["core_hovercraft_platform"].id, hovAtmLowMess,})
+	end
+	if (disableAir==1) then
+		table.insert(alwaysDisableTable, {UnitDefNames["arm_aircraft_plant"].id, airAtmLowMess,})
+		table.insert(alwaysDisableTable, {UnitDefNames["arm_adv_aircraft_plant"].id, airAtmLowMess,})
+		table.insert(alwaysDisableTable, {UnitDefNames["arm_seaplane_platform"].id, airAtmLowMess,})
+		table.insert(alwaysDisableTable, {UnitDefNames["core_aircraft_plant"].id, airAtmLowMess,})
+		table.insert(alwaysDisableTable, {UnitDefNames["core_adv_aircraft_plant"].id, airAtmLowMess,})
+		table.insert(alwaysDisableTable, {UnitDefNames["core_seaplane_platform"].id, airAtmLowMess,})
+	elseif (disableAir==2) then
+		table.insert(alwaysDisableTable, {UnitDefNames["arm_aircraft_plant"].id, windExtrMess,})
+		table.insert(alwaysDisableTable, {UnitDefNames["arm_adv_aircraft_plant"].id, windExtrMess,})	
+		table.insert(alwaysDisableTable, {UnitDefNames["arm_seaplane_platform"].id, windExtrMess,})
+		table.insert(alwaysDisableTable, {UnitDefNames["core_aircraft_plant"].id, windExtrMess,})
+		table.insert(alwaysDisableTable, {UnitDefNames["core_adv_aircraft_plant"].id, windExtrMess,})
+		table.insert(alwaysDisableTable, {UnitDefNames["core_seaplane_platform"].id, windExtrMess,})
 	end
 end
 
