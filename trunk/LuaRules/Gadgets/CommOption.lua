@@ -42,7 +42,7 @@ local spSetTeamRulesParam = Spring.SetTeamRulesParam
 
 -- Maps 'comm' mod option to ARM start unit.
 local arm_start_unit = {
-    zeroupgrade = "arm_commander",
+    autoupgrade = "arm_commander",
     halfupgrade = "arm_u2commander",
     fullupgrade = "arm_u4commander",
     noupgrade = "arm_u0commander",
@@ -50,12 +50,12 @@ local arm_start_unit = {
     decoystart = "arm_decoy_commander",
     capturethebase = "arm_base",
     nincom = "arm_nincommander",
-	static = "arm_scommander",
+	plain = "arm_scommander",
 }
 
 -- Maps 'comm' mod option to CORE start unit.
 local core_start_unit = {
-    zeroupgrade = "core_commander",
+    autoupgrade = "core_commander",
     halfupgrade = "core_u2commander",
     fullupgrade = "core_u4commander",
     noupgrade = "core_u0commander",
@@ -63,7 +63,7 @@ local core_start_unit = {
     decoystart = "core_decoy_commander",
     capturethebase = "core_base",
     nincom = "core_nincommander",
-	static = "core_scommander",
+	plain = "core_scommander",
 }
 
 -- Maps sideName (as specified in side data) to table of start units.
