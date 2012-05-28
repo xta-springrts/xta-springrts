@@ -50,7 +50,7 @@ local arm_start_unit = {
     decoystart = "arm_decoy_commander",
     capturethebase = "arm_base",
     nincom = "arm_nincommander",
-	static = "arm_commander",
+	static = "arm_scommander",
 }
 
 -- Maps 'comm' mod option to CORE start unit.
@@ -63,7 +63,7 @@ local core_start_unit = {
     decoystart = "core_decoy_commander",
     capturethebase = "core_base",
     nincom = "core_nincommander",
-	static = "core_commander",
+	static = "core_scommander",
 }
 
 -- Maps sideName (as specified in side data) to table of start units.
