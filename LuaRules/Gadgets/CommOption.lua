@@ -122,7 +122,6 @@ end
 
 local function SpawnStartUnit(teamID)
 	local startUnit = GetStartUnit(teamID)
-	--Spring.Echo("Spawning start unit for team ",teamID, startUnit)
 	if (startUnit and startUnit ~= "") then
 		Spring.SetTeamResource(teamID, "ms", 0)
 		Spring.SetTeamResource(teamID, "es", 0)
@@ -136,12 +135,8 @@ local function SpawnStartUnit(teamID)
 			and ((x>Game.mapSizeX/2) and "west" or "east")
 			or ((z>Game.mapSizeZ/2) and "north" or "south")
 		local commanderID = Spring.CreateUnit(startUnit, x, y, z, facing, teamID)
-		--Spring.Echo("Create start unit for team ",teamID, commanderID)
-		--if commType=="zeroupgrade" then
-			Spring.GiveOrderToUnit(commanderID, CMD.MOVE_STATE, { 0 }, {})
-			--Spring.Echo("Set move state")
-		--end
-
+		Spring.GiveOrderToUnit(commanderID, CMD.MOVE_STATE, { 0 }, {})
+		
 		-- set start resources, either from mod options or custom team keys
 		local teamOptions = select(7, Spring.GetTeamInfo(teamID))
 		local m = teamOptions.startmetal  or modOptions.startmetal  or 1000
@@ -161,7 +156,6 @@ local function SpawnStartUnit(teamID)
 	
 	end
 end
-
 
 function gadget:GameStart()
 	local excludeTeams = {}

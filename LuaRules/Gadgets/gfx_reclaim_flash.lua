@@ -22,7 +22,6 @@ function gadget:FeatureDestroyed(featureID,allyteam)
 	if (fx ~= nil) then
 		rm, mm, re, me, rl = Spring.GetFeatureResources(featureID)
 		if (rm ~= nil) then
-			--Spring.Echo("Reclaimed:", rm,mm,re,me,rl)
 			if me > mm and rl == 0 then
 				Spring.SpawnCEG(eceg, fx, fy, fz)
 				Spring.PlaySoundFile('Sounds/RECLAIM1.wav', 1, fx, fy, fz)
