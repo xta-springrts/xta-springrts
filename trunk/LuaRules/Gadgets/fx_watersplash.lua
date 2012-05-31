@@ -36,7 +36,6 @@ else
 			Spring.SpawnCEG(splashCEG1, px+random(-aoe/2,aoe/2), py, pz+random(-aoe/2,aoe/2))
 			if aoe > 40 then Spring.SpawnCEG(splashCEG2, px, 0, pz) end
 			Spring.PlaySoundFile(sndWater,15.0,px,0,pz)
-			--Spring.Echo("Explosion!", weaponID, ownerID, Spring.GetGroundInfo(px,pz),aoe)
 			return true
 		else
 			return false
@@ -50,19 +49,10 @@ else
 	
 		for id,Def in pairs(WeaponDefs) do
 			local weaponID
-			-- for i,v in Def:pairs() do
-				-- Spring.Echo(id,i,v)
-			-- end
 			if Def["damageAreaOfEffect"] ~= nil and Def["damageAreaOfEffect"] > 15 and Def["myGravity"] > 0 then
 				weaponID = Def["id"]
 				Script.SetWatchWeapon(weaponID, true)
-				--Spring.Echo(Def["name"] .. " added: AOE = " .. Def["damageAreaOfEffect"] .. " Gravity =" .. Def["myGravity"] )
 			end
 		end
-
-
-		--local bombDefID = WeaponDefNames["TheNameOfMyAwesomeBombWeapon"].id -- change to suit :P
-		--Script.SetWatchWeapon(bombDefID, true)
-		--en
 	end
 end
