@@ -41,6 +41,7 @@ local whiteColor = '\255\255\255\255' -- White
 ------------------------------------------------------------
 local sDefID -- Starting unit def ID
 local sDef -- UnitDefs[sDefID]
+local myTeamID = Spring.GetMyTeamID()
 
 local selDefID = nil -- Currently selected def ID
 local buildQueue = {}
@@ -53,45 +54,14 @@ local areDragging = false
 
 local isMex = {} -- isMex[uDefID] = true / nil
 local weaponRange = {} -- weaponRange[uDefID] = # / nil
-
--- Maps 'comm' mod option to ARM start unit.
-local arm_start_unit = {
-    zeroupgrade = "arm_commander",
-    halfupgrade = "arm_u2commander",
-    fullupgrade = "arm_u4commander",
-    noupgrade = "arm_u0commander",
-    comshooter = "armcom",
-    decoystart = "arm_decoy_commander",
-    capturethebase = "arm_base",
-    nincom = "arm_nincommander",
-}
-
--- Maps 'comm' mod option to CORE start unit.
-local core_start_unit = {
-    zeroupgrade = "core_commander",
-    halfupgrade = "core_u2commander",
-    fullupgrade = "core_u4commander",
-    noupgrade = "core_u0commander",
-    comshooter = "corcom",
-    decoystart = "core_decoy_commander",
-    capturethebase = "core_base",
-    nincom = "core_nincommander",
-}
-
--- Maps sideName (as specified in side data) to table of start units.
-local start_unit_table = {
-    arm = arm_start_unit,
-    core = core_start_unit,
-}
+local spGetTeamRulesParam = Spring.GetTeamRulesParam
 
 -- Maps units that could get disabled because of map conditions
 local disablable = {}
 
 local modOptions = Spring.GetModOptions()
-local commType = modOptions.comm
-if not commType then
-    commType = "zeroupgrade"
-end
+
+
 ------------------------------------------------------------
 -- Local functions
 ------------------------------------------------------------
@@ -229,79 +199,40 @@ end
 -- Initialize/shutdown
 ------------------------------------------------------------
 function widget:Initialize()
-	
+
 	if (Game.startPosType == 1) or			-- Don't run if start positions are random
 	   (Spring.GetGameFrame() > 0) or		-- Don't run if game has already started
 	   (Spring.GetSpectatingState()) then	-- Don't run if we are a spec
 		widgetHandler:RemoveWidget(self)
 		return
 	end
-	
-	--Determine if certain units got disabled
-	local disableWind = Game.windMax < 9.1
-	local map = Game.mapHumanName:lower()
-	local disableAir = Game.windMin <= 1 and Game.windMax <= 4 or map:find("comet") or map:find("moon")
-	local disableHovers = disableAir
-	disableAir = disableAir or Game.windMin >= 30 or Game.windMax >= 35
-	if disableWind then
-		disablable["arm_wind_generator"] = true
-		disablable["core_wind_generator"] = true
-	end
-	if disableAir then
-		disablable["arm_aircraft_plant"] = true
-		disablable["arm_adv_aircraft_plant"] = true
-		disablable["arm_seaplane_platform"] = true
-		disablable["core_aircraft_plant"] = true
-		disablable["core_adv_aircraft_plant"] = true
-		disablable["core_seaplane_platform"] = true
-	end
-	if disableHovers then
-		disablable["arm_hovercraft_platform"] = true
-		disablable["core_hovercraft_platform"] = true
-	end
-
-	
 	-- Get our starting unit
-	local myTeamID = Spring.GetMyTeamID()
+	-- Sometimes the information is not available, so the widget will error and exit :)
 	local _, _, _, _, mySide = Spring.GetTeamInfo(myTeamID)
-    if (mySide == "") then
-        -- startscript didn't specify a side for this team
-        local sidedata = Spring.GetSideData()
-        if (sidedata and #sidedata > 0) then
-            mySide = sidedata[1 + myTeamID % #sidedata].sideName
-        end
-    end
-	local startUnitName = start_unit_table[mySide][commType]
+	local startUnitName = Spring.GetSideData(mySide)
 	sDefID = UnitDefNames[startUnitName].id
+	local startID = spGetTeamRulesParam(myTeamID, 'startUnit')
+	if startID and startID ~= "" then sDefID = startID end
+	InitializeFaction(sDefID)
+	--WG["faction_change"] = InitializeFaction
+	Spring.Echo("StartUnit:",sDefID, startID)
+end
+
+function widget:Shutdown()
+	if panelList then
+		gl.DeleteList(panelList)
+	end
+end
+
+function InitializeFaction(sDefID)
 	sDef = UnitDefs[sDefID]
-	
 	-- Don't run if theres nothing to show
 	local sBuilds = sDef.buildOptions
 	if not sBuilds or (#sBuilds == 0) then
-		widgetHandler:RemoveWidget(self)
 		return
 	end
-	
-	-- Retain the build list order, but move all sea units to the end
-	local waterBuilds = {}
-	local newBuilds = {}
-	for i = 1, #sBuilds do
-		local uDefID = sBuilds[i]
-		local uDef = UnitDefs[uDefID]
-		if not disablable[uDef.name] then
-			buildNameToID[uDef.name] = uDefID
-			if uDef.minWaterDepth <= 0 then
-				newBuilds[#newBuilds + 1] = uDefID
-			else
-				waterBuilds[#waterBuilds + 1] = uDefID
-			end
-		end
-	end
-	for i = 1, #waterBuilds do
-		newBuilds[#newBuilds + 1] = waterBuilds[i]
-	end
-	sBuilds = newBuilds
-	
+
+
 	-- Set up cells
 	local numCols = math.min(#sBuilds, maxCols)
 	local numRows = math.ceil(#sBuilds / numCols)
@@ -311,55 +242,57 @@ function widget:Initialize()
 	for b = 0, #sBuilds - 1 do
 		cellRows[1 + math.floor(b / numCols)][1 + b % numCols] = sBuilds[b + 1]
 	end
-	
+
 	-- Set up drawing function
 	local drawFunc = function()
-		
+
 		gl.PushMatrix()
 			gl.Translate(0, borderSize, 0)
-			
+
 			for r = 1, #cellRows do
 				local cellRow = cellRows[r]
-				
+
 				gl.Translate(0, -iconSize - borderSize, 0)
 				gl.PushMatrix()
-					
+
 					for c = 1, #cellRow do
-						
+
 						gl.Color(0, 0, 0, 1)
 						gl.Rect(-borderSize, -borderSize, iconSize + borderSize, iconSize + borderSize)
-						
+
 						gl.Color(1, 1, 1, 1)
 						gl.Texture("#" .. cellRow[c])
 							gl.TexRect(0, 0, iconSize, iconSize)
 						gl.Texture(false)
-						
+
 						gl.Translate(iconSize + borderSize, 0, 0)
 					end
 				gl.PopMatrix()
 			end
-			
+
 		gl.PopMatrix()
 	end
-	
+
+	-- delete any pre-existing displaylist
+	if panelList then
+		gl.DeleteList(panelList)
+	end
+
 	panelList = gl.CreateList(drawFunc)
-	
+
 	for uDefID, uDef in pairs(UnitDefs) do
-		
-		if uDef.extractsMetal > 0 then
+
+		if uDef.isMetalExtractor then
 			isMex[uDefID] = true
 		end
-		
+
 		if uDef.maxWeaponRange > 16 then
 			weaponRange[uDefID] = uDef.maxWeaponRange
 		end
 	end
 end
-function widget:Shutdown()
-	if panelList then
-		gl.DeleteList(panelList)
-	end
-end
+
+
 
 ------------------------------------------------------------
 -- Config
@@ -415,6 +348,10 @@ function widget:DrawWorld()
 	end
 	
 	local myTeamID = Spring.GetMyTeamID()
+	local startID = spGetTeamRulesParam(myTeamID, 'startUnit')
+	if startID and startID ~= "" then sDefID = startID end
+	--InitializeFaction(sDefID)
+	
 	local sx, sy, sz = Spring.GetTeamStartPosition(myTeamID) -- Returns -100, -100, -100 when none chosen
 	local startChosen = (sx ~= -100)
 	if startChosen then
