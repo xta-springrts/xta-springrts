@@ -51,7 +51,8 @@ Button["info"] = {}
 Button["infopanel"] = {}
 Button["auto"] = {}
 Button["manual"] = {}
-
+Button["infolabel"] = {}
+Button["exit"] = {}
 --------------------------------------------------------------------------------
 -- Speedups
 --------------------------------------------------------------------------------
@@ -63,6 +64,9 @@ local gameState = 0
 local cntDown = -1
 local lastCount
 local pStates
+local markedStates = {}
+
+local strInfo
 local infoOn = false
 --local font            						= "LuaUI/Fonts/FreeMonoBold_12"
 --local font2         						= "LuaUI/Fonts/FreeSansBold_14"
@@ -113,7 +117,11 @@ local function initButtons()
 	Button["core"]["y1"] = py  + sizey
 	
 	Button["ready"]["x0"] = px + sizex/2
-	Button["ready"]["x1"] = px + 4*sizex/5
+	if myState ~= 3 then
+		Button["ready"]["x1"] = px + 4*sizex/5
+	else
+		Button["ready"]["x1"] = px + sizex
+	end
 	Button["ready"]["y0"] = py  + sizey - 24
 	Button["ready"]["y1"] = py  + sizey
 	
@@ -134,8 +142,18 @@ local function initButtons()
 	
 	Button["infopanel"]["x0"] = px + sizex
 	Button["infopanel"]["x1"] = px + sizex + 1.5*sizex
-	Button["infopanel"]["y0"] = py  + sizey - sizey
+	Button["infopanel"]["y0"] = py
 	Button["infopanel"]["y1"] = py  + sizey
+	
+	Button["infolabel"]["x0"] = px
+	Button["infolabel"]["x1"] = px + sizex - 30
+	Button["infolabel"]["y0"] = py + sizey
+	Button["infolabel"]["y1"] = py + sizey + 30
+	
+	Button["exit"]["x0"] = px + sizex - 30
+	Button["exit"]["x1"] = px + sizex
+	Button["exit"]["y0"] = py + sizey
+	Button["exit"]["y1"] = py + sizey + 30
 	
 	mid = px + sizex/2
 end
@@ -187,6 +205,28 @@ function widget:Initialize()
 	sizey 		= sizey 	* scale
 	--buttons:
 	initButtons()
+	--marked states
+	for i,player in ipairs(Spring.GetTeamList()) do
+		markedStates[i] = false
+	end
+	
+end
+
+function widget:RecvLuaMsg(msg, playerID)
+	local positionRegex = "181072"
+	local sms = string.sub(msg, string.len(positionRegex)+1) 
+	
+	local state = tonumber(string.sub(sms,1,1))
+	local player = tonumber(string.sub(sms,2))
+	
+	--Spring.Echo("Got a msg:", player,": ",state, msg)
+	--display the message in the UI
+
+	if state == 0 then
+		markedStates[player+1] = false
+	elseif state == 1 then
+		markedStates[player+1] = true
+	end
 end
 
 function widget:DrawWorld()
@@ -224,10 +264,10 @@ function widget:DrawScreenEffects(vsx, vsy)
 	end
 	
 	--CountDown
-	if gameState == 1 then
+	if gameState == 2 then
 		--UseFont(font)
 		glColor(1, 1, 1, 1)
-		glText(cntDown, vsx/2, vsy/2, 160, 'xsn')
+		glText(cntDown, vsx/2, vsy/2+100, 160, 'xsn')
 		if cntDown ~= lastCount then
 			Spring.PlaySoundFile(tock)
 			lastCount = cntDown
@@ -308,17 +348,19 @@ function widget:DrawScreenEffects(vsx, vsy)
 		-- Panel
 		glColor(0, 0, 0, 0.4)
 		glRect(px,py, px+sizex, py+sizey)
-		-- Highlight
-		glColor(0.8, 0.8, 0.2, 0.5)
-		if Button["arm"]["On"] then
-			glRect(Button["arm"]["x0"],Button["arm"]["y0"], Button["arm"]["x1"], Button["arm"]["y1"])
-		elseif Button["core"]["On"] then
-			glRect(Button["core"]["x0"],Button["core"]["y0"], Button["core"]["x1"], Button["core"]["y1"])
-		elseif Button["ready"]["On"] then
-			glRect(Button["ready"]["x0"],Button["ready"]["y0"], Button["ready"]["x1"], Button["ready"]["y1"])
-		elseif Button["info"]["On"] then
-			glRect(Button["info"]["x0"],Button["info"]["y0"], Button["info"]["x1"], Button["info"]["y1"])
-		end
+	end
+	-- Highlight
+	glColor(0.8, 0.8, 0.2, 0.5)
+	if Button["arm"]["On"] then
+		glRect(Button["arm"]["x0"],Button["arm"]["y0"], Button["arm"]["x1"], Button["arm"]["y1"])
+	elseif Button["core"]["On"] then
+		glRect(Button["core"]["x0"],Button["core"]["y0"], Button["core"]["x1"], Button["core"]["y1"])
+	elseif Button["ready"]["On"] then
+		glRect(Button["ready"]["x0"],Button["ready"]["y0"], Button["ready"]["x1"], Button["ready"]["y1"])
+	elseif Button["info"]["On"] and myState ~= 3 then
+		glRect(Button["info"]["x0"],Button["info"]["y0"], Button["info"]["x1"], Button["info"]["y1"])
+	elseif Button["exit"]["On"] then
+		glRect(Button["exit"]["x0"],Button["exit"]["y0"], Button["exit"]["x1"], Button["exit"]["y1"])
 	end
 end
 
@@ -340,22 +382,33 @@ function widget:DrawScreen()
 		local y0 = vsy/2
 		
 		glText("Players:", 10, y0 + 20, 20, 'xn')
-		for i,ps in pairs(pStates) do
-			if ps == "missing" then
-				local _,_,_,team = Spring.GetPlayerInfo(i)
-				local posx = spGetTeamStartPosition(team)
-				if posx < 0 then
-					glColor(0.6, 0.6, 0.2, 1)
-				else
-					glColor(0.3, 0.6, 0.3, 1)
+		
+		if pStates then
+			for i,ps in pairs(pStates) do
+				local leaderName,active,spectator,team,_,_,_,country,rank	= Spring.GetPlayerInfo(i)
+				--Spring.Echo("State",i,team,active)
+				if not spectator then
+					if not active then
+						glColor(0.6, 0.2, 0.2, 0.8) -- red
+					else
+						if ps == "missing" then
+							local posx = spGetTeamStartPosition(team)
+							if not posx or posx < 0 then
+								if markedStates and markedStates[i] then
+									glColor(0.3, 0.5, 0.6, 1) -- green/blue
+								else
+									glColor(0.6, 0.6, 0.2, 1) -- yellow
+								end
+							else
+								glColor(0.3, 0.5, 0.6, 1) -- green/blue
+							end
+						elseif ps == "ready" then
+							glColor(0.0, 0.5, 0.0, 1) --glColor(0.7, 0.9, 0.7, 1) -- white/green
+						end
+					end
+					glText(leaderName, 10, y0 - 20* i, 20, 'xn')
 				end
-			elseif ps == "ready" then
-				glColor(0.7, 0.9, 0.7, 1)
-			else
-				glColor(0.6, 0.2, 0.2, 0.8)
 			end
-			local name = Spring.GetPlayerInfo(i)
-			glText(name, 10, y0 - 20* i, 20, 'xn')
 		end
 	glColor(1, 1, 1, 1)
 	drawBorder(Button["arm"]["x0"],Button["arm"]["y0"], Button["arm"]["x1"], Button["arm"]["y1"],1)
@@ -372,7 +425,7 @@ function widget:DrawScreen()
 	elseif myState == 3 then -- white
 		glColor(1, 1, 1, 1)
 		lbl = "Ready"
-	else -- can not ready, grey
+	else -- cannot ready, grey
 		glColor(0.8, 0.8, 0.8, 0.5)
 		lbl = ""
 	end
@@ -380,6 +433,36 @@ function widget:DrawScreen()
 		drawBorder(Button["ready"]["x0"],Button["ready"]["y0"], Button["ready"]["x1"], Button["ready"]["y1"],1)
 	end
 	glText(lbl, Button["ready"]["x0"] + 20, Button["ready"]["y0"] + 6, 20, 'x')
+	
+	-- label/info panel
+	glColor(0, 0, 0, 0.4)
+	glRect(Button["infolabel"]["x0"],Button["infolabel"]["y0"], Button["infolabel"]["x1"], Button["infolabel"]["y1"])
+	drawBorder(Button["infolabel"]["x0"],Button["infolabel"]["y0"], Button["infolabel"]["x1"], Button["infolabel"]["y1"],1)
+	glColor(1, 1, 1, 1)
+	local txt = strInfo or "..."
+	
+	if myState == 0 then
+		txt = strInfo .. " (click to change Commander)"
+	elseif myState == 1 then
+		txt = "Press ready (or click to change Commander)"
+	elseif myState == 2 then
+		txt = "Press ready..."
+	elseif myState == 3 then
+		if gameState ~= 2 then
+			txt = strInfo
+		else
+			txt = strInfo
+		end
+	end
+	glText(txt, Button["infolabel"]["x0"] + 10 ,Button["infolabel"]["y0"] + 15 , 11, 'x')
+	
+	--exit button
+	glColor(0, 0, 0, 0.4)
+	glRect(Button["exit"]["x0"],Button["exit"]["y0"], Button["exit"]["x1"], Button["exit"]["y1"])
+	glColor(0, 0, 0, 1)
+	drawBorder(Button["exit"]["x0"],Button["exit"]["y0"], Button["exit"]["x1"], Button["exit"]["y1"],1)
+	glColor(1, 1, 1, 1)
+	glText("X", Button["exit"]["x0"] + 10 ,Button["exit"]["y0"] + 10 , 20, 'x')
 	
 	-- arm/core buttons
 	if mySide == "arm" then
@@ -433,14 +516,19 @@ function widget:GameSetup(state, ready, playerStates)
 	local strS = string.sub(state,1,6)
 	local strN = string.sub(state,13,13)
 	pStates = playerStates
+	strInfo = state
 	
 	if strS == "Choose" then 
 		gameState = 0
-	else
+	elseif strS == "Waitin" then
 		gameState = 1
+	elseif strS == "Starti" then
+		gameState = 2
 		cntDown = strN
+	else
+		gameState = -1
 	end
-
+	
 	if myState == 0 then
 		return true,false
 	elseif myState == 3 then
@@ -457,7 +545,7 @@ function widget:MousePress(mx, my, mButton)
         return false
     end
 
-	if IsOnButton(mx,my, px,py, px+sizex, py+sizey) then
+	if IsOnButton(mx,my, px,py, px+sizex, Button["exit"]["y1"]) then
 		-- Check buttons
 		if mButton == 1 then
 			local startID = spGetTeamRulesParam(myTeamID, 'startUnit')			
@@ -502,6 +590,10 @@ function widget:MousePress(mx, my, mButton)
 				if myState ~= 3 then
 					infoOn = not infoOn
 				end
+			elseif IsOnButton(mx,my,Button["exit"]["x0"],Button["exit"]["y0"],Button["exit"]["x1"],Button["exit"]["y1"]) then
+				widgetHandler:RemoveWidget(self)
+				Spring.Echo("Exited to native dialogue window...")
+				return true
 			end
 			updateState()
 			return true
@@ -543,26 +635,37 @@ function widget:IsAbove(mx,my)
 		Button["core"]["On"] = false
 		Button["ready"]["On"] = false
 		Button["info"]["On"] = false
+		Button["exit"]["On"] = false
 	elseif IsOnButton(mx,my,Button["core"]["x0"],Button["core"]["y0"],Button["core"]["x1"],Button["core"]["y1"]) and mySide == "arm" then
 		Button["arm"]["On"] = false
 		Button["core"]["On"] = true
 		Button["ready"]["On"] = false
 		Button["info"]["On"] = false
+		Button["exit"]["On"] = false
 	elseif IsOnButton(mx,my,Button["ready"]["x0"],Button["ready"]["y0"],Button["ready"]["x1"],Button["ready"]["y1"]) and myState > 0 then
 		Button["arm"]["On"] = false
 		Button["core"]["On"] = false
 		Button["ready"]["On"] = true
 		Button["info"]["On"] = false
+		Button["exit"]["On"] = false
 	elseif IsOnButton(mx,my,Button["info"]["x0"],Button["info"]["y0"],Button["info"]["x1"],Button["info"]["y1"]) then
 		Button["arm"]["On"] = false
 		Button["core"]["On"] = false
 		Button["ready"]["On"] = false
 		Button["info"]["On"] = true
+		Button["exit"]["On"] = false
+	elseif IsOnButton(mx,my,Button["exit"]["x0"],Button["exit"]["y0"],Button["exit"]["x1"],Button["exit"]["y1"]) then
+		Button["arm"]["On"] = false
+		Button["core"]["On"] = false
+		Button["ready"]["On"] = false
+		Button["info"]["On"] = false
+		Button["exit"]["On"] = true
 	else
 		Button["arm"]["On"] = false
 		Button["core"]["On"] = false
 		Button["ready"]["On"] = false
 		Button["info"]["On"] = false
+		Button["exit"]["On"] = false
 	end
 end
 
