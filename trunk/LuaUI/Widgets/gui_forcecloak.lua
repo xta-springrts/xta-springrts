@@ -30,7 +30,11 @@ end
 
 --> "unitID, unitDefID, unitTeam, cmdID, cmdOpts, cmdParams" 
 function widget:UnitCommand(uID, uDefID, uT, cmdID, cmdOpts, cmdParams) 
-	if UnitDefs[uDefID].isCommander and cmdID == CMD.CLOAK then
+	
+	local unitDef   = UnitDefs[uDefID or -1]
+	local cp 		= unitDef.customParams or nil
+	
+	if unitDef and cp and cp.iscommander and cmdID == CMD.CLOAK then
 		local cmd0 = Spring.GetUnitCommands(uID)
 		-- if no orders are given:
 		if cmd0 == nil or cmd0[1] == nil then return true end
