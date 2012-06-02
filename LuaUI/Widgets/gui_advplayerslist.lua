@@ -13,9 +13,9 @@ function widget:GetInfo()
 	return {
 		name      = "AdvPlayersList",
 		desc      = "Players list with useful information / shortcuts. Use tweakmode (ctrl+F11) to customize.",
-		author    = "Marmoth.",
-		date      = "January 16, 2011",
-		version   = "8.0",
+		author    = "Marmoth. Updated by Jools to work with commander changes.",
+		date      = "June 1, 2012",
+		version   = "8.1",
 		license   = "GNU GPL, v2 or later",
 		layer     = -4,
 		enabled   = false,  --  loaded by default?
@@ -197,7 +197,7 @@ local separatorOffset = 3
 local playerOffset    = 19
 local drawList        = {}
 local teamN
-
+local newSide		  = {}
 
 --------------------------------------------------
 -- Modules
@@ -445,12 +445,14 @@ function GetAllPlayers()
 end
 
 function Init()
+	SetNewSides()
 	SetSidePics()
 	SetPingCpuColors()
 	InitializePlayers()
 	SortList()
 	SetModulesPositionX()
 	GeometryChange()
+	
 end
 
 function widget:Initialize()
@@ -1413,16 +1415,48 @@ function GetPingLvl(ping)
 	end
 end
 
+-- Listen for other widgets that tell if a player has changed side. 1 = arm, 2 = core. Expand at will to include more factions.
+function widget:RecvLuaMsg(msg, playerID)
+	local sidePrefix = '195' -- set by widget gui_commchange.lua
+	local sms = string.sub(msg, string.len(sidePrefix)+1) 
+	
+	local side = tonumber(string.sub(sms,1,1))
+	
+	if side == 1 then
+		newSide[playerID] = 1
+	elseif side == 2 then
+		newSide[playerID] = 2
+	end
+	SetSidePics()
+end
+
+-- Set up array to handle dynamic side changes
+function SetNewSides()
+	teamList = Spring_GetTeamList()
+	for _, team in ipairs(teamList) do
+		newSide[team] = 0
+	end
+end
+
 function SetSidePics()
 
 -- Loads the side pics and side pics outlines for each side.
 -- It first tries to look if there is any image in the mod file for the specific side
 -- then it looks in the user files for specific side
 -- if none of those are found, uses default image and notify the missing image.
+-- Include new function that determines dynamic side, 1 = arm, 2 = core. Expand at will to include more factions.
 
 	teamList = Spring_GetTeamList()
 	for _, team in ipairs(teamList) do
 		_,_,_,_,teamside = Spring_GetTeamInfo(team)
+		if newSide[team] and newSide[team] > 0 then
+			if newSide[team] == 1 then
+				teamside = "arm"
+			elseif newSide[team] == 2 then
+				teamside = "core"
+			end
+		end
+		
 		if VFS.FileExists(LUAUI_DIRNAME.."Images/Advplayerslist/"..teamside..".png") then
 			sidePics[team] = ":n:LuaUI/Images/Advplayerslist/"..teamside..".png"
 			if VFS.FileExists(LUAUI_DIRNAME.."Images/Advplayerslist/"..teamside.."WO.png") then

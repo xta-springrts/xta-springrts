@@ -15,10 +15,13 @@ end
 -- Var
 --------------------------------------------------------------------------------
 local vsx, vsy = gl.GetViewSizes()
+local scale
 local px, py = 300, 300
 local sizex, sizey  = 320, 180
 local mid = px + sizex/2
-local scale = 1
+local th = 16 -- text height for buttons
+local th2 = 11 -- text height for body text
+local th3 = 20 -- text height for player names
 local imgComAA = "LuaUI/Images/commchange/ComAA.png" -- arm auto
 local imgComAM = "LuaUI/Images/commchange/ComAM.png" -- arm manual
 local imgComAAD = "LuaUI/Images/commchange/ComAAD.png" -- arm auto disabled
@@ -92,6 +95,7 @@ local spGetTeamStartPosition = Spring.GetTeamStartPosition
 local spGetTeamRulesParam = Spring.GetTeamRulesParam
 local spGetGroundHeight = Spring.GetGroundHeight
 local spSendLuaRulesMsg = Spring.SendLuaRulesMsg
+local spSendLuaUIMsg = Spring.SendLuaUIMsg
 local spGetSpectatingState = Spring.GetSpectatingState
 local spGetTeamInfo = Spring.GetTeamInfo
 
@@ -141,7 +145,7 @@ local function initButtons()
 	Button["info"]["y1"] = py  + sizey
 	
 	Button["infopanel"]["x0"] = px + sizex
-	Button["infopanel"]["x1"] = px + sizex + 1.5*sizex
+	Button["infopanel"]["x1"] = px + sizex + 400
 	Button["infopanel"]["y0"] = py
 	Button["infopanel"]["y1"] = py  + sizey
 	
@@ -175,7 +179,7 @@ end
 
 local function checkState()
 	local pos = spGetTeamStartPosition(myTeamID)
-	if pos >= 0 then
+	if pos and pos >= 0 then
 		if myState ~= 3 then 
 			myState = 1
 		else
@@ -194,15 +198,16 @@ function widget:Initialize()
     if spGetSpectatingState() or Spring.GetGameFrame() > 0 or (Spring.GetModOptions() or {}).comm ~= "choose" then
         widgetHandler:RemoveWidget(self)
     end
-	local X, Y = Spring.GetViewGeometry()
-	scale = Y/1024	
-	-- side
-	updateState()
-	--position:
-	px, py = px*scale, py*scale
+	--local X, Y = Spring.GetViewGeometry()
+	vsx, vsy = gl.GetViewSizes()
+	scale = vsy/1024
 	--sizes:
 	sizex 		= sizex 	* scale
 	sizey 		= sizey 	* scale
+	--position:
+	px, py = px*scale, py*scale
+	-- side
+	updateState()
 	--buttons:
 	initButtons()
 	--marked states
@@ -284,7 +289,7 @@ function widget:DrawScreenEffects(vsx, vsy)
 			glColor(1, 1, 1, 0.3)
 		end
 		drawBorder(Button["info"]["x0"],Button["info"]["y0"],Button["info"]["x1"],Button["info"]["y1"],1)
-		glText("info", Button["info"]["x0"] + 10 , Button["info"]["y0"] + 6 , 20,'x')
+		glText("info", 0.5 * (Button["info"]["x0"] + Button["info"]["x1"]) , 0.5 * (Button["info"]["y0"] + Button["info"]["y1"]) , th*scale,'vc')
 		-- infopanel
 		if infoOn then
 			glColor(0, 0, 0, 0.5)
@@ -337,12 +342,12 @@ function widget:DrawScreenEffects(vsx, vsy)
 					txt5 = "* A manually morphed commander will increase his D-Gun range"
 				end
 			end
-			glText(side .. ", " .. uptype .. ":", x0 + 10, y1 - 20, 20, 'xn')
-			glText(txt1, x0 + 10, y1 - 60, 12, 'xn')
-			glText(txt2, x0 + 10, y1 - 80, 12, 'xn')
-			glText(txt3, x0 + 10, y1 - 100, 12, 'xn')
-			glText(txt4, x0 + 10, y1 - 120, 12, 'xn')
-			glText(txt5, x0 + 10, y1 - 140, 12, 'xn')
+			glText(side .. " commander with " .. uptype .. ":", x0 + 10, y1 - (th2+6), th, 'xn')
+			glText(txt1, x0 + 10, y1 - 3*(th2+6), th2, 'xn')
+			glText(txt2, x0 + 10, y1 - 4*(th2+6), th2, 'xn')
+			glText(txt3, x0 + 10, y1 - 5*(th2+6), th2, 'xn')
+			glText(txt4, x0 + 10, y1 - 6*(th2+6), th2, 'xn')
+			glText(txt5, x0 + 10, y1 - 7*(th2+6), th2, 'xn')
 			
 		end
 		-- Panel
@@ -379,37 +384,42 @@ function widget:DrawScreen()
     end
 	local startID = spGetTeamRulesParam(myTeamID, 'startUnit')
 	-- Player states
-		local y0 = vsy/2
+	if pStates then
+	
+		local n = 0
+		for i,_ in pairs(pStates) do
+			n = n +1
+		end
 		
-		glText("Players:", 10, y0 + 20, 20, 'xn')
-		
-		if pStates then
-			for i,ps in pairs(pStates) do
-				local leaderName,active,spectator,team,_,_,_,country,rank	= Spring.GetPlayerInfo(i)
-				--Spring.Echo("State",i,team,active)
-				if not spectator then
-					if not active then
-						glColor(0.6, 0.2, 0.2, 0.8) -- red
-					else
-						if ps == "missing" then
-							local posx = spGetTeamStartPosition(team)
-							if not posx or posx < 0 then
-								if markedStates and markedStates[i] then
-									glColor(0.3, 0.5, 0.6, 1) -- green/blue
-								else
-									glColor(0.6, 0.6, 0.2, 1) -- yellow
-								end
+		local y0 = 40 + vsy/2 + 0.5*n*th3
+	
+		glText("Players:", 10, y0 + th3+2, th3, 'xno')
+		for i,ps in pairs(pStates) do
+			local leaderName,active,spectator,team,_,_,_,country,rank	= Spring.GetPlayerInfo(i)
+			--Spring.Echo("State",i,team,active)
+			if not spectator then
+				if not active then
+					glColor(0.6, 0.2, 0.2, 0.8) -- red
+				else
+					if ps == "missing" then
+						local posx = spGetTeamStartPosition(team)
+						if not posx or posx < 0 then
+							if markedStates and markedStates[i] then
+								glColor(0.3, 0.5, 0.7, 1) -- blue
 							else
-								glColor(0.3, 0.5, 0.6, 1) -- green/blue
+								glColor(0.6, 0.6, 0.2, 1) -- yellow
 							end
-						elseif ps == "ready" then
-							glColor(0.0, 0.5, 0.0, 1) --glColor(0.7, 0.9, 0.7, 1) -- white/green
+						else
+							glColor(0.3, 0.5, 0.7, 1) -- blue
 						end
+					elseif ps == "ready" then
+						glColor(0.0, 0.5, 0.0, 1) -- green -- glColor(0.7, 0.9, 0.7, 1) -- white/green
 					end
-					glText(leaderName, 10, y0 - 20* i, 20, 'xn')
 				end
+				glText(leaderName, 10, y0 - (th3+2)* i, th3, 'xn')
 			end
 		end
+	end
 	glColor(1, 1, 1, 1)
 	drawBorder(Button["arm"]["x0"],Button["arm"]["y0"], Button["arm"]["x1"], Button["arm"]["y1"],1)
 	drawBorder(Button["core"]["x0"],Button["core"]["y0"], Button["core"]["x1"], Button["core"]["y1"],1)
@@ -424,7 +434,11 @@ function widget:DrawScreen()
 		lbl = "Ready"
 	elseif myState == 3 then -- white
 		glColor(1, 1, 1, 1)
+		if gameState ~= 2 then
+		lbl = "Go back"
+		else
 		lbl = "Ready"
+		end
 	else -- cannot ready, grey
 		glColor(0.8, 0.8, 0.8, 0.5)
 		lbl = ""
@@ -432,7 +446,7 @@ function widget:DrawScreen()
 	if lbl == "Ready" then
 		drawBorder(Button["ready"]["x0"],Button["ready"]["y0"], Button["ready"]["x1"], Button["ready"]["y1"],1)
 	end
-	glText(lbl, Button["ready"]["x0"] + 20, Button["ready"]["y0"] + 6, 20, 'x')
+	glText(lbl, 0.5*(Button["ready"]["x0"] + Button["ready"]["x1"]), 0.5 * (Button["ready"]["y0"] + Button["ready"]["y1"]) - 2, th*scale, 'vc') --correction for strange alignment error in y position
 	
 	-- label/info panel
 	glColor(0, 0, 0, 0.4)
@@ -454,7 +468,7 @@ function widget:DrawScreen()
 			txt = strInfo
 		end
 	end
-	glText(txt, Button["infolabel"]["x0"] + 10 ,Button["infolabel"]["y0"] + 15 , 11, 'x')
+	glText(txt, Button["infolabel"]["x0"] + 10 ,Button["infolabel"]["y0"] + 10 , th2*scale, 'd')
 	
 	--exit button
 	glColor(0, 0, 0, 0.4)
@@ -470,13 +484,13 @@ function widget:DrawScreen()
 	else
 		glColor(1, 1, 1, 0.2)
 	end
-	glText("Arm", Button["arm"]["x0"] + 20, Button["arm"]["y0"] + 6, 20, 'x')
+	glText("Arm", 0.5*(Button["arm"]["x0"] + Button["arm"]["x1"]), 0.5 * (Button["arm"]["y0"] + Button["arm"]["y1"]), th*scale, 'vc')
 	if mySide == "core" then
 		glColor(1, 1, 1, 1)
 	else
 		glColor(1, 1, 1, 0.2)
 	end
-	glText("Core", Button["core"]["x0"] + 20, Button["core"]["y0"] + 6, 20, 'x')
+	glText("Core", 0.5* (Button["core"]["x0"] + Button["core"]["x1"]), 0.5 * (Button["core"]["y0"] + Button["core"]["y1"]), th*scale, 'vc')
 	
 	if myState ~= 3 then
 		-- Commander Icons
@@ -507,8 +521,8 @@ function widget:DrawScreen()
 			end
 		end
 		--commander text
-		glText("Automatic", px+sizex/4  , py + 10 , 14,'cx')
-		glText("Manual", px+3*sizex/4  , py + 10 , 14,'cx')
+		glText("Automatic", px+sizex/4  , py + 10 , (th-2)*scale,'cxo')
+		glText("Manual", px+3*sizex/4  , py + 10 , (th-2)*scale,'cxo')
 	end
 end
 
@@ -529,12 +543,18 @@ function widget:GameSetup(state, ready, playerStates)
 		gameState = -1
 	end
 	
-	if myState == 0 then
-		return true,false
-	elseif myState == 3 then
+	if gameState == 2 then
 		return true, true
-	else
-		return true,false
+	else	
+		if myState == 0 then
+			return true, false
+		elseif myState == 1 then
+			return true, false
+		elseif myState == 3 then
+			return true, true
+		else
+			return true, false
+		end
 	end
 end
 
@@ -553,38 +573,50 @@ function widget:MousePress(mx, my, mButton)
 				if startID == coreauto or startID == coreman then
 					if startID == coreauto then
 						spSendLuaRulesMsg('\177' .. armauto)
+						spSendLuaUIMsg('195' .. 1)
 					else
 						spSendLuaRulesMsg('\177' .. armman)
+						spSendLuaUIMsg('195' .. 1)
 					end
 				end
 			elseif IsOnButton(mx,my,Button["core"]["x0"],Button["core"]["y0"],Button["core"]["x1"],Button["core"]["y1"]) then	
 				if startID == armauto or startID == armman then
 					if startID == armauto then
 						spSendLuaRulesMsg('\177' .. coreauto)
+						spSendLuaUIMsg('195' .. 2)
 					else
 						spSendLuaRulesMsg('\177' .. coreman)
+						spSendLuaUIMsg('195' .. 2)
 					end
 				end
 			elseif IsOnButton(mx,my,Button["auto"]["x0"],Button["auto"]["y0"],Button["auto"]["x1"],Button["auto"]["y1"]) then
 				if startID == armman or startID == coreman then
 					if startID == armman then
 						spSendLuaRulesMsg('\177' .. armauto)
+						spSendLuaUIMsg('195' .. 1)
 					else
 						spSendLuaRulesMsg('\177' .. coreauto)
+						spSendLuaUIMsg('195' .. 2)
 					end
 				end
 			elseif IsOnButton(mx,my,Button["manual"]["x0"],Button["manual"]["y0"],Button["manual"]["x1"],Button["manual"]["y1"]) and myState ~= 3 then
 				if startID == armauto or startID == coreauto then
 					if startID == armauto then
 						spSendLuaRulesMsg('\177' .. armman)
+						spSendLuaUIMsg('195' .. 1)
 					else
 						spSendLuaRulesMsg('\177' .. coreman)
+						spSendLuaUIMsg('195' .. 2)
 					end
 				end
-			elseif IsOnButton(mx,my,Button["ready"]["x0"],Button["ready"]["y0"],Button["ready"]["x1"],Button["ready"]["y1"]) and myState ~= 3 then
+			elseif IsOnButton(mx,my,Button["ready"]["x0"],Button["ready"]["y0"],Button["ready"]["x1"],Button["ready"]["y1"]) and gameState ~= 2 then
 				local pos = spGetTeamStartPosition(myTeamID)
 				if pos >= 0 then
-					if myState > 0 then myState = 3 end
+					if myState ~= 3 then 
+						myState = 3
+					elseif myState == 3 then
+						myState = 1
+					end
 				end
 			elseif IsOnButton(mx,my,Button["info"]["x0"],Button["info"]["y0"],Button["info"]["x1"],Button["info"]["y1"]) and myState ~= 3 then
 				if myState ~= 3 then
@@ -592,7 +624,7 @@ function widget:MousePress(mx, my, mButton)
 				end
 			elseif IsOnButton(mx,my,Button["exit"]["x0"],Button["exit"]["y0"],Button["exit"]["x1"],Button["exit"]["y1"]) then
 				widgetHandler:RemoveWidget(self)
-				Spring.Echo("Exited to native dialogue window...")
+				Spring.Echo("Exit to native dialogue window.")
 				return true
 			end
 			updateState()
@@ -642,7 +674,7 @@ function widget:IsAbove(mx,my)
 		Button["ready"]["On"] = false
 		Button["info"]["On"] = false
 		Button["exit"]["On"] = false
-	elseif IsOnButton(mx,my,Button["ready"]["x0"],Button["ready"]["y0"],Button["ready"]["x1"],Button["ready"]["y1"]) and myState > 0 then
+	elseif IsOnButton(mx,my,Button["ready"]["x0"],Button["ready"]["y0"],Button["ready"]["x1"],Button["ready"]["y1"]) and myState > 0 and gameState ~= 2 then
 		Button["arm"]["On"] = false
 		Button["core"]["On"] = false
 		Button["ready"]["On"] = true
