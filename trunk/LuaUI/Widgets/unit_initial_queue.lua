@@ -3,9 +3,9 @@ function widget:GetInfo()
 	return {
 		name      = "Initial Queue - XTA",
 		desc      = "Allows you to queue buildings before game start",
-		author    = "Niobium", -- Modified for XTA by Deadnight Warrior
-		version   = "1.3",
-		date      = "7 April 2010",
+		author    = "Niobium", -- Modified for XTA by Deadnight Warrior. Made compatible with side changes by Jools.
+		version   = "1.4",
+		date      = "2 June 2012",
 		license   = "GNU GPL, v2 or later",
 		layer     = -1, -- Puts it above minimap_startboxes with layer 0
 		enabled   = true,
@@ -214,8 +214,7 @@ function widget:Initialize()
 	local startID = spGetTeamRulesParam(myTeamID, 'startUnit')
 	if startID and startID ~= "" then sDefID = startID end
 	InitializeFaction(sDefID)
-	--WG["faction_change"] = InitializeFaction
-	Spring.Echo("StartUnit:",sDefID, startID)
+	
 end
 
 function widget:Shutdown()
@@ -346,11 +345,6 @@ function widget:DrawWorld()
 			selBuildData = {selDefID, bx, by, bz, buildFacing}	
 		end
 	end
-	
-	local myTeamID = Spring.GetMyTeamID()
-	local startID = spGetTeamRulesParam(myTeamID, 'startUnit')
-	if startID and startID ~= "" then sDefID = startID end
-	--InitializeFaction(sDefID)
 	
 	local sx, sy, sz = Spring.GetTeamStartPosition(myTeamID) -- Returns -100, -100, -100 when none chosen
 	local startChosen = (sx ~= -100)
@@ -528,6 +522,21 @@ end
 ------------------------------------------------------------
 -- Misc
 ------------------------------------------------------------
+function widget:RecvLuaMsg(msg, playerID)
+	-- we just use this function to trigger side change update.
+	
+	local sidePrefix = '195' -- set by widget gui_commchange.lua
+	
+	if string.find(msg,sidePrefix) then	
+		local myTeamID = Spring.GetMyTeamID()
+		local startID = spGetTeamRulesParam(myTeamID, 'startUnit')
+		if startID and startID ~= "" then sDefID = startID end
+		InitializeFaction(sDefID)
+	end
+end
+
+
+
 function widget:TextCommand(cmd)
 	
 	-- Facing commands are only handled by spring if we have a building selected, which isn't possible pre-game
