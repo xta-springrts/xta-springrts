@@ -201,6 +201,7 @@ end
 function widget:Initialize()
 
 	if (Game.startPosType == 1) or			-- Don't run if start positions are random
+	   (Game.startPosType == 0) or			-- Don't run if start positions are fixed or n/a
 	   (Spring.GetGameFrame() > 0) or		-- Don't run if game has already started
 	   (Spring.GetSpectatingState()) then	-- Don't run if we are a spec
 		widgetHandler:RemoveWidget(self)
