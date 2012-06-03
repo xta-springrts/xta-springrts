@@ -83,8 +83,13 @@ local function CustomLayoutHandler(xIcons, yIcons, cmdCount, commands)
   local reParamsCmds = {}
   local iconList = {}
 
-  local ipp = (xIcons * yIcons)  -- iconsPerPage
-
+  local ipp
+  if cmdCount-2 > xIcons * (yIcons+1) then
+    ipp = (xIcons * yIcons)  -- iconsPerPage
+  else
+    ipp = (xIcons * (yIcons + 1))
+  end
+  
   local activePage = Spring.GetActivePage()
 
   local prevCmd = cmdCount - 1
@@ -107,7 +112,7 @@ local function CustomLayoutHandler(xIcons, yIcons, cmdCount, commands)
   end
 
   local pos = 0;
-  local firstSpecial = (xIcons * (yIcons - 1))
+  local firstSpecial = ipp - xIcons
 
   for cmdSlot = 1, (cmdCount - 2) do
 
@@ -115,6 +120,7 @@ local function CustomLayoutHandler(xIcons, yIcons, cmdCount, commands)
     while (math.fmod(pos, ipp) >= firstSpecial) do
       pos = pos + 1
     end
+
     local onLastRow = (math.abs(math.fmod(pos, ipp)) < 0.1)
 
     if (onLastRow) then
@@ -214,19 +220,19 @@ function widget:Initialize()
 
 	-- 4:3 Screen aspect ratio
 	if (X/Y == 4/3) then
-		config = {"xIconSize 0.055", "yIconSize 0.0695"}
+		config = {"xIconSize 0.054375", "yIconSize 0.0725"}
 
 	-- 5:4 Screen aspect ratio
 	elseif (X/Y == 5/4) then
-		config = {"xIconSize 0.058", "yIconSize 0.0713"}
+		config = {"xIconSize 0.05704", "yIconSize 0.0713"}
 
 	-- 16:9 Screen aspect ratio
 	elseif ((X/Y == 16/9) or (X==1366 and Y==768)) then
-		config = {"xIconSize 0.043", "yIconSize 0.0643"}
+		config = {"xIconSize 0.040", "yIconSize 0.0643"}
 
 	-- 16:10 Screen aspect ratio
 	elseif (X/Y == 16/10) then
-		config = {"xIconSize 0.046", "yIconSize 0.0643"}
+		config = {"xIconSize 0.044", "yIconSize 0.0675"}
 	else
 		Echo("Control Panel Widget doens't support your " ..X.. "x" ..Y.. " resolution.")
 		Echo("Call back your default Layout.")
