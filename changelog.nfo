@@ -27,11 +27,12 @@
 * Commander selection menu scales with resolution so that it's always the same size, it might have too small fonts on low res screens
 * Fixed many unwanted reverts that happened when releasing 9.71 (Raven, and Hammer/Thud are affected mostly)
 * Added RadarEmitHeight and LOSEmitHeight values to all towers, commanders and big ships, makes them see better on bumpy terrain or when climbing hills
-* Added option to adjust custom gravity of cannon weapons (effectivly it changes their projectile speed, smaller number -> slower cannon, default 0.7)
+* Added option to adjust custom gravity of cannon weapons (effectivly it changes their projectile speed, smaller number -> slower cannon, default 0.5)
+* Added Plain Commander, without any upgrades
 * Added option do enable or disable aircraft vs aircraft collision, default no collision
 * Expanded unit description for rocket toggle units so players can see which units can toggle rockets (and what type of rockets) before building them
 * Togglable rocket units now show attack range properly
-* Radar jammers and mine layers set to hold position by default
+* Radar jammers, mine layers and mobile anti-nukes set to hold position by default
 * Fixed many yardmaps that caused warnings in the develop build, improves compatibility with upcoming Spring release
 * Fixed CORE Construction sub description having excess delimiters
 * Fixed Auto-upg. commanders wandering off into battle when set on maneuver
