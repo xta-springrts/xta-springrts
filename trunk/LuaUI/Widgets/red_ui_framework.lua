@@ -7,7 +7,7 @@ function widget:GetInfo()
 	date      = "July 30, 2009", --last change August 29,2009
 	license   = "GNU GPL, v2 or later",
 	layer     = -99999, --lowest go first
-	enabled   = true, --loaded by default
+	enabled   = false, --loaded by default
 	handler   = true, --access to handler
 	}
 end
