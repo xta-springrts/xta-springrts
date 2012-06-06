@@ -217,7 +217,11 @@ local config = {
 
 function widget:Initialize()
 	local X, Y = Spring.GetViewGeometry()
+	local maxButSize=(1-0.097-0.31-4/Y)/9-.0005
+	
+	config = {"xSelectionPos " .. .31/3*Y/X, "xIconSize " .. maxButSize*1.12*Y/X, "yIconSize " .. maxButSize}
 
+	--[[
 	-- 4:3 Screen aspect ratio
 	if (X/Y == 4/3) then
 		config = {"xIconSize 0.054375", "yIconSize 0.0725"}
@@ -239,6 +243,7 @@ function widget:Initialize()
 		Shutdown()
 		return
 	end
+	--]]
 
 	local file = io.open(LUAUI_DIRNAME .. 'ctrlpanelImp.txt', 'w')
 
