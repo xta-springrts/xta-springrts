@@ -6,7 +6,7 @@ function widget:GetInfo()
 	date      = "August 11, 2009", --last change September 10,2009
 	license   = "GNU GPL, v2 or later",
 	layer     = -100,
-	enabled   = true, --enabled by default
+	enabled   = false, --enabled by default
 	handler   = true, --can use widgetHandler:x()
 	}
 end
