@@ -122,9 +122,9 @@ local options = {
 		desc   = "Set the projectile velocity for cannon weapons\nkey: gravity",
 		type   = "number",
 		--section= "xtagame",
-		def    = 0.7,
-		min    = 0.05,
-		max    = 1.6,
+		def    = 0.5,
+		min    = 0.25,
+		max    = 1.25,
 		step   = 0.05,
 	},
 	{
