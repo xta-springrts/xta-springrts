@@ -88,7 +88,7 @@ function gadget:UnitTaken(u, ud, team)
 end
 
 function gadget:Initialize()
-	if not endmodes[Spring.GetModOptions().deathmode] then
+	if not endmodes[Spring.GetModOptions().teamdeathmode] then
 		gadgetHandler:RemoveGadget()
 	end
 	for _,t in ipairs(Spring.GetAllyTeamList()) do
