@@ -202,10 +202,14 @@ function widget:Initialize()
 	vsx, vsy = gl.GetViewSizes()
 	scale = vsy/1024
 	--sizes:
-	sizex 		= sizex 	* scale
-	sizey 		= sizey 	* scale
+	sizex 	= sizex * scale
+	sizey 	= sizey * scale
+	th = 16 * scale
+	th2 = 11 * scale
+	th3 = 20 * scale
 	--position:
 	px, py = px*scale, py*scale
+	mid = px + sizex/2
 	-- side
 	updateState()
 	--buttons:
@@ -289,7 +293,7 @@ function widget:DrawScreenEffects(vsx, vsy)
 			glColor(1, 1, 1, 0.3)
 		end
 		drawBorder(Button["info"]["x0"],Button["info"]["y0"],Button["info"]["x1"],Button["info"]["y1"],1)
-		glText("info", 0.5 * (Button["info"]["x0"] + Button["info"]["x1"]) , 0.5 * (Button["info"]["y0"] + Button["info"]["y1"]) , th*scale,'vc')
+		glText("info", 0.5 * (Button["info"]["x0"] + Button["info"]["x1"]) , 0.5 * (Button["info"]["y0"] + Button["info"]["y1"]) , th,'vc')
 		-- infopanel
 		if infoOn then
 			glColor(0, 0, 0, 0.5)
@@ -446,7 +450,7 @@ function widget:DrawScreen()
 	if lbl == "Ready" then
 		drawBorder(Button["ready"]["x0"],Button["ready"]["y0"], Button["ready"]["x1"], Button["ready"]["y1"],1)
 	end
-	glText(lbl, 0.5*(Button["ready"]["x0"] + Button["ready"]["x1"]), 0.5 * (Button["ready"]["y0"] + Button["ready"]["y1"]) - 2, th*scale, 'vc') --correction for strange alignment error in y position
+	glText(lbl, 0.5*(Button["ready"]["x0"] + Button["ready"]["x1"]), 0.5 * (Button["ready"]["y0"] + Button["ready"]["y1"]) - 2, th, 'vc') --correction for strange alignment error in y position
 	
 	-- label/info panel
 	glColor(0, 0, 0, 0.4)
@@ -468,7 +472,7 @@ function widget:DrawScreen()
 			txt = strInfo
 		end
 	end
-	glText(txt, Button["infolabel"]["x0"] + 10 ,Button["infolabel"]["y0"] + 10 , th2*scale, 'd')
+	glText(txt, Button["infolabel"]["x0"] + 10 ,Button["infolabel"]["y0"] + 10 , th2, 'd')
 	
 	--exit button
 	glColor(0, 0, 0, 0.4)
@@ -484,13 +488,13 @@ function widget:DrawScreen()
 	else
 		glColor(1, 1, 1, 0.2)
 	end
-	glText("Arm", 0.5*(Button["arm"]["x0"] + Button["arm"]["x1"]), 0.5 * (Button["arm"]["y0"] + Button["arm"]["y1"]), th*scale, 'vc')
+	glText("Arm", 0.5*(Button["arm"]["x0"] + Button["arm"]["x1"]), 0.5 * (Button["arm"]["y0"] + Button["arm"]["y1"]), th, 'vc')
 	if mySide == "core" then
 		glColor(1, 1, 1, 1)
 	else
 		glColor(1, 1, 1, 0.2)
 	end
-	glText("Core", 0.5* (Button["core"]["x0"] + Button["core"]["x1"]), 0.5 * (Button["core"]["y0"] + Button["core"]["y1"]), th*scale, 'vc')
+	glText("Core", 0.5* (Button["core"]["x0"] + Button["core"]["x1"]), 0.5 * (Button["core"]["y0"] + Button["core"]["y1"]), th, 'vc')
 	
 	if myState ~= 3 then
 		-- Commander Icons
@@ -521,8 +525,8 @@ function widget:DrawScreen()
 			end
 		end
 		--commander text
-		glText("Automatic", px+sizex/4  , py + 10 , (th-2)*scale,'cxo')
-		glText("Manual", px+3*sizex/4  , py + 10 , (th-2)*scale,'cxo')
+		glText("Automatic", px+sizex/4  , py + 10 , (th-2),'cxo')
+		glText("Manual", px+3*sizex/4  , py + 10 , (th-2),'cxo')
 	end
 end
 
