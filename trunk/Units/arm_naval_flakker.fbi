@@ -47,8 +47,8 @@
 	//  Building
 	//************
 	buildangle=8192;
-	yardmap=wwwww wwwww wwwww wwwww wwwww;
-	activatewhenbuilt=1;
+	yardmap=oooo oooo oooo oooo;
+	activatewhenbuilt=0;
 
 	//************************************************************
 	//  Constructor
@@ -62,7 +62,7 @@
 	canattack=1;
 	canguard=1;
 	canstop=1;
-	onoffable=1;
+	onoffable=0;
 
 	//************************************************************
 	//  Movement
