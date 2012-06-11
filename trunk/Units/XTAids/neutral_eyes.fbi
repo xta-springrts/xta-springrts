@@ -59,5 +59,4 @@
 	MaxWaterDepth=9999;
 	
 	//    Misc
-	SmoothAnim=1;
 }

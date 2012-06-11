@@ -69,7 +69,6 @@
 	MaxWaterDepth=0;
 	
 	//    Misc
-	SmoothAnim=1;
 	//Upright=1;
 	Corpse=cordev1_dead;
 	HideDamage=1;

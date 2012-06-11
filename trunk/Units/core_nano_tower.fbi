@@ -36,7 +36,6 @@
 	explodeas=ATOMIC_SMALLNANO;
 	selfdestructas=ATOMIC_SMALLNANO;
 	maxwaterdepth=255;
-	smoothanim=1;
 	upright=1;
 	buildpic=core_nano_tower.jpg;
 	icontype=building;

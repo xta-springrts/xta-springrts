@@ -37,7 +37,6 @@
 	selfdestructas=LARGE_BUILDING;
 	minwaterdepth=40;
 	corpse=arm_subpen_DEAD;
-	smoothanim=1;
 	buildpic=arm_sub_pen.DDS;
 	icontype=building;
 	bmcode=0;

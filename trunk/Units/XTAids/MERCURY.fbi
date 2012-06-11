@@ -37,7 +37,6 @@
 	selfdestructas=BIG_UNIT;
 	maxwaterdepth=0;
 	corpse=MERCURY_DEAD;
-	smoothanim=1;
 	buildpic=MERCURY.DDS;
 	icontype=building;
 	bmcode=0;

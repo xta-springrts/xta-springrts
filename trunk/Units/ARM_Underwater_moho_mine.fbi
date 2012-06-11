@@ -35,7 +35,6 @@
 	selfdestructas=SMALL_BUILDING;
 	minwaterdepth=22;
 	corpse=ARM_Underwater_moho_mine_DEAD;
-	smoothanim=1;
 	buildpic=ARM_Underwater_moho_mine.DDS;
 	icontype=building;
 	bmcode=0;
