@@ -41,7 +41,6 @@
 	hoverattack=1;
 	selfdestructas=LARGE_BUILDING;
 	maxwaterdepth=0;
-	smoothanim=1;
 	upright=1;
 	buildpic=CORCRW.DDS;
 	icontype=air;

@@ -73,7 +73,6 @@
 	MaxWaterDepth=0;
 	
 	//    Misc
-	SmoothAnim=1;
 	//Upright=1;
 	Corpse=monster_dead;
 	HideDamage=1;

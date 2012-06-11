@@ -36,7 +36,6 @@
 	explodeas=NANO_UNITEX;
 	selfdestructas=NANO_UNIT;
 	corpse=core_construction_sub_DEAD;
-	smoothanim=1;
 	buildpic=core_construction_sub.DDS;
 	icontype=sea;
 	bmcode=1;

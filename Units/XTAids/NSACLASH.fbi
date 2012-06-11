@@ -40,7 +40,6 @@
 	MaxWaterDepth=0;
 	NoChaseCategory=VTOL;
 	SelfDestructAs=BIG_UNIT;
-	SmoothAnim=1;
 	Weapon1=CORE_CANLASER;
 	wpri_badTargetCategory=VTOL;
 	bmcode=1;

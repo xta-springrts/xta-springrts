@@ -38,7 +38,6 @@
 	selfdestructas=NANO_UNIT;
 	minwaterdepth=15;
 	corpse=arm_construction_sub_DEAD;
-	smoothanim=1;
 	buildpic=arm_construction_sub.DDS;
 	icontype=sea;
 	bmcode=1;

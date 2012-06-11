@@ -33,7 +33,7 @@
 	Weapon1 	  = ASTEROID;
 	side	      = ARM;
 	sightDistance     = 273;
-	smoothAnim	= 1;
+	smoothAnim	= 0;
 	TEDClass	  = ENERGY;
 	turnRate	  = 0;
 	upright	   = 0;

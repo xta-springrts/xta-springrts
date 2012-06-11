@@ -39,7 +39,6 @@
 	selfdestructas=BIG_UNIT;
 	maxwaterdepth=0;
 	corpse=SCREAMER_DEAD;
-	smoothanim=1;
 	buildpic=SCREAMER.DDS;
 	icontype=building;
 	bmcode=0;
