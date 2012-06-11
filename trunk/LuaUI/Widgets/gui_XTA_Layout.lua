@@ -30,6 +30,18 @@ end
 
 include("colors.h.lua")
 
+local floor = math.floor
+local glColor = gl.Color
+local glRect = gl.Rect
+local glTexRect = gl.TexRect
+local glPushMatrix = gl.PushMatrix
+local glPopMatrix = gl.PopMatrix
+local glTranslate = gl.Translate
+local glBeginText = gl.BeginText
+local glEndText = gl.EndText
+local glText = gl.Text
+local glTexture = gl.Texture
+
 local langSuffix = Spring.GetConfigString('Language', 'fr')
 local l10nName = 'L10N/commands_' .. langSuffix .. '.lua'
 local success, translations = pcall(VFS.Include, l10nName)
@@ -41,11 +53,12 @@ end
 local FrameTex   = "bitmaps/icons/frame_slate_128x96.png"
 local FrameScale     = "&0.099x0.132&"
 local PageNumTex = "bitmaps/circularthingy.tga"
+local btns = {}
 
 
 if (false) then  --  disable textured buttons?
-  FrameTex   = "false"
-  PageNumTex = "false"
+  FrameTex   = ""
+  PageNumTex = ""
 end
 
 local PageNumCmd = {
@@ -60,6 +73,11 @@ if (Game.version:find("0.75")==nil)or(Game.version:find("svn")) then
   PageNumCmd.iconname = nil
 end
 
+local X, Y
+local TweakPosX, TweakPosY
+local btnOffset, txtOffset
+local bntTxtSize, TweakTitleSize
+local rowSize, btnSize
 --------------------------------------------------------------------------------
 
 local function CustomLayoutHandler(xIcons, yIcons, cmdCount, commands)
@@ -195,9 +213,8 @@ local commonConfig = {
 "selectThrough 	1",
 
 "xPos           0",
-"yPos           0.103",
-"xSelectionPos  0.068",
-"ySelectionPos  0.1001",
+"yPos           0.097",
+"ySelectionPos  0.094",
 "prevPageSlot 	auto",
 "deadIconSlot 	none",
 "nextPageSlot 	auto",
@@ -205,21 +222,31 @@ local commonConfig = {
 "iconBorder 	0.0005",
 "frameBorder 	0.000",
 
-"xIcons         4",
-"yIcons         9"
 }
 
-local config = {
-}
+local config = {}
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
 function widget:Initialize()
-	local X, Y = Spring.GetViewGeometry()
-	local maxButSize=(1-0.097-0.31-4/Y)/9-.0005
-	
-	config = {"xSelectionPos " .. .31/3*Y/X, "xIconSize " .. maxButSize*1.12*Y/X, "yIconSize " .. maxButSize}
+	X, Y = Spring.GetViewGeometry()
+	local maxButSize=(1-0.097-0.31-4/Y)/btns.y-.0005 
+	TweakPosX = floor((maxButSize+0.0005)*btns.x*Y*1.12)
+	TweakPosY = floor(maxButSize*btns.y*Y)
+	btnOffset, txtOffset = floor(12*Y/1200), floor(48*Y/1200)
+	bntTxtSize = 22*Y/1200
+	TweakTitleSize = 10*Y/1200
+	rowSize, btnSize = floor(25*Y/1200), floor(80*Y/1200)
+
+
+	config = {
+		"xIcons         " .. btns.x,
+		"yIcons         " .. btns.y,
+		"xSelectionPos " .. TweakPosX/3/X,
+		"xIconSize " .. maxButSize*1.12*Y/X,
+		"yIconSize " .. maxButSize
+	}
 
 	--[[
 	-- 4:3 Screen aspect ratio
@@ -265,5 +292,64 @@ function widget:Shutdown()
   widgetHandler:ConfigLayoutHandler(true)
 end
 
+
+-- LuaUI Tweak mode
+
+local TweakAbove
+
+function widget:DrawScreen()	--Tweak Mode doesn't work without it
+end
+function widget:TweakDrawScreen()
+	glPushMatrix()
+		glTranslate(TweakPosX, TweakPosY, 0)
+		glColor(0, 0, 0, 0.5)
+		for i=0,2 do
+			glRect(btnOffset,rowSize*i+i,btnSize,rowSize*(i+1))
+		end
+		glColor(1, 1, 1, 1)
+		glBeginText()
+			glText('Select button configuration', btnOffset, 3*rowSize+3, TweakTitleSize, 'd')
+			glText('3 x 8', txtOffset, 2*rowSize, bntTxtSize, 'cd')
+			glText('4 x 9', txtOffset, rowSize, bntTxtSize, 'cd')
+			glText('5 x 11', txtOffset, 0, bntTxtSize, 'cd')
+		glEndText()
+	glPopMatrix()
+end
+
+function widget:TweakIsAbove(x,y)
+	if x>TweakPosX and y>TweakPosY and x<TweakPosX+btnSize and y<TweakPosY+3*rowSize then
+		TweakAbove = true
+	else
+		TweakAbove = false
+	end
+	return TweakAbove
+end
+
+function widget:TweakGetTooltip(x,y)
+  return 'Select number of icons'
+end
+
+function widget:TweakMousePress(x, y, button)
+	if (TweakAbove) then
+		btns.x=3+(2-floor((y-TweakPosY) / rowSize))
+		btns.y=2*btns.x+1
+		if btns.y==7 then btns.y=8 end
+		self:Initialize()
+		return true
+	end
+	return false
+end
+
+--save / load to config file
+function widget:GetConfigData() 
+  return btns
+end
+function widget:SetConfigData(data) 
+  if (data ~= nil) then
+    btns = data
+  else
+    btns = {x = 4,	y = 9,}
+  end
+end
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
