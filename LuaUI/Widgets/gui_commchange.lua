@@ -158,8 +158,6 @@ local function initButtons()
 	Button["exit"]["x1"] = px + sizex
 	Button["exit"]["y0"] = py + sizey
 	Button["exit"]["y1"] = py + sizey + 30
-	
-	mid = px + sizex/2
 end
 
 local function updateState()

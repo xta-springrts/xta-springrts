@@ -48,8 +48,8 @@ function widget:GameFrame(n)
 	end
 end
 
-function widget:MousePress(x, y, b)  
-  if rightClickUpgradeParams then 
+function widget:MousePress(x, y, b)
+  if rightClickUpgradeParams and b==3 then 
     local alt, ctrl, meta, shift = Spring.GetModKeyState() -- 
     local options = {} 
     if shift then options = {"shift"} end 
