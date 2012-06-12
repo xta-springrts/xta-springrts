@@ -55,7 +55,6 @@ local FrameScale     = "&0.099x0.132&"
 local PageNumTex = "bitmaps/circularthingy.tga"
 local btns = {}
 
-
 if (false) then  --  disable textured buttons?
   FrameTex   = ""
   PageNumTex = ""
@@ -230,6 +229,9 @@ local config = {}
 --------------------------------------------------------------------------------
 
 function widget:Initialize()
+	if not btns.x or not btns.y then
+		btns = {x = 4, y = 9}
+	end
 	X, Y = Spring.GetViewGeometry()
 	local maxButSize=(1-0.097-0.31-4/Y)/btns.y-.0005 
 	TweakPosX = floor((maxButSize+0.0005)*btns.x*Y*1.12)
@@ -340,16 +342,20 @@ function widget:TweakMousePress(x, y, button)
 	return false
 end
 
---save / load to config file
-function widget:GetConfigData() 
-  return btns
-end
+--load / save to config file
 function widget:SetConfigData(data) 
-  if (data ~= nil) then
-    btns = data
-  else
-    btns = {x = 4,	y = 9,}
-  end
+	if (data ~= nil) then
+		btns = data
+		if not btns.x or not btns.y then
+			btns = {x = 4,	y = 9,}
+		end
+	else
+		btns = {x = 4,	y = 9,}
+	end
 end
+function widget:GetConfigData() 
+	return btns
+end
+
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
