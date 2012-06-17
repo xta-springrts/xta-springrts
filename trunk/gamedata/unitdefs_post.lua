@@ -70,6 +70,9 @@ if (modOptions) then
 	elseif (ud.unitname == "arm_u0commander" or ud.unitname == "core_u0commander") then
 		ud.energystorage = stEn + 50
 		ud.metalstorage = stMe + 50
+	elseif (ud.unitname == "arm_scommander" or ud.unitname == "core_scommander") then
+		ud.energystorage = stEn + 50
+		ud.metalstorage = stMe + 50
 	elseif (ud.unitname == "arm_ucommander" or ud.unitname == "core_ucommander") then
 		ud.energystorage = stEn + 1000
 		ud.metalstorage = stMe + 1000
@@ -108,6 +111,7 @@ if (modOptions and modOptions.comm) then
 		halfupgrade = "arm_u2commander",
 		fullupgrade = "arm_u4commander",
 		noupgrade = "arm_u0commander",
+		plain = "arm_scommander",
 		comshooter = "armcom",
 		decoystart = "arm_decoy_commander",
 		capturethebase = "arm_base",
@@ -120,6 +124,7 @@ if (modOptions and modOptions.comm) then
 		halfupgrade = "core_u2commander",
 		fullupgrade = "core_u4commander",
 		noupgrade = "core_u0commander",
+		plain = "core_scommander",
 		comshooter = "corcom",
 		decoystart = "core_decoy_commander",
 		capturethebase = "core_base",
@@ -146,6 +151,7 @@ local commanderList = {
 	arm_u2commander = true,
 	arm_u3commander = true,
 	arm_u4commander = true,
+	arm_scommander = true,
 	armcom = true,
 	arm_base = true,
 	arm_nincommander = true,
@@ -156,6 +162,7 @@ local commanderList = {
 	core_u2commander = true,
 	core_u3commander = true,
 	core_u4commander = true,
+	core_scommander = true,
 	corcom = true,
 	core_base = true,
 	core_nincommander = true,
