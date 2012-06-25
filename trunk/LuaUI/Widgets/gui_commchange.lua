@@ -221,18 +221,20 @@ end
 
 function widget:RecvLuaMsg(msg, playerID)
 	local positionRegex = "181072"
-	local sms = string.sub(msg, string.len(positionRegex)+1) 
-	
-	local state = tonumber(string.sub(sms,1,1))
-	local player = tonumber(string.sub(sms,2))
-	
-	--Spring.Echo("Got a msg:", player,": ",state, msg)
-	--display the message in the UI
-
-	if state == 0 then
-		markedStates[player+1] = false
-	elseif state == 1 then
-		markedStates[player+1] = true
+	if msg and string.len(msg>8) then	
+		local sms = string.sub(msg, string.len(positionRegex)+1) 
+		local state = tonumber(string.sub(sms,1,1))
+		local player = tonumber(string.sub(sms,2))
+		
+		--Spring.Echo("Got a msg:", player,": ",state, msg)
+		--display the message in the UI
+		if player then
+			if state == 0 then
+				markedStates[player+1] = false
+			elseif state == 1 then
+				markedStates[player+1] = true
+			end
+		end
 	end
 end
 
