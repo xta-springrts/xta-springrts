@@ -699,7 +699,7 @@
 	startvelocity=150;
 	weaponacceleration=15;
 	turnrate=18000;
-	areaofeffect=16;
+	areaofeffect=24;
 	soundstart=torpedo1;
 	soundhit=xplodep2;
 	tracks=1;
@@ -2603,7 +2603,7 @@
 	startvelocity=150;
 	weaponacceleration=25;
 	turnrate=5000;
-	areaofeffect=16;
+	areaofeffect=32;
 	soundstart=torpedo1;
 	soundhit=xplodep1;
 	tracks=1;
@@ -3005,12 +3005,12 @@
 	propeller=1;
 	range=400;
 	reloadtime=4.0;
-	weapontimer=2.5;
+	weapontimer=3;
 	weaponvelocity=150;
 	startvelocity=150;
 	weaponacceleration=15;
 	turnrate=25000;
-	areaofeffect=16;
+	areaofeffect=24;
 	soundstart=torpedo1;
 	soundhit=xplodep2;
 	tracks=1;
@@ -3022,6 +3022,7 @@
 		default=125;
 		group_subs=275;
 		group_stupidsubs=275;
+		group_large_ships=200;
 		group_torpedo_launcher=283;
 		group_invincible=1;
 	}

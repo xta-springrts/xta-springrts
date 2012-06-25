@@ -89,24 +89,35 @@ end
 --------------------------------------------------------------------------------
 -- XTA Weapon Definitions Post-processing
 --------------------------------------------------------------------------------
+local explosiveWeapons = {
+	MissileLauncher = true,
+	StarburstLauncher = true,
+	TorpedoLauncher = true,
+	Cannon = true,
+	AircraftBomb = true,
+}
+local inertialessWeapons = {
+	LaserCannon = true,
+	BeamLaser = true,
+	EmgCannon = true,
+	Flame = true,
+	LightningCannon = true,
+}
 
 local modOptions = Spring.GetModOptions()
 
 -- Adjustment of terrain damage, area of effect, kinetic force of weapons and cannon trajectory height
-local customGravity = 0.7
+local customGravity = 0.5
+local maxRangeAngle = 45  --in degrees >0 and <=45
 if modOptions and modOptions.gravity then customGravity=modOptions.gravity end
-local velGravFactor = customGravity * 900
+local velGravFactor = customGravity * 900 / math.sin(math.rad(2 * maxRangeAngle))
 for id in pairs(WeaponDefs) do
 	if WeaponDefs[id].range then
-		if tonumber(WeaponDefs[id].range) < 550 or WeaponDefs[id].weapontype == "MissileLauncher" or WeaponDefs[id].weapontype == "StarburstLauncher" or
-			WeaponDefs[id].weapontype == "TorpedoLauncher" or WeaponDefs[id].weapontype == "Cannon" or
-			WeaponDefs[id].weapontype == "AircraftBomb" then
+		if tonumber(WeaponDefs[id].range) < 550 or explosiveWeapons[WeaponDefs[id].weapontype] then
 				WeaponDefs[id].avoidfeature = false
 		end
 		if WeaponDefs[id].edgeeffectiveness and tonumber(WeaponDefs[id].edgeeffectiveness)>0 then
-			if (WeaponDefs[id].weapontype == "MissileLauncher" or WeaponDefs[id].weapontype == "StarburstLauncher" or
-				WeaponDefs[id].weapontype == "TorpedoLauncher" or WeaponDefs[id].weapontype == "Cannon" or
-				WeaponDefs[id].weapontype == "AircraftBomb") and tonumber(WeaponDefs[id].areaofeffect)<145 then
+			if explosiveWeapons[WeaponDefs[id].weapontype] and tonumber(WeaponDefs[id].areaofeffect)<145 then
 					WeaponDefs[id].areaofeffect = math.min(WeaponDefs[id].areaofeffect / (1 - WeaponDefs[id].edgeeffectiveness), 160)
 					WeaponDefs[id].edgeeffectiveness = 0
 					WeaponDefs[id].avoidfeature = false
@@ -116,7 +127,9 @@ for id in pairs(WeaponDefs) do
 	if WeaponDefs[id].weapontype == "Cannon" and WeaponDefs[id].range and not WeaponDefs[id].mygravity and not WeaponDefs[id].cylindertargetting then
 		WeaponDefs[id].mygravity = customGravity
 		WeaponDefs[id].weaponvelocity = math.sqrt(WeaponDefs[id].range * velGravFactor)
-	elseif WeaponDefs[id].weapontype == "LaserCannon" or WeaponDefs[id].weapontype == "BeamLaser" or WeaponDefs[id].weapontype == "EmgCannon" or WeaponDefs[id].weapontype == "LightningCannon" then
+		WeaponDefs[id].gravityaffected = true
+		WeaponDefs[id].heightboostfactor = 0.04
+	elseif inertialessWeapons[WeaponDefs[id].weapontype] then
 		WeaponDefs[id].impulseboost = 0
 		WeaponDefs[id].impulsefactor = 0
 	end
