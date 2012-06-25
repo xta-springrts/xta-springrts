@@ -13,6 +13,15 @@ function gadget:GetInfo()
 end
 
 LUAUI_DIRNAME							= 'LuaUI/'
+local random  = math.random
+local abs = math.abs
+local nonexplosiveWeapons = {
+	LaserCannon = true,
+	BeamLaser = true,
+	EmgCannon = true,
+	Flame = true,
+	LightningCannon = true,
+}
 
 if not gadgetHandler:IsSyncedCode() then
 	-------------------
@@ -29,13 +38,15 @@ else
 	local sndWater 						= "Sounds/SPLSHBIG.WAV"
 	
 	function gadget:Explosion(weaponID, px, py, pz, ownerID)
-		local random  = math.random
 		local isWater = Spring.GetGroundHeight(px,pz) < 0
-		local aoe = WeaponDefs[weaponID]["damageAreaOfEffect"]
-		if isWater and py < 10 then
-			Spring.SpawnCEG(splashCEG1, px+random(-aoe/2,aoe/2), py, pz+random(-aoe/2,aoe/2))
-			if aoe > 40 then Spring.SpawnCEG(splashCEG2, px, 0, pz) end
-			Spring.PlaySoundFile(sndWater,15.0,px,0,pz)
+		local aoe = WeaponDefs[weaponID]["damageAreaOfEffect"] / 2
+		local wType = WeaponDefs[weaponID].type
+		if not nonexplosiveWeapons[wType] and isWater and abs(py) <= aoe then
+			Spring.SpawnCEG(splashCEG1, px+random(-aoe,aoe), py, pz+random(-aoe,aoe))
+			if aoe > 20 then
+				Spring.SpawnCEG(splashCEG2, px, 0, pz)
+				Spring.PlaySoundFile(sndWater,15.0,px,0,pz)
+			end
 			return true
 		else
 			return false
@@ -49,9 +60,8 @@ else
 	
 		for id,Def in pairs(WeaponDefs) do
 			local weaponID
-			if Def["damageAreaOfEffect"] ~= nil and Def["damageAreaOfEffect"] > 15 and Def["myGravity"] > 0 then
-				weaponID = Def["id"]
-				Script.SetWatchWeapon(weaponID, true)
+			if Def.damageAreaOfEffect ~= nil and Def.damageAreaOfEffect > 16 and not nonexplosiveWeapons[Def.type] then
+				Script.SetWatchWeapon(Def.id, true)
 			end
 		end
 	end
