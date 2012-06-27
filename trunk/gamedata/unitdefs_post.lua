@@ -22,6 +22,7 @@ end
 
 --------------------------------------------------------------------------------
 -- General postprocessing
+local lowcpu = modOptions.lowcpu and tobool(modOptions.lowcpu)
 for name, ud in pairs(UnitDefs) do
 	-- Tanks and hovers don't slow down when turning
 	if ud.maxvelocity and ud.category and ((ud.category:find("TANK",1,true) or ud.category:find("HOVER",1,true))) then
@@ -42,7 +43,7 @@ for name, ud in pairs(UnitDefs) do
 		end
 	end
 	-- convert from the pre-0.83 representation (pieceTrailCEGTag, pieceTrailCEGRange)
-	if (ud.piecetrailcegtag ~= nil) then
+	if (ud.piecetrailcegtag ~= nil and not lowcpu) then
 		if (ud.sfxtypes == nil) then
 			ud.sfxtypes = {}
 		end
