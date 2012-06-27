@@ -64,7 +64,7 @@
 	//************************************************************
 	//  Movement
 	//************
-	movementclass=TANKDTCRUSH; //TANKBH3//
+	movementclass=TANKBH3; //TANKBH3//
 	turnrate=400;
 	acceleration=0.2625;
 	brakerate=0.0762939;
