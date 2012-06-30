@@ -20,9 +20,15 @@ local spSetPieceCollisionData = Spring.SetUnitPieceCollisionVolumeData
 local spGetPieceList = Spring.GetUnitPieceList
 local spGetUnitCollisionData = Spring.GetUnitCollisionVolumeData
 local spSetUnitCollisionData = Spring.SetUnitCollisionVolumeData
+local spSetUnitRadiusAndHeight = Spring.SetUnitRadiusAndHeight
+local spGetUnitRadius = Spring.GetUnitRadius
+local spGetUnitHeight = Spring.GetUnitHeight
 local spGetFeatureCollisionData = Spring.GetFeatureCollisionVolumeData
 local spSetFeatureCollisionData = Spring.SetFeatureCollisionVolumeData
 local spSetFeatureRadiusAndHeight = Spring.SetFeatureRadiusAndHeight
+local spGetFeatureRadius = Spring.GetFeatureRadius
+local spGetFeatureHeight = Spring.GetFeatureHeight
+
 local spArmor = Spring.GetUnitArmored
 local spActive = Spring.GetUnitIsActive
 local pairs = pairs	
@@ -38,17 +44,39 @@ if (gadgetHandler:IsSyncedCode()) then
 			for _, featID in pairs(Spring.GetAllFeatures()) do
 				local featureModel = FeatureDefs[Spring.GetFeatureDefID(featID)].modelname:lower()
 				if featureModel:len() > 4 then
-					featureModel = featureModel:match("/.*%."):sub(2,-2)
-					if mapFeatures[featureModel] then
-						local p = mapFeatures[featureModel]
+					local featureModelTrim = featureModel:match("/.*%."):sub(2,-2)
+					if mapFeatures[featureModelTrim] then
+						local p = mapFeatures[featureModelTrim]
 						spSetFeatureCollisionData(featID, p[1], p[2], p[3], p[4], p[5], p[6], p[7], p[8], p[9])
 						spSetFeatureRadiusAndHeight(featID, math.min(p[1], p[3])/2, p[2])
+					elseif featureModel:find(".s3o") then
+						local xs, ys, zs, xo, yo, zo, vtype, htype, axis, _ = spGetFeatureCollisionData(featID)
+						if (vtype==4 and xs==ys and ys==zs) then
+							spSetFeatureCollisionData(featID, xs, ys*0.75, zs,  xo, yo-ys*0.09, zo,  vtype, htype, axis)
+						end
 					end
 				end
 			end			
 		else
 			for _, featID in pairs(Spring.GetAllFeatures()) do
-				gadget:FeatureCreated(featID)
+				local featureModel = FeatureDefs[Spring.GetFeatureDefID(featID)].modelname:lower()
+				local xs, ys, zs, xo, yo, zo, vtype, htype, axis, _ = spGetFeatureCollisionData(featID)
+				if featureModel:find(".3do") then
+					local rs, hs = 0.75, 0.67  
+					if (vtype==4 and xs==ys and ys==zs) then
+						if (xs>47) then
+							rs, hs = 0.68, 0.60
+							spSetFeatureCollisionData(featureID, xs*0.68, ys*0.60, zs*0.68,  xo, yo-ys*0.09, zo,  vtype, htype, axis)
+						else
+							spSetFeatureCollisionData(featureID, xs*0.75, ys*0.67, zs*0.75,  xo, yo-ys*0.1005, zo,  vtype, htype, axis)
+						end
+					end
+					spSetFeatureRadiusAndHeight(featureID, spGetFeatureRadius(featID)*rs, spGetFeatureHeight(featID)*hs)			
+				elseif featureModel:find(".s3o") then
+					if (vtype==4 and xs==ys and ys==zs) then
+						spSetFeatureCollisionData(featID, xs, ys*0.75, zs,  xo, yo-ys*0.09, zo,  vtype, htype, axis)
+					end
+				end
 			end
 		end
 	end
@@ -58,6 +86,7 @@ if (gadgetHandler:IsSyncedCode()) then
 	--for S3O models it's not needed and will in fact result in wrong collision volume
 	--also handles per piece collision volume definitions
 	function gadget:UnitCreated(unitID, unitDefID, unitTeam)
+		local rs, hs = 0.75, 0.75
 		if (pieceCollisionVolume[UnitDefs[unitDefID].name]) then
 			--[[  ment for per piece collision volumes for XTA commanders 
 			if (UnitDefs[unitDefID].isCommander==true) then
@@ -91,20 +120,20 @@ if (gadgetHandler:IsSyncedCode()) then
 			local xs, ys, zs, xo, yo, zo, vtype, htype, axis, _ = spGetUnitCollisionData(unitID)
 			if (vtype==4 and xs==ys and ys==zs) then
 				if (xs>47 and not UnitDefs[unitDefID].canFly) then
+					rs, hs = 0.68, 0.68
 					spSetUnitCollisionData(unitID, xs*0.68, ys*0.68, zs*0.68,  xo, yo, zo,  vtype, htype, axis)
 				elseif (not UnitDefs[unitDefID].canFly) then
 					spSetUnitCollisionData(unitID, xs*0.75, ys*0.75, zs*0.75,  xo, yo, zo,  vtype, htype, axis)
 				else
+					rs, hs = 0.48, 0.225
 					spSetUnitCollisionData(unitID, xs*0.375, ys*0.225, zs*0.48,  xo, yo, zo,  vtype, htype, axis)
 				end
 			end
+		
 		end
-		--[[ Spring.GetUnitRadiusAndHeight(unitID)  not implemented in engine yet
 		if UnitDefs[unitDefID].model.type=="3do" then
-			local r, h = Spring.GetUnitRadiusAndHeight(unitID)
-			Spring.SetUnitRadiusAndHeight(unitID, r*.75, h*.75)
+			spSetUnitRadiusAndHeight(unitID, spGetUnitRadius(unitID)*rs, spGetUnitHeight(unitID)*hs)
 		end
-		]]--
 	end
 
 
@@ -113,17 +142,16 @@ if (gadgetHandler:IsSyncedCode()) then
 		local featureModel = FeatureDefs[Spring.GetFeatureDefID(featureID)].modelname:lower()
 		if featureModel:find(".3do") then
 			local xs, ys, zs, xo, yo, zo, vtype, htype, axis, _ = spGetFeatureCollisionData(featureID)
+			local rs, hs = 0.75, 0.67
 			if (vtype==4 and xs==ys and ys==zs) then
 				if (xs>47) then
+					rs, hs = 0.68, 0.60
 					spSetFeatureCollisionData(featureID, xs*0.68, ys*0.60, zs*0.68,  xo, yo-ys*0.09, zo,  vtype, htype, axis)
 				else
 					spSetFeatureCollisionData(featureID, xs*0.75, ys*0.67, zs*0.75,  xo, yo-ys*0.1005, zo,  vtype, htype, axis)
 				end
 			end
-			--[[ Spring.GetFeatureRadiusAndHeight(featureID)  not implemented in engine yet
-			local r, h = Spring.GetFeatureRadiusAndHeight(featureID)
-			Spring.SetFeatureRadiusAndHeight(featureID, r*.75, h*.75)			
-			--]]
+			spSetFeatureRadiusAndHeight(featureID, spGetFeatureRadius(featureID)*rs, spGetFeatureHeight(featureID)*hs)			
 		end
 	end
 
