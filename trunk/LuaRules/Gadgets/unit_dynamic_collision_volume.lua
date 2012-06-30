@@ -22,6 +22,7 @@ local spGetUnitCollisionData = Spring.GetUnitCollisionVolumeData
 local spSetUnitCollisionData = Spring.SetUnitCollisionVolumeData
 local spGetFeatureCollisionData = Spring.GetFeatureCollisionVolumeData
 local spSetFeatureCollisionData = Spring.SetFeatureCollisionVolumeData
+local spSetFeatureRadiusAndHeight = Spring.SetFeatureRadiusAndHeight
 local spArmor = Spring.GetUnitArmored
 local spActive = Spring.GetUnitIsActive
 local pairs = pairs	
@@ -31,8 +32,24 @@ if (gadgetHandler:IsSyncedCode()) then
 
 	--Process all initial map features
 	function gadget:Initialize()
-		for _, featID in pairs(Spring.GetAllFeatures()) do
-			gadget:FeatureCreated(featID)
+		local mapConfig = "LuaRules/Configs/DynCVmapCFG/" .. Game.mapName .. ".lua"
+		if VFS.FileExists(mapConfig) then
+			local mapFeatures = include(mapConfig)
+			for _, featID in pairs(Spring.GetAllFeatures()) do
+				local featureModel = FeatureDefs[Spring.GetFeatureDefID(featID)].modelname:lower()
+				if featureModel:len() > 4 then
+					featureModel = featureModel:match("/.*%."):sub(2,-2)
+					if mapFeatures[featureModel] then
+						local p = mapFeatures[featureModel]
+						spSetFeatureCollisionData(featID, p[1], p[2], p[3], p[4], p[5], p[6], p[7], p[8], p[9])
+						spSetFeatureRadiusAndHeight(featID, math.min(p[1], p[3])/2, p[2])
+					end
+				end
+			end			
+		else
+			for _, featID in pairs(Spring.GetAllFeatures()) do
+				gadget:FeatureCreated(featID)
+			end
 		end
 	end
 
@@ -82,6 +99,12 @@ if (gadgetHandler:IsSyncedCode()) then
 				end
 			end
 		end
+		--[[ Spring.GetUnitRadiusAndHeight(unitID)  not implemented in engine yet
+		if UnitDefs[unitDefID].model.type=="3do" then
+			local r, h = Spring.GetUnitRadiusAndHeight(unitID)
+			Spring.SetUnitRadiusAndHeight(unitID, r*.75, h*.75)
+		end
+		]]--
 	end
 
 
@@ -97,6 +120,10 @@ if (gadgetHandler:IsSyncedCode()) then
 					spSetFeatureCollisionData(featureID, xs*0.75, ys*0.67, zs*0.75,  xo, yo-ys*0.1005, zo,  vtype, htype, axis)
 				end
 			end
+			--[[ Spring.GetFeatureRadiusAndHeight(featureID)  not implemented in engine yet
+			local r, h = Spring.GetFeatureRadiusAndHeight(featureID)
+			Spring.SetFeatureRadiusAndHeight(featureID, r*.75, h*.75)			
+			--]]
 		end
 	end
 
