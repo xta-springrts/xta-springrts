@@ -1007,7 +1007,7 @@
 	LargeBeamLaser=1;
 	pulseSpeed=1.0;
 	thickness=4.1;
-	CylinderTargetting=1;
+	cylindertargeting=1;
 	name=Annihilator Weapon;
 	rendertype=0;
 	lineofsight=1;
@@ -1048,7 +1048,7 @@
 [LIGHTSKYCRUISERANNI]
 {
 	name=Annihilator Weapon;
-	CylinderTargetting=1;
+	cylindertargeting=1;
 	rendertype=0;
 	SweepFire=0;
 	lineofsight=1;
@@ -1087,7 +1087,7 @@
 {
 	name=E.M.G.;
 	//heightMod=1;
-	//CylinderTargetting=1;
+	//cylindertargeting=1;
 	rendertype=4;
 	color=1;
 	size=1.5;
@@ -1172,7 +1172,7 @@
 	name=Annihilator Weapon;
 	rendertype=0;
 	SweepFire=0;
-	CylinderTargetting=1;
+	cylindertargeting=1;
 	lineofsight=1;
 	turret=1;
 	beamlaser=1;
