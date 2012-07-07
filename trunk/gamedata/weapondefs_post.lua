@@ -107,23 +107,40 @@ local inertialessWeapons = {
 local modOptions = Spring.GetModOptions()
 
 -- Adjustment of terrain damage, area of effect, kinetic force of weapons and cannon trajectory height
-local customGravity = 0.5
-local maxRangeAngle = 45  --in degrees >0 and <=45
+local customGravity = 0.45
+local maxRangeAngle = 38  --in degrees >0 and <=45
 if modOptions and modOptions.gravity then customGravity=modOptions.gravity end
 local velGravFactor = customGravity * 900 / math.sin(math.rad(2 * maxRangeAngle))
 for id in pairs(WeaponDefs) do
-	if WeaponDefs[id].range then
-		if tonumber(WeaponDefs[id].range) < 550 or explosiveWeapons[WeaponDefs[id].weapontype] then
-				WeaponDefs[id].avoidfeature = false
+	WeaponDefs[id].soundhitwet = ""
+	if WeaponDefs[id].range and tonumber(WeaponDefs[id].range) < 550 or explosiveWeapons[WeaponDefs[id].weapontype] then
+		WeaponDefs[id].avoidfeature = false
+	end
+	if explosiveWeapons[WeaponDefs[id].weapontype] then
+		if WeaponDefs[id].edgeeffectiveness and tonumber(WeaponDefs[id].edgeeffectiveness)>0 and tonumber(WeaponDefs[id].areaofeffect)<145 then
+			WeaponDefs[id].areaofeffect = math.min(WeaponDefs[id].areaofeffect / (1 - WeaponDefs[id].edgeeffectiveness), 160)
+			WeaponDefs[id].edgeeffectiveness = 0
+			WeaponDefs[id].avoidfeature = false
 		end
-		if WeaponDefs[id].edgeeffectiveness and tonumber(WeaponDefs[id].edgeeffectiveness)>0 then
-			if explosiveWeapons[WeaponDefs[id].weapontype] and tonumber(WeaponDefs[id].areaofeffect)<145 then
-					WeaponDefs[id].areaofeffect = math.min(WeaponDefs[id].areaofeffect / (1 - WeaponDefs[id].edgeeffectiveness), 160)
-					WeaponDefs[id].edgeeffectiveness = 0
-					WeaponDefs[id].avoidfeature = false
+		if WeaponDefs[id].weapontype == "TorpedoLauncher" then
+			WeaponDefs[id].soundhitwet = WeaponDefs[id].soundhitdry
+		else
+			local AoE = tonumber(WeaponDefs[id].areaofeffect) or 0
+			if AoE<50 then
+				WeaponDefs[id].soundhitwet = "splshbig"
+			elseif AoE<88 then
+				WeaponDefs[id].soundhitwet = "splssml"
+			elseif AoE<145 then
+				WeaponDefs[id].soundhitwet = "splsmed"
+			elseif AoE>450 then
+				WeaponDefs[id].soundhitwet = WeaponDefs[id].soundhitdry
+			else
+				WeaponDefs[id].soundhitwet = "splslrg"
 			end
 		end
-	end
+	else
+		WeaponDefs[id].soundhitwet = "sizzle"		
+	end	
 	if WeaponDefs[id].weapontype == "Cannon" and WeaponDefs[id].range and not WeaponDefs[id].mygravity and not WeaponDefs[id].cylindertargetting then
 		WeaponDefs[id].mygravity = customGravity
 		WeaponDefs[id].weaponvelocity = math.sqrt(WeaponDefs[id].range * velGravFactor)
@@ -132,6 +149,7 @@ for id in pairs(WeaponDefs) do
 	elseif inertialessWeapons[WeaponDefs[id].weapontype] then
 		WeaponDefs[id].impulseboost = 0
 		WeaponDefs[id].impulsefactor = 0
+
 	end
 	if WeaponDefs[id].cratermult then 
 		WeaponDefs[id].cratermult = WeaponDefs[id].cratermult * 0.4
@@ -142,6 +160,11 @@ for id in pairs(WeaponDefs) do
 		WeaponDefs[id].craterboost = WeaponDefs[id].craterboost * 0.4
 	else
 		WeaponDefs[id].craterboost = 0
+	end
+	if WeaponDefs[id].weapontype == "BeamLaser" then
+		--WeaponDefs[id].soundstart = ""
+		WeaponDefs[id].soundhitdry = ""
+		--WeaponDefs[id].soundhitwet = ""
 	end
 end
 

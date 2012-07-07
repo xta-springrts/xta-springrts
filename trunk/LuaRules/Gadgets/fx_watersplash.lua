@@ -42,10 +42,11 @@ else
 		local aoe = WeaponDefs[weaponID]["damageAreaOfEffect"] / 2
 		local wType = WeaponDefs[weaponID].type
 		if not nonexplosiveWeapons[wType] and isWater and abs(py) <= aoe then
-			Spring.SpawnCEG(splashCEG1, px+random(-aoe,aoe), py, pz+random(-aoe,aoe))
+		
+			Spring.SpawnCEG(splashCEG1, px+random(-aoe,aoe), py, pz+random(-aoe,aoe),0,1,0,aoe,aoe)
 			if aoe > 20 then
 				Spring.SpawnCEG(splashCEG2, px, 0, pz)
-				Spring.PlaySoundFile(sndWater,15.0,px,0,pz)
+				--Spring.PlaySoundFile(sndWater,15.0,px,0,pz)
 			end
 			return true
 		else

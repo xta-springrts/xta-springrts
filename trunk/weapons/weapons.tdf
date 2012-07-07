@@ -354,7 +354,7 @@
 	weaponvelocity=1250;
 	areaofeffect=150;
 	edgeeffectiveness=0;
-	cylindertargetting = 1;
+	cylindertargeting = 1;
 	soundstart=canlite2;
 	soundhit=xplomed2;
 	//minbarrelangle=-24;
@@ -429,7 +429,7 @@
 	trajectoryHeight=0.08;
 	dance=30;
 	areaofeffect=48;
-	cylindertargetting = 1;
+	cylindertargeting = 1;
 	soundstart=rockhvy2;
 	soundhit=xplomed2;
 	firestarter=70;
@@ -839,7 +839,7 @@
 	startvelocity=1950;
 	weaponacceleration=10;
 	areaofeffect=150;
-	cylindertargetting = 1;
+	cylindertargeting = 1;
 	soundstart=canlite2;
 	soundhit=xplomed2;
 	//minbarrelangle=-40;
@@ -1026,7 +1026,7 @@
 	explosiongenerator=custom:WindkbotRocket;
 	turret=1;
 	//minbarrelangle=-45;
-	cylindertargetting = 1;
+	cylindertargeting = 1;
 	range=600;
 	reloadtime=0.8;
 	weaponvelocity=900;
@@ -1309,7 +1309,7 @@
 	weaponacceleration=154;
 	turnrate=41660;
 	areaofeffect=48;
-	cylindertargetting = 1;
+	cylindertargeting = 1;
 	soundstart=rockhvy2;
 	soundhit=xplomed2;
 	firestarter=70;
@@ -1739,7 +1739,7 @@
 	trajectoryHeight=0.08;
 	dance=30;
 	areaofeffect=48;
-	cylindertargetting = 1;
+	cylindertargeting = 1;
 	soundstart=rockhvy2;
 	soundhit=xplomed2;
 	firestarter=70;
@@ -1898,7 +1898,7 @@
 	startvelocity=1900;
 	weaponacceleration=10;
 	areaofeffect=145;
-	cylindertargetting = 1;
+	cylindertargeting = 1;
 	soundstart=canlite2;
 	soundhit=xplomed2;
 	//minbarrelangle=-40;
@@ -2414,7 +2414,7 @@
 	turret=1;
 	//minbarrelangle=-40;
 	pulseSpeed=7.0;
-	SoundTrigger=1;
+	SoundTrigger=0;
 	LargeBeamLaser=1;
 	Intensity=0.001;
 	thickness=7.5;
@@ -2744,7 +2744,7 @@
 	trajectoryHeight=0.08;
 	dance=30;
 	areaofeffect=48;
-	cylindertargetting = 1;
+	cylindertargeting = 1;
 	soundstart=rockhvy2;
 	soundhit=xplomed2;
 	firestarter=70;
@@ -3594,7 +3594,7 @@
 	startvelocity=1950;
 	weaponacceleration=10;
 	areaofeffect=155;
-	cylindertargetting = 1;
+	cylindertargeting = 1;
 	soundstart=canlite2;
 	soundhit=xplomed2;
 	//minbarrelangle=-40;
@@ -4211,7 +4211,7 @@
 	weaponacceleration=152;
 	turnrate=41660;
 	areaofeffect=48;
-	cylindertargetting = 1;
+	cylindertargeting = 1;
 	soundstart=rockhvy2;
 	soundhit=xplomed2;
 	firestarter=70;
@@ -4241,7 +4241,7 @@
 	startvelocity=1900;
 	weaponacceleration=10;
 	areaofeffect=140;
-	cylindertargetting = 1;
+	cylindertargeting = 1;
 	soundstart=canlite2;
 	soundhit=xplomed2;
 	//minbarrelangle=-40;
@@ -4573,7 +4573,7 @@
 	trajectoryHeight=0.08;
 	dance=30;
 	areaofeffect=48;
-	cylindertargetting = 1;
+	cylindertargeting = 1;
 	soundstart=rockhvy2;
 	soundhit=xplomed2;
 	firestarter=70;
@@ -5819,7 +5819,7 @@
 	weaponacceleration=230;
 	turnrate=41660;
 	areaofeffect=48;
-	cylindertargetting=1;
+	cylindertargeting=1;
 	soundstart=rockhvy2;
 	soundhit=xplomed2;
 	firestarter=70;

@@ -9,7 +9,7 @@ return {
       properties = {
         airdrag            = 0.7,
         alwaysvisible      = true,
-        colormap           = [[0.1 0.1 0.1 1.0	0.5 0.5 0.5 1.0		0 0 0 0.0]],
+        colormap           = [[0.1 0.1 0.1 1.0  0.5 0.5 0.5 1.0  0 0 0 0.0]],
         directional        = true,
         emitrot            = 90,
         emitrotspread      = 0,
@@ -36,7 +36,7 @@ return {
       properties = {
         airdrag            = 0.7,
         alwaysvisible      = true,
-        colormap           = [[0.9 0.8 0.7 0.04 0.1 0.1 0.1 1.0	0.5 0.4 0.3 1.0		0 0 0 0.0]],
+        colormap           = [[0.9 0.8 0.7 0.04  0.1 0.1 0.1 1.0  0.5 0.4 0.3 1.0  0 0 0 0.0]],
         directional        = true,
         emitrot            = 90,
         emitrotspread      = 0,
@@ -63,10 +63,10 @@ return {
       properties = {
         airdrag            = 0.9,
         alwaysvisible      = true,
-        colormap           = [[0.9 0.9 0.9 1.0	0.5 0.5 0.9 0.0]],
+        colormap           = [[0.9 0.9 0.9 1.0  0.5 0.5 0.9 0.0]],
         directional        = true,
-        emitrot            = 90,
-        emitrotspread      = 0,
+        emitrot            = 0,
+        emitrotspread      = 30,
         emitvector         = [[0, 1, 0]],
         gravity            = [[0, -0.2, 0]],
         numparticles       = 18,
@@ -88,9 +88,9 @@ return {
       count              = 1,
       water              = true,
       properties = {
-        airdrag            = 0.7,
+        airdrag            = 0.8,
         alwaysvisible      = true,
-        colormap           = [[1.0 1.0 1.0 1.0	0.5 0.5 0.8 0.0]],
+        colormap           = [[1.0 1.0 1.0 1.0  0.5 0.5 0.8 0.0]],
         directional        = true,
         emitrot            = 90,
         emitrotspread      = 0,
@@ -118,14 +118,14 @@ return {
         alpha              = 0.4,
         alwaysvisible      = true,
         color              = [[0.5, 0.5, 0.9]],
-        expansionspeed     = [[10 r3]],
+        expansionspeed     = [[d0.4r0.5]],
         ttl                = 14,
       },
     },
     explosionspikes = {
       air                = true,
-      class              = [[explspike]],
-      count              = 7,
+      class              = [[CExploSpikeProjectile]],
+      count              = 1,
       ground             = true,
       water              = true,
       properties = {
@@ -134,8 +134,9 @@ return {
         alwaysvisible      = true,
         color              = [[1, 0.5, 0.2]],
         dir                = [[-45 r90,-45 r90,-45 r90]],
-        length             = 0.2,
-        width              = 10,
+        length             = 0.01,
+		lengthgrowth       = 0,
+        width              = 5,
       },
     },
     groundflash = {
@@ -144,7 +145,7 @@ return {
       circlealpha        = 0.6,
       circlegrowth       = 6,
       flashalpha         = 0.9,
-      flashsize          = 120,
+      flashsize          = "d2",
       ground             = true,
       ttl                = 13,
       water              = true,
@@ -163,7 +164,7 @@ return {
       properties = {
         airdrag            = 0.8,
         alwaysvisible      = true,
-        colormap           = [[0.9 0.8 0.7 0.04	0.9 0.5 0.2 0.01	0.5 0.1 0.1 0.01]],
+        colormap           = [[0.9 0.8 0.7 0.04	 0.9 0.5 0.2 0.01  0.5 0.1 0.1 0.01]],
         directional        = true,
         emitrot            = 45,
         emitrotspread      = 32,
@@ -238,6 +239,5 @@ return {
       },
     },
   },
-
 }
 
