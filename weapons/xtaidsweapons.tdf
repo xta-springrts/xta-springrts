@@ -50,7 +50,7 @@
 	energypershot=1500;
 	areaofeffect=96;
 	soundstart=Rhinofire;
-	soundhit=Rhinohit;
+	soundhitdry=Rhinohit;
 	firestarter=50;
 	accuracy=900;
 	movingaccuracy=600;
@@ -91,7 +91,7 @@
 	areaofeffect=75;
 	metalpershot=0;
 	soundstart=rocklit1;
-	soundhit=xplosml2;
+	soundhitdry=xplosml2;
 	firestarter=70;
 	//smokedelay=0.2;
 	selfprop=1;
@@ -130,7 +130,7 @@
 	areaofeffect=48;
 	metalpershot=0;
 	soundstart=rocklit1;
-	soundhit=xplosml2;
+	soundhitdry=xplosml2;
 	firestarter=70;
 	smokedelay=0.1;
 	guidance=1;
@@ -169,7 +169,7 @@
 	areaofeffect=96;
 	metalpershot=0;
 	soundstart=WASP1;
-	soundhit=rockhit;
+	soundhitdry=rockhit;
 	explosiongenerator=custom:popupcannon;
 	firestarter=70;
 	smokedelay=0.1;
@@ -213,7 +213,7 @@
 	areaofeffect=96;
 	metalpershot=0;
 	soundstart=WASP1;
-	soundhit=rockhit;
+	soundhitdry=rockhit;
 	explosiongenerator=custom:popupcannon;
 	firestarter=70;
 	smokedelay=0.1;
@@ -250,7 +250,7 @@
 	weaponvelocity=250;
 	areaofeffect=516;
 	soundstart=largegun;
-	soundhit=xplonuk3;
+	soundhitdry=xplonuk3;
 	explosiongaf=fx;
 	explosionart=explode2;
 	waterexplosiongaf=h2obboom;
@@ -281,7 +281,7 @@
 	weaponvelocity=400;
 	areaofeffect=64;
 	soundstart=CANNHVY1;
-	soundhit=xplomed2;
+	soundhitdry=xplomed2;
 	explosiongaf=fx;
 	explosionart=explode2;
 	waterexplosiongaf=fx;
@@ -312,7 +312,7 @@
 	weaponvelocity=400;
 	areaofeffect=64;
 	soundstart=CANNHVY1;
-	soundhit=xplomed2;
+	soundhitdry=xplomed2;
 	explosiongaf=fx;
 	explosionart=explode2;
 	waterexplosiongaf=fx;
@@ -351,7 +351,7 @@
 	areaofeffect=8;
 	soundtrigger=0;
 	soundstart=lasrlit3;
-	soundhit=lasrhit2;
+	soundhitdry=lasrhit2;
 	firestarter=50;
 	beamweapon=1;
 	color=232;
@@ -393,7 +393,7 @@
 	weaponvelocity=1600;
 	areaofeffect=36;
 	soundstart=CAPTURE1;
-	soundhit=lasrhit2;
+	soundhitdry=lasrhit2;
 	firestarter=90;
 	beamweapon=1;
 	
@@ -430,7 +430,7 @@
 	areaofeffect=96;
 	metalpershot=0;
 	soundstart=WASP1;
-	soundhit=rockhit;
+	soundhitdry=rockhit;
 	explosiongenerator=custom:popupcannon;
 	firestarter=70;
 	smokedelay=0.1;
@@ -470,7 +470,7 @@
 	weaponvelocity=1000;
 	areaofeffect=500;
 	soundstart=TigerRailgun1;
-	soundhit=TigerRailgun2;
+	soundhitdry=TigerRailgun2;
 	explosiongenerator=custom:GREEN_NUKE_EXPLOSION_FX;//GREEN_EMP_SHOT
 	tolerance=1000;
 	startsmoke=1;
@@ -506,7 +506,7 @@
 	areaofeffect=134;
 	metalpershot=0;
 	soundstart=bombrel;
-	soundhit=Rockethit;
+	soundhitdry=Rockethit;
 	firestarter=70;
 	smokedelay=0.1;
 	guidance=1;
@@ -548,7 +548,7 @@
 	areaofeffect=96;
 	metalpershot=0;
 	soundstart=bombrel;
-	soundhit=xplomed2;
+	soundhitdry=xplomed2;
 	firestarter=70;
 	smokedelay=0.1;
 	guidance=1;
@@ -613,7 +613,7 @@
 	weaponvelocity=512;
 	areaofeffect=48;
 	soundstart=cannon1;
-	soundhit=xplomed3;
+	soundhitdry=xplomed3;
 	minbarrelangle=-55;
 	explosiongaf=fx;
 	explosionart=explode3;
@@ -645,7 +645,7 @@
 	weaponvelocity=1000;
 	areaofeffect=64;
 	soundstart=TigerRailgun1;
-	soundhit=TigerRailgun2;
+	soundhitdry=TigerRailgun2;
 	explosiongenerator=custom:GREEN_EMP_SHOT;
 	tolerance=1000;
 	startsmoke=1;
@@ -675,7 +675,7 @@
 	weaponvelocity=328;
 	areaofeffect=48;
 	soundstart=canlite3;
-	soundhit=xplosml3;
+	soundhitdry=xplosml3;
 	explosiongaf=fx;
 	explosionart=explode4;
 	waterexplosiongaf=fx;
@@ -704,7 +704,7 @@
 	weaponvelocity=428;
 	areaofeffect=48;
 	soundstart=canlite3;
-	soundhit=xplosml3;
+	soundhitdry=xplosml3;
 	explosiongaf=fx;
 	explosionart=explode4;
 	waterexplosiongaf=fx;
@@ -737,7 +737,7 @@
 	turnrate=9680;
 	areaofeffect=48;
 	soundstart=rocklit3;
-	soundhit=explode;
+	soundhitdry=explode;
 	firestarter=70;
 	smokedelay=0.1;
 	selfprop=1;
@@ -771,7 +771,7 @@
 	weaponvelocity=700;
 	areaofeffect=12;
 	soundstart=lasrhvy3;
-	soundhit=lasrhit1;
+	soundhitdry=lasrhit1;
 	firestarter=90;
 	beamweapon=1;
 	color=96;
@@ -805,7 +805,7 @@
 	soundtrigger=1;
 	tolerance=20000;
 	soundstart=lasfirerb;
-	soundhit=lasrhit1;
+	soundhitdry=lasrhit1;
 	explosiongenerator=custom:ZIPPERDICKER_EFFECT; //Added v9.0 by Noruas//
 	firestarter=10;
 	beamlaser=1;
@@ -844,7 +844,7 @@
 	areaofeffect=96;
 	metalpershot=0;
 	soundstart=WASP1;
-	soundhit=rockhit;
+	soundhitdry=rockhit;
 	Trajectoryheight=0.3;
 	firestarter=70;
 	explosiongenerator=custom:popupcannon;
@@ -888,7 +888,7 @@
 	areaofeffect=96;
 	metalpershot=0;
 	soundstart=WASP1;
-	soundhit=rockhit;
+	soundhitdry=rockhit;
 	explosiongenerator=custom:popupcannon;
 	firestarter=70;
 	smokedelay=0.1;
@@ -935,7 +935,7 @@
   //texture4=smallflare;
 	areaofeffect=16;
 	SoundStart=tllelechit;
-	soundhit=lashit2;
+	soundhitdry=lashit2;
 	firestarter=90;
 	beamweapon=1;
 	rgbcolor=0.3 0.5 1.0;
@@ -974,7 +974,7 @@
 	areaofeffect=96;
 	metalpershot=0;
 	soundstart=WASP1;
-	soundhit=rockhit;
+	soundhitdry=rockhit;
 	explosiongenerator=custom:popupcannon;
 	firestarter=70;
 	smokedelay=0.1;
@@ -1024,7 +1024,7 @@
 	areaofeffect=72;
 	targetMoveError=0.5;
 	soundstart=LASRLONG;
-	soundhit=xplolrg1;
+	soundhitdry=xplolrg1;
 	firestarter=90;
 	beamweapon=1;
 	color=104;
@@ -1064,7 +1064,7 @@
 	targetMoveError=0.5;
 	explosiongenerator=custom:PURPLELASER;
 	soundstart=annigun1;
-	soundhit=xplolrg1;
+	soundhitdry=xplolrg1;
 	firestarter=90;
 	beamweapon=1;
 	color=147;
@@ -1107,7 +1107,7 @@
 	burst=2;
 	burstrate=0.1;
 	soundstart=armsml2;
-	soundhit=lasrhit1;
+	soundhitdry=lasrhit1;
 	soundtrigger=0;
 	tolerance=11000;
 	startsmoke=1;
@@ -1143,7 +1143,7 @@
 	areaofeffect=96;
 	metalpershot=0;
 	soundstart=WASP1;
-	soundhit=WASP2;
+	soundhitdry=WASP2;
 	explosiongenerator=custom:popupcannon;
 	firestarter=70;
 	smokedelay=0.1;
@@ -1186,7 +1186,7 @@
 	areaofeffect=8;
 	targetMoveError=0.5;
 	soundstart=annigun1;
-	soundhit=xplolrg1;
+	soundhitdry=xplolrg1;
 	firestarter=90;
 	beamweapon=1;
 	color=144;
@@ -1227,7 +1227,7 @@
 	burst=3;
 	burstrate=0.1;
 	soundstart=armsml2;
-	soundhit=lasrhit1;
+	soundhitdry=lasrhit1;
 	soundtrigger=0;
 	tolerance=11000;
 	startsmoke=1;
@@ -1263,7 +1263,7 @@
 	areaofeffect=96;
 	metalpershot=0;
 	soundstart=WASP1;
-	soundhit=WASP2;
+	soundhitdry=WASP2;
 	explosiongenerator=custom:popupcannon;
 	firestarter=70;
 	smokedelay=0.1;
@@ -1301,7 +1301,7 @@
 	duration=0.02;
 	soundtrigger=0;
 	soundstart=lasrfir1;
-	soundhit=lasrhit2;
+	soundhitdry=lasrhit2;
 	firestarter=50;
 	beamweapon=1;
 	color=208;
@@ -1340,7 +1340,7 @@
 	burst=1;
 	burstrate=0.1;
 	soundstart=BUTTON11;
-	soundhit=lasrhit1;
+	soundhitdry=lasrhit1;
 	soundtrigger=1;
 	tolerance=3000;
 	startsmoke=0;
@@ -1365,7 +1365,7 @@
 	duration=0.5;
 	soundtrigger=0;
 	soundstart=lghthvy1;
-	soundhit=lashit;
+	soundhitdry=lashit;
 	firestarter=50;
 	beamweapon=1;
 	color=30;
@@ -1406,7 +1406,7 @@
 	burst=1;
 	burstrate=0.1;
 	soundstart=armsml2;
-	soundhit=lasrhit1;
+	soundhitdry=lasrhit1;
 	soundtrigger=1;
 	tolerance=3000;
 	startsmoke=0;
@@ -1491,7 +1491,7 @@
 	areaofeffect=32;
 	energypershot=90;
 	soundstart=COMFIRE2;
-	soundhit=COMFIRE1;
+	soundhitdry=COMFIRE1;
 	tolerance=500;
 	startsmoke=1;
 	[DAMAGE]
@@ -1515,7 +1515,7 @@
 	areaofeffect=48;
 	energypershot=150;
 	soundstart=COMFIRE2;
-	soundhit=COMFIRE1;
+	soundhitdry=COMFIRE1;
 	tolerance=500;
 	startsmoke=1;
 	[DAMAGE]
@@ -1537,7 +1537,7 @@
 	accuracy=150;
 	areaofeffect=76;
 	soundstart=cannhvy5;
-	soundhit=xplomed2;
+	soundhitdry=xplomed2;
 	minbarrelangle=-35;
 	explosiongenerator=custom:popupcannon;
 	startsmoke=1;
@@ -1570,7 +1570,7 @@
 	targetable=1;
 	commandfire=1;
 	soundstart=misicbm1;
-	soundhit=xplomed4;
+	soundhitdry=xplomed4;
 	firestarter=100;
 	smokedelay=0.05;
 	selfprop=1;
@@ -1607,7 +1607,7 @@
 	areaofeffect=8;
 	soundtrigger=0;
 	soundstart=lasrfast;
-	soundhit=lashit;
+	soundhitdry=lashit;
 	firestarter=50;
 	beamweapon=1;
 	color=232;
@@ -1639,7 +1639,7 @@
 	burst=6;
 	burstrate=0.02;
 	soundstart=armsml2;
-	soundhit=lasrhit1;
+	soundhitdry=lasrhit1;
 	soundtrigger=0;
 	tolerance=3000;
 	startsmoke=0;
@@ -1667,7 +1667,7 @@
 	noselfdamage=1;
 	range=530;
 	reloadtime=1;
-	soundhit=xplomed2;
+	soundhitdry=xplomed2;
 	soundstart=orcfire;
 	turret=1;
 	weapontype=Cannon;
@@ -1697,7 +1697,7 @@
 	range=1000;
 	reloadtime=6.666;
 	rgbcolor=0.2 0.2 1;
-	soundhit=xplosml3;
+	soundhitdry=xplosml3;
 	soundstart=annigun1;
 	targetmoveerror=0.30000001192093;
 	thickness=5;
@@ -1729,7 +1729,7 @@
 	range=1000;
 	reloadtime=5;
 	smoketrail=1;
-	soundhit=xplosml2;
+	soundhitdry=xplosml2;
 	soundstart=rocklit1;
 	startvelocity=300;
 	texture2=coresmoketrail;
