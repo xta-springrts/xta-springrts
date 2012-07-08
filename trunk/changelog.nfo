@@ -21,13 +21,14 @@
     ศอออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออผ
     Logo by ElementalGizmo
 	
-------------------- Change Log of XTA v9.714 beta (85.0 and next version) ------------------ by Deadnight Warrior and Jools
-* Rewrote commander selection widget from scratch. Now it interacts with initial queue and advanced playerslist, and also has some more functionality than the normal interface during pre-game phase (such as a gong-gong sound when game starts). Commanders are set to dont move on startup rather than maneuver.
-* Fixed the following widgets to work with current version of spring (version 85 and above): dontshoot (puts commander on hold fire during cloak), forcecloak(gives a wait order to the commander if user wants to cloak while the commander is in the process of building something)
-* Added following widgets: Red_resourcebars and red_tooltip (they need re_ui_framework and red_ui_drawing to work), gui_point_tracker (displays labels added by other players on minimap)
-* Added an explosion effect to all gunships (they currently lacked one). Added a splash effect and sound to explosions on water.
-* Fixed "King of The Hill" mode, no cloaked or stunned units, or units not on ground can maintain control. Added reminder and countdown sound when 30 secs left in KoTH mode.
+------------------- Change Log of XTA v9.714 beta (88.0 and next version) ------------------ by Deadnight Warrior and Jools
 * Added support for changing Commanders in-game. New modoption: let users choose in game. Renamed Commander options to Automatic and Manual Commanders.
+* Rewrote commander selection widget from scratch. Now it interacts with initial queue and advanced playerslist, and also has some more functionality than the normal interface during pre-game phase (such as a gong-gong sound when game starts). Commanders are set to dont move on startup rather than maneuver.
+* Added "Team death on zero commanders", game mode that got removed with Spring 84 engine change
+* Fixed the following widgets to work with current version of spring (version 85 and above): dontshoot (puts commander on hold fire during cloak), forcecloak(gives a wait order to the commander if user wants to cloak while the commander is in the process of building something)
+* Added following widgets: Red_resourcebars and red_tooltip (they need re_ui_framework and red_ui_drawing to work), gui_point_tracker (displays labels added by other players on minimap), Ghosted Buildings and Ghosted radar
+* Added an explosion effect to all gunships (they currently lacked one). Added a splash effect to explosions on water.
+* Fixed "King of The Hill" mode, no cloaked or stunned units, or units not on ground can maintain control. Added reminder and countdown sound when 30 secs left in KoTH mode.
 * Fixed many unwanted reverts that happened when releasing 9.71 (Raven, and Hammer/Thud are affected mostly)
 * Added RadarEmitHeight and LOSEmitHeight values to all towers, commanders and big ships, makes them see better on bumpy terrain or when climbing hills
 * Added option to adjust custom gravity of cannon weapons (effectivly it changes their projectile speed, smaller number -> slower cannon, default 0.5)
@@ -42,6 +43,15 @@
 * Fixed starting resources always set to 1000/1000
 * Some updates in LUPS modules
 * Fixed lag when Flebowl boss is killed (not that it matters as the fleabowl gadget is still broken)
+* Added gadget for QTPFS units-stuck-in-factory bug workaround
+* Several gadgets updated for better MT compatibility
+* Default XTA UI grid layout can be selected from among: 3x8, 4x9 and 5x11 icons in Ctrl+F11 mode
+
+--- Requites 89.0 to work ---
+* Updated Dynamic Collision Volume gadget for better map feature and unit CV and radius scaling
+* Renamed all soundHit tags in weaponDefs to soundHitDry, to be up to date with 89.0
+* Added weapon water hit sounds
+* Renamed cylinderTargetting to cylinderTargeting for engine compatibility
 
 
 ------------------- Change Log of XTA v9.71 (85.0 and next version) ------------------ by Deadnight Warrior
