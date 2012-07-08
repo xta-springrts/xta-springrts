@@ -2414,7 +2414,7 @@
 	turret=1;
 	//minbarrelangle=-40;
 	pulseSpeed=7.0;
-	SoundTrigger=0;
+	SoundTrigger=1;
 	LargeBeamLaser=1;
 	Intensity=0.001;
 	thickness=7.5;

@@ -10,7 +10,7 @@
 	areaofeffect=260;
 	impulsefactor=2.0;
 	soundstart=armcomgun;
-	soundhit=armcomhit;
+	soundhitdry=armcomhit;
 	tolerance=1000;
 	commandfire=1;
 	pitchtolerance=5000;
@@ -51,7 +51,7 @@
 
   	explosiongenerator=custom:ZIPPERDICKER_EFFECT;
 	soundstart=lasrfir1;
-	soundhit=lasrhit2;
+	soundhitdry=lasrhit2;
 
 	firestarter=70;
 	beamweapon=1;
@@ -85,7 +85,7 @@
 	weaponvelocity=1000;
 	areaofeffect=65;
 	soundstart=corcomgun;
-	soundhit=xplomas2;  //corcomhit;
+	soundhitdry=xplomas2;  //corcomhit;
 	tolerance=1000;
 	pitchtolerance=5000;
 	targetMoveErro=0.5;
@@ -132,7 +132,7 @@
 	soundtrigger=0;//1
 
 	soundstart=lasrfir1;
-	soundhit=lasrhit2;
+	soundhitdry=lasrhit2;
 
 	firestarter=70;
 	beamweapon=1;
@@ -174,7 +174,7 @@
 	targetable=1;
 	commandfire=1;
 	soundstart=xtanewnuke;
-	soundhit=xtanewnuke;
+	soundhitdry=xtanewnuke;
 	firestarter=100;
 	smokedelay=0.05;
 	selfprop=1;
@@ -221,7 +221,7 @@
 	targetable=1;
 	commandfire=1;
 	soundstart=xtanewnuke;
-	soundhit=xtanewnuke;
+	soundhitdry=xtanewnuke;
 	firestarter=100;
 	smokedelay=0.05;
 	selfprop=1;
@@ -265,7 +265,7 @@
 
   	//explosiongenerator=custom:ZIPPERDICKER_EFFECT;
 	soundstart=lasrfir1;
-	soundhit=lasrhit2;
+	soundhitdry=lasrhit2;
 
 	firestarter=70;
 	beamweapon=1;
