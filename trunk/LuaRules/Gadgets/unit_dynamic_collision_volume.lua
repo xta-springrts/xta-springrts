@@ -71,7 +71,7 @@ if (gadgetHandler:IsSyncedCode()) then
 							spSetFeatureCollisionData(featureID, xs*0.75, ys*0.67, zs*0.75,  xo, yo-ys*0.1005, zo,  vtype, htype, axis)
 						end
 					end
-					spSetFeatureRadiusAndHeight(featureID, spGetFeatureRadius(featID)*rs, spGetFeatureHeight(featID)*hs)			
+					spSetFeatureRadiusAndHeight(featID, spGetFeatureRadius(featID)*rs, spGetFeatureHeight(featID)*hs)			
 				elseif featureModel:find(".s3o") then
 					if (vtype==4 and xs==ys and ys==zs) then
 						spSetFeatureCollisionData(featID, xs, ys*0.75, zs,  xo, yo-ys*0.09, zo,  vtype, htype, axis)

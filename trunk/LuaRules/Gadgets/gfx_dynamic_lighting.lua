@@ -103,15 +103,15 @@ else
 
 				-- NOTE: these rates are not sensible if the decay-type is exponential
 				if (projectileLightDef ~= nil and projectileLightDef.decayFunctionType ~= nil) then
-					projectileLightDefs[weaponDef.id].ambientDecayRate  = vector_scalar_div(projectileLightDef.ambientColor or {0.0, 0.0, 0.0}, projectileLightDef.ttl)
-					projectileLightDefs[weaponDef.id].diffuseDecayRate  = vector_scalar_div(projectileLightDef.diffuseColor or {0.0, 0.0, 0.0}, projectileLightDef.ttl)
-					projectileLightDefs[weaponDef.id].specularDecayRate = vector_scalar_div(projectileLightDef.specularColor or {0.0, 0.0, 0.0}, projectileLightDef.ttl)
+					projectileLightDefs[weaponDef.id].ambientDecayRate  = vector_scalar_div(projectileLightDef.ambientColor or {0.0, 0.0, 0.0}, projectileLightDef.ttl or 1.0)
+					projectileLightDefs[weaponDef.id].diffuseDecayRate  = vector_scalar_div(projectileLightDef.diffuseColor or {0.0, 0.0, 0.0}, projectileLightDef.ttl or 1.0)
+					projectileLightDefs[weaponDef.id].specularDecayRate = vector_scalar_div(projectileLightDef.specularColor or {0.0, 0.0, 0.0}, projectileLightDef.ttl or 1.0)
 				end
 
 				if (explosionLightDef ~= nil and explosionLightDef.decayFunctionType ~= nil) then
-					explosionLightDefs[weaponDef.id].ambientDecayRate  = vector_scalar_div(explosionLightDef.ambientColor or {0.0, 0.0, 0.0}, explosionLightDef.ttl)
-					explosionLightDefs[weaponDef.id].diffuseDecayRate  = vector_scalar_div(explosionLightDef.diffuseColor or {0.0, 0.0, 0.0}, explosionLightDef.ttl)
-					explosionLightDefs[weaponDef.id].specularDecayRate = vector_scalar_div(explosionLightDef.specularColor or {0.0, 0.0, 0.0}, explosionLightDef.ttl)
+					explosionLightDefs[weaponDef.id].ambientDecayRate  = vector_scalar_div(explosionLightDef.ambientColor or {0.0, 0.0, 0.0}, explosionLightDef.ttl or 1.0)
+					explosionLightDefs[weaponDef.id].diffuseDecayRate  = vector_scalar_div(explosionLightDef.diffuseColor or {0.0, 0.0, 0.0}, explosionLightDef.ttl or 1.0)
+					explosionLightDefs[weaponDef.id].specularDecayRate = vector_scalar_div(explosionLightDef.specularColor or {0.0, 0.0, 0.0}, explosionLightDef.ttl or 1.0)
 				end
 			end
 		end
@@ -170,8 +170,8 @@ else
 			return
 		end
 
-		local explosionLightOff = explosionLightDef.altitudeOffset or 0.0
-		local explosionLightPos = {posx, posy + explosionLightOff, posz}
+		local explosionLightAlt = explosionLightDef.altitudeOffset or 0.0
+		local explosionLightPos = {posx, posy + explosionLightAlt, posz}
 		-- NOTE: explosions are non-tracking, so need to supply position
 		-- FIXME:? explosion "ID"'s would require bookkeeping in :Update
 		local explosionLightTbl = {position = explosionLightPos, }
