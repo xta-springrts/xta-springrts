@@ -19,6 +19,8 @@
 --   should be >= 2 (so there is "always" room to add
 --   the explosion light while a projectile light has
 --   not yet been removed)
+--   we work around this by giving explosion lights a
+--   slighly higher priority than the projectile lights
 local AllDynLightDefs = include("LuaRules/Configs/gfx_dynamic_lighting_defs.lua")
 local ModDynLightDefs = AllDynLightDefs[Game.modShortName] or {}
 local WeaponLightDefs = ModDynLightDefs.WeaponLightDefs or {}
@@ -134,6 +136,8 @@ else
 		projectileLights[projectileID] = {
 			[1] = SpringAddMapLight(projectileLightDef),
 			[2] = SpringAddModelLight(projectileLightDef),
+			---- [3] = projectileOwnerID,
+			---- [4] = projectileWeaponDefID,
 		}
 
 		SpringSetMapLightTrackingState(projectileLights[projectileID][1], projectileID, true, false)
