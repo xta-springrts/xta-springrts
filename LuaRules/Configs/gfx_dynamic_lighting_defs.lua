@@ -21,6 +21,8 @@ end
 local rgbSpecMults = {0.25, 0.25, 0.25} -- specular RGB scales
 local copyLightDefs = {
 	["XTA"] = {
+		["cor_gol"           ] = "core_artillery",
+		["corplas_weapon"    ] = "core_artillery",
 		["core_disintegrator"] = "arm_disintegrator",
 		["core_intimidator"  ] = "arm_berthacannon",
 		["cor_bats"          ] = "arm_bats",
@@ -33,7 +35,7 @@ local copyLightDefs = {
 local dynLightDefs = {
 	["XTA"] = {
 		weaponLightDefs = {
-			-- Core Pillager (main barrel) projectiles
+			-- Core Pillager / Goliath / Immolator (main barrel) projectiles
 			["core_artillery"] = {
 				projectileLightDef = {
 					diffuseColor    = {4.9,                   4.5,                   0.2                  },
@@ -46,25 +48,6 @@ local dynLightDefs = {
 					diffuseColor      = {4.0,                   2.5,                   0.2                  },
 					specularColor     = {4.0 * rgbSpecMults[1], 2.5 * rgbSpecMults[2], 0.2 * rgbSpecMults[3]},
 					radius            = 350.0,
-					priority          = 3 * 10 + 1,
-					ttl               = 75,
-					decayFunctionType = {0.0, 0.0, 0.0},
-					altitudeOffset    = 50.0,
-				},
-			},
-			-- Core Goliath (main barrel) projectiles
-			["cor_gol"] = {
-				projectileLightDef = {
-					diffuseColor    = {2.8,                   2.8,                   0.4                  },
-					specularColor   = {0.8 * rgbSpecMults[1], 0.8 * rgbSpecMults[2], 0.1 * rgbSpecMults[3]},
-					radius          = 250.0,
-					priority        = 3 * 10,
-					ttl             = 100000,
-				},
-				explosionLightDef = {
-					diffuseColor      = {3.0,                   2.5,                   0.25                  },
-					specularColor     = {3.0 * rgbSpecMults[1], 2.5 * rgbSpecMults[2], 0.25 * rgbSpecMults[3]},
-					radius            = 325.0,
 					priority          = 3 * 10 + 1,
 					ttl               = 2.5 * Game.gameSpeed,
 					decayFunctionType = {0.0, 0.0, 0.0},
@@ -141,7 +124,7 @@ local dynLightDefs = {
 				explosionLightDef = {
 					diffuseColor      = { 6.0,                    5.0,                    4.5                  },
 					specularColor     = { 6.0 * rgbSpecMults[1],  5.0 * rgbSpecMults[2],  4.5 * rgbSpecMults[3]},
-					priority          = 11 * 10,
+					priority          = 13 * 10,
 					radius            = 575.0,
 					ttl               = 2 * Game.gameSpeed,
 					decayFunctionType = {0.0, 0.0, 0.0},
@@ -152,8 +135,8 @@ local dynLightDefs = {
 				explosionLightDef = {
 					diffuseColor      = { 5.0,                    4.0,                    3.5                  },
 					specularColor     = { 5.0 * rgbSpecMults[1],  4.0 * rgbSpecMults[2],  3.5 * rgbSpecMults[3]},
-					priority          = 11 * 10,
-					radius            = 575.0,
+					priority          = 12 * 10,
+					radius            = 525.0,
 					ttl               = 2 * Game.gameSpeed,
 					decayFunctionType = {0.0, 0.0, 0.0},
 					altitudeOffset    = 25.0,
