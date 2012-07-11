@@ -221,7 +221,7 @@ end
 
 function widget:RecvLuaMsg(msg, playerID)
 	local positionRegex = "181072"
-	if msg and string.len(msg>8) then	
+	if msg and string.len(msg)>8 then	
 		local sms = string.sub(msg, string.len(positionRegex)+1) 
 		local state = tonumber(string.sub(sms,1,1))
 		local player = tonumber(string.sub(sms,2))

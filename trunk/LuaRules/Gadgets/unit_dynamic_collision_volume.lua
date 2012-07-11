@@ -66,9 +66,9 @@ if (gadgetHandler:IsSyncedCode()) then
 					if (vtype==4 and xs==ys and ys==zs) then
 						if (xs>47) then
 							rs, hs = 0.68, 0.60
-							spSetFeatureCollisionData(featureID, xs*0.68, ys*0.60, zs*0.68,  xo, yo-ys*0.09, zo,  vtype, htype, axis)
+							spSetFeatureCollisionData(featID, xs*0.68, ys*0.60, zs*0.68,  xo, yo-ys*0.09, zo,  vtype, htype, axis)
 						else
-							spSetFeatureCollisionData(featureID, xs*0.75, ys*0.67, zs*0.75,  xo, yo-ys*0.1005, zo,  vtype, htype, axis)
+							spSetFeatureCollisionData(featID, xs*0.75, ys*0.67, zs*0.75,  xo, yo-ys*0.1005, zo,  vtype, htype, axis)
 						end
 					end
 					spSetFeatureRadiusAndHeight(featID, spGetFeatureRadius(featID)*rs, spGetFeatureHeight(featID)*hs)			
