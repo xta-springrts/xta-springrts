@@ -1,7 +1,7 @@
 function gadget:GetInfo()
   return {
     name      = "Factory Anti-Stuck",
-    desc      = "Teleports units out from factory build area, workaround for QTPFS bug",
+    desc      = "Teleports units out from factory build area, workaround for QTPFS bug and some AIs",
     author    = "Deadnight Warrior",
     date      = "27 Jun 2012",
     license   = "GNU LGPL, v2 or later",
@@ -41,8 +41,15 @@ local problemFactories = {
 
 function gadget:Initialize()
 	local modOptions = Spring.GetModOptions()
-	Spring.Echo(modOptions.qtpfs)
-	if (not modOptions) or (not modOptions.qtpfs) or modOptions.qtpfs ~= "1" then
+	local noAIs = true
+	for _, teamID in pairs(Spring.GetTeamList()) do
+		local _, _, _, tInfo = Spring.GetTeamInfo(teamID)
+		if tInfo then
+			noAIs = false
+			break
+		end
+	end
+	if ((not modOptions) or (not modOptions.qtpfs) or modOptions.qtpfs ~= "1") and noAIs then
 		gadgetHandler:RemoveGadget()
 	end
 end
