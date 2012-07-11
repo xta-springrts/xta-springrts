@@ -1,4 +1,4 @@
--- NOTE:
+-- NOTES:
 --   games that rely on custom model shaders are SOL
 --
 --   this config-structure silently assumes a LightDef
@@ -8,6 +8,11 @@
 --   for projectile lights, ttl values are arbitrarily
 --   large to make the lights survive until projectiles
 --   die (see ProjectileDestroyed() for the reason why)
+--
+--   for "propelled" projectiles (rockets/missiles/etc)
+--   ttls should be the actual ttl-values so attached
+--   lights die when their "engine" cuts out, but this
+--   gets complex (eg. flighttime is not available)
 --
 --   general rule: big things take priority over small
 --   things, for example nuke explosion > bertha shell
@@ -20,10 +25,11 @@
 --   the explosion light while a projectile light has
 --   not yet been removed)
 --   we work around this by giving explosion lights a
---   slighly higher priority than the projectile lights
-local AllDynLightDefs = include("LuaRules/Configs/gfx_dynamic_lighting_defs.lua")
-local ModDynLightDefs = AllDynLightDefs[Game.modShortName] or {}
-local WeaponLightDefs = ModDynLightDefs.WeaponLightDefs or {}
+--   (slighly) higher priority than the corresponding
+--   projectile lights
+local allDynLightDefs = include("LuaRules/Configs/gfx_dynamic_lighting_defs.lua")
+local modDynLightDefs = allDynLightDefs[Game.modShortName] or {}
+local weaponLightDefs = modDynLightDefs.weaponLightDefs or {}
 
 -- shared synced/unsynced globals
 local PROJECTILE_GENERATED_EVENT_ID = 10001
@@ -35,7 +41,7 @@ local PROJECTILE_EXPLOSION_EVENT_ID = 10003
 if (gadgetHandler:IsSyncedCode()) then
 	-- register/deregister for the synced Projectile*/Explosion call-ins
 	function gadget:Initialize()
-		for weaponDefName, _ in pairs(WeaponLightDefs) do
+		for weaponDefName, _ in pairs(weaponLightDefs) do
 			local weaponDef = WeaponDefNames[weaponDefName]
 
 			if (weaponDef ~= nil) then
@@ -44,7 +50,7 @@ if (gadgetHandler:IsSyncedCode()) then
 		end
 	end
 	function gadget:Shutdown()
-		for weaponDefName, _ in pairs(WeaponLightDefs) do
+		for weaponDefName, _ in pairs(weaponLightDefs) do
 			local weaponDef = WeaponDefNames[weaponDefName]
 
 			if (weaponDef ~= nil) then
@@ -94,7 +100,7 @@ else
 		local function vector_scalar_mul(v, s) return {v[1] * s, v[2] * s, v[3] * s} end
 		local function vector_scalar_div(v, s) return {v[1] / s, v[2] / s, v[3] / s} end
 
-		for weaponDefName, weaponLightDef in pairs(WeaponLightDefs) do
+		for weaponDefName, weaponLightDef in pairs(weaponLightDefs) do
 			local weaponDef = WeaponDefNames[weaponDefName]
 			local projectileLightDef = weaponLightDef.projectileLightDef
 			local explosionLightDef = weaponLightDef.explosionLightDef
@@ -129,15 +135,11 @@ else
 			return
 		end
 
-		-- NOTE:
-		--   for propelled projectiles (rockets/missiles/etc), ttl
-		--   should be the projectile's actual ttl-value so lights
-		--   die when the "engine" cuts out
 		projectileLights[projectileID] = {
 			[1] = SpringAddMapLight(projectileLightDef),
 			[2] = SpringAddModelLight(projectileLightDef),
-			---- [3] = projectileOwnerID,
-			---- [4] = projectileWeaponDefID,
+			-- [3] = projectileOwnerID,
+			-- [4] = projectileWeaponDefID,
 		}
 
 		SpringSetMapLightTrackingState(projectileLights[projectileID][1], projectileID, true, false)
@@ -149,9 +151,11 @@ else
 			return
 		end
 
-		-- set the TTL to 0 upon the projectile's destruction so that
-		-- we can simply give it any desired value when the projectile
-		-- is created and don't have to update manually to keep it alive
+		-- set the TTL to 0 upon the projectile's destruction
+		-- (since all projectile lights start with arbitrarily
+		-- large values, which ensures we don't have to update
+		-- ttls manually to keep our lights alive) so the light
+		-- gets marked for removal
 		local projectileLightPos = {SpringGetProjectilePosition(projectileID)} -- {ppx, ppy, ppz}
 		local projectileLightTbl = {position = projectileLightPos, ttl = 0}
 
