@@ -129,10 +129,6 @@ if (gadgetHandler:IsSyncedCode()) then
 					spSetUnitCollisionData(unitID, xs*0.375, ys*0.225, zs*0.48,  xo, yo, zo,  vtype, htype, axis)
 				end
 			end
-		
-		end
-		if UnitDefs[unitDefID].model.type=="3do" then
-			spSetUnitRadiusAndHeight(unitID, spGetUnitRadius(unitID)*rs, spGetUnitHeight(unitID)*hs)
 		end
 	end
 
@@ -163,6 +159,19 @@ if (gadgetHandler:IsSyncedCode()) then
 			popupUnits[unitID]={name=un, state=-1, perPiece=false}
 		elseif dynamicPieceCollisionVolume[un] then
 			popupUnits[unitID]={name=un, state=-1, perPiece=true, numPieces = #spGetPieceList(unitID)-1}
+		end
+		if UnitDefs[unitDefID].model.type=="3do" then
+			local rs, hs = 0.75, 0.67
+			if (vtype==4 and xs==ys and ys==zs) then
+				if (xs>47 and not UnitDefs[unitDefID].canFly) then
+					rs, hs = 0.68, 0.68
+				elseif (not UnitDefs[unitDefID].canFly) then
+					--rs, hs = 0.75, 0.75
+				else
+					rs, hs = 0.48, 0.225
+				end
+			end
+			spSetUnitRadiusAndHeight(unitID, spGetUnitRadius(unitID)*rs, spGetUnitHeight(unitID)*hs)
 		end
 	end
 

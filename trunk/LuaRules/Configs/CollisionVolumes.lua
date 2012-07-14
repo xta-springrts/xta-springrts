@@ -63,6 +63,9 @@ Spring.SetUnitPieceCollisionVolumeData ( number unitID, number pieceIndex, boole
 	A: Edit unit's definition file and add:
 		usePieceCollisionVolumes=1;    (FBI)
 		usePieceCollisionVolumes=true, (LUA)
+	Q: The unit always has on/off volume and it never changes
+	A: You need to edit the unit script and set ARMORED status to on or off depending on the
+	   unit's on/off status, unarmored for on and armored for off
 ]]--
 
 
