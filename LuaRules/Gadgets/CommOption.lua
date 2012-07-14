@@ -176,7 +176,7 @@ function gadget:GameStart()
     -- spawn start units
     local gaiaTeamID = Spring.GetGaiaTeamID()
     local teams = Spring.GetTeamList()
-    for i = 1,#teams do
+	for i = 1,#teams do
         local teamID = teams[i]
         -- don't spawn a start unit for the Gaia team
         if (teamID ~= gaiaTeamID) and (not excludeTeams[teamID]) then
@@ -186,6 +186,16 @@ function gadget:GameStart()
 end
 
 function gadget:Initialize()
+	--disable start unit spawn for mission mode, or use default behaviour if error in mission script
+    if modOptions.mission and modOptions.mission ~= "" then 
+		local mission = "Missions/" .. modOptions.mission .. ".lua"
+		if VFS.FileExists(mission) then
+			local spawnData = include(mission)
+			if spawnData.map == Game.mapName then
+				gadgetHandler:RemoveGadget()
+			end
+		end
+	end
 	local gaiaTeamID = Spring.GetGaiaTeamID()
 	local teams = Spring.GetTeamList()
 	for i = 1,#teams do

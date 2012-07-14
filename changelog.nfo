@@ -52,6 +52,7 @@
 * Renamed all soundHit tags in weaponDefs to soundHitDry, to be up to date with 89.0
 * Added weapon water hit sounds
 * Renamed cylinderTargetting to cylinderTargeting for engine compatibility
+* Added Sounds.lua for small randomization of general sound effects
 
 
 ------------------- Change Log of XTA v9.71 (85.0 and next version) ------------------ by Deadnight Warrior

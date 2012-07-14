@@ -110,6 +110,7 @@ local function QuadVerts(x, y, z, r)
 end
 
 local function initButtons()
+	mid = px + sizex/2
 	Button["arm"]["x0"] = px
 	Button["arm"]["x1"] = px + sizex/4
 	Button["arm"]["y0"] = py  + sizey - 24
@@ -207,7 +208,6 @@ function widget:Initialize()
 	th3 = 20 * scale
 	--position:
 	px, py = px*scale, py*scale
-	mid = px + sizex/2
 	-- side
 	updateState()
 	--buttons:
