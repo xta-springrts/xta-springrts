@@ -141,7 +141,7 @@ for id in pairs(WeaponDefs) do
 	else
 		WeaponDefs[id].soundhitwet = "sizzle"		
 	end	
-	if WeaponDefs[id].weapontype == "Cannon" and WeaponDefs[id].range and not WeaponDefs[id].mygravity and not WeaponDefs[id].cylindertargetting then
+	if WeaponDefs[id].weapontype == "Cannon" and WeaponDefs[id].range and not WeaponDefs[id].mygravity and not WeaponDefs[id].cylindertargeting then
 		WeaponDefs[id].mygravity = customGravity
 		WeaponDefs[id].weaponvelocity = math.sqrt(WeaponDefs[id].range * velGravFactor)
 		WeaponDefs[id].gravityaffected = true
