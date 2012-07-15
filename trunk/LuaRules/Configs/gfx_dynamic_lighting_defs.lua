@@ -21,15 +21,19 @@ end
 local rgbSpecMults = {0.25, 0.25, 0.25} -- specular RGB scales
 local copyLightDefs = {
 	["XTA"] = {
-		["cor_gol"           ] = "core_artillery",
-		["corplas_weapon"    ] = "core_artillery",
-		["core_disintegrator"] = "arm_disintegrator",
-		["core_intimidator"  ] = "arm_berthacannon",
-		["cor_bats"          ] = "arm_bats",
-		["armmine5"          ] = "crawl_blast",
-		["atomic_blastpen"   ] = "atomic_blast",
-		["crblmssl"          ] = "nuclear_missile",
-		["cortron_weapon"    ] = "armemp_weapon",
+		["cor_gol"             ] = "core_artillery",
+		["corplas_weapon"      ] = "core_artillery",
+		["arm_udisintegrator"  ] = "arm_disintegrator",
+		["csarm_disintegrator" ] = "arm_disintegrator",
+		["core_disintegrator"  ] = "arm_disintegrator",
+		["core_udisintegrator" ] = "arm_disintegrator",
+		["cscore_disintegrator"] = "arm_disintegrator",
+		["core_intimidator"    ] = "arm_berthacannon",
+		["cor_bats"            ] = "arm_bats",
+		["armmine5"            ] = "crawl_blast",
+		["atomic_blastpen"     ] = "atomic_blast",
+		["crblmssl"            ] = "nuclear_missile",
+		["cortron_weapon"      ] = "armemp_weapon",
 	},
 }
 local dynLightDefs = {
