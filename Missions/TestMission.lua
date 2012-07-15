@@ -1,5 +1,5 @@
 spawnData = {
-	map = "Altair_Crossing_v2",		--this mission is ment to be played on this map
+	map = "Altair_Crossing_v3",		--this mission is ment to be played on this map
 	teams = {						--list of teams and their starting units and buildings
 		[0] = {		--teamdID
 			arm_commander = {460,924,1},	--unitname = {X, Z, worldside (0=south, 1=east, 2=north, 3=west)}

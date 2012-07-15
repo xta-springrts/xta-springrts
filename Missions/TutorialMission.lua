@@ -1,5 +1,5 @@
 spawnData = {
-	map = "Altair_Crossing_v2",
+	map = "Altair_Crossing_v3",
 	teams = {
 		[0] = {
 			arm_commander = {460,2000,1},
