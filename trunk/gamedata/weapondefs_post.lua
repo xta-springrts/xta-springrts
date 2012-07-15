@@ -163,7 +163,7 @@ for id in pairs(WeaponDefs) do
 	end
 	if WeaponDefs[id].weapontype == "BeamLaser" then
 		--WeaponDefs[id].soundstart = ""
-		WeaponDefs[id].soundhitdry = "silence"
+		WeaponDefs[id].soundhitdry = ""
 		--WeaponDefs[id].soundhitwet = ""
 		WeaponDefs[id].soundtrigger = 1
 	end
