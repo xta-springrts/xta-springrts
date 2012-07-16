@@ -18,7 +18,7 @@
 	dance=30;
 	areaofeffect=56;
 	soundstart=rockhvy2;
-	soundhit=xplomed2;
+	soundhitdry=xplomed2;
 	firestarter=70;
 	smokedelay=0.1;
 	tracks=1;
@@ -52,7 +52,7 @@
 	turnrate=24384;
 	areaofeffect=96;
 	soundstart=Rockhvy1;
-	soundhit=xplomed4;
+	soundhitdry=xplomed4;
 	firestarter=100;
 	smokedelay=0.1;
 	smoketrail=0;
@@ -84,7 +84,7 @@
 	turnrate=41660;
 	areaofeffect=63;
 	soundstart=rockhvy2;
-	soundhit=xplomed2;
+	soundhitdry=xplomed2;
 	firestarter=70;
 	smokedelay=0.1;
 	tracks=1;
@@ -117,7 +117,7 @@
 	dance=30;
 	areaofeffect=63;
 	soundstart=rockhvy2;
-	soundhit=xplomed2;
+	soundhitdry=xplomed2;
 	firestarter=70;
 	smokedelay=0.1;
 	tracks=1;
@@ -154,7 +154,7 @@
 	turnrate=20000;
 	areaofeffect=96;
 	soundstart=Rockhvy1;
-	soundhit=xplomed4;
+	soundhitdry=xplomed4;
 	firestarter=100;
 	smokedelay=0.1;
 	smoketrail=0;
@@ -185,7 +185,7 @@
 	dance=30;
 	areaofeffect=56;
 	soundstart=rockhvy2;
-	soundhit=xplomed2;
+	soundhitdry=xplomed2;
 	firestarter=70;
 	smokedelay=0.1;
 	tracks=1;
@@ -222,7 +222,7 @@
 	areaofeffect=120;
 	energypershot=50;
 	soundstart=Rockhvy1;
-	soundhit=xplomed4;
+	soundhitdry=xplomed4;
 	firestarter=100;
 	smokedelay=0.1;
 	smoketrail=1;
@@ -255,7 +255,7 @@
 	weaponacceleration=0;
 	areaofeffect=48;
 	soundstart=rocklit1;
-	soundhit=xplosml2;
+	soundhitdry=xplosml2;
 	firestarter=70;
 	smoketrail=0;
 	startsmoke=0;
@@ -287,7 +287,7 @@
 	areaofeffect=96;
 	startvelocity=30;
 	soundstart=Rockhvy1;
-	soundhit=xplomed4;
+	soundhitdry=xplomed4;
 	firestarter=100;
 	smokedelay=0.1;
 	smoketrail=0;
@@ -318,7 +318,7 @@
 	turnrate=41660;
 	areaofeffect=63;
 	soundstart=rockhvy2;
-	soundhit=xplomed2;
+	soundhitdry=xplomed2;
 	firestarter=70;
 	smokedelay=0.1;
 	tracks=1;
@@ -353,7 +353,7 @@
 	dance=30;
 	areaofeffect=63;
 	soundstart=rockhvy2;
-	soundhit=xplomed2;
+	soundhitdry=xplomed2;
 	firestarter=70;
 	smokedelay=0.1;
 	tracks=1;
@@ -390,7 +390,7 @@
 	turnrate=20000;
 	areaofeffect=108;
 	soundstart=Rockhvy1;
-	soundhit=xplomed4;
+	soundhitdry=xplomed4;
 	firestarter=100;
 	smokedelay=0.1;
 	smoketrail=0;
@@ -433,7 +433,7 @@
 	flighttime=5;
 	//turnrate=4500;
 	soundstart=RavenHvyRock;
-	soundhit=rockhit;
+	soundhitdry=rockhit;
 	firestarter=70;
 	smokedelay=0.1;
 	smoketrail=0;
@@ -465,7 +465,7 @@
 	weaponacceleration=0;
 	areaofeffect=48;
 	soundstart=rocklit1;
-	soundhit=xplosml2;
+	soundhitdry=xplosml2;
 	firestarter=70;
 	smokedelay=0.1;
 	smoketrail=0;

@@ -39,17 +39,23 @@ local problemFactories = {
 	core_adv_vehicle_plant = true,
 }
 
+local AIteams = {}
+local QTPFS = false
+
 function gadget:Initialize()
 	local modOptions = Spring.GetModOptions()
 	local noAIs = true
 	for _, teamID in pairs(Spring.GetTeamList()) do
 		local _, _, _, tInfo = Spring.GetTeamInfo(teamID)
 		if tInfo then
+			AIteams[teamID]=true
 			noAIs = false
-			break
 		end
 	end
-	if ((not modOptions) or (not modOptions.qtpfs) or modOptions.qtpfs ~= "1") and noAIs then
+	if modOptions and modOptions.qtpfs then
+		QTPFS = modOptions.qtpfs == "1"
+	end
+	if not QTPFS and noAIs then
 		gadgetHandler:RemoveGadget()
 	end
 end
@@ -58,7 +64,7 @@ if (gadgetHandler:IsSyncedCode()) then
 
 function gadget:UnitFromFactory(unitID, unitDefID, teamID, factoryID, factoryDefID)
 	--if problemMoveDefs[UnitDefs[unitDefID].moveData.name] and problemFactories[UnitDefs[factoryDefID].name] then
-	if problemFactories[UnitDefs[factoryDefID].name] then
+	if AIteams[teamID] or (QTPFS and problemFactories[UnitDefs[factoryDefID].name]) then
 		local x, y, z = spGetUnitPosition(unitID)
 		local v = spGetUnitVectors(factoryID)
 		local r = spGetUnitRadius(unitID)*2 + 16

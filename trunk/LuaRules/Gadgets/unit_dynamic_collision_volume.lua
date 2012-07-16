@@ -160,6 +160,12 @@ if (gadgetHandler:IsSyncedCode()) then
 		elseif dynamicPieceCollisionVolume[un] then
 			popupUnits[unitID]={name=un, state=-1, perPiece=true, numPieces = #spGetPieceList(unitID)-1}
 		end
+	end
+
+	
+	--Reduce radius and height for 3DO units, for buildings this results in cons not being able
+	--to start or finish them depending if the scaling was made on UnitCreated() or UnitFinished()
+	function gadget:UnitFromFactory(unitID, unitDefID, unitTeam)
 		if UnitDefs[unitDefID].model.type=="3do" then
 			local rs, hs = 0.75, 0.67
 			if (vtype==4 and xs==ys and ys==zs) then
@@ -174,7 +180,7 @@ if (gadgetHandler:IsSyncedCode()) then
 			spSetUnitRadiusAndHeight(unitID, spGetUnitRadius(unitID)*rs, spGetUnitHeight(unitID)*hs)
 		end
 	end
-
+	
 
 	--check if a pop-up type unit was destroyed
 	function gadget:UnitDestroyed(unitID, unitDefID, unitTeam)
