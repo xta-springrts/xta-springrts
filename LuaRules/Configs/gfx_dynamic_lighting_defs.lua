@@ -23,6 +23,7 @@ local copyLightDefs = {
 	["XTA"] = {
 		["cor_gol"             ] = "core_artillery",
 		["corplas_weapon"      ] = "core_artillery",
+		["commander_self_d"    ] = "commander_blast",
 		["arm_udisintegrator"  ] = "arm_disintegrator",
 		["csarm_disintegrator" ] = "arm_disintegrator",
 		["core_disintegrator"  ] = "arm_disintegrator",
