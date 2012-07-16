@@ -21,7 +21,7 @@
     ศอออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออผ
     Logo by ElementalGizmo
 	
-------------------- Change Log of XTA v9.72 (89.0 and next version) ------------------ by Deadnight Warrior and Jools
+------------------- Change Log of XTA v9.725 (89.0 and next version) ------------------ by Deadnight Warrior and Jools
 * Added support for changing Commanders in-game. New modoption: let users choose in game. Renamed Commander options to Automatic and Manual Commanders.
 * Rewrote commander selection widget from scratch. Now it interacts with initial queue and advanced playerslist, and also has some more functionality than the normal interface during pre-game phase (such as a gong-gong sound when game starts). Commanders are set to dont move on startup rather than maneuver.
 * Added "Team death on zero commanders", game mode that got removed with Spring 84 engine change
