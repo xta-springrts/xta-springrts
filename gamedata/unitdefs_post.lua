@@ -55,8 +55,45 @@ for name, ud in pairs(UnitDefs) do
 			ud.sfxtypes["pieceExplosionGenerators"][n] = ud.piecetrailcegtag .. (n - 1)
 		end
 	end
+	ud.collisionvolumetest = 1
 end 
 
+-------------------------------------------------------------------------------
+-- Disable units based on map atmosphere and mod options
+
+--[[   Not possible due to Game. not being available at _post stage
+local disableWind = Game.windMax < 9.1
+local disableAir, disableHovers
+if not modOptions.space_mode or (modOptions.space_mode and modOptions.space_mode=="0") then
+local map = Game.mapHumanName:lower()
+	if Game.windMin <= 1 and Game.windMax <= 4 then
+		disableAir = true
+		disableHovers = true
+	elseif map:find("comet") or map:find("moon") then
+		disableAir = true
+		disableHovers = true
+	end
+	if Game.windMin >= 30 or Game.windMax >= 35 then
+		disableAir = true
+	end
+end
+if (disableWind) then
+	UnitDefs[UnitDefNames["arm_wind_generator"].id].unitRestricted = 0
+	UnitDefs[UnitDefNames["core_wind_generator"].id].unitRestricted = 0
+end
+if (disableHovers) then
+	UnitDefs[UnitDefNames["arm_hovercraft_platform"].id].unitRestricted = 0
+	UnitDefs[UnitDefNames["core_hovercraft_platform"].id].unitRestricted = 0
+end
+if (disableAir) then
+	UnitDefs[UnitDefNames["arm_aircraft_plant"].id].unitRestricted = 0
+	UnitDefs[UnitDefNames["arm_adv_aircraft_plant"].id].unitRestricted = 0
+	UnitDefs[UnitDefNames["arm_seaplane_platform"].id].unitRestricted = 0
+	UnitDefs[UnitDefNames["core_aircraft_plant"].id].unitRestricted = 0
+	UnitDefs[UnitDefNames["core_adv_aircraft_plant"].id].unitRestricted = 0
+	UnitDefs[UnitDefNames["core_seaplane_platform"].id].unitRestricted = 0
+end
+--]]
 
 -------------------------------------------------------------------------------
 -- Starting resource storage adjustment
