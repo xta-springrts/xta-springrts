@@ -23,6 +23,8 @@ local copyLightDefs = {
 	["XTA"] = {
 		["cor_gol"             ] = "core_artillery",
 		["corplas_weapon"      ] = "core_artillery",
+		["corkrog_fire"        ] = "core_artillery", -- FIXME? should be krogoth_artillery but corkrog_fire has plasma shell CEGs?
+	--	["krogoth_artillery"   ] = "core_artillery",
 		["commander_self_d"    ] = "commander_blast",
 		["arm_udisintegrator"  ] = "arm_disintegrator",
 		["csarm_disintegrator" ] = "arm_disintegrator",
@@ -35,6 +37,8 @@ local copyLightDefs = {
 		["atomic_blastpen"     ] = "atomic_blast",
 		["crblmssl"            ] = "nuclear_missile",
 		["cortron_weapon"      ] = "armemp_weapon",
+		["corvipe_laser"       ] = "armsnipe_weapon",
+		["corkrog_head"        ] = "armsnipe_weapon",
 	},
 }
 local dynLightDefs = {
@@ -236,6 +240,16 @@ local dynLightDefs = {
 					ttl               = 2 * Game.gameSpeed,
 					decayFunctionType = {0.0, 0.0, 0.0},
 					altitudeOffset    = 50.0,
+				},
+			},
+
+			["armsnipe_weapon"] = {
+				projectileLightDef = {
+					diffuseColor  = {2.5,                   2.0,                   5.0                  },
+					specularColor = {2.5 * rgbSpecMults[1], 2.0 * rgbSpecMults[2], 5.0 * rgbSpecMults[3]},
+					priority      = 4,
+					radius        = 250.0,
+					ttl           = 100000,
 				},
 			},
 		},
