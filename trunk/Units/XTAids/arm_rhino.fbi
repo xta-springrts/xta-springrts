@@ -20,7 +20,7 @@
 	unitnumber=289;
 	objectname=arm_rhino.3do;
 	corpse=arm_rhino_dead;
-	buildpic=arm_rhino.DDS;
+	//buildpic=arm_rhino;
 	soundcategory=MAVERICK;
 
 	//************************************************************

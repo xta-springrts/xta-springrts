@@ -373,9 +373,9 @@ end
 
 if (modOptions and not tobool(modOptions.xtaidunits)) then
   disableunits({
-	"yeomen", "armona", "arm_evaperator", "paci", "armsparkle", "walker",
-	"neutral_eyes", "armpur", "armbfortew", "armarch", "armbugger", "boa",
-	"armfff", "mercury", "tadg07", "armraz", "armhyren", "demolish",
+	"yeomen", "armona", "arm_evaperator", "paci", "armsparkle", "armjanus",
+	"walker", "neutral_eyes", "armpur", "armbfortew", "armarch", "armbugger",
+	"boa", "armfff", "mercury", "tadg07", "armraz", "armhyren", "demolish",
 	"armrebel", "arm_tor","tadg05", "arm_infinite", "arm_mech_lab",
 
 	"corbyp", "justice", "corpur", "astank", "corjar", "core_egg_shell",
