@@ -641,7 +641,6 @@ StartMoving()
 {
 	signal SIG_IDLE;
 	if(idling) call-script StopIdle();
-	set MAX_SPEED to moveSpeed*speedFactor/100;
 	bMoving = 1;
 }
 
