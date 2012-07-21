@@ -1000,7 +1000,8 @@
 		canbuild5=arm_samson;
 		canbuild6=arm_samson_rt; //mod option
 		canbuild7=armsparkle;//xtaids
-		canbuild8=arm_podger;
+		canbuild8=armjanus;//xtaids
+		canbuild9=arm_podger;
 	}
 	[core_adv_aircraft_plant]
 	{
