@@ -2,13 +2,13 @@ spawnData = {
 	map = "Altair_Crossing_v3",
 	teams = {
 		[0] = {
-			arm_commander = {460,2000,1},
-			arm_energy_storage = {420,1700,0},
-			arm_metal_storage = {300,1700,0},
+			{"arm_commander", 460, 2000, 1},
+			{"arm_energy_storage", 420, 1700, 0},
+			{"arm_metal_storage", 300, 1700, 0},
 		},
 		[1] = {
-			core_commander = {3760,2018,3},
-			core_energy_storage = {3820,2400,0}
+			{"core_commander", 3760, 2018, 3},
+			{"core_energy_storage", 3820, 2400, 0}
 		},
 	}
 }
