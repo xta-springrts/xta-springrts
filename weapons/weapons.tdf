@@ -4638,7 +4638,7 @@
 	range=1350;
 	reloadtime=4.25;
 	energypershot=1650;
-	weaponvelocity=1200;
+	weaponvelocity=1650;
 	areaofeffect=8;
 	soundstart=annigun1;
 	soundhitdry=lasrhit2;

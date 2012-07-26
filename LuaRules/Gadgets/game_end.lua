@@ -204,7 +204,7 @@ function gadget:GameFrame(frame)
 		-- kill teams after checking for gameover to avoid to trigger instantly gameover
 		if teamDeathMode == "teamzerounits" then
 			KillTeamsZeroUnits()
-		elseif teamDeathMode == "allyzerounits" then
+		elseif teamDeathMode == "allyzerounits" or teamDeathMode == "com" then
 			KillAllyTeamsZeroUnits()
 		end
 		KillResignedTeams()

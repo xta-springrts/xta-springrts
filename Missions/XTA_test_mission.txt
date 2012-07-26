@@ -2,7 +2,7 @@
 {
 	Mapname=Altair_Crossing_v3;
 	Maphash=-2106788908;
-	GameType=XTA 9.725;
+	GameType=XTA 9 SVN;
 	ModHash=1455791290;
 	[modoptions]
 	{

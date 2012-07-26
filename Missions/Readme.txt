@@ -11,7 +11,8 @@ so that it looks like this Spring/games/MissionEditor.sdd/ (bunch of folders and
 and start the Spring.exe and choose "Deadnight Warrior's Mission Editor 1.0" game
 
 After you're done placing units and buildings on the map (give something to other teams too),
-select the mission wizzard and give it the Dump command.
+select the "Mission Wizzard" unit and give it the "Dump" command. That will save the unit,
+building, and feature (wrecks and walls) placement to Spring/LuaUI/XTA_mission_editor_dump.lua
 
 Now you can manualy add triggers and locations to the mission template, then save it to
 Spring/Missions folder. Trigger documentation is in the TestMission.lua inside XTA/Missions

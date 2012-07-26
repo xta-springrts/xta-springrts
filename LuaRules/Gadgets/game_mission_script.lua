@@ -29,6 +29,13 @@ local spCreateFeature = Spring.CreateFeature
 local modOptions = Spring.GetModOptions()
 local gaiaTeamID = Spring.GetGaiaTeamID()
 local teams = Spring.GetTeamList()
+for i=1, #teams do
+	if teams[i] == gaiaTeamID then
+		table.remove(teams, i)
+		break
+	end
+end
+
 local floor = math.floor
 
 local triggers = {}
@@ -44,11 +51,9 @@ local function initTriggers()
 		triggers[teamID] = {}
 		killCounter[teamID] = {}
 		killCounter[teamID]["total"] = 0
-		for i=0, #teams-1 do
-			if i ~= gaiaTeamID then
-				killCounter[teamID][i] = {}
-				killCounter[teamID][i]["total"] = 0
-			end
+		for _, enemyTeam in pairs(teams) do
+			killCounter[teamID][enemyTeam] = {}
+			killCounter[teamID][enemyTeam]["total"] = 0
 		end
 		killCounterType[teamID] = {}
 		for no, val in pairs(trig) do
@@ -82,11 +87,9 @@ local function initTriggers()
 			triggers[teamID][no].wait = 0
 		end
 	end
-	for _, teamID in pairs(teams) do
-		if teamID ~= gaiaTeamID then
-			deathCounter[teamID] = {}
-			deathCounter[teamID]["total"] = 0
-		end
+	for i, teamID in pairs(teams) do
+		deathCounter[teamID] = {}
+		deathCounter[teamID]["total"] = 0
 	end
 	for i=1, 32 do
 		switches[i]=false
@@ -103,8 +106,8 @@ function gadget:Initialize()
 				spEcho("Swiching to standard skirmish mode")
 				gadgetHandler:RemoveGadget()
 			else
-				initTriggers()
-				missionTriggers = nil	--kill table once not needed
+				initTriggers()			-- pre-parse trigger strings
+				missionTriggers = nil	-- kill table once not needed
 			end
 		else
 			spEcho("Mission parameter incorrect or wrong mission file")
@@ -116,42 +119,49 @@ function gadget:Initialize()
 end
 
 function gadget:GameStart()
-	for i = 1,#teams do
-        local teamID = teams[i]
-        -- don't spawn a start unit for the Gaia team
-        if (teamID ~= gaiaTeamID) then
-			-- set start resources, either from mod options or custom team keys
-			Spring.SetTeamResource(teamID, "ms", 0)
-			Spring.SetTeamResource(teamID, "es", 0)	
+	for _, teamID in pairs(teams) do
+		-- set start resources, either from mod options or custom team keys
+		Spring.SetTeamResource(teamID, "ms", 0)
+		Spring.SetTeamResource(teamID, "es", 0)	
 
-			for _, unitData in pairs(spawnData.teams[teamID]) do
-				--local x, z = 16*floor((unitData[2]+8)/16), 16*floor((unitData[3]+8)/16)	-- snap to 16x16 grid, fails for odd footprint sizes
-				--local x, z = 8*floor((unitData[2]+4)/8), 8*floor((unitData[3]+4)/8)	-- snap to 8x8 grid
-				local x, z = unitData[2], unitData[3]	--don't snap to grid, not needed if mission dumper was used
-				local y = spGetGroundHeight(x, z)
-				spCreateUnit(unitData[1], x, y, z, unitData[4], teamID)
-			end
-
-			local teamOptions = select(7, spGetTeamInfo(teamID))
-			local m = teamOptions.startmetal  or modOptions.startmetal  or 1000
-			local e = teamOptions.startenergy or modOptions.startenergy or 1000
-			if (m and tonumber(m) ~= 0) then
-				--Spring.SetUnitResourcing(commanderID, "m", 0)
-				Spring.SetTeamResource(teamID, "m", 0)
-				Spring.AddTeamResource(teamID, "m", tonumber(m))
-			end
-			if (e and tonumber(e) ~= 0) then
-				--Spring.SetUnitResourcing(commanderID, "e", 0)
-				Spring.SetTeamResource(teamID, "e", 0)
-				Spring.AddTeamResource(teamID, "e", tonumber(e))
-			end
-        end
-		for _, featureData in pairs(spawnData.features) do
-			local y = spGetGroundHeight(featureData[2], featureData[3])
-			spCreateFeature(featureData[1], featureData[2], y, featureData[3], featureData[4], featureData[5])
+		for _, unitData in pairs(spawnData.teams[teamID]) do
+			--local x, z = 16*floor((unitData[2]+8)/16), 16*floor((unitData[3]+8)/16)	-- snap to 16x16 grid, fails for odd footprint sizes
+			--local x, z = 8*floor((unitData[2]+4)/8), 8*floor((unitData[3]+4)/8)	-- snap to 8x8 grid
+			local x, z = unitData[2], unitData[3]	-- don't snap to grid, not needed if mission dumper was used
+			local y = spGetGroundHeight(x, z)
+			spCreateUnit(unitData[1], x, y, z, unitData[4], teamID)
 		end
-    end
-	spawnData = nil		--kill table once not needed
+
+		local teamOptions = select(7, spGetTeamInfo(teamID))
+		local m = teamOptions.startmetal  or modOptions.startmetal  or 1000
+		local e = teamOptions.startenergy or modOptions.startenergy or 1000
+		if (m and tonumber(m) ~= 0) then
+			--Spring.SetUnitResourcing(commanderID, "m", 0)
+			Spring.SetTeamResource(teamID, "m", 0)
+			Spring.AddTeamResource(teamID, "m", tonumber(m))
+		end
+		if (e and tonumber(e) ~= 0) then
+			--Spring.SetUnitResourcing(commanderID, "e", 0)
+			Spring.SetTeamResource(teamID, "e", 0)
+			Spring.AddTeamResource(teamID, "e", tonumber(e))
+		end
+	end
+	for _, featureData in pairs(spawnData.features) do
+		local y = spGetGroundHeight(featureData[2], featureData[3])
+		spCreateFeature(featureData[1], featureData[2], y, featureData[3], featureData[4], featureData[5])
+	end
+	if #triggers == 0 then
+		gadgetHandler:RemoveGadget()	-- this mission has no triggers, we're done
+	end
+	local i=1
+	while i <= #teams do	-- remove from team list all teams that have no triggers
+		if triggers[teams[i]] then
+			i=i+1
+		else
+			table.remove(teams, i)
+		end
+	end
+	spawnData = nil		-- kill table once not needed
 end
 
 local function testCondition(cond, teamID)
@@ -160,11 +170,11 @@ local function testCondition(cond, teamID)
 	if cond[2] then qty=tonumber(cond[2]) end
 	if cond[4] then idx=tonumber(cond[4]) end
 
-	--Always   - Unconditional trigger
+	-- Always   - Unconditional trigger
 	if comm=="Always" then
 		return true
 
-	--Ctrl quantity (unitname|ANY) [index]
+	-- Ctrl quantity (unitname|ANY) [index]
 	elseif comm=="Ctrl" then
 		local loc = locations[idx]
 		local unitsInArea = {}
@@ -194,9 +204,9 @@ local function testCondition(cond, teamID)
 				return #unitsInArea < qty
 			end
 		else
-			local count=0			
+			local count, uDefID = 0, UnitDefNames[type].id
 			for _, unitID in pairs(unitsInArea) do
-				if spGetUnitDefID(unitID) == UnitDefNames[type].id then
+				if spGetUnitDefID(unitID) == uDefID then
 					count = count + 1
 				end
 			end
@@ -207,7 +217,7 @@ local function testCondition(cond, teamID)
 			end
 		end
 		
-	--Death quantity (unitname|ANY) [ownerID]
+	-- Death quantity (unitname|ANY) [ownerID]
 	elseif comm=="Death" then
 		local team = idx or teamID
 		if type == "ANY" then
@@ -224,17 +234,17 @@ local function testCondition(cond, teamID)
 			end
 		end			
 
-	--Kill quantity (unitname|ANY) [ownerID]
+	-- Kill quantity (unitname|ANY) [ownerID]
 	elseif comm=="Kill" then
 		if cond[4] then
 			if type == "ANY" then
-				if qty >= 0 then	--total kills by enemy team
+				if qty >= 0 then	-- total kills by enemy team
 					return killCounter[teamID][idx]["total"] >= qty
 				else
 					return killCounter[teamID][idx]["total"] < qty
 				end
 			else
-				if qty >= 0 then	--kills by enemy team by unitname
+				if qty >= 0 then	-- kills by enemy team by unitname
 					return (killCounter[teamID][idx][UnitDefNames[type].id] or 0) >= qty
 				else
 					return (killCounter[teamID][idx][UnitDefNames[type].id] or 0) < qty
@@ -242,13 +252,13 @@ local function testCondition(cond, teamID)
 			end			
 		else
 			if type == "ANY" then
-				if qty >= 0 then	--total number of kills
+				if qty >= 0 then	-- total number of kills
 					return killCounter[teamID]["total"] >= qty
 				else
 					return killCounter[teamID]["total"] < qty
 				end
 			else
-				if qty >= 0 then	--total number of unitname kills
+				if qty >= 0 then	-- total number of unitname kills
 					return (killCounterType[teamID][UnitDefNames[type].id] or 0) >= qty
 				else
 					return (killCounterType[teamID][UnitDefNames[type].id] or 0) < qty
@@ -256,7 +266,7 @@ local function testCondition(cond, teamID)
 			end
 		end
 
-	--Res quantity (M|E|ME)
+	-- Res quantity (M|E|ME)
 	elseif comm=="Res" then
 		local currentM = Spring.GetTeamResources(teamID, "metal")
 		local currentE = Spring.GetTeamResources(teamID, "energy")
@@ -282,7 +292,7 @@ local function testCondition(cond, teamID)
 			return false
 		end
 
-	--Switch number (true|false)
+	-- Switch number (true|false)
 	elseif comm=="Switch" then
 		if type=="true" then
 			return switches[qty]==true
@@ -311,15 +321,15 @@ local function DoActions(actions, teamID, trigNo)
 	for i=1, #actions do
 		local actn = actions[i]
 
-		--Defeat
+		-- Defeat [teamID]
 		if actn[1]=="Defeat" then
-			Spring.KillTeam(teamID)
+			Spring.KillTeam(tonumber(actn[2] or teamID))
 
-		--Echo Any kind of message.
+		-- Echo Any kind of message.
 		elseif actn[1]=="Echo" then
 			spEcho(actn[2])
 
-		--Eco quantity (M|E|ME) [teamID]
+		-- Eco quantity (M|E|ME) [teamID]
 		elseif actn[1]=="Eco" then
 			local team = tonumber(actn[4] or teamID)
 			local qty = tonumber(actn[2])
@@ -344,11 +354,11 @@ local function DoActions(actions, teamID, trigNo)
 				end			
 			end
 
-		--Give quantity unitname index [teamID]
+		-- Give quantity unitname index [teamID]
 		elseif actn[1]=="Give" then
-			--TO DO
+			-- TO DO
 
-		--Kill (unitname|ANY) teamID [index]
+		-- Kill (unitname|ANY) teamID [index]
 		elseif actn[1]=="Kill" then
 			local team = tonumber(actn[3])	
 			if actn[4] then
@@ -359,8 +369,9 @@ local function DoActions(actions, teamID, trigNo)
 							spDestroyUnit(unitID, false, false, teamID)
 						end
 					else
+						local uDefID = UnitDefNames[actn[2]].id
 						for _, unitID in pairs(spGetUnitsInCylinder(loc.X,loc.Z,loc.r,team)) do
-							if spGetUnitDefID(unitID) == UnitDefNames[actn[2]].id then
+							if spGetUnitDefID(unitID) == uDefID then
 								spDestroyUnit(unitID, false, false, teamID)
 							end
 						end
@@ -371,8 +382,9 @@ local function DoActions(actions, teamID, trigNo)
 							spDestroyUnit(unitID, false, false, teamID)
 						end
 					else
+						local uDefID = UnitDefNames[actn[2]].id
 						for _, unitID in pairs(spGetUnitsInRectangle(loc.X1,loc.Z1,loc.X2,loc.Z2,team)) do
-							if spGetUnitDefID(unitID) == UnitDefNames[actn[2]].id then
+							if spGetUnitDefID(unitID) == uDefID then
 								spDestroyUnit(unitID, false, false, teamID)
 							end
 						end
@@ -384,8 +396,9 @@ local function DoActions(actions, teamID, trigNo)
 						spDestroyUnit(unitID, false, false, teamID)
 					end
 				else
+					local uDefID = UnitDefNames[actn[2]].id
 					for unitDefID, unitIDs in pairs(Spring.GetTeamUnitsSorted(team)) do
-						if unitDefID == UnitDefNames[actn[2]].id then
+						if unitDefID == uDefID then
 							for _, unitID in pairs(unitIDs) do
 								spDestroyUnit(unitID, false, false, teamID)
 							end
@@ -395,7 +408,11 @@ local function DoActions(actions, teamID, trigNo)
 				end
 			end
 
-		--Switch number (true|false|flip)
+		-- Move (unitname|ANY) src dest [teamID]
+		elseif actn[1]=="Give" then
+			-- TO DO
+
+		-- Switch number (true|false|flip)
 		elseif actn[1]=="Switch" then
 			local num = tonumber(actn[2])
 			if actn[3]=="true" then
@@ -406,12 +423,12 @@ local function DoActions(actions, teamID, trigNo)
 				switches[num] = not (switches[num]==true)
 			end
 
-		--Victory
+		-- Victory
 		elseif actn[1]=="Victory" then
 			local allyTeam = select(6,Spring.GetTeamInfo(teamID))
 			Spring.GameOver({allyTeam})
 
-		--Wait time
+		-- Wait time
 		elseif actn[1]=="Wait" then
 			triggers[teamID][trigNo].wait = tonumber(actn[2])
 		end
@@ -419,53 +436,59 @@ local function DoActions(actions, teamID, trigNo)
 end
 
 function gadget:UnitDestroyed(unitID, unitDefID, teamID, attackerID, attackerDefID, attackerTeamID)
+	-- don't track gaia team's kills, but if a gaia unit is killed, it counts under per unit type kill
 	if attackerID and attackerTeamID and killCounter[attackerTeamID] and attackerTeamID ~= gaiaTeamID and teamID ~= attackerTeamID then
-		if teamID ~= gaiaTeamID then
-			if killCounter[attackerTeamID][teamID][unitDefID] then
+		if teamID ~= gaiaTeamID then	-- don't track per team kills for gaia units
+			if killCounter[attackerTeamID][teamID][unitDefID] then -- player's per team per unit type kills
 				killCounter[attackerTeamID][teamID][unitDefID] = killCounter[attackerTeamID][teamID][unitDefID] + 1
 			else
 				killCounter[attackerTeamID][teamID][unitDefID] = 1
 			end
-			killCounter[attackerTeamID][teamID]["total"] = killCounter[attackerTeamID][teamID]["total"] + 1
+			killCounter[attackerTeamID][teamID]["total"] = killCounter[attackerTeamID][teamID]["total"] + 1 -- player's per team kills
 		end
-		if killCounterType[attackerTeamID][unitDefID] then
+		if killCounterType[attackerTeamID][unitDefID] then -- players' per unit type kills
 			killCounterType[attackerTeamID][unitDefID] = killCounterType[attackerTeamID][unitDefID] + 1
 		else
 			killCounterType[attackerTeamID][unitDefID] = 1		
 		end
-		killCounter[attackerTeamID]["total"] = killCounter[attackerTeamID]["total"] + 1
+		killCounter[attackerTeamID]["total"] = killCounter[attackerTeamID]["total"] + 1	-- player's total kills
 	end
-	if teamID ~= gaiaTeamID then
+	if teamID ~= gaiaTeamID then	-- don't track deaths of gaia team
 		if deathCounter[teamID][unitDefID] then
-			deathCounter[teamID][unitDefID] = deathCounter[teamID][unitDefID] + 1
+			deathCounter[teamID][unitDefID] = deathCounter[teamID][unitDefID] + 1	-- per unit type deaths
 		else
 			deathCounter[teamID][unitDefID] = 1
 		end
-		deathCounter[teamID]["total"] = deathCounter[teamID]["total"] + 1
+		deathCounter[teamID]["total"] = deathCounter[teamID]["total"] + 1 -- total deaths
 	end
 end
 
 function gadget:GameFrame(n)
-	--check triggers once per second, but spread teams accross gameframes, less lag
-	--we assume one player per team and multiple teams per allied AI controlled side
-	--we also assume < 31 teams in total
-	--only one human player, usualy team 0, this is for campaign after all
-	local teamID = n % 30
-	if teams[teamID+1] and teamID ~= gaiaTeamID and n>30 then		--skip first second of game and all dead/gaia teams
-		local _, _, active = spGetTeamInfo(teamID)
-		if active==false and triggers[teamID] then
+	-- check triggers once per second, but spread teams accross gameframes, less lag
+	-- we assume one player per team and multiple teams per allied AI controlled side
+	-- we also assume < 31 teams in total
+	-- only one human player, usualy team 0, this is for campaign after all
+	local teamID = teams[n%30 + 1]
+	if teamID and n>29 then		-- skip first second of game and look for teams with triggers
+		local _, _, teamDead = spGetTeamInfo(teamID)
+		if teamDead==false then
 			local trigger = triggers[teamID]
-			for i=1, #trigger do	--process triggers
+			local i = 1
+			while i <= #trigger do	-- process triggers, can't use for loop due to one-shot triggers
 				trigger[i].wait = trigger[i].wait - 1
-				if trigger[i].once==nil and trigger[i].wait<=0 or trigger[i].once==true then	
+				if trigger[i].wait <= 0 then	
 					if testConditions(trigger[i].conditions, teamID)==true then
 						DoActions(trigger[i].actions, teamID, i)
 						if trigger[i].once and trigger[i].once==true then
-							trigger[i].once = false	--disable one shot trigger
+							table.remove(triggers[teamID], i) -- disable one-shot trigger
+							i = i - 1	-- prevent skiping a trigger after table removal
 						end
 					end
 				end
+				i = i + 1
 			end
+		else
+			table.remove(teams, n%30 + 1)	-- remove dead team from teams list
 		end
 	end
 end

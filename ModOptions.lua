@@ -67,9 +67,9 @@ local options = {
 		--section= 'xtagame',
 		def="allyzerounits",
 		items={
-			{key="none", name="Never Die", desc="All players will stay alive regardless of what happends, gameover will never arrive."},
+			{key="none", name="Never Die", desc="All players will stay alive regardless of what happens, gameover will never arrive."},
 			{key="teamzerounits", name="Player death on zero Units", desc="The player will die when he has 0 units left."},
-			{key="com", name="Team death on no commanders", desc="The team will die when every player in that team loses his commander."},
+			{key="com", name="Team death on no commanders", desc="The team will die when all players in that team lose their commanders."},
 			{key="allyzerounits", name="Team death on zero units", desc="The team will die when every player in that team has 0 units left."},
 		}
 	},

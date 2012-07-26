@@ -14,8 +14,32 @@ end
 -- his com dies it acts on an allyteam level, if all coms in an allyteam are dead
 -- the allyteam is out
 
--- the deathmode modoption must be set to one of the following to enable this
+local commanderList = {
+	arm_commander = true,
+	arm_decoy_commander = true,
+	arm_u0commander = true,
+	arm_ucommander = true,
+	arm_u2commander = true,
+	arm_u3commander = true,
+	arm_u4commander = true,
+	arm_scommander = true,
+	armcom = true,
+	arm_base = true,
+	arm_nincommander = true,
+	core_commander = true,
+	core_decoy_commander = true,
+	core_u0commander = true,
+	core_ucommander = true,
+	core_u2commander = true,
+	core_u3commander = true,
+	core_u4commander = true,
+	core_scommander = true,
+	corcom = true,
+	core_base = true,
+	core_nincommander = true,
+}
 
+-- the deathmode modoption must be set to one of the following to enable this
 local endmodes= {
 	com=true,
 	comcontrol=true,
@@ -53,14 +77,14 @@ end
 
 function gadget:UnitCreated(u, ud, team)
 	isAlive[u] = true
-	if UnitDefs[ud].isCommander then
+	if commanderList[UnitDefs[ud].name] then
 		local allyTeam = GetUnitAllyTeam(u)
 		aliveCount[allyTeam] = aliveCount[allyTeam] + 1
 	end
 end
 
 function gadget:UnitGiven(u, ud, team)
-	if UnitDefs[ud].isCommander then
+	if commanderList[UnitDefs[ud].name] then
 		local allyTeam = GetUnitAllyTeam(u)
 		aliveCount[allyTeam] = aliveCount[allyTeam] + 1
 	end
@@ -68,7 +92,7 @@ end
 
 function gadget:UnitDestroyed(u, ud, team)
 	isAlive[u] = nil
-	if UnitDefs[ud].isCommander then
+	if commanderList[UnitDefs[ud].name] then
 		local allyTeam = GetUnitAllyTeam(u)
 		aliveCount[allyTeam] = aliveCount[allyTeam] - 1
 		if aliveCount[allyTeam] <= 0 then
@@ -78,7 +102,7 @@ function gadget:UnitDestroyed(u, ud, team)
 end
 
 function gadget:UnitTaken(u, ud, team)
-	if isAlive[u] and UnitDefs[ud].isCommander then
+	if isAlive[u] and commanderList[UnitDefs[ud].name] then
 		local allyTeam = GetUnitAllyTeam(u)
 		aliveCount[allyTeam] = aliveCount[allyTeam] - 1
 		if aliveCount[allyTeam] <= 0 then
