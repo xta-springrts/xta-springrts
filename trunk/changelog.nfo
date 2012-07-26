@@ -20,17 +20,24 @@
     ºÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜº
     ÈÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ¼
     Logo by ElementalGizmo
+
+------------------- Change Log of XTA v9.726 beta (89.0 and next version) ------------------ by Deadnight Warrior
+* Fixed "Team death on zero commanders"
+* Updated missions gadget with new trigger conditions and actions, some performance optimizations
+* Modified some gadgets and widgets for better interaction with mission scripting gadget
+* Updated Dynamic Collision Volume gadget to support radius and height scaling of buildings and aim point adjustment of popup style units
+
 	
 ------------------- Change Log of XTA v9.725 (89.0 and next version) ------------------ by Deadnight Warrior and Jools
 * Added support for changing Commanders in-game. New modoption: let users choose in game. Renamed Commander options to Automatic and Manual Commanders.
-* Rewrote commander selection widget from scratch. Now it interacts with initial queue and advanced playerslist, and also has some more functionality than the normal interface during pre-game phase (such as a gong-gong sound when game starts). Commanders are set to dont move on startup rather than maneuver.
+* Rewrote commander selection widget from scratch. Now it interacts with initial queue and advanced playerslist, and also has some more functionality than the normal interface during pre-game phase (such as a gong-gong sound when game starts). Commanders are set to hold position on startup rather than maneuver.
 * Added "Team death on zero commanders", game mode that got removed with Spring 84 engine change
 * Adjusted the default on/off for many widgets
 * Updated several gadgets and widgets to newer versions
 * Fixed the following widgets to work with current version of spring (version 85 and above): dontshoot (puts commander on hold fire during cloak), forcecloak(gives a wait order to the commander if user wants to cloak while the commander is in the process of building something)
-* Added following widgets: Red_resourcebars and red_tooltip (they need re_ui_framework and red_ui_drawing to work), gui_point_tracker (displays labels added by other players on minimap), Ghosted Buildings and Ghosted radar
+* Added following widgets: Red_resourcebars and red_tooltip (they need red_ui_framework and red_ui_drawing to work), gui_point_tracker (displays labels added by other players on minimap), Ghosted Buildings and Ghosted radar
 * Improved Default XTA GUI Layout widget with the ability to select different icon grid sizes
-* Added an explosion effect to all gunships (they currently lacked one). Added a splash effect and sound to explosions on water.
+* Added an explosion effect to all gunships (they currently lacked one). Added a splash effect to explosions on water.
 * Fixed "King of The Hill" mode, no cloaked or stunned units, or units not on ground can maintain control. Added reminder and countdown sound when 30 secs left in KoTH mode.
 * Fixed many unwanted reverts that happened when releasing 9.71 (Raven, and Hammer/Thud are affected mostly)
 * Added RadarEmitHeight and LOSEmitHeight values to all towers, commanders and big ships, makes them see better on bumpy terrain or when climbing hills
@@ -50,6 +57,8 @@
 * Added gadget for QTPFS units-stuck-in-factory bug workaround
 * Several gadgets updated for better MT compatibility
 * Default XTA UI grid layout can be selected from among: 3x8, 4x9 and 5x11 icons in Ctrl+F11 mode
+
+* Added a rudimentary mission scripting gadget and 2 demo missions, look for details in XTA.sd7/Missions/Readme.txt
 
 --- Requites 89.0 to work ---
 * Updated Dynamic Collision Volume gadget for better map feature and unit CV and radius scaling

@@ -50,9 +50,8 @@
 	activatewhenbuilt=1;
 	collisionVolumeType=CylY;
 	collisionVolumeScales=41 60 41;
-	collisionVolumeOffsets=0 4.5 0;
+	collisionVolumeOffsets=0 0.5 0;
 	collisionVolumeTest = 1;
-	ModelCenterOffset=0 -4 0;
 
 	//************************************************************
 	//  Constructor
