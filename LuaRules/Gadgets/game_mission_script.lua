@@ -409,7 +409,7 @@ local function DoActions(actions, teamID, trigNo)
 			end
 
 		-- Move (unitname|ANY) src dest [teamID]
-		elseif actn[1]=="Give" then
+		elseif actn[1]=="Move" then
 			-- TO DO
 
 		-- Switch number (true|false|flip)
