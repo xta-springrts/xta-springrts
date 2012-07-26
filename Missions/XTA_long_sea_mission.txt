@@ -1,6 +1,6 @@
 [GAME]
 {
-	Mapname=Altair_Crossing_v3;
+	Mapname=SailAway;
 	Maphash=-2106788908;
 	GameType=XTA 9 SVN;
 	ModHash=1455791290;
@@ -14,11 +14,11 @@
 		ghostedbuildings=1;
 		fixedallies=0;
 		disablemapdamage=0;
-		teamdeathmode=com;
+		teamdeathmode=allyzerounits;
 		comm=autoupgrade;
 		maxspeed=3.0;
 		minspeed=0.3;
-		gravity=0.5;
+		gravity=0.45;
 		qtpfs=0;
 		space_mode=1;
 		lowcpu=0;
@@ -26,7 +26,7 @@
 		mo_nowrecks=0;
 		newunits=0;
 		xtaidunits=0;
-		rockettoggle=1;
+		rockettoggle=0;
 		realscale=0;
 		airnocollide=1;
 		nocollide=0;
@@ -42,7 +42,7 @@
 		mo_queentime=60;
 		mo_maxchicken=1000;
 		mo_maxburrows=20;
-		mission=XTA_test_mission;
+		mission=XTA_long_sea_mission;
 	}
 	startpostype=3;
 	OnlyLocal=1;
@@ -64,7 +64,7 @@
 	{
 		TeamLeader=0;
 		AllyTeam=0;
-		RGBColor=0 0 0 ;
+		RGBColor=0 0 1 ;
 		Side=Arm;
 		Handicap=0;
 		StartPosX=511;
@@ -73,7 +73,7 @@
 	[AI0]
 	{
 		Name=AI_1;
-		ShortName=NullAI;
+		ShortName=RAI;
 		Team=1;
 		Host=0;
 		//[OPTIONS]
@@ -86,7 +86,7 @@
 	{
 		TeamLeader=0;
 		AllyTeam=1;
-		RGBColor=0.890196078431373 0.733333333333333 1 ;
+		RGBColor=1 0 0 ;
 		Side=Arm;
 		Handicap=0;
 		StartPosX=454;

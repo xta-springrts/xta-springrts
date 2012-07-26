@@ -1,5 +1,10 @@
-spawnData = {
+gameData = {
 	map = "Altair_Crossing_v3",
+	game = "XTA",
+	minVersion = "9 SVN",
+}
+
+spawnData = {
 	teams = {
 		[0] = {
 			{"arm_commander", 460, 2000, 1},
@@ -10,6 +15,8 @@ spawnData = {
 			{"core_commander", 3760, 2018, 3},
 			{"core_energy_storage", 3820, 2400, 0}
 		},
+	},
+	features = {
 	}
 }
 
@@ -73,4 +80,4 @@ missionTriggers = {
 locations = {
 }
 
-return spawnData, missionTriggers, locations
+return gameData, spawnData, missionTriggers, locations

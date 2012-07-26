@@ -42,19 +42,21 @@
 		mo_queentime=60;
 		mo_maxchicken=1000;
 		mo_maxburrows=20;
-		mission=TutorialMission;
+		mission=XTA_tutorial_mission;
 	}
 	startpostype=3;
-	HostIP=localhost;
-	HostPort=8452;
-	MyPlayerName=Me;
+	OnlyLocal=1;
+	//HostIP=localhost;
+	HostPort=0;
+	MyPlayerNum=0;
+	MyPlayerName=ARM;
 	IsHost=1;
 	NumPlayers=1;
 	NumUsers=1;
 	NumTeams=2;
 	[PLAYER0]
 	{
-		name=Me;
+		name=ARM;
 		Spectator=0;
 		team=0;
 	}

@@ -2,8 +2,13 @@ In order to play a mission, drag and drop the XTA_*_mission.txt file over the Sp
 dunno how this works on linux, but linux users should be smart enough to figure
 it out on their own
 
-So far both missions use Altair_Crossing_v3 map
+XTA_test_mission will load XTA_tutorial_mission upon victory
+
+So far both missions use "Altair_Crossing_v3" map
 http://springfiles.com/spring/spring-maps/altair-crossing
+
+XTA_long_sea_mission uses "SailAway" map  http://springfiles.com/spring/spring-maps/sailaway
+XTA_easy_mission uses "Red Comet" map  http://springfiles.com/spring/spring-maps/redcomet
 
 
 If you want to use mission editor, extract it into Spring/games or equivalent folder,
