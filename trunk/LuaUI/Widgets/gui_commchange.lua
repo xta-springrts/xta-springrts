@@ -723,14 +723,11 @@ end
 
 function widget:GetConfigData()
 	local vsx, vsy = gl.GetViewSizes()
-	Spring.Echo(vsx, vsy, px, py)
 	return {px / vsx, py / vsy}
 end
 
 function widget:SetConfigData(data)
 	local vsx, vsy = gl.GetViewSizes()
-	Spring.Echo(vsx, vsy, px, py)
 	px = math.floor(math.max(0, vsx * math.min(data[1] or 0, 0.95)))
 	py = math.floor(math.max(0, vsy * math.min(data[2] or 0, 0.95)))
-	Spring.Echo(vsx, vsy, px, py)
 end
