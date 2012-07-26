@@ -1,6 +1,6 @@
 [GAME]
 {
-	Mapname=Altair_Crossing_v3;
+	Mapname=Red Comet;
 	Maphash=-2106788908;
 	GameType=XTA 9 SVN;
 	ModHash=1455791290;
@@ -14,7 +14,7 @@
 		ghostedbuildings=1;
 		fixedallies=0;
 		disablemapdamage=0;
-		teamdeathmode=com;
+		teamdeathmode=allyzerounits;
 		comm=autoupgrade;
 		maxspeed=3.0;
 		minspeed=0.3;
@@ -42,7 +42,7 @@
 		mo_queentime=60;
 		mo_maxchicken=1000;
 		mo_maxburrows=20;
-		mission=XTA_test_mission;
+		mission=XTA_easy_mission;
 	}
 	startpostype=3;
 	OnlyLocal=1;
@@ -73,7 +73,7 @@
 	[AI0]
 	{
 		Name=AI_1;
-		ShortName=NullAI;
+		ShortName=KAIK;
 		Team=1;
 		Host=0;
 		//[OPTIONS]

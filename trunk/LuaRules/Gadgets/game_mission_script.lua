@@ -38,11 +38,10 @@ end
 
 local floor = math.floor
 
-local triggers = {}
-local switches = {}
+local triggers, switches = {}, {}
 local killCounter, deathCounter = {}, {}
 local killCounterType = {}
-local spawnData, missionTriggers, locations = {}, {}, {}
+local gameData, spawnData, missionTriggers, locations = {}, {}, {}, {}
 
 if (gadgetHandler:IsSyncedCode()) then
 
@@ -100,14 +99,19 @@ function gadget:Initialize()
 	if modOptions and modOptions.mission then
 		local mission = "Missions/" .. modOptions.mission ..".lua"
 		if VFS.FileExists(mission) then
-			spawnData, missionTriggers, locations = include(mission)
-			if spawnData.map ~= Game.mapName then
-				spEcho('Mission "' .. modOptions.mission .. "\" was started on a wrong map or you don't have " .. spawnData.map)
-				spEcho("Swiching to standard skirmish mode")
-				gadgetHandler:RemoveGadget()
+			gameData, spawnData, missionTriggers, locations = include(mission)
+			if gameData.game == Game.modShortName and gameData.minVersion <= Game.modVersion then
+				if gameData.map ~= Game.mapName then
+					spEcho('Mission "' .. modOptions.mission .. "\" was started on a wrong map or you don't have " .. spawnData.map)
+					spEcho("Swiching to standard skirmish mode")
+					gadgetHandler:RemoveGadget()
+				else
+					initTriggers()			-- pre-parse trigger strings
+					missionTriggers = nil	-- kill table once not needed
+				end
 			else
-				initTriggers()			-- pre-parse trigger strings
-				missionTriggers = nil	-- kill table once not needed
+				spEcho('This mission is intended for "' .. gameData.game .. " " .. gameData.minVersion .. '" or newer')
+				gadgetHandler:RemoveGadget()				
 			end
 		else
 			spEcho("Mission parameter incorrect or wrong mission file")
@@ -150,9 +154,6 @@ function gadget:GameStart()
 		local y = spGetGroundHeight(featureData[2], featureData[3])
 		spCreateFeature(featureData[1], featureData[2], y, featureData[3], featureData[4], featureData[5])
 	end
-	if #triggers == 0 then
-		gadgetHandler:RemoveGadget()	-- this mission has no triggers, we're done
-	end
 	local i=1
 	while i <= #teams do	-- remove from team list all teams that have no triggers
 		if triggers[teams[i]] then
@@ -160,6 +161,9 @@ function gadget:GameStart()
 		else
 			table.remove(teams, i)
 		end
+	end
+	if #teams == 0 then
+		gadgetHandler:RemoveGadget()	-- this mission has no triggers, we're done
 	end
 	spawnData = nil		-- kill table once not needed
 end
