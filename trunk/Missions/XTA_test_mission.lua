@@ -1,7 +1,7 @@
 gameData = {
 	map = "Altair_Crossing_v3",			-- this mission is ment to be played on this map
 	game = "XTA",						-- and with this game (short game name)
-	minVersion = "9 SVN",			-- and at least this version of game
+	minVersion = "9 SVN",				-- and at least this version of game
 	nextMission = "XTA_tutorial_mission",	-- next mission after victory, optional
 }
 
@@ -29,8 +29,17 @@ missionTriggers = {
 			},
 			actions = {
 				"Echo Bring your commander to the center of the map",
-				"Wait 11",	-- this will disable the trigger for 10 seconds after triggering
+				"Wait 11",	-- this will disable the trigger for 11 seconds after triggering
 			},
+		},
+		{
+			conditions = {
+				"Always",
+			},
+			actions = {
+				"Give 14 arm_peewee 2",
+			},
+			once = true,
 		},
 		{	
 			conditions = {
@@ -107,6 +116,7 @@ return gameData, spawnData, missionTriggers, locations
 
 All triggers must have conditions and actions arrays, individual conditions and actions are strings
 Field once can be either set to true, for one-shot trigger, or ommited, for multi-shot triggers
+Only when all conditions of a trigger are true, it's actions will happen
 
 List of possible conditions:
 ------------------------------
@@ -131,9 +141,14 @@ triggers if player has quantity of resource[s] or more in pool
 
 	Switch number (true|false)
 triggers if the switch of number is set to true or false state, by default switches 1..32
-are set to false, if you use more, define them before using "flip" action on a switch
+are set to false, if you use more, define them before using "flip" action on a switch,
+use "Always" condition and as many "Switch n (true|false)" actions as needed, make the
+trigger one-shot
 
-the quantity values can be negative, in that case it means less than specified value
+	Time quantity
+triggers if the game lasts for quantity or longer of seconds 
+
+the quantity values of conditions can be negative, in that case it means less than specified value
 example:	"Res -400 M"			-- triggers if player has less than 400 metal in pool
 			"Ctrl 20 arm_stumpy"	-- triggers if player has a total of 20 or more Stumpies
 			"Ctrl -10 arm_fido 3"	-- triggers if player has less than 10 Fidos at location 3
@@ -152,7 +167,7 @@ prints a message on the screen, anything after the word Echo till end of string
 	Eco quantity (M|E|ME) [teamID]
 gives the quantity of resources to player or teamID, quantity can be negative for taking away resources
 	
-	Give quantity unitname index [teamID]		-- not currently implemented
+	Give quantity unitname index [teamID]
 spawn a quantity of units of unitname type at location specified in locations list at index
 either for player or specified team
 
@@ -170,11 +185,12 @@ sets the switch of number to true, false or flips its state
 	Victory
 victory for ally team to which the player belongs whose trigger this is
 
-	Wait time
-disables the trigger for time seconds after triggering, this has no effect on
-one time triggers, all triggers are processed at 1 second intervals
+	Wait quantity
+disables the trigger for quantity of seconds after triggering, this has no effect on
+one-shot triggers, all triggers are processed at 1 second intervals
 
 -------------------------------
-All unknown trigger conditions and unknown actions will be ignored
+All unknown trigger conditions and unknown actions (command names) will be ignored,
+errors in parameters will cause LUA error spam in console
 
 ]]

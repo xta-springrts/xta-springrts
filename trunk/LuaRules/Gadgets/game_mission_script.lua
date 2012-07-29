@@ -25,6 +25,7 @@ local spGetUnitsInRectangle = Spring.GetUnitsInRectangle
 local spGetTeamUnitsByDefs = Spring.GetTeamUnitsByDefs
 local spEcho = Spring.Echo
 local spCreateFeature = Spring.CreateFeature
+local spGetGameSeconds = Spring.GetGameSeconds
 
 local modOptions = Spring.GetModOptions()
 local gaiaTeamID = Spring.GetGaiaTeamID()
@@ -37,6 +38,8 @@ for i=1, #teams do
 end
 
 local floor = math.floor
+local ceil = math.ceil
+local pairs = pairs
 
 local triggers, switches = {}, {}
 local killCounter, deathCounter = {}, {}
@@ -61,7 +64,7 @@ local function initTriggers()
 			for cond, text in pairs(val.conditions) do
 				triggers[teamID][no].conditions[cond] = {}
 				local idx = 1
-				for w in text:gmatch("[_%w]+") do
+				for w in text:gmatch("[%-_%w]+") do
 					triggers[teamID][no].conditions[cond][idx] = w
 					idx = idx + 1
 				end
@@ -70,7 +73,7 @@ local function initTriggers()
 			for actn, text in pairs(val.actions) do
 				triggers[teamID][no].actions[actn] = {}
 				local idx = 1
-				for w in text:gmatch("[_%w]+") do
+				for w in text:gmatch("[%-_%w]+") do
 					if w=="Echo" and idx==1 then 
 						triggers[teamID][no].actions[actn][1] = w
 						triggers[teamID][no].actions[actn][2] = text:sub(6,-1)
@@ -305,6 +308,13 @@ local function testCondition(cond, teamID)
 		else
 			return false
 		end
+		
+	elseif comm=="Time" then
+		if qty>= 0 then
+			return spGetGameSeconds >= qty
+		else
+			return spGetGameSeconds < qty
+		end	
 
 	--Unknown condition
 	else
@@ -360,7 +370,34 @@ local function DoActions(actions, teamID, trigNo)
 
 		-- Give quantity unitname index [teamID]
 		elseif actn[1]=="Give" then
-			-- TO DO
+			local loc = locations[tonumber(actn[4])]
+			local qty = tonumber(actn[2])
+			local team = tonumber(actn[5] or teamID)
+			local unitname = actn[3]
+			local x, z, xr, zr
+			if loc.shape == "C" then
+				x, z = loc.X, loc.Z
+			elseif loc.shape == "R" then
+				x, z = (loc.X1 + loc.X2)/2, (loc.Z1 + loc.Z2)/2
+			else
+				return
+			end
+			local xs, zs = UnitDefs[UnitDefNames[unitname].id].xsize*8, UnitDefs[UnitDefNames[unitname].id].zsize*8
+			xr = ceil(math.sqrt(qty))
+			zr = ceil(qty/xr)-1
+			local dz, dx = zr/2*zs, (xr-1)/2*xs
+			for zp=z-dz, z+dz-zs, zs do
+				for xp=x-dx, x+dx, xs do
+					local y = spGetGroundHeight(xp,zp)
+					spCreateUnit(unitname, xp, y, zp, 0,team)
+				end
+			end
+			local zp = z+dz
+			for i=0, qty-xr*zr-1 do
+				local xp = x-dx+i*xs
+				local y = spGetGroundHeight(xp, zp)
+				spCreateUnit(unitname, xp, y, zp, 0, team)
+			end
 
 		-- Kill (unitname|ANY) teamID [index]
 		elseif actn[1]=="Kill" then
