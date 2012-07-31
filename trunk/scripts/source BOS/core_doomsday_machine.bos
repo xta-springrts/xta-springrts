@@ -34,7 +34,8 @@ activatescr()
 	sleep 672;
 
 	move hatch to x-axis [12.800000] speed [12.800000];
-	move hatch to y-axis [-10.000000] speed [10.000000];
+	move hatch to y-axis [-14.000000] speed [14.000000];
+	turn hatch to z-axis <-47.000000> speed <15.000000>;
 	sleep 673;
 
 	move shell1a to z-axis [0.000000] speed [0.000000];
@@ -74,7 +75,7 @@ activatescr()
 	move hatchc to z-axis [-2.500000] speed [2.500000];
 	sleep 673;
 
-	move sleevec to z-axis [10.000000] speed [15.000000];
+	move sleevec to z-axis [15.000000] speed [20.000000];
 	move hatchb to x-axis [11.700000] speed [11.700000];
 	move hatchb to z-axis [-11.750000] speed [11.750000];
 	turn hatchb to y-axis <-45.000000> speed <45.000000>;
@@ -84,7 +85,7 @@ activatescr()
 	move barrelb to z-axis [10.000000] speed [12.500000];
 	move barrelc1 to z-axis [7.500000] speed [10.000000];
 	move barrelc2 to z-axis [7.500000] speed [10.000000];
-	move collarb to z-axis [7.500000] speed [10.000000];
+	move collarb to z-axis [10.500000] speed [14.000000];
 	sleep 683;
 
 	set ACTIVATION to 1;
@@ -99,10 +100,10 @@ deactivatescr()
 	move barrelb to z-axis [0.000000] speed [12.500000];
 	move barrelc1 to z-axis [0.000000] speed [10.000000];
 	move barrelc2 to z-axis [0.000000] speed [10.000000];
-	move collarb to z-axis [0.000000] speed [10.000000];
+	move collarb to z-axis [0.000000] speed [14.000000];
 	sleep 681;
 
-	move sleevec to z-axis [0.000000] speed [15.000000];
+	move sleevec to z-axis [0.000000] speed [20.000000];
 	move hatchb to x-axis [0.000000] speed [11.700000];
 	move hatchb to z-axis [0.000000] speed [11.750000];
 	turn hatchb to y-axis <0.000000> speed <45.000000>;
@@ -146,8 +147,8 @@ deactivatescr()
 	sleep 661;
 
 	move hatch to x-axis [0.000000] speed [12.800000];
-	move hatch to y-axis [0.000000] speed [10.000000];
-	turn hatch to z-axis <-32.000000> speed <27.000000>;
+	move hatch to y-axis [0.000000] speed [14.000000];
+	turn hatch to z-axis <-32.000000> speed <15.000000>;
 	sleep 659;
 
 	turn hatch to z-axis <0.000000> speed <48.000000>;
@@ -185,6 +186,7 @@ SmokeUnit(healthpercent, sleeptime, smoketype)
 
 RequestState(requestedstate, currentstate)
 {
+	set-signal-mask 0;
 	if( statechg_StateChanging )
 	{
 		statechg_DesiredState = requestedstate;
@@ -223,6 +225,7 @@ OpenClose(state)
 		else
 		{
 			if (bAiming) return;
+			while(statechg_StateChanging) sleep 250;
 			turn turreta to y-axis <0.000000> speed <100.000000>;
 			turn sleevea to x-axis <0.000000> speed <100.000000>;
 			turn turretb to y-axis <0.000000> speed <300.000000>;

@@ -199,6 +199,7 @@ SmokeUnit(healthpercent, sleeptime, smoketype)
 
 RequestState(requestedstate, currentstate)
 {
+	set-signal-mask 0;
 	if( statechg_StateChanging )
 	{
 		statechg_DesiredState = requestedstate;
@@ -237,6 +238,7 @@ OpenClose(state)
 		else
 		{
 			if (bAiming) return;
+			while(statechg_StateChanging) sleep 250;
 			turn turret to y-axis <0.000000> speed <50.000000>;
 			turn gun to x-axis <0.000000> speed <50.000000>;
 			wait-for-turn turret around y-axis;
