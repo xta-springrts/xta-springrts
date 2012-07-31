@@ -207,6 +207,30 @@ function widget:Initialize()
 		widgetHandler:RemoveWidget(self)
 		return
 	end
+	--Determine if certain units got disabled
+	local disableWind = Game.windMax < 9.1
+	if disableWind then
+		disablable["arm_wind_generator"] = true
+		disablable["core_wind_generator"] = true
+	end
+	if not modOptions.space_mode or (modOptions.space_mode and modOptions.space_mode=="0") then
+		local map = Game.mapHumanName:lower()
+		local disableAir = Game.windMin <= 1 and Game.windMax <= 4 or map:find("comet") or map:find("moon")
+		local disableHovers = disableAir
+		disableAir = disableAir or Game.windMin >= 30 or Game.windMax >= 35
+		if disableAir then
+			disablable["arm_aircraft_plant"] = true
+			disablable["arm_adv_aircraft_plant"] = true
+			disablable["arm_seaplane_platform"] = true
+			disablable["core_aircraft_plant"] = true
+			disablable["core_adv_aircraft_plant"] = true
+			disablable["core_seaplane_platform"] = true
+		end
+		if disableHovers then
+			disablable["arm_hovercraft_platform"] = true
+			disablable["core_hovercraft_platform"] = true
+		end
+	end
 	-- Get our starting unit
 	-- Sometimes the information is not available, so the widget will error and exit :)
 	local _, _, _, _, mySide = Spring.GetTeamInfo(myTeamID)
@@ -229,8 +253,28 @@ function InitializeFaction(sDefID)
 	-- Don't run if theres nothing to show
 	local sBuilds = sDef.buildOptions
 	if not sBuilds or (#sBuilds == 0) then
+		widgetHandler:RemoveWidget(self)
 		return
 	end
+	-- Retain the build list order, but move all sea units to the end
+	local waterBuilds = {}
+	local newBuilds = {}
+	for i = 1, #sBuilds do
+		local uDefID = sBuilds[i]
+		local uDef = UnitDefs[uDefID]
+		if not disablable[uDef.name] then
+			buildNameToID[uDef.name] = uDefID
+			if uDef.minWaterDepth <= 0 then
+				newBuilds[#newBuilds + 1] = uDefID
+			else
+				waterBuilds[#waterBuilds + 1] = uDefID
+			end
+		end
+	end
+	for i = 1, #waterBuilds do
+		newBuilds[#newBuilds + 1] = waterBuilds[i]
+	end
+	sBuilds = newBuilds
 
 
 	-- Set up cells
@@ -282,7 +326,7 @@ function InitializeFaction(sDefID)
 
 	for uDefID, uDef in pairs(UnitDefs) do
 
-		if uDef.isMetalExtractor then
+		if uDef.extractsMetal > 0 then
 			isMex[uDefID] = true
 		end
 

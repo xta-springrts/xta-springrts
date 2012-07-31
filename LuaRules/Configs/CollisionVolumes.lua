@@ -88,8 +88,8 @@ local dynamicPieceCollisionVolume = {}	--dynamic per piece collision volume defi
 		off={24,40,24,0,-5,0,0,1,0},
 	}
 	unitCollisionVolume["arm_ambusher"] = {
-		on={49,45,49,-0.5,-11,0,0,1,0},
-		off={49,26,49,-0.5,-11,0,0,1,0},
+		on={49,45,49,-0.5,-10,0,0,1,0,0,20,0},
+		off={49,26,49,-0.5,-10,0,0,1,0,0,11,0},
 	}
 	unitCollisionVolume["arm_annihilator"] = {
 		on={50,55,50,0,10,0,2,1,0},
@@ -148,8 +148,8 @@ local dynamicPieceCollisionVolume = {}	--dynamic per piece collision volume defi
 		off={38,20,38,0,0,0,1,1,1},
 	}
 	unitCollisionVolume["core_toaster"] = {
-		on={44,23,44,0,6,0,2,1,0},
-		off={44,8,44,0,-3,0,2,1,0},
+		on={44,23,44,0,3.5,0,2,1,0,0,21,0},
+		off={44,8,44,0,-4,0,2,1,0,0,7,0},
 	}
 	
 	pieceCollisionVolume["arm_big_bertha"] = {
@@ -177,7 +177,7 @@ local dynamicPieceCollisionVolume = {}	--dynamic per piece collision volume defi
 		on = {
 			["0"]={51,12,53,0,4,0,2,0},
 			["5"]={25,66,25,0,-14,0,1,1},
-			offsets={0,35,0}
+			offsets={0,40,0}
 		},
 		off = {
 			["0"]={51,12,53,0,4,0,2,0},
