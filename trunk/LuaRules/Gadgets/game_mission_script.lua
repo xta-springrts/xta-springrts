@@ -26,6 +26,7 @@ local spGetTeamUnitsByDefs = Spring.GetTeamUnitsByDefs
 local spEcho = Spring.Echo
 local spCreateFeature = Spring.CreateFeature
 local spGetGameSeconds = Spring.GetGameSeconds
+local spGetGameFrame = Spring.GetGameFrame
 
 local modOptions = Spring.GetModOptions()
 local gaiaTeamID = Spring.GetGaiaTeamID()
@@ -37,6 +38,7 @@ for i=1, #teams do
 	end
 end
 
+local abs = math.abs
 local floor = math.floor
 local ceil = math.ceil
 local pairs = pairs
@@ -273,10 +275,11 @@ local function testCondition(cond, teamID)
 			end
 		end
 
-	-- Res quantity (M|E|ME)
+	-- Res quantity (M|E|ME) [teamID]
 	elseif comm=="Res" then
-		local currentM = Spring.GetTeamResources(teamID, "metal")
-		local currentE = Spring.GetTeamResources(teamID, "energy")
+		local team = tonumber(cond[4] or teamID)
+		local currentM = Spring.GetTeamResources(team, "metal")
+		local currentE = Spring.GetTeamResources(team, "energy")
 		if type=="M" then
 			if qty>= 0 then
 				return currentM >= qty
@@ -404,30 +407,21 @@ local function DoActions(actions, teamID, trigNo)
 			local team = tonumber(actn[3])	
 			if actn[4] then
 				local loc = locations[tonumber(actn[4])]
+				local unitsInArea = {}
 				if loc.shape == "C" then
-					if actn[2]=="ANY" then
-						for _, unitID in pairs(spGetUnitsInCylinder(loc.X,loc.Z,loc.r,team)) do
-							spDestroyUnit(unitID, false, false, teamID)
-						end
-					else
-						local uDefID = UnitDefNames[actn[2]].id
-						for _, unitID in pairs(spGetUnitsInCylinder(loc.X,loc.Z,loc.r,team)) do
-							if spGetUnitDefID(unitID) == uDefID then
-								spDestroyUnit(unitID, false, false, teamID)
-							end
-						end
-					end
+					unitsInArea = spGetUnitsInCylinder(loc.X,loc.Z,loc.r,team)
 				elseif loc.shape == "R" then
-					if actn[2]=="ANY" then
-						for _, unitID in pairs(spGetUnitsInRectangle(loc.X1,loc.Z1,loc.X2,loc.Z2,team)) do
+					unitsInArea = spGetUnitsInRectangle(loc.X1,loc.Z1,loc.X2,loc.Z2,team)
+				end
+				if actn[2]=="ANY" then
+					for _, unitID in pairs(unitsInArea) do
+						spDestroyUnit(unitID, false, false, teamID)
+					end
+				else
+					local uDefID = UnitDefNames[actn[2]].id
+					for _, unitID in pairs(unitsInArea) do
+						if spGetUnitDefID(unitID) == uDefID then
 							spDestroyUnit(unitID, false, false, teamID)
-						end
-					else
-						local uDefID = UnitDefNames[actn[2]].id
-						for _, unitID in pairs(spGetUnitsInRectangle(loc.X1,loc.Z1,loc.X2,loc.Z2,team)) do
-							if spGetUnitDefID(unitID) == uDefID then
-								spDestroyUnit(unitID, false, false, teamID)
-							end
 						end
 					end
 				end
@@ -451,7 +445,59 @@ local function DoActions(actions, teamID, trigNo)
 
 		-- Move (unitname|ANY) src dest [teamID]
 		elseif actn[1]=="Move" then
-			-- TO DO
+			local src = locations[tonumber(actn[3])]
+			local dest = locations[tonumber(actn[4])]
+			local team = tonumber(actn[5] or teamID)
+			local allUnitsInArea = {}
+			local unitsInArea = {}
+			if src.shape == "C" then
+				allUnitsInArea = spGetUnitsInCylinder(src.X,src.Z,src.r,team)
+			elseif src.shape == "R" then
+				allUnitsInArea = spGetUnitsInRectangle(src.X1,src.Z1,src.X2,src.Z2,team)
+			end
+			if actn[2]=="ANY" then
+				unitsInArea = allUnitsInArea
+			else
+				local uDefID = UnitDefNames[actn[2]].id
+				local i = 1
+				for _, unitID in pairs(allUnitsInArea) do
+					if spGetUnitDefID(unitID) == uDefID then
+						unitsInArea[i] = unitID
+						i = i + 1
+					end
+				end
+			end
+			local xs, zs = 1, 1
+			for _, unitID in pairs(unitsInArea) do
+				local def = UnitDefs[spGetUnitDefID(unitID)]
+				if def.xsize > xs then xs = def.xsize end
+				if def.zsize > zs then zs = def.zsize end				
+			end
+			xs, zs = xs*8, zs*8
+			local x, z, xr, zr
+			if dest.shape == "C" then
+				x, z = dest.X, dest.Z
+			elseif dest.shape == "R" then
+				x, z = (dest.X1 + dest.X2)/2, (dest.Z1 + dest.Z2)/2
+			else
+				return
+			end
+			local qty, i = #unitsInArea, 1
+			xr = ceil(math.sqrt(qty))
+			zr = ceil(qty/xr)-1
+			local dz, dx = zr/2*zs, (xr-1)/2*xs
+			for zp=z-dz, z+dz-zs, zs do
+				for xp=x-dx, x+dx, xs do
+					spSetUnitPosition(unitsInArea[i], xp, zp)
+					i = i + 1
+				end
+			end
+			local zp = z+dz
+			for j=0, qty-xr*zr-1 do
+				local xp = x-dx+j*xs
+				spSetUnitPosition(unitsInArea[i], xp, zp)
+				i = i + 1
+			end
 
 		-- Switch number (true|false|flip)
 		elseif actn[1]=="Switch" then
@@ -530,6 +576,54 @@ function gadget:GameFrame(n)
 			end
 		else
 			table.remove(teams, n%30 + 1)	-- remove dead team from teams list
+		end
+	end
+end
+
+else	--UNSYNCED
+
+function gadget:Initialize()
+	if modOptions and modOptions.mission then
+		local mission = "Missions/" .. modOptions.mission ..".lua"
+		if VFS.FileExists(mission) then
+			gameData, _, _, locations = include(mission)
+			if gameData.game == Game.modShortName and gameData.minVersion <= Game.modVersion then
+				if gameData.map ~= Game.mapName then
+					gadgetHandler:RemoveGadget()
+				else
+					local i=1
+					while i <= #locations do	-- remove from location list all locations that aren't drawn on ground
+						if not locations[i].visible or locations[i].visible==false then
+							table.remove(locations, i)
+						else
+							i=i+1
+						end
+					end
+					if #locations == 0 then
+						gadgetHandler:RemoveGadget()	-- there are no locations that need drawing
+					end
+				end
+			else
+				gadgetHandler:RemoveGadget()
+			end
+		else
+			gadgetHandler:RemoveGadget()
+		end
+	else
+		gadgetHandler:RemoveGadget()
+	end
+end
+
+function gadget:DrawWorldPreUnit()
+	local alpha = abs(spGetGameFrame() % 60 - 30)/30
+	gl.LineWidth(10)
+	for i=1, #locations do
+		local loc = locations[i]
+		if loc.RGB then gl.Color(loc.RGB[1], loc.RGB[2], loc.RGB[3], alpha) else gl.Color(1.0, 1.0, 1.0, alpha) end
+		if loc.shape=="C" then
+			gl.DrawGroundCircle(loc.X, spGetGroundHeight(loc.X, loc.Z), loc.Z, loc.r-3, 24)
+		elseif loc.shape=="R" then
+			gl.DrawGroundQuad(loc.X1, loc.Z1, loc.X2, loc.Z2)
 		end
 	end
 end

@@ -1,5 +1,5 @@
 gameData = {
-	map = "Altair_Crossing_v3",			-- this mission is ment to be played on this map
+	map = "Altair_Crossing_v3",			-- this mission is meant to be played on this map
 	game = "XTA",						-- and with this game (short game name)
 	minVersion = "9 SVN",				-- and at least this version of game
 	nextMission = "XTA_tutorial_mission",	-- next mission after victory, optional
@@ -40,6 +40,14 @@ missionTriggers = {
 				"Give 14 arm_peewee 2",
 			},
 			once = true,
+		},
+		{
+			conditions = {
+				"Ctrl 1 ANY 3",
+			},
+			actions = {
+				"Move ANY 3 2",
+			},
 		},
 		{	
 			conditions = {
@@ -95,10 +103,11 @@ missionTriggers = {
 locations = {	-- use numerical indexes starting from 1
 	[1] = {				-- location index
 		shape = "C",	-- circle
-		X = 2048,		-- center
+		X = 2048,		-- center (yes, it's capital letters for coordinates)
 		Z = 2048,
 		r = 60,			-- radius
-		visible = true,	-- drawn on the ground or not (not currently implemented)
+		visible = true,	-- drawn on the ground or not, set to false or omit for invisible
+		RGB = {1.0, 0.0, 0.0},	-- draw the location with this colour, if omitted uses white
 	},
 	[2] = {
 		shape = "R",	-- rectangle
@@ -106,7 +115,16 @@ locations = {	-- use numerical indexes starting from 1
 		Z1 = 900,
 		X2 = 700,		--bottom right corner of rectangle
 		Z2 = 1000,
-		visible = false,
+		visible = true,
+		RGB = {0.0, 0.0, 0.8},
+	},
+	[3] = {
+		shape = "R",
+		X1 = 600,
+		Z1 = 200,
+		X2 = 700,
+		Z2 = 300,
+		visible = true,
 	},
 }
 
@@ -115,8 +133,8 @@ return gameData, spawnData, missionTriggers, locations
 --[[	Trigger documentation
 
 All triggers must have conditions and actions arrays, individual conditions and actions are strings
-Field once can be either set to true, for one-shot trigger, or ommited, for multi-shot triggers
-Only when all conditions of a trigger are true, it's actions will happen
+Field "once" can be either set to true, for one-shot trigger, or omitted, for multi-shot triggers
+Only when all conditions of a trigger are true, its actions will happen
 
 List of possible conditions:
 ------------------------------
@@ -136,14 +154,12 @@ the unitname or ANY type of unit
 triggers when the player kills quantity or more units of unitname or ANY type, limited or not
 by owner (Gaia team excluded) of the killed units
 
-	Res quantity (M|E|ME)
-triggers if player has quantity of resource[s] or more in pool
+	Res quantity (M|E|ME) [teamID]
+triggers if the specified team or trigger owner have quantity of resource[s] or more in pool
 
 	Switch number (true|false)
 triggers if the switch of number is set to true or false state, by default switches 1..32
-are set to false, if you use more, define them before using "flip" action on a switch,
-use "Always" condition and as many "Switch n (true|false)" actions as needed, make the
-trigger one-shot
+are set to false, if you use more, define them before using "flip" action on a switch
 
 	Time quantity
 triggers if the game lasts for quantity or longer of seconds 
@@ -175,7 +191,7 @@ either for player or specified team
 kills all units of unitname or ANY type for teamID, either on entire map or at location
 specified in locations list at index, units killed this way are counted as killed by trigger owner
 
-	Move (unitname|ANY) src dest [teamID]		-- not currently implemented
+	Move (unitname|ANY) src dest [teamID]
 move all units of unitname or ANY type from location specified in locations list at src to
 location dest filtered by either teamID or for all units at location index
 
