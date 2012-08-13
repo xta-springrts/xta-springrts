@@ -226,7 +226,7 @@ function widget:RecvLuaMsg(msg, playerID)
 		local state = tonumber(string.sub(sms,1,1))
 		local player = tonumber(string.sub(sms,2))
 		
-		--Spring.Echo("Got a msg:", player,": ",state, msg)
+		Spring.Echo("Got a msg:", player,": ",state, msg)
 		--display the message in the UI
 		if player then
 			if state == 0 then
