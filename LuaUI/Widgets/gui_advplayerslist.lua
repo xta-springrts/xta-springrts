@@ -1434,7 +1434,7 @@ end
 function SetNewSides()
 	teamList = Spring_GetTeamList()
 	for _, team in ipairs(teamList) do
-		newSide[team] = 0
+		if not newSide[team] then newSide[team] = 0 end
 	end
 end
 
