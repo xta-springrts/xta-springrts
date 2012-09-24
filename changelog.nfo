@@ -23,12 +23,16 @@
 
 ------------------- Change Log of XTA v9.726 beta (89.0 and next version) ------------------ by Deadnight Warrior
 * Fixed "Team death on zero commanders"
-* Updated missions gadget with new trigger conditions and actions, impleneted all missing features, some performance optimizations
+* Updated missions gadget with new trigger conditions and actions, implemented all missing features, some performance optimizations
 * Modified some gadgets and widgets for better interaction with mission scripting gadget
 * Updated Dynamic Collision Volume gadget to support radius and height scaling of buildings and aim point adjustment of popup style units
+* Fixed offset defense tower collision volumes caused by engine change (removal of modelCenterOffset tag), fixed failed aiming against pop-up cannons
+* Fixed freezing of pop-up defenses when pressing Open/Close button while changing state
+* Added Particle Light widget for faked light effects on cannon shells and laser cannons
+* Some small unit script fixes and optimizations
 
 	
-------------------- Change Log of XTA v9.725 (89.0 and next version) ------------------ by Deadnight Warrior and Jools
+------------------- Change Log of XTA v9.725 (89.0 and next version) ------------------ by Deadnight Warrior, Jools and Kloot
 * Added support for changing Commanders in-game. New modoption: let users choose in game. Renamed Commander options to Automatic and Manual Commanders.
 * Rewrote commander selection widget from scratch. Now it interacts with initial queue and advanced playerslist, and also has some more functionality than the normal interface during pre-game phase (such as a gong-gong sound when game starts). Commanders are set to hold position on startup rather than maneuver.
 * Added "Team death on zero commanders", game mode that got removed with Spring 84 engine change
@@ -36,14 +40,15 @@
 * Updated several gadgets and widgets to newer versions
 * Fixed the following widgets to work with current version of spring (version 85 and above): dontshoot (puts commander on hold fire during cloak), forcecloak(gives a wait order to the commander if user wants to cloak while the commander is in the process of building something)
 * Added following widgets: Red_resourcebars and red_tooltip (they need red_ui_framework and red_ui_drawing to work), gui_point_tracker (displays labels added by other players on minimap), Ghosted Buildings and Ghosted radar
-* Improved Default XTA GUI Layout widget with the ability to select different icon grid sizes
+* Improved Default XTA GUI Layout widget with the ability to select different icon grid sizes: 3x8, 4x9 and 5x11 icons in Ctrl+F11 mode
 * Added an explosion effect to all gunships (they currently lacked one). Added a splash effect to explosions on water.
 * Fixed "King of The Hill" mode, no cloaked or stunned units, or units not on ground can maintain control. Added reminder and countdown sound when 30 secs left in KoTH mode.
 * Fixed many unwanted reverts that happened when releasing 9.71 (Raven, and Hammer/Thud are affected mostly)
 * Added RadarEmitHeight and LOSEmitHeight values to all towers, commanders and big ships, makes them see better on bumpy terrain or when climbing hills
 * Added option to adjust custom gravity of cannon weapons (effectivly it changes their projectile speed, smaller number -> slower cannon, default 0.5)
 * Added Plain Commander, without any upgrades
-* Added option do enable or disable aircraft vs aircraft collision, default no collision
+* Added mod option do enable or disable aircraft vs aircraft collision, default no collision
+* All defense towers' aimspot now back in center, Spring 89.0 no longer supports modelCenterOffset tag, and it's an annoyance to adjust those via LUA, result, towers are less protected by dragon teeth walls
 * Expanded unit description for rocket toggle units so players can see which units can toggle rockets (and what type of rockets) before building them
 * Togglable rocket units now show attack range properly
 * Radar jammers, mine layers and mobile anti-nukes set to hold position by default
@@ -51,12 +56,12 @@
 * Fixed CORE Construction sub description having excess delimiters
 * Fixed Auto-upg. commanders wandering off into battle when set on maneuver, and always having max velocity regardless of XP (requires Spring 89)
 * Fixed starting resources always set to 1000/1000
-* Added dynamic lighting gadget, used for some explosions
+* Added dynamic lighting gadget, used for some (mostly large) explosions
 * Some updates in LUPS modules
 * Fixed lag when Flebowl boss is killed (not that it matters as the fleabowl gadget is still broken)
 * Added gadget for QTPFS units-stuck-in-factory bug workaround
 * Several gadgets updated for better MT compatibility
-* Default XTA UI grid layout can be selected from among: 3x8, 4x9 and 5x11 icons in Ctrl+F11 mode
+* Combined Passive Builders and Build Speed gadgets into one, now uses just one command button instead of two
 
 * Added a rudimentary mission scripting gadget and 2 demo missions, look for details in XTA.sd7/Missions/Readme.txt
 
@@ -70,7 +75,7 @@
 
 ------------------- Change Log of XTA v9.71 (85.0 and next version) ------------------ by Deadnight Warrior
 * When cleaning the game archive from useless files some unit build icons got cleaned in the process, now back
-* Hammers can now shoot while moving
+* Hammers can now shoot while moving, bug in previous release
 * Brawler spray angle reduced from 5° to 3°
 * Given custom collision volumes to 13 wrecks that had interfered with proper aiming
 * Slightly lowered the collision volumes (vertical offset -1) of Dragon Teeth

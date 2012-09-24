@@ -115,7 +115,7 @@
 }
 [CLASS11]
 {
-	Name=TANKHOVER2;
+	Name=HOVER2;
 	FootprintX=2;
 	FootprintZ=2;
 	MaxSlope=21; //v9 peet was15//
@@ -127,7 +127,7 @@
 }
 [CLASS12]
 {
-	Name=TANKHOVER3;
+	Name=HOVER3;
 	FootprintX=3;
 	FootprintZ=3;
 	MaxSlope=21; //v9 peet was15//
@@ -139,7 +139,7 @@
 }
 [CLASS13]
 {
-	Name=TANKHOVER4;
+	Name=HOVER4;
 	FootprintX=4;
 	FootprintZ=4;
 	MaxSlope=21; //v9 peet was15//
@@ -227,7 +227,7 @@
 
 [CLASS21]
 {
-	Name=TANKHOVER9;
+	Name=HOVER9;
 	FootprintX=1;
 	FootprintZ=1;
 	MaxWaterDepth=255;
@@ -239,7 +239,7 @@
 
 [CLASS22]
 {
-	Name=TANKHOVER10;
+	Name=HOVER10;
 	FootprintX=3;
 	FootprintZ=3;
 	MaxWaterDepth=255;

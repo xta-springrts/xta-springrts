@@ -27,6 +27,7 @@ activatescr()
 	turn door2 to z-axis <89.313187> speed <302.769231>;
 	sleep 295;
 
+	set ARMORED to 0;
 	move pillartops to y-axis [0.000000] speed [43.159607];
 	move door1 to y-axis [-19.249985] speed [31.351761];
 	move door2 to y-axis [-19.249985] speed [31.351791];
@@ -36,10 +37,13 @@ activatescr()
 	move turretback to z-axis [0.000000] speed [10.284790];
 	move barrel1 to z-axis [0.000000] speed [99.287979];
 	sleep 316;
+
+	Static_Var_1 = 1;
 }
 
 deactivatescr()
 {
+	Static_Var_1 = 0;
 	move barrel2 to z-axis [0.000000] now;
 	move barrel2 to z-axis [-6.125000] speed [22.032364];
 	move turretback to z-axis [0.000000] now;
@@ -57,6 +61,7 @@ deactivatescr()
 	move door2 to y-axis [0.000000] speed [33.653839];
 	sleep 572;
 
+	set ARMORED to 1;
 	move door2 to y-axis [0.000000] speed [0.000015];
 	turn door1 to z-axis <0.000000> speed <236.934066>;
 	turn door2 to z-axis <0.000000> speed <238.813187>;
@@ -91,25 +96,9 @@ SmokeUnit(healthpercent, sleeptime, smoketype)
 	}
 }
 
-Go()
-{
-	if( !Static_Var_1 )
-	{
-		call-script activatescr();
-	}
-	Static_Var_1 = 1;
-	set ARMORED to 0;
-}
-
-Stop()
-{
-	set ARMORED to 1;
-	Static_Var_1 = 0;
-	call-script deactivatescr();
-}
-
 RequestState(requestedstate, currentstate)
 {
+	set-signal-mask 0;
 	if( statechg_StateChanging )
 	{
 		statechg_DesiredState = requestedstate;
@@ -122,12 +111,12 @@ RequestState(requestedstate, currentstate)
 	{
 		if( statechg_DesiredState )
 		{
-			call-script Stop();
+			call-script deactivatescr();
 			currentstate = 1;
 		}
 		else
 		{
-			call-script Go();
+			call-script activatescr();
 			currentstate = 0;
 		}
 	}
@@ -145,7 +134,6 @@ RestoreAfterDelay()
 		wait-for-turn pillartops around y-axis;
 		wait-for-turn turret around x-axis;
 		if (openState) return;
-		set-signal-mask 0;
 		start-script RequestState(1);
 	}
 }
@@ -182,7 +170,7 @@ Create()
 	statechg_DesiredState = TRUE;
 	statechg_StateChanging = FALSE;
 	start-script SmokeUnit();
-	call-script Stop();
+	call-script deactivatescr();
 	set ARMORED to 0;
 }
 
@@ -211,7 +199,7 @@ AimPrimary(heading, pitch)
 
 FirePrimary()
 {
-	emit-sfx 1024 + 0 from flare;
+	emit-sfx UNIT_SFX1 from flare;
 	move barrel3 to z-axis [-12.500000] speed [1250.000000];
 	sleep 250;
 	move barrel3 to z-axis [0.000000] speed [7.500000];

@@ -16,7 +16,7 @@
 	SoundCategory=CORE_HOVER_BIG;
 	TEDClass=TANK;
 	BrakeRate=0.075;
-	MovementClass=TANKHOVER3;
+	MovementClass=HOVER3;
 	Acceleration=0.072;
 	CanMove=1;
 	MaxVelocity=1.48;
