@@ -52,7 +52,7 @@
 	EnergyMake=0.4;
 	DefaultMissionType=Standby;
 	maneuverleashlength=640;
-	MovementClass=TANKHOVER9;
+	MovementClass=HOVER9;
 	canhover=1;
 	Upright=1;
 	downloadable=1;
