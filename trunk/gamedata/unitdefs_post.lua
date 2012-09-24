@@ -20,6 +20,8 @@ local function tobool(val)
   return false
 end
 
+local tabremove = table.remove
+
 --------------------------------------------------------------------------------
 -- General postprocessing
 local lowcpu = modOptions.lowcpu and tobool(modOptions.lowcpu)
@@ -34,8 +36,8 @@ for name, ud in pairs(UnitDefs) do
 			ud.turninplacespeedlimit = ud.maxvelocity * 0.75
 		end
 	end
-	-- Do aircraft collide with each other or they don't?
-	if ud.canfly and tonumber(ud.canfly) == 1 then
+	-- Do aircraft collide with each other or they don't?  (Default, no collision)
+	if ud.canfly and tobool(ud.canfly) then
 		if modOptions and modOptions.airnocollide and not tobool(modOptions.airnocollide) then
 			ud.collide = 1
 		else
@@ -55,7 +57,7 @@ for name, ud in pairs(UnitDefs) do
 			ud.sfxtypes["pieceExplosionGenerators"][n] = ud.piecetrailcegtag .. (n - 1)
 		end
 	end
-	ud.collisionvolumetest = 1
+	ud.collisionvolumetest = 1  --Prevent projectiles from flying through units
 end 
 
 -------------------------------------------------------------------------------
@@ -65,7 +67,7 @@ end
 local disableWind = Game.windMax < 9.1
 local disableAir, disableHovers
 if not modOptions.space_mode or (modOptions.space_mode and modOptions.space_mode=="0") then
-local map = Game.mapHumanName:lower()
+	local map = Game.mapHumanName:lower()
 	if Game.windMin <= 1 and Game.windMax <= 4 then
 		disableAir = true
 		disableHovers = true
@@ -78,65 +80,59 @@ local map = Game.mapHumanName:lower()
 	end
 end
 if (disableWind) then
-	UnitDefs[UnitDefNames["arm_wind_generator"].id].unitRestricted = 0
-	UnitDefs[UnitDefNames["core_wind_generator"].id].unitRestricted = 0
+	UnitDefs["arm_wind_generator"].unitRestricted = 0
+	UnitDefs["core_wind_generator"].unitRestricted = 0
 end
 if (disableHovers) then
-	UnitDefs[UnitDefNames["arm_hovercraft_platform"].id].unitRestricted = 0
-	UnitDefs[UnitDefNames["core_hovercraft_platform"].id].unitRestricted = 0
+	UnitDefs["arm_hovercraft_platform"].unitRestricted = 0
+	UnitDefs["core_hovercraft_platform"].unitRestricted = 0
 end
 if (disableAir) then
-	UnitDefs[UnitDefNames["arm_aircraft_plant"].id].unitRestricted = 0
-	UnitDefs[UnitDefNames["arm_adv_aircraft_plant"].id].unitRestricted = 0
-	UnitDefs[UnitDefNames["arm_seaplane_platform"].id].unitRestricted = 0
-	UnitDefs[UnitDefNames["core_aircraft_plant"].id].unitRestricted = 0
-	UnitDefs[UnitDefNames["core_adv_aircraft_plant"].id].unitRestricted = 0
-	UnitDefs[UnitDefNames["core_seaplane_platform"].id].unitRestricted = 0
+	UnitDefs["arm_aircraft_plant"].unitRestricted = 0
+	UnitDefs["arm_adv_aircraft_plant"].unitRestricted = 0
+	UnitDefs["arm_seaplane_platform"].unitRestricted = 0
+	UnitDefs["core_aircraft_plant"].unitRestricted = 0
+	UnitDefs["core_adv_aircraft_plant"].unitRestricted = 0
+	UnitDefs["core_seaplane_platform"].unitRestricted = 0
 end
 --]]
 
+local commanderList = {
+	arm_commander = 50,
+	arm_decoy_commander = 0,
+	arm_u0commander = 50,
+	arm_ucommander = 1000,
+	arm_u2commander = 1500,
+	arm_u3commander = 4000,
+	arm_u4commander = 9000,
+	arm_scommander = 50,
+	armcom = 200,
+	arm_base = 0,
+	arm_nincommander = 50,
+	core_commander = 50,
+	core_decoy_commander = 0,
+	core_u0commander = 50,
+	core_ucommander = 1000,
+	core_u2commander = 1500,
+	core_u3commander = 4000,
+	core_u4commander = 9000,
+	core_scommander = 50,
+	corcom = 200,
+	core_base = 0,
+	core_nincommander = 50,
+}
 -------------------------------------------------------------------------------
 -- Starting resource storage adjustment
 
 if (modOptions) then
-   local stEn = modOptions.startenergy or 1000
-   local stMe = modOptions.startmetal or 1000
-   for name, ud in pairs(UnitDefs) do  
-	if (ud.unitname == "arm_commander" or ud.unitname == "core_commander") then
-		ud.energystorage = stEn + 50
-		ud.metalstorage = stMe + 50
-	elseif (ud.unitname == "arm_u0commander" or ud.unitname == "core_u0commander") then
-		ud.energystorage = stEn + 50
-		ud.metalstorage = stMe + 50
-	elseif (ud.unitname == "arm_scommander" or ud.unitname == "core_scommander") then
-		ud.energystorage = stEn + 50
-		ud.metalstorage = stMe + 50
-	elseif (ud.unitname == "arm_ucommander" or ud.unitname == "core_ucommander") then
-		ud.energystorage = stEn + 1000
-		ud.metalstorage = stMe + 1000
-	elseif (ud.unitname == "arm_u2commander" or ud.unitname == "core_u2commander") then
-		ud.energystorage = stEn + 1500
-		ud.metalstorage = stMe + 1500
-	elseif (ud.unitname == "arm_u3commander" or ud.unitname == "core_u3commander") then
-		ud.energystorage = stEn + 4000
-		ud.metalstorage = stMe + 4000
-	elseif (ud.unitname == "arm_u4commander" or ud.unitname == "core_u4commander") then
-		ud.energystorage = stEn + 9000
-		ud.metalstorage = stMe + 9000
-	elseif (ud.unitname == "armcom" or ud.unitname == "corcom") then
-		ud.energystorage = stEn + 200
-		ud.metalstorage = stMe
-	elseif (ud.unitname == "arm_decoy_commander" or ud.unitname == "core_decoy_commander") then
-		ud.energystorage = stEn
-		ud.metalstorage = stMe
-	elseif (ud.unitname == "arm_base" or ud.unitname == "core_base") then
-		ud.energystorage = stEn
-		ud.metalstorage = stMe
-	elseif (ud.unitname == "arm_nincommander" or ud.unitname == "core_nincommander") then
-		ud.energystorage = stEn + 50
-		ud.metalstorage = stMe + 9000
+	local stEn = modOptions.startenergy or 1000
+	local stMe = modOptions.startmetal or 1000
+	for name, store in pairs(commanderList) do  
+		UnitDefs[name].energystorage = stEn + store
+		UnitDefs[name].metalstorage = stMe + store
 	end
-   end
+	UnitDefs["arm_nincommander"].metalstorage = stMe + 9000
+	UnitDefs["core_nincommander"].metalstorage = stMe + 9000
 end
 
 --------------------------------------------------------------------------------
@@ -168,49 +164,16 @@ if (modOptions and modOptions.comm) then
 		capturethebase = "core_base",
 		nincom = "core_nincommander",
 	}
-	for name, ud in pairs(UnitDefs) do  
-		if (ud.unitname == "arm_decoy_commander") then
-			ud.decoyfor = arm_start_unit[modOptions.comm]
-		elseif (ud.unitname == "core_decoy_commander") then
-			ud.decoyfor = core_start_unit[modOptions.comm]		
-		end
-	end
+	UnitDefs["arm_decoy_commander"].decoyfor = arm_start_unit[modOptions.comm]
+	UnitDefs["core_decoy_commander"].decoyfor = core_start_unit[modOptions.comm]
 end
 
 --------------------------------------------------------------------------------
 -- Unit napping settings
 if (modOptions and modOptions.mo_transportenemy) then
-
-local commanderList = {
-	arm_commander = true,
-	arm_decoy_commander = true,
-	arm_u0commander = true,
-	arm_ucommander = true,
-	arm_u2commander = true,
-	arm_u3commander = true,
-	arm_u4commander = true,
-	arm_scommander = true,
-	armcom = true,
-	arm_base = true,
-	arm_nincommander = true,
-	core_commander = true,
-	core_decoy_commander = true,
-	core_u0commander = true,
-	core_ucommander = true,
-	core_u2commander = true,
-	core_u3commander = true,
-	core_u4commander = true,
-	core_scommander = true,
-	corcom = true,
-	core_base = true,
-	core_nincommander = true,
-}
-
   if (modOptions.mo_transportenemy == "com") then
-    for name,ud in pairs(UnitDefs) do  
-      if (commanderList[name]) then
-        ud.transportbyenemy = false
-      end
+    for name,ud in pairs(commanderList) do  
+      UnitDefs[name].transportbyenemy = false
     end
   elseif (modOptions.mo_transportenemy == "all") then
     for name, ud in pairs(UnitDefs) do  
@@ -222,7 +185,7 @@ end
 --------------------------------------------------------------------------------
 -- Metal Extraction Bonus
 
-if (modOptions and modOptions.metalmult) then
+if (modOptions and modOptions.metalmult and tonumber(modOptions.metalmult) ~= 1.0) then
   for name in pairs(UnitDefs) do
     local em = UnitDefs[name].extractsmetal
     if (em) then
@@ -233,7 +196,7 @@ end
 --------------------------------------------------------------------------------
 -- Hitpoint Bonus
 
-if (modOptions and modOptions.hitmult) then
+if (modOptions and modOptions.hitmult and tonumber(modOptions.hitmult) ~= 1.0) then
   for name in pairs(UnitDefs) do
     local em = UnitDefs[name].maxdamage
     if (em) then
@@ -244,7 +207,7 @@ end
 --------------------------------------------------------------------------------
 -- Velocity Bonus
 
-if (modOptions and modOptions.velocitymult) then
+if (modOptions and modOptions.velocitymult and tonumber(modOptions.velocitymult) ~= 1.0) then
   for name in pairs(UnitDefs) do
     local em = UnitDefs[name].maxvelocity
     if (em) then
@@ -255,7 +218,7 @@ end
 --------------------------------------------------------------------------------
 -- Build Bonus
 
-if (modOptions and modOptions.workermult) then
+if (modOptions and modOptions.workermult and tonumber(modOptions.workermult) ~= 1.0) then
   for name in pairs(UnitDefs) do
     local em = UnitDefs[name].workertime
     if (em) then
@@ -266,7 +229,7 @@ end
 --------------------------------------------------------------------------------
 -- Energy Production Bonus
 
-if (modOptions and modOptions.energymult) then
+if (modOptions and modOptions.energymult and tonumber(modOptions.energymult) ~= 1.0) then
   for name in pairs(UnitDefs) do
     local em = UnitDefs[name].energymake
     if (em) then
@@ -280,17 +243,13 @@ if (modOptions and modOptions.energymult) then
     if (em and (em+0)<0) then
       UnitDefs[name].energyuse = em * modOptions.energymult
     end
+	em = UnitDefs[name].totalEnergyOut
+    if (em) then
+      UnitDefs[name].totalEnergyOut = em * modOptions.energymult
+    end	
   end
 end
 
-if (modOptions and modOptions.energymult) then
-  for name in pairs(UnitDefs) do
-    local em = UnitDefs[name].totalEnergyOut
-    if (em) then
-      UnitDefs[name].totalEnergyOut = em * modOptions.energymult
-    end
-  end
-end
 --------------------------------------------------------------------------------
 -- Realistical scaling
 
@@ -319,14 +278,14 @@ if (modOptions and modOptions.realscale and tobool(modOptions.realscale)) then
 		elseif (UnitDefs[name].canfly and UnitDefs[name].canmove) then
 			if (UnitDefs[name].hoverattack or UnitDefs[name].canbuild or UnitDefs[name].transportsize) then
 				UnitDefs[name].maxvelocity = 4 * UnitDefs[name].maxvelocity
-				UnitDefs[name].cruisealt = 1.5 *UnitDefs[name].cruisealt
-				UnitDefs[name].acceleration = 2 *UnitDefs[name].acceleration
-				UnitDefs[name].brakerate = 3 *UnitDefs[name].brakerate
+				UnitDefs[name].cruisealt = 1.5 * UnitDefs[name].cruisealt
+				UnitDefs[name].acceleration = 2 * UnitDefs[name].acceleration
+				UnitDefs[name].brakerate = 3 * UnitDefs[name].brakerate
 			else
 				UnitDefs[name].maxvelocity = 9 * UnitDefs[name].maxvelocity
-				UnitDefs[name].cruisealt = 3 *UnitDefs[name].cruisealt
-				UnitDefs[name].acceleration = 3 *UnitDefs[name].acceleration
-				UnitDefs[name].brakerate = 2 *UnitDefs[name].brakerate
+				UnitDefs[name].cruisealt = 3 * UnitDefs[name].cruisealt
+				UnitDefs[name].acceleration = 3 * UnitDefs[name].acceleration
+				UnitDefs[name].brakerate = 2 * UnitDefs[name].brakerate
 			end
 		elseif (UnitDefs[name].canmove and UnitDefs[name].movementclass) then
 			UnitDefs[name].maxvelocity = 1.75 * UnitDefs[name].maxvelocity
@@ -342,7 +301,7 @@ local function disableunits(unitlist)
       for _, toremovename in ipairs(unitlist) do
         for index, unitname in pairs(ud.buildoptions) do
           if (unitname == toremovename) then
-            table.remove(ud.buildoptions, index)
+            tabremove(ud.buildoptions, index)
           end
         end
       end
@@ -376,7 +335,7 @@ if (modOptions and not tobool(modOptions.xtaidunits)) then
 	"yeomen", "armona", "arm_evaperator", "paci", "armsparkle", "armjanus",
 	"walker", "neutral_eyes", "armpur", "armbfortew", "armarch", "armbugger",
 	"boa", "armfff", "mercury", "tadg07", "armraz", "armhyren", "demolish",
-	"armrebel", "arm_tor","tadg05", "arm_infinite", "arm_mech_lab",
+	"armrebel", "arm_tor", "tadg05", "arm_infinite", "arm_mech_lab",
 
 	"corbyp", "justice", "corpur", "astank", "corjar", "core_egg_shell",
 	"corscrew", "corcrw", "corfff", "screamer", "corebfortns", "corhback",

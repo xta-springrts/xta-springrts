@@ -52,7 +52,7 @@
 	MetalMake=0;
 	DefaultMissionType=Standby;
 	maneuverleashlength=640;
-	MovementClass=TANKHOVER3;
+	MovementClass=HOVER3;
 	Overadjust=1;
 	canhover=1;
 	}

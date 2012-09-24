@@ -628,7 +628,7 @@ StartBuilding(heading, pitch)
 	wait-for-turn luparm around x-axis;
 	wait-for-turn nanolath around x-axis;
 	set INBUILDSTANCE to 1;
-	emit-sfx 1024 + 1 from nanospray;
+	emit-sfx UNIT_SFX2 from nanospray;
 	Static_Var_5 = 1;
 	start-script Build();
 }

@@ -51,7 +51,7 @@
 	EnergyMake=2.0;
 	DefaultMissionType=Standby;
 	maneuverleashlength=640;
-	MovementClass=TANKHOVER3;
+	MovementClass=HOVER3;
 	canattack=1;
 	Weapon1=armlatnk_weapon;
 	weapon2=ARMKBOT_MISSILE;

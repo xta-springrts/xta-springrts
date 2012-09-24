@@ -67,7 +67,7 @@
 	//************************************************************
 	//  Movement
 	//************
-	movementclass=TANKHOVER2;
+	movementclass=HOVER2;
 	turnrate=600;
 	acceleration=1.0;
 	brakerate=1.5;

@@ -46,6 +46,7 @@ activatescr()
 	turn stand to y-axis <-180.280220> speed <333.582418>;
 	sleep 539;
 
+	set ARMORED to 0;
 	move door1 to y-axis [-8.499985] speed [0.000000];
 	move door2 to y-axis [-8.500000] speed [0.000000];
 	move door3 to y-axis [-8.500000] speed [0.000000];
@@ -74,10 +75,13 @@ activatescr()
 	move door4 to y-axis [-8.500000] speed [0.000000];
 	move barrel to z-axis [0.000000] speed [56.107941];
 	sleep 352;
+	
+	Static_Var_1 = 1;
 }
 
 deactivatescr()
 {
+	Static_Var_1 = 0;
 	move door1 to y-axis [-8.500000] now;
 	move door1 to y-axis [-8.500000] speed [0.000000];
 	move door2 to y-axis [-8.500000] now;
@@ -120,6 +124,7 @@ deactivatescr()
 	turn stand to y-axis <-360.082418> speed <353.236264>;
 	sleep 509;
 
+	set ARMORED to 1;
 	turn door1 to x-axis <90.379121> speed <225.956044>;
 	turn door2 to z-axis <-90.379121> speed <225.956044>;
 	turn door3 to x-axis <-90.379121> speed <225.956044>;
@@ -155,26 +160,9 @@ SmokeUnit(healthpercent, sleeptime, smoketype)
 	}
 }
 
-Go()
-{
-
-	if( !Static_Var_1 )
-	{
-		call-script activatescr();
-	}
-	Static_Var_1 = 1;
-	set ARMORED to 0;
-}
-
-Stop()
-{
-	set ARMORED to 1;
-	Static_Var_1 = 0;
-	call-script deactivatescr();
-}
-
 RequestState(requestedstate, currentstate)
 {
+	set-signal-mask 0;
 	if( statechg_StateChanging )
 	{
 		statechg_DesiredState = requestedstate;
@@ -187,12 +175,12 @@ RequestState(requestedstate, currentstate)
 	{
 		if( statechg_DesiredState )
 		{
-			call-script Stop();
+			call-script deactivatescr();
 			currentstate = 1;
 		}
 		else
 		{
-			call-script Go();
+			call-script activatescr();
 			currentstate = 0;
 		}
 	}
@@ -205,7 +193,6 @@ RestoreAfterDelay()
 	bAiming = 0;
 	if (!openState)
 	{
-		set-signal-mask 0;
 		start-script RequestState(1);
 	}
 }
@@ -223,8 +210,7 @@ OpenClose(state)
 		}
 		else
 		{
-			if (bAiming) return;
-			start-script RequestState(1);
+			if (!bAiming) start-script RequestState(1);
 		}
 	}
 }
@@ -238,7 +224,7 @@ Create()
 	start-script SmokeUnit();
 	statechg_DesiredState = TRUE;
 	statechg_StateChanging = FALSE;
-	call-script Stop();
+	call-script deactivatescr();
 	set ARMORED to 0;
 }
 
