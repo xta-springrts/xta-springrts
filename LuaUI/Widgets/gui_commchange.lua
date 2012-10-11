@@ -3,14 +3,19 @@ function widget:GetInfo()
 	return {
 		name      = 'Commander Change',
 		desc      = 'Adds buttons to choose commander',
+		version   = "1.1",
 		author    = 'Niobium, Jools',
-		date      = 'March 2012',
+		date      = 'October, 2012',
 		license   = 'GNU GPL v2',
-		layer     = -100,
+		layer     = -9,
 		enabled   = true,
 	}
 end
-
+-- Bugfixes:
+--
+-- * Fixed a bug caused by change in ready state message by spring: it updated from "missing" to "notready" and that's why widget would never catch 
+-- correct state when user has marked but not readied up. Now colour code is grey and not red when correct state is not recognised.
+--
 --------------------------------------------------------------------------------
 -- Var
 --------------------------------------------------------------------------------
@@ -221,12 +226,13 @@ end
 
 function widget:RecvLuaMsg(msg, playerID)
 	local positionRegex = "181072"
-	if msg and string.len(msg)>8 then	
+	--Spring.Echo("Got a message...",msg, playerID,string.len(msg))
+	if msg and string.len(msg) >= 8 then	
 		local sms = string.sub(msg, string.len(positionRegex)+1) 
 		local state = tonumber(string.sub(sms,1,1))
 		local player = tonumber(string.sub(sms,2))
 		
-		Spring.Echo("Got a msg:", player,": ",state, msg)
+		--Spring.Echo("Got a msg:", player,": ",state, msg)
 		--display the message in the UI
 		if player then
 			if state == 0 then
@@ -235,6 +241,11 @@ function widget:RecvLuaMsg(msg, playerID)
 				markedStates[player+1] = true
 			end
 		end
+		
+		--for i,st in pairs(markedStates) do
+			--Spring.Echo("Markedstates for player " .. i-1 .. ":" ,st)
+		--end
+		
 	end
 end
 
@@ -389,26 +400,30 @@ function widget:DrawScreen()
 	local startID = spGetTeamRulesParam(myTeamID, 'startUnit')
 	-- Player states
 	if pStates then
-	
 		local n = 0
-		for i,_ in pairs(pStates) do
+		for i,ps in pairs(pStates) do
 			n = n +1
+			--Spring.Echo(i, "N = " .. n, ps)
 		end
-		
+		--Spring.Echo("N = " .. n)
 		local y0 = 40 + vsy/2 + 0.5*n*th3
 	
 		glText("Players:", 10, y0 + th3+2, th3, 'xno')
+		
 		for i,ps in pairs(pStates) do
 			local leaderName,active,spectator,team,_,_,_,country,rank	= Spring.GetPlayerInfo(i)
-			--Spring.Echo("State",i,team,active)
+			local mked = markedStates[i+1]
+			--Spring.Echo("State for player: ",i,team,active, mked,ps)
 			if not spectator then
 				if not active then
 					glColor(0.6, 0.2, 0.2, 0.8) -- red
 				else
 					if ps == "missing" then
+						glColor(0.6, 0.2, 0.2, 0.8) -- red
+					elseif ps == "notready" then
 						local posx = spGetTeamStartPosition(team)
 						if not posx or posx < 0 then
-							if markedStates and markedStates[i] then
+							if markedStates and markedStates[i+1] then
 								glColor(0.3, 0.5, 0.7, 1) -- blue
 							else
 								glColor(0.6, 0.6, 0.2, 1) -- yellow
@@ -418,6 +433,8 @@ function widget:DrawScreen()
 						end
 					elseif ps == "ready" then
 						glColor(0.0, 0.5, 0.0, 1) -- green -- glColor(0.7, 0.9, 0.7, 1) -- white/green
+					else
+						glColor(0.5, 0.5, 0.5, 0.8) -- grey -- glColor(0.7, 0.9, 0.7, 1) -- white/green
 					end
 				end
 				glText(leaderName, 10, y0 - (th3+2)* i, th3, 'xn')
@@ -535,6 +552,11 @@ function widget:GameSetup(state, ready, playerStates)
 	local strN = string.sub(state,13,13)
 	pStates = playerStates
 	strInfo = state
+	
+	--for i,ps in pairs(pStates) do
+		--Spring.Echo("State for player" .. i+1 .. ":",ps)
+		--Spring.Echo("State for player" .. i+1 .. ":",markedStates[i])
+	--end
 	
 	if strS == "Choose" then 
 		gameState = 0
