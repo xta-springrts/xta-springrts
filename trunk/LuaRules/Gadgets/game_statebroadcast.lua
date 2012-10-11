@@ -3,42 +3,55 @@ function gadget:GetInfo()
   return {
     name      = "State Broadcast",
     desc      = "Broadcast player state in game setup phase",
-	version   = "1.0",
+	version   = "1.1",
     author    = "Jools",
-    date      = "June,2012",
+    date      = "October,2012",
     license   = "GNU GPL, v2 or later",
     layer     = 0,
     enabled   = true,  --  loaded by default?
   }
 end
 
+local playerMarked = {}
+
 if not gadgetHandler:IsSyncedCode() then
+	
 	-------------------
 	-- UNSYNCED PART --
 	-------------------
+	
 	local positionRegex = "181072"
 	local spGetTeamStartPosition = Spring.GetTeamStartPosition
-	
-	
-	function gadget:MousePress(mx, my, mButton)
+		
+	function gadget:Update()
 		--Spring.Echo("State Broadcasting...")
 		for i,player in ipairs(Spring.GetTeamList()) do
-			if player ~= Spring.GetGaiaTeamID() then
+			if player ~= Spring.GetGaiaTeamID() then	
 				local posx = spGetTeamStartPosition(player)
 				local marked
+				
 				if posx and posx >= 0 then
 					marked = true
 				else
 					marked = false
 				end
-				if marked then
-					Spring.SendLuaUIMsg (positionRegex .. 1 .. player)
+				
+				if marked then 
+					if not playerMarked[i] then
+						Spring.SendLuaUIMsg (positionRegex .. 1 .. player)
+						playerMarked[i] = true
+						--Spring.Echo("mark state: ",i,player, marked)
+					end
 				else
-					Spring.SendLuaUIMsg (positionRegex .. 0 .. player)
+					if playerMarked[i] then
+						Spring.SendLuaUIMsg (positionRegex .. 0 .. player)
+						playerMarked[i] = false
+						--Spring.Echo("mark state: ",i,player, marked)
+					end
 				end
-				--Spring.Echo(i,player, posx, positionRegex, Spring.GetGaiaTeamID())
 			end
 		end
+		return false
 	end
 	
 	--function gadget:MapDrawCmd(playerID, cmdType, px, py, pz, labeltext) 
@@ -54,11 +67,13 @@ else
 	-----------------
 	
 	function gadget:Initialize()
-		-- nothing yet
+		for i,_ in ipairs(Spring.GetTeamList()) do
+			playerMarked[i] = false
+		end
 	end
 	
 	function gadget:GameStart()
-		Spring.Echo("State Broadcast ended")
+		--Spring.Echo("State Broadcast ended")
 		gadgetHandler:RemoveGadget()
 	end
 	
