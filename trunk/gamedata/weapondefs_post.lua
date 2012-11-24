@@ -149,7 +149,9 @@ for id in pairs(WeaponDefs) do
 	elseif inertialessWeapons[WeaponDefs[id].weapontype] then
 		WeaponDefs[id].impulseboost = 0
 		WeaponDefs[id].impulsefactor = 0
-
+		if WeaponDefs[id].weapontype == "LaserCannon" then
+			WeaponDefs[id].cegtag = ""
+		end
 	end
 	if WeaponDefs[id].cratermult then 
 		WeaponDefs[id].cratermult = WeaponDefs[id].cratermult * 0.4

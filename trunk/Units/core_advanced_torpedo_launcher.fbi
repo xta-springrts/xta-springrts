@@ -49,8 +49,8 @@
 	buildangle=16384;
 	yardmap=www www www;
 	activatewhenbuilt=1;
-	collisionVolumeType=Ell;
-	collisionVolumeScales=52 25 45;
+	collisionVolumeType=CylY;
+	collisionVolumeScales=50 10 50;
 	collisionVolumeOffsets=0 0 0;
 	//collisionVolumeTest = 1;
 
@@ -70,7 +70,7 @@
 	//************************************************************
 	//  Movement
 	//************
-	minwaterdepth=10;
+	minwaterdepth=38;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
@@ -83,7 +83,7 @@
 	//  Weapons
 	//***********
 	weapon1=CORSSUB_WEAPON;
-	explodeas=;
+	explodeas=MEDIUM_UNITEX;
 	selfdestructas=MEDIUM_UNIT;
 
 	//************************************************************
@@ -104,7 +104,7 @@
 	shootme=1;
 	threed=1;
 	version=1.2;
-	waterline=50;
+	waterline=35;
 	zbuffer=1;
 	pieceTrailCEGTag=Debree;//bleh
 	pieceTrailCEGRange = 4;
