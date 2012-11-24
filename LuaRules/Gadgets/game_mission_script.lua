@@ -10,23 +10,34 @@ function gadget:GetInfo()
   }
 end
 
+local spEcho = Spring.Echo
+local spGetGameSeconds = Spring.GetGameSeconds
+local spGetGameFrame = Spring.GetGameFrame
+
 local spGetTeamInfo = Spring.GetTeamInfo
-local spGetUnitPosition = Spring.GetUnitPosition
-local spGetUnitVectors = Spring.GetUnitVectors
-local spGetUnitRadius = Spring.GetUnitRadius
-local spSetUnitPosition = Spring.SetUnitPosition
+local spSetTeamResource = Spring.SetTeamResource
+local spAddTeamResource = Spring.AddTeamResource
+local spGetTeamResources = Spring.GetTeamResources
+local spUseTeamResource = Spring.UseTeamResource
 
 local spGetGroundHeight = Spring.GetGroundHeight
+
 local spGetUnitDefID = Spring.GetUnitDefID
 local spCreateUnit = Spring.CreateUnit
 local spDestroyUnit = Spring.DestroyUnit
+local spTransferUnit = Spring.TransferUnit
+local spSetUnitPosition = Spring.SetUnitPosition
+
 local spGetUnitsInCylinder = Spring.GetUnitsInCylinder
 local spGetUnitsInRectangle = Spring.GetUnitsInRectangle
-local spGetTeamUnitsByDefs = Spring.GetTeamUnitsByDefs
-local spEcho = Spring.Echo
+local spGetTeamUnits = Spring.GetTeamUnits
+local spGetTeamUnitsSorted = Spring.GetTeamUnitsSorted
+local spGetTeamUnitCount = Spring.GetTeamUnitCount
+local spGetTeamUnitDefCount = Spring.GetTeamUnitDefCount
+
 local spCreateFeature = Spring.CreateFeature
-local spGetGameSeconds = Spring.GetGameSeconds
-local spGetGameFrame = Spring.GetGameFrame
+
+local spPlaySoundFile = Spring.PlaySoundFile
 
 local modOptions = Spring.GetModOptions()
 local gaiaTeamID = Spring.GetGaiaTeamID()
@@ -43,14 +54,14 @@ local floor = math.floor
 local ceil = math.ceil
 local pairs = pairs
 
-local triggers, switches = {}, {}
+local triggers, switches, timers = {}, {}, {}
 local killCounter, deathCounter = {}, {}
 local killCounterType = {}
 local gameData, spawnData, missionTriggers, locations = {}, {}, {}, {}
 
 if (gadgetHandler:IsSyncedCode()) then
 
-local function initTriggers()
+local function initTriggers()	-- pre-parse triggers
 	for teamID, trig in pairs(missionTriggers) do
 		triggers[teamID] = {}
 		killCounter[teamID] = {}
@@ -76,7 +87,7 @@ local function initTriggers()
 				triggers[teamID][no].actions[actn] = {}
 				local idx = 1
 				for w in text:gmatch("[%-_%w]+") do
-					if w=="Echo" and idx==1 then 
+					if idx==1 and w=="Echo" or w=="Play" then 
 						triggers[teamID][no].actions[actn][1] = w
 						triggers[teamID][no].actions[actn][2] = text:sub(6,-1)
 						break
@@ -130,8 +141,8 @@ end
 function gadget:GameStart()
 	for _, teamID in pairs(teams) do
 		-- set start resources, either from mod options or custom team keys
-		Spring.SetTeamResource(teamID, "ms", 0)
-		Spring.SetTeamResource(teamID, "es", 0)	
+		spSetTeamResource(teamID, "ms", 0)
+		spSetTeamResource(teamID, "es", 0)	
 
 		for _, unitData in pairs(spawnData.teams[teamID]) do
 			--local x, z = 16*floor((unitData[2]+8)/16), 16*floor((unitData[3]+8)/16)	-- snap to 16x16 grid, fails for odd footprint sizes
@@ -145,14 +156,12 @@ function gadget:GameStart()
 		local m = teamOptions.startmetal  or modOptions.startmetal  or 1000
 		local e = teamOptions.startenergy or modOptions.startenergy or 1000
 		if (m and tonumber(m) ~= 0) then
-			--Spring.SetUnitResourcing(commanderID, "m", 0)
-			Spring.SetTeamResource(teamID, "m", 0)
-			Spring.AddTeamResource(teamID, "m", tonumber(m))
+			spSetTeamResource(teamID, "m", 0)
+			spAddTeamResource(teamID, "m", tonumber(m))
 		end
 		if (e and tonumber(e) ~= 0) then
-			--Spring.SetUnitResourcing(commanderID, "e", 0)
-			Spring.SetTeamResource(teamID, "e", 0)
-			Spring.AddTeamResource(teamID, "e", tonumber(e))
+			spSetTeamResource(teamID, "e", 0)
+			spAddTeamResource(teamID, "e", tonumber(e))
 		end
 	end
 	for _, featureData in pairs(spawnData.features) do
@@ -183,22 +192,22 @@ local function testCondition(cond, teamID)
 	if comm=="Always" then
 		return true
 
-	-- Ctrl quantity (unitname|ANY) [index]
+	-- Ctrl quantity (unitname|ANY) [locIdx]
 	elseif comm=="Ctrl" then
 		local loc = locations[idx]
 		local unitsInArea = {}
 		if loc==nil then
 			if type=="ANY" then
 				if qty >= 0 then
-					return Spring.GetTeamUnitCount(teamID) >= qty
+					return spGetTeamUnitCount(teamID) >= qty
 				else
-					return Spring.GetTeamUnitCount(teamID) < qty
+					return spGetTeamUnitCount(teamID) < qty
 				end
 			else
 				if qty >= 0 then
-					return Spring.GetTeamUnitDefCount(teamID, UnitDefNames[type].id) >= qty
+					return spGetTeamUnitDefCount(teamID, UnitDefNames[type].id) >= qty
 				else
-					return Spring.GetTeamUnitDefCount(teamID, UnitDefNames[type].id) < qty
+					return spGetTeamUnitDefCount(teamID, UnitDefNames[type].id) < qty
 				end
 			end
 		elseif loc.shape == "C" then
@@ -278,8 +287,8 @@ local function testCondition(cond, teamID)
 	-- Res quantity (M|E|ME) [teamID]
 	elseif comm=="Res" then
 		local team = tonumber(cond[4] or teamID)
-		local currentM = Spring.GetTeamResources(team, "metal")
-		local currentE = Spring.GetTeamResources(team, "energy")
+		local currentM = spGetTeamResources(team, "metal")
+		local currentE = spGetTeamResources(team, "energy")
 		if type=="M" then
 			if qty>= 0 then
 				return currentM >= qty
@@ -311,12 +320,19 @@ local function testCondition(cond, teamID)
 		else
 			return false
 		end
-		
+
+	-- Time quantity
 	elseif comm=="Time" then
 		if qty>= 0 then
 			return spGetGameSeconds >= qty
 		else
 			return spGetGameSeconds < qty
+		end	
+		
+	-- Timer number
+	elseif comm=="Timer" then
+		if timers[qty] then
+			return timers[qty]==0
 		end	
 
 	--Unknown condition
@@ -352,26 +368,26 @@ local function DoActions(actions, teamID, trigNo)
 			local qty = tonumber(actn[2])
 			if actn[3]=="M" then
 				if qty>=0 then
-					Spring.AddTeamResource(team, "metal", qty)
+					spAddTeamResource(team, "metal", qty)
 				else
-					Spring.UseTeamResource(team, "metal", 0-qty)
+					spUseTeamResource(team, "metal", 0-qty)
 				end
 			elseif actn[3]=="E" then
 				if qty>=0 then
-					Spring.AddTeamResource(team, "energy", qty)
+					spAddTeamResource(team, "energy", qty)
 				else
-					Spring.UseTeamResource(team, "energy", 0-qty)
+					spUseTeamResource(team, "energy", 0-qty)
 				end			
 			elseif actn[3]=="ME" then
 				if qty>=0 then
-					Spring.AddTeamResource(team, "metal", qty)
-					Spring.AddTeamResource(team, "energy", qty)
+					spAddTeamResource(team, "metal", qty)
+					spAddTeamResource(team, "energy", qty)
 				else
-					Spring.UseTeamResource(team, {metal=0-qty, energy=0-qty})
+					spUseTeamResource(team, {metal=0-qty, energy=0-qty})
 				end			
 			end
 
-		-- Give quantity unitname index [teamID]
+		-- Give quantity unitname locIdx [teamID]
 		elseif actn[1]=="Give" then
 			local loc = locations[tonumber(actn[4])]
 			local qty = tonumber(actn[2])
@@ -402,7 +418,7 @@ local function DoActions(actions, teamID, trigNo)
 				spCreateUnit(unitname, xp, y, zp, 0, team)
 			end
 
-		-- Kill (unitname|ANY) teamID [index]
+		-- Kill (unitname|ANY) teamID [locIdx]
 		elseif actn[1]=="Kill" then
 			local team = tonumber(actn[3])	
 			if actn[4] then
@@ -427,12 +443,12 @@ local function DoActions(actions, teamID, trigNo)
 				end
 			else
 				if actn[2]=="ANY" then
-					for _, unitID in pairs(Spring.GetTeamUnits(team)) do
+					for _, unitID in pairs(spGetTeamUnits(team)) do
 						spDestroyUnit(unitID, false, false, teamID)
 					end
 				else
 					local uDefID = UnitDefNames[actn[2]].id
-					for unitDefID, unitIDs in pairs(Spring.GetTeamUnitsSorted(team)) do
+					for unitDefID, unitIDs in pairs(spGetTeamUnitsSorted(team)) do
 						if unitDefID == uDefID then
 							for _, unitID in pairs(unitIDs) do
 								spDestroyUnit(unitID, false, false, teamID)
@@ -499,6 +515,51 @@ local function DoActions(actions, teamID, trigNo)
 				i = i + 1
 			end
 
+		-- Play soundfile
+		elseif actn[1]=="Play" then
+			spPlaySoundFile(actn[2])
+
+		-- Share (unitname|ANY) teamID [locIdx]
+		elseif actn[1]=="Share" then
+			local team = tonumber(actn[3])	
+			if actn[4] then
+				local loc = locations[tonumber(actn[4])]
+				local unitsInArea = {}
+				if loc.shape == "C" then
+					unitsInArea = spGetUnitsInCylinder(loc.X,loc.Z,loc.r,teamID)
+				elseif loc.shape == "R" then
+					unitsInArea = spGetUnitsInRectangle(loc.X1,loc.Z1,loc.X2,loc.Z2,teamID)
+				end
+				if actn[2]=="ANY" then
+					for _, unitID in pairs(unitsInArea) do
+						spTransferUnit(unitID, team)
+					end
+				else
+					local uDefID = UnitDefNames[actn[2]].id
+					for _, unitID in pairs(unitsInArea) do
+						if spGetUnitDefID(unitID) == uDefID then
+							spTransferUnit(unitID, team)
+						end
+					end
+				end
+			else
+				if actn[2]=="ANY" then
+					for _, unitID in pairs(spGetTeamUnits(teamID)) do
+						spTransferUnit(unitID, team)
+					end
+				else
+					local uDefID = UnitDefNames[actn[2]].id
+					for unitDefID, unitIDs in pairs(spGetTeamUnitsSorted(teamID)) do
+						if unitDefID == uDefID then
+							for _, unitID in pairs(unitIDs) do
+								spTransferUnit(unitID, team)
+							end
+							break
+						end
+					end
+				end
+			end
+			
 		-- Switch number (true|false|flip)
 		elseif actn[1]=="Switch" then
 			local num = tonumber(actn[2])
@@ -510,9 +571,13 @@ local function DoActions(actions, teamID, trigNo)
 				switches[num] = not (switches[num]==true)
 			end
 
+		-- Timer number quantity
+		elseif actn[1]=="Timer" then
+			timers[tonumber(actn[2])] = tonumber(actn[3])
+
 		-- Victory
 		elseif actn[1]=="Victory" then
-			local allyTeam = select(6,Spring.GetTeamInfo(teamID))
+			local allyTeam = select(6,spGetTeamInfo(teamID))
 			Spring.GameOver({allyTeam})
 
 		-- Wait time
@@ -553,16 +618,22 @@ end
 function gadget:GameFrame(n)
 	-- check triggers once per second, but spread teams accross gameframes, less lag
 	-- we assume one player per team and multiple teams per allied AI controlled side
-	-- we also assume < 31 teams in total
-	-- only one human player, usualy team 0, this is for campaign after all
-	local teamID = teams[n%30 + 1]
+	-- we also assume < 31 teams in total and only one human player, usualy team 0
+	-- this is for campaign after all, but should work with more human players in
+	-- form of special game modes or LOLmaps
+	local index = n%30 + 1
+	if index==1 then
+		for i in pairs(timers) do	-- timers can have arbitrary indexes, as they are added in-game
+			timer[i] = timer[i]-1
+		end
+	end
+	local teamID = teams[index]
 	if teamID and n>29 then		-- skip first second of game and look for teams with triggers
 		local _, _, teamDead = spGetTeamInfo(teamID)
 		if teamDead==false then
 			local trigger = triggers[teamID]
 			local i = 1
 			while i <= #trigger do	-- process triggers, can't use for loop due to one-shot triggers
-				trigger[i].wait = trigger[i].wait - 1
 				if trigger[i].wait <= 0 then	
 					if testConditions(trigger[i].conditions, teamID)==true then
 						DoActions(trigger[i].actions, teamID, i)
@@ -571,11 +642,13 @@ function gadget:GameFrame(n)
 							i = i - 1	-- prevent skiping a trigger after table removal
 						end
 					end
+				else
+					trigger[i].wait = trigger[i].wait - 1			
 				end
 				i = i + 1
 			end
 		else
-			table.remove(teams, n%30 + 1)	-- remove dead team from teams list
+			table.remove(teams, index)	-- remove dead team from teams list
 		end
 	end
 end

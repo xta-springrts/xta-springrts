@@ -280,11 +280,13 @@ if (modOptions and modOptions.realscale and tobool(modOptions.realscale)) then
 				UnitDefs[name].maxvelocity = 4 * UnitDefs[name].maxvelocity
 				UnitDefs[name].cruisealt = 1.5 * UnitDefs[name].cruisealt
 				UnitDefs[name].acceleration = 2 * UnitDefs[name].acceleration
+				UnitDefs[name].maxacc = 0.52
 				UnitDefs[name].brakerate = 3 * UnitDefs[name].brakerate
 			else
 				UnitDefs[name].maxvelocity = 9 * UnitDefs[name].maxvelocity
 				UnitDefs[name].cruisealt = 3 * UnitDefs[name].cruisealt
 				UnitDefs[name].acceleration = 3 * UnitDefs[name].acceleration
+				UnitDefs[name].maxacc = 0.78
 				UnitDefs[name].brakerate = 2 * UnitDefs[name].brakerate
 			end
 		elseif (UnitDefs[name].canmove and UnitDefs[name].movementclass) then

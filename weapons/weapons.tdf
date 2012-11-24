@@ -1065,7 +1065,7 @@
 	reloadtime=8;
 	noautorange=1;
 	weapontimer=2;
-	flighttime=10;
+	flighttime=5;
 	weaponvelocity=700;
 	weaponacceleration=160;
 	turnrate=48768;
@@ -1271,7 +1271,7 @@
 	reloadtime=9;
 	noautorange=1;
 	weapontimer=4;
-	flighttime=10;
+	flighttime=7.5;
 	weaponvelocity=600;
 	weaponacceleration=100;
 	turnrate=24384;
@@ -1773,7 +1773,7 @@
 	reloadtime=11;
 	noautorange=1;
 	weapontimer=2;
-	flighttime=10;
+	flighttime=6;
 	weaponvelocity=800;
 	weaponacceleration=160;
 	startvelocity=30;
@@ -3638,7 +3638,7 @@
 	reloadtime=8;
 	noautorange=1;
 	weapontimer=2;
-	flighttime=10;
+	flighttime=5;
 	weaponvelocity=800;
 	weaponacceleration=170;
 	startvelocity=30;
@@ -3791,7 +3791,7 @@
 	range=1000;
 	reloadtime=1.4;
 	weapontimer=0.5;
-	flighttime=15;
+	flighttime=4;
 	weaponvelocity=3000;
 	startvelocity=300;
 	weaponacceleration=66;
@@ -3913,7 +3913,7 @@
 	reloadtime=9;
 	noautorange=1;
 	weapontimer=2;
-	flighttime=10;
+	flighttime=5;
 	weaponvelocity=700;
 	weaponacceleration=160;
 	turnrate=48768;
@@ -4116,7 +4116,7 @@
 	reloadtime=8;
 	noautorange=1;
 	weapontimer=4;
-	flighttime=10;
+	flighttime=7.5;
 	weaponvelocity=600;
 	weaponacceleration=100;
 	turnrate=20000;
@@ -4608,7 +4608,7 @@
 	reloadtime=12;
 	noautorange=1;
 	weapontimer=2;
-	flighttime=10;
+	flighttime=6;
 	weaponvelocity=750;
 	weaponacceleration=152;
 	startvelocity=30;
@@ -5973,10 +5973,11 @@
 	shakeduration=0.3;
 	explosiongenerator=custom:E400;
 	Explosionspeed=9001;
-	edgeeffectiveness=1.0;
+	//edgeeffectiveness=1.0;
 	[DAMAGE]
 	{
 		default=350;
+		group_invincible=1;
 	}
 }
 [TRANSPORT_UNITEX]
@@ -6438,7 +6439,7 @@
 	propeller=1;
 	range=450;
 	reloadtime=8;
-	weapontimer=10;
+	weapontimer=4;
 	weaponvelocity=400;
 	startvelocity=100;
 	weaponacceleration=50;
@@ -6634,7 +6635,7 @@
 	reloadtime=8;
 	noautorange=1;
 	weapontimer=2;
-	flighttime=10;
+	flighttime=6;
 	weaponvelocity=700;
 	weaponacceleration=160;
 	turnrate=48768;

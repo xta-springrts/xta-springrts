@@ -31,6 +31,9 @@
 * Added Particle Light widget for faked light effects on cannon shells and laser cannons
 * Some small unit script fixes and optimizations
 
+* adjusted torpedo and adv. torpedo launchers min water depth and water line so that they don't sink into sea floor and can't shoot
+* adjusted rocket and missile flightTime to avoid excessive overshooting of max range when firing at aircraft
+
 	
 ------------------- Change Log of XTA v9.725 (89.0 and next version) ------------------ by Deadnight Warrior, Jools and Kloot
 * Added support for changing Commanders in-game. New modoption: let users choose in game. Renamed Commander options to Automatic and Manual Commanders.

@@ -72,7 +72,7 @@
 	//  Movement
 	//************
 	maxslope=10;
-	minwaterdepth=13;
+	minwaterdepth=12;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
