@@ -39,14 +39,17 @@ else
 	
 	function gadget:Explosion(weaponID, px, py, pz, ownerID)
 		local isWater = Spring.GetGroundHeight(px,pz) < 0
+		local isShallow = Spring.GetGroundHeight(px,pz) > -50
 		local aoe = WeaponDefs[weaponID]["damageAreaOfEffect"] / 2
 		local wType = WeaponDefs[weaponID].type
-		if not nonexplosiveWeapons[wType] and isWater and abs(py) <= aoe then
 		
+		--Spring.Echo("Water depth = ", Spring.GetGroundHeight(px,pz), isWater, isShallow)
+		if not nonexplosiveWeapons[wType] and isWater and abs(py) <= aoe then		
 			Spring.SpawnCEG(splashCEG1, px+random(-aoe,aoe), py, pz+random(-aoe,aoe),0,1,0,aoe,aoe)
-			if aoe > 20 then
+			if isShallow then
 				Spring.SpawnCEG(splashCEG2, px, 0, pz)
-				--Spring.PlaySoundFile(sndWater,15.0,px,0,pz)
+				--Spring.Echo("Shallow water explosion:", weaponID)
+				--Spring.PlaySoundFile(sndWater,15.0,px,0,pz) -- now indluded in mod
 			end
 			return true
 		else
