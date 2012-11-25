@@ -7,6 +7,8 @@ local function istable(x)  return (type(x) == 'table')   end
 local function isnumber(x) return (type(x) == 'number')  end
 local function isstring(x) return (type(x) == 'string')  end
 
+
+
 local function tobool(val)
   local t = type(val)
   if (t == 'nil') then
@@ -111,6 +113,9 @@ local customGravity = 0.45
 local maxRangeAngle = 38  --in degrees >0 and <=45
 if modOptions and modOptions.gravity then customGravity=modOptions.gravity end
 local velGravFactor = customGravity * 900 / math.sin(math.rad(2 * maxRangeAngle))
+
+
+
 for id in pairs(WeaponDefs) do
 	WeaponDefs[id].soundhitwet = ""
 	if WeaponDefs[id].range and tonumber(WeaponDefs[id].range) < 550 or explosiveWeapons[WeaponDefs[id].weapontype] then
@@ -171,8 +176,38 @@ for id in pairs(WeaponDefs) do
 	end
 end
 
-
-
+-- Localised sounds, put sounds in customparams and access them from snd_local gadget.
+if modOptions and modOptions.globalsounds ~= '1' then
+	--Spring.Echo("Weapons_post: Local sound option detected")
+	for id,weaponDef in pairs(WeaponDefs) do
+		--Spring.Echo("Old weaponsdef:",id,WeaponDefs[id].soundhitwet)
+		if weaponDef.soundhitwet then
+			if not weaponDef.customparams then
+				weaponDef.customparams = {}
+			end
+			weaponDef.customparams.soundhitwet = weaponDef.soundhitwet -- for sound localisation gadget
+		end
+		
+		if weaponDef.soundhitdry then
+			if not weaponDef.customparams then
+				weaponDef.customparams = {}
+			end
+			weaponDef.customparams.soundhitdry = weaponDef.soundhitdry -- for sound localisation gadget
+		end
+		
+		if weaponDef.soundstart then
+			if not weaponDef.customparams then
+				weaponDef.customparams = {}
+			end
+			weaponDef.customparams.soundstart = weaponDef.soundstart -- for sound localisation gadget
+		end
+		weaponDef.soundhitwet = nil
+		weaponDef.soundhitdry = nil
+		weaponDef.soundstart = nil
+		--Spring.Echo("New weaponsdef:",id,WeaponDefs[id].soundhitwet)
+	end
+end
+	
 if (modOptions) then
 
 --------------------------------------------------------------------------------
