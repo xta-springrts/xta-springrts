@@ -51,10 +51,8 @@ else
 				--Spring.Echo("Shallow water explosion:", weaponID)
 				--Spring.PlaySoundFile(sndWater,15.0,px,0,pz) -- now indluded in mod
 			end
-			return true
-		else
-			return false
 		end
+		return false
 	end
 	
 	function gadget:Initialize()
