@@ -22,7 +22,7 @@
 			alpha=1;
 			alphadecay=0.1;
 			color=1.0, 0.7, 0.2;
-			alwaysVisible=1;
+			alwaysVisible=0;
 
 		}
 		air=1;
