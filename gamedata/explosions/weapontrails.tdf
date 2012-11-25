@@ -73,6 +73,7 @@
           	frontOffset=0;
           	sideTexture=muzzleside;
           	frontTexture=muzzlefront;
+			alwaysVisible=0;
       	}
    water=1;
    air=1;
@@ -91,7 +92,7 @@
 			alpha=1;
 			alphadecay=0.35;
 			color=1.0, 0.7, 0.2;
-
+			alwaysVisible=0;
 		}
 		air=1;
 		water=1;
@@ -121,6 +122,7 @@
 			emitRot=0;
 			emitRotSpread=20;
 			directional=0;
+			alwaysVisible=0;
 		}
 		air=1;
 		water=1;
@@ -150,6 +152,7 @@
 			emitRot=0;
 			emitRotSpread=10;
 			directional=0;
+			alwaysVisible=0;
 		}
 		air=1;
 		water=1;
@@ -291,7 +294,7 @@
 			alpha=1;
 			alphadecay=0.08;
 			color=1.0, 0.5, 0.2;
-			alwaysVisible=1;
+			alwaysVisible=0;
 
 		}
 		air=1;
@@ -328,7 +331,7 @@
 		emitRot=80;
 		emitRotSpread=5; 
 		directional=0; 
-		alwaysVisible=1;
+		alwaysVisible=0;
 
 		}
 	air=1;
@@ -366,7 +369,7 @@
 		emitRot=80;
 		emitRotSpread=5; 
 		directional=0; 
-		alwaysVisible=1;
+		alwaysVisible=0;
 
 		}
 	air=1;
@@ -390,7 +393,7 @@
 			alpha=1;
 			alphadecay=0.2;
 			color=1.0, 0.5, 0.2;
-			alwaysVisible=1;
+			alwaysVisible=0;
 
 		}
 		air=1;
@@ -427,7 +430,7 @@
 		emitRot=80;
 		emitRotSpread=5; 
 		directional=0; 
-		alwaysVisible=1;
+		alwaysVisible=0;
 
 		}
 	air=1;
@@ -465,7 +468,7 @@
 		emitRot=80;
 		emitRotSpread=5; 
 		directional=0; 
-		alwaysVisible=1;
+		alwaysVisible=0;
 
 		}
 	air=1;
@@ -488,7 +491,7 @@
 			alpha=1;
 			alphadecay=0.15;
 			color=1.0, 0.5, 0.2;
-			alwaysVisible=1;
+			alwaysVisible=0;
 
 		}
 		air=1;
@@ -525,7 +528,7 @@
 		emitRot=80;
 		emitRotSpread=5; 
 		directional=0; 
-		alwaysVisible=1;
+		alwaysVisible=0;
 
 		}
 	air=1;
@@ -563,7 +566,7 @@
 		emitRot=80;
 		emitRotSpread=5; 
 		directional=0; 
-		alwaysVisible=1;
+		alwaysVisible=0;
 
 		}
 	air=1;

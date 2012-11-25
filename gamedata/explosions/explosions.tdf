@@ -755,8 +755,9 @@ usedefaultexplosions=1;
       		sizemodmod = 0;
       		speed = 0, 2, 0;
       		pos = 0, 0, 0;
+			alwaysVisible=0;
       		}
-	air=1;
+		air=1;
       	water=1;
       	ground=1;
       	count=1;
@@ -773,8 +774,9 @@ usedefaultexplosions=1;
          		sizeGrowth = 0.5;
          		pos = 5 r-5, 5 r-5, 5 r-5;
          		speed=0, 2 r0.5, 0;
+				alwaysVisible=0;
       		}
-	air=1;
+		air=1;
       	water=1;
       	ground=1;
       	count=1;
@@ -787,7 +789,7 @@ usedefaultexplosions=1;
       	circleAlpha = 0;
       	ttl = 60;
       	color = 0.6, 0.4, 0.3;
-	air=1;
+		air=1;
      	ground=1;
       	water=1;
 	}
@@ -1020,7 +1022,7 @@ usedefaultexplosions=1;
 		emitRot=28;
 		emitRotSpread=65;
 		directional=1;
-		alwaysVisible=1;
+		alwaysVisible=0;
 		}
 	air=1;
 	water=1;
