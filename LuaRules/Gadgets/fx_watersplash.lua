@@ -33,23 +33,25 @@ else
 	-- SYNCED PART --
 	-----------------
 	
-	local splashCEG1					= "verticalbomb"
-	local splashCEG2					= "torpbomb"
-	local sndWater 						= "Sounds/SPLSHBIG.WAV"
+	local splashCEG							= "verticalbomb"
+	local splashCEGshallow					= "torpbomb"
+	local shockCEG							= "Torpedoold"
 	
 	function gadget:Explosion(weaponID, px, py, pz, ownerID)
-		local isWater = Spring.GetGroundHeight(px,pz) < 0
-		local isShallow = Spring.GetGroundHeight(px,pz) > -50
+		local groundHeight = Spring.GetGroundHeight(px,pz)
+		local isWater = groundHeight < 0
+		local isShallow = groundHeight > -50
 		local aoe = WeaponDefs[weaponID]["damageAreaOfEffect"] / 2
 		local wType = WeaponDefs[weaponID].type
 		
-		--Spring.Echo("Water depth = ", Spring.GetGroundHeight(px,pz), isWater, isShallow)
-		if not nonexplosiveWeapons[wType] and isWater and abs(py) <= aoe then		
-			Spring.SpawnCEG(splashCEG1, px+random(-aoe,aoe), py, pz+random(-aoe,aoe),0,1,0,aoe,aoe)
-			if isShallow then
-				Spring.SpawnCEG(splashCEG2, px, 0, pz)
-				--Spring.Echo("Shallow water explosion:", weaponID)
-				--Spring.PlaySoundFile(sndWater,15.0,px,0,pz) -- now indluded in mod
+		--Spring.Echo("Water depth = ", groundHeight, isWater, isShallow, py)
+		if not nonexplosiveWeapons[wType] and isWater and abs(py) <= aoe and py <= 0 then
+			if py > -2 then -- hits close to water surface
+				Spring.SpawnCEG(splashCEG, px+random(-aoe,aoe), py, pz+random(-aoe,aoe),0,1,0,aoe,aoe)
+				if isShallow then Spring.SpawnCEG(splashCEGshallow, px, 0, pz) end
+			else -- deep water explosion
+				Spring.SpawnCEG(shockCEG, px+random(-aoe,aoe), py, pz+random(-aoe,aoe),0,1,0,aoe,aoe)
+				--Spring.Echo("Deep water explosiion")
 			end
 		end
 		return false
