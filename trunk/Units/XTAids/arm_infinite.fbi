@@ -5,13 +5,13 @@
 	//********************
 	side=Arm;
 	name=Infinite;
-	description=-Superior Battleship;
+	description=Superior Battleship;
 	icontype=sea;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=ARM SHIP WEAPON NOTAIR NOTSUB;
+	category=ARM SHIP MOBILE WEAPON NOTAIR NOTSUB;
 	tedclass=SHIP;
 
 	//************************************************************
@@ -47,6 +47,10 @@
 	//  Building
 	//************
 	buildangle=16384;
+	collisionVolumeType = box;
+	collisionVolumeScales = 60 55 190;
+	collisionVolumeOffsets = 0 -20 0;
+	collisionVolumeTest = 1;
 
 	//************************************************************
 	//  Constructor

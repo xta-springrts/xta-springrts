@@ -46,7 +46,7 @@
 	YardMap=y;
 	levelground=0;
 	upright=0;
-	collisionVolumeType=Ell;
+	collisionVolumeType=CylY;
 	collisionVolumeScales=15 6 15;
 	collisionVolumeOffsets=0 -2 0;
 	collisionVolumeTest = 1;

@@ -5,7 +5,7 @@
 	//********************
 	side=Core;
 	name=Emperor;
-	description=-Superior Battleship;
+	description=Superior Battleship;
 	icontype=sea;
 
 	//************************************************************
@@ -47,6 +47,10 @@
 	//  Building
 	//************
 	buildangle=16384;
+	collisionVolumeType = box;
+	collisionVolumeScales =60 55 190;
+	collisionVolumeOffsets = 0 -20 0;
+	collisionVolumeTest = 1;
 
 	//************************************************************
 	//  Constructor
