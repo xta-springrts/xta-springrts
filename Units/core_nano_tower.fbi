@@ -53,7 +53,7 @@
 	//onoffable=1;
 	pieceTrailCEGTag=Debree;//bleh
 	pieceTrailCEGRange = 4;
-	collisionVolumeType=Ell;
+	collisionVolumeType=CylY;
 	collisionVolumeScales=38 94 38;
 	collisionVolumeOffsets=0 -21.5 0;
 	collisionVolumeTest = 1;

@@ -53,8 +53,8 @@
 	//onoffable=1;
 	pieceTrailCEGTag=NanoDebree;//bleh
 	pieceTrailCEGRange = 2;
-	collisionVolumeType=Ell;
-	collisionVolumeScales=43 96 43;
-	collisionVolumeOffsets=0 -22.5 0;
+	collisionVolumeType=CylY;
+	collisionVolumeScales=43 51 43;
+	collisionVolumeOffsets=0 0 0;
 	collisionVolumeTest = 1;
 }

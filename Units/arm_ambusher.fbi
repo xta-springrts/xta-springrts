@@ -47,7 +47,7 @@
 	//************
 	buildangle=8192;
 	yardmap=ooo ooo ooo;
-	collisionVolumeType=Ell;
+	collisionVolumeType=CylY;
 	collisionVolumeScales=49 45 49;
 	collisionVolumeOffsets=-0.5 -14 0;
 	collisionVolumeTest = 1;
