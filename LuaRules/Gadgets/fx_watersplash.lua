@@ -58,8 +58,8 @@ else
 			
 			if isShallow then
 				local rnd = random()
-				Spring.Echo(rnd)
-				if rnd > 0.96 then
+				--Spring.Echo(rnd)
+				if rnd > 0.99 then
 					Spring.PlaySoundFile(duckSND, 1.0, px, 250, pz,0,10,0,'sfx')
 					--Spring.SpawnCEG(duckCEG, px, py, pz,0,0,0,aoe,0)
 					--Spring.Echo("Some ducks were hit")
