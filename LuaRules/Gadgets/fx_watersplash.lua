@@ -36,6 +36,8 @@ else
 	local splashCEG							= "verticalbomb"
 	local splashCEGshallow					= "torpbomb"
 	local shockCEG							= "Torpedoold"
+	--local duckCEG							= "blplasmaballbloom"
+	local duckSND							= 'sounds/ducks.ogg'
 	
 	function gadget:Explosion(weaponID, px, py, pz, ownerID)
 		local groundHeight = Spring.GetGroundHeight(px,pz)
@@ -53,6 +55,19 @@ else
 				Spring.SpawnCEG(shockCEG, px+random(-aoe,aoe), py, pz+random(-aoe,aoe),0,1,0,aoe,aoe)
 				--Spring.Echo("Deep water explosiion")
 			end
+			
+			if isShallow then
+				local rnd = random()
+				Spring.Echo(rnd)
+				if rnd > 0.96 then
+					Spring.PlaySoundFile(duckSND, 1.0, px, 250, pz,0,10,0,'sfx')
+					--Spring.SpawnCEG(duckCEG, px, py, pz,0,0,0,aoe,0)
+					--Spring.Echo("Some ducks were hit")
+				end
+			end
+			
+			
+			
 		end
 		return false
 	end
