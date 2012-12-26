@@ -283,7 +283,7 @@
 	energypershot=5000;
 	metalpershot=100;
 	stockpile=1;
-	interceptor=1;
+	interceptor=2;
 	explosiongenerator=custom:PUFFY;
 	cegTag=RAVENTRAIL;
 	Texture1=null;
@@ -1348,7 +1348,7 @@
 	energypershot=5000;
 	metalpershot=100;
 	stockpile=1;
-	interceptor=1;
+	interceptor=2;
 	cegTag=RAVENTRAIL;
 	explosiongenerator=custom:PUFFY;
 	Texture1=null;
@@ -3877,7 +3877,7 @@
 	energypershot=5000;
 	metalpershot=100;
 	stockpile=1;
-	interceptor=1;
+	interceptor=2;
 	cegTag=RAVENTRAIL;
 	Texture1=null;
 	Texture2=null;
@@ -5124,7 +5124,7 @@
 	energypershot=5050;
 	metalpershot=100;
 	stockpile=1;
-	interceptor=1;
+	interceptor=2;
 	cegTag=RAVENTRAIL;
 	Texture1=null;
 	Texture2=null;

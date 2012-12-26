@@ -7,8 +7,6 @@ local function istable(x)  return (type(x) == 'table')   end
 local function isnumber(x) return (type(x) == 'number')  end
 local function isstring(x) return (type(x) == 'string')  end
 
-
-
 local function tobool(val)
   local t = type(val)
   if (t == 'nil') then
@@ -70,47 +68,47 @@ local function ProcessWeaponDef(wdName,wd)
   if (wd.weapontype==nil) then
     local rendertype = tonumber(wd.rendertype) or 0
     if (tobool(wd.dropped)) then
-      wd.weapontype = "AircraftBomb"
+      wd.weapontype = "AircraftBomb";
     elseif (tobool(wd.vlaunch)) then
-      wd.weapontype = "StarburstLauncher"
+      wd.weapontype = "StarburstLauncher";
     elseif (tobool(wd.beamlaser)) then
-      wd.weapontype = "BeamLaser"
+      wd.weapontype = "BeamLaser";
     elseif (tobool(wd.isshield)) then
-      wd.weapontype = "Shield"
+      wd.weapontype = "Shield";
     elseif (tobool(wd.waterweapon)) then
-      wd.weapontype = "TorpedoLauncher"
+      wd.weapontype = "TorpedoLauncher";
     elseif (wdName:lower():find("disintegrator",1,true)) then
       wd.weaponType = "DGun"
     elseif (tobool(wd.lineofsight)) then
       if (rendertype==7) then
-        wd.weapontype = "LightningCannon"
+        wd.weapontype = "LightningCannon";
 
       -- swta fix (outdated?)
       elseif (wd.model and wd.model:lower():find("laser",1,true)) then
-        wd.weapontype = "LaserCannon"
+        wd.weapontype = "LaserCannon";
 
       elseif (tobool(wd.beamweapon)) then
-        wd.weapontype = "LaserCannon"
+        wd.weapontype = "LaserCannon";
       elseif (tobool(wd.smoketrail)) then
-        wd.weapontype = "MissileLauncher"
+        wd.weapontype = "MissileLauncher";
       elseif (rendertype==4 and tonumber(wd.color)==2) then
-        wd.weapontype = "EmgCannon"
+        wd.weapontype = "EmgCannon";
       elseif (rendertype==5) then
-        wd.weapontype = "Flame"
+        wd.weapontype = "Flame";
       --elseif(rendertype==1) then
-      --  wd.weapontype = "MissileLauncher"
+      --  wd.weapontype = "MissileLauncher";
       else
-        wd.weapontype = "Cannon"
+        wd.weapontype = "Cannon";
       end
     else
-      wd.weapontype = "Cannon"
+      wd.weapontype = "Cannon";
     end
 
     if (wd.weapontype == "LightingCannon") then
-      wd.weapontype = "LightningCannon"
+      wd.weapontype = "LightningCannon";
     end
   end
-
+  
   if (not wd.rgbcolor) then
     if (wd.weapontype == "Cannon") then
       wd.rgbcolor = "1.0 0.5 0.0"
@@ -122,7 +120,7 @@ local function ProcessWeaponDef(wdName,wd)
       wd.rgbcolor = hs2rgb(hue, sat)
     end
   end
-
+  
   if (tobool(wd.ballistic) or tobool(wd.dropped)) then
     wd.gravityaffected = true
   end
@@ -151,6 +149,7 @@ local inertialessWeapons = {
 	EmgCannon = true,
 	Flame = true,
 	LightningCannon = true,
+	DGun = true,
 }
 
 local modOptions = Spring.GetModOptions()
@@ -160,8 +159,8 @@ local customGravity = 0.45
 local maxRangeAngle = 38  --in degrees >0 and <=45
 if modOptions and modOptions.gravity then customGravity=modOptions.gravity end
 local velGravFactor = customGravity * 900 / math.sin(math.rad(2 * maxRangeAngle))
-
-
+local interceptorStyle = 2
+if modOptions and modOptions.nuke then interceptorStyle = modOptions.nuke end
 
 for id in pairs(WeaponDefs) do
 	WeaponDefs[id].soundhitwet = ""
@@ -173,6 +172,14 @@ for id in pairs(WeaponDefs) do
 			WeaponDefs[id].areaofeffect = math.min(WeaponDefs[id].areaofeffect / (1 - WeaponDefs[id].edgeeffectiveness), 160)
 			WeaponDefs[id].edgeeffectiveness = 0
 			WeaponDefs[id].avoidfeature = false
+		end
+		if WeaponDefs[id].weapontype == "Cannon" and WeaponDefs[id].range and not WeaponDefs[id].mygravity and not WeaponDefs[id].cylindertargeting then
+			WeaponDefs[id].mygravity = customGravity
+			WeaponDefs[id].weaponvelocity = math.sqrt(WeaponDefs[id].range * velGravFactor)
+			WeaponDefs[id].gravityaffected = true
+			WeaponDefs[id].heightboostfactor = 0.04
+		elseif WeaponDefs[id].interceptor then
+			WeaponDefs[id].interceptor = interceptorStyle
 		end
 		if WeaponDefs[id].weapontype == "TorpedoLauncher" then
 			WeaponDefs[id].soundhitwet = WeaponDefs[id].soundhitdry
@@ -190,21 +197,17 @@ for id in pairs(WeaponDefs) do
 				WeaponDefs[id].soundhitwet = "splslrg"
 			end
 		end
-	else
-		WeaponDefs[id].soundhitwet = "sizzle"		
-	end	
-	if WeaponDefs[id].weapontype == "Cannon" and WeaponDefs[id].range and not WeaponDefs[id].mygravity and not WeaponDefs[id].cylindertargeting then
-		WeaponDefs[id].mygravity = customGravity
-		WeaponDefs[id].weaponvelocity = math.sqrt(WeaponDefs[id].range * velGravFactor)
-		WeaponDefs[id].gravityaffected = true
-		WeaponDefs[id].heightboostfactor = 0.04
 	elseif inertialessWeapons[WeaponDefs[id].weapontype] then
 		WeaponDefs[id].impulseboost = 0
 		WeaponDefs[id].impulsefactor = 0
+		WeaponDefs[id].soundhitwet = "sizzle"		
 		if WeaponDefs[id].weapontype == "LaserCannon" then
-			WeaponDefs[id].cegtag = ""
+			WeaponDefs[id].cegtag = ""	-- we use the projectile lights widget now
+		elseif WeaponDefs[id].weapontype == "BeamLaser" then
+			WeaponDefs[id].soundhitdry = ""
+			WeaponDefs[id].soundtrigger = 1
 		end
-	end
+	end	
 	if WeaponDefs[id].cratermult then 
 		WeaponDefs[id].cratermult = WeaponDefs[id].cratermult * 0.4
 	else
@@ -215,46 +218,10 @@ for id in pairs(WeaponDefs) do
 	else
 		WeaponDefs[id].craterboost = 0
 	end
-	if WeaponDefs[id].weapontype == "BeamLaser" then
-		--WeaponDefs[id].soundstart = ""
-		WeaponDefs[id].soundhitdry = ""
-		--WeaponDefs[id].soundhitwet = ""
-		WeaponDefs[id].soundtrigger = 1
-	end
 end
 
--- Localised sounds, put sounds in customparams and access them from snd_local gadget.
-if modOptions and modOptions.globalsounds ~= '1' then
-	--Spring.Echo("Weapons_post: Local sound option detected")
-	for id,weaponDef in pairs(WeaponDefs) do
-		--Spring.Echo("Old weaponsdef:",id,WeaponDefs[id].soundhitwet)
-		if weaponDef.soundhitwet then
-			if not weaponDef.customparams then
-				weaponDef.customparams = {}
-			end
-			weaponDef.customparams.soundhitwet = weaponDef.soundhitwet -- for sound localisation gadget
-		end
-		
-		if weaponDef.soundhitdry then
-			if not weaponDef.customparams then
-				weaponDef.customparams = {}
-			end
-			weaponDef.customparams.soundhitdry = weaponDef.soundhitdry -- for sound localisation gadget
-		end
-		
-		if weaponDef.soundstart then
-			if not weaponDef.customparams then
-				weaponDef.customparams = {}
-			end
-			weaponDef.customparams.soundstart = weaponDef.soundstart -- for sound localisation gadget
-		end
-		weaponDef.soundhitwet = nil
-		weaponDef.soundhitdry = nil
-		weaponDef.soundstart = nil
-		--Spring.Echo("New weaponsdef:",id,WeaponDefs[id].soundhitwet)
-	end
-end
-	
+
+
 if (modOptions) then
 
 --------------------------------------------------------------------------------
