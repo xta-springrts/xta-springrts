@@ -85,7 +85,8 @@ if gadgetHandler:IsSyncedCode() then
 	
 	function gadget:RecvLuaMsg(msg, playerID)
 		--Spring.Echo("Got a message from " .. playerID .. " :",msg,string.len(msg))
-		if msg and string.len(msg) >= 9 then	
+		local minimapX_msg = (msg:find(LUAMESSAGE,1,true))
+		if msg and string.len(msg) >= 9 and minimapX_msg then	
 			local sms = string.sub(msg, string.len(LUAMESSAGE)+1) 
 			clientID = tonumber(string.sub(sms,1,1))
 			--Echo("Local client = ", clientID)
