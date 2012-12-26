@@ -92,6 +92,7 @@
 	wpri_badtargetcategory=VTOL;
 	explodeas=BIG_UNITEX;
 	selfdestructas=BIG_UNIT;
+	onlytargetcategory1=NOTAIR; //Added 24.11 By Jools
 
 	//************************************************************
 	//  Orders
