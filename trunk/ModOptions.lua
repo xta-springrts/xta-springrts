@@ -145,6 +145,14 @@ local options = {
 		section= "xtagame",
 	},
 	{
+		key    = "nuke",
+		name   = "Intercept nukes flying through coverage area",
+		desc   = "If enabled all enemy nukes flying through coverage area of your antinuke but not targeting a spot inside it will be intercepted\nkey: nuke",
+		type   = "bool",
+		def    = true,
+		section= "xtagame",
+	},
+	{
 		key    = "mo_nowrecks",
 		name   = "No Unit Wrecks",
 		desc   = "Removes all unit wrecks from the game\nkey: mo_nowrecks",
