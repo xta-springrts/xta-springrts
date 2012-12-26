@@ -51,9 +51,9 @@ else
 			if py > -2 then -- hits close to water surface
 				Spring.SpawnCEG(splashCEG, px+random(-aoe,aoe), py, pz+random(-aoe,aoe),0,1,0,aoe,aoe)
 				if isShallow then Spring.SpawnCEG(splashCEGshallow, px, 0, pz) end
-			else -- deep water explosion
+			else -- subsurface hit
 				Spring.SpawnCEG(shockCEG, px+random(-aoe,aoe), py, pz+random(-aoe,aoe),0,1,0,aoe,aoe)
-				--Spring.Echo("Deep water explosiion")
+				--Spring.Echo("Deep water explosion")
 			end
 			
 			if isShallow then
