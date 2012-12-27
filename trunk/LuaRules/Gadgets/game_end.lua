@@ -15,8 +15,8 @@ function gadget:GetInfo()
 	return {
 		name      = "Game End",
 		desc      = "Handles team/allyteam deaths and declares gameover",
-		author    = "Andrea Piras",
-		date      = "August, 2010",
+		author    = "Andrea Piras, modified by Jools",
+		date      = "December, 2012",
 		license   = "GNU GPL, v2 or later",
 		layer     = 0,
 		enabled   = true  --  loaded by default?
@@ -33,13 +33,14 @@ end
 
 local modOptions = Spring.GetModOptions()
 
+local TEAMZERO = "killall" -- each player is removed if he has no units left
+local ALLYZERO = "team" -- players are left alive and only removed if whole team dies
+local COMENDS = "comends" -- team commander ends, teams are killed if they have no commanders left
+local COMMANDER = "commander" -- classic commander ends, if commander is killed, all units die of that player.
 
 
-
-
-
--- teamDeathMode possible values: "none", "teamzerounits" , "allyzerounits"
-local teamDeathMode = modOptions.teamdeathmode or "teamzerounits"
+-- teamDeathMode possible values: "none", "teamzerounits" , "allyzerounits". Teamzerounits = killall, allyzerounits = team
+local teamDeathMode = modOptions.mode or TEAMZERO
 
 -- sharedDynamicAllianceVictory is a C-like bool
 local sharedDynamicAllianceVictory = tonumber(modOptions.shareddynamicalliancevictory) or 0
@@ -202,9 +203,9 @@ function gadget:GameFrame(frame)
 	if (frame%16) == 0 then
 		CheckGameOver()
 		-- kill teams after checking for gameover to avoid to trigger instantly gameover
-		if teamDeathMode == "teamzerounits" then
+		if teamDeathMode == TEAMZERO or teamDeathMode == COMMANDER then
 			KillTeamsZeroUnits()
-		elseif teamDeathMode == "allyzerounits" or teamDeathMode == "com" then
+		elseif teamDeathMode == ALLYZERO or teamDeathMode == COMENDS then
 			KillAllyTeamsZeroUnits()
 		end
 		KillResignedTeams()
