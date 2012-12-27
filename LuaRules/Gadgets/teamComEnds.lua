@@ -39,10 +39,11 @@ local commanderList = {
 	core_nincommander = true,
 }
 
--- the deathmode modoption must be set to one of the following to enable this
+-- the deathmode modoption (called now just "mode") must be set to one of the following to enable this
 local endmodes= {
-	com=true,
 	comcontrol=true,
+	commander=true,
+	comends=true,
 }
 
 if (gadgetHandler:IsSyncedCode()) then
@@ -83,11 +84,12 @@ function gadget:UnitCreated(u, ud, team)
 	end
 end
 
-function gadget:UnitGiven(u, ud, team)
-	if commanderList[UnitDefs[ud].name] then
-		local allyTeam = GetUnitAllyTeam(u)
+function gadget:UnitGiven(unitID, unitDefID, unitTeam, oldTeam)
+	if commanderList[UnitDefs[unitDefID].name] then
+		local allyTeam = GetUnitAllyTeam(unitID)
 		aliveCount[allyTeam] = aliveCount[allyTeam] + 1
 	end
+	
 end
 
 function gadget:UnitDestroyed(u, ud, team)
@@ -97,6 +99,15 @@ function gadget:UnitDestroyed(u, ud, team)
 		aliveCount[allyTeam] = aliveCount[allyTeam] - 1
 		if aliveCount[allyTeam] <= 0 then
 			destroyQueue[allyTeam] = true
+		end
+	end
+		
+	-- implement classic commander ends option
+	if Spring.GetModOptions().mode == "commander" then
+		if commanderList[UnitDefs[ud].name] then
+			for _,u in ipairs(GetTeamUnits(team)) do
+				DestroyUnit(u, true)
+			end
 		end
 	end
 end
@@ -112,7 +123,7 @@ function gadget:UnitTaken(u, ud, team)
 end
 
 function gadget:Initialize()
-	if not endmodes[Spring.GetModOptions().teamdeathmode] then
+	if not endmodes[Spring.GetModOptions().mode] then
 		gadgetHandler:RemoveGadget()
 	end
 	for _,t in ipairs(Spring.GetAllyTeamList()) do
