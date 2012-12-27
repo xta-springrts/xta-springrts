@@ -51,6 +51,14 @@ local options = {
 		desc = 'Settings for multipliers.',
 		type = "section",
 	},
+	
+	{
+		key  = 'other',
+		name = 'Experimental options',
+		desc = 'Other non-homologated stuff',
+		type = "section",
+	},
+	
 	--[[ Removed till spawner is fixed
 	{
 		key  = 'Fleabowl',
@@ -60,24 +68,26 @@ local options = {
 	},
 	]]--
 	{
-		key="teamdeathmode",
+		key="mode",
 		name="Game End Mode",
-		desc="What it takes to eliminate a Team\nkey: teamdeathmode",
+		desc="What it takes to eliminate a player or team\nkey: mode",
 		type="list",
-		--section= 'xtagame',
-		def="allyzerounits",
+		section= 'xtagame',
+		def="comends",
 		items={
-			{key="none", name="Never Die", desc="All players will stay alive regardless of what happens, gameover will never arrive."},
-			{key="teamzerounits", name="Player death on zero Units", desc="The player will die when he has 0 units left."},
-			{key="com", name="Team death on no commanders", desc="The team will die when all players in that team lose their commanders."},
-			{key="allyzerounits", name="Team death on zero units", desc="The team will die when every player in that team has 0 units left."},
+			{key="none", name="Never Die", desc="All players will stay alive regardless of what happens, game is never over"},
+			{key="killall", name="Kill all enemy players", desc="Kill all enemies. Player will die if they have no units left."},
+			{key="commander", name="Commander Ends", desc="Player will die if commander is killed"},
+			{key="comends", name="Team Commander Ends", desc="Team will die if commanders of all players are killed."},
+			{key="team", name="Kill all enemy units", desc="Kill all enemies. Dead players are retained until whole team dies"},
 		}
 	},
 	{
-		key  = "comm",
+		key  = "commander",
 		name = "Starting Commander",
 		desc = "Adjusts Starting Commander type or level\nkey: comm",
 		type = "list",
+		section= 'xtagame',
 		def  = "choose",
 		items = {
 			{ key = "choose", name = "Let players choose in game", desc = "Let users choose in game between automatical and manual types"},
@@ -110,6 +120,7 @@ local options = {
 		name="Pathfinding system",
 		desc="Which pathfinding system to use\nkey: qtpfs",
 		type="list",
+		section= 'xtagame',
 		--section= 'xtagame',
 		def="qtpfs",
 		items={
@@ -122,7 +133,7 @@ local options = {
 		name   = "Cannon Velocity",
 		desc   = "Set the projectile velocity for cannon weapons\nkey: gravity",
 		type   = "number",
-		--section= "xtagame",
+		section= 'other',
 		def    = 0.5,
 		min    = 0.25,
 		max    = 1.25,
@@ -134,7 +145,7 @@ local options = {
 		desc   = "Improves game performance and aircraft control at the expense of aircraft vs AA\nkey: airnocollide",
 		type   = "bool",
 		def    = true,
-		section= "xtagame",
+		section= 'other',
 	},
 	{
 		key    = "space_mode",
@@ -142,7 +153,7 @@ local options = {
 		desc   = "If enabled map atmosphere condition will be ignored for aircraft and hovercraft\nkey: space_mode",
 		type   = "bool",
 		def    = true,
-		section= "xtagame",
+		section= 'other',
 	},
 	{
 		key    = "nuke",
@@ -182,7 +193,7 @@ local options = {
 		desc   = "** ThirdParty ** Enable additional rocket type for several rocket/missile units  Author: Deadnight Warrior\nkey: rockettoggle",
 		type   = "bool",
 		def    = false,
-		section= "xtagame",
+		section= 'other',
 	},
 	{
 		key    = "realscale",
@@ -190,7 +201,7 @@ local options = {
 		desc   = "** ThirdParty ** Make all sight, radar, sonar, jammer and weapon ranges and unit max velocities to realistical values. Not recomended on maps smaller than 30x30  Author: Deadnight Warrior\nkey: realscale",
 		type   = "bool",
 		def    = false,
-		section= "xtagame",
+		section= 'other',
 	},
 	{
 		key    = "nocollide",
@@ -198,7 +209,7 @@ local options = {
 		desc   = "** ThirdParty ** Author: Deadnight Warrior\nkey: nocollide",
 		type   = "bool",
 		def    = false,
-		section= "xtagame",
+		section= 'other',
 	},
 	{
 		key    = "lowcpu",
@@ -206,8 +217,18 @@ local options = {
 		desc   = "Reduces effects and makes fast fire weapons slower with more damage in order to reduce simulation requirements\nkey: lowcpu",
 		type   = "bool",
 		def    = false,
-		section= "xtagame",
+		section= 'xtagame',
 	},
+	
+	{
+		key		= "globalsounds",
+		name	= "Global sounds",
+		desc	= "is sound heard out of player's line of sight?",
+		type	= "bool",
+		section	= 'xtagame',
+		def		= false,
+	},
+	
 --	{
 --		key    = "mo_coop",
 --		name   = "Cooperative Mode",
