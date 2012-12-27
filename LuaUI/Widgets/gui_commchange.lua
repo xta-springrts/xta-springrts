@@ -199,7 +199,7 @@ end
 --------------------------------------------------------------------------------
 function widget:Initialize()
 
-    if spGetSpectatingState() or Spring.GetGameFrame() > 0 or (Spring.GetModOptions() or {}).comm ~= "choose" then
+    if spGetSpectatingState() or Spring.GetGameFrame() > 0 or (Spring.GetModOptions() or {}).commander ~= "choose" then
         widgetHandler:RemoveWidget(self)
     end
 	--local X, Y = Spring.GetViewGeometry()
