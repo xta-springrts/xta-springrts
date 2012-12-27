@@ -65,7 +65,7 @@ local spGetGroundHeight = Spring.GetGroundHeight
 function gadget:Initialize()
     local gaiaTeamID = Spring.GetGaiaTeamID()
     local teamList = Spring.GetTeamList()
-	if (Spring.GetModOptions() or {}).comm ~= 'choose' then
+	if (Spring.GetModOptions() or {}).commander ~= 'choose' then
 		gadgetHandler:RemoveGadget() 
 	end
 	
@@ -83,7 +83,7 @@ function gadget:Initialize()
     end
 end
 
-if (Spring.GetModOptions() or {}).comm == 'choose' then
+if (Spring.GetModOptions() or {}).commander == 'choose' then
     function gadget:RecvLuaMsg(msg, playerID)
         local startUnit = tonumber(msg:match(changeStartUnitRegex))
         if startUnit and validStartUnits[startUnit] then
