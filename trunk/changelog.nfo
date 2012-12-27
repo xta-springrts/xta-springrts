@@ -21,8 +21,16 @@
     ศอออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออผ
     Logo by ElementalGizmo
 
-------------------- Change Log of XTA v9.726 beta (89.0 and next version) ------------------ by Deadnight Warrior
+------------------- Change Log of XTA v9.726 beta (89.0 and next version) ------------------ by Deadnight Warrior and Jools
+* Added original commander ends option
+* Renamed modoptions: renamed "teamdeathmode" to "mode" and "comm" to "commander" to make it easier to use autohost  commands. mode options are: "killall" (kill all units and remove dead players), "comends" (team commander ends), "commander" (original commander ends), "team" (kill all units and retain dead players) and "none" (game never ends). Spads command "!bset mode killall" replaces old "!bset teamdeathmode allyzerounits" which was a bit complicated.
 * Fixed "Team death on zero commanders"
+* Added a gadget to draw an X on minimap for nukes and antinukes (within radar coverage)
+* Fixed arm_wombat issue where it was targetting aircraft
+* On rare occasions explosions near the coast can hit ducks
+* Fixed the logic in the sea splashes and underwater explosions, new sound for small splashes.
+* Added mod option to make sounds local (not audible for events outside line of sight). Loop-style sounds are not yet perfect (but working) with this option.
+* Changed visiblity outside LOS for some unit weapons (such as core pyro, core fusion and D-Gun)
 * Updated missions gadget with new trigger conditions and actions, implemented all missing features, some performance optimizations
 * Modified some gadgets and widgets for better interaction with mission scripting gadget
 * Updated Dynamic Collision Volume gadget to support radius and height scaling of buildings and aim point adjustment of popup style units
