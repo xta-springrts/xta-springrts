@@ -84,7 +84,7 @@ function widget:DrawWorld()
 	local cp 		= unitDef.customParams or nil
     local height    = unitDef.height+heightOffset
 	 
-	if unitDef and cp and cp.iscommander then
+	if unitDef and cp and cp.iscommander and not cp.isdecoycommander then
       DrawUnitPlayerName(unitID, height)
     end
   end
