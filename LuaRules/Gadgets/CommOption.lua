@@ -40,7 +40,7 @@ local spGetTeamRulesParam = Spring.GetTeamRulesParam
 local spSetTeamRulesParam = Spring.SetTeamRulesParam
 
 
--- Maps 'comm' mod option to ARM start unit.
+-- Maps 'commander' mod option to ARM start unit.
 local arm_start_unit = {
     autoupgrade = "arm_commander",
     halfupgrade = "arm_u2commander",
@@ -53,7 +53,6 @@ local arm_start_unit = {
 	plain = "arm_scommander",
 }
 
--- Maps 'comm' mod option to CORE start unit.
 local core_start_unit = {
     autoupgrade = "core_commander",
     halfupgrade = "core_u2commander",
@@ -78,7 +77,7 @@ local start_unit_table = {
 local modOptions = Spring.GetModOptions()
 
 local coopMode = tonumber(modOptions.mo_coop) or 0
-local commType = modOptions.comm
+local commType = modOptions.commander
 
 --[[
 local enabled = tonumber(modOptions.mo_coop) or 0
@@ -97,7 +96,7 @@ local function GetStartUnit(teamID)
 
 	local defaultStartUnit = spGetTeamRulesParam(teamID, startUnitParamName)
 	
-	if (Spring.GetModOptions() or {}).comm == 'choose' and defaultStartUnit then
+	if (Spring.GetModOptions() or {}).commander == 'choose' and defaultStartUnit then
 		return defaultStartUnit
 	else	
 		local side = select(5, Spring.GetTeamInfo(teamID))

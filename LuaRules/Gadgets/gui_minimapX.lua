@@ -27,8 +27,8 @@ local nukeWeapons = {
 	nuclear_missile = true, -- arm_retaliator
 	amd_rocket = true, -- arm_protector, arm_repulsor
 	armemp_weapon = true, --arm_stunner
-	cortron_weapon = true -- core_neutron 
-	corabm_weapon = true -- core_hedgehog
+	cortron_weapon = true, -- core_neutron 
+	corabm_weapon = true, -- core_hedgehog
 	}
 
 	
@@ -60,7 +60,7 @@ if gadgetHandler:IsSyncedCode() then
 		
 		local wName
 		if WeaponDefs[projectileWeaponDefID] then wName = WeaponDefs[projectileWeaponDefID].name end
-		Echo("Weapon:",wName)
+		--Echo("Weapon:",wName)
 		if wName and nukeWeapons[wName] then
 			local teamID = Spring.GetUnitTeam(projectileOwnerID)
 			table.insert(nukeList,{projectileID, x,y,z, inRadar,teamID})
