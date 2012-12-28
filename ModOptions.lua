@@ -223,10 +223,10 @@ local options = {
 	{
 		key		= "globalsounds",
 		name	= "Global sounds",
-		desc	= "is sound heard out of player's line of sight?",
+		desc	= "is sound heard out of player's line of sight? (local sounds has a slight problem with looping type of sounds)",
 		type	= "bool",
 		section	= 'xtagame',
-		def		= false,
+		def		= true,
 	},
 	
 --	{
