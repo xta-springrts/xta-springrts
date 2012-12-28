@@ -51,7 +51,7 @@
 	//  Constructor
 	//***************
 	builder=1;
-	builddistance=170;
+	builddistance=130;//170, edited by Jools
 	workertime=160;
 	RepairSpeed=160;
 	ReclaimSpeed=160;
