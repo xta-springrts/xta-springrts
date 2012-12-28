@@ -22,6 +22,7 @@
     Logo by ElementalGizmo
 
 ------------------- Change Log of XTA v9.726 beta (89.0 and next version) ------------------ by Deadnight Warrior and Jools
+* Decoy commanders now have same cloak radius as their respective normal commanders. Their weapons ranges now show as that of normal commanders to enemies, but show still are actual ones to allies.Decoys can be upgrades to level 2 decoys, which can disguise as opposite faction commanders. Level 2 decoys appear to enemies as level 2 commanders (D-Gun still reveals though).
 * Added original commander ends option
 * Renamed modoptions: renamed "teamdeathmode" to "mode" and "comm" to "commander" to make it easier to use autohost  commands. mode options are: "killall" (kill all units and remove dead players), "comends" (team commander ends), "commander" (original commander ends), "team" (kill all units and retain dead players) and "none" (game never ends). Spads command "!bset mode killall" replaces old "!bset teamdeathmode allyzerounits" which was a bit complicated.
 * Fixed "Team death on zero commanders"
