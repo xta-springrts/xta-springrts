@@ -7,7 +7,7 @@
 	name=Decoy Commander;
 	description=Decoy Commander;
 	icontype=core_commander;
-
+	decoyFor=core_commander;
 	//************************************************************
 	//  Categories
 	//**************
@@ -124,7 +124,7 @@
 	hidedamage=1;
 	leavetracks=1;
 	maneuverleashlength=640;
-	mincloakdistance=30;
+	mincloakdistance=80;
 	shootme=1;
 	showplayername=1;
 	smoothanim=1;

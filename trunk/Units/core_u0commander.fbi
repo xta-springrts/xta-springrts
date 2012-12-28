@@ -127,7 +127,7 @@
 	immunetoparalyzer=1;
 	leavetracks=1;
 	maneuverleashlength=640;
-	mincloakdistance=74;
+	mincloakdistance=80;
 	norestrict=1;
 	shootme=1;
 	showplayername=1;
