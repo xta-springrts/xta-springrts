@@ -100,6 +100,8 @@ end
 local commanderList = {
 	arm_commander = 50,
 	arm_decoy_commander = 0,
+	arm_decoy_ucommander = 0,
+	arm_decoy_ucommander_core = 0,
 	arm_u0commander = 50,
 	arm_ucommander = 1000,
 	arm_u2commander = 1500,
@@ -111,6 +113,8 @@ local commanderList = {
 	arm_nincommander = 50,
 	core_commander = 50,
 	core_decoy_commander = 0,
+	core_decoy_ucommander = 0,
+	core_decoy_ucommander_arm = 0,
 	core_u0commander = 50,
 	core_ucommander = 1000,
 	core_u2commander = 1500,
@@ -120,6 +124,7 @@ local commanderList = {
 	corcom = 200,
 	core_base = 0,
 	core_nincommander = 50,
+	
 }
 -------------------------------------------------------------------------------
 -- Starting resource storage adjustment
@@ -137,7 +142,7 @@ end
 
 --------------------------------------------------------------------------------
 -- Decoy commander setup
-if (modOptions and modOptions.comm) then
+if (modOptions and modOptions.commander) then
 	-- Maps 'comm' mod option to ARM start unit.
 	local arm_start_unit = {
 		choose		= "arm_commander",
@@ -164,8 +169,8 @@ if (modOptions and modOptions.comm) then
 		capturethebase = "core_base",
 		nincom = "core_nincommander",
 	}
-	UnitDefs["arm_decoy_commander"].decoyfor = arm_start_unit[modOptions.comm]
-	UnitDefs["core_decoy_commander"].decoyfor = core_start_unit[modOptions.comm]
+	UnitDefs["arm_decoy_commander"].decoyfor = arm_start_unit[modOptions.commander]
+	UnitDefs["core_decoy_commander"].decoyfor = core_start_unit[modOptions.commander]
 end
 
 --------------------------------------------------------------------------------

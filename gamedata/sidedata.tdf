@@ -882,6 +882,73 @@
 		canbuild28=arm_adv_shipyard;
 		canbuild29=arm_seaplane_platform;
 	}
+	
+	[arm_decoy_ucommander]
+	{
+		canbuild1=arm_solar_collector;
+		canbuild2=arm_wind_generator;
+		canbuild3=arm_energy_storage;
+		canbuild4=arm_metal_storage;
+		canbuild5=arm_metal_extractor;
+		canbuild6=arm_metal_maker;
+		canbuild7=arm_kbot_lab;
+		canbuild8=arm_vehicle_plant;
+		canbuild9=arm_aircraft_plant;
+		canbuild10=arm_shipyard;
+		canbuild11=arm_sub_pen;
+		canbuild12=arm_light_laser_tower;
+		canbuild13=arm_radar_tower;
+		canbuild14=arm_floating_radar;
+		canbuild15=arm_sonar_station;
+		canbuild16=arm_tidal_generator;
+		canbuild17=arm_underwater_energy_storage;
+		canbuild18=arm_underwater_metal_storage;
+		canbuild19=arm_underwater_metal_extractor;
+		canbuild20=arm_floating_metal_maker;
+		canbuild21=arm_torpedo_launcher;
+		canbuild22=arm_dragons_teeth;
+		canbuild23=arm_hovercraft_platform;
+		canbuild24=arm_floating_dragons_teeth;
+		canbuild25=arm_adv_vehicle_plant;
+		canbuild26=arm_adv_kbot_lab;
+		canbuild27=arm_adv_aircraft_plant;
+		canbuild28=arm_adv_shipyard;
+		canbuild29=arm_seaplane_platform;
+	}
+	
+	[arm_decoy_ucommander_core]
+	{
+		canbuild1=arm_solar_collector;
+		canbuild2=arm_wind_generator;
+		canbuild3=arm_energy_storage;
+		canbuild4=arm_metal_storage;
+		canbuild5=arm_metal_extractor;
+		canbuild6=arm_metal_maker;
+		canbuild7=arm_kbot_lab;
+		canbuild8=arm_vehicle_plant;
+		canbuild9=arm_aircraft_plant;
+		canbuild10=arm_shipyard;
+		canbuild11=arm_sub_pen;
+		canbuild12=arm_light_laser_tower;
+		canbuild13=arm_radar_tower;
+		canbuild14=arm_floating_radar;
+		canbuild15=arm_sonar_station;
+		canbuild16=arm_tidal_generator;
+		canbuild17=arm_underwater_energy_storage;
+		canbuild18=arm_underwater_metal_storage;
+		canbuild19=arm_underwater_metal_extractor;
+		canbuild20=arm_floating_metal_maker;
+		canbuild21=arm_torpedo_launcher;
+		canbuild22=arm_dragons_teeth;
+		canbuild23=arm_hovercraft_platform;
+		canbuild24=arm_floating_dragons_teeth;
+		canbuild25=arm_adv_vehicle_plant;
+		canbuild26=arm_adv_kbot_lab;
+		canbuild27=arm_adv_aircraft_plant;
+		canbuild28=arm_adv_shipyard;
+		canbuild29=arm_seaplane_platform;
+	}	
+	
 	[arm_fark]
 	{
 		canbuild1=arm_solar_collector;
@@ -1871,6 +1938,73 @@
 		canbuild28=core_seaplane_platform;
 		canbuild29=core_hovercraft_platform;
 	}
+	
+	[core_decoy_ucommander]
+	{
+		canbuild1=core_solar_collector;
+		canbuild2=core_wind_generator;
+		canbuild3=core_energy_storage;
+		canbuild4=core_metal_storage;
+		canbuild5=core_metal_extractor;
+		canbuild6=core_metal_maker;
+		canbuild7=core_kbot_lab;
+		canbuild8=core_vehicle_plant;
+		canbuild9=core_aircraft_plant;
+		canbuild10=core_shipyard;
+		canbuild11=core_sub_pen;
+		canbuild12=core_light_laser_tower;
+		canbuild13=core_radar_tower;
+		canbuild14=core_floating_radar;
+		canbuild15=core_sonar_station;
+		canbuild16=core_tidal_generator;
+		canbuild17=core_underwater_energy_storage;
+		canbuild18=core_underwater_metal_storage;
+		canbuild19=core_underwater_metal_extractor;
+		canbuild20=core_floating_metal_maker;
+		canbuild21=core_torpedo_launcher;
+		canbuild22=core_dragons_teeth;
+		canbuild23=core_floating_dragons_teeth;
+		canbuild24=core_adv_vehicle_plant;
+		canbuild25=core_adv_kbot_lab;
+		canbuild26=core_adv_aircraft_plant;
+		canbuild27=core_adv_shipyard;
+		canbuild28=core_seaplane_platform;
+		canbuild29=core_hovercraft_platform;
+	}
+	
+	[core_decoy_ucommander_arm]
+	{
+		canbuild1=core_solar_collector;
+		canbuild2=core_wind_generator;
+		canbuild3=core_energy_storage;
+		canbuild4=core_metal_storage;
+		canbuild5=core_metal_extractor;
+		canbuild6=core_metal_maker;
+		canbuild7=core_kbot_lab;
+		canbuild8=core_vehicle_plant;
+		canbuild9=core_aircraft_plant;
+		canbuild10=core_shipyard;
+		canbuild11=core_sub_pen;
+		canbuild12=core_light_laser_tower;
+		canbuild13=core_radar_tower;
+		canbuild14=core_floating_radar;
+		canbuild15=core_sonar_station;
+		canbuild16=core_tidal_generator;
+		canbuild17=core_underwater_energy_storage;
+		canbuild18=core_underwater_metal_storage;
+		canbuild19=core_underwater_metal_extractor;
+		canbuild20=core_floating_metal_maker;
+		canbuild21=core_torpedo_launcher;
+		canbuild22=core_dragons_teeth;
+		canbuild23=core_floating_dragons_teeth;
+		canbuild24=core_adv_vehicle_plant;
+		canbuild25=core_adv_kbot_lab;
+		canbuild26=core_adv_aircraft_plant;
+		canbuild27=core_adv_shipyard;
+		canbuild28=core_seaplane_platform;
+		canbuild29=core_hovercraft_platform;
+	}
+	
 	[core_krogoth_gantry]
 	{
 		canbuild1=core_krogoth;
