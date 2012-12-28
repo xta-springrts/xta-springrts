@@ -21,14 +21,18 @@ local LUAMESSAGE = 	"20121130"
 
 
 local nukeWeapons = {
-	fmd_rocket = true,
-	crblmssl = true,
-	armscab_weapon = true,
-	nuclear_missile = true,
-	amd_rocket = true,
-	armemp_weapon = true,
+	fmd_rocket = true, -- Core_Resistor, core_fortitude_missile_defense
+	crblmssl = true, -- core_silencer
+	armscab_weapon = true, -- arm_scarab
+	nuclear_missile = true, -- arm_retaliator
+	amd_rocket = true, -- arm_protector, arm_repulsor
+	armemp_weapon = true, --arm_stunner
+	cortron_weapon = true -- core_neutron 
+	corabm_weapon = true -- core_hedgehog
 	}
 
+	
+	
 local nukeList = {}
 	
 if gadgetHandler:IsSyncedCode() then
@@ -56,6 +60,7 @@ if gadgetHandler:IsSyncedCode() then
 		
 		local wName
 		if WeaponDefs[projectileWeaponDefID] then wName = WeaponDefs[projectileWeaponDefID].name end
+		Echo("Weapon:",wName)
 		if wName and nukeWeapons[wName] then
 			local teamID = Spring.GetUnitTeam(projectileOwnerID)
 			table.insert(nukeList,{projectileID, x,y,z, inRadar,teamID})
