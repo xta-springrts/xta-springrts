@@ -73,6 +73,46 @@ local morphDefs = {
 		xp = .25
 		--tech = 2
 	},
+	arm_decoy_commander = {
+		into = 'arm_decoy_ucommander',
+		time = 30,
+		metal = 200,
+		energy = 2000
+	},
+	arm_decoy_ucommander = {
+		into = 'arm_decoy_ucommander_core',
+		time = 15,
+		energy = 1000,
+		cmdname = 'Shift',
+		text = 'Disguise as Core Level 2 Commander',
+	},
+	arm_decoy_ucommander_core = {
+		into = 'arm_decoy_ucommander',
+		time = 15,
+		energy = 1000,
+		cmdname = 'Shift',
+		text = 'Disguise as Arm Level 2 Commander',
+	},
+	core_decoy_commander = {
+		into = 'core_decoy_ucommander',
+		time = 30,
+		metal = 200,
+		energy = 2000,
+	},
+	core_decoy_ucommander = {
+		into = 'core_decoy_ucommander_arm',
+		time = 15,
+		energy = 1000,
+		cmdname = 'Shift',
+		text = 'Disguise as Arm Level 2 Commander',
+	},
+	core_decoy_ucommander_arm = {
+		into = 'core_decoy_ucommander',
+		time = 15,
+		energy = 1000,
+		cmdname = 'Shift',
+		text = 'Disguise as Core Level 2 Commander',
+	},
 	arm_spidey = {
 		into = 'arm_fart_spidey',
 		time = 5,
