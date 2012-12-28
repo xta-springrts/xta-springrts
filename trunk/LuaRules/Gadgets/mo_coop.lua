@@ -76,7 +76,7 @@ function gadget:GameStart()
     end
     
     local comtype = defs.commander
-	local modoptioncomtype = Spring.GetModOptions().comm
+	local modoptioncomtype = Spring.GetModOptions().commander
 	
 	if modoptioncomtype and modoptioncomtype ~="zeroupgrade" then
 		if comtype == "arm_u0commander" then
