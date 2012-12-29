@@ -37,11 +37,17 @@ if (gadgetHandler:IsSyncedCode()) then
 	local DestroyUnit			= Spring.DestroyUnit
 	local Echo 					= Spring.Echo
 	local GetTeamUnitDefCount	= Spring.GetTeamUnitDefCount
+	local GetTeamUnitCount 		= Spring.GetTeamUnitCount
+	local GetUnitsInSphere 		= Spring.GetUnitsInSphere
+	local GetGameFrame			= Spring.GetGameFrame
 	local COMMANDER				= "commander" --key name in modoptions.mode
 	local DECOYSTART			= "decoystart" -- value name in modoptions.commander
 	local commanderEnds			= Spring.GetModOptions().mode == COMMANDER
 	local killX, killZ
-	
+	local frame
+	local step					= 35 -- how much to expand killradius every 10 frames
+	local frequency				= 8
+	local destroyStepwise		= true
 	
 	function gadget:Initialize()
 		if not endmodes[Spring.GetModOptions().mode] then
@@ -78,35 +84,51 @@ if (gadgetHandler:IsSyncedCode()) then
 	end
 	
 	function DestroySingleTeam(team)
-		if killX then
+		if killX and destroyStepwise then
 			-- code to kill team in steps
+			local count = GetTeamUnitCount(team)
+			if count > 0 then
+				if not frame then frame = GetGameFrame() end
+				local radius = (GetGameFrame() - frame)*step
+				if radius > 0 then
+					for _, unitID in ipairs(GetUnitsInSphere(killX,0,killZ,radius,team)) do
+						DestroyUnit(unitID, true)
+					end
+				end	
+			else
+				destroySingleQueue[team] = nil
+				frame = nil
+			end
 		else	
 			for _,u in ipairs(GetTeamUnits(team)) do
 				DestroyUnit(u, true)
 			end
+			destroySingleQueue[team] = nil
 		end
 	end
 	
 	function DestroyAllyTeam(allyTeam)
-		if killX then
-		-- code to kill allyteam in steps
-		else
-			for _,team in ipairs(GetTeamList(allyTeam)) do
-				for _,u in ipairs(GetTeamUnits(team)) do
-					DestroyUnit(u, true)
-				end
+		local allyteamCount = 0
+		for _,team in ipairs(GetTeamList(allyTeam)) do
+			local count = GetTeamUnitCount(team) or 0
+			Echo("Count:",team,count)
+			allyteamCount = allyteamCount + count
+			if count > 0 then
+				DestroySingleTeam(team)
 			end
+		end
+		if allyteamCount <= 0 then 
+			destroyQueue[allyTeam] = nil
 		end
 	end
 	
 	function gadget:GameFrame(t)
-		if t % 32 < .1 then
+		if t % frequency == 0 then
 			for ateam,_ in pairs(destroyQueue) do
 				if not commanderEnds then				
 					if aliveCount[ateam] <= 0 then --safety check, triggers on transferring the last com otherwise
 						DestroyAllyTeam(ateam)
 					end
-					destroyQueue[ateam]=nil
 				end
 			end
 			
@@ -115,7 +137,6 @@ if (gadgetHandler:IsSyncedCode()) then
 					if localCommanders[team] <= 0 then --safety check, triggers on transferring the last com otherwise
 						DestroySingleTeam(team)
 					end
-					destroySingleQueue[team]=nil
 				end
 			end
 		end
