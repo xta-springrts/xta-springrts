@@ -45,8 +45,8 @@ if (gadgetHandler:IsSyncedCode()) then
 	local commanderEnds			= Spring.GetModOptions().mode == COMMANDER
 	local killX, killZ
 	local frame
-	local step					= 35 -- how much to expand killradius every 10 frames
-	local frequency				= 8
+	local step					= 28 -- how much to expand killradius every 10 frames
+	local frequency				= 6
 	local destroyStepwise		= true
 	
 	function gadget:Initialize()
@@ -84,41 +84,42 @@ if (gadgetHandler:IsSyncedCode()) then
 	end
 	
 	function DestroySingleTeam(team)
+		--Echo("Destroying team:",team)
 		if killX and destroyStepwise then
 			-- code to kill team in steps
-			local count = GetTeamUnitCount(team)
-			if count > 0 then
-				if not frame then frame = GetGameFrame() end
-				local radius = (GetGameFrame() - frame)*step
-				if radius > 0 then
-					for _, unitID in ipairs(GetUnitsInSphere(killX,0,killZ,radius,team)) do
-						DestroyUnit(unitID, true)
-					end
-				end	
-			else
-				destroySingleQueue[team] = nil
-				frame = nil
+			if not frame then frame = GetGameFrame() end
+			local radius = (GetGameFrame() - frame)*step
+			if radius > 0 then
+				for _, unitID in ipairs(GetUnitsInSphere(killX,0,killZ,radius,team)) do
+					DestroyUnit(unitID, true)
+				end
 			end
+			--Echo("Radius:",team, radius)
 		else	
 			for _,u in ipairs(GetTeamUnits(team)) do
 				DestroyUnit(u, true)
 			end
-			destroySingleQueue[team] = nil
+			
 		end
 	end
 	
 	function DestroyAllyTeam(allyTeam)
+		--Echo("Destroying allyteam:",allyTeam)
 		local allyteamCount = 0
 		for _,team in ipairs(GetTeamList(allyTeam)) do
-			local count = GetTeamUnitCount(team) or 0
-			Echo("Count:",team,count)
+			local count = GetTeamUnitCount(team)
+			--Echo("Count:",team,count)
 			allyteamCount = allyteamCount + count
 			if count > 0 then
 				DestroySingleTeam(team)
+			else
+				destroySingleQueue[team] = nil
 			end
 		end
+
 		if allyteamCount <= 0 then 
 			destroyQueue[allyTeam] = nil
+			frame = nil
 		end
 	end
 	
