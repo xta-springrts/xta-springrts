@@ -350,6 +350,22 @@ local options = {
 		step   = 1,  -- quantization is aligned to the def value
 					-- (step <= 0) means that there is no quantization
 	},
+
+	{
+		key  = "enableSlopeMods",
+		def  = false,
+		type = bool,
+		name = "enable MoveDef slope-modifiers",
+		desc = "determines if ground-units slow down on slopes",
+	},
+	{
+		key  = "enableDepthMods",
+		def  = true,
+		type = bool,
+		name = "enable MoveDef depth-modifiers",
+		desc = "determines if ground-units slow down in water",
+	},
+
 	--[[ Removed till spawner is fixed
 	{
 		key    = "BOSSES",
