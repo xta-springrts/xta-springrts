@@ -226,7 +226,7 @@ local moveDefs = {
 		maxWaterDepth = 255,
 		maxSlope = 35.0,
 		slopeMod = (enableSlopeMods and EngineDefaultSlopeMod(35.0)) or 0.0,
-		crushStrength = 3000.0,
+		crushStrength = 3000.0, -- ??
 	},
 
 	-- MISC
@@ -243,7 +243,8 @@ local moveDefs = {
 		footprintZ = 5,
 		maxWaterDepth = 90,
 		maxSlope = 25.0,
-		crushStrength = 400.0,
+		slopeMod = (enableSlopeMods and EngineDefaultSlopeMod(25.0)) or 0.0,
+		crushStrength = 500.0,
 	},
 	[22] = {
 		name = "CRAWLBOMB",

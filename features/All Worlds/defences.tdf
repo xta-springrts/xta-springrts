@@ -11,7 +11,7 @@
 	hitdensity=100;
 	metal=8;
 	damage=1200; //2400
-	mass=250;
+	crushResistance=250;
 	reclaimable=1;
 	autoreclaimable=0;
 	featuredead=rock_teeth;
@@ -33,7 +33,7 @@
 	blocking=1;
 	hitdensity=100;
 	metal=9;
-	mass=250;
+	crushResistance=250;
 	damage=1275; //2550
 	reclaimable=1;
 	autoreclaimable=0;
@@ -74,7 +74,7 @@
 	hitdensity=100;
 	metal=20;
 	damage=1750; //3500
-	mass=350;
+	crushResistance=350;
 	reclaimable=1;
 	autoreclaimable=0;
 	floating=1;
@@ -96,7 +96,7 @@
 	hitdensity=100;
 	metal=18;
 	damage=1900; //3800
-	mass=350;
+	crushResistance=350;
 	reclaimable=1;
 	autoreclaimable=0;
 	floating=1;
@@ -118,6 +118,7 @@
 	hitdensity=100;
 	metal=27;
 	damage=4800;
+	crushResistance=450;
 	reclaimable=1;
 	autoreclaimable=0;
 	featuredead=rock_fort;
@@ -141,6 +142,7 @@
 	hitdensity=100;
 	metal=30;
 	damage=4813;
+	crushResistance=450;
 	reclaimable=1;
 	autoreclaimable=0;
 	featuredead=rock_fort;
