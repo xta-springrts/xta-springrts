@@ -1289,16 +1289,16 @@
 	[core_adv_vehicle_plant]
 	{
 		canbuild1=core_adv_construction_vehicle;
-		canbuild2=core_crockold;
+		canbuild2=core_crock;
 		canbuild3=core_reaper;
 		canbuild4=core_deleter;
-		canbuild5=core_mobile_artilleryold;
+		canbuild5=core_pillager;
 		canbuild6=core_egg_shell;//xtaids
 		canbuild7=core_goliath;
 		canbuild8=core_informer;
 		canbuild9=core_diplomat;
 		canbuild10=core_diplomat_rt;
-		canbuild11=core_copperheadold;
+		canbuild11=core_copperhead;
 		canbuild12=cor_jumbo;//xtaids
 		canbuild13=core_hedgehog;
 		canbuild14=scorp3g;//xtaids

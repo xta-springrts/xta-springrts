@@ -18,7 +18,7 @@
 	//******************
 	unitname=core_reaper;
 	unitnumber=128;
-	objectname=core_reaper.s3o;
+	objectname=core_reaper_mrd.s3o;
 	corpse=core_reaper_dead;
 	buildpic=core_reaper.DDS;
 	soundcategory=CORE_TANK;

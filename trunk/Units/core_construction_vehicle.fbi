@@ -18,7 +18,7 @@
 	//******************
 	unitname=core_construction_vehicle;
 	unitnumber=98;
-	objectname=core_construction_vehicle.s3o;
+	objectname=core_construction_vehicle_mrd.s3o;
 	corpse=core_construction_vehicle_dead;
 	buildpic=core_construction_vehicle.DDS;
 	soundcategory=CORE_CVEHICLE;

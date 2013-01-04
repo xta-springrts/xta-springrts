@@ -18,7 +18,7 @@
 	//******************
 	unitname=core_slasher;
 	unitnumber=119;
-	objectname=core_slasher.s3o;
+	objectname=core_slasher_mrd.s3o;
 	corpse=core_slasher_dead;
 	buildpic=core_slasher.DDS;
 	soundcategory=CORE_VEHICLE;

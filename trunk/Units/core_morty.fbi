@@ -18,7 +18,7 @@
 	//******************
 	unitname=core_morty;
 	unitnumber=217;
-	objectname=core_morty.s3o;
+	objectname=core_morty_smoth.s3o;
 	corpse=core_morty_dead;
 	buildpic=core_morty.DDS;
 	soundcategory=COR_KBOT;

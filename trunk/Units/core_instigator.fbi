@@ -18,7 +18,7 @@
 	//******************
 	unitname=core_instigator;
 	unitnumber=108;
-	objectname=core_gator.s3o;
+	objectname=core_instigator_mrd.s3o;
 	corpse=core_instigator_dead;
 	buildpic=core_instigator.DDS;
 	soundcategory=CORE_TANK;

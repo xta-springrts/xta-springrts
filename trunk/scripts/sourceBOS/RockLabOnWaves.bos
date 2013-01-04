@@ -1,0 +1,23 @@
+#include "WindDirection.bos"
+
+RockOnWaves()
+{
+	var x,z,xs,zs;
+	while(1)
+	{
+		x= ROCK_AMPLITUDE*windDirectionX/1000;
+		z= ROCK_AMPLITUDE*windDirectionZ/1000;
+		xs=x;	zs=z;
+		if (xs< MIN_ROCK_SPEED) xs= MIN_ROCK_SPEED;
+		zs = get ABS(zs);
+		if (zs< MIN_ROCK_SPEED) zs= MIN_ROCK_SPEED;
+		turn base to z-axis x speed xs;
+		turn base to x-axis z speed zs;
+		wait-for-turn base around x-axis;
+		wait-for-turn base around z-axis;
+		turn base to z-axis 0-x speed xs;
+		turn base to x-axis 0-z speed zs;
+		wait-for-turn base around x-axis;
+		wait-for-turn base around z-axis;
+	}
+}

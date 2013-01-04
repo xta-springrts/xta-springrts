@@ -18,7 +18,7 @@
 	FootprintX=2;
 	FootprintZ=2;
 	MaxDamage=5500;
-	ObjectName=CScore_commander.s3o;
+	ObjectName=CScore_commander_mrd.s3o;
 	TEDClass=COMMANDER;
 	BrakeRate=0.96;
 	Acceleration=1.11;
