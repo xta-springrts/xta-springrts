@@ -19,7 +19,8 @@
 	//******************
 	unitname=core_aircraft_plant;
 	unitnumber=84;
-	objectname=core_aircraft_plant.3do;
+	objectname=core_aircraft_plant_mrd.s3o;
+	script=core_aircraft_plant_mrd_ca.lua;
 	corpse=core_aircraft_plant_dead;
 	buildpic=core_aircraft_plant.DDS;
 	soundcategory=AIRPLANT;

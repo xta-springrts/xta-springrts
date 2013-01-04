@@ -19,7 +19,8 @@
 	//******************
 	unitname=core_cobra;
 	unitnumber=161;
-	objectname=core_cobra.3do;
+	objectname=core_cobra_mrd_zk.s3o;
+	script=core_cobra_mrd_zk.cob;
 	corpse=core_cobra_dead;
 	buildpic=core_cobra.DDS;
 	soundcategory=GUARD;

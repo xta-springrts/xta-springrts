@@ -19,7 +19,8 @@
 	//******************
 	unitname=core_adv_vehicle_plant;
 	unitnumber=88;
-	objectname=core_adv_vehicle_plant.3do;
+	objectname=core_adv_vehicle_plant_mrd_ca.s3o;
+	script=core_adv_vehicle_plant_mrd_ca.lua;
 	corpse=core_adv_vehicle_plant_dead;
 	buildpic=core_adv_vehicle_plant.DDS;
 	soundcategory=TANKPLANT;

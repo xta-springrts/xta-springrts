@@ -1,0 +1,158 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+piece  flare1, flare2, base, turret1, barrel1, barrel2, turret2, ground;
+
+static-var  gun_1;
+
+// Signal definitions
+#define SIG_AIM				2
+
+SetDirection(heading)
+{
+	var spd;
+	spd = get ABS(heading);
+	turn ground to y-axis heading speed spd;
+	turn base to y-axis 0-heading speed spd;
+}
+
+RockOnWaves()
+{
+	while(1)
+	{
+		turn ground to x-axis <1.0> speed <1.5>;
+		move ground to y-axis [-0.8] speed [0.3];
+		wait-for-turn ground around x-axis;
+		turn ground to x-axis <-1.0> speed <1.5>;
+		move ground to y-axis [-1.0] speed [0.3];
+		wait-for-move ground along y-axis;
+		move ground to y-axis [-0.8] speed [0.3];
+		wait-for-turn ground around x-axis;
+		turn ground to x-axis <1.0> speed <1.5>;
+		move ground to y-axis [-1.0] speed [0.3];
+		wait-for-move ground along y-axis;
+	}
+}
+
+#include "SmokeUnit.bos"
+
+
+RockUnit(anglex, anglez)
+{
+	turn base to x-axis anglex speed <15.000000>;
+	turn base to z-axis anglez speed <15.000000>;
+	wait-for-turn base around z-axis;
+	wait-for-turn base around x-axis;
+	turn base to x-axis <0.000000> - anglex speed <12.000000>;
+	turn base to z-axis <0.000000> - anglez speed <12.000000>;
+}
+
+Create()
+{
+	hide flare1;
+	hide flare2;
+	dont-shade barrel1;
+	dont-shade barrel2;
+	dont-shade base;
+	dont-shade turret1;
+	dont-shade turret2;
+	gun_1 = flare1;
+	move ground to y-axis [-0.9] now;
+	start-script SmokeUnit();
+	start-script RockOnWaves();
+}
+
+AimPrimary(heading, pitch)
+{
+	signal SIG_AIM;
+	set-signal-mask SIG_AIM;
+	turn turret1 to y-axis heading speed <150.027473>;
+	turn turret2 to x-axis <0.000000> - pitch speed <150.027473>;
+	wait-for-turn turret1 around y-axis;
+	wait-for-turn turret2 around x-axis;
+	return (1);
+}
+
+FirePrimary()
+{
+	if( gun_1 )
+	{
+		move barrel2 to z-axis [-3.000000] now;
+		emit-sfx 1024 from flare2;
+		move barrel2 to z-axis [0.000000] speed [3.000000];
+	}
+	else
+	{
+		move barrel1 to z-axis [-3.000000] now;
+		emit-sfx 1024 from flare1;
+		move barrel1 to z-axis [0.000000] speed [3.000000];
+	}
+	gun_1 = !gun_1;
+}
+
+QueryPrimary(piecenum)
+{
+	piecenum = gun_1;
+}
+
+AimFromPrimary(piecenum)
+{
+	piecenum = turret2;
+}
+
+SweetSpot(piecenum)
+{
+	piecenum = base;
+}
+
+Killed(severity, corpsetype)
+{
+	hide flare1;
+	hide flare2;
+	if( severity <= 25 )
+	{
+		corpsetype = 1;
+		explode barrel1 type BITMAPONLY | BITMAP1;
+		explode barrel2 type BITMAPONLY | BITMAP2;
+		explode base type BITMAPONLY | BITMAP3;
+		explode flare1 type BITMAPONLY | BITMAP4;
+		explode flare2 type BITMAPONLY | BITMAP5;
+		explode turret1 type BITMAPONLY | BITMAP1;
+		explode turret2 type BITMAPONLY | BITMAP2;
+		return (0);
+	}
+	if( severity <= 50 )
+	{
+		corpsetype = 2;
+		explode barrel1 type FALL | BITMAP1;
+		explode barrel2 type FALL | BITMAP2;
+		explode base type BITMAPONLY | BITMAP3;
+		explode flare1 type FALL | BITMAP4;
+		explode flare2 type FALL | BITMAP5;
+		explode turret1 type SHATTER | BITMAP1;
+		explode turret2 type BITMAPONLY | BITMAP2;
+		return (0);
+	}
+	if( severity <= 99 )
+	{
+		corpsetype = 3;
+		explode barrel1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+		explode barrel2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+		explode base type BITMAPONLY | BITMAP3;
+		explode flare1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+		explode flare2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+		explode turret1 type SHATTER | BITMAP1;
+		explode turret2 type BITMAPONLY | BITMAP2;
+		return (0);
+	}
+	corpsetype = 3;
+	explode barrel1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+	explode barrel2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode base type BITMAPONLY | BITMAP3;
+	explode flare1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+	explode flare2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+	explode turret1 type SHATTER | EXPLODE_ON_HIT | BITMAP1;
+	explode turret2 type BITMAPONLY | BITMAP2;
+}

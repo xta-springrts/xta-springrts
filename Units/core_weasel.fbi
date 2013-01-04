@@ -18,7 +18,7 @@
 	//******************
 	unitname=core_weasel;
 	unitnumber=103;
-	objectname=core_weasel.s3o;
+	objectname=core_weasel_mrd.s3o;
 	corpse=core_weasel_dead;
 	buildpic=core_weasel.DDS;
 	soundcategory=CORE_VEHICLE;

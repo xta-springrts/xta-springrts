@@ -19,7 +19,7 @@
 	//******************
 	unitname=core_ucommander;
 	unitnumber=94;
-	objectname=core_commander.s3o;
+	objectname=core_commander_mrd.s3o;
 	buildpic=core_commander.DDS;
 	soundcategory=CORE_COM;
 

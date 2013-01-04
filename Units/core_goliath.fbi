@@ -18,7 +18,7 @@
 	//******************
 	unitname=core_goliath;
 	unitnumber=110;
-	objectname=corgol.s3o;
+	objectname=core_goliath_mrd.s3o;
 	corpse=core_goliath_dead;
 	buildpic=core_goliath.DDS;
 	soundcategory=CORE_TANK;
