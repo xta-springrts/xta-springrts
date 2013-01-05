@@ -19,13 +19,12 @@
 	unitname=core_copperhead;
 	unitnumber=314;
 
-	objectname=core_copperhead_mrd_zk.s3o;
-	// FIXME: references some pieces that don't exist ("base", "aim")
-	script=core_copperhead_mrd_zk.cob;
+	objectname=core_copperhead_mrd_ca.s3o;
+	script=core_copperhead_mrd_ca.cob;
 
 	// OTA junk
 	// objectname=core_copperhead.3do;
-	// script=core_copperhead_ota.cob;
+	// script=core_copperhead.cob;
 
 	corpse=core_copperhead_dead;
 	buildpic=core_copperhead.DDS;
@@ -92,7 +91,8 @@
 	//************************************************************
 	//  Weapons
 	//***********
-	weapon1=CORSENT_GUN;
+	weapon1=NOWEAPON;
+	weapon2=CORSENT_GUN;
 	nochasecategory=vtol;
 	wpri_badtargetcategory=NOTAIR;
 	explodeas=BIG_UNITEX;
