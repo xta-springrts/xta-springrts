@@ -18,7 +18,7 @@
 	//******************
 	unitname=core_garpike;
 	unitnumber=22;
-	objectname=corgarp_512.s3o;
+	objectname=core_garpike_mrd.s3o;
 	corpse=core_garpike_dead;
 	buildpic=core_garpike.png;
 	soundcategory=core_TANK;

@@ -19,7 +19,7 @@
 	//******************
 	unitname=core_vehicle_plant;
 	unitnumber=150;
-	objectname=corvp.s3o;
+	objectname=core_vehicle_plant_mrd.s3o;
 	corpse=core_vehicle_plant_dead;
 	buildpic=core_vehicle_plant.DDS;
 	soundcategory=TANKPLANT;

@@ -18,7 +18,7 @@
 	//******************
 	unitname=core_informer;
 	unitnumber=151;
-	objectname=core_informer.s3o;
+	objectname=core_informer_mrd.s3o;
 	corpse=core_informer_dead;
 	buildpic=core_informer.DDS;
 	soundcategory=CORE_VEHICLE;
