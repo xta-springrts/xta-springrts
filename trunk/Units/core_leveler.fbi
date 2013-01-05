@@ -18,7 +18,7 @@
 	//******************
 	unitname=core_leveler;
 	unitnumber=266;
-	objectname=corleveler_512.s3o;
+	objectname=core_leveler_mrd.s3o;
 	corpse=core_leveler_dead;
 	buildpic=core_leveler.DDS;
 	soundcategory=CORE_TANK;
