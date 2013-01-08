@@ -10,35 +10,6 @@ function gadget:GetInfo()
   }
 end
 
-local spEcho = Spring.Echo
-local spGetGameSeconds = Spring.GetGameSeconds
-local spGetGameFrame = Spring.GetGameFrame
-
-local spGetTeamInfo = Spring.GetTeamInfo
-local spSetTeamResource = Spring.SetTeamResource
-local spAddTeamResource = Spring.AddTeamResource
-local spGetTeamResources = Spring.GetTeamResources
-local spUseTeamResource = Spring.UseTeamResource
-
-local spGetGroundHeight = Spring.GetGroundHeight
-
-local spGetUnitDefID = Spring.GetUnitDefID
-local spCreateUnit = Spring.CreateUnit
-local spDestroyUnit = Spring.DestroyUnit
-local spTransferUnit = Spring.TransferUnit
-local spSetUnitPosition = Spring.SetUnitPosition
-
-local spGetUnitsInCylinder = Spring.GetUnitsInCylinder
-local spGetUnitsInRectangle = Spring.GetUnitsInRectangle
-local spGetTeamUnits = Spring.GetTeamUnits
-local spGetTeamUnitsSorted = Spring.GetTeamUnitsSorted
-local spGetTeamUnitCount = Spring.GetTeamUnitCount
-local spGetTeamUnitDefCount = Spring.GetTeamUnitDefCount
-
-local spCreateFeature = Spring.CreateFeature
-
-local spPlaySoundFile = Spring.PlaySoundFile
-
 local modOptions = Spring.GetModOptions()
 local gaiaTeamID = Spring.GetGaiaTeamID()
 local teams = Spring.GetTeamList()
@@ -53,13 +24,43 @@ local abs = math.abs
 local floor = math.floor
 local ceil = math.ceil
 local pairs = pairs
+local spGetGameFrame = Spring.GetGameFrame
+local spGetGroundHeight = Spring.GetGroundHeight
+
+
+if (gadgetHandler:IsSyncedCode()) then	-- SYNCED
+
+local spEcho = Spring.Echo
+local spGetGameSeconds = Spring.GetGameSeconds
+
+local spGetTeamInfo = Spring.GetTeamInfo
+local spSetTeamResource = Spring.SetTeamResource
+local spAddTeamResource = Spring.AddTeamResource
+local spGetTeamResources = Spring.GetTeamResources
+local spUseTeamResource = Spring.UseTeamResource
+
+local spGetUnitDefID = Spring.GetUnitDefID
+local spCreateUnit = Spring.CreateUnit
+local spCreateFeature = Spring.CreateFeature
+local spDestroyUnit = Spring.DestroyUnit
+local spTransferUnit = Spring.TransferUnit
+local spSetUnitPosition = Spring.SetUnitPosition
+local spGetUnitHealth = Spring.GetUnitHealth
+
+local spGetUnitsInCylinder = Spring.GetUnitsInCylinder
+local spGetUnitsInRectangle = Spring.GetUnitsInRectangle
+local spGetTeamUnits = Spring.GetTeamUnits
+local spGetTeamUnitsSorted = Spring.GetTeamUnitsSorted
+local spGetTeamUnitCount = Spring.GetTeamUnitCount
+local spGetTeamUnitDefCount = Spring.GetTeamUnitDefCount
+local spGetTeamUnitsByDefs = Spring.GetTeamUnitsByDefs
+
+local spPlaySoundFile = Spring.PlaySoundFile
 
 local triggers, switches, timers = {}, {}, {}
 local killCounter, deathCounter = {}, {}
 local killCounterType = {}
 local gameData, spawnData, missionTriggers, locations = {}, {}, {}, {}
-
-if (gadgetHandler:IsSyncedCode()) then
 
 local function initTriggers()	-- pre-parse triggers
 	for teamID, trig in pairs(missionTriggers) do
@@ -198,34 +199,48 @@ local function testCondition(cond, teamID)
 		local unitsInArea = {}
 		if loc==nil then
 			if type=="ANY" then
-				if qty >= 0 then
-					return spGetTeamUnitCount(teamID) >= qty
-				else
-					return spGetTeamUnitCount(teamID) < qty
-				end
+				unitsInArea = spGetTeamUnits(teamID)
 			else
-				if qty >= 0 then
-					return spGetTeamUnitDefCount(teamID, UnitDefNames[type].id) >= qty
-				else
-					return spGetTeamUnitDefCount(teamID, UnitDefNames[type].id) < qty
-				end
+				unitsInArea = spGetTeamUnitsByDefs(teamID, UnitDefNames[type].id)
 			end
+			local count = 0
+			for _, unitID in pairs(unitsInArea) do
+				local _, _, _, _, build = spGetUnitHealth(unitID)
+				if build>=1 then
+					count = count + 1
+				end
+			end			
+			if qty >= 0 then
+				return count >= qty
+			else
+				return count < qty
+			end	
 		elseif loc.shape == "C" then
 			unitsInArea = spGetUnitsInCylinder(loc.X,loc.Z,loc.r,teamID)
 		elseif loc.shape == "R" then
 			unitsInArea = spGetUnitsInRectangle(loc.X1,loc.Z1,loc.X2,loc.Z2,teamID)
 		end
 		if type=="ANY" then
+			local count = 0
+			for _, unitID in pairs(unitsInArea) do
+				local _, _, _, _, build = spGetUnitHealth(unitID)
+				if build>=1 then
+					count = count + 1
+				end
+			end
 			if qty >= 0 then
-				return #unitsInArea >= qty
+				return count >= qty
 			else
-				return #unitsInArea < qty
+				return count < qty
 			end
 		else
 			local count, uDefID = 0, UnitDefNames[type].id
 			for _, unitID in pairs(unitsInArea) do
 				if spGetUnitDefID(unitID) == uDefID then
-					count = count + 1
+					local _, _, _, _, build = spGetUnitHealth(unitID)
+					if build>=1 then
+						count = count + 1
+					end
 				end
 			end
 			if qty >= 0 then
@@ -458,6 +473,18 @@ local function DoActions(actions, teamID, trigNo)
 					end
 				end
 			end
+			
+		-- Loc number (true|false|flip)
+		elseif actn[1]=="Loc" then
+			local num = tonumber(actn[2])
+			if actn[3]=="true" then
+				locations[num].visible = true
+			elseif actn[3]=="false" then
+				locations[num].visible = false
+			elseif actn[3]=="flip" then
+				locations[num].visible = not (locations[num].visible==true)
+			end
+			SendToUnsynced("LocationVisibilty", num, locations[num].visible)
 
 		-- Move (unitname|ANY) src dest [teamID]
 		elseif actn[1]=="Move" then
@@ -564,9 +591,9 @@ local function DoActions(actions, teamID, trigNo)
 		elseif actn[1]=="Switch" then
 			local num = tonumber(actn[2])
 			if actn[3]=="true" then
-				switches[num]=true
+				switches[num] = true
 			elseif actn[3]=="false" then
-				switches[num]=false
+				switches[num] = false
 			elseif actn[3]=="flip" then
 				switches[num] = not (switches[num]==true)
 			end
@@ -588,30 +615,33 @@ local function DoActions(actions, teamID, trigNo)
 end
 
 function gadget:UnitDestroyed(unitID, unitDefID, teamID, attackerID, attackerDefID, attackerTeamID)
-	-- don't track gaia team's kills, but if a gaia unit is killed, it counts under per unit type kill
-	if attackerID and attackerTeamID and killCounter[attackerTeamID] and attackerTeamID ~= gaiaTeamID and teamID ~= attackerTeamID then
-		if teamID ~= gaiaTeamID then	-- don't track per team kills for gaia units
-			if killCounter[attackerTeamID][teamID][unitDefID] then -- player's per team per unit type kills
-				killCounter[attackerTeamID][teamID][unitDefID] = killCounter[attackerTeamID][teamID][unitDefID] + 1
-			else
-				killCounter[attackerTeamID][teamID][unitDefID] = 1
+	local _, _, _, _, build = spGetUnitHealth(unitID)
+	if build>=1 then	-- don't count destruction of unfinished units
+		-- don't track gaia team's kills, but if a gaia unit is killed, it counts under per unit type kill
+		if attackerID and attackerTeamID and killCounter[attackerTeamID] and attackerTeamID ~= gaiaTeamID and teamID ~= attackerTeamID then
+			if teamID ~= gaiaTeamID then	-- don't track per team kills for gaia units
+				if killCounter[attackerTeamID][teamID][unitDefID] then -- player's per team per unit type kills
+					killCounter[attackerTeamID][teamID][unitDefID] = killCounter[attackerTeamID][teamID][unitDefID] + 1
+				else
+					killCounter[attackerTeamID][teamID][unitDefID] = 1
+				end
+				killCounter[attackerTeamID][teamID]["total"] = killCounter[attackerTeamID][teamID]["total"] + 1 -- player's per team kills
 			end
-			killCounter[attackerTeamID][teamID]["total"] = killCounter[attackerTeamID][teamID]["total"] + 1 -- player's per team kills
+			if killCounterType[attackerTeamID][unitDefID] then -- players' per unit type kills
+				killCounterType[attackerTeamID][unitDefID] = killCounterType[attackerTeamID][unitDefID] + 1
+			else
+				killCounterType[attackerTeamID][unitDefID] = 1		
+			end
+			killCounter[attackerTeamID]["total"] = killCounter[attackerTeamID]["total"] + 1	-- player's total kills
 		end
-		if killCounterType[attackerTeamID][unitDefID] then -- players' per unit type kills
-			killCounterType[attackerTeamID][unitDefID] = killCounterType[attackerTeamID][unitDefID] + 1
-		else
-			killCounterType[attackerTeamID][unitDefID] = 1		
+		if teamID ~= gaiaTeamID then	-- don't track deaths of gaia team
+			if deathCounter[teamID][unitDefID] then
+				deathCounter[teamID][unitDefID] = deathCounter[teamID][unitDefID] + 1	-- per unit type deaths
+			else
+				deathCounter[teamID][unitDefID] = 1
+			end
+			deathCounter[teamID]["total"] = deathCounter[teamID]["total"] + 1 -- total deaths
 		end
-		killCounter[attackerTeamID]["total"] = killCounter[attackerTeamID]["total"] + 1	-- player's total kills
-	end
-	if teamID ~= gaiaTeamID then	-- don't track deaths of gaia team
-		if deathCounter[teamID][unitDefID] then
-			deathCounter[teamID][unitDefID] = deathCounter[teamID][unitDefID] + 1	-- per unit type deaths
-		else
-			deathCounter[teamID][unitDefID] = 1
-		end
-		deathCounter[teamID]["total"] = deathCounter[teamID]["total"] + 1 -- total deaths
 	end
 end
 
@@ -655,6 +685,16 @@ end
 
 else	--UNSYNCED
 
+local glColor = gl.Color
+local glLineWidth = gl.LineWidth
+local glDrawGroundCircle = gl.DrawGroundCircle
+local glDrawGroundQuad = gl.DrawGroundQuad
+local gameData, locations = {}, {}
+
+local function LocationVisibilty(_, locnum, vis)
+	locations[locnum].visible = vis
+end
+
 function gadget:Initialize()
 	if modOptions and modOptions.mission then
 		local mission = "Missions/" .. modOptions.mission ..".lua"
@@ -664,6 +704,8 @@ function gadget:Initialize()
 				if gameData.map ~= Game.mapName then
 					gadgetHandler:RemoveGadget()
 				else
+					gadgetHandler:AddSyncAction('LocationVisibilty', LocationVisibilty)  
+					--[[	abort removing of gadget if there are no visible locations at start, that can change by trigger actions
 					local i=1
 					while i <= #locations do	-- remove from location list all locations that aren't drawn on ground
 						if not locations[i].visible or locations[i].visible==false then
@@ -675,6 +717,7 @@ function gadget:Initialize()
 					if #locations == 0 then
 						gadgetHandler:RemoveGadget()	-- there are no locations that need drawing
 					end
+					--]]
 				end
 			else
 				gadgetHandler:RemoveGadget()
@@ -689,14 +732,16 @@ end
 
 function gadget:DrawWorldPreUnit()
 	local alpha = abs(spGetGameFrame() % 60 - 30)/30
-	gl.LineWidth(10)
+	glLineWidth(10)
 	for i=1, #locations do
 		local loc = locations[i]
-		if loc.RGB then gl.Color(loc.RGB[1], loc.RGB[2], loc.RGB[3], alpha) else gl.Color(1.0, 1.0, 1.0, alpha) end
-		if loc.shape=="C" then
-			gl.DrawGroundCircle(loc.X, spGetGroundHeight(loc.X, loc.Z), loc.Z, loc.r-3, 24)
-		elseif loc.shape=="R" then
-			gl.DrawGroundQuad(loc.X1, loc.Z1, loc.X2, loc.Z2)
+		if loc.visible then
+			if loc.RGB then glColor(loc.RGB[1], loc.RGB[2], loc.RGB[3], alpha) else glColor(1.0, 1.0, 1.0, alpha) end
+			if loc.shape=="C" then
+				glDrawGroundCircle(loc.X, spGetGroundHeight(loc.X, loc.Z), loc.Z, loc.r-3, 24)
+			elseif loc.shape=="R" then
+				glDrawGroundQuad(loc.X1, loc.Z1, loc.X2, loc.Z2)
+			end
 		end
 	end
 end

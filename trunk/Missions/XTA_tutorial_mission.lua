@@ -71,6 +71,7 @@ missionTriggers = {
 			},
 			actions = {
 				"Echo Great, now you have 5 basic attack units, go kick some robot arse, the enemy should be on the center right side of the map",
+				"Loc 1 true",
 			},
 			once = true,
 		},
@@ -78,6 +79,31 @@ missionTriggers = {
 }
 
 locations = {
+	[1] = {
+		shape = "C",
+		X = 3775,
+		Z = 2032,
+		r = 60,
+		visible = false,
+		RGB = {1.0, 0.0, 0.0},
+	},
 }
 
-return gameData, spawnData, missionTriggers, locations
+briefing = {
+	"$cXTA Tutorial Mission",
+	"",
+	"",
+	"Wellcome to XTA, a real time strategy game powered by Spring RTS engine.",
+	"",
+	"In this tutorial mission you'll learn the basics of gameplay:",
+	"       1: How to build a base and units",
+	"       2: Elementary combat",
+	"",
+	"Have fun playing XTA",
+	"",
+	"",
+	"$rDeadnight Warrior",
+	"$rXTA dev team"
+}
+
+return gameData, spawnData, missionTriggers, locations, briefing

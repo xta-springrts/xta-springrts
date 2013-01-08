@@ -128,7 +128,28 @@ locations = {	-- use numerical indexes starting from 1
 	},
 }
 
-return gameData, spawnData, missionTriggers, locations
+briefing = {	-- optional, consists of strings which will be displayed one per line
+	"$cTest Mission Briefing",
+	"",
+	"",
+	"This is a test mission. It's meant as an example for mission developers to get acquainted with mission editor and",
+	"mission script format.",
+	"",
+	"The objective of this mission is to bring your commander to centre of the map, inside the pulsating red circle.",
+	"The two pulsating squares (white and blue) are entrance and exit of a teleport. Moving your units to white square",
+	"will teleport them to blue one.",
+	"",
+	"The briefing text is left aligned and isn't wraped if larger than window. Developer must take care that string line doesn't",
+	"exceed line capacity. Nothing serious will happen in that case, it'll only look bad.",
+	"If the string begins with $c then that particular line will be centred, $r for right alignment. Formatting command",
+	'is ignored in text output and no spaces are needed after it. So you can make a string like: "$cMission Title"',
+	"",
+	"",
+	"$rDeadnight Warrior",
+	"$rXTA dev team",
+}
+
+return gameData, spawnData, missionTriggers, locations, briefing
 
 --[[	Trigger documentation
 
@@ -197,13 +218,17 @@ spawn a quantity of units of unitname type at location locIdx either for player 
 kills all units of unitname or ANY type for teamID, either on entire map or at location locIdx,
 units killed this way are counted as killed by trigger owner
 
+	Loc number (true|false|flip)
+sets the visibility of a location specified by number to visible (true), invisible (false), or
+flips its visibilty state
+	
 	Move (unitname|ANY) src dest [teamID]
 move all units of unitname or ANY type from location src to location dest, filtered by
 either teamID or all units at location src
 
 	Play soundfile
 plays a sound from the game archive, use VFS path, typicaly "sounds/mysound.wav", sound will be global
-so in a cooperative mission all player will hear it
+so in a cooperative mission all players will hear it
 
 	Share (unitname|ANY) teamID [locIdx]
 shares all units of unitname or ANY type to teamID, either owned on entire map or at location locIdx,

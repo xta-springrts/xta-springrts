@@ -190,4 +190,13 @@ missionTriggers = {
 locations = {
 }
 
-return gameData, spawnData, missionTriggers, locations
+briefing = {
+	"$cHide and Seek",
+	"",
+	"",
+	"Commander, we got reports about enemy establishing a base on the far side of sector 007. Our forces there are",
+	"very limited, but we can't allow enemy to gain hold of that area. Use the scouting party at out outpost to deal with",
+	"this threat, but beware, enemy outnumbers you and you have no reinforcments."
+}
+
+return gameData, spawnData, missionTriggers, locations, briefing
