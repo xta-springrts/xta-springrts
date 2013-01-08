@@ -14,9 +14,6 @@ end
 local popupUnits = {}		--list of pop-up style units
 local unitCollisionVolume, pieceCollisionVolume, dynamicPieceCollisionVolume = include("LuaRules/Configs/CollisionVolumes.lua")
 
--- Building's radius must be scaled after UnitFinished()
-local scaleBuilding = {}
-
 -- Localization and speedups
 local spGetPieceCollisionData = Spring.GetUnitPieceCollisionVolumeData
 local spSetPieceCollisionData = Spring.SetUnitPieceCollisionVolumeData
@@ -137,9 +134,10 @@ if (gadgetHandler:IsSyncedCode()) then
 			if (vtype>=3 and xs==ys and ys==zs) then
 				spSetUnitCollisionData(unitID, xs*ws, ys*hs, zs*rs,  xo, yo, zo,  vtype, htype, axis)
 			end
-			--Reduce radius and height for 3DO units, for buildings this results in cons not being able
-			--to start or finish them depending if the scaling was made on UnitCreated() or UnitFinished()
-			--if not UnitDefs[unitDefID].isBuilding then
+			-- the following lines are commented because they're not needed in XTA, but that might change
+			--if UnitDefs[unitDefID].canFly and UnitDefs[unitDefID].transportCapacity>0 then
+			--	spSetUnitRadiusAndHeight(unitID, 16, 16)
+			--else
 				spSetUnitRadiusAndHeight(unitID, spGetUnitRadius(unitID)*rs, spGetUnitHeight(unitID)*hs)
 			--end
 		end
@@ -174,17 +172,6 @@ if (gadgetHandler:IsSyncedCode()) then
 		elseif dynamicPieceCollisionVolume[un] then
 			popupUnits[unitID]={name=un, state=-1, perPiece=true, numPieces = #spGetPieceList(unitID)-1}
 		end
-		--[[
-		if UnitDefs[unitDefID].isBuilding and UnitDefs[unitDefID].model.type=="3do" then
-			local rs, hs
-			if (spGetUnitRadius(unitID)>47) then
-				rs, hs, ws = 0.68, 0.68
-			else
-				rs, hs, ws = 0.75, 0.75
-			end
-			scaleBuilding[unitID] = {rs, hs, 3+select(1,spGetGameFrame())}
-		end
-		--]]
 	end
 
 
@@ -256,19 +243,6 @@ if (gadgetHandler:IsSyncedCode()) then
 				end
 			end			
 		end
-		-- Rescale radius and height of buildings in list
-		--[[
-		for unitID, p in pairs(scaleBuilding) do
-			if spValidUnitID(unitID) then
-				if p[3] < select(1,spGetGameFrame()) then
-					spSetUnitRadiusAndHeight(unitID, spGetUnitRadius(unitID)*p[1], spGetUnitHeight(unitID)*p[2])
-					scaleBuilding[unitID] = nil
-				end
-			else
-				scaleBuilding[unitID] = nil
-			end
-		end
-		--]]
 	end
 	
 end
