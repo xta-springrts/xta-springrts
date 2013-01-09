@@ -7,4 +7,5 @@ if (select == nil) then
 end
 
 VFS.Include(Script.GetName() .. '/gadgets.lua', nil, VFS.ZIP_ONLY)
---VFS.Include("LuaGadgets/gadgets.lua")	-- default engine gadget handler
+-- TODO: use default engine gadget handler since it is more up-to-date
+-- VFS.Include("LuaGadgets/gadgets.lua")
