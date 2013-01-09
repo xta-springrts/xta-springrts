@@ -4270,6 +4270,16 @@
 		group_landair=201;
 	}
 }
+[CORSENT_GUN_NOWEAPON]
+{
+	range=720;
+	[DAMAGE]
+	{
+		default=0;
+		group_invincible=1;
+	}
+}
+
 [CORSFIG_WEAPON]
 {
 	name=Light Laser;

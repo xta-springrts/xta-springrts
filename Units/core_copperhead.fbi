@@ -91,7 +91,7 @@
 	//************************************************************
 	//  Weapons
 	//***********
-	weapon1=NOWEAPON;
+	weapon1=CORSENT_GUN_NOWEAPON;
 	weapon2=CORSENT_GUN;
 	nochasecategory=vtol;
 	wpri_badtargetcategory=NOTAIR;
