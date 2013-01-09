@@ -64,6 +64,7 @@ local Sounds = {
 		FailedCommand = {
 			file = "sounds/cantdo4.wav",       
 		},
+
 		--[[ Has undesired effects
 		default = {
 			--- new since 89.0
@@ -77,6 +78,16 @@ local Sounds = {
 			maxconcurrent = 1,
 			dopplerscale = 0,
 			priority = -1,
+		},
+		-- dgun explosion sound, normally plays every frame
+		-- because dgun projectiles are ground-hugging and
+		-- collide with it for each frame of their lifetime
+		-- ==> limit concurrency to prevent resonance
+		xplomas2 = {
+			file = "sounds/xplomas2.wav",
+			maxconcurrent = 4,
+			pitchmod = 0.05,
+			maxdist = 2000,
 		}
    },
 }

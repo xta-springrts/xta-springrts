@@ -101,36 +101,37 @@ else
 	local pID = Spring.GetLocalPlayerID()
 	local pTable = {}
 	local nonexplosiveWeapons = {
-	LaserCannon = true,
-	BeamLaser = true,
-	EmgCannon = true,
-	Flame = true,
-	LightningCannon = true,
-	DGun = true,
+		LaserCannon = true,
+		BeamLaser = true,
+		EmgCannon = true,
+		Flame = true,
+		LightningCannon = true,
+		DGun = true,
 	}
-	local dgunTable = {}
+
 	function gadget:Initialize()
-		
 		--Echo("Sound files:")
 		--Echo("-------------")
 		local pID = Spring.GetLocalPlayerID()
 		Spring.SendLuaRulesMsg(LUAMESSAGE .. pID)
-		for id,weaponDef in pairs(WeaponDefs) do
-			if weaponDef.customParams then
-				if weaponDef.customParams.soundhitwet and string.len(weaponDef.customParams.soundhitwet) > 0 then
-					sndwet[id] = weaponDef.customParams.soundhitwet
-				else
-					--Echo("No wet sound for:", id, weaponDef.name)
-				end
-				if weaponDef.customParams.soundhitdry and string.len(weaponDef.customParams.soundhitdry) > 0 then
-					snddry[id] = weaponDef.customParams.soundhitdry
-				else
-					--Echo("No dry sound for:", id, weaponDef.name)
-				end
-				if weaponDef.customParams.soundstart and string.len(weaponDef.customParams.soundstart) > 0 then
-					sndstart[id] = weaponDef.customParams.soundstart
-				else
-					--Echo("No start sound for:", id, weaponDef.name)
+		for id, weaponDef in pairs(WeaponDefs) do
+			if (weaponDef.name == nil or weaponDef.name:find("Disintegrator") == nil) then
+				if (weaponDef.customParams ~= nil) then
+					if weaponDef.customParams.soundhitwet and string.len(weaponDef.customParams.soundhitwet) > 0 then
+						sndwet[id] = weaponDef.customParams.soundhitwet
+					else
+						--Echo("No wet sound for:", id, weaponDef.name)
+					end
+					if weaponDef.customParams.soundhitdry and string.len(weaponDef.customParams.soundhitdry) > 0 then
+						snddry[id] = weaponDef.customParams.soundhitdry
+					else
+						--Echo("No dry sound for:", id, weaponDef.name)
+					end
+					if weaponDef.customParams.soundstart and string.len(weaponDef.customParams.soundstart) > 0 then
+						sndstart[id] = weaponDef.customParams.soundstart
+					else
+						--Echo("No start sound for:", id, weaponDef.name)
+					end
 				end
 			end
 		end
