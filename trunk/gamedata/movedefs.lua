@@ -35,29 +35,30 @@ end
 
 
 local moveDefs = {
+	-- NOTE: engine starts counting MoveDefs at 1, not 0
 	-- SHIPS
-	[0] = {
+	[1] = {
 		name = "SMALLBOAT",
 		footprintX = 2,
 		footprintZ = 3,
 		minWaterDepth = 5.0,
 		crushStrength = 50.0,
 	},
-	[1] = {
+	[2] = {
 		name = "MEDIUMBOAT",
 		footprintX = 3,
 		footprintZ = 4,
 		minWaterDepth = 25.0,
 		crushStrength = 200.0,
 	},
-	[2] = {
+	[3] = {
 		name = "LARGEBOAT",
 		footprintX = 4,
 		footprintZ = 6,
 		minWaterDepth = 50.0,
 		crushStrength = 1600.0,
 	},
-	[3] = {
+	[4] = {
 		name = "BOATSUB",
 		footprintX = 3,
 		footprintZ = 3,
@@ -67,7 +68,7 @@ local moveDefs = {
 	},
 
 	-- BOTS
-	[4] = {
+	[5] = {
 		name = "KBOTSF2",
 		footprintX = 2,
 		footprintZ = 2,
@@ -76,7 +77,7 @@ local moveDefs = {
 		slopeMod = (enableSlopeMods and EngineDefaultSlopeMod(36.0)) or 0.0,
 		crushStrength = 30.0,
 	},
-	[5] = {
+	[6] = {
 		name = "KBOTSf3",
 		footprintX = 3,
 		footprintZ = 3,
@@ -85,7 +86,7 @@ local moveDefs = {
 		slopeMod = (enableSlopeMods and EngineDefaultSlopeMod(24.0)) or 0.0,
 		crushStrength = 100.0,
 	},
-	[6] = {
+	[7] = {
 		name = "KBOTSS2",
 		footprintX = 2,
 		footprintZ = 2,
@@ -94,7 +95,7 @@ local moveDefs = {
 		slopeMod = (enableSlopeMods and EngineDefaultSlopeMod(36.0)) or 0.0,
 		crushStrength = 10.0,
 	},
-	[7] = {
+	[8] = {
 		name = "KBOTUW3",
 		footprintX = 3,
 		footprintZ = 3,
@@ -108,7 +109,7 @@ local moveDefs = {
 			linearCoeff = (enableDepthMods and 0.003) or 0.0,
 		}
 	},
-	[8] = {
+	[9] = {
 		name = "KBOTDS2",
 		footprintX = 2,
 		footprintZ = 2,
@@ -124,7 +125,7 @@ local moveDefs = {
 	},
 
 	-- TANKS
-	[9] = {
+	[10] = {
 		name = "TANKBH3",
 		footprintX = 3,
 		footprintZ = 3,
@@ -133,7 +134,7 @@ local moveDefs = {
 		slopeMod = (enableSlopeMods and EngineDefaultSlopeMod(18.0)) or 0.0,
 		crushStrength = 300.0,
 	},
-	[10] = {
+	[11] = {
 		name = "TANKDH3",
 		footprintX = 3,
 		footprintZ = 3,
@@ -147,7 +148,7 @@ local moveDefs = {
 			linearCoeff = (enableDepthMods and 0.003) or 0.0,
 		}
 	},
-	[11] = {
+	[12] = {
 		name = "TANKSH2",
 		footprintX = 2,
 		footprintZ = 2,
@@ -156,7 +157,7 @@ local moveDefs = {
 		slopeMod = (enableSlopeMods and EngineDefaultSlopeMod(18.0)) or 0.0,
 		crushStrength = 10.0,
 	},
-	[12] = {
+	[13] = {
 		name = "TANKSH3",
 		footprintX = 3,
 		footprintZ = 3,
@@ -165,7 +166,7 @@ local moveDefs = {
 		slopeMod = (enableSlopeMods and EngineDefaultSlopeMod(18.0)) or 0.0,
 		crushStrength = 15.0,
 	},
-	[13] = {
+	[14] = {
 		name = "TANKSH4",
 		footprintX = 4,
 		footprintZ = 4,
@@ -174,7 +175,7 @@ local moveDefs = {
 		slopeMod = (enableSlopeMods and EngineDefaultSlopeMod(18.0)) or 0.0,
 		crushStrength = 100.0,
 	},
-	[14] = {
+	[15] = {
 		-- Bulldog/Reaper/Goliath can crush DT's
 		name = "TANKDTCRUSH",
 		footprintX = 4,
@@ -186,7 +187,7 @@ local moveDefs = {
 	},
 
 	-- HOVERS
-	[15] = {
+	[16] = {
 		name = "HOVER2",
 		footprintX = 2,
 		footprintZ = 2,
@@ -194,7 +195,7 @@ local moveDefs = {
 		slopeMod = (enableSlopeMods and EngineDefaultSlopeMod(21.0)) or 0.0,
 		crushStrength = 10.0,
 	},
-	[16] = {
+	[17] = {
 		name = "HOVER3",
 		footprintX = 3,
 		footprintZ = 3,
@@ -202,7 +203,7 @@ local moveDefs = {
 		slopeMod = (enableSlopeMods and EngineDefaultSlopeMod(21.0)) or 0.0,
 		crushStrength = 30.0,
 	},
-	[17] = {
+	[18] = {
 		name = "HOVER4",
 		footprintX = 4,
 		footprintZ = 4,
@@ -210,7 +211,7 @@ local moveDefs = {
 		slopeMod = (enableSlopeMods and EngineDefaultSlopeMod(21.0)) or 0.0,
 		crushStrength = 50.0,
 	},
-	[18] = {
+	[19] = {
 		name = "HOVER9",
 		footprintX = 1,
 		footprintZ = 1,
@@ -219,7 +220,7 @@ local moveDefs = {
 		slopeMod = (enableSlopeMods and EngineDefaultSlopeMod(60.0)) or 0.0,
 		crushStrength = 30.0,
 	},
-	[19] = {
+	[20] = {
 		name = "HOVER10",
 		footprintX = 3,
 		footprintZ = 3,
@@ -230,14 +231,14 @@ local moveDefs = {
 	},
 
 	-- MISC
-	[20] = {
+	[21] = {
 		name = "SPID3",
 		footprintX = 2,
 		footprintZ = 2,
 		maxWaterDepth = 16.0,
 		crushStrength = 30.0,
 	},
-	[21] = {
+	[22] = {
 		name = "Krogoth",
 		footprintX = 5,
 		footprintZ = 5,
@@ -246,7 +247,7 @@ local moveDefs = {
 		slopeMod = (enableSlopeMods and EngineDefaultSlopeMod(25.0)) or 0.0,
 		crushStrength = 500.0,
 	},
-	[22] = {
+	[23] = {
 		name = "CRAWLBOMB",
 		footprintX = 1,
 		footprintZ = 1,
