@@ -2,10 +2,13 @@
 
 return {
   ["verticalbomb"] = {
+			
     dirta = {
       air                = true,
       class              = [[CSimpleParticleSystem]],
       count              = 1,
+	  alwaysvisible      = true,
+	  
       properties = {
         airdrag            = 0.7,
         alwaysvisible      = true,
@@ -33,6 +36,8 @@ return {
       class              = [[CSimpleParticleSystem]],
       count              = 1,
       ground             = true,
+	  alwaysvisible      = true,
+	  
       properties = {
         airdrag            = 0.7,
         alwaysvisible      = true,
@@ -60,6 +65,8 @@ return {
       class              = [[CSimpleParticleSystem]],
       count              = 1,
       water              = true,
+	  alwaysvisible      = true,
+	  
       properties = {
         airdrag            = 0.9,
         alwaysvisible      = true,
@@ -80,13 +87,15 @@ return {
         sizegrowth         = 1.2,
         sizemod            = 1.0,
         texture            = [[randdots]],
-        useairlos          = false,
+        useairlos          = true,
       },
     },
     dirtw2 = {
       class              = [[CSimpleParticleSystem]],
       count              = 1,
       water              = true,
+	  alwaysvisible      = true,
+	  
       properties = {
         airdrag            = 0.8,
         alwaysvisible      = true,
@@ -114,6 +123,8 @@ return {
       class              = [[CSpherePartSpawner]],
       count              = 1,
       water              = true,
+	  alwaysvisible      = true,
+	  
       properties = {
         alpha              = 0.4,
         alwaysvisible      = true,
@@ -128,6 +139,8 @@ return {
       count              = 1,
       ground             = true,
       water              = true,
+	  alwaysvisible      = true,
+	  
       properties = {
         alpha              = 1,
         alphadecay         = 0.19,
@@ -149,6 +162,7 @@ return {
       ground             = true,
       ttl                = 13,
       water              = true,
+	  alwaysvisible      = true,
       color = {
         [1]  = 1,
         [2]  = 0.5,
@@ -161,6 +175,8 @@ return {
       count              = 1,
       ground             = true,
       water              = true,
+	  alwaysvisible      = true,
+	  
       properties = {
         airdrag            = 0.8,
         alwaysvisible      = true,
@@ -190,6 +206,8 @@ return {
       count              = 2,
       ground             = true,
       water              = true,
+	  alwaysvisible      = true,
+	  
       properties = {
         alwaysvisible      = true,
         heat               = 10,
@@ -208,6 +226,8 @@ return {
       count              = 1,
       ground             = true,
       water              = true,
+	  alwaysvisible      = true,
+	  
       properties = {
         alwaysvisible      = true,
         heat               = 10,
@@ -226,6 +246,8 @@ return {
       count              = 1,
       ground             = true,
       water              = true,
+	  alwaysvisible      = true,
+	  
       properties = {
         alwaysvisible      = true,
         heat               = 10,
@@ -240,4 +262,3 @@ return {
     },
   },
 }
-
