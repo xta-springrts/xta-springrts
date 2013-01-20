@@ -71,7 +71,11 @@ end
   
 local exceptionMap  = {}
 for _, unitName in pairs(exceptionList) do
-  exceptionMap[UnitDefNames[unitName].id] = true
+	if exceptionMap[UnitDefNames[unitName]] then
+		exceptionMap[UnitDefNames[unitName].id] = true
+	else
+		Spring.Echo("No Self Pwn: Cannot find the following unit:", unitName)
+	end
 end
 
 
