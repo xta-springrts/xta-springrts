@@ -62,7 +62,7 @@ missionTriggers = {
 				"Kill 1 core_commander",
 			},
 			actions = {
-				"Bonus arm_commander 0"
+				"Bonus arm_commander 0",
 				"Victory",
 			},
 			once = true,

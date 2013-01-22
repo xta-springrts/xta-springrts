@@ -458,4 +458,4 @@ missionTriggers = {
 locations = {
 }
 
-return spawnData, missionTriggers, locations
+return gameData, spawnData, missionTriggers, locations
