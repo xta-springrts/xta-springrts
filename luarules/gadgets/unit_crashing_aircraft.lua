@@ -1,6 +1,11 @@
 if (gadgetHandler:IsSyncedCode()) then
+	
+	local random = math.random 
 	local crashingUnits = {}
-
+	
+	local CRASHCUTOFF = 0.33
+	local MINHEALTH = 0.5
+	
 	function gadget:GetInfo()
 		return {
 			name    = "unit_crashing_aircraft",
@@ -22,8 +27,8 @@ if (gadgetHandler:IsSyncedCode()) then
 			-- paralysis damage cannot trigger a crash
 			return damage, 1.0
 		end
-
-		if (damage > Spring.GetUnitHealth(unitID)) then
+		
+		if (damage > MINHEALTH * Spring.GetUnitHealth(unitID)) and random() < CRASHCUTOFF then
 			Spring.SetUnitCrashing(unitID, true)
 			Spring.SetUnitNoSelect(unitID, true)
 			Spring.SetUnitNeutral(unitID, true)
