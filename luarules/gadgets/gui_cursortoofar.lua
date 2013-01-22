@@ -12,20 +12,30 @@ function gadget:GetInfo()
 end
 
 -- function localisations
--- Synced Read
-local GetUnitDefID			= Spring.GetUnitDefID
-local GetUnitPosition		= Spring.GetUnitPosition
-local GetUnitsInCylinder	= Spring.GetUnitsInCylinder
-local ValidUnitID			= Spring.ValidUnitID
--- Synced Ctrl
-local CallCOBScript			= Spring.CallCOBScript
-local DestroyUnit			= Spring.DestroyUnit
-local RemoveBuildingDecal	= Spring.RemoveBuildingDecal
-local SetUnitMoveGoal		= Spring.SetUnitMoveGoal
-local SpawnCEG				= Spring.SpawnCEG
-local AssignMouseCursor 	= Spring.AssignMouseCursor
+
+local GetUnitDefID					= Spring.GetUnitDefID
+local GetUnitPosition				= Spring.GetUnitPosition
+local GetUnitsInCylinder			= Spring.GetUnitsInCylinder
+local ValidUnitID					= Spring.ValidUnitID
+local CallCOBScript					= Spring.CallCOBScript
+local DestroyUnit					= Spring.DestroyUnit
+local RemoveBuildingDecal			= Spring.RemoveBuildingDecal
+local SetUnitMoveGoal				= Spring.SetUnitMoveGoal
+local SpawnCEG						= Spring.SpawnCEG
+local AssignMouseCursor 			= Spring.AssignMouseCursor
+local Spring_GetMouseState 			= Spring.GetMouseState
+local Spring_GetActiveCommand 		= Spring.GetActiveCommand
+local Spring_GetSelectedUnits 		= Spring.GetSelectedUnits
+local Spring_TraceScreenRay 		= Spring.TraceScreenRay
+local Spring_GetUnitDefID 			= Spring.GetUnitDefID
+local Spring_GetUnitWeaponState 	= Spring.GetUnitWeaponState
+local Spring_GetUnitPosition  		= Spring.GetUnitPosition 
+local Spring_SetMouseCursor 		= Spring.SetMouseCursor
+local CMD_ATTACK 					= CMD.ATTACK
+local Echo							= Spring.Echo
+
 -- Constants
-local CMD_ATTACKBAD = 35522
+local CMD_ATTACKBAD = 35577
 
 if gadgetHandler:IsSyncedCode() then
 --	SYNCED
@@ -35,21 +45,34 @@ if gadgetHandler:IsSyncedCode() then
 	function gadget:Initialize()
 		gadgetHandler:RegisterCMDID(CMD_ATTACKBAD)
 		AssignMouseCursor("AttackBad", "cursorattackbad", true, false)
-	end
-
-else
---	UNSYNCED
+	end	
 	
-	-- function localisations
-	local Spring_GetMouseState = Spring.GetMouseState
-	local Spring_GetActiveCommand = Spring.GetActiveCommand
-	local Spring_GetSelectedUnits = Spring.GetSelectedUnits
-	local Spring_TraceScreenRay = Spring.TraceScreenRay
-	local Spring_GetUnitDefID = Spring.GetUnitDefID
-	local Spring_GetUnitWeaponState = Spring.GetUnitWeaponState
-	local Spring_GetUnitPosition  = Spring.GetUnitPosition 
-	local Spring_SetMouseCursor = Spring.SetMouseCursor
-	local CMD_ATTACK = CMD.ATTACK
+	function gadget:AllowCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdOptions, cmdTag, synced)
+		
+		if cmdID == CMD_ATTACK and UnitDefs[unitDefID].isBuilding and #UnitDefs[unitDefID].weapons > 0 then
+			
+			local range = Spring_GetUnitWeaponState(unitID,0,"range")		
+			
+			if cmdParams and cmdParams[3] ~= nil then
+				local ux, _, uz = Spring_GetUnitPosition(unitID)
+				
+				local x = cmdParams[1]
+				local z = cmdParams[3]
+				local dist = ((x-ux)^2+(z-uz)^2)^0.5
+				
+				if dist > range then 
+					--Spring.SetActiveCommand ("Attack") -- causes confusion in UI when multiple units are selected are some can attack
+					return false	
+				end
+			end
+		end
+		return true
+	end
+	
+else
+
+--	UNSYNCED
+		
 	function gadget:Update()
 		
 		local _, activeCmdID = Spring_GetActiveCommand()
@@ -67,20 +90,25 @@ else
 				if sU then
 					local inRange = false
 					for _,unit in ipairs(sU) do
-						local unitDef = Spring_GetUnitDefID(unit)
-						local isTurret = UnitDefs[unitDef].isBuilding and #UnitDefs[unitDef].weapons > 0
-						if isTurret then
-							local range = Spring_GetUnitWeaponState(unit,0,"range")
-							if range and range > 0 then
-								local ux, uy, uz = Spring_GetUnitPosition(unit)
-								local dist = ((x-ux)^2+(z-uz)^2)^0.5
-								if dist < range then inRange = true end
+						local unitDefID = Spring_GetUnitDefID(unit)
+						local unitDef = UnitDefs[unitDefID]
+						if unitDef.isBuilding then
+							if #unitDef.weapons > 0 then
+								local range = Spring_GetUnitWeaponState(unit,0,"range")
+								if range and range > 0 then
+									local ux, uy, uz = Spring_GetUnitPosition(unit)
+									local dist = ((x-ux)^2+(z-uz)^2)^0.5
+									if dist < range then inRange = true end
+								else
+									--Echo("Range N/A",unitDef.name)
+								end
 							else
-								--inRange = true
+								-- No weapons, but building still can attack. Return in range. Applies for example to labs, can set attack point
+								inRange = true
 							end
 						else -- moving unit
-							if #UnitDefs[unitDef].weapons > 0 then
-								inRange = true
+							if #unitDef.weapons > 0 or unitDef.canKamikaze then
+								inRange = true -- units can always walk closer until they can attack.
 							end
 						end
 					end
