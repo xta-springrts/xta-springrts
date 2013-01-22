@@ -37,6 +37,23 @@ missionTriggers = {
 				"Always",
 			},
 			actions = {
+				"CEG dgunflare upperHill 15",
+			},
+		},				
+		{
+			conditions = {
+				"Always",
+			},
+			actions = {
+				"Bonus arm_commander 0",
+			},
+			once = true,
+		},				
+		{
+			conditions = {
+				"Always",
+			},
+			actions = {
 				"Give 14 arm_peewee 2",
 			},
 			once = true,	-- this will trigger only once
@@ -100,7 +117,7 @@ missionTriggers = {
 	},
 }
 
-locations = {	-- use numerical indexes starting from 1
+locations = {	-- use numerical indexes starting from 1 or string names, later preffered
 	[1] = {				-- location index
 		shape = "C",	-- circle
 		X = 2048,		-- center (yes, it's capital letters for coordinates)
@@ -126,6 +143,15 @@ locations = {	-- use numerical indexes starting from 1
 		Z2 = 300,
 		visible = true,
 	},
+	upperHill = {
+		shape = "R",
+		X1 = 1600,
+		Z1 = 1400,
+		X2 = 1700,
+		Z2 = 1500,
+		visible = true,
+		RGB = {0.0, 0.4, 0.8},	
+	}
 }
 
 briefing = {	-- optional, consists of strings which will be displayed one per line
@@ -153,13 +179,34 @@ return gameData, spawnData, missionTriggers, locations, briefing
 
 --[[	Trigger documentation
 
-All triggers must have conditions and actions arrays, individual conditions and actions are strings
-All conditions and actions must start with a command, and any parameters are separated with spaces
-Command names and parameters are case sensitive
-Only when all conditions of a trigger are true, its actions will happen
-Field "once" can be either set to true, for one-shot trigger, or omitted, for multi-shot triggers
-All locations are referenced by their index number in the locations table, and all teams are
-referenced by their teamID number
+All triggers must have conditions and actions arrays, individual conditions and actions are strings.
+All conditions and actions must start with a command, and any parameters are separated with spaces.
+Command names and parameters are case sensitive.
+Only when all conditions of a trigger are true, its actions will happen.
+Field "once" can be either set to true, for one-shot trigger, or omitted, for multi-shot triggers.
+Locations, switches, timers and variables are referenced by their name.
+String parser that pre-parses trigger strings for faster execution accepts any non-space characters,
+as spaces are reserved as parameter separators. Though constrain yourself to LUA identifier naming.
+
+Switches, timers and locations can be given a number instead of a name, like:
+	locations = {
+		upperHill = { ... },
+		lowerHill = { ... },
+		[1] = { ... },
+		[4] = { ... },
+	}
+but those names may never be strings of digits (even though it's valid from LUA standpoint):
+	locations = {
+		["1"] = { ... },
+		["2"] = { ... },
+	}
+use regular integer numbers instead, as all numbers in condition and action fields will be parsed to
+numbers and never as strings containg digits
+
+Same care should be taken with variables, as "-myVar" is a legal name, it doesn't reffer to negative
+value of myVar. If a variable has only digits in its name, it will not be accessible by triggers.
+Therefore it's recomended to use at least one letter in variable name.
+
 
 List of possible conditions:
 ------------------------------
@@ -182,31 +229,47 @@ by owner (Gaia team excluded) of the killed units
 	Res quantity (M|E|ME) [teamID]
 triggers if the specified team or trigger owner have quantity of resource[s] or more in pool
 
-	Switch number (true|false)
+	Switch (number|name) (true|false)
 triggers if the specified switch is set to true or false state, by default switches 1..32
-are set to false, if you use more, define them before using "flip" action on a switch
+are set to false, others are undefined
 
 	Time quantity
 triggers if the game lasts for quantity or longer of seconds
 
-	Timer number
+	Timer (number|name)
 triggers when the specified timer reaches zero, needs to be set to a value before
 
+	Var (name) (>|>=|=|<=|<|~=) value
+triggers if specified variable is of specified relation compared to value, value can be other variable
+
 the quantity values of conditions can be negative, in that case it means less than specified value
+if you use a non-numeric value, it will be interpreted as a variable name
 examples:	"Res -400 M"			-- triggers if player has less than 400 metal in pool
 			"Ctrl 20 arm_stumpy"	-- triggers if player has a total of 20 or more Stumpies
 			"Ctrl -10 arm_fido 3"	-- triggers if player has less than 10 Fidos at location 3
 			"Kill 5 ANY 4"			-- triggers if player killed 5 or more units owned by player 4
 			"Kill -7 arm_fido"		-- triggers if player killed less than 7 Fidos in total
+			"Var myVar ~= 5"		-- triggers if variable myVar is not equal to 5 
+			"Res myVar M"			-- triggers if player has metal in quantity specified in myVar or more
+									-- if myVar is negative, then triggers if quantity is less than abs(myVar)
 
 List of possible actions:
 ------------------------------
+
+	Bonus (unitname|ANY) minXP [locIdx]
+carries over all units of unitname or ANY type with combat experience >= minXP located at location locIdx
+or anywhere on the map to next mission, minXP can be a variable
+
+	CEG cegname (x y z dx dy dz r dam|loc h)
+spawns a CEG with given name at: given coordiantes, direction, radius and damage
+or
+at location loc, h above the ground at location center, pointing upward, with radius and damage = 1
 
 	Defeat [teamID]
 defeat for player whose trigger this is or specific team
 
 	Echo Any kind of message.
-prints a message on the screen, anything after the word Echo till end of string
+prints a message on the screen, anything after the word "Echo " (space included) till end of string
 
 	Eco quantity (M|E|ME) [teamID]
 gives the quantity of resources to player or teamID, quantity can be negative for taking away resources
@@ -215,7 +278,7 @@ gives the quantity of resources to player or teamID, quantity can be negative fo
 spawn a quantity of units of unitname type at location locIdx either for player or specified team
 
 	Kill (unitname|ANY) teamID [locIdx]
-kills all units of unitname or ANY type for teamID, either on entire map or at location locIdx,
+kills all units of unitname or ANY type owned by teamID, either on entire map or at location locIdx,
 units killed this way are counted as killed by trigger owner
 
 	Loc number (true|false|flip)
@@ -223,8 +286,8 @@ sets the visibility of a location specified by number to visible (true), invisib
 flips its visibilty state
 	
 	Move (unitname|ANY) src dest [teamID]
-move all units of unitname or ANY type from location src to location dest, filtered by
-either teamID or all units at location src
+move all units of unitname or ANY type from location src to location dest, owned by either teamID or
+every team at location src
 
 	Play soundfile
 plays a sound from the game archive, use VFS path, typicaly "sounds/mysound.wav", sound will be global
@@ -233,19 +296,30 @@ so in a cooperative mission all players will hear it
 	Share (unitname|ANY) teamID [locIdx]
 shares all units of unitname or ANY type to teamID, either owned on entire map or at location locIdx,
 
-	Switch number (true|false|flip)
-sets the switch specified by number to true, false or flips its state
+	Switch (number|name) (true|false|flip)
+sets the specified switch to true, false or flips its state, using flip on a undefined switch will
+set it to true
 
-	Timer number quantity
-sets the countdown timer specified by number to quantity of seconds
+	Timer (number|name) quantity
+sets the specified countdown timer to quantity of seconds
+
+	Var (name) (number|name) [operator (number|name)]
+if there are 2 parameters, then it sets specified variable to value of second parameter, which can be
+another variable, use for (re)initializing a variable
+variables are not initialized on game start, use a one-shot unconditional trigger to initialize them
+if there are 4 parameters, the specified variable will be set to result of an arithmetical operation
+on the second and fourth parameter, which can be either numbers or other variables
+possible operators are: + - * / % ^  and they behave exactly as in LUA
+variable's name shouldn't contain only digits as it will be parsed as a number not a variable
 
 	Victory
-victory for ally team to which the player belongs whose trigger this is
+victory for ally team to which the trigger owner belongs
 
 	Wait quantity
 disables the trigger for quantity of seconds after triggering, this has no effect on
 one-shot triggers, all triggers are processed at 1 second intervals
 
+If quantities are non-numeric, they'll be interpreted as variable names
 examples:	"Kill ANY 3 2"			-- kills any units controled by player 3 found at location 2
 			"Move arm_fido 3 4"		-- moves all Fidos controled by trigger owner from location 3 to location 4
 			"Eco -100 M 3"			-- takes away 100 metal from player 3
@@ -255,6 +329,9 @@ examples:	"Kill ANY 3 2"			-- kills any units controled by player 3 found at loc
 			"Share arm_peewee 3 2"	-- gives all PeeWees controled by trigger owner at location 2 to team 3
 			"Timer 4 60"			-- sets timer 4 to 60 seconds countdown
 			"Play sounds/bang.wav"	-- plays the bang.wav sound located in /sounds/bang.wav, path local to game archive
+			"Var myVar 4"			-- sets myVar to 4, needed before first use
+			"Var a a + b"			-- a = a + b
+			"Var a c ^ 2"			-- a = c ^ 2
 
 -------------------------------
 All unknown trigger conditions and unknown actions (command names) will be ignored,

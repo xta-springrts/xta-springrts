@@ -2,6 +2,7 @@ gameData = {
 	map = "Red Comet",
 	game = "XTA",
 	minVersion = "9 SVN",
+	nextMission = "XTA_long_sea_mission",
 }
 
 spawnData = {
@@ -46,9 +47,43 @@ spawnData = {
 }
 
 missionTriggers = {
+	[0] = {
+		{
+			conditions = {
+				"Death 1 arm_commander",
+			},
+			actions = {
+				"Defeat",
+			},
+			once = true,
+		},
+		{
+			conditions = {
+				"Kill 1 core_commander",
+			},
+			actions = {
+				"Bonus arm_commander 0"
+				"Victory",
+			},
+			once = true,
+		},
+	}
 }
 
 locations = {
 }
 
-return spawnData, missionTriggers, locations
+briefing = {
+	"$cFirst engagement",
+	"",
+	"",
+	"Commander, congratulations on your promotion. This will be your first assignment and your final exam.",
+	"",
+	"Your mission is to clear all CORE forces from this sector. CORE has a small base in northeast which shouldn't",
+	"pose a serious challenge. Intel says enemy commander is a n00b straight from the academy. Don't fail us or",
+	"you're demoted to infantry.",
+	"",
+	"$rARM Central Command",
+}
+
+return gameData, spawnData, missionTriggers, locations, briefing
