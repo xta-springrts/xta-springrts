@@ -42,8 +42,8 @@ missionTriggers = {
 		},
 		{	
 			conditions = {
-				"Ctrl 3 arm_metal_extractor",
 				"Ctrl 2 arm_solar_collector",
+				"Ctrl 3 arm_metal_extractor",
 			},
 			actions = {
 				"Echo Good. Now build a Kbot lab",
@@ -52,9 +52,9 @@ missionTriggers = {
 		},
 		{	
 			conditions = {
-				"Ctrl 3 arm_metal_extractor",
-				"Ctrl 2 arm_solar_collector",
 				"Ctrl 1 arm_kbot_lab",
+				"Ctrl 2 arm_solar_collector",
+				"Ctrl 3 arm_metal_extractor",
 			},
 			actions = {
 				"Echo Good. Select your Kbot lab and queue 5 Peewees. Left click to queue by one, Shift+Click for queuing 5 at the time",
@@ -64,10 +64,10 @@ missionTriggers = {
 		},
 		{	
 			conditions = {
-				"Ctrl 3 arm_metal_extractor",
-				"Ctrl 2 arm_solar_collector",
-				"Ctrl 1 arm_kbot_lab",
 				"Ctrl 5 arm_peewee",
+				"Ctrl 1 arm_kbot_lab",
+				"Ctrl 2 arm_solar_collector",
+				"Ctrl 3 arm_metal_extractor",
 			},
 			actions = {
 				"Echo Great, now you have 5 basic attack units, go kick some robot arse, the enemy should be on the center right side of the map",

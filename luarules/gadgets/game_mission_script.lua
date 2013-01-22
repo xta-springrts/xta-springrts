@@ -6,7 +6,7 @@ function gadget:GetInfo()
     date      = "14 Jul 2012",
     license   = "GNU LGPL, v2 or later",
     layer     = 0,
-    enabled   = true --  loaded by default?
+    enabled   = false --  loaded by default?
   }
 end
 
@@ -23,6 +23,7 @@ end
 local abs = math.abs
 local floor = math.floor
 local ceil = math.ceil
+local sqrt = math.sqrt
 local pairs = pairs
 local spGetGameFrame = Spring.GetGameFrame
 local spGetGroundHeight = Spring.GetGroundHeight
@@ -32,6 +33,7 @@ if (gadgetHandler:IsSyncedCode()) then	-- SYNCED
 
 local spEcho = Spring.Echo
 local spGetGameSeconds = Spring.GetGameSeconds
+local taremove = table.remove
 
 local spGetTeamInfo = Spring.GetTeamInfo
 local spSetTeamResource = Spring.SetTeamResource
@@ -46,6 +48,8 @@ local spDestroyUnit = Spring.DestroyUnit
 local spTransferUnit = Spring.TransferUnit
 local spSetUnitPosition = Spring.SetUnitPosition
 local spGetUnitHealth = Spring.GetUnitHealth
+local spGetUnitExperience = Spring.GetUnitExperience
+local spSetUnitExperience = Spring.SetUnitExperience
 
 local spGetUnitsInCylinder = Spring.GetUnitsInCylinder
 local spGetUnitsInRectangle = Spring.GetUnitsInRectangle
@@ -54,13 +58,43 @@ local spGetTeamUnitsSorted = Spring.GetTeamUnitsSorted
 local spGetTeamUnitCount = Spring.GetTeamUnitCount
 local spGetTeamUnitDefCount = Spring.GetTeamUnitDefCount
 local spGetTeamUnitsByDefs = Spring.GetTeamUnitsByDefs
+local spGetTeamStartPosition = Spring.GetTeamStartPosition
+local spGetPlayerInfo = Spring.GetPlayerInfo
 
 local spPlaySoundFile = Spring.PlaySoundFile
+local spSpawnCEG = Spring.SpawnCEG
 
-local triggers, switches, timers = {}, {}, {}
+local triggers, switches, timers, vars = {}, {}, {}, {}
 local killCounter, deathCounter = {}, {}
 local killCounterType = {}
 local gameData, spawnData, missionTriggers, locations = {}, {}, {}, {}
+local campaignData = {}
+local cmpgName = Game.modShortName .. "_cmpg"
+
+local commanderList = {	-- XTA specific
+	arm_commander = 50,
+	arm_decoy_commander = 0,
+	arm_u0commander = 50,
+	arm_ucommander = 1000,
+	arm_u2commander = 1500,
+	arm_u3commander = 4000,
+	arm_u4commander = 9000,
+	arm_scommander = 50,
+	armcom = 200,
+	arm_base = 0,
+	arm_nincommander = 50,
+	core_commander = 50,
+	core_decoy_commander = 0,
+	core_u0commander = 50,
+	core_ucommander = 1000,
+	core_u2commander = 1500,
+	core_u3commander = 4000,
+	core_u4commander = 9000,
+	core_scommander = 50,
+	corcom = 200,
+	core_base = 0,
+	core_nincommander = 50,
+}
 
 local function initTriggers()	-- pre-parse triggers
 	for teamID, trig in pairs(missionTriggers) do
@@ -78,8 +112,8 @@ local function initTriggers()	-- pre-parse triggers
 			for cond, text in pairs(val.conditions) do
 				triggers[teamID][no].conditions[cond] = {}
 				local idx = 1
-				for w in text:gmatch("[%-_%w]+") do
-					triggers[teamID][no].conditions[cond][idx] = w
+				for w in text:gmatch("[^%s]+") do
+					triggers[teamID][no].conditions[cond][idx] = tonumber(w) or w
 					idx = idx + 1
 				end
 			end
@@ -87,13 +121,13 @@ local function initTriggers()	-- pre-parse triggers
 			for actn, text in pairs(val.actions) do
 				triggers[teamID][no].actions[actn] = {}
 				local idx = 1
-				for w in text:gmatch("[%-_%w]+") do
+				for w in text:gmatch("[^%s]+") do
 					if idx==1 and w=="Echo" or w=="Play" then 
 						triggers[teamID][no].actions[actn][1] = w
 						triggers[teamID][no].actions[actn][2] = text:sub(6,-1)
 						break
 					end
-					triggers[teamID][no].actions[actn][idx] = w
+					triggers[teamID][no].actions[actn][idx] = tonumber(w) or w
 					idx = idx + 1
 				end
 			end
@@ -139,6 +173,21 @@ function gadget:Initialize()
 	end
 end
 
+local locMsgQueue = {}
+function gadget:RecvLuaMsg(msg, playerID)
+	local _, _, playerIsSpec, playerTeam = spGetPlayerInfo(playerID)
+	if not playerIsSpec then
+		local tokens = {}
+		for token in msg:gmatch("[^%s]+") do
+			tokens[#tokens + 1] = token
+		end
+		-- changing game-state directly from here is unsafe
+		if (tokens[1] == cmpgName and #tokens == 4) then
+			locMsgQueue[#locMsgQueue + 1] = {tokens[2], tokens[3], tokens[4]}
+		end
+	end
+end
+
 function gadget:GameStart()
 	for _, teamID in pairs(teams) do
 		-- set start resources, either from mod options or custom team keys
@@ -165,6 +214,19 @@ function gadget:GameStart()
 			spAddTeamResource(teamID, "e", tonumber(e))
 		end
 	end
+	for _, unitData in pairs(locMsgQueue) do	-- units carried over from last mission (with XP)
+		teamID = tonumber(unitData[3])
+		local bonusUnit
+		if commanderList[unitData[1]] then	-- carry over commander XP from last mission, this can be avoided if only first mission spawns a commander
+											-- and each succesive mission gets its commander as a bonus unit
+			local comms = spGetTeamUnitsByDefs(teamID, UnitDefNames[unitData[1]].id)
+			bonusUnit = comms[1]
+		else
+			local x,y,z = spGetTeamStartPosition(teamID)
+			bonusUnit = spCreateUnit(unitData[1],x,y,z,0,teamID)
+		end
+		spSetUnitExperience(bonusUnit, tonumber(unitData[2]))
+	end
 	for _, featureData in pairs(spawnData.features) do
 		local y = spGetGroundHeight(featureData[2], featureData[3])
 		spCreateFeature(featureData[1], featureData[2], y, featureData[3], featureData[4], featureData[5])
@@ -174,38 +236,39 @@ function gadget:GameStart()
 		if triggers[teams[i]] then
 			i=i+1
 		else
-			table.remove(teams, i)
+			taremove(teams, i)
 		end
 	end
 	if #teams == 0 then
 		gadgetHandler:RemoveGadget()	-- this mission has no triggers, we're done
 	end
 	spawnData = nil		-- kill table once not needed
+	gadgetHandler:RemoveCallIn("RecvLuaMsg")
 end
 
 local function testCondition(cond, teamID)
-	local comm, type = cond[1], cond[3]
-	local qty, idx
-	if cond[2] then qty=tonumber(cond[2]) end
-	if cond[4] then idx=tonumber(cond[4]) end
-
+	local comm, qty, utype, idx = cond[1], cond[2], cond[3], cond[4]
+	if type(qty)=="string" then
+		qty = vars[qty]
+	end
+	
 	-- Always   - Unconditional trigger
 	if comm=="Always" then
 		return true
-
+	
 	-- Ctrl quantity (unitname|ANY) [locIdx]
 	elseif comm=="Ctrl" then
 		local loc = locations[idx]
 		local unitsInArea = {}
 		if loc==nil then
-			if type=="ANY" then
+			if utype=="ANY" then
 				unitsInArea = spGetTeamUnits(teamID)
 			else
-				unitsInArea = spGetTeamUnitsByDefs(teamID, UnitDefNames[type].id)
+				unitsInArea = spGetTeamUnitsByDefs(teamID, UnitDefNames[utype].id)
 			end
 			local count = 0
-			for _, unitID in pairs(unitsInArea) do
-				local _, _, _, _, build = spGetUnitHealth(unitID)
+			for i=1, #unitsInArea do
+				local _, _, _, _, build = spGetUnitHealth(unitsInArea[i])
 				if build>=1 then
 					count = count + 1
 				end
@@ -220,10 +283,10 @@ local function testCondition(cond, teamID)
 		elseif loc.shape == "R" then
 			unitsInArea = spGetUnitsInRectangle(loc.X1,loc.Z1,loc.X2,loc.Z2,teamID)
 		end
-		if type=="ANY" then
+		if utype=="ANY" then
 			local count = 0
-			for _, unitID in pairs(unitsInArea) do
-				local _, _, _, _, build = spGetUnitHealth(unitID)
+			for i=1, #unitsInArea do
+				local _, _, _, _, build = spGetUnitHealth(unitsInArea[i])
 				if build>=1 then
 					count = count + 1
 				end
@@ -234,10 +297,10 @@ local function testCondition(cond, teamID)
 				return count < qty
 			end
 		else
-			local count, uDefID = 0, UnitDefNames[type].id
-			for _, unitID in pairs(unitsInArea) do
-				if spGetUnitDefID(unitID) == uDefID then
-					local _, _, _, _, build = spGetUnitHealth(unitID)
+			local count, uDefID = 0, UnitDefNames[utype].id
+			for i=1, #unitsInArea do
+				if spGetUnitDefID(unitsInArea[i]) == uDefID then
+					local _, _, _, _, build = spGetUnitHealth(unitsInArea[i])
 					if build>=1 then
 						count = count + 1
 					end
@@ -253,7 +316,7 @@ local function testCondition(cond, teamID)
 	-- Death quantity (unitname|ANY) [ownerID]
 	elseif comm=="Death" then
 		local team = idx or teamID
-		if type == "ANY" then
+		if utype == "ANY" then
 			if qty >= 0 then	--total deaths
 				return deathCounter[team]["total"] >= qty
 			else
@@ -261,16 +324,16 @@ local function testCondition(cond, teamID)
 			end
 		else
 			if qty >= 0 then	--deaths by unitname
-				return (deathCounter[team][UnitDefNames[type].id] or 0)>= qty
+				return (deathCounter[team][UnitDefNames[utype].id] or 0)>= qty
 			else
-				return (deathCounter[team][UnitDefNames[type].id] or 0) < qty
+				return (deathCounter[team][UnitDefNames[utype].id] or 0) < qty
 			end
 		end			
 
 	-- Kill quantity (unitname|ANY) [ownerID]
 	elseif comm=="Kill" then
 		if cond[4] then
-			if type == "ANY" then
+			if utype == "ANY" then
 				if qty >= 0 then	-- total kills by enemy team
 					return killCounter[teamID][idx]["total"] >= qty
 				else
@@ -278,13 +341,13 @@ local function testCondition(cond, teamID)
 				end
 			else
 				if qty >= 0 then	-- kills by enemy team by unitname
-					return (killCounter[teamID][idx][UnitDefNames[type].id] or 0) >= qty
+					return (killCounter[teamID][idx][UnitDefNames[utype].id] or 0) >= qty
 				else
-					return (killCounter[teamID][idx][UnitDefNames[type].id] or 0) < qty
+					return (killCounter[teamID][idx][UnitDefNames[utype].id] or 0) < qty
 				end
 			end			
 		else
-			if type == "ANY" then
+			if utype == "ANY" then
 				if qty >= 0 then	-- total number of kills
 					return killCounter[teamID]["total"] >= qty
 				else
@@ -292,31 +355,31 @@ local function testCondition(cond, teamID)
 				end
 			else
 				if qty >= 0 then	-- total number of unitname kills
-					return (killCounterType[teamID][UnitDefNames[type].id] or 0) >= qty
+					return (killCounterType[teamID][UnitDefNames[utype].id] or 0) >= qty
 				else
-					return (killCounterType[teamID][UnitDefNames[type].id] or 0) < qty
+					return (killCounterType[teamID][UnitDefNames[utype].id] or 0) < qty
 				end
 			end
 		end
 
 	-- Res quantity (M|E|ME) [teamID]
 	elseif comm=="Res" then
-		local team = tonumber(cond[4] or teamID)
+		local team = cond[4] or teamID
 		local currentM = spGetTeamResources(team, "metal")
 		local currentE = spGetTeamResources(team, "energy")
-		if type=="M" then
+		if utype=="M" then
 			if qty>= 0 then
 				return currentM >= qty
 			else
 				return currentM < qty
 			end
-		elseif type=="E" then
+		elseif utype=="E" then
 			if qty>= 0 then
 				return currentE >= qty
 			else
 				return currentE < qty
 			end
-		elseif type=="ME" then
+		elseif utype=="ME" then
 			if qty>= 0 then
 				return currentM >= qty and currentE >= qty
 			else
@@ -326,12 +389,12 @@ local function testCondition(cond, teamID)
 			return false
 		end
 
-	-- Switch number (true|false)
+	-- Switch (number|name) (true|false)
 	elseif comm=="Switch" then
-		if type=="true" then
-			return switches[qty]==true
-		elseif type=="false" then
-			return switches[qty]==false
+		if utype=="true" then
+			return switches[cond[2]]==true
+		elseif utype=="false" then
+			return switches[cond[2]]==false
 		else
 			return false
 		end
@@ -344,11 +407,31 @@ local function testCondition(cond, teamID)
 			return spGetGameSeconds < qty
 		end	
 		
-	-- Timer number
+	-- Timer (number|name)
 	elseif comm=="Timer" then
-		if timers[qty] then
-			return timers[qty]==0
+		if timers[cond[2]] then
+			return timers[cond[2]]<=0
 		end	
+
+	-- Var (name) (>|>=|=|<=|<|~=) value
+	elseif comm=="Var" then
+		local var, op, val = cond[2], cond[3], cond[4]
+		if type(val)=="string" then
+			val = vars[val]
+		end
+		if op==">" then
+			return vars[var] > val
+		elseif op==">=" then
+			return vars[var] >= val
+		elseif op=="=" then
+			return vars[var] == val
+		elseif op=="<=" then
+			return vars[var] <= val
+		elseif op=="<" then
+			return vars[var] < val
+		elseif op=="~=" then
+			return vars[var] ~= val
+		end
 
 	--Unknown condition
 	else
@@ -368,19 +451,94 @@ end
 local function DoActions(actions, teamID, trigNo)
 	for i=1, #actions do
 		local actn = actions[i]
+		local comm = actn[1]
+		
+		-- Bonus (unitname|ANY) minXP [locIdx]
+		if comm=="Bonus" then
+			local xp = actn[3]
+			if type(xp)=="string" then
+				xp = vars[xp]
+			end
+			local unitsInArea = {}
+			if actn[4] then
+				local loc = locations[actn[4]]
+				if loc.shape == "C" then
+					unitsInArea = spGetUnitsInCylinder(loc.X,loc.Z,loc.r,teamID)
+				elseif loc.shape == "R" then
+					unitsInArea = spGetUnitsInRectangle(loc.X1,loc.Z1,loc.X2,loc.Z2,teamID)
+				end
+				if actn[2]=="ANY" then
+					for i=1, #unitsInArea do
+						local myXP = spGetUnitExperience(unitsInArea[i])
+						if myXP >= xp then
+							SendToUnsynced("BonusUnits", unitsInArea[i])
+						end
+					end
+				else
+					local uDefID = UnitDefNames[actn[2]].id
+					for i=1, #unitsInArea do
+						if spGetUnitDefID(unitsInArea[i]) == uDefID then
+							local myXP = spGetUnitExperience(unitsInArea[i])
+							if myXP >= xp then
+								SendToUnsynced("BonusUnits", unitsInArea[i])
+							end
+						end
+					end
+				end
+			else
+				if actn[2]=="ANY" then
+					unitsInArea = spGetTeamUnits(teamID)
+					for i=1, #unitsInArea do
+						local myXP = spGetUnitExperience(unitsInArea[i])
+						if myXP >= xp then
+							SendToUnsynced("BonusUnits", unitsInArea[i])
+						end
+					end
+				else
+					local uDefID = UnitDefNames[actn[2]].id
+					local unitsInArea = spGetTeamUnitsByDefs(teamID, uDefID)
+					for i=1, #unitsInArea do
+						local myXP = spGetUnitExperience(unitsInArea[i])
+						if myXP >= xp then
+							SendToUnsynced("BonusUnits", unitsInArea[i])
+						end
+					end
+				end
+			end
+		
+		-- CEG cegname (x y z dx dy dz r dam|locIdx h)
+		elseif comm=="CEG" then
+			if #actn==10 then
+				spSpawnCEG(actn[2],actn[3],actn[4],actn[5],actn[6],actn[7],actn[8],actn[9],actn[10])
+			else
+				local x,z
+				local loc = locations[actn[3]]
+				if loc.shape == "C" then
+					x, z = loc.X, loc.Z
+				elseif loc.shape == "R" then
+					x, z = (loc.X1 + loc.X2)*0.5, (loc.Z1 + loc.Z2)*0.5
+				else
+					return
+				end
+				local y = spGetGroundHeight(x,z) + actn[4]
+				spSpawnCEG(actn[2],x,y,z,0,1,0,1,1)
+			end
 
 		-- Defeat [teamID]
-		if actn[1]=="Defeat" then
-			Spring.KillTeam(tonumber(actn[2] or teamID))
+		elseif comm=="Defeat" then
+			Spring.KillTeam(actn[2] or teamID)
 
 		-- Echo Any kind of message.
-		elseif actn[1]=="Echo" then
+		elseif comm=="Echo" then
 			spEcho(actn[2])
 
 		-- Eco quantity (M|E|ME) [teamID]
-		elseif actn[1]=="Eco" then
-			local team = tonumber(actn[4] or teamID)
-			local qty = tonumber(actn[2])
+		elseif comm=="Eco" then
+			local team = actn[4] or teamID
+			local qty = actn[2]
+			if type(qty)=="string" then
+				qty = vars[qty]
+			end
 			if actn[3]=="M" then
 				if qty>=0 then
 					spAddTeamResource(team, "metal", qty)
@@ -403,23 +561,26 @@ local function DoActions(actions, teamID, trigNo)
 			end
 
 		-- Give quantity unitname locIdx [teamID]
-		elseif actn[1]=="Give" then
-			local loc = locations[tonumber(actn[4])]
-			local qty = tonumber(actn[2])
-			local team = tonumber(actn[5] or teamID)
+		elseif comm=="Give" then
+			local loc = locations[actn[4]]
+			local qty = actn[2]
+			if type(qty)=="string" then
+				qty = vars[qty]
+			end
+			local team = actn[5] or teamID
 			local unitname = actn[3]
 			local x, z, xr, zr
 			if loc.shape == "C" then
 				x, z = loc.X, loc.Z
 			elseif loc.shape == "R" then
-				x, z = (loc.X1 + loc.X2)/2, (loc.Z1 + loc.Z2)/2
+				x, z = (loc.X1 + loc.X2)*0.5, (loc.Z1 + loc.Z2)*0.5
 			else
 				return
 			end
 			local xs, zs = UnitDefs[UnitDefNames[unitname].id].xsize*8, UnitDefs[UnitDefNames[unitname].id].zsize*8
-			xr = ceil(math.sqrt(qty))
+			xr = ceil(sqrt(qty))
 			zr = ceil(qty/xr)-1
-			local dz, dx = zr/2*zs, (xr-1)/2*xs
+			local dz, dx = zr*0.5*zs, (xr-1)*0.5*xs
 			for zp=z-dz, z+dz-zs, zs do
 				for xp=x-dx, x+dx, xs do
 					local y = spGetGroundHeight(xp,zp)
@@ -434,49 +595,45 @@ local function DoActions(actions, teamID, trigNo)
 			end
 
 		-- Kill (unitname|ANY) teamID [locIdx]
-		elseif actn[1]=="Kill" then
-			local team = tonumber(actn[3])	
+		elseif comm=="Kill" then
+			local team = actn[3]	
+			local unitsInArea = {}
 			if actn[4] then
-				local loc = locations[tonumber(actn[4])]
-				local unitsInArea = {}
+				local loc = locations[actn[4]]
 				if loc.shape == "C" then
 					unitsInArea = spGetUnitsInCylinder(loc.X,loc.Z,loc.r,team)
 				elseif loc.shape == "R" then
 					unitsInArea = spGetUnitsInRectangle(loc.X1,loc.Z1,loc.X2,loc.Z2,team)
 				end
 				if actn[2]=="ANY" then
-					for _, unitID in pairs(unitsInArea) do
-						spDestroyUnit(unitID, false, false, teamID)
+					for i=1, #unitsInArea do
+						spDestroyUnit(unitsInArea[i], false, false, teamID)
 					end
 				else
 					local uDefID = UnitDefNames[actn[2]].id
-					for _, unitID in pairs(unitsInArea) do
-						if spGetUnitDefID(unitID) == uDefID then
-							spDestroyUnit(unitID, false, false, teamID)
+					for i=1, #unitsInArea do
+						if spGetUnitDefID(unitsInArea[i]) == uDefID then
+							spDestroyUnit(unitsInArea[i], false, false, teamID)
 						end
 					end
 				end
 			else
 				if actn[2]=="ANY" then
-					for _, unitID in pairs(spGetTeamUnits(team)) do
-						spDestroyUnit(unitID, false, false, teamID)
+					unitsInArea = spGetTeamUnits(team)
+					for i=1, #unitsInArea do
+						spDestroyUnit(unitsInArea[i], false, false, teamID)
 					end
 				else
-					local uDefID = UnitDefNames[actn[2]].id
-					for unitDefID, unitIDs in pairs(spGetTeamUnitsSorted(team)) do
-						if unitDefID == uDefID then
-							for _, unitID in pairs(unitIDs) do
-								spDestroyUnit(unitID, false, false, teamID)
-							end
-							break
-						end
+					local unitsInArea = spGetTeamUnitsByDefs(team, UnitDefNames[actn[2]].id)
+					for i=1, #unitsInArea do
+						spDestroyUnit(unitsInArea[i], false, false, teamID)
 					end
 				end
 			end
 			
-		-- Loc number (true|false|flip)
-		elseif actn[1]=="Loc" then
-			local num = tonumber(actn[2])
+		-- Loc (number|name) (true|false|flip)
+		elseif comm=="Loc" then
+			local num = actn[2]
 			if actn[3]=="true" then
 				locations[num].visible = true
 			elseif actn[3]=="false" then
@@ -487,10 +644,10 @@ local function DoActions(actions, teamID, trigNo)
 			SendToUnsynced("LocationVisibilty", num, locations[num].visible)
 
 		-- Move (unitname|ANY) src dest [teamID]
-		elseif actn[1]=="Move" then
-			local src = locations[tonumber(actn[3])]
-			local dest = locations[tonumber(actn[4])]
-			local team = tonumber(actn[5] or teamID)
+		elseif comm=="Move" then
+			local src = locations[actn[3]]
+			local dest = locations[actn[4]]
+			local team = actn[5] or teamID
 			local allUnitsInArea = {}
 			local unitsInArea = {}
 			if src.shape == "C" then
@@ -503,16 +660,16 @@ local function DoActions(actions, teamID, trigNo)
 			else
 				local uDefID = UnitDefNames[actn[2]].id
 				local i = 1
-				for _, unitID in pairs(allUnitsInArea) do
-					if spGetUnitDefID(unitID) == uDefID then
-						unitsInArea[i] = unitID
+				for j=1, #allUnitsInArea do
+					if spGetUnitDefID(allUnitsInArea[j]) == uDefID then
+						unitsInArea[i] = allUnitsInArea[j]
 						i = i + 1
 					end
 				end
 			end
 			local xs, zs = 1, 1
-			for _, unitID in pairs(unitsInArea) do
-				local def = UnitDefs[spGetUnitDefID(unitID)]
+			for i=1, #unitsInArea do
+				local def = UnitDefs[spGetUnitDefID(unitsInArea[i])]
 				if def.xsize > xs then xs = def.xsize end
 				if def.zsize > zs then zs = def.zsize end				
 			end
@@ -521,14 +678,14 @@ local function DoActions(actions, teamID, trigNo)
 			if dest.shape == "C" then
 				x, z = dest.X, dest.Z
 			elseif dest.shape == "R" then
-				x, z = (dest.X1 + dest.X2)/2, (dest.Z1 + dest.Z2)/2
+				x, z = (dest.X1 + dest.X2)*0.5, (dest.Z1 + dest.Z2)*0.5
 			else
 				return
 			end
 			local qty, i = #unitsInArea, 1
-			xr = ceil(math.sqrt(qty))
+			xr = ceil(sqrt(qty))
 			zr = ceil(qty/xr)-1
-			local dz, dx = zr/2*zs, (xr-1)/2*xs
+			local dz, dx = zr*0.5*zs, (xr-1)*0.5*xs
 			for zp=z-dz, z+dz-zs, zs do
 				for xp=x-dx, x+dx, xs do
 					spSetUnitPosition(unitsInArea[i], xp, zp)
@@ -543,53 +700,49 @@ local function DoActions(actions, teamID, trigNo)
 			end
 
 		-- Play soundfile
-		elseif actn[1]=="Play" then
+		elseif comm=="Play" then
 			spPlaySoundFile(actn[2])
 
 		-- Share (unitname|ANY) teamID [locIdx]
-		elseif actn[1]=="Share" then
-			local team = tonumber(actn[3])	
+		elseif comm=="Share" then
+			local team = actn[3]
+			local unitsInArea = {}
 			if actn[4] then
-				local loc = locations[tonumber(actn[4])]
-				local unitsInArea = {}
+				local loc = locations[actn[4]]
 				if loc.shape == "C" then
 					unitsInArea = spGetUnitsInCylinder(loc.X,loc.Z,loc.r,teamID)
 				elseif loc.shape == "R" then
 					unitsInArea = spGetUnitsInRectangle(loc.X1,loc.Z1,loc.X2,loc.Z2,teamID)
 				end
 				if actn[2]=="ANY" then
-					for _, unitID in pairs(unitsInArea) do
-						spTransferUnit(unitID, team)
+					for i=1, #unitsInArea do
+						spTransferUnit(unitsInArea[i], team)
 					end
 				else
 					local uDefID = UnitDefNames[actn[2]].id
-					for _, unitID in pairs(unitsInArea) do
-						if spGetUnitDefID(unitID) == uDefID then
-							spTransferUnit(unitID, team)
+					for i=1, #unitsInArea do
+						if spGetUnitDefID(unitsInArea[i]) == uDefID then
+							spTransferUnit(unitsInArea[i], team)
 						end
 					end
 				end
 			else
 				if actn[2]=="ANY" then
-					for _, unitID in pairs(spGetTeamUnits(teamID)) do
-						spTransferUnit(unitID, team)
+					unitsInArea =spGetTeamUnits(teamID)
+					for i=1, #unitsInArea do
+						spTransferUnit(unitsInArea[i], team)
 					end
 				else
-					local uDefID = UnitDefNames[actn[2]].id
-					for unitDefID, unitIDs in pairs(spGetTeamUnitsSorted(teamID)) do
-						if unitDefID == uDefID then
-							for _, unitID in pairs(unitIDs) do
-								spTransferUnit(unitID, team)
-							end
-							break
-						end
+					unitsInArea = spGetTeamUnitsByDefs(team, UnitDefNames[actn[2]].id)
+					for i=1, #unitsInArea do
+						spTransferUnit(unitsInArea[i], team)
 					end
 				end
 			end
 			
-		-- Switch number (true|false|flip)
-		elseif actn[1]=="Switch" then
-			local num = tonumber(actn[2])
+		-- Switch (number|name) (true|false|flip)
+		elseif comm=="Switch" then
+			local num = actn[2]
 			if actn[3]=="true" then
 				switches[num] = true
 			elseif actn[3]=="false" then
@@ -598,18 +751,51 @@ local function DoActions(actions, teamID, trigNo)
 				switches[num] = not (switches[num]==true)
 			end
 
-		-- Timer number quantity
-		elseif actn[1]=="Timer" then
-			timers[tonumber(actn[2])] = tonumber(actn[3])
+		-- Timer (number|name) quantity
+		elseif comm=="Timer" then
+			timers[actn[2]] = actn[3]
 
+		-- Var (name) (number|name) [operator (number|name)]
+		elseif comm=="Var" then
+			if #actn==3 then
+				if type(actn[3])=="string" then
+					vars[actn[2]] = vars[actn[3]]
+				else
+					vars[actn[2]] = actn[3]
+				end
+			else
+				local vr = actn[3]
+				if type(vr)=="string" then
+					vr = vars[actn[3]]
+				end
+				local qty = actn[5]
+				if type(qty)=="string" then
+					qty = vars[actn[5]]
+				end
+				local oper = actn[4]
+				if oper=="+" then
+					vars[actn[2]] = vr + qty		
+				elseif oper=="-" then
+					vars[actn[2]] = vr - qty		
+				elseif oper=="*" then
+					vars[actn[2]] = vr * qty		
+				elseif oper=="/" then
+					vars[actn[2]] = vr / qty		
+				elseif oper=="%" then
+					vars[actn[2]] = vr % qty		
+				elseif oper=="^" then
+					vars[actn[2]] = vr ^ qty
+				end
+			end
+		
 		-- Victory
-		elseif actn[1]=="Victory" then
+		elseif comm=="Victory" then
 			local allyTeam = select(6,spGetTeamInfo(teamID))
 			Spring.GameOver({allyTeam})
 
 		-- Wait time
-		elseif actn[1]=="Wait" then
-			triggers[teamID][trigNo].wait = tonumber(actn[2])
+		elseif comm=="Wait" then
+			triggers[teamID][trigNo].wait = actn[2]
 		end
 	end
 end
@@ -664,26 +850,29 @@ function gadget:GameFrame(n)
 			local trigger = triggers[teamID]
 			local i = 1
 			while i <= #trigger do	-- process triggers, can't use for loop due to one-shot triggers
-				if trigger[i].wait <= 0 then	
-					if testConditions(trigger[i].conditions, teamID)==true then
-						DoActions(trigger[i].actions, teamID, i)
-						if trigger[i].once and trigger[i].once==true then
-							table.remove(triggers[teamID], i) -- disable one-shot trigger
+				local trg = trigger[i]
+				if trg.wait <= 0 then	
+					if testConditions(trg.conditions, teamID)==true then
+						DoActions(trg.actions, teamID, i)
+						if trg.once and trg.once==true then
+							taremove(triggers[teamID], i) -- disable one-shot trigger
 							i = i - 1	-- prevent skiping a trigger after table removal
 						end
 					end
 				else
-					trigger[i].wait = trigger[i].wait - 1			
+					trg.wait = trg.wait - 1			
 				end
 				i = i + 1
 			end
 		else
-			table.remove(teams, index)	-- remove dead team from teams list
+			taremove(teams, index)	-- remove dead team from teams list
 		end
 	end
 end
 
+
 else	--UNSYNCED
+
 
 local glColor = gl.Color
 local glLineWidth = gl.LineWidth
@@ -693,6 +882,10 @@ local gameData, locations = {}, {}
 
 local function LocationVisibilty(_, locnum, vis)
 	locations[locnum].visible = vis
+end
+
+local function BonusUnits(_, unitID)
+	Script.LuaUI.SetBonusUnits(unitID)
 end
 
 function gadget:Initialize()
@@ -705,6 +898,7 @@ function gadget:Initialize()
 					gadgetHandler:RemoveGadget()
 				else
 					gadgetHandler:AddSyncAction('LocationVisibilty', LocationVisibilty)  
+					gadgetHandler:AddSyncAction('BonusUnits', BonusUnits)  
 					--[[	abort removing of gadget if there are no visible locations at start, that can change by trigger actions
 					local i=1
 					while i <= #locations do	-- remove from location list all locations that aren't drawn on ground
@@ -733,10 +927,14 @@ end
 function gadget:DrawWorldPreUnit()
 	local alpha = abs(spGetGameFrame() % 60 - 30)/30
 	glLineWidth(10)
-	for i=1, #locations do
-		local loc = locations[i]
+	for _, loc in pairs(locations) do
 		if loc.visible then
-			if loc.RGB then glColor(loc.RGB[1], loc.RGB[2], loc.RGB[3], alpha) else glColor(1.0, 1.0, 1.0, alpha) end
+			if loc.RGB then
+				local c = loc.RGB
+				glColor(c[1], c[2], c[3], alpha)
+			else
+				glColor(1.0, 1.0, 1.0, alpha)
+			end
 			if loc.shape=="C" then
 				glDrawGroundCircle(loc.X, spGetGroundHeight(loc.X, loc.Z), loc.Z, loc.r-3, 24)
 			elseif loc.shape=="R" then
