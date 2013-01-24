@@ -18,9 +18,9 @@ local modOptions = Spring.GetModOptions()
 local gameData, briefing = {}, {}
 local msgQueue = {}
 local campaignData, bonUnits = {}, {}
-local curMission, lastMission
+local victory, defeat, endTime = false, false, 0
 local cmpgNotSent = true
-local commander
+local commander, startScript
 
 local spSendLuaRulesMsg = Spring.SendLuaRulesMsg
 local spGetUnitDefID = Spring.GetUnitDefID
@@ -101,27 +101,41 @@ function widget:GameStart()
 	end
 end
 
+function widget:Update(t)
+	if endTime>0 and (Spring.GetGameSeconds()-endTime>5) then
+		if startScript then Spring.Restart("-s", startScript) end
+	end
+end
+
 function widget:GameOver()
 	local amIDead = select(3, Spring.GetTeamInfo(Spring.GetMyTeamID()))
-	if amIDead==false and gameData.nextMission then
-		local nextMission = "Missions/" .. gameData.nextMission ..".txt"
-		if VFS.FileExists(nextMission) then
-			local file = io.open("LuaUI/Config/" .. gameData.game .. "_campaign.lua","w")
-			file:write(defCmpgData[1] .. modOptions.mission .. defCmpgData[2] .. gameData.nextMission .. defCmpgData[3])
-			for _, unitID in pairs(bonUnits) do
-				if spValidUnitID(unitID) then
-					local h, _, _, _, _ = spGetUnitHealth(unitID)
-					if h>0 then
-						file:write('\t\t"' .. UnitDefs[spGetUnitDefID(unitID)].name .. " " .. spGetUnitExperience(unitID) .. '"\n')
+	if amIDead==false then
+		if gameData.nextMission then
+			local nextMission = "Missions/" .. gameData.nextMission ..".txt"
+			if VFS.FileExists(nextMission) then
+				local file = io.open("LuaUI/Config/" .. gameData.game .. "_campaign.lua","w")
+				file:write(defCmpgData[1] .. modOptions.mission .. defCmpgData[2] .. gameData.nextMission .. defCmpgData[3])
+				for _, unitID in pairs(bonUnits) do
+					if spValidUnitID(unitID) then
+						local h, _, _, _, _ = spGetUnitHealth(unitID)
+						if h>0 then
+							file:write('\t\t"' .. UnitDefs[spGetUnitDefID(unitID)].name .. " " .. spGetUnitExperience(unitID) .. '"\n')
+						end
 					end
 				end
+				file:write(defCmpgData[4])
+				file:flush()
+				file:close()
+				startScript = VFS.LoadFile(nextMission)
 			end
-			file:write(defCmpgData[4])
-			file:flush()
-			file:close()
-			local startScript = VFS.LoadFile(nextMission)
-			Spring.Restart("-s", startScript)
 		end
+		victory = true
+		endTime = Spring.GetGameSeconds()
+		Spring.PlaySoundFile("sounds/victory2.wav")
+	else
+		defeat = true
+		startScript = VFS.LoadFile("Missions/" .. modOptions.mission ..".lua")
+		endTime = Spring.GetGameSeconds()
 	end
 end
 
@@ -138,7 +152,7 @@ end
 function widget:MousePress(mx, my, mButton)
 	if mouseOverOK and mButton==1 then
 		dispBrief = false
-		widgetHandler:RemoveCallIn("DrawScreen")
+		--widgetHandler:RemoveCallIn("DrawScreen")
 		widgetHandler:RemoveCallIn("IsAbove")
 		widgetHandler:RemoveCallIn("MousePress")
 		local _, _, paused = Spring.GetGameSpeed()
@@ -175,6 +189,12 @@ function widget:DrawScreen()
 			glText("OK",X*0.5,bot+fs*1.4,fs,"cd")
 		glEndText()
 		glPopMatrix()
+	elseif victory then
+		glColor(1.0,1.0,1.0,1.0)
+		glText("Victory", X*0.5, Y*0.5, 5*fs, "cd")
+	elseif defeat then
+		glColor(0.6,0.0,0.0,1.0)
+		glText("Defeat", X*0.5, Y*0.5, 5*fs, "cd")
 	end
 	if cmpgNotSent then
 		if modOptions.mission == campaignData.currentMission then
