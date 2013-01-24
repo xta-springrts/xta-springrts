@@ -1,4 +1,4 @@
-local versionNumber = "v1.9b"
+local versionNumber = "v1.92"
 
 function widget:GetInfo()
 	return {
@@ -72,6 +72,7 @@ local MAP_SIZE_Z_SCALED = MAP_SIZE_Z / METAL_MAP_SQUARE_SIZE
 --H4X
 ------------------------------------------------
 local once
+local vsx, vsy
 
 ------------------------------------------------
 --helpers
@@ -103,10 +104,10 @@ end
 local function SetupMexDefInfos() 
 	local minExtractsMetal
 	
-	local armMexDef = UnitDefNames["armmex"]
+	local armMexDef = UnitDefNames["arm_metal_extractor"]
 	
 	if armMexDef and armMexDef.extractsMetal > 0 then
-		defaultDefID = UnitDefNames["armmex"].id
+		defaultDefID = UnitDefNames["arm_metal_extractor"].id
 		minExtractsMetal = 0
 	end
 	
@@ -226,6 +227,7 @@ end
 function widget:DrawScreen()
   if (once) then
 		local viewSizeX, viewSizeY = widgetHandler:GetViewSizes()
+		widget:ViewResize(viewSizeX, viewSizeY)
 		once = false
 	end
 	
@@ -256,7 +258,11 @@ function widget:DrawScreen()
 	if (not coords) then return end
 	
 	IntegrateMetal(mexDefInfo, coords[1], coords[3], forceUpdate)
-	DrawTextWithBackground("\255\255\255\255Metal extraction: " .. strFormat("%.2f", extraction), mx, my, textSize)
+	DrawTextWithBackground("\255\255\255\255Metal extraction: " .. strFormat("%.2f", extraction), mx, my, textSize, "d")
 	glColor(1, 1, 1, 1)
 end
 
+function widget:ViewResize(viewSizeX, viewSizeY)
+	vsx = viewSizeX
+	vsy = viewSizeY
+end

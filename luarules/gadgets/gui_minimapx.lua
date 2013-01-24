@@ -5,7 +5,7 @@ function gadget:GetInfo()
     desc      = "Draws an X for nukes in minimap (when in radar)",
 	version   = "1.0",
     author    = "Jools",
-    date      = "Movember,2012",
+    date      = "November,2012",
     license   = "GNU GPL, v2 or later",
     layer     = 0,
     enabled   = true,  --  loaded by default?
@@ -14,7 +14,11 @@ end
 
 -- shared synced/unsynced globals
 LUAUI_DIRNAME							= 'LuaUI/'
+local ipairs = ipairs
+
 local random  = math.random
+local tainsert = table.insert
+local taremove = table.remove
 local abs = math.abs
 local Echo = Spring.Echo
 local LUAMESSAGE = 	"20121130"
@@ -42,6 +46,7 @@ if gadgetHandler:IsSyncedCode() then
 	local clientID, clientAllyID, clientIsSpec
 	local GetProjectilePosition = Spring.GetProjectilePosition
 	local IsPosInRadar = Spring.IsPosInRadar
+	local GetUnitTeam = Spring.GetUnitTeam
 				
 	function gadget:Initialize()	
 		for id,weaponDef in pairs(WeaponDefs) do
@@ -55,23 +60,31 @@ if gadgetHandler:IsSyncedCode() then
 
 	
 	function gadget:ProjectileCreated(projectileID, projectileOwnerID, projectileWeaponDefID)
-		local x,y,z = Spring.GetProjectilePosition(projectileID)
-		local inRadar = Spring.IsPosInRadar(x, y, z, clientAllyID)
-		
-		local wName
-		if WeaponDefs[projectileWeaponDefID] then wName = WeaponDefs[projectileWeaponDefID].name end
-		--Echo("Weapon:",wName)
-		if wName and nukeWeapons[wName] then
-			local teamID = Spring.GetUnitTeam(projectileOwnerID)
-			table.insert(nukeList,{projectileID, x,y,z, inRadar,teamID})
-			--Echo("Nuke added:",#nukeList, inRadar, projectileOwnerID,teamID)
+		if WeaponDefs[projectileWeaponDefID] then
+			local wName = WeaponDefs[projectileWeaponDefID].name
+			--Echo("Weapon:",wName)
+			if nukeWeapons[wName] then
+				local x,y,z = GetProjectilePosition(projectileID)
+				local inRadar = IsPosInRadar(x, y, z, clientAllyID)
+				local teamID = GetUnitTeam(projectileOwnerID)
+				tainsert(nukeList,{projectileID, x,y,z, inRadar,teamID})
+				--Echo("Nuke added:",#nukeList, inRadar, projectileOwnerID,teamID)
+			end
 		end
 	end
 
 	function gadget:ProjectileDestroyed(projectileID)
-		for i,array in ipairs(nukeList) do
-			if array[1] == projectileID then table.remove(nukeList,i) return end	
+		for i=1, #nukeList do
+			if nukeList[i][1] == projectileID then
+				taremove(nukeList,i)
+				return
+			end
 		end
+		--[[
+		for i,array in ipairs(nukeList) do
+			if array[1] == projectileID then  return end	
+		end
+		--]]
 	end
 	
 	function gadget:GameFrame(frame)
@@ -111,41 +124,43 @@ else
 	-------------------
 	-- UNSYNCED PART --
 	-------------------
-
+	local glPushMatrix = gl.PushMatrix
+	local glColor = gl.Color
+	local glText = gl.Text
+	local glPopMatrix = gl.PopMatrix
+	local sipairs = sipairs
+	
 	local mapX = Game.mapX * 512
 	local mapY = Game.mapY * 512
 	local GetTeamColor = Spring.GetTeamColor
+	
 	function gadget:Initialize()
 		local pID = Spring.GetLocalPlayerID()
 		Spring.SendLuaRulesMsg(LUAMESSAGE .. pID)
 	end
 
 	function gadget:DrawInMiniMap(sx, sy)
-		local ratioX = sx / mapX
-		local ratioY = sy / mapY
-		
 		local drawList = SYNCED.nukeList
 		
-		gl.PushMatrix()
-		gl.Color(1, 1, 1, 1)
 		if drawList then
+			local ratioX = sx / mapX
+			local ratioY = sy / mapY
+			glPushMatrix()
 			for i, nuke in sipairs(drawList) do
-				local id = nuke[1]
+				--local id = nuke[1]
 				local x = nuke[2]
 				local y = nuke[4]
 				local inRadar = nuke[5]
 				local teamID = nuke[6]
-				local red
-				local green
-				local blue
-				red, green, blue = GetTeamColor(teamID)
-				gl.Color(red, green, blue, 1)
+				local red, green, blue = GetTeamColor(teamID)
+				glColor(red, green, blue, 1)
 				--Echo("Nuke ",i, x,y, inRadar)
 				if inRadar then
-					gl.Text("X", x*ratioX, sy-y*ratioY, 10, 'cv')
+					glText("X", x*ratioX, sy-y*ratioY, 10, 'cv')
 				end
 			end
+			glPopMatrix()
+			glColor(1, 1, 1, 1)
 		end
-		gl.PopMatrix()
 	end
 end
