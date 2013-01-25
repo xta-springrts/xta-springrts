@@ -249,7 +249,7 @@ for i =1,#files do
 	--Echo("Filename:", fileName, shortName)
 	
 	if guiSounds[shortName] then
-		Echo("GUI sound:",shortName)
+		--Echo("GUI sound:",shortName)
 		t[fileName]  = {
 		file      = fileName;
 		pitchmod  = 0.0;
@@ -273,7 +273,7 @@ for i =1,#files do
 			priority  = -2;
 			}
 		else
-		Echo("Explosion sound:",shortName)
+		--Echo("Explosion sound:",shortName)
 		t[fileName]  = {
 		file      = fileName;
 		pitchmod  = 0.1;
@@ -285,7 +285,7 @@ for i =1,#files do
 		end
 	else
 		-- unitreply sounds
-		Echo("Unitreply sound (assumed):",shortName)
+		--Echo("Unitreply sound (assumed):",shortName)
 		t[fileName]  = {
 		file      = fileName;
 		pitchmod  = 0.0;
@@ -304,7 +304,7 @@ end
 local t  = Sounds.SoundItems
 for i,v in pairs (t) do
 	for u,x in pairs(v) do
-		Echo("Index:", i, "Item:",u,x)
+		--Echo("Index:", i, "Item:",u,x)
 	end
 end
 
