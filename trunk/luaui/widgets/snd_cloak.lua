@@ -14,7 +14,8 @@ end
 -- function localisations
 local Echo							= Spring.Echo
 local PlaySoundFile		 			= Spring.PlaySoundFile
-
+local GetUnitPosition				= Spring.GetUnitPosition
+local GetTeamInfo					= Spring.GetTeamInfo
 -- sounds
 local cloak1 = "sounds/kloak1.wav"
 local decloak1 = "sounds/kloak1un.wav"
@@ -32,8 +33,8 @@ function widget:Initialize()
 end
 
 function widget:UnitCloaked(unitID, unitDefID, teamID) 
-	local x,y,z = Spring.GetUnitPosition(unitID)
-	local foo1,foo2,foo3,foo4,side = Spring.GetTeamInfo(teamID)
+	local x,y,z = GetUnitPosition(unitID)
+	local _,_,_,_,side = Spring.GetTeamInfo(teamID)
 		
 	if side == "arm" then
 		PlaySoundFile(cloak1,volume,x,y,z,0,0,0,Channel)
@@ -43,8 +44,8 @@ function widget:UnitCloaked(unitID, unitDefID, teamID)
 end
 
 function widget:UnitDecloaked(unitID, unitDefID, teamID) 
-	local x,y,z = Spring.GetUnitPosition(unitID)
-	local _,_,_,_,side = Spring.GetTeamInfo(teamID)
+	local x,y,z = GetUnitPosition(unitID)
+	local _,_,_,_,side = GetTeamInfo(teamID)
 	
 	if side == "arm" then
 		PlaySoundFile(decloak1,volume,x,y,z,0,0,0,Channel)

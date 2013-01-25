@@ -74,7 +74,7 @@ else
 	
 	function gadget:GameStart()
 		--Spring.Echo("State Broadcast ended")
-		gadgetHandler:RemoveGadget()
+		gadgetHandler:RemoveGadget(self)
 	end
 	
 end

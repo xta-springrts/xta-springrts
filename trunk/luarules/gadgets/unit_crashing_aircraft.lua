@@ -24,7 +24,7 @@ if (gadgetHandler:IsSyncedCode()) then
 			return 0.0, 0.0
 		end
 		if (paralyzer) then
-			-- paralysis damage cannot trigger a crash
+			-- paralysis damage cannot trigger a crash <--- wonder why not
 			return damage, 1.0
 		end
 		

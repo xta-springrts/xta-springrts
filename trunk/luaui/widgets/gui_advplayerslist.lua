@@ -14,8 +14,8 @@ function widget:GetInfo()
 		name      = "AdvPlayersList",
 		desc      = "Players list with useful information / shortcuts. Use tweakmode (ctrl+F11) to customize.",
 		author    = "Marmoth. Updated by Jools to work with commander changes.",
-		date      = "June 1, 2012",
-		version   = "8.1",
+		date      = "Jan, 2013",
+		version   = "8.2",
 		license   = "GNU GPL, v2 or later",
 		layer     = -4,
 		enabled   = true,  --  loaded by default?
@@ -56,7 +56,8 @@ local gl_Texture          = gl.Texture
 local gl_Rect             = gl.Rect
 local gl_TexRect          = gl.TexRect
 local gl_Color            = gl.Color
-
+local sub 				  = string.sub
+local len 				  = string.len
 --------------------------------------------------------------------------------
 -- IMAGES
 --------------------------------------------------------------------------------
@@ -1418,14 +1419,14 @@ end
 -- Listen for other widgets that tell if a player has changed side. 1 = arm, 2 = core. Expand at will to include more factions.
 function widget:RecvLuaMsg(msg, playerID)
 	local sidePrefix = '195' -- set by widget gui_commchange.lua
-	local sms = string.sub(msg, string.len(sidePrefix)+1) 
+	local sms = sub(msg, len(sidePrefix)+1) 
 	
-	local side = tonumber(string.sub(sms,1,1))
-	
+	local side = tonumber(sub(sms,1,1))
+	local _, _,_, playerTeam = Spring_GetPlayerInfo(playerID)
 	if side == 1 then
-		newSide[playerID] = 1
+		newSide[playerTeam] = 1
 	elseif side == 2 then
-		newSide[playerID] = 2
+		newSide[playerTeam] = 2
 	end
 	SetSidePics()
 end

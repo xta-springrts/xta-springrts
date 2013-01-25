@@ -224,37 +224,38 @@ end
 --- NOTE:
 ---    dguns are excluded from this since the gadget breaks Spring's ability to
 ---    limit playback concurrency which we want for the dgun's explosion sounds
+---    EDIT: Jan, 25: Should be fixed now, so dguns are again included
 if modOptions and modOptions.globalsounds ~= '1' then
-	Spring.Echo("Weapons_post: Local sound option detected")
+	Spring.Echo("Weapons_post: Local sound option detected, moving sounds to customparams")
 
 	for id, weaponDef in pairs(WeaponDefs) do
-		if (weaponDef.name == nil or weaponDef.name:find("Disintegrator") == nil) then
-			--Spring.Echo("Old weaponsdef:",id,WeaponDefs[id].soundhitwet)
-			if weaponDef.soundhitwet then
-				if not weaponDef.customparams then
-					weaponDef.customparams = {}
-				end
-				weaponDef.customparams.soundhitwet = weaponDef.soundhitwet -- for sound localisation gadget
+	--if (weaponDef.name == nil or weaponDef.name:find("Disintegrator") == nil) then
+		--Spring.Echo("Old weaponsdef:",id,WeaponDefs[id].soundhitwet)
+		if weaponDef.soundhitwet then
+			if not weaponDef.customparams then
+				weaponDef.customparams = {}
 			end
-		
-			if weaponDef.soundhitdry then
-				if not weaponDef.customparams then
-					weaponDef.customparams = {}
-				end
-				weaponDef.customparams.soundhitdry = weaponDef.soundhitdry -- for sound localisation gadget
-			end
-		
-			if weaponDef.soundstart then
-				if not weaponDef.customparams then
-					weaponDef.customparams = {}
-				end
-				weaponDef.customparams.soundstart = weaponDef.soundstart -- for sound localisation gadget
-			end
-			weaponDef.soundhitwet = nil
-			weaponDef.soundhitdry = nil
-			weaponDef.soundstart = nil
-			--Spring.Echo("New weaponsdef:",id,WeaponDefs[id].soundhitwet)
+			weaponDef.customparams.soundhitwet = weaponDef.soundhitwet -- for sound localisation gadget
 		end
+	
+		if weaponDef.soundhitdry then
+			if not weaponDef.customparams then
+				weaponDef.customparams = {}
+			end
+			weaponDef.customparams.soundhitdry = weaponDef.soundhitdry -- for sound localisation gadget
+		end
+	
+		if weaponDef.soundstart then
+			if not weaponDef.customparams then
+				weaponDef.customparams = {}
+			end
+			weaponDef.customparams.soundstart = weaponDef.soundstart -- for sound localisation gadget
+		end
+		weaponDef.soundhitwet = nil
+		weaponDef.soundhitdry = nil
+		weaponDef.soundstart = nil
+		--Spring.Echo("New weaponsdef:",id,WeaponDefs[id].soundhitwet)
+	--end
 	end
 end
 
