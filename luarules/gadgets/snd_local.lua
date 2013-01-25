@@ -78,7 +78,7 @@ if gadgetHandler:IsSyncedCode() then
 		if msg and string.len(msg) >= 9 and localSND_msg then	
 			local sms = string.sub(msg, string.len(LUAMESSAGE)+1) 
 			clientID = tonumber(string.sub(sms,1,1))
-			--Echo("Local client = ", clientID)
+			Echo("Local client = ", clientID)
 			_,_,clientIsSpec,_,clientAllyID = Spring.GetPlayerInfo(clientID)
 		end
 	end
@@ -109,13 +109,16 @@ else
 		DGun = true,
 	}
 
+	local Channel = 'battle'
+	local volume = 3.0
+	
 	function gadget:Initialize()
 		--Echo("Sound files:")
 		--Echo("-------------")
 		local pID = Spring.GetLocalPlayerID()
 		Spring.SendLuaRulesMsg(LUAMESSAGE .. pID)
 		for id, weaponDef in pairs(WeaponDefs) do
-			if (weaponDef.name == nil or weaponDef.name:find("Disintegrator") == nil) then
+			--if (weaponDef.name == nil or weaponDef.name:find("Disintegrator") == nil) then
 				if (weaponDef.customParams ~= nil) then
 					if weaponDef.customParams.soundhitwet and string.len(weaponDef.customParams.soundhitwet) > 0 then
 						sndwet[id] = weaponDef.customParams.soundhitwet
@@ -133,8 +136,25 @@ else
 						--Echo("No start sound for:", id, weaponDef.name)
 					end
 				end
-			end
+			--end
 		end
+		
+		-- Make a soundcheck of the available sounds
+		--Echo("Loading sounds:", Spring.LoadSoundDef("gamedata/sounds.lua"))
+		for i, snd in pairs(sndstart) do
+			--Echo("Testing start sound:",i,snd)
+			Spring.PlaySoundFile("sounds/" .. snd .. ".wav",1,0,0,0,Channel)
+		end
+		for i, snd in pairs(sndwet) do
+			--Echo("Testing wet sound:",i,snd)
+			Spring.PlaySoundFile("sounds/" .. snd .. ".wav",1,0,0,0,Channel)
+		end
+		for i, snd in pairs(snddry) do
+			--Echo("Testing dry sound:",i,snd)
+			Spring.PlaySoundFile("sounds/" .. snd .. ".wav",1,0,0,0,Channel)
+		end
+		
+		
 	end
 	
 	function table.removekey(table, key)
@@ -154,7 +174,7 @@ else
 		
 		if LOS and projectileWeaponDefID and sndstart[projectileWeaponDefID] then
 			if wType then
-				if nonexplosiveWeapons[wType] then
+				if false then --if nonexplosiveWeapons[wType] then
 					local soundBusy = false
 					for i,array in ipairs (pTable) do
 						local count = 0
@@ -176,11 +196,11 @@ else
 						--Echo("Playing beam weapon type sound")
 						--Echo("Projectile added: ",#pTable, projectileOwnerID, projectileWeaponDefID, projectileID)
 						--Echo(pTable[#pTable][1],pTable[#pTable][2],pTable[#pTable][3])
-						Spring.PlaySoundFile("Sounds/"..sndstart[projectileWeaponDefID]..".WAV",1,'battle')					
+						Spring.PlaySoundFile("sounds/"..sndstart[projectileWeaponDefID]..".WAV",volume,x,y,z,Channel)					
 					end
 				else
 					--Echo("Normal weapon sound playing")
-					Spring.PlaySoundFile("Sounds/"..sndstart[projectileWeaponDefID]..".WAV",1,'battle')
+					Spring.PlaySoundFile("sounds/"..sndstart[projectileWeaponDefID]..".WAV",volume,x,y,z,Channel)
 				end
 			end
 		end
@@ -199,18 +219,18 @@ else
 		--Echo("ProjectileExplosion: ", weaponDefID, LOS, y,gh)
 		if LOS and weaponDefID then
 				if gh >= 0 then -- explosion on land
-				if snddry[weaponDefID] then Spring.PlaySoundFile("Sounds/"..snddry[weaponDefID]..".WAV",1,'battle') end
+				if snddry[weaponDefID] then Spring.PlaySoundFile("sounds/"..snddry[weaponDefID]..".WAV",volume,x,y,z,Channel) end
 				--Echo("Land")
 			else -- explosion on water
 				if y > 0 then -- hits something above water level, use dry sounds
-					if snddry[weaponDefID] then Spring.PlaySoundFile("Sounds/"..snddry[weaponDefID]..".WAV",1,'battle') end
+					if snddry[weaponDefID] then Spring.PlaySoundFile("sounds/"..snddry[weaponDefID]..".WAV",volume,x,y,z,Channel) end
 					--Echo("On water but above water level")
 				elseif y <= 0 and gh > -50 then -- hits shallow water
-					if snddry[weaponDefID] then Spring.PlaySoundFile("Sounds/"..snddry[weaponDefID]..".WAV",1,'battle') end
-					if sndwet[weaponDefID] then Spring.PlaySoundFile("Sounds/"..sndwet[weaponDefID]..".WAV",1,'battle') end
+					if snddry[weaponDefID] then Spring.PlaySoundFile("sounds/"..snddry[weaponDefID]..".WAV",volume,x,y,z,Channel) end
+					if sndwet[weaponDefID] then Spring.PlaySoundFile("sounds/"..sndwet[weaponDefID]..".WAV",volume,x,y,z,Channel) end
 					--Echo("Shallow water")
 				elseif y <= 0 and gh <= -50 then -- hits deep water
-					if sndwet[weaponDefID] then Spring.PlaySoundFile("Sounds/"..sndwet[weaponDefID]..".WAV",1,'battle') end
+					if sndwet[weaponDefID] then Spring.PlaySoundFile("sounds/"..sndwet[weaponDefID]..".WAV",volume,x,y,z,Channel) end
 					--Echo("Deep water")
 				end
 			end
