@@ -3,9 +3,9 @@ function gadget:GetInfo()
   return {
     name      = "snd_local",
     desc      = "Make sounds local based on LOS",
-	version   = "1.0",
+	version   = "1.2",
     author    = "Jools",
-    date      = "Movember,2012",
+    date      = "Jan, 2013",
     license   = "GNU GPL, v2 or later",
     layer     = 0,
     enabled   = true,  --  loaded by default?
@@ -22,11 +22,22 @@ local PROJECTILE_DESTROYED_EVENT_ID = 10012
 local PROJECTILE_EXPLOSION_EVENT_ID = 10013
 local LUAMESSAGE = 	"20121120"
 
+local Echo 					= Spring.Echo
+
+
 if gadgetHandler:IsSyncedCode() then
 	-----------------
 	-- SYNCED PART --
 	-----------------
 
+	local SetWatchWeapon 		= Script.SetWatchWeapon
+	local IsPosInLos			= Spring.IsPosInLos
+	local GetProjectilePosition	= Spring.GetProjectilePosition
+	local GetGroundHeight 		= Spring.GetGroundHeight
+	local GetPlayerInfo			= Spring.GetPlayerInfo
+	local len 					= string.len
+	local sub 					= string.sub
+	
 	--local isWater = Spring.GetGroundHeight(px,pz) < 0
 	--local aoe = WeaponDefs[weaponID]["damageAreaOfEffect"] / 2
 	--local wType = WeaponDefs[weaponID].type
@@ -36,38 +47,42 @@ if gadgetHandler:IsSyncedCode() then
 	local clientAllyID
 		
 	function gadget:Initialize()	
-		--Spring.SendCommands ("cheat") 	
-		--Spring.SendCommands ("nocost")
-		
 		local modOptions = Spring.GetModOptions()
 		
 		if modOptions and modOptions.globalsounds == '1' then
-			Spring.Echo("[" .. (self:GetInfo()).name .. "] synced client has disabled local sounds")
+			Echo("[" .. (self:GetInfo()).name .. "] local sounds disabled")
 			gadgetHandler:RemoveGadget(self)
 		end
 		
 		for id,weaponDef in pairs(WeaponDefs) do
 			if weaponDef.customParams then				
-				Script.SetWatchWeapon(weaponDef.id, true)
+				SetWatchWeapon(weaponDef.id, true)
 			end
 		end
 	end
 	
+	function gadget:GameFrame(frame)
+		-- Test if gadget is really removed
+		--if frame%30 == 0 then
+			--Echo("Local sounds running for: " .. frame/30 .." seconds")
+		--end	
+	end
+	
 	function gadget:ProjectileCreated(projectileID, projectileOwnerID, projectileWeaponDefID)
-		local x,y,z = Spring.GetProjectilePosition(projectileID)
-		local clientLOS = clientIsSpec or Spring.IsPosInLos(x,y,z, clientAllyID)
+		local x,y,z = GetProjectilePosition(projectileID)
+		local clientLOS = clientIsSpec or IsPosInLos(x,y,z, clientAllyID)
 		SendToUnsynced(PROJECTILE_GENERATED_EVENT_ID, projectileID, projectileOwnerID, projectileWeaponDefID, clientLOS,x,y,z)
 	end
 
 	function gadget:ProjectileDestroyed(projectileID)
-		local x,y,z = Spring.GetProjectilePosition(projectileID)
-		local clientLOS = clientIsSpec or Spring.IsPosInLos(x,y,z, clientAllyID)
+		local x,y,z = GetProjectilePosition(projectileID)
+		local clientLOS = clientIsSpec or IsPosInLos(x,y,z, clientAllyID)
 		SendToUnsynced(PROJECTILE_DESTROYED_EVENT_ID, projectileID, clientLOS, y)
 	end
 
 	function gadget:Explosion(weaponDefID, posx, posy, posz, ownerID)
-		local clientLOS = clientIsSpec or Spring.IsPosInLos(posx, posy, posz, clientAllyID)
-		local h = Spring.GetGroundHeight(posx,posz)
+		local clientLOS = clientIsSpec or IsPosInLos(posx, posy, posz, clientAllyID)
+		local h = GetGroundHeight(posx,posz)
 		SendToUnsynced(PROJECTILE_EXPLOSION_EVENT_ID, weaponDefID, clientLOS, posz, posy, posz,h)
 		return false -- noGFX
 	end
@@ -75,18 +90,20 @@ if gadgetHandler:IsSyncedCode() then
 	function gadget:RecvLuaMsg(msg, playerID)
 		--Spring.Echo("Got a message from " .. playerID .. " :",msg,string.len(msg))
 		local localSND_msg = (msg:find(LUAMESSAGE,1,true))
-		if msg and string.len(msg) >= 9 and localSND_msg then	
-			local sms = string.sub(msg, string.len(LUAMESSAGE)+1) 
-			clientID = tonumber(string.sub(sms,1,1))
-			Echo("Local client = ", clientID)
-			_,_,clientIsSpec,_,clientAllyID = Spring.GetPlayerInfo(clientID)
+		if msg and len(msg) >= 9 and localSND_msg then	
+			local sms = sub(msg, len(LUAMESSAGE)+1) 
+			clientID = tonumber(sub(sms,1,1))
+			localName,_,clientIsSpec,_,clientAllyID = GetPlayerInfo(clientID)
+			if clientID and localName then
+				Echo("Local client with ID " .. clientID .. " = " .. localName)
+			end
 		end
 	end
 	
 	function gadget:Shutdown()
 		for id,weaponDef in pairs(WeaponDefs) do
 			if (weaponDef ~= nil) then
-				Script.SetWatchWeapon(weaponDef.id, false)
+				SetWatchWeapon(weaponDef.id, false)
 			end
 		end
 	end
@@ -95,11 +112,25 @@ else
 	-- UNSYNCED PART --
 	-------------------
 	
+	local GetLocalPlayerID				= Spring.GetLocalPlayerID
+	local SendLuaRulesMsg				= Spring.SendLuaRulesMsg
+	local PlaySoundFile					= Spring.PlaySoundFile
+	
+	local len 							= string.len
+	local tainsert						= table.insert
+	local taremove						= table.remove
+	
+	
 	local sndwet = {}
 	local snddry = {}
 	local sndstart = {}
-	local pID = Spring.GetLocalPlayerID()
+	local pID
 	local pTable = {}
+	local Channel 						= 'battle'
+	local volume 						= 3.0
+	local shallowLimit 					= -25
+	local shallowHitLimit				= -5
+	
 	local nonexplosiveWeapons = {
 		LaserCannon = true,
 		BeamLaser = true,
@@ -109,28 +140,29 @@ else
 		DGun = true,
 	}
 
-	local Channel = 'battle'
-	local volume = 3.0
+
 	
 	function gadget:Initialize()
-		--Echo("Sound files:")
-		--Echo("-------------")
-		local pID = Spring.GetLocalPlayerID()
-		Spring.SendLuaRulesMsg(LUAMESSAGE .. pID)
+		
+		pID = GetLocalPlayerID()
+		SendLuaRulesMsg(LUAMESSAGE .. pID)
+		
+		--get weapon sounds from customparams
 		for id, weaponDef in pairs(WeaponDefs) do
 			--if (weaponDef.name == nil or weaponDef.name:find("Disintegrator") == nil) then
 				if (weaponDef.customParams ~= nil) then
-					if weaponDef.customParams.soundhitwet and string.len(weaponDef.customParams.soundhitwet) > 0 then
+					if weaponDef.customParams.soundhitwet and len(weaponDef.customParams.soundhitwet) > 0 then
 						sndwet[id] = weaponDef.customParams.soundhitwet
+						--Echo("Wet sound for:", id, weaponDef.name, ":", sndwet[id])
 					else
 						--Echo("No wet sound for:", id, weaponDef.name)
 					end
-					if weaponDef.customParams.soundhitdry and string.len(weaponDef.customParams.soundhitdry) > 0 then
+					if weaponDef.customParams.soundhitdry and len(weaponDef.customParams.soundhitdry) > 0 then
 						snddry[id] = weaponDef.customParams.soundhitdry
 					else
 						--Echo("No dry sound for:", id, weaponDef.name)
 					end
-					if weaponDef.customParams.soundstart and string.len(weaponDef.customParams.soundstart) > 0 then
+					if weaponDef.customParams.soundstart and len(weaponDef.customParams.soundstart) > 0 then
 						sndstart[id] = weaponDef.customParams.soundstart
 					else
 						--Echo("No start sound for:", id, weaponDef.name)
@@ -140,18 +172,19 @@ else
 		end
 		
 		-- Make a soundcheck of the available sounds
+		local vol = 0
 		--Echo("Loading sounds:", Spring.LoadSoundDef("gamedata/sounds.lua"))
 		for i, snd in pairs(sndstart) do
 			--Echo("Testing start sound:",i,snd)
-			Spring.PlaySoundFile("sounds/" .. snd .. ".wav",1,0,0,0,Channel)
+			PlaySoundFile("sounds/" .. snd .. ".wav",vol,0,0,0,0,0,0,Channel)
 		end
 		for i, snd in pairs(sndwet) do
 			--Echo("Testing wet sound:",i,snd)
-			Spring.PlaySoundFile("sounds/" .. snd .. ".wav",1,0,0,0,Channel)
+			PlaySoundFile("sounds/" .. snd .. ".wav",vol,0,0,0,0,0,0,Channel)
 		end
 		for i, snd in pairs(snddry) do
 			--Echo("Testing dry sound:",i,snd)
-			Spring.PlaySoundFile("sounds/" .. snd .. ".wav",1,0,0,0,Channel)
+			PlaySoundFile("sounds/" .. snd .. ".wav",vol,0,0,0,0,0,0,Channel)
 		end
 		
 		
@@ -173,35 +206,9 @@ else
 		--Echo("ProjectileCreated: ", projectileID, projectileWeaponDefID, LOS, wType)
 		
 		if LOS and projectileWeaponDefID and sndstart[projectileWeaponDefID] then
-			if wType then
-				if false then --if nonexplosiveWeapons[wType] then
-					local soundBusy = false
-					for i,array in ipairs (pTable) do
-						local count = 0
-						--Echo(i, array[1],array[2],array[3],"Match for: ",projectileOwnerID)
-						if array[1] == projectileOwnerID then
-							count = count +1 
-						end
-						if array[1] == projectileOwnerID then 
-							soundBusy = true
-							--Echo("Yoyo", soundBusy, count)
-							--return
-						end
-					end
-					--Echo(wType, soundBusy)
-					if soundBusy then
-						--Echo("Sound busy for:",projectileOwnerID, wType)
-					else
-						table.insert(pTable,{projectileOwnerID, projectileWeaponDefID, projectileID})
-						--Echo("Playing beam weapon type sound")
-						--Echo("Projectile added: ",#pTable, projectileOwnerID, projectileWeaponDefID, projectileID)
-						--Echo(pTable[#pTable][1],pTable[#pTable][2],pTable[#pTable][3])
-						Spring.PlaySoundFile("sounds/"..sndstart[projectileWeaponDefID]..".WAV",volume,x,y,z,Channel)					
-					end
-				else
-					--Echo("Normal weapon sound playing")
-					Spring.PlaySoundFile("sounds/"..sndstart[projectileWeaponDefID]..".WAV",volume,x,y,z,Channel)
-				end
+			if wType then			
+				--Echo("Normal weapon sound playing")
+				PlaySoundFile("sounds/"..sndstart[projectileWeaponDefID]..".wav",volume,x,y,z,0,0,0,Channel)
 			end
 		end
 	end
@@ -209,7 +216,7 @@ else
 	local function ProjectileDestroyed(projectileID, LOS)		
 		--table.remove(pTable,projectileID)
 		for i,array in ipairs (pTable) do
-			if array[3] == projectileID then table.remove(pTable,i) end
+			if array[3] == projectileID then taremove(pTable,i) end
 		end
 		--Echo("ProjectileDestroyed: ",projectileID, LOS, #pTable)
 	end
@@ -217,21 +224,34 @@ else
 	--SendToUnsynced(PROJECTILE_EXPLOSION_EVENT_ID, weaponDefID, clientLOS, posz, posy, posz,h)
 	local function ProjectileExplosion(weaponDefID, LOS, x, y, z, gh)
 		--Echo("ProjectileExplosion: ", weaponDefID, LOS, y,gh)
+		-- This part determines what sound the explosion will play. In the following, the variable y is the height coordinate of 
+		-- the projectile, whereas gh is that of the ground height. The wet sound is typically a splash sound, but we don't want splash 
+		-- sounds in the following cases: i) explosion above water level ii) explosion very deep, like from torpedoes. If something hits 
+		-- shallow water, we want both splash and land explosion. 
 		if LOS and weaponDefID then
 				if gh >= 0 then -- explosion on land
-				if snddry[weaponDefID] then Spring.PlaySoundFile("sounds/"..snddry[weaponDefID]..".WAV",volume,x,y,z,Channel) end
+				if snddry[weaponDefID] then PlaySoundFile("sounds/"..snddry[weaponDefID]..".wav",volume,x,y,z,0,0,0,Channel) end
 				--Echo("Land")
 			else -- explosion on water
 				if y > 0 then -- hits something above water level, use dry sounds
-					if snddry[weaponDefID] then Spring.PlaySoundFile("sounds/"..snddry[weaponDefID]..".WAV",volume,x,y,z,Channel) end
+					if snddry[weaponDefID] then PlaySoundFile("sounds/"..snddry[weaponDefID]..".wav",volume,x,y,z,0,0,0,Channel) end
 					--Echo("On water but above water level")
-				elseif y <= 0 and gh > -50 then -- hits shallow water
-					if snddry[weaponDefID] then Spring.PlaySoundFile("sounds/"..snddry[weaponDefID]..".WAV",volume,x,y,z,Channel) end
-					if sndwet[weaponDefID] then Spring.PlaySoundFile("sounds/"..sndwet[weaponDefID]..".WAV",volume,x,y,z,Channel) end
-					--Echo("Shallow water")
-				elseif y <= 0 and gh <= -50 then -- hits deep water
-					if sndwet[weaponDefID] then Spring.PlaySoundFile("sounds/"..sndwet[weaponDefID]..".WAV",volume,x,y,z,Channel) end
-					--Echo("Deep water")
+				else
+					if y > shallowHitLimit then -- projectile hits close to surface
+						if gh > shallowLimit then -- water is shallow
+							--Echo("Shallow water")
+							if snddry[weaponDefID] then PlaySoundFile("sounds/"..snddry[weaponDefID]..".wav",volume/2,x,y,z,0,0,0,Channel) end
+							if sndwet[weaponDefID] then PlaySoundFile("sounds/"..sndwet[weaponDefID]..".wav",volume/2,x,y,z,0,0,0,Channel) end
+							
+						else -- hits deep water
+							--Echo("Deep water")
+							if sndwet[weaponDefID] then PlaySoundFile("sounds/"..sndwet[weaponDefID]..".wav",volume,x,y,z,0,0,0,Channel) end
+						end
+					else -- projectile hits at a depth, ideally, there would be another type of explosion sound in this case. However,
+						-- this is already considered in weapon explosions, for example the wet sound of torpedoes is xplodep2, which is
+						-- a deep water sound. We still use standard wet sounds, this division is kept for future needs.
+						if sndwet[weaponDefID] then PlaySoundFile("sounds/"..sndwet[weaponDefID]..".wav",volume,x,y,z,0,0,0,Channel) end
+					end
 				end
 			end
 		end

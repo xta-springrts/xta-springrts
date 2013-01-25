@@ -31,6 +31,20 @@ local startUnitParamName = 'startUnit'
 local armcomDefID = UnitDefNames.arm_commander.id
 local corcomDefID = UnitDefNames.core_commander.id
 
+local sideData = {
+	[30] = 'Arm',
+	[166] = 'Arm',
+	[231] = 'Core',
+	[366] = 'Core',
+	}
+
+local typeData = {
+	[30] = 'A',
+	[166] = 'M',
+	[231] = 'A',
+	[366] = 'M',
+	}
+
 local validStartUnits = {
    [UnitDefNames.arm_commander.id] = true,
    [UnitDefNames.arm_u0commander.id] = true,
@@ -50,14 +64,15 @@ local startEnergy = tonumber(modOptions.startenergy) or 1000
 ----------------------------------------------------------------
 -- Speedups
 ----------------------------------------------------------------
-local spGetPlayerInfo = Spring.GetPlayerInfo
-local spGetTeamInfo = Spring.GetTeamInfo
-local spGetTeamRulesParam = Spring.GetTeamRulesParam
-local spSetTeamRulesParam = Spring.SetTeamRulesParam
-local spGetTeamStartPosition = Spring.GetTeamStartPosition
-local spGetAllyTeamStartBox = Spring.GetAllyTeamStartBox
-local spCreateUnit = Spring.CreateUnit
-local spGetGroundHeight = Spring.GetGroundHeight
+local spGetPlayerInfo 				= Spring.GetPlayerInfo
+local spGetTeamInfo 				= Spring.GetTeamInfo
+local spGetTeamRulesParam 			= Spring.GetTeamRulesParam
+local spSetTeamRulesParam 			= Spring.SetTeamRulesParam
+local spGetTeamStartPosition 		= Spring.GetTeamStartPosition
+local spGetAllyTeamStartBox 		= Spring.GetAllyTeamStartBox
+local spCreateUnit 					= Spring.CreateUnit
+local spGetGroundHeight 			= Spring.GetGroundHeight
+local Echo 							= Spring.Echo
 
 ----------------------------------------------------------------
 -- Callins
@@ -87,9 +102,10 @@ if (Spring.GetModOptions() or {}).commander == 'choose' then
     function gadget:RecvLuaMsg(msg, playerID)
         local startUnit = tonumber(msg:match(changeStartUnitRegex))
         if startUnit and validStartUnits[startUnit] then
-            local _, _, playerIsSpec, playerTeam = spGetPlayerInfo(playerID)
+            local localName, _, playerIsSpec, playerTeam = spGetPlayerInfo(playerID)
             if not playerIsSpec then
                 spSetTeamRulesParam(playerTeam, startUnitParamName, startUnit)
+				-- Echo(localName .. " chooses " .. sideData[startUnit].." ("..typeData[startUnit]..")")
                 return true
             end
         end
