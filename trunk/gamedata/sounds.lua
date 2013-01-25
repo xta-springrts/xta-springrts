@@ -45,7 +45,6 @@
 	}
 --]]
 
-
 local Sounds = {
 	SoundItems = {
 		IncomingChat = {
@@ -64,7 +63,17 @@ local Sounds = {
 		FailedCommand = {
 			file = "sounds/cantdo4.wav",       
 		},
-
+		
+		-- default = { -- has undesired effects
+		- new since 89.0
+		- you can overwrite the fallback profile here (used when no corresponding SoundItem is defined for a sound)
+		-- gainmod = 0.2,
+		-- pitchmod = 0.3,
+		-- in3d = true,
+		-- maxconcurrent = 16,
+		-- rolloff = 0.4,
+		-- },
+	
 		--[[ Has undesired effects
 		default = {
 			--- new since 89.0
@@ -87,9 +96,24 @@ local Sounds = {
 			file = "sounds/xplomas2.wav",
 			maxconcurrent = 4,
 			pitchmod = 0.05,
-			maxdist = 2000,
-		}
+			maxdist = 5000,
+		},	
    },
 }
+
+local files = VFS.DirList("sounds/")
+local t = Sounds.SoundItems
+for i=1,#files do
+	local fileName = files[i]
+	t[fileName] = {
+		file     = fileName;
+		pitchmod = 0.1;
+		gainmod  = 0.2;
+		gain = 1;
+		maxconcurrent = 8;
+		rolloff = 0.4;
+		}
+end
+
 
 return Sounds
