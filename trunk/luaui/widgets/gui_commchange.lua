@@ -47,6 +47,8 @@ local bell = 'sounds/bell.ogg'
 local beep = 'sounds/BEEP1.wav'
 local tock = 'sounds/ticktock.wav'
 local button = 'sounds/button9.wav'
+local cancel = 'sounds/cancel2.wav'
+
 --------------------------------------------------------------------------------
 -- Buttons
 --------------------------------------------------------------------------------
@@ -194,8 +196,8 @@ local function checkState()
 	end
 end
 
-local function playSound()
-	PlaySoundFile(button)
+local function playSound(snd)
+	PlaySoundFile(snd)
 end
 
 --------------------------------------------------------------------------------
@@ -608,8 +610,9 @@ function widget:MousePress(mx, my, mButton)
 						spSendLuaRulesMsg('\177' .. armman)
 						spSendLuaUIMsg('195' .. 1)
 					end
+					playSound(button)
 				end
-			elseif IsOnButton(mx,my,Button["core"]["x0"],Button["core"]["y0"],Button["core"]["x1"],Button["core"]["y1"]) then	
+			elseif IsOnButton(mx,my,Button["core"]["x0"],Button["core"]["y0"],Button["core"]["x1"],Button["core"]["y1"]) then
 				if startID == armauto or startID == armman then
 					if startID == armauto then
 						spSendLuaRulesMsg('\177' .. coreauto)
@@ -618,6 +621,7 @@ function widget:MousePress(mx, my, mButton)
 						spSendLuaRulesMsg('\177' .. coreman)
 						spSendLuaUIMsg('195' .. 2)
 					end
+					playSound(button)
 				end
 			elseif IsOnButton(mx,my,Button["auto"]["x0"],Button["auto"]["y0"],Button["auto"]["x1"],Button["auto"]["y1"]) then
 				if startID == armman or startID == coreman then
@@ -628,6 +632,7 @@ function widget:MousePress(mx, my, mButton)
 						spSendLuaRulesMsg('\177' .. coreauto)
 						spSendLuaUIMsg('195' .. 2)
 					end
+					playSound(button)
 				end
 			elseif IsOnButton(mx,my,Button["manual"]["x0"],Button["manual"]["y0"],Button["manual"]["x1"],Button["manual"]["y1"]) and myState ~= 3 then
 				if startID == armauto or startID == coreauto then
@@ -638,6 +643,7 @@ function widget:MousePress(mx, my, mButton)
 						spSendLuaRulesMsg('\177' .. coreman)
 						spSendLuaUIMsg('195' .. 2)
 					end
+					playSound(button)
 				end
 			elseif IsOnButton(mx,my,Button["ready"]["x0"],Button["ready"]["y0"],Button["ready"]["x1"],Button["ready"]["y1"]) and gameState ~= 2 then
 				local pos = spGetTeamStartPosition(myTeamID)
@@ -647,18 +653,23 @@ function widget:MousePress(mx, my, mButton)
 					elseif myState == 3 then
 						myState = 1
 					end
+					playSound(button)
 				end
 			elseif IsOnButton(mx,my,Button["info"]["x0"],Button["info"]["y0"],Button["info"]["x1"],Button["info"]["y1"]) and myState ~= 3 then
 				if myState ~= 3 then
 					infoOn = not infoOn
+					if infoOn then
+						playSound(button)
+					else
+						playSound(cancel)
+					end
 				end
 			elseif IsOnButton(mx,my,Button["exit"]["x0"],Button["exit"]["y0"],Button["exit"]["x1"],Button["exit"]["y1"]) then
 				widgetHandler:RemoveWidget(self)
 				Spring.Echo("Exit to native dialogue window.")
-				playSound()
+				playSound(cancel)
 				return true
 			end
-			playSound()
 			updateState()
 			return true
 		elseif (mButton == 2 or mButton == 3) and mx < px + sizex then
