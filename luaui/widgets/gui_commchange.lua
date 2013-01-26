@@ -46,7 +46,7 @@ local coreman = UnitDefNames["core_u0commander"].id
 local bell = 'sounds/bell.ogg'
 local beep = 'sounds/BEEP1.wav'
 local tock = 'sounds/ticktock.wav'
-
+local button = 'sounds/button9.wav'
 --------------------------------------------------------------------------------
 -- Buttons
 --------------------------------------------------------------------------------
@@ -103,7 +103,7 @@ local spSendLuaRulesMsg = Spring.SendLuaRulesMsg
 local spSendLuaUIMsg = Spring.SendLuaUIMsg
 local spGetSpectatingState = Spring.GetSpectatingState
 local spGetTeamInfo = Spring.GetTeamInfo
-
+local PlaySoundFile = Spring.PlaySoundFile
 --------------------------------------------------------------------------------
 -- Local functions
 --------------------------------------------------------------------------------
@@ -192,6 +192,10 @@ local function checkState()
 	else
 		myState = 0
 	end
+end
+
+local function playSound()
+	PlaySoundFile(button)
 end
 
 --------------------------------------------------------------------------------
@@ -651,8 +655,10 @@ function widget:MousePress(mx, my, mButton)
 			elseif IsOnButton(mx,my,Button["exit"]["x0"],Button["exit"]["y0"],Button["exit"]["x1"],Button["exit"]["y1"]) then
 				widgetHandler:RemoveWidget(self)
 				Spring.Echo("Exit to native dialogue window.")
+				playSound()
 				return true
 			end
+			playSound()
 			updateState()
 			return true
 		elseif (mButton == 2 or mButton == 3) and mx < px + sizex then

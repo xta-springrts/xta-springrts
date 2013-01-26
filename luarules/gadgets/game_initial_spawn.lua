@@ -81,7 +81,7 @@ function gadget:Initialize()
     local gaiaTeamID = Spring.GetGaiaTeamID()
     local teamList = Spring.GetTeamList()
 	if (Spring.GetModOptions() or {}).commander ~= 'choose' then
-		gadgetHandler:RemoveGadget() 
+		gadgetHandler:RemoveGadget(self) 
 	end
 	
     for i = 1, #teamList do
@@ -110,4 +110,8 @@ if (Spring.GetModOptions() or {}).commander == 'choose' then
             end
         end
     end
+end
+
+function gadget:GameStart()
+	 gadgetHandler:RemoveCallIn("RecvLuaMsg")	
 end
