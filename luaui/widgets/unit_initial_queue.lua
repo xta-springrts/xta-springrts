@@ -207,6 +207,13 @@ function widget:Initialize()
 		widgetHandler:RemoveWidget(self)
 		return
 	end
+	
+	local modOptions = Spring.GetModOptions()
+	if modOptions.mission then 				-- Don't run on missions; screen will be in the way.
+		widgetHandler:RemoveWidget(self)
+		return
+	end
+	
 	--Determine if certain units got disabled
 	local disableWind = Game.windMax < 9.1
 	if disableWind then
