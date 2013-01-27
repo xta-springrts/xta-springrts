@@ -3,8 +3,16 @@ if (gadgetHandler:IsSyncedCode()) then
 	local random = math.random 
 	local crashingUnits = {}
 	
-	local CRASHCUTOFF = 0.33
-	local MINHEALTH = 0.5
+	local CRASHRISK = 0.33
+	local DAMAGELIMIT = 1.0
+	
+	local SetUnitCrashing = Spring.SetUnitCrashing
+	local SetUnitNoSelect = Spring.SetUnitNoSelect
+	local SetUnitNeutral = Spring.SetUnitNeutral
+	local SetUnitSensorRadius = Spring.SetUnitSensorRadius
+	local SetUnitCOBValue = Spring.SetUnitCOBValue
+	
+	
 	
 	function gadget:GetInfo()
 		return {
@@ -14,7 +22,13 @@ if (gadgetHandler:IsSyncedCode()) then
 		}
 	end
 
+	function gadget:UnitFinished(unitID, unitDefID, teamID)
+		Spring.Echo(UnitDefs[unitDefID].name,UnitDefs[unitDefID].canLoopbackAttack)
+	end
+	
 	function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weaponDefID, attackerID, attackerDefID, attackerTeam)
+		
+		
 		if (not UnitDefs[unitDefID].canFly) then
 			-- not an airplane
 			return damage, 1.0
@@ -28,11 +42,18 @@ if (gadgetHandler:IsSyncedCode()) then
 			return damage, 1.0
 		end
 		
-		if (damage > MINHEALTH * Spring.GetUnitHealth(unitID)) and random() < CRASHCUTOFF then
-			Spring.SetUnitCrashing(unitID, true)
-			Spring.SetUnitNoSelect(unitID, true)
-			Spring.SetUnitNeutral(unitID, true)
-			Spring.SetUnitCOBValue(unitID, COB.CRASHING, 1)
+		if (damage > DAMAGELIMIT * Spring.GetUnitHealth(unitID)) and random() < CRASHRISK then
+			SetUnitCrashing(unitID, true)
+			SetUnitNoSelect(unitID, true)
+			SetUnitNeutral(unitID, true)
+			SetUnitSensorRadius (unitID, "los", 0)
+			SetUnitSensorRadius (unitID, "airLos", 0)
+			SetUnitSensorRadius (unitID, "radar", 0)
+			SetUnitSensorRadius (unitID, "sonar", 0)
+			SetUnitSensorRadius (unitID, "seismic", 0)
+			SetUnitSensorRadius (unitID, "radarJammer", 0)
+			SetUnitSensorRadius (unitID, "sonarJammer", 0)
+			SetUnitCOBValue(unitID, COB.CRASHING, 1)
 
 			crashingUnits[unitID] = true
 		end
