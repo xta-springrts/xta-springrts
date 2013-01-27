@@ -27,7 +27,7 @@ local CD3 = "sounds/count3.wav"
 local CD4 = "sounds/count4.wav"
 local CD5 = "sounds/count5.wav"
 local CD6 = "sounds/count6.wav"
-
+local cancel = "sounds/cancel2.wav"
 
 local ADUnits = {}
 local CMD_SELFD = CMD.SELFD
@@ -39,17 +39,15 @@ end
 
 function widget:GameFrame(gameFrame)
 	for _, startFrame in pairs(ADUnits) do
-		if (gameFrame - startFrame) == 5 then
-			PlaySoundFile(CD1)
-		elseif (gameFrame - startFrame) == 35 then
+		if (gameFrame - startFrame) == 30 then
 			PlaySoundFile(CD2)
-		elseif (gameFrame - startFrame) == 65 then
+		elseif (gameFrame - startFrame) == 60 then
 			PlaySoundFile(CD3)
-		elseif (gameFrame - startFrame) == 95 then
+		elseif (gameFrame - startFrame) == 90 then
 			PlaySoundFile(CD4)
-		elseif (gameFrame - startFrame) == 125 then
+		elseif (gameFrame - startFrame) == 120 then
 			PlaySoundFile(CD5)
-		elseif (gameFrame - startFrame) == 155 then
+		elseif (gameFrame - startFrame) == 150 then
 			PlaySoundFile(CD6)
 		end			
 	end
@@ -60,8 +58,10 @@ function widget:UnitCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdOp
 		if not ADUnits[unitID] then
 		local frame = Spring.GetGameFrame()
 			ADUnits[unitID] = frame
+			PlaySoundFile(CD1)
 		else
 			ADUnits[unitID] = nil
+			PlaySoundFile(cancel)
 		end
 	end
 	return true
