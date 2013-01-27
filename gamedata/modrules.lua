@@ -59,7 +59,7 @@ local modrules  = {
 
   fireAtDead = {
     fireAtKilled   = false,  -- defaults to false
-    fireAtCrashing = true,  -- defaults to false
+    fireAtCrashing = false,  -- defaults to false
   },
 
   nanospray = {
