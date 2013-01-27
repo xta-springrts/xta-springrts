@@ -21,10 +21,6 @@ if (gadgetHandler:IsSyncedCode()) then
 			enabled = true,
 		}
 	end
-
-	function gadget:UnitFinished(unitID, unitDefID, teamID)
-		Spring.Echo(UnitDefs[unitDefID].name,UnitDefs[unitDefID].canLoopbackAttack)
-	end
 	
 	function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weaponDefID, attackerID, attackerDefID, attackerTeam)
 		
