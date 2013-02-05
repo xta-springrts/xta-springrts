@@ -41,14 +41,14 @@ if not gadgetHandler:IsSyncedCode() then
 					if not playerMarked[i] then
 						Spring.SendLuaUIMsg (positionRegex .. 1 .. player)
 						playerMarked[i] = true
-						PlaySoundFile(snd)
+						--PlaySoundFile(snd)
 						--Spring.Echo("mark state: ",i,player, marked)
 					end
 				else
 					if playerMarked[i] then
 						Spring.SendLuaUIMsg (positionRegex .. 0 .. player)
 						playerMarked[i] = false
-						PlaySoundFile(snd)
+						--PlaySoundFile(snd)
 						--Spring.Echo("mark state: ",i,player, marked)
 					end
 				end
