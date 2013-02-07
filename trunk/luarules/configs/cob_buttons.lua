@@ -17,6 +17,7 @@ return {
   },
   ]]--
 
+  --[[ singing is handeled via dedicated sing/taunt gadget, otherwise this causes double sing buttons
   core_u4commander = {
     {cob = "Sing"},
   },
@@ -59,6 +60,7 @@ return {
   arm_nincommander = {
     {cob = "Sing"},
   },
+  --]]
   arm_podger = {
     {
       name     = "Self-Charge",

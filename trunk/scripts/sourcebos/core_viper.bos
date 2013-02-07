@@ -96,6 +96,7 @@ Stop()
 
 RequestState(requestedstate, currentstate)
 {
+	set-signal-mask 0;
 	if( statechg_StateChanging )
 	{
 		statechg_DesiredState = requestedstate;
