@@ -48,6 +48,7 @@ local spEditUnitCmdDesc = Spring.EditUnitCmdDesc
 local spRemoveUnitCmdDesc = Spring.RemoveUnitCmdDesc
 local spCallCOBScript = Spring.CallCOBScript
 local spGetUnitDefID = Spring.GetUnitDefID
+local format = string.format
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
@@ -56,6 +57,7 @@ local reloads = {}
 local buttonDefs = VFS.Include"LuaRules/Configs/cob_buttons.lua"
 
 local buttons = {}
+local buttonParams = {}
 local cmdOffset = 0
 for unit, cmds in pairs(buttonDefs) do
 	for i, cmd in ipairs(cmds) do
@@ -93,8 +95,15 @@ end
 function gadget:UnitCreated(unitID, unitDefID)
 	local name = UnitDefs[unitDefID].name
 	if (buttonDefs[name]) then
+		buttonParams[unitID] = {}
 		for i, button in ipairs(buttonDefs[name]) do
 			spInsertUnitCmdDesc(unitID, button.position or 500, button.cmdDesc)
+			if button.params then
+				buttonParams[unitID][button.id] = {}
+				for p=1, #button.params do
+					buttonParams[unitID][button.id][p] = button.params[p]
+				end
+			end
 		end
 		reloads[unitID] = {}
 	end
@@ -134,11 +143,11 @@ function gadget:GameFrame(n)
 							status[2] = true
 						end
 						local progress = (s-reload-cmd.duration) / (cmd.reload-cmd.duration) * 100
-						local text = string.format("%d%%", progress)    
+						local text = format("%d%%", progress)    
 						cmdArray = {name = text, disabled = true}
 					elseif (s - reload < cmd.reload) then 
 						local progress = (s-reload) / (cmd.duration) * 100
-						local text = string.format("%d%%", progress)
+						local text = format("%d%%", progress)
 						cmdArray = {name = text, disabled = true}
 					else
 						if (not cmd.duration) then
@@ -164,25 +173,39 @@ end
 
 
 function gadget:AllowCommand(unitID, unitDefID, teamID, cmdID, cmdParams, cmdOptions)
-	if (buttons[cmdID] and buttonDefs[UnitDefs[unitDefID].name] and buttons[cmdID].name==buttonDefs[UnitDefs[unitDefID].name][1].name) then
-		local cmd = buttons[cmdID]
-		local cmdDescID = spFindUnitCmdDesc(unitID, cmdID)
-		if (cmd.reload) then
-			reloads[unitID] = reloads[unitID] or {}
-			if (not reloads[unitID][cmd.buttonIndex]) then
-				reloads[unitID][cmd.buttonIndex] = {Spring.GetGameSeconds()}
-				spCallCOBScript(unitID, cmd.cob, 0)
+	if buttons[cmdID] then
+		local unitName = UnitDefs[unitDefID].name
+		if buttonDefs[unitName] then
+			local buttonDoesntExist = true	-- if an unit has multiple cob buttons, check them all, not just the first one
+			for i=1, #buttonDefs[unitName] do
+				if buttons[cmdID].name==buttonDefs[unitName][i].name then
+					buttonDoesntExist = false
+					break
+				end
 			end
-		else
-			if (cmdDescID and cmd.params) then
-				cmd.params[1] = cmdParams[1]
-				spCallCOBScript(unitID, cmd.cob, 0, cmdParams[1])
-				spEditUnitCmdDesc(unitID, cmdDescID, {params=cmd.params})
+			if buttonDoesntExist then
+				return true
+			end
+			local cmd = buttons[cmdID]
+			local cmdDescID = spFindUnitCmdDesc(unitID, cmdID)
+			if (cmd.reload) then
+				reloads[unitID] = reloads[unitID] or {}
+				if (not reloads[unitID][cmd.buttonIndex]) then
+					reloads[unitID][cmd.buttonIndex] = {Spring.GetGameSeconds()}
+					spCallCOBScript(unitID, cmd.cob, 0)
+				end
 			else
-				spCallCOBScript(unitID, cmd.cob, 0)
+				if (cmdDescID and buttonParams[unitID][cmdID]) then
+					local bp = buttonParams[unitID][cmdID]
+					bp[1] = cmdParams[1]
+					spCallCOBScript(unitID, cmd.cob, 0, cmdParams[1])
+					spEditUnitCmdDesc(unitID, cmdDescID, {params=bp})
+				else
+					spCallCOBScript(unitID, cmd.cob, 0)
+				end
 			end
+			return false  -- command was used
 		end
-		return false  -- command was used
 	end
 	return true  -- command was not used
 end

@@ -90,6 +90,7 @@ deactivatescr()
 	move door3 to y-axis [-8.500000] speed [0.000000];
 	move door4 to y-axis [-8.500000] now;
 	move door4 to y-axis [-8.500000] speed [0.000000];
+	turn gun to x-axis <-90.379121> speed <253.181319>;
 	move barrel to z-axis [0.000000] now;
 	move barrel to z-axis [-19.750000] speed [61.718750];
 	sleep 320;
@@ -162,7 +163,7 @@ SmokeUnit(healthpercent, sleeptime, smoketype)
 
 RequestState(requestedstate, currentstate)
 {
-	set-signal-mask 0;
+	//set-signal-mask 0;
 	if( statechg_StateChanging )
 	{
 		statechg_DesiredState = requestedstate;
@@ -199,18 +200,16 @@ RestoreAfterDelay()
 
 OpenClose(state)
 {
-	signal SIG_OPEN;
-	set-signal-mask SIG_OPEN;
 	openState = state;
-	if (state != Static_var_1)
+	if (!bAiming)
 	{
 		if (state)
 		{
-			if (!bAiming) start-script RequestState(0);
+			start-script RequestState(0);
 		}
 		else
 		{
-			if (!bAiming) start-script RequestState(1);
+			start-script RequestState(1);
 		}
 	}
 }
