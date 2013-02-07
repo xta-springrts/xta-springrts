@@ -20,6 +20,8 @@ local Echo = Spring.Echo
 local PROJECTILE_GENERATED_EVENT_ID = 10011
 local PROJECTILE_DESTROYED_EVENT_ID = 10012
 local PROJECTILE_EXPLOSION_EVENT_ID = 10013
+local TEAM_DIED_EVENT_ID = 10014
+
 local LUAMESSAGE = 	"20121120"
 
 local Echo 					= Spring.Echo
@@ -75,10 +77,6 @@ if gadgetHandler:IsSyncedCode() then
 		SendToUnsynced(PROJECTILE_EXPLOSION_EVENT_ID, weaponDefID, posx, posy, posz, posz,h)
 		return false -- noGFX
 	end
-	
-	function gadget:PlayerChanged(playerID)
-		--Echo("Player Changed:",playerID) -- doesn't seem to work
-	end
 		
 	function gadget:Shutdown()
 		for id,weaponDef in pairs(WeaponDefs) do
@@ -87,6 +85,16 @@ if gadgetHandler:IsSyncedCode() then
 			end
 		end
 	end
+	
+	function gadget:PlayerAdded(playerID) 
+		Echo("Player added:", playerID) -- doesn't seem to work
+	end
+	
+	function gadget:TeamDied(teamID)
+		SendToUnsynced(TEAM_DIED_EVENT_ID, teamID)
+	end
+	
+	
 else
 	-------------------
 	-- UNSYNCED PART --
@@ -248,6 +256,15 @@ else
 		end
 	end
 	
+	local function TeamDied(teamID)
+		clientIsSpec = GetSpectatingState()
+	end
+	
+	function gadget:PlayerChanged(playerID)
+		Echo("Player Changed:",playerID) -- doesn't seem to work
+		clientIsSpec = GetSpectatingState()
+	end
+	
 	function gadget:RecvFromSynced(eventID, arg0, arg1, arg2, arg3, arg4, arg5)
 		
 		if eventID == PROJECTILE_GENERATED_EVENT_ID then
@@ -256,6 +273,8 @@ else
 			ProjectileDestroyed(arg0)
 		elseif eventID == PROJECTILE_EXPLOSION_EVENT_ID then
 			ProjectileExplosion(arg0, arg1, arg2, arg3, arg4)
+		elseif eventID == TEAM_DIED_EVENT_ID then
+			TeamDied(arg0)
 		end
 	end
 end
