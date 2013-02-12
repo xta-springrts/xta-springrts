@@ -2102,6 +2102,8 @@
 	alphadecay=0.5;
 	sizedecay=-0.55;
 	Tolerance=300;
+	avoidFriendly=0;
+	avoidFeature=0;
 	[DAMAGE]
 	{
 		default=30000;
@@ -2583,6 +2585,8 @@
 	noexplode=1;
 	commandfire=1;
 	startsmoke=1;
+	avoidFriendly=0;
+	avoidFeature=0;
 	explosiongenerator=custom:DGUNTRACE;
 	[DAMAGE]
 	{
@@ -3179,6 +3183,8 @@
 	cegTag=DGUNTRAIL;
 	startsmoke=1;
 	Tolerance=300;
+	avoidFriendly=0;
+	avoidFeature=0;
 	[DAMAGE]
 	{
 		default=30000;
@@ -3207,6 +3213,8 @@
 	explosiongenerator=custom:DGUNTRACE;
 	cegTag=DGUNTRAIL;
 	startsmoke=1;
+	avoidFriendly=0;
+	avoidFeature=0;
 	[DAMAGE]
 	{
 		default=30000;
@@ -3235,6 +3243,8 @@
 	explosiongenerator=custom:DGUNTRACE;
 	cegTag=DGUNTRAIL;
 	startsmoke=1;
+	avoidFriendly=0;
+	avoidFeature=0;
 	[DAMAGE]
 	{
 		default=30000;
