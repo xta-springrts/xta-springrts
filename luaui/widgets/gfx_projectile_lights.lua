@@ -64,7 +64,6 @@ local noise = {--this is so that it flashes a bit, should be addressed with (x+z
 local pieceprojectilecolor={1.0, 1.0, 0.5, 0.25} -- This is the color of piece projectiles, set to nil to disable
 
 listC = gl.CreateList(function()	-- Cannon light decal texture
-	glTexture('luaui/images/pointlight.tga') --simple white square with alpha white blurred circle
 	glBeginEnd(GL.QUAD_STRIP,function()  
     --point1
     glTexCoord(0.0,0.0)
@@ -73,22 +72,21 @@ listC = gl.CreateList(function()	-- Cannon light decal texture
     glTexCoord(0.0,1.0)                           
     glVertex(4.0,0.0,-4.0)                   
     --point3
-    glTexCoord(1.0,0.0)
+    glTexCoord(0.5,0.0)
     glVertex(-4.0,0.0,4.0)
     --point4
-    glTexCoord(1.0,1.0)
+    glTexCoord(0.5,1.0)
     glVertex(4.0,0.0,4.0)
     end)
 end)
 
 listL = gl.CreateList(function()	-- Laser cannon decal texture
-	glTexture('luaui/images/neonlight.tga') --simple white square with alpha white blurred rectangle
 	glBeginEnd(GL.QUAD_STRIP,function()  
     --point1
-    glTexCoord(0.0,0.0)
+    glTexCoord(0.5,0.0)
     glVertex(-2.0,0.0,-4.0)
     --point2                                 
-    glTexCoord(0.0,1.0)                           
+    glTexCoord(0.5,1.0)                           
     glVertex(2.0,0.0,-4.0)                   
     --point3
     glTexCoord(1.0,0.0)
@@ -110,24 +108,24 @@ function widget:Initialize() -- create lighttable
 	for u=1, #UnitDefs do
 		if UnitDefs[u]['weapons'] and #UnitDefs[u]['weapons']>0 then --only units with weapons
 			--These projectiles should have lights:
-				--Cannon (projectile size: tempsize = 2.0f + std::min(wd.damages[0] * 0.0025f, wd.damageAreaOfEffect * 0.1f);)
-				--EmgCannon (only gorg uses it, and lights dont look so good too close to ground)
-				--LaserCannon --only sniper uses it, no need to make shot more visible
-				--LightningCannon --projectile is centered on emit point
-				--Flame --a bit iffy cause of long projectile life... too bad it looks great.
+				--Cannon - projectile size: tempsize = 2.0f + std::min(wd.damages[0] * 0.0025f, wd.damageAreaOfEffect * 0.1f);)
+				--EmgCannon - looks a bit shiny when close to ground
+				--LaserCannon - über effects
+				--Flame - a bit iffy cause of long projectile life... but it looks great.
 			--Shouldn't:
 				--Dgun
 				--MissileLauncher
 				--StarburstLauncher
 				--AircraftBomb
 				--BeamLaser --Beamlasers shouldnt, because they are buggy (GetProjectilePosition returns center of beam, no other info avalable)
+				--LightningCannon --same as BeamLasers
 				--Melee
 				--Shield
 				--TorpedoLauncher
 			for w=1, #UnitDefs[u]['weapons'] do 
 				weaponID = UnitDefs[u]['weapons'][w]['weaponDef']
 				local wdID = WeaponDefs[weaponID]
-				if not BlackList[wdID.name] then 
+				if not BlackList[wdID.name] then	-- prevent projectile light, if the weapon has some other light effect
 					if (wdID.type == 'Cannon' or wdID.type == 'EmgCannon') then
 						plighttable[wdID.name] = {1.0,1.0,0.5,0.5*((wdID.size-0.65)/3.0)}
 					elseif (wdID.type == 'LaserCannon') then
@@ -224,6 +222,7 @@ function widget:DrawWorldPreUnit()
 			--and ESPECIALLY when overlapping
 		-- mask=false and test=true is perfect, no overlap flicker, no cliff overdraw
 			--BUT it clips into cliffs from the side....
+		glTexture('luaui/images/lightmap.tga') --simple white rectangle with alpha white blurred circle and square
 		glDepthMask(false)
 		--glDepthMask(true)
 		glDepthTest(false)
