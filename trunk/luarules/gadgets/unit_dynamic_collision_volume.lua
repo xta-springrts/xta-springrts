@@ -36,6 +36,7 @@ local spGetGameFrame = Spring.GetGameFrame
 local spArmor = Spring.GetUnitArmored
 local spActive = Spring.GetUnitIsActive
 local pairs = pairs	
+local min = math.min
 
 
 if (gadgetHandler:IsSyncedCode()) then
@@ -57,7 +58,7 @@ if (gadgetHandler:IsSyncedCode()) then
 					if mapFeatures[featureModelTrim] then
 						local p = mapFeatures[featureModelTrim]
 						spSetFeatureCollisionData(featID, p[1], p[2], p[3], p[4], p[5], p[6], p[7], p[8], p[9])
-						spSetFeatureRadiusAndHeight(featID, math.min(p[1], p[3])/2, p[2])
+						spSetFeatureRadiusAndHeight(featID, min(p[1], p[3])*0.5, p[2])
 					elseif featureModel:find(".s3o") then
 						local xs, ys, zs, xo, yo, zo, vtype, htype, axis, _ = spGetFeatureCollisionData(featID)
 						Spring.Echo(featureModel, xs, ys, zs, xo, yo, zo, vtype, htype, axis)
@@ -205,13 +206,13 @@ if (gadgetHandler:IsSyncedCode()) then
 						end
 						if t.offsets then
 							p = t.offsets
-							Spring.SetUnitMidAndAimPos(unitID, 0, spGetUnitHeight(unitID)/2, 0, p[1], p[2], p[3],true)
+							Spring.SetUnitMidAndAimPos(unitID, 0, spGetUnitHeight(unitID)*0.5, 0, p[1], p[2], p[3],true)
 						end
 					else
 						p = unitCollisionVolume[defs.name].off
 						spSetUnitCollisionData(unitID, p[1], p[2], p[3], p[4], p[5], p[6], p[7], p[8], p[9])
 						if p[10] then
-							Spring.SetUnitMidAndAimPos(unitID, 0, spGetUnitHeight(unitID)/2, 0, p[10], p[11], p[12],true)
+							Spring.SetUnitMidAndAimPos(unitID, 0, spGetUnitHeight(unitID)*0.5, 0, p[10], p[11], p[12],true)
 						end
 					end
 					popupUnits[unitID].state = 0
@@ -230,13 +231,13 @@ if (gadgetHandler:IsSyncedCode()) then
 						end
 						if t.offsets then
 							p = t.offsets
-							Spring.SetUnitMidAndAimPos(unitID, 0, spGetUnitHeight(unitID)/2, 0, p[1], p[2], p[3],true)
+							Spring.SetUnitMidAndAimPos(unitID, 0, spGetUnitHeight(unitID)*0.5, 0, p[1], p[2], p[3],true)
 						end
 					else
 						p = unitCollisionVolume[defs.name].on
 						spSetUnitCollisionData(unitID, p[1], p[2], p[3], p[4], p[5], p[6], p[7], p[8], p[9])
 						if p[10] then
-							Spring.SetUnitMidAndAimPos(unitID, 0, spGetUnitHeight(unitID)/2, 0, p[10], p[11], p[12],true)
+							Spring.SetUnitMidAndAimPos(unitID, 0, spGetUnitHeight(unitID)*0.5, 0, p[10], p[11], p[12],true)
 						end
 					end
 					popupUnits[unitID].state = 1
