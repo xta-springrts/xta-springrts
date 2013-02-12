@@ -117,7 +117,7 @@ local function SetupMexDefInfos()
 		if (extractsMetal > 0) then
 			mexDefInfos[unitDefID] = {}
 			mexDefInfos[unitDefID][1] = extractsMetal
-			mexDefInfos[unitDefID][2] = unitDef.extractSquare
+			--mexDefInfos[unitDefID][2] = unitDef.extractSquare
 			if (unitDef.xsize % 4 == 2) then
 				mexDefInfos[unitDefID][3] = true
 			end
@@ -164,6 +164,7 @@ local function IntegrateMetal(mexDefInfo, x, z, forceUpdate)
 	local square = mexDefInfo[2]
 	local result = 0
 	
+	--[[
 	if (square) then
 		for i = startX, endX do
 			for j = startZ, endZ do
@@ -173,6 +174,7 @@ local function IntegrateMetal(mexDefInfo, x, z, forceUpdate)
 			end
 		end
 	else
+	--]]
 		for i = startX, endX do
 			for j = startZ, endZ do
 				local cx, cz = (i + 0.5) * METAL_MAP_SQUARE_SIZE, (j + 0.5) * METAL_MAP_SQUARE_SIZE
@@ -185,7 +187,7 @@ local function IntegrateMetal(mexDefInfo, x, z, forceUpdate)
 				end
 			end
 		end
-	end
+	--end
 	
 	extraction = result * mult
 end
