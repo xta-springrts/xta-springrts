@@ -45,7 +45,7 @@
   impulsefactor=1;
   interceptedbyshieldtype=0;
   largebeamlaser=1;
-noexplode=1;
+  noexplode=1;
   laserflaresize=6;
   lineofsight=1;
   noselfdamage=1;

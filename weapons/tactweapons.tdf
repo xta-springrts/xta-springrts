@@ -35,7 +35,9 @@
   	separation=0.44;
   	alphadecay=0.5;
   	sizedecay=-0.55;
-  Tolerance=300; //added v9.3
+	Tolerance=300; //added v9.3
+	avoidFriendly=0;
+	avoidFeature=0;
 	[DAMAGE]
 	{
 		default=30000;
@@ -80,6 +82,8 @@
   	alphadecay=0.5;
   	sizedecay=-0.55;
   	Tolerance=300; //added v9.3
+	avoidFriendly=0;
+	avoidFeature=0;
 	[DAMAGE]
 	{
 		default=30000;
