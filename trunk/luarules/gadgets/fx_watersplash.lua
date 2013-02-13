@@ -70,7 +70,7 @@ else
 			if isShallow then
 				local rnd = random()
 				--Echo(rnd)
-				if rnd > 0.99 then
+				if rnd > 0.999 then
 					PlaySoundFile(duckSND, volume, px, 100, pz,0,0,0,Channel)
 					--SpawnCEG(duckCEG, px, py, pz,0,0,0,aoe,0)
 					--Echo("Some ducks were hit")
