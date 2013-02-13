@@ -74,7 +74,7 @@ if gadgetHandler:IsSyncedCode() then
 
 	function gadget:Explosion(weaponDefID, posx, posy, posz, ownerID)
 		local h = GetGroundHeight(posx,posz)
-		SendToUnsynced(PROJECTILE_EXPLOSION_EVENT_ID, weaponDefID, posx, posy, posz, posz,h)
+		SendToUnsynced(PROJECTILE_EXPLOSION_EVENT_ID, weaponDefID, posx, posy, posz, ownerID, h)
 		return false -- noGFX
 	end
 		
@@ -215,17 +215,20 @@ else
 		end
 	end
 	
-	--SendToUnsynced(PROJECTILE_EXPLOSION_EVENT_ID, weaponDefID, posx, posy, posz, h)
-	local function ProjectileExplosion(weaponDefID, x, y, z, gh)
+	--SendToUnsynced(PROJECTILE_EXPLOSION_EVENT_ID, weaponDefID, posx, posy, posz, ownerID, h)
+	local function ProjectileExplosion(weaponDefID, x, y, z, ownerID, gh)
 			
 	
-		--Echo("ProjectileExplosion: ", weaponDefID, LOS, y,gh)
 		-- This part determines what sound the explosion will play. In the following, the variable y is the height coordinate of 
 		-- the projectile, whereas gh is that of the ground height. The wet sound is typically a splash sound, but we don't want splash 
 		-- sounds in the following cases: i) explosion above water level ii) explosion very deep, like from torpedoes. If something hits 
 		-- shallow water, we want both splash and land explosion. 
 		
 		local LOS = clientIsSpec or IsPosInLos(x,y,z,allyID)
+		local wType 
+		if WeaponDefs[weaponDefID] then wType = WeaponDefs[weaponDefID].type end
+		
+		--Echo("ProjectileExplosion: ", wType, LOS, x,y,z,ownerID,gh)
 		
 		if LOS and weaponDefID then
 				if gh >= 0 then -- explosion on land
@@ -246,7 +249,7 @@ else
 							--Echo("Deep water")
 							if sndwet[weaponDefID] then PlaySoundFile("sounds/"..sndwet[weaponDefID]..".wav",volume,x,y,z,0,0,0,Channel) end
 						end
-					else -- projectile hits at a depth, ideally, there would be another type of explosion sound in this case. However,
+					else -- projectile hits at a depth, ideally, there would be anoether type of explosion sound in this case. However,
 						-- this is already considered in weapon explosions, for example the wet sound of torpedoes is xplodep2, which is
 						-- a deep water sound. We still use standard wet sounds, this division is kept for future needs.
 						if sndwet[weaponDefID] then PlaySoundFile("sounds/"..sndwet[weaponDefID]..".wav",volume,x,y,z,0,0,0,Channel) end
@@ -272,7 +275,7 @@ else
 		elseif eventID == PROJECTILE_DESTROYED_EVENT_ID then
 			ProjectileDestroyed(arg0)
 		elseif eventID == PROJECTILE_EXPLOSION_EVENT_ID then
-			ProjectileExplosion(arg0, arg1, arg2, arg3, arg4)
+			ProjectileExplosion(arg0, arg1, arg2, arg3, arg4, arg5)
 		elseif eventID == TEAM_DIED_EVENT_ID then
 			TeamDied(arg0)
 		end
