@@ -230,7 +230,7 @@ if modOptions and modOptions.globalsounds ~= '1' then
 
 	for id, weaponDef in pairs(WeaponDefs) do
 	--if (weaponDef.name == nil or weaponDef.name:find("Disintegrator") == nil) then
-		--Spring.Echo("Old weaponsdef:",id,WeaponDefs[id].soundhitwet)
+		Spring.Echo("Old weaponsdef:",id,WeaponDefs[id].soundhitwet)
 		if weaponDef.soundhitwet then
 			if not weaponDef.customparams then
 				weaponDef.customparams = {}
@@ -254,7 +254,11 @@ if modOptions and modOptions.globalsounds ~= '1' then
 		weaponDef.soundhitwet = nil
 		weaponDef.soundhitdry = nil
 		weaponDef.soundstart = nil
-		--Spring.Echo("New weaponsdef:",id,WeaponDefs[id].soundhitwet)
+		if weaponDef.customparams then 
+			Spring.Echo("New weaponsdef (wd -> cp):",id,WeaponDefs[id].soundhitwet,"-->", weaponDef.customparams.soundhitwet)
+		else
+			Spring.Echo("No customparams:", id)
+		end
 	--end
 	end
 end
