@@ -18,7 +18,7 @@
 	//******************
 	unitname=core_diplomat_rt;
 	unitnumber=152;
-	objectname=core_diplomat.s3o;
+	objectname=core_diplomat_mrd.s3o;
 	corpse=core_diplomat_dead;
 	buildpic=core_diplomat.DDS;
 	soundcategory=CORE_VEHICLE;
