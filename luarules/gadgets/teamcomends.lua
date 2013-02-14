@@ -39,6 +39,7 @@ if (gadgetHandler:IsSyncedCode()) then
 	local GetTeamUnitDefCount	= Spring.GetTeamUnitDefCount
 	local GetTeamUnitCount 		= Spring.GetTeamUnitCount
 	local GetUnitsInSphere 		= Spring.GetUnitsInSphere
+	local GetUnitPosition		= Spring.GetUnitPosition
 	local GetGameFrame			= Spring.GetGameFrame
 	local COMMANDER				= "commander" --key name in modoptions.mode
 	local DECOYSTART			= "decoystart" -- value name in modoptions.commander
@@ -48,11 +49,10 @@ if (gadgetHandler:IsSyncedCode()) then
 	local step					= 28 -- how much to expand killradius every 10 frames
 	local frequency				= 6
 	local destroyStepwise		= true
+	local modOptions			= Spring.GetModOptions()
 	
 	function gadget:Initialize()
-		gadgetHandler:RemoveGadget()
-		if not endmodes[Spring.GetModOptions().mode] then
-			Spring.Echo("Teamcomends: not commander ends, removing gadget")
+		if not endmodes[modOptions.mode] then
 			gadgetHandler:RemoveGadget()
 		end
 		
@@ -64,20 +64,26 @@ if (gadgetHandler:IsSyncedCode()) then
 			localCommanders[team] = 0
 		end
 		
-		for id,unitDef in ipairs(UnitDefs) do
-			if Spring.GetModOptions() and Spring.GetModOptions().commander == DECOYSTART then
+		if modOptions and modOptions.commander == DECOYSTART then
+			for id, unitDef in ipairs(UnitDefs) do
 				if unitDef.customParams.iscommander then
-					commanderTable[unitDef.name] = true
+					if unitDef.name then
+						commanderTable[id] = true
+					end
 				end
-			else
+			end	
+		else
+			for id, unitDef in ipairs(UnitDefs) do	
 				if unitDef.customParams.iscommander and (not unitDef.customParams.isdecoycommander) then
-					commanderTable[unitDef.name] = true
+					if unitDef.name then
+						commanderTable[id] = true
+					end				
 				end
 			end
 		end
 	end
 	
-	function DestroySingleTeam(team)
+	local function DestroySingleTeam(team)
 		--Echo("Destroying team:",team)
 		if killX and destroyStepwise then
 			-- code to kill team in steps
@@ -97,7 +103,7 @@ if (gadgetHandler:IsSyncedCode()) then
 		end
 	end
 	
-	function DestroyAllyTeam(allyTeam)
+	local function DestroyAllyTeam(allyTeam)
 		--Echo("Destroying allyteam:",allyTeam)
 		local allyteamCount = 0
 		for _,team in ipairs(GetTeamList(allyTeam)) do
@@ -139,7 +145,7 @@ if (gadgetHandler:IsSyncedCode()) then
 
 	function gadget:UnitCreated(unitID, unitDefID, team)
 		isAlive[unitID] = true
-		if commanderTable[UnitDefs[unitDefID].name] then
+		if commanderTable[unitDefID] then
 			local allyTeam = GetUnitAllyTeam(unitID)
 			aliveCount[allyTeam] = aliveCount[allyTeam] + 1
 			localCommanders[team] = localCommanders[team] + 1
@@ -147,7 +153,7 @@ if (gadgetHandler:IsSyncedCode()) then
 	end
 
 	function gadget:UnitGiven(unitID, unitDefID, unitTeam, oldTeam)
-		if commanderTable[UnitDefs[unitDefID].name] then
+		if commanderTable[unitDefID] then
 			local allyTeam = GetUnitAllyTeam(unitID)
 			aliveCount[allyTeam] = aliveCount[allyTeam] + 1
 			localCommanders[unitTeam] = localCommanders[unitTeam] + 1
@@ -157,7 +163,7 @@ if (gadgetHandler:IsSyncedCode()) then
 	function gadget:UnitDestroyed(unitID, unitDefID, team)
 		isAlive[unitID] = nil
 		
-		if commanderTable[UnitDefs[unitDefID].name] then
+		if commanderTable[unitDefID] then
 			local allyTeam = GetUnitAllyTeam(unitID)
 			aliveCount[allyTeam] = aliveCount[allyTeam] - 1
 			localCommanders[team] = localCommanders[team] - 1
@@ -167,27 +173,27 @@ if (gadgetHandler:IsSyncedCode()) then
 			
 			if commanderEnds then -- implement classic commander ends option
 				if localCommanders[team] <= 0 then
-					killX, _, killZ = Spring.GetUnitPosition(unitID)
+					killX, _, killZ = GetUnitPosition(unitID)
 					destroySingleQueue[team] = true
 				end
 			else -- team comends option
 				if aliveCount[allyTeam] <= 0 then
-					killX, _, killZ = Spring.GetUnitPosition(unitID)
+					killX, _, killZ = GetUnitPosition(unitID)
 					destroyQueue[allyTeam] = true
 				end
 			end
 		end
 	end
 
-	function gadget:UnitTaken(u, ud, team)
-		if isAlive[u] and commanderTable[UnitDefs[ud].name] then
-			local allyTeam = GetUnitAllyTeam(u)
+	function gadget:UnitTaken(unitID, unitDefID, team)
+		if isAlive[unitID] and commanderTable[unitDefID] then
+			local allyTeam = GetUnitAllyTeam(unitID)
 			aliveCount[allyTeam] = aliveCount[allyTeam] - 1
 			localCommanders[team] = localCommanders[team] - 1 
 			if aliveCount[allyTeam] <= 0 then
 				destroyQueue[allyTeam] = true
 			end
-			if Spring.GetModOptions().mode == COMMANDER then
+			if modOptions.mode == COMMANDER then
 				if localCommanders[team] <= 0 then
 					destroySingleQueue[team] = true
 				end

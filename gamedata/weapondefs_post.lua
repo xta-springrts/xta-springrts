@@ -160,7 +160,7 @@ local maxRangeAngle = 38  --in degrees >0 and <=45
 if modOptions and modOptions.gravity then customGravity=modOptions.gravity end
 local velGravFactor = customGravity * 900 / math.sin(math.rad(2 * maxRangeAngle))
 local interceptorStyle = 2
-if modOptions and modOptions.nuke then interceptorStyle = modOptions.nuke end
+if modOptions and modOptions.nuke and not tobool(modOptions.nuke) then interceptorStyle = 1 end
 
 for id in pairs(WeaponDefs) do
 	WeaponDefs[id].soundhitwet = ""
@@ -225,7 +225,7 @@ end
 ---    dguns are excluded from this since the gadget breaks Spring's ability to
 ---    limit playback concurrency which we want for the dgun's explosion sounds
 ---    EDIT: Jan, 25: Should be fixed now, so dguns are again included
-if modOptions and modOptions.globalsounds ~= '1' then
+if modOptions.globalsounds and not tobool(modOptions.globalsounds) then
 	Spring.Echo("Weapons_post: Local sound option detected, moving sounds to customparams")
 
 	for id, weaponDef in pairs(WeaponDefs) do
@@ -315,7 +315,7 @@ if (modOptions.realscale and tobool(modOptions.realscale)) then
 		WeaponDefs[id].duration = durMul * WeaponDefs[id].duration
 	end
 	if (WeaponDefs[id].sprayangle) then
-		WeaponDefs[id].duration = WeaponDefs[id].sprayangle / rngMul
+		WeaponDefs[id].sprayangle = WeaponDefs[id].sprayangle / rngMul
 	end
   end
 end
