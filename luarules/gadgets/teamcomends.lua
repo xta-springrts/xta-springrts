@@ -50,7 +50,9 @@ if (gadgetHandler:IsSyncedCode()) then
 	local destroyStepwise		= true
 	
 	function gadget:Initialize()
+		gadgetHandler:RemoveGadget()
 		if not endmodes[Spring.GetModOptions().mode] then
+			Spring.Echo("Teamcomends: not commander ends, removing gadget")
 			gadgetHandler:RemoveGadget()
 		end
 		
@@ -63,24 +65,16 @@ if (gadgetHandler:IsSyncedCode()) then
 		end
 		
 		for id,unitDef in ipairs(UnitDefs) do
-		 if Spring.GetModOptions() and Spring.GetModOptions().commander == DECOYSTART then
+			if Spring.GetModOptions() and Spring.GetModOptions().commander == DECOYSTART then
 				if unitDef.customParams.iscommander then
-					for name,param in unitDef:pairs() do
-						if name == "name" then 
-							commanderTable[param] = true
-						end
-					end
+					commanderTable[unitDef.name] = true
 				end
 			else
 				if unitDef.customParams.iscommander and (not unitDef.customParams.isdecoycommander) then
-					for name,param in unitDef:pairs() do
-						if name == "name" then 
-							commanderTable[param] = true
-						end
-					end
+					commanderTable[unitDef.name] = true
 				end
 			end
-		 end
+		end
 	end
 	
 	function DestroySingleTeam(team)
