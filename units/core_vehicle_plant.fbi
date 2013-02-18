@@ -48,8 +48,8 @@
 	buildangle=2048;
 	yardmap=yooooy yooooy occcco occcco occcco occcco;
 	collisionVolumeType=CylZ;
-	collisionVolumeScales=90 50 90;
-	collisionVolumeOffsets=0 0 0;
+	collisionVolumeScales=88 88 90;
+	collisionVolumeOffsets=0 -10 0;
 	collisionVolumeTest = 1;
 
 	//************************************************************

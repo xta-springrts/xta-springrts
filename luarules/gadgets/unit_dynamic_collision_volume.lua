@@ -30,6 +30,7 @@ local spSetFeatureRadiusAndHeight = Spring.SetFeatureRadiusAndHeight
 local spGetFeatureRadius = Spring.GetFeatureRadius
 local spGetFeatureHeight = Spring.GetFeatureHeight
 local spGetUnitHealth = Spring.GetUnitHealth
+local spGetUnitDefID = Spring.GetUnitDefID
 local spValidUnitID = Spring.ValidUnitID
 local spGetGameFrame = Spring.GetGameFrame
 
@@ -206,13 +207,13 @@ if (gadgetHandler:IsSyncedCode()) then
 						end
 						if t.offsets then
 							p = t.offsets
-							Spring.SetUnitMidAndAimPos(unitID, 0, spGetUnitHeight(unitID)*0.5, 0, p[1], p[2], p[3],true)
+							spSetUnitMidAndAimPos(unitID, p[1], p[2], p[3], p[4], p[5], p[6],true)
 						end
 					else
 						p = unitCollisionVolume[defs.name].off
 						spSetUnitCollisionData(unitID, p[1], p[2], p[3], p[4], p[5], p[6], p[7], p[8], p[9])
 						if p[10] then
-							Spring.SetUnitMidAndAimPos(unitID, 0, spGetUnitHeight(unitID)*0.5, 0, p[10], p[11], p[12],true)
+							spSetUnitMidAndAimPos(unitID, p[10], p[11], p[12], p[13], p[14], p[15],true)
 						end
 					end
 					popupUnits[unitID].state = 0
@@ -231,13 +232,13 @@ if (gadgetHandler:IsSyncedCode()) then
 						end
 						if t.offsets then
 							p = t.offsets
-							Spring.SetUnitMidAndAimPos(unitID, 0, spGetUnitHeight(unitID)*0.5, 0, p[1], p[2], p[3],true)
+							spSetUnitMidAndAimPos(unitID, p[1], p[2], p[3], p[4], p[5], p[6],true)
 						end
 					else
 						p = unitCollisionVolume[defs.name].on
 						spSetUnitCollisionData(unitID, p[1], p[2], p[3], p[4], p[5], p[6], p[7], p[8], p[9])
 						if p[10] then
-							Spring.SetUnitMidAndAimPos(unitID, 0, spGetUnitHeight(unitID)*0.5, 0, p[10], p[11], p[12],true)
+							spSetUnitMidAndAimPos(unitID, p[10], p[11], p[12], p[13], p[14], p[15],true)
 						end
 					end
 					popupUnits[unitID].state = 1

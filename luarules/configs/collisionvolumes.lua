@@ -14,11 +14,12 @@ Spring.SetUnitPieceCollisionVolumeData ( number unitID, number pieceIndex, boole
 	
    possible vType constants
      DISABLED = -1  disables collision volume and collision detection for that unit, do not use
-     ELLIPSOID = 0
-     CYLINDER =  1
+     ELLIPSOID = 0  no longer supported since 92.0
+     CYLINDER =  1  base must be circular since 92.0
      BOX =       2
      SPHERE =    3
-     FOOTPRINT = 4  intersection of sphere and footprint-prism, makes a sphere collision volume, default
+     FOOTPRINT = 4  no longer supported since 92.0
+                    intersection of sphere and footprint-prism, makes a sphere collision volume, default
 	 
    possible tType constants, for non-sphere collision volumes use 1
      COLVOL_TEST_DISC = 0
@@ -35,7 +36,8 @@ Spring.SetUnitPieceCollisionVolumeData ( number unitID, number pieceIndex, boole
 		   {60,80,60,  -- Volume X scale, Volume Y scale, Volume Z scale,
 		    0,15,0,    -- Volume X offset, Volume Y offset, Volume Z offset,
 		    0,1,0[,    -- vType, tType, axis [,  -- Optional
-			0,0,0]}    -- Aimpoint X offset, Aimpoint Y offset, Aimpoint Z offset]},
+			0,0,0,     -- Midpoint X offset, Midpoint Y offset, Midpoint Z offset,   -- (from unit coordinate space 0,0,0)	
+			0,0,0]}    -- Aimpoint X offset, Aimpoint Y offset, Aimpoint Z offset]}, -- (from unit coordinate space 0,0,0)
 		off={32,48,32,0,-10,0,0,1,0},
 	}                  -- Aimpoint offsets are relative to unit's base position (aka unit coordiante space)
 	pieceCollisionVolume["arm_big_bertha"] = {
@@ -49,7 +51,8 @@ Spring.SetUnitPieceCollisionVolumeData ( number unitID, number pieceIndex, boole
 		on = {
 			["0"]={true,51,12,53,0,4,0,2,0},
 			["5"]={true,25,66,25,0,-14,0,1,1},
-			offsets={0,35,0}   -- Aimpoint X offset, Aimpoint Y offset, Aimpoint Z offset
+			offsets={0,0,0,    -- Midpoint X offset, Midpoint Y offset, Midpoint Z offset (from unit coordinate space 0,0,0)
+					 0,35,0}   -- Aimpoint X offset, Aimpoint Y offset, Aimpoint Z offset (from unit coordinate space 0,0,0)
 		},                     -- offsets entry is optional 
 		off = {
 			["0"]={true,51,12,53,0,4,0,2,0},
@@ -84,12 +87,12 @@ local dynamicPieceCollisionVolume = {}	--dynamic per piece collision volume defi
 	}
 	]]--
 	unitCollisionVolume["arm_advanced_sonar_station"] = {
-		on={63,70,63,0,-7,0,0,1,0},
-		off={24,40,24,0,-5,0,0,1,0},
+		on={63,70,63,0,-7,0,1,1,1},
+		off={24,40,24,0,-5,0,1,1,1},
 	}
 	unitCollisionVolume["arm_ambusher"] = {
-		on={49,45,49,-0.5,-10,0,0,1,0,0,20,0},
-		off={49,26,49,-0.5,-10,0,0,1,0,0,11,0},
+		on={49,45,49,-0.5,0,0,1,1,1,0,0,0,0,20,0},
+		off={49,19,49,-0.5,0,0,1,1,1,0,0,0,0,7,0},
 	}
 	unitCollisionVolume["arm_annihilator"] = {
 		on={50,55,50,0,10,0,2,1,0},
@@ -108,8 +111,8 @@ local dynamicPieceCollisionVolume = {}	--dynamic per piece collision volume defi
 		off={105,44,105,0,0,0,2,1,0},
 	}
 	unitCollisionVolume["arm_solar_collector"] = {
-		on={83,78,83,0,-18,1,0,1,0},
-		off={50,78,50,0,-18,1,0,1,0},
+		on={80,77,80,0,0,1,1,1,1,0,0,0,0,20,0},
+		off={46,77,46,0,0,1,1,1,1,0,0,0,0,20,0},
 	}
 	unitCollisionVolume["arm_stunner"] = {
 		on={61,28,64,0,-6,0,2,1,0},
@@ -117,11 +120,11 @@ local dynamicPieceCollisionVolume = {}	--dynamic per piece collision volume defi
 	}
 	unitCollisionVolume["arm_targeting_facility"] = {
 		on={62,34,62,0,0,0,2,1,0},
-		off={55,78,55,0,-19.5,0,0,1,0},
+		off={55,78,55,0,-19.5,0,1,1,1},
 	}
 	unitCollisionVolume["arm_vehicle_plant"] = {
-		on={120,34,92,0,0,0,2,1,0},
-		off={92,74,92,0,-18,0,1,1,2},
+		on={120,34,92,0,15,0,2,1,0,0,0,0,0,20,0},
+		off={92,74,92,0,-7,0,1,1,2,0,0,0,0,20,0},
 	}
 	unitCollisionVolume["core_doomsday_machine"] = {
 		on={55,116,55,0,15,0,2,1,0},
@@ -133,23 +136,23 @@ local dynamicPieceCollisionVolume = {}	--dynamic per piece collision volume defi
 	}
 	unitCollisionVolume["core_moho_metal_maker"] = {
 		on={60,60,60,0,0,0,1,1,1},
-		off={50,92,50,0,-22.5,0,0,1,0},
+		off={50,92,50,0,-22.5,0,1,1,1},
 	}
 	unitCollisionVolume["core_seaplane_platform"] = {
 		on={112,60,112,0,30,0,1,1,1},
 		off={112,40,112,0,0,0,1,1,1},
 	}
 	unitCollisionVolume["core_solar_collector"] = {
-		on={86,78,86,0,-18,0,0,1,0},
-		off={77,78,77,0,-28,0,0,1,0},
+		on={76,48,76,0,0,0,1,1,1,0,0,0,0,20,0},
+		off={65,27,65,0,0,0,1,1,1,0,0,0,0,12,0},
 	}
 	unitCollisionVolume["core_targeting_facility"] = {
 		on={64,20,64,0,0,0,1,1,1},
 		off={38,20,38,0,0,0,1,1,1},
 	}
 	unitCollisionVolume["core_toaster"] = {
-		on={44,23,44,0,3.5,0,2,1,0,0,21,0},
-		off={44,8,44,0,-4,0,2,1,0,0,7,0},
+		on={44,23,44,0,12,0,2,1,0,0,0,0,0,21,0},
+		off={44,8,44,0,4,0,2,1,0,0,0,0,0,4,0},
 	}
 	
 	pieceCollisionVolume["arm_big_bertha"] = {
@@ -170,18 +173,18 @@ local dynamicPieceCollisionVolume = {}	--dynamic per piece collision volume defi
 			["2"]={76,29,29,0,3,0,1,0},
 		},
 		off = {
-			["0"]={32,51,32,0,8,1,0,0},
+			["0"]={32,51,32,0,8,1,1,1},
 		}
 	}
 	dynamicPieceCollisionVolume["core_viper"] = {
 		on = {
 			["0"]={51,12,53,0,4,0,2,0},
 			["5"]={25,66,25,0,-14,0,1,1},
-			offsets={0,40,0}
+			offsets={0,0,0,0,40,0}
 		},
 		off = {
 			["0"]={51,12,53,0,4,0,2,0},
-			offsets={0,8,0}
+			offsets={0,0,0,0,8,0}
 		}
 	}
 	dynamicPieceCollisionVolume["core_krogoth_gantry"] = {
