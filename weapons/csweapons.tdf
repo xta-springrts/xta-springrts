@@ -55,8 +55,7 @@
 
 	firestarter=70;
 	beamweapon=1;
-	color=232;	/* GREEN */
-	color2=234;
+	rgbcolor=1.000 0.059 0.000;
 
 	explosiongaf=fx;
 	explosionart=explode5;
@@ -136,8 +135,7 @@
 
 	firestarter=70;
 	beamweapon=1;
-	color=232;	/* GREEN */
-	color2=234;
+	rgbcolor=1.000 0.059 0.000;
 
 	explosiongaf=fx;
 	explosionart=explode5;
@@ -195,7 +193,7 @@
 	impulseBoost=1; 
 	craterMult=3; 
 	craterBoost=2;
-        explosiongenerator=custom:SMALL_NUKE_EXPLOSION_FX;
+	explosiongenerator=custom:SMALL_NUKE_EXPLOSION_FX;
 	[DAMAGE]
 		{
 		default=600;
@@ -269,8 +267,7 @@
 
 	firestarter=70;
 	beamweapon=1;
-	color=153;	/* GREEN */
-	color2=154;
+	rgbcolor=0.200 0.000 1.000;
 
 	explosiongaf=fx;
 	explosionart=explode5;
