@@ -14,7 +14,7 @@
 		ghostedbuildings=1;
 		fixedallies=0;
 		disablemapdamage=0;
-		teamdeathmode=none;
+		mode=none;
 		comm=autoupgrade;
 		qtpfs=0;
 		gravity=0.50;

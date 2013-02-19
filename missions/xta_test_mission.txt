@@ -14,7 +14,7 @@
 		ghostedbuildings=1;
 		fixedallies=0;
 		disablemapdamage=0;
-		teamdeathmode=com;
+		mode=none;
 		comm=autoupgrade;
 		maxspeed=3.0;
 		minspeed=0.3;
