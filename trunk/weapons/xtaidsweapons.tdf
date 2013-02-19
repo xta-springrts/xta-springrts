@@ -1,7 +1,7 @@
 [ARM_Rhino_Shield]
 {
 	name=PlasmaRepulsor;
-	isshield=1;
+	WeaponType="Shield";
 	shieldrepulser=1;
 	smartshield=1;
 	visibleshieldrepulse=1;
@@ -38,7 +38,7 @@
 	rendertype=4;
 	ballistic=1;
 	turret=1;
-	color=3;
+	//color=3;
 	GroundBounce=0;
 	WaterBounce=0;
 	NumBounce=1;
@@ -354,8 +354,7 @@
 	soundhitdry=lasrhit2;
 	firestarter=50;
 	beamweapon=1;
-	color=232;
-	color2=234;
+	rgbcolor=1.000 0.059 0.000;
 	explosiongaf=fx;
 	explosionart=explode5;
 	waterexplosiongaf=fx;
@@ -774,8 +773,7 @@
 	soundhitdry=lasrhit1;
 	firestarter=90;
 	beamweapon=1;
-	color=96;
-	color2=98;
+	rgbcolor=0.000 1.000 0.259;
 	explosiongaf=fx;
 	explosionart=explode5;
 	waterexplosiongaf=fx;
@@ -1027,8 +1025,7 @@
 	soundhitdry=xplolrg1;
 	firestarter=90;
 	beamweapon=1;
-	color=104;
-	color2=267;
+	rgbcolor=0.000 1.000 0.447;
 	tolerance=200;
 	explosiongaf=fx;
 	explosionart=explode5;
@@ -1067,8 +1064,7 @@
 	soundhitdry=xplolrg1;
 	firestarter=90;
 	beamweapon=1;
-	color=147;
-	color2=213;
+	rgbcolor=0.059 0.000 1.000;
 	tolerance=500;
 	explosiongaf=fx;
 	explosionart=explode5;
@@ -1089,7 +1085,7 @@
 	//heightMod=1;
 	//cylindertargeting=1;
 	rendertype=4;
-	color=1;
+	//color=1;
 	size=1.5;
 	rgbcolor=1 0.87 0.3;
 	lineofsight=1;
@@ -1189,8 +1185,7 @@
 	soundhitdry=xplolrg1;
 	firestarter=90;
 	beamweapon=1;
-	color=144;
-	color2=217;
+	rgbcolor=0.000 0.012 1.000;
 	tolerance=500;
 	explosiongaf=fx;
 	explosionart=explode5;
@@ -1209,7 +1204,7 @@
 {
 	name=E.M.G.;
 	rendertype=4;
-	color=1;
+	//color=1;
 	size=1.5;
 	rgbcolor=1 0.87 0.3;
 	lineofsight=1;
@@ -1304,8 +1299,7 @@
 	soundhitdry=lasrhit2;
 	firestarter=50;
 	beamweapon=1;
-	color=208;
-	color2=0;
+	rgbcolor=1.000 0.000 0.506;
 	explosiongaf=fx;
 	explosionart=explode5;
 	waterexplosiongaf=fx;
@@ -1329,8 +1323,7 @@
 	beamlaser=1;
 	beamtime=0.1;
 	thickness=0.7;
-	color=232;
-	color2=234;
+	rgbcolor=1.000 0.059 0.000;
 	range=200;
 	reloadtime=0.1;
 	weapontimer=1;
@@ -1368,8 +1361,7 @@
 	soundhitdry=lashit;
 	firestarter=50;
 	beamweapon=1;
-	color=30;
-	color2=234;
+	rgbcolor=1.000 0.706 0.000;
 	explosiongaf=fx;
 	explosionart=explode5;
 	explosiongenerator=custom:LIGHTNING_ORANGE;
@@ -1388,15 +1380,14 @@
 {
 	name=E.M.G.;
 	rendertype=4;
-	color=2;
+	//color=2;
 	lineofsight=1;
 	turret=1;
 	beamlaser=1;
 	beamtime=0.1;
 	explosiongenerator=custom:PARALYZER_Orange;
 	paralyzer=1;
-	color=30;
-	color2=234;
+	rgbcolor=1.000 0.706 0.000;
 	range=200;
 	reloadtime=0.1;
 	weapontimer=1;
@@ -1427,7 +1418,7 @@
 [SHIELD2]
 {
 	name=Plasmashield;
-	IsShield=1;
+	WeaponType="Shield";
 	ShieldRepulsor=1;
 	SmartShield=1;
 	ExteriorShield=0;
@@ -1453,7 +1444,7 @@
 [SHIELD1]
 {
 	name=Plasmashield;
-	IsShield=1;
+	WeaponType="Shield";
 	ShieldRepulsor=1;
 	SmartShield=1;
 	ExteriorShield=0;
@@ -1610,8 +1601,7 @@
 	soundhitdry=lashit;
 	firestarter=50;
 	beamweapon=1;
-	color=232;
-	color2=234;
+	rgbcolor=1.000 0.059 0.000;
 	tolerance=1500;
 	guidance=1;
 	[DAMAGE]
@@ -1749,7 +1739,7 @@
 }
 [ORCONE_SHIELD]
 {
-	isshield=1;
+	WeaponType="Shield";
 	name=PersonalShield;
 	shieldalpha=0.45;
 	shieldbadcolor=0.05 0.05 0.05;

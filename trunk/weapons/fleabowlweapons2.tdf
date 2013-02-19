@@ -1,5 +1,5 @@
 [ARMFLEA_KILLER]
-	{
+{
 	name=High Energy Laser;
 	rendertype=0;
 	lineofsight=1;
@@ -13,70 +13,68 @@
 	soundhitdry=lasrhit1;
 	firestarter=90;
 	beamweapon=1;
-	color=96;	/* blue */
-	color2=98;
+	rgbcolor=0.000 1.000 0.259;
 	beamdecay=0.9;
 	beamttl=20;
 	hardStop=0;
 
-
 	[DAMAGE]
-		{
+	{
 		default=148;
-		}
 	}
+}
 
 [DeathLASER]
 {
-  name=DeathLaser;
-  areaofeffect=24;
-  energypershot=0;
-  SweepFire=1;
-  beamlaser=1;
-  beamtime=0.40;
-  corethickness=0.32;
-  craterboost=1;
-  cratermult=1;
-  duration=0.31;
-  edgeeffectiveness=0.99;
-  explosiongenerator=custom:ZIPPERDICKER_EFFECT;
-  firestarter=70;
-  impulseboost=0;
-  impulsefactor=1;
-  interceptedbyshieldtype=0;
-  largebeamlaser=1;
-  noexplode=1;
-  laserflaresize=6;
-  lineofsight=1;
-  noselfdamage=1;
-  range=100;
-  reloadtime=1.25;
-  rendertype=0;
-  rgbcolor=0.7 0.2 0.2;
+	name=DeathLaser;
+	areaofeffect=24;
+	energypershot=0;
+	SweepFire=1;
+	beamlaser=1;
+	beamtime=0.40;
+	corethickness=0.32;
+	craterboost=1;
+	cratermult=1;
+	duration=0.31;
+	edgeeffectiveness=0.99;
+	explosiongenerator=custom:ZIPPERDICKER_EFFECT;
+	firestarter=70;
+	impulseboost=0;
+	impulsefactor=1;
+	interceptedbyshieldtype=0;
+	largebeamlaser=1;
+	noexplode=1;
+	laserflaresize=6;
+	lineofsight=1;
+	noselfdamage=1;
+	range=100;
+	reloadtime=1.25;
+	rendertype=0;
+	rgbcolor=0.7 0.2 0.2;
 	soundstart=lasrfir3;
 	soundhitdry=lasrhit2;
-  soundtrigger=1;
-  targetmoveerror=0.05;
-  //texture1=largelaser;
-  //texture2=flare;
-  //texture3=flare;
-  //texture4=smallflare;
-  thickness=3.25;
-  tolerance=10000;
-  turret=1;
-  weaponvelocity=900;
-  paralyzer=0;
+	soundtrigger=1;
+	targetmoveerror=0.05;
+	//texture1=largelaser;
+	//texture2=flare;
+	//texture3=flare;
+	//texture4=smallflare;
+	thickness=3.25;
+	tolerance=10000;
+	turret=1;
+	weaponvelocity=900;
+	paralyzer=0;
 	beamdecay=0.9;
 	beamttl=20;
 	hardStop=0;
-  //dyndamageexp=1;
-  //dyndamageinverted=0;
+	//dyndamageexp=1;
+	//dyndamageinverted=0;
 	waterweapon=1;
-  [DAMAGE]
-  {
-    default=133;
-    group_invincible=1;
-  }
+	[DAMAGE]
+	{
+		default=133;
+		group_invincible=1;
+	}
 }
 [MINIGOTH_MISSILE]
 {
@@ -119,9 +117,9 @@
 	startsmoke=1;
 	[DAMAGE]
 	{
-	default=31;
-	group_landair=101;
-        group_invincible=1;
+		default=31;
+		group_landair=101;
+		group_invincible=1;
 	}
 }
 [MINIGOTH]
@@ -145,11 +143,10 @@
 	soundhitdry=xplolrg1;
 	firestarter=90;
 	beamweapon=1;
-	color=188;
-	color2=198;
+	rgbcolor=1.000 0.000 0.976;
 	tolerance=500;
 	guidance=1;
-        //SweepFire=1; // added by Myg in v9 for .75b2 release
+	//SweepFire=1; // added by Myg in v9 for .75b2 release
 	LargeBeamLaser=1;
 	pulseSpeed=4.0;
 	thickness=3.5;
@@ -158,8 +155,8 @@
 	hardStop=0;
 	[DAMAGE]
 	{
-	default=25;
-	group_invincible=1;
+		default=25;
+		group_invincible=1;
 	}
 }
 [Fleagoth_MISSILE]
@@ -204,9 +201,9 @@
 	Trajectoryheight=1;
 	[DAMAGE]
 	{
-	default=310;
-	group_landair=1000;
-   	group_invincible=1;
+		default=310;
+		group_landair=1000;
+		group_invincible=1;
 	}
 }
 [fleammine3]
@@ -227,10 +224,10 @@
 	shakeduration=0;
 	[DAMAGE]
 	{
-	default=1000;
-    	group_invincible=1;
-	group_mines=5;
-	fleabomber=5;
+		default=1000;
+		group_invincible=1;
+		group_mines=5;
+		fleabomber=5;
 	}
 }
 [PARABOLT]
@@ -318,8 +315,7 @@
 	cegTag=FIREBALLTRAIL;
 	accuracy=4000;
 	//TargetMoveError=0;
-	
-	
+
 	Texture1=null; //testing//
 	Texture2=null;
 	Texture3=null;
@@ -352,7 +348,7 @@
 	[DAMAGE]
 	{
 		default=44; //WAS 11 with reload of 1.5(pyro = 6) //
-    group_invincible=1;
+		group_invincible=1;
 	}
 }
 [fleabomb]
@@ -380,8 +376,8 @@
 	[DAMAGE]
 	{
 		default=154;
-    group_invincible=1;
-    fleabomber=1;
+		group_invincible=1;
+		fleabomber=1;
 	}
 }
 [Order_fireexplode]
@@ -408,8 +404,8 @@
 	[DAMAGE]
 	{
 		default=254;
-    group_invincible=1;
-    Order_fire=1;
+		group_invincible=1;
+		Order_fire=1;
 	}
 }
 [FLEAGOTH]
@@ -434,8 +430,7 @@
 	soundhitdry=xplolrg1;
 	firestarter=90;
 	beamweapon=1;
-	color=144;
-	color2=217;
+	rgbcolor=0.000 0.012 1.000;
 	tolerance=200;
 	explosiongenerator=custom:ANNILAHATORLASER;
 	guidance=1;
@@ -452,7 +447,7 @@
 	}
 }
 [ASTEROID]
-	{
+{
 	ID=120;
 	name=Bug Asteroid;
 	rendertype=1;
@@ -486,11 +481,11 @@
 	explosiongenerator=custom:SMALL_NUKE_EXPLOSION_FX; //added v9
 
 	[DAMAGE]
-		{
+	{
 		default=10000;
 		group_commanders=10;
-		}
 	}
+}
 [ARMFLEABOWL_WEAPON]
 {
 	ID=111;
@@ -504,7 +499,7 @@
 	//Texture4=null;//
 	duration=0.04; 
 	thickness=0.8;
-      intensity=0.5;
+	intensity=0.5;
 	lineofsight=1;
 	turret=1;
 	range=360;
@@ -517,8 +512,7 @@
 	soundhitdry=lasrhit2;
 	firestarter=30;
 	beamweapon=1;
-	color=232;
-	color2=234;
+	rgbcolor=1.000 0.059 0.000;
 	tolerance=500;
 	guidance=1;
 	[DAMAGE]
@@ -552,7 +546,7 @@
 	[DAMAGE]
 	{
 		default=44;
-    group_invincible=1;
+		group_invincible=1;
 	}
 }
 
@@ -574,7 +568,7 @@
 	[DAMAGE]
 	{
 		default=1;
-    group_invincible=1;
+		group_invincible=1;
 	}
 }
 
@@ -603,14 +597,14 @@
 	explosiongenerator=custom:fireballboom;
 	firestarter=90;
 	beamweapon=1;
-	rgbcolor= "1, 0.75, 0";
+	rgbcolor=1 0.75 0;
 	tolerance=20000;
 	guidance=1;
 	[DAMAGE]
 	{
-	default=30;
-    	group_invincible=1;
-	Order_fire=1;
+		default=30;
+		group_invincible=1;
+		Order_fire=1;
 	}
 }
 
@@ -631,8 +625,8 @@
 	startsmoke=1;
 	[DAMAGE]
 	{
-	default=3;
-    	group_invincible=1;
+		default=3;
+		group_invincible=1;
 	}
 }
 
@@ -661,14 +655,14 @@
 	explosiongenerator=custom:fireballbloom;
 	firestarter=90;
 	beamweapon=1;
-	rgbcolor= "0, 0.75, 1";
+	rgbcolor=0 0.75 1;
 	tolerance=20000;
 	guidance=1;
 	[DAMAGE]
 	{
-	default=60;
-    	group_invincible=1;
-	Order_fire=1;
+		default=60;
+		group_invincible=1;
+		Order_fire=1;
 	}
 }
 
@@ -690,7 +684,7 @@
 	[DAMAGE]
 	{
 		default=9;
-    group_invincible=1;
+		group_invincible=1;
 	}
 }
 
@@ -719,13 +713,13 @@
 	explosiongenerator=custom:plasmaballbloom;
 	firestarter=90;
 	beamweapon=1;
-	rgbcolor= "0.5, 0.0, 0.5";
+	rgbcolor=0.5 0.0 0.5;
 	tolerance=20000;
 	guidance=1;
 	[DAMAGE]
 	{
-	default=90;
-    	group_invincible=1;
-	Order_fire=1;
+		default=90;
+		group_invincible=1;
+		Order_fire=1;
 	}
 }

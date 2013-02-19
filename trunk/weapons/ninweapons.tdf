@@ -1,7 +1,7 @@
 [FakeShield]
 {
 	name=SuperShield;
-	isshield=1;
+	WeaponType="Shield";
 	shieldrepulser=0;
 	range=250;
 	smartshield=1;

@@ -115,8 +115,7 @@
 	soundhitdry=lashit;
 	firestarter=50;
 	beamweapon=1;
-	color=232;
-	color2=234;
+	rgbcolor=1.000 0.059 0.000;
 	explosiongaf=fx;
 	explosionart=explode5;
 	tolerance=2000;
@@ -156,8 +155,7 @@
 	soundhitdry=lashit;
 	firestarter=50;
 	beamweapon=1;
-	color=232;
-	color2=234;
+	rgbcolor=1.000 0.059 0.000;
 	explosiongaf=fx;
 	explosionart=explode5;
 	tolerance=2000;
