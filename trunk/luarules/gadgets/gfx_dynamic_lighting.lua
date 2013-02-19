@@ -40,6 +40,8 @@ if (gadgetHandler:IsSyncedCode()) then
 
 	-- register/deregister for the synced Projectile*/Explosion call-ins
 	function gadget:Initialize()
+		local modOptions = Spring.GetModOptions()
+		if modOptions and modOptions.lowcpu == "1" then gadgetHandler:RemoveGadget(self) end
 		for weaponDefName, _ in pairs(weaponLightDefs) do
 			local weaponDef = WeaponDefNames[weaponDefName]
 
@@ -209,6 +211,9 @@ else
 	end
 
 	function gadget:Initialize()
+		local modOptions = Spring.GetModOptions()
+		if modOptions and modOptions.lowcpu == "1" then gadgetHandler:RemoveGadget(self) end
+
 		local maxMapLights = Spring.GetConfigInt("MaxDynamicMapLights") or 0
 		local maxMdlLights = Spring.GetConfigInt("MaxDynamicModelLights") or 0
 
