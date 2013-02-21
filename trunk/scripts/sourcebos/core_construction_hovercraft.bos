@@ -23,7 +23,7 @@ BankClerck(Func_Var_1, Func_Var_2, Func_Var_3)
 		Func_Var_3 = 0;
 		if( get XZ_HYPOT(Func_Var_1 - Func_Var_2) >= [2.500000] )
 		{
-			Func_Var_3 = 0 - get XZ_ATAN(Func_Var_2 - Func_Var_1) * 2;
+			Func_Var_3 = 0 - get XZ_ATAN(Func_Var_2 - Func_Var_1) / 16;
 		}
 		turn base to z-axis Func_Var_3 speed <45.000000>;
 		Func_Var_2 = Func_Var_1;
