@@ -26,9 +26,9 @@ local spIsPosInLos = Spring.IsPosInLos
 				local x,y,z = spGetUnitPosition(targetID)
 				local allyID = spGetUnitAllyTeam(attackerID)
 				if spIsPosInRadar(x, y, z, allyID) then
-					return true
+					return true, defaultPriority
 				else
-					return false
+					return false, defaultPriority
 					-- TODO: Remove attack order from attackers queue
 				end
 			--[[  there is Spring.SetUnitStealth, but no Get, unlike with Cloak, which has both Set and Get
@@ -36,17 +36,17 @@ local spIsPosInLos = Spring.IsPosInLos
 				local x,y,z = spGetUnitPosition(targetID)
 				local allyID = spGetUnitAllyTeam(attackerID)
 				if spIsPosInLos(x, y, z, allyID) then
-					return true
+					return true, defaultPriority
 				else
-					return false
+					return false, defaultPriority
 					-- TODO: Remove attack order from attackers queue
 				end
 			--]]
 			else
-				return true
+				return true, defaultPriority
 			end
 		end
-		return true
+		return true, defaultPriority
 	end
 
 end
