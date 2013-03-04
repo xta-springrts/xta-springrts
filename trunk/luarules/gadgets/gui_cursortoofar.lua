@@ -49,22 +49,18 @@ local spAssignMouseCursor 	= Spring.AssignMouseCursor
 
 else	--	UNSYNCED
 
-if Game.version > "91.0" then return end	-- not needed in Spring > 91.0
+--if Game.version > "91.0" then return end	-- not needed in Spring > 91.0
 
-local spGetGameFrame 		= Spring.GetGameFrame
 local spGetUnitDefID 		= Spring.GetUnitDefID
 local spSetMouseCursor 		= Spring.SetMouseCursor
 local spGetActiveCommand 	= Spring.GetActiveCommand
 local spGetSelectedUnits 	= Spring.GetSelectedUnits
 local spTraceScreenRay 		= Spring.TraceScreenRay
 local spGetMouseState 		= Spring.GetMouseState
-local frame = 0
 
 	function gadget:Update()
 		local _, activeCmdID = spGetActiveCommand()
-		local gf = spGetGameFrame()
-		if (activeCmdID == CMD_ATTACK) and (frame < gf) then
-			frame = gf
+		if activeCmdID == CMD_ATTACK then
 			local mx, my = spGetMouseState()
 			local sU = spGetSelectedUnits()
 			local s, t = spTraceScreenRay(mx,my)
