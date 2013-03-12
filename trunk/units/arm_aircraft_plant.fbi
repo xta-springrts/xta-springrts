@@ -46,7 +46,7 @@
 	//  Building
 	//************
 	yardmap=yoooooo yoooooo yccccco occccco occccco occccco;
-	activatewhenbuilt=0;
+	activatewhenbuilt=1;
 	collisionVolumeType=Box;
 	collisionVolumeScales=85 39 51;
 	collisionVolumeOffsets=11 -17 -22;
