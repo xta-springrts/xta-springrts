@@ -57,14 +57,15 @@
 		canbuild26=arm_aircraft_plant;
 		canbuild27=arm_adv_aircraft_plant;
 		canbuild28=arm_shipyard;
-		canbuild29=arm_adv_shipyard;
-		canbuild30=arm_hovercraft_platform; 
-		canbuild31=arm_stunner;
-		canbuild32=arm_retaliator;
-	 	canbuild33=ARMFFF;//xtaids
-	 	canbuild34=MERCURY;//xtaids
-		canbuild35=arm_vulcan;
-		canbuild36=arm_nano_tower;
+		canbuild29=arm_sub_pen;
+		canbuild30=arm_adv_shipyard;
+		canbuild31=arm_hovercraft_platform; 
+		canbuild32=arm_stunner;
+		canbuild33=arm_retaliator;
+	 	canbuild34=ARMFFF;//xtaids
+	 	canbuild35=MERCURY;//xtaids
+		canbuild36=arm_vulcan;
+		canbuild37=arm_nano_tower;
 	}
 	[arm_adv_construction_kbot]
 	{
@@ -96,42 +97,44 @@
 		canbuild26=arm_aircraft_plant;
 		canbuild27=arm_adv_aircraft_plant;
 		canbuild28=arm_shipyard;
-		canbuild29=arm_adv_shipyard;
-		canbuild30=arm_hovercraft_platform;
-		canbuild31=arm_mech_lab; //xtaids
-		canbuild32=arm_stunner;
-		canbuild33=arm_retaliator;
-	 	canbuild34=ARMFFF;//xtaids
-	 	canbuild35=MERCURY;//xtaids
-		canbuild36=arm_vulcan;
-		canbuild37=arm_nano_tower;
+		canbuild29=arm_sub_pen;
+		canbuild30=arm_adv_shipyard;
+		canbuild31=arm_hovercraft_platform;
+		canbuild32=arm_mech_lab; //xtaids
+		canbuild33=arm_stunner;
+		canbuild34=arm_retaliator;
+	 	canbuild35=ARMFFF;//xtaids
+	 	canbuild36=MERCURY;//xtaids
+		canbuild37=arm_vulcan;
+		canbuild38=arm_nano_tower;
 	}
 	[arm_adv_construction_sub]
 	{
 		canbuild1=arm_floating_dragons_teeth;
-		canbuild2=ARM_Underwater_moho_mine;
-		canbuild3=arm_floating_metal_maker;
-		canbuild4=arm_underwater_energy_storage;
-		canbuild5=arm_underwater_metal_storage;
-		canbuild6=arm_underwater_fusion_reactor;
-		canbuild7=arm_advanced_sonar_station;
-		canbuild8=arm_advanced_radar_tower;
-		canbuild9=arm_radar_jamming_tower;
-		canbuild10=arm_air_repair_pad;
-		canbuild11=arm_repulsor;
-		canbuild12=arm_advanced_torpedo_launcher;
-		canbuild13=arm_stingray;
-		canbuild14=arm_sentry;
-		canbuild15=arm_torpedo_launcher;
-		canbuild16=arm_naval_flakker;
-		canbuild17=arm_sub_pen;
-		canbuild18=arm_shipyard;
-		canbuild19=arm_adv_shipyard;
-		canbuild20=arm_seaplane_platform;
-		canbuild21=arm_hovercraft_platform; 
-		canbuild22=arm_floating_radar;
-		canbuild23=arm_nano_tower;
-	}
+		canbuild2=arm_underwater_metal_extractor;
+		canbuild3=arm_Underwater_moho_mine;
+		canbuild4=arm_floating_metal_maker;
+		canbuild5=arm_underwater_energy_storage;
+		canbuild6=arm_underwater_metal_storage;
+		canbuild7=arm_underwater_fusion_reactor;
+		canbuild8=arm_floating_radar;
+		canbuild9=arm_advanced_radar_tower;
+		canbuild10=arm_advanced_sonar_station;
+		canbuild11=arm_radar_jamming_tower;
+		canbuild12=arm_air_repair_pad;
+		canbuild13=arm_repulsor;
+		canbuild14=arm_advanced_torpedo_launcher;
+		canbuild15=arm_stingray;
+		canbuild16=arm_sentry;
+		canbuild17=arm_torpedo_launcher;
+		canbuild18=arm_naval_flakker;
+		canbuild19=arm_sub_pen;
+		canbuild20=arm_shipyard;
+		canbuild21=arm_adv_shipyard;
+		canbuild22=arm_seaplane_platform;
+		canbuild23=arm_hovercraft_platform; 
+		canbuild24=arm_nano_tower;
+	}	
 	[arm_adv_construction_vehicle]
 	{
 	 	canbuild1=arm_fortification_wall;
@@ -162,14 +165,15 @@
 		canbuild26=arm_aircraft_plant;
 		canbuild27=arm_adv_aircraft_plant;
 		canbuild28=arm_shipyard;
-		canbuild29=arm_adv_shipyard;
-		canbuild30=arm_hovercraft_platform; 
-		canbuild31=arm_stunner;
-		canbuild32=arm_retaliator;
-	 	canbuild33=ARMFFF;//xtaids
-	 	canbuild34=MERCURY;//xtaids
-		canbuild35=arm_vulcan;
-		canbuild36=arm_nano_tower;
+		canbuild29=arm_sub_pen;
+		canbuild30=arm_adv_shipyard;
+		canbuild31=arm_hovercraft_platform; 
+		canbuild32=arm_stunner;
+		canbuild33=arm_retaliator;
+	 	canbuild34=ARMFFF;//xtaids
+	 	canbuild35=MERCURY;//xtaids
+		canbuild36=arm_vulcan;
+		canbuild37=arm_nano_tower;
 	}
 	[arm_adv_kbot_lab]
 	{
@@ -1117,16 +1121,17 @@
 		canbuild27=core_aircraft_plant;
 		canbuild28=core_adv_aircraft_plant;
 		canbuild29=core_shipyard;
-		canbuild30=core_adv_shipyard;
-		canbuild31=core_hovercraft_platform;
-		canbuild32=core_neutron;
-		canbuild33=core_silencer;
-		canbuild34=core_krogoth_gantry;
-		canbuild35=corfff;//xtaids
-		canbuild36=screamer;//xtaids
-		canbuild37=core_buzzsaw; 
-		canbuild38=core_nano_tower;
-		canbuild39=COREBFORTNS;//xtaids                    
+		canbuild30=core_sub_pen;
+		canbuild31=core_adv_shipyard;
+		canbuild32=core_hovercraft_platform;
+		canbuild33=core_neutron;
+		canbuild34=core_silencer;
+		canbuild35=core_krogoth_gantry;
+		canbuild36=corfff;//xtaids
+		canbuild37=screamer;//xtaids
+		canbuild38=core_buzzsaw; 
+		canbuild39=core_nano_tower;
+		canbuild40=COREBFORTNS;//xtaids                    
 	}
 	[core_adv_construction_kbot]
 	{
@@ -1159,22 +1164,23 @@
 		canbuild27=core_aircraft_plant;
 		canbuild28=core_adv_aircraft_plant;
 		canbuild29=core_shipyard;
-		canbuild30=core_adv_shipyard;
-		canbuild31=core_hovercraft_platform;
-		canbuild32=core_neutron;
-		canbuild33=core_silencer;
-		canbuild34=core_krogoth_gantry;
-		canbuild35=corfff;//xtaids
-		canbuild36=screamer;//xtaids
-		canbuild37=core_buzzsaw; 
-		canbuild38=core_nano_tower;
-		canbuild39=COREBFORTNS;//xtaids     
+		canbuild30=core_sub_pen;
+		canbuild31=core_adv_shipyard;
+		canbuild32=core_hovercraft_platform;
+		canbuild33=core_neutron;
+		canbuild34=core_silencer;
+		canbuild35=core_krogoth_gantry;
+		canbuild36=corfff;//xtaids
+		canbuild37=screamer;//xtaids
+		canbuild38=core_buzzsaw; 
+		canbuild39=core_nano_tower;
+		canbuild40=COREBFORTNS;//xtaids     
 	}
 	[core_adv_construction_sub]     
 	{
 		canbuild1=core_floating_dragons_teeth;
 		canbuild2=core_underwater_metal_extractor;
-		canbuild3=CORE_Underwater_moho_mine;
+		canbuild3=core_underwater_moho_mine;
 		canbuild4=core_floating_metal_maker;
 		canbuild5=core_underwater_fusion_power_plant;
 		canbuild6=core_underwater_energy_storage;
@@ -1191,11 +1197,12 @@
 		canbuild17=core_advanced_torpedo_launcher;
 		canbuild18=core_aircraft_plant;
 		canbuild19=core_shipyard;
-		canbuild20=core_adv_shipyard;
-		canbuild21=core_seaplane_platform;
-		canbuild22=core_hovercraft_platform;
-		canbuild23=core_nano_tower;
-		canbuild24=core_krogoth_gantry;
+		canbuild20=core_sub_pen;
+		canbuild21=core_adv_shipyard;
+		canbuild22=core_seaplane_platform;
+		canbuild23=core_hovercraft_platform;
+		canbuild24=core_nano_tower;
+		canbuild25=core_krogoth_gantry;
 	}
 	[core_adv_construction_vehicle]
 	{
@@ -1228,16 +1235,17 @@
 		canbuild27=core_aircraft_plant;
 		canbuild28=core_adv_aircraft_plant;
 		canbuild29=core_shipyard;
-		canbuild30=core_adv_shipyard;
-		canbuild31=core_hovercraft_platform;
-		canbuild32=core_neutron;
-		canbuild33=core_silencer;
-		canbuild34=core_krogoth_gantry;
-		canbuild35=corfff;//xtaids
-		canbuild36=screamer;//xtaids
-		canbuild37=core_buzzsaw; 
-		canbuild38=core_nano_tower;
-		canbuild39=COREBFORTNS;//xtaids     
+		canbuild30=core_sub_pen;
+		canbuild31=core_adv_shipyard;
+		canbuild32=core_hovercraft_platform;
+		canbuild33=core_neutron;
+		canbuild34=core_silencer;
+		canbuild35=core_krogoth_gantry;
+		canbuild36=corfff;//xtaids
+		canbuild37=screamer;//xtaids
+		canbuild38=core_buzzsaw; 
+		canbuild39=core_nano_tower;
+		canbuild30=COREBFORTNS;//xtaids     
 	}
 	[core_adv_kbot_lab]
 	{
