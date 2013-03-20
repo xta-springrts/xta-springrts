@@ -77,12 +77,6 @@ RequestState(requestedstate, currentstate)
 
 Create()
 {
-	dont-cache dish;
-	dont-cache ear1;
-	dont-cache ear2;
-	dont-shade dish;
-	dont-shade ear1;
-	dont-shade ear2;
 	statechg_DesiredState = TRUE;
 	statechg_StateChanging = FALSE;
 	start-script SmokeUnit();
@@ -105,7 +99,7 @@ SweetSpot(piecenum)
 
 Killed(severity, corpsetype)
 {
-	if( severity <= 250 )
+	if( severity <= 25 )
 	{
 		corpsetype = 1;
 		explode base type BITMAPONLY | BITMAP1;

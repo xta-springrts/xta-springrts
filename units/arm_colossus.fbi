@@ -57,6 +57,7 @@
 	canassist=0;
 	canreclaim=0;
 	canrepair=0;
+	canrestore=0;
 	workertime=600; //was 200//
 
 	//************************************************************

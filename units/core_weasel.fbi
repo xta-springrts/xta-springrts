@@ -102,10 +102,16 @@
 	bmcode=1;
 	designation=MA-L8;
 	downloadable=1;
+	leavetracks=1;
 	maneuverleashlength=640;
 	shootme=1;
 	steeringmode=1;
 	threed=1;
+	trackoffset=4;
+	trackstrength=3;
+	trackstretch=1;
+	tracktype=StdTank;
+	trackwidth=28;
 	version=1.2;
 	zbuffer=0;
 	collisionVolumeType = box;

@@ -73,7 +73,6 @@ SmokeUnit(healthpercent, sleeptime, smoketype)
 	{
 		sleep 500;
 	}
-	spin radar around y-axis speed <60.010989>;
 	start-script FlameControl();
 	while( TRUE )
 	{
@@ -94,6 +93,16 @@ SmokeUnit(healthpercent, sleeptime, smoketype)
 		}
 		sleep sleeptime;
 	}
+}
+
+Activate()
+{
+	spin radar around y-axis speed <60.010989> accelerate <3.010989>;
+}
+
+Deactivate()
+{
+	stop-spin radar around y-axis decelerate <3.010989>;
 }
 
 Create()
