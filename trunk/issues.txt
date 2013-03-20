@@ -14,8 +14,10 @@ Fixed
 Fixed carriers, airlabs pending
 
 5) No Tech 2 constructors can make sub pens (50% Confirmed. Arm T2 sub can make sub pens, but not core. Should be fixed.)
+Fixed
 
 6) T2 construction subs need water radar next to standard radar in build menu.
+Fixed
 
 7) Pelicans are seen as hovers even when walking (had *2 speed on icy run)
 
