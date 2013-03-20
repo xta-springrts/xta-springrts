@@ -70,6 +70,7 @@
 	//  Movement
 	//************
 	minwaterdepth=30;
+	maxwaterdepth=1000;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
