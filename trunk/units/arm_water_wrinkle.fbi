@@ -14,7 +14,7 @@
 	buildcostmetal=18;
 	buildcostenergy=205;
 	MaxDamage=15;
-	MaxWaterDepth=10;
+	MinWaterDepth=10;
 	MaxSlope=15;
 	EnergyUse=0;
 	BuildTime=312;
@@ -33,7 +33,7 @@
 	SelfDestructAs=ARMMINE2;
 	selfdestructcountdown=0;
 	Category=ARM MINE DEFENSIVE STATIC WEAPON NOTLAND NOTAIR NOTSUB;
-	TEDClass=DEFENSIVE;
+	TEDClass=MINE;
 	yardmap=o;
 	stealth=1;
 	sonarStealth=1;
@@ -49,7 +49,7 @@
 	downloadable=1;
 	kamikaze=1;
 	cancloak=1;
-	CloakCost=2;
+	CloakCost=1;
 	init_cloaked=1;
 	kamikazedistance=32;
 	mincloakdistance=20;
