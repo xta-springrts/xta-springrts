@@ -14,7 +14,7 @@
 	buildcostmetal=41;
 	buildcostenergy=342;
 	MaxDamage=15;
-	MaxWaterDepth=10;
+	MinWaterDepth=10;
 	MaxSlope=15;
 	EnergyUse=0;
 	BuildTime=678;
@@ -50,7 +50,7 @@
 	downloadable=1;
 	kamikaze=1;
 	cancloak=1;
-	CloakCost=2;
+	CloakCost=1;
 	init_cloaked=1;
 	mincloakdistance=20;
 	MinWaterDepth=0;

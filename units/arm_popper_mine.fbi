@@ -99,7 +99,7 @@
 	//*****************
 	bmcode=0;
 	cancloak=1;
-	cloakcost=2;
+	cloakcost=1;
 	designation=EG-3;
 	downloadable=1;
 	init_cloaked=1;

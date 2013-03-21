@@ -99,7 +99,7 @@
 	//*****************
 	bmcode=0;
 	cancloak=1;
-	cloakcost=3;
+	cloakcost=1;
 	designation=GTK6;
 	downloadable=1;
 	init_cloaked=1;
