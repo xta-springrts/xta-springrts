@@ -21,6 +21,56 @@
     ศอออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออผ
     Logo by ElementalGizmo
 
+------------------- Change Log of XTA v9.73 (94.0 and next version) ------------------ by Deadnight Warrior, Kloot, Jools, NTG and Scifi
+New features or technical changes:
+----------------------------------
+* Minelayers have a limited stock of mines (arm: 5, core: 6, naval: 8). Restocking costs same as building new minelayer (this is due to the fact that it's not as easy to build sensitive equipment such as mines in the field as inside factory conditions).
+* Changed the collision volume of dragon's teeth so that scouts can fire through. Will still require micro. Increased dt hit points back to previous value, because otherwise they get destroyed too quickly due to changes in engine i n v. 93 ->
+* Decreased duck odds from 1:100 to 1:1000
+* Changed some effects in water explosions, they are now different depending on water depth and explosion impact altitude
+* removed beeps from people placing their commander at start window (everybody hates it)
+* Units do not target crashing aircraft (no change from latest patch)
+* New sounds when units cloak or self-d (all combined in widget: xta unit sounds). 
+* Removed global sounds when commander cloaks or is repaired.
+
+Balancing changes:
+--------------------
+* Brawler:  Maxangle: 140 -> 56 (no change from latest patch)
+* Rapier: Maxangle: 130 -> 52 (no change from latest patch)
+* Crusader: metalcost: 765 -> 898 (981 in patch 1.7, 765 in 9.725, 898 in OTA), energycost: 4425 -> 4537 (return to OTA value), buildtime: 8453 -> 13391 (return to OTA-value)
+* Enforcer: same thing (new values: metalcost: 887, energycost: 4505, buildtime: 13368, return to ota-values)
+* Guardian: metalcost: 2169 -> 3253.5, energycost: 45441 -> 22720
+* Punisher: metalcost: 2081 -> 3121.5, energycost: 45099 -> 22549
+* Hammer: Turnrate: 700 -> 475, Speed: 1.32 (1.20 in p1.7, 1.5 in 9.725)
+* Thud: Turnrate: 750 -> 495, Speed: 1.24 (1.15 in p1.7, 1.45 in 9.725). Slope tolerance 14 -> 18. This is an old ability the thud used to have, arm has the spider instead.
+* Jeffy: HP: 410 -> 273.33 (no change from latest patch)
+* Weasel: HP: 440 -> 293.33, Speed: 3.724 -> 3.74 
+* Raven: Speed 1.9 -> 1.1, slopetolerance 20 -> 14.
+* Sentinel: LOS 920 -> 839 (no change from latest patch)
+* Gaat Gun: LOS 920 -> 839 (no change from latest patch)
+* Skimmer: HP 876 -> 675 (no change from latest patch), metalcost: 216->206, energycost: 3946 -> 3476
+* Scrubber: HP 907 -> 680 (no change from latest patch), metalcost: 227 -> 217, energycost: 3787 -> 3208
+* Stunner: ennergycost: 264522 -> 132261, buildtime: 202869 -> 111453
+* Neutron: ennergycost: 258882 -> 129441, buildtime: 196784 -> 124423
+* Zeus: HP: 3100 -> 4200 (no change from latest patch)
+* Doomsday machine: HP: 9925 -> 7444 (no change from latest patch)
+
+Bugfixes:
+---------
+* Fixed that both T1 radars do not leave wreck when they self destruct
+* Fixed that Core Eraser and Arm Spector (Kbot jammers), once turned off no longer spin even when turned on.
+* Fixed that Seer's radar spins no matter if you turn it off or on.
+* Fixed that core T2 sub cannot make sub pens
+* T2 construction sub now has water radar next to standard radar in build menu
+* Removed "Reclaim", "Restore" and "Repair" from Colossus and Hive
+* Increase T1 kbot and veh build radiuses so that they can build the sub pen (now same as T2)
+* Set Airlabs to by default be turned on when built, so that their radar works
+* Fix the fact that the following naval series units weren't buildable due to bad value of maxwaterdepth: Dragon's Teeth NS, LLT NS, Floating metal maker, Flakker NS, Seaplane Platform, Cobra NS, All NS mines.
+* Change TEDClass of Arm Water wrinkle from DEFENSIVE to MINE
+* Fix for lose target on cloak
+* Fix for issues arising from targetting with D-Gun ground and friendly units (avoidfriendly and avoidground set to false for D-Gun weapons)
+* Fix for issue in local sounds mode (should work now)
+	
 ------------------- Change Log of XTA v9.726 beta (89.0 and next version) ------------------ by Deadnight Warrior and Jools
 * Decoy commanders now have same cloak radius as their respective normal commanders. Their weapons ranges now show as that of normal commanders to enemies, but show still are actual ones to allies.Decoys can be upgrades to level 2 decoys, which can disguise as opposite faction commanders. Level 2 decoys appear to enemies as level 2 commanders (D-Gun still reveals though).
 * Added original commander ends option
