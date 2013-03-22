@@ -70,7 +70,6 @@
 	//  Movement
 	//************
 	maxslope=14;
-	maxwaterdepth=1000;
 	minwaterdepth=11;
 	waterline=0.6;
 
