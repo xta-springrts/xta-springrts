@@ -26,11 +26,11 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=1265; //was 1165 
+	maxdamage=1265; //was 1165 -- OTA: 
 	healtime=30;
-	buildcostmetal=189;
-	buildcostenergy=2184;
-	buildtime=2340;
+	buildcostmetal=189; //-- OTA: 151
+	buildcostenergy=2184; //-- OTA: 1187
+	buildtime=2340; // -- OTA: 2340
 	footprintx=2;
 	footprintz=2;
 
@@ -66,10 +66,10 @@
 	//  Movement
 	//************
 	movementclass=KBOTSS2;
-	turnrate=700; // was 995//was 446
+	turnrate=446; //475 in p1.7, 700 in 9.725; // was 995//was 446 OTA: 164 deg/s
 	acceleration=1.0;
 	brakerate=1.83105;
-	maxvelocity=1.5; //1.32;
+	maxvelocity=;1.32;//1.20 in p1.7; // 1.5 in 9.725; //1.32; OTA: 13.2 m/s
 	maxslope=14;
 	maxwaterdepth=12;
 

@@ -28,9 +28,9 @@
 	//********************
 	maxdamage=1569; //was 1300//was 1500
 	healtime=30;
-	buildcostmetal=368;
-	buildcostenergy=9225;
-	buildtime=21000;
+	buildcostmetal=368; // OTA: 294
+	buildcostenergy=9225;// OTA: 5778
+	buildtime=21000;// OTA:  13294
 	footprintx=3;
 	footprintz=3;
 	ModelCenterOffset=0 -7 0;
@@ -85,7 +85,7 @@
 	//***********
 	weapon1=VTOL_ROCKET;
 	WeaponMainDir1= 0 0 1;
-	MaxAngleDif1=130;
+	MaxAngleDif1=52;//130 in 9.725
 	nochasecategory=VTOL;
 	badtargetcategory=VTOL;
 	wpri_badtargetcategory=VTOL;

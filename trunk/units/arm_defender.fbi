@@ -82,7 +82,7 @@
 	//************************************************************
 	//  Weapons
 	//***********
-	weapon1=gizmotron;
+	weapon1=gizmotron; // ARMRL_MISSILE; in p1.7
 	badtargetcategory=NOTAIR;
 	wpri_badtargetcategory=NOTAIR;
 	explodeas=BIG_UNITEX;

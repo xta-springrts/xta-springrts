@@ -29,9 +29,9 @@
 	//********************
 	maxdamage=2760;
 	healtime=11;
-	buildcostmetal=3604;
-	buildcostenergy=264522;
-	buildtime=202869;
+	buildcostmetal=3604; // OTA: 1802
+	buildcostenergy=132261;//264522; // OTA: 52134
+	buildtime=111453; //202869 //OTA: 111453 -- OTA values reset
 	footprintx=4;
 	footprintz=4;
 	collisionVolumeType = Box;

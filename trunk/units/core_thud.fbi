@@ -28,9 +28,9 @@
 	//********************
 	maxdamage=1312; 
 	healtime=30;
-	buildcostmetal=199; //191;
-	buildcostenergy=1509;
-	buildtime=2171;
+	buildcostmetal=199; //191; -- OTA: 147
+	buildcostenergy=1509; // -- OTA: 1161
+	buildtime=2171; // -- OTA: 2171
 	footprintx=2;
 	footprintz=2;
 
@@ -66,11 +66,11 @@
 	//  Movement
 	//************
 	movementclass=KBOTSS2;
-	turnrate=750; // was 999 was 420
+	turnrate=495;//750 in 9.725; // was 999 was 420 // -- OTA: 165 deg/s
 	acceleration=0.915527;
 	brakerate=1.83105;
-	maxvelocity=1.45; //1.24//
-	maxslope=14;
+	maxvelocity=1.24; // -- 1.15; in p1.7 //1.45 in 9.75; //1.24// // -- OTA: 13.6 m/s
+	maxslope=18; // was 14 -- to reset an ability that thud used to have before.
 	maxwaterdepth=12;
 
 	//************************************************************

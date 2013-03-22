@@ -29,9 +29,9 @@
 	//********************
 	maxdamage=2996;
 	healtime=30;
-	buildcostmetal=778; //was 1183//
-	buildcostenergy=4043;
-	buildtime=7968;
+	buildcostmetal=887;//980 in patch 1.7: //778 in 9.725; //was 1183// -- OTA: 887
+	buildcostenergy=4504;//4043 in 9.725 // OTA: 4505
+	buildtime=13368;// 7968 in 9.725 // OTA:  13368
 	footprintx=4;
 	footprintz=4;
 
