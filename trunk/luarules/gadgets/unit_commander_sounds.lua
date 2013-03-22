@@ -30,13 +30,13 @@ if (gadgetHandler:IsSyncedCode()) then
 		SendToUnsynced(UNIT_DESTROYED_EVENT_ID, unitID, unitDefID, unitTeamID, attackerID, attackerDefID, attackerTeamID)
 	end
 
-	function gadget:UnitCloaked(unitID, unitDefID, unitTeamID)
-		SendToUnsynced(UNIT_CLOAKED_EVENT_ID, unitID, unitDefID, unitTeamID)
-	end
+	--function gadget:UnitCloaked(unitID, unitDefID, unitTeamID)
+		--SendToUnsynced(UNIT_CLOAKED_EVENT_ID, unitID, unitDefID, unitTeamID)
+	--end
 
-	function gadget:UnitLoaded(unitID, unitDefID, unitTeamID, transportUnitID, transportTeamID)
-		SendToUnsynced(UNIT_LOADED_EVENT_ID, unitID, unitDefID, unitTeamID, transportUnitID, transportTeamID)
-	end
+	--function gadget:UnitLoaded(unitID, unitDefID, unitTeamID, transportUnitID, transportTeamID)
+		--SendToUnsynced(UNIT_LOADED_EVENT_ID, unitID, unitDefID, unitTeamID, transportUnitID, transportTeamID)
+	--end
 
 	-- HACK:
 	--    * CommandFallback is only called for unknown commands
@@ -44,9 +44,9 @@ if (gadgetHandler:IsSyncedCode()) then
 	--      (even though EventHandler sets up UnitCommand with
 	--      MANAGED_BIT) so use AllowCommand instead
 	function gadget:AllowCommand(unitID, unitDefID, unitTeamID, cmdID, cmdParams, cmdOptions)
-		if (cmdID == CMD.REPAIR and #cmdParams == 1 and unitID == cmdParams[1]) then
-			SendToUnsynced(UNIT_SELF_REPAIR_EVENT_ID, unitID, unitDefID, unitTeamID)
-		end
+		--if (cmdID == CMD.REPAIR and #cmdParams == 1 and unitID == cmdParams[1]) then
+			--SendToUnsynced(UNIT_SELF_REPAIR_EVENT_ID, unitID, unitDefID, unitTeamID)
+		--end
 
 		if (CommanderUnitDefs[unitDefID] ~= nil) then
 			-- note:
