@@ -78,7 +78,6 @@
 	acceleration=0.005;
 	brakerate=0.005;
 	maxvelocity=1.5;
-	maxwaterdepth=1000;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
