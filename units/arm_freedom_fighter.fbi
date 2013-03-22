@@ -28,9 +28,9 @@
 	//********************
 	maxdamage=431;
 	healtime=30;
-	buildcostmetal=117; //132;
-	buildcostenergy=2587; //3234;
-	buildtime=4407; //7346;
+	buildcostmetal=117; //132; -- OTA: 99
+	buildcostenergy=2587; //3234; -- OTA: 3234
+	buildtime=4407; //7346; -- OTA: 9182
 	footprintx=2;
 	footprintz=2;
 
@@ -67,7 +67,7 @@
 	turnrate=1280;
 	acceleration=0.5;
 	brakerate=6;
-	maxvelocity=9.5;
+	maxvelocity=9.5; // OTA: 120.0
 	maxslope=10;
 	maxwaterdepth=255;
 	cruisealt=185;

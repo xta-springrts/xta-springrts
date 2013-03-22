@@ -68,8 +68,8 @@
 	turnrate=590;
 	acceleration=0.9;
 	brakerate=1.5;
-	maxvelocity=1.9;
-	maxslope=20;
+	maxvelocity=1.1;//1.9; in 9.725
+	maxslope=14;// 20; in 9.725
 	maxwaterdepth=12;
 
 	//************************************************************

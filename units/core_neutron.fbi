@@ -29,9 +29,9 @@
 	//********************
 	maxdamage=2520;
 	healtime=11;
-	buildcostmetal=3416;
-	buildcostenergy=258882;
-	buildtime=196784;
+	buildcostmetal=3416; // --OTA: 1708
+	buildcostenergy=129441;//258882 in 9.725 // --OTA: 52134
+	buildtime=124423; //98392.0 in p1.7 //196784 in 9.725  // --OTA: 150453 --average of OTA and p.1.7 values. OTA versions do not work the same way exactly
 	footprintx=4;
 	footprintz=4;
 	collisionVolumeType = CylY;

@@ -26,11 +26,11 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=440;//reduced by 60
+	maxdamage=293.33; // 440 in 9.725 // reduced by 60
 	healtime=30;
-	buildcostmetal=76;
-	buildcostenergy=1150;
-	buildtime=2954;
+	buildcostmetal=76; // OTA: 38
+	buildcostenergy=1150; // OTA: 575
+	buildtime=2954; // OTA: 1515
 	footprintx=2;
 	footprintz=2;
 
@@ -68,7 +68,7 @@
 	turnrate=500;
 	acceleration=0.072;
 	brakerate=0.086;
-	maxvelocity=3.724;
+	maxvelocity=3.74; // p1.7. 4.0;  OTA: 33.6 m/s
 	maxslope=18;
 	maxwaterdepth=12;
 	turninplace=0;

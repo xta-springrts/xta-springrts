@@ -27,11 +27,11 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=876;//1400
+	maxdamage=675;//876 in 9.725 //1400
 	healtime=30;
-	buildcostmetal=216;//286
-	buildcostenergy=3976;//3476
-	buildtime=5582;
+	buildcostmetal=206;//216//286 -- OTA: 76
+	buildcostenergy=3476;//3946//3476 -- OTA: 1169
+	buildtime=5582; // -- OTA: 3388
 	footprintx=2;
 	footprintz=2;
 

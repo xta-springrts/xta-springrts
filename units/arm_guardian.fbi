@@ -29,9 +29,9 @@
 	//********************
 	maxdamage=4335;
 	healtime=11;
-	buildcostmetal=2169;
-	buildcostenergy=45441;
-	buildtime=36357;
+	buildcostmetal=3253.5;//2169 in 9.725 // -- OTA: 1946
+	buildcostenergy=22720; // 45441 in 9.725 // -- OTA: 7687, OTA-ambusher: 16821
+	buildtime=36357;// -- OTA: 13377
 	footprintx=4;
 	footprintz=4;
 
