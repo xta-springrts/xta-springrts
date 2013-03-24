@@ -3,9 +3,9 @@ function widget:GetInfo()
 	return {
 		name      = "CustomFormations2",
 		desc      = "Allows you to draw your own formation line.",
-		author    = "Niobium", -- Based on 'Custom Formations' by jK and gunblob
-		version   = "v3.3",
-		date      = "Mar, 2010",
+		author    = "Niobium, Silentwings", -- Based on 'Custom Formations' by jK and gunblob
+		version   = "v3.4",
+		date      = "Mar, 2013",
 		license   = "GNU GPL, v2 or later",
 		layer     = 10000,
 		enabled   = true,
@@ -123,6 +123,7 @@ local spTraceScreenRay = Spring.TraceScreenRay
 local spGetGroundHeight = Spring.GetGroundHeight
 local spGetFeaturePosition = Spring.GetFeaturePosition
 local spGiveOrderToUnit = Spring.GiveOrderToUnit
+local spGetUnitHeight = Spring.GetUnitHeight
 
 local mapSizeX, mapSizeZ = Game.mapSizeX, Game.mapSizeZ
 local maxUnits = Game.maxUnits
@@ -223,6 +224,9 @@ local function GetExecutingUnits(cmdID)
 	end
 	return units
 end
+
+local lineLength = 0
+
 local function AddFNode(pos)
 	
 	local px, pz = pos[1], pos[3]
@@ -244,14 +248,38 @@ local function AddFNode(pos)
 		
 		fNodes[n + 1] = pos
 		fDists[n + 1] = fDists[n] + sqrt(distSq)
+		lineLength = lineLength+distSq^0.5
 	end
 	
 	totaldxy = 0
 	return true
 end
-local function GetInterpNodes(number)
-	
-	local spacing = fDists[#fNodes] / (number - 1)
+
+local function HasWaterWeapon(UnitDefID)
+	local haswaterweapon = false
+	local numweapons = #(UnitDefs[UnitDefID]["weapons"])
+	for j=1, numweapons do
+		local weapondefid = UnitDefs[UnitDefID]["weapons"][j]["weaponDef"]
+		local iswaterweapon = WeaponDefs[weapondefid]["waterWeapon"]
+		if iswaterweapon then haswaterweapon=true end
+	end	
+	return haswaterweapon
+end
+
+local function GetInterpNodes(mUnits)
+		
+	local number = #mUnits
+	local spacing = fDists[#fNodes] / (#mUnits - 1)
+
+	local haswaterweapon = {}
+	for i=1, number do
+		local UnitDefID = spGetUnitDefID(mUnits[i])
+		haswaterweapon[i] = HasWaterWeapon(UnitDefID)
+	end
+	--result of this and code below is that the height of the aimpoint for a unit [i] will be:
+	--(a) on GetGroundHeight(units aimed position), if the unit has a waterweapon
+	--(b) on whichever is highest out of water surface (=0) and GetGroundHeight(units aimed position), if the unit does not have water weapon. 
+	--in BA this must match the behaviour of prevent_range_hax or commands will get modified.
 	
 	local interpNodes = {}
 	
@@ -266,7 +294,9 @@ local function GetInterpNodes(number)
 	local eZ = ePos[3]
 	local eDist = fDists[2]
 	
-	interpNodes[1] = {sX, spGetGroundHeight(sX, sZ), sZ}
+	local sY 
+	if haswaterweapon[1] then sY=spGetGroundHeight(sX, sZ) else sY=math.max(0,spGetGroundHeight(sX,sZ)) end
+	interpNodes[1] = {sX, sY, sZ}
 	
 	for n = 1, number - 2 do
 		
@@ -287,13 +317,19 @@ local function GetInterpNodes(number)
 		local nFrac = (reqDist - sDist) / (eDist - sDist)
 		local nX = sX * (1 - nFrac) + eX * nFrac
 		local nZ = sZ * (1 - nFrac) + eZ * nFrac
-		interpNodes[n + 1] = {nX, spGetGroundHeight(nX, nZ), nZ}
+		local nY 
+		if haswaterweapon[number+1] then nY=spGetGroundHeight(nX, nZ) else nY=math.max(0,spGetGroundHeight(nX, nZ)) end
+		interpNodes[n + 1] = {nX, nY, nZ}
 	end
 	
 	ePos = fNodes[#fNodes]
 	eX = ePos[1]
 	eZ = ePos[3]
-	interpNodes[number] = {eX, spGetGroundHeight(eX, eZ), eZ}
+	local eY 
+	if haswaterweapon[number] then  eY=spGetGroundHeight(eX, eZ) else eY=math.max(0,spGetGroundHeight(eX, eZ)) end
+	interpNodes[number] = {eX, eY, eZ}
+	
+	--DEBUG for i=1,number do Spring.Echo(interpNodes[i]) end
 	
 	return interpNodes
 end
@@ -336,7 +372,7 @@ end
 -- Mouse/keyboard Callins
 --------------------------------------------------------------------------------
 function widget:MousePress(mx, my, mButton)
-	
+	lineLength=0 --for linestipple
 	-- Where did we click
 	inMinimap = spIsAboveMiniMap(mx, my)
 	if inMinimap and not MiniMapFullProxy then return false end
@@ -531,9 +567,10 @@ function widget:MouseRelease(mx, my, mButton)
 			-- Order is a formation
 			-- Are any units able to execute it?
 			local mUnits = GetExecutingUnits(usingCmd)
+			
 			if #mUnits > 0 then
-				
-				local interpNodes = GetInterpNodes(#mUnits)
+		
+				local interpNodes = GetInterpNodes(mUnits)
 				
 				local orders
 				if (#mUnits <= maxHungarianUnits) then
@@ -586,8 +623,10 @@ function widget:MouseRelease(mx, my, mButton)
 		
 		-- Directly giving speed order appears to work perfectly, including with shifted orders ...
 		-- ... But other widgets CMD.INSERT the speed order into the front (Posn 1) of the queue instead (which doesn't work with shifted orders)
-		local speedOpts = GetCmdOpts(alt, ctrl, meta, shift, true)
-		GiveNotifyingOrder(CMD_SET_WANTED_MAX_SPEED, {wantedSpeed / 30}, speedOpts)
+		if usingCmd ~= CMD.ATTACK and usingCmd ~= CMD.UNLOAD then --hack to fix bomber line attack etc.
+		  local speedOpts = GetCmdOpts(alt, ctrl, meta, shift, true)
+		  GiveNotifyingOrder(CMD_SET_WANTED_MAX_SPEED, {wantedSpeed / 30}, speedOpts)
+		end
 	end
 	
 	if #fNodes > 1 then
@@ -625,28 +664,37 @@ local function tVertsMinimap(verts)
 	end
 end
 local function DrawFormationLines(vertFunction, lineStipple)
-	
-	glLineStipple(lineStipple, 4095)
+
+	glLineStipple(lineStipple, 4369)
 	glLineWidth(2.0)
-	
+
 	if #fNodes > 1 then
 		SetColor(usingCmd, 1.0)
 		glBeginEnd(GL_LINE_STRIP, vertFunction, fNodes)
 	end
-	
+
 	if #dimmNodes > 1 then
 		SetColor(dimmCmd, dimmAlpha)
 		glBeginEnd(GL_LINE_STRIP, vertFunction, dimmNodes)
 	end
-	
+
 	glLineWidth(1.0)
 	glLineStipple(false)
 end
 
+local GetCameraPosition = Spring.GetCameraPosition
+local GetSelectedUnitsCount = Spring.GetSelectedUnitsCount
+
 function widget:DrawWorld()
-	
-	DrawFormationLines(tVerts, 2)
+  if #fNodes > 1 or #dimmNodes > 1 then
+	local _,zoomY = GetCameraPosition()
+	zoomY = zoomY/470 --magic number with 20 units its 27 stipp with 30 its 39
+	local lineStipple = lineLength/((GetSelectedUnitsCount()-1)*zoomY)
+	--TODO fix the pattern and rest of math -so that always starts with half line and ends with half line
+	DrawFormationLines(tVerts, lineStipple)
+  end
 end
+
 function widget:DrawInMiniMap()
 	
 	glPushMatrix()
