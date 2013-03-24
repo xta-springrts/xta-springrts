@@ -6742,13 +6742,13 @@
 	intensity=0.5;
 	turret=1;
 	range=286;
-	reloadtime=1;
+	reloadtime=0.2;
 	weapontimer=1;
 	weaponvelocity=800;
 	sprayangle=924;
 	areaofeffect=8;
-	burst=2;
-	burstrate=0.1;
+	//burst=2;
+	//burstrate=0.1;
 	soundstart=armsml2;
 	soundhitdry=lasrhit1;
 	soundtrigger=1;
@@ -6789,7 +6789,7 @@
 	projectiles=2;
 	[DAMAGE]
 	{
-		default=22;
+		default=55;
 		group_invincible=1;
 	}
 }
