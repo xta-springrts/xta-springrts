@@ -22,7 +22,7 @@ if (gadgetHandler:IsSyncedCode()) then
 		}
 	end
 	
-	function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weaponDefID, attackerID, attackerDefID, attackerTeam)
+	function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weaponDefID, projectileID, attackerID, attackerDefID, attackerTeam)
 		
 		
 		if (not UnitDefs[unitDefID].canFly) then
