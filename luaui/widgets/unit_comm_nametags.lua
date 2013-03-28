@@ -38,37 +38,38 @@ local glBillboard         = gl.Billboard
 local glPopMatrix         = gl.PopMatrix
 
 --------------------------------------------------------------------------------
+-- vars
+--------------------------------------------------------------------------------
+teams = {}
+commanderIDs = {}
+
+--------------------------------------------------------------------------------
 -- helper functions
 --------------------------------------------------------------------------------
 
-local function GetUnitPlayerName(unitID)
-  local team = GetUnitTeam(unitID)
-  local player,isAI,side,name
-  _,player,_,isAI,side,_,_,_ = GetTeamInfo(team)
-  if isAI then
-	if side == "arm" then name = "Arm"
-		elseif side == "core" then name = "Core"
-		else name = side
+function widget:Initialize()
+	for no, teamID in pairs(Spring.GetTeamList()) do
+		teams[teamID] = {}
+		local r, g, b, a = GetTeamColor(teamID)
+		teams[teamID].colour = {r, g, b, a}
+		local player,isAI,side,name
+		_,player,_,isAI,side,_,_,_ = GetTeamInfo(teamID)
+		if isAI then
+			if side == "arm" then name = "Arm"
+				elseif side == "core" then name = "Core"
+				else name = side
+			end
+		else
+			name = GetPlayerInfo(player)
+		end
+		teams[teamID].name = name
 	end
-  else
-	name = GetPlayerInfo(player)
-  end
-  local r, g, b, a = GetTeamColor(team)
-  if name == nil or #name < 1 then name = ("Team " .. team) end
-  return name, {r, g, b, a,}
-end
-
-local function DrawUnitPlayerName(unitID, height)
-  local ux, uy, uz = GetUnitViewPosition(unitID)
-  local name, color = GetUnitPlayerName(unitID)
-  glPushMatrix()
-  glTranslate(ux, uy + height, uz )
-  glBillboard()
-  
-  glColor(color)
-  glText(name, 0, 0, fontSize, "cn")
-  
-  glPopMatrix()
+	for i=1, #UnitDefs do
+		local cp = UnitDefs[i].customParams
+		if cp and cp.iscommander and not cp.isdecoycommander then
+			commanderIDs[i] = true
+		end
+	end
 end
 
 --------------------------------------------------------------------------------
@@ -76,16 +77,19 @@ end
 --------------------------------------------------------------------------------
 
 function widget:DrawWorld()
-  local visibleUnits = GetVisibleUnits(ALL_UNITS,nil,true)
-  for i=1,#visibleUnits do
-    local unitID    = visibleUnits[i]
-    local unitDefID = GetUnitDefID(unitID)
-    local unitDef   = UnitDefs[unitDefID or -1]
-	local cp 		= unitDef.customParams or nil
-    local height    = unitDef.height+heightOffset
-	 
-	if unitDef and cp and cp.iscommander and not cp.isdecoycommander then
-      DrawUnitPlayerName(unitID, height)
-    end
-  end
+	local visibleUnits = GetVisibleUnits(ALL_UNITS,16,false)
+	for i=1,#visibleUnits do
+		local unitID    = visibleUnits[i]
+		local unitDefID = GetUnitDefID(unitID)
+		if commanderIDs[unitDefID] then
+			local ux, uy, uz = GetUnitViewPosition(unitID)
+			local teamData = teams[GetUnitTeam(unitID)]
+			glPushMatrix()
+			glTranslate(ux, uy + UnitDefs[unitDefID].height + heightOffset, uz )
+			glBillboard()
+			glColor(teamData.colour)
+			glText(teamData.name, 0, 0, fontSize, "cn")
+			glPopMatrix()
+		end
+	end
 end
