@@ -20,7 +20,7 @@ local modrules  = {
 
   reclaim = {
     multiReclaim  = 1,   -- defaults to 0
-    reclaimMethod = 0,   -- defaults to 1
+    reclaimMethod = (Spring.GetModOptions() and (Spring.GetModOptions().reclaim_method == "1") and 1) or 0,   -- defaults to 1
     unitMethod    = 1,   -- defaults to 1
 
     unitEnergyCostFactor    = 0,  -- defaults to 0

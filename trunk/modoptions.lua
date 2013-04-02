@@ -122,10 +122,23 @@ local options = {
 		type="list",
 		section= 'xtagame',
 		--section= 'xtagame',
-		def="qtpfs",
+		def="0",
 		items={
 			{key="0", name="Default", desc="Default Spring path finding engine"},
 			{key="1", name="QTPFS", desc="Quick/Tesellating Path Finding System"},
+		}
+	},
+	{
+		key="reclaim_method",
+		name="Reclaim method",
+		desc="Which reclaim method to use\nkey: reclaim_method",
+		type="list",
+		section= 'xtagame',
+		--section= 'xtagame',
+		def="1",
+		items={
+			{key="0", name="Discrete", desc="Receive all metal in one lump sum after reclaim finishes"},
+			{key="1", name="Continuous", desc="Receive some metal for the duration of the reclaim"},
 		}
 	},
 	{
