@@ -4,8 +4,6 @@ Old issues, mostly details. From http://springrts.com/phpbb/viewtopic.php?f=48&t
 Existing:
 ---------
 
-11) Customformations doesn't work as line attack if you draw a line over water. It has to be modified so that it sends surface water attack order instead of sea bottom coordinates to units that can not water attack. See: http://springrts.com/mantis/view.php?id=3539
-
 4) Air labs keep their radar spinning no matter if they are on or off — except Arm T1 Airlab, whose radar is always in not spinning state. Carriers spins their radars too no matter if they are on or off. 
 Fixed carriers, airlabs pending
 
@@ -37,4 +35,7 @@ Fixed
 Fixed
 
 10 Light carriers have "Reclaim", "Restore" and "Repair", despite not being able to do any (unless a plane lands on them).
+Fixed
+
+11) Customformations doesn't work as line attack if you draw a line over water. It has to be modified so that it sends surface water attack order instead of sea bottom coordinates to units that can not water attack. See: http://springrts.com/mantis/view.php?id=3539
 Fixed
