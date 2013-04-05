@@ -6,14 +6,14 @@ if (gadgetHandler:IsSyncedCode()) then
 	local CRASHRISK = 0.33
 	local DAMAGELIMIT = 1.0
 	
-	local SetUnitCrashing = Spring.SetUnitCrashing
-	local SetUnitNoSelect = Spring.SetUnitNoSelect
-	local SetUnitNeutral = Spring.SetUnitNeutral
-	local SetUnitSensorRadius = Spring.SetUnitSensorRadius
-	local SetUnitCOBValue = Spring.SetUnitCOBValue
-	
-	
-	
+	local SetUnitCrashing 		= Spring.SetUnitCrashing
+	local SetUnitNoSelect 		= Spring.SetUnitNoSelect
+	local SetUnitNeutral 		= Spring.SetUnitNeutral
+	local SetUnitSensorRadius 	= Spring.SetUnitSensorRadius
+	local SetUnitCOBValue 		= Spring.SetUnitCOBValue
+	local GiveOrderToUnit 		= Spring.GiveOrderToUnit
+	local CMD_FIRE_STATE 		= CMD.FIRE_STATE
+	local CMD_STOP 				= CMD.STOP
 	function gadget:GetInfo()
 		return {
 			name    = "unit_crashing_aircraft",
@@ -42,6 +42,7 @@ if (gadgetHandler:IsSyncedCode()) then
 			SetUnitCrashing(unitID, true)
 			SetUnitNoSelect(unitID, true)
 			SetUnitNeutral(unitID, true)
+			GiveOrderToUnit(unitID, CMD_FIRE_STATE, {0},{}) -- hold fire
 			SetUnitSensorRadius (unitID, "los", 0)
 			SetUnitSensorRadius (unitID, "airLos", 0)
 			SetUnitSensorRadius (unitID, "radar", 0)
@@ -49,6 +50,7 @@ if (gadgetHandler:IsSyncedCode()) then
 			SetUnitSensorRadius (unitID, "seismic", 0)
 			SetUnitSensorRadius (unitID, "radarJammer", 0)
 			SetUnitSensorRadius (unitID, "sonarJammer", 0)
+			GiveOrderToUnit(unitID, CMD_STOP,{},{""}) -- prevent unit from continuing to attack. The stop order must be the last order before crashing order, or the engine will find a new target.
 			SetUnitCOBValue(unitID, COB.CRASHING, 1)
 
 			crashingUnits[unitID] = true
