@@ -69,7 +69,7 @@
 	turnrate=475; //475 in p1.7, 700 in 9.725; // was 995//was 446 OTA: 164 deg/s
 	acceleration=1.0;
 	brakerate=1.83105;
-	maxvelocity=;1.32;//1.20 in p1.7; // 1.5 in 9.725; //1.32; OTA: 13.2 m/s
+	maxvelocity=1.32;//1.20 in p1.7; // 1.5 in 9.725; //1.32; OTA: 13.2 m/s
 	maxslope=14;
 	maxwaterdepth=12;
 
