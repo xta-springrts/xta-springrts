@@ -1,0 +1,656 @@
+#define TA			// This is a TA script
+// set linear constant to 16384 before compiling
+
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+piece  flarea, flareb, flareg, wake1, wake2, wake3, turret, spinner,
+       turret2, barrel1, sleeva, shella, barrel2, sleevb, shellb, aimpt,
+       aimpt2, guna, gunb, gung, base, hull, leg1, leg2,
+       leg3, leg4, leg5, leg6, turret3, gun, missile1, missile2,
+       missile3;
+
+static-var  bMoving, bAiming, gun_3, Floating, CannonDirection,
+            restore_delay, Static_Var_7, Static_Var_8, Static_Var_9,
+            windDirection, windSteady;
+
+// Signal definitions
+#define SIG_MOVE			2
+#define SIG_AIM				4
+#define SIG_AIM_2			8
+#define SIG_AIM_3			16
+#define SIG_RECOIL			32
+#define SIG_ROCK			64
+#define ROCK_AMPLITUDE		<1.4>
+#define ROCK_SPEED			<1.5>
+#define ROCK_PIECE base
+#define SHALLOWS			[-6.3]
+#define SHALLOWS_POS		[6.3]
+
+SetDirection(heading)
+{
+	windDirection = heading;
+	windSteady = 0;	
+}
+
+RockOnWaves(x,z,xs,zs)
+{
+	signal SIG_ROCK;
+	set-signal-mask SIG_ROCK;
+	while(Floating){
+		x= ROCK_AMPLITUDE * get KCOS(windDirection) / 1024;
+		z= ROCK_AMPLITUDE * get KSIN(windDirection) / 1024;
+		xs= get ABS(x) * ROCK_SPEED / <1.0>;
+		zs= get ABS(z) * ROCK_SPEED / <1.0>;
+		windSteady=1;
+		while(windSteady)
+		{
+			if(windSteady)
+			{
+				turn ROCK_PIECE to z-axis z speed zs;
+				turn ROCK_PIECE to x-axis x speed xs;
+				wait-for-turn ROCK_PIECE around x-axis;
+				wait-for-turn ROCK_PIECE around z-axis;
+				turn ROCK_PIECE to z-axis 0 speed zs;
+				turn ROCK_PIECE to x-axis 0 speed xs;
+				wait-for-turn ROCK_PIECE around x-axis;
+				wait-for-turn ROCK_PIECE around z-axis;
+			}
+			if(windSteady)
+			{
+				turn ROCK_PIECE to z-axis 0-z speed zs;
+				turn ROCK_PIECE to x-axis 0-x speed xs;
+				wait-for-turn ROCK_PIECE around x-axis;
+				wait-for-turn ROCK_PIECE around z-axis;
+				turn ROCK_PIECE to z-axis 0 speed zs;
+				turn ROCK_PIECE to x-axis 0 speed xs;
+				wait-for-turn ROCK_PIECE around x-axis;
+				wait-for-turn ROCK_PIECE around z-axis;
+			}
+		}
+	}
+}
+
+ProjXPW(Func_Var_1, Func_Var_2)
+{
+	if( Func_Var_2 < -21840 )
+	{
+		Static_Var_7 = Func_Var_1 * ( Func_Var_2 + 32760 ) / 10920;
+	}
+	else if( Func_Var_2 > 21840 )
+	{
+		Static_Var_7 = Func_Var_1 * ( 32760 - Func_Var_2 ) / 10920;
+	}
+	else if( Func_Var_2 < -10920 )
+	{
+		Static_Var_7 = 0 - Func_Var_1;
+	}
+	else if( Func_Var_2 > 10920 )
+	{
+		Static_Var_7 = Func_Var_1;
+	}
+	else
+	{
+		Static_Var_7 = Func_Var_1 * Func_Var_2 / 10920;
+	}
+}
+
+RockZ(Func_Var_1, Func_Var_2)
+{
+	signal SIG_RECOIL;
+	set-signal-mask SIG_RECOIL;
+	call-script ProjXPW(10920 / Func_Var_2,Func_Var_1);
+	Static_Var_8 = Static_Var_8 + Static_Var_7;
+	Static_Var_7 = get ABS(Static_Var_8);
+	while( Static_Var_7 > 91 )
+	{
+		turn hull to z-axis Static_Var_8 speed Static_Var_7 * <0.016484>;
+		wait-for-turn hull around z-axis;
+		Static_Var_8 = Static_Var_8 * -1 / 2;
+		Static_Var_7 = get ABS(Static_Var_8);
+	}
+	turn hull to z-axis <0.000000> speed <1.5>;
+}
+
+walk()
+{
+	signal SIG_MOVE;
+	set-signal-mask SIG_MOVE;
+	while ( !Floating )
+	{
+		if( bMoving )
+		{
+			turn hull to x-axis <-1.000000> speed <10.000000>;
+			turn hull to y-axis <0.000000> speed <15.000000>;
+			turn hull to z-axis <1.000000> speed <10.000000>;
+			turn leg1 to y-axis <0.000000> speed <80.000000>;
+			turn leg1 to z-axis <0.000000> speed <80.000000>;
+			turn leg2 to z-axis <31.005495> speed <80.000000>;
+			turn leg3 to y-axis <34.005495> speed <80.000000>;
+			turn leg3 to z-axis <0.000000> speed <80.000000>;
+			turn leg4 to y-axis <-40.005495> speed <80.000000>;
+			turn leg4 to z-axis <0.000000> speed <80.000000>;
+			turn leg5 to y-axis <0.000000> speed <80.000000>;
+			turn leg5 to z-axis <0.000000> speed <80.000000>;
+			turn leg6 to y-axis <-30.005495> speed <40.000000>;
+			turn leg6 to z-axis <-45.005495> speed <80.000000>;
+			sleep 100;	
+			if( bMoving )
+			{
+				turn hull to x-axis <0.000000> speed <15.000000>;
+				turn hull to y-axis <1.000000> speed <10.000000>;
+				turn hull to z-axis <-1.000000> speed <10.000000>;
+				turn leg1 to z-axis <31.005495> speed <80.000000>;
+				turn leg2 to y-axis <34.005495> speed <80.000000>;
+				turn leg2 to z-axis <31.005495> speed <80.000000>;
+				turn leg3 to y-axis <0.000000> speed <80.000000>;
+				turn leg3 to z-axis <0.000000> speed <80.000000>;
+				turn leg4 to y-axis <0.000000> speed <80.000000>;
+				turn leg5 to z-axis <-31.005495> speed <80.000000>;
+				turn leg6 to z-axis <2.000000> speed <80.000000>;
+				sleep 100;
+			}
+			if( bMoving )
+			{
+				turn hull to x-axis <1.000000> speed <10.000000>;
+				turn hull to y-axis <-1.000000> speed <10.000000>;
+				turn hull to z-axis <0.000000> speed <15.000000>;
+				turn leg1 to z-axis <31.005495> speed <80.000000>;
+				turn leg2 to y-axis <34.005495> speed <80.000000>;
+				turn leg2 to z-axis <31.005495> speed <80.000000>;
+				turn leg3 to y-axis <0.000000> speed <80.000000>;
+				turn leg3 to z-axis <0.000000> speed <80.000000>;
+				turn leg4 to y-axis <0.000000> speed <80.000000>;
+				turn leg5 to z-axis <-31.005495> speed <80.000000>;
+				turn leg6 to z-axis <2.000000> speed <80.000000>;
+				sleep 100;
+			}
+			if( bMoving )
+			{
+				turn hull to x-axis <-1.000000> speed <10.000000>;
+				turn hull to y-axis <0.000000> speed <15.000000>;
+				turn hull to z-axis <1.000000> speed <10.000000>;
+				turn leg1 to y-axis <55.005495> speed <80.000000>;
+				turn leg1 to z-axis <31.005495> speed <80.000000>;
+				turn leg2 to y-axis <34.005495> speed <80.000000>;
+				turn leg2 to z-axis <0.000000> speed <80.000000>;
+				turn leg3 to z-axis <31.005495> speed <80.000000>;
+				turn leg4 to y-axis <0.000000> speed <80.000000>;
+				turn leg4 to z-axis <-31.005495> speed <80.000000>;
+				turn leg5 to y-axis <-31.005495> speed <80.000000>;
+				turn leg5 to z-axis <-31.005495> speed <80.000000>;
+				turn leg6 to y-axis <3.000000> speed <80.000000>;
+				sleep 100;
+			}
+			if( bMoving )
+			{
+				turn hull to x-axis <-1.000000> speed <10.000000>;
+				turn hull to y-axis <1.000000> speed <10.000000>;
+				turn hull to z-axis <0.000000> speed <15.000000>;
+				turn leg1 to y-axis <43.005495> speed <80.000000>;
+				turn leg1 to z-axis <0.000000> speed <80.000000>;
+				turn leg2 to y-axis <0.000000> speed <80.000000>;
+				turn leg2 to z-axis <0.000000> speed <80.000000>;
+				turn leg3 to y-axis <34.005495> speed <80.000000>;
+				turn leg3 to z-axis <31.005495> speed <80.000000>;
+				turn leg4 to y-axis <-40.005495> speed <80.000000>;
+				turn leg4 to z-axis <-31.005495> speed <80.000000>;
+				turn leg5 to y-axis <-37.005495> speed <80.000000>;
+				turn leg5 to z-axis <0.000000> speed <80.000000>;
+				turn leg6 to y-axis <0.000000> speed <80.000000>;
+				turn leg6 to z-axis <-45.005495> speed <80.000000>;
+				sleep 100;
+			}
+		}
+		else sleep 200;
+	}
+}
+
+//transform to ship
+transform()
+{
+	signal SIG_MOVE;
+	turn leg1 to y-axis <0.000000> speed <200.000000>;
+	turn leg2 to y-axis <0.000000> speed <200.000000>;
+	turn leg3 to y-axis <0.000000> speed <200.000000>;
+	turn leg4 to y-axis <0.000000> speed <200.000000>;
+	turn leg5 to y-axis <0.000000> speed <200.000000>;
+	turn leg6 to y-axis <0.000000> speed <200.000000>;
+	turn leg1 to z-axis <0.000000> speed <200.000000>;
+	turn leg2 to z-axis <0.000000> speed <200.000000>;
+	turn leg3 to z-axis <0.000000> speed <200.000000>;
+	turn leg4 to z-axis <0.000000> speed <200.000000>;
+	turn leg5 to z-axis <0.000000> speed <200.000000>;
+	turn leg6 to z-axis <0.000000> speed <200.000000>;
+	sleep 225;
+	
+	turn leg1 to z-axis <-180.000000> speed <120.000000>;
+	turn leg4 to z-axis <180.000000> speed <120.000000>;
+	turn leg2 to z-axis <-180.000000> speed <120.000000>;
+	turn leg5 to z-axis <180.000000> speed <120.000000>;
+	turn leg3 to z-axis <-138.000000> speed <120.000000>;
+	turn leg6 to z-axis <138.000000> speed <120.000000>;
+	wait-for-turn leg3 around z-axis;
+	turn leg3 to x-axis <126.500000> speed <120.000000>;
+	turn leg6 to x-axis <126.500000> speed <120.000000>;
+	wait-for-turn leg1 around z-axis;
+
+	start-script RockOnWaves();
+	turn leg1 to x-axis <-170.000000> speed <120.000000>;
+	turn leg4 to x-axis <-170.000000> speed <120.000000>;
+	turn leg2 to x-axis <-90.000000> speed <120.000000>;
+	turn leg5 to x-axis <-90.000000> speed <120.000000>;
+	move leg1 to y-axis [0.0000] speed [3];
+	move leg2 to y-axis [0.0000] speed [3];
+	move leg3 to y-axis [0.0000] speed [3];
+	move leg4 to y-axis [0.0000] speed [3];
+	move leg5 to y-axis [0.0000] speed [3];
+	move leg6 to y-axis [0.0000] speed [3];
+	sleep 650;
+	
+	set MAX_SPEED to Static_Var_9;
+}
+
+//transform to spider
+reform()
+{
+	set MAX_SPEED to Static_Var_9 * 2 / 3;
+
+	move leg1 to y-axis [-0.750000] now;
+	move leg2 to y-axis [-0.750000] now;
+	move leg3 to y-axis [-0.750000] now;
+	move leg4 to y-axis [-0.750000] now;
+	move leg5 to y-axis [-0.750000] now;
+	move leg6 to y-axis [-0.750000] now;
+	turn leg1 to x-axis <0.000000> speed <200.000000>;
+	turn leg2 to x-axis <0.000000> speed <200.000000>;
+	turn leg3 to x-axis <0.000000> speed <200.000000>;
+	turn leg4 to x-axis <0.000000> speed <200.000000>;
+	turn leg5 to x-axis <0.000000> speed <200.000000>;
+	turn leg6 to x-axis <0.000000> speed <200.000000>;
+	wait-for-turn leg3 around x-axis;
+	
+	turn leg1 to z-axis <0.000000> speed <200.000000>;
+	turn leg2 to z-axis <0.000000> speed <200.000000>;
+	turn leg3 to z-axis <0.000000> speed <200.000000>;
+	turn leg4 to z-axis <0.000000> speed <200.000000>;
+	turn leg5 to z-axis <0.000000> speed <200.000000>;
+	turn leg6 to z-axis <0.000000> speed <200.000000>;
+	sleep 450;
+}
+
+swim()
+{
+	signal SIG_MOVE;
+	set-signal-mask SIG_MOVE;
+	var waketime;
+	while( Floating )
+	{
+		emit-sfx 2 from wake1;
+		emit-sfx 2 from wake2;
+		emit-sfx 2 from wake3;
+		waketime = (get CURRENT_SPEED) * 100 / get MAX_SPEED;
+		if (waketime < 50) waketime = 50;
+		sleep 20000/waketime;
+	}
+}
+
+MotionControl()
+{
+	var waterdepth;
+	while( TRUE )
+	{
+		waterdepth = get GROUND_WATER_HEIGHT(get UNIT_XZ);
+		if( waterdepth < SHALLOWS ) {
+			set UPRIGHT to 1;
+		}
+		else
+		{
+			set UPRIGHT to 0;
+			if( waterdepth < 0)
+				move hull to y-axis (SHALLOWS_POS+waterdepth) now;
+			else
+				move hull to y-axis [0.0] now;		
+		}
+		if( ( !Floating ) AND (waterdepth < SHALLOWS) )
+		{
+			move hull to y-axis [0.0] now;
+			Floating = 1;
+			call-script transform();
+			if (bMoving) start-script swim();
+		}
+		else if( Floating AND (waterdepth > SHALLOWS) )
+		{
+			call-script reform();
+			Floating = 0;
+			signal SIG_ROCK;
+			turn base to x-axis <0.0> now;
+			turn base to z-axis <0.0> now;
+			if (bMoving) start-script walk();
+		}
+		sleep 66;
+	}
+}
+
+SmokeUnit(healthpercent, sleeptime, smoketype)
+{
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 500;
+	}
+	start-script MotionControl();
+	while( TRUE )
+	{
+		healthpercent = get HEALTH;
+		if( healthpercent < 66 )
+		{
+			smoketype = SFXTYPE_BLACKSMOKE;
+			if( Rand( 1, 66 ) < healthpercent )
+			{
+				smoketype = SFXTYPE_WHITESMOKE;
+			}
+			emit-sfx smoketype from hull;
+		}
+		sleeptime = healthpercent * 50;
+		if( sleeptime < 200 )
+		{
+			sleeptime = 200;
+		}
+		sleep sleeptime;
+	}
+}
+
+Create()
+{
+	Static_Var_9 = get MAX_SPEED;
+	set MAX_SPEED to Static_Var_9;
+	bMoving = FALSE;
+	bAiming = FALSE;
+	gun_3 = flareb;
+	Floating = 0;
+	hide flarea;
+	hide flareb;
+	hide flareg;
+	restore_delay = 3000;
+	start-script SmokeUnit();
+}
+
+StartMoving()
+{
+	bMoving = TRUE;
+	if( Floating )
+	{
+		start-script swim();
+	}
+	else
+	{
+		start-script walk();
+	}
+}
+
+StopMoving()
+{
+	bMoving = FALSE;
+	signal SIG_MOVE;
+	if( !Floating )
+	{
+		turn leg1 to y-axis <0.000000> speed <100.000000>;
+		turn leg1 to z-axis <0.000000> speed <100.000000>;
+		turn leg2 to y-axis <0.000000> speed <100.000000>;
+		turn leg2 to z-axis <0.000000> speed <100.000000>;
+		turn leg3 to y-axis <0.000000> speed <100.000000>;
+		turn leg3 to z-axis <0.000000> speed <100.000000>;
+		turn leg4 to y-axis <0.000000> speed <100.000000>;
+		turn leg4 to z-axis <0.000000> speed <100.000000>;
+		turn leg5 to y-axis <0.000000> speed <100.000000>;
+		turn leg5 to z-axis <0.000000> speed <100.000000>;
+		turn leg6 to y-axis <0.000000> speed <100.000000>;
+		turn leg6 to z-axis <0.000000> speed <100.000000>;
+		turn hull to z-axis <0.000000> speed <5.000000>;
+		turn hull to y-axis <0.000000> speed <5.000000>;
+		turn hull to x-axis <0.000000> speed <5.000000>;
+	}
+}
+
+SetMaxReloadTime(Func_Var_1)
+{
+	restore_delay = Func_Var_1 * 2;
+}
+
+RestoreAfterDelay()
+{
+	sleep restore_delay;
+	turn turret to y-axis <0.000000> speed <10.000000>;
+	turn spinner to x-axis <0.000000> speed <80.000000>;
+}
+
+RestoreAfterDelay2()
+{
+	sleep restore_delay;
+	turn turret2 to y-axis <0.000000> speed <50.000000>;
+	turn turret2 to x-axis <0.000000> speed <30.000000>;
+}
+
+AimPrimary(heading, pitch)
+{
+	signal SIG_AIM;
+	set-signal-mask SIG_AIM;
+	bAiming = TRUE;
+	turn turret2 to y-axis heading speed <50.000000>;
+	turn turret2 to x-axis <0.000000> - pitch speed <50.000000>;
+	wait-for-turn turret2 around y-axis;
+	wait-for-turn turret2 around x-axis;
+	CannonDirection = heading;
+	start-script RestoreAfterDelay2();
+	return (1);
+}
+
+AimSecondary(heading, pitch)
+{
+	signal SIG_AIM_2;
+	set-signal-mask SIG_AIM_2;
+	bAiming = TRUE;
+	turn turret2 to y-axis heading speed <50.000000>;
+	turn turret2 to x-axis <0.000000> - pitch speed <50.000000>;
+	wait-for-turn turret2 around y-axis;
+	wait-for-turn turret2 around x-axis;
+	CannonDirection = heading;
+	start-script RestoreAfterDelay2();
+	return (1);
+}
+
+FirePrimary()
+{
+	if( Floating ) 
+		start-script RockZ(-5,CannonDirection);
+	else
+		start-script RockZ(-25,CannonDirection);
+	emit-sfx UNIT_SFX1 from flarea;
+	move barrel1 to z-axis [-4.500000] speed [500.000000];
+	move sleeva to z-axis [-2.500000] speed [200.000000];
+	wait-for-move barrel1 along z-axis;
+	wait-for-move sleeva along z-axis;
+	move barrel1 to z-axis [0.000000] speed [2.000000];
+	move sleeva to z-axis [0.000000] speed [3.000000];
+}
+
+FireSecondary()
+{
+	if( Floating ) 
+		start-script RockZ(-5,CannonDirection);
+	else
+		start-script RockZ(-25,CannonDirection);
+	emit-sfx UNIT_SFX1 from flareb;
+	move barrel2 to z-axis [-4.500000] speed [500.000000];
+	move sleevb to z-axis [-2.500000] speed [200.000000];
+	wait-for-move barrel2 along z-axis;
+	wait-for-move sleevb along z-axis;
+	move barrel2 to z-axis [0.000000] speed [2.000000];
+	move sleevb to z-axis [0.000000] speed [3.000000];
+}
+
+AimFromPrimary(piecenum)
+{
+	piecenum = aimpt;
+}
+
+QueryPrimary(piecenum)
+{
+	piecenum = guna;
+}
+
+AimFromSecondary(piecenum)
+{
+	piecenum = aimpt;
+}
+
+QuerySecondary(piecenum)
+{
+	piecenum = gunb;
+}
+
+AimTertiary(heading, pitch)
+{
+	signal SIG_AIM_3;
+	set-signal-mask SIG_AIM_3;
+	turn turret3 to y-axis heading speed <150.000000>;
+	turn gun to x-axis <0.000000> - pitch speed <150.000000>;
+	wait-for-turn turret3 around y-axis;
+	wait-for-turn gun around x-axis;
+	start-script RestoreAfterDelay();
+	return (1);
+}
+
+FireTertiary()
+{
+	if( gun_3 == 0 ) gun_3 = flareb; else if( gun_3 == 1 ) gun_3 = flareg; else if( gun_3 == 2 ) gun_3 = flarea;
+}
+
+AimFromTertiary(piecenum)
+{
+	piecenum = turret;
+}
+
+QueryTertiary(piecenum)
+{
+	if( gun_3 == 0 ) piecenum = missile1; else if( gun_3 == 1 ) piecenum = missile2; else if( gun_3 == 2 ) piecenum = missile3;
+}
+
+SweetSpot(piecenum)
+{
+	piecenum = aimpt;
+}
+
+Killed(severity, corpsetype)
+{
+	hide flarea;
+	hide flareb;
+	hide flareg;
+	hide shella;
+	hide shellb;
+	if( severity <= 25 )
+	{
+		corpsetype = 1;
+		explode aimpt type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+		explode aimpt2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+		explode guna type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+		explode gunb type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+		explode gung type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+		explode sleeva type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+		explode sleevb type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+		explode barrel1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+		explode barrel2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+		explode spinner type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+		explode base type BITMAPONLY | BITMAP2;
+		explode hull type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+		explode flarea type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+		explode flareb type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+		explode flareg type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+		explode shella type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+		explode shellb type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+		explode turret type BITMAPONLY | BITMAP4;
+		explode turret2 type SHATTER | EXPLODE_ON_HIT | BITMAP5;
+		explode wake1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+		explode wake2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+		explode wake3 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+		return (0);
+	}
+	if( severity <= 50 )
+	{
+		corpsetype = 2;
+		explode aimpt type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+		explode aimpt2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+		explode guna type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+		explode gunb type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+		explode gung type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+		explode sleeva type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+		explode sleevb type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+		explode barrel1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+		explode barrel2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+		explode spinner type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+		explode base type BITMAPONLY | BITMAP2;
+		explode hull type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+		explode flarea type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+		explode flareb type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+		explode flareg type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+		explode shella type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+		explode shellb type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+		explode turret type BITMAPONLY | BITMAP4;
+		explode turret2 type SHATTER | EXPLODE_ON_HIT | BITMAP5;
+		explode wake1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+		explode wake2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+		explode wake3 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+		return (0);
+	}
+	if( severity <= 99 )
+	{
+		corpsetype = 3;
+		explode aimpt type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+		explode aimpt2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+		explode guna type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+		explode gunb type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+		explode gung type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+		explode sleeva type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+		explode sleevb type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+		explode barrel1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+		explode barrel2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+		explode spinner type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+		explode base type BITMAPONLY | BITMAP2;
+		explode hull type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+		explode flarea type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+		explode flareb type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+		explode flareg type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+		explode shella type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+		explode shellb type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+		explode turret type BITMAPONLY | BITMAP4;
+		explode turret2 type SHATTER | EXPLODE_ON_HIT | BITMAP5;
+		explode wake1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+		explode wake2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+		explode wake3 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+		return (0);
+	}
+	corpsetype = 3;
+	explode aimpt type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+	explode aimpt2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+	explode guna type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+	explode gunb type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+	explode gung type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+	explode sleeva type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+	explode sleevb type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+	explode barrel1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+	explode barrel2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+	explode spinner type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+	explode base type BITMAPONLY | BITMAP2;
+	explode hull type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+	explode flarea type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+	explode flareb type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+	explode flareg type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+	explode shella type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+	explode shellb type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+	explode turret type BITMAPONLY | BITMAP4;
+	explode turret2 type SHATTER | EXPLODE_ON_HIT | BITMAP5;
+	explode wake1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+	explode wake2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode wake3 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+}

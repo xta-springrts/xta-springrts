@@ -1,0 +1,259 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+piece  base, rocket, door1, door2, plate, arm;
+
+static-var  gun_1, restore_delay, statechg_DesiredState,
+			statechg_StateChanging, RocketTypeSelect;
+
+// Signal definitions
+#define SIG_AIM				2
+
+
+activatescr()
+{
+	move door1 to z-axis [0.000000] now;
+	move door2 to z-axis [0.000000] now;
+	move rocket to y-axis [0.000000] now;
+	move rocket to z-axis [0.000000] now;
+	turn door1 to z-axis <0.000000> now;
+	turn door1 to z-axis <-89.098901> speed <143.500000>;
+	turn door2 to z-axis <0.000000> now;
+	turn door2 to z-axis <90.000000> speed <145.000000>;
+	sleep 621;
+
+	move door1 to y-axis [-6.250000] speed [10.250000];
+	move door2 to y-axis [-6.500000] speed [10.250000];
+	sleep 627;
+
+	move plate to y-axis [7.750000] speed [12.250000];
+	sleep 628;
+
+	move rocket to y-axis [0.000000] speed [0.000000];
+	move rocket to z-axis [0.000000] speed [0.000000];
+	turn arm to x-axis <-90.000000> speed <143.296703>;
+	sleep 628;
+}
+
+deactivatescr()
+{
+	move plate to y-axis [7.750000] now;
+	move door1 to y-axis [-6.250000] now;
+	move door1 to z-axis [0.000000] now;
+	move door2 to y-axis [-6.500000] now;
+	move door2 to z-axis [0.000000] now;
+	move rocket to y-axis [0.000000] now;
+	move rocket to z-axis [0.000000] now;
+	turn door1 to z-axis <-89.098901> now;
+	turn door2 to z-axis <90.000000> now;
+	turn arm to x-axis <-89.796703> now;
+	turn arm to x-axis <0.000000> speed <175.395604>;
+	sleep 512;
+
+	move plate to y-axis [0.000000] speed [15.000000];
+	sleep 518;
+
+	move door1 to y-axis [0.000000] speed [12.250000];
+	move door2 to y-axis [0.000000] speed [12.500000];
+	sleep 520;
+
+	turn door1 to z-axis <0.000000> speed <171.697802>;
+	turn door2 to z-axis <0.000000> speed <173.500000>;
+	sleep 519;
+}
+
+SmokeUnit(healthpercent, sleeptime, smoketype)
+{
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 500;
+	}
+	while( TRUE )
+	{
+		healthpercent = get HEALTH;
+		if( healthpercent < 66 )
+		{
+			smoketype = 258;
+			if( Rand( 1, 66 ) < healthpercent )
+			{
+				smoketype = 257;
+			}
+			emit-sfx smoketype from base;
+		}
+		sleeptime = healthpercent * 50;
+		if( sleeptime < 200 )
+		{
+			sleeptime = 200;
+		}
+		sleep sleeptime;
+	}
+}
+
+Go()
+{
+	show rocket;
+	call-script activatescr();
+	gun_1 = rocket;
+}
+
+Stop()
+{
+	gun_1 = base;
+	call-script deactivatescr();
+}
+
+RequestState(requestedstate, currentstate)
+{
+	if( statechg_StateChanging )
+	{
+		statechg_DesiredState = requestedstate;
+		return (0);
+	}
+	statechg_StateChanging = TRUE;
+	currentstate = statechg_DesiredState;
+	statechg_DesiredState = requestedstate;
+	while( statechg_DesiredState != currentstate )
+	{
+		if( statechg_DesiredState )
+		{
+			call-script Stop();
+			currentstate = 1;
+		}
+		else
+		{
+			call-script Go();
+			currentstate = 0;
+		}
+	}
+	statechg_StateChanging = FALSE;
+}
+
+RocketType(select)
+{
+	RocketTypeSelect = select;
+}
+
+Create()
+{
+	gun_1 = base;
+	restore_delay = 3000;
+	RocketTypeSelect = 1;
+	statechg_DesiredState = TRUE;
+	statechg_StateChanging = FALSE;
+	start-script SmokeUnit();
+}
+
+SetMaxReloadTime(Func_Var_1)
+{
+	restore_delay = Func_Var_1;
+}
+
+RestoreAfterDelay()
+{
+	sleep restore_delay;
+	set-signal-mask 0;
+	start-script RequestState(1);
+}
+
+AimPrimary(heading, pitch)
+{
+	if(!RocketTypeSelect OR (get WEAPON_RELOADSTATE(2) > get GAME_FRAME)) return 0;
+	start-script RequestState(0);
+	signal SIG_AIM;
+	set-signal-mask SIG_AIM;
+	while( !gun_1 )
+	{
+		sleep 250;
+	}
+	start-script RestoreAfterDelay();
+	return (1);
+}
+
+FirePrimary()
+{
+	hide rocket;
+	gun_1 = base;
+	start-script RequestState(1);
+}
+
+QueryPrimary(piecenum)
+{
+	piecenum = rocket;
+}
+
+AimSecondary(heading, pitch)
+{
+	if(RocketTypeSelect OR (get WEAPON_RELOADSTATE(1) > get GAME_FRAME)) return 0;
+	start-script RequestState(0);
+	signal SIG_AIM;
+	set-signal-mask SIG_AIM;
+	while( !gun_1 )
+	{
+		sleep 250;
+	}
+	start-script RestoreAfterDelay();
+	return (1);
+}
+
+FireSecondary()
+{
+	hide rocket;
+	gun_1 = base;
+	start-script RequestState(1);
+}
+
+QuerySecondary(piecenum)
+{
+	piecenum = rocket;
+}
+
+SweetSpot(piecenum)
+{
+	piecenum = base;
+}
+
+Killed(severity, corpsetype)
+{
+	if( severity <= 25 )
+	{
+		corpsetype = 1;
+		explode arm type BITMAPONLY | BITMAP1;
+		explode base type BITMAPONLY | BITMAP2;
+		explode door1 type BITMAPONLY | BITMAP3;
+		explode door2 type BITMAPONLY | BITMAP4;
+		explode plate type BITMAPONLY | BITMAP5;
+		explode rocket type BITMAPONLY | BITMAP1;
+		return (0);
+	}
+	if( severity <= 50 )
+	{
+		corpsetype = 2;
+		explode arm type FALL | BITMAP1;
+		explode base type BITMAPONLY | BITMAP2;
+		explode door1 type FALL | BITMAP3;
+		explode door2 type FALL | BITMAP4;
+		explode plate type BITMAPONLY | BITMAP5;
+		explode rocket type SHATTER | BITMAP1;
+		return (0);
+	}
+	if( severity <= 99 )
+	{
+		corpsetype = 3;
+		explode arm type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+		explode base type BITMAPONLY | BITMAP2;
+		explode door1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+		explode door2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+		explode plate type BITMAPONLY | BITMAP5;
+		explode rocket type SHATTER | BITMAP1;
+		return (0);
+	}
+	corpsetype = 3;
+	explode arm type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+	explode base type BITMAPONLY | BITMAP2;
+	explode door1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+	explode door2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+	explode plate type BITMAPONLY | BITMAP5;
+	explode rocket type SHATTER | EXPLODE_ON_HIT | BITMAP1;
+}

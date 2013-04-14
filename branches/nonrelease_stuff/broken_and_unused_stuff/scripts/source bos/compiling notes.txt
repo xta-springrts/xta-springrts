@@ -1,0 +1,5 @@
+Kbots and vehicles need linear constant of 65536, while ships use 163840. Use scriptor's settings menu
+to adjust. Or decompile then compile with same linear constant.
+If you want to use the same numbers in BOS for linear movement as in UpSpring
+set linear constant to 81920, this is only for X,Z axis, Y axis uses 65536 as
+linear constant (only for 3DO, S3O uses 65536 for all axes).

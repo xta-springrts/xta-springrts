@@ -1,0 +1,175 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+piece  base, body, turret, sleeve, barrel, firepoint, tracks1, tracks2,
+       tracks3, tracks4, wheels1, wheels2, wheels3, wheels4, wheels5;
+
+static-var  bMoving, Static_Var_2, Static_Var_3;
+
+
+RestoreAfterDelay(Func_Var_1)
+{
+	sleep Func_Var_1;
+	turn turret to y-axis <0.000000> speed <90.000000>;
+}
+
+DamageControl(Func_Var_1)
+{
+	while( TRUE )
+	{
+		Func_Var_1 = get HEALTH;
+		/*
+		if( Func_Var_1 > 25 )
+		{
+			if( Func_Var_1 > 50 )
+			{
+			}
+		}
+		*/
+		if( Func_Var_1 < 50 )
+		{
+			emit-sfx 257 from body;
+			if( Func_Var_1 < 25 )
+			{
+				emit-sfx 258 from turret;
+			}
+		}
+		sleep 1000;
+	}
+}
+
+AnimationControl(Func_Var_1)
+{
+	Func_Var_1 = 0;
+	while( TRUE )
+	{
+		if( bMoving OR Static_Var_2 )
+		{
+			if( Func_Var_1 == 0 )
+			{
+				show tracks1;
+				hide tracks4;
+				++Func_Var_1;
+			}
+			else if( Func_Var_1 == 1 )
+			{
+				show tracks2;
+				hide tracks1;
+				++Func_Var_1;
+			}
+			else if( Func_Var_1 == 2 )
+			{
+				show tracks3;
+				hide tracks2;
+				++Func_Var_1;
+			}
+			else if( Func_Var_1 == 3 )
+			{
+				show tracks4;
+				hide tracks3;
+				Func_Var_1 = 0;
+				if( Static_Var_2 )
+				{
+					--Static_Var_2;
+				}
+			}
+		}
+		++Static_Var_3;
+		sleep 50;
+	}
+}
+
+StartMoving()
+{
+	bMoving = TRUE;
+	Static_Var_3 = 0;
+	spin wheels1 around x-axis speed <240.000000> accelerate <45.000000>;
+	spin wheels5 around x-axis speed <240.000000> accelerate <45.000000>;
+	spin wheels2 around x-axis speed <360.000000> accelerate <60.000000>;
+	spin wheels3 around x-axis speed <360.000000> accelerate <60.000000>;
+	spin wheels4 around x-axis speed <360.000000> accelerate <60.000000>;
+}
+
+StopMoving()
+{
+	bMoving = FALSE;
+	Static_Var_2 = Static_Var_3 * 50 / 1000;
+	stop-spin wheels1 around x-axis decelerate <120.000000>;
+	stop-spin wheels5 around x-axis decelerate <120.000000>;
+	stop-spin wheels2 around x-axis decelerate <160.000000>;
+	stop-spin wheels3 around x-axis decelerate <160.000000>;
+	stop-spin wheels4 around x-axis decelerate <160.000000>;
+}
+
+AimFromWeapon1(piecenum)
+{
+	piecenum = turret;
+}
+
+QueryWeapon1(piecenum)
+{
+	piecenum = firepoint;
+}
+
+AimWeapon1(heading, pitch)
+{
+	signal 1;
+	set-signal-mask 1;
+	turn turret to y-axis heading speed <270.000000>;
+	turn sleeve to x-axis <0.000000> - pitch speed <165.000000>;
+	wait-for-turn turret around y-axis;
+	wait-for-turn sleeve around y-axis;
+	start-script RestoreAfterDelay(3000);
+	return (1);
+}
+
+FireWeapon1()
+{
+	emit-sfx UNIT_SFX1 from firepoint;
+	move barrel to z-axis [-15.000000] now;
+	move barrel to z-axis [0.000000] speed [18.750000];
+	wait-for-move barrel along z-axis;
+}
+
+Killed(severity, corpsetype)
+{
+	if( severity <= 25 )
+	{
+		corpsetype = 1;
+		explode body type BITMAPONLY | 10000001;
+		explode turret type BITMAPONLY | 10000001;
+		return (0);
+	}
+	if( severity <= 50 )
+	{
+		corpsetype = 2;
+		explode sleeve type FALL | SMOKE | FIRE | 10000001;
+		return (0);
+	}
+	if( severity <= 99 )
+	{
+		corpsetype = 3;
+		explode barrel type SHATTER | SMOKE | FIRE | 10000001;
+		return (0);
+	}
+	corpsetype = 3;
+	explode barrel type SHATTER | SMOKE | FIRE | 10000001;
+}
+
+Create()
+{
+	bMoving = FALSE;
+	hide tracks1;
+	hide tracks2;
+	hide tracks3;
+	hide firepoint;
+	turn firepoint to y-axis <180.000000> now;
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 500;
+	}
+	start-script AnimationControl();
+	start-script DamageControl();
+}
