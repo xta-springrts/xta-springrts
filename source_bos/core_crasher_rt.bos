@@ -1,0 +1,356 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+piece  firept1, firept2, turret, gunbase, pelvis, lleg, rleg, gun1,
+       gun2, ground;
+
+static-var  gun_3, moveSpeed, currentSpeed, RocketTypeSelect;
+
+// Signal definitions
+#define SIG_MOVE			2
+#define SIG_AIM_3			4
+
+
+walk()
+{
+	while( TRUE )
+	{
+		move pelvis to y-axis [0.000000] now;
+		move lleg to y-axis [0.000000] now;
+		move lleg to z-axis [1.750000] now;
+		move rleg to y-axis [0.000000] now;
+		move rleg to z-axis [-1.600000] now;
+		turn pelvis to x-axis <6.000000> now;
+		turn lleg to x-axis <-6.000000> now;
+		turn rleg to x-axis <0.000000> now;
+		sleep 3000/currentSpeed;
+
+		move pelvis to y-axis [-0.500000] now;
+		move lleg to y-axis [0.500000] now;
+		move rleg to y-axis [0.500000] now;
+		turn pelvis to x-axis <4.912088> now;
+		turn lleg to x-axis <-4.912088> now;
+		turn rleg to x-axis <1.049451> now;
+		sleep 1500/currentSpeed;
+
+		move pelvis to y-axis [-0.300000] now;
+		move lleg to y-axis [0.300000] now;
+		move rleg to y-axis [0.300000] now;
+		turn pelvis to x-axis <2.093407> now;
+		turn lleg to x-axis <-2.093407> now;
+		turn rleg to x-axis <2.802198> now;
+		sleep 1500/currentSpeed;
+
+		move pelvis to y-axis [-0.100000] now;
+		move lleg to y-axis [0.100000] now;
+		move rleg to y-axis [0.100000] now;
+		turn pelvis to x-axis <1.049451> now;
+		turn lleg to x-axis <-1.038462> now;
+		turn rleg to x-axis <3.159341> now;
+		sleep 1500/currentSpeed;
+
+		move pelvis to y-axis [0.000000] now;
+		move lleg to y-axis [0.000000] now;
+		move rleg to y-axis [1.100000] now;
+		move rleg to z-axis [-1.850000] now;
+		turn pelvis to x-axis <0.000000> now;
+		turn lleg to x-axis <0.000000> now;
+		turn rleg to x-axis <0.000000> now;
+		sleep 3000/currentSpeed;
+
+		move lleg to z-axis [1.000000] now;
+		move rleg to z-axis [-0.350000] now;
+		sleep 3000/currentSpeed;
+
+		move lleg to y-axis [0.000000] now;
+		move lleg to z-axis [0.000000] now;
+		move rleg to z-axis [0.000000] now;
+		turn pelvis to x-axis <0.000000> now;
+		turn lleg to x-axis <0.000000> now;
+		turn rleg to x-axis <0.000000> now;
+		sleep 3000/currentSpeed;
+
+		move lleg to z-axis [-0.600000] now;
+		move rleg to z-axis [0.850000] now;
+		turn rleg to x-axis <-9.137363> now;
+		sleep 5000/currentSpeed;
+
+		move lleg to z-axis [-1.200000] now;
+		move rleg to y-axis [0.000000] now;
+		turn pelvis to x-axis <6.000000> now;
+		turn rleg to x-axis <-6.000000> now;
+		sleep 3000/currentSpeed;
+
+		move pelvis to y-axis [-0.489984] now;
+		move lleg to y-axis [0.500000] now;
+		move rleg to y-axis [0.500000] now;
+		turn pelvis to x-axis <4.560440> now;
+		turn lleg to x-axis <0.692308> now;
+		turn rleg to x-axis <-4.912088> now;
+		sleep 1500/currentSpeed;
+
+		move pelvis to y-axis [-0.279999] now;
+		move lleg to y-axis [0.300000] now;
+		move rleg to y-axis [0.300000] now;
+		turn pelvis to x-axis <2.093407> now;
+		turn lleg to x-axis <2.802198> now;
+		turn rleg to x-axis <-2.093407> now;
+		sleep 1500/currentSpeed;
+
+		move pelvis to y-axis [-0.100000] now;
+		move lleg to y-axis [0.100000] now;
+		move rleg to y-axis [0.100000] now;
+		turn pelvis to x-axis <1.049451> now;
+		turn lleg to x-axis <2.456044> now;
+		turn rleg to x-axis <-1.038462> now;
+		sleep 1500/currentSpeed;
+
+		move lleg to y-axis [1.100000] now;
+		move lleg to z-axis [-1.550000] now;
+		move rleg to y-axis [0.500000] now;
+		turn pelvis to x-axis <0.000000> now;
+		turn lleg to x-axis <0.000000> now;
+		turn rleg to x-axis <0.000000> now;
+		sleep 3000/currentSpeed;
+
+		move lleg to z-axis [-0.700000] now;
+		move rleg to z-axis [0.200000] now;
+		sleep 3000/currentSpeed;
+
+		move lleg to z-axis [0.450000] now;
+		move rleg to y-axis [0.000000] now;
+		move rleg to z-axis [-0.300000] now;
+		turn rleg to x-axis <0.000000> now;
+		sleep 3000/currentSpeed;
+
+		move lleg to z-axis [1.000000] now;
+		move rleg to y-axis [0.000000] now;
+		move rleg to z-axis [-1.300000] now;
+		turn lleg to x-axis <-10.192308> now;
+		turn rleg to x-axis <0.000000> now;
+		sleep 5000/currentSpeed;
+	}
+}
+
+UnitSpeed()
+{
+	while(TRUE)
+	{
+		currentSpeed = (get CURRENT_SPEED)*100/moveSpeed;
+		if (currentSpeed<20) currentSpeed=20;
+		sleep 142;
+	}
+}
+
+SmokeUnit(healthpercent, sleeptime, smoketype)
+{
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 500;
+	}
+	start-script UnitSpeed();
+	while( TRUE )
+	{
+		healthpercent = get HEALTH;
+		if( healthpercent < 66 )
+		{
+			smoketype = SFXTYPE_BLACKSMOKE;
+			if( Rand( 1, 66 ) < healthpercent )
+			{
+				smoketype = SFXTYPE_WHITESMOKE;
+			}
+			emit-sfx smoketype from turret;
+		}
+		sleeptime = healthpercent * 50;
+		if( sleeptime < 200 )
+		{
+			sleeptime = 200;
+		}
+		sleep sleeptime;
+	}
+}
+
+StartMoving()
+{
+	signal SIG_MOVE;
+	set-signal-mask SIG_MOVE;
+	call-script walk();
+}
+
+StopMoving()
+{
+	signal SIG_MOVE;
+	set-signal-mask SIG_MOVE;
+}
+
+RocketType(select)
+{
+	RocketTypeSelect = select;
+	if (select)
+	{
+		get WEAPON_RANGE(-1, get WEAPON_RANGE(3));
+	}
+	else
+	{
+		get WEAPON_RANGE(-1, get WEAPON_RANGE(4));
+	}
+}
+
+Create()
+{
+	gun_3 = 0;
+	RocketTypeSelect = 1;
+	moveSpeed = get MAX_SPEED;
+	currentSpeed = 100;
+	start-script StopMoving();
+	start-script SmokeUnit();
+}
+
+SweetSpot(piecenum)
+{
+	piecenum = pelvis;
+}
+
+RestoreAfterDelay()
+{
+	sleep 5000;
+	turn turret to y-axis <0.000000> speed <90.000000>;
+}
+
+AimFromTertiary(piecenum)
+{
+	piecenum = turret;
+}
+
+QueryTertiary(piecenum)
+{
+	piecenum = gun_3;
+}
+
+AimTertiary(heading, pitch)
+{
+	if(!RocketTypeSelect OR (get WEAPON_RELOADSTATE(4) > get GAME_FRAME)) return 0;
+	signal SIG_AIM_3;
+	set-signal-mask SIG_AIM_3;
+	turn turret to y-axis heading speed <225.000000>;
+	wait-for-turn turret around y-axis;
+	start-script RestoreAfterDelay();
+	return (1);
+}
+
+FireTertiary()
+{
+	if( gun_3 )
+	{
+		move gun2 to z-axis [-1.500000] speed [25.000000];
+		wait-for-move gun2 along z-axis;
+		move gun2 to z-axis [0.000000] speed [3.000000];
+	}
+	else
+	{
+		move gun1 to z-axis [-1.500000] speed [25.000000];
+		wait-for-move gun1 along z-axis;
+		move gun1 to z-axis [0.000000] speed [3.000000];
+	}
+	gun_3 = !gun_3;
+}
+
+AimFromWeapon4(piecenum)
+{
+	piecenum = turret;
+}
+
+QueryWeapon4(piecenum)
+{
+	piecenum = gun_3;
+}
+
+AimWeapon4(heading, pitch)
+{
+	if(RocketTypeSelect OR (get WEAPON_RELOADSTATE(3) > get GAME_FRAME)) return 0;
+	signal SIG_AIM_3;
+	set-signal-mask SIG_AIM_3;
+	turn turret to y-axis heading speed <225.000000>;
+	wait-for-turn turret around y-axis;
+	start-script RestoreAfterDelay();
+	return (1);
+}
+
+FireWeapon4()
+{
+	if( gun_3 )
+	{
+		move gun2 to z-axis [-1.500000] speed [25.000000];
+		wait-for-move gun2 along z-axis;
+		move gun2 to z-axis [0.000000] speed [3.000000];
+	}
+	else
+	{
+		move gun1 to z-axis [-1.500000] speed [25.000000];
+		wait-for-move gun1 along z-axis;
+		move gun1 to z-axis [0.000000] speed [3.000000];
+	}
+	gun_3 = !gun_3;
+}
+
+Killed(severity, corpsetype)
+{
+	if( severity <= 25 )
+	{
+		corpsetype = 1;
+		explode firept1 type FALL | BITMAP1;
+		explode firept2 type FALL | BITMAP2;
+		explode ground type FALL | BITMAP3;
+		explode gun1 type FALL | BITMAP4;
+		explode gun2 type FALL | BITMAP5;
+		explode gunbase type BITMAPONLY | BITMAP1;
+		explode lleg type FALL | BITMAP2;
+		explode pelvis type BITMAPONLY | BITMAP3;
+		explode rleg type FALL | BITMAP4;
+		explode turret type BITMAPONLY | BITMAP5;
+		return (0);
+	}
+	if( severity <= 50 )
+	{
+		corpsetype = 2;
+		explode firept1 type FALL | BITMAP1;
+		explode firept2 type FALL | BITMAP2;
+		explode ground type FALL | BITMAP3;
+		explode gun1 type FALL | BITMAP4;
+		explode gun2 type FALL | BITMAP5;
+		explode gunbase type BITMAPONLY | BITMAP1;
+		explode lleg type FALL | BITMAP2;
+		explode pelvis type BITMAPONLY | BITMAP3;
+		explode rleg type FALL | BITMAP4;
+		explode turret type BITMAPONLY | BITMAP5;
+		return (0);
+	}
+	if( severity <= 99 )
+	{
+		corpsetype = 3;
+		explode firept1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+		explode firept2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+		explode ground type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+		explode gun1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+		explode gun2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+		explode gunbase type BITMAPONLY | BITMAP1;
+		explode lleg type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+		explode pelvis type BITMAPONLY | BITMAP3;
+		explode rleg type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+		explode turret type BITMAPONLY | BITMAP5;
+		return (0);
+	}
+	corpsetype = 3;
+	explode firept1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+	explode firept2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode ground type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+	explode gun1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+	explode gun2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+	explode gunbase type SHATTER | EXPLODE_ON_HIT | BITMAP1;
+	explode lleg type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode pelvis type BITMAPONLY | BITMAP3;
+	explode rleg type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+	explode turret type BITMAPONLY | BITMAP5;
+}

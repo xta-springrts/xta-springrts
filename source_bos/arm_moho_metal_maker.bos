@@ -1,0 +1,171 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+piece  base2, lid2, lid3, mmakercore, lid1, lid4, glowingthing;
+
+static-var  mmState;
+
+#define OPERATING 1024
+
+activatescr()
+{
+	turn lid2 to x-axis <30.395604> speed <38.598901>;
+	turn lid3 to x-axis <-26.796703> speed <35.500000>;
+	turn mmakercore to y-axis <-30.395604> speed <39.395604>;
+	sleep 772;
+
+	move mmakercore to y-axis [12.500000] speed [39.500000];
+	turn lid1 to x-axis <35.296703> speed <45.598901>;
+	turn lid4 to x-axis <-30.395604> speed <39.296703>;
+	turn lid2 to x-axis <60.796703> speed <39.296703>;
+	turn lid3 to x-axis <-74.197802> speed <61.296703>;
+	turn mmakercore to y-axis <-60.796703> speed <39.296703>;
+	sleep 774;
+
+	set ARMORED to 0;
+	move mmakercore to y-axis [39.500000] speed [34.750000];
+	turn mmakercore to y-axis <-90.000000> speed <37.697802>;
+	sleep 775;
+}
+
+deactivatescr()
+{
+	move mmakercore to y-axis [12.500000] speed [39.500000];
+	turn mmakercore to y-axis <-60.796703> speed <42.697802>;
+	sleep 683;
+
+	move mmakercore to y-axis [0.000000] speed [18.500000];
+	turn lid1 to x-axis <0.000000> speed <51.395604>;
+	turn lid4 to x-axis <0.000000> speed <44.296703>;
+	turn lid2 to x-axis <30.395604> speed <44.296703>;
+	turn lid3 to x-axis <-26.796703> speed <69.098901>;
+	turn mmakercore to y-axis <-30.395604> speed <44.296703>;
+	set ARMORED to 1;
+	sleep 687;
+
+	turn lid2 to x-axis <0.598901> speed <43.598901>;
+	turn lid3 to x-axis <0.598901> speed <40.000000>;
+	turn mmakercore to y-axis <0.000000> speed <44.500000>;
+	sleep 684;
+}
+
+ImAMetalMaker()
+{
+	mmState = -1;
+	while( TRUE )
+	{
+		if ((get OPERATING) == 1)
+		{
+			if (mmState != 1) {
+				call-script activatescr();
+				mmState = 1;
+			}
+		}
+		else
+		{
+			if (mmState != 0) {
+				call-script deactivatescr();
+				mmState = 0;
+			}
+		}
+		sleep 1000;
+	}
+}
+
+SmokeUnit(healthpercent, sleeptime, smoketype)
+{
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 500;
+	}
+	start-script ImAMetalMaker();
+	while( TRUE )
+	{
+		healthpercent = get HEALTH;
+		if( healthpercent < 66 )
+		{
+			smoketype = SFXTYPE_BLACKSMOKE;
+			if( Rand( 1, 66 ) < healthpercent )
+			{
+				smoketype = SFXTYPE_WHITESMOKE;
+			}
+			emit-sfx smoketype from base2;
+		}
+		sleeptime = healthpercent * 50;
+		if( sleeptime < 200 )
+		{
+			sleeptime = 200;
+		}
+		sleep sleeptime;
+	}
+}
+
+
+Create()
+{
+	dont-shade glowingthing;
+	dont-cache glowingthing;
+	dont-shade base2;
+	dont-shade lid1;
+	dont-shade lid2;
+	dont-shade lid3;
+	dont-shade lid4;
+	dont-shade mmakercore;
+	set ARMORED to 0;
+	start-script SmokeUnit();
+}
+
+SweetSpot(piecenum)
+{
+	piecenum = base2;
+}
+
+Killed(severity, corpsetype)
+{
+	if( severity <= 25 )
+	{
+		corpsetype = 1;
+		explode base2 type BITMAPONLY | BITMAP1;
+		explode glowingthing type BITMAPONLY | BITMAP2;
+		explode lid1 type BITMAPONLY | BITMAP3;
+		explode lid2 type BITMAPONLY | BITMAP4;
+		explode lid3 type BITMAPONLY | BITMAP5;
+		explode lid4 type BITMAPONLY | BITMAP1;
+		explode mmakercore type BITMAPONLY | BITMAP2;
+		return (0);
+	}
+	if( severity <= 50 )
+	{
+		corpsetype = 2;
+		explode base2 type BITMAPONLY | BITMAP1;
+		explode glowingthing type SHATTER | BITMAP2;
+		explode lid1 type FALL | BITMAP3;
+		explode lid2 type FALL | BITMAP4;
+		explode lid3 type FALL | BITMAP5;
+		explode lid4 type FALL | BITMAP1;
+		explode mmakercore type BITMAPONLY | BITMAP2;
+		return (0);
+	}
+	if( severity <= 99 )
+	{
+		corpsetype = 3;
+		explode base2 type BITMAPONLY | BITMAP1;
+		explode glowingthing type SHATTER | BITMAP2;
+		explode lid1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+		explode lid2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+		explode lid3 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+		explode lid4 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+		explode mmakercore type BITMAPONLY | BITMAP2;
+		return (0);
+	}
+	corpsetype = 3;
+	explode base2 type BITMAPONLY | BITMAP1;
+	explode glowingthing type SHATTER | EXPLODE_ON_HIT | BITMAP2;
+	explode lid1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+	explode lid2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+	explode lid3 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+	explode lid4 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+	explode mmakercore type BITMAPONLY | BITMAP2;
+}

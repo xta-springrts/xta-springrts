@@ -1,0 +1,126 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Core;
+	name=Mini Krogoth;
+	description=All-Purpose Kbot;
+	icontype=core_krogoth;
+
+	//************************************************************
+	//  Categories
+	//**************
+	Category=CORE KBOT WEAPON NOTAIR NOTSUB;
+	tedclass=KBOT;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=core_mkrogoth;
+	unitnumber=231;
+	objectname=core_mkrogoth.3do;
+	corpse=core_mkrogoth_dead;
+	buildpic=core_krogoth.DDS;
+	soundcategory=KROGOTH;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=3676;
+	healtime=30;
+	buildcostmetal=1001;
+	buildcostenergy=10230;
+	buildtime=16543;
+	footprintx=2;
+	footprintz=2;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=1.1;
+	energyuse=1.1;
+	energystorage=10;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canattack=1;
+	canguard=1;
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+	upright=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementclass=TANKSH4;
+	turnrate=960;
+	acceleration=0.09;
+	brakerate=0.19;
+	maxvelocity=0.8;
+	maxslope=17;
+	maxwaterdepth=12;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=368;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=KROG_LIGHTCANNON;
+	weapon2=ARM_LIGHTLASER;
+	weapon3=gizmotron;
+	nochasecategory=VTOL;
+	explodeas=BIG_UNITEX;
+	selfdestructas=BIG_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	firestandorders=1;
+	mobilestandorders=1;
+	standingfireorder=2;
+	standingmoveorder=1;
+	defaultmissiontype=Standby;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=1;
+	damagemodifier=1;
+	designation=ARM-KL;
+	downloadable=1;
+	maneuverleashlength=640;
+	shootme=1;
+	smoothanim=1;
+	steeringmode=2;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+	badtargetcategory1=VTOL;
+	badtargetcategory2=VTOL;
+
+}

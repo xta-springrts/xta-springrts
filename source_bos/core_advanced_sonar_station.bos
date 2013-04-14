@@ -1,0 +1,140 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+piece  base, sonar, ground;
+
+static-var  statechg_DesiredState, statechg_StateChanging;
+
+SetDirection(heading)
+{
+	var spd;
+	spd = get ABS(heading);
+	turn ground to y-axis heading speed spd;
+	turn base to y-axis 0-heading speed spd;
+}
+
+RockOnWaves()
+{
+	while(1)
+	{
+		turn ground to x-axis <1.0> speed <1.5>;
+		move ground to y-axis [0.0] speed [0.3];
+		wait-for-turn ground around x-axis;
+		turn ground to x-axis <-1.0> speed <1.5>;
+		move ground to y-axis [-0.2] speed [0.3];
+		wait-for-move ground along y-axis;
+		move ground to y-axis [0.0] speed [0.3];
+		wait-for-turn ground around x-axis;
+		turn ground to x-axis <1.0> speed <1.5>;
+		move ground to y-axis [-0.2] speed [0.3];
+		wait-for-move ground along y-axis;
+	}
+}
+
+#include "SmokeUnit.bos"
+
+Go()
+{
+	dont-cache sonar;
+	spin sonar around y-axis speed <20.000000>;
+}
+
+Stop()
+{
+	stop-spin sonar around y-axis;
+	cache sonar;
+}
+
+InitState()
+{
+	statechg_DesiredState = TRUE;
+	statechg_StateChanging = FALSE;
+}
+
+RequestState(requestedstate, currentstate)
+{
+	if( statechg_StateChanging )
+	{
+		statechg_DesiredState = requestedstate;
+		return (0);
+	}
+	statechg_StateChanging = TRUE;
+	currentstate = statechg_DesiredState;
+	statechg_DesiredState = requestedstate;
+	while( statechg_DesiredState != currentstate )
+	{
+		if( !statechg_DesiredState )
+		{
+			start-script Go();
+			currentstate = 0;
+		}
+		if( statechg_DesiredState )
+		{
+			start-script Stop();
+			currentstate = 1;
+		}
+	}
+	statechg_StateChanging = FALSE;
+}
+
+Create()
+{
+	dont-shade sonar;
+	call-script InitState();
+	start-script SmokeUnit();
+	start-script RockOnWaves();
+}
+
+Activate()
+{
+	start-script RequestState(0);
+}
+
+Deactivate()
+{
+	start-script RequestState(1);
+}
+
+HitByWeapon(Func_Var_1, Func_Var_2)
+{
+	signal 2;
+	set-signal-mask 2;
+	set ACTIVATION to 0;
+	sleep 8000;
+	set ACTIVATION to 1;
+}
+
+SweetSpot(piecenum)
+{
+	piecenum = base;
+}
+
+Killed(severity, corpsetype)
+{
+	if( severity <= 25 )
+	{
+		corpsetype = 1;
+		explode sonar type BITMAPONLY | BITMAP1;
+		explode base type BITMAPONLY | BITMAP2;
+		return (0);
+	}
+	if( severity <= 50 )
+	{
+		corpsetype = 2;
+		explode sonar type BITMAPONLY | BITMAP1;
+		explode base type BITMAPONLY | BITMAP2;
+		return (0);
+	}
+	if( severity <= 99 )
+	{
+		corpsetype = 3;
+		explode sonar type BITMAPONLY | BITMAP1;
+		explode base type BITMAPONLY | BITMAP2;
+		return (0);
+	}
+	corpsetype = 3;
+	explode sonar type BITMAPONLY | BITMAP1;
+	explode base type BITMAPONLY | BITMAP2;
+}

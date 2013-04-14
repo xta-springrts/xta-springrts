@@ -1,0 +1,251 @@
+#define TAK			// This is a TAK script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+piece  base, body, turret1, gunmount1, barrel1, firepoint1, turret2, gun2,
+       firepoint2, tracks1, tracks2, tracks3, wheels1, wheels2, wheels3, wheels4,
+       wheels5, wheels6, ignite1, ignite2, ignite3, ignite4, ignite5;
+
+static-var  Static_Var_1, Static_Var_2;
+
+
+FlameControl(Func_Var_3)
+{
+	while( TRUE )
+	{
+		Func_Var_3 = get HEALTH;
+		if( Func_Var_3 <= 80 )
+		{
+			emit-sfx UNIT_SFX3 from ignite1;
+			if( Func_Var_3 <= 60 ){
+				emit-sfx UNIT_SFX3 from ignite2;
+				if( Func_Var_3 <= 45 ){
+					emit-sfx UNIT_SFX3 from ignite3;
+					if( Func_Var_3 <= 25 ){
+						emit-sfx UNIT_SFX3 from ignite4;
+						if( Func_Var_3 <= 10 )	emit-sfx UNIT_SFX3 from ignite5;
+					}
+				}
+			}
+			sleep 66;
+		}
+		else
+		{
+			sleep 333;
+		}
+	}
+}
+
+RestoreAfterDelay(Func_Var_1)
+{
+	sleep Func_Var_1;
+	turn turret1 to y-axis <0.000000> speed <45.000000>;
+	turn gunmount1 to x-axis <0.000000> speed <15.000000>;
+	turn turret2 to y-axis <0.000000> speed <120.000000>;
+	turn gun2 to x-axis <0.000000> speed <90.000000>;
+}
+
+DamageControl(healthpercent, sleeptime)
+{
+	while( TRUE )
+	{
+		healthpercent = get HEALTH;
+		if( healthpercent < 50 )
+		{
+			emit-sfx SFXTYPE_WHITESMOKE from body;
+			if( healthpercent < 25 )
+			{
+				emit-sfx SFXTYPE_BLACKSMOKE from turret1;
+			}
+		}
+		sleeptime = healthpercent * 50;
+		if( sleeptime < 300 )
+		{
+			sleeptime = 300;
+		}
+		sleep sleeptime;
+	}
+}
+
+AnimationControl(Func_Var_1)
+{
+	Func_Var_1 = 0;
+	while( TRUE )
+	{
+		if( Static_Var_1 OR Static_Var_2 )
+		{
+			if( Func_Var_1 == 0 )
+			{
+				show tracks1;
+				hide tracks3;
+				++Func_Var_1;
+			}
+			else if( Func_Var_1 == 1 )
+			{
+				show tracks2;
+				hide tracks1;
+				++Func_Var_1;
+			}
+			else if( Func_Var_1 == 2 )
+			{
+				show tracks3;
+				hide tracks2;
+				Func_Var_1 = 0;
+				Static_Var_2 = 0;
+			}
+		}
+		sleep 48;
+	}
+}
+
+StartMoving()
+{
+	Static_Var_1 = 1;
+	spin wheels1 around x-axis speed <360.000000> accelerate <60.000000>;
+	spin wheels6 around x-axis speed <360.000000> accelerate <60.000000>;
+	spin wheels2 around x-axis speed <480.000000> accelerate <120.000000>;
+	spin wheels3 around x-axis speed <480.000000> accelerate <120.000000>;
+	spin wheels4 around x-axis speed <480.000000> accelerate <120.000000>;
+	spin wheels5 around x-axis speed <480.000000> accelerate <120.000000>;
+}
+
+StopMoving()
+{
+	Static_Var_1 = 0;
+	Static_Var_2 = 1;
+	stop-spin wheels1 around x-axis decelerate <15.000000>;
+	stop-spin wheels6 around x-axis decelerate <15.000000>;
+	stop-spin wheels2 around x-axis decelerate <45.000000>;
+	stop-spin wheels3 around x-axis decelerate <45.000000>;
+	stop-spin wheels4 around x-axis decelerate <45.000000>;
+	stop-spin wheels5 around x-axis decelerate <45.000000>;
+}
+
+AimFromWeapon1(Func_Var_1)
+{
+	Func_Var_1 = 2;
+}
+
+QueryWeapon1(Func_Var_1)
+{
+	Func_Var_1 = 5;
+}
+
+AimWeapon1(Func_Var_1, Func_Var_2)
+{
+	signal 1;
+	set-signal-mask 1;
+	turn turret1 to y-axis Func_Var_1 speed <90.000000>;
+	turn gunmount1 to x-axis <0.000000> - Func_Var_2 speed <45.000000>;
+	wait-for-turn turret1 around y-axis;
+	wait-for-turn gunmount1 around x-axis;
+	start-script RestoreAfterDelay(2000);
+	return (1);
+}
+
+FireWeapon1()
+{
+	emit-sfx 1024 from firepoint1;
+	move barrel1 to z-axis [-12.500000] now;
+	move barrel1 to z-axis [0.000000] speed [12.500000];
+	wait-for-move barrel1 along z-axis;
+}
+
+AimFromWeapon2(Func_Var_1)
+{
+	Func_Var_1 = 6;
+}
+
+QueryWeapon2(Func_Var_1)
+{
+	Func_Var_1 = 8;
+}
+
+AimWeapon2(Func_Var_1, Func_Var_2)
+{
+	signal 2;
+	set-signal-mask 2;
+	turn turret2 to y-axis Func_Var_1 speed <360.000000>;
+	turn gun2 to x-axis <0.000000> - Func_Var_2 speed <180.000000>;
+	wait-for-turn turret2 around y-axis;
+	wait-for-turn gun2 around x-axis;
+	start-script RestoreAfterDelay(2000);
+	return (1);
+}
+
+FireWeapon2()
+{
+	emit-sfx 1025 from firepoint2;
+	move gun2 to z-axis [-1.250000] now;
+	move gun2 to z-axis [0.000000] speed [5.000000];
+	wait-for-move gun2 along z-axis;
+}
+
+SweetSpot(piecenum)
+{
+	piecenum = base;
+}
+
+Create()
+{
+	hide ignite1;
+	hide ignite2;
+	hide ignite3;
+	hide ignite4;
+	hide ignite5;
+	Static_Var_1 = 0;
+	hide tracks1;
+	hide tracks2;
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 500;
+	}
+	start-script AnimationControl();
+	start-script DamageControl();
+	start-script FlameControl();
+}
+
+Killed(Func_Var_1, Func_Var_2)
+{
+	if( Func_Var_1 <= 25 )
+	{
+		Func_Var_2 = 1;
+		explode wheels1 type BITMAPONLY | EXPTYPE_XLARGEEXPLOSION;
+		explode wheels2 type BITMAPONLY | EXPTYPE_LARGEEXPLOSION;
+		explode wheels3 type BITMAPONLY | EXPTYPE_BLOODEXPLOSION;
+		explode wheels4 type BITMAPONLY | EXPTYPE_LARGEEXPLOSION;
+		explode wheels5 type FALL | 2 | EXPTYPE_LARGEEXPLOSION;
+		explode wheels6 type BITMAPONLY | EXPTYPE_BLOODEXPLOSION;
+		return (0);
+	}
+	if( Func_Var_1 <= 50 )
+	{
+		Func_Var_2 = 2;
+		explode wheels1 type 1 | EXPTYPE_XLARGEEXPLOSION;
+		explode wheels2 type BITMAPONLY | EXPTYPE_LARGEEXPLOSION;
+		explode wheels3 type 1 | EXPTYPE_BLOODEXPLOSION;
+		explode wheels4 type BITMAPONLY | EXPTYPE_LARGEEXPLOSION;
+		explode wheels5 type FALL | 2 | EXPTYPE_LARGEEXPLOSION;
+		explode wheels6 type BITMAPONLY | EXPTYPE_BLOODEXPLOSION;
+		return (0);
+	}
+	if( Func_Var_1 <= 99 )
+	{
+		Func_Var_2 = 3;
+		explode wheels1 type BITMAPONLY | EXPTYPE_XLARGEEXPLOSION;
+		explode wheels2 type BITMAPONLY | EXPTYPE_LARGEEXPLOSION;
+		explode wheels3 type BITMAPONLY | EXPTYPE_BLOODEXPLOSION;
+		explode wheels4 type BITMAPONLY | EXPTYPE_LARGEEXPLOSION;
+		explode wheels5 type FALL | 2 | EXPTYPE_LARGEEXPLOSION;
+		explode wheels6 type BITMAPONLY | EXPTYPE_BLOODEXPLOSION;
+		return (0);
+	}
+	Func_Var_2 = 3;
+	explode wheels1 type BITMAPONLY | EXPTYPE_XLARGEEXPLOSION;
+	explode wheels2 type BITMAPONLY | EXPTYPE_LARGEEXPLOSION;
+	explode wheels3 type BITMAPONLY | EXPTYPE_BLOODEXPLOSION;
+	explode wheels4 type BITMAPONLY | EXPTYPE_LARGEEXPLOSION;
+	explode wheels5 type FALL | 2 | EXPTYPE_LARGEEXPLOSION;
+	explode wheels6 type BITMAPONLY | EXPTYPE_BLOODEXPLOSION;
+}
