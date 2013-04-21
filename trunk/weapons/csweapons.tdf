@@ -169,7 +169,7 @@
 	areaofeffect=900;
 	energypershot=120000;
 	stockpile=1;
-	targetable=1;
+	targetable=3;
 	commandfire=1;
 	soundstart=xtanewnuke;
 	soundhitdry=xtanewnuke;
@@ -216,7 +216,7 @@
 	energypershot=120000;
 	explosiongenerator=custom:NUKE_EXPLOSION_FX_COM;
 	stockpile=1;
-	targetable=1;
+	targetable=3;
 	commandfire=1;
 	soundstart=xtanewnuke;
 	soundhitdry=xtanewnuke;

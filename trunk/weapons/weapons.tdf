@@ -739,7 +739,7 @@
 	areaofeffect=484;
 	edgeeffectiveness=0.45;
 	energypershot=10000;
-	targetable=1;
+	targetable=3;
 	soundstart=misicbm1;
 	soundhitdry=xplomed4;
 	firestarter=100;
@@ -4533,7 +4533,7 @@
 	edgeeffectiveness=0.16;
 	startfire=1;
 	energypershot=10000;
-	targetable=1;
+	targetable=3;
 	soundstart=misicbm1;
 	soundhitdry=xplomed4;
 	smokedelay=0.01;
@@ -4830,7 +4830,7 @@
 	energypershot=120000;
 	metalpershot=1800;
 	stockpile=1;
-	targetable=1;
+	targetable=3;
 	commandfire=1;
 	soundstart=misicbm1;
 	soundhitdry=xtanewnuke;
@@ -5478,7 +5478,7 @@
 	energypershot=120000;
 	metalpershot=1575;
 	stockpile=1;
-	targetable=1;
+	targetable=3;
 	commandfire=1;
 	soundstart=misicbm1;
 	soundhitdry=xtanewnuke;
