@@ -1558,7 +1558,7 @@
 	areaofeffect=1500;
 	energypershot=120000;
 	stockpile=1;
-	targetable=1;
+	targetable=3;
 	commandfire=1;
 	soundstart=misicbm1;
 	soundhitdry=xplomed4;
