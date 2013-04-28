@@ -10,11 +10,6 @@ Fixed carriers, airlabs pending
 7) Pelicans are seen as hovers even when walking (had *2 speed on icy run)
 -- Next spring has a possibility to set movetype on the run, then this can be fixed.
 
-8) Many units have a "fight" button despite not having a weapon eg: Spy bots, construction units, minelayers, jammers, radars etc. Confirmed for minelayer and jammer. Didn't find it for any radar.
-
-9) Some structures have "Wait", "Repeat" and "Stop" despite no need, eg fusion reactors.
-
-
 
 Fixed:
 ------
@@ -32,6 +27,12 @@ Fixed
 Fixed
 
 6) T2 construction subs need water radar next to standard radar in build menu.
+Fixed
+
+8) Many units have a "fight" button despite not having a weapon eg: Spy bots, construction units, minelayers, jammers, radars etc. Confirmed for minelayer and jammer. Didn't find it for any radar.
+Fixed
+
+9) Some structures have "Wait", "Repeat" and "Stop" despite no need, eg fusion reactors.
 Fixed
 
 10 Light carriers have "Reclaim", "Restore" and "Repair", despite not being able to do any (unless a plane lands on them).
