@@ -19,6 +19,7 @@
 	WorkerTime=115;
 	BMcode=1;
 	Builder=1;
+	canfight=0;
 	ThreeD=1;
 	ZBuffer=1;
 	NoAutoFire=0;
@@ -39,6 +40,7 @@
 	canmove=1;
 	canpatrol=1;
 	canstop=1;
+	canfight=0;
 	canguard=1;
 	MaxVelocity=1.54;
 	BrakeRate=0.03;

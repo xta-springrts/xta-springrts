@@ -64,6 +64,13 @@
 	//*************
 	isairbase=1;
 	onoffable=1;
+	canMove=0;
+	canAttack=0;
+	canFight=0;
+	canPatrol=0;
+	canGuard=0;
+	canRepeat=0;
+	noAutoFire=1;
 
 	//************************************************************
 	//  Movement

@@ -64,11 +64,12 @@
 	canguard=1;
 	canmove=1;
 	canpatrol=1;
-	canreclamate=1;
 	canstop=1;
 	floater=1;
 	upright=1;
-
+	canreclamate=1;
+	canfight=0;
+	
 	//************************************************************
 	//  Movement
 	//************

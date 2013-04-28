@@ -62,6 +62,8 @@
 	canpatrol=1;
 	canstop=1;
 	stealth=1;
+	canfight=0;
+	canrepeat=0;
 
 	//************************************************************
 	//  Movement

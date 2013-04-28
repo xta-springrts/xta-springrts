@@ -30,6 +30,7 @@
 	energyuse=10;
 	metalstorage=100;
 	canstop=1;
+	canfight=0;
 	idletime=1800;
 	idleautoheal=5;
 	sightdistance=480;

@@ -486,7 +486,7 @@
 	rgbcolor=1 0.60 0.0;
 	weaponType=Cannon;
 	turret=1;
-	range=1330;
+	range=1250; // 1330; in 9.725
 	reloadtime=3.1;
 	weaponvelocity=440;
 	areaofeffect=100;
@@ -827,39 +827,45 @@
 }
 [ARMFLAK_GUN]
 {
-	name=Flak Cannon;
-	weaponType=Cannon;
-	turret=1;
-	range=700;
-	reloadtime=0.6;
-	weapontimer=1;
-	weaponvelocity=2050;
-	startvelocity=1950;
-	weaponacceleration=10;
-	areaofeffect=150;
-	cylindertargeting = 1;
-	soundstart=canlite2;
-	soundhitdry=xplomed2;
-	//minbarrelangle=-40;
-	tolerance=2000;
-	burnblow=1;
-	explosiongenerator=custom:FlakCloud;
-	size=1;
-	rgbcolor=1 0.6 0.6;
-	rgbColor2=0.1 0.1 0.1;
-	stages=20;
-	separation=0.35;
+	accuracy=1000;
 	alphadecay=0.2;
-	sizedecay=-0.2;
+	areaofeffect=176;
+	burnblow=1;
 	//color=1;
-	startsmoke=1;
-	tracks=1;
-	turnrate=327680;
 	craterboost=0.25;
 	cratermult=0.25;
+	cylindertargeting = 1;
+	edgeeffectiveness=0.85;
+	explosiongenerator=custom:FlakCloud;
+	//minbarrelangle=-40;
+	name=Flak Cannon;
+	noexplode=0;
+	ownerExpAccWeight=0.5;
+	predictboost=1;
+	proximityPriority=-0.75;
+	range=700;
+	reloadtime=0.6;
+	rgbColor2=0.1 0.1 0.1;
+	rgbcolor=1 0.6 0.6;
+	separation=0.15;
+	size=1;
+	sizedecay=-0.2;
+	soundhitdry=xplomed2;
+	soundstart=canlite2;
+	stages=10;
+	startsmoke=1;
+	startvelocity=2250;
+	tolerance=2000;
+	tracks=1;
+	turnrate=327680;
+	turret=1;
+	weaponType=Cannon;
+	weaponacceleration=10;
+	weapontimer=1;
+	weaponvelocity=2450;
 	[DAMAGE]
 	{
-		default=40;
+		default=30;
 		group_landair=292;
 		group_invincible=1;
 	}
@@ -1882,41 +1888,46 @@
 }
 [ARMyork_GUN]
 {
-	name=Flak Cannon;
-	weaponType=Cannon;
-	turret=1;
-	range=680;
-	reloadtime=0.46;
-	weaponvelocity=1560;
-	startvelocity=1900;
-	weaponacceleration=10;
-	areaofeffect=145;
-	cylindertargeting = 1;
-	soundstart=canlite2;
-	soundhitdry=xplomed2;
-	//minbarrelangle=-40;
-	tolerance=1560;
-	burnblow=1;
-	explosiongenerator=custom:FlakCloud;
-	size=1;
-	rgbcolor=1 0.6 0.6;
-	rgbColor2=0.1 0.1 0.1;
-	stages=20;
-	separation=0.35;
+	accuracy=1000;
 	alphadecay=0.2;
-	sizedecay=-0.2;
+	areaofeffect=168;
+	burnblow=1;
 	//color=1;
-	startsmoke=1;
-	tracks=1;
-	turnrate=327680;
 	craterboost=0.25;
 	cratermult=0.25;
+	cylindertargeting = 1;
+	edgeeffectiveness=0.75;
+	explosiongenerator=custom:FlakCloud;
+	//minbarrelangle=-40;
+	name=Flak Cannon;
+	ownerExpAccWeight=0.5;
+	predictboost=1;
+	proximityPriority=-0.75;
+	range=680;
+	reloadtime=0.55;
+	rgbColor2=0.1 0.1 0.1;
+	rgbcolor=1 0.6 0.6;
+	separation=0.15;
+	size=1;
+	sizedecay=-0.2;
+	soundhitdry=xplomed2;
+	soundstart=canlite2;
+	stages=10;
+	startsmoke=1;
+	startvelocity=2000;
+	tolerance=1560;
+	tracks=1;
+	turnrate=327680;
+	turret=1;
+	weaponType=Cannon;
+	weaponacceleration=10;
+	weaponvelocity=2060;
 	[DAMAGE]
 	{
-		default=33;
+		default=23;
 		group_invincible=1;
 		group_landair=119;
-	}
+	}	
 }
 [ARM_ARTILLERY]
 {
@@ -3573,40 +3584,46 @@
 }
 [CORFLAK_GUN]
 {
-	name=Flak Cannon;
-	turret=1;
-	range=750;
-	reloadtime=0.7;
-	weaponvelocity=2050;
-	startvelocity=1950;
-	weaponacceleration=10;
-	areaofeffect=155;
-	cylindertargeting = 1;
-	soundstart=canlite2;
-	soundhitdry=xplomed2;
-	//minbarrelangle=-40;
-	tolerance=2000;
-	burnblow=1;
-	explosiongenerator=custom:FlakCloud;
-	size=1;
-	rgbcolor=1 0.6 0.6;
-	rgbColor2=0.1 0.1 0.1;
-	stages=20;
-	separation=0.35;
+	accuracy=1000;
 	alphadecay=0.2;
-	sizedecay=-0.2;
+	areaofeffect=180;
+	burnblow=1;
 	//color=1;
-	startsmoke=1;
-	tracks=1;
-	turnrate=327680;
 	craterboost=0.25;
 	cratermult=0.25;
+	cylindertargeting = 1;
+	edgeeffectiveness=0.85;
+	explosiongenerator=custom:FlakCloud;
+	//minbarrelangle=-40;
+	name=Flak Cannon;
+	noexplode=0;
+	ownerExpAccWeight=0.5;
+	predictboost=1;
+	proximityPriority=-0.75;
+	range=750;
+	reloadtime=0.7;
+	rgbColor2=0.1 0.1 0.1;
+	rgbcolor=1 0.6 0.6;
+	separation=0.15;
+	size=1;
+	sizedecay=-0.2;
+	soundhitdry=xplomed2;
+	soundstart=canlite2;
+	stages=10;
+	startsmoke=1;
+	startvelocity=2450;
+	tolerance=2000;
+	tracks=1;
+	turnrate=327680;
+	turret=1;
+	weaponacceleration=10;
+	weaponvelocity=2550;
 	[DAMAGE]
 	{
-		default=76;
+		default=58;
 		group_landair=294;
 		group_invincible=1;
-	}
+	}	
 }
 [CORHRK_ROCKET]
 {
@@ -4219,38 +4236,43 @@
 }
 [CORSENT_GUN]
 {
-	name=Flak Cannon;
-	turret=1;
-	range=720;
-	reloadtime=0.78;
-	weaponvelocity=2000;
-	startvelocity=1900;
-	weaponacceleration=10;
-	areaofeffect=140;
-	cylindertargeting = 1;
-	soundstart=canlite2;
-	soundhitdry=xplomed2;
-	//minbarrelangle=-40;
-	tolerance=2000;
-	burnblow=1;
-	explosiongenerator=custom:FlakCloud;
-	size=1;
-	rgbcolor=1 0.6 0.6;
-	rgbColor2=0.1 0.1 0.1;
-	stages=20;
-	separation=0.35;
+	accuracy=1000;
 	alphadecay=0.2;
-	sizedecay=-0.2;
+	areaofeffect=164;
+	burnblow=1;
 	//color=1;
-	startsmoke=1;
-	tracks=1;
-	turnrate=327680;
-	flighttime=3;
 	craterboost=0.25;
 	cratermult=0.25;
+	cylindertargeting = 1;
+	edgeeffectiveness=0.75;
+	explosiongenerator=custom:FlakCloud;
+	flighttime=3;
+	//minbarrelangle=-40;
+	name=Flak Cannon;
+	range=720;
+	reloadtime=0.78;
+	rgbColor2=0.1 0.1 0.1;
+	rgbcolor=1 0.6 0.6;
+	ownerExpAccWeight=0.5;
+	predictboost=1;
+	proximityPriority=-0.75;
+	separation=0.15;
+	size=1;
+	sizedecay=-0.2;
+	soundhitdry=xplomed2;
+	soundstart=canlite2;
+	stages=20;
+	startsmoke=1;
+	startvelocity=2000;
+	tolerance=2000;
+	tracks=1;
+	turnrate=327680;
+	turret=1;
+	weaponacceleration=10;
+	weaponvelocity=2100;
 	[DAMAGE]
 	{
-		default=55;
+		default=42;
 		group_invincible=1;
 		group_landair=201;
 	}
@@ -4487,7 +4509,7 @@
 	rgbcolor=1 0.60 0.0;
 	weaponType=Cannon;
 	turret=1;
-	range=1330;
+	range=1250; // 1330 in 9.725
 	reloadtime=3;
 	weaponvelocity=430;
 	areaofeffect=105;

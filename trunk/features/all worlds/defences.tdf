@@ -17,7 +17,7 @@
 	featuredead=rock_teeth;
 	seqnamereclamate=tree1reclamate;
 	collisionVolumeType = Box;
-	collisionVolumeScales =28 34 28;
+	collisionVolumeScales =26 34 26;
 	collisionVolumeOffsets = 0 -2 0;   //0 0 0
 	collisionVolumeTest = 1;
 }
@@ -40,7 +40,7 @@
 	featuredead=rock_teeth;
 	seqnamereclamate=tree1reclamate;
 	collisionVolumeType = Box;
-	collisionVolumeScales =28 36 28;
+	collisionVolumeScales =26 36 26;
 	collisionVolumeOffsets = 0 -3 0;   //0 -1 0
 	collisionVolumeTest = 1;
 }

@@ -17,7 +17,7 @@ end
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
-if Game.modVersion~="9 SVN" then	-- allow profiling info only for SVN version
+if Game.modVersion~='$VERSION' then	-- allow profiling info only for SVN version
 	return false
 end
 
