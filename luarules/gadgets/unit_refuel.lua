@@ -7,8 +7,8 @@ function gadget:GetInfo()
     name      = "Repair Pad",
     desc      = "Tells the plane to go" ..
                 "a repair pad",
-    author    = "thor",
-    date      = "July 12, 2008",
+    author    = "thor, edited by Jools",
+    date      = "Apr, 2013",
     license   = "GNU GPL, v2 or later",
     layer     = 0,
     enabled   = true  --  loaded by default?
@@ -37,43 +37,7 @@ local FindUnitCmdDesc = Spring.FindUnitCmdDesc
 CMD_REFUEL = 33457
 
 
-local airDefs = {
-
- arm_construction_aircraft = true,
- arm_peeper = true,
- arm_freedom_fighter = true,
- arm_thunder = true,
- arm_atlas = true,
- arm_ornith = true,
- arm_tornado = true,
- arm_adv_construction_aircraft = true,
- arm_brawler = true,
- arm_phoenix = true,
- arm_lancet = true,
- arm_hawk = true,
- arm_albatross = true,
- arm_harpoon = true,
- arm_seahawk = true, 
- arm_construction_seaplane = true,
- core_construction_aircraft = true,
- core_fink = true,
- core_avenger = true,
- core_shadow = true,
- core_valkyrie = true,
- core_voodoo = true,
- core_vulture = true,
- core_adv_construction_aircraft = true,
- core_rapier = true,
- core_titan = true,
- core_hurricane = true,
- core_vamp = true,
- core_typhoon = true,
- core_hunter = true,
- core_silhouette = true,
- core_construction_seaplane = true,
- core_zeppelin = true,
-
-}
+local airDefs = {}
 
 local refuelCmdDesc = {
   id      = CMD_REFUEL,
@@ -150,12 +114,17 @@ end
 
 
 function gadget:Initialize()
-  gadgetHandler:RegisterCMDID(CMD_REFUEL)
-  for _, unitID in ipairs(Spring.GetAllUnits()) do
-    local teamID = Spring.GetUnitTeam(unitID)
-    local unitDefID = GetUnitDefID(unitID)
-    gadget:UnitCreated(unitID, unitDefID, teamID)
-  end
+	for i,unitDef in pairs(UnitDefs) do
+		if unitDef.canFly then
+			airDefs[unitDef.name] = true
+        end
+	end
+	gadgetHandler:RegisterCMDID(CMD_REFUEL)
+	for _, unitID in ipairs(Spring.GetAllUnits()) do
+		local teamID = Spring.GetUnitTeam(unitID)
+		local unitDefID = GetUnitDefID(unitID)
+		gadget:UnitCreated(unitID, unitDefID, teamID)
+	end
 end
 
 

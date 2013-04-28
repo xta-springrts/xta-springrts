@@ -41,6 +41,8 @@
 	canpatrol=1;
 	canstop=1;
 	canguard=1;
+	canfight=0;
+	canrepeat=0;
 	MaxVelocity=2.4;
 	BrakeRate=0.3;
 	Acceleration=0.047;

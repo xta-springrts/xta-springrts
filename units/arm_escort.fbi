@@ -64,6 +64,8 @@
 	canstop=1;
 	floater=1;
 	onoffable=1;
+	canfight=0;
+	canrepeat=0;
 
 	//************************************************************
 	//  Movement

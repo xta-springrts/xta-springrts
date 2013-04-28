@@ -27,6 +27,7 @@
 	extractsmetal=0.0059;
 	metalstorage=0; //1000;
 	onoffable=1;
+	canRepeat=0;
 	idletime=1800;
 	idleautoheal=5;
 	activatewhenbuilt=1;

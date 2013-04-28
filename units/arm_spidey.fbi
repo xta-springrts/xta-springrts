@@ -19,6 +19,7 @@
 	WorkerTime=0;
 	BMcode=1;
 	Builder=0;
+	canrepeat=0;
 	ThreeD=1;
 	ZBuffer=1;
 	NoAutoFire=0;
