@@ -17,7 +17,20 @@ end
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
-if Game.modVersion~='$VERSION' then	-- allow profiling info only for SVN version
+local modOptions = Spring.GetModOptions()
+local enable = false
+
+if modOptions and modOptions.debugmode then
+	if modOptions.debugmode == '1' then 
+		enable = true 
+	end
+else
+	if Game.modVersion =='$VERSION' then 
+		enable = true 
+	end
+end
+
+if not enable then 	-- allow profiling info only for SVN version
 	return false
 end
 
