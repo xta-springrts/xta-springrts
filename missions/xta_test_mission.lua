@@ -1,7 +1,7 @@
 gameData = {
 	map = "Altair_Crossing_v3",			-- this mission is meant to be played on this map
 	game = "XTA",						-- and with this game (short game name)
-	minVersion = "9 SVN",				-- and at least this version of game
+	minVersion = "$VERSION",				-- and at least this version of game
 	nextMission = "XTA_tutorial_mission",	-- next mission after victory, optional
 }
 
@@ -118,7 +118,7 @@ missionTriggers = {
 }
 
 locations = {	-- use numerical indexes starting from 1 or string names, later preffered
-	[1] = {				-- location index
+	[1] = {				-- location index or name
 		shape = "C",	-- circle
 		X = 2048,		-- center (yes, it's capital letters for coordinates)
 		Z = 2048,
@@ -130,7 +130,7 @@ locations = {	-- use numerical indexes starting from 1 or string names, later pr
 		shape = "R",	-- rectangle
 		X1 = 600,		-- top left corner of rectangle
 		Z1 = 900,
-		X2 = 700,		--bottom right corner of rectangle
+		X2 = 700,		-- bottom right corner of rectangle
 		Z2 = 1000,
 		visible = true,
 		RGB = {0.0, 0.0, 0.8},
@@ -212,7 +212,8 @@ List of possible conditions:
 ------------------------------
 
 	Always
-unconditional trigger
+unconditional trigger, typically used for initializing values of switches, timers and variables or
+displaying messages at start, or some periodical events
 
 	Ctrl quantity (unitname|ANY) [locIdx]
 triggers when the player commands over quantity or more units of unitname or ANY type
@@ -239,19 +240,21 @@ triggers if the game lasts for quantity or longer of seconds
 	Timer (number|name)
 triggers when the specified timer reaches zero, needs to be set to a value before
 
-	Var (name) (>|>=|=|<=|<|~=) value
+	Var name (>|>=|=|<=|<|~=) value
 triggers if specified variable is of specified relation compared to value, value can be other variable
+just because variables can be used instead of switches for same propose, for performace reasons, avoid it
 
 the quantity values of conditions can be negative, in that case it means less than specified value
 if you use a non-numeric value, it will be interpreted as a variable name
-examples:	"Res -400 M"			-- triggers if player has less than 400 metal in pool
-			"Ctrl 20 arm_stumpy"	-- triggers if player has a total of 20 or more Stumpies
-			"Ctrl -10 arm_fido 3"	-- triggers if player has less than 10 Fidos at location 3
-			"Kill 5 ANY 4"			-- triggers if player killed 5 or more units owned by player 4
-			"Kill -7 arm_fido"		-- triggers if player killed less than 7 Fidos in total
+examples:	"Res -400 M"			-- triggers if trigger owner has less than 400 metal in pool
+			"Ctrl 20 arm_stumpy"	-- triggers if trigger owner has a total of 20 or more Stumpies
+			"Ctrl -10 arm_fido 3"	-- triggers if trigger owner has less than 10 Fidos at location 3
+			"Kill 5 ANY 4"			-- triggers if trigger owner killed 5 or more units owned by player 4
+			"Kill -7 arm_fido"		-- triggers if trigger owner killed less than 7 Fidos in total
 			"Var myVar ~= 5"		-- triggers if variable myVar is not equal to 5 
-			"Res myVar M"			-- triggers if player has metal in quantity specified in myVar or more
-									-- if myVar is negative, then triggers if quantity is less than abs(myVar)
+			"Res myVar M"			-- triggers if trigger owner has metal in quantity specified in myVar
+									-- or more if value of myVar is negative, then triggers if quantity is
+									-- less than abs(myVar)
 
 List of possible actions:
 ------------------------------
@@ -323,7 +326,7 @@ If quantities are non-numeric, they'll be interpreted as variable names
 examples:	"Kill ANY 3 2"			-- kills any units controled by player 3 found at location 2
 			"Move arm_fido 3 4"		-- moves all Fidos controled by trigger owner from location 3 to location 4
 			"Eco -100 M 3"			-- takes away 100 metal from player 3
-			"Echo Go for it!"		-- types "Got for it!" in the chat console (without quotes)
+			"Echo Go for it!"		-- displays "Got for it!" near the bottom of screen (without quotes)
 			"Switch 4 flip"			-- inverts the state of switch 4 (true->false or false->true)
 			"Share ANY 1"			-- gives all units controled by trigger owner to team 1
 			"Share arm_peewee 3 2"	-- gives all PeeWees controled by trigger owner at location 2 to team 3
