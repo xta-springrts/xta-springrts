@@ -157,15 +157,6 @@ local RemoveAreaAttack = {
 	[UnitDefNames.core_fink.id] = true,
 }
 
-local DestructDesc= {
-	name = "Destruct",
-	action="SelfD",
-	id=CMD_SELFD,
-	type=CMDTYPE.ICON,
-	tooltip="Order the unit to selfdestruct",
-	cursor="cursorattack",
-}
-
 local RemoveUnitCmdDesc 			= Spring.RemoveUnitCmdDesc
 local FindUnitCmdDesc				= Spring.FindUnitCmdDesc
 local EditUnitCmdDesc				= Spring.EditUnitCmdDesc

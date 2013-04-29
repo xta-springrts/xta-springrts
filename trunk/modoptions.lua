@@ -135,10 +135,11 @@ local options = {
 		type="list",
 		section= 'xtagame',
 		--section= 'xtagame',
-		def="1",
+		def="0",
 		items={
-			{key="0", name="Discrete", desc="Receive all metal in one lump sum after reclaim finishes"},
-			{key="1", name="Continuous", desc="Receive some metal for the duration of the reclaim"},
+			{key="0", name="Continuous", desc="Receive some metal for the duration of the reclaim"},
+			{key="1", name="Discrete", desc="Receive all metal in one lump sum after reclaim finishes"},
+			
 		}
 	},
 	{
@@ -236,10 +237,19 @@ local options = {
 	{
 		key		= "globalsounds",
 		name	= "Global sounds",
-		desc	= "is sound heard out of player's line of sight? (local sounds has a slight problem with looping type of sounds)",
+		desc	= "is sound heard out of player's line of sight? (local sounds has a slight problem with looping type of sounds).\nkey: globalsounds",
 		type	= "bool",
 		section	= 'xtagame',
 		def		= true,
+	},
+	
+	{
+		key		= "debugmode",
+		name	= "Debug Mode",
+		desc	= "Enable debugging mode. Will allow cheats, nocost and globallos by default, and load gadget profiler.\nkey: debugmode",
+		type	= "bool",
+		section	= 'xtagame',
+		def		= false,
 	},
 	
 --	{
