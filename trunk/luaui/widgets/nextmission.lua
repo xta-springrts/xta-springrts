@@ -6,7 +6,7 @@ function widget:GetInfo()
 		author    = 'Deadnight Warrior',
 		date      = '26 Jul 2012',
 		license   = 'GNU LGPL v2',
-		layer     = -1,
+		layer     = -2,
 		enabled   = true,
 	}
 end
@@ -191,19 +191,19 @@ function widget:DrawScreen()
 		glPopMatrix()
 	elseif victory then
 		glColor(1.0,1.0,1.0,1.0)
-		glText("Victory", X*0.5, Y*0.5, 5*fs, "cd")
+		glText("Victory", X*0.5, Y*0.5, 4*fs, "cvo")
 	elseif defeat then
 		glColor(0.6,0.0,0.0,1.0)
-		glText("Defeat", X*0.5, Y*0.5, 5*fs, "cd")
+		glText("Defeat", X*0.5, Y*0.5, 4*fs, "cvo")
 	end
 	if cmpgNotSent then
 		if modOptions.mission == campaignData.currentMission then
 			local bu = campaignData.bonusUnits
 			local mt = " " .. tostring(Spring.GetMyTeamID())
 			for i=1, #bu do
-				spSendLuaRulesMsg("XTA_cmpg " .. bu[i] .. " " .. mt)
+				spSendLuaRulesMsg("XTA_cmpg " .. bu[i] .. mt)
 			end
-			--spSendLuaRulesMsg("XTA_cmpg " .. commander .. " " .. mt)
+			--spSendLuaRulesMsg("XTA_cmpg " .. commander .. mt)
 			campaignData.bonusUnits = {}
 			cmpgNotSent = false
 		end

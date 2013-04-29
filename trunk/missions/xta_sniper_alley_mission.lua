@@ -1,7 +1,7 @@
 gameData = {
 	map = "Hide_and_Seek_v03",
 	game = "XTA",
-	minVersion = "9 SVN",
+	minVersion = "$VERSION",
 }
 
 spawnData = {

@@ -10,16 +10,6 @@ function gadget:GetInfo()
   }
 end
 
-local modOptions = Spring.GetModOptions()
-local gaiaTeamID = Spring.GetGaiaTeamID()
-local teams = Spring.GetTeamList()
-for i=1, #teams do
-	if teams[i] == gaiaTeamID then
-		table.remove(teams, i)
-		break
-	end
-end
-
 local abs = math.abs
 local floor = math.floor
 local ceil = math.ceil
@@ -27,13 +17,24 @@ local sqrt = math.sqrt
 local pairs = pairs
 local spGetGameFrame = Spring.GetGameFrame
 local spGetGroundHeight = Spring.GetGroundHeight
+local tainsert = table.insert
+local taremove = table.remove
+
+local modOptions = Spring.GetModOptions()
+local gaiaTeamID = Spring.GetGaiaTeamID()
+local teams = Spring.GetTeamList()
+for i=1, #teams do
+	if teams[i] == gaiaTeamID then
+		taremove(teams, i)
+		break
+	end
+end
 
 
 if (gadgetHandler:IsSyncedCode()) then	-- SYNCED
 
 local spEcho = Spring.Echo
 local spGetGameSeconds = Spring.GetGameSeconds
-local taremove = table.remove
 
 local spGetTeamInfo = Spring.GetTeamInfo
 local spSetTeamResource = Spring.SetTeamResource
@@ -530,7 +531,8 @@ local function DoActions(actions, teamID, trigNo)
 
 		-- Echo Any kind of message.
 		elseif comm=="Echo" then
-			spEcho(actn[2])
+			--spEcho(actn[2])
+			SendToUnsynced("ScreenMessage", actn[2], actn[2]:len()/6, teamID)
 
 		-- Eco quantity (M|E|ME) [teamID]
 		elseif comm=="Eco" then
@@ -878,7 +880,19 @@ local glColor = gl.Color
 local glLineWidth = gl.LineWidth
 local glDrawGroundCircle = gl.DrawGroundCircle
 local glDrawGroundQuad = gl.DrawGroundQuad
-local gameData, locations = {}, {}
+local glBeginText = gl.BeginText
+local glEndText = gl.EndText
+local glText = gl.Text
+local spGetMyTeamID = Spring.GetMyTeamID
+local lastGameFrame = 0
+local lastMessageFrame = -1
+
+local X, Y = Spring.GetViewGeometry()
+local msgX, msgY = X/4, Y*0.0625
+local fs = 18*Y/1200
+
+
+local gameData, locations, messages = {}, {}, {}
 
 local function LocationVisibilty(_, locnum, vis)
 	locations[locnum].visible = vis
@@ -886,6 +900,22 @@ end
 
 local function BonusUnits(_, unitID)
 	Script.LuaUI.SetBonusUnits(unitID)
+end
+
+local function ScreenMessage(_, mess, dur, teamID)
+	if teamID==spGetMyTeamID() then
+		if dur>0 then
+			local n = spGetGameFrame()
+			if n == lastMessageFrame then
+				tainsert(messages, #messages, {text = mess, TTL = dur})
+			else
+				messages[#messages+1] = {text = mess, TTL = dur}
+				lastMessageFrame = n
+			end
+		else
+			taremove(messages, -dur)
+		end
+	end
 end
 
 function gadget:Initialize()
@@ -897,9 +927,11 @@ function gadget:Initialize()
 				if gameData.map ~= Game.mapName then
 					gadgetHandler:RemoveGadget()
 				else
-					gadgetHandler:AddSyncAction('LocationVisibilty', LocationVisibilty)  
-					gadgetHandler:AddSyncAction('BonusUnits', BonusUnits)  
+					gadgetHandler:AddSyncAction('LocationVisibilty', LocationVisibilty)
+					gadgetHandler:AddSyncAction('BonusUnits', BonusUnits)
+					gadgetHandler:AddSyncAction('ScreenMessage', ScreenMessage)
 					--[[	abort removing of gadget if there are no visible locations at start, that can change by trigger actions
+							mission messages are also printed via unsynced rendering
 					local i=1
 					while i <= #locations do	-- remove from location list all locations that aren't drawn on ground
 						if not locations[i].visible or locations[i].visible==false then
@@ -924,6 +956,25 @@ function gadget:Initialize()
 	end
 end
 
+function gadget:Update()
+	local n = spGetGameFrame()
+	if n ~= lastGameFrame then
+		if (n%30)==0 then
+			local i = 1
+			while i <= #messages do
+				local msg = messages[i]
+				msg.TTL = msg.TTL - 1
+				if msg.TTL<=0 then
+					taremove(messages, i)
+				else
+					i=i+1
+				end
+			end
+		end
+		lastGameFrame = n
+	end
+end
+
 function gadget:DrawWorldPreUnit()
 	local alpha = abs(spGetGameFrame() % 60 - 30)/30
 	glLineWidth(10)
@@ -941,6 +992,16 @@ function gadget:DrawWorldPreUnit()
 				glDrawGroundQuad(loc.X1, loc.Z1, loc.X2, loc.Z2)
 			end
 		end
+	end
+end
+
+function gadget:DrawScreen()
+	if #messages>0 then
+		glBeginText()
+		for i=1, #messages, 1 do
+			glText(messages[i].text, msgX, msgY+i*(fs+2)-fs, fs, "do")
+		end
+		glEndText()
 	end
 end
 

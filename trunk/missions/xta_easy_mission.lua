@@ -1,7 +1,7 @@
 gameData = {
 	map = "Red Comet",
 	game = "XTA",
-	minVersion = "9 SVN",
+	minVersion = "$VERSION",
 	nextMission = "XTA_long_sea_mission",
 }
 

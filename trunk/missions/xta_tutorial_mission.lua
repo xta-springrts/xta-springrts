@@ -1,7 +1,7 @@
 gameData = {
 	map = "Altair_Crossing_v3",
 	game = "XTA",
-	minVersion = "9 SVN",
+	minVersion = "$VERSION",
 }
 
 spawnData = {
