@@ -2108,6 +2108,8 @@
 	Tolerance=300;
 	avoidFriendly=0;
 	avoidFeature=0;
+	avoidGround=0;
+	avoidNeutral=0;
 	[DAMAGE]
 	{
 		default=30000;
@@ -2582,6 +2584,8 @@
 	startsmoke=1;
 	avoidFriendly=0;
 	avoidFeature=0;
+	avoidGround=0;
+	avoidNeutral=0;
 	explosiongenerator=custom:DGUNTRACE;
 	[DAMAGE]
 	{
@@ -3177,6 +3181,8 @@
 	Tolerance=300;
 	avoidFriendly=0;
 	avoidFeature=0;
+	avoidGround=0;
+	avoidNeutral=0;
 	[DAMAGE]
 	{
 		default=30000;
@@ -3207,6 +3213,8 @@
 	startsmoke=1;
 	avoidFriendly=0;
 	avoidFeature=0;
+	avoidGround=0;
+	avoidNeutral=0;
 	[DAMAGE]
 	{
 		default=30000;
@@ -3237,6 +3245,8 @@
 	startsmoke=1;
 	avoidFriendly=0;
 	avoidFeature=0;
+	avoidGround=0;
+	avoidNeutral=0;
 	[DAMAGE]
 	{
 		default=30000;

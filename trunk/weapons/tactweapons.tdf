@@ -38,6 +38,8 @@
 	Tolerance=300; //added v9.3
 	avoidFriendly=0;
 	avoidFeature=0;
+	avoidGround=0;
+	avoidNeutral=0;
 	[DAMAGE]
 	{
 		default=30000;
@@ -84,6 +86,8 @@
   	Tolerance=300; //added v9.3
 	avoidFriendly=0;
 	avoidFeature=0;
+	avoidGround=0;
+	avoidNeutral=0;
 	[DAMAGE]
 	{
 		default=30000;
