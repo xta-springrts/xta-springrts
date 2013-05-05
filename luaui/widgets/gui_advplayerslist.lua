@@ -23,6 +23,8 @@ function widget:GetInfo()
 	}
 end
 
+-- XTA version. Detects changed commanderID by receiving a luamsg with the prefix '195'. It's sent by the gui_commchange widget.
+
 --------------------------------------------------------------------------------
 -- SPEED UPS
 --------------------------------------------------------------------------------
