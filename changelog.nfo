@@ -21,7 +21,38 @@
     ศอออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออผ
     Logo by ElementalGizmo
 
-------------------- Change Log of XTA v9.73 (94.0 and next version) ------------------ by Deadnight Warrior, Kloot, Jools, NTG and Scifi
+XTA 9.727 ------------------ by Deadnight Warrior, Jools 
+---------
+* Widget to set commander as member of group number 1 on gamestart (default disabled).
+* Add avoidGround=0; and avoidNeutral=0; to disintegrator weapons.
+* Update mission stuff
+* Add debug mode (allows gadget profiler to run, use it to troubleshoot which gadget is the problem)
+* Remove stop and wait commands from units that cannot do that,
+remove fight from units that cannot attack (like mine layers, construction
+units, air scouts, spies), remove attack from anti-nukes (they still do their
+thing), remove move, attack and patrol from air repair pad. Add a self-destruct
+button to all units (can be hidden with hidecommands.lua widget, that widget
+added to xta but isn't enabled by default).
+
+* Nerf ambusher and toaster range from 1330 to 1250 as it was in kloot's patches. Increase flak-weapon's
+projectile speed and areaofeffect (they differ, but for example arm flakker has
+speed 1950 -> 2450 and aoe 150 -> 176), and decrease their damage vs ground
+units by about 30%. Decreased flakker projectile's amount of particles from 20
+to 10 and their separation from 0.35 to 0.15.
+
+* Changed dragon's teeth's collision volume scales: arm: 28 34 28 -> 26 34 26,
+core: 26 36 26 -> 26 36 26, so that they let more shots pass.
+
+* Fix for anti-nuke interception fail
+* Set cannon velocity default to 0.25 instead of 0.5
+* Add reclaim method as mod option: continuous = instant reclaim, discreet = lump sum reclaim after completion
+* Fix hammer and jeffy
+* Add snd_volume_osd widget. Decrease/Increase sound with - and +. Engine changed the shortcut for speed change to alt - +/-
+* Prevent crashing aircraft from continuing to fire on enemies.	
+	
+	
+------------------- Change Log of XTA v9.726 (94.0 and next version) ------------------ by Deadnight Warrior, Kloot, Jools, NTG and Scifi
+
 New features or technical changes:
 ----------------------------------
 * Minelayers have a limited stock of mines (arm: 5, core: 6, naval: 8). Restocking costs same as building new minelayer (this is due to the fact that it's not as easy to build sensitive equipment such as mines in the field as inside factory conditions).
