@@ -2,7 +2,7 @@
 {
 	Mapname=Hide_and_Seek_v03;
 	Maphash=1390286161;
-	GameType=XTA 9 SVN;
+	GameType=XTA $VERSION;
 	ModHash=-2025370868;
 	startpostype=3;
 	[modoptions]

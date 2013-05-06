@@ -306,14 +306,14 @@ set it to true
 	Timer (number|name) quantity
 sets the specified countdown timer to quantity of seconds
 
-	Var (name) (number|name) [operator (number|name)]
+	Var name (number|name) [operator (number|name)]
 if there are 2 parameters, then it sets specified variable to value of second parameter, which can be
 another variable, use for (re)initializing a variable
 variables are not initialized on game start, use a one-shot unconditional trigger to initialize them
 if there are 4 parameters, the specified variable will be set to result of an arithmetical operation
 on the second and fourth parameter, which can be either numbers or other variables
 possible operators are: + - * / % ^  and they behave exactly as in LUA
-variable's name shouldn't contain only digits as it will be parsed as a number not a variable
+variable's name shouldn't contain only digits as it will be parsed as a number not a variable as in LUA
 
 	Victory
 victory for ally team to which the trigger owner belongs
