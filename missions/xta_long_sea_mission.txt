@@ -2,7 +2,7 @@
 {
 	Mapname=SailAway;
 	Maphash=-2106788908;
-	GameType=XTA 9 SVN;
+	GameType=XTA $VERSION;
 	ModHash=1455791290;
 	[modoptions]
 	{
