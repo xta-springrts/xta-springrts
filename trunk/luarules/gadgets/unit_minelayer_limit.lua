@@ -156,11 +156,14 @@ if (gadgetHandler:IsSyncedCode()) then
 		
 		if cmdID < 0 and mineDefTable[-cmdID] then
 			if mineNames[UnitDefs[-cmdID].name] then
-				local stock = minelayerStock[unitID]
+				local stock = minelayerStock[unitID] or 0
 				if stock == 0 then
 					return false
 				else
-					local pendingMines = countMineQueue(unitID, stock)					
+					local pendingMines = countMineQueue(unitID, stock)
+					if not stock or not pendingMines then
+						Echo("Error in minelayer limit. Stock:", stock, " Queue: ", pendingMines)
+					end
 					if  stock > pendingMines then
 						return true
 					elseif stock == pendingMines then
