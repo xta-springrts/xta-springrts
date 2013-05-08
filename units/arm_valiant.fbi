@@ -19,7 +19,7 @@
 	WorkerTime=110;
 	BMcode=1;
 	Builder=1;
-	canfight=0;
+	canFight=1;
 	ThreeD=1;
 	ZBuffer=1;
 	NoAutoFire=0;

@@ -62,7 +62,7 @@
 	canpatrol=1;
 	canreclamate=1;
 	canstop=1;
-	canfight=0;
+	canFight=1;
 	
 	//************************************************************
 	//  Movement

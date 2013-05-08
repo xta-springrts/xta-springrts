@@ -68,7 +68,7 @@
 	floater=1;
 	upright=1;
 	canreclamate=1;
-	canfight=0;
+	canFight=1;
 	
 	//************************************************************
 	//  Movement
