@@ -1,7 +1,7 @@
 
 function gadget:GetInfo()
   return {
-    name      = "snd_local",
+    name      = "Local sounds",
     desc      = "Make sounds local based on LOS",
 	version   = "1.3",
     author    = "Jools",
@@ -24,9 +24,6 @@ local TEAM_DIED_EVENT_ID = 10014
 
 local LUAMESSAGE = 	"20121120"
 
-local Echo 					= Spring.Echo
-
-
 if gadgetHandler:IsSyncedCode() then
 	-----------------
 	-- SYNCED PART --
@@ -39,12 +36,13 @@ if gadgetHandler:IsSyncedCode() then
 	local GetPlayerInfo			= Spring.GetPlayerInfo
 	local len 					= string.len
 	local sub 					= string.sub
-		
+	local unload 				= false
 	function gadget:Initialize()	
 		local modOptions = Spring.GetModOptions()
 		
 		if modOptions and modOptions.globalsounds == '1' then
 			Echo("[" .. (self:GetInfo()).name .. "] local sounds disabled")
+			unload = true
 			gadgetHandler:RemoveGadget(self)
 		end
 		
@@ -55,11 +53,16 @@ if gadgetHandler:IsSyncedCode() then
 		end
 	end
 	
-	function gadget:GameFrame(frame)
+	if unload then
+		function gadget:GameFrame(frame)
+			if frame > 0 then
+				gadgetHandler:RemoveGadget(self)
+			end
 		-- Test if gadget is really removed
 		--if frame%30 == 0 then
 			--Echo("Local sounds running for: " .. frame/30 .." seconds")
 		--end	
+		end
 	end
 	
 	function gadget:ProjectileCreated(projectileID, projectileOwnerID, projectileWeaponDefID)
@@ -149,14 +152,12 @@ else
 			Echo("[" .. (self:GetInfo()).name .. "] local sounds disabled")
 			gadgetHandler:RemoveGadget(self)
 		end
-	
 		
 		local waterColour = Game.waterBaseColor
 		if waterColour and waterColour[1] > waterColour[3] then -- primitive check: more red than blue means lava
 			isLava = true
 		end
-		
-		
+			
 		pID = GetLocalPlayerID()
 		allyID = GetLocalAllyTeamID()
 		clientIsSpec = GetSpectatingState()
@@ -176,7 +177,7 @@ else
 						if nonexplosiveWeapons[wType] then
 							--Echo("Lava:",weaponDef.name, aoe, loop, wType, vel,damage)
 							if damage and damage > 100 then
-								sndlava[id] = 'sizzle'
+								sndlava[id] = 'lavaloop1'
 							end
 						elseif explosiveWeapons[wType] then
 							if damage and damage > 50 then
@@ -195,26 +196,26 @@ else
 								end
 							end
 						end
-						Echo("Lava sound for: ", id, weaponDef.name, wType, damage, sndlava[id])
+						--Echo("Lava sound for: ", id, weaponDef.name, wType, damage, sndlava[id])
 					else
 						if weaponDef.customParams.soundhitwet and len(weaponDef.customParams.soundhitwet) > 0 then
 							sndwet[id] = weaponDef.customParams.soundhitwet
-							Echo("Wet sound for:", id, weaponDef.name, ":", sndwet[id])
+							--Echo("Wet sound for:", id, weaponDef.name, ":", sndwet[id])
 						else
-							Echo("No wet sound for:", id, weaponDef.name)
+							Echo("Local sounds: no soundhitwet sound: ", weaponDef.name)
 						end
 					end
 					if weaponDef.customParams.soundhitdry and len(weaponDef.customParams.soundhitdry) > 0 then
 						snddry[id] = weaponDef.customParams.soundhitdry
 						--Echo("Dry sound for:", id, weaponDef.name, ":", snddry[id])
 					else
-						--Echo("No dry sound for:", id, weaponDef.name)
+						Echo("Local sounds: no soundshitdry sound: ", weaponDef.name)
 					end
 					if weaponDef.customParams.soundstart and len(weaponDef.customParams.soundstart) > 0 then
 						sndstart[id] = weaponDef.customParams.soundstart
 						--Echo("Start sound for:", id, weaponDef.name, ":", sndstart[id])
 					else
-						Echo("No start sound for:", id, weaponDef.name)
+						Echo("Local sounds: no soundstart sound: ", weaponDef.name)
 					end
 				end
 			--end
@@ -248,7 +249,6 @@ else
 		table[key] = nil
 		return element
 	end
-	
 		
 	--SendToUnsynced(PROJECTILE_GENERATED_EVENT_ID, projectileID, projectileOwnerID, projectileWeaponDefID, x,y,z)
 	local function ProjectileCreated(projectileID, projectileOwnerID, projectileWeaponDefID,x,y,z)
@@ -304,6 +304,7 @@ else
 						if snddry[weaponDefID] then PlaySoundFile("sounds/"..snddry[weaponDefID]..".wav",volume/3,x,y,z,0,0,0,Channel) end
 						if sndlava[weaponDefID] then PlaySoundFile("sounds/"..sndlava[weaponDefID]..".wav",volume,x,y,z,0,0,0,Channel) end
 					else
+						--Echo("water hit",sndwet[weaponDefID])
 						if y > shallowHitLimit then -- projectile hits close to surface
 							if gh > shallowLimit then -- water is shallow
 								--Echo("Shallow water")
