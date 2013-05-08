@@ -13,6 +13,7 @@ function gadget:GetInfo()
 end
 
 local playerMarked = {}
+local Echo = Spring.Echo
 
 if not gadgetHandler:IsSyncedCode() then
 	
@@ -22,11 +23,16 @@ if not gadgetHandler:IsSyncedCode() then
 	
 	local positionRegex = "181072"
 	local spGetTeamStartPosition = Spring.GetTeamStartPosition
+	local GetGameFrame = Spring.GetGameFrame
 	local PlaySoundFile = Spring.PlaySoundFile
 	local snd = 'sounds/button11.wav'
 		
 	function gadget:Update()
-		--Spring.Echo("State Broadcasting...")
+		local frame = GetGameFrame()
+		if frame > 0 then 
+			gadgetHandler:RemoveGadget(self)
+		end
+		--Echo("State Broadcasting...")
 		for i,player in ipairs(Spring.GetTeamList()) do
 			if player ~= Spring.GetGaiaTeamID() then	
 				local posx = spGetTeamStartPosition(player)
@@ -43,14 +49,14 @@ if not gadgetHandler:IsSyncedCode() then
 						Spring.SendLuaUIMsg (positionRegex .. 1 .. player)
 						playerMarked[i] = true
 						--PlaySoundFile(snd)
-						--Spring.Echo("mark state: ",i,player, marked)
+						--Echo("mark state: ",i,player, marked)
 					end
 				else
 					if playerMarked[i] then
 						Spring.SendLuaUIMsg (positionRegex .. 0 .. player)
 						playerMarked[i] = false
 						--PlaySoundFile(snd)
-						--Spring.Echo("mark state: ",i,player, marked)
+						--Echo("mark state: ",i,player, marked)
 					end
 				end
 			end
@@ -59,7 +65,7 @@ if not gadgetHandler:IsSyncedCode() then
 	end
 	
 	function gadget:GameStart()
-		--Spring.Echo("State Broadcast ended")
+		--Echo("State Broadcast ended")
 		gadgetHandler:RemoveGadget(self)
 	end
 		
@@ -82,20 +88,12 @@ else
 			playerMarked[i] = false
 		end
 	end
-	
-	function gadget:GameStart()
-		--Spring.Echo("State Broadcast ended")
 		
-	end
-	
 	function gadget:GameFrame(frame)
 		-- Test if gadget is really removed
 		if frame > 0 then
 			gadgetHandler:RemoveGadget(self)
 		end
-		if frame%30 == 0 then
-			--Echo("Statebroadcast running for: " .. frame/30 .." seconds")
-		end	
 	end
 	
 end
