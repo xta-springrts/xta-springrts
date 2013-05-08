@@ -118,7 +118,12 @@ walk()
 	var spin_speed, movespeed, headingDelta, spinL, spinR;
 	while (1)
 	{
-		headingDelta = ((get HEADING) - oldHeading)*16;
+		headingDelta = (get HEADING) - oldHeading;
+		if (get ABS(headingDelta) > 16384) 
+			headingDelta=0;
+		else
+			headingDelta = headingDelta*24;
+		get PRINT(headingDelta);
 		oldHeading = get HEADING;
 		spin_speed = (get CURRENT_SPEED) * 100 / MaxSpeed * <1.800>;
 		spinL = spin_speed - headingDelta;
@@ -263,7 +268,7 @@ MotionControl()
 			if( !Floating )
 			{
 				set UPRIGHT to 1;
-				move body to y-axis [0.0] now;
+				//move body to y-axis [0.0] now;
 				Floating = 1;
 				call-script transform();
 				if (bMoving) start-script swim();
@@ -271,10 +276,12 @@ MotionControl()
 		}
 		else
 		{
+			/*
 			if( waterdepth < 0)
 				move body to y-axis (SHALLOWS_POS+waterdepth) now;
 			else
-				move body to y-axis [0.0] now;		
+				move body to y-axis [0.0] now;	
+			*/	
 			if( Floating )
 			{
 				set UPRIGHT to 0;
@@ -286,7 +293,7 @@ MotionControl()
 				if (bMoving) start-script walk();
 			}
 		}
-		sleep 66;
+		sleep 65;
 	}
 }
 
@@ -326,8 +333,8 @@ Create()
 	bMoving = FALSE;
 	oldHeading = get HEADING;
 	Floating = 0;
-	gun_1 = tur1;
-	gun_3 = tur1;
+	gun_1 = 0;
+	gun_3 = 0;
 	hide flare1a;
 	hide flare1b;
 	hide flare3a;
@@ -442,24 +449,23 @@ FireTertiary()
 		show flare3a;
 		sleep 150;
 		hide flare3a;
-		gun_3 = 1;
 	}
 	else if( gun_3 == 1 )
 	{
 		show flare3b;
 		sleep 150;
 		hide flare3b;
-		gun_3 = 2;
 	}
 	else if( gun_3 == 2 )
 	{
 		show flare3c;
 		sleep 150;
 		hide flare3c;
-		gun_3 = 0;
 		//Static_Var_1 = 0;
 		//call-script Reload();
 	}
+	++gun_3;
+	if (gun_3 > 2) gun_3 = 0;
 }
 
 AimFromPrimary(piecenum)
@@ -475,6 +481,7 @@ AimFromTertiary(piecenum)
 QueryPrimary(piecenum)
 {
 	piecenum = flare1a + gun_1;
+
 }
 
 QueryTertiary(piecenum)
