@@ -36,6 +36,8 @@ else
 	local splashCEG							= "verticalbomb"
 	local splashCEGshallow					= "torpedoold"
 	local shockCEG							= "torpedo"
+	local lavaCEG1							= "napalam"
+	local lavaCEG2							= "SMOKESHELL_Small"
 	--local duckCEG							= "blplasmaballbloom"
 	local duckSND							= 'sounds/ducks.ogg'
 	
@@ -48,6 +50,7 @@ else
 	local SetWatchWeapon					= Script.SetWatchWeapon
 	local volume 							= 3.0
 	local Channel	 						= 'battle'
+	local isLava 							= false
 	
 	
 	function gadget:Explosion(weaponID, px, py, pz, ownerID)
@@ -59,32 +62,37 @@ else
 		
 		-- Echo("Water depth = ", groundHeight, isWater, isShallow, py)
 		if not nonexplosiveWeapons[wType] and isWater and abs(py) <= aoe and py <= 0 then
-			if py > shallowHitLimit then -- hits close to water surface
-				SpawnCEG(splashCEG, px+random(-aoe,aoe), py, pz+random(-aoe,aoe),0,1,0,aoe,aoe)
-				if isShallow then SpawnCEG(splashCEGshallow, px, 0, pz) end
-			else -- subsurface hit
-				SpawnCEG(shockCEG, px+random(-aoe,aoe), py, pz+random(-aoe,aoe),0,1,0,aoe,aoe)
-				--Echo("Deep water explosion")
-			end
-			
-			if isShallow then
-				local rnd = random()
-				--Echo(rnd)
-				if rnd > 0.999 then
-					PlaySoundFile(duckSND, volume, px, 100, pz,0,0,0,Channel)
-					--SpawnCEG(duckCEG, px, py, pz,0,0,0,aoe,0)
-					--Echo("Some ducks were hit")
+			if isLava then
+				SpawnCEG(lavaCEG1, px+random(-aoe,aoe), py, pz+random(-aoe,aoe),0,1,0,aoe,aoe)
+			else
+				if py > shallowHitLimit then -- hits close to water surface
+					SpawnCEG(splashCEG, px+random(-aoe,aoe), py, pz+random(-aoe,aoe),0,1,0,aoe,aoe)
+					if isShallow then SpawnCEG(splashCEGshallow, px, 0, pz) end
+				else -- subsurface hit
+					SpawnCEG(shockCEG, px+random(-aoe,aoe), py, pz+random(-aoe,aoe),0,1,0,aoe,aoe)
+					--Echo("Deep water explosion")
+				end
+				
+				if isShallow then
+					local rnd = random()
+					--Echo(rnd)
+					if rnd > 0.999 then
+						PlaySoundFile(duckSND, volume, px, 100, pz,0,0,0,Channel)
+						--SpawnCEG(duckCEG, px, py, pz,0,0,0,aoe,0)
+						--Echo("Some ducks were hit")
+					end
 				end
 			end
-			
-			
-			
 		end
 		return false
 	end
 	
 	function gadget:Initialize()
-		
+		local waterColour = Game.waterBaseColor
+		if waterColour and waterColour[1] > waterColour[3] then
+			isLava = true
+		end
+		--Echo("Lava:", isLava)
 		for id,Def in pairs(WeaponDefs) do
 			if Def.damageAreaOfEffect ~= nil and Def.damageAreaOfEffect > 16 and not nonexplosiveWeapons[Def.type] then
 				SetWatchWeapon(Def.id, true)

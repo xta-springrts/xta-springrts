@@ -15,6 +15,8 @@ end
 local spGetUnitWeaponState 	= Spring.GetUnitWeaponState
 local spGetUnitPosition  	= Spring.GetUnitPosition 
 local CMD_ATTACK 			= CMD.ATTACK
+local Echo 					= Spring.Echo
+local errorCount 			= 0
 
 -- Constants
 local CMD_ATTACKBAD = 35577
@@ -32,7 +34,7 @@ local spAssignMouseCursor 	= Spring.AssignMouseCursor
 	function gadget:AllowCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdOptions, cmdTag, synced)
 		if cmdID == CMD_ATTACK and UnitDefs[unitDefID].isBuilding and #UnitDefs[unitDefID].weapons > 0 then
 			local range = spGetUnitWeaponState(unitID,0,"range")		
-			if cmdParams and cmdParams[3] ~= nil then
+			if cmdParams and cmdParams[3] ~= nil and range ~= nil then
 				local ux, _, uz = spGetUnitPosition(unitID)
 				local x, z = cmdParams[1], cmdParams[3]
 				local dx, dz = x-ux, z-uz
@@ -85,8 +87,14 @@ local spGetMouseState 		= Spring.GetMouseState
 									inRange = true
 									break
 								end
-							--else
-								--Echo("Range N/A",unitDef.name)
+							else
+								errorCount = errorCount + 1
+								if errorCount < 5 then 
+									Echo("Cursortoofar: Range = nil for ",unitDef.name)
+								else
+									Echo("Cursortoofar: Removing gadget due to errors")
+									gadgetHandler:RemoveGadget(self)
+								end
 							end
 						else
 							-- No weapons, but building still can attack. Return in range. Applies for example to labs, can set attack point

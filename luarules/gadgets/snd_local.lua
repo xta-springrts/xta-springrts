@@ -3,9 +3,9 @@ function gadget:GetInfo()
   return {
     name      = "snd_local",
     desc      = "Make sounds local based on LOS",
-	version   = "1.2",
+	version   = "1.3",
     author    = "Jools",
-    date      = "Jan, 2013",
+    date      = "May, 2013",
     license   = "GNU GPL, v2 or later",
     layer     = 0,
     enabled   = true,  --  loaded by default?
@@ -115,6 +115,8 @@ else
 	local sndwet = {}
 	local snddry = {}
 	local sndstart = {}
+	local sndlava =	{}
+	
 	local pID
 	local allyID
 	local pTable = {}
@@ -122,19 +124,38 @@ else
 	local volume 						= 3.0
 	local shallowLimit 					= -25
 	local shallowHitLimit				= -5
+	local isLava						= false
 	
 	local nonexplosiveWeapons = {
 		LaserCannon = true,
 		BeamLaser = true,
-		EmgCannon = true,
-		Flame = true,
 		LightningCannon = true,
 		DGun = true,
 	}
-
-
 	
+	local explosiveWeapons = {
+		MissileLauncher = true,
+		StarburstLauncher = true,
+		TorpedoLauncher = true,
+		Cannon = true,
+		AircraftBomb = true,
+	}
+		
 	function gadget:Initialize()
+	
+		local modOptions = Spring.GetModOptions()
+		
+		if modOptions and modOptions.globalsounds == '1' then
+			Echo("[" .. (self:GetInfo()).name .. "] local sounds disabled")
+			gadgetHandler:RemoveGadget(self)
+		end
+	
+		
+		local waterColour = Game.waterBaseColor
+		if waterColour and waterColour[1] > waterColour[3] then -- primitive check: more red than blue means lava
+			isLava = true
+		end
+		
 		
 		pID = GetLocalPlayerID()
 		allyID = GetLocalAllyTeamID()
@@ -144,21 +165,56 @@ else
 		for id, weaponDef in pairs(WeaponDefs) do
 			--if (weaponDef.name == nil or weaponDef.name:find("Disintegrator") == nil) then
 				if (weaponDef.customParams ~= nil) then
-					if weaponDef.customParams.soundhitwet and len(weaponDef.customParams.soundhitwet) > 0 then
-						sndwet[id] = weaponDef.customParams.soundhitwet
-						--Echo("Wet sound for:", id, weaponDef.name, ":", sndwet[id])
+					if isLava then
+						local aoe = weaponDef.damageAreaOfEffect
+						local loop = weaponDef.soundTrigger
+						local wType = weaponDef.type
+						local vel = weaponDef.startvelocity
+						local damage = weaponDef.damages[1]
+						-- Echo("Lava:",weaponDef.name, aoe, loop, wType, vel,damage)
+						
+						if nonexplosiveWeapons[wType] then
+							--Echo("Lava:",weaponDef.name, aoe, loop, wType, vel,damage)
+							if damage and damage > 100 then
+								sndlava[id] = 'sizzle'
+							end
+						elseif explosiveWeapons[wType] then
+							if damage and damage > 50 then
+								if damage < 80 then
+									sndlava[id] = 'magma1'
+								elseif damage < 120 then
+									sndlava[id] = 'magma2'
+								elseif damage < 200 then
+									sndlava[id] = 'magma3'
+								elseif damage < 350 then
+									sndlava[id] = 'magma4'
+								elseif damage < 750 then
+									sndlava[id] = 'lavaeruption1'
+								elseif damage >= 750 then
+									sndlava[id] = 'lavaeruption2'
+								end
+							end
+						end
+						Echo("Lava sound for: ", id, weaponDef.name, wType, damage, sndlava[id])
 					else
-						--Echo("No wet sound for:", id, weaponDef.name)
+						if weaponDef.customParams.soundhitwet and len(weaponDef.customParams.soundhitwet) > 0 then
+							sndwet[id] = weaponDef.customParams.soundhitwet
+							Echo("Wet sound for:", id, weaponDef.name, ":", sndwet[id])
+						else
+							Echo("No wet sound for:", id, weaponDef.name)
+						end
 					end
 					if weaponDef.customParams.soundhitdry and len(weaponDef.customParams.soundhitdry) > 0 then
 						snddry[id] = weaponDef.customParams.soundhitdry
+						--Echo("Dry sound for:", id, weaponDef.name, ":", snddry[id])
 					else
 						--Echo("No dry sound for:", id, weaponDef.name)
 					end
 					if weaponDef.customParams.soundstart and len(weaponDef.customParams.soundstart) > 0 then
 						sndstart[id] = weaponDef.customParams.soundstart
+						--Echo("Start sound for:", id, weaponDef.name, ":", sndstart[id])
 					else
-						--Echo("No start sound for:", id, weaponDef.name)
+						Echo("No start sound for:", id, weaponDef.name)
 					end
 				end
 			--end
@@ -177,6 +233,10 @@ else
 		end
 		for i, snd in pairs(snddry) do
 			--Echo("Testing dry sound:",i,snd)
+			PlaySoundFile("sounds/" .. snd .. ".wav",vol,0,0,0,0,0,0,Channel)
+		end
+		for i, snd in pairs(sndlava) do
+			--Echo("Testing lava sound:",i,snd)
 			PlaySoundFile("sounds/" .. snd .. ".wav",vol,0,0,0,0,0,0,Channel)
 		end
 		
@@ -228,31 +288,37 @@ else
 		local wType 
 		if WeaponDefs[weaponDefID] then wType = WeaponDefs[weaponDefID].type end
 		
-		--Echo("ProjectileExplosion: ", wType, LOS, x,y,z,ownerID,gh)
+		--Echo("ProjectileExplosion: ", wType, WeaponDefs[weaponDefID].damages[1])
 		
 		if LOS and weaponDefID then
-				if gh >= 0 then -- explosion on land
+			if gh >= 0 then -- explosion on land
 				if snddry[weaponDefID] then PlaySoundFile("sounds/"..snddry[weaponDefID]..".wav",volume,x,y,z,0,0,0,Channel) end
 				--Echo("Land")
 			else -- explosion on water
 				if y > 0 then -- hits something above water level, use dry sounds
 					if snddry[weaponDefID] then PlaySoundFile("sounds/"..snddry[weaponDefID]..".wav",volume,x,y,z,0,0,0,Channel) end
 					--Echo("On water but above water level")
-				else
-					if y > shallowHitLimit then -- projectile hits close to surface
-						if gh > shallowLimit then -- water is shallow
-							--Echo("Shallow water")
-							if snddry[weaponDefID] then PlaySoundFile("sounds/"..snddry[weaponDefID]..".wav",volume/2,x,y,z,0,0,0,Channel) end
-							if sndwet[weaponDefID] then PlaySoundFile("sounds/"..sndwet[weaponDefID]..".wav",volume/2,x,y,z,0,0,0,Channel) end
-							
-						else -- hits deep water
-							--Echo("Deep water")
+				else -- hits under or on water surface
+					if isLava then
+						--Echo("Lava hit",sndlava[weaponDefID])
+						if snddry[weaponDefID] then PlaySoundFile("sounds/"..snddry[weaponDefID]..".wav",volume/3,x,y,z,0,0,0,Channel) end
+						if sndlava[weaponDefID] then PlaySoundFile("sounds/"..sndlava[weaponDefID]..".wav",volume,x,y,z,0,0,0,Channel) end
+					else
+						if y > shallowHitLimit then -- projectile hits close to surface
+							if gh > shallowLimit then -- water is shallow
+								--Echo("Shallow water")
+								if snddry[weaponDefID] then PlaySoundFile("sounds/"..snddry[weaponDefID]..".wav",volume/2,x,y,z,0,0,0,Channel) end
+								if sndwet[weaponDefID] then PlaySoundFile("sounds/"..sndwet[weaponDefID]..".wav",volume/2,x,y,z,0,0,0,Channel) end
+								
+							else -- hits deep water
+								--Echo("Deep water")
+								if sndwet[weaponDefID] then PlaySoundFile("sounds/"..sndwet[weaponDefID]..".wav",volume,x,y,z,0,0,0,Channel) end
+							end
+						else -- projectile hits at a depth, ideally, there would be anoether type of explosion sound in this case. However,
+							-- this is already considered in weapon explosions, for example the wet sound of torpedoes is xplodep2, which is
+							-- a deep water sound. We still use standard wet sounds, this division is kept for future needs.
 							if sndwet[weaponDefID] then PlaySoundFile("sounds/"..sndwet[weaponDefID]..".wav",volume,x,y,z,0,0,0,Channel) end
 						end
-					else -- projectile hits at a depth, ideally, there would be anoether type of explosion sound in this case. However,
-						-- this is already considered in weapon explosions, for example the wet sound of torpedoes is xplodep2, which is
-						-- a deep water sound. We still use standard wet sounds, this division is kept for future needs.
-						if sndwet[weaponDefID] then PlaySoundFile("sounds/"..sndwet[weaponDefID]..".wav",volume,x,y,z,0,0,0,Channel) end
 					end
 				end
 			end

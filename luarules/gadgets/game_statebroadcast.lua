@@ -24,6 +24,7 @@ if not gadgetHandler:IsSyncedCode() then
 	local spGetTeamStartPosition = Spring.GetTeamStartPosition
 	local PlaySoundFile = Spring.PlaySoundFile
 	local snd = 'sounds/button11.wav'
+		
 	function gadget:Update()
 		--Spring.Echo("State Broadcasting...")
 		for i,player in ipairs(Spring.GetTeamList()) do
@@ -56,6 +57,12 @@ if not gadgetHandler:IsSyncedCode() then
 		end
 		return false
 	end
+	
+	function gadget:GameStart()
+		--Spring.Echo("State Broadcast ended")
+		gadgetHandler:RemoveGadget(self)
+	end
+		
 		
 	--function gadget:MapDrawCmd(playerID, cmdType, px, py, pz, labeltext) 
 		-- Spring.Echo("Yo yo")
@@ -78,7 +85,17 @@ else
 	
 	function gadget:GameStart()
 		--Spring.Echo("State Broadcast ended")
-		gadgetHandler:RemoveGadget(self)
+		
+	end
+	
+	function gadget:GameFrame(frame)
+		-- Test if gadget is really removed
+		if frame > 0 then
+			gadgetHandler:RemoveGadget(self)
+		end
+		if frame%30 == 0 then
+			--Echo("Statebroadcast running for: " .. frame/30 .." seconds")
+		end	
 	end
 	
 end
