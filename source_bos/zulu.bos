@@ -302,11 +302,12 @@ MotionControl()
 	while( TRUE )
 	{
 		waterdepth = get GROUND_WATER_HEIGHT(get UNIT_XZ);
+		//get PRINT(waterdepth, SHALLOWS);
 		if( waterdepth < SHALLOWS ) {
 			if( !Floating )
 			{
 				set UPRIGHT to 1;
-				move hull to y-axis [0.0] now;
+				//move hull to y-axis [0.0] now;
 				Floating = 1;
 				call-script transform();
 				if (bMoving) start-script swim();
@@ -314,10 +315,12 @@ MotionControl()
 		}
 		else
 		{
+			/*
 			if( waterdepth < 0)
 				move hull to y-axis (SHALLOWS_POS+waterdepth) now;
 			else
 				move hull to y-axis [0.0] now;		
+			*/
 			if( Floating  )
 			{
 				set UPRIGHT to 0;
