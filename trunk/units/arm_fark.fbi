@@ -69,7 +69,7 @@
 	canstop=1;
 	upright=1;
 	autoheal=2;
-	canfight=0;
+	canFight=1;
 	
 	//************************************************************
 	//  Movement

@@ -48,7 +48,7 @@
 	mobilestandorders=1;
 	standingmoveorder=1;
 	canguard=1;
-	canfight=0;
+	canFight=1;
 	steeringmode=1;
 	maneuverleashlength=640;
 	collisionVolumeType = box;
