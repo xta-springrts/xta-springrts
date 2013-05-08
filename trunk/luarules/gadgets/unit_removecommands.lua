@@ -160,6 +160,7 @@ local RemoveAreaAttack = {
 local RemoveUnitCmdDesc 			= Spring.RemoveUnitCmdDesc
 local FindUnitCmdDesc				= Spring.FindUnitCmdDesc
 local EditUnitCmdDesc				= Spring.EditUnitCmdDesc
+local GetUnitDefID					= Spring.GetUnitDefID
 local cmdWait 						= 5 -- "Wait" ID = "5"
 local cmdStop						= 0 -- "Stop" ID = "0"
 local cmdMove						= 10 -- "Move" ID = "10"

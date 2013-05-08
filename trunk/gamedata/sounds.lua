@@ -208,7 +208,17 @@ local explosionsList  = {
 		'xplosml3.wav',
 		'xplosml4.wav',
 		'xplosml6.wav',
-		'xtanewnuke.wav'
+		'xtanewnuke.wav',
+		'magma1.wav',
+		'magma2.wav',
+		'magma3.wav',
+		'magma4.wav',
+		'lavasplash1.wav',
+		'lavasplash2.wav',
+		'lavaloop1.wav',
+		'lavaloop2.wav',
+		'lavaeruption1.wav',
+		'lavaeruption2.wav',
 		}
 
 local guiList = {
@@ -262,6 +272,17 @@ for i =1,#files do
 		}
 	elseif explosionSounds[shortName] then
 		if shortname == 'xplomas2.wav' then --DGUN sound
+			t[fileName]  = {
+			file      = fileName;
+			gainmod   = 0.2;
+			gain  = 1;
+			rolloff  = 0.4;
+			maxconcurrent  = 1;
+			pitchmod  = 0.05;
+			maxdist  = 5000;
+			priority  = -2;
+			}
+		elseif shortname == 'sizzle.wav' then --DGUN water sound
 			t[fileName]  = {
 			file      = fileName;
 			gainmod   = 0.2;

@@ -225,7 +225,7 @@ end
 ---    dguns are excluded from this since the gadget breaks Spring's ability to
 ---    limit playback concurrency which we want for the dgun's explosion sounds
 ---    EDIT: Jan, 25: Should be fixed now, so dguns are again included
-if modOptions.globalsounds and not tobool(modOptions.globalsounds) then
+if modOptions == nil or (modOptions.globalsounds and modOptions.globalsounds == '0') then
 	Spring.Echo("Weapons_post: Local sound option detected, moving sounds to customparams")
 
 	for id, weaponDef in pairs(WeaponDefs) do
