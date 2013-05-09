@@ -21,6 +21,21 @@
     ศอออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออผ
     Logo by ElementalGizmo
 
+XTA 9.728 ------------------ by Deadnight Warrior, Jools and Noruas
+---------
+* Fix landboat transition from land to water
+* Improve commander selection widget (remembers selection from last game, better countdown text)
+* Bugfixes for minelayer and buildspeed gadgets (probable cause for error: builder died)
+* New sounds for D-Gun, Arm Penetrator and Core Doomsday machine. Sounds by Noruas. Should be less disturbing.
+* Update cursor out of range gadget. It now gets range from engine. Cursor will still show bad attack cursor if 
+  attack is blocked, but attack order is only dropped if it is outside of range (only for turrets).
+* New splash sound for lava maps.
+* Builders can now again fight.
+* Fix hitsoundwet sound for Arm Bulldog
+* Optimise MinimapX gadget to use less fps
+* Force some gadgets that wouldn't unload to really do it (gadgets that have synced and unsynced parts).
+
+	
 XTA 9.727 ------------------ by Deadnight Warrior, Jools 
 ---------
 * Widget to set commander as member of group number 1 on gamestart (default disabled).
