@@ -33,7 +33,7 @@ XTA 9.728 ------------------ by Deadnight Warrior, Jools and Noruas
 * Builders can now again fight.
 * Fix hitsoundwet sound for Arm Bulldog
 * Optimise MinimapX gadget to use less fps
-* Force some gadgets that wouldn't unload to really do it (gadgets that have synced and unsynced parts).
+* Force some gadgets that wouldn't unload to really do so (gadgets that have synced and unsynced parts).
 
 	
 XTA 9.727 ------------------ by Deadnight Warrior, Jools 
