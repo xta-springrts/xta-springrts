@@ -219,6 +219,8 @@ local explosionsList  = {
 		'lavaloop2.wav',
 		'lavaeruption1.wav',
 		'lavaeruption2.wav',
+		'annigun1beamlaser.wav',
+		'xplomas2dgun.wav',
 		}
 
 local guiList = {
@@ -271,7 +273,7 @@ for i =1,#files do
 		in3d = 0;
 		}
 	elseif explosionSounds[shortName] then
-		if shortname == 'xplomas2.wav' then --DGUN sound
+		if shortname == 'xplomas2dgun.wav' then --DGUN sound
 			t[fileName]  = {
 			file      = fileName;
 			gainmod   = 0.2;

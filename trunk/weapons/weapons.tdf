@@ -1007,7 +1007,7 @@
 	weaponvelocity=900;
 	areaofeffect=8;
 	targetMoveError=0.5;
-	soundstart=annigun1;
+	soundstart=annigun1beamlaser;// was annigun1
 	SoundTrigger=1;
 	soundhitdry=xplolrg1;
 	firestarter=90;
@@ -2092,7 +2092,7 @@
 	areaofeffect=48;
 	soundtrigger=1;
 	soundstart=disigun1;
-	soundhitdry=xplomas2;
+	soundhitdry=xplomas2dgun;//was xplomas2
 	firestarter=70;
 	noexplode=1;
 	commandfire=1;
@@ -2577,7 +2577,7 @@
 	areaofeffect=48;
 	soundtrigger=1;
 	soundstart=disigun1;
-	soundhitdry=xplomas2;
+	soundhitdry=xplomas2dgun; //was xplomas2
 	firestarter=70;
 	noexplode=1;
 	commandfire=1;
@@ -3171,7 +3171,7 @@
 	areaofeffect=48;
 	soundtrigger=1;
 	soundstart=GUNHUGE;
-	soundhitdry=xplomas2;
+	soundhitdry=xplomas2dgun;// was xplomas2
 	firestarter=70;
 	noexplode=1;
 	commandfire=1;
@@ -3204,7 +3204,7 @@
 	areaofeffect=48;
 	soundtrigger=1;
 	soundstart=GUNHUGE;
-	soundhitdry=xplomas2;
+	soundhitdry=xplomas2dgun; //was xplomas2
 	firestarter=70;
 	noexplode=1;
 	commandfire=1;
@@ -3236,7 +3236,7 @@
 	areaofeffect=48;
 	soundtrigger=1;
 	soundstart=GUNHUGE;
-	soundhitdry=xplomas2;
+	soundhitdry=xplomas2dgun;//was xplomas2
 	firestarter=70;
 	noexplode=1;
 	commandfire=1;
@@ -3265,7 +3265,7 @@
 	weaponvelocity=1000;
 	areaofeffect=8;
 	targetMoveError=0.5;
-	soundstart=annigun1;
+	soundstart=annigun1beamlaser;//was annigun1
 	soundhitdry=xplosml4;
 	SoundTrigger=1;
 	firestarter=90;

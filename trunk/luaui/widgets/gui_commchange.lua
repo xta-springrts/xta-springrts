@@ -27,14 +27,19 @@ local mid = px + sizex/2
 local th = 16 -- text height for buttons
 local th2 = 11 -- text height for body text
 local th3 = 20 -- text height for player names
-local imgComAA = "LuaUI/Images/commchange/ComAA.png" -- arm auto
-local imgComAM = "LuaUI/Images/commchange/ComAM.png" -- arm manual
-local imgComAAD = "LuaUI/Images/commchange/ComAAD.png" -- arm auto disabled
-local imgComAMD = "LuaUI/Images/commchange/ComAMD.png" -- arm manual disabled
-local imgComCA = "LuaUI/Images/commchange/ComCA.png" -- core auto
-local imgComCM = "LuaUI/Images/commchange/ComCM.png"
-local imgComCAD = "LuaUI/Images/commchange/ComCAD.png" -- core auto disabled
-local imgComCMD = "LuaUI/Images/commchange/ComCMD.png"
+local imgComAA 				= "LuaUI/Images/commchange/ComAA.png" -- arm auto
+local imgComAM 				= "LuaUI/Images/commchange/ComAM.png" -- arm manual
+local imgComAAD 			= "LuaUI/Images/commchange/ComAAD.png" -- arm auto disabled
+local imgComAMD 			= "LuaUI/Images/commchange/ComAMD.png" -- arm manual disabled
+local imgComCA 				= "LuaUI/Images/commchange/ComCA.png" -- core auto
+local imgComCM			 	= "LuaUI/Images/commchange/ComCM.png"
+local imgComCAD 			= "LuaUI/Images/commchange/ComCAD.png" -- core auto disabled
+local imgComCMD 			= "LuaUI/Images/commchange/ComCMD.png"
+
+local img3 					= "LuaUI/Images/commchange/3-cnt.png"
+local img2 					= "LuaUI/Images/commchange/2-cnt.png"
+local img1 					= "LuaUI/Images/commchange/1-cnt.png"
+local img0 					= "LuaUI/Images/commchange/0-cnt.png"
 
 -- commanders
 local armauto = UnitDefNames["arm_commander"].id
@@ -282,6 +287,12 @@ end
 
 function widget:DrawScreenEffects(vsx, vsy)
 	
+	local h = 500
+	local x = vsx/2 - h/2
+	local y = vsy/2 - h/2
+	local x1 = x + h
+	local y1 = y + h
+	
 	local function drawBorder(x0, y0, x1, y1, width)
 		glRect(x0, y0, x1, y0 + width)
 		glRect(x0, y1, x1, y1 - width)
@@ -292,8 +303,24 @@ function widget:DrawScreenEffects(vsx, vsy)
 	--CountDown
 	if gameState == 2 then
 		--UseFont(font)
+		glColor(0.8, 0.8, 1, 1)
+		
+		if cntDown == "3" then
+			glTexture(img3)
+		elseif cntDown == "2" then
+			glTexture(img2)
+		elseif cntDown == "1" then
+			glTexture(img1)
+		elseif cntDown == "0" then
+			glTexture(img0)
+		else
+			Spring.Echo(cntDown)
+		end
+		
+		glTexRect(x,y,x1,y1)
 		glColor(1, 1, 1, 1)
-		glText(cntDown, vsx/2, vsy/2+100, 160, 'xsn')
+		--glText(cntDown, vsx/2, vsy/2+100, 160, 'xsn')
+		
 		if cntDown ~= lastCount then
 			Spring.PlaySoundFile(tock)
 			lastCount = cntDown

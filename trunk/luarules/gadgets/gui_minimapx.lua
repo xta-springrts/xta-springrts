@@ -67,35 +67,25 @@ if gadgetHandler:IsSyncedCode() then
 				local x,y,z = GetProjectilePosition(projectileID)
 				local inRadar = IsPosInRadar(x, y, z, clientAllyID)
 				local teamID = GetUnitTeam(projectileOwnerID)
-				tainsert(nukeList,{projectileID, x,y,z, inRadar,teamID})
+				nukeList[projectileID] = {x,y,z, inRadar,teamID}
 				--Echo("Nuke added:",#nukeList, inRadar, projectileOwnerID,teamID)
 			end
 		end
 	end
 
 	function gadget:ProjectileDestroyed(projectileID)
-		for i=1, #nukeList do
-			if nukeList[i][1] == projectileID then
-				taremove(nukeList,i)
-				return
-			end
-		end
-		--[[
-		for i,array in ipairs(nukeList) do
-			if array[1] == projectileID then  return end	
-		end
-		--]]
+		nukeList[projectileID] = nil
 	end
 	
 	function gadget:GameFrame(frame)
-		if frame%3 == 0 then
-			for i,array in ipairs(nukeList) do
-				local x,y,z = GetProjectilePosition(array[1])
-				local inRadar = IsPosInRadar(x, y, z, clientAllyID)
-				array[2] = x
-				array[3] = y
-				array[4] = z
-				array[5] = inRadar
+		if frame%4 == 0 then
+			for i,array in pairs(nukeList) do
+				local x,y,z = GetProjectilePosition(i)
+				--local inRadar = IsPosInRadar(x, y, z, clientAllyID)
+				array[1] = x
+				array[2] = y
+				array[3] = z
+				array[4] = true
 			end
 			_G.nukeList = nukeList
 		end
@@ -128,7 +118,7 @@ else
 	local glColor = gl.Color
 	local glText = gl.Text
 	local glPopMatrix = gl.PopMatrix
-	local sipairs = sipairs
+	local spairs = spairs
 	
 	local mapX = Game.mapX * 512
 	local mapY = Game.mapY * 512
@@ -146,15 +136,15 @@ else
 			local ratioX = sx / mapX
 			local ratioY = sy / mapY
 			glPushMatrix()
-			for i, nuke in sipairs(drawList) do
+			for _, nuke in spairs(drawList) do
 				--local id = nuke[1]
-				local x = nuke[2]
-				local y = nuke[4]
-				local inRadar = nuke[5]
-				local teamID = nuke[6]
+				local x = nuke[1]
+				local y = nuke[3]
+				local inRadar = nuke[4]
+				local teamID = nuke[5]
 				local red, green, blue = GetTeamColor(teamID)
 				glColor(red, green, blue, 1)
-				--Echo("Nuke ",i, x,y, inRadar)
+				--Echo("Nuke ", x,y, inRadar)
 				if inRadar then
 					glText("X", x*ratioX, sy-y*ratioY, 10, 'cv')
 				end
