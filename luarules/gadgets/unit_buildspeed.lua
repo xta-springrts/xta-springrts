@@ -180,6 +180,10 @@ function gadget:GameFrame(n)
 end
 
 function gadget:AllowUnitBuildStep(builderID, builderTeamID, uID, uDefID, step)
+	if not buildspeedlist[builderID] then
+		--Spring.Echo("Error in unit buildspeed gadget. Variables: ", builderID, buildspeedlist[builderID])
+		return nil
+	end
     return (step <= 0) or not (buildspeedlist[builderID].mode==0 and ((teamMetalStalling[builderTeamID] and requiresMetal[uDefID]) or (teamEnergyStalling[builderTeamID] and requiresEnergy[uDefID])))
 end
 function gadget:AllowCommand(unitID, unitDefID, teamID, cmdID, cmdParams, _)
