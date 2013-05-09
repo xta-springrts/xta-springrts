@@ -162,7 +162,7 @@ if (gadgetHandler:IsSyncedCode()) then
 				else
 					local pendingMines = countMineQueue(unitID, stock)
 					if not stock or not pendingMines then
-						Echo("Error in minelayer limit. Stock:", stock, " Queue: ", pendingMines)
+						Echo("Error in minelayer limit gadget. Stock:", stock, " Queue: ", pendingMines)
 					end
 					if  stock > pendingMines then
 						return true
