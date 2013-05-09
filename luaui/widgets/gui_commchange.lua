@@ -80,6 +80,7 @@ local cntDown = -1
 local lastCount
 local pStates
 local markedStates = {}
+local lastStartID
 
 local strInfo
 local infoOn = false
@@ -233,6 +234,22 @@ function widget:Initialize()
 		markedStates[i] = false
 	end
 	
+	--set default startID
+	if lastStartID then
+		if lastStartID == armauto then
+			spSendLuaRulesMsg('\177' .. armauto)
+			spSendLuaUIMsg('195' .. 1)
+		elseif lastStartID == armman then
+			spSendLuaRulesMsg('\177' .. armman)
+			spSendLuaUIMsg('195' .. 1)
+		elseif lastStartID == coreauto then
+			spSendLuaRulesMsg('\177' .. coreuto)
+			spSendLuaUIMsg('195' .. 2)
+		elseif lastStartID == coreman then
+			spSendLuaRulesMsg('\177' .. coreman)
+			spSendLuaUIMsg('195' .. 2)
+		end
+	end
 end
 
 function widget:RecvLuaMsg(msg, playerID)
@@ -633,9 +650,11 @@ function widget:MousePress(mx, my, mButton)
 					if startID == coreauto then
 						spSendLuaRulesMsg('\177' .. armauto)
 						spSendLuaUIMsg('195' .. 1)
+						lastStartID = armauto
 					else
 						spSendLuaRulesMsg('\177' .. armman)
 						spSendLuaUIMsg('195' .. 1)
+						lastStartID = armman
 					end
 					playSound(button)
 				end
@@ -644,9 +663,11 @@ function widget:MousePress(mx, my, mButton)
 					if startID == armauto then
 						spSendLuaRulesMsg('\177' .. coreauto)
 						spSendLuaUIMsg('195' .. 2)
+						lastStartID = coreauto
 					else
 						spSendLuaRulesMsg('\177' .. coreman)
 						spSendLuaUIMsg('195' .. 2)
+						lastStartID = coreman
 					end
 					playSound(button)
 				end
@@ -655,9 +676,11 @@ function widget:MousePress(mx, my, mButton)
 					if startID == armman then
 						spSendLuaRulesMsg('\177' .. armauto)
 						spSendLuaUIMsg('195' .. 1)
+						lastStartID = armauto
 					else
 						spSendLuaRulesMsg('\177' .. coreauto)
 						spSendLuaUIMsg('195' .. 2)
+						lastStartID = coreauto
 					end
 					playSound(button)
 				end
@@ -666,9 +689,11 @@ function widget:MousePress(mx, my, mButton)
 					if startID == armauto then
 						spSendLuaRulesMsg('\177' .. armman)
 						spSendLuaUIMsg('195' .. 1)
+						lastStartID = armman
 					else
 						spSendLuaRulesMsg('\177' .. coreman)
 						spSendLuaUIMsg('195' .. 2)
+						lastStartID = coreman
 					end
 					playSound(button)
 				end
@@ -772,8 +797,8 @@ function widget:IsAbove(mx,my)
 end
 
 function widget:GameStart()
-	Spring.PlaySoundFile(bell)
-	Spring.PlaySoundFile(beep)
+	Spring.PlaySoundFile(bell,4.0,0,0,0,0,0,0,'userinterface')
+	Spring.PlaySoundFile(beep,4.0,0,0,0,0,0,0,'unitreply')
     widgetHandler:RemoveWidget(self)
 end
 
@@ -787,13 +812,18 @@ function IsOnButton(x, y, BLcornerX, BLcornerY,TRcornerX,TRcornerY)
 
 end
 
-function widget:GetConfigData()
+function widget:GetConfigData() -- Save
 	local vsx, vsy = gl.GetViewSizes()
-	return {px / vsx, py / vsy}
+	return {
+		px / vsx,
+		py / vsy,
+		lastStartID = lastStartID
+		}
 end
 
-function widget:SetConfigData(data)
+function widget:SetConfigData(data) -- Load
 	local vsx, vsy = gl.GetViewSizes()
 	px = math.floor(math.max(0, vsx * math.min(data[1] or 0, 0.95)))
 	py = math.floor(math.max(0, vsy * math.min(data[2] or 0, 0.95)))
+	lastStartID = data.lastStartID or lastStartID
 end
