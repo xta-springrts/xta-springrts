@@ -123,7 +123,6 @@ walk()
 			headingDelta=0;
 		else
 			headingDelta = headingDelta*24;
-		get PRINT(headingDelta);
 		oldHeading = get HEADING;
 		spin_speed = (get CURRENT_SPEED) * 100 / MaxSpeed * <1.800>;
 		spinL = spin_speed - headingDelta;
