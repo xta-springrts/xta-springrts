@@ -202,6 +202,14 @@ local options = {
 		section= "xtagame",
 	},
 	{
+		key    = "critters",
+		name   = 'Enable cute animals?',
+		desc   = "on some maps critters will they wiggle and wubble around",
+		type   = "bool",
+		def    = true,
+		section= "xtagame",
+	},
+	{
 		key    = "rockettoggle",
 		name   = "Enable togglable rocket type?",
 		desc   = "** ThirdParty ** Enable additional rocket type for several rocket/missile units  Author: Deadnight Warrior\nkey: rockettoggle",
@@ -388,6 +396,7 @@ local options = {
 		name = "enable MoveDef depth-modifiers",
 		desc = "determines if ground-units slow down in water",
 	},
+	
 
 	--[[ Removed till spawner is fixed
 	{
