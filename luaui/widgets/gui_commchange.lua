@@ -243,7 +243,7 @@ function widget:Initialize()
 			spSendLuaRulesMsg('\177' .. armman)
 			spSendLuaUIMsg('195' .. 1)
 		elseif lastStartID == coreauto then
-			spSendLuaRulesMsg('\177' .. corauto)
+			spSendLuaRulesMsg('\177' .. coreauto)
 			spSendLuaUIMsg('195' .. 2)
 		elseif lastStartID == coreman then
 			spSendLuaRulesMsg('\177' .. coreman)
