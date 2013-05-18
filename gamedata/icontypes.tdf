@@ -120,5 +120,12 @@
 		distance=1;
 		size=1.1;
 	}
+	[blank]
+	{
+		bitmap=icons/blank.png;
+		radiusadjust=1;
+		distance=1;
+		size=0.1;
+	}
 }
 
