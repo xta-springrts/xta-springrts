@@ -32,7 +32,6 @@ function gadget:Initialize()
 	Spring.Echo ("gaia_critters.lua: gadget:Initialize() Game.mapName=" .. Game.mapName)
 	if not critterConfig[Game.mapName] then Spring.Echo ("no critter config for this map") return end	
 	for key, cC in pairs (critterConfig[Game.mapName]) do
-	
 		for unitName, unitAmount in pairs (cC.unitNames) do
 			--Spring.Echo ("***"..unitName .. " " .. unitAmount)			
 			for i=1, unitAmount do
@@ -41,7 +40,11 @@ function gadget:Initialize()
 					local x = math.random (cC.spawnBox.x1, cC.spawnBox.x2)
 					local z = math.random (cC.spawnBox.z1, cC.spawnBox.z2)
 					unitID = Spring.CreateUnit (unitName,x,100,z, 0, GaiaTeamID)
-					randomPatrolInBox (unitID, cC.spawnBox)
+					if unitID then
+						randomPatrolInBox (unitID, cC.spawnBox)
+					else
+						Spring.Echo("Failed to create " .. unitName)
+					end
 				end
 				if cC.spawnCircle then
 					local a = math.rad (math.random (0,360))
@@ -49,12 +52,18 @@ function gadget:Initialize()
 					local x = cC.spawnCircle.x + (math.sin (a)*r)
 					local z = cC.spawnCircle.z + (math.cos (a)*r)
 					unitID = Spring.CreateUnit (unitName,x,100,z, 0, GaiaTeamID)
-					randomPatrolInCircle (unitID, cC.spawnCircle)
+					if unitID then
+						randomPatrolInCircle (unitID, cC.spawnCircle)
+					else
+						Spring.Echo("Failed to create " .. unitName)
+					end
 				end
-				--Spring.Echo ("i:"..i)				
-				Spring.SetUnitNeutral (unitID, true)
-				Spring.SetUnitNoSelect (unitID, true)
-				critterUnits[unitID] = true				
+				--Spring.Echo ("i:"..i)
+				if unitID then
+					Spring.SetUnitNeutral (unitID, true)
+					Spring.SetUnitNoSelect (unitID, true)
+					critterUnits[unitID] = true
+				end
 			end			
 		end		
 	end
