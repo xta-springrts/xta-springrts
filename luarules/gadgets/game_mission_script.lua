@@ -883,14 +883,29 @@ local glDrawGroundQuad = gl.DrawGroundQuad
 local glBeginText = gl.BeginText
 local glEndText = gl.EndText
 local glText = gl.Text
+local glPushMatrix = gl.PushMatrix
+local glTranslate = gl.Translate
+local glPopMatrix = gl.PopMatrix
+local glBeginEnd = gl.BeginEnd
+local glVertex = gl.Vertex
+local glDepthMask = gl.DepthMask
+local glDepthTest = gl.DepthTest
+local glCallList = gl.CallList
+local glBlending = gl.Blending
 local spGetMyTeamID = Spring.GetMyTeamID
+
+local sin				= math.sin
+local cos				= math.cos
+
 local lastGameFrame = 0
 local lastMessageFrame = -1
 
 local X, Y = Spring.GetViewGeometry()
 local msgX, msgY = X/4, Y*0.0625
 local fs = 18*Y/1200
-
+local pi2 = 6.283185307179586
+local segs = 24
+local step = pi2/segs
 
 local gameData, locations, messages = {}, {}, {}
 
@@ -918,32 +933,48 @@ local function ScreenMessage(_, mess, dur, teamID)
 	end
 end
 
+local locCircles = {}
+
 function gadget:Initialize()
 	if modOptions and modOptions.mission then
 		local mission = "Missions/" .. modOptions.mission ..".lua"
 		if VFS.FileExists(mission) then
-			gameData, _, _, locations = include(mission)
+			gameData, _, missionTriggers, locations = include(mission)
 			if gameData.game == Game.modShortName and gameData.minVersion <= Game.modVersion then
 				if gameData.map ~= Game.mapName then
 					gadgetHandler:RemoveGadget()
 				else
-					gadgetHandler:AddSyncAction('LocationVisibilty', LocationVisibilty)
-					gadgetHandler:AddSyncAction('BonusUnits', BonusUnits)
-					gadgetHandler:AddSyncAction('ScreenMessage', ScreenMessage)
-					--[[	abort removing of gadget if there are no visible locations at start, that can change by trigger actions
-							mission messages are also printed via unsynced rendering
-					local i=1
-					while i <= #locations do	-- remove from location list all locations that aren't drawn on ground
-						if not locations[i].visible or locations[i].visible==false then
-							table.remove(locations, i)
+					if #locations==0 and #missionTriggers==0 then	-- no triggers and locations, nothing to do, unload
+						gadgetHandler:RemoveGadget()
+					else
+						if #locations==0 then	-- no locations, no rendering needed
+							gadgetHandler:RemoveCallIn(DrawWorldPreUnit)
 						else
-							i=i+1
+							gadgetHandler:AddSyncAction('LocationVisibilty', LocationVisibilty)
+							for ln, loc in pairs(locations) do	-- Create one display list for each circular location
+								if loc.shape == "C" then
+									local x,z,r = loc.X, loc.Z, loc.r
+									locCircles[ln] = gl.CreateList(function()
+										glBeginEnd(GL.TRIANGLE_FAN,function()
+											glVertex(x, spGetGroundHeight(loc.X, loc.Z), z)
+											for t=0.0, pi2, step do
+												rs, rc = loc.X + r*sin(t), loc.Z + r*cos(t)
+												glVertex(rc, spGetGroundHeight(rc, rs), rs)
+											end
+										end)
+									end)
+								end
+							end
+						end
+						if #missionTriggers==0 then	-- no triggers, no mission messages or bonus units possible
+							gadgetHandler:RemoveCallIn("Update")
+							gadgetHandler:RemoveCallIn("DrawScreen")
+						else
+							gadgetHandler:AddSyncAction('ScreenMessage', ScreenMessage)
+							gadgetHandler:AddSyncAction('BonusUnits', BonusUnits)
 						end
 					end
-					if #locations == 0 then
-						gadgetHandler:RemoveGadget()	-- there are no locations that need drawing
-					end
-					--]]
+					gameData, missionTriggers = nil, nil	-- kill tables, not needed any more
 				end
 			else
 				gadgetHandler:RemoveGadget()
@@ -977,8 +1008,12 @@ end
 
 function gadget:DrawWorldPreUnit()
 	local alpha = abs(spGetGameFrame() % 60 - 30)/30
-	glLineWidth(10)
-	for _, loc in pairs(locations) do
+	--glLineWidth(10)
+	--glDepthMask(false)
+	glDepthTest(GL.LEQUAL)
+	glPushMatrix()
+	glTranslate(0, 5, 0)
+	for ln, loc in pairs(locations) do
 		if loc.visible then
 			if loc.RGB then
 				local c = loc.RGB
@@ -987,12 +1022,14 @@ function gadget:DrawWorldPreUnit()
 				glColor(1.0, 1.0, 1.0, alpha)
 			end
 			if loc.shape=="C" then
-				glDrawGroundCircle(loc.X, spGetGroundHeight(loc.X, loc.Z), loc.Z, loc.r-3, 24)
+				--glDrawGroundCircle(loc.X, spGetGroundHeight(loc.X, loc.Z), loc.Z, loc.r-3, 24)
+				glCallList(locCircles[ln])
 			elseif loc.shape=="R" then
 				glDrawGroundQuad(loc.X1, loc.Z1, loc.X2, loc.Z2)
 			end
 		end
 	end
+	glPopMatrix()
 end
 
 function gadget:DrawScreen()
