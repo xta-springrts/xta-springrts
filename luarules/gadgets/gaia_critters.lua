@@ -5,7 +5,7 @@ function gadget:GetInfo()
     author    = "knorke",
     date      = "2013",
     license   = "horse",
-    layer     = -10,
+    layer     = -100, --negative, otherwise critters spawned by gadget do not disappear on death (spawned with /give they always die)
     enabled   = true,
 	}
 end

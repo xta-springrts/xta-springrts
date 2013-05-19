@@ -6,11 +6,16 @@ function gadget:GetInfo()
    author    = "Jools",
    date      = "Apr, 2013", 
    license   = "Public Domain",
-   layer     = 0,
+   layer     = 1,
    enabled   = true, --enabled by default
    handler   = true, --access to handler
    }
 end
+
+--adding this was first try at making it not fail with critters. but it just completly disables i think.
+--if (not gadgetHandler:IsSyncedCode()) then
+--	return false
+--end
 
 local RemoveWait = {
 	[UnitDefNames.arm_advanced_radar_tower.id] = true,
@@ -181,7 +186,11 @@ function gadget:Initialize()
 	end
 end
 
+local GaiaTeamID  = Spring.GetGaiaTeamID ()
 function gadget:UnitCreated(unitID, unitDefID, teamID, builderID)
+	--somehow this gadget does not like the critters. so just do not try to edit their buttons.
+	if teamID == GaiaTeamID then return end
+	
 	--remove wait command
 	if RemoveWait[unitDefID] then
 		local cmdDescID = FindUnitCmdDesc(unitID, cmdWait)
@@ -229,7 +238,11 @@ function gadget:UnitCreated(unitID, unitDefID, teamID, builderID)
 	
 	-- add self-d button
 	local cmdDescID = FindUnitCmdDesc(unitID, cmdSelfD)
-	EditUnitCmdDesc(unitID, cmdDescID, {hidden = false,name = "Destruct"})
+	if (cmdDescID) then --just to be sure
+		EditUnitCmdDesc(unitID, cmdDescID, {hidden = false,name = "Destruct"})
+	else
+		Spring.Echo ("unit ", unitID, " had no FindUnitCmdDesc(unitID, cmdSelfD)")
+	end
 	--Spring.InsertUnitCmdDesc(unitID, cmd
 end
 
