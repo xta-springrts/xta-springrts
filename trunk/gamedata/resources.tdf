@@ -54,6 +54,7 @@
 			laserend=laserend.tga;
 			laserfalloff=laserfalloff.tga;
 			randdots=randdots.tga;
+			dirt=dirt.png;
 			smoketrail=smoketrail.tga;
 			wake=wake.png;
 			flare=flare.tga;
