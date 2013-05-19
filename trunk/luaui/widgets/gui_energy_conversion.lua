@@ -68,9 +68,9 @@ function widget:DrawScreen()
     
     -- Var
     local myTeamID = spGetMyTeamID()
-    local curLevel = spGetTeamRulesParam(myTeamID, 'mmLevel')
-    local curUsage = spGetTeamRulesParam(myTeamID, 'mmUse')
-    local curCapacity = spGetTeamRulesParam(myTeamID, 'mmCapacity')
+    local curLevel = spGetTeamRulesParam(myTeamID, 'mmLevel') or 0
+    local curUsage = spGetTeamRulesParam(myTeamID, 'mmUse') or 0
+    local curCapacity = spGetTeamRulesParam(myTeamID, 'mmCapacity') or 0
 	local Mprod = curUsage/60
 	local display
 	if Mprod >= 1 then 
