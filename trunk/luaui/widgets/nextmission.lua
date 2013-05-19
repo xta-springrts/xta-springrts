@@ -27,6 +27,7 @@ local spGetUnitDefID = Spring.GetUnitDefID
 local spGetUnitHealth = Spring.GetUnitHealth
 local spGetUnitExperience = Spring.GetUnitExperience
 local spValidUnitID = Spring.ValidUnitID
+local spGetViewGeometry = Spring.GetViewGeometry
 
 local glColor = gl.Color
 local glRect = gl.Rect
@@ -40,8 +41,8 @@ local glText = gl.Text
 local glTexture = gl.Texture
 
 local dispBrief = true
-local X, Y = Spring.GetViewGeometry()
-local scale = Y/1200
+local X, Y = spGetViewGeometry()
+local X_2, scale = X*0.5, Y/1200
 local fs
 local lef, rig, top, bot = (X-Y*1.333*.8)*0.5, (X+Y*1.333*.8)*0.5, .9*Y, .1*Y
 local okL, okR, okT, okB
@@ -63,6 +64,14 @@ local function SetBonusUnits(unitID)
 	bonUnits[#bonUnits+1] = unitID
 end
 
+function widget:ViewResize(viewSizeX, viewSizeY)
+	X, Y = spGetViewGeometry()
+	X_2, scale = X*0.5, Y/1200
+	fs = 23 * scale
+	lef, rig, top, bot = (X-Y*1.333*.8)*0.5, (X+Y*1.333*.8)*0.5, .9*Y, .1*Y
+	okL, okR, okT, okB = X_2-2*fs, X_2+2*fs, bot+3*fs, bot+fs
+end
+
 function widget:Initialize()
 	if modOptions and modOptions.mission then
 		local mission = "Missions/" .. modOptions.mission ..".lua"
@@ -78,7 +87,7 @@ function widget:Initialize()
 						dispBrief = false
 					else
 						fs = 23 * scale
-						okL, okR, okT, okB = X*0.5-2*fs, X*0.5+2*fs, bot+3*fs, bot+fs
+						okL, okR, okT, okB = X_2-2*fs, X_2+2*fs, bot+3*fs, bot+fs
 					end				
 				end
 			else
@@ -176,7 +185,7 @@ function widget:DrawScreen()
 			for i=1, #briefing, 1 do
 				if briefing[i]:sub(1,1)=="$" then
 					if briefing[i]:sub(2,2)=="c" then
-						glText(briefing[i]:sub(3), X*0.5, top-i*(fs+2)-fs, fs, "cd")
+						glText(briefing[i]:sub(3), X_2, top-i*(fs+2)-fs, fs, "cd")
 					elseif briefing[i]:sub(2,2)=="r" then
 						glText(briefing[i]:sub(3), rig-fs, top-i*(fs+2)-fs, fs, "rd")
 					else
@@ -186,15 +195,15 @@ function widget:DrawScreen()
 					glText(briefing[i], lef+fs, top-i*(fs+2)-fs, fs, "d")
 				end
 			end
-			glText("OK",X*0.5,bot+fs*1.4,fs,"cd")
+			glText("OK",X_2,bot+fs*1.4,fs,"cd")
 		glEndText()
 		glPopMatrix()
 	elseif victory then
 		glColor(1.0,1.0,1.0,1.0)
-		glText("Victory", X*0.5, Y*0.5, 4*fs, "cvo")
+		glText("Victory", X_2, Y*0.5, 4*fs, "cvo")
 	elseif defeat then
 		glColor(0.6,0.0,0.0,1.0)
-		glText("Defeat", X*0.5, Y*0.5, 4*fs, "cvo")
+		glText("Defeat", X_2, Y*0.5, 4*fs, "cvo")
 	end
 	if cmpgNotSent then
 		if modOptions.mission == campaignData.currentMission then
