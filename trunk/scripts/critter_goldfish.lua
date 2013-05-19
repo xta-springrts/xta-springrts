@@ -6,7 +6,7 @@ local body = piece "body"
 local flapSpeed = math.rad(400)
 
 function script.Create()
-	Spring.Echo ("goldfish here")
+--	Spring.Echo ("goldfish here")
 	StartThread (flapFins)
 end
 
