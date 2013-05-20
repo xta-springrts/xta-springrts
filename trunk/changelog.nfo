@@ -21,6 +21,24 @@
     ศอออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออผ
     Logo by ElementalGizmo
 
+XTA 9.729 ------------------ by Deadnight Warrior, Jools and Noruas and Knorke
+---------
+* Added animals that wander around the map:
+
+- critters are invisible on minimap+radar and have a blank icon, as not to be confused with player units
+- enjoy the amazing duck and friends!
+- i tried to not make them interfere with gameplay as much as possible:
+- for now, mostly only on ffa maps where it often has less serious games anyway
+- attacking them is not possible, to avoid units accidently following them around the map
+- critters are placed in ways where they will not get in the way
+- they can be reclaimed instantly (should they block construction)
+- they are killed easily (near explosions etc)
+- but still they CAN decloak cloaked units..not sure how to fix that and how much it matters. if in doubt, reclaim them.
+- they spawn on the maps defined in gaia_critters_config.lua
+- modoptions "critters" = false to turn them off.
+
+* Some bugfixes: missing sound on volume control and bug in commander change widget.
+	
 XTA 9.728 ------------------ by Deadnight Warrior, Jools and Noruas
 ---------
 * Fix landboat transition from land to water
