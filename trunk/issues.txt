@@ -10,6 +10,11 @@ Fixed carriers, airlabs pending
 7) Pelicans are seen as hovers even when walking (had *2 speed on icy run)
 -- Next spring has a possibility to set movetype on the run, then this can be fixed.
 
+12)
+
+Units with oversized Collision Volumes: arm_vanguard, core_viking, arm_fusion_reactor, core_krogoth, arm_advanced_radar_tower, arm_naval_flakker, core_naval_cobra, arm_skeeter, core_searcher, arm_moho_mine, core_moho_mine, arm_sentry, core_stinger, core_underwater_metal_storage, core_resistor, core_pillager
+
+
 
 Fixed:
 ------
