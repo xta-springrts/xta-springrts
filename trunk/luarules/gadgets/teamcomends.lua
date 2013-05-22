@@ -46,7 +46,7 @@ if (gadgetHandler:IsSyncedCode()) then
 	local commanderEnds			= Spring.GetModOptions().mode == COMMANDER
 	local killX, killZ
 	local frame
-	local step					= 28 -- how much to expand killradius every 10 frames
+	local step					= 28 -- how much to expand killradius every <frequency> frames
 	local frequency				= 6
 	local destroyStepwise		= true
 	local modOptions			= Spring.GetModOptions()
