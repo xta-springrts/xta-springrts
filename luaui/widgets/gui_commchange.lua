@@ -304,7 +304,7 @@ end
 
 function widget:DrawScreenEffects(vsx, vsy)
 	
-	local h = 500
+	local h = vsy/3
 	local x = vsx/2 - h/2
 	local y = vsy/2 - h/2
 	local x1 = x + h
