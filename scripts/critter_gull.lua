@@ -1,6 +1,10 @@
 local wingr = piece "rwing"
 local wingl = piece "lwing"
 local flapSpeed = math.rad(360)
+local volume 			= 5.0
+local PlaySoundFile 	= Spring.PlaySoundFile
+local GetUnitPosition 	= Spring.GetUnitPosition
+local GetUnitVelocity   = Spring.GetUnitVelocity
 
 function script.Create()
 	StartThread (flapWings)
@@ -24,5 +28,17 @@ function flapWings()
 			WaitForTurn (wingr,z_axis)
 		end		
 		Sleep (math.random (500,2000))
+		local x,y,z = GetUnitPosition(unitID)
+		local vx,vy,vz = GetUnitVelocity(unitID)
+		local snd
+		local rnd = math.random (0,100)
+		if rnd < 35 then
+			snd =  'sounds/critters/seacry1.wav'
+		elseif rnd < 70 then 
+			snd =  'sounds/critters/seacry2.wav'
+		else
+			snd =  'sounds/critters/seacry3.wav'
+		end
+		PlaySoundFile(snd,volume,x,y,z,vx,vy,vz,'battle')
 	end
 end

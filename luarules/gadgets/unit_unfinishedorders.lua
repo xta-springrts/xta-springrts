@@ -17,7 +17,7 @@ function gadget:AllowCommand(unitID, unitDefID, teamID, cmdID, cmdParams, cmdOpt
 	if cmdID == CMD_SELFD then
 		local _,_,_,_,progress = Spring.GetUnitHealth(unitID)
 		if progress < 1.0 then
-			return false
+			--return false
 		end
 	end
 	return true
