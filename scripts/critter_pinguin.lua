@@ -10,6 +10,8 @@ local SIG_WALK = 2
 local tspeed = math.rad (180)
 local ta = math.rad (30)
 local volume 			= 5.0
+local soundPause 		= 300
+local lastSound		 	= 0
 local PlaySoundFile 	= Spring.PlaySoundFile
 local GetUnitPosition 	= Spring.GetUnitPosition
 local GetGameFrame 		= Spring.GetGameFrame
@@ -71,9 +73,12 @@ function script.setSFXoccupy (curTerrainType)
 		Turn (body, x_axis, 0, tspeed*2)
 		--bodyWiggleAxis = z_axis
 	end	
-	local x,y,z = GetUnitPosition(unitID)
-	local snd = 'sounds/critters/penbray2.wav'
-	PlaySoundFile(snd,volume,x,y,z,0,0,0,'battle')
+	if  GetGameFrame () -lastSound > soundPause then
+		local x,y,z = GetUnitPosition(unitID)
+		local snd = 'sounds/critters/penbray2.wav'
+		PlaySoundFile(snd,volume,x,y,z,0,0,0,'battle')
+		lastSound = GetGameFrame ()
+	end
 	--Spring.Echo (curTerrainType)
 end
 
