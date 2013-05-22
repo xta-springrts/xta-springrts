@@ -221,6 +221,11 @@ local explosionsList  = {
 		'lavaeruption2.wav',
 		'annigun1beamlaser.wav',
 		'xplomas2dgun.wav',
+		'penbray1',
+		'penbray2',
+		'pensquawk1',
+		'pensquawk2',
+		'pensquawk3',
 		}
 
 local guiList = {
