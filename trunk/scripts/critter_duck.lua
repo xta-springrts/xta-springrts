@@ -7,6 +7,13 @@ local SIG_WALK = 2
 local tspeed = math.rad (180)
 local ta = math.rad (30)
 
+local volume 			= 5.0
+local soundPause 		= 300
+local lastSound 		= 0
+local PlaySoundFile 	= Spring.PlaySoundFile
+local GetUnitPosition 	= Spring.GetUnitPosition
+local GetGameFrame 		= Spring.GetGameFrame
+
 function walk()
 	Signal(SIG_WALK)
 	SetSignalMask(SIG_WALK)		
@@ -34,6 +41,20 @@ end
 function script.StartMoving()
 	--Spring.Echo ("start moving")
 	Turn (body, x_axis, math.rad (10), math.rad (45))
+	if  GetGameFrame () -lastSound > soundPause then
+		local snd
+		local rnd = math.random (0,100)
+		local x,y,z = GetUnitPosition(unitID)
+		if  rnd < 35 then
+			snd = 'sounds/critters/duckcall1.wav'
+		elseif rnd < 70 then
+			snd = 'sounds/critters/duckcall2.wav'
+		else
+			snd = 'sounds/critters/duckcall3.wav'
+		end
+		PlaySoundFile(snd,volume,x,y,z,0,0,0,'battle')
+		lastSound = GetGameFrame ()
+	end
 	StartThread(walk)
 end
 	
@@ -50,10 +71,20 @@ function script.AimWeapon1( heading, pitch )
 end
 
 function script.Shot1()
-
+	
 end
 
 function script.Killed(recentDamage, maxHealth)
+	local snd
+	local rnd = math.random (0,100)
+	local x,y,z = GetUnitPosition(unitID)
+	
+	if  rnd < 50 then
+		snd = 'sounds/critters/duckcry1.wav'
+	else
+		snd = 'sounds/critters/duckcry2.wav'
+	end
+	PlaySoundFile(snd,volume,x,y,z,0,0,0,'battle')
 end
 
 
