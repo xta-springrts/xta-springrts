@@ -38,6 +38,7 @@ XTA 9.729 ------------------ by Deadnight Warrior, Jools and Noruas and Knorke
 - modoptions "critters" = false to turn them off.
 
 * Some bugfixes: missing sound on volume control and bug in commander change widget.
+! The downloads of 9.728 got corrupted, which caused desyncs. So this release is mostly an attempt to fix this.
 	
 XTA 9.728 ------------------ by Deadnight Warrior, Jools and Noruas
 ---------
