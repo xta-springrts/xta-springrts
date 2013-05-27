@@ -13,6 +13,8 @@ XTA_easy_mission uses "Red Comet" map  http://springfiles.com/spring/spring-maps
 
 XTA_sniper_alley_mission uses "Hide_and_Seek_v03" map  http://springfiles.com/spring/spring-maps/hideandseekv03
 
+XTA_rescue_penguin_mission uses "Iceland" map
+http://www.springfiles.com/spring/spring-maps/iceland
 
 If you want to use mission editor, extract it into Spring/games or equivalent folder,
 so that it looks like this Spring/games/MissionEditor.sdd/ (bunch of folders and files)
