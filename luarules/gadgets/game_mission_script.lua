@@ -403,9 +403,9 @@ local function testCondition(cond, teamID)
 	-- Time quantity
 	elseif comm=="Time" then
 		if qty>= 0 then
-			return spGetGameSeconds >= qty
+			return spGetGameSeconds() >= qty
 		else
-			return spGetGameSeconds < qty
+			return spGetGameSeconds() < qty
 		end	
 		
 	-- Timer (number|name)
@@ -894,8 +894,8 @@ local glCallList = gl.CallList
 local glBlending = gl.Blending
 local spGetMyTeamID = Spring.GetMyTeamID
 
-local sin				= math.sin
-local cos				= math.cos
+local sin = math.sin
+local cos = math.cos
 
 local lastGameFrame = 0
 local lastMessageFrame = -1
@@ -907,7 +907,7 @@ local pi2 = 6.283185307179586
 local segs = 24
 local step = pi2/segs
 
-local gameData, locations, messages = {}, {}, {}
+local gameData, locations, missionTriggers, messages = {}, {}, {}, {}
 
 local function LocationVisibilty(_, locnum, vis)
 	locations[locnum].visible = vis
@@ -933,6 +933,12 @@ local function ScreenMessage(_, mess, dur, teamID)
 	end
 end
 
+function gadget:ViewResize(viewSizeX, viewSizeY)
+	X, Y = Spring.GetViewGeometry()
+	msgX, msgY = X/4, Y*0.0625
+	fs = 18*Y/1200
+end
+
 local locCircles = {}
 
 function gadget:Initialize()
@@ -944,10 +950,17 @@ function gadget:Initialize()
 				if gameData.map ~= Game.mapName then
 					gadgetHandler:RemoveGadget()
 				else
-					if #locations==0 and #missionTriggers==0 then	-- no triggers and locations, nothing to do, unload
+					local no_loc, no_trig = 0, 0
+					for _, v in pairs(locations) do	-- must manualy count the number of locations and triggers
+						no_loc = no_loc+1			-- as # operator fails on those tables
+					end
+					for _, v in pairs(missionTriggers) do
+						no_trig = no_trig+1
+					end
+					if no_loc==0 and no_trig==0 then	-- no triggers and locations, nothing to do, unload
 						gadgetHandler:RemoveGadget()
 					else
-						if #locations==0 then	-- no locations, no rendering needed
+						if no_loc==0 then	-- no locations, no rendering needed
 							gadgetHandler:RemoveCallIn(DrawWorldPreUnit)
 						else
 							gadgetHandler:AddSyncAction('LocationVisibilty', LocationVisibilty)
@@ -966,7 +979,7 @@ function gadget:Initialize()
 								end
 							end
 						end
-						if #missionTriggers==0 then	-- no triggers, no mission messages or bonus units possible
+						if no_trig==0 then	-- no triggers, no mission messages or bonus units possible
 							gadgetHandler:RemoveCallIn("Update")
 							gadgetHandler:RemoveCallIn("DrawScreen")
 						else

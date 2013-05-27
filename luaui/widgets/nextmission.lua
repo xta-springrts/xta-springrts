@@ -112,7 +112,7 @@ end
 
 function widget:Update(t)
 	if endTime>0 and (Spring.GetGameSeconds()-endTime>5) then
-		if startScript then Spring.Restart("-s", startScript) end
+		if startScript then Spring.Restart("", startScript) end
 	end
 end
 
@@ -143,7 +143,7 @@ function widget:GameOver()
 		Spring.PlaySoundFile("sounds/victory2.wav")
 	else
 		defeat = true
-		startScript = VFS.LoadFile("Missions/" .. modOptions.mission ..".lua")
+		startScript = VFS.LoadFile("Missions/" .. modOptions.mission ..".txt")
 		endTime = Spring.GetGameSeconds()
 	end
 end
