@@ -16,7 +16,7 @@ XTA_sniper_alley_mission uses "Hide_and_Seek_v03" map  http://springfiles.com/sp
 
 If you want to use mission editor, extract it into Spring/games or equivalent folder,
 so that it looks like this Spring/games/MissionEditor.sdd/ (bunch of folders and files)
-and start the Spring.exe and choose "Deadnight Warrior's Mission Editor 1.0" game
+and start the Spring.exe and choose "XTA Mission Editor $VERSION" game
 
 After you're done placing units and buildings on the map (give something to other teams too),
 select the "Mission Wizzard" unit and give it the "Dump" command. That will save the unit,
