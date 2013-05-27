@@ -40,8 +40,9 @@
 		hitmult=1.00;
 		mission=XTA_sniper_alley_mission;
 	}
-	HostIP=localhost;
-	HostPort=8452;
+	OnlyLocal=1;
+	//HostIP=localhost;
+	HostPort=0;
 	MyPlayerName=Me;
 	IsHost=1;
 	NumPlayers=1;

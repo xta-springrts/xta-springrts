@@ -4,44 +4,10 @@ Old issues, mostly details. From http://springrts.com/phpbb/viewtopic.php?f=48&t
 Existing:
 ---------
 
-4) Air labs keep their radar spinning no matter if they are on or off — except Arm T1 Airlab, whose radar is always in not spinning state. Carriers spins their radars too no matter if they are on or off. 
+* Units with oversized Collision Volumes: arm_vanguard, core_viking, arm_fusion_reactor, core_krogoth, arm_advanced_radar_tower, arm_naval_flakker, core_naval_cobra, arm_skeeter, core_searcher, arm_moho_mine, core_moho_mine, arm_sentry, core_stinger, core_underwater_metal_storage, core_resistor, core_pillager
+
+* Air labs keep their radar spinning no matter if they are on or off — except Arm T1 Airlab, whose radar is always in not spinning state. Carriers spins their radars too no matter if they are on or off. 
 Fixed carriers, airlabs pending
 
-7) Pelicans are seen as hovers even when walking (had *2 speed on icy run)
--- Next spring has a possibility to set movetype on the run, then this can be fixed.
-
-12)
-
-Units with oversized Collision Volumes: arm_vanguard, core_viking, arm_fusion_reactor, core_krogoth, arm_advanced_radar_tower, arm_naval_flakker, core_naval_cobra, arm_skeeter, core_searcher, arm_moho_mine, core_moho_mine, arm_sentry, core_stinger, core_underwater_metal_storage, core_resistor, core_pillager
-
-
-
-Fixed:
-------
-
-1) Both T1 radars leave wreck when they self destruct.
-Fixed (when dnw commits)
-
-2)  Core Eraser and Arm Spector (Kbot jammers), once turned off no longer spin even when turned on.
-Fixed
-
-3) There is a problem with Seer (Arm vehicle mobile radar), it spins no matter if you turn it off or on.
-Fixed
-
-5) No Tech 2 constructors can make sub pens (50% Confirmed. Arm T2 sub can make sub pens, but not core. Should be fixed.)
-Fixed
-
-6) T2 construction subs need water radar next to standard radar in build menu.
-Fixed
-
-8) Many units have a "fight" button despite not having a weapon eg: Spy bots, construction units, minelayers, jammers, radars etc. Confirmed for minelayer and jammer. Didn't find it for any radar.
-Fixed
-
-9) Some structures have "Wait", "Repeat" and "Stop" despite no need, eg fusion reactors.
-Fixed
-
-10 Light carriers have "Reclaim", "Restore" and "Repair", despite not being able to do any (unless a plane lands on them).
-Fixed
-
-11) Customformations doesn't work as line attack if you draw a line over water. It has to be modified so that it sends surface water attack order instead of sea bottom coordinates to units that can not water attack. See: http://springrts.com/mantis/view.php?id=3539
-Fixed
+* Pelicans are seen as hovers even when walking (had *2 speed on icy run)
+  Next spring has a possibility to set movetype on the run, then this can be fixed.
