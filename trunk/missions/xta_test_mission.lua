@@ -284,8 +284,8 @@ spawn a quantity of units of unitname type at location locIdx either for player 
 kills all units of unitname or ANY type owned by teamID, either on entire map or at location locIdx,
 units killed this way are counted as killed by trigger owner
 
-	Loc number (true|false|flip)
-sets the visibility of a location specified by number to visible (true), invisible (false), or
+	Loc (number|name) (true|false|flip)
+sets the visibility of a location specified by number or name to visible (true), invisible (false), or
 flips its visibilty state
 	
 	Move (unitname|ANY) src dest [teamID]

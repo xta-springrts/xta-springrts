@@ -1,0 +1,301 @@
+
+function widget:GetInfo()
+	return {
+		name      = 'Mission UI',
+		desc      = 'Handles mission briefing, mission cycling and intro screen',
+		author    = 'Deadnight Warrior',
+		date      = '30 May 2013',
+		license   = 'GNU LGPL v2',
+		layer     = -6,
+		enabled   = true,
+	}
+end
+
+--------------------------------------------------------------------------------
+-- Speedups
+--------------------------------------------------------------------------------
+local modOptions = Spring.GetModOptions()
+local spSendLuaRulesMsg = Spring.SendLuaRulesMsg
+local spGetUnitDefID = Spring.GetUnitDefID
+local spGetUnitHealth = Spring.GetUnitHealth
+local spGetUnitExperience = Spring.GetUnitExperience
+local spValidUnitID = Spring.ValidUnitID
+
+local spGetGameSpeed = Spring.GetGameSpeed
+local spGetGameFrame = Spring.GetGameFrame
+local spGetGameSeconds = Spring.GetGameSeconds
+local spGetViewGeometry = Spring.GetViewGeometry
+
+local glColor = gl.Color
+local glRect = gl.Rect
+local glTexRect = gl.TexRect
+local glPushMatrix = gl.PushMatrix
+local glPopMatrix = gl.PopMatrix
+local glTranslate = gl.Translate
+local glBeginText = gl.BeginText
+local glEndText = gl.EndText
+local glText = gl.Text
+local glTexture = gl.Texture
+
+local max = math.max
+
+local gameData, briefing = {}, {}
+local msgQueue = {}
+local campaignData, bonUnits = {}, {}
+local victory, defeat, endTime = false, false, 0
+local cmpgNotSent = true
+local intro, selMission, sndVolume = false, 0, Spring.GetConfigInt("snd_volmaster", 60)
+local commander, startScript
+local missionList = VFS.DirList("Missions", "*.lua")
+local missScreen = {}
+for i=1, #missionList do
+	if missionList[i]:find("_campaign.lua") then
+		table.remove(missionList, i)
+		break
+	end
+end
+for i=1, #missionList do
+	missScreen[i] = missionList[i]:sub(14,-5):gsub("_", " ")
+	missScreen[i] = missScreen[i]:sub(1,1):upper() .. missScreen[i]:sub(2)
+end
+
+local dispBrief = true
+local X, Y = spGetViewGeometry()
+local X_2, scale = X*0.5, Y/1200
+local fs = 23 * scale
+local lef, rig, top, bot = (X-Y*1.333*.8)*0.5, (X+Y*1.333*.8)*0.5, .9*Y, .1*Y
+local okL, okR, okT, okB
+local iAlpha = 1
+
+local defCmpgData = {
+[[campaignData = {
+	lastMission = "]],
+[[",
+	currentMission = "]],
+[[",
+	bonusUnits = {
+]],
+[[	},
+}
+return campaignData]]
+}
+
+local function SetBonusUnits(unitID)
+	bonUnits[#bonUnits+1] = unitID
+end
+
+function widget:ViewResize(viewSizeX, viewSizeY)
+	X, Y = spGetViewGeometry()
+	X_2, scale = X*0.5, Y/1200
+	fs = 23 * scale
+	lef, rig, top, bot = (X-Y*1.333*.8)*0.5, (X+Y*1.333*.8)*0.5, .9*Y, .1*Y
+	okL, okR, okT, okB = X_2-2*fs, X_2+2*fs, bot+3*fs, bot+fs
+end
+
+function widget:Initialize()
+	if modOptions and modOptions.mission then
+		local mission = "Missions/" .. modOptions.mission ..".lua"
+		if VFS.FileExists(mission) then
+			gameData, _, _, _, briefing = VFS.Include(mission)
+			if gameData.game == Game.modShortName and gameData.minVersion <= Game.modVersion then
+				if gameData.map ~= Game.mapName then
+					widgetHandler:RemoveWidget()
+				else
+					if modOptions.mission == "XTA_campaign" then
+						intro = true
+						Spring.SetConfigInt("snd_volmaster", sndVolume/3)
+						--widgetHandler:RemoveWidget("XTA Unit sounds")
+						--widgetHandler:RemoveWidget("SelectionButtons")
+						--widgetHandler:RemoveWidget("BuildBar - XTA")
+						--widgetHandler:RemoveWidget("UnitGroups v5.1 - XTA")	
+					else
+						intro = false
+						widgetHandler:RegisterGlobal("SetBonusUnits", SetBonusUnits)
+						cmpgNotSent, campaignData = pcall(include,"Config/" .. gameData.game .."_campaign.lua")
+						if not briefing then
+							dispBrief = false
+						else
+							fs = 23 * scale
+							okL, okR, okT, okB = X_2-2*fs, X_2+2*fs, bot+3*fs, bot+fs
+						end
+					end
+				end
+			else
+				widgetHandler:RemoveWidget()				
+			end
+		else
+			widgetHandler:RemoveWidget()
+		end
+	else
+		widgetHandler:RemoveWidget()
+	end
+end
+
+function widget:GameStart()
+	if briefing and dispBrief then
+		local _, _, paused = spGetGameSpeed()
+		if not paused then
+			Spring.SendCommands("pause")
+		end
+	end
+end
+
+function widget:Update(t)
+	if intro then
+		iAlpha = max(0.75, 1 - spGetGameFrame()/480)
+	else
+		if endTime>0 and (Spring.GetGameSeconds()-endTime>5) then
+			if startScript then
+				Spring.Restart("", startScript)
+			else
+				intro = true
+			end
+		end
+	end
+end
+
+function widget:Shutdown()
+	Spring.SetConfigInt("snd_volmaster", sndVolume)
+end
+
+function widget:GameOver()
+	if intro then return end
+	local amIDead = select(3, Spring.GetTeamInfo(Spring.GetMyTeamID()))
+	if amIDead==false then
+		if gameData.nextMission then
+			local nextMission = "Missions/" .. gameData.nextMission ..".txt"
+			if VFS.FileExists(nextMission) then
+				local file = io.open("LuaUI/Config/" .. gameData.game .. "_campaign.lua","w")
+				file:write(defCmpgData[1] .. modOptions.mission .. defCmpgData[2] .. gameData.nextMission .. defCmpgData[3])
+				for _, unitID in pairs(bonUnits) do
+					if spValidUnitID(unitID) then
+						local h, _, _, _, _ = spGetUnitHealth(unitID)
+						if h>0 then
+							file:write('\t\t"' .. UnitDefs[spGetUnitDefID(unitID)].name .. " " .. spGetUnitExperience(unitID) .. '"\n')
+						end
+					end
+				end
+				file:write(defCmpgData[4])
+				file:flush()
+				file:close()
+				startScript = VFS.LoadFile(nextMission)
+			end
+		end
+		victory = true
+		endTime = Spring.GetGameSeconds()
+		Spring.PlaySoundFile("sounds/victory2.wav")
+	else
+		defeat = true
+		startScript = VFS.LoadFile("Missions/" .. modOptions.mission ..".txt")
+		endTime = Spring.GetGameSeconds()
+	end
+end
+
+local mouseOverOK = false
+function widget:IsAbove(x, y)
+	if intro then
+		if x>lef+fs and x<rig-fs and y<top*0.75 and y>bot+fs then
+			selMission = math.floor((top*0.75-y)/(fs+2))
+			return true
+		end
+		selMission = 0
+	else
+		if dispBrief and y>okB and y<okT and x>okL and x<okR then
+			mouseOverOK = true
+			return true
+		end
+		mouseOverOK = false
+	end
+	return false
+end
+
+function widget:MousePress(mx, my, mButton)
+	if intro then
+		if missionList[selMission] and mButton==1 then
+			startScript = VFS.LoadFile(missionList[selMission]:sub(1,-5) .. ".txt")
+			Spring.SetConfigInt("snd_volmaster", sndVolume)
+			Spring.Restart("", startScript)
+		end
+	else
+		if mouseOverOK and mButton==1 then
+			dispBrief = false
+			--widgetHandler:RemoveCallIn("DrawScreen")
+			widgetHandler:RemoveCallIn("IsAbove")
+			widgetHandler:RemoveCallIn("MousePress")
+			local _, _, paused = Spring.GetGameSpeed()
+			if paused then
+				Spring.SendCommands("pause")
+			end
+		end
+	end
+end
+
+function widget:DrawScreen()
+	if intro then
+		glPushMatrix()
+		glTranslate(0,0,-0.1)
+		glColor(0,0,0,iAlpha)
+		glRect(0,0,X,Y)
+		if iAlpha<=0.75 then
+			glColor(0,0,0,0.75)
+			glRect(lef,bot,rig,top)
+			if missionList[selMission] then
+				glColor(0.2,0.2,0.2,0.75)
+				glRect(lef+fs,top*0.75-selMission*(fs+2)-fs,rig-fs,top*0.75-selMission*(fs+2)+1)
+			end
+			glBeginText()
+				glText("XTA",X_2,top-6*fs,5*fs,"cd")
+				for i=1, #missScreen do
+					glText(missScreen[i], X_2, top*0.75-i*(fs+2)-fs, fs, "cd")
+				end
+			glEndText()	
+		end
+		glPopMatrix()
+	else
+		if dispBrief then
+			glPushMatrix()
+			glTranslate(0,0,-0.1)
+			glColor(0,0,0,0.92)
+			glRect(lef,bot,rig,top)
+			if mouseOverOK then
+				glColor(0.2,0.2,0.2,0.75)
+				glRect(okL,okB,okR,okT)
+			end
+			glBeginText()
+				for i=1, #briefing, 1 do
+					if briefing[i]:sub(1,1)=="$" then
+						if briefing[i]:sub(2,2)=="c" then
+							glText(briefing[i]:sub(3), X_2, top-i*(fs+2)-fs, fs, "cd")
+						elseif briefing[i]:sub(2,2)=="r" then
+							glText(briefing[i]:sub(3), rig-fs, top-i*(fs+2)-fs, fs, "rd")
+						else
+							glText(briefing[i], lef+fs, top-i*(fs+2)-fs, fs, "d")
+						end
+					else
+						glText(briefing[i], lef+fs, top-i*(fs+2)-fs, fs, "d")
+					end
+				end
+				glText("OK",X_2,bot+fs*1.4,fs,"cd")
+			glEndText()
+			glPopMatrix()
+		elseif victory then
+			glColor(1.0,1.0,1.0,1.0)
+			glText("Victory", X_2, Y*0.5, 4*fs, "cvo")
+		elseif defeat then
+			glColor(0.6,0.0,0.0,1.0)
+			glText("Defeat", X_2, Y*0.5, 4*fs, "cvo")
+		end
+		if cmpgNotSent then
+			if modOptions.mission == campaignData.currentMission then
+				local bu = campaignData.bonusUnits
+				local mt = " " .. tostring(Spring.GetMyTeamID())
+				for i=1, #bu do
+					spSendLuaRulesMsg("XTA_cmpg " .. bu[i] .. mt)
+				end
+				--spSendLuaRulesMsg("XTA_cmpg " .. commander .. mt)
+				campaignData.bonusUnits = {}
+				cmpgNotSent = false
+			end
+		end
+	end
+end

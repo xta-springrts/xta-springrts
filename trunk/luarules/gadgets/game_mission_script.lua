@@ -414,7 +414,7 @@ local function testCondition(cond, teamID)
 			return timers[cond[2]]<=0
 		end	
 
-	-- Var (name) (>|>=|=|<=|<|~=) value
+	-- Var name (>|>=|=|<=|<|~=) value
 	elseif comm=="Var" then
 		local var, op, val = cond[2], cond[3], cond[4]
 		if type(val)=="string" then
@@ -961,7 +961,7 @@ function gadget:Initialize()
 						gadgetHandler:RemoveGadget()
 					else
 						if no_loc==0 then	-- no locations, no rendering needed
-							gadgetHandler:RemoveCallIn(DrawWorldPreUnit)
+							gadgetHandler:RemoveCallIn("DrawWorldPreUnit")
 						else
 							gadgetHandler:AddSyncAction('LocationVisibilty', LocationVisibilty)
 							for ln, loc in pairs(locations) do	-- Create one display list for each circular location
@@ -971,8 +971,8 @@ function gadget:Initialize()
 										glBeginEnd(GL.TRIANGLE_FAN,function()
 											glVertex(x, spGetGroundHeight(loc.X, loc.Z), z)
 											for t=0.0, pi2, step do
-												rs, rc = loc.X + r*sin(t), loc.Z + r*cos(t)
-												glVertex(rc, spGetGroundHeight(rc, rs), rs)
+												rx, rz = loc.X + r*sin(t), loc.Z + r*cos(t)
+												glVertex(rx, spGetGroundHeight(rx, rz), rz)
 											end
 										end)
 									end)
