@@ -21,7 +21,7 @@
 	unitnumber=253;
 	objectname=arm_mech_lab.3do;
 	corpse=arm_mech_lab_dead;
-	buildpic=arm_mech_lab.DDS;
+	buildpic=arm_mech_lab.png;
 	soundcategory=CORE_GANTRY;
 
 	//************************************************************
@@ -45,7 +45,7 @@
 	//************************************************************
 	//  Building
 	//************
-	YardMap=oooooooo oooooooo ooccccoo ooccccoo ooccccoo ooccccoo ooccccoo ooccccoo;
+	YardMap=oooooooo oooooooo occcccco occcccco occcccco occcccoo occcccco occcccco;
 
 	//************************************************************
 	//  Constructor

@@ -59,13 +59,14 @@
 		canbuild28=arm_shipyard;
 		canbuild29=arm_sub_pen;
 		canbuild30=arm_adv_shipyard;
-		canbuild31=arm_hovercraft_platform; 
-		canbuild32=arm_stunner;
-		canbuild33=arm_retaliator;
-	 	canbuild34=ARMFFF;//xtaids
-	 	canbuild35=MERCURY;//xtaids
-		canbuild36=arm_vulcan;
-		canbuild37=arm_nano_tower;
+		canbuild31=arm_spidernest;//Spiderpack vs. Tortoise
+		canbuild32=arm_hovercraft_platform; 
+		canbuild33=arm_stunner;
+		canbuild34=arm_retaliator;
+	 	canbuild35=ARMFFF;//xtaids
+	 	canbuild36=MERCURY;//xtaids
+		canbuild37=arm_vulcan;
+		canbuild38=arm_nano_tower;
 	}
 	[arm_adv_construction_kbot]
 	{
@@ -99,14 +100,15 @@
 		canbuild28=arm_shipyard;
 		canbuild29=arm_sub_pen;
 		canbuild30=arm_adv_shipyard;
-		canbuild31=arm_hovercraft_platform;
-		canbuild32=arm_mech_lab; //xtaids
-		canbuild33=arm_stunner;
-		canbuild34=arm_retaliator;
-	 	canbuild35=ARMFFF;//xtaids
-	 	canbuild36=MERCURY;//xtaids
-		canbuild37=arm_vulcan;
-		canbuild38=arm_nano_tower;
+		canbuild31=arm_spidernest;//Spiderpack vs. Tortoise
+		canbuild32=arm_hovercraft_platform;
+		canbuild33=arm_mech_lab; //xtaids
+		canbuild34=arm_stunner;
+		canbuild35=arm_retaliator;
+	 	canbuild36=ARMFFF;//xtaids
+	 	canbuild37=MERCURY;//xtaids
+		canbuild38=arm_vulcan;
+		canbuild39=arm_nano_tower;
 	}
 	[arm_adv_construction_sub]
 	{
@@ -167,13 +169,14 @@
 		canbuild28=arm_shipyard;
 		canbuild29=arm_sub_pen;
 		canbuild30=arm_adv_shipyard;
-		canbuild31=arm_hovercraft_platform; 
-		canbuild32=arm_stunner;
-		canbuild33=arm_retaliator;
-	 	canbuild34=ARMFFF;//xtaids
-	 	canbuild35=MERCURY;//xtaids
-		canbuild36=arm_vulcan;
-		canbuild37=arm_nano_tower;
+		canbuild31=arm_spidernest;//Spiderpack vs. Tortoise
+		canbuild32=arm_hovercraft_platform; 
+		canbuild33=arm_stunner;
+		canbuild34=arm_retaliator;
+	 	canbuild35=ARMFFF;//xtaids
+	 	canbuild36=MERCURY;//xtaids
+		canbuild37=arm_vulcan;
+		canbuild38=arm_nano_tower;
 	}
 	[arm_adv_kbot_lab]
 	{
@@ -269,11 +272,12 @@
 		canbuild18=arm_defender;
 		canbuild19=arm_dragons_teeth;
 		canbuild20=arm_ambusher;
-		canbuild21=arm_hovercraft_platform;
-		canbuild22=arm_seaplane_platform;
-		canbuild23=arm_adv_vehicle_plant;
-		canbuild24=arm_adv_kbot_lab;
-		canbuild25=arm_adv_shipyard;
+		canbuild21=arm_spidernest;//Spiderpack vs. Tortoise
+		canbuild22=arm_hovercraft_platform;
+		canbuild23=arm_seaplane_platform;
+		canbuild24=arm_adv_vehicle_plant;
+		canbuild25=arm_adv_kbot_lab;
+		canbuild26=arm_adv_shipyard;
 	}
 	[arm_construction_hovercraft]
 	{
@@ -308,17 +312,52 @@
 		canbuild29=arm_stingray;
 		canbuild30=arm_torpedo_launcher;
 		canbuild31=arm_floating_light_laser_tower;
-		canbuild32=arm_hovercraft_platform;
-		canbuild33=arm_seaplane_platform;
-		canbuild34=arm_adv_vehicle_plant;
-		canbuild35=arm_adv_aircraft_plant;
-		canbuild36=arm_adv_shipyard;
-		canbuild37=arm_Underwater_moho_mine;
-		canbuild38=arm_moho_mine;
-		canbuild39=arm_air_repair_pad;
-		canbuild40=arm_protector;
-		canbuild41=arm_repulsor;
-		canbuild42=arm_nano_tower;
+		canbuild32=arm_spidernest;//Spiderpack vs. Tortoise
+		canbuild33=arm_hovercraft_platform;
+		canbuild34=arm_seaplane_platform;
+		canbuild35=arm_adv_vehicle_plant;
+		canbuild36=arm_adv_aircraft_plant;
+		canbuild37=arm_adv_shipyard;
+		canbuild38=arm_Underwater_moho_mine;
+		canbuild39=arm_moho_mine;
+		canbuild40=arm_air_repair_pad;
+		canbuild41=arm_protector;
+		canbuild42=arm_repulsor;
+		canbuild43=arm_nano_tower;
+
+	}
+
+	[arm_construction_spider]
+	{
+		canbuild1=arm_solar_collector;
+		canbuild2=arm_wind_generator;
+		canbuild3=arm_energy_storage;
+		canbuild4=arm_metal_storage;
+		canbuild5=arm_metal_extractor;
+		canbuild6=arm_metal_maker;
+		canbuild7=arm_kbot_lab;
+		canbuild8=arm_vehicle_plant;
+		canbuild9=arm_aircraft_plant;
+		canbuild10=arm_shipyard;
+		canbuild11=arm_sub_pen;
+		canbuild12=arm_light_laser_tower;
+		canbuild13=arm_radar_tower;
+		canbuild14=arm_adv_kbot_lab;
+		canbuild15=arm_geothermal_powerplant;
+		canbuild16=arm_sentinel;
+		canbuild17=arm_defender;
+		canbuild18=arm_dragons_teeth;
+		canbuild19=arm_ambusher;
+		canbuild20=arm_spidernest;
+		canbuild21=arm_hovercraft_platform;
+		canbuild22=arm_seaplane_platform;
+		canbuild23=arm_adv_vehicle_plant;
+		canbuild24=arm_adv_aircraft_plant;
+		canbuild25=arm_adv_shipyard;
+		canbuild26=arm_moho_mine;
+		canbuild27=arm_air_repair_pad;
+		canbuild28=arm_protector;
+		canbuild29=arm_nano_tower;
 
 	}
 	[arm_construction_kbot]
@@ -344,11 +383,12 @@
 		canbuild19=arm_defender;
 		canbuild20=arm_dragons_teeth;
 		canbuild21=arm_ambusher;
-		canbuild22=arm_hovercraft_platform;
-		canbuild23=arm_seaplane_platform;
-		canbuild24=arm_adv_vehicle_plant;
-		canbuild25=arm_adv_aircraft_plant;
-		canbuild26=arm_adv_shipyard;
+		canbuild22=arm_spidernest;//Spiderpack vs. Tortoise
+		canbuild23=arm_hovercraft_platform;
+		canbuild24=arm_seaplane_platform;
+		canbuild25=arm_adv_vehicle_plant;
+		canbuild26=arm_adv_aircraft_plant;
+		canbuild27=arm_adv_shipyard;
 	}
 	[arm_base]
 	{
@@ -408,13 +448,14 @@
 		canbuild21=arm_torpedo_launcher;
 		canbuild22=arm_floating_light_laser_tower;
 		canbuild23=arm_dragons_teeth;
-		canbuild24=arm_hovercraft_platform;
-		canbuild25=arm_floating_dragons_teeth;
-		canbuild26=arm_adv_vehicle_plant;
-		canbuild27=arm_adv_kbot_lab;
-		canbuild28=arm_adv_aircraft_plant;
-		canbuild29=arm_adv_shipyard;
-		canbuild30=arm_seaplane_platform;
+		canbuild24=arm_spidernest;//Spiderpack vs. Tortoise
+		canbuild25=arm_hovercraft_platform;
+		canbuild26=arm_floating_dragons_teeth;
+		canbuild27=arm_adv_vehicle_plant;
+		canbuild28=arm_adv_kbot_lab;
+		canbuild29=arm_adv_aircraft_plant;
+		canbuild30=arm_adv_shipyard;
+		canbuild31=arm_seaplane_platform;
 	}
 	[arm_scommander]
 	{
@@ -441,13 +482,14 @@
 		canbuild21=arm_torpedo_launcher;
 		canbuild22=arm_floating_light_laser_tower;
 		canbuild23=arm_dragons_teeth;
-		canbuild24=arm_hovercraft_platform;
-		canbuild25=arm_floating_dragons_teeth;
-		canbuild26=arm_adv_vehicle_plant;
-		canbuild27=arm_adv_kbot_lab;
-		canbuild28=arm_adv_aircraft_plant;
-		canbuild29=arm_adv_shipyard;
-		canbuild30=arm_seaplane_platform;
+		canbuild24=arm_spidernest;//Spiderpack vs. Tortoise
+		canbuild25=arm_hovercraft_platform;
+		canbuild26=arm_floating_dragons_teeth;
+		canbuild27=arm_adv_vehicle_plant;
+		canbuild28=arm_adv_kbot_lab;
+		canbuild29=arm_adv_aircraft_plant;
+		canbuild30=arm_adv_shipyard;
+		canbuild31=arm_seaplane_platform;
 	}
 	[arm_nincommander]
 	{
@@ -474,20 +516,23 @@
 		canbuild21=arm_torpedo_launcher;
 		canbuild22=arm_floating_light_laser_tower;
 		canbuild23=arm_dragons_teeth;
-		canbuild24=arm_hovercraft_platform;
-		canbuild25=arm_floating_dragons_teeth;
-		canbuild26=arm_adv_vehicle_plant;
-		canbuild27=arm_adv_kbot_lab;
-		canbuild28=arm_adv_aircraft_plant;
-		canbuild29=arm_adv_shipyard;
-		canbuild30=arm_seaplane_platform;
+		canbuild24=arm_spidernest;//Spiderpack vs. Tortoise
+		canbuild25=arm_hovercraft_platform;
+		canbuild26=arm_floating_dragons_teeth;
+		canbuild27=arm_adv_vehicle_plant;
+		canbuild28=arm_adv_kbot_lab;
+		canbuild29=arm_adv_aircraft_plant;
+		canbuild30=arm_adv_shipyard;
+		canbuild31=arm_seaplane_platform;
 	}
 	[arm_mech_lab]
 	{
-		canbuild1=arm_adv_construction_kbot;
-		canbuild2=arm_orcone;
-		canbuild3=armraz;
+		canbuild1=arm_noruas;
+		canbuild2=arm_fleagoth;
+		canbuild3=arm_orcone;
 		canbuild4=arm_rhino;
+		canbuild5=armraz;
+		canbuild6=arm_raven;
 	}
 	[arm_u0commander]
 	{
@@ -514,13 +559,14 @@
 		canbuild21=arm_torpedo_launcher;
 		canbuild22=arm_floating_light_laser_tower;
 		canbuild23=arm_dragons_teeth;
-		canbuild24=arm_hovercraft_platform;
-		canbuild25=arm_floating_dragons_teeth;
-		canbuild26=arm_adv_vehicle_plant;
-		canbuild27=arm_adv_kbot_lab;
-		canbuild28=arm_adv_aircraft_plant;
-		canbuild29=arm_adv_shipyard;
-		canbuild30=arm_seaplane_platform;
+		canbuild24=arm_spidernest;//Spiderpack vs. Tortoise
+		canbuild25=arm_hovercraft_platform;
+		canbuild26=arm_floating_dragons_teeth;
+		canbuild27=arm_adv_vehicle_plant;
+		canbuild28=arm_adv_kbot_lab;
+		canbuild29=arm_adv_aircraft_plant;
+		canbuild30=arm_adv_shipyard;
+		canbuild31=arm_seaplane_platform;
 	}
       [arm_LUAcommander] //commander with negative storage for use in LUA SP missions//
 	{
@@ -547,13 +593,14 @@
 		canbuild21=arm_torpedo_launcher;
 		canbuild22=arm_floating_light_laser_tower;
 		canbuild23=arm_dragons_teeth;
-		canbuild24=arm_hovercraft_platform;
-		canbuild25=arm_floating_dragons_teeth;
-		canbuild26=arm_adv_vehicle_plant;
-		canbuild27=arm_adv_kbot_lab;
-		canbuild28=arm_adv_aircraft_plant;
-		canbuild29=arm_adv_shipyard;
-		canbuild30=arm_seaplane_platform;
+		canbuild24=arm_spidernest;//Spiderpack vs. Tortoise
+		canbuild25=arm_hovercraft_platform;
+		canbuild26=arm_floating_dragons_teeth;
+		canbuild27=arm_adv_vehicle_plant;
+		canbuild28=arm_adv_kbot_lab;
+		canbuild29=arm_adv_aircraft_plant;
+		canbuild30=arm_adv_shipyard;
+		canbuild31=arm_seaplane_platform;
 	}
 	[arm_Ucommander]
 	{
@@ -580,13 +627,14 @@
 		canbuild21=arm_torpedo_launcher;
 		canbuild22=arm_floating_light_laser_tower;
 		canbuild23=arm_dragons_teeth;
-		canbuild24=arm_hovercraft_platform;
-		canbuild25=arm_floating_dragons_teeth;
-		canbuild26=arm_adv_vehicle_plant;
-		canbuild27=arm_adv_kbot_lab;
-		canbuild28=arm_adv_aircraft_plant;
-		canbuild29=arm_adv_shipyard;
-		canbuild30=arm_seaplane_platform;
+		canbuild24=arm_spidernest;//Spiderpack vs. Tortoise
+		canbuild25=arm_hovercraft_platform;
+		canbuild26=arm_floating_dragons_teeth;
+		canbuild27=arm_adv_vehicle_plant;
+		canbuild28=arm_adv_kbot_lab;
+		canbuild29=arm_adv_aircraft_plant;
+		canbuild30=arm_adv_shipyard;
+		canbuild31=arm_seaplane_platform;
 	}
 	[arm_u2commander]
 	{
@@ -613,13 +661,14 @@
 		canbuild21=arm_torpedo_launcher;
 		canbuild22=arm_floating_light_laser_tower;
 		canbuild23=arm_dragons_teeth;
-		canbuild24=arm_hovercraft_platform;
-		canbuild25=arm_floating_dragons_teeth;
-		canbuild26=arm_adv_vehicle_plant;
-		canbuild27=arm_adv_kbot_lab;
-		canbuild28=arm_adv_aircraft_plant;
-		canbuild29=arm_adv_shipyard;
-		canbuild30=arm_seaplane_platform;
+		canbuild24=arm_spidernest;//Spiderpack vs. Tortoise
+		canbuild25=arm_hovercraft_platform;
+		canbuild26=arm_floating_dragons_teeth;
+		canbuild27=arm_adv_vehicle_plant;
+		canbuild28=arm_adv_kbot_lab;
+		canbuild29=arm_adv_aircraft_plant;
+		canbuild30=arm_adv_shipyard;
+		canbuild31=arm_seaplane_platform;
 	}
 	[arm_u3commander]
 	{
@@ -646,13 +695,14 @@
 		canbuild21=arm_torpedo_launcher;
 		canbuild22=arm_floating_light_laser_tower;
 		canbuild23=arm_dragons_teeth;
-		canbuild24=arm_hovercraft_platform;
-		canbuild25=arm_floating_dragons_teeth;
-		canbuild26=arm_adv_vehicle_plant;
-		canbuild27=arm_adv_kbot_lab;
-		canbuild28=arm_adv_aircraft_plant;
-		canbuild29=arm_adv_shipyard;
-		canbuild30=arm_seaplane_platform;
+		canbuild24=arm_spidernest;//Spiderpack vs. Tortoise
+		canbuild25=arm_hovercraft_platform;
+		canbuild26=arm_floating_dragons_teeth;
+		canbuild27=arm_adv_vehicle_plant;
+		canbuild28=arm_adv_kbot_lab;
+		canbuild29=arm_adv_aircraft_plant;
+		canbuild30=arm_adv_shipyard;
+		canbuild31=arm_seaplane_platform;
 	}
 	[arm_u4commander]
 	{
@@ -679,13 +729,14 @@
 		canbuild21=arm_torpedo_launcher;
 		canbuild22=arm_floating_light_laser_tower;
 		canbuild23=arm_dragons_teeth;
-		canbuild24=arm_hovercraft_platform;
-		canbuild25=arm_floating_dragons_teeth;
-		canbuild26=arm_adv_vehicle_plant;
-		canbuild27=arm_adv_kbot_lab;
-		canbuild28=arm_adv_aircraft_plant;
-		canbuild29=arm_adv_shipyard;
-		canbuild30=arm_seaplane_platform;
+		canbuild24=arm_spidernest;//Spiderpack vs. Tortoise
+		canbuild25=arm_hovercraft_platform;
+		canbuild26=arm_floating_dragons_teeth;
+		canbuild27=arm_adv_vehicle_plant;
+		canbuild28=arm_adv_kbot_lab;
+		canbuild29=arm_adv_aircraft_plant;
+		canbuild30=arm_adv_shipyard;
+		canbuild31=arm_seaplane_platform;
 	}
 	[arm_construction_ship]
 	{
@@ -772,17 +823,18 @@
 		canbuild29=arm_stingray;
 		canbuild30=arm_torpedo_launcher;
 		canbuild31=arm_floating_light_laser_tower;
-		canbuild32=arm_hovercraft_platform;
-		canbuild33=arm_seaplane_platform;
-		canbuild34=arm_adv_shipyard;
-		canbuild35=arm_adv_vehicle_plant;
-		canbuild36=arm_adv_kbot_lab;
-		canbuild37=arm_moho_mine;
-		canbuild38=arm_air_repair_pad;
-		canbuild39=ARM_Underwater_moho_mine;
-		canbuild40=arm_protector;
-		canbuild41=arm_repulsor;
-		canbuild42=arm_nano_tower;
+		canbuild32=arm_spidernest;//Spiderpack vs. Tortoise
+		canbuild33=arm_hovercraft_platform;
+		canbuild34=arm_seaplane_platform;
+		canbuild35=arm_adv_shipyard;
+		canbuild36=arm_adv_vehicle_plant;
+		canbuild37=arm_adv_kbot_lab;
+		canbuild38=arm_moho_mine;
+		canbuild39=arm_air_repair_pad;
+		canbuild40=ARM_Underwater_moho_mine;
+		canbuild41=arm_protector;
+		canbuild42=arm_repulsor;
+		canbuild43=arm_nano_tower;
 	}
 	[arm_construction_vehicle]
 	{
@@ -807,11 +859,12 @@
 		canbuild19=arm_defender;
 		canbuild20=arm_dragons_teeth;
 		canbuild21=arm_ambusher;
-		canbuild22=arm_hovercraft_platform;
-		canbuild23=arm_seaplane_platform;
-		canbuild24=arm_adv_kbot_lab;
-		canbuild25=arm_adv_aircraft_plant;
-		canbuild26=arm_adv_shipyard;
+		canbuild22=arm_spidernest;//Spiderpack vs. Tortoise
+		canbuild23=arm_hovercraft_platform;
+		canbuild24=arm_seaplane_platform;
+		canbuild25=arm_adv_kbot_lab;
+		canbuild26=arm_adv_aircraft_plant;
+		canbuild27=arm_adv_shipyard;
 	}
 	[arm_beaver]
 	{
@@ -836,23 +889,24 @@
 		canbuild19=arm_defender;
 		canbuild20=arm_dragons_teeth;
 		canbuild21=arm_ambusher;
-		canbuild22=arm_hovercraft_platform;
-		canbuild23=arm_seaplane_platform;
-		canbuild24=arm_adv_kbot_lab;
-		canbuild25=arm_adv_aircraft_plant;
-		canbuild26=arm_adv_shipyard;
-		canbuild27=arm_tidal_generator;
-		canbuild28=arm_underwater_tidal_generator;
-		canbuild29=arm_sonar_station;
-		canbuild30=arm_floating_radar;
-		canbuild31=arm_floating_light_laser_tower;
-		canbuild32=arm_sentry;
-		canbuild33=arm_underwater_energy_storage;
-		canbuild34=arm_floating_metal_maker;
-		canbuild35=arm_underwater_metal_storage;
-		canbuild36=arm_stingray;
-		canbuild37=arm_underwater_metal_extractor;
-		canbuild38=arm_floating_dragons_teeth;
+		canbuild22=arm_spidernest;//Spiderpack vs. Tortoise
+		canbuild23=arm_hovercraft_platform;
+		canbuild24=arm_seaplane_platform;
+		canbuild25=arm_adv_kbot_lab;
+		canbuild26=arm_adv_aircraft_plant;
+		canbuild27=arm_adv_shipyard;
+		canbuild28=arm_tidal_generator;
+		canbuild29=arm_underwater_tidal_generator;
+		canbuild30=arm_sonar_station;
+		canbuild31=arm_floating_radar;
+		canbuild32=arm_floating_light_laser_tower;
+		canbuild33=arm_sentry;
+		canbuild34=arm_underwater_energy_storage;
+		canbuild35=arm_floating_metal_maker;
+		canbuild36=arm_underwater_metal_storage;
+		canbuild37=arm_stingray;
+		canbuild38=arm_underwater_metal_extractor;
+		canbuild39=arm_floating_dragons_teeth;
 	}
 	[arm_decoy_commander]
 	{
@@ -878,13 +932,14 @@
 		canbuild20=arm_floating_metal_maker;
 		canbuild21=arm_torpedo_launcher;
 		canbuild22=arm_dragons_teeth;
-		canbuild23=arm_hovercraft_platform;
-		canbuild24=arm_floating_dragons_teeth;
-		canbuild25=arm_adv_vehicle_plant;
-		canbuild26=arm_adv_kbot_lab;
-		canbuild27=arm_adv_aircraft_plant;
-		canbuild28=arm_adv_shipyard;
-		canbuild29=arm_seaplane_platform;
+		canbuild23=arm_spidernest;//Spiderpack vs. Tortoise
+		canbuild24=arm_hovercraft_platform;
+		canbuild25=arm_floating_dragons_teeth;
+		canbuild26=arm_adv_vehicle_plant;
+		canbuild27=arm_adv_kbot_lab;
+		canbuild28=arm_adv_aircraft_plant;
+		canbuild29=arm_adv_shipyard;
+		canbuild30=arm_seaplane_platform;
 	}
 	
 	[arm_decoy_ucommander]
@@ -911,13 +966,14 @@
 		canbuild20=arm_floating_metal_maker;
 		canbuild21=arm_torpedo_launcher;
 		canbuild22=arm_dragons_teeth;
-		canbuild23=arm_hovercraft_platform;
-		canbuild24=arm_floating_dragons_teeth;
-		canbuild25=arm_adv_vehicle_plant;
-		canbuild26=arm_adv_kbot_lab;
-		canbuild27=arm_adv_aircraft_plant;
-		canbuild28=arm_adv_shipyard;
-		canbuild29=arm_seaplane_platform;
+		canbuild23=arm_spidernest;//Spiderpack vs. Tortoise
+		canbuild24=arm_hovercraft_platform;
+		canbuild25=arm_floating_dragons_teeth;
+		canbuild26=arm_adv_vehicle_plant;
+		canbuild27=arm_adv_kbot_lab;
+		canbuild28=arm_adv_aircraft_plant;
+		canbuild29=arm_adv_shipyard;
+		canbuild30=arm_seaplane_platform;
 	}
 	
 	[arm_decoy_ucommander_core]
@@ -944,13 +1000,14 @@
 		canbuild20=arm_floating_metal_maker;
 		canbuild21=arm_torpedo_launcher;
 		canbuild22=arm_dragons_teeth;
-		canbuild23=arm_hovercraft_platform;
-		canbuild24=arm_floating_dragons_teeth;
-		canbuild25=arm_adv_vehicle_plant;
-		canbuild26=arm_adv_kbot_lab;
-		canbuild27=arm_adv_aircraft_plant;
-		canbuild28=arm_adv_shipyard;
-		canbuild29=arm_seaplane_platform;
+		canbuild23=arm_spidernest;//Spiderpack vs. Tortoise
+		canbuild24=arm_hovercraft_platform;
+		canbuild25=arm_floating_dragons_teeth;
+		canbuild26=arm_adv_vehicle_plant;
+		canbuild27=arm_adv_kbot_lab;
+		canbuild28=arm_adv_aircraft_plant;
+		canbuild29=arm_adv_shipyard;
+		canbuild30=arm_seaplane_platform;
 	}	
 	
 	[arm_fark]
@@ -1002,6 +1059,48 @@
 		canbuild10=arm_spidey;
 		canbuild11=walker;//xtaids
 	}
+	[arm_noruas]
+	{
+		canbuild1=arm_solar_collector;
+		canbuild2=arm_wind_generator;
+		canbuild3=arm_energy_storage;
+		canbuild4=arm_metal_storage;
+		canbuild5=arm_metal_extractor;
+		canbuild6=arm_metal_maker;
+		canbuild7=arm_kbot_lab;
+		canbuild8=arm_vehicle_plant;
+		canbuild9=arm_aircraft_plant;
+		canbuild10=arm_shipyard;
+		canbuild11=arm_sub_pen;
+		canbuild12=arm_nano_tower;
+		canbuild13=arm_light_laser_tower;
+		canbuild14=arm_radar_tower;
+		canbuild15=arm_torpedo_launcher; //added v9 beta
+		canbuild16=arm_adv_vehicle_plant;
+		canbuild17=arm_geothermal_powerplant;
+		canbuild18=arm_sentinel;
+		canbuild19=arm_defender;
+		canbuild20=arm_dragons_teeth;
+		canbuild21=arm_ambusher;
+		canbuild22=arm_spidernest;//Spiderpack vs. Tortoise
+		canbuild23=arm_hovercraft_platform;
+		canbuild24=arm_seaplane_platform;
+		canbuild25=arm_adv_kbot_lab;
+		canbuild26=arm_adv_aircraft_plant;
+		canbuild27=arm_adv_shipyard;
+		canbuild28=arm_tidal_generator;
+		canbuild29=arm_underwater_tidal_generator;
+		canbuild30=arm_sonar_station;
+		canbuild31=arm_floating_radar;
+		canbuild32=arm_floating_light_laser_tower;
+		canbuild33=arm_sentry;
+		canbuild34=arm_underwater_energy_storage;
+		canbuild35=arm_floating_metal_maker;
+		canbuild36=arm_underwater_metal_storage;
+		canbuild37=arm_stingray;
+		canbuild38=arm_underwater_metal_extractor;
+		canbuild39=arm_floating_dragons_teeth;
+	}
 	[arm_Valiant]
 	{
 		canbuild1=arm_drip;
@@ -1051,6 +1150,21 @@
 		canbuild5=arm_hulk;
 		canbuild6=arm_lurker;
 	}
+
+	[arm_spidernest]
+	{
+		canbuild1=arm_construction_spider;
+		canbuild2=arm_netcaster;
+		canbuild3=arm_birdcatcher;
+		canbuild4=arm_hobo;
+		canbuild5=arm_tarantula;
+		canbuild6=arm_orbweaver;
+		canbuild7=arm_shellshocker;
+		canbuild8=arm_spider;
+		canbuild9=arm_huntsman;
+		canbuild10=arm_widow;
+	}
+
 	[arm_sub_pen]
 	{
 		canbuild1=arm_construction_sub;
@@ -1123,15 +1237,16 @@
 		canbuild29=core_shipyard;
 		canbuild30=core_sub_pen;
 		canbuild31=core_adv_shipyard;
-		canbuild32=core_hovercraft_platform;
-		canbuild33=core_neutron;
-		canbuild34=core_silencer;
-		canbuild35=core_krogoth_gantry;
-		canbuild36=corfff;//xtaids
-		canbuild37=screamer;//xtaids
-		canbuild38=core_buzzsaw; 
-		canbuild39=core_nano_tower;
-		canbuild40=COREBFORTNS;//xtaids                    
+		canbuild32=core_tortoise_plant;//spiders vs. tortoise
+		canbuild33=core_hovercraft_platform;
+		canbuild34=core_neutron;
+		canbuild35=core_silencer;
+		canbuild36=core_krogoth_gantry;
+		canbuild37=corfff;//xtaids
+		canbuild38=screamer;//xtaids
+		canbuild39=core_buzzsaw; 
+		canbuild40=core_nano_tower;
+		canbuild41=COREBFORTNS;//xtaids                    
 	}
 	[core_adv_construction_kbot]
 	{
@@ -1166,15 +1281,16 @@
 		canbuild29=core_shipyard;
 		canbuild30=core_sub_pen;
 		canbuild31=core_adv_shipyard;
-		canbuild32=core_hovercraft_platform;
-		canbuild33=core_neutron;
-		canbuild34=core_silencer;
-		canbuild35=core_krogoth_gantry;
-		canbuild36=corfff;//xtaids
-		canbuild37=screamer;//xtaids
-		canbuild38=core_buzzsaw; 
-		canbuild39=core_nano_tower;
-		canbuild40=COREBFORTNS;//xtaids     
+		canbuild32=core_tortoise_plant;//spiders vs. tortoise
+		canbuild33=core_hovercraft_platform;
+		canbuild34=core_neutron;
+		canbuild35=core_silencer;
+		canbuild36=core_krogoth_gantry;
+		canbuild37=corfff;//xtaids
+		canbuild38=screamer;//xtaids
+		canbuild39=core_buzzsaw; 
+		canbuild40=core_nano_tower;
+		canbuild41=COREBFORTNS;//xtaids    
 	}
 	[core_adv_construction_sub]     
 	{
@@ -1200,9 +1316,10 @@
 		canbuild20=core_sub_pen;
 		canbuild21=core_adv_shipyard;
 		canbuild22=core_seaplane_platform;
-		canbuild23=core_hovercraft_platform;
-		canbuild24=core_nano_tower;
-		canbuild25=core_krogoth_gantry;
+		canbuild23=core_tortoise_plant;//spiders vs. tortoise
+		canbuild24=core_hovercraft_platform;
+		canbuild25=core_nano_tower;
+		canbuild26=core_krogoth_gantry;
 	}
 	[core_adv_construction_vehicle]
 	{
@@ -1237,15 +1354,16 @@
 		canbuild29=core_shipyard;
 		canbuild30=core_sub_pen;
 		canbuild31=core_adv_shipyard;
-		canbuild32=core_hovercraft_platform;
-		canbuild33=core_neutron;
-		canbuild34=core_silencer;
-		canbuild35=core_krogoth_gantry;
-		canbuild36=corfff;//xtaids
-		canbuild37=screamer;//xtaids
-		canbuild38=core_buzzsaw; 
-		canbuild39=core_nano_tower;
-		canbuild30=COREBFORTNS;//xtaids     
+		canbuild22=core_tortoise_plant;//spiders vs. tortoise
+		canbuild33=core_hovercraft_platform;
+		canbuild34=core_neutron;
+		canbuild35=core_silencer;
+		canbuild36=core_krogoth_gantry;
+		canbuild37=corfff;//xtaids
+		canbuild38=screamer;//xtaids
+		canbuild39=core_buzzsaw; 
+		canbuild40=core_nano_tower;
+		canbuild41=COREBFORTNS;//xtaids     
 	}
 	[core_adv_kbot_lab]
 	{
@@ -1335,11 +1453,12 @@
 		canbuild18=core_pulverizer;
 		canbuild19=core_dragons_teeth;
 		canbuild20=core_toaster;
-		canbuild21=core_hovercraft_platform;
-		canbuild22=core_seaplane_platform;
-		canbuild23=core_adv_kbot_lab;
-		canbuild24=core_adv_vehicle_plant;
-		canbuild25=core_adv_shipyard;
+		canbuild21=core_tortoise_plant;//spiders vs. tortoise
+		canbuild22=core_hovercraft_platform;
+		canbuild23=core_seaplane_platform;
+		canbuild24=core_adv_kbot_lab;
+		canbuild25=core_adv_vehicle_plant;
+		canbuild26=core_adv_shipyard;
 	}
 	[core_construction_hovercraft]
 	{
@@ -1374,17 +1493,18 @@
 		canbuild29=core_thunderbolt;
 		canbuild30=core_torpedo_launcher;
 		canbuild31=core_floating_light_laser_tower;
-		canbuild32=core_hovercraft_platform;
-		canbuild33=core_seaplane_platform;
-		canbuild34=core_adv_shipyard;
-		canbuild35=core_adv_kbot_lab;
-		canbuild36=core_adv_aircraft_plant;
-		canbuild37=core_air_repair_pad;
-		canbuild38=CORE_Underwater_moho_mine;
-		canbuild39=core_moho_mine;
-		canbuild40=core_fortitude_missile_defense;
-		canbuild41=Core_Resistor;
-		canbuild42=core_nano_tower;
+		canbuild32=core_tortoise_plant;//spiders vs. tortoise
+		canbuild33=core_hovercraft_platform;
+		canbuild34=core_seaplane_platform;
+		canbuild35=core_adv_shipyard;
+		canbuild36=core_adv_kbot_lab;
+		canbuild37=core_adv_aircraft_plant;
+		canbuild38=core_air_repair_pad;
+		canbuild39=CORE_Underwater_moho_mine;
+		canbuild40=core_moho_mine;
+		canbuild41=core_fortitude_missile_defense;
+		canbuild42=Core_Resistor;
+		canbuild43=core_nano_tower;
 	}
 	[core_construction_kbot]
 	{
@@ -1409,13 +1529,59 @@
 		canbuild19=core_pulverizer;
 		canbuild20=core_dragons_teeth;
 		canbuild21=core_toaster;
-		canbuild22=core_hovercraft_platform;
-		canbuild23=core_seaplane_platform;
-		canbuild24=core_adv_vehicle_plant;
-		canbuild25=core_adv_aircraft_plant;
-		canbuild26=core_adv_shipyard;
+		canbuild22=core_tortoise_plant;//spiders vs. tortoise
+		canbuild23=core_hovercraft_platform;
+		canbuild24=core_seaplane_platform;
+		canbuild25=core_adv_vehicle_plant;
+		canbuild26=core_adv_aircraft_plant;
+		canbuild27=core_adv_shipyard;
 	}
-
+	[core_construction_tortoise]
+	{
+		canbuild1=core_solar_collector;
+		canbuild2=core_wind_generator;
+		canbuild3=core_energy_storage;
+		canbuild4=core_metal_storage;
+		canbuild5=core_metal_extractor;
+		canbuild6=core_metal_maker;
+		canbuild7=core_kbot_lab;
+		canbuild8=core_vehicle_plant;
+		canbuild9=core_aircraft_plant;
+		canbuild10=core_shipyard;
+		canbuild11=core_sub_pen;
+		canbuild12=core_light_laser_tower;
+		canbuild13=core_radar_tower;
+		canbuild14=core_adv_vehicle_plant;
+		canbuild15=core_geothermal_powerplant;
+		canbuild16=core_gaat_gun;
+		canbuild17=core_pulverizer;
+		canbuild18=core_dragons_teeth;
+		canbuild19=core_toaster;
+		canbuild20=core_sonar_station;
+		canbuild21=core_floating_radar;
+		canbuild22=core_tidal_generator;
+		canbuild23=core_underwater_energy_storage;
+		canbuild24=core_underwater_metal_storage;
+		canbuild25=core_underwater_metal_extractor;
+		canbuild26=core_floating_metal_maker;
+		canbuild27=core_stinger;
+		canbuild28=core_floating_dragons_teeth;
+		canbuild29=core_thunderbolt;
+		canbuild30=core_torpedo_launcher;
+		canbuild31=core_floating_light_laser_tower;
+		canbuild32=core_tortoise_plant;//spiders vs. tortoise
+		canbuild33=core_hovercraft_platform;
+		canbuild34=core_seaplane_platform;
+		canbuild35=core_adv_shipyard;
+		canbuild36=core_adv_kbot_lab;
+		canbuild37=core_adv_aircraft_plant;
+		canbuild38=core_air_repair_pad;
+		canbuild39=CORE_Underwater_moho_mine;
+		canbuild40=core_moho_mine;
+		canbuild41=core_fortitude_missile_defense;
+		canbuild42=Core_Resistor;
+		canbuild43=core_nano_tower;
+	}
 	[core_base]
 	{
 		canbuild1=core_solar_collector;
@@ -1480,7 +1646,8 @@
 		canbuild27=core_adv_aircraft_plant;
 		canbuild28=core_adv_shipyard;
 		canbuild29=core_seaplane_platform;
-		canbuild30=core_hovercraft_platform;
+		canbuild30=core_tortoise_plant;//spiders vs. tortoise
+		canbuild31=core_hovercraft_platform;
 	}
 	[core_scommander]
 	{
@@ -1513,7 +1680,8 @@
 		canbuild27=core_adv_aircraft_plant;
 		canbuild28=core_adv_shipyard;
 		canbuild29=core_seaplane_platform;
-		canbuild30=core_hovercraft_platform;
+		canbuild30=core_tortoise_plant;//spiders vs. tortoise
+		canbuild31=core_hovercraft_platform;
 	}
 	[core_nincommander]
 	{
@@ -1546,7 +1714,8 @@
 		canbuild27=core_adv_aircraft_plant;
 		canbuild28=core_adv_shipyard;
 		canbuild29=core_seaplane_platform;
-		canbuild30=core_hovercraft_platform;
+		canbuild30=core_tortoise_plant;//spiders vs. tortoise
+		canbuild31=core_hovercraft_platform;
 	}
 	[core_U0commander]
 	{
@@ -1579,7 +1748,8 @@
 		canbuild27=core_adv_aircraft_plant;
 		canbuild28=core_adv_shipyard;
 		canbuild29=core_seaplane_platform;
-		canbuild30=core_hovercraft_platform;
+		canbuild30=core_tortoise_plant;//spiders vs. tortoise
+		canbuild31=core_hovercraft_platform;
 	}
 	[core_ucommander]
 	{
@@ -1612,7 +1782,8 @@
 		canbuild27=core_adv_aircraft_plant;
 		canbuild28=core_adv_shipyard;
 		canbuild29=core_seaplane_platform;
-		canbuild30=core_hovercraft_platform;
+		canbuild30=core_tortoise_plant;//spiders vs. tortoise
+		canbuild31=core_hovercraft_platform;
 	}
 	[core_u2commander]
 	{
@@ -1645,7 +1816,8 @@
 		canbuild27=core_adv_aircraft_plant;
 		canbuild28=core_adv_shipyard;
 		canbuild29=core_seaplane_platform;
-		canbuild30=core_hovercraft_platform;
+		canbuild30=core_tortoise_plant;//spiders vs. tortoise
+		canbuild31=core_hovercraft_platform;
 	}
 	[core_u3commander]
 	{
@@ -1678,7 +1850,8 @@
 		canbuild27=core_adv_aircraft_plant;
 		canbuild28=core_adv_shipyard;
 		canbuild29=core_seaplane_platform;
-		canbuild30=core_hovercraft_platform;
+		canbuild30=core_tortoise_plant;//spiders vs. tortoise
+		canbuild31=core_hovercraft_platform;
 	}
 	[core_u4commander]
 	{
@@ -1711,7 +1884,8 @@
 		canbuild27=core_adv_aircraft_plant;
 		canbuild28=core_adv_shipyard;
 		canbuild29=core_seaplane_platform;
-		canbuild30=core_hovercraft_platform;
+		canbuild30=core_tortoise_plant;//spiders vs. tortoise
+		canbuild31=core_hovercraft_platform;
 	}
 	[core_LUAcommander] //commander with negative storage for LUA SP missions//
 	{
@@ -1744,7 +1918,8 @@
 		canbuild27=core_adv_aircraft_plant;
 		canbuild28=core_adv_shipyard;
 		canbuild29=core_seaplane_platform;
-		canbuild30=core_hovercraft_platform;
+		canbuild30=core_tortoise_plant;//spiders vs. tortoise
+		canbuild31=core_hovercraft_platform;
 	}
 	[core_construction_ship]
 	{
@@ -1764,17 +1939,18 @@
 		canbuild14=core_underwater_metal_extractor;
 		canbuild15=core_floating_metal_maker;
 		canbuild16=core_floating_dragons_teeth;
-		canbuild17=core_hovercraft_platform;
-		canbuild18=core_kbot_lab;
-		canbuild19=core_vehicle_plant;
-		canbuild20=core_aircraft_plant;
-		canbuild21=core_dragons_teeth;
-		canbuild22=core_seaplane_platform;
-		canbuild23=core_adv_vehicle_plant;
-		canbuild24=core_adv_kbot_lab;
-		canbuild25=core_adv_aircraft_plant;
-		canbuild26=core_geothermal_powerplant;
-		canbuild27=core_nano_tower;
+		canbuild17=core_tortoise_plant;//spiders vs. tortoise
+		canbuild18=core_hovercraft_platform;
+		canbuild19=core_kbot_lab;
+		canbuild20=core_vehicle_plant;
+		canbuild21=core_aircraft_plant;
+		canbuild22=core_dragons_teeth;
+		canbuild23=core_seaplane_platform;
+		canbuild24=core_adv_vehicle_plant;
+		canbuild25=core_adv_kbot_lab;
+		canbuild26=core_adv_aircraft_plant;
+		canbuild27=core_geothermal_powerplant;
+		canbuild28=core_nano_tower;
 	}
 	[core_construction_sub]
 	{
@@ -1794,7 +1970,8 @@
 		canbuild14=core_underwater_metal_extractor;
 		canbuild15=core_floating_metal_maker;
 		canbuild16=core_floating_dragons_teeth;
-		canbuild17=core_hovercraft_platform; 
+		canbuild17=core_tortoise_plant;//spiders vs. tortoise
+		canbuild18=core_hovercraft_platform; 
 		canbuild18=core_seaplane_platform;
 		canbuild19=core_nano_tower;
 	}
@@ -1831,17 +2008,18 @@
 		canbuild29=core_thunderbolt;
 		canbuild30=core_torpedo_launcher;
 		canbuild31=core_floating_light_laser_tower;
-		canbuild32=core_hovercraft_platform;
-		canbuild33=core_seaplane_platform;
-		canbuild34=core_adv_vehicle_plant;
-		canbuild35=core_adv_kbot_lab;
-		canbuild36=core_adv_shipyard;
-		canbuild37=core_moho_mine;
-		canbuild38=core_air_repair_pad;
-		canbuild39=CORE_Underwater_moho_mine;
-		canbuild40=core_fortitude_missile_defense;
-		canbuild41=Core_Resistor;
-		canbuild42=core_nano_tower;
+		canbuild32=core_tortoise_plant;//spiders vs. tortoise
+		canbuild33=core_hovercraft_platform;
+		canbuild34=core_seaplane_platform;
+		canbuild35=core_adv_vehicle_plant;
+		canbuild36=core_adv_kbot_lab;
+		canbuild37=core_adv_shipyard;
+		canbuild38=core_moho_mine;
+		canbuild39=core_air_repair_pad;
+		canbuild40=CORE_Underwater_moho_mine;
+		canbuild41=core_fortitude_missile_defense;
+		canbuild42=Core_Resistor;
+		canbuild43=core_nano_tower;
 	}
 	[core_construction_vehicle]
 	{
@@ -1866,11 +2044,12 @@
 		canbuild19=core_pulverizer;
 		canbuild20=core_dragons_teeth;
 		canbuild21=core_toaster;
-		canbuild22=core_hovercraft_platform;
-		canbuild23=core_seaplane_platform;
-		canbuild24=core_adv_kbot_lab;
-		canbuild25=core_adv_aircraft_plant;
-		canbuild26=core_adv_shipyard;
+		canbuild22=core_tortoise_plant;//spiders vs. tortoise
+		canbuild23=core_hovercraft_platform;
+		canbuild24=core_seaplane_platform;
+		canbuild25=core_adv_kbot_lab;
+		canbuild26=core_adv_aircraft_plant;
+		canbuild27=core_adv_shipyard;
 	}
 	[core_muskrat]
 	{
@@ -1895,24 +2074,25 @@
 		canbuild19=core_pulverizer;
 		canbuild20=core_dragons_teeth;
 		canbuild21=core_toaster;
-		canbuild22=core_hovercraft_platform;
-		canbuild23=core_seaplane_platform;
-		canbuild24=core_adv_kbot_lab;
-		canbuild25=core_adv_aircraft_plant;
-		canbuild26=core_adv_shipyard;
-		canbuild27=core_tidal_generator;
-		canbuild28=core_underwater_tidal_generator;
-		canbuild29=core_floating_radar;
-		canbuild30=core_sonar_station;
-		canbuild31=core_floating_light_laser_tower;
-		canbuild32=core_stinger;
-		canbuild33=core_thunderbolt;
-		canbuild34=core_underwater_energy_storage;
-		canbuild35=core_underwater_metal_storage;
-		canbuild36=core_underwater_metal_extractor;
-		canbuild37=core_floating_metal_maker;
-		canbuild38=core_floating_dragons_teeth;
-		canbuild39=core_seaplane_platform;
+		canbuild22=core_tortoise_plant;//spiders vs. tortoise
+		canbuild23=core_hovercraft_platform;
+		canbuild24=core_seaplane_platform;
+		canbuild25=core_adv_kbot_lab;
+		canbuild26=core_adv_aircraft_plant;
+		canbuild27=core_adv_shipyard;
+		canbuild28=core_tidal_generator;
+		canbuild29=core_underwater_tidal_generator;
+		canbuild30=core_floating_radar;
+		canbuild31=core_sonar_station;
+		canbuild32=core_floating_light_laser_tower;
+		canbuild33=core_stinger;
+		canbuild34=core_thunderbolt;
+		canbuild35=core_underwater_energy_storage;
+		canbuild36=core_underwater_metal_storage;
+		canbuild37=core_underwater_metal_extractor;
+		canbuild38=core_floating_metal_maker;
+		canbuild39=core_floating_dragons_teeth;
+		canbuild40=core_seaplane_platform;
 	}
 	[core_decoy_commander]
 	{
@@ -1944,7 +2124,8 @@
 		canbuild26=core_adv_aircraft_plant;
 		canbuild27=core_adv_shipyard;
 		canbuild28=core_seaplane_platform;
-		canbuild29=core_hovercraft_platform;
+		canbuild28=core_tortoise_plant;//spiders vs. tortoise
+		canbuild30=core_hovercraft_platform;
 	}
 	
 	[core_decoy_ucommander]
@@ -1977,7 +2158,8 @@
 		canbuild26=core_adv_aircraft_plant;
 		canbuild27=core_adv_shipyard;
 		canbuild28=core_seaplane_platform;
-		canbuild29=core_hovercraft_platform;
+		canbuild29=core_tortoise_plant;//spiders vs. tortoise
+		canbuild30=core_hovercraft_platform;
 	}
 	
 	[core_decoy_ucommander_arm]
@@ -2010,7 +2192,8 @@
 		canbuild26=core_adv_aircraft_plant;
 		canbuild27=core_adv_shipyard;
 		canbuild28=core_seaplane_platform;
-		canbuild29=core_hovercraft_platform;
+		canbuild29=core_tortoise_plant;//spiders vs. tortoise
+		canbuild30=core_hovercraft_platform;
 	}
 	
 	[core_krogoth_gantry]
@@ -2124,6 +2307,21 @@
 		canbuild7=CORE_Barracuda;
 		canbuild8=core_snake;
 	}
+
+	[core_tortoise_plant]
+	{
+		canbuild1=core_construction_tortoise;
+		canbuild2=core_hatchling;
+		canbuild3=core_slingshot;
+		canbuild4=core_Chelonian;
+		canbuild5=CORe_Caliber;
+		canbuild6=core_Avalanche;
+		canbuild7=core_wrecker;
+		canbuild8=core_outback;
+		//canbuild9=arm_huntsman;
+		//canbuild10=arm_widow;
+	}
+
 	[core_vehicle_plant]
 	{
 		canbuild1=core_construction_vehicle;

@@ -4,7 +4,7 @@
 	activatewhenbuilt = 1;
 	brakerate=0.238;
 	buildcostenergy=191957;
-	buildcostmetal=28467;
+	buildcostmetal=26467;
 	buildpic=ARMORCO.DDS;
 	buildtime=469801;
 	canmove=1;

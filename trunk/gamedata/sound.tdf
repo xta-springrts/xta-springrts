@@ -1759,11 +1759,12 @@
 	count0=count6;
 	canceldestruct=cancel2;
 }
-[Spider]
+[Skycruiser]
 {
-	select1=spider;
-	ok1=spider;
-	arrived1=spider;
+	select1=skycruiserselect;
+	select2=skycruiserselect2;
+	ok1=skycruisergo;
+	arrived1=skycruiserstop;
 	cant1=cantdo4;
 	underattack=warning1;
 	count5=count1;
@@ -1774,6 +1775,70 @@
 	count0=count6;
 	canceldestruct=cancel2;
 }
+[Spider]
+{
+	select1=spider2;
+	ok1=spider4;
+	arrived1=spider3;
+	cant1=cantdo4;
+	underattack=warning1;
+	count5=count1;
+	count4=count2;
+	count3=count3;
+	count2=count4;
+	count1=count5;
+	count0=count6;
+	canceldestruct=cancel2;
+}
+
+[SpiderBig]
+{
+	select1=BIGSPD3;
+	ok1=BIGSPD2;
+	arrived1=BIGSPD1;
+	cant1=cantdo4;
+	underattack=warning1;
+	count5=count1;
+	count4=count2;
+	count3=count3;
+	count2=count4;
+	count1=count5;
+	count0=count6;
+	canceldestruct=cancel2;
+}
+
+[SpiderEMP]
+{
+	select1=SPDEMP1;
+	ok1=SPDEMP2;
+	arrived1=SPDEMP2;
+	cant1=cantdo4;
+	underattack=warning1;
+	count5=count1;
+	count4=count2;
+	count3=count3;
+	count2=count4;
+	count1=count5;
+	count0=count6;
+	canceldestruct=cancel2;
+}
+
+[COR_TOR]   		// Tortoises
+	{
+	select1=Tortoise1;
+	ok1=Tortoise2;
+	arrived1=Tortoise3;
+	cant1=cantdo4;
+	underattack=warning1;
+	count5=count1;
+	count4=count2;
+	count3=count3;
+	count2=count4;
+	count1=count5;
+	count0=count6;
+	canceldestruct=cancel2;
+	}
+
 [TANKPLANT]
 {
 	select1=pvehactv;

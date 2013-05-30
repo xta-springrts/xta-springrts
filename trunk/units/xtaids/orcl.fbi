@@ -26,7 +26,7 @@
 	SightDistance=800;
 	RadarDistance=4000;
 	Sonardistance=4000;
-	SoundCategory=CORESKYCRU;
+	SoundCategory=Skycruiser;
 	EnergyStorage=20;
 	MetalStorage=10;
 	ExplodeAs=AATOMIC_BLAST;

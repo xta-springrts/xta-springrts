@@ -25,7 +25,7 @@
 	NoAutoFire=0;
 	SightDistance=800;
 	RadarDistance=0;
-	SoundCategory=ARMSKYCRU;
+	SoundCategory=Skycruiser;
 	EnergyStorage=0;
 	MetalStorage=0;
 	ExplodeAs=AATOMIC_BLAST;

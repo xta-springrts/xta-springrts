@@ -202,6 +202,14 @@ local options = {
 		section= "xtagame",
 	},
 	{
+		key    = "spidertortoise",
+		name   = 'Enable "Spiders vs. Tortoise" Unit Pack?',
+		desc   = "** ThirdParty ** Adds Spiders and Tortoise unitpack. Originally by TA: Mayhem and TA SECT! Author: Noruas\nkey: spidertortoise",
+		type   = "bool",
+		def    = false,
+		section= "xtagame",
+	},
+	{
 		key    = "critters",
 		name   = 'Enable cute animals?',
 		desc   = "on some maps critters will they wiggle and wubble around",
