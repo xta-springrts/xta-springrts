@@ -12,7 +12,12 @@ return {
     speed     = 9, 
     reload    = 3, -- optional
     aaShootMe = true, -- optional
-  },
-
-  
+  }, 
+ arm_noruas = {
+    range     = 235,
+    height    = 70,
+    speed     = 7, 
+    reload    = 10, -- optional
+    aaShootMe = true, -- optional
+  },  
 }

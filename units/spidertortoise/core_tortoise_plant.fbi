@@ -1,0 +1,42 @@
+[UNITINFO]
+	{
+	UnitName=core_tortoise_plant;
+	Version=2.2;
+	Side=CORE;
+	Objectname=core_tortoise_plant;
+	Designation=CHKBC;
+	Name=Terraplant;
+	buildpic=core_tortoise_plant.png;
+	Description=Produces Tortoises;
+	FootprintX=10;
+	FootprintZ=9;
+	BuildCostEnergy=7965;
+	BuildCostMetal=1504;
+	BuildTime=15431;
+	MaxDamage=4290;
+	MaxWaterDepth=10000;
+	MaxSlope=15;
+	WorkerTime=250;
+	BMcode=0;
+	Builder=1;
+	ThreeD=1;
+	ZBuffer=1;
+	NoAutoFire=0;
+	SightDistance=525;
+	SoundCategory=Core_HOVER_PLANT;
+	EnergyStorage=600;
+	MetalStorage=600;
+	ExplodeAs=LARGE_BUILDINGEX;
+	SelfDestructAs=LARGE_BUILDING;
+	Category=CORE PLANT LEVEL1 NOWEAPON NOTAIR NOTSUB CTRL_F;
+	TEDClass=PLANT;
+	YardMap=ooyyyyyyoo oooooooooo oooooooooo oooccccooo oooccccooo oooccccooo oooccccooo ooccccccoo occcccccco;
+	Corpse=core_tortoise_plant_dead;
+	firestandorders=1;
+	StandingFireOrder=2;
+	mobilestandorders=1;
+	StandingMoveOrder=1;
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+	}

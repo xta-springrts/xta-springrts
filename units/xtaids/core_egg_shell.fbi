@@ -10,13 +10,13 @@
 	Description=Mobile Armor Tank;
 	FootprintX=3;
 	FootprintZ=3;
-	BuildCostEnergy=12294;
+	BuildCostEnergy=7294;
 	BuildCostMetal=453;
 	MaxDamage=3654;
 	MaxWaterDepth=100;
 	MaxSlope=12;
 	EnergyUse=0.8;
-	BuildTime=17320;
+	BuildTime=12320;
 	WorkerTime=0;
 	BMcode=1;
 	Builder=0;

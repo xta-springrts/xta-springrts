@@ -351,6 +351,19 @@ if (modOptions and not tobool(modOptions.xtaidunits)) then
   })
 end
 --------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+-- Disable Spider and Tortoise unitpack?
+--
+
+if (modOptions and not tobool(modOptions.spidertortoise)) then
+  disableunits({
+	"arm_spidernest",
+
+	"core_tortoise_plant" 
+  })
+end
+--------------------------------------------------------------------------------
 -- Can missile/rocket units toggle rocket type?
 --
 

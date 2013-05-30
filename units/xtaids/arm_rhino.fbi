@@ -5,7 +5,7 @@
 	//********************
 	side=Arm;
 	name=Rhino;
-	description=Mobile Energy Shield;
+	description=self-Defending Support Shield;
 
 	//************************************************************
 	//  Categories
@@ -26,10 +26,10 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=1500;
-	buildcostmetal=2421;
-	buildcostenergy=32750;
-	buildtime=50024;
+	maxdamage=3475;
+	buildcostmetal=3054;
+	buildcostenergy=42750;
+	buildtime=60024;
 	footprintx=3;
 	footprintz=3;
 
@@ -65,27 +65,31 @@
 	//  Movement
 	//************
 	movementclass=KBOTSf3;
-	turnrate=590;
+	turnrate=390;
 	acceleration=0.9;
 	brakerate=1.5;
-	maxvelocity=1.1;
+	maxvelocity=0.9;
 	maxslope=20;
 	maxwaterdepth=12;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=750;
+	sightdistance=450;
 	radardistance=1500;
 
 	//************************************************************
 	//  Weapons
 	//***********
+	//Weapon1=ARM_SNUB;
 	weapon1=ARM_Rhino_Shield;
+	Weapon2=ARM_Rhino_ANNIHILATOR;
+	WeaponMainDir2= 0 0 1;
+	MaxAngleDif2=120;
 	nochasecategory=VTOL;
 	onlytargetcategory1=NOTAIR;
-	explodeas=BIG_UNITEX;
-	selfdestructas=BIG_UNIT;
+	explodeas=ATOMIC_BLASTPEN;
+	selfdestructas=CRAWL_BLASTSML;
 
 	//************************************************************
 	//  Orders
