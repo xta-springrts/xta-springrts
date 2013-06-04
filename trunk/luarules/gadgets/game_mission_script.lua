@@ -64,6 +64,7 @@ local spGetPlayerInfo = Spring.GetPlayerInfo
 
 local spPlaySoundFile = Spring.PlaySoundFile
 local spSpawnCEG = Spring.SpawnCEG
+local spSetCameraTarget = Spring.SetCameraTarget
 
 local triggers, switches, timers, vars = {}, {}, {}, {}
 local killCounter, deathCounter = {}, {}
@@ -152,7 +153,7 @@ function gadget:Initialize()
 		local mission = "Missions/" .. modOptions.mission ..".lua"
 		if VFS.FileExists(mission) then
 			gameData, spawnData, missionTriggers, locations = include(mission)
-			if gameData.game == Game.modShortName and gameData.minVersion <= Game.modVersion then
+			if gameData.game == Game.modShortName then
 				if gameData.map ~= Game.mapName then
 					spEcho('Mission "' .. modOptions.mission .. "\" was started on a wrong map or you don't have " .. spawnData.map)
 					spEcho("Swiching to standard skirmish mode")
@@ -162,7 +163,7 @@ function gadget:Initialize()
 					missionTriggers = nil	-- kill table once not needed
 				end
 			else
-				spEcho('This mission is intended for "' .. gameData.game .. " " .. gameData.minVersion .. '" or newer')
+				spEcho('This mission is intended for "' .. gameData.game .. '"')
 				gadgetHandler:RemoveGadget()				
 			end
 		else
@@ -507,6 +508,36 @@ local function DoActions(actions, teamID, trigNo)
 				end
 			end
 		
+		-- Cam (locIdx|x y z) [transTime]
+		elseif comm=="Cam" then
+			if #actn==5 then
+				spSetCameraTarget(actn[2],actn[3],actn[4],actn[5])
+			elseif #actn==4 then
+				spSetCameraTarget(actn[2],actn[3],actn[4])
+			elseif #actn==3 then
+				local x,z
+				local loc = locations[actn[3]]
+				if loc.shape == "C" then
+					x, z = loc.X, loc.Z
+				elseif loc.shape == "R" then
+					x, z = (loc.X1 + loc.X2)*0.5, (loc.Z1 + loc.Z2)*0.5
+				else
+					return
+				end
+				spSetCameraTarget(x,spGetGroundHeight(x,z),z,actn[3])
+			elseif #actn==2 then
+				local x,z
+				local loc = locations[actn[3]]
+				if loc.shape == "C" then
+					x, z = loc.X, loc.Z
+				elseif loc.shape == "R" then
+					x, z = (loc.X1 + loc.X2)*0.5, (loc.Z1 + loc.Z2)*0.5
+				else
+					return
+				end
+				spSetCameraTarget(x,spGetGroundHeight(x,z),z)
+			end
+			
 		-- CEG cegname (x y z dx dy dz r dam|locIdx h)
 		elseif comm=="CEG" then
 			if #actn==10 then
@@ -946,7 +977,7 @@ function gadget:Initialize()
 		local mission = "Missions/" .. modOptions.mission ..".lua"
 		if VFS.FileExists(mission) then
 			gameData, _, missionTriggers, locations = include(mission)
-			if gameData.game == Game.modShortName and gameData.minVersion <= Game.modVersion then
+			if gameData.game == Game.modShortName then
 				if gameData.map ~= Game.mapName then
 					gadgetHandler:RemoveGadget()
 				else
@@ -971,7 +1002,7 @@ function gadget:Initialize()
 										glBeginEnd(GL.TRIANGLE_FAN,function()
 											glVertex(x, spGetGroundHeight(loc.X, loc.Z), z)
 											for t=0.0, pi2, step do
-												rx, rz = loc.X + r*sin(t), loc.Z + r*cos(t)
+												rx, rz = loc.X + r*cos(t), loc.Z + r*sin(t)
 												glVertex(rx, spGetGroundHeight(rx, rz), rz)
 											end
 										end)
@@ -1025,7 +1056,7 @@ function gadget:DrawWorldPreUnit()
 	--glDepthMask(false)
 	glDepthTest(GL.LEQUAL)
 	glPushMatrix()
-	glTranslate(0, 5, 0)
+	glTranslate(0, 1, 0)
 	for ln, loc in pairs(locations) do
 		if loc.visible then
 			if loc.RGB then

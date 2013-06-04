@@ -1,7 +1,6 @@
 gameData = {
 	map = "Altair_Crossing_v3",			-- this mission is meant to be played on this map
 	game = "XTA",						-- and with this game (short game name)
-	minVersion = "$VERSION",				-- and at least this version of game
 	nextMission = "XTA_tutorial_mission",	-- next mission after victory, optional
 }
 
@@ -245,7 +244,8 @@ triggers if specified variable is of specified relation compared to value, value
 just because variables can be used instead of switches for same propose, for performace reasons, avoid it
 
 the quantity values of conditions can be negative, in that case it means less than specified value
-if you use a non-numeric value, it will be interpreted as a variable name
+if you use a non-numeric value for quantity, it will be interpreted as a variable name
+
 examples:	"Res -400 M"			-- triggers if trigger owner has less than 400 metal in pool
 			"Ctrl 20 arm_stumpy"	-- triggers if trigger owner has a total of 20 or more Stumpies
 			"Ctrl -10 arm_fido 3"	-- triggers if trigger owner has less than 10 Fidos at location 3
@@ -253,7 +253,7 @@ examples:	"Res -400 M"			-- triggers if trigger owner has less than 400 metal in
 			"Kill -7 arm_fido"		-- triggers if trigger owner killed less than 7 Fidos in total
 			"Var myVar ~= 5"		-- triggers if variable myVar is not equal to 5 
 			"Res myVar M"			-- triggers if trigger owner has metal in quantity specified in myVar
-									-- or more if value of myVar is negative, then triggers if quantity is
+									-- or more, if value of myVar is negative, then triggers if quantity is
 									-- less than abs(myVar)
 
 List of possible actions:
@@ -263,10 +263,13 @@ List of possible actions:
 carries over all units of unitname or ANY type with combat experience >= minXP located at location locIdx
 or anywhere on the map to next mission, minXP can be a variable
 
-	CEG cegname (x y z dx dy dz r dam|loc h)
+	Cam (locIdx|x y z) [transTime]
+sets the camera over a location locIdx or x, y, z coordinates with optional transition time
+	
+	CEG cegname (x y z dx dy dz r dam|locIdx h)
 spawns a CEG with given name at: given coordiantes, direction, radius and damage
 or
-at location loc, h above the ground at location center, pointing upward, with radius and damage = 1
+at location locIdx, h above the ground at location center, pointing upward, with radius and damage = 1
 
 	Defeat [teamID]
 defeat for player whose trigger this is or specific team
@@ -284,8 +287,8 @@ spawn a quantity of units of unitname type at location locIdx either for player 
 kills all units of unitname or ANY type owned by teamID, either on entire map or at location locIdx,
 units killed this way are counted as killed by trigger owner
 
-	Loc (number|name) (true|false|flip)
-sets the visibility of a location specified by number or name to visible (true), invisible (false), or
+	Loc number (true|false|flip)
+sets the visibility of a location specified by number to visible (true), invisible (false), or
 flips its visibilty state
 	
 	Move (unitname|ANY) src dest [teamID]
@@ -313,7 +316,7 @@ variables are not initialized on game start, use a one-shot unconditional trigge
 if there are 4 parameters, the specified variable will be set to result of an arithmetical operation
 on the second and fourth parameter, which can be either numbers or other variables
 possible operators are: + - * / % ^  and they behave exactly as in LUA
-variable's name shouldn't contain only digits as it will be parsed as a number not a variable as in LUA
+variable's name shouldn't contain only digits as it will be parsed as a number not a variable
 
 	Victory
 victory for ally team to which the trigger owner belongs

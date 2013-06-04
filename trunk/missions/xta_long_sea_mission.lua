@@ -1,7 +1,6 @@
 gameData = {
 	map = "SailAway",
 	game = "XTA",
-	minVersion = "$VERSION",
 }
 
 spawnData = {
