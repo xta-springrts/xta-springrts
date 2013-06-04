@@ -44,27 +44,22 @@ local msgQueue = {}
 local campaignData, bonUnits = {}, {}
 local victory, defeat, endTime = false, false, 0
 local cmpgNotSent = true
-local intro, selMission, sndVolume = false, 0, Spring.GetConfigInt("snd_volmaster", 60)
+local intro, hovMission, selMission, sndVolume = false, 0, nil, Spring.GetConfigInt("snd_volmaster", 60)
 local commander, startScript
-local missionList = VFS.DirList("Missions", "*.lua")
+local missionList = VFS.DirList("Missions", "xta_*.txt")
 local missScreen = {}
-for i=1, #missionList do
-	if missionList[i]:find("_campaign.lua") then
-		table.remove(missionList, i)
-		break
-	end
-end
+
 for i=1, #missionList do
 	missScreen[i] = missionList[i]:sub(14,-5):gsub("_", " ")
 	missScreen[i] = missScreen[i]:sub(1,1):upper() .. missScreen[i]:sub(2)
 end
 
-local dispBrief = true
+local dispBrief = false
 local X, Y = spGetViewGeometry()
 local X_2, scale = X*0.5, Y/1200
 local fs = 23 * scale
 local lef, rig, top, bot = (X-Y*1.333*.8)*0.5, (X+Y*1.333*.8)*0.5, .9*Y, .1*Y
-local okL, okR, okT, okB
+local okL, okR, okT, okB = X_2-2*fs, X_2+2*fs, bot+3*fs, bot+fs
 local iAlpha = 1
 
 local defCmpgData = {
@@ -97,7 +92,7 @@ function widget:Initialize()
 		local mission = "Missions/" .. modOptions.mission ..".lua"
 		if VFS.FileExists(mission) then
 			gameData, _, _, _, briefing = VFS.Include(mission)
-			if gameData.game == Game.modShortName and gameData.minVersion <= Game.modVersion then
+			if gameData.game == Game.modShortName then
 				if gameData.map ~= Game.mapName then
 					widgetHandler:RemoveWidget()
 				else
@@ -112,11 +107,8 @@ function widget:Initialize()
 						intro = false
 						widgetHandler:RegisterGlobal("SetBonusUnits", SetBonusUnits)
 						cmpgNotSent, campaignData = pcall(include,"Config/" .. gameData.game .."_campaign.lua")
-						if not briefing then
-							dispBrief = false
-						else
-							fs = 23 * scale
-							okL, okR, okT, okB = X_2-2*fs, X_2+2*fs, bot+3*fs, bot+fs
+						if briefing then
+							dispBrief = true
 						end
 					end
 				end
@@ -195,36 +187,37 @@ local mouseOverOK = false
 function widget:IsAbove(x, y)
 	if intro then
 		if x>lef+fs and x<rig-fs and y<top*0.75 and y>bot+fs then
-			selMission = math.floor((top*0.75-y)/(fs+2))
-			return true
+			hovMission = math.floor((top*0.75-y)/(fs+2))
+		else
+			hovMission = 0
 		end
-		selMission = 0
-	else
-		if dispBrief and y>okB and y<okT and x>okL and x<okR then
-			mouseOverOK = true
-			return true
-		end
+	end
+	if (dispBrief or intro) and y>okB and y<okT and x>okL and x<okR then
+		mouseOverOK = true
+	else	
 		mouseOverOK = false
 	end
-	return false
 end
 
 function widget:MousePress(mx, my, mButton)
-	if intro then
-		if missionList[selMission] and mButton==1 then
-			startScript = VFS.LoadFile(missionList[selMission]:sub(1,-5) .. ".txt")
-			Spring.SetConfigInt("snd_volmaster", sndVolume)
-			Spring.Restart("", startScript)
-		end
-	else
-		if mouseOverOK and mButton==1 then
-			dispBrief = false
-			--widgetHandler:RemoveCallIn("DrawScreen")
-			widgetHandler:RemoveCallIn("IsAbove")
-			widgetHandler:RemoveCallIn("MousePress")
-			local _, _, paused = Spring.GetGameSpeed()
-			if paused then
-				Spring.SendCommands("pause")
+	if mButton==1 then
+		if intro then
+			if missionList[hovMission] then
+				selMission = hovMission
+			elseif mouseOverOK and selMission~=nil then
+				startScript = VFS.LoadFile(missionList[selMission]:sub(1,-5) .. ".txt")
+				Spring.SetConfigInt("snd_volmaster", sndVolume)
+				Spring.Restart("", startScript)
+			end
+		else
+			if mouseOverOK then
+				dispBrief = false
+				widgetHandler:RemoveCallIn("IsAbove")
+				widgetHandler:RemoveCallIn("MousePress")
+				local _, _, paused = Spring.GetGameSpeed()
+				if paused then
+					Spring.SendCommands("pause")
+				end
 			end
 		end
 	end
@@ -239,16 +232,26 @@ function widget:DrawScreen()
 		if iAlpha<=0.75 then
 			glColor(0,0,0,0.75)
 			glRect(lef,bot,rig,top)
-			if missionList[selMission] then
+			if missionList[hovMission] then
 				glColor(0.2,0.2,0.2,0.75)
-				glRect(lef+fs,top*0.75-selMission*(fs+2)-fs,rig-fs,top*0.75-selMission*(fs+2)+1)
+				glRect(lef+fs,top*0.75-hovMission*(fs+2)-fs,rig-fs,top*0.75-hovMission*(fs+2)+1)
 			end
-			glBeginText()
-				glText("XTA",X_2,top-6*fs,5*fs,"cd")
-				for i=1, #missScreen do
+			if mouseOverOK then
+				glColor(0.2,0.2,0.2,0.75)
+				glRect(okL,okB,okR,okT)
+			end
+			glColor(1.0,1.0,1.0,1.0)
+			glText("XTA",X_2,top-6*fs,5*fs,"cd")
+			for i=1, #missScreen do
+				if i==selMission then
+					glColor(1.0,1.0,0.2,1.0)
+					glText(missScreen[i], X_2, top*0.75-i*(fs+2)-fs, fs, "cd")
+					glColor(1.0,1.0,1.0,1.0)
+				else
 					glText(missScreen[i], X_2, top*0.75-i*(fs+2)-fs, fs, "cd")
 				end
-			glEndText()	
+			end
+			glText("OK",X_2,bot+fs*1.4,fs,"cd")
 		end
 		glPopMatrix()
 	else
@@ -292,7 +295,6 @@ function widget:DrawScreen()
 				for i=1, #bu do
 					spSendLuaRulesMsg("XTA_cmpg " .. bu[i] .. mt)
 				end
-				--spSendLuaRulesMsg("XTA_cmpg " .. commander .. mt)
 				campaignData.bonusUnits = {}
 				cmpgNotSent = false
 			end
