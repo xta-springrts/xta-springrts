@@ -6816,9 +6816,9 @@
 	firestarter=50;
 	rgbcolor=1.000 0.059 0.000;
 	tolerance=1000;
-	sprayangle=924;
-	burst=1;
-	projectiles=2;
+	//sprayangle=924;
+	//burst=1;
+	//projectiles=2;
 	[DAMAGE]
 	{
 		default=55;
