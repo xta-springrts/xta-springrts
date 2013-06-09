@@ -33,8 +33,8 @@ if gadgetHandler:IsSyncedCode() then
 		
 		if enable then			
 			Spring.SendCommands ("cheat") 	
-			Spring.SendCommands ("nocost")
-			Spring.SendCommands ("globallos")
+			--Spring.SendCommands ("nocost")
+			--Spring.SendCommands ("globallos")
 			Spring.Echo("dbg_cheats.lua: loaded for XTA version " .. Game.modVersion)
 		end
 	end
