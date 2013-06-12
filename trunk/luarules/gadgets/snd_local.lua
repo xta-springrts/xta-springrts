@@ -202,20 +202,20 @@ else
 							sndwet[id] = weaponDef.customParams.soundhitwet
 							--Echo("Wet sound for:", id, weaponDef.name, ":", sndwet[id])
 						else
-							Echo("Local sounds: no soundhitwet sound: ", weaponDef.name)
+							--Echo("Local sounds: no soundhitwet sound: ", weaponDef.name)
 						end
 					end
 					if weaponDef.customParams.soundhitdry and len(weaponDef.customParams.soundhitdry) > 0 then
 						snddry[id] = weaponDef.customParams.soundhitdry
 						--Echo("Dry sound for:", id, weaponDef.name, ":", snddry[id])
 					else
-						Echo("Local sounds: no soundshitdry sound: ", weaponDef.name)
+						--Echo("Local sounds: no soundshitdry sound: ", weaponDef.name)
 					end
 					if weaponDef.customParams.soundstart and len(weaponDef.customParams.soundstart) > 0 then
 						sndstart[id] = weaponDef.customParams.soundstart
 						--Echo("Start sound for:", id, weaponDef.name, ":", sndstart[id])
 					else
-						Echo("Local sounds: no soundstart sound: ", weaponDef.name)
+						--Echo("Local sounds: no soundstart sound: ", weaponDef.name)
 					end
 				end
 			--end
