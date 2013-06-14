@@ -58,6 +58,9 @@
 	//  Abilities
 	//*************
 	canRepeat=0;
+	canMove=0;
+	canAttack=0;
+	canGuard=0;
 	
 	//************************************************************
 	//  Movement

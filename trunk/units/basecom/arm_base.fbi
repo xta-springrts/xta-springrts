@@ -48,6 +48,7 @@
 	CanStop=1;
 	canreclamate=1;
 	CantBeTransported=1;
+	canGuard=1;
 	//Weapon1=ARM_BASE_ROCKET;
 	//Weapon2=ARM_BASE_MISSILE;
 	OnlyTargetCategory1=NOTAIR;

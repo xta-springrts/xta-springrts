@@ -18,6 +18,8 @@
 	Builder=0;
 	canRepeat=0;
 	canAttack=0;
+	canguard=0;
+	canmove=0;
 	ThreeD=1;
 	ZBuffer=1;
 	NoAutoFire=1;

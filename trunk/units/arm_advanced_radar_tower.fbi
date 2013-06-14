@@ -64,6 +64,9 @@
 	//*************
 	onoffable=1;
 	canRepeat=0;
+	canMove=0;
+	canGuard=0;
+	canAttack=0;
 
 	//************************************************************
 	//  Movement

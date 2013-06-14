@@ -13,9 +13,7 @@ function gadget:GetInfo()
 end
 
 --adding this was first try at making it not fail with critters. but it just completly disables i think.
---if (not gadgetHandler:IsSyncedCode()) then
---	return false
---end
+if (gadgetHandler:IsSyncedCode()) then
 
 local RemoveWait = {
 	[UnitDefNames.arm_advanced_radar_tower.id] = true,
@@ -166,14 +164,14 @@ local RemoveUnitCmdDesc 			= Spring.RemoveUnitCmdDesc
 local FindUnitCmdDesc				= Spring.FindUnitCmdDesc
 local EditUnitCmdDesc				= Spring.EditUnitCmdDesc
 local GetUnitDefID					= Spring.GetUnitDefID
-local cmdWait 						= 5 -- "Wait" ID = "5"
-local cmdStop						= 0 -- "Stop" ID = "0"
-local cmdMove						= 10 -- "Move" ID = "10"
-local cmdMoveState					= 50 -- "Move state" ID = "50"
-local cmdFireState					= 45 -- "Fire state" ID = "45"
-local cmdAreaAttack_air				= 21 -- "Area Attack" ID = "39954", this is the one for aircraft, provided bt engine, xta has a gadget for area attack too
-local cmdSelfD						= 65 -- "SelfD" ID = "65"
-
+local CMD_WAIT						= CMD.WAIT -- "Wait" ID = "5"
+local CMD_STOP						= CMD.STOP -- "Stop" ID = "0"
+local CMD_MOVE						= CMD.MOVE -- "Move" ID = "10"
+local CMD_MOVESTATE					= CMD.MOVE_STATE -- "Move state" ID = "50"
+local CMD_FIRESTATE					= CMD.FIRE_STATE -- "Fire state" ID = "45"
+local CMD_AREA_ATTACK_AIR			= 21 -- "Area Attack" ID = "39954", this is the one for aircraft, provided by engine, xta has a gadget for area attack too
+local CMD_SELFD						= CMD.SELFD -- "SelfD" ID = "65"
+local GaiaTeamID  					= Spring.GetGaiaTeamID ()
 --local cmdFight						= 16 -- "Fight" ID = "16"
 -- (Fight should be removed by putting canFight tag to false in unitDef)
 local Echo							= Spring.Echo
@@ -186,14 +184,13 @@ function gadget:Initialize()
 	end
 end
 
-local GaiaTeamID  = Spring.GetGaiaTeamID ()
 function gadget:UnitCreated(unitID, unitDefID, teamID, builderID)
 	--somehow this gadget does not like the critters. so just do not try to edit their buttons.
 	if teamID == GaiaTeamID then return end
 	
 	--remove wait command
 	if RemoveWait[unitDefID] then
-		local cmdDescID = FindUnitCmdDesc(unitID, cmdWait)
+		local cmdDescID = FindUnitCmdDesc(unitID, CMD_WAIT)
 		if (cmdDescID) then
 			RemoveUnitCmdDesc(unitID, cmdDescID)
 		end
@@ -201,7 +198,7 @@ function gadget:UnitCreated(unitID, unitDefID, teamID, builderID)
 	
 	--remove stop command
 	if RemoveStop[unitDefID] then
-		local cmdDescID = FindUnitCmdDesc(unitID, cmdStop)
+		local cmdDescID = FindUnitCmdDesc(unitID, CMD_STOP)
 		if (cmdDescID) then
 			RemoveUnitCmdDesc(unitID, cmdDescID)
 		end
@@ -209,35 +206,35 @@ function gadget:UnitCreated(unitID, unitDefID, teamID, builderID)
 	
 	--remove other commands
 	if RemoveMove[unitDefID] then
-		local cmdDescID = FindUnitCmdDesc(unitID, cmdMove)
+		local cmdDescID = FindUnitCmdDesc(unitID, CMD_MOVE)
 		if (cmdDescID) then
 			RemoveUnitCmdDesc(unitID, cmdDescID)
 		end
 	end	
 	
 	if RemoveMoveState[unitDefID] then
-		local cmdDescID = FindUnitCmdDesc(unitID, cmdMoveState)
+		local cmdDescID = FindUnitCmdDesc(unitID, CMD_MOVESTATE)
 		if (cmdDescID) then
 			RemoveUnitCmdDesc(unitID, cmdDescID)
 		end
 	end	
 	
 	if RemoveFireState[unitDefID] then
-		local cmdDescID = FindUnitCmdDesc(unitID, cmdFireState)
+		local cmdDescID = FindUnitCmdDesc(unitID, CMD_FIRESTATE)
 		if (cmdDescID) then
 			RemoveUnitCmdDesc(unitID, cmdDescID)
 		end
 	end
 	
 	if RemoveAreaAttack[unitDefID] then
-		local cmdDescID = FindUnitCmdDesc(unitID, cmdAreaAttack_air)
+		local cmdDescID = FindUnitCmdDesc(unitID, CMD_AREA_ATTACK_AIR)
 		if (cmdDescID) then
 			RemoveUnitCmdDesc(unitID, cmdDescID)
 		end
 	end
 	
 	-- add self-d button
-	local cmdDescID = FindUnitCmdDesc(unitID, cmdSelfD)
+	local cmdDescID = FindUnitCmdDesc(unitID, CMD_SELFD)
 	if (cmdDescID) then --just to be sure
 		EditUnitCmdDesc(unitID, cmdDescID, {hidden = false,name = "Destruct"})
 	else
@@ -286,3 +283,7 @@ end
 "ntPassiveMode" ID = "34571"
 "Capture" ID = "130"
 ]]--
+
+else
+-- UNSYNCED CODE
+end
