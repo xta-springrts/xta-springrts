@@ -11,18 +11,34 @@ function widget:GetInfo()
    handler   = true, --access to handler
    }
 end
+local CMD_ATTACK					= CMD.ATTACK
+local CMD_GUARD						= CMD.GUARD
+local CMD_AREA_GUARD				= 14001
+local CMD_PATROL					= CMD.PATROL
+local CMD_FIGHT						= CMD.FIGHT
+local CMD_DGUN						= CMD.DGUN
+local CMD_REPAIR					= CMD.REPAIR
+local CMD_WAIT						= CMD.WAIT -- "Wait" ID = "5"
+local CMD_STOP						= CMD.STOP -- "Stop" ID = "0"
+local CMD_MOVE						= CMD.MOVE -- "Move" ID = "10"
+local CMD_MOVESTATE					= CMD.MOVE_STATE -- "Move state" ID = "50"
+local CMD_FIRESTATE					= CMD.FIRE_STATE -- "Fire state" ID = "45"
+local CMD_AREA_ATTACK_AIR			= 21 -- "Area Attack" ID = "39954", this is the one for aircraft, provided by engine, xta has a gadget for area attack too
+local CMD_SELFD						= CMD.SELFD -- "SelfD" ID = "65"
 
+-- Add/Remove commands here that you want removed from the control panel buttons. Commands are really numbers, but it is better to not
+-- hardcode them unless neccessary. Commands still work with the shortcut even if they are hidden.
 local HiddenCommands = {
-   [105] = true, --dgun
-   [0] = true, --stop
-   [10] = true, --move
-   [15] = true, --patrol
-   [16] = true, --fight
-   [25] = true, --guard
-   [20] = true, --attack
-   [5] = true, --wait
-   [40] = true, --repair
-   [65] = true, --selfd
+   [CMD_DGUN] = true, --dgun
+   [CMD_STOP] = true, --stop
+   [CMD_MOVE] = true, --move
+   [CMD_PATROL] = true, --patrol
+   [CMD_FIGHT] = true, --fight
+   [CMD_GUARD] = true, --guard
+   [CMD_ATTACK] = true, --attack
+   [CMD_WAIT] = true, --wait
+   [CMD_REPAIR] = true, --repair
+   [CMD_SELFD] = true, --selfd
 }
 
 function widget:CommandsChanged()
@@ -52,6 +68,7 @@ end
 "Patrol" ID = "15"
 "Fight" ID = "16"
 "Guard" ID = "25"
+"Area guard" ID = "14001"
 "Repair level" ID = "135"
 "Land mode" ID = "145"
 "Area attack" ID = "21"

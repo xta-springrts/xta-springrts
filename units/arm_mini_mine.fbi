@@ -60,8 +60,8 @@
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
-	canguard=1;
+	canattack=0;
+	canguard=0;
 	canmove=0;
 	canpatrol=0;
 	canstop=0;

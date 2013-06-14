@@ -65,6 +65,7 @@
 	canpatrol=1;
 	canstop=1;
 	onoffable=1;
+	canguard=1;
 
 	//************************************************************
 	//  Movement

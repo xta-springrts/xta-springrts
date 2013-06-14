@@ -47,6 +47,7 @@
 	firestandorders=1;
 	standingfireorder=2;
 	canpatrol=1;
+	canguard=1;
 	mobilestandorders=1;
 	standingmoveorder=1;
 	pieceTrailCEGTag=Debree;//bleh
