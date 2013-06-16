@@ -143,7 +143,7 @@
 	cylindertargeting = 1;
 	range=450;
 	reloadtime=1.6;
-	weaponvelocity=800;
+	weaponvelocity=700;
 	areaofeffect=8;
 	soundstart=Mavgun2;
 	soundhitdry=xplomed2;
@@ -163,32 +163,31 @@
 		group_invincible=1;
 	}
 }
+
 [SPID2AIRLASER]
 {
-	name=Long Energy Laser;
+	name=J7 Laser;
 	Weapontype=LaserCannon;
-	//minbarrelangle=-30;
-	duration=0.06;
-	thickness=0.75;
-	CoreThickness=1.0;
-	Intensity=0.4;
-	duration=0.03;	
-	rgbcolor=1 0.8 0.4;
+	explosiongenerator=custom:Gator;
+	cegTag=REDCRAP;
+	duration=0.11;
+	thickness=1.0;
+	Intensity=0.9;
+	FallOffRate=0;
 	turret=1;
 	range=450;
-	explosiongenerator=custom:LightFlylaser;
-	reloadtime=0.25;
-	weaponvelocity=1200;
-	areaofeffect=12;
-	soundstart=LASRLIT1;
+	reloadtime=2;
+	weaponvelocity=600;
+	areaofeffect=16;
+	soundtrigger=1;
+	soundstart=lasrfir1;
 	soundhitdry=lasrhit2;
-	firestarter=90;
-	tolerance=500;
+	firestarter=70;
+	tolerance=2000;
 	[DAMAGE]
 	{
-		default=9;
-	 	group_invincible=1;
-		group_landair=23;
+		default=72;
+		group_invincible=1;
 	}
 }
 
@@ -460,7 +459,7 @@
 	turret=1;
 	range=500;
 	duration=0.2;
-	reloadtime=2;
+	reloadtime=2.5;
 	energypershot=300;
 	weaponvelocity=650;
 	areaofeffect=8;
@@ -480,10 +479,10 @@
 	//paralyzetime=40;
 	[DAMAGE]
 	{
-		default=80;
+		default=75;
 		group_invincible=1;
-		group_commanders=75;
-		group_landair=191;
+		//group_commanders=75;
+		//group_landair=191;
 
 	}
 }
