@@ -38,9 +38,9 @@ if (gadgetHandler:IsSyncedCode()) then
 		core_spoiler = true,
 		arm_valiant = true,
 		core_limiter = true,
-		Vandal = true,
-		Filcher = true,
-		}	
+		tadg05 = true,
+		tadg06 = true,
+	}	
 	local mineNames = {						-- table of mine unit names
 		-- arm_drip = true, exclude minesweepers
 		-- arm_fart_mine = true, exclude minesweepers
@@ -115,9 +115,9 @@ if (gadgetHandler:IsSyncedCode()) then
 	end
 
 	local function getSide(unitname)
-		if unitname == 'arm_podger' then
+		if unitname == "arm_podger" or unitname == "tadg05" then
 			return "arm"
-		elseif unitname == 'core_spoiler' then
+		elseif unitname == "core_spoiler"  or unitname == "tadg06" then
 			return "core"
 		else
 			return "water"

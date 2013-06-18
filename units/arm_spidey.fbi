@@ -59,7 +59,6 @@
 	movementclass=CRAWLBOMB;
 	kamikaze=1;
 	kamikazedistance=70;
-	selfdestructcountdown=0;
 	wpri_badTargetCategory=VTOL;
 	BadTargetCategory=VTOL;
 	NoChaseCategory=VTOL;

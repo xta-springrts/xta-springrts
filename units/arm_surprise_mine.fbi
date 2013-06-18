@@ -85,7 +85,7 @@
 	//***********
 	explodeas=armmine6;
 	selfdestructas=armmine6;
-	selfdestructcountdown=1;
+	selfdestructcountdown=0;
 
 	//************************************************************
 	//  Orders
