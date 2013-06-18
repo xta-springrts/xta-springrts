@@ -38,9 +38,10 @@ if (gadgetHandler:IsSyncedCode()) then
 		core_spoiler = true,
 		arm_valiant = true,
 		core_limiter = true,
-		tadg05 = true,
-		tadg06 = true,
+		tadg05 = true, -- Filcher
+		tadg06 = true, -- Vandal
 	}	
+
 	local mineNames = {						-- table of mine unit names
 		-- arm_drip = true, exclude minesweepers
 		-- arm_fart_mine = true, exclude minesweepers
