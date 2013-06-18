@@ -32,7 +32,6 @@
 	explodeas=DECOY_COMMANDER_BLAST;
 	selfdestructas=DECOY_COMMANDER_BLAST;
 	selfdestructcountdown=0;
-
 	Category=ARM MINE DEFENSIVE STATIC WEAPON NOTLAND NOTAIR NOTSUB;
 	TEDClass=MINE;
 	Copyright=Copyright 1997 Humongous Entertainment. All rights reserved.;
@@ -50,7 +49,6 @@
 	canattack=0;
 	downloadable=1;
 	kamikaze=1;
-	selfdestructcountdown=1;
 	cancloak=1;
 	CloakCost=1;
 	init_cloaked=1;

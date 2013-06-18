@@ -48,7 +48,6 @@
 	canattack=0;
 	downloadable=1;
 	kamikaze=1;
-	selfdestructcountdown=1;
 	cancloak=1;
 	CloakCost=1;
 	init_cloaked=1;
