@@ -41,10 +41,6 @@
 	MetalStorage=0;
 	
 	//    Abilities
-	canRepeat=0;
-	canMove=0;
-	canAttack=0;
-	canGuard=0;
 	
 	//    Sight/Radar
 	RadarDistance=0;

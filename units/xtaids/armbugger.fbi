@@ -41,7 +41,6 @@
 	canpatrol=1;
 	canstop=1;
 	canguard=1;
-	canattack=1;
 	MaxVelocity=1.9;
 	BrakeRate=0.1;
 	Acceleration=0.1;
@@ -52,6 +51,7 @@
 	DefaultMissionType=Standby;
 	maneuverleashlength=640;
 	movementclass=KBOTSS2;
+	canattack=1;
 	kamikaze=1;
 	Ovradjust=1;
 	kamikazedistance=80;

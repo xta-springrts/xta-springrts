@@ -7,7 +7,7 @@
 	Designation=CORE-DR5;
 	Name=Chelonian;
 	buildpic=core_chelonian.png;
-	Description=Riot Tortoise;
+	Description=FlameThrower Tortoise;
 	FootprintX=4;
 	FootprintZ=4;
 	BuildCostEnergy=3463;
@@ -48,7 +48,7 @@
 	DefaultMissionType=Standby;
 	maneuverleashlength=640;
 	MovementClass=KBOTUW3;
-	Weapon1=CHELCHELIONLASER;
+	Weapon1=CHELCHELFLAMETHROWER;
 	wpri_badTargetCategory=VTOL;
 	BadTargetCategory=VTOL;
 	canattack=1;

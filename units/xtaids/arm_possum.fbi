@@ -4,79 +4,94 @@
 	//  Unit Description
 	//********************
 	side=Arm;
-	name=Mech Gantry;
-	description=Builds Large Kbots;
-	icontype=plant;
+	name=Sneaky Possum;
+	description=Sniper/Radar/Support Kbot;
 
 	//************************************************************
 	//  Categories
 	//**************
-	Category=CORE PLANT NOWEAPON NOTAIR NOTSUB;
-	tedclass=PLANT;
+	category=ARM KBOT WEAPON NOTAIR;
+	tedclass=KBOT;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=arm_mech_lab;
-	unitnumber=253;
-	objectname=arm_mech_lab.3do;
-	corpse=arm_mech_lab_dead;
-	buildpic=arm_mech_lab.pcx;
-	soundcategory=CORE_GANTRY;
+	unitname=arm_possum;
+	objectname=arm_possum.3do;
+	corpse=arm_possum_dead;
+	buildpic=arm_possum.jpg;
+	soundcategory=ARM_KBOT;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=5226;
+	autoheal=10;//just like ota
+	maxdamage=2321;
 	healtime=30;
-	buildcostmetal=4654;
-	buildcostenergy=8574;
-	buildtime=37937;
-	footprintx=10;
-	footprintz=7;
+	buildcostmetal=2543;
+	buildcostenergy=44727;
+	buildtime=50758;
+	footprintx=2;
+	footprintz=2;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=800;
-	energyuse=0;
-	energystorage=1400;
+	metalstorage=0;
+	energymake=0.9;
+	energyuse=0.9;
+	energystorage=1500;//reduced by 50 percent
 
 	//************************************************************
 	//  Building
 	//************
-	YardMap=oooooooooo oooooooooo ooccccccoo ooccccccoo ooccccccoo ooccccccoo ooccccccoo;
 
 	//************************************************************
 	//  Constructor
 	//***************
-	builder=1;
-	workertime=400;
+	builder=0;
+	workertime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
+	canattack=1;
+	canguard=1;
 	canmove=1;
 	canpatrol=1;
 	canstop=1;
+	upright=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	maxslope=10;
+	movementclass=KBOTSS2;
+	turnrate=1216;
+	acceleration=1.0;
+	brakerate=1.5;
+	maxvelocity=1.0;
+	maxslope=14;
 	maxwaterdepth=22;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
+	activatewhenbuilt=1;
+	onoffable=1;
 	//*********************
-	sightdistance=367.5;
-	radardistance=0;
+	sightdistance=635;
+	radardistance=1600;
 
 	//************************************************************
 	//  Weapons
 	//***********
-	explodeas=LARGE_BUILDINGEX;
-	selfdestructas=LARGE_BUILDING;
+	DecloakOnFire=0;
+	weapon1=ARMPossum_WEAPON;
+	weapon2=Possum_Lightning;
+	nochasecategory=VTOL;
+	badtargetcategory=VTOL;
+	wpri_badtargetcategory=VTOL;
+	explodeas=BIG_UNITEX;
+	selfdestructas=BIG_UNIT;
 
 	//************************************************************
 	//  Orders
@@ -84,30 +99,40 @@
 	noautofire=0;
 	firestandorders=1;
 	mobilestandorders=1;
-	standingfireorder=2;
-	standingmoveorder=2;
+	standingfireorder=0;
+	standingmoveorder=1;
+	defaultmissiontype=Standby;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=0;
-	designation=GKA-DML;
+	bmcode=1;
+	cancloak=1;
+	cloakcost=400;
+	cloakcostmoving=800;
+	designation=BK-CD4;
 	downloadable=1;
+	maneuverleashlength=640;
+	mincloakdistance=250;
+	shootme=1;
+	smoothanim=1;
+	steeringmode=2;
 	threed=1;
 	version=1.2;
 	zbuffer=1;
+	collisionVolumeType = box;
+	collisionVolumeScales =23 44 27;
+	collisionVolumeOffsets = 0 -1 0;
+	collisionVolumeTest = 1;
 	pieceTrailCEGTag=Debree;//bleh
 	pieceTrailCEGRange = 4;
 
+	[SFXTypes]
+	{
+	explosiongenerator0=custom:snipeflare;
+	}
 	//************************************************************
 	//  To be removed
 	//*****************
-	[SFXTypes]
-	{
-	explosiongenerator0=custom:Nano;
-	explosiongenerator1=custom:WhiteLight;
-	explosiongenerator2=custom:YellowLight;
-	explosiongenerator3=custom:YellowLight1;
-	}
 
 }

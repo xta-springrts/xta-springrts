@@ -41,12 +41,12 @@
 	canstop=1;
 	canguard=1;
 	MaxVelocity=2.5;
-	BrakeRate=0.009;
+	BrakeRate=0.007;
 	Acceleration=0.07;
 	TurnRate=640;
 	SteeringMode=1;
 	ShootMe=1;
-	Builddistance=90;
+	Builddistance=70;
 	CanReclamate=0;
 	EnergyMake=1;
 	MetalMake=0;

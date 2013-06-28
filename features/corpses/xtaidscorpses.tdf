@@ -1,4 +1,40 @@
 
+[arm_possum_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=arm_corpses;
+	object=arm_possum_dead;
+	featuredead=arm_possum_heap;
+	footprintx=2;
+	footprintz=2;
+	height=20;
+	blocking=1;
+	hitdensity=100;
+	metal=1748;
+	damage=1400;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+}
+[arm_possum_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=2x2d;
+	footprintx=2;
+	footprintz=2;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	metal=1374;
+	damage=800;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+}
+
 [arm_Rhino_dead]
 	{
 	World=All Worlds;
@@ -35,6 +71,81 @@
 	FeatureReclamate=smudge01;
 	SeqNameReclamate=tree1reclamate;
 	}
+
+[arm_bantha_dead]
+	{
+	World=All Worlds;
+	Description=Wreckage;
+	Category=arm_bantha_corpses;
+	Object=arm_bantha_dead;
+	FeatureDead=arm_bantha_heap;
+	FootPrintx=3;
+	FootPrintz=3;
+	Height=21;
+	Blocking=1;
+	HitDensity=105;
+	Metal=2895;
+	Damage=5452;
+	Reclaimable=1;
+	FeatureReclamate=smudge01;
+	SeqNameReclamate=tree1reclamate;
+	}
+
+[arm_bantha_heap]
+	{
+	World=All Worlds;
+	Description=Wreckage;
+	Category=heaps;
+	Object=3x3b;
+	FootPrintx=3;
+	FootPrintz=3;
+	Height=2;
+	Blocking=0;
+	HitDensity=105;
+	Metal=1548;
+	Damage=5445;
+	Reclaimable=1;
+	FeatureReclamate=smudge01;
+	SeqNameReclamate=tree1reclamate;
+	}
+
+[arm_Odin_dead]
+	{
+	World=All Worlds;
+	Description=Wreckage;
+	Category=arm_Rhino_corpses;
+	Object=arm_Odin_dead;
+	FeatureDead=arm_Odin_heap;
+	FootPrintx=3;
+	FootPrintz=3;
+	Height=21;
+	Blocking=1;
+	HitDensity=105;
+	Metal=6895;
+	Damage=95352;
+	Reclaimable=1;
+	FeatureReclamate=smudge01;
+	SeqNameReclamate=tree1reclamate;
+	}
+
+[arm_Odin_heap]
+	{
+	World=All Worlds;
+	Description=Wreckage;
+	Category=heaps;
+	Object=3x3b;
+	FootPrintx=3;
+	FootPrintz=3;
+	Height=2;
+	Blocking=0;
+	HitDensity=105;
+	Metal=3408;
+	Damage=6145;
+	Reclaimable=1;
+	FeatureReclamate=smudge01;
+	SeqNameReclamate=tree1reclamate;
+	}
+
 
 
 [arm_mech_lab_dead]
@@ -986,6 +1097,78 @@ Seqnamereclamate=tree1reclamate;
 	hitdensity=100;
 	metal=458;
 	damage=471;
+	reclaimable=1;
+	featurereclamate=SMUDGE01;
+	seqnamereclamate=TREE1RECLAMATE;
+	energy=0;
+}
+
+[arm_raptor_DEAD]{
+	world=All Worlds;
+	description=Wreckage;
+	category=corpses;
+	object=arm_raptor_DEAD;
+	featuredead=arm_raptor_HEAP;
+	footprintx=3;
+	footprintz=3;
+	height=20;
+	blocking=1;
+	hitdensity=100;
+	metal=2245;
+	damage=3142;
+	reclaimable=1;
+	featurereclamate=SMUDGE01;
+	seqnamereclamate=TREE1RECLAMATE;
+	energy=0;
+}
+
+[arm_raptor_HEAP]{
+	world=All Worlds;
+	description=Metal Shards;
+	category=heaps;
+	object=4X4A;
+	footprintx=3;
+	footprintz=3;
+	blocking=0;
+	hitdensity=100;
+	metal=1458;
+	damage=1471;
+	reclaimable=1;
+	featurereclamate=SMUDGE01;
+	seqnamereclamate=TREE1RECLAMATE;
+	energy=0;
+}
+
+[arm_rex_DEAD]{
+	world=All Worlds;
+	description=Wreckage;
+	category=corpses;
+	object=arm_rex_DEAD;
+	featuredead=arm_rex_HEAP;
+	footprintx=3;
+	footprintz=3;
+	height=20;
+	blocking=1;
+	hitdensity=100;
+	metal=4245;
+	damage=5142;
+	reclaimable=1;
+	featurereclamate=SMUDGE01;
+	seqnamereclamate=TREE1RECLAMATE;
+	energy=0;
+}
+
+[arm_rex_HEAP]{
+	world=All Worlds;
+	description=Metal Shards;
+	category=heaps;
+	object=4X4A;
+	footprintx=3;
+	footprintz=3;
+	blocking=0;
+	hitdensity=100;
+	metal=2458;
+	damage=3471;
 	reclaimable=1;
 	featurereclamate=SMUDGE01;
 	seqnamereclamate=TREE1RECLAMATE;
