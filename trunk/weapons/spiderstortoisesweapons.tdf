@@ -452,6 +452,44 @@
 	}
 }
 
+[CHELCHELFLAMETHROWER]
+{
+	name=Flame Thrower;
+	weaponType=Flame;
+	explosiongenerator=custom:FLAMETHROWER;
+	NoSelfDamage=1;	
+	SoundTrigger=1;
+	Texture1=flamer;
+	Texture2=null;
+	Texture3=null;
+	Texture4=null;
+	turret=1;
+	range=300;
+	reloadtime=0.5;
+	weapontimer=4.5;
+	weaponvelocity=180;
+	areaofeffect=40;
+	flamegfxtime=1.3;
+	sizegrowth=0.7;
+	burst=15;
+	burstrate=0.01;
+	sprayangle=2048;
+	randomdecay=0;
+	soundstart=Flamhvy1;
+	soundhitdry=;
+	firestarter=100;
+	groundbounce=1;
+	smokedelay=1;
+	startsmoke=0;
+	endsmoke=1;
+	tolerance=8000;
+	//minbarrelangle=-90;
+	[DAMAGE]
+	{
+		default=5;
+		group_invincible=1;
+	}
+}
 [BioElectric_WEAPON]
 {
 	name=Electro Weapon;
@@ -479,7 +517,7 @@
 	//paralyzetime=40;
 	[DAMAGE]
 	{
-		default=75;
+		default=66.6;
 		group_invincible=1;
 		//group_commanders=75;
 		//group_landair=191;

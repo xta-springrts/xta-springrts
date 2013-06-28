@@ -7,7 +7,7 @@
 	Designation=CORE-DR5;
 	Name=Caliber;
 	buildpic=core_caliber.png;
-	Description=Electro Anti-Swarm Tortoise;
+	Description=Experimental Tortoise;
 	FootprintX=4;
 	FootprintZ=4;
 	BuildCostEnergy=7234;

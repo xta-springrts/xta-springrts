@@ -9,7 +9,7 @@
 	description=Paralyzer/Capture Kbot;
 	footprintx=2;
 	footprintz=2;
-	maxdamage=1843;
+	maxdamage=2643;
 	objectname=COMMANDO;
 	side=CORE;
 	soundcategory=COR_CKBOT;

@@ -527,12 +527,18 @@
 	}
 	[arm_mech_lab]
 	{
-		canbuild1=arm_noruas;
-		canbuild2=arm_fleagoth;
+		canbuild1=arm_adv_construction_kbot;
+		canbuild2=arm_bantha;
 		canbuild3=arm_orcone;
 		canbuild4=arm_rhino;
-		canbuild5=armraz;
-		canbuild6=arm_raven;
+		canbuild5=arm_raven;
+		canbuild6=armraz;
+		canbuild7=arm_raptor;
+		canbuild8=arm_rex;
+		canbuild9=arm_skynite;
+		canbuild10=arm_possum;
+		canbuild11=arm_odin;
+		canbuild12=arm_noruas;
 	}
 	[arm_u0commander]
 	{

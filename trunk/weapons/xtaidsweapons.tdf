@@ -1,4 +1,115 @@
 
+[ARM_BANTHA_HEAD]
+{
+	name=Annihilator Weapon;
+	Weapontype=LaserCannon;
+	turret=1;
+	range=1000;
+	reloadtime=9;
+	energypershot=1500;
+	weaponvelocity=1000;
+	areaofeffect=24;
+	soundstart=laserAA;
+	soundhitdry=xplolrg1;
+	Texture1=null;
+	Texture2=null;
+	Texture3=null;
+	Texture4=null;
+	firestarter=90;
+	rgbcolor=0.2 1.000 0.1;
+	tolerance=500;
+	explosiongenerator=custom:GREEN_EMP_SHOT;
+	Texture1=purplelaser;
+	Texture2=null;
+	Texture3=null;
+	Texture4=null;
+	w=84.75;
+	thickness=9.7;
+	duration=0.05;
+	beamdecay=0.3;
+	beamttl=50;
+	hardStop=0;
+	[DAMAGE]
+	{
+		default=999;
+		group_landair=1500;
+		group_invincible=1;
+	}
+}
+
+[ARMBANTHA_WEAPON]
+{
+	name=Gauss Cannon;
+	weaponType=Cannon;
+	explosiongenerator=custom:WindkbotRocket;
+	turret=1;
+	//minbarrelangle=-45;
+	cylindertargeting = 1;
+	range=600;
+	reloadtime=1.0;
+	weaponvelocity=900;
+	areaofeffect=8;
+	soundstart=Mavgun2;
+	soundhitdry=xplomed2;
+	tolerance=500;
+	weapontimer=1.5;
+	startsmoke=1;
+	size=0.85;
+	rgbcolor=0.9 0.66 0.3;
+	stages=10;
+	separation=0.5;
+	alphadecay=-0.01;
+	sizedecay=-0.2;
+	nogap=1;
+	[DAMAGE]
+	{
+		default=167;
+		group_invincible=1;
+	}
+}
+
+[ARM_BANTHA_MISSILE]
+{
+	ID=100;
+	name=Missiles;
+	rendertype=1;
+	lineofsight=1;
+	explosiongenerator=custom:KBOTROCKETHIT;
+	cegTag=KBOTROCKETTRAIL;
+	Weapontype=MissileLauncher;
+	turret=1;
+	model=missile.s3o;
+	Texture1=null; //flare//
+	range=750;
+	reloadtime=1.5;
+	weapontimer=50;
+	Trajectoryheight=1;
+	weaponvelocity=650;
+	startvelocity=350;
+	weaponacceleration=150;
+	turnrate=50000;
+	areaofeffect=48;
+	metalpershot=0;
+	soundstart=rocklit1;
+	soundhitdry=xplosml2;
+	firestarter=70;
+	smokedelay=0.1;
+	guidance=1;
+	tracks=1;
+	flighttime=6;
+	selfprop=1;
+	smoketrail=0;
+	tolerance=9000;
+	explosiongaf=fx;
+	startsmoke=1;
+	[DAMAGE]
+	{
+		default=131;
+		group_landair=257;
+		group_invincible=1;
+	}
+}
+
 [ARM_FLEAGOTH_MISSILE]
 {
 	ID=100;
@@ -12,7 +123,7 @@
 	model=missile.s3o;
 	Texture1=null; //flare//
 	range=728;
-	reloadtime=0.75;
+	reloadtime=1.00;
 	weapontimer=50;
 	Trajectoryheight=1;
 	weaponvelocity=1050;
@@ -1753,7 +1864,7 @@
 	myGravity=0.1;
 	[DAMAGE]
 	{
-		default=175;
+		default=125;
 		group_invincible=1;
 	}
 }
@@ -1877,18 +1988,85 @@
 	turnrate=1000;
 	weaponvelocity=500;
 	startvelocity=100;
-	weaponacceleration=400;
+	weaponacceleration=350;
 	areaofeffect=160;
 	soundstart=rocklit1;
 	soundhitdry=rockhit;
 	firestarter=70;
 	smoketrail=0;
 	startsmoke=0;
-	soundstart=RavenHvyRock;
+	soundstart=banisher_fire;
 	soundhitdry=rockhit;
 	[DAMAGE]
 	{
 		default=425;
+		group_invincible=1;
+	}
+}
+
+[ARMRAPTOR_ROCKET]
+{
+	name=Rockets;
+	Weapontype=MissileLauncher;
+	turret=1;
+	model=weapon_exphvyrock;
+	explosiongenerator=custom:raven;
+	cegTag=RAVENTRAIL;
+	Texture1=null;
+	Texture2=null;
+	Texture3=null;
+	Texture4=null;
+	range=550;
+	reloadtime=4.5;
+	flighttime=3;
+	weapontimer=3;
+	Wobble=2000;
+	Dance=40;
+	weaponvelocity=500;
+	startvelocity=100;
+	weaponacceleration=350;
+	areaofeffect=98;
+	soundstart=rocklit1;
+	soundhitdry=rockhit;
+	firestarter=70;
+	smoketrail=0;
+	startsmoke=0;
+	soundstart=banisher_fire;
+	soundhitdry=rockhit;
+	tracks=1;
+	turnrate=10000;
+	[DAMAGE]
+	{
+		default=425;
+		group_invincible=1;
+	}
+}
+
+[RAPTOR_GUN]
+{
+	accuracy=500;
+	areaofeffect=48;
+	burnblow=1;
+	explosiongenerator=custom:BluePlasmaExtraBANG;
+	cegTag=BluePlasmaExtraGlow;
+	lineofsight=1;
+	name=SuperGaussCannon;
+	noexplode=1;
+	noselfdamage=1;
+	range=550;
+	reloadtime=1;
+	soundhitdry=xplomed2;
+	soundstart=mech_plasma;
+	turret=1;
+	weapontype=Cannon;
+	weaponvelocity=696;
+	rgbcolor=0.4 0.6 1.0;
+	energypershot=200;
+	size=6;
+	myGravity=0.1;
+	[DAMAGE]
+	{
+		default=66.6;
 		group_invincible=1;
 	}
 }
@@ -2044,5 +2222,139 @@
 		group_commanders=75;
 		default=2333;
 		group_invincible=1;
+	}
+}
+
+[skynight_WEAPON]
+{
+	name=PurpleSatan;
+	rendertype=4;
+	explosiongenerator=custom:PurpleFlames;
+	lineofsight=1;
+	cegTag=PurpleFlames;
+	turret=1;
+	minbarrelangle=-35;
+	range=400;
+	reloadtime=1.5;
+	energypershot=200;
+	weaponvelocity=900;
+	areaofeffect=36;
+	soundstart=skynightfire;
+	soundhit=skynighthit;
+	tolerance=500;
+	weapontimer=1.5;
+	startsmoke=1;
+	guidance=1;
+	size=3;
+	rgbcolor=0.5 0.1 0.5;
+	stages=10;
+  	separation=0.5;
+  	alphadecay=-0.01;
+  	sizedecay=-0.2;
+  	nogap=1;
+	[DAMAGE]
+	{
+		default=150;//380 dmg rate
+	}
+}
+[Possum_Lightning]
+{
+	name=Lightning Gun;
+	Weapontype=LightningCannon;
+	turret=1;
+	range=340;
+	reloadtime=1.5;
+	weaponvelocity=800;
+	areaofeffect=8;
+	duration=0.5;
+	soundtrigger=1;
+	soundstart=lghthvy1;
+	soundhitdry=lashit;
+	firestarter=50;
+	rgbcolor=0.5 0.5 1;
+	explosiongenerator=custom:ElectricSequence;
+	tolerance=3000;
+	startsmoke=1;
+	[DAMAGE]
+	{
+		default=186;
+		group_landair=38;
+		group_invincible=1;
+	}
+}
+
+[ARMPossum_WEAPON]
+{
+	name=Annihilator Weapon;
+	Weapontype=LaserCannon;
+	turret=1;
+	range=1400;
+	duration=0.08;
+	reloadtime=13;
+	energypershot=1500;
+	weaponvelocity=1650;
+	areaofeffect=8;
+	soundstart=annigun1;
+	soundhitdry=xplolrg1;
+	firestarter=90;
+	color=144;
+	color2=217;
+	explosiongenerator=custom:SNIPELASER;
+	Texture1=purplelaser;
+	Texture2=null;
+	Texture3=null;
+	Texture4=null;
+	thickness=9;
+	[DAMAGE]
+	{
+		default=2260;
+		group_invincible=1;
+		group_commanders=1000;
+		group_landair=1212;
+
+	}
+}
+
+[ODIN_HAMMER]
+{
+	name=Plasma Cannon;
+	rgbcolor=1 0.4 0.2;
+	stages=10;
+	separation=0.45;
+	alphadecay=0.3;
+	sizedecay=-0.15;
+	nogap=1;
+	size=4;
+	weaponType=Cannon;
+	turret=1;
+	range=1450;
+	explosiongenerator=custom:LaunchNuke;
+	cegTag=NUCKLEARNANO;
+	GroundBounce=0;
+	WaterBounce=0;
+	NumBounce=1;
+	BounceSlip=1.01;
+	BounceRebound=0.8;
+	//bounceExplosionGenerator=custom:BERTHASHOT;
+	reloadtime=16;
+	weaponvelocity=600; //400
+	areaofeffect=250;
+	soundstart=armcomgun;
+	soundhitdry=armcomhit;
+	accuracy=900;
+	movingaccuracy=1200;
+	tolerance=500;
+	//minbarrelangle=-40;
+	startsmoke=1;
+	edgeeffectiveness=0.01;
+	energypershot=7500;
+	//color=3;
+	[DAMAGE]
+	{
+		default=3500;
+		group_ships=4200;
+		group_large_ships=4400;
+		group_invincible=1;
+		group_commanders=1666;
 	}
 }
