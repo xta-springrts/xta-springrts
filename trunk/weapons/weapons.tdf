@@ -804,7 +804,7 @@
 {
 	name=Plasma Cannon;
 	explosiongenerator=custom:popupcannon;
-	energypershot=259;
+	energypershot=500;
 	rgbcolor=1 0.33 0.0;
 	size=4;
 	weaponType=Cannon;
@@ -3569,7 +3569,7 @@
 [CORFIXED_GUN]
 {
 	name=Plasma Cannon;
-	energypershot=276;
+	energypershot=525;
 	explosiongenerator=custom:popupcannon;
 	size=4;
 	rgbcolor=1 0.33 0.0;
@@ -6059,7 +6059,7 @@
 {
 	name=Plasma Cannon;
 	explosiongenerator=custom:popupcannon;
-	energypershot=259;
+	energypershot=500;
 	rgbcolor=1 0.33 0.0;
 	weaponType=Cannon;
 	turret=1;
@@ -6084,7 +6084,7 @@
 {
 	name=Plasma Cannon;
 	explosiongenerator=custom:popupcannon;
-	energypershot=259;
+	energypershot=500;
 	rgbcolor=1 0.33 0.0;
 	weaponType=Cannon;
 	turret=1;
@@ -6109,7 +6109,7 @@
 [EXEC_GUN]
 {
 	name=Plasma Cannon;
-	energypershot=276;
+	energypershot=525;
 	explosiongenerator=custom:popupcannon;
 	rgbcolor=1 0.33 0.0;
 	weaponType=Cannon;
