@@ -53,7 +53,7 @@
 	maneuverleashlength=640;
 	MovementClass=MEDIUMBOAT;
 	buildangle=16384;
-	Weapon1=ARM_TINY_ANNIHILATOR;
+	Weapon1=ARM_EVAP_ANNIHILATOR;
 	wpri_badTargetCategory=VTOL;
 	BadTargetCategory=VTOL;
 	canattack=1;

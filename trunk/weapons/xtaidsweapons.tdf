@@ -1,4 +1,41 @@
 
+[ARM_EVAP_ANNIHILATOR]
+{
+	name=Annihilator Weapon;
+	Weapontype=BeamLaser;
+	turret=1;
+	//minbarrelangle=-40;
+	pulseSpeed=7.0;
+	SoundTrigger=1;
+	LargeBeamLaser=1;
+	Intensity=0.001;
+	thickness=7.5;
+	beamtime=1;
+	beamdecay=0.9;
+	beamttl=20;
+	hardStop=0;
+	range=1550;
+	reloadtime=12;
+	targetMoveError=0.5;
+	energypershot=2500;
+	weaponvelocity=1000;
+	areaofeffect=16;
+	soundhitdry=xplolrg1;
+	soundstart=annigun1;
+	firestarter=90;
+	waterweapon=1; //allow piercing of water surface
+	rgbcolor=0.000 0.247 1.000;
+	explosiongenerator=custom:BluePlasmaExtraBANG;
+	[DAMAGE]
+	{
+		default=6500;
+		group_commanders=2200;
+		group_ships=5000;
+		group_large_ships=5000;
+		group_invincible=1;
+	}
+}
+
 [ARM_BANTHA_HEAD]
 {
 	name=Annihilator Weapon;
@@ -11,10 +48,6 @@
 	areaofeffect=24;
 	soundstart=laserAA;
 	soundhitdry=xplolrg1;
-	Texture1=null;
-	Texture2=null;
-	Texture3=null;
-	Texture4=null;
 	firestarter=90;
 	rgbcolor=0.2 1.000 0.1;
 	tolerance=500;
