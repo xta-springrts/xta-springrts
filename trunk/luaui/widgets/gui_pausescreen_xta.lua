@@ -15,8 +15,11 @@ end
 
 
 local spGetGameSeconds      = Spring.GetGameSeconds
+local spGetGameFrame		= Spring.GetGameFrame
 local spGetMouseState       = Spring.GetMouseState
 local spEcho                = Spring.Echo
+
+local spPlaySoundFile		= Spring.PlaySoundFile
 
 local spGetGameSpeed 		= Spring.GetGameSpeed
 
@@ -79,44 +82,14 @@ local forceHideWindow = false
 local sound_1  = LUAUI_DIRNAME .. 'Sounds/BEEP3.wav'
 local sound_4  = LUAUI_DIRNAME .. 'Sounds/BEEP5.wav'
 
-
-function widget:Initialize()
-	myFont = glLoadFont( fontPath, fontSizeHeadline )
-	updateWindowCoords()
+local function ResetGl() 
+	glColor( { 1.0, 1.0, 1.0, 1.0 } )
+	glLineWidth( 1.0 )
+	glDepthTest(false)
+	glTexture(false)
 end
 
-function widget:Shutdown()
-	glDeleteFont( myFont )
-end
-
-function widget:DrawScreen()
-	local now = osClock()
-	local _, _, paused = spGetGameSpeed()
-	local diffPauseTime = ( now - pauseTimestamp)
-	
-	if ( ( not paused and lastPause ) or ( paused and not lastPause ) ) then
-		--pause switch
-		pauseTimestamp = osClock()
-		if ( diffPauseTime <= slideTime ) then
-			pauseTimestamp = pauseTimestamp - ( slideTime - ( diffPauseTime / slideTime ) * slideTime )
-		end
-	end
-	
-	if ( paused and not lastPause ) then
-		--new pause
-		clickTimestamp = nil
-	end
-
-	lastPause = paused
-		
-	if ( paused or ( ( now - pauseTimestamp) <= slideTime ) ) then
-		drawPause()
-	end
-	
-	ResetGl()
-end
-
-function isOverWindow(x, y)
+local function isOverWindow(x, y)
 	if ( ( x > screenCenterX - boxWidth) and ( y < screenCenterY + boxHeight ) and 
 		( x < screenCenterX + boxWidth ) and ( y > screenCenterY - boxHeight ) ) then	
 		return true
@@ -167,7 +140,7 @@ function widget:GetTooltip(x, y)
 	end
 end
 
-function drawPause()
+local function drawPause()
 	local _, _, paused = spGetGameSpeed()
 	local now = osClock()
 	local diffPauseTime = ( now - pauseTimestamp)
@@ -203,11 +176,11 @@ function drawPause()
 		local group1XOffset = 0
 		--we are sliding
 		if ( paused ) then
-      Spring.PlaySoundFile(sound_1, 1)
+			spPlaySoundFile(sound_1, 1)
 			--sliding in
 			group1XOffset = ( screenx - wndX1 ) * ( 1.0 - ( diffPauseTime / slideTime ) )
 		else
-      	Spring.PlaySoundFile(sound_4, 1)
+			spPlaySoundFile(sound_4, 1)
 			--sliding out
 			group1XOffset = ( screenx - wndX1 ) * ( ( diffPauseTime / slideTime ) )
 		end
@@ -250,11 +223,11 @@ function drawPause()
 	if ( diffPauseTime <= slideTime ) then
 		--we are sliding
 		if ( paused ) then
-      	Spring.PlaySoundFile(sound_1, 1)
+			spPlaySoundFile(sound_1, 1)
 			--sliding in
 			glTranslate( 0, ( ( yCenter + imgWidthHalf ) * ( 1.0 - ( diffPauseTime / slideTime ) ) ), 0)
 		else
-      	Spring.PlaySoundFile(sound_4, 1)
+			spPlaySoundFile(sound_4, 1)
 			--sliding out
 			glTranslate( 0, ( yCenter + imgWidthHalf ) * ( diffPauseTime / slideTime ), 0)
 		end
@@ -266,11 +239,11 @@ function drawPause()
 	glTexture(false)
 end
 
-function updateWindowCoords()
+local function updateWindowCoords()
 	screenx, screeny = widgetHandler:GetViewSizes()
 	
-	screenCenterX = screenx / 2
-	screenCenterY = screeny / 2
+	screenCenterX = screenx * 0.5
+	screenCenterY = screeny * 0.5
 	wndX1 = screenCenterX - boxWidth
 	wndY1 = screenCenterY + boxHeight
 	wndX2 = screenCenterX + boxWidth
@@ -288,14 +261,42 @@ function widget:ViewResize(viewSizeX, viewSizeY)
   updateWindowCoords()
  end
 
---Commons
-function ResetGl() 
-	glColor( { 1.0, 1.0, 1.0, 1.0 } )
-	glLineWidth( 1.0 )
-	glDepthTest(false)
-	glTexture(false)
+function widget:DrawScreen()
+	if spGetGameFrame() < 15 then return end
+	local now = osClock()
+	local _, _, paused = spGetGameSpeed()
+	local diffPauseTime = ( now - pauseTimestamp)
+	
+	if ( ( not paused and lastPause ) or ( paused and not lastPause ) ) then
+		--pause switch
+		pauseTimestamp = osClock()
+		if ( diffPauseTime <= slideTime ) then
+			pauseTimestamp = pauseTimestamp - ( slideTime - ( diffPauseTime / slideTime ) * slideTime )
+		end
+	end
+	
+	if ( paused and not lastPause ) then
+		--new pause
+		clickTimestamp = nil
+	end
+
+	lastPause = paused
+		
+	if ( paused or ( ( now - pauseTimestamp) <= slideTime ) ) then
+		drawPause()
+	end
+	
+	ResetGl()
+end 
+ 
+function widget:Initialize()
+	myFont = glLoadFont( fontPath, fontSizeHeadline )
+	updateWindowCoords()
 end
 
+function widget:Shutdown()
+	glDeleteFont( myFont )
+end
 
 function printDebug( value )
 	if ( debug ) then
