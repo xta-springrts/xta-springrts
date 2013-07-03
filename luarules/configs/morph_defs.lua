@@ -143,39 +143,51 @@ local morphDefs = {
 	},
 	arm_podger = {
 		into = 'arm_podger',
-		time = 34,
+		time = 30,
 		metal = 153,
 		energy = 1031,
 		cmdname = 'Resupply',
 		text = 'Rebuild mine supply',
-		--tech = 2
 	},
 	core_spoiler = {
 		into = 'core_spoiler',
-		time = 42,
+		time = 34.8,
 		metal = 167,
 		energy = 1117,
 		cmdname = 'Resupply',
 		text = 'Rebuild mine supply',
-		--tech = 2
 	},
 	arm_valiant = {
 		into = 'arm_valiant',
-		time = 45,
+		time = 20.4,
 		metal = 187,
 		energy = 1243,
 		cmdname = 'Resupply',
 		text = 'Rebuild mine supply',
-		--tech = 2
 	},
 	core_limiter = {
 		into = 'core_limiter',
-		time = 45,
+		time = 21.4,
 		metal = 178,
 		energy = 1302,
 		cmdname = 'Resupply',
 		text = 'Rebuild mine supply',
-		--tech = 2
+	},
+	tadg05 = {
+		into = 'tadg05',
+		time = 25.3,
+		metal = 245,
+		energy = 3450,
+		cmdname = 'Resupply',
+		text = 'Rebuild mine supply',
+	},
+	tadg06 = {
+		into = 'tadg06',
+		time = 25.8,
+		metal = 235,
+		energy = 3550,
+		cmdname = 'Resupply',
+		text = 'Rebuild mine supply',
 	},
 	
 	
