@@ -3,15 +3,20 @@ function widget:GetInfo()
 	return {
 		name      = "CustomFormations2",
 		desc      = "Allows you to draw your own formation line.",
-		author    = "Niobium, Silentwings", -- Based on 'Custom Formations' by jK and gunblob
-		version   = "v3.4",
-		date      = "Mar, 2013",
+		author    = "Niobium", -- based on 'Custom Formations' by jK and gunblob
+		version   = "v4.2",
+		date      = "April, 2013",
 		license   = "GNU GPL, v2 or later",
 		layer     = 10000,
 		enabled   = true,
 		handler   = true,
 	}
 end
+
+-- 29/05/13 -- Dots are of consistent size depending on zoom and terrain height
+-- 25/05/13 -- Fixed crash bug that was triggered by pressing the left mouse button during line drawing with right mouse button. Also improved visuals.
+-- 13/04/13 -- Visuals remade by PixelOfDeath 
+-- 23/03/13 -- Attack order y-coord placement remade by Bluestone for spring 94+ 
 
 --------------------------------------------------------------------------------
 -- User Configurable Constants
@@ -112,7 +117,7 @@ local spFindUnitCmdDesc = Spring.FindUnitCmdDesc
 local spGetModKeyState = Spring.GetModKeyState
 local spGetInvertQueueKey = Spring.GetInvertQueueKey
 local spIsAboveMiniMap = Spring.IsAboveMiniMap
-local spGetSelectedUnitCount = Spring.GetSelectedUnitsCount
+local spGetSelectedUnitsCount = Spring.GetSelectedUnitsCount
 local spGetSelectedUnits = Spring.GetSelectedUnits
 local spGetUnitDefID = Spring.GetUnitDefID
 local spGiveOrder = Spring.GiveOrder
@@ -124,6 +129,10 @@ local spGetGroundHeight = Spring.GetGroundHeight
 local spGetFeaturePosition = Spring.GetFeaturePosition
 local spGiveOrderToUnit = Spring.GiveOrderToUnit
 local spGetUnitHeight = Spring.GetUnitHeight
+local spGetCameraPosition = Spring.GetCameraPosition
+local spGetViewGeometry = Spring.GetViewGeometry
+local spTraceScreenRay = Spring.TraceScreenRay
+
 
 local mapSizeX, mapSizeZ = Game.mapSizeX, Game.mapSizeZ
 local maxUnits = Game.maxUnits
@@ -133,7 +142,11 @@ local tsort = table.sort
 local floor = math.floor
 local ceil = math.ceil
 local sqrt = math.sqrt
+local sin = math.sin
+local cos = math.cos
+local max = math.max
 local huge = math.huge
+local pi2 = 2*math.pi
 
 local CMD_INSERT = CMD.INSERT
 local CMD_MOVE = CMD.MOVE
@@ -376,6 +389,12 @@ function widget:MousePress(mx, my, mButton)
 	-- Where did we click
 	inMinimap = spIsAboveMiniMap(mx, my)
 	if inMinimap and not MiniMapFullProxy then return false end
+
+	if mButton ~= 3 and usingRMB then
+		fNodes = {}
+		fDists = {}
+		usingRMB = false
+	end
 	
 	-- Get command that would've been issued
 	local _, activeCmdID = spGetActiveCommand()
@@ -435,7 +454,7 @@ function widget:MousePress(mx, my, mButton)
 	if not AddFNode(pos) then return false end
 	
 	-- Is this line a path candidate (We don't do a path off an overriden command)
-	pathCandidate = (not overriddenCmd) and (spGetSelectedUnitCount()==1 or (alt and not requiresAlt[usingCmd]))
+	pathCandidate = (not overriddenCmd) and (spGetSelectedUnitsCount()==1 or (alt and not requiresAlt[usingCmd]))
 	
 	-- We handled the mouse press
 	return true
@@ -663,57 +682,121 @@ local function tVertsMinimap(verts)
 		glVertex(v[1], v[3], 1)
 	end
 end
-local function DrawFormationLines(vertFunction, lineStipple)
 
+local function DrawFilledCircle(pos, size, cornerCount)
+	glPushMatrix()
+	glTranslate(pos[1], pos[2], pos[3])
+	glBeginEnd(GL.TRIANGLE_FAN, function()
+		glVertex(0,0,0)
+		for t = 0, pi2, pi2 / cornerCount do
+			glVertex(sin(t) * size, 0, cos(t) * size)
+		end
+	end)
+	glPopMatrix()
+end
+
+local function DrawFilledCircleOutFading(pos, size, cornerCount)
+	glPushMatrix()
+	glTranslate(pos[1], pos[2], pos[3])
+	glBeginEnd(GL.TRIANGLE_FAN, function()
+		SetColor(usingCmd, 1)
+		glVertex(0,0,0)
+		SetColor(usingCmd, 0)
+		for t = 0, pi2, pi2 / cornerCount do
+			glVertex(sin(t) * size, 0, cos(t) * size)
+		end
+	end)
+	glPopMatrix()
+end
+
+local function DrawFormationDots(vertFunction, zoomY, unitCount)
+	local currentLength = 0
+	local lengthPerUnit = lineLength / (unitCount-1)
+	local lengthUnitNext = lengthPerUnit
+	local dotSize = sqrt(zoomY*0.1)
+	if (#fNodes > 1) and (unitCount > 1) then
+		SetColor(usingCmd, 0.6)
+		DrawFilledCircleOutFading(fNodes[1], dotSize, 8)
+		if (#fNodes > 2) then
+			for i=1, #fNodes-1 do
+				local x = fNodes[i][1]
+				local y = fNodes[i][3]
+				local x2 = fNodes[i+1][1]
+				local y2 = fNodes[i+1][3]
+				local dx = x - x2
+				local dy = y - y2
+				local length = sqrt((dx*dx)+(dy*dy))
+				while (currentLength + length >= lengthUnitNext) do
+					local factor = (lengthUnitNext - currentLength) / length
+					local factorPos =
+						{fNodes[i][1] + ((fNodes[i+1][1] - fNodes[i][1]) * factor),
+						fNodes[i][2] + ((fNodes[i+1][2] - fNodes[i][2]) * factor),
+						fNodes[i][3] + ((fNodes[i+1][3] - fNodes[i][3]) * factor)}
+					DrawFilledCircleOutFading(factorPos, dotSize, 8)
+					lengthUnitNext = lengthUnitNext + lengthPerUnit
+				end
+				currentLength = currentLength + length
+			end
+		end
+		DrawFilledCircleOutFading(fNodes[#fNodes], dotSize, 8)
+	end
+end
+
+local function DrawFormationLines(vertFunction, lineStipple)
 	glLineStipple(lineStipple, 4369)
 	glLineWidth(2.0)
-
 	if #fNodes > 1 then
 		SetColor(usingCmd, 1.0)
 		glBeginEnd(GL_LINE_STRIP, vertFunction, fNodes)
 	end
-
 	if #dimmNodes > 1 then
 		SetColor(dimmCmd, dimmAlpha)
 		glBeginEnd(GL_LINE_STRIP, vertFunction, dimmNodes)
 	end
-
 	glLineWidth(1.0)
 	glLineStipple(false)
 end
 
-local GetCameraPosition = Spring.GetCameraPosition
-local GetSelectedUnitsCount = Spring.GetSelectedUnitsCount
+local Xs, Ys = spGetViewGeometry()
+Xs, Ys = Xs*0.5, Ys*0.5
+function widget:ViewResize(viewSizeX, viewSizeY)
+	Xs, Ys = spGetViewGeometry()
+	Xs, Ys = Xs*0.5, Ys*0.5
+end
 
 function widget:DrawWorld()
   if #fNodes > 1 or #dimmNodes > 1 then
-	local _,zoomY = GetCameraPosition()
-	zoomY = zoomY/470 --magic number with 20 units its 27 stipp with 30 its 39
-	local lineStipple = lineLength/((GetSelectedUnitsCount()-1)*zoomY)
-	--TODO fix the pattern and rest of math -so that always starts with half line and ends with half line
-	DrawFormationLines(tVerts, lineStipple)
+	local camX, camY, camZ = spGetCameraPosition()
+	local at, p = spTraceScreenRay(Xs,Ys,true,false,false)
+	if at == "ground" then 
+		local dx, dy, dz = camX-p[1], camY-p[2], camZ-p[3]
+		--zoomY = ((dx*dx + dy*dy + dz*dz)*0.01)^0.25	--tests show that sqrt(sqrt(x)) is faster than x^0.25
+		zoomY = sqrt(dx*dx + dy*dy + dz*dz)
+	else
+		--zoomY = sqrt((camY - max(spGetGroundHeight(camX, camZ), 0))*0.1)
+		zoomY = camY - max(spGetGroundHeight(camX, camZ), 0)
+	end
+	if zoomY < 6 then zoomY = 6 end
+	local unitCount = spGetSelectedUnitsCount()
+	DrawFormationDots(tVerts, zoomY, unitCount)
   end
 end
 
+--TODO maybe include minimap drawing again
 function widget:DrawInMiniMap()
-	
 	glPushMatrix()
 		glLoadIdentity()
 		glTranslate(0, 1, 0)
 		glScale(1 / mapSizeX, -1 / mapSizeZ, 1)
-		
 		DrawFormationLines(tVertsMinimap, 1)
 	glPopMatrix()
 end
+
 function widget:Update(deltaTime)
-	
 	dimmAlpha = dimmAlpha - lineFadeRate * deltaTime
-	
 	if dimmAlpha <= 0 then
-		
 		dimmNodes = {}
 		widgetHandler:RemoveWidgetCallIn("Update", self)
-		
 		if #fNodes == 0 then
 			widgetHandler:RemoveWidgetCallIn("DrawWorld", self)
 			widgetHandler:RemoveWidgetCallIn("DrawInMiniMap", self)
