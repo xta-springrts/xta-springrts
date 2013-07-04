@@ -1,0 +1,90 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+piece  ground, body, deflector, fire2, fire1, fire3, phaserarray, lpylon,
+       rpylon, fire4, torpedobay1, torpedobay2;
+
+static-var  restore_delay, Static_Var_2;
+
+
+SmokeUnit(healthpercent, sleeptime, smoketype)
+{
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 500;
+	}
+	while( TRUE )
+	{
+		healthpercent = get HEALTH;
+		if( healthpercent < 66 )
+		{
+			smoketype = 258;
+			if( Rand( 1, 66 ) < healthpercent )
+			{
+				smoketype = 257;
+			}
+			emit-sfx smoketype from body;
+		}
+		sleeptime = healthpercent * 50;
+		if( sleeptime < 200 )
+		{
+			sleeptime = 200;
+		}
+		sleep sleeptime;
+	}
+}
+
+Activate()
+{
+	move lpylon to x-axis [0.000000] speed [2.500000];
+	move rpylon to x-axis [0.000000] speed [2.500000];
+	move lpylon to y-axis [0.000000] speed [2.500000];
+	move rpylon to y-axis [0.000000] speed [2.500000];
+	wait-for-move rpylon along y-axis;
+	turn lpylon to z-axis <0.000000> speed <25.005495>;
+	turn rpylon to z-axis <0.000000> speed <25.005495>;
+	wait-for-turn rpylon around x-axis;
+}
+
+Deactivate()
+{
+	turn lpylon to z-axis <-45.005495> speed <25.005495>;
+	turn rpylon to z-axis <45.005495> speed <25.005495>;
+	wait-for-turn rpylon around x-axis;
+	move lpylon to x-axis [-2.500000] speed [2.500000];
+	move rpylon to x-axis [2.500000] speed [2.500000];
+	move lpylon to y-axis [-1.875000] speed [2.500000];
+	move rpylon to y-axis [-1.875000] speed [2.500000];
+}
+
+Create()
+{
+	hide ground;
+	Static_Var_2 = 0;
+	start-script Deactivate();
+	restore_delay = 3000;
+	start-script SmokeUnit();
+	set ARMORED to 1;
+}
+
+StartBuilding()
+{
+	set INBUILDSTANCE to 1;
+}
+
+StopBuilding()
+{
+	set INBUILDSTANCE to 0;
+}
+
+QueryNanoPiece(piecenum)
+{
+	piecenum = ground;
+}
+
+SweetSpot(piecenum)
+{
+	piecenum = ground;
+}
