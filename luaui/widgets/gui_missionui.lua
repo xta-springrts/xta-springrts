@@ -38,6 +38,7 @@ local glText = gl.Text
 local glTexture = gl.Texture
 
 local max = math.max
+local floor = math.floor
 
 local gameData, briefing = {}, {}
 local msgQueue = {}
@@ -46,11 +47,12 @@ local victory, defeat, endTime = false, false, 0
 local cmpgNotSent = true
 local intro, hovMission, selMission, sndVolume = false, 0, nil, Spring.GetConfigInt("snd_volmaster", 60)
 local commander, startScript
-local missionList = VFS.DirList("Missions", "xta_*.txt")
+local missionList = VFS.DirList("Missions", Game.modShortName:lower() .. "_*.txt")
+local nameStart = string.len("Missions/" .. Game.modShortName .. "_") + 1
 local missScreen = {}
 
 for i=1, #missionList do
-	missScreen[i] = missionList[i]:sub(14,-5):gsub("_", " ")
+	missScreen[i] = missionList[i]:sub(nameStart,-5):gsub("_", " ")
 	missScreen[i] = missScreen[i]:sub(1,1):upper() .. missScreen[i]:sub(2)
 end
 
@@ -96,7 +98,7 @@ function widget:Initialize()
 				if gameData.map ~= Game.mapName then
 					widgetHandler:RemoveWidget()
 				else
-					if modOptions.mission == "XTA_campaign" then
+					if modOptions.mission:lower() == Game.modShortName:lower() .. "_campaign" then
 						intro = true
 						Spring.SetConfigInt("snd_volmaster", sndVolume/3)
 						--widgetHandler:RemoveWidget("XTA Unit sounds")
@@ -187,7 +189,7 @@ local mouseOverOK = false
 function widget:IsAbove(x, y)
 	if intro then
 		if x>lef+fs and x<rig-fs and y<top*0.75 and y>bot+fs then
-			hovMission = math.floor((top*0.75-y)/(fs+2))
+			hovMission = floor((top*0.75-y)/(fs+2))
 		else
 			hovMission = 0
 		end
@@ -225,8 +227,6 @@ end
 
 function widget:DrawScreen()
 	if intro then
-		glPushMatrix()
-		glTranslate(0,0,-0.1)
 		glColor(0,0,0,iAlpha)
 		glRect(0,0,X,Y)
 		if iAlpha<=0.75 then
@@ -241,23 +241,21 @@ function widget:DrawScreen()
 				glRect(okL,okB,okR,okT)
 			end
 			glColor(1.0,1.0,1.0,1.0)
-			glText("XTA",X_2,top-6*fs,5*fs,"cd")
+			glTexture("luaui/images/xtalogo.tga")
+			glTexRect(X_2-244*scale, top-272*scale, X_2+244*scale, top)	
+			glBeginText()
 			for i=1, #missScreen do
 				if i==selMission then
-					glColor(1.0,1.0,0.2,1.0)
-					glText(missScreen[i], X_2, top*0.75-i*(fs+2)-fs, fs, "cd")
-					glColor(1.0,1.0,1.0,1.0)
+					glText('\255\255\255\51' .. missScreen[i], X_2, top*0.75-i*(fs+2)-fs, fs, "cd")
 				else
 					glText(missScreen[i], X_2, top*0.75-i*(fs+2)-fs, fs, "cd")
 				end
 			end
 			glText("OK",X_2,bot+fs*1.4,fs,"cd")
+			glEndText()
 		end
-		glPopMatrix()
 	else
 		if dispBrief then
-			glPushMatrix()
-			glTranslate(0,0,-0.1)
 			glColor(0,0,0,0.92)
 			glRect(lef,bot,rig,top)
 			if mouseOverOK then
@@ -280,7 +278,6 @@ function widget:DrawScreen()
 				end
 				glText("OK",X_2,bot+fs*1.4,fs,"cd")
 			glEndText()
-			glPopMatrix()
 		elseif victory then
 			glColor(1.0,1.0,1.0,1.0)
 			glText("Victory", X_2, Y*0.5, 4*fs, "cvo")

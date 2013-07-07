@@ -27,7 +27,7 @@ missionTriggers = {
 				"Always",
 			},
 			actions = {
-				"Echo Bring your commander to the center of the map",
+				"Echo Bring your \255\255\0\0commander \255\255\255\255to the center of the map",
 				"Wait 11",	-- this will disable the trigger for 11 seconds after triggering
 			},
 		},
@@ -37,22 +37,15 @@ missionTriggers = {
 			},
 			actions = {
 				"CEG dgunflare upperHill 15",
+				--"Loc upperHill flip", -- double blinking location box
 			},
-		},				
+		},
 		{
 			conditions = {
 				"Always",
 			},
 			actions = {
 				"Bonus arm_commander 0",
-			},
-			once = true,
-		},				
-		{
-			conditions = {
-				"Always",
-			},
-			actions = {
 				"Give 14 arm_peewee 2",
 			},
 			once = true,	-- this will trigger only once
@@ -63,9 +56,11 @@ missionTriggers = {
 			},
 			actions = {
 				"Move ANY 3 2",
+				"CEG ElectricFlare 3 1",
+				"CEG ElectricFlare 2 1",
 			},
 		},
-		{	
+		{
 			conditions = {
 				"Ctrl 1 arm_commander 1",
 			},
@@ -75,7 +70,7 @@ missionTriggers = {
 			},
 			once = true,
 		},
-		{	
+		{
 			conditions = {
 				"Kill 5 core_ak 1",
 			},
@@ -83,8 +78,8 @@ missionTriggers = {
 				"Echo Yay, killed 5 AKs!",
 			},
 			once = true,
-		},	
-		{	
+		},
+		{
 			conditions = {
 				"Kill 10 core_ak",
 			},
@@ -92,7 +87,7 @@ missionTriggers = {
 				"Echo Yay, killed 10 AKs!",
 			},
 			once = true,
-		},	
+		},
 	},
 	[1] = {
 		{
@@ -165,9 +160,18 @@ briefing = {	-- optional, consists of strings which will be displayed one per li
 	"will teleport them to blue one.",
 	"",
 	"The briefing text is left aligned and isn't wraped if larger than window. Developer must take care that string line doesn't",
-	"exceed line capacity. Nothing serious will happen in that case, it'll only look bad.",
+	"exceed screen line capacity. Nothing serious will happen in that case, it'll only look bad.",
 	"If the string begins with $c then that particular line will be centred, $r for right alignment. Formatting command",
-	'is ignored in text output and no spaces are needed after it. So you can make a string like: "$cMission Title"',
+	'is ignored in text output and no spaces are needed after it. So you can make a string like: "$cMission Title".',
+	"You should also pay attention to string quotes ' '  or \" \" or you need to use escape characters \\\" or \\', but that's",
+	"normal LUA syntax.",
+	"",
+	"It's also possible to have \255\255\255\0coloured \255\255\255\255text by giving a colour formatting command \\A\\R\\G\\B where A,R,G,B={0,255}",
+	"Note that \255\0\255\255coloured text stretches from colour formatting command till end of the text line, not just one word",
+	"and text in next line won't be affected by it.",
+	'The same colour formatting command can be used in trigger displayed text as in: "Echo \\A\\R\\G\\BColourfull text"',
+	"",
+	"On a side note: this briefing uses British english spelling so don't complain about \255\255\0\0c\255\255\128\0o\255\255\255\0l\255\0\255\0o\255\0\0\255u\255\128\0\128r\255\255\255\255 being misspelt.",
 	"",
 	"",
 	"$rDeadnight Warrior",
