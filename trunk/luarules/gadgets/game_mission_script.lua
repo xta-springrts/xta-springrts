@@ -160,6 +160,11 @@ function gadget:Initialize()
 					gadgetHandler:RemoveGadget()
 				else
 					initTriggers()			-- pre-parse trigger strings
+					if spawnData.features then	-- spawn features in initialize phase so players can see them before game start
+						for _, fData in pairs(spawnData.features) do
+							spCreateFeature(fData[1], fData[2], spGetGroundHeight(fData[2], fData[3]), fData[3], fData[4], fData[5])
+						end
+					end
 					missionTriggers = nil	-- kill table once not needed
 				end
 			else
@@ -196,12 +201,14 @@ function gadget:GameStart()
 		spSetTeamResource(teamID, "ms", 0)
 		spSetTeamResource(teamID, "es", 0)	
 
-		for _, unitData in pairs(spawnData.teams[teamID]) do
-			--local x, z = 16*floor((unitData[2]+8)/16), 16*floor((unitData[3]+8)/16)	-- snap to 16x16 grid, fails for odd footprint sizes
-			--local x, z = 8*floor((unitData[2]+4)/8), 8*floor((unitData[3]+4)/8)	-- snap to 8x8 grid
-			local x, z = unitData[2], unitData[3]	-- don't snap to grid, not needed if mission dumper was used
-			local y = spGetGroundHeight(x, z)
-			spCreateUnit(unitData[1], x, y, z, unitData[4], teamID)
+		if spawnData.teams then		-- spawn units and structures defined by mission data
+			for _, unitData in pairs(spawnData.teams[teamID]) do
+				--local x, z = 16*floor((unitData[2]+8)/16), 16*floor((unitData[3]+8)/16)	-- snap to 16x16 grid, fails for odd footprint sizes
+				--local x, z = 8*floor((unitData[2]+4)/8), 8*floor((unitData[3]+4)/8)	-- snap to 8x8 grid
+				local x, z = unitData[2], unitData[3]	-- don't snap to grid, not needed if mission dumper was used
+				local y = spGetGroundHeight(x, z)
+				spCreateUnit(unitData[1], x, y, z, unitData[4], teamID)
+			end
 		end
 
 		local teamOptions = select(7, spGetTeamInfo(teamID))
@@ -219,8 +226,8 @@ function gadget:GameStart()
 	for _, unitData in pairs(locMsgQueue) do	-- units carried over from last mission (with XP)
 		teamID = tonumber(unitData[3])
 		local bonusUnit
-		if commanderList[unitData[1]] then	-- carry over commander XP from last mission, this can be avoided if only first mission spawns a commander
-											-- and each succesive mission gets its commander as a bonus unit
+		if commanderList[unitData[1]] then	-- carry over commander XP from last mission, this can be avoided if only first mission
+											-- spawns a commander and each succesive mission gets its commander as a bonus unit
 			local comms = spGetTeamUnitsByDefs(teamID, UnitDefNames[unitData[1]].id)
 			bonusUnit = comms[1]
 		else
@@ -228,10 +235,6 @@ function gadget:GameStart()
 			bonusUnit = spCreateUnit(unitData[1],x,y,z,0,teamID)
 		end
 		spSetUnitExperience(bonusUnit, tonumber(unitData[2]))
-	end
-	for _, featureData in pairs(spawnData.features) do
-		local y = spGetGroundHeight(featureData[2], featureData[3])
-		spCreateFeature(featureData[1], featureData[2], y, featureData[3], featureData[4], featureData[5])
 	end
 	local i=1
 	while i <= #teams do	-- remove from team list all teams that have no triggers
@@ -933,7 +936,7 @@ local lastMessageFrame = -1
 
 local X, Y = Spring.GetViewGeometry()
 local msgX, msgY = X/4, Y*0.0625
-local fs = 18*Y/1200
+local fs = 20*Y/1200
 local pi2 = 6.283185307179586
 local segs = 24
 local step = pi2/segs
@@ -967,7 +970,7 @@ end
 function gadget:ViewResize(viewSizeX, viewSizeY)
 	X, Y = Spring.GetViewGeometry()
 	msgX, msgY = X/4, Y*0.0625
-	fs = 18*Y/1200
+	fs = 20*Y/1200
 end
 
 local locCircles = {}
@@ -1000,9 +1003,9 @@ function gadget:Initialize()
 									local x,z,r = loc.X, loc.Z, loc.r
 									locCircles[ln] = gl.CreateList(function()
 										glBeginEnd(GL.TRIANGLE_FAN,function()
-											glVertex(x, spGetGroundHeight(loc.X, loc.Z), z)
+											glVertex(x, spGetGroundHeight(x, z), z)
 											for t=0.0, pi2, step do
-												rx, rz = loc.X + r*cos(t), loc.Z + r*sin(t)
+												rx, rz = x + r*cos(t), z + r*sin(t)
 												glVertex(rx, spGetGroundHeight(rx, rz), rz)
 											end
 										end)

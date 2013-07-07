@@ -132,9 +132,10 @@ function widget:DrawScreen()
 		glColor(R,G,B,1)
 		glRect(x2-16*scale,y1+margin,x2-margin,y2-margin)
 		glColor(1,1,1,1)
-		glRect(x1+1*scale,y1+R*length+1,x1+11*scale,y1+R*length+3)
-		glRect(x1+13*scale,y1+G*length+1,x1+23*scale,y1+G*length+3)
-		glRect(x1+25*scale,y1+B*length+1,x1+35*scale,y1+B*length+3)
+		local rs,gs,bs = R*length, G*length, B*length
+		glRect(x1+scale,y1+rs+1,x1+11*scale,y1+rs+3)
+		glRect(x1+13*scale,y1+gs+1,x1+23*scale,y1+gs+3)
+		glRect(x1+25*scale,y1+bs+1,x1+35*scale,y1+bs+3)
 	glPopMatrix()
 end
 
