@@ -6,25 +6,25 @@ local stealthDefs = {
   core_cloakable_fusion_power_plant = {
     draw   = true,
     init   = false,
-    energy = 550,
+    energy = 500,
     delay  = 30,
   },
   arm_cloakable_fusion_reactor = {
     draw   = true,
     init   = false,
-    energy = 500,
+    energy = 450,
     delay  = 30,
   },
   arm_infiltrator = {
     draw   = true,
     init   = false,
-    energy = 600,
+    energy = 550,
     delay  = 30,
   },
   core_parasite = {
     draw   = true,
     init   = false,
-    energy = 550,
+    energy = 500,
     delay  = 30,
   },
   core_freaker = {

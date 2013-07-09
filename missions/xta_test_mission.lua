@@ -330,18 +330,19 @@ disables the trigger for quantity of seconds after triggering, this has no effec
 one-shot triggers, all triggers are processed at 1 second intervals
 
 If quantities are non-numeric, they'll be interpreted as variable names
-examples:	"Kill ANY 3 2"			-- kills any units controled by player 3 found at location 2
-			"Move arm_fido 3 4"		-- moves all Fidos controled by trigger owner from location 3 to location 4
-			"Eco -100 M 3"			-- takes away 100 metal from player 3
-			"Echo Go for it!"		-- displays "Got for it!" near the bottom of screen (without quotes)
-			"Switch 4 flip"			-- inverts the state of switch 4 (true->false or false->true)
-			"Share ANY 1"			-- gives all units controled by trigger owner to team 1
-			"Share arm_peewee 3 2"	-- gives all PeeWees controled by trigger owner at location 2 to team 3
-			"Timer 4 60"			-- sets timer 4 to 60 seconds countdown
-			"Play sounds/bang.wav"	-- plays the bang.wav sound located in /sounds/bang.wav, path local to game archive
-			"Var myVar 4"			-- sets myVar to 4, needed before first use
-			"Var a a + b"			-- a = a + b
-			"Var a c ^ 2"			-- a = c ^ 2
+examples:	"Kill ANY 3 2"				-- kills any units controled by player 3 found at location 2
+			"Move arm_fido 3 4"			-- moves all Fidos controled by trigger owner from location 3 to location 4
+			"Eco -100 M 3"				-- takes away 100 metal from player 3
+			"Echo Go for it!"			-- displays "Go for it!" near the bottom of screen (without quotes)
+			"Echo \255\255\0\0Awsome!"	-- displays "Awsome!" in red (without quotes), \A\R\G\B where A,R,G,B={0,255}
+			"Switch 4 flip"				-- inverts the state of switch 4 (true->false or false->true)
+			"Share ANY 1"				-- gives all units controled by trigger owner to team 1
+			"Share arm_peewee 3 2"		-- gives all PeeWees controled by trigger owner at location 2 to team 3
+			"Timer 4 60"				-- sets timer 4 to 60 seconds countdown
+			"Play sounds/bang.wav"		-- plays the bang.wav sound located in /sounds/bang.wav, path local to game archive
+			"Var myVar 4"				-- sets myVar to 4, needed before first use
+			"Var a a + b"				-- a = a + b
+			"Var a c ^ 2"				-- a = c ^ 2
 
 -------------------------------
 All unknown trigger conditions and unknown actions (command names) will be ignored,
