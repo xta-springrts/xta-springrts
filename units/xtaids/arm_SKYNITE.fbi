@@ -30,7 +30,7 @@
 	MetalStorage=5;
 	ExplodeAs=BIG_UNITEX;
 	SelfDestructAs=BIG_UNIT;
-	Category=ARM KBOT CTRL_V LEVEL3 WEAPON  NOTSUB CTRL_W CTRL_P ;
+	Category=ARM KBOT WEAPON MOBILE NOTSUB;
 	TEDClass=VTOL;
 	firestandorders=1;
 	StandingFireOrder=2;

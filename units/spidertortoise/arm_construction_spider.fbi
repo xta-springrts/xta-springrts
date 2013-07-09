@@ -10,7 +10,7 @@
 	//************************************************************
 	//  Categories
 	//**************
-	category=ARM KBOT  CONSTR NOWEAPON NOTAIR NOTSUB;
+	category=ARM KBOT CONSTR NOWEAPON NOTAIR NOTSUB;
 	tedclass=KBOT;
 
 	//************************************************************

@@ -26,7 +26,7 @@
 	SoundCategory=COR_TOR;
 	ExplodeAs=BIG_UNITEX;
 	SelfDestructAs=BIG_UNIT;
-	Category=CORE TANK LEVEL1 WEAPON NOTAIR NOTSUB CTRL_W;
+	Category=CORE TANK WEAPON NOTAIR NOTSUB;
 	TEDClass=TANK;
 	Copyright=Copyright 1997 Humongous Entertainment. All rights reserved.;
 	Corpse=core_slingshot_dead;

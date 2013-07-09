@@ -32,7 +32,7 @@
 	MetalStorage=200;
 	ExplodeAs=BIG_UNITEX;
 	SelfDestructAs=BIG_UNIT;
-	Category=CORE TANK LEVEL1 CONSTR NOWEAPON NOTAIR NOTSUB CTRL_B ;
+	Category=CORE TANK CONSTR NOWEAPON NOTAIR NOTSUB;
 	TEDClass=CNSTR;
 	Copyright=Copyright 1997 Humongous Entertainment. All rights reserved.;
 	Corpse=core_construction_tortoise_dead;
