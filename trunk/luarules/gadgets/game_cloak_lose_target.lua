@@ -22,28 +22,18 @@ local spIsPosInLos = Spring.IsPosInLos
 
 	function gadget:AllowWeaponTarget(attackerID, targetID, attackerWeaponNum, attackerWeaponDefID, defaultPriority)
 		if targetID then
+			local x,y,z = spGetUnitPosition(targetID)
+			local allyID = spGetUnitAllyTeam(attackerID)
 			if spGetUnitIsCloaked(targetID) then
-				local x,y,z = spGetUnitPosition(targetID)
-				local allyID = spGetUnitAllyTeam(attackerID)
-				if spIsPosInRadar(x, y, z, allyID) then
-					return true, defaultPriority
-				else
-					return false, defaultPriority
-					-- TODO: Remove attack order from attackers queue
-				end
-			--[[  there is Spring.SetUnitStealth, but no Get, unlike with Cloak, which has both Set and Get
-			elseif spGetUnitStealth(targetID) then
-				local x,y,z = spGetUnitPosition(targetID)
-				local allyID = spGetUnitAllyTeam(attackerID)
+				return spIsPosInRadar(x, y, z, allyID), defaultPriority
+				-- TODO: Remove attack order from attackers queue
+			else
 				if spIsPosInLos(x, y, z, allyID) then
 					return true, defaultPriority
 				else
-					return false, defaultPriority
+					return spIsPosInRadar(x, y, z, allyID), defaultPriority
 					-- TODO: Remove attack order from attackers queue
 				end
-			--]]
-			else
-				return true, defaultPriority
 			end
 		end
 		return true, defaultPriority
