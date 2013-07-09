@@ -28,7 +28,7 @@
 	MetalStorage=600;
 	ExplodeAs=LARGE_BUILDINGEX;
 	SelfDestructAs=LARGE_BUILDING;
-	Category=CORE PLANT LEVEL1 NOWEAPON NOTAIR NOTSUB CTRL_F;
+	Category=CORE PLANT NOWEAPON NOTAIR NOTSUB;
 	TEDClass=PLANT;
 	YardMap=ooyyyyyyoo oooooooooo oooooooooo oooccccooo oooccccooo oooccccooo oooccccooo ooccccccoo occcccccco;
 	Corpse=core_tortoise_plant_dead;

@@ -26,6 +26,7 @@ SightDistance=355;
 SoundCategory=Spider;
 ExplodeAs=BIG_UNITEX;
 SelfDestructAs=BIG_UNIT;
+Category=ARM WEAPON NOTAIR NOTSUB;
 TEDClass=TANK;
 Corpse=ARM_huntsman_dead;
 firestandorders=1;

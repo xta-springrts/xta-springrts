@@ -16,7 +16,7 @@ unitDef = {
   canMove             = true,
   canPatrol           = true,
   canstop             = [[1]],
-  category            = [[LAND ALL SEA]],  
+  category            = [[MOBILE NOWEAPON NOTAIR NOTSUB]],  
   reclaimable         = true,
   stealth 			  = true,
 	----------	
@@ -36,7 +36,7 @@ unitDef = {
   --crushStrength 	  = 25,
   moveState           = -1,
   noAutoFire          = false,
-  noChaseCategory     = [[ALL]],
+  noChaseCategory     = [[MOBILE STATIC]],
   objectName          = [[critter_duck.s3o]], --
   seismicSignature    = 4,
   --selfDestructAs      = [[MEDIUM_UNIT]],
