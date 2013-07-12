@@ -245,6 +245,9 @@ if (gadgetHandler:IsSyncedCode()) then
 				)
 									
 				--Echo("Mine built!", UnitDefs[unitDefID].humanName)
+			else
+			-- if minelayer has no stock, mine was built using an exploit: remove mine
+				Spring.DestroyUnit(unitID,false,true)
 			end
 		end
 	end

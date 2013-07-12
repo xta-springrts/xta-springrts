@@ -16,6 +16,7 @@ local CMD_AREA_GUARD 						= 14001
 local Echo 									= Spring.Echo
 local GetSelectedUnits						= Spring.GetSelectedUnits
 local CMD_GUARD 							= CMD.GUARD
+local CMD_REPAIR 							= CMD.REPAIR
 local CMD_INSERT							= CMD.INSERT
 local CMD_OPT_SHIFT							= CMD.OPT_SHIFT
 local CMD_STOP								= CMD.STOP
@@ -96,22 +97,7 @@ function widget:CommandsChanged()
 				cmds[i].hidden = false
 		end
 	end
-
-	-- local cmds = widgetHandler.commands
-	-- local n = #(widgetHandler.commands)
-	
-	-- table.insert(cmds, areaGuardCmd)
-
-	-- if n > 0 and count < 3 then
-		-- for i,command in pairs (cmds) do
-			-- for j, v in pairs(command) do
-				-- Echo("Commands:",i,j,v)
-			-- end
-		-- end
-		-- count = count + 1
-	-- end
 end
-
 
 function widget:CommandNotify(cmdID, cmdParams, cmdOptions)
 	if cmdID == CMD_AREA_GUARD then
@@ -145,6 +131,7 @@ end
 
 function widget:UnitCommand(unitID, unitDefID, unitTeam, cmdID, cmdOpts, cmdParams) 	
 	if cmdID == CMD_STOP then
+	Echo("Stop command")
 		if squadron[unitID] then 
 			squadron[unitID] = nil 
 			for tID, sID in pairs (guardianTable) do
@@ -155,7 +142,7 @@ function widget:UnitCommand(unitID, unitDefID, unitTeam, cmdID, cmdOpts, cmdPara
 end
 
 function widget:UnitDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weaponDefID, attackerID, attackerDefID, attackerTeam)
-	--Echo("UnitDamaged",unitID)
+	--Echo("UnitDamaged",unitID,guardianTable[unitID],countIndex(guardianTable))
 	local function sortByHP(v1,v2)
 		return v1[2] < v2[2]
 	end
@@ -164,26 +151,33 @@ function widget:UnitDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weap
 		local sID = guardianTable[unitID]
 		local ttable = squadron[sID]
 		
-		local stable = {}
+		local sortedTable = {}
 		
 		for i, tID in ipairs(ttable) do
 			--local tUD = UnitDefs[GetUnitDefID(tID)]
 			local damage, maxdamage = GetUnitHealth(tID)
 			if damage then
-				stable[i] = {tID, damage/maxdamage}
+				sortedTable[i] = {tID, damage/maxdamage}
 			else
 				Echo("Areaguard:Invalid unit-ID for calculating damage")
 			end
 		end
 		
-		ta_sort(stable,sortByHP)
-		GiveOrderToUnit(sID, CMD_STOP,{},{})
-		for i, array in ipairs(stable) do
-			local tID = array[1]
-			local hp = array[2]
-			GiveOrderToUnit(sID, CMD_INSERT,{-1,CMD_GUARD,CMD_OPT_SHIFT,tID},{"alt"})
-		end
+		ta_sort(sortedTable,sortByHP)
+		local newTarget = sortedTable[1][1]
+		--Echo(newTarget)
+		--GiveOrderToUnit(sID, CMD_STOP,{},{})
+		--if newTarget ~=unitID then
+		GiveOrderToUnit(sID, CMD_INSERT,{0,CMD_REPAIR,CMD_OPT_SHIFT,newTarget},{"alt"})
+		--end
+		-- for i, array in ipairs(sortedTable) do
+			-- local targetID = array[1]
+			-- local hp = array[2]
+			-- GiveOrderToUnit(sID, CMD_INSERT,{1,CMD_GUARD,CMD_OPT_SHIFT,targetID},{"alt"})
+			-- Echo(i, "Guarding:",targetID, hp)
+		-- end
 	end
+	--Echo("UnitDamaged2",unitID,guardianTable[unitID],countIndex(guardianTable))
 end
 
 function widget:UnitDestroyed(unitID, unitDefID, teamID, attackerID, attackerDefID, attackerTeamID)
@@ -371,7 +365,7 @@ function widget:DefaultCommand(type,id)
 		--Echo("DefaultCommand",type,id)
 		local target_team = Spring.GetUnitTeam(id)
 		if Spring.AreTeamsAllied( target_team, Spring.GetLocalTeamID() ) then
-			--return CMD_AREA_GUARD
+			return CMD_AREA_GUARD
 		end
 	end
 end	
