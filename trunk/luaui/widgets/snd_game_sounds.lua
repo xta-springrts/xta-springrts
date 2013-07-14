@@ -49,6 +49,10 @@ local Channel = 'battle'
 ----------------------------------------------------------------------------
 function widget:Initialize()
     localTeamID = spGetLocalTeamID()   
+	if (spGetSpectatingState() == true) then
+		widgetHandler:RemoveWidget()
+		return false
+	end
     lastAlarmTime = spGetTimer()
     math.randomseed(os.time())
 end

@@ -46,6 +46,7 @@ local cmdColorsTbl = {
 }
 
 local wayPtSelDist = 13
+local wayPtSelDistSqr = wayPtSelDist * wayPtSelDist
 local selWayPtsTbl = {}
 
 function widget:GetInfo()
@@ -159,27 +160,6 @@ end
 
 -- measure distance from waypoint to cursor in screen-space coordinates
 -- (so that at greater zoom-levels, waypoints are less easily dragged)
-local function GetCommandCursorScreenSqDist(cmd, mx, my)
-	local x, y, z, _ = GetCommandWorldPosition(cmd)
-
-	if (x ~= nil and y ~= nil and z ~= nil) then
-		local p, q = sprWorldToScreenCoords(x, y, z)
-		local d    = GetSqDist2D(mx, my, p, q)
-
-		return d
-	end
-
-	return -1
-end
-
-local function IsCommandNearCursor(cmd, mx, my)
-	local d = GetCommandCursorScreenSqDist(cmd, mx, my)
-
-	return (d >= 0 and d < (wayPtSelDist * wayPtSelDist))
-end
-
-
-
 local function GetWayPointsNearCursor(wpTbl, mx, my)
 	local selUnitsTbl = sprGetSelectedUnits()
 	local numSelWayPts = 0
@@ -191,20 +171,23 @@ local function GetWayPointsNearCursor(wpTbl, mx, my)
 	for i = 1, #selUnitsTbl do
 		local unitID = selUnitsTbl[i]
 		local commands = sprGetCommandQueue(unitID)
-
 		for cmdNum = 1, #commands do
 			local curCmd      = commands[cmdNum    ]
-			local nxtCmd      = commands[cmdNum + 1]
-			local x, y, z, fr = GetCommandWorldPosition(curCmd)
+			if cmdColorsTbl[curCmd.id] then
+				local nxtCmd      = commands[cmdNum + 1]
+				local x, y, z, fr = GetCommandWorldPosition(curCmd)
+				if x then
+					local p, q  = sprWorldToScreenCoords(x, y, z)
+					if (GetSqDist2D(mx,my,p,q) < wayPtSelDistSqr) then
+						-- save the tag of the next command
+						local wpLink = (nxtCmd and nxtCmd.tag) or nil
+						local wpData = {x, y, z, fr, wpLink, curCmd, unitID}
+						local wpKey  = tostring(unitID) .. "-" .. tostring(curCmd.tag)
 
-			if (IsCommandNearCursor(curCmd, mx, my)) then
-				-- save the tag of the next command
-				local wpLink = (nxtCmd and nxtCmd.tag) or nil
-				local wpData = {x, y, z, fr, wpLink, curCmd, unitID}
-				local wpKey  = tostring(unitID) .. "-" .. tostring(curCmd.tag)
-
-				wpTbl[wpKey] = wpData
-				numSelWayPts = numSelWayPts + 1
+						wpTbl[wpKey] = wpData
+						numSelWayPts = numSelWayPts + 1
+					end
+				end
 			end
 		end
 	end
@@ -358,13 +341,12 @@ function widget:Update(_)
 end
 
 function widget:DrawWorld()
-	local mx, my, _, _, _ = sprGetMouseState()
 	local _, _, _, shift = sprGetModKeyState()
-	local wpTblTmp = {}
-
 	if (not shift) then
 		return
 	end
+	local mx, my, _, _, _ = sprGetMouseState()
+	local wpTblTmp = {}
 
 	-- we want to draw selection circles even when no
 	-- MousePress event has occurred (more intuitive)
@@ -391,7 +373,7 @@ function widget:DrawWorld()
 
 		glColor(r, g, b, a)
 
-		if (d > (wayPtSelDist * wayPtSelDist)) then
+		if (d > wayPtSelDistSqr) then
 			glDrawGroundCircle(ox, oy, oz, wayPtSelDist, 16)
 		end
 

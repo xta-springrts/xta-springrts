@@ -14,7 +14,6 @@ end
 if gadgetHandler:IsSyncedCode() then
 
 local spGetUnitIsCloaked = Spring.GetUnitIsCloaked
-local spGetUnitStealth = Spring.GetUnitStealth
 local spGetUnitPosition = Spring.GetUnitPosition
 local spGetUnitAllyTeam = Spring.GetUnitAllyTeam
 local spIsPosInRadar = Spring.IsPosInRadar

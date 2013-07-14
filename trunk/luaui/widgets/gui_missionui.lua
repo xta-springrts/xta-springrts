@@ -49,6 +49,7 @@ local intro, hovMission, selMission, sndVolume = false, 0, nil, Spring.GetConfig
 local commander, startScript
 local missionList = VFS.DirList("Missions", Game.modShortName:lower() .. "_*.txt")
 local nameStart = string.len("Missions/" .. Game.modShortName .. "_") + 1
+local logoTexture = "luaui/images/" .. Game.modShortName:lower() .. "logo.tga"
 local missScreen = {}
 
 for i=1, #missionList do
@@ -241,7 +242,7 @@ function widget:DrawScreen()
 				glRect(okL,okB,okR,okT)
 			end
 			glColor(1.0,1.0,1.0,1.0)
-			glTexture("luaui/images/xtalogo.tga")
+			glTexture(logoTexture)
 			glTexRect(X_2-244*scale, top-272*scale, X_2+244*scale, top)	
 			glBeginText()
 			for i=1, #missScreen do
