@@ -26,10 +26,11 @@ local spEcho                = Spring.Echo
 local spGetUnitPosition     = Spring.GetUnitPosition
 local spGetGameSeconds      = Spring.GetGameSeconds
 local floor                 = math.floor
-local max					= math.max
+local pairs					= pairs
 local spGetMyPlayerID       = Spring.GetMyPlayerID
 local spGetPlayerInfo       = Spring.GetPlayerInfo
 local spIsSphereInView  	= Spring.IsSphereInView
+local spIsUnitInView		= Spring.IsUnitInView
 
 
 local glColor               = gl.Color
@@ -92,22 +93,13 @@ end
 
 
 function widget:DrawWorld()
-	DrawGhosts()
-end
-
-
-function DrawGhosts()
   glColor(1.0, 1.0, 1.0, 0.35 )
   glDepthTest(true)
 
   for unitID, dot in pairs( dots ) do
 		local x, y, z = spGetUnitPosition(unitID)
-		local udef = udefTab[ dot["unitDefId"] ]
-		local radius = max( udef["xsize"], udef["zsize"] ) * 0.5
-		
 		if ( dot["radar"] == true ) and ( dot["los"] == false ) and ( dot["unitDefId"] ~= nil ) and ( x ~= nil ) then		
-		--	printDebug("DRAW udef: " .. dot["unitDefId"] .. " x: " .. x .. " y: " .. y .. " z:" .. z )
-			if ( spIsSphereInView( x, y, z, radius ) ) then
+			if ( spIsUnitInView(unitID) ) then
 				glPushMatrix()
 				glTranslate( x, y + 5 , z)
 				glUnitShape( dot["unitDefId"], dot["teamId"] )					      
