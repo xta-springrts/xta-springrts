@@ -15,7 +15,7 @@
 		fixedallies=0;
 		disablemapdamage=0;
 		mode=killall;
-		comm=autoupgrade;
+		commander=autoupgrade;
 		maxspeed=3.0;
 		minspeed=0.3;
 		gravity=0.5;

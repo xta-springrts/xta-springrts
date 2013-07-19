@@ -85,7 +85,7 @@ local options = {
 	{
 		key  = "commander",
 		name = "Starting Commander",
-		desc = "Adjusts Starting Commander type or level\nkey: comm",
+		desc = "Adjusts Starting Commander type or level\nkey: commander",
 		type = "list",
 		section= 'xtagame',
 		def  = "choose",
