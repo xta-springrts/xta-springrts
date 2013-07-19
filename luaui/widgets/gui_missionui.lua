@@ -43,9 +43,9 @@ local floor = math.floor
 local gameData, briefing = {}, {}
 local msgQueue = {}
 local campaignData, bonUnits = {}, {}
-local victory, defeat, endTime = false, false, 0
+local intro, victory, endTime = false, false, 0
 local cmpgNotSent = true
-local intro, hovMission, selMission, sndVolume = false, 0, nil, Spring.GetConfigInt("snd_volmaster", 60)
+local hovMission, selMission, sndVolume = 0, nil, Spring.GetConfigInt("snd_volmaster", 60)
 local commander, startScript
 local missionList = VFS.DirList("Missions", Game.modShortName:lower() .. "_*.txt")
 local nameStart = string.len("Missions/" .. Game.modShortName .. "_") + 1
@@ -62,7 +62,7 @@ local X, Y = spGetViewGeometry()
 local X_2, scale = X*0.5, Y/1200
 local fs = 23 * scale
 local lef, rig, top, bot = (X-Y*1.333*.8)*0.5, (X+Y*1.333*.8)*0.5, .9*Y, .1*Y
-local okL, okR, okT, okB = X_2-2*fs, X_2+2*fs, bot+3*fs, bot+fs
+local okL, okR, okT, okB, lowTop = X_2-2*fs, X_2+2*fs, bot+3*fs, bot+fs, top*0.75
 local iAlpha = 1
 
 local defCmpgData = {
@@ -87,7 +87,7 @@ function widget:ViewResize(viewSizeX, viewSizeY)
 	X_2, scale = X*0.5, Y/1200
 	fs = 23 * scale
 	lef, rig, top, bot = (X-Y*1.333*.8)*0.5, (X+Y*1.333*.8)*0.5, .9*Y, .1*Y
-	okL, okR, okT, okB = X_2-2*fs, X_2+2*fs, bot+3*fs, bot+fs
+	okL, okR, okT, okB, lowTop = X_2-2*fs, X_2+2*fs, bot+3*fs, bot+fs, top*0.75
 end
 
 function widget:Initialize()
@@ -138,12 +138,17 @@ end
 function widget:Update(t)
 	if intro then
 		iAlpha = max(0.75, 1 - spGetGameFrame()/480)
+		if spGetGameFrame()>120 then
+			widgetHandler:RemoveCallIn("Update")
+		end
 	else
 		if endTime>0 and (Spring.GetGameSeconds()-endTime>5) then
 			if startScript then
 				Spring.Restart("", startScript)
 			else
 				intro = true
+				widgetHandler:UpdateCallIn("MousePress")
+				widgetHandler:UpdateCallIn("IsAbove")
 			end
 		end
 	end
@@ -155,6 +160,7 @@ end
 
 function widget:GameOver()
 	if intro then return end
+	widgetHandler:UpdateCallIn("DrawScreen")
 	local amIDead = select(3, Spring.GetTeamInfo(Spring.GetMyTeamID()))
 	if amIDead==false then
 		if gameData.nextMission then
@@ -180,7 +186,6 @@ function widget:GameOver()
 		endTime = Spring.GetGameSeconds()
 		Spring.PlaySoundFile("sounds/victory2.wav")
 	else
-		defeat = true
 		startScript = VFS.LoadFile("Missions/" .. modOptions.mission ..".txt")
 		endTime = Spring.GetGameSeconds()
 	end
@@ -189,8 +194,8 @@ end
 local mouseOverOK = false
 function widget:IsAbove(x, y)
 	if intro then
-		if x>lef+fs and x<rig-fs and y<top*0.75 and y>bot+fs then
-			hovMission = floor((top*0.75-y)/(fs+2))
+		if x>lef+fs and x<rig-fs and y<lowTop and y>bot+fs then
+			hovMission = floor((lowTop-y)/(fs+2))
 		else
 			hovMission = 0
 		end
@@ -208,7 +213,7 @@ function widget:MousePress(mx, my, mButton)
 			if missionList[hovMission] then
 				selMission = hovMission
 			elseif mouseOverOK and selMission~=nil then
-				startScript = VFS.LoadFile(missionList[selMission]:sub(1,-5) .. ".txt")
+				startScript = VFS.LoadFile(missionList[selMission])
 				Spring.SetConfigInt("snd_volmaster", sndVolume)
 				Spring.Restart("", startScript)
 			end
@@ -217,6 +222,7 @@ function widget:MousePress(mx, my, mButton)
 				dispBrief = false
 				widgetHandler:RemoveCallIn("IsAbove")
 				widgetHandler:RemoveCallIn("MousePress")
+				widgetHandler:RemoveCallIn("DrawScreen")
 				local _, _, paused = Spring.GetGameSpeed()
 				if paused then
 					Spring.SendCommands("pause")
@@ -235,7 +241,8 @@ function widget:DrawScreen()
 			glRect(lef,bot,rig,top)
 			if missionList[hovMission] then
 				glColor(0.2,0.2,0.2,0.75)
-				glRect(lef+fs,top*0.75-hovMission*(fs+2)-fs,rig-fs,top*0.75-hovMission*(fs+2)+1)
+				local recTop = lowTop-hovMission*(fs+2)
+				glRect(lef+fs,recTop-fs,rig-fs,recTop+1)
 			end
 			if mouseOverOK then
 				glColor(0.2,0.2,0.2,0.75)
@@ -247,9 +254,9 @@ function widget:DrawScreen()
 			glBeginText()
 			for i=1, #missScreen do
 				if i==selMission then
-					glText('\255\255\255\51' .. missScreen[i], X_2, top*0.75-i*(fs+2)-fs, fs, "cd")
+					glText('\255\255\255\51' .. missScreen[i], X_2, lowTop-i*(fs+2)-fs, fs, "cd")
 				else
-					glText(missScreen[i], X_2, top*0.75-i*(fs+2)-fs, fs, "cd")
+					glText(missScreen[i], X_2, lowTop-i*(fs+2)-fs, fs, "cd")
 				end
 			end
 			glText("OK",X_2,bot+fs*1.4,fs,"cd")
@@ -282,7 +289,7 @@ function widget:DrawScreen()
 		elseif victory then
 			glColor(1.0,1.0,1.0,1.0)
 			glText("Victory", X_2, Y*0.5, 4*fs, "cvo")
-		elseif defeat then
+		else
 			glColor(0.6,0.0,0.0,1.0)
 			glText("Defeat", X_2, Y*0.5, 4*fs, "cvo")
 		end
