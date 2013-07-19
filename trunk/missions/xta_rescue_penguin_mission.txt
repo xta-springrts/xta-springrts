@@ -15,7 +15,7 @@
 		fixedallies=0;
 		disablemapdamage=0;
 		mode=none;
-		comm=autoupgrade;
+		commander=autoupgrade;
 		qtpfs=0;
 		gravity=0.50;
 		maxspeed=3.0;
