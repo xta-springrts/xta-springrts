@@ -153,8 +153,8 @@ local springInfo
 local player = {}
 
 --To determine faction at start
-local armcomDefID = UnitDefNames.armcom.id
-local corcomDefID = UnitDefNames.corcom.id
+local armcomDefID = UnitDefNames.arm_commander.id
+local corcomDefID = UnitDefNames.core_commander.id
 
 --------------------------------------------------------------------------------
 -- Button check variable
@@ -1185,12 +1185,20 @@ function colourNames(teamID)
 end 
 
 function DrawName(name, team, posY, dark)
-	gl_Text(colourNames(team) .. name, m_name.posX + widgetPosX + 3, posY + 3, 15, "o") -- draws name
+	--if dark then
+	--	gl_Text(colourNames(team) .. name, m_name.posX + widgetPosX + 3, posY + 3, 15, "O") -- draws name
+	--else
+		gl_Text(colourNames(team) .. name, m_name.posX + widgetPosX + 3, posY + 3, 15, "o") -- draws name
+	--end
 	gl_Color(1,1,1)
 end
 
 function DrawSmallName(name, posY, dark)
-	gl_Text(name, m_name.posX + widgetPosX + 3, posY + 3, 12, "o")
+	--if dark then
+	--	gl_Text(name, m_name.posX + widgetPosX + 3, posY + 3, 12, "O")
+	--else
+		gl_Text(name, m_name.posX + widgetPosX + 3, posY + 3, 12, "o")
+	--end
 	gl_Color(1,1,1)
 end
 
@@ -1462,8 +1470,9 @@ function GetDark(red,green,blue)
 
 	-- Determines if the player color is dark. (to determine if white outline is needed)
 
-	if red*1.2 + green*1.1 + blue*0.8 < 0.9 then return true end
-	return false
+	return (red*1.2 + green*1.1 + blue*0.8) < 0.9
+	--if red*1.2 + green*1.1 + blue*0.8 < 0.9 then return true end
+	--return false
 end
 
 function Spec(teamID)
