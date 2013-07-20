@@ -701,7 +701,7 @@ local function DrawFilledCircleOutFading(pos, size, cornerCount)
 	glBeginEnd(GL.TRIANGLE_FAN, function()
 		SetColor(usingCmd, 1)
 		glVertex(0,0,0)
-		SetColor(usingCmd, 0)
+		SetColor(usingCmd, 0.15)
 		for t = 0, pi2, pi2 / cornerCount do
 			glVertex(sin(t) * size, 0, cos(t) * size)
 		end
@@ -778,6 +778,7 @@ function widget:DrawWorld()
 	end
 	if zoomY < 6 then zoomY = 6 end
 	local unitCount = spGetSelectedUnitsCount()
+	DrawFormationLines(tVerts, 2)
 	DrawFormationDots(tVerts, zoomY, unitCount)
   end
 end
