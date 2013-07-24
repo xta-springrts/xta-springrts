@@ -23,8 +23,16 @@
 
 XTA 9.729 Svn 375 ------------------ by ???
 ---------
-Updated Xtaids, added new unitpack that functions, called spiders vs. tortoise. Both work need more balance tests. - Noruas
-Increased Cost of Guardian and Punisher by double, from 250 to 500 per shot, roughly twice as much and a bit more then a pop up cannon at 230 Energy. - Noruas
+* Updated Xtaids, added new unitpack that functions, called spiders vs. tortoise. Both work need more balance tests. - Noruas
+* Increased Cost of Guardian and Punisher by double, from 250 to 500 per shot, roughly twice as much and a bit more then a pop up cannon at 230 Energy. - Noruas
+* Reduced cost of stealthing for Cloakable fusion reactors and spy kbots by 50E
+* Mine layer gadget fixed for XTAids units and other bugs
+* Added new guard behaviour: Area Guard
+* Performance optimizations in following widgets: Adv. Players List, Ghost Radar, Commander Selection, Mission UI
+* Updated CustomFormations to show end points for unit destinations, some other small fixes
+* Fixed double projectile for CORE Garpike, making it quite OP ofr it's price
+* Added buttons for selecting game speed when watching replays
+
 
 XTA 9.729 ------------------ by Deadnight Warrior, Jools and Noruas and Knorke
 ---------
