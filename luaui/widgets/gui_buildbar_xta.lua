@@ -24,6 +24,33 @@ YellowStr  = "\255\255\255\152"
 OrangeStr  = "\255\255\190\128"
 
 -------------------------------------------------------------------------------
+-- Speed Up
+-------------------------------------------------------------------------------
+local GetUnitDefID      = Spring.GetUnitDefID
+local GetMouseState     = Spring.GetMouseState
+local GetUnitHealth     = Spring.GetUnitHealth
+local GetUnitStates     = Spring.GetUnitStates
+local DrawUnitCommands  = Spring.DrawUnitCommands
+local GetSelectedUnits  = Spring.GetSelectedUnits
+local GetFullBuildQueue = Spring.GetFullBuildQueue
+local GetUnitIsBuilding = Spring.GetUnitIsBuilding
+local glText      = gl.Text
+local glRect      = gl.Rect
+local glShape     = gl.Shape
+local glColor     = gl.Color
+local glTexture   = gl.Texture
+local glTexRect   = gl.TexRect
+local glLineWidth = gl.LineWidth
+local push        = table.insert
+local tan         = math.tan
+local rad         = math.rad
+local abs         = math.abs
+local min         = math.min
+local max         = math.max
+local floor       = math.floor
+
+
+-------------------------------------------------------------------------------
 -------------------------------------------------------------------------------
 --
 --  vars
@@ -99,6 +126,7 @@ end
 -------------------------------------------------------------------------------
 -- SCREENSIZE FUNCTIONS
 -------------------------------------------------------------------------------
+
 local iconSizeX  = 65
 local iconSizeY  = floor(iconSizeX * 0.75)
 local repIcoSize = floor(iconSizeY*0.6)   --repeat iconsize
@@ -141,33 +169,6 @@ function widget:ViewResize(viewSizeX, viewSizeY)
   UpdateIconSizes()
   SetupNewScreenAlignment()
 end
-
-
--------------------------------------------------------------------------------
--- Speed Up
--------------------------------------------------------------------------------
-local GetUnitDefID      = Spring.GetUnitDefID
-local GetMouseState     = Spring.GetMouseState
-local GetUnitHealth     = Spring.GetUnitHealth
-local GetUnitStates     = Spring.GetUnitStates
-local DrawUnitCommands  = Spring.DrawUnitCommands
-local GetSelectedUnits  = Spring.GetSelectedUnits
-local GetFullBuildQueue = Spring.GetFullBuildQueue
-local GetUnitIsBuilding = Spring.GetUnitIsBuilding
-local glText      = gl.Text
-local glRect      = gl.Rect
-local glShape     = gl.Shape
-local glColor     = gl.Color
-local glTexture   = gl.Texture
-local glTexRect   = gl.TexRect
-local glLineWidth = gl.LineWidth
-local push        = table.insert
-local tan         = math.tan
-local rad         = math.rad
-local abs         = math.abs
-local min         = math.min
-local max         = math.max
-local floor       = math.floor
 
 
 -------------------------------------------------------------------------------
