@@ -131,7 +131,7 @@ end
 
 function widget:UnitCommand(unitID, unitDefID, unitTeam, cmdID, cmdOpts, cmdParams) 	
 	if cmdID == CMD_STOP then
-	Echo("Stop command")
+	--Echo("Stop command")
 		if squadron[unitID] then 
 			squadron[unitID] = nil 
 			for tID, sID in pairs (guardianTable) do

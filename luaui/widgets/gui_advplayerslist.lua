@@ -68,6 +68,15 @@ local gl_CallList         = gl.CallList
 local gl_Text			  = gl.Text
 local gl_GetTextWidth	  = gl.GetTextWidth
 
+local TextDraw            = fontHandler.Draw
+
+local floor = math.floor
+local schar = string.char
+local tainsert = table.insert
+local tasort = table.sort
+local tamaxn = table.maxn
+local ipairs = ipairs
+
 --------------------------------------------------------------------------------
 -- IMAGES
 --------------------------------------------------------------------------------
@@ -364,7 +373,7 @@ end
 
 local function SetModulesPositionX()
 	m_name.width = SetMaxPlayerNameWidth()
-	table.sort(modules, function(v1,v2)
+	tasort(modules, function(v1,v2)
 		return v1.position < v2.position
 	end)
 	pos = 1
@@ -417,7 +426,7 @@ end
 local function GetAllPlayers()
 	local noplayer
 	local allteams   = Spring_GetTeamList()
-	teamN = table.maxn(allteams) - 1               --remove gaia
+	teamN = tamaxn(allteams) - 1               --remove gaia
 	for i = 0,teamN-1 do
 		local teamPlayers = Spring_GetPlayerList(i, true)
 		player[i + 64] = CreatePlayerFromTeam(i)
@@ -612,14 +621,14 @@ function SortAllyTeams(vOffset)
 	local allyTeamID
 	local allyTeamList = Spring_GetAllyTeamList()
 	local firstEnnemy = true
-	allyTeamsCount = table.maxn(allyTeamList)-1
+	allyTeamsCount = tamaxn(allyTeamList)-1
 	
 	-- find own ally team
 	for allyTeamID = 0, allyTeamsCount - 1 do
 		if allyTeamID == myAllyTeamID  then
 			vOffset = vOffset + labelOffset - 2
-			table.insert(drawListOffset, vOffset)
-			table.insert(drawList, -2)  -- "Allies" label
+			tainsert(drawListOffset, vOffset)
+			tainsert(drawList, -2)  -- "Allies" label
 			vOffset = SortTeams(allyTeamID, vOffset)	-- Add the teams from the allyTeam		
 			break
 		end
@@ -630,13 +639,13 @@ function SortAllyTeams(vOffset)
 		if allyTeamID ~= myAllyTeamID then
 			if firstEnnemy == true then
 				vOffset = vOffset + labelOffset - 2
-				table.insert(drawListOffset, vOffset)
-				table.insert(drawList, -3) -- "Ennemies" label
+				tainsert(drawListOffset, vOffset)
+				tainsert(drawList, -3) -- "Ennemies" label
 				firstEnnemy = false
 			else
 				vOffset = vOffset + separatorOffset
-				table.insert(drawListOffset, vOffset)
-				table.insert(drawList, -4) -- Ennemy teams separator
+				tainsert(drawListOffset, vOffset)
+				tainsert(drawList, -4) -- Ennemy teams separator
 			end
 			vOffset = SortTeams(allyTeamID, vOffset) -- Add the teams from the allyTeam 
 		end
@@ -653,16 +662,16 @@ function SortTeams(allyTeamID, vOffset)
 	
 	-- add own team first (if in own ally team)
 	if myAllyTeamID == allyTeamID then
-		table.insert(drawListOffset, vOffset)
-		table.insert(drawList, -1)
+		tainsert(drawListOffset, vOffset)
+		tainsert(drawList, -1)
 		vOffset = SortPlayers(myTeamID,allyTeamID,vOffset) -- adds players from the team	
 	end
 	
 	-- add other teams
 	for _,teamID in ipairs(teamsList) do
 		if teamID ~= myTeamID then
-			table.insert(drawListOffset, vOffset)
-			table.insert(drawList, -1)
+			tainsert(drawListOffset, vOffset)
+			tainsert(drawList, -1)
 			vOffset = SortPlayers(teamID,allyTeamID,vOffset) -- adds players form the team
 		end  
 	end
@@ -682,8 +691,8 @@ function SortPlayers(teamID,allyTeamID,vOffset)
 		if player[myPlayerID].name ~= nil then
 			if mySpecStatus == false then
 				vOffset = vOffset + playerOffset
-				table.insert(drawListOffset, vOffset)
-				table.insert(drawList, myPlayerID) -- new player (with ID)
+				tainsert(drawListOffset, vOffset)
+				tainsert(drawList, myPlayerID) -- new player (with ID)
 				player[myPlayerID].posY = vOffset
 				noPlayer = false
 			end
@@ -696,8 +705,8 @@ function SortPlayers(teamID,allyTeamID,vOffset)
 			if player[playerID].name ~= nil then
 				if player[playerID].spec ~= true then
 					vOffset = vOffset + playerOffset
-					table.insert(drawListOffset, vOffset)
-					table.insert(drawList, playerID) -- new player (with ID)
+					tainsert(drawListOffset, vOffset)
+					tainsert(drawList, playerID) -- new player (with ID)
 					player[playerID].posY = vOffset
 					noPlayer = false
 				end
@@ -708,8 +717,8 @@ function SortPlayers(teamID,allyTeamID,vOffset)
 	-- add AI teams
 	if isAi == true then
 		vOffset = vOffset + playerOffset
-		table.insert(drawListOffset, vOffset)
-		table.insert(drawList, 64 + teamID) -- new AI team (instead of players)
+		tainsert(drawListOffset, vOffset)
+		tainsert(drawList, 64 + teamID) -- new AI team (instead of players)
 		player[64 + teamID].posY = vOffset
 		noPlayer = false
 	end
@@ -717,8 +726,8 @@ function SortPlayers(teamID,allyTeamID,vOffset)
 	-- ad no player token if no player found in this team at this point
 	if noPlayer == true then
 		vOffset = vOffset + playerOffset
-		table.insert(drawListOffset, vOffset)
-		table.insert(drawList, 64 + teamID)  -- no players team
+		tainsert(drawListOffset, vOffset)
+		tainsert(drawList, 64 + teamID)  -- no players team
 		player[64 + teamID].posY = vOffset
 	end
 	return vOffset
@@ -738,16 +747,16 @@ function SortSpecs(vOffset)
 				-- add "Specs" label if first spec
 				if noSpec == true then
 					vOffset = vOffset + labelOffset - 2
-					table.insert(drawListOffset, vOffset)
-					table.insert(drawList, -5)
+					tainsert(drawListOffset, vOffset)
+					tainsert(drawList, -5)
 					noSpec = false
 					vOffset = vOffset + 4					
 				end
 				
 				-- add spectator
 				vOffset = vOffset + specOffset
-				table.insert(drawListOffset, vOffset)
-				table.insert(drawList, playerID)
+				tainsert(drawListOffset, vOffset)
+				tainsert(drawList, playerID)
 				player[playerID].posY = vOffset
 				noPlayer = false
 			end
@@ -898,7 +907,7 @@ function CreateBackground()
 	gl_Rect(widgetPosX,widgetPosY + widgetHeight  - 2, widgetPosX + widgetWidth, widgetPosY + widgetHeight  - 1)
 	gl_Rect(widgetPosX , widgetPosY, widgetPosX + 1, widgetPosY + widgetHeight  - 1)
 	gl_Rect(widgetPosX + widgetWidth - 1, widgetPosY, widgetPosX + widgetWidth, widgetPosY + widgetHeight  - 1)
-	gl_Color(1,1,1,1)
+	--gl_Color(1,1,1,1)
 	
 	end)	
 end
@@ -949,14 +958,14 @@ function DrawLabel(text, vOffset)
 	gl_Rect(widgetPosX+1, widgetPosY + widgetHeight -vOffset-1, widgetPosX + widgetWidth-1, widgetPosY + widgetHeight -vOffset-2)
 	gl_Color(0,0,0,0.5)
 	gl_Rect(widgetPosX+1, widgetPosY + widgetHeight -vOffset-2, widgetPosX + widgetWidth-1, widgetPosY + widgetHeight -vOffset-3)
-	gl_Color(1,1,1)
+	--gl_Color(1,1,1)
 end
 
 function DrawSeparator(vOffset)
 	gl_Rect(widgetPosX+1, widgetPosY + widgetHeight -vOffset-1, widgetPosX + widgetWidth-1, widgetPosY + widgetHeight -vOffset-2)
 	gl_Color(0,0,0)
 	gl_Rect(widgetPosX+1, widgetPosY + widgetHeight -vOffset-2, widgetPosX + widgetWidth-1, widgetPosY + widgetHeight -vOffset-3)
-	gl_Color(1,1,1)
+	--gl_Color(1,1,1)
 end
 
 
@@ -1008,27 +1017,27 @@ function DrawPlayerTip(playerID, leader, vOffset, mouseX, mouseY)
 			end
 			gl_Color(red,green,blue,1)	
 			if m_rank.active == true then
-					DrawRank(rank, posY, dark)
+				DrawRank(rank, posY, dark)
 			end
 			if m_ID.active == true then
-					DrawID(team, posY, dark)
+				DrawID(team, posY, dark)
 			end
 		end
-		gl_Color(red,green,blue,1)
 		if m_rank.active == true then                        
+			gl_Color(red,green,blue,1)
 			DrawRank(rank, posY, leader, dark)   
 		end
-		gl_Color(red,green,blue,1)
 		if m_side.active == true then                        
+			gl_Color(red,green,blue,1)
 			DrawSidePic(team, posY, leader, dark)   
 		end
-		gl_Color(red,green,blue,1)	
 		if m_name.active == true then
+			gl_Color(red,green,blue,1)	
 			DrawName(name, team, posY, dark)
 		end
 	else -- spectator
-		gl_Color(1,1,1,1)	
 		if m_name.active == true then
+			gl_Color(1,1,1,1)	
 			DrawSmallName(name, posY, false)
 		end		
 	end
@@ -1087,6 +1096,7 @@ function DrawTakeSignal(posY)
 end
 
 function DrawShareButtons(posY, needm, neede)
+	gl_Color(1,1,1,1)
 	gl_Texture(unitsPic)                       -- Share UNIT BUTTON
 	gl_TexRect(m_share.posX + widgetPosX  + 1, posY, m_share.posX + widgetPosX  + 17, posY + 16)
 	gl_Texture(energyPic)                      -- share ENERGY BUTTON
@@ -1158,20 +1168,20 @@ function DrawRank(rank, posY, dark)
 	else
 		DrawRankImage(rank8, posY)
 	end
-	gl_Color(1,1,1,1)
+	--gl_Color(1,1,1,1)
 end
 
 function DrawRankImage(rankImage, posY)
-		gl_Color(1,1,1)
-		gl_Texture(rankImage)
-		gl_TexRect(widgetPosX + 2, posY, widgetPosX + 18, posY + 16)
+	gl_Color(1,1,1)
+	gl_Texture(rankImage)
+	gl_TexRect(widgetPosX + 2, posY, widgetPosX + 18, posY + 16)
 end
 
 function colourNames(teamID)
     	nameColourR,nameColourG,nameColourB,nameColourA = Spring_GetTeamColor(teamID)
-		R255 = math.floor(nameColourR*255)  --the first \255 is just a tag (not colour setting) no part can end with a zero due to engine limitation (C)
-        G255 = math.floor(nameColourG*255)
-        B255 = math.floor(nameColourB*255)
+		R255 = floor(nameColourR*255)  --the first \255 is just a tag (not colour setting) no part can end with a zero due to engine limitation (C)
+        G255 = floor(nameColourG*255)
+        B255 = floor(nameColourB*255)
         if ( R255%10 == 0) then
                 R255 = R255+1
         end
@@ -1181,34 +1191,43 @@ function colourNames(teamID)
         if ( B255%10 == 0) then
                 B255 = B255+1
         end
-	return "\255"..string.char(R255)..string.char(G255)..string.char(B255) --works thanks to zwzsg
+	return "\255"..schar(R255)..schar(G255)..schar(B255) --works thanks to zwzsg
 end 
 
 function DrawName(name, team, posY, dark)
-	--if dark then
-	--	gl_Text(colourNames(team) .. name, m_name.posX + widgetPosX + 3, posY + 3, 15, "O") -- draws name
-	--else
-		gl_Text(colourNames(team) .. name, m_name.posX + widgetPosX + 3, posY + 3, 15, "o") -- draws name
-	--end
-	gl_Color(1,1,1)
+	if dark then
+		gl_Text(colourNames(team) .. name, m_name.posX + widgetPosX + 3, posY + 3, 15, "O") -- draws name
+	else
+		--TextDraw(name, m_name.posX + widgetPosX + 3, posY + 3)
+		gl_Text(--[[colourNames(team) ..]] name, m_name.posX + widgetPosX + 3, posY + 3, 15) -- draws name
+	end
+	--gl_Color(1,1,1)
 end
 
 function DrawSmallName(name, posY, dark)
-	--if dark then
-	--	gl_Text(name, m_name.posX + widgetPosX + 3, posY + 3, 12, "O")
-	--else
-		gl_Text(name, m_name.posX + widgetPosX + 3, posY + 3, 12, "o")
-	--end
-	gl_Color(1,1,1)
+	if dark then
+		gl_Text(name, m_name.posX + widgetPosX + 3, posY + 3, 12, "O")
+	else
+		gl_Text(name, m_name.posX + widgetPosX + 3, posY + 3, 12)
+	end
+	--gl_Color(1,1,1)
 end
 
 function DrawID(playerID, posY, dark)
 	if playerID < 10 then
-		gl_Text(colourNames(playerID) .. " ".. playerID .. ".", m_ID.posX + widgetPosX+2, posY + 3, 15, "o") 
+		if dark then
+			gl_Text(colourNames(playerID) .. " ".. playerID .. ".", m_ID.posX + widgetPosX+2, posY + 3, 15, "o")
+		else
+			gl_Text(colourNames(playerID) .. " ".. playerID .. ".", m_ID.posX + widgetPosX+2, posY + 3, 15)
+		end
 	else
-		gl_Text(colourNames(playerID) .. playerID .. ".", m_ID.posX + widgetPosX+2, posY + 3, 15, "o") 
+		if dark then
+			gl_Text(colourNames(playerID) .. playerID .. ".", m_ID.posX + widgetPosX+2, posY + 3, 15, "o")
+		else
+			gl_Text(colourNames(playerID) .. playerID .. ".", m_ID.posX + widgetPosX+2, posY + 3, 15)
+		end
 	end
-	gl_Color(1,1,1)
+	--gl_Color(1,1,1)
 end
 
 function DrawPingCpu(pingLvl, cpuLvl, posY)
@@ -1237,7 +1256,7 @@ function DrawPoint(posY,pointtime)
 		gl_Texture(pointPic)
 		gl_TexRect(leftPosX + 28, posY, leftPosX + 12, posY + 16)	
 	end
-	gl_Color(1,1,1,1)
+	--gl_Color(1,1,1,1)
 end
 
 function TakeTip(mouseX)
@@ -1702,7 +1721,7 @@ end
 local function DrawGreyRect()
 	gl_Color(0.2,0.2,0.2,0.8)                                   -- draw show/hide modules buttons
 	gl_Rect(widgetPosX, widgetPosY, widgetPosX + widgetWidth, widgetPosY + widgetHeight)
-	gl_Color(1,1,1,1)
+	--gl_Color(1,1,1,1)
 end
 
 local function DrawTweakButton(module, image)
@@ -1753,7 +1772,7 @@ local function DrawArrows()
 	else
 		gl_TexRect(widgetRight + 4, widgetPosY, widgetRight + 12, widgetTop)
 	end
-	gl_Color(1,1,1,1)
+	--gl_Color(1,1,1,1)
 	gl_Texture(false)
 end
 
@@ -1935,7 +1954,7 @@ function CheckPlayersChange()
 		if active == false then
 			if player[i].name ~= nil then                                             -- NON SPEC PLAYER LEAVING
 				if player[i].spec==false then
-					if table.maxn(Spring_GetPlayerList(player[i].team,true)) == 0 then
+					if tamaxn(Spring_GetPlayerList(player[i].team,true)) == 0 then
 						player[player[i].team + 64] = CreatePlayerFromTeam(player[i].team)
 						sorting = true
 					end
@@ -1947,7 +1966,7 @@ function CheckPlayersChange()
 		elseif active == true and name ~= nil then
 			if spec ~= player[i].spec then                                           -- PLAYER SWITCHING TO SPEC STATUS
 				if spec == true then
-					if table.maxn(Spring_GetPlayerList(player[i].team,true)) == 0 then   -- (update the no players team)
+					if tamaxn(Spring_GetPlayerList(player[i].team,true)) == 0 then   -- (update the no players team)
 						player[player[i].team + 64] = CreatePlayerFromTeam(player[i].team)
 					end
 					player[i].team = nil                                                 -- remove team
@@ -1956,7 +1975,7 @@ function CheckPlayersChange()
 				sorting = true
 			end
 			if teamID ~= player[i].team then                                               -- PLAYER CHANGING TEAM
-				if table.maxn(Spring_GetPlayerList(player[i].team,true)) == 0 then           -- check if there is no more player in the team + update
+				if tamaxn(Spring_GetPlayerList(player[i].team,true)) == 0 then           -- check if there is no more player in the team + update
 					player[player[i].team + 64] = CreatePlayerFromTeam(player[i].team)         
 				end
 				player[i].team = teamID

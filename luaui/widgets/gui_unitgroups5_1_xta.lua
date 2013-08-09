@@ -17,6 +17,44 @@ end
 include("colors.h.lua")
 
 -------------------------------------------------------------------------------
+
+local spGetGroupUnits = Spring.GetGroupUnits
+local spGetUnitDefID = Spring.GetUnitDefID
+local spGetUnitDefDimensions = Spring.GetUnitDefDimensions
+local spGetUnitHealth = Spring.GetUnitHealth
+local spGetGameSeconds = Spring.GetGameSeconds
+local spGetMouseState = Spring.GetMouseState
+local spGetModKeyState = Spring.GetModKeyState
+local spGetSelectedGroup = Spring.GetSelectedGroup
+local spGetMyTeamID = Spring.GetMyTeamID
+
+local glDepthTest = gl.DepthTest
+local glDepthMask = gl.DepthMask
+local glCulling = gl.Culling
+local glLighting = gl.Lighting
+local glBlending = gl.Blending
+local glMaterial = gl.Material
+local glTexture = gl.Texture
+local glShape = gl.Shape
+local glRect = gl.Rect
+local glTexRect = gl.TexRect
+local glColor = gl.Color
+local glBeginText = gl.BeginText
+local glEndText = gl.EndText
+local glText = gl.Text
+local glClear = gl.Clear
+local glScale =  gl.Scale
+local glTranslate = gl.Translate
+local glScissor = gl.Scissor
+local glRotate = gl.Rotate
+local glUnitShape = gl.UnitShape
+local glPushMatrix = gl.PushMatrix
+local glPopMatrix = gl.PopMatrix
+
+local floor = math.floor
+local pi = math.pi
+local cos = math.cos
+	
 local vsx, vsy = widgetHandler:GetViewSizes()
 
 local updated = true
@@ -64,9 +102,9 @@ local slideOffsetChanged={}	-- this table holds two booleans, "right" and "botto
 local oldMouseX = 0
 local oldMouseY = 0
 
---local iconSizeX = math.floor(80)
-local iconSizeX = math.floor(100)
-local iconSizeY = math.floor(50)
+--local iconSizeX = floor(80)
+local iconSizeX = floor(100)
+local iconSizeY = floor(50)
 
 local iconDefaultWidth = {}
 local iconDefaultHeight = {}
@@ -81,6 +119,38 @@ local rectMaxX = 0
 local rectMinY = 0
 local rectMaxY = 0
 
+local function boolToNumber(value)
+    if value then
+      return 1
+    else
+      return 0
+    end
+end
+
+local function numberToBool(value)
+    if value ~= 0 then
+      return true
+    else
+      return false
+    end
+end
+
+local function GetGroupIdFromNum(num)
+  -- the Lua mod (%) does not seem to work.
+  if num ~= 10 then 
+    return num
+  else 
+    return 0
+  end
+end
+
+local function GetNumFromGroupId(groupId)
+  if groupId == 0 then 
+    return 10
+  else 
+    return groupId
+  end
+end
 -------------------------------------------------------------------------------
 function widget:ViewResize(viewSizeX, viewSizeY)
   vsx = viewSizeX
@@ -173,7 +243,7 @@ function widget:GroupChanged(groupId)
   -- now we re-calc the groupToIconMapping and iconToGroupMapping tables
 end
 
-function RecalcMappings()
+local function RecalcMappings()
   local iCounter
   local icon = 1
   for groupId = 1, 10 do
@@ -199,17 +269,186 @@ function RecalcMappings()
   iconCount = iconCount + 1 -- add 1 to allow for the control icon group
 end
 
+
+local function CheckOneGroupsHealth(groupId)
+  local tGroup = unitGroups[groupId]
+  local nMaxHealth = 0
+  local nHealth = 0
+  local maxHealth
+  local health
+  local paralyzeDamage
+  local captureProgress
+  local buildProgress
+  local nUnitId = 0
+  local tUnitDetails = {}
+  local nIndex
+  local count = 0
+
+  for nIndex, nUnitId in ipairs(tGroup.unitTable) do
+    health, maxHealth, paralyzeDamage, captureProgress, buildProgress = spGetUnitHealth(nUnitId)
+    nMaxHealth = nMaxHealth + maxHealth
+    nHealth = nHealth + health
+    count = count + 1
+  end
+  tGroup.totalMaxHealth = nMaxHealth
+  tGroup.numUnits = count
+  if nHealth < tGroup.totalHealth then
+    -- someone in the group has taken damage since we last checked!
+    tGroup.lastHealthDrop = spGetGameSeconds()
+  end
+  tGroup.totalHealth = nHealth
+end
+
+
+local function GetGroupsUnitNumbers(groupId)
+  local nMostCommonUnitId = 0
+  local nUnitNumber = 0
+  local nIndex
+  local nUnitId
+  local nUnitDefId
+  local tUnitIdCounts = {}
+  local maxDefId = nil
+  local maxDefCount = 0
+
+  --~     if unitGroups[groupId].unitTable == nil
+
+  for nIndex, nUnitId in ipairs(unitGroups[groupId].unitTable) do
+    nUnitDefId = spGetUnitDefID(nUnitId)
+    if tUnitIdCounts[nUnitDefId] ~= nil then
+      tUnitIdCounts[nUnitDefId] = tUnitIdCounts[nUnitDefId] + 1
+    else
+      tUnitIdCounts[nUnitDefId] = 1
+    end
+    if tUnitIdCounts[nUnitDefId] > maxDefCount then
+      maxDefCount = tUnitIdCounts[nUnitDefId]
+      maxDefId = nUnitDefId
+    end
+    nUnitNumber = nUnitNumber + 1
+  end
+
+  --~     return tUnitIdCounts[nUnitDefId], nUnitDefId
+  return nUnitNumber, maxDefId
+end
+
+
+local function drawTextureAdv(name, screenLeft, screenTop, screenWidth, screenHeight, texLeft, texTop, texWidth, texHeight, imgSize, imgColour)
+    -- Note: images have 0,0 in the top left corner, while the screen coords are 0,0 in the bottom left corner.
+    if imgColour == nil then
+      glColor(Colors.white)
+    else
+      glColor(imgColour)
+    end
+    glTexture(":n:LuaUI/Images/" .. name)
+    glShape(GL.QUADS, {
+      { v = { screenLeft-1,						screenTop       +1 }, 					t = { texLeft/imgSize, 				texTop/imgSize}},
+      { v = { screenLeft+screenWidth-1,	screenTop       +1 }, 					t = {(texLeft+texWidth)/imgSize,	texTop/imgSize}},
+      { v = { screenLeft+screenWidth-1, 	screenTop-screenHeight+1 }, 	t = {(texLeft+texWidth)/imgSize,	(texTop+texHeight)/imgSize}},
+      { v = { screenLeft -1, 					screenTop-screenHeight+1 }, 	t = { texLeft/imgSize,					(texTop+texHeight)/imgSize}}
+    })
+    glTexture(false)
+end
+
+local function drawTexture(name, left, top, width, height, innerX, innerY, imgSize)
+    glColor(Colors.white)
+    glTexture(":n:LuaUI/Images/" .. name)
+    glShape(GL.QUADS, {
+      { v = { left-1,				top       +1 }, 		t = { innerX/imgSize, 				innerY/imgSize}},
+      { v = { left+width-1,	top       +1 }, 		t = {(innerX+width)/imgSize, 	innerY/imgSize}},
+      { v = { left+width-1, 	top-height+1 }, 	t = {(innerX+width)/imgSize,	(innerY+height)/imgSize}},
+      { v = { left -1, 			top-height+1 }, 	t = { innerX/imgSize,				(innerY+height)/imgSize}}
+    })
+    glTexture(false)
+end
+
+local function drawBox(left,top, width,height, bgColor, boColor)
+    if left==nil or width < 2 or height < 2 then
+      return false
+    end
+    glColor(bgColor)
+	--glRect(left,top,left+width,top-height)
+	---[[
+    glShape(GL.QUADS, {
+      { v = { left+width, top-height }},
+      { v = { left,       top-height }},
+      { v = { left,       top        }},
+      { v = { left+width, top        }}
+    })
+	--]]
+
+    glColor(boColor)
+    glShape(GL.LINE_LOOP, {
+      { v = { left+width, top-height }},
+      { v = { left,         top-height }},
+      { v = { left,         top          }},
+      { v = { left+width,   top        }}
+    })
+end
+
+local function drawBoxSimple(left,top, width,height, bgColor)
+    if left==nil or width < 2 or height < 2 then
+      return false
+    end
+    glColor(bgColor)
+	--glRect(left,top,left+width,top-height)
+	---[[
+    glShape(GL.QUADS, {
+      { v = { left+width, top-height }},
+      { v = { left,       top-height }},
+      { v = { left,       top        }},
+      { v = { left+width, top        }}
+    })
+	--]]
+end
+
+local function drawBoxOutline(left,top, width,height, boColor)
+    if left==nil or width < 2 or height < 2 then
+      return false
+    end
+    glColor(boColor)
+    glShape(GL.LINE_LOOP, {
+      { v = { left+width, top-height }},
+      { v = { left,         top-height }},
+      { v = { left,         top          }},
+      { v = { left+width,   top        }}
+    })
+end
+
+local function drawBorder(left, top, width, height, lineWidth, boColor)
+    -- top line 
+    drawBoxSimple(left, top, width, lineWidth, boColor)
+    -- right line 
+    drawBoxSimple(left + width - lineWidth, top - lineWidth +1, lineWidth, height - lineWidth + 1, boColor)
+    -- bottom line 
+    drawBoxSimple(left, top - height + lineWidth, width - lineWidth, lineWidth, boColor)
+    -- left line 
+    drawBoxSimple(left, top - lineWidth + 1, lineWidth, height - lineWidth*2 + 2, boColor)
+end
+
+local function drawBoxGradient(left, top, width, height, topLeftColour, topRightColour, bottomRightColour, bottomLeftColour)
+    if left==nil or width < 2 or height < 2 then
+      return false
+    end
+    glColor(1,1,1)
+    glShape(GL.QUADS, {
+      { v = { left+width, top-height },	color = bottomRightColour},
+      { v = { left,       top-height },		color = bottomLeftColour},
+      { v = { left,       top        },				color = topLeftColour},
+      { v = { left+width, top        },			color = topRightColour}
+    })
+  end
+
+ 
 --~ [[
 --~ 	UpdateOneGroupsDetails()
 --~ 	Called by Initialize() and GroupChanged() as it only needs to be done whenever a group is changed (or the script just started)
 --~ ]]
-function UpdateOneGroupsDetails(groupId)
+local function UpdateOneGroupsDetails(groupId)
   local nMaxUnitTypeId = -1
   local nMaxUnitTypeNumber = 0
   local tGroupNumbers = {}
   local unitTypeNumber = {}
 
-  unitGroups[groupId].unitTable = Spring.GetGroupUnits(GetGroupIdFromNum((groupId)))
+  unitGroups[groupId].unitTable = spGetGroupUnits(GetGroupIdFromNum((groupId)))
   unitGroups[groupId].numUnits  =  0 -- we'll calculate this below.
 
   --~ 	-- Work out which unittype has the biggest presence in this group and then use it as the icon for the group
@@ -229,219 +468,7 @@ function UpdateOneGroupsDetails(groupId)
   CheckOneGroupsHealth(groupId)
 end
 
-
-function GetGroupsUnitNumbers(groupId)
-  local nMostCommonUnitId = 0
-  local nUnitNumber = 0
-  local nIndex
-  local nUnitId
-  local nUnitDefId
-  local tUnitIdCounts = {}
-  local maxDefId = nil
-  local maxDefCount = 0
-
-  --~     if unitGroups[groupId].unitTable == nil
-
-  for nIndex, nUnitId in ipairs(unitGroups[groupId].unitTable) do
-    nUnitDefId = Spring.GetUnitDefID(nUnitId)
-    if tUnitIdCounts[nUnitDefId] ~= nil then
-      tUnitIdCounts[nUnitDefId] = tUnitIdCounts[nUnitDefId] + 1
-    else
-      tUnitIdCounts[nUnitDefId] = 1
-    end
-    if tUnitIdCounts[nUnitDefId] > maxDefCount then
-      maxDefCount = tUnitIdCounts[nUnitDefId]
-      maxDefId = nUnitDefId
-    end
-    nUnitNumber = nUnitNumber + 1
-  end
-
-  --~     return tUnitIdCounts[nUnitDefId], nUnitDefId
-  return nUnitNumber, maxDefId
-end
-
-
-function CheckOneGroupsHealth(groupId)
-  local tGroup = unitGroups[groupId]
-  local nMaxHealth = 0
-  local nHealth = 0
-  local maxHealth
-  local health
-  local paralyzeDamage
-  local captureProgress
-  local buildProgress
-  local nUnitId = 0
-  local tUnitDetails = {}
-  local nIndex
-  local count = 0
-
-  for nIndex, nUnitId in ipairs(tGroup.unitTable) do
-    health, maxHealth, paralyzeDamage, captureProgress, buildProgress = Spring.GetUnitHealth(nUnitId)
-    nMaxHealth = nMaxHealth + maxHealth
-    nHealth = nHealth + health
-    count = count + 1
-  end
-  tGroup.totalMaxHealth = nMaxHealth
-  tGroup.numUnits = count
-  if nHealth < tGroup.totalHealth then
-    -- someone in the group has taken damage since we last checked!
-    tGroup.lastHealthDrop = Spring.GetGameSeconds()
-  end
-  tGroup.totalHealth = nHealth
-end
-
-
-function widget:DrawScreen()
-  local iCounter
-
-  if updated then
-    updated = false
-    -- loop through each possible group
-    for groupId = 1, 10 do
-      if updatedGroups[groupId] then
-        updatedGroups[groupId] = false
-
-        UpdateOneGroupsDetails(groupId)
-      end
-    end
-
-    RecalcMappings()    
-
-  end
-
-  --~ 	SetupDimensions(10)    
-
-  -- Check to see if we're in "slideMode" (we're moving the icons around)
-  if slideMode then
-    local newX, newY, _, _, _ = Spring.GetMouseState()
-    if alignment=="right" then
-      if newY ~= oldMouseY then
-        slideOffset.right = slideOffset.right + newY - oldMouseY
-        oldMouseY = newY
-      end
-    else -- "bottom"
-      if newX ~= oldMouseX then
-        slideOffset.bottom = slideOffset.bottom + newX - oldMouseX
-        oldMouseX = newX
-      end
-    end
-  end
-
-  -- Check to see if the control icon is at least on the screen.  If it isn't, move it onto the screen.
-  if slideOffset.bottom < 0 then
-    slideOffset.bottom = 0
-  elseif slideOffset.bottom > vsx - iconSizeX then
-    slideOffset.bottom = vsx - iconSizeX
-  end
-  if slideOffset.right < iconSizeY then
-    slideOffset.right = iconSizeY
-  elseif slideOffset.right > vsy - iconSizeY then
-    slideOffset.right = vsy - iconSizeY
-  end
-
-
-  -- We check the health status of one group / frame (we don't reeeally need to check them all every frame)
-  CheckOneGroupsHealth(nLastGroupChecked)
-  nLastGroupChecked  = nLastGroupChecked + 1
-  if (nLastGroupChecked > 10) then
-    nLastGroupChecked = 1
-  end 
-
-  -- unit model rendering uses the depth-buffer
-  gl.Clear(GL.DEPTH_BUFFER_BIT)
-
-  -- draw the control icons
-  DrawControlIcons()
-
-  selectedGroupId = Spring.GetSelectedGroup()
-  if selectedGroupId ~= nil then
-    selectedGroupId = GetNumFromGroupId(selectedGroupId)
-  end
-
-  -- draw the buildpics
-  for iCounter = 1, 10 do
-    --~ 		DrawUnitDefIcon(iCounter) --old system
-    DrawGroupIcon(iCounter) --new system
-  end
-end
-
-function GetGroupIdFromNum(num)
-  -- the Lua mod (%) does not seem to work.
-  if num ~= 10 then 
-    return num
-  else 
-    return 0
-  end
-end
-
-function GetNumFromGroupId(groupId)
-  if groupId == 0 then 
-    return 10
-  else 
-    return groupId
-  end
-end
-
-function DrawControlIcons()
-  -- the control icons are three buttons:
-  --	(1) "Alignment" switch between right screen edge and bottom 
-  --	(2) "AlwaysOn" always show empty groups or allow them to slide away; and 
-  --	(3) "Shrink" close space between empty groups when they're empty (like idlecons script)
-  local xmin, ymin, xmax, ymax = GetBoxForIcon(0)
-  if xmin == nil then
-    echo("DrawControlIcons(): GetBoxForIcon(0) returned nil!")
-    return -- error?
-  end
-
-  -- blueish grey
-  local boxTopColor = {0.9, 0.9, 1, 0.5}
-  local boxBottomColor = {0.55, 0.55, 0.65, 0.5}
-
-  -- draw a box with the above colours
-  drawBox(xmin, ymax, iconSizeX, iconSizeY, bgIcexuickGrey, boIcexuickGrey)
-  --~ 	drawBoxGradient(xmin, ymax, iconSizeX, iconSizeY, boxTopColor, boxTopColor, boxBottomColor, boxBottomColor)
-  --~ 	drawBoxOutline(xmin, ymax, iconSizeX, iconSizeY, {0.3, 0.3, 0.3, 1})
-
-  local sliderTopColor = {0, 0, 0, 1}
-  local sliderBottomColor = {0.4, 0.4, 0.4, 1}
-
-  gl.Color(1,1,1)
-  if alignment=="right" then
-    -- draw slider bar
-    drawBoxGradient(xmin, ymax, iconSizeX, iconSizeY/4, sliderTopColor, sliderTopColor, sliderBottomColor, sliderBottomColor)
-    -- draw buttons left to right
-    gl.Color(1,1,1)
-    gl.Text("Bottom", xmin, ymin + iconSizeY/3 - 4, 8, "on")
-    if iconsAlwaysOn then
-      drawBox(xmin + iconSizeX / 3 + 1, ymax - iconSizeY/4 - 1, iconSizeX / 3 - 2, iconSizeY*2/3 - 2, {0, 1, 0, 0.5}, {0.1,0.1,0.1,1})
-    end
-    gl.Color(1,1,1)
-    gl.Text("Always", xmin + iconSizeX / 3 + 1, ymin + iconSizeY/3 - 4 , 8, "on")
-    if iconsShrink then
-      drawBox(xmin + iconSizeX*2/3 + 1, ymax - iconSizeY/4 - 1, iconSizeX / 3 - 2, iconSizeY*2/3 - 2, {0, 1, 0, 0.5}, {0.1,0.1,0.1,1})
-    end
-    gl.Color(1,1,1)
-    gl.Text("Shrink", xmin + iconSizeX * 2 / 3 + 1, ymin + iconSizeY/3 - 4 , 8, "on")
-  else
-    -- draw slider bar
-    drawBoxGradient(xmin, ymax, iconSizeX/4, iconSizeY, sliderTopColor, sliderBottomColor, sliderBottomColor, sliderTopColor)
-    -- draw buttons top to bottom
-    gl.Color(1,1,1)
-    gl.Text("Right", xmin + iconSizeX/4 + 2, ymax - 12, 8, "on")
-    if iconsAlwaysOn then
-      drawBox(xmin + iconSizeX/4 + 1, ymax - iconSizeY/3+1, iconSizeX*3/4 - 2, iconSizeY/3, {0, 1, 0, 0.5}, {0.1,0.1,0.1,1})
-    end
-    gl.Color(1,1,1)
-    gl.Text("Always", xmin + iconSizeX/4 + 2, ymax - 12 - iconSizeY / 3 , 8, "on")
-    if iconsShrink then
-      drawBox(xmin + iconSizeX/4 + 1, ymax - iconSizeY*2/3+1, iconSizeX*3/4 - 2, iconSizeY/3, {0, 1, 0, 0.5}, {0.1,0.1,0.1,1})
-    end
-    gl.Color(1,1,1)
-    gl.Text("Shrink", xmin + iconSizeX/4 + 2, ymax - 12 - iconSizeY * 2 / 3  , 8, "on")
-  end
-end
-
-function GetBoxForIcon(iconNum)
+local function GetBoxForIcon(iconNum)
   if iconNum ~= 0 and iconWindows[iconNum].groupId == nil then
     -- There is no mapping from this icon number to a group, so it doesn't get drawn.
     return nil
@@ -476,26 +503,85 @@ function GetBoxForIcon(iconNum)
   end
 end
 
+local function DrawControlIcons()
+  -- the control icons are three buttons:
+  --	(1) "Alignment" switch between right screen edge and bottom 
+  --	(2) "AlwaysOn" always show empty groups or allow them to slide away; and 
+  --	(3) "Shrink" close space between empty groups when they're empty (like idlecons script)
+  local xmin, ymin, xmax, ymax = GetBoxForIcon(0)
+  if xmin == nil then
+    echo("DrawControlIcons(): GetBoxForIcon(0) returned nil!")
+    return -- error?
+  end
+
+  -- blueish grey
+  local boxTopColor = {0.9, 0.9, 1, 0.5}
+  local boxBottomColor = {0.55, 0.55, 0.65, 0.5}
+
+  -- draw a box with the above colours
+  drawBox(xmin, ymax, iconSizeX, iconSizeY, bgIcexuickGrey, boIcexuickGrey)
+  --~ 	drawBoxGradient(xmin, ymax, iconSizeX, iconSizeY, boxTopColor, boxTopColor, boxBottomColor, boxBottomColor)
+  --~ 	drawBoxOutline(xmin, ymax, iconSizeX, iconSizeY, {0.3, 0.3, 0.3, 1})
+
+  local sliderTopColor = {0, 0, 0, 1}
+  local sliderBottomColor = {0.4, 0.4, 0.4, 1}
+
+  glColor(1,1,1)
+  if alignment=="right" then
+    -- draw slider bar
+    drawBoxGradient(xmin, ymax, iconSizeX, iconSizeY*0.25, sliderTopColor, sliderTopColor, sliderBottomColor, sliderBottomColor)
+    -- draw buttons left to right
+    if iconsAlwaysOn then
+      drawBox(xmin + iconSizeX*0.3333 + 1, ymax - iconSizeY*0.25 - 1, iconSizeX*0.3333 - 2, iconSizeY*0.6666 - 2, {0, 1, 0, 0.5}, {0.1,0.1,0.1,1})
+    end
+    if iconsShrink then
+      drawBox(xmin + iconSizeX*0.6666 + 1, ymax - iconSizeY*0.25 - 1, iconSizeX*0.3333 - 2, iconSizeY*0.6666 - 2, {0, 1, 0, 0.5}, {0.1,0.1,0.1,1})
+    end
+    glColor(1,1,1)
+	glBeginText()
+		glText("Bottom", xmin, ymin + iconSizeY*0.3333 - 4, 8, "on")
+		glText("Always", xmin + iconSizeX*0.3333 + 1, ymin + iconSizeY*0.3333 - 4 , 8, "on")
+		glText("Shrink", xmin + iconSizeX*0.6666 + 1, ymin + iconSizeY*0.3333 - 4 , 8, "on")
+	glEndText()
+  else
+    -- draw slider bar
+    drawBoxGradient(xmin, ymax, iconSizeX*0.25, iconSizeY, sliderTopColor, sliderBottomColor, sliderBottomColor, sliderTopColor)
+    -- draw buttons top to bottom
+    if iconsAlwaysOn then
+      drawBox(xmin + iconSizeX*0.25 + 1, ymax - iconSizeY*0.3333+1, iconSizeX*0.75 - 2, iconSizeY*0.3333, {0, 1, 0, 0.5}, {0.1,0.1,0.1,1})
+    end
+    if iconsShrink then
+      drawBox(xmin + iconSizeX*0.25 + 1, ymax - iconSizeY*0.6666+1, iconSizeX*0.75 - 2, iconSizeY*0.3333, {0, 1, 0, 0.5}, {0.1,0.1,0.1,1})
+    end
+    glColor(1,1,1)
+	glBeginText()
+		glText("Right", xmin + iconSizeX*0.25 + 2, ymax - 12, 8, "on")
+		glText("Always", xmin + iconSizeX*0.25 + 2, ymax - 12 - iconSizeY*0.3333, 8, "on")
+		glText("Shrink", xmin + iconSizeX*0.25 + 2, ymax - 12 - iconSizeY*0.6666, 8, "on")
+	glEndText()
+  end
+end
+
 --~ function SetupDimensions(count)
   --~ 	xmid = vsx * 0.5
-  --~ 	width = math.floor(iconSizeX * count)
-  --~ 	rectMinX = math.floor(xmid - (0.5 * width))
-  --~ 	rectMaxX = math.floor(xmid + (0.5 * width))
-  --~ 	rectMinY = math.floor(0)
-  --~ 	rectMaxY = math.floor(rectMinY + iconSizeY)
+  --~ 	width = floor(iconSizeX * count)
+  --~ 	rectMinX = floor(xmid - (0.5 * width))
+  --~ 	rectMaxX = floor(xmid + (0.5 * width))
+  --~ 	rectMinY = floor(0)
+  --~ 	rectMaxY = floor(rectMinY + iconSizeY)
   --~     
   --~ end
 
   -------------------------------------------------------------------------------
   -------------------------------------------------------------------------------
 
-  function CenterUnitDef(unitDefID)
+local function CenterUnitDef(unitDefID)
     local ud = UnitDefs[unitDefID] 
     if (not ud) then
       return
     end
     if (not ud.dimensions) then
-      ud.dimensions = Spring.GetUnitDefDimensions(unitDefID)
+      ud.dimensions = spGetUnitDefDimensions(unitDefID)
     end
     if (not ud.dimensions) then
       return
@@ -514,9 +600,9 @@ end
     --~ 	local vAspect = iconSizeX / iconSizeY
     local vAspect
     if alignment == "right" then
-      vAspect = iconSizeX / 2 / iconSizeY
+      vAspect = iconSizeX*0.5 / iconSizeY
     else
-      vAspect = iconSizeX / (iconSizeY / 2)
+      vAspect = iconSizeX / (iconSizeY*0.5)
     end
 
     -- scale the unit to the box (maxspect)
@@ -531,29 +617,29 @@ end
       if alignment == "right" then
         scale = (iconSizeY / ySize)
       else
-        scale = (iconSizeY / 2 / ySize)
+        scale = (iconSizeY*0.5 / ySize)
       end
     end
     scale = scale * 0.8 -- * 0.5
-    gl.Scale(scale, scale, scale)
+    glScale(scale, scale, scale)
 
     -- translate to the unit's midpoint
     local xMid = 0.5 * (d.maxx + d.minx)
     local yMid = 0.5 * (d.maxy + d.miny)
     local zMid = 0.5 * (d.maxz + d.minz)
-    gl.Translate(-xMid, -yMid, -zMid)
-  end
+    glTranslate(-xMid, -yMid, -zMid)
+end
 
   -------------------------------------------------------------------------------
   -------------------------------------------------------------------------------
 
   local function SetupModelDrawing()
-    gl.DepthTest(true) 
-    gl.DepthMask(true)
-    gl.Culling(GL.FRONT)
-    gl.Lighting(true)
-    gl.Blending(false)
-    gl.Material({
+    glDepthTest(true) 
+    glDepthMask(true)
+    glCulling(GL.FRONT)
+    glLighting(true)
+    glBlending(false)
+    glMaterial({
       ambient  = { 0.2, 0.2, 0.2, 1.0 },
       diffuse  = { 1.0, 1.0, 1.0, 1.0 },
       emission = { 0.0, 0.0, 0.0, 1.0 },
@@ -566,16 +652,16 @@ end
   -------------------------------------------------------------------------------
 
   local function RevertModelDrawing()
-    gl.Blending(true)
-    gl.Lighting(false)
-    gl.Culling(false)
-    gl.DepthMask(false)
-    gl.DepthTest(false)
+    glBlending(true)
+    glLighting(false)
+    glCulling(false)
+    glDepthMask(false)
+    glDepthTest(false)
   end
 
   -------------------------------------------------------------------------------
   -------------------------------------------------------------------------------
-  function DrawGroupIcon(iconId)
+  local function DrawGroupIcon(iconId)
     local scrollRate = 0.04
     local groupId = iconWindows[iconId].groupId
     local tUnitGroup = unitGroups[groupId]
@@ -617,9 +703,9 @@ end
     local xmid = (xmin + xmax) * 0.5
     local ymid = (ymin + ymax) * 0.5
 
-    gl.Scissor(xmin, ymin, xmax - xmin, ymax - ymin)
+    glScissor(xmin, ymin, xmax - xmin, ymax - ymin)
 
-    --~ 	gl.Blending(GL.SRC_ALPHA, GL.ONE)
+    --~ 	glBlending(GL.SRC_ALPHA, GL.ONE)
 
     -- blueish grey gradient
     local boxTopColor = {0.85, 0.85, 0.95, 0.5}
@@ -627,19 +713,19 @@ end
     local background = bgIcexuickGrey
     local border = boIcexuickGrey
 
-    gl.Texture(false)
+    glTexture(false)
     if tUnitGroup ~= nil then
-      gl.Scissor(xmin, ymin, xmax - xmin, ymax - ymin)
-      if tUnitGroup.lastHealthDrop > Spring.GetGameSeconds() - 9 then
+      glScissor(xmin, ymin, xmax - xmin, ymax - ymin)
+      if tUnitGroup.lastHealthDrop > spGetGameSeconds() - 9 then
         -- this group has suffered damange within the last 5 seconds!  
         -- maybe add an icon or have the box flash!
-        local colourTimer = math.cos(20 * widgetHandler:GetHourTimer())
-        gl.Blending(GL.SRC_ALPHA, GL.ONE)
-        boxTopColor = {colourTimer/2+0.5, 0, 0, 0.5}
-        boxBottomColor = {colourTimer * 0.7/2+0.5, 0, 0, 0.5}
+        local colourTimer = cos(20 * widgetHandler:GetHourTimer())
+        glBlending(GL.SRC_ALPHA, GL.ONE)
+        boxTopColor = {colourTimer*0.5+0.5, 0, 0, 0.5}
+        boxBottomColor = {colourTimer*0.35 + 0.5, 0, 0, 0.5}
         background = boxTopColor
       end
-      gl.Scissor(false)
+      glScissor(false)
     end
 
     -- Draw a box for the icon.  This will be flashing red if the group has taken damage, otherwise it will be a grey gradient.
@@ -661,21 +747,21 @@ end
       if ud ~= nil then
         -- draw the 3D unit
         SetupModelDrawing()
-        gl.PushMatrix()
-        gl.Scissor(xmin, ymin, xmax - xmin, ymax - ymin)
-        --~ 			gl.Translate(xmid, ymid, 0)
+        glPushMatrix()
+        glScissor(xmin, ymin, xmax - xmin, ymax - ymin)
+        --~ 			glTranslate(xmid, ymid, 0)
         if alignment == "right" then
-          gl.Translate((xmid + xmax) / 2, ymid, 0)
+          glTranslate((xmid + xmax)*0.5, ymid, 0)
         else
-          gl.Translate(xmid, (ymid + ymin)/2, 0)
+          glTranslate(xmid, (ymid + ymin)*0.5, 0)
         end
-        gl.Rotate(15.0, 1, 0, 0)
+        glRotate(15.0, 1, 0, 0)
         local timer = 1.5 * widgetHandler:GetHourTimer()
-        gl.Rotate(math.cos(0.5 * math.pi * timer) * 60.0, 0, 1, 0)
+        glRotate(cos(0.5 * pi * timer) * 60.0, 0, 1, 0)
         CenterUnitDef(tUnitGroup.primaryUnitTypeId)
-        gl.UnitShape(tUnitGroup.primaryUnitTypeId, Spring.GetMyTeamID())
-        gl.Scissor(false)
-        gl.PopMatrix()
+        glUnitShape(tUnitGroup.primaryUnitTypeId, spGetMyTeamID())
+        glScissor(false)
+        glPopMatrix()
         RevertModelDrawing()
       end
     end
@@ -688,7 +774,7 @@ end
       local nBarHeight = 13
       local nBarLength
       if alignment == "right" then
-        nBarLength = (xmax - xmin) / 2 - nHBuffer * 2
+        nBarLength = (xmax - xmin)*0.5 - nHBuffer * 2
       else
         nBarLength = xmax - xmin - nHBuffer * 2
       end
@@ -697,25 +783,118 @@ end
       local nHealthRatio = tUnitGroup.totalHealth / tUnitGroup.totalMaxHealth 
       local nHealthLength = nHealthRatio * (nBarLength - 2)
       local tHealthColour = { (1 - nHealthRatio), nHealthRatio, 0, 0.5}
-      local tHealthColourBorder = {(1 - nHealthRatio) / 2, nHealthRatio / 2, 0, 0.5}
+      local tHealthColourBorder = {(1 - nHealthRatio)*0.5, nHealthRatio*0.5, 0, 0.5}
       drawBox(xmin + nHBuffer + 1, ymax  - nVBuffer - 1, nHealthLength,  nBarHeight - 1, tHealthColour, tHealthColourBorder)
       -- write the health as a number over the top of the health bar
-      gl.Color({ 1, 1, 1 })
-      gl.Text(" "..math.floor(tUnitGroup.totalHealth), xmin + 3, ymax - nVBuffer - nBarHeight , 10, "on")
+      glColor({ 1, 1, 1 })
+      glText(" "..floor(tUnitGroup.totalHealth), xmin + 3, ymax - nVBuffer - nBarHeight , 10, "on")
     end
 
     -- display the "group number" (ie: its name)
-    gl.Color({ 1, 1, 1 })
-    gl.Text(""..GetGroupIdFromNum(groupId), xmin, ymax - 12, 10, "on")
+    glColor({ 1, 1, 1 })
+	glBeginText()
+    glText(""..GetGroupIdFromNum(groupId), xmin, ymax - 12, 10, "on")
 
     -- display the number of units in the group
     if tUnitGroup ~= nil and tUnitGroup.numUnits ~= nil then
-      gl.Text("Count: "..tUnitGroup.numUnits, xmin, ymax - 22, 10, "n")
+      glText("Count: "..tUnitGroup.numUnits, xmin, ymax - 22, 10, "n")
     else
-      gl.Text("Count: 0", xmin, ymax - 22, 10, "n")
+      glText("Count: 0", xmin, ymax - 22, 10, "n")
     end
-    gl.Scissor(false)
+	glEndText()
+    glScissor(false)
   end
+
+  -------------------------------------------------------------------------------
+function widget:DrawScreen()
+  local iCounter
+
+  if updated then
+    updated = false
+    -- loop through each possible group
+    for groupId = 1, 10 do
+      if updatedGroups[groupId] then
+        updatedGroups[groupId] = false
+
+        UpdateOneGroupsDetails(groupId)
+      end
+    end
+
+    RecalcMappings()    
+
+  end
+
+  --~ 	SetupDimensions(10)    
+
+  -- Check to see if we're in "slideMode" (we're moving the icons around)
+  if slideMode then
+    local newX, newY, _, _, _ = spGetMouseState()
+    if alignment=="right" then
+      if newY ~= oldMouseY then
+        slideOffset.right = slideOffset.right + newY - oldMouseY
+        oldMouseY = newY
+      end
+    else -- "bottom"
+      if newX ~= oldMouseX then
+        slideOffset.bottom = slideOffset.bottom + newX - oldMouseX
+        oldMouseX = newX
+      end
+    end
+  end
+
+  -- Check to see if the control icon is at least on the screen.  If it isn't, move it onto the screen.
+  if slideOffset.bottom < 0 then
+    slideOffset.bottom = 0
+  elseif slideOffset.bottom > vsx - iconSizeX then
+    slideOffset.bottom = vsx - iconSizeX
+  end
+  if slideOffset.right < iconSizeY then
+    slideOffset.right = iconSizeY
+  elseif slideOffset.right > vsy - iconSizeY then
+    slideOffset.right = vsy - iconSizeY
+  end
+
+
+  -- We check the health status of one group / frame (we don't reeeally need to check them all every frame)
+  CheckOneGroupsHealth(nLastGroupChecked)
+  nLastGroupChecked  = nLastGroupChecked + 1
+  if (nLastGroupChecked > 10) then
+    nLastGroupChecked = 1
+  end 
+
+  -- unit model rendering uses the depth-buffer
+  glClear(GL.DEPTH_BUFFER_BIT)
+
+  -- draw the control icons
+  DrawControlIcons()
+
+  selectedGroupId = spGetSelectedGroup()
+  if selectedGroupId ~= nil then
+    selectedGroupId = GetNumFromGroupId(selectedGroupId)
+  end
+
+  -- draw the buildpics
+  for iCounter = 1, 10 do
+    --~ 		DrawUnitDefIcon(iCounter) --old system
+    DrawGroupIcon(iCounter) --new system
+  end
+end
+  -------------------------------------------------------------------------------
+
+local function MouseOverIcon(x, y)
+    local icon
+    local xmin, ymin, xmax, ymax
+    for icon = 0, 10 do
+      xmin, ymin, xmax, ymax = GetBoxForIcon(icon)
+      if xmin ~= nil then
+        if x > xmin and x < xmax and y > ymin and y < ymax then
+          -- we're in this box
+          return icon
+        end
+      end
+    end
+    return -1
+end
 
   -------------------------------------------------------------------------------
 
@@ -724,7 +903,7 @@ end
     activePress = (mouseIcon >= 0)
     if activePress then
       local shift
-      _, _, _, shift = Spring.GetModKeyState()
+      _, _, _, shift = spGetModKeyState()
       if button == 4 then
         if shift then
           iconSizeX = iconSizeX + 3
@@ -770,7 +949,7 @@ end
 
     local iconNum = MouseOverIcon(x, y)
     local bDoubleClick = false
-    local nNewClickTime = Spring.GetGameSeconds()
+    local nNewClickTime = spGetGameSeconds()
 
     -- Test for a double click action
     if (iconNum == nLastIcon) and (nNewClickTime - nLastClick < 2) then
@@ -805,9 +984,9 @@ end
       -- they've clicked in the icon controlls area
       local iconChoice
       if alignment == "right" then
-        iconChoice = 2 - math.floor((vsx - x) / iconSizeX * 3)
+        iconChoice = 2 - floor((vsx - x) / iconSizeX * 3)
       else
-        iconChoice = 2 - math.floor(y / iconSizeY * 3)
+        iconChoice = 2 - floor(y / iconSizeY * 3)
       end
       if iconChoice == 0 then
         -- selected "alignment" button 
@@ -840,24 +1019,6 @@ end
     return -1
   end
 
-  -------------------------------------------------------------------------------
-
-  function MouseOverIcon(x, y)
-    local icon
-    local xmin, ymin, xmax, ymax
-    for icon = 0, 10 do
-      xmin, ymin, xmax, ymax = GetBoxForIcon(icon)
-      if xmin ~= nil then
-        if x > xmin and x < xmax and y > ymin and y < ymax then
-          -- we're in this box
-          return icon
-        end
-      end
-    end
-    return -1
-  end
-
-  -------------------------------------------------------------------------------
 
   function echo(msg)
     Spring.SendCommands({"echo " .. msg})
@@ -873,9 +1034,9 @@ end
       -- they've clicked in the icon controlls area
       local iconChoice
       if alignment == "right" then
-        iconChoice = 2 - math.floor((vsx - x) / iconSizeX * 3)
+        iconChoice = 2 - floor((vsx - x) / iconSizeX * 3)
       else
-        iconChoice = 2 - math.floor(y / iconSizeY * 3)
+        iconChoice = 2 - floor(y / iconSizeY * 3)
       end
       if iconChoice == 0 then
         -- Alignment button
@@ -903,120 +1064,3 @@ end
       return true
     end
   end
-
-  function drawTextureAdv(name, screenLeft, screenTop, screenWidth, screenHeight, texLeft, texTop, texWidth, texHeight, imgSize, imgColour)
-    -- Note: images have 0,0 in the top left corner, while the screen coords are 0,0 in the bottom left corner.
-    if imgColour == nil then
-      gl.Color(Colors.white)
-    else
-      gl.Color(imgColour)
-    end
-    gl.Texture(":n:LuaUI/Images/" .. name)
-    gl.Shape(GL.QUADS, {
-      { v = { screenLeft-1,						screenTop       +1 }, 					t = { texLeft/imgSize, 				texTop/imgSize}},
-      { v = { screenLeft+screenWidth-1,	screenTop       +1 }, 					t = {(texLeft+texWidth)/imgSize,	texTop/imgSize}},
-      { v = { screenLeft+screenWidth-1, 	screenTop-screenHeight+1 }, 	t = {(texLeft+texWidth)/imgSize,	(texTop+texHeight)/imgSize}},
-      { v = { screenLeft -1, 					screenTop-screenHeight+1 }, 	t = { texLeft/imgSize,					(texTop+texHeight)/imgSize}}
-    })
-    gl.Texture(false)
-  end
-
-  function drawTexture(name, left, top, width, height, innerX, innerY, imgSize)
-    gl.Color(Colors.white)
-    gl.Texture(":n:LuaUI/Images/" .. name)
-    gl.Shape(GL.QUADS, {
-      { v = { left-1,				top       +1 }, 		t = { innerX/imgSize, 				innerY/imgSize}},
-      { v = { left+width-1,	top       +1 }, 		t = {(innerX+width)/imgSize, 	innerY/imgSize}},
-      { v = { left+width-1, 	top-height+1 }, 	t = {(innerX+width)/imgSize,	(innerY+height)/imgSize}},
-      { v = { left -1, 			top-height+1 }, 	t = { innerX/imgSize,				(innerY+height)/imgSize}}
-    })
-    gl.Texture(false)
-  end
-
-  function drawBox(left,top, width,height, bgColor, boColor)
-    if left==nil or width < 2 or height < 2 then
-      return false
-    end
-    gl.Color(bgColor)
-    gl.Shape(GL.QUADS, {
-      { v = { left+width, top-height }},
-      { v = { left,       top-height }},
-      { v = { left,       top        }},
-      { v = { left+width, top        }}
-    })
-
-    gl.Color(boColor)
-    gl.Shape(GL.LINE_LOOP, {
-      { v = { left+width, top-height }},
-      { v = { left,         top-height }},
-      { v = { left,         top          }},
-      { v = { left+width,   top        }}
-    })
-  end
-
-  function drawBoxSimple(left,top, width,height, bgColor)
-    if left==nil or width < 2 or height < 2 then
-      return false
-    end
-    gl.Color(bgColor)
-    gl.Shape(GL.QUADS, {
-      { v = { left+width, top-height }},
-      { v = { left,       top-height }},
-      { v = { left,       top        }},
-      { v = { left+width, top        }}
-    })
-  end
-
-  function drawBoxOutline(left,top, width,height, boColor)
-    if left==nil or width < 2 or height < 2 then
-      return false
-    end
-    gl.Color(boColor)
-    gl.Shape(GL.LINE_LOOP, {
-      { v = { left+width, top-height }},
-      { v = { left,         top-height }},
-      { v = { left,         top          }},
-      { v = { left+width,   top        }}
-    })
-  end
-
-  function drawBorder(left, top, width, height, lineWidth, boColor)
-    -- top line 
-    drawBoxSimple(left, top, width, lineWidth, boColor)
-    -- right line 
-    drawBoxSimple(left + width - lineWidth, top - lineWidth +1, lineWidth, height - lineWidth + 1, boColor)
-    -- bottom line 
-    drawBoxSimple(left, top - height + lineWidth, width - lineWidth, lineWidth, boColor)
-    -- left line 
-    drawBoxSimple(left, top - lineWidth + 1, lineWidth, height - lineWidth*2 + 2, boColor)
-  end
-
-  function drawBoxGradient(left, top, width, height, topLeftColour, topRightColour, bottomRightColour, bottomLeftColour)
-    if left==nil or width < 2 or height < 2 then
-      return false
-    end
-    gl.Color(1,1,1)
-    gl.Shape(GL.QUADS, {
-      { v = { left+width, top-height },	color = bottomRightColour},
-      { v = { left,       top-height },		color = bottomLeftColour},
-      { v = { left,       top        },				color = topLeftColour},
-      { v = { left+width, top        },			color = topRightColour}
-    })
-  end
-
-  function boolToNumber(value)
-    if value then
-      return 1
-    else
-      return 0
-    end
-  end
-
-  function numberToBool(value)
-    if value ~= 0 then
-      return true
-    else
-      return false
-    end
-  end
-
