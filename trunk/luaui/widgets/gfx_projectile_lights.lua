@@ -16,6 +16,7 @@ end
 local spGetUnitViewPosition 	= Spring.GetUnitViewPosition
 local spGetUnitDefID			= Spring.GetUnitDefID
 local spGetGroundHeight			= Spring.GetGroundHeight
+local spGetGroundNormal			= Spring.GetGroundNormal
 local spGetVectorFromHeading	= Spring.GetVectorFromHeading
 local spTraceScreenRay			= Spring.TraceScreenRay
 local spGetViewGeometry			= Spring.GetViewGeometry
@@ -43,8 +44,8 @@ local glBlending		= gl.Blending
 local max				= math.max
 local floor				= math.floor
 local sqrt				= math.sqrt
-local deg				= math.deg
 local atan2				= math.atan2
+local acos				= math.acos
 
 local list      
 local plighttable = {}
@@ -228,7 +229,7 @@ function widget:DrawWorldPreUnit()
 		glDepthTest(false)
 		--glDepthTest(GL.LEQUAL) 
 		
-		local x, y, z, dx, dz
+		local x, y, z, dx, dz, ny
 		--local fx, fy = 32, 32	--footprint
 		glBlending("alpha_add") --makes it go into +
 		local lightparams
@@ -255,9 +256,13 @@ function widget:DrawWorldPreUnit()
 						glColor(lightparams[1], lightparams[2], lightparams[3], lightparams[4]*factor*factor*noise[floor(x+z+pID)%10+1]) -- attentuation is x^2
 						factor = 32*(1.1-max(factor, 0.3)) -- clamp the size
 						glPushMatrix()
-						glTranslate(x, height+5, z)  -- push in y dir by height (to push it on the ground!), +5 to keep it above surface
+						glTranslate(x, height+3, z)  -- push in y dir by height (to push it on the ground!), +3 to keep it above surface
+						nx, ny = spGetGroundNormal(x,z)
+						local ang = acos(ny)*57.295779513082320876798		-- deg(x) is 4x slower than x*57.295779513082320876798
+						if nx>0 then ang = ang * -1.0 end
+						glRotate(ang,0,0,1)	-- align to ground slope, rather coarse but fast method
+						glRotate(atan2(dx,dz)*57.295779513082320876798, 0.0, 1.0, 0.0)	-- align light with projectile direction, needed for slope alignment too
 						if lightparams[5] then
-							glRotate(deg(atan2(dx,dz)), 0.0, 1.0, 0.0)	-- align laser cannon light with projectile direction
 							glScale(factor*lightparams[6], 1.0, factor*lightparams[5]) -- scale it by thickness, duration and height from ground
 							glCallList(listL) -- draw laser cannon light
 						else
