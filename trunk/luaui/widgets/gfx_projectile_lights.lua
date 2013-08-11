@@ -46,6 +46,7 @@ local floor				= math.floor
 local sqrt				= math.sqrt
 local atan2				= math.atan2
 local acos				= math.acos
+local abs				= math.abs
 
 local list      
 local plighttable = {}
@@ -98,6 +99,23 @@ listL = gl.CreateList(function()	-- Laser cannon decal texture
     end)
 end)
 
+listN = gl.CreateList(function()	-- Laser cannon decal texture
+	glBeginEnd(GL.QUAD_STRIP,function()  
+    --point1
+    glTexCoord(0.5,0.0)
+    glVertex(-2.0,0.0,-2.0)
+    --point2                                 
+    glTexCoord(0.5,1.0)                           
+    glVertex(2.0,0.0,-2.0)                   
+    --point3
+    glTexCoord(1.0,0.0)
+    glVertex(-2.0,0.0,2.0)
+    --point4
+    glTexCoord(1.0,1.0)
+    glVertex(2.0,0.0,2.0)
+    end)
+end)
+
 
 function widget:Initialize() -- create lighttable
 	local modOptions = Spring.GetModOptions()
@@ -134,11 +152,13 @@ function widget:Initialize() -- create lighttable
 						plighttable[wdID.name] = {
 							colour.colorR, colour.colorG, colour.colorB, 0.6,
 							wdID.projectilespeed * wdID.duration, colour.thickness^0.33333}
-					--elseif (wdID.type == 'LightningCannon' or wdID.type == 'BeamLaser') then
+					elseif (wdID.type == 'LightningCannon' or wdID.type == 'BeamLaser') then
+						local colour = wdID.visuals
+						plighttable[wdID.name] = {colour.colorR, colour.colorG, colour.colorB, 0.75, true, colour.thickness^0.45}
 					--	Bugged for Lightning cannon and Beam Lasers
 					--	plighttable[wdID.name]={0.2,0.2,1.0,0.6,true}
 					elseif (wdID.type == 'Flame') then
-						plighttable[wdID.name]={1.0,0.6,0.3,0.3}  --{0,1,0,0.6}
+						plighttable[wdID.name]={1.0,0.5,0.2,0.3}  --{0,1,0,0.6}
 					end
 				end
 			end	
@@ -229,7 +249,7 @@ function widget:DrawWorldPreUnit()
 		glDepthTest(false)
 		--glDepthTest(GL.LEQUAL) 
 		
-		local x, y, z, dx, dz, ny
+		local x, y, z, dx, dz, nx, ny, ang
 		--local fx, fy = 32, 32	--footprint
 		glBlending("alpha_add") --makes it go into +
 		local lightparams
@@ -250,26 +270,52 @@ function widget:DrawWorldPreUnit()
 										-- diff is negative, cause we need to put the lighting under it
 										-- diff defines size and diffusion rate)
 				local factor = max(0.01, (100.0+height-y)*0.01) --factor=1 at when almost touching ground, factor=0 when above 100 height)
-				if (factor >= 0.01 and factor < 1.0) then
-					dx, _, dz = spGetProjectileVelocity(pID)
-					if dx*dx + dz*dz > 0.1 then		-- when a projectile hits a target above ground, there's an unaligned flash due to velocity being 0
-						glColor(lightparams[1], lightparams[2], lightparams[3], lightparams[4]*factor*factor*noise[floor(x+z+pID)%10+1]) -- attentuation is x^2
-						factor = 32*(1.1-max(factor, 0.3)) -- clamp the size
-						glPushMatrix()
-						glTranslate(x, height+3, z)  -- push in y dir by height (to push it on the ground!), +3 to keep it above surface
-						nx, ny = spGetGroundNormal(x,z)
-						local ang = acos(ny)*57.295779513082320876798		-- deg(x) is 4x slower than x*57.295779513082320876798
-						if nx>0 then ang = ang * -1.0 end
-						glRotate(ang,0,0,1)	-- align to ground slope, rather coarse but fast method
-						glRotate(atan2(dx,dz)*57.295779513082320876798, 0.0, 1.0, 0.0)	-- align light with projectile direction, needed for slope alignment too
-						if lightparams[5] then
-							glScale(factor*lightparams[6], 1.0, factor*lightparams[5]) -- scale it by thickness, duration and height from ground
-							glCallList(listL) -- draw laser cannon light
-						else
-							glScale(factor, 1.0, factor) -- scale it by size and height from ground
-							glCallList(listC) -- draw cannon light
-						end					
-						glPopMatrix()
+				-- experimental support for beam lasers and lightning cannons, works only when fired on a unit/feature, not ground
+				if lightparams[5] and type(lightparams[5])=="boolean" then 
+					local targID, targType = Spring.GetProjectileTarget(pID)
+					if targID then
+						local tx,ty,tz
+						if targType=="u" then
+							_,_,_,tx,ty,tz = Spring.GetUnitPosition(targID,false,true)
+						elseif targType=="f" then
+							_,_,_,tx,ty,tz = Spring.GetFeaturePosition(targID,false,true)
+						end
+						if ty<=y*1.25 then	-- no neon lights if aiming towards air
+							glColor(lightparams[1], lightparams[2], lightparams[3], lightparams[4]*factor*factor*noise[floor(x+z+pID)%10+1]) -- attentuation is x^2
+							factor = 32*(1.1-max(factor, 0.3)) -- clamp the size
+							glPushMatrix()
+							glTranslate(x, height+3, z)  -- push in y dir by height (to push it on the ground!), +3 to keep it above surface
+							local scX, scZ = tx-x, tz-z
+							glRotate(atan2(scX,scZ)*57.295779513082320876798, 0.0, 1.0, 0.0)	-- align light with beam direction
+							glScale(factor*lightparams[6], 1.0, factor*sqrt(scX*scX+scZ*scZ)*.052) -- scale it by thickness, distance to target and height from ground
+							glCallList(listN) -- draw neon light
+							glPopMatrix()
+						end
+					end
+				else	-- other weapons
+					if (factor >= 0.01 and factor < 1.0) then
+						dx, _, dz = spGetProjectileVelocity(pID)
+						if dx*dx + dz*dz > 0.1 then		-- when a projectile hits a target above ground, there's an unaligned flash due to velocity being 0
+							glColor(lightparams[1], lightparams[2], lightparams[3], lightparams[4]*factor*factor*noise[floor(x+z+pID)%10+1]) -- attentuation is x^2
+							factor = 32*(1.1-max(factor, 0.3)) -- clamp the size
+							glPushMatrix()
+							--glTranslate(x, height+3, z)
+							glTranslate(x, y+3, z)  -- push in y dir by height (to push it on the ground!), +3 to keep it above surface
+							nx, ny = spGetGroundNormal(x,z)
+							ang = acos(ny)*57.295779513082320876798		-- deg(x) is 4x slower than x*57.295779513082320876798
+							if nx>0 then ang = ang * -1.0 end
+							glRotate(ang, 0.0, 0.0, 1.0)	-- align to ground slope, rather coarse but fast method
+							glRotate(atan2(dx,dz)*57.295779513082320876798, 0.0, 1.0, 0.0)	-- align light with projectile direction, needed for slope alignment too
+							glTranslate(0,height-y,0)
+							if lightparams[5] then
+								glScale(factor*lightparams[6], 1.0, factor*lightparams[5]) -- scale it by thickness, duration and height from ground
+								glCallList(listL) -- draw laser cannon light
+							else
+								glScale(factor, 1.0, factor) -- scale it by size and height from ground
+								glCallList(listC) -- draw cannon light
+							end					
+							glPopMatrix()
+						end
 					end
 				end
 			end
