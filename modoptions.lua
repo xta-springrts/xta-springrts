@@ -137,7 +137,7 @@ local options = {
 		--section= 'xtagame',
 		def="0",
 		items={
-			{key="0", name="Continuous", desc="Receive metal gradualy for the duration of the reclaim"},
+			{key="0", name="Continuous", desc="Receive metal gradually for the duration of the reclaim"},
 			{key="1", name="Discrete", desc="Receive all metal at once after reclaim finishes"},
 			
 		}
@@ -145,7 +145,7 @@ local options = {
 	{
 		key    = "gravity",
 		name   = "Cannon Velocity",
-		desc   = "Set the projectile velocity for cannon weapons. Note: should be close to 0.25 (the number is actualy weapon's local gravity).\nkey: gravity",
+		desc   = "Set the projectile velocity for cannon weapons. Note: should be close to 0.25 (the number is actually weapon's local gravity).\nkey: gravity",
 		type   = "number",
 		section= 'other',
 		def    = 0.25,
