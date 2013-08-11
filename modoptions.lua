@@ -125,7 +125,7 @@ local options = {
 		def="0",
 		items={
 			{key="0", name="Default", desc="Default Spring path finding engine"},
-			{key="1", name="QTPFS", desc="Quick/Tesellating Path Finding System"},
+			{key="1", name="QTPFS", desc="QuadTree Path Finding System"},
 		}
 	},
 	{
@@ -137,15 +137,15 @@ local options = {
 		--section= 'xtagame',
 		def="0",
 		items={
-			{key="0", name="Continuous", desc="Receive some metal for the duration of the reclaim"},
-			{key="1", name="Discrete", desc="Receive all metal in one lump sum after reclaim finishes"},
+			{key="0", name="Continuous", desc="Receive metal gradualy for the duration of the reclaim"},
+			{key="1", name="Discrete", desc="Receive all metal at once after reclaim finishes"},
 			
 		}
 	},
 	{
 		key    = "gravity",
 		name   = "Cannon Velocity",
-		desc   = "Set the projectile velocity for cannon weapons. Note: should be close to 0.25.\nkey: gravity",
+		desc   = "Set the projectile velocity for cannon weapons. Note: should be close to 0.25 (the number is actualy weapon's local gravity).\nkey: gravity",
 		type   = "number",
 		section= 'other',
 		def    = 0.25,
@@ -212,7 +212,7 @@ local options = {
 	{
 		key    = "critters",
 		name   = 'Enable cute animals?',
-		desc   = "on some maps critters will they wiggle and wubble around",
+		desc   = "On some maps critters will they wiggle and wubble around\nkey: critters",
 		type   = "bool",
 		def    = true,
 		section= "xtagame",
@@ -253,7 +253,7 @@ local options = {
 	{
 		key		= "globalsounds",
 		name	= "Global sounds",
-		desc	= "is sound heard out of player's line of sight? (local sounds has a slight problem with looping type of sounds).\nkey: globalsounds",
+		desc	= "Is sound heard out of player's line of sight? (local sounds has a slight problem with looping type of sounds).\nkey: globalsounds",
 		type	= "bool",
 		section	= 'xtagame',
 		def		= true,
@@ -262,7 +262,7 @@ local options = {
 	{
 		key		= "debugmode",
 		name	= "Debug Mode",
-		desc	= "Enable debugging mode. Will allow cheats, nocost and globallos by default, and load gadget profiler.\nkey: debugmode",
+		desc	= "Enable debugging mode. Will allow /cheat by default, and load gadget profiler.\nkey: debugmode",
 		type	= "bool",
 		section	= 'xtagame',
 		def		= false,
@@ -286,7 +286,7 @@ local options = {
 	{
 		key    = "hilltime",
 		name   = "Hill control time",
-		desc   = "Set how long a team has to control the hill for (in minutes) \nkey: hilltime",
+		desc   = "Set how long a team has to control the hill for (in minutes)\nkey: hilltime",
 		type   = "number",
 		def    = 3,
 		min    = 0.5,
@@ -297,7 +297,7 @@ local options = {
 	{
 		key    = "gracetime",
 		name   = "No control grace period",
-		desc   = "No player can control the hill until period is over \nkey: gracetime",
+		desc   = "No player can control the hill until period is over (in minutes)\nkey: gracetime",
 		type   = "number",
 		def    = 0,
 		min    = 0,
@@ -394,15 +394,15 @@ local options = {
 		key  = "enableSlopeMods",
 		def  = false,
 		type = bool,
-		name = "enable MoveDef slope-modifiers",
-		desc = "determines if ground-units slow down on slopes",
+		name = "Enable MoveDef slope-modifiers",
+		desc = "Determines if ground-units slow down on slopes\nkey: enableSlopeMods",
 	},
 	{
 		key  = "enableDepthMods",
 		def  = true,
 		type = bool,
-		name = "enable MoveDef depth-modifiers",
-		desc = "determines if ground-units slow down in water",
+		name = "Enable MoveDef depth-modifiers",
+		desc = "Determines if ground-units slow down in water\nkey: enableDepthMods",
 	},
 	
 

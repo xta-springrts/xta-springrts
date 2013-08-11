@@ -58,7 +58,7 @@ local spAssignMouseCursor 	= Spring.AssignMouseCursor
 
 else	--	UNSYNCED
 
---if Game.version > "91.0" then return end	-- not needed in Spring > 91.0
+if Game.version > "91.0" then return end	-- not needed in Spring > 91.0
 
 local spGetUnitDefID 		= Spring.GetUnitDefID
 local spSetMouseCursor 		= Spring.SetMouseCursor
