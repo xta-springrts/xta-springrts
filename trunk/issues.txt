@@ -15,3 +15,11 @@ Fixed carriers, airlabs pending
 * Static turrets can not guard other units, althought they have canguard=1 in unitdef. Maybe redui bug, maybe engine bug, maybe feature?
 
 *Spiders are paralysed by fellow spiders EMP-overcharging. Feature or bug?
+
+*Widgets that are known to be hungry:
+	- Healthbars (1st priority)
+	- Ghost Radar
+	- Ghost Site
+	- Advanced playerslist (with version 9.729, may be already fixed)
+	- RedUI Drawing
+	- RedUI Framework
