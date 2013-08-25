@@ -801,10 +801,9 @@ do
   local GetCameraPosition    = Spring.GetCameraPosition
   local GetUnitDefID         = Spring.GetUnitDefID
   local glDepthMask          = gl.DepthMask
-  local IsGUIHidden			 = Spring.IsGUIHidden
-  
+    
   function widget:DrawWorld()
-    if (#visibleUnits+#visibleFeatures==0) or IsGUIHidden() then
+    if (#visibleUnits+#visibleFeatures==0) then
       return
     end
 
