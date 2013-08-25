@@ -30,9 +30,17 @@ end
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
-local gl     = gl  --  use a local copy for faster access
---local Spring = Spring -- functions localised below
-local table  = table
+local glBillboard = gl.Billboard
+local glTranslate = gl.Translate
+local glText = gl.Text
+local glDepthTest = gl.DepthTest
+local glColor = gl.Color
+local glDrawFuncAtUnit = gl.DrawFuncAtUnit
+
+local ta_insert = table.insert
+local strfmt = string.format
+local pairs = pairs
+local ipairs = ipairs
 
 local etaTable = {}
 
@@ -111,7 +119,7 @@ function widget:Update(dt)
   for unitID,bi in pairs(etaTable) do
     local _,_,_,_,buildProgress = GetUnitHealth(unitID)
     if ((not buildProgress) or (buildProgress >= 1.0)) then
-      table.insert(killTable, unitID)
+      ta_insert(killTable, unitID)
     else
       local dp = buildProgress - bi.lastProg 
       local dt = gs - bi.lastTime
@@ -197,35 +205,31 @@ local function DrawEtaText(timeLeft,yoffset)
     etaStr = '\255\255\255\1ETA\255\255\255\255:\255\1\1\255???'
   else
     if (timeLeft > 60) then
-        etaStr = "\255\255\255\1ETA\255\255\255\255:" .. string.format('\255\1\255\1%d', timeLeft / 60) .. "m, " .. string.format('\255\1\255\1%.1f', timeLeft % 60) .. "s"
+        etaStr = "\255\255\255\1ETA\255\255\255\255:" .. strfmt('\255\1\255\1%d', timeLeft / 60) .. "m, " .. strfmt('\255\1\255\1%.1f', timeLeft % 60) .. "s"
     elseif (timeLeft > 0) then
-      etaStr = "\255\255\255\1ETA\255\255\255\255:" .. string.format('\255\1\255\1%.1f', timeLeft) .. "s"
+      etaStr = "\255\255\255\1ETA\255\255\255\255:" .. strfmt('\255\1\255\1%.1f', timeLeft) .. "s"
     else
-      etaStr = "\255\255\255\1ETA\255\255\255\255:" .. string.format('\255\255\1\1%.1f', -timeLeft) .. "s"
+      etaStr = "\255\255\255\1ETA\255\255\255\255:" .. strfmt('\255\255\1\1%.1f', -timeLeft) .. "s"
     end
   end
 
-  gl.Translate(0, yoffset,0)
-  gl.Billboard()
-  gl.Translate(0, 5 ,0)
-  --fontHandler.DrawCentered(etaStr)
-  gl.Text(etaStr, 0, 0, 8, "c")
+  glTranslate(0, yoffset+5,-4)
+  glBillboard()
+  glText(etaStr, 0, 0, 8, "c")
 end
 
 function widget:DrawWorld()
 	if IsGUIHidden() then return end
 	
-	gl.DepthTest(true)
+	glDepthTest(true)
 
-	gl.Color(1, 1, 1)
-	--fontHandler.UseDefaultFont()
+	glColor(1, 1, 1)
 
 	for unitID, bi in pairs(etaTable) do
-		gl.DrawFuncAtUnit(unitID, false, DrawEtaText, bi.timeLeft,bi.yoffset)
+		glDrawFuncAtUnit(unitID, false, DrawEtaText, bi.timeLeft,bi.yoffset)
 	end
 
-	gl.DepthTest(false)
-
+	glDepthTest(false)
 end
   
 
