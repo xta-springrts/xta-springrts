@@ -34,6 +34,15 @@ if not enable then 	-- allow profiling info only for SVN version
 	return false
 end
 
+local pairs = pairs
+local ipairs = ipairs
+local table = table
+local math = math
+local string = string
+local unpack = unpack
+local Spring = Spring
+local gl = gl
+
 local callinTimes       = {}
 local callinTimesSYNCED = {}
 

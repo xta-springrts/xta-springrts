@@ -1,6 +1,8 @@
 --------------------------------------------------------------------------------
 -- Default Engine Weapon Definitions Post-processing
 --------------------------------------------------------------------------------
+local pairs = pairs
+local math = math
 
 local function isbool(x)   return (type(x) == 'boolean') end
 local function istable(x)  return (type(x) == 'table')   end
@@ -201,7 +203,7 @@ for id in pairs(WeaponDefs) do
 		WeaponDefs[id].impulseboost = 0
 		WeaponDefs[id].impulsefactor = 0
 		WeaponDefs[id].soundhitwet = "sizzle"		
-		if WeaponDefs[id].weapontype == "LaserCannon" then
+		if WeaponDefs[id].weapontype == "LaserCannon" or WeaponDefs[id].weapontype == "EmgCannon" then
 			WeaponDefs[id].cegtag = ""	-- we use the projectile lights widget now
 		elseif WeaponDefs[id].weapontype == "BeamLaser" then
 			WeaponDefs[id].soundhitdry = ""

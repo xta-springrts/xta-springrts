@@ -135,14 +135,25 @@ if (gadgetHandler:IsSyncedCode()) then
 			local xs, ys, zs, xo, yo, zo, vtype, htype, axis, _ = spGetUnitCollisionData(unitID)
 			if (vtype>=3 and xs==ys and ys==zs) then
 				spSetUnitCollisionData(unitID, xs*ws, ys*hs, zs*rs,  xo, yo, zo,  vtype, htype, axis)
-			end
-			-- the following lines are commented because they're not needed in XTA, but that might change
-			--if UnitDefs[unitDefID].canFly and UnitDefs[unitDefID].transportCapacity>0 then
-			--	spSetUnitRadiusAndHeight(unitID, 16, 16)
-			--else
 				spSetUnitRadiusAndHeight(unitID, spGetUnitRadius(unitID)*rs, spGetUnitHeight(unitID)*hs)
-			--end
+				return
+			end
 		end
+		if UnitDefs[unitDefID].model.type=="3do" then	-- a 3DO unit that has dynamic or per-piece CV still needs a radius and height adjustment
+			local rs, hs
+			if (spGetUnitRadius(unitID)>47 and not UnitDefs[unitDefID].canFly) then
+				rs, hs = 0.68, 0.68
+			elseif (not UnitDefs[unitDefID].canFly) then
+				rs, hs = 0.75, 0.75
+			else
+				rs, hs = 0.48, 0.225
+			end
+			spSetUnitRadiusAndHeight(unitID, spGetUnitRadius(unitID)*rs, spGetUnitHeight(unitID)*hs)
+		end
+		-- the following lines are commented because they're not needed in XTA, but that might change
+		--if UnitDefs[unitDefID].canFly and UnitDefs[unitDefID].transportCapacity>0 then
+		--	spSetUnitRadiusAndHeight(unitID, 16, 16)
+		--end
 	end
 
 
