@@ -18,10 +18,11 @@ function widget:GetInfo()
   return {
     name      = "BuildETA - XTA",
     desc      = "Displays estimated time of arrival for builds",
-    author    = "trepan (modified by jK)",
-    date      = "Feb, 2008",
+    author    = "trepan (modified by jK, Jools)",
+    date      = "Aug, 2013",
     license   = "GNU GPL, v2 or later",
     layer     = -1,
+	version   = 2.0, --added by Jools
     enabled   = true  --  loaded by default?
   }
 end
@@ -30,12 +31,21 @@ end
 --------------------------------------------------------------------------------
 
 local gl     = gl  --  use a local copy for faster access
-local Spring = Spring
+--local Spring = Spring -- functions localised below
 local table  = table
 
 local etaTable = {}
 
-
+-- Localisations
+local GetUnitHealth 		= Spring.GetUnitHealth
+local GetGameSeconds 		= Spring.GetGameSeconds
+local GetTeamUnits  		= Spring.GetTeamUnits
+local GetMyTeamID  			= Spring.GetMyTeamID
+local GetUnitDefID		 	= Spring.GetUnitDefID
+local GetGameSpeed	 		= Spring.GetGameSpeed
+local GetSpectatingState	= Spring.GetSpectatingState
+local AreTeamsAllied		= Spring.AreTeamsAllied
+local IsGUIHidden			= Spring.IsGUIHidden
 --------------------------------------------------------------------------------
 
 local vsx, vsy = widgetHandler:GetViewSizes()
@@ -50,7 +60,7 @@ end
 
 local function MakeETA(unitID,unitDefID)
   if (unitDefID == nil) then return nil end
-  local _,_,_,_,buildProgress = Spring.GetUnitHealth(unitID)
+  local _,_,_,_,buildProgress = GetUnitHealth(unitID)
   if (buildProgress == nil) then return nil end
 
   local ud = UnitDefs[unitDefID]
@@ -58,7 +68,7 @@ local function MakeETA(unitID,unitDefID)
 
   return {
     firstSet = true,
-    lastTime = Spring.GetGameSeconds(),
+    lastTime = GetGameSeconds(),
     lastProg = buildProgress,
     rate     = nil,
     timeLeft = nil,
@@ -70,11 +80,11 @@ end
 --------------------------------------------------------------------------------
 
 function widget:Initialize()
-  local myUnits = Spring.GetTeamUnits(Spring.GetMyTeamID())
+  local myUnits = Spring.GetTeamUnits(GetMyTeamID())
   for _,unitID in ipairs(myUnits) do
-    local _,_,_,_,buildProgress = Spring.GetUnitHealth(unitID)
+    local _,_,_,_,buildProgress = GetUnitHealth(unitID)
     if (buildProgress < 1) then
-      etaTable[unitID] = MakeETA(unitID,Spring.GetUnitDefID(unitID))
+      etaTable[unitID] = MakeETA(unitID,GetUnitDefID(unitID))
     end
   end
 end
@@ -82,16 +92,16 @@ end
 
 --------------------------------------------------------------------------------
 
-local lastGameUpdate = Spring.GetGameSeconds()
+local lastGameUpdate = GetGameSeconds()
 
 function widget:Update(dt)
 
-  local userSpeed,_,pause = Spring.GetGameSpeed()
+  local userSpeed,_,pause = GetGameSpeed()
   if (pause) then
     return
   end
 
-  local gs = Spring.GetGameSeconds()
+  local gs = GetGameSeconds()
   if (gs == lastGameUpdate) then
     return
   end
@@ -99,7 +109,7 @@ function widget:Update(dt)
   
   local killTable = {}
   for unitID,bi in pairs(etaTable) do
-    local _,_,_,_,buildProgress = Spring.GetUnitHealth(unitID)
+    local _,_,_,_,buildProgress = GetUnitHealth(unitID)
     if ((not buildProgress) or (buildProgress >= 1.0)) then
       table.insert(killTable, unitID)
     else
@@ -157,8 +167,8 @@ end
 --------------------------------------------------------------------------------
 
 function widget:UnitCreated(unitID, unitDefID, unitTeam)
-  local spect,spectFull = Spring.GetSpectatingState()
-  if Spring.AreTeamsAllied(unitTeam,Spring.GetMyTeamID()) or (spect and spectFull) then
+  local spect,spectFull = GetSpectatingState()
+  if AreTeamsAllied(unitTeam,GetMyTeamID()) or (spect and spectFull) then
     etaTable[unitID] = MakeETA(unitID,unitDefID)
   end
 end
@@ -203,16 +213,19 @@ local function DrawEtaText(timeLeft,yoffset)
 end
 
 function widget:DrawWorld()
-  gl.DepthTest(true)
+	if IsGUIHidden() then return end
+	
+	gl.DepthTest(true)
 
-  gl.Color(1, 1, 1)
-  --fontHandler.UseDefaultFont()
+	gl.Color(1, 1, 1)
+	--fontHandler.UseDefaultFont()
 
-  for unitID, bi in pairs(etaTable) do
-    gl.DrawFuncAtUnit(unitID, false, DrawEtaText, bi.timeLeft,bi.yoffset)
-  end
+	for unitID, bi in pairs(etaTable) do
+		gl.DrawFuncAtUnit(unitID, false, DrawEtaText, bi.timeLeft,bi.yoffset)
+	end
 
-  gl.DepthTest(false)
+	gl.DepthTest(false)
+
 end
   
 
