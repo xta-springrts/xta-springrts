@@ -70,10 +70,12 @@ if gadgetHandler:IsSyncedCode() then
 		SendToUnsynced(PROJECTILE_GENERATED_EVENT_ID, projectileID, projectileOwnerID, projectileWeaponDefID, x,y,z)
 	end
 
+	--[[
 	function gadget:ProjectileDestroyed(projectileID)
 		local x,y,z = GetProjectilePosition(projectileID)
 		SendToUnsynced(PROJECTILE_DESTROYED_EVENT_ID, projectileID, y)
 	end
+	--]]
 
 	function gadget:Explosion(weaponDefID, posx, posy, posz, ownerID)
 		local h = GetGroundHeight(posx,posz)
@@ -221,7 +223,7 @@ else
 			--end
 		end
 		
-		-- Make a soundcheck of the available sounds
+		--[[ Make a soundcheck of the available sounds
 		local vol = 0
 		--Echo("Loading sounds:", Spring.LoadSoundDef("gamedata/sounds.lua"))
 		for i, snd in pairs(sndstart) do
@@ -240,7 +242,7 @@ else
 			--Echo("Testing lava sound:",i,snd)
 			PlaySoundFile("sounds/" .. snd .. ".wav",vol,0,0,0,0,0,0,Channel)
 		end
-		
+		--]]
 		
 	end
 	
@@ -253,27 +255,29 @@ else
 	--SendToUnsynced(PROJECTILE_GENERATED_EVENT_ID, projectileID, projectileOwnerID, projectileWeaponDefID, x,y,z)
 	local function ProjectileCreated(projectileID, projectileOwnerID, projectileWeaponDefID,x,y,z)
 		
-		local wType 
-		if WeaponDefs[projectileWeaponDefID] then wType = WeaponDefs[projectileWeaponDefID].type end
+		--local wType 
+		--if WeaponDefs[projectileWeaponDefID] then wType = WeaponDefs[projectileWeaponDefID].type end
 		
 		--Echo("ProjectileCreated: ", projectileID, projectileWeaponDefID, LOS, wType)
 		
 		local LOS = clientIsSpec or IsPosInLos(x,y,z,allyID)
 		
 		if LOS and projectileWeaponDefID and sndstart[projectileWeaponDefID] then
-			if wType then			
+			--if WeaponDefs[projectileWeaponDefID] then --wType then			
 				--Echo("Normal weapon sound playing")
 				PlaySoundFile("sounds/"..sndstart[projectileWeaponDefID]..".wav",volume,x,y,z,0,0,0,Channel)
-			end
+			--end
 		end
 	end
 	
+	--[[
 	local function ProjectileDestroyed(projectileID)		
 		--table.remove(pTable,projectileID)
 		for i,array in ipairs (pTable) do
 			if array[3] == projectileID then taremove(pTable,i) end
 		end
 	end
+	--]]
 	
 	--SendToUnsynced(PROJECTILE_EXPLOSION_EVENT_ID, weaponDefID, posx, posy, posz, ownerID, h)
 	local function ProjectileExplosion(weaponDefID, x, y, z, ownerID, gh)
@@ -285,12 +289,13 @@ else
 		-- shallow water, we want both splash and land explosion. 
 		
 		local LOS = clientIsSpec or IsPosInLos(x,y,z,allyID)
-		local wType 
-		if WeaponDefs[weaponDefID] then wType = WeaponDefs[weaponDefID].type end
+		--local wType 
+		--if WeaponDefs[weaponDefID] then wType = WeaponDefs[weaponDefID].type end
 		
 		--Echo("ProjectileExplosion: ", wType, WeaponDefs[weaponDefID].damages[1])
 		
 		if LOS and weaponDefID then
+		
 			if gh >= 0 then -- explosion on land
 				if snddry[weaponDefID] then PlaySoundFile("sounds/"..snddry[weaponDefID]..".wav",volume,x,y,z,0,0,0,Channel) end
 				--Echo("Land")
@@ -338,11 +343,15 @@ else
 	function gadget:RecvFromSynced(eventID, arg0, arg1, arg2, arg3, arg4, arg5)
 		
 		if eventID == PROJECTILE_GENERATED_EVENT_ID then
-			ProjectileCreated(arg0, arg1, arg2, arg3, arg4, arg5)
-		elseif eventID == PROJECTILE_DESTROYED_EVENT_ID then
-			ProjectileDestroyed(arg0)
+			--ProjectileCreated(arg0, arg1, arg2, arg3, arg4, arg5) --projectileID, projectileOwnerID, projectileWeaponDefID,x,y,z
+			local LOS = clientIsSpec or IsPosInLos(arg3,arg4,arg5,allyID)
+			if LOS and arg2 and sndstart[arg2] then
+				PlaySoundFile("sounds/"..sndstart[arg2]..".wav",volume,arg3,arg4,arg5,0,0,0,Channel)
+			end
+		--elseif eventID == PROJECTILE_DESTROYED_EVENT_ID then
+		--	ProjectileDestroyed(arg0)
 		elseif eventID == PROJECTILE_EXPLOSION_EVENT_ID then
-			ProjectileExplosion(arg0, arg1, arg2, arg3, arg4, arg5)
+			ProjectileExplosion(arg0, arg1, arg2, arg3, arg4, arg5)	--weaponDefID, x, y, z, ownerID, gh
 		elseif eventID == TEAM_DIED_EVENT_ID then
 			TeamDied(arg0)
 		end

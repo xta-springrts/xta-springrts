@@ -22,8 +22,8 @@ end
 local vsx, vsy = gl.GetViewSizes()
 local scale
 local px, py = 300, 300
-local sizex, sizey  = 320, 180
-local mid = px + sizex/2
+local sizeX, sizeY  = 320, 180
+local mid = px + sizeX/2
 local th = 16 -- text height for buttons
 local th2 = 11 -- text height for body text
 local th3 = 20 -- text height for player names
@@ -112,6 +112,7 @@ local spSendLuaUIMsg = Spring.SendLuaUIMsg
 local spGetSpectatingState = Spring.GetSpectatingState
 local spGetTeamInfo = Spring.GetTeamInfo
 local PlaySoundFile = Spring.PlaySoundFile
+local max, min = math.max, math.min
 --------------------------------------------------------------------------------
 -- Local functions
 --------------------------------------------------------------------------------
@@ -159,9 +160,9 @@ local function initButtons()
 	Button["info"]["y1"] = py  + sizey
 	
 	Button["infopanel"]["x0"] = px + sizex
-	Button["infopanel"]["x1"] = px + sizex + 400
+	Button["infopanel"]["x1"] = px + sizex + 400 * scale
 	Button["infopanel"]["y0"] = py
-	Button["infopanel"]["y1"] = py  + sizey
+	Button["infopanel"]["y1"] = py + sizey
 	
 	Button["infolabel"]["x0"] = px
 	Button["infolabel"]["x1"] = px + sizex - 30
@@ -218,8 +219,9 @@ function widget:Initialize()
 	vsx, vsy = gl.GetViewSizes()
 	scale = vsy/1024
 	--sizes:
-	sizex 	= sizex * scale
-	sizey 	= sizey * scale
+	sizex 	= sizeX * scale
+	sizey 	= sizeY * scale
+	mid = px + sizeX/2
 	th = 16 * scale
 	th2 = 11 * scale
 	th3 = 20 * scale
@@ -277,10 +279,21 @@ function widget:RecvLuaMsg(msg, playerID)
 	end
 end
 
+function widget:ViewResize(viewSizeX, viewSizeY)
+	vsx, vsy = gl.GetViewSizes()
+	scale = vsy/1024
+	--sizes:
+	sizex 	= sizeX * scale
+	sizey 	= sizeY * scale
+	th = 16 * scale
+	th2 = 11 * scale
+	th3 = 20 * scale
+	initButtons()
+end
+
 function widget:DrawWorld()
 	checkState()
 	updateState()
-	initButtons()
 	
 	glColor(1, 1, 1, 0.5)
     glDepthTest(false)
@@ -302,6 +315,13 @@ function widget:DrawWorld()
 	
 end
 
+local function drawBorder(x0, y0, x1, y1, width)
+	glRect(x0, y0, x1, y0 + width)
+	glRect(x0, y1, x1, y1 - width)
+	glRect(x0, y0, x0 + width, y1)
+	glRect(x1, y0, x1 - width, y1)
+end
+
 function widget:DrawScreenEffects(vsx, vsy)
 	
 	local h = vsy/3
@@ -309,13 +329,6 @@ function widget:DrawScreenEffects(vsx, vsy)
 	local y = vsy/2 - h/2
 	local x1 = x + h
 	local y1 = y + h
-	
-	local function drawBorder(x0, y0, x1, y1, width)
-		glRect(x0, y0, x1, y0 + width)
-		glRect(x0, y1, x1, y1 - width)
-		glRect(x0, y0, x0 + width, y1)
-		glRect(x1, y0, x1 - width, y1)
-	end
 	
 	--CountDown
 	if gameState == 2 then
@@ -366,53 +379,57 @@ function widget:DrawScreenEffects(vsx, vsy)
 			local y0 = Button["infopanel"]["y0"]
 			local x1 = Button["infopanel"]["x1"]
 			local y1 = Button["infopanel"]["y1"]
-			local txt1
-			local txt2
-			local txt3
-			local txt4
+			local txt
 			local side
 			local uptype
 			if mySide == "arm" then
 				side = "Arm"
 				if myType == "auto" then
 					uptype = "automatic upgrades"
-					txt1 = "* Arm Commander is faster than Core."
-					txt2 = "* Will get longer radar, speed and laser range with more XP"
-					txt3 = "* Paralyser beam at 0.3, Sniper Laser at 0.6 and Sat. Strike at 1.2 XP"
-					txt4 = "* Good to use if you will be at the front a lot as upgrades are effortless"
-					txt5 = "* Upgrading is very dependent on experience"
+					txt = {"* Arm Commander is faster than Core.",
+						"* Increases radar, sonar, laser range, and speed with more XP",
+						"* Gets 20% armour and secondary laser at 0.15 XP",
+						"* Paralyser beam at 0.3, Sniper Laser at 0.6 and Sat. Strike at 1.2 XP",
+						"* Good to use if you will be at the front a lot as upgrades are effortless",
+						"* Upgrading is very dependent on experience"}
 				elseif myType == "manual" then
-					uptype = "manual upgrades"
-					txt1 = "* Arm Commander is faster than Core."
-					txt2 = "* Paralyser laser and longer D-Gun at level 2"
-					txt3 = "* Self-repair at level 3, Raven-rockets and at Level 4."
-					txt4 = "* Commander will be stunned during manual upgrade"
-					txt5 = "* A manually morphed commander will increase his D-Gun range"
+					uptype = "regular upgrades"
+					txt = {"* Arm Commander is faster than Core.",
+						"* With each upg. level commander gets more HP, build power and",
+						"  produces more resources",
+						"* Paralyser laser and longer D-Gun at level 2",
+						"* Self-repair at level 3, Sat. Strike and at Level 4.",
+						"* Commander will be stunned during manual upgrade",
+						"* A manually morphed commander will increase his D-Gun range"}
 				end
 			else
 				side = "Core"
 				if myType == "auto" then
 					uptype = "automatic upgrades"
-					txt1 = "* Core is slow in the beginning."
-					txt2 = "* Will get longer radar, speed and laser range with more XP"
-					txt3 = "* Ion Beam at 0.3, Sumo Laser at 0.6, and Sat. Strike at 1.2 XP."
-					txt4 = "* Good to use if you will be at the front a lot as upgrades are effortless"
-					txt5 = "* Upgrading is very dependent on experience"
+					txt = {"* Core is slow in the beginning, but has longer D-Gun range.",
+						"* Increases radar, sonar, laser range, and speed with more XP",
+						"* Gets 20% armour and secondary laser at 0.15 XP",
+						"* Ion Beam at 0.3, Sumo Laser at 0.6, and Sat. Strike at 1.2 XP.",
+						"* Good to use if you will be at the front a lot as upgrades are effortless",
+						"* Upgrading is very dependent on experience"}
 				elseif myType == "manual" then
-					uptype = "manual upgrades"
-					txt1 = "* Core Commander is slower, but has longer D-Gun."
-					txt2 = "* Gets a longer D-Gun when upgraded, and laser beam at level 2."
-					txt3 = "* A level 4 Commander will have a Mobile Artillery shot."
-					txt4 = "* Commander will be stunned during manual upgrade"
-					txt5 = "* A manually morphed commander will increase his D-Gun range"
+					uptype = "regular upgrades"
+					txt = {"* Core Commander is slower, but has longer D-Gun.",
+						"* With each upg. level commander gets more HP, build power and",
+						"  produces more resources",
+						"* Gets a longer D-Gun when upgraded, and laser beam at level 2.",
+						"* A level 4 Commander will have a Sat. Artillery shot.",
+						"* Commander will be stunned during manual upgrade",
+						"* A manually morphed commander will increase his D-Gun range"}
 				end
 			end
-			glText(side .. " commander with " .. uptype .. ":", x0 + 10, y1 - (th2+6), th, 'xn')
-			glText(txt1, x0 + 10, y1 - 3*(th2+6), th2, 'xn')
-			glText(txt2, x0 + 10, y1 - 4*(th2+6), th2, 'xn')
-			glText(txt3, x0 + 10, y1 - 5*(th2+6), th2, 'xn')
-			glText(txt4, x0 + 10, y1 - 6*(th2+6), th2, 'xn')
-			glText(txt5, x0 + 10, y1 - 7*(th2+6), th2, 'xn')
+			local xofs, thofs = x0+10, th2+6
+			glBeginText()
+				glText(side .. " commander with " .. uptype .. ":", xofs, y1 - thofs, th, 'xn')
+				for i=1, #txt do
+					glText(txt[i], xofs, y1 - (i+2)*thofs, th2, 'xn')
+				end
+			glEndText()
 			
 		end
 		-- Panel
@@ -435,13 +452,6 @@ function widget:DrawScreenEffects(vsx, vsy)
 end
 
 function widget:DrawScreen()
-	local function drawBorder(x0, y0, x1, y1, width)
-		glRect(x0, y0, x1, y0 + width)
-		glRect(x0, y1, x1, y1 - width)
-		glRect(x0, y0, x0 + width, y1)
-		glRect(x1, y0, x1 - width, y1)
-	end
-	
 	-- Spectator check
     if spGetSpectatingState() then
         widgetHandler:RemoveWidget(self)
@@ -456,7 +466,7 @@ function widget:DrawScreen()
 			--Spring.Echo(i, "N = " .. n, ps)
 		end
 		--Spring.Echo("N = " .. n)
-		local y0 = 40 + vsy/2 + 0.5*n*th3
+		local y0 = 40 + 0.5*(vsy + n*th3)
 	
 		glText("Players:", 10, y0 + th3+2, th3, 'xno')
 		
@@ -634,6 +644,15 @@ function widget:GameSetup(state, ready, playerStates)
 	end
 end
 
+local function IsOnButton(x, y, BLcornerX, BLcornerY,TRcornerX,TRcornerY)
+	if BLcornerX == nil then return false end
+	-- check if the mouse is in a rectangle
+
+	return x >= BLcornerX and x <= TRcornerX
+	                      and y >= BLcornerY
+	                      and y <= TRcornerY
+end
+
 function widget:MousePress(mx, my, mButton)
 	-- Spectator check before any action
     if spGetSpectatingState() then
@@ -731,6 +750,7 @@ function widget:MousePress(mx, my, mButton)
 			end
 		end
 		updateState()
+		initButtons()
 		return true
 	elseif mButton == 3 and IsOnButton(mx,my,Button["infopanel"]["x0"],Button["infopanel"]["y0"],Button["infopanel"]["x1"],Button["infopanel"]["y1"]) and myState ~= 3 then
 		infoOn = false
@@ -749,8 +769,8 @@ end
 function widget:MouseMove(mx, my, dx, dy, mButton)
     -- Dragging
     if mButton == 2 or mButton == 3 then
-        px = px + dx
-        py = py + dy
+		px = max(0, min(px+dx, vsx-sizex))	--prevent moving off screen
+		py = max(0, min(py+dy, vsy-sizey))
 		initButtons()
     end
 	
@@ -802,16 +822,6 @@ function widget:GameStart()
     widgetHandler:RemoveWidget(self)
 end
 
-function IsOnButton(x, y, BLcornerX, BLcornerY,TRcornerX,TRcornerY)
-	if BLcornerX == nil then return false end
-	-- check if the mouse is in a rectangle
-
-	return x >= BLcornerX and x <= TRcornerX
-	                      and y >= BLcornerY
-	                      and y <= TRcornerY
-
-end
-
 function widget:GetConfigData() -- Save
 	local vsx, vsy = gl.GetViewSizes()
 	return {
@@ -823,7 +833,7 @@ end
 
 function widget:SetConfigData(data) -- Load
 	local vsx, vsy = gl.GetViewSizes()
-	px = math.floor(math.max(0, vsx * math.min(data[1] or 0, 0.95)))
-	py = math.floor(math.max(0, vsy * math.min(data[2] or 0, 0.95)))
+	px = math.floor(max(0, vsx * min(data[1] or 0, 0.95)))
+	py = math.floor(max(0, vsy * min(data[2] or 0, 0.95)))
 	lastStartID = data.lastStartID or lastStartID
 end
