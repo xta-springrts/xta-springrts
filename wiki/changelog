@@ -32,7 +32,13 @@ XTA 9.730? Svn 375 ------------------ by ???
   - Persistent mode (hold alt+ctrl and drag): makes the squadrons permanent. When one unit in the squadron gets damaged, the 
     unit guarding the squadron will shift the guard task to prioritise the unit wth least health. Selecting a unit that is 
 	guarding a squadron and pressing "stop" will also clear the guard task.
-* Bugfixes: added missing minelayer-limit icons, fixed bug for xtaids hovercraft minelayers. - Jools
+* Bugfixes: 
+	- Added missing minelayer-limit icons, fixed bug for xtaids hovercraft minelayers. - Jools
+	- Fixed TA-era bug with moho metal maker's missing explosions: they were set to use BIG_BUILDINGEX, which has never existed. Now
+	  instead they use same explosions as in ba (ATOMIC_BLASTSML and ATOMIC_BLAST)
+	- Fixed minelayer mine-limit exploit. Now it won't finish the mine if it's not in stock.
+* Performance improvements:
+	- Add flood protection to local sounds gadget, improve build-eta widget.
 
 XTA 9.729 ------------------ by Deadnight Warrior, Jools and Noruas and Knorke
 ---------
