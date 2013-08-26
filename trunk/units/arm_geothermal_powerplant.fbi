@@ -82,7 +82,7 @@
 	//************************************************************
 	//  Weapons
 	//***********
-	explodeas=LARGE_BUILDINGEX;
+	explodeas=MEDIUM_BUILDING;
 	selfdestructas=armmine5;
 
 	//************************************************************

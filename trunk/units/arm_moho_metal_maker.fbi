@@ -81,8 +81,8 @@
 	//************************************************************
 	//  Weapons
 	//***********
-	explodeas=;
-	selfdestructas=;
+	explodeas=ATOMIC_BLASTSML;
+	selfdestructas=ATOMIC_BLAST;
 
 	//************************************************************
 	//  Orders
