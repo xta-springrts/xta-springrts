@@ -3,14 +3,17 @@ function gadget:GetInfo()
   return {
     name      = "Local sounds",
     desc      = "Make sounds local based on LOS",
-	version   = "1.3",
+	version   = "1.4",
     author    = "Jools",
-    date      = "May, 2013",
+    date      = "Aug, 2013",
     license   = "GNU GPL, v2 or later",
     layer     = 0,
     enabled   = true,  --  loaded by default?
   }
 end
+
+-- v1.4 
+-- add flood limit for created projectile and explosion events to be sent to unsynced
 
 -- shared synced/unsynced globals
 LUAUI_DIRNAME							= 'LuaUI/'
@@ -23,6 +26,12 @@ local PROJECTILE_EXPLOSION_EVENT_ID = 10013
 local TEAM_DIED_EVENT_ID = 10014
 
 local LUAMESSAGE = 	"20121120"
+
+local loopWeapons = {
+	Flame = true,
+	BeamLaser = true,
+}
+
 
 if gadgetHandler:IsSyncedCode() then
 	-----------------
@@ -37,6 +46,10 @@ if gadgetHandler:IsSyncedCode() then
 	local len 					= string.len
 	local sub 					= string.sub
 	local unload 				= false
+	local activeShooters 		= {}
+	local activeExplosions		= {}
+	local GetGameFrame			= Spring.GetGameFrame
+	
 	function gadget:Initialize()	
 		local modOptions = Spring.GetModOptions()
 		
@@ -66,8 +79,38 @@ if gadgetHandler:IsSyncedCode() then
 	end
 	
 	function gadget:ProjectileCreated(projectileID, projectileOwnerID, projectileWeaponDefID)
-		local x,y,z = GetProjectilePosition(projectileID)
-		SendToUnsynced(PROJECTILE_GENERATED_EVENT_ID, projectileID, projectileOwnerID, projectileWeaponDefID, x,y,z)
+		-- flood protection to not send too many events to unsynced
+		
+		local wd = WeaponDefs[projectileWeaponDefID]
+		if not wd then return end
+		
+		local wType = wd.type
+		
+		if wType then
+			local x,y,z = GetProjectilePosition(projectileID)
+			if loopWeapons[wType] then
+				local ownerID = projectileOwnerID	
+				local frame = GetGameFrame()
+				local lastshot = activeShooters[ownerID]
+				
+				if lastshot then
+					local beamtime = wd.beamtime
+					if lastshot+beamtime*30 + 1 < frame then 
+						activeShooters[ownerID] = nil 
+					end
+				end
+				
+				lastshot = activeShooters[ownerID]
+				if not lastshot then
+					SendToUnsynced(PROJECTILE_GENERATED_EVENT_ID, projectileID, projectileOwnerID, projectileWeaponDefID, x,y,z)
+					activeShooters[ownerID] = frame
+				end
+			else --not loopweapons
+				SendToUnsynced(PROJECTILE_GENERATED_EVENT_ID, projectileID, projectileOwnerID, projectileWeaponDefID, x,y,z)
+			end
+		else
+			Echo("No wtype for:",wd.name)
+		end
 	end
 
 	--[[
@@ -79,7 +122,30 @@ if gadgetHandler:IsSyncedCode() then
 
 	function gadget:Explosion(weaponDefID, posx, posy, posz, ownerID)
 		local h = GetGroundHeight(posx,posz)
-		SendToUnsynced(PROJECTILE_EXPLOSION_EVENT_ID, weaponDefID, posx, posy, posz, ownerID, h)
+		
+		if ownerID then
+			local frame = GetGameFrame()
+			local lastexp = activeExplosions[ownerID]
+			
+			if lastexp then
+				local floodlimit = 3.6 	-- in frames, change according to how metallic you want the dgun to sound :)
+										-- but this also affects other weapons such as anni beam (although that has 
+										-- no explosion sound ATM)
+				
+				if lastexp + floodlimit < frame then 
+					activeExplosions[ownerID] = nil 
+				end
+			end
+			
+			lastexp = activeExplosions[ownerID]
+			if not lastexp then
+				SendToUnsynced(PROJECTILE_EXPLOSION_EVENT_ID, weaponDefID, posx, posy, posz, ownerID, h)
+				activeExplosions[ownerID] = frame
+			end
+		else
+			SendToUnsynced(PROJECTILE_EXPLOSION_EVENT_ID, weaponDefID, posx, posy, posz, ownerID, h)
+		end
+		
 		return false -- noGFX
 	end
 		
@@ -98,8 +164,7 @@ if gadgetHandler:IsSyncedCode() then
 	function gadget:TeamDied(teamID)
 		SendToUnsynced(TEAM_DIED_EVENT_ID, teamID)
 	end
-	
-	
+		
 else
 	-------------------
 	-- UNSYNCED PART --
@@ -115,7 +180,7 @@ else
 	local tainsert						= table.insert
 	local taremove						= table.remove
 	local clientIsSpec					
-	
+	local GetGameFrame					= Spring.GetGameFrame
 	
 	local sndwet = {}
 	local snddry = {}
@@ -124,7 +189,6 @@ else
 	
 	local pID
 	local allyID
-	local pTable = {}
 	local Channel 						= 'battle'
 	local volume 						= 3.0
 	local shallowLimit 					= -25
@@ -136,6 +200,7 @@ else
 		BeamLaser = true,
 		LightningCannon = true,
 		DGun = true,
+		Flame = true,
 	}
 	
 	local explosiveWeapons = {
@@ -166,60 +231,57 @@ else
 			
 		--get weapon sounds from customparams
 		for id, weaponDef in pairs(WeaponDefs) do
-			--if (weaponDef.name == nil or weaponDef.name:find("Disintegrator") == nil) then
-				if (weaponDef.customParams ~= nil) then
-					if isLava then
-						local aoe = weaponDef.damageAreaOfEffect
-						local loop = weaponDef.soundTrigger
-						local wType = weaponDef.type
-						local vel = weaponDef.startvelocity
-						local damage = weaponDef.damages[1]
-						-- Echo("Lava:",weaponDef.name, aoe, loop, wType, vel,damage)
-						
-						if nonexplosiveWeapons[wType] then
-							--Echo("Lava:",weaponDef.name, aoe, loop, wType, vel,damage)
-							if damage and damage > 100 then
-								sndlava[id] = 'lavaloop1'
-							end
-						elseif explosiveWeapons[wType] then
-							if damage and damage > 50 then
-								if damage < 80 then
-									sndlava[id] = 'magma1'
-								elseif damage < 120 then
-									sndlava[id] = 'magma2'
-								elseif damage < 200 then
-									sndlava[id] = 'magma3'
-								elseif damage < 350 then
-									sndlava[id] = 'magma4'
-								elseif damage < 750 then
-									sndlava[id] = 'lavaeruption1'
-								elseif damage >= 750 then
-									sndlava[id] = 'lavaeruption2'
-								end
+			if (weaponDef.customParams ~= nil) then
+				local aoe = weaponDef.damageAreaOfEffect
+				
+				local wType = weaponDef.type
+				local vel = weaponDef.startvelocity
+				local damage = weaponDef.damages[1]
+				
+				if isLava then
+					if nonexplosiveWeapons[wType] then
+						if damage and damage > 100 then
+							sndlava[id] = 'lavaloop1'
+						end
+					elseif explosiveWeapons[wType] then
+						if damage and damage > 50 then
+							if damage < 80 then
+								sndlava[id] = 'magma1'
+							elseif damage < 120 then
+								sndlava[id] = 'magma2'
+							elseif damage < 200 then
+								sndlava[id] = 'magma3'
+							elseif damage < 350 then
+								sndlava[id] = 'magma4'
+							elseif damage < 750 then
+								sndlava[id] = 'lavaeruption1'
+							elseif damage >= 750 then
+								sndlava[id] = 'lavaeruption2'
 							end
 						end
-						--Echo("Lava sound for: ", id, weaponDef.name, wType, damage, sndlava[id])
-					else
-						if weaponDef.customParams.soundhitwet and len(weaponDef.customParams.soundhitwet) > 0 then
-							sndwet[id] = weaponDef.customParams.soundhitwet
-							--Echo("Wet sound for:", id, weaponDef.name, ":", sndwet[id])
-						else
-							--Echo("Local sounds: no soundhitwet sound: ", weaponDef.name)
-						end
 					end
-					if weaponDef.customParams.soundhitdry and len(weaponDef.customParams.soundhitdry) > 0 then
-						snddry[id] = weaponDef.customParams.soundhitdry
-						--Echo("Dry sound for:", id, weaponDef.name, ":", snddry[id])
+					--Echo("Lava sound for: ", id, weaponDef.name, wType, damage, sndlava[id])
+				else
+					if weaponDef.customParams.soundhitwet and len(weaponDef.customParams.soundhitwet) > 0 then
+						sndwet[id] = weaponDef.customParams.soundhitwet
+						--Echo("Wet sound for:", id, weaponDef.name, ":", sndwet[id])
 					else
-						--Echo("Local sounds: no soundshitdry sound: ", weaponDef.name)
-					end
-					if weaponDef.customParams.soundstart and len(weaponDef.customParams.soundstart) > 0 then
-						sndstart[id] = weaponDef.customParams.soundstart
-						--Echo("Start sound for:", id, weaponDef.name, ":", sndstart[id])
-					else
-						--Echo("Local sounds: no soundstart sound: ", weaponDef.name)
+						--Echo("Local sounds: no soundhitwet sound: ", weaponDef.name)
 					end
 				end
+				if weaponDef.customParams.soundhitdry and len(weaponDef.customParams.soundhitdry) > 0 then
+					snddry[id] = weaponDef.customParams.soundhitdry
+					--Echo("Dry sound for:", id, weaponDef.name, ":", snddry[id])
+				else
+					--Echo("Local sounds: no soundshitdry sound: ", weaponDef.name)
+				end
+				if weaponDef.customParams.soundstart and len(weaponDef.customParams.soundstart) > 0 then
+					sndstart[id] = weaponDef.customParams.soundstart
+					--Echo("Start sound for:", id, weaponDef.name, ":", sndstart[id])
+				else
+					--Echo("Local sounds: no soundstart sound: ", weaponDef.name)
+				end
+			end
 			--end
 		end
 		
@@ -253,14 +315,12 @@ else
 	end
 		
 	--SendToUnsynced(PROJECTILE_GENERATED_EVENT_ID, projectileID, projectileOwnerID, projectileWeaponDefID, x,y,z)
-	local function ProjectileCreated(projectileID, projectileOwnerID, projectileWeaponDefID,x,y,z)
-		
-		--local wType 
-		--if WeaponDefs[projectileWeaponDefID] then wType = WeaponDefs[projectileWeaponDefID].type end
-		
-		--Echo("ProjectileCreated: ", projectileID, projectileWeaponDefID, LOS, wType)
-		
+	local function ProjectileCreated(projectileID, projectileOwnerID, projectileWeaponDefID,x,y,z)		
+		local wType 
+		if WeaponDefs[projectileWeaponDefID] then wType = WeaponDefs[projectileWeaponDefID].type end
+		local frame = GetGameFrame()
 		local LOS = clientIsSpec or IsPosInLos(x,y,z,allyID)
+		--Echo(frame, "ProjectileCreated: ", projectileID, projectileWeaponDefID, LOS, wType)
 		
 		if LOS and projectileWeaponDefID and sndstart[projectileWeaponDefID] then
 			--if WeaponDefs[projectileWeaponDefID] then --wType then			
@@ -281,21 +341,18 @@ else
 	
 	--SendToUnsynced(PROJECTILE_EXPLOSION_EVENT_ID, weaponDefID, posx, posy, posz, ownerID, h)
 	local function ProjectileExplosion(weaponDefID, x, y, z, ownerID, gh)
-			
-	
 		-- This part determines what sound the explosion will play. In the following, the variable y is the height coordinate of 
 		-- the projectile, whereas gh is that of the ground height. The wet sound is typically a splash sound, but we don't want splash 
 		-- sounds in the following cases: i) explosion above water level ii) explosion very deep, like from torpedoes. If something hits 
 		-- shallow water, we want both splash and land explosion. 
 		
 		local LOS = clientIsSpec or IsPosInLos(x,y,z,allyID)
+		--local frame = GetGameFrame()
 		--local wType 
 		--if WeaponDefs[weaponDefID] then wType = WeaponDefs[weaponDefID].type end
+		--Echo(frame, "ProjectileExplosion: ", wType, WeaponDefs[weaponDefID].damages[1])
 		
-		--Echo("ProjectileExplosion: ", wType, WeaponDefs[weaponDefID].damages[1])
-		
-		if LOS and weaponDefID then
-		
+		if LOS and weaponDefID then		
 			if gh >= 0 then -- explosion on land
 				if snddry[weaponDefID] then PlaySoundFile("sounds/"..snddry[weaponDefID]..".wav",volume,x,y,z,0,0,0,Channel) end
 				--Echo("Land")
@@ -341,13 +398,8 @@ else
 	end
 	
 	function gadget:RecvFromSynced(eventID, arg0, arg1, arg2, arg3, arg4, arg5)
-		
 		if eventID == PROJECTILE_GENERATED_EVENT_ID then
-			--ProjectileCreated(arg0, arg1, arg2, arg3, arg4, arg5) --projectileID, projectileOwnerID, projectileWeaponDefID,x,y,z
-			local LOS = clientIsSpec or IsPosInLos(arg3,arg4,arg5,allyID)
-			if LOS and arg2 and sndstart[arg2] then
-				PlaySoundFile("sounds/"..sndstart[arg2]..".wav",volume,arg3,arg4,arg5,0,0,0,Channel)
-			end
+			ProjectileCreated(arg0, arg1, arg2, arg3, arg4, arg5) --projectileID, projectileOwnerID, projectileWeaponDefID,x,y,z
 		--elseif eventID == PROJECTILE_DESTROYED_EVENT_ID then
 		--	ProjectileDestroyed(arg0)
 		elseif eventID == PROJECTILE_EXPLOSION_EVENT_ID then
