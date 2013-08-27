@@ -48,8 +48,7 @@ local exceptionList = {
   "core_immolator",
   "core_intimidator",
   "core_krogoth",
-  "core_mobile_artilleryold",	-- 9.725
-  "core_pillager",				-- SVN
+  "core_pillager",
   "core_missile_frigate",
   "core_morty",
   "core_punisher",
