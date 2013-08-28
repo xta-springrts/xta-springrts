@@ -60,8 +60,9 @@ function gadget:Initialize()
 				end
 				--Spring.Echo ("i:"..i)
 				if unitID then
-					Spring.SetUnitNeutral (unitID, true)
-					Spring.SetUnitNoSelect (unitID, true)
+					Spring.SetUnitNeutral(unitID, true)
+					Spring.SetUnitNoSelect(unitID, true)
+					Spring.SetUnitStealth(unitID, true)
 					critterUnits[unitID] = true
 				end
 			end			
