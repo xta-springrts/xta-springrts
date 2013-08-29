@@ -21,9 +21,11 @@
     ╚═════════════════════════════════════════════════════════════════╝
     Logo by ElementalGizmo
 
-XTA 9.730? Svn 375 ------------------ by ???
+XTA 9.73 Svn 375 ------------------ by Deadnight Warrior, Jools and Noruas
 ---------
 * Updated Xtaids, added new unitpack that functions, called spiders vs. tortoise. Both work need more balance tests. - Noruas
+* Increased Cost of Guardian and Punisher by double, from 250 to 500 per shot, roughly twice as much and a bit more then a pop up cannon at 230 Energy. - Noruas
+* Reduced cost of stealthing for Cloakable fusion reactors and spy kbots by 50E
 * Added area guard gadget and widget combo. Works like area attack but for guard command. Enable/disable by toggling the Area 
   Guard widget in F11 menu. Widget listens to keyboard shortcut "g". The widget has three modes:
   - Basic mode: drag over units to guard, all selected units will guard all units.
@@ -32,13 +34,19 @@ XTA 9.730? Svn 375 ------------------ by ???
   - Persistent mode (hold alt+ctrl and drag): makes the squadrons permanent. When one unit in the squadron gets damaged, the 
     unit guarding the squadron will shift the guard task to prioritise the unit wth least health. Selecting a unit that is 
 	guarding a squadron and pressing "stop" will also clear the guard task.
+* New spectator mode in commander change widget
+* Added buttons for selecting game speed when watching replays
 * Bugfixes: 
 	- Added missing minelayer-limit icons, fixed bug for xtaids hovercraft minelayers. - Jools
+	- Mine layer gadget fixed for XTAids units and other bugs - Noruas
 	- Fixed TA-era bug with moho metal maker's missing explosions: they were set to use BIG_BUILDINGEX, which has never existed. Now
 	  instead they use same explosions as in ba (ATOMIC_BLASTSML and ATOMIC_BLAST)
 	- Fixed minelayer mine-limit exploit. Now it won't finish the mine if it's not in stock.
+	- Fixed double projectile for CORE Garpike, making it quite OP for it's price
 * Performance improvements:
 	- Add flood protection to local sounds gadget, improve build-eta widget.
+	- Optimizations in following widgets: Adv. Players List, Ghost Radar, Commander Selection, Mission UI
+	- Updated CustomFormations to show end points for unit destinations, some other small fixes
 
 XTA 9.729 ------------------ by Deadnight Warrior, Jools and Noruas and Knorke
 ---------
