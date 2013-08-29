@@ -3,9 +3,9 @@ function widget:GetInfo()
 	return {
 		name      = 'Commander Change',
 		desc      = 'Adds buttons to choose commander',
-		version   = "1.1",
+		version   = "1.2",
 		author    = 'Niobium, Jools',
-		date      = 'October, 2012',
+		date      = 'August, 2013',
 		license   = 'GNU GPL v2',
 		layer     = -9,
 		enabled   = true,
@@ -27,6 +27,10 @@ local mid = px + sizeX/2
 local th = 16 -- text height for buttons
 local th2 = 11 -- text height for body text
 local th3 = 20 -- text height for player names
+local n = 0 -- amount of players
+
+--IMAGES
+--commander selection
 local imgComAA 				= "LuaUI/Images/commchange/ComAA.png" -- arm auto
 local imgComAM 				= "LuaUI/Images/commchange/ComAM.png" -- arm manual
 local imgComAAD 			= "LuaUI/Images/commchange/ComAAD.png" -- arm auto disabled
@@ -36,10 +40,18 @@ local imgComCM			 	= "LuaUI/Images/commchange/ComCM.png"
 local imgComCAD 			= "LuaUI/Images/commchange/ComCAD.png" -- core auto disabled
 local imgComCMD 			= "LuaUI/Images/commchange/ComCMD.png"
 
+--countdown
 local img3 					= "LuaUI/Images/commchange/3-cnt.png"
 local img2 					= "LuaUI/Images/commchange/2-cnt.png"
 local img1 					= "LuaUI/Images/commchange/1-cnt.png"
 local img0 					= "LuaUI/Images/commchange/0-cnt.png"
+
+--faction emblems
+local imgARM 				= "LuaUI/Images/commchange/arm.png"
+local imgCORE 				= "LuaUI/Images/commchange/core.png"
+
+--other
+local imgDuck				= "LuaUI/Images/commchange/duck.png"
 
 -- commanders
 local armauto = UnitDefNames["arm_commander"].id
@@ -54,6 +66,14 @@ local tock = 'sounds/ticktock.wav'
 local button = 'sounds/button9.wav'
 local cancel = 'sounds/cancel2.wav'
 
+local duckSounds =	 {
+	[1] = 'sounds/critters/duckcall1.wav',
+	[2] = 'sounds/critters/duckcall2.wav',
+	[3] = 'sounds/critters/duckcall3.wav',
+	[4] = 'sounds/critters/duckcry1.wav',
+	[5] = 'sounds/critters/duckcry2.wav',
+	}
+	
 --------------------------------------------------------------------------------
 -- Buttons
 --------------------------------------------------------------------------------
@@ -68,6 +88,9 @@ Button["auto"] = {}
 Button["manual"] = {}
 Button["infolabel"] = {}
 Button["exit"] = {}
+Button["speclabel"] = {}
+Button["duck"] = {}
+Button["specinfo"] = {}
 --------------------------------------------------------------------------------
 -- Speedups
 --------------------------------------------------------------------------------
@@ -103,13 +126,12 @@ local glBeginText = gl.BeginText
 local glEndText = gl.EndText
 local glText = gl.Text
 local Echo = Spring.Echo
-
+local spectator = Spring.GetSpectatingState()
 local spGetTeamStartPosition = Spring.GetTeamStartPosition
 local spGetTeamRulesParam = Spring.GetTeamRulesParam
 local spGetGroundHeight = Spring.GetGroundHeight
 local spSendLuaRulesMsg = Spring.SendLuaRulesMsg
 local spSendLuaUIMsg = Spring.SendLuaUIMsg
-local spGetSpectatingState = Spring.GetSpectatingState
 local spGetTeamInfo = Spring.GetTeamInfo
 local PlaySoundFile = Spring.PlaySoundFile
 local max, min = math.max, math.min
@@ -173,6 +195,20 @@ local function initButtons()
 	Button["exit"]["x1"] = px + sizex
 	Button["exit"]["y0"] = py + sizey
 	Button["exit"]["y1"] = py + sizey + 30
+	
+	Button["speclabel"]["x0"] = px  + 30
+	Button["speclabel"]["x1"] = px  + sizex - 30
+	Button["speclabel"]["y0"] = py  + sizey
+	Button["speclabel"]["y1"] = py  + sizey + 30
+	
+	Button["duck"]["x0"] = px
+	Button["duck"]["x1"] = px + 30
+	Button["duck"]["y0"] = py + sizey
+	Button["duck"]["y1"] = py + sizey + 30
+	
+	Button["specinfo"]["x0"] = px + 5
+	Button["specinfo"]["y0"] = py + 5
+	
 end
 
 local function updateState()
@@ -212,7 +248,7 @@ end
 --------------------------------------------------------------------------------
 function widget:Initialize()
 
-    if spGetSpectatingState() or Spring.GetGameFrame() > 0 or (Spring.GetModOptions() or {}).commander ~= "choose" then
+    if Spring.GetGameFrame() > 0 or (Spring.GetModOptions() or {}).commander ~= "choose" then
         widgetHandler:RemoveWidget(self)
     end
 	--local X, Y = Spring.GetViewGeometry()
@@ -229,8 +265,6 @@ function widget:Initialize()
 	--px, py = px*scale, py*scale
 	-- side
 	updateState()
-	--buttons:
-	initButtons()
 	--marked states
 	for i,player in ipairs(Spring.GetTeamList()) do
 		markedStates[i] = false
@@ -252,6 +286,16 @@ function widget:Initialize()
 			spSendLuaUIMsg('195' .. 2)
 		end
 	end
+	
+	-- update size for spectators
+	if spectator then
+		n = #(Spring.GetTeamList())-1
+		sizeX = 380
+		sizeY = 50 + 20 * (n+1)
+		--Echo("Updated size for specs: n = ",n, " size =", sizeX, sizeY)
+	end
+	--buttons:
+	initButtons()
 end
 
 function widget:RecvLuaMsg(msg, playerID)
@@ -303,10 +347,10 @@ function widget:DrawWorld()
         if tsx and tsx > 0 then
             if mySide == "arm" then
 			--if (teamStartUnit == 30) or (teamStartUnit == 166) then
-                glTexture('LuaUI/Images/commchange/arm.png')
+                glTexture(imgARM)
                 glBeginEnd(GL_QUADS, QuadVerts, tsx, spGetGroundHeight(tsx, tsz), tsz, 80)
             else 
-                glTexture('LuaUI/Images/commchange/core.png')
+                glTexture(imgCORE)
                 glBeginEnd(GL_QUADS, QuadVerts, tsx, spGetGroundHeight(tsx, tsz), tsz, 64)
             end
         end
@@ -348,6 +392,7 @@ function widget:DrawScreenEffects(vsx, vsy)
 		end
 		
 		glTexRect(x,y,x1,y1)
+		glTexture(false)
 		glColor(1, 1, 1, 1)
 		--glText(cntDown, vsx/2, vsy/2+100, 160, 'xsn')
 		
@@ -359,83 +404,88 @@ function widget:DrawScreenEffects(vsx, vsy)
 	end
 	
 	if myState ~= 3 then
-	
-	-- Infobutton
-		if infoOn then
-			glColor(1, 1, 1, 1)
-		else
-			glColor(1, 1, 1, 0.3)
-		end
-		drawBorder(Button["info"]["x0"],Button["info"]["y0"],Button["info"]["x1"],Button["info"]["y1"],1)
-		glText("info", 0.5 * (Button["info"]["x0"] + Button["info"]["x1"]) , 0.5 * (Button["info"]["y0"] + Button["info"]["y1"]) , th,'vc')
-		-- infopanel
-		if infoOn then
-			glColor(0, 0, 0, 0.5)
-			glRect(Button["infopanel"]["x0"],Button["infopanel"]["y0"],Button["infopanel"]["x1"],Button["infopanel"]["y1"])
-			glColor(1, 1, 1, 1)
-			drawBorder(Button["infopanel"]["x0"],Button["infopanel"]["y0"],Button["infopanel"]["x1"],Button["infopanel"]["y1"],1)
-			
-			local x0 = Button["infopanel"]["x0"]
-			local y0 = Button["infopanel"]["y0"]
-			local x1 = Button["infopanel"]["x1"]
-			local y1 = Button["infopanel"]["y1"]
-			local txt
-			local side
-			local uptype
-			if mySide == "arm" then
-				side = "Arm"
-				if myType == "auto" then
-					uptype = "automatic upgrades"
-					txt = {"* Arm Commander is faster than Core.",
-						"* Increases radar, sonar, laser range, and speed with more XP",
-						"* Gets 20% armour and secondary laser at 0.15 XP",
-						"* Paralyser beam at 0.3, Sniper Laser at 0.6 and Sat. Strike at 1.2 XP",
-						"* Good to use if you will be at the front a lot as upgrades are effortless",
-						"* Upgrading is very dependent on experience"}
-				elseif myType == "manual" then
-					uptype = "regular upgrades"
-					txt = {"* Arm Commander is faster than Core.",
-						"* With each upg. level commander gets more HP, build power and",
-						"  produces more resources",
-						"* Paralyser laser and longer D-Gun at level 2",
-						"* Self-repair at level 3, Sat. Strike and at Level 4.",
-						"* Commander will be stunned during manual upgrade",
-						"* A manually morphed commander will increase his D-Gun range"}
-				end
+		if not spectator then
+			-- Infobutton
+			if infoOn then
+				glColor(1, 1, 1, 1)
 			else
-				side = "Core"
-				if myType == "auto" then
-					uptype = "automatic upgrades"
-					txt = {"* Core is slow in the beginning, but has longer D-Gun range.",
-						"* Increases radar, sonar, laser range, and speed with more XP",
-						"* Gets 20% armour and secondary laser at 0.15 XP",
-						"* Ion Beam at 0.3, Sumo Laser at 0.6, and Sat. Strike at 1.2 XP.",
-						"* Good to use if you will be at the front a lot as upgrades are effortless",
-						"* Upgrading is very dependent on experience"}
-				elseif myType == "manual" then
-					uptype = "regular upgrades"
-					txt = {"* Core Commander is slower, but has longer D-Gun.",
-						"* With each upg. level commander gets more HP, build power and",
-						"  produces more resources",
-						"* Gets a longer D-Gun when upgraded, and laser beam at level 2.",
-						"* A level 4 Commander will have a Sat. Artillery shot.",
-						"* Commander will be stunned during manual upgrade",
-						"* A manually morphed commander will increase his D-Gun range"}
-				end
+				glColor(1, 1, 1, 0.3)
 			end
-			local xofs, thofs = x0+10, th2+6
-			glBeginText()
-				glText(side .. " commander with " .. uptype .. ":", xofs, y1 - thofs, th, 'xn')
-				for i=1, #txt do
-					glText(txt[i], xofs, y1 - (i+2)*thofs, th2, 'xn')
+			drawBorder(Button["info"]["x0"],Button["info"]["y0"],Button["info"]["x1"],Button["info"]["y1"],1)
+			glText("info", 0.5 * (Button["info"]["x0"] + Button["info"]["x1"]) , 0.5 * (Button["info"]["y0"] + Button["info"]["y1"]) , th,'vc')
+			-- infopanel
+			if infoOn then
+				glColor(0, 0, 0, 0.5)
+				glRect(Button["infopanel"]["x0"],Button["infopanel"]["y0"],Button["infopanel"]["x1"],Button["infopanel"]["y1"])
+				glColor(1, 1, 1, 1)
+				drawBorder(Button["infopanel"]["x0"],Button["infopanel"]["y0"],Button["infopanel"]["x1"],Button["infopanel"]["y1"],1)
+				
+				local x0 = Button["infopanel"]["x0"]
+				local y0 = Button["infopanel"]["y0"]
+				local x1 = Button["infopanel"]["x1"]
+				local y1 = Button["infopanel"]["y1"]
+				local txt
+				local side
+				local uptype
+				if mySide == "arm" then
+					side = "Arm"
+					if myType == "auto" then
+						uptype = "automatic upgrades"
+						txt = {"* Arm Commander is faster than Core.",
+							"* Increases radar, sonar, laser range, and speed with more XP",
+							"* Gets 20% armour and secondary laser at 0.15 XP",
+							"* Paralyser beam at 0.3, Sniper Laser at 0.6 and Sat. Strike at 1.2 XP",
+							"* Good to use if you will be at the front a lot as upgrades are effortless",
+							"* Upgrading is very dependent on experience"}
+					elseif myType == "manual" then
+						uptype = "regular upgrades"
+						txt = {"* Arm Commander is faster than Core.",
+							"* With each upg. level commander gets more HP, build power and",
+							"  produces more resources",
+							"* Paralyser laser and longer D-Gun at level 2",
+							"* Self-repair at level 3, Sat. Strike and at Level 4.",
+							"* Commander will be stunned during manual upgrade",
+							"* A manually morphed commander will increase his D-Gun range"}
+					end
+				else
+					side = "Core"
+					if myType == "auto" then
+						uptype = "automatic upgrades"
+						txt = {"* Core is slow in the beginning, but has longer D-Gun range.",
+							"* Increases radar, sonar, laser range, and speed with more XP",
+							"* Gets 20% armour and secondary laser at 0.15 XP",
+							"* Ion Beam at 0.3, Sumo Laser at 0.6, and Sat. Strike at 1.2 XP.",
+							"* Good to use if you will be at the front a lot as upgrades are effortless",
+							"* Upgrading is very dependent on experience"}
+					elseif myType == "manual" then
+						uptype = "regular upgrades"
+						txt = {"* Core Commander is slower, but has longer D-Gun.",
+							"* With each upg. level commander gets more HP, build power and",
+							"  produces more resources",
+							"* Gets a longer D-Gun when upgraded, and laser beam at level 2.",
+							"* A level 4 Commander will have a Sat. Artillery shot.",
+							"* Commander will be stunned during manual upgrade",
+							"* A manually morphed commander will increase his D-Gun range"}
+					end
 				end
-			glEndText()
-			
+				local xofs, thofs = x0+10, th2+6
+				glBeginText()
+					glText(side .. " commander with " .. uptype .. ":", xofs, y1 - thofs, th, 'xn')
+					for i=1, #txt do
+						glText(txt[i], xofs, y1 - (i+2)*thofs, th2, 'xn')
+					end
+				glEndText()
+			end
 		end
-		-- Panel
-		glColor(0, 0, 0, 0.4)
-		glRect(px,py, px+sizex, py+sizey)
+		
+		if gameState ~= 2 then
+			-- Panel
+			glColor(0, 0, 0, 0.4)
+			glRect(px,py, px+sizex, py+sizey)
+			--Echo("DrawScreeneffects: size = ", sizeX, sizeY, "pxpy =", px, py)
+		end
 	end
+	
 	-- Highlight
 	glColor(0.8, 0.8, 0.2, 0.5)
 	if Button["arm"]["On"] then
@@ -448,32 +498,30 @@ function widget:DrawScreenEffects(vsx, vsy)
 		glRect(Button["info"]["x0"],Button["info"]["y0"], Button["info"]["x1"], Button["info"]["y1"])
 	elseif Button["exit"]["On"] then
 		glRect(Button["exit"]["x0"],Button["exit"]["y0"], Button["exit"]["x1"], Button["exit"]["y1"])
+	elseif Button["duck"]["On"] then
+		glRect(Button["duck"]["x0"],Button["duck"]["y0"], Button["duck"]["x1"], Button["duck"]["y1"])
 	end
 end
 
 function widget:DrawScreen()
-	-- Spectator check
-    if spGetSpectatingState() then
-        widgetHandler:RemoveWidget(self)
-        return
-    end
+		
+	local function firstToUpper(str)
+		return (str:gsub("^%l", string.upper))
+	end	
+	
 	local startID = spGetTeamRulesParam(myTeamID, 'startUnit')
-	-- Player states
+	-- Draw list with player connection and ready up states
 	if pStates then
 		local n = 0
-		for i,ps in pairs(pStates) do
-			n = n +1
-			--Spring.Echo(i, "N = " .. n, ps)
+		for _,_ in pairs(pStates) do
+			n = n + 1
 		end
-		--Spring.Echo("N = " .. n)
 		local y0 = 40 + 0.5*(vsy + n*th3)
 	
 		glText("Players:", 10, y0 + th3+2, th3, 'xno')
 		
 		for i,ps in pairs(pStates) do
 			local leaderName,active,spectator,team,_,_,_,country,rank	= Spring.GetPlayerInfo(i)
-			local mked = markedStates[i+1]
-			--Spring.Echo("State for player: ",i,team,active, mked,ps)
 			if not spectator then
 				if not active then
 					glColor(0.6, 0.2, 0.2, 0.8) -- red
@@ -501,109 +549,303 @@ function widget:DrawScreen()
 			end
 		end
 	end
-	glColor(1, 1, 1, 1)
-	drawBorder(Button["arm"]["x0"],Button["arm"]["y0"], Button["arm"]["x1"], Button["arm"]["y1"],1)
-	drawBorder(Button["core"]["x0"],Button["core"]["y0"], Button["core"]["x1"], Button["core"]["y1"],1)
 	
-	-- Ready button
-	local lbl
-	if myState == 1 then -- green
-		glColor(0.5, 1, 0.5, 1)
-		lbl = "Ready"
-	elseif myState == 2 then -- red
-		glColor(1.0, 0.5, 0.5, 1)
-		lbl = "Ready"
-	elseif myState == 3 then -- white
+	if spectator then
+		-- Panel
+		--glColor(0, 0, 0, 0.4)
+		--glRect(px,py, px+sizex, py+sizey)	
+		--Echo("DrawWorld: size = ", sizeX, sizeY)
+		
+		-- duck button
+		glColor(0, 0, 0, 0.4)
+		glRect(Button["duck"]["x0"],Button["duck"]["y0"], Button["duck"]["x1"], Button["duck"]["y1"])
+		glColor(0, 0, 0, 1)
+		drawBorder(Button["duck"]["x0"],Button["duck"]["y0"], Button["duck"]["x1"], Button["duck"]["y1"],1)
+		
+		-- spectator info label
+		glColor(0, 0, 0, 0.4)
+		glRect(Button["speclabel"]["x0"],Button["speclabel"]["y0"], Button["speclabel"]["x1"], Button["speclabel"]["y1"])
 		glColor(1, 1, 1, 1)
+		glText("Info for spectators", Button["speclabel"]["x0"] + 78 ,Button["speclabel"]["y0"] + 10, th, 'x')
+		
+		--exit button
+		glColor(0, 0, 0, 0.4)
+		glRect(Button["exit"]["x0"],Button["exit"]["y0"], Button["exit"]["x1"], Button["exit"]["y1"])
+		glColor(0, 0, 0, 1)
+		drawBorder(Button["exit"]["x0"],Button["exit"]["y0"], Button["exit"]["x1"], Button["exit"]["y1"],1)
+		glColor(1, 1, 1, 1)
+		glText("X", Button["exit"]["x0"] + 10 ,Button["exit"]["y0"] + 10, 20, 'x')
+		
+		-- textures
+		local fr = 3 -- frame
+		glColor(1, 1, 1, 1)
+		glTexture(imgDuck)
+		glTexRect(Button["duck"]["x0"]+fr,Button["duck"]["y0"]+fr, Button["duck"]["x1"]-fr, Button["duck"]["y1"]-fr)
+		glTexture(false)
+		
+		--player states billboard
+		local x0 		= px + 8
+		local y0 		= Button["speclabel"]["y0"] - 20
+		local rh 		= 15 -- row height
+		local th4 		= th2
+		local col_0 	= x0 		-- team #
+		local col_1 	= x0 + 20	-- faction symbol
+		local col_2 	= x0 + 40	-- commander type 
+		local col_3 	= x0 + 80	-- player rank
+		local col_4 	= x0 + 100	-- leader name
+		local col_5 	= x0 + 200	-- status text
+		local col_6 	= x0 + 270	-- remarks
+		local col_7 	= x0 + 300	-- for future use
+		local commside	= "arm"
+		local commtype	= "AT"
+		local prevposy = y0 - 14
+		
 		if gameState ~= 2 then
-		lbl = "Go back"
-		else
-		lbl = "Ready"
+			--labels
+			glColor(0.6, 0.6, 0.8, 1)
+			glText("Team", 		col_0, y0 - 10, th4, 'x')
+			glText("Player", 	col_4, y0 - 10, th4, 'x')
+			glText("Status",	col_5, y0 - 10, th4, 'x')
+			--glText("Remarks",	col_6, y0 - 10, th4, 'x')
+			
+			-- Game state info label
+			glColor(1, 1, 1, 1)
+			glText("Status: " .. strInfo, Button["specinfo"]["x0"] + 10 ,Button["specinfo"]["y0"] + 5, 11, 'x')
+			
+			--player data
+			local as = 0 -- ally separation space
+			
+			for _, aID in pairs(Spring.GetAllyTeamList()) do
+				as = 8
+				-- draw line between allies
+				glColor(0.1, 0.1, 0.1, 0.3)
+				glRect(col_0, prevposy - 7, col_6, prevposy - 8)
+				glColor(0.4, 0.4, 0.4, 0.3)
+				glRect(col_0, prevposy - 8, col_6, prevposy - 9)
+				local newteam = true
+				
+				for i, tID in pairs(Spring.GetTeamList(aID)) do
+					
+					local y1 		= prevposy - as - rh
+					prevposy		= y1
+					as = 0
+					
+					local _,leaderID,_,isAI,_,allyID = Spring.GetTeamInfo(tID)
+					local leaderName,active,spec,team,allyteam,_,_,country,rank	= Spring.GetPlayerInfo(leaderID)
+					local aiID, aiName, aiHostID, aiShortName = Spring.GetAIInfo(tID)
+					local isComShare = false
+					local pCount = 0
+					for _, pID in pairs (Spring.GetPlayerList(tID)) do
+						local lName,_,isSspec = Spring.GetPlayerInfo(pID)
+						if isSpec == false then 
+							pCount = pCount + 1 
+						end
+					end
+					
+					if pCount > 1 then isComShare = true end
+					
+					if isAI then leaderName = "AI: "..aiShortName end
+					if isComShare then leaderName = leaderName .. "+" end
+					
+					if tID ~= Spring.GetGaiaTeamID() then
+						local marked = markedStates[i]
+						local startID = spGetTeamRulesParam(tID, 'startUnit')
+						local ps = tostring(pStates[leaderID])
+						
+						if startID == armauto then
+							commside = 'arm'
+							commtype = 'AT'
+						elseif startID == armman then
+							commside = 'arm'
+							commtype = 'M'
+						elseif startID == coreauto then
+							commside = 'core'
+							commtype = 'AT'
+						elseif startID == coreman then
+							commside = 'core'
+							commtype = 'M'
+						else
+							commside = '?'
+							commtype = '?'
+						end
+						
+						--data
+						glColor(1, 1, 1, 1)
+						if isAI then
+							glColor(0.8, 0.8, 0.8, 0.8)
+						end
+						if newteam then
+							glText(allyID,	 		col_0, y1, th4, 'x')
+						end
+						newteam = false
+						--side
+						if commside == 'arm' then
+							glTexture(imgARM)
+						elseif commside == 'core' then
+							glTexture(imgCORE)
+						else
+							glTexture(img0)
+						end
+						glTexRect(					col_1, y1 - 5, col_1 + 15, y1 - 5 + 15)
+						glTexture(false)
+						glText(commtype, 			col_2, y1, th4, 'x')
+						
+						--rank
+						if not spec then
+							glTexture("LuaUI/Images/commchange/C-Rank" .. rank ..".png")
+							glTexRect(				col_3, y1 - 2, col_3 + 14, y1 - 2 + 14)
+							glTexture(false)
+						end
+						--name
+						glText(tostring(leaderName),col_4, y1, th4, 'x')
+						-- status and remarks
+						local statustext, remarks
+						if ps == 'missing' then
+							statustext = "Missing"
+							glColor(0.6, 0.2, 0.2, 0.8) -- red
+						elseif ps == 'notready' then
+							if not marked then
+								statustext = "Warming up ..."
+								glColor(0.6, 0.6, 0.2, 1) -- yellow
+							else
+								statustext = "Marked"
+								glColor(0.3, 0.5, 0.7, 1) -- blue
+							end
+						elseif ps == 'ready' then
+							statustext = "Ready"
+							glColor(0.0, 0.5, 0.0, 1) -- green
+						else
+							statustext = firstToUpper(ps)
+							glColor(0.5, 0.5, 0.5, 0.8) -- grey
+						end
+						glText(statustext,			col_5, y1, th4, 'x')
+						glColor(1, 1, 1, 1)
+						if isAI then
+							remarks = "AI"
+						else
+							if leaderName == "[2up]knorke" then
+								remarks = "TP"
+							else
+								remarks = country
+							end
+						end						
+						--glText(remarks,				col_6, y1, th4, 'x')
+						--glText(tostring(startID),	col_7, y1, th4, 'x')
+						--Spring.Echo(i, leaderName, active,spec, team, startID, country, rank)
+					end
+				end
+			end
 		end
-	else -- cannot ready, grey
-		glColor(0.8, 0.8, 0.8, 0.5)
-		lbl = ""
-	end
-	if lbl == "Ready" then
-		drawBorder(Button["ready"]["x0"],Button["ready"]["y0"], Button["ready"]["x1"], Button["ready"]["y1"],1)
-	end
-	glText(lbl, 0.5*(Button["ready"]["x0"] + Button["ready"]["x1"]), 0.5 * (Button["ready"]["y0"] + Button["ready"]["y1"]) - 2, th, 'vc') --correction for strange alignment error in y position
+	else
+		-- draw window with options for active players
+		
+		-- border
+		glColor(1, 1, 1, 1)
+		drawBorder(Button["arm"]["x0"],Button["arm"]["y0"], Button["arm"]["x1"], Button["arm"]["y1"],1)
+		drawBorder(Button["core"]["x0"],Button["core"]["y0"], Button["core"]["x1"], Button["core"]["y1"],1)
 	
-	-- label/info panel
-	glColor(0, 0, 0, 0.4)
-	glRect(Button["infolabel"]["x0"],Button["infolabel"]["y0"], Button["infolabel"]["x1"], Button["infolabel"]["y1"])
-	drawBorder(Button["infolabel"]["x0"],Button["infolabel"]["y0"], Button["infolabel"]["x1"], Button["infolabel"]["y1"],1)
-	glColor(1, 1, 1, 1)
-	local txt = strInfo or "..."
-	
-	if myState == 0 then
-		txt = strInfo .. " (click to change Commander)"
-	elseif myState == 1 then
-		txt = "Press ready (or click to change Commander)"
-	elseif myState == 2 then
-		txt = "Press ready..."
-	elseif myState == 3 then
-		if gameState ~= 2 then
-			txt = strInfo
-		else
-			txt = strInfo
+		-- Ready button
+		local lbl
+		if myState == 1 then -- green
+			glColor(0.5, 1, 0.5, 1)
+			lbl = "Ready"
+		elseif myState == 2 then -- red
+			glColor(1.0, 0.5, 0.5, 1)
+			lbl = "Ready"
+		elseif myState == 3 then -- white
+			glColor(1, 1, 1, 1)
+			if gameState ~= 2 then
+			lbl = "Go back"
+			else
+			lbl = "Ready"
+			end
+		else -- cannot ready, grey
+			glColor(0.8, 0.8, 0.8, 0.5)
+			lbl = ""
 		end
-	end
-	glText(txt, Button["infolabel"]["x0"] + 10 ,Button["infolabel"]["y0"] + 10 , th2, 'd')
-	
-	--exit button
-	glColor(0, 0, 0, 0.4)
-	glRect(Button["exit"]["x0"],Button["exit"]["y0"], Button["exit"]["x1"], Button["exit"]["y1"])
-	glColor(0, 0, 0, 1)
-	drawBorder(Button["exit"]["x0"],Button["exit"]["y0"], Button["exit"]["x1"], Button["exit"]["y1"],1)
-	glColor(1, 1, 1, 1)
-	glText("X", Button["exit"]["x0"] + 10 ,Button["exit"]["y0"] + 10 , 20, 'x')
-	
-	-- arm/core buttons
-	if mySide == "arm" then
+		if lbl == "Ready" then
+			drawBorder(Button["ready"]["x0"],Button["ready"]["y0"], Button["ready"]["x1"], Button["ready"]["y1"],1)
+		end
+		glText(lbl, 0.5*(Button["ready"]["x0"] + Button["ready"]["x1"]), 0.5 * (Button["ready"]["y0"] + Button["ready"]["y1"]) - 2, th, 'vc') --correction for strange alignment error in y position
+		
+		-- label/info panel
+		glColor(0, 0, 0, 0.4)
+		glRect(Button["infolabel"]["x0"],Button["infolabel"]["y0"], Button["infolabel"]["x1"], Button["infolabel"]["y1"])
+		drawBorder(Button["infolabel"]["x0"],Button["infolabel"]["y0"], Button["infolabel"]["x1"], Button["infolabel"]["y1"],1)
 		glColor(1, 1, 1, 1)
-	else
-		glColor(1, 1, 1, 0.2)
-	end
-	glText("Arm", 0.5*(Button["arm"]["x0"] + Button["arm"]["x1"]), 0.5 * (Button["arm"]["y0"] + Button["arm"]["y1"]), th, 'vc')
-	if mySide == "core" then
+		local txt = strInfo or "..."
+		
+		if myState == 0 then
+			txt = strInfo .. " (click to change Commander)"
+		elseif myState == 1 then
+			txt = "Press ready (or click to change Commander)"
+		elseif myState == 2 then
+			txt = "Press ready..."
+		elseif myState == 3 then
+			if gameState ~= 2 then
+				txt = strInfo
+			else
+				txt = strInfo
+			end
+		end
+		glText(txt, Button["infolabel"]["x0"] + 10 ,Button["infolabel"]["y0"] + 10 , th2, 'd')
+		
+		--exit button
+		glColor(0, 0, 0, 0.4)
+		glRect(Button["exit"]["x0"],Button["exit"]["y0"], Button["exit"]["x1"], Button["exit"]["y1"])
+		glColor(0, 0, 0, 1)
+		drawBorder(Button["exit"]["x0"],Button["exit"]["y0"], Button["exit"]["x1"], Button["exit"]["y1"],1)
 		glColor(1, 1, 1, 1)
-	else
-		glColor(1, 1, 1, 0.2)
-	end
-	glText("Core", 0.5* (Button["core"]["x0"] + Button["core"]["x1"]), 0.5 * (Button["core"]["y0"] + Button["core"]["y1"]), th, 'vc')
-	
-	if myState ~= 3 then
-		-- Commander Icons
-		glColor(1, 1, 1, 1)
+		glText("X", Button["exit"]["x0"] + 10 ,Button["exit"]["y0"] + 10 , 20, 'x')
+		
+		-- arm/core buttons
 		if mySide == "arm" then
-			if myType == "auto" then
-				glTexture(imgComAA)
-				glTexRect(Button["auto"]["x0"],Button["auto"]["y0"], Button["auto"]["x1"], Button["auto"]["y1"])
-				glTexture(imgComAMD)
-				glTexRect(Button["manual"]["x0"],Button["manual"]["y0"], Button["manual"]["x1"], Button["manual"]["y1"])
-			else
-				glTexture(imgComAAD)
-				glTexRect(Button["auto"]["x0"],Button["auto"]["y0"], Button["auto"]["x1"], Button["auto"]["y1"])
-				glTexture(imgComAM)
-				glTexRect(Button["manual"]["x0"],Button["manual"]["y0"], Button["manual"]["x1"], Button["manual"]["y1"])
-			end
+			glColor(1, 1, 1, 1)
 		else
-			if myType == "auto" then
-				glTexture(imgComCA)
-				glTexRect(Button["auto"]["x0"],Button["auto"]["y0"], Button["auto"]["x1"], Button["auto"]["y1"])
-				glTexture(imgComCMD)
-				glTexRect(Button["manual"]["x0"],Button["manual"]["y0"], Button["manual"]["x1"], Button["manual"]["y1"])
-			else
-				glTexture(imgComCAD)
-				glTexRect(Button["auto"]["x0"],Button["auto"]["y0"], Button["auto"]["x1"], Button["auto"]["y1"])
-				glTexture(imgComCM)
-				glTexRect(Button["manual"]["x0"],Button["manual"]["y0"], Button["manual"]["x1"], Button["manual"]["y1"])
-			end
+			glColor(1, 1, 1, 0.2)
 		end
-		--commander text
-		glText("Automatic", px+sizex/4  , py + 10 , (th-2),'cxo')
-		glText("Manual", px+3*sizex/4  , py + 10 , (th-2),'cxo')
+		glText("Arm", 0.5*(Button["arm"]["x0"] + Button["arm"]["x1"]), 0.5 * (Button["arm"]["y0"] + Button["arm"]["y1"]), th, 'vc')
+		if mySide == "core" then
+			glColor(1, 1, 1, 1)
+		else
+			glColor(1, 1, 1, 0.2)
+		end
+		glText("Core", 0.5* (Button["core"]["x0"] + Button["core"]["x1"]), 0.5 * (Button["core"]["y0"] + Button["core"]["y1"]), th, 'vc')
+		
+		if myState ~= 3 then
+			-- Commander Icons
+			glColor(1, 1, 1, 1)
+			if mySide == "arm" then
+				if myType == "auto" then
+					glTexture(imgComAA)
+					glTexRect(Button["auto"]["x0"],Button["auto"]["y0"], Button["auto"]["x1"], Button["auto"]["y1"])
+					glTexture(imgComAMD)
+					glTexRect(Button["manual"]["x0"],Button["manual"]["y0"], Button["manual"]["x1"], Button["manual"]["y1"])
+				else
+					glTexture(imgComAAD)
+					glTexRect(Button["auto"]["x0"],Button["auto"]["y0"], Button["auto"]["x1"], Button["auto"]["y1"])
+					glTexture(imgComAM)
+					glTexRect(Button["manual"]["x0"],Button["manual"]["y0"], Button["manual"]["x1"], Button["manual"]["y1"])
+				end
+				glTexture(false)
+			else
+				if myType == "auto" then
+					glTexture(imgComCA)
+					glTexRect(Button["auto"]["x0"],Button["auto"]["y0"], Button["auto"]["x1"], Button["auto"]["y1"])
+					glTexture(imgComCMD)
+					glTexRect(Button["manual"]["x0"],Button["manual"]["y0"], Button["manual"]["x1"], Button["manual"]["y1"])
+				else
+					glTexture(imgComCAD)
+					glTexRect(Button["auto"]["x0"],Button["auto"]["y0"], Button["auto"]["x1"], Button["auto"]["y1"])
+					glTexture(imgComCM)
+					glTexRect(Button["manual"]["x0"],Button["manual"]["y0"], Button["manual"]["x1"], Button["manual"]["y1"])
+				end
+				glTexture(false)
+			end
+			--commander text
+			glText("Automatic", px+sizex/4  , py + 10 , (th-2),'cxo')
+			glText("Manual", px+3*sizex/4  , py + 10 , (th-2),'cxo')
+		end
 	end
 end
 
@@ -654,95 +896,18 @@ local function IsOnButton(x, y, BLcornerX, BLcornerY,TRcornerX,TRcornerY)
 end
 
 function widget:MousePress(mx, my, mButton)
-	-- Spectator check before any action
-    if spGetSpectatingState() then
-		widgetHandler:RemoveWidget(self)
-        return false
-    end
-
-	if IsOnButton(mx,my, px,py, px+sizex, Button["exit"]["y1"]) then
-		-- Check buttons
+	if spectator then
 		if mButton == 1 then
-			local startID = spGetTeamRulesParam(myTeamID, 'startUnit')			
-			if IsOnButton(mx,my,Button["arm"]["x0"],Button["arm"]["y0"],Button["arm"]["x1"],Button["arm"]["y1"]) then	
-				if startID == coreauto or startID == coreman then
-					if startID == coreauto then
-						spSendLuaRulesMsg('\177' .. armauto)
-						spSendLuaUIMsg('195' .. 1)
-						lastStartID = armauto
-					else
-						spSendLuaRulesMsg('\177' .. armman)
-						spSendLuaUIMsg('195' .. 1)
-						lastStartID = armman
-					end
-					playSound(button)
-				end
-			elseif IsOnButton(mx,my,Button["core"]["x0"],Button["core"]["y0"],Button["core"]["x1"],Button["core"]["y1"]) then
-				if startID == armauto or startID == armman then
-					if startID == armauto then
-						spSendLuaRulesMsg('\177' .. coreauto)
-						spSendLuaUIMsg('195' .. 2)
-						lastStartID = coreauto
-					else
-						spSendLuaRulesMsg('\177' .. coreman)
-						spSendLuaUIMsg('195' .. 2)
-						lastStartID = coreman
-					end
-					playSound(button)
-				end
-			elseif IsOnButton(mx,my,Button["auto"]["x0"],Button["auto"]["y0"],Button["auto"]["x1"],Button["auto"]["y1"]) then
-				if startID == armman or startID == coreman then
-					if startID == armman then
-						spSendLuaRulesMsg('\177' .. armauto)
-						spSendLuaUIMsg('195' .. 1)
-						lastStartID = armauto
-					else
-						spSendLuaRulesMsg('\177' .. coreauto)
-						spSendLuaUIMsg('195' .. 2)
-						lastStartID = coreauto
-					end
-					playSound(button)
-				end
-			elseif IsOnButton(mx,my,Button["manual"]["x0"],Button["manual"]["y0"],Button["manual"]["x1"],Button["manual"]["y1"]) and myState ~= 3 then
-				if startID == armauto or startID == coreauto then
-					if startID == armauto then
-						spSendLuaRulesMsg('\177' .. armman)
-						spSendLuaUIMsg('195' .. 1)
-						lastStartID = armman
-					else
-						spSendLuaRulesMsg('\177' .. coreman)
-						spSendLuaUIMsg('195' .. 2)
-						lastStartID = coreman
-					end
-					playSound(button)
-				end
-			elseif IsOnButton(mx,my,Button["ready"]["x0"],Button["ready"]["y0"],Button["ready"]["x1"],Button["ready"]["y1"]) and gameState ~= 2 then
-				local pos = spGetTeamStartPosition(myTeamID)
-				if pos >= 0 then
-					if myState ~= 3 then 
-						myState = 3
-					elseif myState == 3 then
-						myState = 1
-					end
-					playSound(button)
-				end
-			elseif IsOnButton(mx,my,Button["info"]["x0"],Button["info"]["y0"],Button["info"]["x1"],Button["info"]["y1"]) and myState ~= 3 then
-				if myState ~= 3 then
-					infoOn = not infoOn
-					if infoOn then
-						playSound(button)
-					else
-						playSound(cancel)
-					end
-				end
-			elseif IsOnButton(mx,my,Button["exit"]["x0"],Button["exit"]["y0"],Button["exit"]["x1"],Button["exit"]["y1"]) then
+			if IsOnButton(mx,my,Button["exit"]["x0"],Button["exit"]["y0"],Button["exit"]["x1"],Button["exit"]["y1"]) then
 				widgetHandler:RemoveWidget(self)
 				Spring.Echo("Exit to native dialogue window.")
 				playSound(cancel)
 				return true
+			elseif IsOnButton(mx,my,Button["duck"]["x0"],Button["duck"]["y0"],Button["duck"]["x1"],Button["duck"]["y1"]) then
+				local idx = math.random(1,#duckSounds)
+				playSound(duckSounds[idx])
+				return true
 			end
-			updateState()
-			return true
 		elseif (mButton == 2 or mButton == 3) and mx < px + sizex then
 			if mx >= px and my >= py and my < py + sizey then
 				-- Dragging
@@ -751,10 +916,103 @@ function widget:MousePress(mx, my, mButton)
 		end
 		updateState()
 		initButtons()
-		return true
-	elseif mButton == 3 and IsOnButton(mx,my,Button["infopanel"]["x0"],Button["infopanel"]["y0"],Button["infopanel"]["x1"],Button["infopanel"]["y1"]) and myState ~= 3 then
-		infoOn = false
-		return true
+	else
+		if IsOnButton(mx,my, px,py, px+sizex, Button["exit"]["y1"]) then
+			-- Check buttons
+			if mButton == 1 then
+				local startID = spGetTeamRulesParam(myTeamID, 'startUnit')			
+				if IsOnButton(mx,my,Button["arm"]["x0"],Button["arm"]["y0"],Button["arm"]["x1"],Button["arm"]["y1"]) then	
+					if startID == coreauto or startID == coreman then
+						if startID == coreauto then
+							spSendLuaRulesMsg('\177' .. armauto)
+							spSendLuaUIMsg('195' .. 1)
+							lastStartID = armauto
+						else
+							spSendLuaRulesMsg('\177' .. armman)
+							spSendLuaUIMsg('195' .. 1)
+							lastStartID = armman
+						end
+						playSound(button)
+					end
+				elseif IsOnButton(mx,my,Button["core"]["x0"],Button["core"]["y0"],Button["core"]["x1"],Button["core"]["y1"]) then
+					if startID == armauto or startID == armman then
+						if startID == armauto then
+							spSendLuaRulesMsg('\177' .. coreauto)
+							spSendLuaUIMsg('195' .. 2)
+							lastStartID = coreauto
+						else
+							spSendLuaRulesMsg('\177' .. coreman)
+							spSendLuaUIMsg('195' .. 2)
+							lastStartID = coreman
+						end
+						playSound(button)
+					end
+				elseif IsOnButton(mx,my,Button["auto"]["x0"],Button["auto"]["y0"],Button["auto"]["x1"],Button["auto"]["y1"]) then
+					if startID == armman or startID == coreman then
+						if startID == armman then
+							spSendLuaRulesMsg('\177' .. armauto)
+							spSendLuaUIMsg('195' .. 1)
+							lastStartID = armauto
+						else
+							spSendLuaRulesMsg('\177' .. coreauto)
+							spSendLuaUIMsg('195' .. 2)
+							lastStartID = coreauto
+						end
+						playSound(button)
+					end
+				elseif IsOnButton(mx,my,Button["manual"]["x0"],Button["manual"]["y0"],Button["manual"]["x1"],Button["manual"]["y1"]) and myState ~= 3 then
+					if startID == armauto or startID == coreauto then
+						if startID == armauto then
+							spSendLuaRulesMsg('\177' .. armman)
+							spSendLuaUIMsg('195' .. 1)
+							lastStartID = armman
+						else
+							spSendLuaRulesMsg('\177' .. coreman)
+							spSendLuaUIMsg('195' .. 2)
+							lastStartID = coreman
+						end
+						playSound(button)
+					end
+				elseif IsOnButton(mx,my,Button["ready"]["x0"],Button["ready"]["y0"],Button["ready"]["x1"],Button["ready"]["y1"]) and gameState ~= 2 then
+					local pos = spGetTeamStartPosition(myTeamID)
+					if pos >= 0 then
+						if myState ~= 3 then 
+							myState = 3
+						elseif myState == 3 then
+							myState = 1
+						end
+						playSound(button)
+					end
+				elseif IsOnButton(mx,my,Button["info"]["x0"],Button["info"]["y0"],Button["info"]["x1"],Button["info"]["y1"]) and myState ~= 3 then
+					if myState ~= 3 then
+						infoOn = not infoOn
+						if infoOn then
+							playSound(button)
+						else
+							playSound(cancel)
+						end
+					end
+				elseif IsOnButton(mx,my,Button["exit"]["x0"],Button["exit"]["y0"],Button["exit"]["x1"],Button["exit"]["y1"]) then
+					widgetHandler:RemoveWidget(self)
+					Spring.Echo("Exit to native dialogue window.")
+					playSound(cancel)
+					return true
+				end
+				updateState()
+				return true
+			elseif (mButton == 2 or mButton == 3) and mx < px + sizex then
+				if mx >= px and my >= py and my < py + sizey then
+					-- Dragging
+					return true
+				end
+			end
+			updateState()
+			initButtons()
+			return true
+		elseif mButton == 3 and IsOnButton(mx,my,Button["infopanel"]["x0"],Button["infopanel"]["y0"],Button["infopanel"]["x1"],Button["infopanel"]["y1"]) and myState ~= 3 then
+			infoOn = false
+			return true
+		end
 	end
 	return false
 end
@@ -776,43 +1034,62 @@ function widget:MouseMove(mx, my, dx, dy, mButton)
 	
 end
 
-function widget:IsAbove(mx,my)
-	if IsOnButton(mx,my,Button["arm"]["x0"],Button["arm"]["y0"],Button["arm"]["x1"],Button["arm"]["y1"]) and mySide == "core" then
-		Button["arm"]["On"] = true
-		Button["core"]["On"] = false
-		Button["ready"]["On"] = false
-		Button["info"]["On"] = false
-		Button["exit"]["On"] = false
-	elseif IsOnButton(mx,my,Button["core"]["x0"],Button["core"]["y0"],Button["core"]["x1"],Button["core"]["y1"]) and mySide == "arm" then
-		Button["arm"]["On"] = false
-		Button["core"]["On"] = true
-		Button["ready"]["On"] = false
-		Button["info"]["On"] = false
-		Button["exit"]["On"] = false
-	elseif IsOnButton(mx,my,Button["ready"]["x0"],Button["ready"]["y0"],Button["ready"]["x1"],Button["ready"]["y1"]) and myState > 0 and gameState ~= 2 then
-		Button["arm"]["On"] = false
-		Button["core"]["On"] = false
-		Button["ready"]["On"] = true
-		Button["info"]["On"] = false
-		Button["exit"]["On"] = false
-	elseif IsOnButton(mx,my,Button["info"]["x0"],Button["info"]["y0"],Button["info"]["x1"],Button["info"]["y1"]) then
-		Button["arm"]["On"] = false
-		Button["core"]["On"] = false
-		Button["ready"]["On"] = false
-		Button["info"]["On"] = true
-		Button["exit"]["On"] = false
-	elseif IsOnButton(mx,my,Button["exit"]["x0"],Button["exit"]["y0"],Button["exit"]["x1"],Button["exit"]["y1"]) then
+function widget:IsAbove(mx,my)	
+	if spectator then
 		Button["arm"]["On"] = false
 		Button["core"]["On"] = false
 		Button["ready"]["On"] = false
 		Button["info"]["On"] = false
-		Button["exit"]["On"] = true
+		
+		if IsOnButton(mx,my,Button["exit"]["x0"],Button["exit"]["y0"],Button["exit"]["x1"],Button["exit"]["y1"]) then		
+			Button["exit"]["On"] = true
+			Button["duck"]["On"] = false
+		elseif IsOnButton(mx,my,Button["duck"]["x0"],Button["duck"]["y0"],Button["duck"]["x1"],Button["duck"]["y1"]) then
+			Button["exit"]["On"] = false
+			Button["duck"]["On"] = true
+		else
+			Button["exit"]["On"] = false
+			Button["duck"]["On"] = false
+		end
 	else
-		Button["arm"]["On"] = false
-		Button["core"]["On"] = false
-		Button["ready"]["On"] = false
-		Button["info"]["On"] = false
-		Button["exit"]["On"] = false
+		
+		if IsOnButton(mx,my,Button["arm"]["x0"],Button["arm"]["y0"],Button["arm"]["x1"],Button["arm"]["y1"]) and mySide == "core" then
+			Button["arm"]["On"] = true
+			Button["core"]["On"] = false
+			Button["ready"]["On"] = false
+			Button["info"]["On"] = false
+			Button["exit"]["On"] = false
+		elseif IsOnButton(mx,my,Button["core"]["x0"],Button["core"]["y0"],Button["core"]["x1"],Button["core"]["y1"]) and mySide == "arm" then
+			Button["arm"]["On"] = false
+			Button["core"]["On"] = true
+			Button["ready"]["On"] = false
+			Button["info"]["On"] = false
+			Button["exit"]["On"] = false
+		elseif IsOnButton(mx,my,Button["ready"]["x0"],Button["ready"]["y0"],Button["ready"]["x1"],Button["ready"]["y1"]) and myState > 0 and gameState ~= 2 then
+			Button["arm"]["On"] = false
+			Button["core"]["On"] = false
+			Button["ready"]["On"] = true
+			Button["info"]["On"] = false
+			Button["exit"]["On"] = false
+		elseif IsOnButton(mx,my,Button["info"]["x0"],Button["info"]["y0"],Button["info"]["x1"],Button["info"]["y1"]) then
+			Button["arm"]["On"] = false
+			Button["core"]["On"] = false
+			Button["ready"]["On"] = false
+			Button["info"]["On"] = true
+			Button["exit"]["On"] = false
+		elseif IsOnButton(mx,my,Button["exit"]["x0"],Button["exit"]["y0"],Button["exit"]["x1"],Button["exit"]["y1"]) then
+			Button["arm"]["On"] = false
+			Button["core"]["On"] = false
+			Button["ready"]["On"] = false
+			Button["info"]["On"] = false
+			Button["exit"]["On"] = true
+		else
+			Button["arm"]["On"] = false
+			Button["core"]["On"] = false
+			Button["ready"]["On"] = false
+			Button["info"]["On"] = false
+			Button["exit"]["On"] = false
+		end
 	end
 end
 
