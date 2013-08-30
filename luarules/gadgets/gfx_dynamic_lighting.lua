@@ -1,5 +1,20 @@
+function gadget:GetInfo()
+	return {
+		name    = "gfx_dynamic_lighting.lua",
+		desc    = "dynamic lighting in the Spring RTS engine",
+		author  = "Kloot",
+		date    = "January 15, 2011",
+		license = "GPL v2",
+		enabled = true,
+	}
+end
+
 -- NOTES:
 --   games that rely on custom model shaders are SOL
+--
+--   this config-structure silently assumes a LightDef
+--   does not get used by more than one WeaponDef, but
+--   copy-pasting is always an option (see below)
 --
 --   for projectile lights, ttl values are arbitrarily
 --   large to make the lights survive until projectiles
@@ -9,6 +24,11 @@
 --   ttls should be the actual ttl-values so attached
 --   lights die when their "engine" cuts out, but this
 --   gets complex (eg. flighttime is not available)
+--
+--   general rule: big things take priority over small
+--   things, for example nuke explosion > bertha shell
+--   impact > mobile artillery shell impact (and trail
+--   lights should obey the same relation)
 --
 --   Explosion() occurs before ProjectileDestroyed(),
 --   so for best effect maxDynamic{Map, Model}Lights
@@ -27,25 +47,20 @@ local PROJECTILE_GENERATED_EVENT_ID = 10001
 local PROJECTILE_DESTROYED_EVENT_ID = 10002
 local PROJECTILE_EXPLOSION_EVENT_ID = 10003
 
-if (gadgetHandler:IsSyncedCode()) then
-	function gadget:GetInfo()
-        return {
-			-- put this gadget in a lower layer than fx_watersplash and exp_no_air_nuke
-			-- (which both want noGFX) so the short-circuit evaluation in gh:Explosion()
-			-- does not cut us out
-			enabled = true,
-			layer   = -1,
-		}
-	end
 
+
+if (gadgetHandler:IsSyncedCode()) then
+	local projectileLightDefs = {}
 	-- register/deregister for the synced Projectile*/Explosion call-ins
 	function gadget:Initialize()
 		local modOptions = Spring.GetModOptions()
 		if modOptions and modOptions.lowcpu == "1" then gadgetHandler:RemoveGadget(self) end
-		for weaponDefName, _ in pairs(weaponLightDefs) do
-			local weaponDef = WeaponDefNames[weaponDefName]
 
+		for weaponDefName, weaponLightDef in pairs(weaponLightDefs) do
+			local weaponDef = WeaponDefNames[weaponDefName]
 			if (weaponDef ~= nil) then
+				local projectileLightDef = weaponLightDef.projectileLightDef
+				projectileLightDefs[weaponDef.id] = projectileLightDef or false
 				Script.SetWatchWeapon(weaponDef.id, true)
 			end
 		end
@@ -60,9 +75,12 @@ if (gadgetHandler:IsSyncedCode()) then
 		end
 	end
 
-
+	-- if other gadgets set watching of weapons that don't use dynamic lighting, we're sending
+	-- too much calls to unsynced part, therefore, check if the projectile has a dynamic light
 	function gadget:ProjectileCreated(projectileID, projectileOwnerID, projectileWeaponDefID)
-		SendToUnsynced(PROJECTILE_GENERATED_EVENT_ID, projectileID, projectileOwnerID, projectileWeaponDefID)
+		if projectileLightDefs[projectileWeaponDefID] then
+			SendToUnsynced(PROJECTILE_GENERATED_EVENT_ID, projectileID, projectileOwnerID, projectileWeaponDefID)
+		end
 	end
 
 	function gadget:ProjectileDestroyed(projectileID)
@@ -70,8 +88,12 @@ if (gadgetHandler:IsSyncedCode()) then
 	end
 
 	function gadget:Explosion(weaponDefID, posx, posy, posz, ownerID)
-		SendToUnsynced(PROJECTILE_EXPLOSION_EVENT_ID, weaponDefID, posx, posy, posz)
-		return false -- noGFX
+		if projectileLightDefs[WeaponDefID] then
+			SendToUnsynced(PROJECTILE_EXPLOSION_EVENT_ID, weaponDefID, posx, posy, posz)
+			return false -- noGFX
+		else
+			return true
+		end
 	end
 
 
@@ -181,7 +203,6 @@ else
 
 		local explosionLightAlt = explosionLightDef.altitudeOffset or 0.0
 		local explosionLightPos = {posx, posy + explosionLightAlt, posz}
-
 		-- NOTE: explosions are non-tracking, so need to supply position
 		-- FIXME:? explosion "ID"'s would require bookkeeping in :Update
 		local explosionLightTbl = {position = explosionLightPos, }
@@ -196,20 +217,6 @@ else
 		SpringUpdateModelLight(explosionLights[numExplosions][2], explosionLightTbl)
 	end
 
-
-
-
-	function gadget:GetInfo()
-        return {
-			name    = "gfx_dynamic_lighting.lua",
-			desc    = "dynamic lighting in the Spring RTS engine",
-			author  = "Kloot",
-			date    = "January 15, 2011",
-			license = "GPL v2",
-			enabled = true,
-		}
-	end
-
 	function gadget:Initialize()
 		local modOptions = Spring.GetModOptions()
 		if modOptions and modOptions.lowcpu == "1" then gadgetHandler:RemoveGadget(self) end
@@ -221,6 +228,9 @@ else
 			Spring.Echo("[" .. (self:GetInfo()).name .. "] client has disabled dynamic lighting")
 			gadgetHandler:RemoveGadget(self)
 			return
+		else
+			Spring.SetConfigInt("MaxDynamicMapLights", math.max(maxMapLights, 4))
+			Spring.SetConfigInt("MaxDynamicModelLights", math.max(maxMdlLights, 4))
 		end
 
 		unsyncedEventHandlers[PROJECTILE_GENERATED_EVENT_ID] = ProjectileCreated
