@@ -316,9 +316,9 @@ else
 		
 	--SendToUnsynced(PROJECTILE_GENERATED_EVENT_ID, projectileID, projectileOwnerID, projectileWeaponDefID, x,y,z)
 	local function ProjectileCreated(projectileID, projectileOwnerID, projectileWeaponDefID,x,y,z)		
-		local wType 
-		if WeaponDefs[projectileWeaponDefID] then wType = WeaponDefs[projectileWeaponDefID].type end
-		local frame = GetGameFrame()
+		--local wType 
+		--if WeaponDefs[projectileWeaponDefID] then wType = WeaponDefs[projectileWeaponDefID].type end
+		--local frame = GetGameFrame()
 		local LOS = clientIsSpec or IsPosInLos(x,y,z,allyID)
 		--Echo(frame, "ProjectileCreated: ", projectileID, projectileWeaponDefID, LOS, wType)
 		
