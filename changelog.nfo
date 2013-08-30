@@ -42,9 +42,14 @@
     instead they use same explosions as in ba (ATOMIC_BLASTSML and ATOMIC_BLAST)
   - Fixed minelayer mine-limit exploit. Now it won't finish the mine if it's not in stock.
   - Fixed double projectile for CORE Garpike, making it quite OP for it's price
+  - Fixed Dynamic Collision Volume gadget not scaling 3DO model radius and height if used for a unit with a dyanmic CV
 * Performance improvements:
   - Add flood protection to local sounds gadget
-  - Optimizations in following widgets: Adv. Players List, Ghost Radar, Commander Selection, Mission UI, BuildETA
+  - Optimizations in following widgets:
+    Major: Adv. Players List, Commander Selection, Commander Nametags
+	Minor: Ghost Radar, Mission UI, BuildETA, UnitGroups
+    Symbolical: BuildBar, Waypoint Dragger
+  - Improve performance of Dynamic Lighting when used together with Local Sounds, otherwise no performance change
   - Updated CustomFormations to show end points for unit destinations, some other small fixes
 * SVN:
   - Rename all files that had upper-case letters to lower-case (fixes possible linux vs windows issues)
