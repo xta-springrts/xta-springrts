@@ -1,11 +1,10 @@
 if (gadgetHandler:IsSyncedCode()) then
-	
-	local random = math.random 
+	local RandNumGen = math.random 
 	local crashingUnits = {}
-	
+
 	local CRASHRISK = 0.33
 	local DAMAGELIMIT = 1.0
-	
+
 	local SetUnitCrashing 		= Spring.SetUnitCrashing
 	local SetUnitNoSelect 		= Spring.SetUnitNoSelect
 	local SetUnitNeutral 		= Spring.SetUnitNeutral
@@ -13,7 +12,8 @@ if (gadgetHandler:IsSyncedCode()) then
 	local SetUnitCOBValue 		= Spring.SetUnitCOBValue
 	local GiveOrderToUnit 		= Spring.GiveOrderToUnit
 	local CMD_FIRE_STATE 		= CMD.FIRE_STATE
-	local CMD_STOP 				= CMD.STOP
+	local CMD_ATTACK 			= CMD.ATTACK
+
 	function gadget:GetInfo()
 		return {
 			name    = "unit_crashing_aircraft",
@@ -21,10 +21,8 @@ if (gadgetHandler:IsSyncedCode()) then
 			enabled = true,
 		}
 	end
-	
+
 	function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weaponDefID, projectileID, attackerID, attackerDefID, attackerTeam)
-		
-		
 		if (not UnitDefs[unitDefID].canFly) then
 			-- not an airplane
 			return damage, 1.0
@@ -37,12 +35,11 @@ if (gadgetHandler:IsSyncedCode()) then
 			-- paralysis damage cannot trigger a crash <--- wonder why not
 			return damage, 1.0
 		end
-		
-		if (damage > DAMAGELIMIT * Spring.GetUnitHealth(unitID)) and random() < CRASHRISK then
+
+		if ((damage > DAMAGELIMIT * Spring.GetUnitHealth(unitID)) and (RandNumGen() < CRASHRISK)) then
 			SetUnitCrashing(unitID, true)
 			SetUnitNoSelect(unitID, true)
 			SetUnitNeutral(unitID, true)
-			GiveOrderToUnit(unitID, CMD_FIRE_STATE, {0},{}) -- hold fire
 			SetUnitSensorRadius (unitID, "los", 0)
 			SetUnitSensorRadius (unitID, "airLos", 0)
 			SetUnitSensorRadius (unitID, "radar", 0)
@@ -50,7 +47,11 @@ if (gadgetHandler:IsSyncedCode()) then
 			SetUnitSensorRadius (unitID, "seismic", 0)
 			SetUnitSensorRadius (unitID, "radarJammer", 0)
 			SetUnitSensorRadius (unitID, "sonarJammer", 0)
-			GiveOrderToUnit(unitID, CMD_STOP,{},{""}) -- prevent unit from continuing to attack. The stop order must be the last order before crashing order, or the engine will find a new target.
+			-- hold fire and prevent unit from continuing to attack.
+			-- must be the last order before crashing state, or the
+			-- engine will find a new target.
+			GiveOrderToUnit(unitID, CMD_FIRE_STATE, {0}, {})
+			GiveOrderToUnit(unitID, CMD_ATTACK, {0.0, 0.0, 0.0}, {""})
 			SetUnitCOBValue(unitID, COB.CRASHING, 1)
 
 			crashingUnits[unitID] = true
