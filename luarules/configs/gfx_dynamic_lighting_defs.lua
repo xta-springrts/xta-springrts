@@ -161,8 +161,8 @@ local dynLightDefs = {
 			--   ttl value roughly matches CEG duration
 			["nuclear_missile"] = {
 				projectileLightDef = {
-					diffuseColor    = {5.0,                   5.0,                   0.0                  },
-					specularColor   = {5.0 * rgbSpecMults[1], 5.0 * rgbSpecMults[2], 0.0 * rgbSpecMults[3]},
+					diffuseColor    = {5.5,                   5.0,                   2.5                  },
+					specularColor   = {5.5 * rgbSpecMults[1], 5.0 * rgbSpecMults[2], 2.5 * rgbSpecMults[3]},
 					priority        = 20 * 10,
 					radius          = 1000.0,
 					ttl             = 100000,
