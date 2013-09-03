@@ -250,6 +250,9 @@ function widget:Initialize()
 end
 
 function widget:Shutdown()
+  if Spring.GetGameFrame() > 0 then
+    Spring.SendCommands({"luarules morphluaui 0"})
+  end  
   --// catch f9
   widgetHandler:RemoveAction("showhealthbars", showhealthbars)
   Spring.SendCommands({"unbind f9 luaui"})
@@ -801,7 +804,7 @@ do
   local GetCameraPosition    = Spring.GetCameraPosition
   local GetUnitDefID         = Spring.GetUnitDefID
   local glDepthMask          = gl.DepthMask
-    
+
   function widget:DrawWorld()
     if (#visibleUnits+#visibleFeatures==0) then
       return
@@ -867,12 +870,17 @@ do
   local sec2 = 0
 
   local videoFrame   = 0
+  local firstUpdate = true
 
   function widget:Update(dt)
     sec=sec+dt
     blink = (sec%1)<0.5
 
     gameFrame = GetGameFrame()
+    if firstUpdate and gameFrame > 0 then
+      Spring.SendCommands({"luarules morphluaui 1"})
+      firstUpdate = false
+    end    
 
     videoFrame = videoFrame+1
     sec1=sec1+dt

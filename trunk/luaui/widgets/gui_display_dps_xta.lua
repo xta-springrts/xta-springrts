@@ -122,16 +122,18 @@ function widget:UnitDestroyed(unitID, unitDefID, unitTeam)
     if (v.unitID == unitID) then
       if not v.paralyze then
         local ux, uy, uz = GetUnitViewPosition(unitID)
-        table.insert(deadList,1,{})
-        deadList[1].x = ux + v.offset
-        deadList[1].y = uy + v.height + v.heightOffset
-        deadList[1].z = uz
-        deadList[1].lifeSpan = v.lifeSpan
-        deadList[1].fadeTime = v.fadeTime * 2.5
-        deadList[1].riseTime = v.riseTime * 0.66
-        deadList[1].damage = v.damage
-        deadList[1].textSize = v.textSize
-        deadList[1].red = false
+        if ux ~= nil then
+          table.insert(deadList,1,{})
+          deadList[1].x = ux + v.offset
+          deadList[1].y = uy + v.height + v.heightOffset
+          deadList[1].z = uz
+          deadList[1].lifeSpan = v.lifeSpan
+          deadList[1].fadeTime = v.fadeTime * 2.5
+          deadList[1].riseTime = v.riseTime * 0.66
+          deadList[1].damage = v.damage
+          deadList[1].textSize = v.textSize
+          deadList[1].red = false
+        end
       end
       table.remove(damageTable,i)
     end
