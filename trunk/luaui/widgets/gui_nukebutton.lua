@@ -192,12 +192,11 @@ function widget:Update()
 				if ( numStockPQue > 0 ) then
 					highProgress = max( highProgress, buildPercent )
 				end
+				if ( numStockpiled > highestLoadCount ) then
+					intConfig["nextNuke"] = unitID
+					highestLoadCount = numStockpiled
+				end
 			end			
-			
-			if ( numStockpiled > highestLoadCount ) then
-				intConfig["nextNuke"] = unitID
-				highestLoadCount = numStockpiled
-			end
 		end
 		
 		printDebug("HighProgress: " .. highProgress )

@@ -314,7 +314,7 @@ function widget:DrawWorldPreUnit()
 					--]]
 						if (factor > 0.1 and factor < 1.0) then		-- if factor is <0.1 then opacity is <1% and not visible by human eye
 							dx, _, dz = spGetProjectileVelocity(pID)
-							if dx*dx + dz*dz > 0.1 then		-- when a projectile hits a target above ground, there's an unaligned flash due to velocity being 0
+							if dx and (dx*dx + dz*dz > 0.1) then		-- when a projectile hits a target above ground, there's an unaligned flash due to velocity being 0
 								glColor(lightparams[1], lightparams[2], lightparams[3], lightparams[4]*factor*factor*noise[floor(x+z+pID)%10+1]) -- attentuation is x^2
 								factor = 32*(1.1-factor)
 								glPushMatrix()
