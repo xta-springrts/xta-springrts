@@ -288,6 +288,9 @@ function UnitDetected( unitID, allyTeam, teamId )
 	local udef = UnitDefs[spGetUnitDefID(unitID)]
 	local key = tostring(unitID)
 	local x, y, z = spGetUnitPosition(unitID)
+	if ( udef == nil or x == nil ) then
+		return
+	end
 					
 	local range = 0
 	local type = 0

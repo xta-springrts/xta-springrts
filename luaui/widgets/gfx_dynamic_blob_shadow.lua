@@ -99,27 +99,29 @@ function widget:DrawWorldPreUnit()
 				for _,unitID in ipairs(unitIDList) do
 					id = SpringGetUnitDefID(unitID)
 					x,y,z = SpringGetUnitViewPosition(unitID)
-					height = SpringGetGroundHeight(x,z)
-					diff = y-height
-					local alpha
-					if y>0 and y<=maxTerrainDistance and height<0 then
-						alpha=(maxTerrainDistance-y)*shadowGrad
-					elseif height>0 and diff<=maxTerrainDistance then
-						alpha=(maxTerrainDistance-diff)*shadowGrad		
-					elseif UnitDefs[id].floatOnWater and -height<maxTerrainDistance then
-						alpha=(maxTerrainDistance+height)*shadowGrad		
-					elseif -height<=maxTerrainDistance and y<0 and not UnitDefs[id].floatOnWater then
-						alpha=(maxTerrainDistance+y)*shadowGrad
-					else
-						alpha=0
-					end 
-					if alpha>0 then
-						fx = UnitDefs[id].xsize
-						fy = UnitDefs[id].zsize
-						glPushMatrix()
-						glColor(SR,SG,SB,alpha)						
-						glDrawListAtUnit(unitID,list,false,fx,1.0,fy,sunangle,0,1.0,0)
-						glPopMatrix()
+					if x ~= nil then
+						height = SpringGetGroundHeight(x,z)
+						diff = y-height
+						local alpha
+						if y>0 and y<=maxTerrainDistance and height<0 then
+							alpha=(maxTerrainDistance-y)*shadowGrad
+						elseif height>0 and diff<=maxTerrainDistance then
+							alpha=(maxTerrainDistance-diff)*shadowGrad		
+						elseif UnitDefs[id].floatOnWater and -height<maxTerrainDistance then
+							alpha=(maxTerrainDistance+height)*shadowGrad		
+						elseif -height<=maxTerrainDistance and y<0 and not UnitDefs[id].floatOnWater then
+							alpha=(maxTerrainDistance+y)*shadowGrad
+						else
+							alpha=0
+						end 
+						if alpha>0 then
+							fx = UnitDefs[id].xsize
+							fy = UnitDefs[id].zsize
+							glPushMatrix()
+							glColor(SR,SG,SB,alpha)						
+							glDrawListAtUnit(unitID,list,false,fx,1.0,fy,sunangle,0,1.0,0)
+							glPopMatrix()
+						end
 					end
 				end
 			end
