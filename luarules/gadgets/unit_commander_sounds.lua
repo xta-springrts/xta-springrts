@@ -1,12 +1,9 @@
-local UNIT_DAMAGED_EVENT_ID     = 20001
-local UNIT_DESTROYED_EVENT_ID   = 20002
-local UNIT_CLOAKED_EVENT_ID     = 20003
-local UNIT_LOADED_EVENT_ID      = 20004
-local UNIT_SELF_REPAIR_EVENT_ID = 20005
-
 local CommanderUnitDefs, CommanderSounds, CommanderTargets = include("LuaRules/Configs/unit_commander_sounds_defs.lua")
 local CommanderSingCmdDesc = {id = 40123, name = "Sing", }
 local CommanderTauntCmdDesc = {id = 40234, name = "Taunt", }
+
+local spPlaySoundFile = Spring.PlaySoundFile
+local rnd = math.random
 
 if (gadgetHandler:IsSyncedCode()) then
 	function gadget:Initialize()
@@ -22,20 +19,20 @@ if (gadgetHandler:IsSyncedCode()) then
 		end
 	end
 
-	function gadget:UnitDamaged(unitID, unitDefID, unitTeamID, damage, paralyzer, weaponID, attackerID, attackerDefID, attackerTeam)
-		SendToUnsynced(UNIT_DAMAGED_EVENT_ID, unitID, unitDefID, unitTeamID, damage, paralyzer, weaponID, attackerID, attackerDefID, attackerTeam)
+	function gadget:UnitDamaged(unitID, unitDefID, unitTeamID, damage, paralyzer, weaponID, attackerID, attackerDefID, attackerTeamID)
+		SendToUnsynced('usUnitDamaged', unitID, unitDefID, unitTeamID, damage, paralyzer, weaponID, attackerID, attackerDefID, attackerTeamID)
 	end
 
 	function gadget:UnitDestroyed(unitID, unitDefID, unitTeamID, attackerID, attackerDefID, attackerTeamID)
-		SendToUnsynced(UNIT_DESTROYED_EVENT_ID, unitID, unitDefID, unitTeamID, attackerID, attackerDefID, attackerTeamID)
+		SendToUnsynced('usUnitDestroyed', unitID, unitDefID, unitTeamID, attackerID, attackerDefID, attackerTeamID)
 	end
 
 	--function gadget:UnitCloaked(unitID, unitDefID, unitTeamID)
-		--SendToUnsynced(UNIT_CLOAKED_EVENT_ID, unitID, unitDefID, unitTeamID)
+		--SendToUnsynced('usUnitCloaked', unitID, unitDefID, unitTeamID)
 	--end
 
 	--function gadget:UnitLoaded(unitID, unitDefID, unitTeamID, transportUnitID, transportTeamID)
-		--SendToUnsynced(UNIT_LOADED_EVENT_ID, unitID, unitDefID, unitTeamID, transportUnitID, transportTeamID)
+		--SendToUnsynced('usUnitLoaded', unitID, unitDefID, unitTeamID, transportUnitID, transportTeamID)
 	--end
 
 	-- HACK:
@@ -45,6 +42,7 @@ if (gadgetHandler:IsSyncedCode()) then
 	--      MANAGED_BIT) so use AllowCommand instead
 	function gadget:AllowCommand(unitID, unitDefID, unitTeamID, cmdID, cmdParams, cmdOptions)
 		--if (cmdID == CMD.REPAIR and #cmdParams == 1 and unitID == cmdParams[1]) then
+			--SendToUnsynced('usUnitSelfRepair', unitID, unitDefID, unitTeamID)
 			--SendToUnsynced(UNIT_SELF_REPAIR_EVENT_ID, unitID, unitDefID, unitTeamID)
 		--end
 
@@ -53,17 +51,13 @@ if (gadgetHandler:IsSyncedCode()) then
 			--   in synced code, so these play for everyone (also non-positional)
 			--   return false for Sing/Taunt so they do not cancel normal orders
 			if (cmdID == CommanderSingCmdDesc.id) then
-				local rnd = math.random(0, 15)
-				local idx = math.min(rnd, #CommanderSounds.CommanderSongs[unitDefID])
-
-				Spring.PlaySoundFile(CommanderSounds.CommanderSongs[unitDefID][idx], 4.0)
+				local idx = rnd(0, #CommanderSounds.CommanderSongs[unitDefID])
+				spPlaySoundFile(CommanderSounds.CommanderSongs[unitDefID][idx], 4.0)
 				return false
 			end
 			if (cmdID == CommanderTauntCmdDesc.id) then
-				local rnd = math.random(0, 15)
-				local idx = math.min(rnd, #CommanderSounds.CommanderTaunts[unitDefID])
-
-				Spring.PlaySoundFile(CommanderSounds.CommanderTaunts[unitDefID][idx], 4.0)
+				local idx = rnd(0, #CommanderSounds.CommanderTaunts[unitDefID])
+				spPlaySoundFile(CommanderSounds.CommanderTaunts[unitDefID][idx], 4.0)
 				return false
 			end
 		end
@@ -75,29 +69,32 @@ if (gadgetHandler:IsSyncedCode()) then
 else
 	local unsyncedEventHandlers = {}
 	local commanderKillCounts = {}
+	local myTeamID = Spring.GetMyTeamID()	-- we assume that players can't change control of teams
 
-
-	local function usUnitDamaged(unitID, unitDefID, unitTeamID, _, _, _, attackerID, attackerDefID, _)
-		if (unitTeamID ~= Spring.GetMyTeamID()) then
-			-- not one of our units
-			return
-		end
-		if (Spring.GetUnitHealth(unitID) <= 0.0) then
-			-- unit is already dead
-			return
-		end
-
+	local spGetUnitTeam = Spring.GetUnitTeam
+	local spAreTeamsAllied = Spring.AreTeamsAllied
+	local spGetUnitHealth = Spring.GetUnitHealth
+	local spGetUnitPosition = Spring.GetUnitPosition
+	local spGetGameFrame = Spring.GetGameFrame
+	
+	local function usUnitDamaged(_, unitID, unitDefID, unitTeamID, _, _, _, attackerID, attackerDefID, attackerTeamID)
 		if (CommanderUnitDefs[unitDefID] == nil) then
-			return
+			return true	-- not a commander
 		end
-		if (attackerID ~= nil and Spring.AreTeamsAllied(Spring.GetUnitTeam(unitID), Spring.GetUnitTeam(attackerID))) then
-			-- ignore friendly fire
-			return
+		if (unitTeamID ~= myTeamID) then
+			return true	-- not one of our units
+		end
+		if (spGetUnitHealth(unitID) <= 0.0) then
+			return true	-- unit is already dead
+		end
+		--if (attackerID ~= nil and spAreTeamsAllied(spGetUnitTeam(unitID), spGetUnitTeam(attackerID))) then
+		if (attackerID ~= nil and spAreTeamsAllied(unitTeamID, attackerTeamID)) then
+			return true	-- ignore friendly fire
 		end
 
 		local unitDef = UnitDefs[unitDefID]
 		local attackerDef = UnitDefs[attackerDefID or -1]
-		local unitHealth = Spring.GetUnitHealth(unitID)
+		local unitHealth = spGetUnitHealth(unitID)
 		local dmgSoundIdx = 0
 
 			if (unitHealth > (unitDef.health * 0.75)) then dmgSoundIdx = 3
@@ -113,53 +110,49 @@ else
 			dmgSoundIdx = dmgSoundIdx + 4
 		end
 
-		Spring.PlaySoundFile(CommanderSounds.CommanderDamaged[dmgSoundIdx], 1.0, Spring.GetUnitPosition(unitID))
+		spPlaySoundFile(CommanderSounds.CommanderDamaged[dmgSoundIdx], 1.0, spGetUnitPosition(unitID))
 
 		-- crawling bomb damage counts as humiliation (as does being loaded)
 		-- problem: the attacker has blown itself up, so attackerDef is nil
 		-- if detonation is not right on top of commander (waiting damages)
 		if (attackerDef == nil or (not attackerDef.canKamikaze)) then
-			return
+			return true
 		end
 
-		Spring.PlaySoundFile(CommanderSounds.CommanderHumiliated, 1.0, Spring.GetUnitPosition(unitID))
+		spPlaySoundFile(CommanderSounds.CommanderHumiliated, 1.0, spGetUnitPosition(unitID))
+		return true
 	end
 
-	local function usUnitDestroyed(unitID, unitDefID, unitTeamID, attackerID, attackerDefID, attackerTeamID, _, _, _)
-		if (attackerTeamID ~= Spring.GetMyTeamID()) then
-			-- it was not one of our attackers that killed this unit
-			return
-		end
-		if (attackerTeamID ~= nil and Spring.AreTeamsAllied(unitTeamID, attackerTeamID)) then
-			-- one of our units was killed
-			return
-		end
-
-		if (attackerDefID == nil or UnitDefs[attackerDefID] == nil) then
-			-- destroyed unit had no direct or valid attacker
-			return
-		end
+	local function usUnitDestroyed(_, unitID, unitDefID, unitTeamID, attackerID, attackerDefID, attackerTeamID)
 		if (CommanderUnitDefs[attackerDefID] == nil) then
-			-- unit was not destroyed by a commander
-			return
+			return true	-- unit was not destroyed by a commander
+		end
+		if (attackerTeamID ~= myTeamID) then
+			return true	-- it was not one of our attackers that killed this unit
+		end
+		if (attackerTeamID ~= nil and spAreTeamsAllied(unitTeamID, attackerTeamID)) then
+			return true	-- one of our units was killed
+		end
+		if (attackerDefID == nil or UnitDefs[attackerDefID] == nil) then
+			return true	-- destroyed unit had no direct or valid attacker
 		end
 
 		-- check if the destroyed unit was a special target
 		for i = 0, #CommanderTargets.HolyTargetDefs do
 			if (unitDefID == CommanderTargets.HolyTargetDefs[i].id) then
-				Spring.PlaySoundFile(CommanderSounds.CommanderHolyTargetDestroyed, 4.0)
-				return
+				spPlaySoundFile(CommanderSounds.CommanderHolyTargetDestroyed, 4.0)
+				return true
 			end
 		end
 		for i = 0, #CommanderTargets.ImpressiveTargetDefs do
 			if (unitDefID == CommanderTargets.ImpressiveTargetDefs[i].id) then
-				Spring.PlaySoundFile(CommanderSounds.CommanderImpressiveTargetDestroyed, 4.0)
-				return
+				spPlaySoundFile(CommanderSounds.CommanderImpressiveTargetDestroyed, 4.0)
+				return true
 			end
 		end
 
 		-- otherwise just maintain kill-counter
-		local f = Spring.GetGameFrame()
+		local f = spGetGameFrame()
 
 		if (commanderKillCounts[attackerID] == nil) then
 			commanderKillCounts[attackerID] = {[0] = f, [1] = 0} -- frame, #kills
@@ -169,79 +162,83 @@ else
 			commanderKillCounts[attackerID][1] = commanderKillCounts[attackerID][1] + 1
 
 			if (commanderKillCounts[attackerID][1] >= 15) then
-				Spring.PlaySoundFile(CommanderSounds.CommanderPerfectTargetsKilled, 4.0)
+				spPlaySoundFile(CommanderSounds.CommanderPerfectTargetsKilled, 4.0)
 				commanderKillCounts[attackerID] = nil
 			elseif (commanderKillCounts[attackerID][1] == 5) then
-				Spring.PlaySoundFile(CommanderSounds.CommanderExcellentTargetsKilled, 4.0)
+				spPlaySoundFile(CommanderSounds.CommanderExcellentTargetsKilled, 4.0)
 			end
 		else
 			commanderKillCounts[attackerID] = nil
 		end
+		return true
 	end
 
-	local function usUnitCloaked(unitID, unitDefID, unitTeamID, _, _, _, _, _, _)
-		if (unitTeamID ~= Spring.GetMyTeamID()) then
-			-- unit that cloaked was not ours
-			return
+	local function usUnitCloaked(_, unitID, unitDefID, unitTeamID)
+		if (unitTeamID ~= myTeamID) then
+			return true	-- unit that cloaked was not ours
 		end
-
 		if (CommanderUnitDefs[unitDefID] == nil) then
-			return
+			return true
 		end
 
-		Spring.PlaySoundFile(CommanderSounds.CommanderCloaked, 1.0, Spring.GetUnitPosition(unitID))
+		spPlaySoundFile(CommanderSounds.CommanderCloaked, 1.0, spGetUnitPosition(unitID))
+		return true
 	end
 
-	local function usUnitLoaded(unitID, unitDefID, unitTeamID, _, transTeamID, _, _, _, _)
-		if (unitTeamID ~= Spring.GetMyTeamID()) then
-			-- unit that got loaded was not ours
-			return
+	local function usUnitLoaded(_, unitID, unitDefID, unitTeamID, _, transTeamID)
+		if (unitTeamID ~= myTeamID) then
+			return true	-- unit that got loaded was not ours
 		end
-
-		if (Spring.AreTeamsAllied(unitTeamID, transTeamID)) then
-			-- our unit got loaded by a friendly transport
-			return
+		if (spAreTeamsAllied(unitTeamID, transTeamID)) then
+			return true	-- our unit got loaded by a friendly transport
 		end
-
 		if (CommanderUnitDefs[unitDefID] == nil) then
-			return
+			return true	-- not a commander
 		end
 
 		-- TODO: make synced?
-		Spring.PlaySoundFile(CommanderSounds.CommanderHumiliated, 1.0, Spring.GetUnitPosition(unitID))
+		spPlaySoundFile(CommanderSounds.CommanderHumiliated, 1.0, spGetUnitPosition(unitID))
+		return true
 	end
 
-	local function usUnitSelfRepair(unitID, unitDefID, unitTeamID, _, _, _, _, _, _)
-		if (unitTeamID ~= Spring.GetMyTeamID()) then
-			-- not one of our units repairing itself
-			return
+	local function usUnitSelfRepair(_, unitID, unitDefID, unitTeamID)
+		if (unitTeamID ~= myTeamID) then
+			return true	-- not one of our units repairing itself
 		end
 		if (not UnitDefs[unitDefID].canSelfRepair) then
-			return
+			return true
 		end
 		if (CommanderUnitDefs[unitDefID] == nil) then
-			return
+			return true
 		end
 
-		Spring.PlaySoundFile(CommanderSounds.CommanderRepaired, 1.0, Spring.GetUnitPosition(unitID))
+		spPlaySoundFile(CommanderSounds.CommanderRepaired, 1.0, spGetUnitPosition(unitID))
+		return true
 	end
 
 
 
 	function gadget:Initialize()
-		unsyncedEventHandlers[UNIT_DAMAGED_EVENT_ID    ] = usUnitDamaged
-		unsyncedEventHandlers[UNIT_DESTROYED_EVENT_ID  ] = usUnitDestroyed
-		unsyncedEventHandlers[UNIT_CLOAKED_EVENT_ID    ] = usUnitCloaked
-		unsyncedEventHandlers[UNIT_LOADED_EVENT_ID     ] = usUnitLoaded
-		unsyncedEventHandlers[UNIT_SELF_REPAIR_EVENT_ID] = usUnitSelfRepair
+		gadgetHandler:AddSyncAction('usUnitDamaged', usUnitDamaged)
+		gadgetHandler:AddSyncAction('usUnitDestroyed', usUnitDestroyed)
+		--gadgetHandler:AddSyncAction('usUnitCloaked', usUnitCloaked)
+		--gadgetHandler:AddSyncAction('usUnitLoaded', usUnitLoaded)
+		--gadgetHandler:AddSyncAction('usUnitSelfRepair', usUnitSelfRepair)
+		
+		--[[
+		Note: Not all sync actions are in use, and all should return true so that SendToUnsynced
+		      doesn't get passed to all other gadget:RecvFromUnsynced(), as gadgetHandler has
+		      if (actionHandler.RecvFromSynced(...)) then
+		        return
+		      end
+		      for _,g in ipairs(self.RecvFromSyncedList) do
+		        if (g:RecvFromSynced(...)) then
+		          return
+		        end
+		      end
+		--]]
+
 	end
 
-	function gadget:RecvFromSynced(eventID, a, b, c, d, e, f, g, h, i)
-		local eventHandler = unsyncedEventHandlers[eventID]
-
-		if (eventHandler ~= nil) then
-			eventHandler(a, b, c, d, e, f, g, h, i)
-		end
-	end
 end
 

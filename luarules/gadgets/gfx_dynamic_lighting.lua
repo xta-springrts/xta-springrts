@@ -30,6 +30,8 @@ local PROJECTILE_EXPLOSION_EVENT_ID = 10003
 
 
 if (gadgetHandler:IsSyncedCode()) then
+	local SpringGetProjectileName = Spring.GetProjectileName
+
 	local projectileLightDefs = {}
 	local explosionLightDefs = {}
 
@@ -70,7 +72,7 @@ if (gadgetHandler:IsSyncedCode()) then
 	end
 
 	-- if other gadgets set watching of weapons that don't use dynamic lighting, we're sending
-	-- too much calls to unsynced part, therefore, check if the projectile has a dynamic light
+	-- too many calls to unsynced part, therefore, check if the projectile has a dynamic light
 	function gadget:ProjectileCreated(projectileID, projectileOwnerID, projectileWeaponDefID)
 		if (projectileLightDefs[projectileWeaponDefID]) then
 			SendToUnsynced(PROJECTILE_GENERATED_EVENT_ID, projectileID, projectileOwnerID, projectileWeaponDefID)
@@ -78,7 +80,10 @@ if (gadgetHandler:IsSyncedCode()) then
 	end
 
 	function gadget:ProjectileDestroyed(projectileID)
-		SendToUnsynced(PROJECTILE_DESTROYED_EVENT_ID, projectileID)
+		local wName = SpringGetProjectileName(projectileID)
+		if (WeaponDefNames[wName] and projectileLightDefs[WeaponDefNames[wName].id]) then
+			SendToUnsynced(PROJECTILE_DESTROYED_EVENT_ID, projectileID)
+		end
 	end
 
 	function gadget:Explosion(weaponDefID, posx, posy, posz, ownerID)
