@@ -20,10 +20,6 @@ LUAUI_DIRNAME							= 'LuaUI/'
 local random  = math.random
 local abs = math.abs
 local Echo = Spring.Echo
-local PROJECTILE_GENERATED_EVENT_ID = 10011
-local PROJECTILE_DESTROYED_EVENT_ID = 10012
-local PROJECTILE_EXPLOSION_EVENT_ID = 10013
-local TEAM_DIED_EVENT_ID = 10014
 
 local LUAMESSAGE = 	"20121120"
 
@@ -71,10 +67,6 @@ if gadgetHandler:IsSyncedCode() then
 			if frame > 0 then
 				gadgetHandler:RemoveGadget(self)
 			end
-		-- Test if gadget is really removed
-		--if frame%30 == 0 then
-			--Echo("Local sounds running for: " .. frame/30 .." seconds")
-		--end	
 		end
 	end
 	
@@ -102,23 +94,16 @@ if gadgetHandler:IsSyncedCode() then
 				
 				lastshot = activeShooters[ownerID]
 				if not lastshot then
-					SendToUnsynced(PROJECTILE_GENERATED_EVENT_ID, projectileID, projectileOwnerID, projectileWeaponDefID, x,y,z)
+					SendToUnsynced("LS_ProjectileCreated", projectileID, projectileOwnerID, projectileWeaponDefID, x,y,z)
 					activeShooters[ownerID] = frame
 				end
 			else --not loopweapons
-				SendToUnsynced(PROJECTILE_GENERATED_EVENT_ID, projectileID, projectileOwnerID, projectileWeaponDefID, x,y,z)
+				SendToUnsynced("LS_ProjectileCreated", projectileID, projectileOwnerID, projectileWeaponDefID, x,y,z)
 			end
 		else
 			Echo("No wtype for:",wd.name)
 		end
 	end
-
-	--[[
-	function gadget:ProjectileDestroyed(projectileID)
-		local x,y,z = GetProjectilePosition(projectileID)
-		SendToUnsynced(PROJECTILE_DESTROYED_EVENT_ID, projectileID, y)
-	end
-	--]]
 
 	function gadget:Explosion(weaponDefID, posx, posy, posz, ownerID)
 		local h = GetGroundHeight(posx,posz)
@@ -139,11 +124,11 @@ if gadgetHandler:IsSyncedCode() then
 			
 			lastexp = activeExplosions[ownerID]
 			if not lastexp then
-				SendToUnsynced(PROJECTILE_EXPLOSION_EVENT_ID, weaponDefID, posx, posy, posz, ownerID, h)
+				SendToUnsynced("LS_ProjectileExplosion", weaponDefID, posx, posy, posz, ownerID, h)
 				activeExplosions[ownerID] = frame
 			end
 		else
-			SendToUnsynced(PROJECTILE_EXPLOSION_EVENT_ID, weaponDefID, posx, posy, posz, ownerID, h)
+			SendToUnsynced("LS_ProjectileExplosion", weaponDefID, posx, posy, posz, ownerID, h)
 		end
 		
 		return false -- noGFX
@@ -162,7 +147,7 @@ if gadgetHandler:IsSyncedCode() then
 	end
 	
 	function gadget:TeamDied(teamID)
-		SendToUnsynced(TEAM_DIED_EVENT_ID, teamID)
+		SendToUnsynced("LS_TeamDied", teamID)
 	end
 		
 else
@@ -210,7 +195,65 @@ else
 		Cannon = true,
 		AircraftBomb = true,
 	}
+
+
+	local function LS_ProjectileCreated(_, projectileID, projectileOwnerID, projectileWeaponDefID,x,y,z)		
+		local LOS = clientIsSpec or IsPosInLos(x,y,z,allyID)
+		if LOS and projectileWeaponDefID and sndstart[projectileWeaponDefID] then
+			PlaySoundFile("sounds/"..sndstart[projectileWeaponDefID]..".wav",volume,x,y,z,0,0,0,Channel)
+		end
+		return true
+	end
+	
+	local function LS_ProjectileExplosion(_, weaponDefID, x, y, z, ownerID, gh)
+		-- This part determines what sound the explosion will play. In the following, the variable y is the height coordinate of 
+		-- the projectile, whereas gh is that of the ground height. The wet sound is typically a splash sound, but we don't want splash 
+		-- sounds in the following cases: i) explosion above water level ii) explosion very deep, like from torpedoes. If something hits 
+		-- shallow water, we want both splash and land explosion. 
 		
+		local LOS = clientIsSpec or IsPosInLos(x,y,z,allyID)
+		if LOS and weaponDefID then		
+			if gh >= 0 then -- explosion on land
+				if snddry[weaponDefID] then PlaySoundFile("sounds/"..snddry[weaponDefID]..".wav",volume,x,y,z,0,0,0,Channel) end
+				--Echo("Land")
+			else -- explosion on water
+				if y > 0 then -- hits something above water level, use dry sounds
+					if snddry[weaponDefID] then PlaySoundFile("sounds/"..snddry[weaponDefID]..".wav",volume,x,y,z,0,0,0,Channel) end
+					--Echo("On water but above water level")
+				else -- hits under or on water surface
+					if isLava then
+						--Echo("Lava hit",sndlava[weaponDefID])
+						if snddry[weaponDefID] then PlaySoundFile("sounds/"..snddry[weaponDefID]..".wav",volume/3,x,y,z,0,0,0,Channel) end
+						if sndlava[weaponDefID] then PlaySoundFile("sounds/"..sndlava[weaponDefID]..".wav",volume,x,y,z,0,0,0,Channel) end
+					else
+						--Echo("water hit",sndwet[weaponDefID])
+						if y > shallowHitLimit then -- projectile hits close to surface
+							if gh > shallowLimit then -- water is shallow
+								--Echo("Shallow water")
+								if snddry[weaponDefID] then PlaySoundFile("sounds/"..snddry[weaponDefID]..".wav",volume/2,x,y,z,0,0,0,Channel) end
+								if sndwet[weaponDefID] then PlaySoundFile("sounds/"..sndwet[weaponDefID]..".wav",volume/2,x,y,z,0,0,0,Channel) end
+								
+							else -- hits deep water
+								--Echo("Deep water")
+								if sndwet[weaponDefID] then PlaySoundFile("sounds/"..sndwet[weaponDefID]..".wav",volume,x,y,z,0,0,0,Channel) end
+							end
+						else -- projectile hits at a depth, ideally, there would be another type of explosion sound in this case. However,
+							-- this is already considered in weapon explosions, for example the wet sound of torpedoes is xplodep2, which is
+							-- a deep water sound. We still use standard wet sounds, this division is kept for future needs.
+							if sndwet[weaponDefID] then PlaySoundFile("sounds/"..sndwet[weaponDefID]..".wav",volume,x,y,z,0,0,0,Channel) end
+						end
+					end
+				end
+			end
+		end
+		return true
+	end
+	
+	local function TeamDied(_, teamID)
+		clientIsSpec = GetSpectatingState()
+		return true
+	end
+	
 	function gadget:Initialize()
 	
 		local modOptions = Spring.GetModOptions()
@@ -228,6 +271,10 @@ else
 		pID = GetLocalPlayerID()
 		allyID = GetLocalAllyTeamID()
 		clientIsSpec = GetSpectatingState()
+		
+		gadgetHandler:AddSyncAction('LS_ProjectileCreated', LS_ProjectileCreated)
+		gadgetHandler:AddSyncAction('LS_ProjectileExplosion', LS_ProjectileExplosion)
+		gadgetHandler:AddSyncAction('LS_TeamDied', TeamDied)
 			
 		--get weapon sounds from customparams
 		for id, weaponDef in pairs(WeaponDefs) do
@@ -307,105 +354,5 @@ else
 		--]]
 		
 	end
-	
-	function table.removekey(table, key)
-		local element = table[key]
-		table[key] = nil
-		return element
-	end
 		
-	--SendToUnsynced(PROJECTILE_GENERATED_EVENT_ID, projectileID, projectileOwnerID, projectileWeaponDefID, x,y,z)
-	local function ProjectileCreated(projectileID, projectileOwnerID, projectileWeaponDefID,x,y,z)		
-		--local wType 
-		--if WeaponDefs[projectileWeaponDefID] then wType = WeaponDefs[projectileWeaponDefID].type end
-		--local frame = GetGameFrame()
-		local LOS = clientIsSpec or IsPosInLos(x,y,z,allyID)
-		--Echo(frame, "ProjectileCreated: ", projectileID, projectileWeaponDefID, LOS, wType)
-		
-		if LOS and projectileWeaponDefID and sndstart[projectileWeaponDefID] then
-			--if WeaponDefs[projectileWeaponDefID] then --wType then			
-				--Echo("Normal weapon sound playing")
-				PlaySoundFile("sounds/"..sndstart[projectileWeaponDefID]..".wav",volume,x,y,z,0,0,0,Channel)
-			--end
-		end
-	end
-	
-	--[[
-	local function ProjectileDestroyed(projectileID)		
-		--table.remove(pTable,projectileID)
-		for i,array in ipairs (pTable) do
-			if array[3] == projectileID then taremove(pTable,i) end
-		end
-	end
-	--]]
-	
-	--SendToUnsynced(PROJECTILE_EXPLOSION_EVENT_ID, weaponDefID, posx, posy, posz, ownerID, h)
-	local function ProjectileExplosion(weaponDefID, x, y, z, ownerID, gh)
-		-- This part determines what sound the explosion will play. In the following, the variable y is the height coordinate of 
-		-- the projectile, whereas gh is that of the ground height. The wet sound is typically a splash sound, but we don't want splash 
-		-- sounds in the following cases: i) explosion above water level ii) explosion very deep, like from torpedoes. If something hits 
-		-- shallow water, we want both splash and land explosion. 
-		
-		local LOS = clientIsSpec or IsPosInLos(x,y,z,allyID)
-		--local frame = GetGameFrame()
-		--local wType 
-		--if WeaponDefs[weaponDefID] then wType = WeaponDefs[weaponDefID].type end
-		--Echo(frame, "ProjectileExplosion: ", wType, WeaponDefs[weaponDefID].damages[1])
-		
-		if LOS and weaponDefID then		
-			if gh >= 0 then -- explosion on land
-				if snddry[weaponDefID] then PlaySoundFile("sounds/"..snddry[weaponDefID]..".wav",volume,x,y,z,0,0,0,Channel) end
-				--Echo("Land")
-			else -- explosion on water
-				if y > 0 then -- hits something above water level, use dry sounds
-					if snddry[weaponDefID] then PlaySoundFile("sounds/"..snddry[weaponDefID]..".wav",volume,x,y,z,0,0,0,Channel) end
-					--Echo("On water but above water level")
-				else -- hits under or on water surface
-					if isLava then
-						--Echo("Lava hit",sndlava[weaponDefID])
-						if snddry[weaponDefID] then PlaySoundFile("sounds/"..snddry[weaponDefID]..".wav",volume/3,x,y,z,0,0,0,Channel) end
-						if sndlava[weaponDefID] then PlaySoundFile("sounds/"..sndlava[weaponDefID]..".wav",volume,x,y,z,0,0,0,Channel) end
-					else
-						--Echo("water hit",sndwet[weaponDefID])
-						if y > shallowHitLimit then -- projectile hits close to surface
-							if gh > shallowLimit then -- water is shallow
-								--Echo("Shallow water")
-								if snddry[weaponDefID] then PlaySoundFile("sounds/"..snddry[weaponDefID]..".wav",volume/2,x,y,z,0,0,0,Channel) end
-								if sndwet[weaponDefID] then PlaySoundFile("sounds/"..sndwet[weaponDefID]..".wav",volume/2,x,y,z,0,0,0,Channel) end
-								
-							else -- hits deep water
-								--Echo("Deep water")
-								if sndwet[weaponDefID] then PlaySoundFile("sounds/"..sndwet[weaponDefID]..".wav",volume,x,y,z,0,0,0,Channel) end
-							end
-						else -- projectile hits at a depth, ideally, there would be anoether type of explosion sound in this case. However,
-							-- this is already considered in weapon explosions, for example the wet sound of torpedoes is xplodep2, which is
-							-- a deep water sound. We still use standard wet sounds, this division is kept for future needs.
-							if sndwet[weaponDefID] then PlaySoundFile("sounds/"..sndwet[weaponDefID]..".wav",volume,x,y,z,0,0,0,Channel) end
-						end
-					end
-				end
-			end
-		end
-	end
-	
-	local function TeamDied(teamID)
-		clientIsSpec = GetSpectatingState()
-	end
-	
-	function gadget:PlayerChanged(playerID)
-		Echo("Player Changed:",playerID) -- doesn't seem to work
-		clientIsSpec = GetSpectatingState()
-	end
-	
-	function gadget:RecvFromSynced(eventID, arg0, arg1, arg2, arg3, arg4, arg5)
-		if eventID == PROJECTILE_GENERATED_EVENT_ID then
-			ProjectileCreated(arg0, arg1, arg2, arg3, arg4, arg5) --projectileID, projectileOwnerID, projectileWeaponDefID,x,y,z
-		--elseif eventID == PROJECTILE_DESTROYED_EVENT_ID then
-		--	ProjectileDestroyed(arg0)
-		elseif eventID == PROJECTILE_EXPLOSION_EVENT_ID then
-			ProjectileExplosion(arg0, arg1, arg2, arg3, arg4, arg5)	--weaponDefID, x, y, z, ownerID, gh
-		elseif eventID == TEAM_DIED_EVENT_ID then
-			TeamDied(arg0)
-		end
-	end
 end
