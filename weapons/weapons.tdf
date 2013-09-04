@@ -3842,15 +3842,16 @@
 	Texture4=null;
 	turret=1;
 	range=360;
-	reloadtime=0.5;
+	reloadtime=1.0;
 	weapontimer=5;
 	weaponvelocity=180;
-	flamegfxtime=1.3;
-	sizegrowth=0.7;
+	flamegfxtime=1.25;
+	size=6;
+	sizegrowth=1.4;
 	areaofeffect=40;
 	burst=15;
-	burstrate=0.001;
-	sprayangle=2048;
+	burstrate=0.0667;
+	sprayangle=1024;
 	randomdecay=0;
 	soundstart=Flamhvy1;
 	//soundhitdry=0;
@@ -3863,7 +3864,7 @@
 	useAirLos=0;
 	[DAMAGE]
 	{
-		default=7;
+		default=14;
 		group_invincible=1;
 	}
 }
@@ -5100,15 +5101,16 @@
 	Texture4=null;
 	turret=1;
 	range=300;
-	reloadtime=0.5;
+	reloadtime=1;
+	burst=15;
+	burstrate=0.0667;
 	weapontimer=4.5;
 	weaponvelocity=180;
 	areaofeffect=40;
-	flamegfxtime=1.3;
-	sizegrowth=0.7;
-	burst=15;
-	burstrate=0.01;
-	sprayangle=2048;
+	flamegfxtime=1.25;
+	size=6;
+	sizegrowth=1.4;
+	sprayangle=1024;
 	randomdecay=0;
 	soundstart=Flamhvy1;
 	soundhitdry=;
@@ -5121,7 +5123,7 @@
 	//minbarrelangle=-90;
 	[DAMAGE]
 	{
-		default=6;
+		default=12;
 		group_invincible=1;
 	}
 }
@@ -6759,7 +6761,7 @@
 	explosiongenerator=custom:EMGFLASH;
 	Weapontype=EmgCannon;
 	cegTag=PEEWEESHINE;
-	projectiles=2;
+	//projectiles=2;
 	Texture1=emg;
 	Texture2=null;
 	Texture3=null;
