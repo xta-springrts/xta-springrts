@@ -206,7 +206,7 @@ for id in pairs(WeaponDefs) do
 		if WeaponDefs[id].weapontype == "LaserCannon" or WeaponDefs[id].weapontype == "EmgCannon" then
 			WeaponDefs[id].cegtag = ""	-- we use the projectile lights widget now
 		elseif WeaponDefs[id].weapontype == "BeamLaser" then
-			WeaponDefs[id].soundhitdry = ""
+			--WeaponDefs[id].soundhitdry = ""
 			WeaponDefs[id].soundtrigger = 1
 		end
 	end	

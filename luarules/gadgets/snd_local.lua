@@ -79,25 +79,25 @@ if gadgetHandler:IsSyncedCode() then
 		local wType = wd.type
 		
 		if wType then
-			local x,y,z = GetProjectilePosition(projectileID)
 			if loopWeapons[wType] then
-				local ownerID = projectileOwnerID	
 				local frame = GetGameFrame()
-				local lastshot = activeShooters[ownerID]
+				local lastshot = activeShooters[projectileOwnerID]
 				
 				if lastshot then
 					local beamtime = wd.beamtime
 					if lastshot+beamtime*30 + 1 < frame then 
-						activeShooters[ownerID] = nil 
+						activeShooters[projectileOwnerID] = nil 
 					end
 				end
 				
-				lastshot = activeShooters[ownerID]
+				lastshot = activeShooters[projectileOwnerID]
 				if not lastshot then
+					local x,y,z = GetProjectilePosition(projectileID)
 					SendToUnsynced("LS_ProjectileCreated", projectileID, projectileOwnerID, projectileWeaponDefID, x,y,z)
-					activeShooters[ownerID] = frame
+					activeShooters[projectileOwnerID] = frame
 				end
 			else --not loopweapons
+				local x,y,z = GetProjectilePosition(projectileID)
 				SendToUnsynced("LS_ProjectileCreated", projectileID, projectileOwnerID, projectileWeaponDefID, x,y,z)
 			end
 		else
@@ -106,7 +106,6 @@ if gadgetHandler:IsSyncedCode() then
 	end
 
 	function gadget:Explosion(weaponDefID, posx, posy, posz, ownerID)
-		local h = GetGroundHeight(posx,posz)
 		
 		if ownerID then
 			local frame = GetGameFrame()
@@ -124,10 +123,12 @@ if gadgetHandler:IsSyncedCode() then
 			
 			lastexp = activeExplosions[ownerID]
 			if not lastexp then
+				local h = GetGroundHeight(posx,posz)
 				SendToUnsynced("LS_ProjectileExplosion", weaponDefID, posx, posy, posz, ownerID, h)
 				activeExplosions[ownerID] = frame
 			end
 		else
+			local h = GetGroundHeight(posx,posz)
 			SendToUnsynced("LS_ProjectileExplosion", weaponDefID, posx, posy, posz, ownerID, h)
 		end
 		
