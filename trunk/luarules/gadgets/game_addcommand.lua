@@ -16,13 +16,13 @@ end
 
 local CMD_AREA_GUARD 						= 14001
 local SetCustomCommandDrawData				= Spring.SetCustomCommandDrawData
+local Echo 									= Spring.Echo
 
 if (gadgetHandler:IsSyncedCode()) then
 
 --SYNCED
 
 local CMD_GUARD 							= CMD.GUARD
-local Echo 									= Spring.Echo
 local EditUnitCmdDesc						= Spring.EditUnitCmdDesc
 local FindUnitCmdDesc						= Spring.FindUnitCmdDesc
 local InsertUnitCmdDesc						= Spring.InsertUnitCmdDesc
@@ -41,9 +41,6 @@ hidden	= true,
 
 function gadget:Initialize()
 
-	gadgetHandler:RegisterCMDID(CMD_AREA_GUARD)
-	local result = SetCustomCommandDrawData(CMD_AREA_GUARD, CMDTYPE.ICON_UNIT_OR_AREA, {1,0,0,0.8},true)
-	--Echo("Editing custom draw data: ",result)
 	for _, unitID in ipairs(Spring.GetAllUnits()) do
 		local unitDefID = GetUnitDefID(unitID)
 		gadget:UnitCreated(unitID, unitDefID, team)
@@ -59,5 +56,13 @@ function gadget:UnitCreated(unitID, unitDefID, team)
 end
 
 else 
---UNSYNCED
+
+--------------
+-- UNSYNCED --
+--------------
+
+	function gadget:Initialize()
+		local result = Spring.SetCustomCommandDrawData(CMD_AREA_GUARD,"Guard", {1,0,0,0.8})
+		Echo("Editing custom draw data: ",result)
+	end
 end
