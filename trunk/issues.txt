@@ -21,7 +21,7 @@ x	arm_sentry,
 x	core_stinger, 
 x	core_underwater_metal_storage, 
 x	core_resistor, 
-	core_pillager
+x	core_pillager
 
 x = fixed
 
