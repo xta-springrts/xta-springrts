@@ -132,8 +132,8 @@
 
 	pieceTrailCEGTag=NanoDebree;//bleh
 	pieceTrailCEGRange = 1;
-	collisionVolumeType=Ell;
-	collisionVolumeScales=99 138 84;
+	collisionVolumeType=box;
+	collisionVolumeScales=74 122 58;
 	collisionVolumeOffsets=0 -8 -8;
 	collisionVolumeTest=0;
 	[SFXTypes]
