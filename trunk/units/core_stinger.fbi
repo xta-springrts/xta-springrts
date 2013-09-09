@@ -54,7 +54,10 @@
 	//***************
 	builder=0;
 	workertime=0;
-
+	collisionVolumeType = box;
+	collisionVolumeScales = 24 52 36;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
 	//************************************************************
 	//  Abilities
 	//*************
