@@ -47,7 +47,11 @@
 	//************************************************************
 	//  Building
 	//************
-
+	collisionVolumeType = box;
+	collisionVolumeScales =16 19 51;
+	collisionVolumeOffsets = 0 -4 -1;
+	collisionVolumeTest = 1;
+	
 	//************************************************************
 	//  Constructor
 	//***************
@@ -114,10 +118,6 @@
 	threed=1;
 	version=1.2;
 	zbuffer=1;
-	collisionVolumeType = CylY;
-	collisionVolumeScales =17 22 51;
-	collisionVolumeOffsets = 0 -4 -1;
-	collisionVolumeTest = 1;
 	pieceTrailCEGTag=Debree;//bleh
 	pieceTrailCEGRange = 4;
 

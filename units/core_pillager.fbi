@@ -46,7 +46,11 @@
 	//************************************************************
 	//  Building
 	//************
-
+	collisionVolumeType = box;
+	collisionVolumeScales =42 32 42;
+	collisionVolumeOffsets = 0 0 3;
+	collisionVolumeTest = 1;
+	
 	//************************************************************
 	//  Constructor
 	//***************
@@ -119,10 +123,6 @@
 	trackwidth=42;
 	version=1.2;
 	zbuffer=1;
-	collisionVolumeType = box;
-	collisionVolumeScales =50 33 50;
-	collisionVolumeOffsets = 0 0 0;
-	collisionVolumeTest = 1;
 	pieceTrailCEGTag=Debree;//bleh
 	pieceTrailCEGRange = 4;
 

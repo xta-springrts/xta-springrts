@@ -34,6 +34,10 @@
 	TEDClass=STRATEGIC;
 	buildpic=core_resistor.pcx;
 	YardMap=ooooo ooooo ooooo ooooo ooooo;
+	collisionVolumeType=box;
+	collisionVolumeScales= 55 40 55;
+	collisionVolumeOffsets= 0 0 0;
+	collisionVolumeTest = 1;
 	Corpse=Core_Resistor_dead;
 	UnitNumber=11992;
 	firestandorders=1;

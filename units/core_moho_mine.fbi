@@ -48,6 +48,11 @@
 	buildangle=2048;
 	yardmap=yoooy ooooo ooooo ooooo yoooy;
 	activatewhenbuilt=1;
+	collisionVolumeType = CylY;
+	collisionVolumeScales = 72 30 72;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	
 
 	//************************************************************
 	//  Constructor

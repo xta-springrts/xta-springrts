@@ -13,15 +13,17 @@ x	core_krogoth,
 x	arm_advanced_radar_tower, 
 x	arm_naval_flakker, 
 x	core_naval_cobra, 
-	arm_skeeter, 
-	core_searcher, 
-	arm_moho_mine, 
-	core_moho_mine, 
-	arm_sentry, 
-	core_stinger, 
-	core_underwater_metal_storage, 
-	core_resistor, 
+x	arm_skeeter, 
+x	core_searcher, 
+x	arm_moho_mine, 
+x	core_moho_mine, 
+x	arm_sentry, 
+x	core_stinger, 
+x	core_underwater_metal_storage, 
+x	core_resistor, 
 	core_pillager
+
+x = fixed
 
 * Air labs keep their radar spinning no matter if they are on or off — except Arm T1 Airlab, whose radar is always in not spinning state. Carriers spins their radars too no matter if they are on or off. 
 Fixed carriers, airlabs pending
