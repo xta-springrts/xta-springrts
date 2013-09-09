@@ -87,11 +87,14 @@ if (gadgetHandler:IsSyncedCode()) then
 	end
 
 	function gadget:Explosion(weaponDefID, posx, posy, posz, ownerID)
+	
+		--Spring.Echo(Spring.GetGameFrame(), ", Dyn. Light - Explosion: ", weaponDefID, posx, posy, posz, ownerID)
+	
 		if (explosionLightDefs[weaponDefID]) then
 			SendToUnsynced(PROJECTILE_EXPLOSION_EVENT_ID, weaponDefID, posx, posy, posz)
 			return false -- noGFX
 		else
-			return true
+			return false -- returning true interferes with other gadgets
 		end
 	end
 
