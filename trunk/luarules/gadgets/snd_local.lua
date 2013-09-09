@@ -3,9 +3,9 @@ function gadget:GetInfo()
   return {
     name      = "Local sounds",
     desc      = "Make sounds local based on LOS",
-	version   = "1.4",
+	version   = "1.41",
     author    = "Jools",
-    date      = "Aug, 2013",
+    date      = "Sep, 2013",
     license   = "GNU GPL, v2 or later",
     layer     = 0,
     enabled   = true,  --  loaded by default?
@@ -28,7 +28,6 @@ local loopWeapons = {
 	BeamLaser = true,
 }
 
-
 if gadgetHandler:IsSyncedCode() then
 	-----------------
 	-- SYNCED PART --
@@ -41,7 +40,6 @@ if gadgetHandler:IsSyncedCode() then
 	local GetPlayerInfo			= Spring.GetPlayerInfo
 	local len 					= string.len
 	local sub 					= string.sub
-	local unload 				= false
 	local activeShooters 		= {}
 	local activeExplosions		= {}
 	local GetGameFrame			= Spring.GetGameFrame
@@ -51,21 +49,13 @@ if gadgetHandler:IsSyncedCode() then
 		
 		if modOptions and modOptions.globalsounds == '1' then
 			Echo("[" .. (self:GetInfo()).name .. "] local sounds disabled")
-			unload = true
 			gadgetHandler:RemoveGadget(self)
+			return
 		end
 		
 		for id,weaponDef in pairs(WeaponDefs) do
 			if weaponDef.customParams then				
 				SetWatchWeapon(weaponDef.id, true)
-			end
-		end
-	end
-	
-	if unload then
-		function gadget:GameFrame(frame)
-			if frame > 0 then
-				gadgetHandler:RemoveGadget(self)
 			end
 		end
 	end
@@ -262,6 +252,7 @@ else
 		if modOptions and modOptions.globalsounds == '1' then
 			Echo("[" .. (self:GetInfo()).name .. "] local sounds disabled")
 			gadgetHandler:RemoveGadget(self)
+			return
 		end
 		
 		local waterColour = Game.waterBaseColor
