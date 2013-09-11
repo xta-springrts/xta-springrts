@@ -1,3 +1,4 @@
+// use linear constant 65536
 #define TA			// This is a TA script
 
 #include "sfxtype.h"
@@ -75,17 +76,17 @@ activatescr()
 	move hatchc to z-axis [-2.500000] speed [2.500000];
 	sleep 673;
 
-	move sleevec to z-axis [15.000000] speed [20.000000];
+	move sleevec to z-axis [16.500000] speed [20.000000];
 	move hatchb to x-axis [11.700000] speed [11.700000];
 	move hatchb to z-axis [-11.750000] speed [11.750000];
 	turn hatchb to y-axis <-45.000000> speed <45.000000>;
 	sleep 683;
 
-	move barrela to z-axis [10.000000] speed [12.500000];
-	move barrelb to z-axis [10.000000] speed [12.500000];
-	move barrelc1 to z-axis [7.500000] speed [10.000000];
-	move barrelc2 to z-axis [7.500000] speed [10.000000];
-	move collarb to z-axis [10.500000] speed [14.000000];
+	move barrela to z-axis [14.000000] speed [17.000000];
+	move barrelb to z-axis [13.000000] speed [17.000000];
+	move barrelc1 to z-axis [12.500000] speed [17.000000];
+	move barrelc2 to z-axis [12.500000] speed [17.000000];
+	move collarb to z-axis [13.000000] speed [17.000000];
 	sleep 683;
 
 	set ACTIVATION to 1;
