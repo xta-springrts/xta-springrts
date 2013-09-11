@@ -1,17 +1,20 @@
 include("keysym.h.lua")
-local versionNumber = "1.21"
+local versionNumber = "1.30"
 
 function widget:GetInfo()
 	return {
 		name      = "Pause Screen - XTA",
 		desc      = "[v" .. string.format("%s", versionNumber ) .. "] Displays pause screen when game is paused.",
-		author    = "very_bad_soldier",
-		date      = "2009.08.16",
+		author    = "very_bad_soldier, updated by Jools",
+		date      = "2013.09.11",
 		license   = "GNU GPL v2",
 		layer     = 0,
 		enabled   = true
 	}
 end
+
+-- Update: Make sure sound to fade in/out is played only once. Change fade-in sound, modify fade-out sound to 
+-- include a little silence before to make it sound cleaner. Update minimum transparency to 0, add music.
 
 
 local spGetGameSeconds      = Spring.GetGameSeconds
@@ -57,6 +60,7 @@ local windowIconPath = "LuaUI/Images/SpringIconmkII.png"
 local fontPath = "LuaUI/Fonts/MicrogrammaDBold.ttf"
 local windowClosePath = "LuaUI/Images/closex_32.png"
 local imgCloseWidth = 32
+local minTransparency = 0
 --Color config in drawPause function
 	
 ----------------
@@ -78,9 +82,15 @@ local yCenter = nil
 local xCut = nil
 local mouseOverClose = false
 local forceHideWindow = false
+local musicOn = false
+local musicDelay = 3 -- seconds
+local soundPlayed = false
 
-local sound_1  = LUAUI_DIRNAME .. 'Sounds/BEEP3.wav'
+local sound_1  = LUAUI_DIRNAME .. 'Sounds/jingle.wav'
 local sound_4  = LUAUI_DIRNAME .. 'Sounds/BEEP5.wav'
+local music		= LUAUI_DIRNAME .. 'Sounds/streetcollection.ogg'
+-- music by David Matthews, available for free on WWW.DAVIDMATHEWS.CO.UK.
+-- The original soundtrack is actually called street collection.
 
 local function ResetGl() 
 	glColor( { 1.0, 1.0, 1.0, 1.0 } )
@@ -98,23 +108,32 @@ local function isOverWindow(x, y)
  end
 
 function widget:MousePress(x, y, button)
-  if ( not clickTimestamp and not forceHideWindow ) then
-	if ( isOverWindow(x, y)) then	
-		--do not update clickTimestamp any more after right mouse button click
-		if ( not forceHideWindow ) then
-			clickTimestamp = osClock()
-		end
-		
-		--hide window for the rest of the game if it was a right mouse button
-		if ( button == 3 ) then
-			forceHideWindow = true
-		end
-		
+	if ( button == 2) and isOverWindow(x, y) then
+		Spring.StopSoundStream()
 		return true
 	end
-  end
+	
+	if ( not clickTimestamp and not forceHideWindow ) then
+		if ( isOverWindow(x, y)) then	
+			--do not update clickTimestamp any more after right mouse button click
+			if ( not forceHideWindow ) then
+				clickTimestamp = osClock()
+			end
+			--hide window for the rest of the game if it was a right mouse button
+			if ( button == 3 ) then
+				forceHideWindow = true
+				Spring.StopSoundStream()
+			end
+		
+			return true
+		end
+	elseif not clickTimestamp then
+		if ( isOverWindow(x, y)) then
+			Spring.StopSoundStream()
+		end
+	end
   
-  return false
+	return false
 end
 
 function widget:IsAbove(x,y)
@@ -136,7 +155,7 @@ end
 
 function widget:GetTooltip(x, y)
 	if ( ( clickTimestamp == nil and forceHideWindow == false ) and isOverWindow(x, y) ) then
-		return "Click left mouse button to hide pause window.\nClick right mouse button to hide pause window for the rest of the game."
+		return "Click left mouse button to hide pause window.\nClick middle button to stop music.\nClick right mouse button to hide pause window for the rest of the game."
 	end
 end
 
@@ -159,9 +178,9 @@ local function drawPause()
 		if ( clickTimestamp ) then		
 			factor = ( 1.0 - ( now - clickTimestamp ) / fadeTime )
 		end
-		factor = max( factor, 0.3 )
+		factor = max( factor, minTransparency )
 		colorWnd[4] = colorWnd[4] * factor
-		text[4] = text[4] * factor
+		text[4] = max(text[4] * factor, 0.30)
 		text2[4] = text2[4] * factor
 		outline[4] = outline[4] * factor
 		iconColor[4] = iconColor[4] * factor
@@ -176,15 +195,25 @@ local function drawPause()
 		local group1XOffset = 0
 		--we are sliding
 		if ( paused ) then
-			spPlaySoundFile(sound_1, 1)
+			if not soundPlayed then
+				--Spring.Echo("Playing in sound")
+				spPlaySoundFile(sound_1, 1)
+				soundPlayed = true
+			end
 			--sliding in
 			group1XOffset = ( screenx - wndX1 ) * ( 1.0 - ( diffPauseTime / slideTime ) )
 		else
-			spPlaySoundFile(sound_4, 1)
+			if not soundPlayed then
+				--Spring.Echo("Playing out sound")
+				spPlaySoundFile(sound_4, 1)
+				soundPlayed = true
+			end
 			--sliding out
 			group1XOffset = ( screenx - wndX1 ) * ( ( diffPauseTime / slideTime ) )
 		end
 		glTranslate( group1XOffset, 0, 0)
+	else
+		soundPlayed = false
 	end
 	
 	glColor( colorWnd )
@@ -223,14 +252,24 @@ local function drawPause()
 	if ( diffPauseTime <= slideTime ) then
 		--we are sliding
 		if ( paused ) then
-			spPlaySoundFile(sound_1, 1)
+			if not soundPlayed then
+				--Spring.Echo("Playing in sound")
+				spPlaySoundFile(sound_1, 1)
+				soundPlayed = true
+			end
 			--sliding in
 			glTranslate( 0, ( ( yCenter + imgWidthHalf ) * ( 1.0 - ( diffPauseTime / slideTime ) ) ), 0)
 		else
-			spPlaySoundFile(sound_4, 1)
+			if not soundPlayed then
+				--Spring.Echo("Playing out sound")
+				spPlaySoundFile(sound_4, 1)
+				soundPlayed = true
+			end
 			--sliding out
 			glTranslate( 0, ( yCenter + imgWidthHalf ) * ( diffPauseTime / slideTime ), 0)
 		end
+	else
+		soundPlayed = false
 	end
 	
 	glTexRect( xCut - imgWidthHalf, yCenter + imgWidthHalf, xCut + imgWidthHalf, yCenter - imgWidthHalf, 0.0, 0.0, imgTexCoordX, imgTexCoordY )
@@ -277,6 +316,7 @@ function widget:DrawScreen()
 	
 	if ( paused and not lastPause ) then
 		--new pause
+		soundPlayed = false
 		clickTimestamp = nil
 	end
 
@@ -284,6 +324,20 @@ function widget:DrawScreen()
 		
 	if ( paused or ( ( now - pauseTimestamp) <= slideTime ) ) then
 		drawPause()
+		
+		if paused then
+			if now - pauseTimestamp > musicDelay then
+				if (not musicOn) and (not forceHideWindow) then
+					Spring.PlaySoundStream(music, 0.3)
+					musicOn = true
+				end
+			end
+		else
+			if musicOn then
+				Spring.StopSoundStream()
+				musicOn = false
+			end
+		end
 	end
 	
 	ResetGl()
@@ -295,8 +349,11 @@ function widget:Initialize()
 end
 
 function widget:Shutdown()
+	Spring.StopSoundStream()
 	glDeleteFont( myFont )
 end
+
+
 
 function printDebug( value )
 	if ( debug ) then
