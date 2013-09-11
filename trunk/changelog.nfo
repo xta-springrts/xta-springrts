@@ -32,25 +32,26 @@
     to guard.
   - Persistent mode (hold alt+ctrl and drag): makes the squadrons permanent. When one unit in the squadron gets damaged, the 
     unit guarding the squadron will shift the guard task to prioritise the unit wth least health. Selecting a unit that is 
-	guarding a squadron and pressing "stop" will also clear the guard task.
+    guarding a squadron and pressing "stop" will also clear the guard task.
 * New spectator mode in commander change widget
 * Added buttons for selecting game speed when watching replays
 * Bugfixes: 
   - Added missing minelayer-limit icons, fixed bug for xtaids hovercraft minelayers. - Jools
   - Mine layer gadget fixed for XTAids units and other bugs - Noruas
-  - Fixed TA-era bug with moho metal maker's missing explosions: they were set to use BIG_BUILDINGEX, which has never existed. Now
-    instead they use same explosions as in ba (ATOMIC_BLASTSML and ATOMIC_BLAST)
+  - Fixed a bug with moho metal maker's missing explosions: they were set to "", now they use same explosions as in BA (ATOMIC_BLASTSML and ATOMIC_BLAST)
   - Fixed minelayer mine-limit exploit. Now it won't finish the mine if it's not in stock.
-  - Fixed double projectile for CORE Garpike, making it quite OP for it's price
-  - Fixed Dynamic Collision Volume gadget not scaling 3DO model radius and height if used for a unit with a dyanmic CV
+  - Fixed double projectile for CORE Garpike and ARM Crab, making then quite OP for their price
+  - Fixed Dynamic Collision Volume gadget not scaling 3DO model radius and height if used for a unit with a dynamic CV
+  - Fixed many oversized collision volumes, happened due to changes in 94.1 engine
 * Performance improvements:
   - Add flood protection to local sounds gadget
   - Optimizations in following widgets:
-    Major: Adv. Players List, Commander Selection, Commander Nametags
-	Minor: Ghost Radar, Mission UI, BuildETA, UnitGroups
-    Symbolical: BuildBar, Waypoint Dragger
+    - Major: Adv. Players List, Commander Selection, Commander Nametags
+    - Minor: Ghost Radar, Mission UI, BuildETA, UnitGroups
+    - Symbolical: BuildBar, Waypoint Dragger, Selection Buttons
   - Improve performance of Dynamic Lighting when used together with Local Sounds, otherwise no performance change
   - Updated CustomFormations to show end points for unit destinations, some other small fixes
+  - Halved the number of flame projectiles per second for Pyros and Levelers, damage and visuals adjusted to look and feel as before
 * SVN:
   - Rename all files that had upper-case letters to lower-case (fixes possible linux vs windows issues)
 
