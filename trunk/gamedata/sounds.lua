@@ -326,6 +326,25 @@ for i =1,#files do
 	end
 end
 
+-- add sounds located in luaui too as gui sounds
+local uiFiles  = VFS.DirList("luaui/sounds")
+local t  = Sounds.SoundItems
+for i =1,#uiFiles do
+	local fileName  = uiFiles[i]
+	local startChar,endChar = string.find(fileName,"luaui/sounds/")
+	local shortName = string.sub(fileName, endChar+1)
+	
+	t[fileName]  = {
+	file      = fileName;
+	pitchmod  = 0.0;
+	gainmod   = 0;
+	gain  = 1;
+	maxconcurrent  = 1;
+	rolloff  = 0;
+	priority  = -1;
+	in3d = 0;
+	}
+end
 
 --Echo("Sound files:")
 --Echo("-------------")
