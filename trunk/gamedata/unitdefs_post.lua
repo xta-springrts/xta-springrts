@@ -278,7 +278,7 @@ if (modOptions and modOptions.realscale and tobool(modOptions.realscale)) then
 		if (UnitDefs[name].sonardistancejam) then
 			UnitDefs[name].sonardistancejam = 10 * UnitDefs[name].sonardistancejam
 		end
-		if (UnitDefs[name].floater and UnitDefs[name].canmove) then
+		if (UnitDefs[name].floatOnWater and UnitDefs[name].canmove) then
 			UnitDefs[name].maxvelocity = 1.5 * UnitDefs[name].maxvelocity
 		elseif (UnitDefs[name].canfly and UnitDefs[name].canmove) then
 			if (UnitDefs[name].hoverattack or UnitDefs[name].canbuild or UnitDefs[name].transportsize) then
