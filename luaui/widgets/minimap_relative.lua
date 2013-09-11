@@ -15,14 +15,15 @@ function widget:GetInfo()
   return {
     name      = "RelativeMinimap",
     desc      = "Keeps the minimap at a relative size (maxspect)",
-    author    = "trepan",
-    date      = "Feb 5, 2007",
+    author    = "trepan, updated by Jools",
+    date      = "Sep 11, 2013",
     license   = "GNU GPL, v2 or later",
     layer     = 0,
     enabled   = true  --  loaded by default?
   }
 end
-
+--
+-- Updated by Jools to work with CtrlPanel Improved
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 --
@@ -53,7 +54,20 @@ yoff = math.floor(yoff)
 --------------------------------------------------------------------------------
 
 function widget:Initialize()
-  widget:ViewResize(widgetHandler:GetViewSizes())
+    
+	local file = VFS.LoadFile('ctrlpanelImp.txt') 
+	if file then
+		Spring.Echo("RelativeMinimap: found ctrlpanelImp.txt and using its config")
+		--Spring.Echo(file:find('xIcons'), " AND ",file:find('xIconSize'))
+		local XColsPos = file:find('xIcons')
+		local XSizePos = file:find('xIconSize')
+		local xcols = tonumber(string.sub(file, XColsPos+6, XColsPos + 8))
+		local xsize = tonumber(string.sub(file, XSizePos+9, XSizePos + 14))
+		
+		xmax = xcols * (xsize + 0.003) -- 0.003 is sum of default textborder (0.002) and iconborder (0.001) of ctrlpanelImp
+		--Spring.Echo("Variables:",xcols,xsize,xmax)
+	end
+	widget:ViewResize(widgetHandler:GetViewSizes())
 end
 
 
