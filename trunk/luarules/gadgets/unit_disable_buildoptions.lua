@@ -111,8 +111,8 @@ function gadget:UnitCreated(unitID, unitDefID)
 	--amph facs
 	if (unitDef.isFactory and unitDef.buildOptions) then
 		for _, buildoptionID in ipairs(unitDef.buildOptions) do
-			if (UnitDefs[buildoptionID] and UnitDefs[buildoptionID].moveData) then
-				local moveData = UnitDefs[buildoptionID].moveData
+			if (UnitDefs[buildoptionID] and UnitDefs[buildoptionID].moveDef) then
+				local moveData = UnitDefs[buildoptionID].moveDef
 				if (moveData and moveData.family and moveData.depth) then
 					if (moveData.family == "ship") then
 						if (-groundheight < moveData.depth) then

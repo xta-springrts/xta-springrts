@@ -63,7 +63,7 @@ end
 if (gadgetHandler:IsSyncedCode()) then
 
 function gadget:UnitFromFactory(unitID, unitDefID, teamID, factoryID, factoryDefID)
-	--if problemMoveDefs[UnitDefs[unitDefID].moveData.name] and problemFactories[UnitDefs[factoryDefID].name] then
+	--if problemMoveDefs[UnitDefs[unitDefID].moveDef.name] and problemFactories[UnitDefs[factoryDefID].name] then
 	if AIteams[teamID] or (QTPFS and problemFactories[UnitDefs[factoryDefID].name]) then
 		local x, y, z = spGetUnitPosition(unitID)
 		local v = spGetUnitVectors(factoryID)
