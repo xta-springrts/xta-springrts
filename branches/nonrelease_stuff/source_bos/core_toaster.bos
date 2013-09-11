@@ -6,7 +6,7 @@
 piece  frame, flare, turret, pillartops, barrel2, turretback, barrel1, door2,
        door1, barrel3, hole, turretssides, ground;
 
-static-var  Static_Var_1, restore_delay, openState, bAiming, statechg_DesiredState, statechg_StateChanging;
+static-var  notReady, restore_delay, openState, bAiming, statechg_DesiredState, statechg_StateChanging;
 
 // Signal definitions
 #define SIG_AIM			2
@@ -38,12 +38,12 @@ activatescr()
 	move barrel1 to z-axis [0.000000] speed [99.287979];
 	sleep 316;
 
-	Static_Var_1 = 1;
+	notReady = 0;
 }
 
 deactivatescr()
 {
-	Static_Var_1 = 0;
+	notReady = 1;
 	move barrel2 to z-axis [0.000000] now;
 	move barrel2 to z-axis [-6.125000] speed [22.032364];
 	move turretback to z-axis [0.000000] now;
@@ -143,7 +143,7 @@ OpenClose(state)
 	signal SIG_OPEN;
 	set-signal-mask SIG_OPEN;
 	openState = state;
-	if (state != Static_var_1)
+	if (state != notReady)
 	{
 		if (state)
 		{
@@ -164,7 +164,7 @@ OpenClose(state)
 Create()
 {
 	hide flare;
-	Static_Var_1 = 1;
+	notReady = 1;
 	bAiming = 0;
 	restore_delay = 3000;
 	statechg_DesiredState = TRUE;
@@ -184,7 +184,7 @@ AimPrimary(heading, pitch)
 	start-script RequestState(0);
 	signal SIG_AIM;
 	set-signal-mask SIG_AIM;
-	while( !Static_Var_1 )
+	while( notReady )
 	{
 		sleep 250;
 	}
@@ -225,13 +225,13 @@ Killed(severity, corpsetype)
 	hide flare;
 	if( severity <= 25 )
 	{
-		if( Static_Var_1 )
-		{
-			corpsetype = 1;
-		}
-		if( !Static_Var_1 )
+		if( notReady )
 		{
 			corpsetype = 2;
+		}
+		else
+		{
+			corpsetype = 1;
 		}
 		explode barrel1 type BITMAPONLY | BITMAP1;
 		explode barrel2 type BITMAPONLY | BITMAP2;
@@ -248,13 +248,13 @@ Killed(severity, corpsetype)
 	}
 	if( severity <= 50 )
 	{
-		if( Static_Var_1 )
-		{
-			corpsetype = 2;
-		}
-		if( !Static_Var_1 )
+		if( notReady )
 		{
 			corpsetype = 3;
+		}
+		else
+		{
+			corpsetype = 2;
 		}
 		explode barrel1 type BITMAPONLY | BITMAP1;
 		explode barrel2 type FALL | BITMAP2;
@@ -273,13 +273,13 @@ Killed(severity, corpsetype)
 	}
 	if( severity <= 99 )
 	{
-		if( Static_Var_1 )
-		{
-			corpsetype = 3;
-		}
-		if( !Static_Var_1 )
+		if( notReady )
 		{
 			corpsetype = 4;
+		}
+		else
+		{
+			corpsetype = 3;
 		}
 		explode barrel1 type BITMAPONLY | BITMAP1;
 		explode barrel2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
