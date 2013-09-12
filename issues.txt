@@ -4,23 +4,10 @@ Old issues, mostly details. From http://springrts.com/phpbb/viewtopic.php?f=48&t
 Existing:
 ---------
 
-* Widgets spamming error: [f=xxx] Warning: [ReturnFalse] deprecated field!
-	
-	On firing a weapon:
-	--------------------
-	- DGun Stall assist
-	- Immobile Builder
-	
-	On creating a unit from lab:
-	-------------------
-	- factoryGuard XTA
-	
+* I got these errors on spring 94.1 when shooting with penetrator:
 
-* Gadgets spamming error: Warning: [ReturnNil] deprecated field!
-	
-	On creating a lab:
-	------------------
-	- unit_disable_buildoptions.lua (same number of errors as the number of units the lab can build)
+[f=0003075] [UnitScript] Error: Invalid explosion generator index for emit-sfx (in scripts/arm_penetrator.cob:ON at 59)
+[f=0003077] [UnitScript] Error: Invalid explosion generator index for emit-sfx (in scripts/arm_penetrator.cob:ON at 55)
 
 
 * Annihilator shoots before it has aimed. It shoots the first beam before the turret has targeted on target, and the first beam goes to a random direction, sometimes it hits self.
