@@ -22,11 +22,6 @@ local allDynLightDefs = include("LuaRules/Configs/gfx_dynamic_lighting_defs.lua"
 local modDynLightDefs = allDynLightDefs[Game.modShortName] or {}
 local weaponLightDefs = modDynLightDefs.weaponLightDefs or {}
 
--- shared synced/unsynced globals
-local PROJECTILE_GENERATED_EVENT_ID = 10001
-local PROJECTILE_DESTROYED_EVENT_ID = 10002
-local PROJECTILE_EXPLOSION_EVENT_ID = 10003
-
 
 
 if (gadgetHandler:IsSyncedCode()) then
@@ -75,27 +70,22 @@ if (gadgetHandler:IsSyncedCode()) then
 	-- too many calls to unsynced part, therefore, check if the projectile has a dynamic light
 	function gadget:ProjectileCreated(projectileID, projectileOwnerID, projectileWeaponDefID)
 		if (projectileLightDefs[projectileWeaponDefID]) then
-			SendToUnsynced(PROJECTILE_GENERATED_EVENT_ID, projectileID, projectileOwnerID, projectileWeaponDefID)
+			SendToUnsynced("DL_ProjectileCreated", projectileID, projectileOwnerID, projectileWeaponDefID)
 		end
 	end
 
 	function gadget:ProjectileDestroyed(projectileID)
 		local wName = SpringGetProjectileName(projectileID)
 		if (WeaponDefNames[wName] and projectileLightDefs[WeaponDefNames[wName].id]) then
-			SendToUnsynced(PROJECTILE_DESTROYED_EVENT_ID, projectileID)
+			SendToUnsynced("DL_ProjectileDestroyed", projectileID)
 		end
 	end
 
 	function gadget:Explosion(weaponDefID, posx, posy, posz, ownerID)
-	
-		--Spring.Echo(Spring.GetGameFrame(), ", Dyn. Light - Explosion: ", weaponDefID, posx, posy, posz, ownerID)
-	
 		if (explosionLightDefs[weaponDefID]) then
-			SendToUnsynced(PROJECTILE_EXPLOSION_EVENT_ID, weaponDefID, posx, posy, posz)
-			return false -- noGFX
-		else
-			return false -- returning true interferes with other gadgets
+			SendToUnsynced("DL_ProjectileExplosion", weaponDefID, posx, posy, posz)
 		end
+		return false
 	end
 
 
@@ -162,11 +152,11 @@ else
 
 
 
-	local function ProjectileCreated(projectileID, projectileOwnerID, projectileWeaponDefID)
+	local function ProjectileCreated(_, projectileID, projectileOwnerID, projectileWeaponDefID)
 		local projectileLightDef = projectileLightDefs[projectileWeaponDefID]
 
 		if (projectileLightDef == nil) then
-			return
+			return true
 		end
 
 		projectileLights[projectileID] = {
@@ -178,11 +168,12 @@ else
 
 		SpringSetMapLightTrackingState(projectileLights[projectileID][1], projectileID, true, false)
 		SpringSetModelLightTrackingState(projectileLights[projectileID][2], projectileID, true, false)
+		return true
 	end
 
-	local function ProjectileDestroyed(projectileID)
+	local function ProjectileDestroyed(_, projectileID)
 		if (projectileLights[projectileID] == nil) then
-			return
+			return true
 		end
 
 		-- set the TTL to 0 upon the projectile's destruction
@@ -202,14 +193,15 @@ else
 
 		-- get rid of this light
 		projectileLights[projectileID] = nil
+		return true
 	end
 
 
-	local function ProjectileExplosion(weaponDefID, posx, posy, posz)
+	local function ProjectileExplosion(_, weaponDefID, posx, posy, posz)
 		local explosionLightDef = explosionLightDefs[weaponDefID]
 
 		if (explosionLightDef == nil) then
-			return
+			return true
 		end
 
 		local explosionLightAlt = explosionLightDef.altitudeOffset or 0.0
@@ -226,6 +218,7 @@ else
 
 		SpringUpdateMapLight(explosionLights[numExplosions][1], explosionLightTbl)
 		SpringUpdateModelLight(explosionLights[numExplosions][2], explosionLightTbl)
+		return true
 	end
 
 	function gadget:Initialize()
@@ -244,20 +237,13 @@ else
 			Spring.SetConfigInt("MaxDynamicModelLights", math.max(maxMdlLights, 4))
 		end
 
-		unsyncedEventHandlers[PROJECTILE_GENERATED_EVENT_ID] = ProjectileCreated
-		unsyncedEventHandlers[PROJECTILE_DESTROYED_EVENT_ID] = ProjectileDestroyed
-		unsyncedEventHandlers[PROJECTILE_EXPLOSION_EVENT_ID] = ProjectileExplosion
-
+		gadgetHandler:AddSyncAction('DL_ProjectileCreated', ProjectileCreated)
+		gadgetHandler:AddSyncAction('DL_ProjectileDestroyed', ProjectileDestroyed)
+		gadgetHandler:AddSyncAction('DL_ProjectileExplosion', ProjectileExplosion)
+		
 		-- fill the {projectile, explosion}LightDef tables
 		LoadLightDefs()
 	end
 
-	function gadget:RecvFromSynced(eventID, arg0, arg1, arg2, arg3)
-		local eventHandler = unsyncedEventHandlers[eventID]
-
-		if (eventHandler ~= nil) then
-			eventHandler(arg0, arg1, arg2, arg3)
-		end
-	end
 end
 
