@@ -8,10 +8,13 @@ Existing:
 
 [f=0003075] [UnitScript] Error: Invalid explosion generator index for emit-sfx (in scripts/arm_penetrator.cob:ON at 59)
 [f=0003077] [UnitScript] Error: Invalid explosion generator index for emit-sfx (in scripts/arm_penetrator.cob:ON at 55)
+-Does not happen in dev build, it's also not a script error, must be related to FBI and explosiongenerator0=custom:UNITFIRE;
 
 
 * Annihilator shoots before it has aimed. It shoots the first beam before the turret has targeted on target, and the first beam goes to a random direction, sometimes it hits self.
 	- Also applies for penetrator
+-This is not an issue, it's happens in dev build due to all BeamLasers having sweepfire enabled by default in order to test the sweepfire fix
+
 
 
 * Units with oversized Collision Volumes: 
