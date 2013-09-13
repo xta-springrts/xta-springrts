@@ -87,8 +87,7 @@ else
 		if (spGetUnitHealth(unitID) <= 0.0) then
 			return true	-- unit is already dead
 		end
-		--if (attackerID ~= nil and spAreTeamsAllied(spGetUnitTeam(unitID), spGetUnitTeam(attackerID))) then
-		if (attackerID ~= nil and spAreTeamsAllied(unitTeamID, attackerTeamID)) then
+		if (attackerTeamID ~= nil and spAreTeamsAllied(unitTeamID, attackerTeamID)) then
 			return true	-- ignore friendly fire
 		end
 
