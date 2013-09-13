@@ -34,10 +34,10 @@ if LUA_NAME == "LuaUI" then
 	KNOWN_FILENAME  = LUAUI_DIRNAME .. 'Config/' .. Game.modShortName .. '_known.lua'
 
 	ADDON_DIRS     = {
-		LUA_DIRNAME .. 'Addons/';
-		LUA_DIRNAME .. 'Widgets/';
-		LUA_DIRNAME .. 'SystemAddons/';
-		LUA_DIRNAME .. 'SystemWidgets/';
+		LUA_DIRNAME .. 'addons/';
+		LUA_DIRNAME .. 'widgets/';
+		LUA_DIRNAME .. 'systemaddons/';
+		LUA_DIRNAME .. 'systemwidgets/';
 		LUA_DIRNAME .. 'chili/';
 	}
 
@@ -49,10 +49,10 @@ else
 	AddonNames = handler.AddonName .. "s/"
 
 	ADDON_DIRS     = {
-		LUA_DIRNAME .. 'Addons/';
+		LUA_DIRNAME .. 'addons/';
 		LUA_DIRNAME .. AddonNames;
-		LUA_DIRNAME .. 'SystemAddons/';
-		LUA_DIRNAME .. 'System' .. AddonNames;
+		LUA_DIRNAME .. 'systemaddons/';
+		LUA_DIRNAME .. 'system' .. AddonNames;
 		LUA_DIRNAME .. 'chili/';
 	}
 end
