@@ -3,33 +3,25 @@ function widget:GetInfo()
 	return {
 		name      = 'Commander Change',
 		desc      = 'Adds buttons to choose commander',
-		version   = "1.2",
+		version   = "1.3",
 		author    = 'Niobium, Jools',
-		date      = 'August, 2013',
+		date      = 'Sep, 2013',
 		license   = 'GNU GPL v2',
 		layer     = -9,
 		enabled   = true,
 	}
 end
 -- Bugfixes:
+-- * Now dont filter out spectators from playerslist on the left; add code to correctly hide on F5
 --
 -- * Fixed a bug caused by change in ready state message by spring: it updated from "missing" to "notready" and that's why widget would never catch 
 -- correct state when user has marked but not readied up. Now colour code is grey and not red when correct state is not recognised.
 --
---------------------------------------------------------------------------------
--- Var
---------------------------------------------------------------------------------
-local vsx, vsy = gl.GetViewSizes()
-local scale
-local px, py = 300, 300
-local sizeX, sizeY  = 320, 180
-local mid = px + sizeX/2
-local th = 16 -- text height for buttons
-local th2 = 11 -- text height for body text
-local th3 = 20 -- text height for player names
-local n = 0 -- amount of players
 
+--------------------------------------------------------------------------------
 --IMAGES
+--------------------------------------------------------------------------------
+
 --commander selection
 local imgComAA 				= "LuaUI/Images/commchange/ComAA.png" -- arm auto
 local imgComAM 				= "LuaUI/Images/commchange/ComAM.png" -- arm manual
@@ -91,50 +83,61 @@ Button["exit"] = {}
 Button["speclabel"] = {}
 Button["duck"] = {}
 Button["specinfo"] = {}
+
+--------------------------------------------------------------------------------
+-- Variables
+--------------------------------------------------------------------------------
+local vsx, vsy 						= gl.GetViewSizes()
+local scale
+local px, py 						= 300, 300
+local sizeX, sizeY  				= 320, 180
+local mid 							= px + sizeX/2
+local th 							= 16 -- text height for buttons
+local th2 							= 11 -- text height for body text
+local th3 							= 20 -- text height for player names
+local n 							= 0 -- amount of players
+local mySide, myType
+local myState 						= 0
+local gameState 					= 0
+local cntDown 						= -1
+local lastCount
+local pStates
+local markedStates 					= {}
+local lastStartID
+local strInfo
+local infoOn 						= false
+
 --------------------------------------------------------------------------------
 -- Speedups
 --------------------------------------------------------------------------------
-local teamList = Spring.GetTeamList()
-local myTeamID = Spring.GetMyTeamID()
-local mySide, myType
-local myState = 0
-local gameState = 0
-local cntDown = -1
-local lastCount
-local pStates
-local markedStates = {}
-local lastStartID
+local teamList 						= Spring.GetTeamList()
+local myTeamID 						= Spring.GetMyTeamID()
+local glTexCoord					= gl.TexCoord
+local glVertex 						= gl.Vertex
+local glColor 						= gl.Color
+local glRect						= gl.Rect
+local glTexture 					= gl.Texture
+local glTexRect 					= gl.TexRect
+local glDepthTest 					= gl.DepthTest
+local glBeginEnd 					= gl.BeginEnd
+local GL_QUADS 						= GL.QUADS
+local glPushMatrix 					= gl.PushMatrix
+local glPopMatrix 					= gl.PopMatrix
+local glTranslate 					= gl.Translate
+local glBeginText				 	= gl.BeginText
+local glEndText 					= gl.EndText
+local glText 						= gl.Text
+local Echo 							= Spring.Echo
+local spectator 					= Spring.GetSpectatingState()
+local spGetTeamStartPosition 		= Spring.GetTeamStartPosition
+local spGetTeamRulesParam 			= Spring.GetTeamRulesParam
+local spGetGroundHeight	 			= Spring.GetGroundHeight
+local spSendLuaRulesMsg 			= Spring.SendLuaRulesMsg
+local spSendLuaUIMsg 				= Spring.SendLuaUIMsg
+local spGetTeamInfo 				= Spring.GetTeamInfo
+local PlaySoundFile 				= Spring.PlaySoundFile
+local max, min 						= math.max, math.min
 
-local strInfo
-local infoOn = false
---local font            						= "LuaUI/Fonts/FreeMonoBold_12"
---local font2         						= "LuaUI/Fonts/FreeSansBold_14"
---local UseFont             		 			= fontHandler.UseFont
-local glTexCoord = gl.TexCoord
-local glVertex = gl.Vertex
-local glColor = gl.Color
-local glRect = gl.Rect
-local glTexture = gl.Texture
-local glTexRect = gl.TexRect
-local glDepthTest = gl.DepthTest
-local glBeginEnd = gl.BeginEnd
-local GL_QUADS = GL.QUADS
-local glPushMatrix = gl.PushMatrix
-local glPopMatrix = gl.PopMatrix
-local glTranslate = gl.Translate
-local glBeginText = gl.BeginText
-local glEndText = gl.EndText
-local glText = gl.Text
-local Echo = Spring.Echo
-local spectator = Spring.GetSpectatingState()
-local spGetTeamStartPosition = Spring.GetTeamStartPosition
-local spGetTeamRulesParam = Spring.GetTeamRulesParam
-local spGetGroundHeight = Spring.GetGroundHeight
-local spSendLuaRulesMsg = Spring.SendLuaRulesMsg
-local spSendLuaUIMsg = Spring.SendLuaUIMsg
-local spGetTeamInfo = Spring.GetTeamInfo
-local PlaySoundFile = Spring.PlaySoundFile
-local max, min = math.max, math.min
 --------------------------------------------------------------------------------
 -- Local functions
 --------------------------------------------------------------------------------
@@ -251,9 +254,10 @@ function widget:Initialize()
     if Spring.GetGameFrame() > 0 or (Spring.GetModOptions() or {}).commander ~= "choose" then
         widgetHandler:RemoveWidget(self)
     end
-	--local X, Y = Spring.GetViewGeometry()
+
 	vsx, vsy = gl.GetViewSizes()
 	scale = vsy/1024
+	
 	--sizes:
 	sizex 	= sizeX * scale
 	sizey 	= sizeY * scale
@@ -261,10 +265,9 @@ function widget:Initialize()
 	th = 16 * scale
 	th2 = 11 * scale
 	th3 = 20 * scale
-	--position:
-	--px, py = px*scale, py*scale
-	-- side
+	
 	updateState()
+	
 	--marked states
 	for i,player in ipairs(Spring.GetTeamList()) do
 		markedStates[i] = false
@@ -292,7 +295,6 @@ function widget:Initialize()
 		n = #(Spring.GetTeamList())-1
 		sizeX = 380
 		sizeY = 50 + 20 * (n+1)
-		--Echo("Updated size for specs: n = ",n, " size =", sizeX, sizeY)
 	end
 	--buttons:
 	initButtons()
@@ -300,14 +302,12 @@ end
 
 function widget:RecvLuaMsg(msg, playerID)
 	local positionRegex = "181072"
-	--Spring.Echo("Got a message...",msg, playerID,string.len(msg))
+
 	if msg and string.len(msg) >= 8 then	
 		local sms = string.sub(msg, string.len(positionRegex)+1) 
 		local state = tonumber(string.sub(sms,1,1))
 		local player = tonumber(string.sub(sms,2))
 		
-		--Spring.Echo("Got a msg:", player,": ",state, msg)
-		--display the message in the UI
 		if player then
 			if state == 0 then
 				markedStates[player+1] = false
@@ -315,17 +315,13 @@ function widget:RecvLuaMsg(msg, playerID)
 				markedStates[player+1] = true
 			end
 		end
-		
-		--for i,st in pairs(markedStates) do
-			--Spring.Echo("Markedstates for player " .. i-1 .. ":" ,st)
-		--end
-		
 	end
 end
 
 function widget:ViewResize(viewSizeX, viewSizeY)
 	vsx, vsy = gl.GetViewSizes()
 	scale = vsy/1024
+	
 	--sizes:
 	sizex 	= sizeX * scale
 	sizey 	= sizeY * scale
@@ -336,6 +332,8 @@ function widget:ViewResize(viewSizeX, viewSizeY)
 end
 
 function widget:DrawWorld()
+	if Spring.IsGUIHidden() then return end
+	
 	checkState()
 	updateState()
 	
@@ -346,7 +344,6 @@ function widget:DrawWorld()
         local tsx, tsy, tsz = spGetTeamStartPosition(teamID)
         if tsx and tsx > 0 then
             if mySide == "arm" then
-			--if (teamStartUnit == 30) or (teamStartUnit == 166) then
                 glTexture(imgARM)
                 glBeginEnd(GL_QUADS, QuadVerts, tsx, spGetGroundHeight(tsx, tsz), tsz, 80)
             else 
@@ -367,7 +364,8 @@ local function drawBorder(x0, y0, x1, y1, width)
 end
 
 function widget:DrawScreenEffects(vsx, vsy)
-	
+	if Spring.IsGUIHidden() then return end
+		
 	local h = vsy/3
 	local x = vsx/2 - h/2
 	local y = vsy/2 - h/2
@@ -376,7 +374,6 @@ function widget:DrawScreenEffects(vsx, vsy)
 	
 	--CountDown
 	if gameState == 2 then
-		--UseFont(font)
 		glColor(0.8, 0.8, 1, 1)
 		
 		if cntDown == "3" then
@@ -394,13 +391,11 @@ function widget:DrawScreenEffects(vsx, vsy)
 		glTexRect(x,y,x1,y1)
 		glTexture(false)
 		glColor(1, 1, 1, 1)
-		--glText(cntDown, vsx/2, vsy/2+100, 160, 'xsn')
 		
 		if cntDown ~= lastCount then
 			Spring.PlaySoundFile(tock)
 			lastCount = cntDown
 		end
-		--UseFont(font)
 	end
 	
 	if myState ~= 3 then
@@ -482,7 +477,6 @@ function widget:DrawScreenEffects(vsx, vsy)
 			-- Panel
 			glColor(0, 0, 0, 0.4)
 			glRect(px,py, px+sizex, py+sizey)
-			--Echo("DrawScreeneffects: size = ", sizeX, sizeY, "pxpy =", px, py)
 		end
 	end
 	
@@ -504,7 +498,8 @@ function widget:DrawScreenEffects(vsx, vsy)
 end
 
 function widget:DrawScreen()
-		
+	if Spring.IsGUIHidden() then return end
+	
 	local function firstToUpper(str)
 		return (str:gsub("^%l", string.upper))
 	end	
@@ -521,8 +516,8 @@ function widget:DrawScreen()
 		glText("Players:", 10, y0 + th3+2, th3, 'xno')
 		
 		for i,ps in pairs(pStates) do
-			local leaderName,active,spectator,team,_,_,_,country,rank	= Spring.GetPlayerInfo(i)
-			if not spectator then
+			local leaderName,active,spec,team,_,_,_,country,rank	= Spring.GetPlayerInfo(i)
+			if not spec then
 				if not active then
 					glColor(0.6, 0.2, 0.2, 0.8) -- red
 				else
@@ -546,15 +541,18 @@ function widget:DrawScreen()
 					end
 				end
 				glText(leaderName, 10, y0 - (th3+2)* i, th3, 'xn')
+			else
+				if not active or ps == "missing" then
+					glColor(0.6, 0.2, 0.2, 0.8) -- red
+				else
+					glColor(0.5, 0.5, 0.5, 0.8) -- grey 
+				end
+				glText(leaderName .. " (s)", 10, y0 - (th3+2)* i, th3, 'xn')
 			end
 		end
 	end
 	
 	if spectator then
-		-- Panel
-		--glColor(0, 0, 0, 0.4)
-		--glRect(px,py, px+sizex, py+sizey)	
-		--Echo("DrawWorld: size = ", sizeX, sizeY)
 		
 		-- duck button
 		glColor(0, 0, 0, 0.4)
@@ -855,11 +853,6 @@ function widget:GameSetup(state, ready, playerStates)
 	pStates = playerStates
 	strInfo = state
 	
-	--for i,ps in pairs(pStates) do
-		--Spring.Echo("State for player" .. i+1 .. ":",ps)
-		--Spring.Echo("State for player" .. i+1 .. ":",markedStates[i])
-	--end
-	
 	if strS == "Choose" then 
 		gameState = 0
 	elseif strS == "Waitin" then
@@ -1015,13 +1008,6 @@ function widget:MousePress(mx, my, mButton)
 		end
 	end
 	return false
-end
-
-function widget:MapDrawCmd(playerID, cmdType, px, py, pz, labeltext)
-	if playerID == myTeamID then
-		--checkState()
-		--return true
-	end
 end
 
 function widget:MouseMove(mx, my, dx, dy, mButton)
