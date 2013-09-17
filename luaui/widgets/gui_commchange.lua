@@ -540,14 +540,18 @@ function widget:DrawScreen()
 						glColor(0.5, 0.5, 0.5, 0.8) -- grey -- glColor(0.7, 0.9, 0.7, 1) -- white/green
 					end
 				end
-				glText(leaderName, 10, y0 - (th3+2)* i, th3, 'xn')
+				glText(leaderName, 25, y0 - (th3+2)* i, th3, 'xn')
+				glColor(0.4,0.4,0.4,1)
+				glTexture("LuaUI/Images/commchange/C-Rank" .. rank ..".png")
+				glTexRect(10, y0 - (th3+2)* i, 22, y0 - (th3+2)* i+12)
+				glTexture (false)
 			else
 				if not active or ps == "missing" then
 					glColor(0.6, 0.2, 0.2, 0.8) -- red
 				else
 					glColor(0.5, 0.5, 0.5, 0.8) -- grey 
 				end
-				glText(leaderName .. " (s)", 10, y0 - (th3+2)* i, th3, 'xn')
+				glText(leaderName .. " (s)", 25, y0 - (th3+2)* i, th3, 'xn')
 			end
 		end
 	end
