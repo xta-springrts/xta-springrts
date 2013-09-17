@@ -199,7 +199,7 @@
 	soundstart=bombrel;
 	soundhitdry=xplomed2;
 	soundtrigger=0;
-	firestarter=50;	
+	firestarter=50;
 	[DAMAGE]
 	{
 		default=107.5;
@@ -216,7 +216,7 @@
 	thickness=0.75;
 	CoreThickness=1.0;
 	Intensity=0.4;
-	duration=0.03;	
+	duration=0.03;
 	rgbcolor=1 0.8 0.4;
 	turret=1;
 	range=666;
@@ -243,7 +243,7 @@
 	thickness=0.75;
 	CoreThickness=1.0;
 	Intensity=0.4;
-	duration=0.03;	
+	duration=0.03;
 	rgbcolor=1 0.8 0.4;
 	turret=1;
 	range=830;
@@ -463,7 +463,7 @@
 	tracks=1;
 	waterweapon=1;
 	tolerance=12000;
-	edgeeffectiveness=0.05;	
+	edgeeffectiveness=0.05;
 	explosiongenerator=custom:Torpedo;
 	WaterBounce=0;
 	NumBounce=1;
@@ -474,7 +474,7 @@
 	{
 		default=1200;
 		group_invincible=1;
-		
+
 	}
 }
 [ARMAMB_GUN]
@@ -780,7 +780,7 @@
 	Weapontype=LaserCannon;
 	explosiongenerator=custom:GreenLaser;
 	cegTag=GREENCRAP;
-	duration=0.08;	
+	duration=0.08;
 	thickness=2.5;
 	intensity=0.9;
 	turret=1;
@@ -1014,6 +1014,7 @@
 	rgbcolor=0.000 0.012 1.000;
 	pulseSpeed=4.0;
 	thickness=3.5;
+	avoidFeature=0;
 	[DAMAGE]
 	{
 		default=40;
@@ -1321,7 +1322,7 @@
 	tolerance=10000;
 	startsmoke=1;
 	trajectoryHeight=0.08;
-	dance=30;	
+	dance=30;
 	[DAMAGE]
 	{
 		default=36;
@@ -1927,7 +1928,7 @@
 		default=23;
 		group_invincible=1;
 		group_landair=119;
-	}	
+	}
 }
 [ARM_ARTILLERY]
 {
@@ -2046,7 +2047,7 @@
 	{
 		default=950;//742
 		group_invincible=1;
-		group_ships=1430; //1120 
+		group_ships=1430; //1120
 		group_large_ships=1430; //1120
 	}
 }
@@ -2327,7 +2328,7 @@
 	tolerance=3000;
 	startsmoke=0;
 	endsmoke=0;
-	explosiongenerator=custom:PARALYZER_BLUE;	
+	explosiongenerator=custom:PARALYZER_BLUE;
 	paralyzetime=25;
   	texture1=testlightning;
   	laserflaresize=1;
@@ -2420,7 +2421,7 @@
 	thickness=7.5;
 	beamtime=1;
 	beamdecay=0.9;
-	beamttl=20;
+	beamttl=10;
 	hardStop=0;
 	range=1850;
 	reloadtime=7;
@@ -2433,6 +2434,7 @@
 	waterweapon=1; //allow piercing of water surface
 	rgbcolor=0.000 0.012 1.000;
 	explosiongenerator=custom:ANNILAHATORLASER;
+	avoidFeature=0;
 	[DAMAGE]
 	{
 		default=8500;
@@ -3036,7 +3038,7 @@
 	name=Laser;
 	Weapontype=LaserCannon;
 	explosiongenerator=custom:PINKFLASH;
-	duration=0.12;	
+	duration=0.12;
 	thickness=1.0;
 	intensity=0.85;
 	turret=1;
@@ -3329,7 +3331,7 @@
 	Weapontype=LaserCannon;
 	explosiongenerator=custom:GreenLaser;
 	cegTag=GREENCRAP;
-	duration=0.07;	
+	duration=0.07;
 	thickness=2.5;
 	intensity=1.0;
 
@@ -3544,7 +3546,7 @@
 {
 	explosiongenerator=custom:GreenLaser;
 	cegTag=GREENCRAP;
-	duration=0.08;	
+	duration=0.08;
 	thickness=2.5;
 	intensity=0.9;
 	name=High Energy Laser;
@@ -3633,7 +3635,7 @@
 		default=58;
 		group_landair=294;
 		group_invincible=1;
-	}	
+	}
 }
 [CORHRK_ROCKET]
 {
@@ -4237,7 +4239,7 @@
 	tolerance=10000;
 	startsmoke=1;
 	trajectoryHeight=0.08;
-	dance=30;	
+	dance=30;
 	[DAMAGE]
 	{
 		default=35;
@@ -4492,7 +4494,7 @@
 	Weapontype=LaserCannon;
 	duration=0.06;
 	thickness=1.6;
-	Intensity=0.9; 	
+	Intensity=0.9;
 	turret=1;
 	range=780;
 	reloadtime=0.7;
@@ -4658,7 +4660,7 @@
 	Weapontype=LaserCannon;
 	turret=1;
 	duration=0.11;
-	intensity=1;	
+	intensity=1;
 	thickness=1.3;
 	range=1350;
 	reloadtime=4.25;
@@ -4859,7 +4861,7 @@
 	weaponvelocity=350;
 	weaponacceleration=100;
 	turnrate=28000;
-	areaofeffect=2812;	
+	areaofeffect=2812;
 	energypershot=120000;
 	metalpershot=1800;
 	stockpile=1;
@@ -5093,7 +5095,7 @@
 	name=Flame Thrower;
 	weaponType=Flame;
 	explosiongenerator=custom:FLAMETHROWER;
-	NoSelfDamage=1;	
+	NoSelfDamage=1;
 	SoundTrigger=1;
 	Texture1=flamer;
 	Texture2=null;
@@ -6126,7 +6128,7 @@
 	startsmoke=1;
 	accuracy=900;
 	movingaccuracy=1800;
-	tolerance=300;	
+	tolerance=300;
 	[DAMAGE]
 	{
 		default=422;
@@ -6265,7 +6267,7 @@
 	duration=0.04;
 	thickness=1.2;
 	CoreThickness=0.5;
-	Intensity=5.0; 	
+	Intensity=5.0;
 	turret=1;
 	range=300;
 	reloadtime=0.6;
@@ -6689,7 +6691,7 @@
 	size=3;
 	impulseboost=0.0;
 	cratermult=0;
-	impulsefactor=0.0;	
+	impulsefactor=0.0;
 	GroundBounce=0;
 	WaterBounce=0;
 	NumBounce=2;
@@ -6960,7 +6962,7 @@
 	tolerance=1000;
 	impulseboost=0.0;
 	cratermult=0;
-	impulsefactor=0.0;	
+	impulsefactor=0.0;
 	[DAMAGE]
 	{
 		default=4000;
@@ -6990,7 +6992,7 @@
 	tolerance=1000;
 	impulseboost=0.0;
 	cratermult=0;
-	impulsefactor=0.0;	
+	impulsefactor=0.0;
 	[DAMAGE]
 	{
 		default=687;
@@ -7150,7 +7152,7 @@
 	firestarter=90;
 	rgbcolor=0.8 0.8 1.0;
 	tolerance=5000;
-	explosiongenerator=custom:PARALYZER_BLUE;	
+	explosiongenerator=custom:PARALYZER_BLUE;
 	[DAMAGE]
 	{
 		default=22;
