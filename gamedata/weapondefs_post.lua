@@ -166,14 +166,15 @@ if modOptions and modOptions.nuke and not tobool(modOptions.nuke) then intercept
 
 for id in pairs(WeaponDefs) do
 	WeaponDefs[id].soundhitwet = ""
-	if WeaponDefs[id].range and tonumber(WeaponDefs[id].range) < 550 or explosiveWeapons[WeaponDefs[id].weapontype] then
-		WeaponDefs[id].avoidfeature = false
+	if WeaponDefs[id].range and tonumber(WeaponDefs[id].range) < 550 or 
+		WeaponDefs[id].reloadtime and tonumber(WeaponDefs[id].reloadtime)<1.5 or
+		explosiveWeapons[WeaponDefs[id].weapontype] then
+			WeaponDefs[id].avoidfeature = false	-- don't avoid features if short range, explosive or rapid fire weapon
 	end
 	if explosiveWeapons[WeaponDefs[id].weapontype] then
 		if WeaponDefs[id].edgeeffectiveness and tonumber(WeaponDefs[id].edgeeffectiveness)>0 and tonumber(WeaponDefs[id].areaofeffect)<145 then
 			WeaponDefs[id].areaofeffect = math.min(WeaponDefs[id].areaofeffect / (1 - WeaponDefs[id].edgeeffectiveness), 160)
 			WeaponDefs[id].edgeeffectiveness = 0
-			WeaponDefs[id].avoidfeature = false
 		end
 		if WeaponDefs[id].weapontype == "Cannon" and WeaponDefs[id].range and not WeaponDefs[id].mygravity and not WeaponDefs[id].cylindertargeting then
 			WeaponDefs[id].mygravity = customGravity
@@ -208,6 +209,14 @@ for id in pairs(WeaponDefs) do
 		elseif WeaponDefs[id].weapontype == "BeamLaser" then
 			WeaponDefs[id].soundhitdry = ""
 			WeaponDefs[id].soundtrigger = 1
+			--WeaponDefs[id].sweepfire = 0	-- at least till test phase of spring is over
+		elseif WeaponDefs[id].weapontype == "DGun" then
+			WeaponDefs[id].waterweapon = true	-- make DGun ball piece water, but don't allow firing while under water
+			WeaponDefs[id].firesubmersed = false
+			WeaponDefs[id].avoidFriendly = false	-- make DGun ball shoot through anything, anywhere, anytime
+			WeaponDefs[id].avoidFeature = false
+			WeaponDefs[id].avoidGround = false
+			WeaponDefs[id].avoidNeutral = false
 		end
 	end	
 	if WeaponDefs[id].cratermult then 
@@ -326,25 +335,33 @@ end
 -- Don't Collide with friendlies for all weapons
 
 if (modOptions.nocollide and tobool(modOptions.nocollide)) then
-  for id in pairs(WeaponDefs) do
-	WeaponDefs[id].collidefriendly = false
-  end
+	for id in pairs(WeaponDefs) do
+		WeaponDefs[id].collidefriendly = false
+	end
 end
 
 -- Low performance computer mode
 if (modOptions.lowcpu and tobool(modOptions.lowcpu)) then
-  for id in pairs(WeaponDefs) do
-	WeaponDefs[id].cegtag = "" 
-	if WeaponDefs[id].reloadtime and tonumber(WeaponDefs[id].reloadtime)<0.5 then
-		WeaponDefs[id].reloadtime = WeaponDefs[id].reloadtime * 2
-		if WeaponDefs[id].energypershot then WeaponDefs[id].energypershot = WeaponDefs[id].energypershot * 2 end
-		if WeaponDefs[id].metalpershot then WeaponDefs[id].metalpershot = WeaponDefs[id].metalpershot * 2 end
-		if WeaponDefs[id].beamtime then WeaponDefs[id].beamtime = WeaponDefs[id].beamtime * 2 end
-		for weap, dmg in pairs(WeaponDefs[id].damage) do
-			WeaponDefs[id].damage[weap] = dmg * 2
+	for id in pairs(WeaponDefs) do
+		WeaponDefs[id].cegtag = ""
+		local burst = tonumber(WeaponDefs[id].burst or 1)
+		local rTime = tonumber(WeaponDefs[id].reloadtime or 1)
+		if rTime<0.5 then
+			WeaponDefs[id].reloadtime = rTime * 2
+			if WeaponDefs[id].energypershot then WeaponDefs[id].energypershot = WeaponDefs[id].energypershot * 2 end
+			if WeaponDefs[id].metalpershot then WeaponDefs[id].metalpershot = WeaponDefs[id].metalpershot * 2 end
+			if WeaponDefs[id].beamtime then WeaponDefs[id].beamtime = WeaponDefs[id].beamtime * 2 end
+			for weap, dmg in pairs(WeaponDefs[id].damage) do
+				WeaponDefs[id].damage[weap] = dmg * 2
+			end
+		elseif rTime/burst<0.5 then
+			WeaponDefs[id].reloadtime = WeaponDefs[id].reloadtime * 2
+			WeaponDefs[id].burstrate = (WeaponDefs[id].burstrate or 0.1) * 2
+			for weap, dmg in pairs(WeaponDefs[id].damage) do
+				WeaponDefs[id].damage[weap] = dmg * 2
+			end
 		end
 	end
-  end
 end
 
 end

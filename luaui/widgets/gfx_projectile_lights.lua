@@ -29,6 +29,7 @@ local spGetProjectileTarget		= Spring.GetProjectileTarget
 local spGetUnitPosition			= Spring.GetUnitPosition
 local spGetUnitRadius			= Spring.GetUnitRadius
 local spGetFeaturePosition		= Spring.GetFeaturePosition
+local spGetFeatureRadius		= Spring.GetFeatureRadius
 local spGetGameFrame 			= Spring.GetGameFrame
 
 local glPushMatrix		= gl.PushMatrix
@@ -39,17 +40,19 @@ local glPopMatrix		= gl.PopMatrix
 local glBeginEnd		= gl.BeginEnd
 local glVertex			= gl.Vertex
 local glTexCoord		= gl.TexCoord
+local glShape			= gl.Shape
 local glTexture			= gl.Texture
 local glColor			= gl.Color
 local glDepthMask		= gl.DepthMask
 local glDepthTest		= gl.DepthTest
 local glCallList		= gl.CallList
 local glBlending		= gl.Blending
+local GL_TRIANGLE_STRIP = GL.TRIANGLE_STRIP
 local max, min			= math.max, math.min
 local floor				= math.floor
 local sqrt				= math.sqrt
 local atan2				= math.atan2
-local acos				= math.acos
+local acos, cos			= math.acos, math.cos
 local abs				= math.abs
 local DegToRad			= 57.295779513082320876798
 
@@ -75,9 +78,9 @@ listC = gl.CreateList(function()	-- Cannon light decal texture
     --point1
     glTexCoord(0.0,0.0)
     glVertex(-4.0,0.0,-4.0)
-    --point2                                 
-    glTexCoord(0.0,1.0)                           
-    glVertex(4.0,0.0,-4.0)                   
+    --point2
+    glTexCoord(0.0,1.0)
+    glVertex(4.0,0.0,-4.0)
     --point3
     glTexCoord(0.5,0.0)
     glVertex(-4.0,0.0,4.0)
@@ -92,9 +95,9 @@ listL = gl.CreateList(function()	-- Laser cannon decal texture
     --point1
     glTexCoord(0.5,0.0)
     glVertex(-2.0,0.0,-4.0)
-    --point2                                 
-    glTexCoord(0.5,1.0)                           
-    glVertex(2.0,0.0,-4.0)                   
+    --point2
+    glTexCoord(0.5,1.0)
+    glVertex(2.0,0.0,-4.0)
     --point3
     glTexCoord(1.0,0.0)
     glVertex(-2.0,0.0,2.0)
@@ -103,24 +106,6 @@ listL = gl.CreateList(function()	-- Laser cannon decal texture
     glVertex(2.0,0.0,2.0)
     end)
 end)
-
-listN = gl.CreateList(function()	-- BeamLaser/LightningCannon decal texture
-	glBeginEnd(GL.QUAD_STRIP,function()  
-    --point1
-    glTexCoord(0.5,0.0)
-    glVertex(-2.0,0.0,-1.0)
-    --point2                                 
-    glTexCoord(0.5,1.0)                           
-    glVertex(2.0,0.0,-1.0)                   
-    --point3
-    glTexCoord(1.0,0.0)
-    glVertex(-2.0,0.0,1.0)
-    --point4
-    glTexCoord(1.0,1.0)
-    glVertex(2.0,0.0,1.0)
-    end)
-end)
-
 
 function widget:Initialize() -- create lighttable
 	local modOptions = Spring.GetModOptions()
@@ -136,13 +121,13 @@ function widget:Initialize() -- create lighttable
 				--EmgCannon - looks a bit shiny when close to ground
 				--LaserCannon - über effects
 				--Flame - a bit iffy cause of long projectile life... but it looks great.
+				--BeamLaser --with Spring 94.1.1+ super-über-ober effects
+				--LightningCannon --same as BeamLasers
 			--Shouldn't:
 				--Dgun
 				--MissileLauncher	-- already has CEG trails, which have both smoke and ground light
 				--StarburstLauncher	-- same as MissileLauncher
 				--AircraftBomb
-				--BeamLaser --Beamlasers shouldnt, because they are buggy (GetProjectilePosition returns center of beam, no other info avalable)
-				--LightningCannon --same as BeamLasers
 				--Melee
 				--Shield
 				--TorpedoLauncher
@@ -156,14 +141,18 @@ function widget:Initialize() -- create lighttable
 						local colour = wdID.visuals
 						plighttable[wdID.name] = {
 							colour.colorR, colour.colorG, colour.colorB, 0.6,
-							wdID.projectilespeed * wdID.duration, colour.thickness^0.33333}
-					--[[	Bugged for Lightning cannon and Beam Lasers					
-					elseif (wdID.type == 'LightningCannon' or wdID.type == 'BeamLaser') then
+							wdID.projectilespeed * wdID.duration, colour.thickness^0.33333}			
+					elseif (wdID.type == 'LightningCannon') then
 						local colour = wdID.visuals
-						plighttable[wdID.name] = {colour.colorR, colour.colorG, colour.colorB, 0.75, true, colour.thickness^0.45}
-					--]]
+						plighttable[wdID.name] = {colour.colorR, colour.colorG, colour.colorB, 0.75, true, 64*colour.thickness^0.45, 1.1}					
+					elseif (wdID.type == 'BeamLaser') then
+						local colour, alpha, thick, blend = wdID.visuals, 0.75, 0.45, 0.0
+						if wdID.largeBeamLaser==true then
+							alpha, thick, blend = 0.16, 0.58, 0.12
+						end
+						plighttable[wdID.name] = {colour.colorR+blend/2, colour.colorG+blend, colour.colorB, alpha, true, 64*colour.thickness^thick, 1.07}
 					elseif (wdID.type == 'Flame') then
-						plighttable[wdID.name]={1.0,0.55,0.25,0.3}  --{0,1,0,0.6}
+						plighttable[wdID.name]={1.0,0.6,0.3,0.55}  --{0,1,0,0.6}
 					end
 				end
 			end	
@@ -180,6 +169,8 @@ local plist = {}
 local frame = 0
 local x1, y1 = 0, 0
 local x2, y2 = Game.mapSizeX, Game.mapSizeZ
+local x, y, z, dx, dz, nx, ny, nz, ang
+local a, f, h = {}, {}, {}
 function widget:DrawWorldPreUnit()
 
 	if frame < spGetGameFrame() then
@@ -191,8 +182,6 @@ function widget:DrawWorldPreUnit()
 			local dcxp1, dcxp3
 			local outofbounds = 0
 			local d = 0
-			--x2=math.min(x2, tl[1])
-			--y2=math.min(y2, tl[3])
 			
 			at, p = spTraceScreenRay(0, 0, true, false, false) --bottom left
 			if at=='ground' then
@@ -233,96 +222,175 @@ function widget:DrawWorldPreUnit()
 		end
 	end
 		--todo, only those in view or close:P
-	--Spring.GetCameraPosition 
-	--Spring.GetCameraPosition() -> number x, number y, number z
-	--Spring.GetCameraDirection() -> number forward_x, number forward_y, number forward_z
-	--Spring.GetCameraFOV( ) -> number fov
-
-	--Spring.Echo('mapview',nplist,outofbounds,d,cx,cy)
-	--Spring.Echo('fov',Spring.GetCameraFOV(),Spring.GetCameraPosition())
 	if #plist>0 then --dont do anything if there are no projectiles in range of view
-		--Spring.Echo('#projectiles:',#plist)
 		
 		--enabling both test and mask means they wont be drawn over cliffs when obscured
-			--but also means that they will flicker cause of z-fighting when scrolling around...
-			--and ESPECIALLY when overlapping
+		--but also means that they will flicker cause of z-fighting when scrolling around...
+		--and ESPECIALLY when overlapping
 		-- mask=false and test=true is perfect, no overlap flicker, no cliff overdraw
-			--BUT it clips into cliffs from the side....
-		glTexture('luaui/images/lightmap.tga') --simple white rectangle with alpha white blurred circle and square
+		--BUT it clips into cliffs from the side....
+		glTexture('luaui/images/lightmap.tga') --simple white rectangle with alpha white blurred circle and rounded square
 		glDepthMask(false)
 		--glDepthMask(true)
 		glDepthTest(false)
 		--glDepthTest(GL.LEQUAL) 
 		
-		local x, y, z, dx, dz, nx, ny, ang
-		--local fx, fy = 32, 32	--footprint
 		glBlending("alpha_add") --makes it go into +
 		local lightparams
 		-- AND NOW FOR THE FUN STUFF!
+		local stpX, stpY, stpZ, r,g,b,al, w,nf
+		local tx,ty,tz,bx,bz,px,py,pz, fa
 		for i=1, #plist do
 			local pID = plist[i]
-			local pName = spGetProjectileName(pID)
 			local wep, piece = spGetProjectileType(pID)
 			if piece then
-				lightparams = {1.0, 1.0, 0.5, 0.3}	-- debree from explosions
+				lightparams = {1.0, 0.8, 0.4, 0.3}	-- debree from explosions
 			else
-				lightparams = plighttable[pName]	-- weapon projectile
+				lightparams = plighttable[spGetProjectileName(pID)]	-- weapon projectile
 			end
 			if lightparams then	-- there is a light defined for this projectile type
 				x, y, z = spGetProjectilePosition(pID)			
-				if (x and y>0) then -- projectile is above water
-					local height = max(0, spGetGroundHeight(x, z)) --above water projectiles should show on water surface
-					local diff = height-y	-- this is usually 5 for land units, 5+cruisehieght for others
-											-- the plus 5 is do that it doesn't clip all ugly like, unneeded with depthtest and mask both false!
-											-- diff is negative, cause we need to put the lighting under it
-											-- diff defines size and diffusion rate)
-					local factor = (100.0+diff)*0.01 --factor=1 at when almost touching ground, factor<=0 when above 100 height)
-					-- experimental support for beam lasers and lightning cannons, works only when fired on a unit/feature, not ground
-					--[[ too buggy and unpredictable, beams with long duration and many projectiles tend to shift targets which causes multiple and incorrect ground lights
-					if lightparams[5] and type(lightparams[5])=="boolean" then 
-						local targID, targType = spGetProjectileTarget(pID)
-						if targID then
-							local tx,ty,tz
-							if targType=="u" then
-								_,_,_,tx,ty,tz = spGetUnitPosition(targID,false,true)
-							elseif targType=="f" then
-								_,_,_,tx,ty,tz = spGetFeaturePosition(targID,false,true)
-							end
-							if tx then
-								local hty = spGetGroundHeight(tx, tz)
-								if hty>0 and ty-hty<70 then	-- no neon lights if aiming towards air
-									while factor <= 0.207 do	-- beam shoots steep downwards, light up only the part which has visible factor
-										x, y, z = x+(tx-x)*0.25, y+(ty-y)*0.25, z+(tz-z)*0.25	-- move towards target by 25%
-										height = max(0, spGetGroundHeight(x, z))
-										factor = (100.0+height-y)*0.01
+				if (x and y>0.0) then -- projectile is above water					
+					-- needs Spring 94.1.1-1163+ and no sweepfire BeamLasers
+					if lightparams[5] and type(lightparams[5])=="boolean" then -- BeamLaser and LightningCannon
+						tx,ty,tz = spGetProjectileVelocity(pID)
+						if tx then
+							local dist = sqrt(tx*tx + tz*tz) -- distance from beam start till beam end
+							local endSeg = max(4, floor(dist/(100-min(50,abs(spGetGroundHeight(x,z)-spGetGroundHeight(x+tx*0.5,z+tz*0.5))))))	-- number of segments used for beam neon, min 4 segments
+							stpX, stpY, stpZ = tx/endSeg, ty/endSeg, tz/endSeg
+							r,g,b,al,w = lightparams[1], lightparams[2], lightparams[3], lightparams[4], lightparams[6]
+							nf = noise[floor(x+z+pID)%10+1]
+							glPushMatrix()
+							glTranslate(x, 0.0, z)
+							glRotate(atan2(tx,tz)*DegToRad, 0.0, 1.0, 0.0)	-- align light with beam direction
+							bx, bz = x+tx, z+tz
+							bx,bz, px,py,pz = bx+stpX, bz+stpZ, bx, y+ty, bz
+							for i=0, endSeg do	-- calculate the size factor, alpha and terrain height of beam neon segments
+								if py>0.0 then
+									h[i] = max(0.0,spGetGroundHeight(px,pz))	-- above water beam should show on water surface
+									if h[i]>0.0 then	
+										_,ny = spGetGroundNormal(bx,bz)	-- if the ground is not flat, distance to terrain is not relative altitude
+									else
+										ny = 1.0	-- ny~1 for flat land and water surface, ny~0 for cliffs
 									end
-									glColor(lightparams[1], lightparams[2], lightparams[3], lightparams[4]*factor*factor*noise[floor(x+z+pID)%10+1]) -- attentuation is x^2
-									factor = 32*(1.1-factor)
-									glPushMatrix()
-									glTranslate(x, height, z)  -- push in y dir by height (to push it on the ground!)
-									local scX, scZ = tx-x, tz-z
-									glRotate(atan2(scX,scZ)*57.295779513082320876798, 0.0, 1.0, 0.0)	-- align light with beam direction
-									local dist = sqrt(scX*scX+scZ*scZ) - (spGetUnitRadius(targID) or 0) -- distance from beam center till target aimpoint minus target radius
-									if pName~="arm_total_annihilator" then dist = 2*dist end	-- large BeamLaser seems to work differently
-									glScale(factor*lightparams[6], 1.0, factor*dist*.0525) -- scale it by thickness, distance to target and height from ground
-									glCallList(listN) -- draw beam light
-									glPopMatrix()
+									fa = (100.0+(h[i]-py)*ny)*0.01
+									if fa<=0.0626 then	-- if the factor <=0.0626, then alpha<=1/255 which is not visible any more
+										a[i] = 0.0			-- but may still cause a segment being rendered, this way we prevent that
+										f[i] = 0.0
+									else
+										a[i] = al*fa*fa*nf
+										f[i] = max(12.0, (1.1-fa)*w)
+									end
+								else
+									a[i], f[i], h[i] = 0.0, 0.0, 0.0
 								end
+								bx,bz, px, py, pz = px,pz, px-stpX, py-stpY, pz-stpZ
 							end
+							local i, j, dStep, de = 0, 1, -dist/endSeg
+							local a0 = a[0]
+							if a0>0.0 then	-- neon endcap
+								local h0, f0 = h[0], f[0]
+								glShape(GL_TRIANGLE_STRIP, {
+									{	v={-f0,h0,dist+f0},
+										t={0.5,0.0},
+										c={r,g,b,a0}
+									},
+									{	v={-f0,h0,dist},
+										t={0.25,0.0},
+										c={r,g,b,a0}
+									},
+									{	v={f0,h0,dist+f0},
+										t={0.5,1.0},
+										c={r,g,b,a0}
+									},
+									{	v={f0,h0,dist},
+										t={0.25,1.0},
+										c={r,g,b,a0}
+									},
+								})
+							end
+							a0 = a[endSeg]
+							if a0>0.0 then	-- neon startcap
+								local h0, f0 = h[endSeg], f[endSeg]
+								glShape(GL_TRIANGLE_STRIP, {
+									{	v={-f0,h0,0.01},
+										t={0.25,0.0},
+										c={r,g,b,a0}
+									},
+									{	v={-f0,h0,-f0},
+										t={0.0,0.0},
+										c={r,g,b,a0}
+									},
+									{	v={f0,h0,0.01},
+										t={0.25,1.0},
+										c={r,g,b,a0}
+									},
+									{	v={f0,h0,-f0},
+										t={0.0,1.0},
+										c={r,g,b,a0}
+									},
+								})
+							end
+							for d=dist, 0.01, dStep do	-- render segments of beam neon with alpha>0
+								if a[i]>0.0 or a[j]>0.0 then
+									de = d+dStep
+									glShape(GL_TRIANGLE_STRIP, {
+										--[[ segment delimiter, only for debuging
+										{	v={-f[j],h[i],d},
+											t={0.75,0.5},
+											c={1.0,1.0,1.0,1.0}
+										},
+										--]]
+										{	v={-f[i],h[i],d},
+											t={0.875,0.0},
+											c={r,g,b,a[i]}
+										},
+										{	v={-f[j],h[j],de},
+											t={0.625,0.0},
+											c={r,g,b,a[j]}
+										},
+										{	v={0.0,h[i],d},
+											t={0.875,0.5},
+											c={r,g,b,a[i]}
+										},
+										{	v={f[j],h[j],de},
+											t={0.625,1.0},
+											c={r,g,b,a[j]}
+										},
+										{	v={f[i],h[i],d},
+											t={0.875,1.0},
+											c={r,g,b,a[i]}
+										},
+										--[[ segment delimiter, only for debuging
+										{	v={f[j],h[i],d},
+											t={0.75,0.5},
+											c={1.0,1.0,1.0,1.0}
+										},
+										--]]
+									})
+								end
+								i, j = i+1, j+1
+							end
+							glPopMatrix()
 						end
 					else	-- other weapons
-					--]]
-						if (factor > 0.1 and factor < 1.0) then		-- if factor is <0.1 then opacity is <1% and not visible by human eye
+						local height = max(0, spGetGroundHeight(x, z)) --above water projectiles should show on water surface
+						local diff = height-y	-- this is usually 5 for land units, 5+cruisehieght for others
+												-- the plus 5 is do that it doesn't clip all ugly like, unneeded with depthtest and mask both false!
+												-- diff is negative, cause we need to put the lighting under it
+												-- diff defines size and diffusion rate)
+						local factor = (100.0+diff)*0.01 --factor=1 at when almost touching ground, factor<=0 when above 100 height)
+						if (factor > 0.0626 and factor < 1.0) then		-- if factor is <0.0626 then opacity is <1/255 and not visible any more
 							dx, _, dz = spGetProjectileVelocity(pID)
-							if dx and (dx*dx + dz*dz > 0.1) then		-- when a projectile hits a target above ground, there's an unaligned flash due to velocity being 0
+							if dx*dx + dz*dz > 0.1 then		-- when a projectile hits a target above ground, there's an unaligned flash due to velocity being 0
 								glColor(lightparams[1], lightparams[2], lightparams[3], lightparams[4]*factor*factor*noise[floor(x+z+pID)%10+1]) -- attentuation is x^2
 								factor = 32*(1.1-factor)
 								glPushMatrix()
-								nx, ny = spGetGroundNormal(x,z)
+								nx, ny, nz = spGetGroundNormal(x,z)
 								if ny<0.995 then						-- don't align with slope on flat surface, less transformations, faster
-									glTranslate(x, height, z)
+									glTranslate(x, y, z)
 									ang = min(acos(ny)*DegToRad, 60)	-- deg(x) is 4x slower than x*57.295779513082320876798
-									if nx>0 then ang = ang * -1.0 end	-- east/west slope correction
+									if nx>0.0 or nz>0.45 then ang = ang * -1.0 end	-- east/west slope correction
 									glRotate(ang, 0.0, 0.0, 1.0)		-- align to ground slope, rather coarse but fast method
 									glRotate(atan2(dx,dz)*DegToRad, 0.0, 1.0, 0.0)	-- align light with projectile direction, needed for slope alignment too
 									glTranslate(0,diff,0)				-- make light closer to sloped terrain
@@ -347,7 +415,7 @@ function widget:DrawWorldPreUnit()
 								glPopMatrix()
 							end
 						end
-					--end
+					end
 				end
 			end
 		end
