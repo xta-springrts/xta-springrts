@@ -26,8 +26,8 @@
 	SightDistance=400;
 	RadarDistance=0;
 	SoundCategory=CORE_CHOVER;
-	EnergyStorage=0;
-	MetalStorage=0;
+	EnergyStorage=10;
+	MetalStorage=10;
 	ExplodeAs=BIG_UNITEX;
 	SelfDestructAs=BIG_UNIT;
 	Category=CORE HOVER CONSTR NOWEAPON NOTAIR NOTSUB;

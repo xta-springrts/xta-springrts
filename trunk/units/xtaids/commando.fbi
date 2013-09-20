@@ -29,9 +29,9 @@
 	TerraformSpeed=400;//speed up terraforming
 	capturespeed=800;//50 percent faster
 	energymake=0.8;
-	energystorage=0;
+	energystorage=100;
 	energyuse=0.8;
-	metalstorage=0;
+	metalstorage=100;
 	canattack=1;
 	cancapture=1;
 	canstop=1;
