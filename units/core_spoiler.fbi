@@ -38,10 +38,10 @@
 	//  Resources
 	//*************
 	metalmake=0;
-	metalstorage=0;
+	metalstorage=10;
 	energymake=1;
 	energyuse=1;
-	energystorage=0;
+	energystorage=10;
 
 	//************************************************************
 	//  Building

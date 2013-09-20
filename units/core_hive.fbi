@@ -41,7 +41,7 @@
 	metalstorage=0;
 	energymake=380;
 	energyuse=45;
-	energystorage=0;
+	energystorage=100;
 	windgenerator=0.001;
 
 	//************************************************************
