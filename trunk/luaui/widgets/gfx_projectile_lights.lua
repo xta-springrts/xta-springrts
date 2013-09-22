@@ -1,6 +1,7 @@
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
-
+	-- needs Spring 94.1.1-1171+ and no sweepfire BeamLasers
+					
 function widget:GetInfo()
   return {
     name      = "Projectile lights",
@@ -114,48 +115,43 @@ function widget:Initialize() -- create lighttable
 		widgetHandler:RemoveWidget()
 	end
 
-	for u=1, #UnitDefs do
-		if UnitDefs[u]['weapons'] and #UnitDefs[u]['weapons']>0 then --only units with weapons
-			--These projectiles should have lights:
-				--Cannon - projectile size: tempsize = 2.0f + std::min(wd.damages[0] * 0.0025f, wd.damageAreaOfEffect * 0.1f);)
-				--EmgCannon - looks a bit shiny when close to ground
-				--LaserCannon - über effects
-				--Flame - a bit iffy cause of long projectile life... but it looks great.
-				--BeamLaser --with Spring 94.1.1+ super-über-ober effects
-				--LightningCannon --same as BeamLasers
-			--Shouldn't:
-				--Dgun
-				--MissileLauncher	-- already has CEG trails, which have both smoke and ground light
-				--StarburstLauncher	-- same as MissileLauncher
-				--AircraftBomb
-				--Melee
-				--Shield
-				--TorpedoLauncher
-			for w=1, #UnitDefs[u]['weapons'] do 
-				weaponID = UnitDefs[u]['weapons'][w]['weaponDef']
-				local weaponDef = WeaponDefs[weaponID]
-				if not BlackList[weaponDef.name] then	-- prevent projectile light, if the weapon has some other light effect
-					if (weaponDef.type == 'Cannon' or weaponDef.type == 'EmgCannon') then
-						plighttable[weaponDef.id] = {1.0,1.0,0.5,0.5*((weaponDef.size-0.65)/3.0)}
-					elseif (weaponDef.type == 'LaserCannon') then
-						local colour = weaponDef.visuals
-						plighttable[weaponDef.id] = {
-							colour.colorR, colour.colorG, colour.colorB, 0.6,
-							weaponDef.projectilespeed * weaponDef.duration, colour.thickness^0.33333}			
-					elseif (weaponDef.type == 'LightningCannon') then
-						local colour = weaponDef.visuals
-						plighttable[weaponDef.id] = {colour.colorR, colour.colorG, colour.colorB, 0.75, true, 64*colour.thickness^0.45, 1.1}					
-					elseif (weaponDef.type == 'BeamLaser') then
-						local colour, alpha, thick, blend = weaponDef.visuals, 0.75, 0.45, 0.0
-						if weaponDef.largeBeamLaser then
-							alpha, thick, blend = 0.16, 0.58, 0.12
-						end
-						plighttable[weaponDef.id] = {colour.colorR+blend/2, colour.colorG+blend, colour.colorB, alpha, true, 64*colour.thickness^thick, 1.07}
-					elseif (weaponDef.type == 'Flame') then
-						plighttable[weaponDef.id]={1.0,0.6,0.3,0.55}  --{0,1,0,0.6}
-					end
+	-- These projectiles should have lights:
+		-- Cannon - projectile size: tempsize = 2.0f + std::min(wd.damages[0] * 0.0025f, wd.damageAreaOfEffect * 0.1f);)
+		-- EmgCannon - looks a bit shiny when close to ground
+		-- LaserCannon - über effects
+		-- Flame - a bit iffy cause of long projectile life... but it looks great.
+		-- BeamLaser --with Spring 94.1.1163+ super-über-ober effects
+		-- LightningCannon --same as BeamLasers
+	-- Shouldn't:
+		-- Dgun	-- uses dynamic lighting
+		-- MissileLauncher	-- already has CEG trails, which have both smoke and ground light
+		-- StarburstLauncher	-- same as MissileLauncher
+		-- AircraftBomb
+		-- Melee, Rifle	-- has no projectile
+		-- Shield
+		-- TorpedoLauncher
+	for w=1, #WeaponDefs do 
+		local weaponDef = WeaponDefs[w]
+		if not BlackList[weaponDef.name] then	-- prevent projectile light, if the weapon has some other light effect
+			if (weaponDef.type == 'Cannon' or weaponDef.type == 'EmgCannon') then
+				plighttable[w] = {1.0,1.0,0.5,0.5*((weaponDef.size-0.65)/3.0)}
+			elseif (weaponDef.type == 'LaserCannon') then
+				local colour = weaponDef.visuals
+				plighttable[w] = {
+					colour.colorR, colour.colorG, colour.colorB, 0.6,
+					weaponDef.projectilespeed * weaponDef.duration, colour.thickness^0.33333}			
+			elseif (weaponDef.type == 'LightningCannon') then
+				local colour = weaponDef.visuals
+				plighttable[w] = {colour.colorR, colour.colorG, colour.colorB, 0.75, true, 64*colour.thickness^0.45, 1.1}					
+			elseif (weaponDef.type == 'BeamLaser') then
+				local colour, alpha, thick, blend = weaponDef.visuals, 0.75, 0.45, 0.0
+				if weaponDef.largeBeamLaser==true then
+					alpha, thick, blend = 0.16, 0.58, 0.12
 				end
-			end	
+				plighttable[w] = {colour.colorR+blend/2, colour.colorG+blend, colour.colorB, alpha, true, 64*colour.thickness^thick, 1.07}
+			elseif (weaponDef.type == 'Flame') then
+				plighttable[w]={1.0,0.6,0.3,0.55}  --{0,1,0,0.6}
+			end
 		end
 	end
 end
@@ -238,8 +234,8 @@ function widget:DrawWorldPreUnit()
 		glBlending("alpha_add") --makes it go into +
 		local lightparams
 		-- AND NOW FOR THE FUN STUFF!
-		local stpX, stpY, stpZ, r,g,b,al, w,nf
-		local tx,ty,tz,bx,bz,px,py,pz, fa
+		local stpX, stpY, stpZ, r,g,b,al, w,nf	-- step in x,y,z axis for beam traversing,  RGBA values of lightparams,  light width, noize factor
+		local tx,ty,tz,px,py,pz,bx,bz, fa	-- target's x,y,z coordiantes,  x,y,z Position along the beam,  x,z position from iteration Before, alpha factor
 		for i=1, #plist do
 			local pID = plist[i]
 			local wproj, pproj = spGetProjectileType(pID)
@@ -253,12 +249,11 @@ function widget:DrawWorldPreUnit()
 			if lightparams then	-- there is a light defined for this projectile type
 				x, y, z = spGetProjectilePosition(pID)			
 				if (x and y>0.0) then -- projectile is above water					
-					-- needs Spring 94.1.1-1163+ and no sweepfire BeamLasers
 					if lightparams[5] and type(lightparams[5])=="boolean" then -- BeamLaser and LightningCannon
 						tx,ty,tz = spGetProjectileVelocity(pID)
 						if tx then
 							local dist = sqrt(tx*tx + tz*tz) -- distance from beam start till beam end
-							local endSeg = max(4, floor(dist/(100-min(50,abs(spGetGroundHeight(x,z)-spGetGroundHeight(x+tx*0.5,z+tz*0.5))))))	-- number of segments used for beam neon, min 4 segments
+							local endSeg = max(4, floor(dist/(100-min(50,abs(spGetGroundHeight(x+tx,z+tz)-spGetGroundHeight(x+tx*0.5,z+tz*0.5))))))	-- number of segments used for beam neon, min 4 segments
 							stpX, stpY, stpZ = tx/endSeg, ty/endSeg, tz/endSeg
 							r,g,b,al,w = lightparams[1], lightparams[2], lightparams[3], lightparams[4], lightparams[6]
 							nf = noise[floor(x+z+pID)%10+1]
@@ -270,8 +265,10 @@ function widget:DrawWorldPreUnit()
 							for i=0, endSeg do	-- calculate the size factor, alpha and terrain height of beam neon segments
 								if py>0.0 then
 									h[i] = max(0.0,spGetGroundHeight(px,pz))	-- above water beam should show on water surface
-									if h[i]>0.0 then	
-										_,ny = spGetGroundNormal(bx,bz)	-- if the ground is not flat, distance to terrain is not relative altitude
+									if h[i]>0.0 then
+										_,fa = spGetGroundNormal(bx,bz)	-- if the ground is not flat, distance to terrain is not relative altitude
+										_,ny = spGetGroundNormal(px,pz)	-- average of current and previous section slope
+										ny = 0.5*(ny+fa)
 									else
 										ny = 1.0	-- ny~1 for flat land and water surface, ny~0 for cliffs
 									end
@@ -288,7 +285,7 @@ function widget:DrawWorldPreUnit()
 								end
 								bx,bz, px, py, pz = px,pz, px-stpX, py-stpY, pz-stpZ
 							end
-							local i, j, dStep, de = 0, 1, -dist/endSeg
+							local i, j, dStep, de, gh = 0, 1, -dist/endSeg
 							local a0 = a[0]
 							if a0>0.0 then	-- neon endcap
 								local h0, f0 = h[0], f[0]
@@ -334,37 +331,38 @@ function widget:DrawWorldPreUnit()
 								})
 							end
 							for d=dist, 0.01, dStep do	-- render segments of beam neon with alpha>0
-								if a[i]>0.0 or a[j]>0.0 then
-									de = d+dStep
+								a0 = a[i]
+								if a0>0.0 or a[j]>0.0 then
+									de, gh = d+dStep, h[i]
 									glShape(GL_TRIANGLE_STRIP, {
 										--[[ segment delimiter, only for debuging
-										{	v={-f[j],h[i],d},
+										{	v={-f[j],gh,d},
 											t={0.75,0.5},
 											c={1.0,1.0,1.0,1.0}
 										},
 										--]]
-										{	v={-f[i],h[i],d},
+										{	v={-f[i],gh,d},
 											t={0.875,0.0},
-											c={r,g,b,a[i]}
+											c={r,g,b,a0}
 										},
 										{	v={-f[j],h[j],de},
 											t={0.625,0.0},
 											c={r,g,b,a[j]}
 										},
-										{	v={0.0,h[i],d},
+										{	v={0.0,gh,d},
 											t={0.875,0.5},
-											c={r,g,b,a[i]}
+											c={r,g,b,a0}
 										},
 										{	v={f[j],h[j],de},
 											t={0.625,1.0},
 											c={r,g,b,a[j]}
 										},
-										{	v={f[i],h[i],d},
+										{	v={f[i],gh,d},
 											t={0.875,1.0},
-											c={r,g,b,a[i]}
+											c={r,g,b,a0}
 										},
 										--[[ segment delimiter, only for debuging
-										{	v={f[j],h[i],d},
+										{	v={f[j],gh,d},
 											t={0.75,0.5},
 											c={1.0,1.0,1.0,1.0}
 										},
@@ -384,7 +382,7 @@ function widget:DrawWorldPreUnit()
 						local factor = (100.0+diff)*0.01 --factor=1 at when almost touching ground, factor<=0 when above 100 height)
 						if (factor > 0.0626 and factor < 1.0) then		-- if factor is <0.0626 then opacity is <1/255 and not visible any more
 							dx, _, dz = spGetProjectileVelocity(pID)
-							if dx*dx + dz*dz > 0.1 then		-- when a projectile hits a target above ground, there's an unaligned flash due to velocity being 0
+							if dx and (dx*dx + dz*dz > 0.1) then		-- when a projectile hits a target above ground, there's an unaligned flash due to velocity being 0
 								glColor(lightparams[1], lightparams[2], lightparams[3], lightparams[4]*factor*factor*noise[floor(x+z+pID)%10+1]) -- attentuation is x^2
 								factor = 32*(1.1-factor)
 								glPushMatrix()

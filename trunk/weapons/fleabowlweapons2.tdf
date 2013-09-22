@@ -65,7 +65,7 @@
 	weaponvelocity=900;
 	paralyzer=0;
 	beamdecay=0.9;
-	beamttl=20;
+	beamttl=10;
 	hardStop=0;
 	//dyndamageexp=1;
 	//dyndamageinverted=0;
@@ -151,7 +151,7 @@
 	pulseSpeed=4.0;
 	thickness=3.5;
 	beamdecay=0.9;
-	beamttl=20;
+	beamttl=10;
 	hardStop=0;
 	[DAMAGE]
 	{
@@ -435,7 +435,7 @@
 	explosiongenerator=custom:ANNILAHATORLASER;
 	guidance=1;
 	beamdecay=0.9;
-	beamttl=20;
+	beamttl=10;
 	hardStop=0;
 	waterweapon=1;
 	[DAMAGE]
