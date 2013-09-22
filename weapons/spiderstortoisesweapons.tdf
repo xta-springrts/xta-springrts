@@ -327,7 +327,7 @@
 	turret=1;
 	beamdecay=0.5;
 	beamtime=0.375;
-	beamttl=25;
+	beamttl=5;
 	range=1000;
 	reloadtime=12;
 	energypershot=400;

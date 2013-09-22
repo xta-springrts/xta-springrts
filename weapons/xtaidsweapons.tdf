@@ -12,7 +12,7 @@
 	thickness=7.5;
 	beamtime=1;
 	beamdecay=0.9;
-	beamttl=20;
+	beamttl=10;
 	hardStop=0;
 	range=1550;
 	reloadtime=12;
@@ -267,7 +267,7 @@
 	thickness=14.5;
 	beamtime=0.2;
 	beamdecay=0.5;
-	beamttl=60;
+	beamttl=10;
 	hardStop=0;
   	texture1=testlightning;
   	laserflaresize=6;
@@ -1906,7 +1906,7 @@
 	areaofeffect=8;
 	beamdecay=0.9;
 	beamtime=0.65;
-	beamttl=15;
+	beamttl=10;
 	corethickness=0.5;
 	energypershot=1000;
 	explosiongenerator=custom:ANNILAHATORLASER;
