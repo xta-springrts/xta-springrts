@@ -23,7 +23,7 @@ local spGetViewGeometry			= Spring.GetViewGeometry
 local spGetProjectilesInRectangle = Spring.GetProjectilesInRectangle
 local spGetProjectilePosition	= Spring.GetProjectilePosition
 local spGetProjectileType		= Spring.GetProjectileType
-local spGetProjectileName		= Spring.GetProjectileName
+local spGetProjectileDefID		= Spring.GetProjectileDefID
 local spGetProjectileVelocity	= Spring.GetProjectileVelocity
 local spGetProjectileTarget		= Spring.GetProjectileTarget
 local spGetUnitPosition			= Spring.GetUnitPosition
@@ -133,26 +133,26 @@ function widget:Initialize() -- create lighttable
 				--TorpedoLauncher
 			for w=1, #UnitDefs[u]['weapons'] do 
 				weaponID = UnitDefs[u]['weapons'][w]['weaponDef']
-				local wdID = WeaponDefs[weaponID]
-				if not BlackList[wdID.name] then	-- prevent projectile light, if the weapon has some other light effect
-					if (wdID.type == 'Cannon' or wdID.type == 'EmgCannon') then
-						plighttable[wdID.name] = {1.0,1.0,0.5,0.5*((wdID.size-0.65)/3.0)}
-					elseif (wdID.type == 'LaserCannon') then
-						local colour = wdID.visuals
-						plighttable[wdID.name] = {
+				local weaponDef = WeaponDefs[weaponID]
+				if not BlackList[weaponDef.name] then	-- prevent projectile light, if the weapon has some other light effect
+					if (weaponDef.type == 'Cannon' or weaponDef.type == 'EmgCannon') then
+						plighttable[weaponDef.id] = {1.0,1.0,0.5,0.5*((weaponDef.size-0.65)/3.0)}
+					elseif (weaponDef.type == 'LaserCannon') then
+						local colour = weaponDef.visuals
+						plighttable[weaponDef.id] = {
 							colour.colorR, colour.colorG, colour.colorB, 0.6,
-							wdID.projectilespeed * wdID.duration, colour.thickness^0.33333}			
-					elseif (wdID.type == 'LightningCannon') then
-						local colour = wdID.visuals
-						plighttable[wdID.name] = {colour.colorR, colour.colorG, colour.colorB, 0.75, true, 64*colour.thickness^0.45, 1.1}					
-					elseif (wdID.type == 'BeamLaser') then
-						local colour, alpha, thick, blend = wdID.visuals, 0.75, 0.45, 0.0
-						if wdID.largeBeamLaser==true then
+							weaponDef.projectilespeed * weaponDef.duration, colour.thickness^0.33333}			
+					elseif (weaponDef.type == 'LightningCannon') then
+						local colour = weaponDef.visuals
+						plighttable[weaponDef.id] = {colour.colorR, colour.colorG, colour.colorB, 0.75, true, 64*colour.thickness^0.45, 1.1}					
+					elseif (weaponDef.type == 'BeamLaser') then
+						local colour, alpha, thick, blend = weaponDef.visuals, 0.75, 0.45, 0.0
+						if weaponDef.largeBeamLaser then
 							alpha, thick, blend = 0.16, 0.58, 0.12
 						end
-						plighttable[wdID.name] = {colour.colorR+blend/2, colour.colorG+blend, colour.colorB, alpha, true, 64*colour.thickness^thick, 1.07}
-					elseif (wdID.type == 'Flame') then
-						plighttable[wdID.name]={1.0,0.6,0.3,0.55}  --{0,1,0,0.6}
+						plighttable[weaponDef.id] = {colour.colorR+blend/2, colour.colorG+blend, colour.colorB, alpha, true, 64*colour.thickness^thick, 1.07}
+					elseif (weaponDef.type == 'Flame') then
+						plighttable[weaponDef.id]={1.0,0.6,0.3,0.55}  --{0,1,0,0.6}
 					end
 				end
 			end	
@@ -242,12 +242,14 @@ function widget:DrawWorldPreUnit()
 		local tx,ty,tz,bx,bz,px,py,pz, fa
 		for i=1, #plist do
 			local pID = plist[i]
-			local wep, piece = spGetProjectileType(pID)
-			if piece then
-				lightparams = {1.0, 0.8, 0.4, 0.3}	-- debree from explosions
-			else
-				lightparams = plighttable[spGetProjectileName(pID)]	-- weapon projectile
+			local wproj, pproj = spGetProjectileType(pID)
+
+			if pproj then
+				lightparams = {1.0, 0.8, 0.4, 0.3} -- debree from explosions
+			elseif wproj then
+				lightparams = plighttable[spGetProjectileDefID(pID)] -- weapon projectile
 			end
+
 			if lightparams then	-- there is a light defined for this projectile type
 				x, y, z = spGetProjectilePosition(pID)			
 				if (x and y>0.0) then -- projectile is above water					
