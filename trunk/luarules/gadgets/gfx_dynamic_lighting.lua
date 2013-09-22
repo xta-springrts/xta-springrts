@@ -25,7 +25,7 @@ local weaponLightDefs = modDynLightDefs.weaponLightDefs or {}
 
 
 if (gadgetHandler:IsSyncedCode()) then
-	local SpringGetProjectileName = Spring.GetProjectileName
+	local SpringGetProjectileDefID = Spring.GetProjectileDefID
 
 	local projectileLightDefs = {}
 	local explosionLightDefs = {}
@@ -75,8 +75,10 @@ if (gadgetHandler:IsSyncedCode()) then
 	end
 
 	function gadget:ProjectileDestroyed(projectileID)
-		local wName = SpringGetProjectileName(projectileID)
-		if (WeaponDefNames[wName] and projectileLightDefs[WeaponDefNames[wName].id]) then
+		-- returns weaponDefID for weapon-projectiles, nil otherwise
+		local pDefID = SpringGetProjectileDefID(projectileID)
+
+		if (projectileLightDefs[pDefID] ~= nil) then
 			SendToUnsynced("DL_ProjectileDestroyed", projectileID)
 		end
 	end
