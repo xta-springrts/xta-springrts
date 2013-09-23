@@ -37,7 +37,7 @@ local MaxStockpile = {}
 
 -- set this array to desired stockpile levels for individual units or use "default"
 MaxStockpile["default"] = 6	--default stockpile value
-MaxStockpile["arm_raven_rt"] = 120
+MaxStockpile["arm_raven_rt"] = 40
 MaxStockpile["arm_protector"] = 12
 MaxStockpile["arm_scarab"] = 12
 MaxStockpile["arm_repulsor"] = 12
