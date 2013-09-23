@@ -115,6 +115,7 @@ local function GetStartUnit(teamID)
 			-- Unknown side.
 			startUnit = Spring.GetSideData(side)
 		end
+		spSetTeamRulesParam(teamID, startUnitParamName, UnitDefNames[startUnit].id)
 		return startUnit
 	end
 end
