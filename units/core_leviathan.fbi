@@ -71,7 +71,7 @@
 	movementclass=BOATSUB;
 	turnrate=270;
 	acceleration=0.07;
-	brakerate=0.01;
+	brakerate=0.08;
 	maxvelocity=1.525; //was 1.425//
 	minwaterdepth=1;
 

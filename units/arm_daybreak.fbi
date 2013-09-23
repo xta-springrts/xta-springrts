@@ -42,7 +42,7 @@
 	canstop=1;
 	canguard=1;
 	MaxVelocity=2.35;
-	BrakeRate=0.018;
+	BrakeRate=0.028;
 	Acceleration=0.025;
 	TurnRate=480;
 	SteeringMode=1;

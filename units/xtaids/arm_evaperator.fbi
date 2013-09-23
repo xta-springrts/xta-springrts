@@ -41,9 +41,9 @@
 	canpatrol=1;
 	canstop=1;
 	canguard=1;
-	MaxVelocity=1.15;
+	MaxVelocity=1.75;
 	BrakeRate=0.018;
-	Acceleration=0.007;
+	Acceleration=0.01;
 	TurnRate=364;
 	SteeringMode=1;
 	ShootMe=1;
@@ -61,6 +61,7 @@
 	Weapon2=ARMAAS_WEAPON1;
 	wsec_badTargetCategory=VTOL;
 	floater=1;
+	waterline=4.99;
 	NoChaseCategory=VTOL;
 	pieceTrailCEGTag=Debree;//bleh
 	pieceTrailCEGRange = 4;

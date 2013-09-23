@@ -72,7 +72,7 @@
 	movementclass=Smallboat;
 	turnrate=343;
 	acceleration=0.08;
-	brakerate=0.016;
+	brakerate=0.09;
 	maxvelocity=2.9;
 	minwaterdepth=12;
 	waterline=4.99;

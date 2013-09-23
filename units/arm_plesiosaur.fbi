@@ -74,7 +74,7 @@
 	movementclass=HOVER4;
 	turnrate=184;
 	acceleration=0.01;
-	brakerate=0.005;
+	brakerate=0.015;
 	maxvelocity=1.5;
 
 	//************************************************************
