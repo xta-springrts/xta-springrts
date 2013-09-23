@@ -76,7 +76,7 @@
 	//movementclass=TANKDH3;//TANKDH3
 	turnrate=165;
 	acceleration=0.005;
-	brakerate=0.005;
+	brakerate=0.007;
 	maxvelocity=1.5;
 
 	//************************************************************

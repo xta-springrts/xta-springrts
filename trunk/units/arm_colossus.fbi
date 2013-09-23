@@ -77,7 +77,7 @@
 	movementclass=LARGEBOAT;
 	turnrate=152;
 	acceleration=0.01;
-	brakerate=0.005;
+	brakerate=0.015;
 	maxvelocity=2.6;
 	minwaterdepth=30;
 	waterline=4.99;

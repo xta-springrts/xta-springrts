@@ -72,7 +72,7 @@
 	movementclass=MEDIUMBOAT;
 	turnrate=384;
 	acceleration=0.00915527;
-	brakerate=0.005;
+	brakerate=0.015;
 	maxvelocity=1.3; //was 2.7//
 	minwaterdepth=12;
 	waterline=4;
