@@ -13,6 +13,7 @@ end
 -- Pop-up style unit and per piece collision volume definitions
 local popupUnits = {}		--list of pop-up style units
 local unitCollisionVolume, pieceCollisionVolume, dynamicPieceCollisionVolume = include("LuaRules/Configs/CollisionVolumes.lua")
+local mapFeatures = {}
 
 -- Localization and speedups
 local spGetPieceCollisionData = Spring.GetUnitPieceCollisionVolumeData
@@ -46,15 +47,15 @@ if (gadgetHandler:IsSyncedCode()) then
 	function gadget:Initialize()
 		local mapConfig = "LuaRules/Configs/DynCVmapCFG/" .. Game.mapName .. ".lua"
 		if VFS.FileExists(mapConfig) then
-			local mapFeatures = VFS.Include(mapConfig)
+			mapFeatures = VFS.Include(mapConfig)
 			for _, featID in pairs(Spring.GetAllFeatures()) do
 				local featureModel = FeatureDefs[Spring.GetFeatureDefID(featID)].modelname:lower()
 				if featureModel:len() > 4 then
 					local featureModelTrim
 					if Game.version > "91.0" then
-						featureModelTrim = featureModel:sub(1,-5) -- featureModel:match("/.*%."):sub(2,-2)
-					else
 						featureModelTrim = featureModel:match("/.*%."):sub(2,-2)
+					else
+						featureModelTrim = featureModel:sub(1,-5)
 					end
 					if mapFeatures[featureModelTrim] then
 						local p = mapFeatures[featureModelTrim]
@@ -62,7 +63,6 @@ if (gadgetHandler:IsSyncedCode()) then
 						spSetFeatureRadiusAndHeight(featID, min(p[1], p[3])*0.5, p[2])
 					elseif featureModel:find(".s3o") then
 						local xs, ys, zs, xo, yo, zo, vtype, htype, axis, _ = spGetFeatureCollisionData(featID)
-						Spring.Echo(featureModel, xs, ys, zs, xo, yo, zo, vtype, htype, axis)
 						if (vtype>=3 and xs==ys and ys==zs) then
 							if Game.version > "91.0" then
 								spSetFeatureCollisionData(featID, xs, ys*0.75, zs,  xo, yo-ys*0.09, zo,  1, htype, 1)
@@ -160,7 +160,17 @@ if (gadgetHandler:IsSyncedCode()) then
 	-- Same as for 3DO units, but for features
 	function gadget:FeatureCreated(featureID, allyTeam)
 		local featureModel = FeatureDefs[Spring.GetFeatureDefID(featureID)].modelname:lower()
-		if featureModel:find(".3do") then
+		local featureModelTrim
+		if Game.version > "91.0" then
+			featureModelTrim = featureModel:match("/.*%."):sub(2,-2)
+		else
+			featureModelTrim = featureModel:sub(1,-5)
+		end
+		if mapFeatures[featureModelTrim] then	-- it just might happen that some map features can have corpses
+			local p = mapFeatures[featureModelTrim]
+			spSetFeatureCollisionData(featureID, p[1], p[2], p[3], p[4], p[5], p[6], p[7], p[8], p[9])
+			spSetFeatureRadiusAndHeight(featureID, min(p[1], p[3])*0.5, p[2])		
+		elseif featureModelTrim:find(".3do",-1) then
 			local rs, hs
 			if (spGetFeatureRadius(featureID)>47) then
 				rs, hs = 0.68, 0.60
@@ -171,13 +181,12 @@ if (gadgetHandler:IsSyncedCode()) then
 			if (vtype>=3 and xs==ys and ys==zs) then
 				spSetFeatureCollisionData(featureID, xs*rs, ys*hs, zs*rs,  xo, yo-ys*0.09, zo,  vtype, htype, axis)
 			end
-			spSetFeatureRadiusAndHeight(featureID, spGetFeatureRadius(featureID)*rs, spGetFeatureHeight(featureID)*hs)			
+			spSetFeatureRadiusAndHeight(featureID, spGetFeatureRadius(featureID)*rs, spGetFeatureHeight(featureID)*hs)
 		end
 	end
 
 
 	-- Check if a unit is pop-up type (the list must be entered manually)
-	-- If a building was constructed add it to the list for later radius and height scaling
 	function gadget:UnitFinished(unitID, unitDefID, unitTeam)
 		local un = UnitDefs[unitDefID].name
 		if unitCollisionVolume[un] then
@@ -197,7 +206,6 @@ if (gadgetHandler:IsSyncedCode()) then
 
 	
 	--Dynamic adjustment of pop-up style of units' collision volumes based on unit's ARMORED status, runs twice per second
-	--rescaling of radius and height of 3DO buildings
 	function gadget:GameFrame(n)
 		if (n%15 ~= 0) then
 			return
