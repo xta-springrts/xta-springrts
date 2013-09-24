@@ -82,17 +82,6 @@ gadgetHandler = {
   mouseOwner = nil,
 }
 
--- maintain backwards compatibility with spring < 95
-
-local fullversion = string.sub(Game.version,1,4)
-local smallversion = string.sub(Game.version,5,5)
-local gameversion = tonumber(fullversion)
-if smallversion then gameversion = gameversion + 0.01 end
-
-if gameversion < 94.11 then
-	CALLIN_LIST = CallInsList
-	Spring.GetProjectileDefID = Spring.GetProjectileName
-end 
 
 -- initialize the call-in lists
 do
