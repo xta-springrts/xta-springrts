@@ -2,7 +2,7 @@
 if addon.InGetInfo then
 	return {
 		name    = "Main",
-		desc    = "displays a simple loadbar",
+		desc    = "displays a simplae loadbar",
 		author  = "jK",
 		date    = "2012,2013",
 		license = "GPL2",
@@ -29,16 +29,18 @@ function addon.DrawLoadScreen()
 
 	local vsx, vsy = gl.GetViewSizes()
 
-	local x0 = 0.2
-	local x1 = 0.8
-	
-	
+
 	
 	-- draw progressbar
 	local hbw = 3.5/vsx
 	local vbw = 3.5/vsy
-	local hsw = 0.8
-	local vsw = 0.8
+	local hsw = 0.2
+	local vsw = 0.2
+	
+	gl.PushMatrix()
+	gl.Scale(.4,.4,1)
+	gl.Translate(-0.1,0,0)
+	
 	gl.BeginEnd(GL.QUADS, function()
 		--shadow topleft
 		gl.Color(0,0,0,0)
@@ -112,15 +114,15 @@ function addon.DrawLoadScreen()
 			gl.Vertex(0.2, 0.15)
 
 		--progress
-		gl.Color(0.8,0.8,1,0.7)
+		gl.Color(1,1,1,0.7)
 			gl.Vertex(0.2, 0.2)
 			gl.Vertex(0.2 + math.max(0, loadProgress-0.01) * 0.6, 0.2)
 			gl.Vertex(0.2 + math.max(0, loadProgress-0.01) * 0.6, 0.15)
 			gl.Vertex(0.2, 0.15)
-		gl.Color(0.7,0.7,1,0.6)
+		gl.Color(1,1,1,0.7)
 			gl.Vertex(0.2 + math.max(0, loadProgress-0.01) * 0.6, 0.2)
 			gl.Vertex(0.2 + math.max(0, loadProgress-0.01) * 0.6, 0.15)
-		gl.Color(0.6,0.6,1,0.1)
+		gl.Color(1,1,1,0)
 			gl.Vertex(0.2 + math.min(1, math.max(0, loadProgress+0.01)) * 0.6, 0.15)
 			gl.Vertex(0.2 + math.min(1, math.max(0, loadProgress+0.01)) * 0.6, 0.2)
 
@@ -163,18 +165,18 @@ function addon.DrawLoadScreen()
 	-- progressbar text
 	gl.PushMatrix()
 	gl.Scale(1/vsx,1/vsy,1)
-		local barTextSize = 0.5 * vsy * (0.05 - 0.015)
-		local progressTextSize = 0.75 * vsy * (0.05 - 0.015)
-		local loadMessageSize = 0.5 * vsy * (0.05 - 0.015)
+		local barTextSize = vsy * (0.05 - 0.015)
 
 		--font:Print(lastLoadMessage, vsx * 0.5, vsy * 0.3, 50, "sc")
-		font:Print(Game.gameName, vsx * 0.5, vsy * 0.95, vsy * 0.07, "sca")
-		font:Print(lastLoadMessage, vsx * 0.2, vsy * 0.14, loadMessageSize, "sa")
+		--font:Print(Game.gameName, vsx * 0.5, vsy * 0.95, vsy * 0.07, "sca")
+		font:Print(lastLoadMessage, vsx * 0.2, vsy * 0.14, barTextSize, "sa")
 		if loadProgress>0 then
-			font:Print(("%.0f%%"):format(loadProgress * 100), vsx * 0.5, vsy * 0.169, progressTextSize, "oc")
+			font:Print(("%.0f%%"):format(loadProgress * 100), vsx * 0.5, vsy * 0.165, barTextSize, "oc")
 		else
-			font:Print("Loading...", vsx * 0.5, vsy * 0.169, barTextSize, "oc")
+			font:Print("Loading...", vsx * 0.5, vsy * 0.165, barTextSize, "oc")
 		end
+	gl.PopMatrix()
+	
 	gl.PopMatrix()
 end
 
