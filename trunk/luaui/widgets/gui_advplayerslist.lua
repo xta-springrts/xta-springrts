@@ -15,7 +15,7 @@ function widget:GetInfo()
 		desc      = "Players list with useful information / shortcuts. Use tweakmode (ctrl+F11) to customize.",
 		author    = "Marmoth.",
 		date      = "11.06.2013",
-		version   = "10",
+		version   = "11",
 		license   = "GNU GPL, v2 or later",
 		layer     = -4,
 		enabled   = true,  --  loaded by default?
@@ -28,12 +28,14 @@ end
 -- v9.0 (Bluestone): modifications to deal with twice as many players/specs; specs are rendered in a small font and cpu/ping does not show for them. 
 -- v9.1 ([teh]decay): added notification about shared resources
 -- v10  (Bluestone): Better use of opengl for a big speed increase & less spaghetti
+-- v11  (Bluestone): Get take info from cmd_idle_players
 
 --------------------------------------------------------------------------------
 -- SPEED UPS
 --------------------------------------------------------------------------------
 
 local Spring_GetGameSeconds      = Spring.GetGameSeconds
+local Spring_GetGameFrame		 = Spring.GetGameFrame
 local Spring_GetAllyTeamList     = Spring.GetAllyTeamList
 local Spring_GetTeamInfo         = Spring.GetTeamInfo
 local Spring_GetTeamList         = Spring.GetTeamList
@@ -528,6 +530,15 @@ function CreatePlayerFromTeam(teamID)
 			tname = "no player yet"
 			ttotake = false
 			tdead = false
+		elseif Spring_GetTeamRulesParam(teamID, "numActivePlayers") == 0 then
+			local units = Spring_GetTeamUnitCount(teamID)
+			local energy = Spring_GetTeamResources(teamID,"energy")
+			local metal = Spring_GetTeamResources(teamID,"metal")
+			if units and energy and metal then
+				if (units > 0) or (energy > 1000) or (metal > 100) then			
+					ttotake = true
+				end
+			end
 		else
 			if Spring_GetTeamUnitCount(teamID) > 0  then
 				tname = "- aband. units -"
@@ -729,6 +740,20 @@ function SortPlayers(teamID,allyTeamID,vOffset)
 		tainsert(drawListOffset, vOffset)
 		tainsert(drawList, 64 + teamID)  -- no players team
 		player[64 + teamID].posY = vOffset
+		if Spring_GetGameFrame() > 0 then
+			if Spring_GetTeamRulesParam(teamID, "numActivePlayers") == 0 then
+				local units = Spring_GetTeamUnitCount(teamID)
+				local energy = Spring_GetTeamResources(teamID,"energy")
+				local metal = Spring_GetTeamResources(teamID,"metal")
+				if units and metal and energy then
+					if (units > 0) or (energy > 1000) or (metal > 100) then			
+						player[64+teamID].totake = true
+					else
+						player[64+teamID].totake = false	
+					end
+				end
+			end
+		end
 	end
 	return vOffset
 end
@@ -1486,12 +1511,8 @@ function SetPingCpuColors()
 end
 
 function GetDark(red,green,blue)                  	
-
 	-- Determines if the player color is dark. (to determine if white outline is needed)
-
 	return (red*1.2 + green*1.1 + blue*0.8) < 0.9
-	--if red*1.2 + green*1.1 + blue*0.8 < 0.9 then return true end
-	--return false
 end
 
 function Spec(teamID)
@@ -1557,12 +1578,12 @@ function widget:MousePress(x,y,button)
 							if clickedPlayer.totake == true then
 								if right == true then
 									if IsOnRect(x,y, widgetPosX - 57, posY - 1,widgetPosX - 12, posY + 17) then                            --take button
-										Take()                                                                                             --
+										Take(clickedPlayer.team, clickedPlayer.name, i)                                                                                             --
 										return true                                                                                        --
 									end                                                                                                    --
 								else                                                                                                       --
 									if IsOnRect(x,y, widgetPosX + widgetWidth + 12, posY-1,widgetPosX + widgetWidth + 57, posY + 17) then  --
-										Take()                                                                                             --
+										Take(clickedPlayer.team, clickedPlayer.name, i)                                                                                             --
 										return true
 									end
 								end
@@ -1666,7 +1687,7 @@ function widget:MouseRelease(x,y,button)
 				else
 					Spring_SendCommands("say a: I need "..amountEM.." Energy!")
 				end
-			else
+			elseif amountEM > 0 then
 				Spring_ShareResources(energyPlayer.team, "energy", amountEM)
 				Spring_SendCommands("say a: I sent "..amountEM.." energy to "..energyPlayer.name)
 			end
@@ -1684,7 +1705,7 @@ function widget:MouseRelease(x,y,button)
 				else
 					Spring_SendCommands("say a: I need "..amountEM.." Metal!")
 				end
-			else
+			elseif amountEM > 0 then
 				Spring_ShareResources(metalPlayer.team, "metal", amountEM)
 				Spring_SendCommands("say a: I sent "..amountEM.." metal to "..metalPlayer.name)
 			end
@@ -2006,6 +2027,22 @@ function CheckPlayersChange()
 			player[i].ping    = pingTime*1000-((pingTime*1000)%1)
 			player[i].cpu     = cpuUsage*100-((cpuUsage*100)%1)
 		end
+		if teamID and Spring_GetGameFrame() > 0 then
+			if Spring_GetTeamRulesParam(teamID, "numActivePlayers") == 0 and player[i].totake == false then
+				local units = Spring_GetTeamUnitCount(teamID)
+				local energy = Spring_GetTeamResources(teamID,"energy")
+				local metal = Spring_GetTeamResources(teamID,"metal")
+				if units and energy and metal then
+					if (units > 0) or (energy > 1000) or (metal > 100) then			
+						player[i].totake = true
+						sorting = true
+					end
+				end
+			else
+				player[i].name = name
+				player[i].totake = false					
+			end
+		end
 	end
 	if sorting == true then    -- sorts the list again if change needs it
 		SortList()
@@ -2034,20 +2071,22 @@ function GetNeed(resType,teamID)
 	return false
 end
 
-function Take()
+local reportTake = false
+local tookTeamID
+local tookTeamName
+local tookFrame = -120
+
+function Take(teamID,name, i)
 
 	-- sends the /take command to spring
 
-	Spring_SendCommands{"take"}
-	Spring_SendCommands{"say a: I took the abandoned units."}
-	for i = 0,127 do
-		if player[i].allyteam == myAllyTeamID then
-			if player[i].totake == true then
-				player[i] = CreatePlayerFromTeam(player[i].team)
-				SortList()
-			end
-		end
-	end
+	reportTake = true
+	tookTeamID = teamID
+	tookTeamName = name
+	tookFrame = Spring.GetGameFrame()
+	
+	Spring_SendCommands("luarules take2 " .. teamID)
+	
 	return
 end
 
@@ -2061,6 +2100,41 @@ local updateRate = 0.5
 
 function widget:Update(delta) 
 	timeCounter = timeCounter + delta
+	curFrame = Spring_GetGameFrame()
+
+	if curFrame >= 30 + tookFrame then
+		if lastTakeMsg + 120 < tookFrame and reportTake then 
+			local teamID = tookTeamID
+			local afterE = Spring_GetTeamResources(teamID,"energy")
+			local afterM = Spring_GetTeamResources(teamID, "metal")
+			local afterU = Spring_GetTeamUnitCount(teamID)
+	
+			local toSay = "say a: I took " .. tookTeamName .. ". "
+		
+			if afterE and afterM and afterU then
+				if afterE > 1.0 or afterM > 1.0 or  afterU > 0 then
+					toSay = toSay .. "Left  " .. math.floor(afterU) .. " units, " .. math.floor(afterE) .. " energy and " .. math.floor(afterM) .. " metal."
+				end
+			end
+			
+			Spring_SendCommands(toSay)
+		
+			for j = 0,127 do
+				if player[j].allyteam == myAllyTeamID then
+					if player[j].totake == true then
+						player[j] = CreatePlayerFromTeam(player[j].team)
+						SortList()
+					end
+				end
+			end	
+
+			lastTakeMsg = tookFrame
+			reportTake = false
+		else
+			reportTake = false
+		end
+	end
+
 	if timeCounter < updateRate then
 		return
 	else
@@ -2071,7 +2145,6 @@ end
 
 function widget:TeamDied(teamID)
 	player[teamID+64]        = CreatePlayerFromTeam(teamID)
-	player[teamID+64].totake = false
 	SortList()
 end
 
@@ -2087,7 +2160,3 @@ function widget:ViewResize(viewSizeX, viewSizeY)
 		widgetPosX  = widgetRight - widgetWidth
 	end
 end
-
-
--- Coord in % (resize) geometry will not be done
--- ajouter les d�cryptages de messages "widget:AddConsoleLine(line,priority)" appel� � chaque fois qu'il doit ajouter une ligne
