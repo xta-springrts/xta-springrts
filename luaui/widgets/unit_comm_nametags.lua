@@ -38,6 +38,7 @@ local glPushMatrix        = gl.PushMatrix
 local glTranslate         = gl.Translate
 local glBillboard         = gl.Billboard
 local glPopMatrix         = gl.PopMatrix
+local GetGaiaTeamID		  = Spring.GetGaiaTeamID
 
 --------------------------------------------------------------------------------
 -- vars
@@ -59,12 +60,15 @@ function widget:Initialize()
 		local r, g, b, a = GetTeamColor(teamID)
 		teams[teamID].colour = {r, g, b, a}
 		local player,isAI,side,name
+		local isGaia = teamID == GetGaiaTeamID()
 		_,player,_,isAI,side,_,_,_ = GetTeamInfo(teamID)
 		if isAI then
 			if side == "arm" then name = "Arm"
 				elseif side == "core" then name = "Core"
 				else name = side
 			end
+		elseif isGaia then
+			name = "Gaia"
 		else
 			name = GetPlayerInfo(player)
 		end
