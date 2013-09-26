@@ -130,7 +130,7 @@ function widget:Initialize() -- create lighttable
 		-- Melee, Rifle	-- has no projectile
 		-- Shield
 		-- TorpedoLauncher
-	for w=1, #WeaponDefs do 
+	for w=0, #WeaponDefs do 
 		local weaponDef = WeaponDefs[w]
 		if not BlackList[weaponDef.name] then	-- prevent projectile light, if the weapon has some other light effect
 			if (weaponDef.type == 'Cannon' or weaponDef.type == 'EmgCannon') then
@@ -253,14 +253,14 @@ function widget:DrawWorldPreUnit()
 						tx,ty,tz = spGetProjectileVelocity(pID)
 						if tx then
 							local dist = sqrt(tx*tx + tz*tz) -- distance from beam start till beam end
-							local endSeg = max(4, floor(dist/(100-min(50,abs(spGetGroundHeight(x+tx,z+tz)-spGetGroundHeight(x+tx*0.5,z+tz*0.5))))))	-- number of segments used for beam neon, min 4 segments
+							bx, bz = x+tx, z+tz
+							local endSeg = max(4, floor(dist/(100-min(50,abs(spGetGroundHeight(bx,bz)-spGetGroundHeight(x+tx*0.5,z+tz*0.5))))))	-- number of segments used for beam neon, min 4 segments
 							stpX, stpY, stpZ = tx/endSeg, ty/endSeg, tz/endSeg
 							r,g,b,al,w = lightparams[1], lightparams[2], lightparams[3], lightparams[4], lightparams[6]
 							nf = noise[floor(x+z+pID)%10+1]
 							glPushMatrix()
 							glTranslate(x, 0.0, z)
 							glRotate(atan2(tx,tz)*DegToRad, 0.0, 1.0, 0.0)	-- align light with beam direction
-							bx, bz = x+tx, z+tz
 							bx,bz, px,py,pz = bx+stpX, bz+stpZ, bx, y+ty, bz
 							for i=0, endSeg do	-- calculate the size factor, alpha and terrain height of beam neon segments
 								if py>0.0 then

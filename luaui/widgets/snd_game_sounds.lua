@@ -142,7 +142,7 @@ function widget:UnitDamaged (unitID, unitDefID, unitTeam, damage, paralyzer, wea
 		id = random(1, #udef.sounds.underattack) --pick a sound from the table by random --(id 138, name warning2, volume 1)
 
 		soundFile = udef.sounds.underattack[id].name
-		if (string.find(soundFile, "%.") == nil) then
+		if (soundFile:find("%.") == nil) then
 			soundFile = soundFile .. ".wav" --append .wav if no extension is found
 		end
 			
