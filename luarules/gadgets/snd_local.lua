@@ -48,8 +48,8 @@ if gadgetHandler:IsSyncedCode() then
 		local modOptions = Spring.GetModOptions()
 		
 		if modOptions and modOptions.globalsounds == '1' then
-			Echo("[" .. (self:GetInfo()).name .. "] local sounds disabled")
-			gadgetHandler:RemoveGadget(self)
+			Echo("Local sounds disabled")
+			gadgetHandler:RemoveGadget()
 			return
 		end
 		
@@ -250,8 +250,8 @@ else
 		local modOptions = Spring.GetModOptions()
 		
 		if modOptions and modOptions.globalsounds == '1' then
-			Echo("[" .. (self:GetInfo()).name .. "] local sounds disabled")
-			gadgetHandler:RemoveGadget(self)
+			Echo("Local sounds disabled")
+			gadgetHandler:RemoveGadget()
 			return
 		end
 		

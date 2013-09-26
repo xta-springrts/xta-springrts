@@ -103,7 +103,6 @@ local explosionsList  = {
 		'amphstp1.wav',
 		'anni.wav',
 		'annigun1.wav',
-		'armcom1.wav',
 		'armcomgun.wav',
 		'armcomhit.wav',
 		'armsml2.wav',
@@ -229,6 +228,8 @@ local explosionsList  = {
 		}
 
 local guiList = {
+		'armcom1.wav',
+		'armcom2.wav',
 		'beep1.wav',
 		'beep4.wav',
 		'beep6.wav',
@@ -236,12 +237,18 @@ local guiList = {
 		'button11.wav',
 		'button9.wav',
 		'cancel2.wav',
+		'corcom1.wav',
+		'corcom2.wav',
 		'ding.wav',
 		'honk.wav',
+		'honk2.wav',
 		'sing.wav',
+		'sing2.wav',
 		'sneer_mono.ogg',
 		'ticktock.wav',
+		'victory1.wav',
 		'victory2.wav',
+		'victory3.wav',
 		'warning1.wav',
 		'warning2.wav'
 		}
@@ -266,6 +273,29 @@ for i =1,#files do
 	--Echo("Filename:", fileName, shortName)
 	
 	if guiSounds[shortName] then
+		if shortname == 'victory1.wav' then --victory sound
+			t[fileName]  = {
+			file      = fileName;
+			pitchmod  = 0.0;
+			gainmod   = 0;
+			gain  = 5;
+			maxconcurrent  = 1;
+			rolloff  = 0;
+			priority  = 10;
+			in3d = 0;
+			}
+		elseif shortname == 'sing.wav' or shortname == 'sing2.wav' or shortname == 'honk.wav' or shortname == 'honk2.wav'then --sing/honk sounds
+			t[fileName]  = {
+			file      = fileName;
+			pitchmod  = 0.1;
+			gainmod   = 0;
+			gain  = 1;
+			maxconcurrent  = 8;
+			rolloff  = 0;
+			priority  = -1;
+			in3d = 0;
+			}
+		else
 		--Echo("GUI sound:",shortName)
 		t[fileName]  = {
 		file      = fileName;
@@ -274,31 +304,43 @@ for i =1,#files do
 		gain  = 1;
 		maxconcurrent  = 32;
 		rolloff  = 0;
-		priority  = -1;
+		priority  = 1;
 		in3d = 0;
 		}
+		end
 	elseif explosionSounds[shortName] then
 		if shortname == 'xplomas2dgun.wav' then --DGUN sound
 			t[fileName]  = {
 			file      = fileName;
-			gainmod   = 0.2;
+			gainmod   = 0.1;
 			gain  = 1;
 			rolloff  = 0.4;
 			maxconcurrent  = 1;
 			pitchmod  = 0.05;
 			maxdist  = 5000;
-			priority  = -2;
+			priority  = 3;
 			}
 		elseif shortname == 'sizzle.wav' then --DGUN water sound
 			t[fileName]  = {
 			file      = fileName;
-			gainmod   = 0.2;
+			gainmod   = 0.1;
 			gain  = 1;
 			rolloff  = 0.4;
 			maxconcurrent  = 1;
 			pitchmod  = 0.05;
 			maxdist  = 5000;
-			priority  = -2;
+			priority  = -1;
+			}
+		elseif shortname == 'disigun1.wav' then -- DGUN start sound
+			t[fileName]  = {
+			file      = fileName;
+			gainmod   = 0.1;
+			gain  = 1;
+			rolloff  = 0.1;
+			maxconcurrent  = 8;
+			pitchmod  = 0.05;
+			maxdist  = 10000;
+			priority  = 10;
 			}
 		else
 		--Echo("Explosion sound:",shortName)

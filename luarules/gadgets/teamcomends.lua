@@ -5,7 +5,7 @@ function gadget:GetInfo()
 		author = "KDR_11k (David Becker)",
 		date = "2008-02-04",
 		license = "Public domain",
-		layer = 1,
+		layer = -5,
 		enabled = true
 	}
 end
@@ -26,9 +26,9 @@ if (gadgetHandler:IsSyncedCode()) then
 	
 	local destroyQueue 			= {}
 	local destroySingleQueue	= {}
-	local aliveCount 			= {}
-	local localCommanders 		= {}
-	local commanderTable 		= {}
+	local teamCommanders 		= {}	-- table of commander's count per team (allyteam)
+	local playerCommanders 		= {}	-- table of commanders per player (team)
+	local commanderTable 		= {} 	-- table of commander unitdefid:s
 	local isAlive 				= {}
 
 	local GetTeamList			= Spring.GetTeamList
@@ -41,6 +41,7 @@ if (gadgetHandler:IsSyncedCode()) then
 	local GetUnitsInSphere 		= Spring.GetUnitsInSphere
 	local GetUnitPosition		= Spring.GetUnitPosition
 	local GetGameFrame			= Spring.GetGameFrame
+	local AreTeamsAllied		= Spring.AreTeamsAllied
 	local COMMANDER				= "commander" --key name in modoptions.mode
 	local DECOYSTART			= "decoystart" -- value name in modoptions.commander
 	local commanderEnds			= Spring.GetModOptions().mode == COMMANDER
@@ -50,18 +51,47 @@ if (gadgetHandler:IsSyncedCode()) then
 	local frequency				= 6
 	local destroyStepwise		= true
 	local modOptions			= Spring.GetModOptions()
+	local gameHasEnded			= false
+	local contesters			= {}
+	local gameoverframe			= nil
+	local gamewinners			= nil
+	local gameoverdelay			= 120 -- check that this is less than the value in game_end gadget to make combomb forfeit work
+	
+	local dgunWeapons = {		-- better to hardcode these, as many weapons are listed as dgun, for example bogus dgun
+	arm_disintegrator = true,
+	core_disintegrator = true,
+	core_udisintegrator = true,
+	uber_disintegrator = true,
+	}
+	
+	local dgunTable = {} -- Populated from dgunWeapons; a little better to store weapons in table by id instead of name
 	
 	function gadget:Initialize()
 		if not endmodes[modOptions.mode] then
-			gadgetHandler:RemoveGadget()
+			gadgetHandler:RemoveGadget(self)
+			Echo("Team Comends gadget: game is set to continue when commander dies, I am not needed.")
+			return
 		end
 		
-		for _,allyTeam in ipairs(Spring.GetAllyTeamList()) do
-			aliveCount[allyTeam] = 0
+		local gaiaAllyID = select(6, Spring.GetTeamInfo(Spring.GetGaiaTeamID()))
+		
+		for i,allyTeam in ipairs(Spring.GetAllyTeamList()) do
+			teamCommanders[allyTeam] = 0
+			if allyTeam ~= gaiaAllyID then
+				contesters[i] = allyTeam
+			end
 		end
 		
 		for _,team in ipairs(GetTeamList()) do
-			localCommanders[team] = 0
+			playerCommanders[team] = 0
+		end
+		
+		for id,weaponDef in pairs(WeaponDefs) do
+			local wName = weaponDef.name
+			--Echo("Weapon: ", wName)
+			if dgunWeapons[wName] then
+				dgunTable[weaponDef.id] = true
+			end
 		end
 		
 		if modOptions and modOptions.commander == DECOYSTART then
@@ -83,8 +113,32 @@ if (gadgetHandler:IsSyncedCode()) then
 		end
 	end
 	
+	local function removeContester(allyID)
+		for i, aID in ipairs (contesters) do
+			if aID == allyID then
+				table.remove(contesters, i)
+			end
+		end
+	end
+	
+	local function checkWinners()
+		local winners 
+		if #contesters == 1 then
+			winners = (contesters)
+		elseif #contesters < 1 then
+			winners = {}
+		end
+		if winners then
+			local frame = Spring.GetGameFrame()
+			gameoverframe = frame + gameoverdelay
+			gamewinners = winners
+			Spring.PlaySoundFile("sounds/victory1.wav",8.0,0,0,0,0,0,0,'userinterface')
+			return true
+		end
+		return false
+	end
+			
 	local function DestroySingleTeam(team)
-		--Echo("Destroying team:",team)
 		if killX and destroyStepwise then
 			-- code to kill team in steps
 			if not frame then frame = GetGameFrame() end
@@ -94,7 +148,6 @@ if (gadgetHandler:IsSyncedCode()) then
 					DestroyUnit(unitID, true)
 				end
 			end
-			--Echo("Radius:",team, radius)
 		else	
 			for _,u in ipairs(GetTeamUnits(team)) do
 				DestroyUnit(u, true)
@@ -104,11 +157,9 @@ if (gadgetHandler:IsSyncedCode()) then
 	end
 	
 	local function DestroyAllyTeam(allyTeam)
-		--Echo("Destroying allyteam:",allyTeam)
 		local allyteamCount = 0
 		for _,team in ipairs(GetTeamList(allyTeam)) do
 			local count = GetTeamUnitCount(team)
-			--Echo("Count:",team,count)
 			allyteamCount = allyteamCount + count
 			if count > 0 then
 				DestroySingleTeam(team)
@@ -124,10 +175,15 @@ if (gadgetHandler:IsSyncedCode()) then
 	end
 	
 	function gadget:GameFrame(t)
+		
+		if gameoverframe and t >= gameoverframe then
+			Spring.GameOver(gamewinners)
+		end
+		
 		if t % frequency == 0 then
 			for ateam,_ in pairs(destroyQueue) do
 				if not commanderEnds then				
-					if aliveCount[ateam] <= 0 then --safety check, triggers on transferring the last com otherwise
+					if teamCommanders[ateam] <= 0 then --safety check, triggers on transferring the last com otherwise
 						DestroyAllyTeam(ateam)
 					end
 				end
@@ -135,29 +191,52 @@ if (gadgetHandler:IsSyncedCode()) then
 			
 			for team,_ in pairs(destroySingleQueue) do
 				if commanderEnds then				
-					if localCommanders[team] <= 0 then --safety check, triggers on transferring the last com otherwise
+					if playerCommanders[team] <= 0 then --safety check, triggers on transferring the last com otherwise
 						DestroySingleTeam(team)
 					end
 				end
 			end
 		end
 	end
-
+	
 	function gadget:UnitCreated(unitID, unitDefID, team)
 		isAlive[unitID] = true
 		if commanderTable[unitDefID] then
 			local allyTeam = GetUnitAllyTeam(unitID)
-			aliveCount[allyTeam] = aliveCount[allyTeam] + 1
-			localCommanders[team] = localCommanders[team] + 1
+			teamCommanders[allyTeam] = teamCommanders[allyTeam] + 1
+			playerCommanders[team] = playerCommanders[team] + 1
 		end
+		return false
 	end
 
 	function gadget:UnitGiven(unitID, unitDefID, unitTeam, oldTeam)
 		if commanderTable[unitDefID] then
 			local allyTeam = GetUnitAllyTeam(unitID)
-			aliveCount[allyTeam] = aliveCount[allyTeam] + 1
-			localCommanders[unitTeam] = localCommanders[unitTeam] + 1
+			teamCommanders[allyTeam] = teamCommanders[allyTeam] + 1
+			playerCommanders[unitTeam] = playerCommanders[unitTeam] + 1
 		end
+		return false
+	end
+
+	function gadget:UnitDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weaponDefID, projectileID, attackerID, attackerDefID, attackerTeam)
+		
+		-- End game and declare winners if a Commander was D-Gunned
+		if commanderTable[unitDefID] then
+			if dgunTable[weaponDefID] and attackerTeam then
+				local health = Spring.GetUnitHealth(unitID)
+				local enemyAllyID = select(6,Spring.GetTeamInfo(attackerTeam))
+				if teamCommanders[enemyAllyID] <= 1 and health <= 0 and (not AreTeamsAllied(unitTeam, attackerTeam)) then
+					if not gameHasEnded then
+						removeContester(enemyAllyID)
+						if checkWinners() then
+							Echo("Game ends: last team commander d-gunned enemy commander")
+							gameHasEnded = true
+						end
+					end
+				end
+			end
+		end
+		return false
 	end
 
 	function gadget:UnitDestroyed(unitID, unitDefID, team)
@@ -165,40 +244,57 @@ if (gadgetHandler:IsSyncedCode()) then
 		
 		if commanderTable[unitDefID] then
 			local allyTeam = GetUnitAllyTeam(unitID)
-			aliveCount[allyTeam] = aliveCount[allyTeam] - 1
-			localCommanders[team] = localCommanders[team] - 1
-			
-			--Echo("Local commanders",localCommanders[team])
-			--Echo("Team commanders",aliveCount[allyTeam])
-			
+			teamCommanders[allyTeam] = teamCommanders[allyTeam] - 1
+			playerCommanders[team] = playerCommanders[team] - 1
+		
+			-- End game and declare winners if last commander dies
 			if commanderEnds then -- implement classic commander ends option
-				if localCommanders[team] <= 0 then
+				if playerCommanders[team] <= 0 then
 					killX, _, killZ = GetUnitPosition(unitID)
 					destroySingleQueue[team] = true
+					if teamCommanders[allyTeam] <= 0 then
+						if not gameHasEnded then
+							removeContester(allyTeam)
+							if checkWinners() then
+								Echo("Game ends: last commander is killed")
+								gameHasEnded = true
+							end
+						end
+					end
 				end
+				
 			else -- team comends option
-				if aliveCount[allyTeam] <= 0 then
+				if teamCommanders[allyTeam] <= 0 then
 					killX, _, killZ = GetUnitPosition(unitID)
 					destroyQueue[allyTeam] = true
+					if not gameHasEnded then
+						removeContester(allyTeam)
+						if checkWinners() then
+							Echo("Game ends: last team commander is killed")
+							gameHasEnded = true
+						end
+					end
 				end
 			end
 		end
+		return false
 	end
 
 	function gadget:UnitTaken(unitID, unitDefID, team)
 		if isAlive[unitID] and commanderTable[unitDefID] then
 			local allyTeam = GetUnitAllyTeam(unitID)
-			aliveCount[allyTeam] = aliveCount[allyTeam] - 1
-			localCommanders[team] = localCommanders[team] - 1 
-			if aliveCount[allyTeam] <= 0 then
+			teamCommanders[allyTeam] = teamCommanders[allyTeam] - 1
+			playerCommanders[team] = playerCommanders[team] - 1 
+			if teamCommanders[allyTeam] <= 0 then
 				destroyQueue[allyTeam] = true
 			end
 			if modOptions.mode == COMMANDER then
-				if localCommanders[team] <= 0 then
+				if playerCommanders[team] <= 0 then
 					destroySingleQueue[team] = true
 				end
 			end
 		end
+		return false
 	end
 else
 	--UNSYNCED

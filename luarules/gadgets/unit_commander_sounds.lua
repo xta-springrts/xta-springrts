@@ -4,6 +4,7 @@ local CommanderTauntCmdDesc = {id = 40234, name = "Taunt", }
 
 local spPlaySoundFile = Spring.PlaySoundFile
 local rnd = math.random
+local volume = 4.0
 
 if (gadgetHandler:IsSyncedCode()) then
 	function gadget:Initialize()
@@ -50,13 +51,19 @@ if (gadgetHandler:IsSyncedCode()) then
 			--   in synced code, so these play for everyone (also non-positional)
 			--   return false for Sing/Taunt so they do not cancel normal orders
 			if (cmdID == CommanderSingCmdDesc.id) then
-				local idx = rnd(0, #CommanderSounds.CommanderSongs[unitDefID])
-				spPlaySoundFile(CommanderSounds.CommanderSongs[unitDefID][idx], 4.0)
+				local idx
+				local rnd2 = rnd(0,10)
+				if rnd2 < 8 then 
+					idx = 0
+				else
+					idx = rnd(1, #CommanderSounds.CommanderSongs[unitDefID])
+				end
+				spPlaySoundFile(CommanderSounds.CommanderSongs[unitDefID][idx], volume)
 				return false
 			end
 			if (cmdID == CommanderTauntCmdDesc.id) then
 				local idx = rnd(0, #CommanderSounds.CommanderTaunts[unitDefID])
-				spPlaySoundFile(CommanderSounds.CommanderTaunts[unitDefID][idx], 4.0)
+				spPlaySoundFile(CommanderSounds.CommanderTaunts[unitDefID][idx], volume)
 				return false
 			end
 		end
@@ -138,13 +145,13 @@ else
 		-- check if the destroyed unit was a special target
 		for i = 0, #CommanderTargets.HolyTargetDefs do
 			if (unitDefID == CommanderTargets.HolyTargetDefs[i].id) then
-				spPlaySoundFile(CommanderSounds.CommanderHolyTargetDestroyed, 4.0)
+				spPlaySoundFile(CommanderSounds.CommanderHolyTargetDestroyed, volume)
 				return true
 			end
 		end
 		for i = 0, #CommanderTargets.ImpressiveTargetDefs do
 			if (unitDefID == CommanderTargets.ImpressiveTargetDefs[i].id) then
-				spPlaySoundFile(CommanderSounds.CommanderImpressiveTargetDestroyed, 4.0)
+				spPlaySoundFile(CommanderSounds.CommanderImpressiveTargetDestroyed, volume)
 				return true
 			end
 		end
@@ -160,10 +167,10 @@ else
 			commanderKillCounts[attackerID][1] = commanderKillCounts[attackerID][1] + 1
 
 			if (commanderKillCounts[attackerID][1] >= 15) then
-				spPlaySoundFile(CommanderSounds.CommanderPerfectTargetsKilled, 4.0)
+				spPlaySoundFile(CommanderSounds.CommanderPerfectTargetsKilled, volume)
 				commanderKillCounts[attackerID] = nil
 			elseif (commanderKillCounts[attackerID][1] == 5) then
-				spPlaySoundFile(CommanderSounds.CommanderExcellentTargetsKilled, 4.0)
+				spPlaySoundFile(CommanderSounds.CommanderExcellentTargetsKilled, volume)
 			end
 		else
 			commanderKillCounts[attackerID] = nil

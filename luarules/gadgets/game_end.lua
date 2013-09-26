@@ -18,7 +18,7 @@ function gadget:GetInfo()
 		author    = "Andrea Piras, modified by Jools",
 		date      = "December, 2012",
 		license   = "GNU GPL, v2 or later",
-		layer     = 0,
+		layer     = 10, -- must be higher than layer for game_gameover gadget, otherwise GameOver callin is trapped
 		enabled   = true  --  loaded by default?
 	}
 end
@@ -70,13 +70,17 @@ local allyTeamAliveTeamsCount = {}
 local teamToAllyTeam = {}
 local aliveAllyTeamCount = 0
 local killedAllyTeams = {}
-
+local gameoverframe = nil
+local gamewinners 	= nil
+local gameoverdelay	= 150 -- check that this is more than the value in teamcomends gadget to make combomb forfeit work
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
-
 
 function gadget:GameOver()
-	-- remove ourself after successful game over
+	-- This callin gets trapped here and no other gadgets can use the same callin, unless the layer 
+	-- of this gadget is higher than the other ones. It doesn't mattre if you return true, false or nil from this callin.
+	--
+	--remove ourself after successful game over
 	gadgetHandler:RemoveGadget()
 end
 
@@ -147,8 +151,13 @@ local function CheckGameOver()
 		winners = CheckSharedAllyVictoryEnd()
 	end
 
-	if winners then
-		spGameOver(winners)
+	if winners and (not gameoverframe) then
+		local frame = Spring.GetGameFrame()
+		gamewinners = winners
+		gameoverframe = frame + gameoverdelay
+		if teamDeathMode ~= COMENDS and teamDeathMode ~= COMMANDER then
+			Spring.PlaySoundFile("sounds/victory1.wav",8.0,0,0,0,0,0,0,'userinterface')
+		end
 	end
 end
 
@@ -199,8 +208,14 @@ local function KillResignedTeams()
 end
 
 function gadget:GameFrame(frame)
+	-- trigger gameover with a delay to let all explosions calm down
+	if gameoverframe and frame >= gameoverframe then
+		spGameOver(gamewinners)
+	end
+
 	-- only do a check in slowupdate
-	if (frame%16) == 0 then
+	-- change 16 => 32, no hurries here
+	if (frame%32) == 0 then
 		CheckGameOver()
 		-- kill teams after checking for gameover to avoid to trigger instantly gameover
 		if teamDeathMode == TEAMZERO or teamDeathMode == COMMANDER then
@@ -228,36 +243,29 @@ function gadget:TeamDied(teamID)
 	end
 end
 
-
 function gadget:Initialize()
+	
 	if teamDeathMode == "none" then
-
 		gadgetHandler:RemoveGadget()
 	end
-
+	
 	gaiaAllyTeamID = select(6, spGetTeamInfo(gaiaTeamID))
-
-
 	-- at start, fill in the table of all alive allyteams
 	for _,allyTeamID in ipairs(allyTeams) do
 		local teamList = spGetTeamList(allyTeamID)
 		local teamCount = 0
+
 		for _,teamID in ipairs(teamList) do
 			teamToAllyTeam[teamID] = allyTeamID
 			if (ignoreGaia == 0) or (teamID ~= gaiaTeamID) then
-
-
 				teamCount = teamCount + 1
 			end
-
-
-
-
 		end
+		
 		allyTeamAliveTeamsCount[allyTeamID] = teamCount
+		
 		if teamCount > 0 then
 			 aliveAllyTeamCount = aliveAllyTeamCount + 1
-
 		end
 	end
 
@@ -275,11 +283,6 @@ end
 
 gadget.UnitGiven = gadget.UnitCreated
 gadget.UnitCaptured = gadget.UnitCreated
-
-
-
-
-
 
 function gadget:UnitDestroyed(unitID, unitDefID, unitTeamID)
 	if unitTeamID == gaiaTeamID and ignoreGaia ~= 0 then
@@ -299,6 +302,4 @@ function gadget:UnitDestroyed(unitID, unitDefID, unitTeamID)
 	end
 end
 
-
 gadget.UnitTaken = gadget.UnitDestroyed
-
