@@ -2097,6 +2097,7 @@ end
 
 local timeCounter = 0
 local updateRate = 0.5
+local lastTakeMsg = -120
 
 function widget:Update(delta) 
 	timeCounter = timeCounter + delta
