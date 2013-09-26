@@ -86,7 +86,7 @@ end
 --------------------------------------------------------------------------------
 
 function gadget:UnitDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, 
-                            weaponID, attackerID, attackerDefID, attackerTeam)
+                            weaponID, projectileID, attackerID, attackerDefID, attackerTeam)
   if (unitID == attackerID and not exceptionMap[unitDefID]) then
     local health, _, paralyzeDamage = spGetUnitHealth(unitID)
     if (paralyzer) then
