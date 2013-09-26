@@ -19,8 +19,8 @@ if (gadgetHandler:IsSyncedCode()) then
 		end
 	end
 
-	function gadget:UnitDamaged(unitID, unitDefID, unitTeamID, damage, paralyzer, weaponID, attackerID, attackerDefID, attackerTeamID)
-		SendToUnsynced('usUnitDamaged', unitID, unitDefID, unitTeamID, damage, paralyzer, weaponID, attackerID, attackerDefID, attackerTeamID)
+	function gadget:UnitDamaged(unitID, unitDefID, unitTeamID, damage, paralyzer, weaponID, projectileID, attackerID, attackerDefID, attackerTeamID)
+		SendToUnsynced('usUnitDamaged', unitID, unitDefID, unitTeamID, damage, paralyzer, weaponID, projectileID, attackerID, attackerDefID, attackerTeamID)
 	end
 
 	function gadget:UnitDestroyed(unitID, unitDefID, unitTeamID, attackerID, attackerDefID, attackerTeamID)
@@ -43,7 +43,6 @@ if (gadgetHandler:IsSyncedCode()) then
 	function gadget:AllowCommand(unitID, unitDefID, unitTeamID, cmdID, cmdParams, cmdOptions)
 		--if (cmdID == CMD.REPAIR and #cmdParams == 1 and unitID == cmdParams[1]) then
 			--SendToUnsynced('usUnitSelfRepair', unitID, unitDefID, unitTeamID)
-			--SendToUnsynced(UNIT_SELF_REPAIR_EVENT_ID, unitID, unitDefID, unitTeamID)
 		--end
 
 		if (CommanderUnitDefs[unitDefID] ~= nil) then
@@ -77,7 +76,7 @@ else
 	local spGetUnitPosition = Spring.GetUnitPosition
 	local spGetGameFrame = Spring.GetGameFrame
 	
-	local function usUnitDamaged(_, unitID, unitDefID, unitTeamID, _, _, _, attackerID, attackerDefID, attackerTeamID)
+	local function usUnitDamaged(_, unitID, unitDefID, unitTeamID, _, _, _, _, attackerID, attackerDefID, attackerTeamID)
 		if (CommanderUnitDefs[unitDefID] == nil) then
 			return true	-- not a commander
 		end
