@@ -20,6 +20,8 @@ end
 
 local floor                 = math.floor
 local abs					= math.abs
+local ta_insert				= table.insert
+local pairs, ipairs			= pairs, ipairs
 
 local udefTab				= UnitDefs
 local spGetUnitDefID        = Spring.GetUnitDefID
@@ -120,21 +122,21 @@ end
 function calcCircleLines(divs)
 	local circleOffset = 0
 	local lines = gl.CreateList(function()
-    gl.BeginEnd(GL.LINE_LOOP, function()
-		  local radstep = (2.0 * math.pi) / divs
-		  for i = 1, divs do
-			local a = (i * radstep)
-			gl.Vertex(math.sin(a), circleOffset, math.cos(a))
-		  end
+		glBeginEnd(GL_LINE_LOOP, function()
+			local radstep = (2.0 * math.pi) / divs
+			for i = 1, divs do
+				local a = (i * radstep)
+				glVertex(math.sin(a), circleOffset, math.cos(a))
+			end
 		end)
-		gl.BeginEnd(GL.POINTS, function()
-		  local radstep = (2.0 * math.pi) / divs
-		  for i = 1, divs do
-			local a = (i * radstep)
-			gl.Vertex(math.sin(a), circleOffset, math.cos(a))
-		  end
+		glBeginEnd(GL.POINTS, function()
+			local radstep = (2.0 * math.pi) / divs
+			for i = 1, divs do
+				local a = (i * radstep)
+				glVertex(math.sin(a), circleOffset, math.cos(a))
+			end
 		end)
-	  end)
+	end)
   
 	return lines
 end
@@ -160,7 +162,14 @@ function widget:UnitDestroyed(unitID, attacker )
 	end
 end
 
-function newHotUnit( unitId, coop, playerId )
+function widget:PlayerChanged(playerID)
+	local _, active = Spring.GetPlayerInfo(playerID)
+	if active~=true and coopSelectedUnits[playerID] then
+		coopSelectedUnits[playerID] = nil
+	end
+end
+
+local function newHotUnit( unitId, coop, playerId )
 	local timestamp = spGetGameSeconds()
 	local udef = spGetUnitDefID( unitId )
 	if ( udef ~= nil ) then
