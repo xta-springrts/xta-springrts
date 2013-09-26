@@ -22,8 +22,8 @@ if gadgetHandler:IsSyncedCode() then
 	-------------------
 	
 	function gadget:GameOver()
-		Spring.PlaySoundFile("sounds/victory1.wav",8.0,0,0,0,0,0,0,'userinterface')
-		
+	-- GameOver callin gets trapped if called from other gadgets with a lower layer first.
+		Spring.PlaySoundFile("sounds/beep1.wav",3.0,0,0,0,0,0,0,'userinterface')		
 		for _, unitID in ipairs(Spring.GetAllUnits()) do
 			Spring.SetUnitNeutral(unitID, true)
 			Spring.SetUnitNoSelect(unitID, true)
@@ -31,7 +31,6 @@ if gadgetHandler:IsSyncedCode() then
 			Spring.GiveOrderToUnit(unitID, CMD_STOP,{},{})
 		end
 	
-		gadgetHandler:RemoveGadget(self)
-		return false
+		gadgetHandler:RemoveGadget()
 	end
 end
