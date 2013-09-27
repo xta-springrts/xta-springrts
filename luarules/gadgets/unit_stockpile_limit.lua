@@ -15,7 +15,7 @@ local modOptions = Spring.GetModOptions()
 -- so far this gadget is only needed for rockettoggle mode due to stockpilable Ravens
 function gadget:Initialize()
 	if not modOptions or modOptions.rockettoggle=="0" then
-		gadgetHandler:RemoveGadget()
+		gadgetHandler:RemoveGadget(self)
 	end
 end
 
@@ -34,8 +34,8 @@ local spGiveOrderToUnit = Spring.GiveOrderToUnit
 			return true
 		else
 			local stock,queued = spGetUnitStockpile(unitID)
-			local limit = stockpileLimits[unitDefID]
-			if (stock>=limit or queued>limit) and cmdParams[1]~=666 then	
+			local limit = stockpileLimits[unitDefID] or 1000000
+			if cmdOptions.right==false and (stock>=limit or queued>=limit-stock) and (cmdParams[1]~=666 or synced==false) then
 				return false	-- usualy stockpile commands have no params, this way we allow unstockpiling of excess commands
 			end
 			return true
@@ -46,8 +46,7 @@ local spGiveOrderToUnit = Spring.GiveOrderToUnit
 		local limit = stockpileLimits[unitDefID]
 		if limit then
 			if (newCount-oldCount)>0 and oldCount>=limit-1 then
-				spSetUnitStockpile(unitID, limit, 0)	-- if a player makes his own widget that circumwents line 37, he'll still hit the limit,
-														-- but will waste E until he unstockpiles excess, take that you cheaters
+				spSetUnitStockpile(unitID, limit, 0)
 				spGiveOrderToUnit(unitID, CMD.STOCKPILE, {666}, {"right", "ctrl", "shift"})	-- unstockpile excess
 				spGiveOrderToUnit(unitID, CMD.STOCKPILE, {666}, {"right", "ctrl", "shift"})
 			end
