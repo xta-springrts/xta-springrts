@@ -1,16 +1,16 @@
 function gadget:GetInfo()
 	return {
-		name = "Team Com Ends",
-		desc = "Implements com ends for allyteams",
-		author = "KDR_11k (David Becker)",
-		date = "2008-02-04",
+		name = "Team-comends",
+		desc = "Implements comends for allyteams",
+		author = "KDR_11k (David Becker), Jools",
+		date = "Sep, 2013",
 		license = "Public domain",
 		layer = -5,
 		enabled = true
 	}
 end
 
--- this acts just like Com Ends except instead of killing a player's units when
+-- this acts just like Comends except instead of killing a player's units when
 -- his com dies it acts on an allyteam level, if all coms in an allyteam are dead
 -- the allyteam is out
 
