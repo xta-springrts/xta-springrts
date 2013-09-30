@@ -2,7 +2,7 @@ function gadget:GetInfo()
   return {
     name      = "TeamDiedMessages",
     desc      = "Prints a message when a Team died",
-    author    = "abma",
+    author    = "Jools",
     date      = "Sep, 2013",
     license   = "GNU GPL, v2 or later",
     layer     = 5,
