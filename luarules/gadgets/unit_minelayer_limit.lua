@@ -203,9 +203,8 @@ if (gadgetHandler:IsSyncedCode()) then
 
 	function gadget:UnitFinished(unitID, unitDefID, teamID)
 		local builderID = pendingMines[unitID] or nil 
-		
-		if builderID then
-			if minelayerStock[builderID] > 0 then
+		if builderID then -- the builderID is not nil even though the unit that started the building may be dead. But dead units have no minelayerstock.
+			if minelayerStock[builderID] and minelayerStock[builderID] > 0 then
 				minelayerStock[builderID] = minelayerStock[builderID] -1
 				pendingMines[unitID] = nil
 				
@@ -243,11 +242,10 @@ if (gadgetHandler:IsSyncedCode()) then
 					texture     	= tex
 					}
 				)
-									
-				--Echo("Mine built!", UnitDefs[unitDefID].humanName)
 			else
-			-- if minelayer has no stock, mine was built using an exploit: remove mine
-				Spring.DestroyUnit(unitID,false,true)
+			-- if minelayer has no stock, either the minelayer was destroyed and some other unit completed the construction, or
+			-- the mine was built using some exploit. But for now we ssume the benefit of a doubt and let the mine be built.
+				--Spring.DestroyUnit(unitID,false,true)
 			end
 		end
 	end
