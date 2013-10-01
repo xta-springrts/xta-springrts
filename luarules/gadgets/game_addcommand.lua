@@ -15,6 +15,7 @@ end
 -- Shared SYNCED/UNSYNCED
 
 local CMD_AREA_GUARD 						= 14001
+local CMD_UPGRADE_MEXX						= 31244 
 local SetCustomCommandDrawData				= Spring.SetCustomCommandDrawData
 
 if (gadgetHandler:IsSyncedCode()) then
@@ -42,6 +43,9 @@ hidden	= true,
 function gadget:Initialize()
 
 	gadgetHandler:RegisterCMDID(CMD_AREA_GUARD)
+	gadgetHandler:RegisterCMDID(CMD_UPGRADE_MEXX)
+	Spring.AssignMouseCursor("Guardprotect", "cursorprotect", true, false)
+	
 	local result = SetCustomCommandDrawData(CMD_AREA_GUARD, CMDTYPE.ICON_UNIT_OR_AREA, {1,0,0,0.8},true)
 	--Echo("Editing custom draw data: ",result)
 	for _, unitID in ipairs(Spring.GetAllUnits()) do

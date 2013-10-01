@@ -24,7 +24,8 @@ local TraceScreenRay = Spring.TraceScreenRay
 local GetActiveCommand = Spring.GetActiveCommand 
 
 function widget:Initialize() 
-  widgetHandler:RegisterGlobal('registerUpgradePairs', registerUpgradePairs) 
+	widgetHandler:RegisterGlobal('registerUpgradePairs', registerUpgradePairs) 
+	Spring.AssignMouseCursor("Upgrademex", "cursorupgrade", true, false)
 end 
 
 function widget:Shutdown() 
@@ -63,7 +64,7 @@ function widget:GetTooltip(x,y)
   if rightClickUpgradeParams then 
     local unitDef = UnitDefs[rightClickUpgradeParams.upgradeTo] 
     tooltip = "Right click to upgrade to " .. unitDef.humanName 
-    Spring.SetMouseCursor(upgradeMouseCursor) 
+    Spring.SetMouseCursor("Upgrademex") 
   else 
     tooltip = "NO TOOLTIP AVALIABLE" 
   end 

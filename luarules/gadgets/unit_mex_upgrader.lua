@@ -71,7 +71,7 @@ local upgradeMexCmdDesc = {
   id      = CMD_UPGRADEMEX, 
   type    = CMDTYPE.ICON_UNIT_OR_AREA, 
   name    = 'Upgrade Mex', 
-  cursor  = 'Attack', 
+  cursor  = 'Upgrademex', 
   action  = 'upgrademex', 
   tooltip = 'Upgrade Mex', 
   hidden  = false, 
@@ -150,7 +150,8 @@ if (gadgetHandler:IsSyncedCode()) then
 --------------------------------------------------------------------------------------------------------------------------- 
 function gadget:Initialize()  
   determine(UnitDefs, WeaponDefs) 
-  registerUnits()  
+  registerUnits()
+  Spring.AssignMouseCursor("Upgrademex", "cursorupgrade", true, false)
 end 
 
 
