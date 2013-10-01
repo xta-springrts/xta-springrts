@@ -308,13 +308,21 @@ else
 	end
 
 	function gadget:AllowResourceTransfer(fromTeamID, toTeamID, restype, level)
+		-- disabled this: there may be many occasions where you want to transfer things to your AFK or AI ally. This should 
+		--	not be handled by gadget, but on local level. Jools
+		-- 
 		-- prevent resources to leak to uncontrolled teams
-		return GetTeamRulesParam(toTeamID,"numActivePlayers") ~= 0
+		--return GetTeamRulesParam(toTeamID,"numActivePlayers") ~= 0 
+		return true
 	end
 	
 	function gadget:AllowUnitTransfer(unitID, unitDefID, fromTeamID, toTeamID, capture)
-		-- prevent units to be shared to uncontrolled teams
-		return capture or GetTeamRulesParam(toTeamID,"numActivePlayers") ~= 0
+		-- disabled this: there may be many occasions where you want to transfer things to your AFK or AI ally. This should 
+		--	not be handled by gadget, but on local level. Jools
+		-- 
+		-- prevent units to be shared to uncontrolled teams 
+		--return capture or GetTeamRulesParam(toTeamID,"numActivePlayers") ~= 0
+		return true
 	end
 
 
