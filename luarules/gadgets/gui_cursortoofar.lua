@@ -15,17 +15,12 @@ end
 
 -- function localisations
 local spGetUnitWeaponState 	= Spring.GetUnitWeaponState
-local spGetUnitPosition  	= Spring.GetUnitPosition 
 local CMD_ATTACK 			= CMD.ATTACK
 local Echo 					= Spring.Echo
-local errorCount 			= 0
-local sqrt					= math.sqrt
-local GetGroundHeight		= Spring.GetGroundHeight
-
 
 -- Constants
 local CMD_ATTACKBAD 		= 35577
-
+local FIRSTWEAPON			= 1
 if gadgetHandler:IsSyncedCode() then	--	SYNCED
 
 local spAssignMouseCursor 	= Spring.AssignMouseCursor
@@ -34,23 +29,21 @@ local spAssignMouseCursor 	= Spring.AssignMouseCursor
 	function gadget:Initialize()
 		gadgetHandler:RegisterCMDID(CMD_ATTACKBAD)
 		spAssignMouseCursor("AttackBad", "cursorattackbad", true, false)
+		if Game.version <= "91.0" then 
+			FIRSTWEAPON	= 0
+		end
 	end	
-
+	
 	function gadget:AllowCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdOptions, cmdTag, synced)
+		
 		if cmdID == CMD_ATTACK and UnitDefs[unitDefID].isBuilding and #UnitDefs[unitDefID].weapons > 0 then
-			local range = spGetUnitWeaponState(unitID,0,"range")		
+			local range = spGetUnitWeaponState(unitID,FIRSTWEAPON,"range")		
 			if cmdParams and cmdParams[3] ~= nil and range ~= nil then
 				local x, y, z = cmdParams[1], cmdParams[2], cmdParams[3]
-				
-				--Spring.GetUnitWeaponTryTarget (( number unitID, number weaponNum, number targetID | number posX, number posY, number posZ ) 
-				-- -> nil | boolean success
-				--local tryTarget = Spring.GetUnitWeaponTryTarget(unitID, 0, x, y, z)
-				local testRange = Spring.GetUnitWeaponTestRange(unitID, 0, x, y, z)
-				--Spring.Echo("Fire test: ", canFire, testTarget, testRange)
-				if not testRange then 
-					--Spring.SetActiveCommand ("Attack") -- causes confusion in UI when multiple units are selected are some can attack
-					return false
-				end
+				-- Only check if position is within range
+				-- local tryTarget = Spring.GetUnitWeaponTryTarget(unitID, FIRSTWEAPON, x, y, z)
+				local testRange = Spring.GetUnitWeaponTestRange(unitID, FIRSTWEAPON, x, y, z)
+				if not testRange then return false end
 			end
 		end
 		return true
