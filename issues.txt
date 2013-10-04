@@ -4,6 +4,8 @@ Old issues, mostly details. From http://springrts.com/phpbb/viewtopic.php?f=48&t
 Existing:
 ---------
 
+* Lancet doesnt hit underwater targets: drops bomb when above target and not before.
+
 * I got these errors on spring 94.1 when shooting with penetrator:
 
 [f=0003075] [UnitScript] Error: Invalid explosion generator index for emit-sfx (in scripts/arm_penetrator.cob:ON at 59)
@@ -11,13 +13,8 @@ Existing:
 -Does not happen in dev build, it's also not a script error, must be related to FBI and explosiongenerator0=custom:UNITFIRE;
 
 
-* Annihilator shoots before it has aimed. It shoots the first beam before the turret has targeted on target, and the first beam goes to a random direction, sometimes it hits self.
-	- Also applies for penetrator
--This is not an issue, it's happens in dev build due to all BeamLasers having sweepfire enabled by default in order to test the sweepfire fix
-
-
-
 * Units with oversized Collision Volumes: 
+- resolved
 
 x 	arm_vanguard, 
 x	core_viking, 
@@ -50,7 +47,7 @@ x = fixed
 
 
 *Spiders are paralysed by fellow spiders EMP-overcharging. Feature or bug?
-
+- feature
 
 *Widgets that are known to be hungry:
 	- Healthbars (1st priority)
