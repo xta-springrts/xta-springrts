@@ -47,11 +47,7 @@ else
 			local onlyBombers = true 
 			
 			for i=1, #sU do
-				local unitID = sU[i]
-				local unitDef = UnitDefs[GetUnitDefID(unitID)]
-				local canFly =  unitDef.canFly
-				local canBomb = unitDef.isBomberAirUnit
-				if not canBomb then 
+				if not UnitDefs[GetUnitDefID(sU[i])].isBomberAirUnit then 
 					onlyBombers = false
 					break
 				end
