@@ -123,8 +123,6 @@ end
 local function SpawnStartUnit(teamID)
 	local startUnit = GetStartUnit(teamID)
 	if (startUnit and startUnit ~= "") then
-		Spring.SetTeamResource(teamID, "ms", 0)
-		Spring.SetTeamResource(teamID, "es", 0)
 		-- spawn the specified start unit
 		local x,y,z = Spring.GetTeamStartPosition(teamID)
 		-- snap to 16x16 grid
@@ -180,6 +178,8 @@ function gadget:GameStart()
         local teamID = teams[i]
         -- don't spawn a start unit for the Gaia team
         if (teamID ~= gaiaTeamID) and (not excludeTeams[teamID]) then
+			Spring.SetTeamResource(teamID, "ms", 0)
+			Spring.SetTeamResource(teamID, "es", 0)
             SpawnStartUnit(teamID)
         end
     end
@@ -194,15 +194,6 @@ function gadget:Initialize()
 			if spawnData.map == Game.mapName then
 				gadgetHandler:RemoveGadget()
 			end
-		end
-	end
-	local gaiaTeamID = Spring.GetGaiaTeamID()
-	local teams = Spring.GetTeamList()
-	for i = 1,#teams do
-		local teamID = teams[i]
-		if (teamID ~= gaiaTeamID) then
-			Spring.SetTeamResource(teamID, "ms", 0)
-			Spring.SetTeamResource(teamID, "es", 0)
 		end
 	end
 end

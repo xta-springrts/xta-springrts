@@ -29,19 +29,17 @@ local spAssignMouseCursor 	= Spring.AssignMouseCursor
 	function gadget:Initialize()
 		gadgetHandler:RegisterCMDID(CMD_ATTACKBAD)
 		spAssignMouseCursor("AttackBad", "cursorattackbad", true, false)
-		if Game.version <= "91.0" then 
+		if Game.version <= "94.1" then 
 			FIRSTWEAPON	= 0
 		end
 	end	
 	
 	function gadget:AllowCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdOptions, cmdTag, synced)
-		
 		if cmdID == CMD_ATTACK and UnitDefs[unitDefID].isBuilding and #UnitDefs[unitDefID].weapons > 0 then
 			local range = spGetUnitWeaponState(unitID,FIRSTWEAPON,"range")		
 			if cmdParams and cmdParams[3] ~= nil and range ~= nil then
 				local x, y, z = cmdParams[1], cmdParams[2], cmdParams[3]
 				-- Only check if position is within range
-				-- local tryTarget = Spring.GetUnitWeaponTryTarget(unitID, FIRSTWEAPON, x, y, z)
 				local testRange = Spring.GetUnitWeaponTestRange(unitID, FIRSTWEAPON, x, y, z)
 				if not testRange then return false end
 			end
@@ -105,9 +103,7 @@ local spGetMouseState 		= Spring.GetMouseState
 						end
 					end
 				end
-				if canFire then
-					spSetMouseCursor("Attack")
-				else
+				if not canFire then
 					spSetMouseCursor("AttackBad")
 				end
 			end
