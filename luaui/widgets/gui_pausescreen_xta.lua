@@ -1,12 +1,12 @@
 include("keysym.h.lua")
-local versionNumber = "1.30"
+local versionNumber = "1.31"
 
 function widget:GetInfo()
 	return {
 		name      = "Pause Screen - XTA",
 		desc      = "[v" .. string.format("%s", versionNumber ) .. "] Displays pause screen when game is paused.",
-		author    = "very_bad_soldier, updated by Jools",
-		date      = "2013.09.11",
+		author    = "very_bad_soldier, Jools",
+		date      = "Oct, 2013",
 		license   = "GNU GPL v2",
 		layer     = 0,
 		enabled   = true
@@ -15,6 +15,7 @@ end
 
 -- Update: Make sure sound to fade in/out is played only once. Change fade-in sound, modify fade-out sound to 
 -- include a little silence before to make it sound cleaner. Update minimum transparency to 0, add music.
+-- Add text command option to disable/enable music
 
 
 local spGetGameSeconds      = Spring.GetGameSeconds
@@ -85,6 +86,8 @@ local forceHideWindow = false
 local musicOn = false
 local musicDelay = 3 -- seconds
 local soundPlayed = false
+local disableMusic = false 
+
 
 local sound_1  = LUAUI_DIRNAME .. 'Sounds/jingle.wav'
 local sound_4  = LUAUI_DIRNAME .. 'Sounds/BEEP5.wav'
@@ -107,56 +110,22 @@ local function isOverWindow(x, y)
 	return false
  end
 
-function widget:MousePress(x, y, button)
-	if ( button == 2) and isOverWindow(x, y) then
-		Spring.StopSoundStream()
-		return true
-	end
+local function updateWindowCoords()
+	screenx, screeny = widgetHandler:GetViewSizes()
 	
-	if ( not clickTimestamp and not forceHideWindow ) then
-		if ( isOverWindow(x, y)) then	
-			--do not update clickTimestamp any more after right mouse button click
-			if ( not forceHideWindow ) then
-				clickTimestamp = osClock()
-			end
-			--hide window for the rest of the game if it was a right mouse button
-			if ( button == 3 ) then
-				forceHideWindow = true
-				Spring.StopSoundStream()
-			end
-		
-			return true
-		end
-	elseif not clickTimestamp then
-		if ( isOverWindow(x, y)) then
-			Spring.StopSoundStream()
-		end
-	end
-  
-	return false
-end
+	screenCenterX = screenx * 0.5
+	screenCenterY = screeny * 0.5
+	wndX1 = screenCenterX - boxWidth
+	wndY1 = screenCenterY + boxHeight
+	wndX2 = screenCenterX + boxWidth
+	wndY2 = screenCenterY - boxHeight
 
-function widget:IsAbove(x,y)
-	local _, _, paused = spGetGameSpeed()
-	if ( paused and not forceHideWindow and not clickTimestamp and isOverWindow( x, y ) ) then
-		return true
-	end
-	return false
-end
-
-function widget:Update()
-	local x,y = spGetMouseState()
-	if ( isOverWindow(x, y) ) then	
-		mouseOverClose = true
-	else
-		mouseOverClose = false
-	end
-end
-
-function widget:GetTooltip(x, y)
-	if ( ( clickTimestamp == nil and forceHideWindow == false ) and isOverWindow(x, y) ) then
-		return "Click left mouse button to hide pause window.\nClick middle button to stop music.\nClick right mouse button to hide pause window for the rest of the game."
-	end
+	textX = wndX1 + ( wndX2 - wndX1 ) * 0.36
+	textY = wndY2 + ( wndY1 - wndY2 ) * 0.53
+	lineOffset = ( wndY1 - wndY2 ) * 0.3
+	
+	yCenter = wndY2 + ( wndY1 - wndY2 ) * 0.5
+	xCut = wndX1 + ( wndX2 - wndX1 ) * 0.19
 end
 
 local function drawPause()
@@ -277,23 +246,75 @@ local function drawPause()
 	
 	glTexture(false)
 end
+ 
+ function widget:Initialize()
+	myFont = glLoadFont( fontPath, fontSizeHeadline )
+	updateWindowCoords()
+end
 
-local function updateWindowCoords()
-	screenx, screeny = widgetHandler:GetViewSizes()
-	
-	screenCenterX = screenx * 0.5
-	screenCenterY = screeny * 0.5
-	wndX1 = screenCenterX - boxWidth
-	wndY1 = screenCenterY + boxHeight
-	wndX2 = screenCenterX + boxWidth
-	wndY2 = screenCenterY - boxHeight
+function widget:Shutdown()
+	Spring.StopSoundStream()
+	glDeleteFont( myFont )
+end
 
-	textX = wndX1 + ( wndX2 - wndX1 ) * 0.36
-	textY = wndY2 + ( wndY1 - wndY2 ) * 0.53
-	lineOffset = ( wndY1 - wndY2 ) * 0.3
+ function widget:TextCommand(command)
+	if command == 'musicoff' or command == 'disablemusic' then
+		disableMusic = true
+	elseif command == 'musicon' or command == 'enablemusic'then
+		disableMusic = false
+	end
+ end
+ 
+function widget:MousePress(x, y, button)
+	if ( button == 2) and isOverWindow(x, y) then
+		Spring.StopSoundStream()
+		return true
+	end
 	
-	yCenter = wndY2 + ( wndY1 - wndY2 ) * 0.5
-	xCut = wndX1 + ( wndX2 - wndX1 ) * 0.19
+	if ( not clickTimestamp and not forceHideWindow ) then
+		if ( isOverWindow(x, y)) then	
+			--do not update clickTimestamp any more after right mouse button click
+			if ( not forceHideWindow ) then
+				clickTimestamp = osClock()
+			end
+			--hide window for the rest of the game if it was a right mouse button
+			if ( button == 3 ) then
+				forceHideWindow = true
+				Spring.StopSoundStream()
+			end
+		
+			return true
+		end
+	elseif not clickTimestamp then
+		if ( isOverWindow(x, y)) then
+			Spring.StopSoundStream()
+		end
+	end
+  
+	return false
+end
+
+function widget:IsAbove(x,y)
+	local _, _, paused = spGetGameSpeed()
+	if ( paused and not forceHideWindow and not clickTimestamp and isOverWindow( x, y ) ) then
+		return true
+	end
+	return false
+end
+
+function widget:Update()
+	local x,y = spGetMouseState()
+	if ( isOverWindow(x, y) ) then	
+		mouseOverClose = true
+	else
+		mouseOverClose = false
+	end
+end
+
+function widget:GetTooltip(x, y)
+	if ( ( clickTimestamp == nil and forceHideWindow == false ) and isOverWindow(x, y) ) then
+		return "Click left mouse button to hide pause window.\nClick middle button to stop music.\nClick right mouse button to hide pause window for the rest of the game."
+	end
 end
 
 function widget:ViewResize(viewSizeX, viewSizeY)
@@ -324,8 +345,7 @@ function widget:DrawScreen()
 		
 	if ( paused or ( ( now - pauseTimestamp) <= slideTime ) ) then
 		drawPause()
-		
-		if paused then
+		if paused and (not disableMusic) then
 			if now - pauseTimestamp > musicDelay then
 				if (not musicOn) and (not forceHideWindow) then
 					Spring.PlaySoundStream(music, 0.3)
@@ -342,18 +362,6 @@ function widget:DrawScreen()
 	
 	ResetGl()
 end 
- 
-function widget:Initialize()
-	myFont = glLoadFont( fontPath, fontSizeHeadline )
-	updateWindowCoords()
-end
-
-function widget:Shutdown()
-	Spring.StopSoundStream()
-	glDeleteFont( myFont )
-end
-
-
 
 function printDebug( value )
 	if ( debug ) then
@@ -371,3 +379,12 @@ function printDebug( value )
 	end
 end
 	
+function widget:GetConfigData() -- Save
+	return {
+		disablemusic = disableMusic
+		}
+end
+
+function widget:SetConfigData(data) -- Load
+	disableMusic = data.disablemusic or false
+end
