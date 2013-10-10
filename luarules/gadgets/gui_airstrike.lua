@@ -15,46 +15,49 @@ end
 -- Shared SYNCED/UNSYNCED
 
 local CMD_ATTACK 							= CMD.ATTACK
+local CMD_AIRSTRIKE 						= 36001
 local Echo 									= Spring.Echo
-	
+
+local airstrikeCmd = {
+	id      = CMD_AIRSTRIKE,
+	name    = "Attack",
+	action  = "airstrike",
+	cursor  = "Airstrike",
+	type    = CMDTYPE.ICON_UNIT_OR_MAP,
+	tooltip = "Order an airstrike on an unit or a position on the ground",
+	hidden	= false,
+}
+
 if (gadgetHandler:IsSyncedCode()) then
 
 	--SYNCED
 	local EditUnitCmdDesc						= Spring.EditUnitCmdDesc
 	local FindUnitCmdDesc						= Spring.FindUnitCmdDesc
 	local InsertUnitCmdDesc						= Spring.InsertUnitCmdDesc
+	local RemoveUnitCmdDesc						= Spring.RemoveUnitCmdDesc
+	local GetUnitDefID							= Spring.GetUnitDefID
+	local GiveOrderToUnit						= Spring.GiveOrderToUnit
+	local ta_insert								= table.insert
+	
 
 	function gadget:Initialize()
-		Spring.AssignMouseCursor("Airstrike", "cursorairstrike", true, false)
+		gadgetHandler:RegisterCMDID(CMD_AIRSTRIKE)
+		Spring.AssignMouseCursor('Airstrike', "cursorairstrike", true, false)
+		Spring.SetCustomCommandDrawData(CMD_AIRSTRIKE, 'Airstrike', {0,1,0,.8},true)
 	end
-
+		
+	function gadget:UnitCreated(unitID, unitDefID, teamID, builderID)
+		local uD = UnitDefs[GetUnitDefID(unitID)]
+		local canBomb = uD.isBomberAirUnit
+		
+		if canBomb then
+			local cmdAttackID = FindUnitCmdDesc(unitID,CMD_ATTACK)
+			if cmdAttackID then
+				EditUnitCmdDesc(unitID,cmdAttackID,{cursor= 'Airstrike'})
+			end
+		end
+	end
 	
 else
 
---UNSYNCED
-	
-	local GetUnitDefID							= Spring.GetUnitDefID
-	local SetMouseCursor						= Spring.SetMouseCursor
-	local GetActiveCommand						= Spring.GetActiveCommand
-	local GetSelectedUnits						= Spring.GetSelectedUnits
-	
-	
-	function gadget:Update()
-		local _, activeCmdID = GetActiveCommand()
-		
-		if activeCmdID == CMD_ATTACK then
-			local sU = GetSelectedUnits()
-			local onlyBombers = true 
-			
-			for i=1, #sU do
-				if not UnitDefs[GetUnitDefID(sU[i])].isBomberAirUnit then 
-					onlyBombers = false
-					break
-				end
-			end
-			if onlyBombers then
-				SetMouseCursor("Airstrike")	
-			end
-		end
-	end	
-end
+end		
