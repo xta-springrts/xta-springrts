@@ -1,3 +1,15 @@
+function gadget:GetInfo()
+	return {
+		name    = "game_zombiemode",
+		desc    = "handles the 'zombies' modoption",
+		author  = "",
+		date    = "Okt, 2013",
+		license = "Public domain",
+		layer   = 0,
+		enabled = true
+	}
+end
+
 if (not gadgetHandler:IsSyncedCode()) then
 	return false
 end
@@ -5,21 +17,21 @@ end
 local FIRESTATE_FATW = 2
 local MOVESTATE_ROAM = 2
 
-local spGetUnitNeutral = Spring.GetUnitNeutral
-local spSetUnitNeutral = Spring.SetUnitNeutral
-local spGetGameFrame = Spring.GetGameFrame
-local spGetGaiaTeamID = Spring.GetGaiaTeamID
-local spGetUnitPosition = Spring.GetUnitPosition
+local spGetUnitNeutral     = Spring.GetUnitNeutral
+local spSetUnitNeutral     = Spring.SetUnitNeutral
+local spGetGameFrame       = Spring.GetGameFrame
+local spGetGaiaTeamID      = Spring.GetGaiaTeamID
+local spGetUnitPosition    = Spring.GetUnitPosition
 local spGetUnitBuildFacing = Spring.GetUnitBuildFacing
-local spCreateUnit = Spring.CreateUnit
-local spGiveOrderToUnit = Spring.GiveOrderToUnit
-local spEcho = Spring.Echo
+local spCreateUnit         = Spring.CreateUnit
+local spGiveOrderToUnit    = Spring.GiveOrderToUnit
+local spEcho               = Spring.Echo
 
-local modOptions = Spring.GetModOptions()
+local modOptions    = Spring.GetModOptions()
 local modOptionDefs = VFS.Include("modoptions.lua")
 
-local zombieConf = "LuaRules/Configs/game_zombiemode_defs.lua"
-local zombieDefs = VFS.FileExists(zombieConf) and include(zombieConf) or {}
+local zombieConf  = "LuaRules/Configs/game_zombiemode_defs.lua"
+local zombieDefs  = VFS.FileExists(zombieConf) and include(zombieConf) or {}
 local zombieQueue = {}
 local haveZombies = modOptions.zombies or false
 
@@ -67,10 +79,10 @@ function gadget:UnitDestroyed(unitID, unitDefID, unitTeam, attackerID, attackerD
 	end
 
 	zombieQueue[unitID] = {
-		defID = unitDefID,
-		pos = {spGetUnitPosition(unitID)},
+		defID  = unitDefID,
+		pos    = {spGetUnitPosition(unitID)},
 		facing = spGetUnitBuildFacing(unitID),
-		frame = spGetGameFrame() + respawnTime
+		frame  = spGetGameFrame() + respawnTime
 	}
 end
 
