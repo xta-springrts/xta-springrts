@@ -10,6 +10,7 @@ local spSetUnitNeutral = Spring.SetUnitNeutral
 local spGetGameFrame = Spring.GetGameFrame
 local spGetGaiaTeamID = Spring.GetGaiaTeamID
 local spGetUnitPosition = Spring.GetUnitPosition
+local spGetUnitBuildFacing = Spring.GetUnitBuildFacing
 local spCreateUnit = Spring.CreateUnit
 local spGiveOrderToUnit = Spring.GiveOrderToUnit
 local spEcho = Spring.Echo
@@ -54,7 +55,7 @@ end
 
 function gadget:UnitDestroyed(unitID, unitDefID, unitTeam)
 	local isZombie = spGetUnitNeutral(unitID)
-	local zombieDef = zombieDefs[unitDefID]
+	local zombieDef = zombieDefs[unitDefID] or {}
 	local canRespawn = zombieDef.canRespawn
 	local respawnTime = zombieDef.respawnTime
 
@@ -62,13 +63,18 @@ function gadget:UnitDestroyed(unitID, unitDefID, unitTeam)
 		return
 	end
 
-	zombieQueue[unitID] = {defID = unitDefID, pos = {spGetUnitPosition(unitID)}, frame = (spGetGameFrame() + respawnTime)}
+	zombieQueue[unitID] = {
+		defID = unitDefID,
+		pos = {spGetUnitPosition(unitID)},
+		facing = spGetUnitBuildFacing(unitID),
+		frame = spGetGameFrame() + respawnTime
+	}
 end
 
 function gadget:GameFrame(n)
 	for id, spawn in pairs(zombieQueue) do
 		if (spawn.frame == n) then
-			local unitID = spCreateUnit(spawn.defID, spawn.pos[1], spawn.pos[2], spawn.pos[3], 0, spGetGaiaTeamID())
+			local unitID = spCreateUnit(spawn.defID, spawn.pos[1], spawn.pos[2], spawn.pos[3], spawn.facing, spGetGaiaTeamID())
 
 			if (unitID ~= nil) then
 				spGiveOrderToUnit(unitID, CMD.FIRE_STATE, {[1] = CMD_FIRESTATE_FATW}, {})
