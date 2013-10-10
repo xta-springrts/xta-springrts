@@ -53,13 +53,16 @@ function gadget:Initialize()
 	end
 end
 
-function gadget:UnitDestroyed(unitID, unitDefID, unitTeam)
+function gadget:UnitDestroyed(unitID, unitDefID, unitTeam, attackerID, attackerDefID, attackerTeam)
 	local isZombie = spGetUnitNeutral(unitID)
 	local zombieDef = zombieDefs[unitDefID] or {}
 	local canRespawn = zombieDef.canRespawn
 	local respawnTime = zombieDef.respawnTime
 
 	if ((isZombie) or (not canRespawn)) then
+		return
+	end
+	if (attackerTeam ~= nil and attackerTeam == unitTeam) then
 		return
 	end
 
