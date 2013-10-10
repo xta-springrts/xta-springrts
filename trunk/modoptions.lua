@@ -72,7 +72,7 @@ local options = {
 		name = "Zombie Mode",
 		desc = "All dead units respawn as neutral zombies!",
 		type = "bool",
-		def  = true,
+		def  = false,
 	},
 
 	{
