@@ -1,27 +1,20 @@
--- NOTE: when starting Spring standalone, modoption-table is nil
+-- NOTE: when starting Spring standalone, modoption-table is empty
 local modOptions = Spring.GetModOptions()
-local modOptionDefs = VFS.Include("ModOptions.lua")
+local modOptionDefs = VFS.Include("modoptions.lua")
 
 local enableSlopeMods = modOptions.enableSlopeMods
 local enableDepthMods = modOptions.enableDepthMods
 
-if (modOptionDefs ~= nil) then
-	for idx, tbl in ipairs(modOptionDefs) do
-		if (tbl.key == "enableSlopeMods") then
-			enableSlopeMods = enableSlopeMods or tbl.def
-		end
-		if (tbl.key == "enableDepthMods") then
-			enableDepthMods = enableDepthMods or tbl.def
-		end
+assert(modOptionDefs ~= nil)
+
+for idx, tbl in ipairs(modOptionDefs) do
+	if (tbl.key == "enableSlopeMods") then
+		enableSlopeMods = enableSlopeMods or tbl.def
+	end
+	if (tbl.key == "enableDepthMods") then
+		enableDepthMods = enableDepthMods or tbl.def
 	end
 end
-
---[[
-print("\n\n\n\n\n\n\n\n")
-print("[movedefs.lua] enableSlopeMods=" .. tostring(enableSlopeMods))
-print("[movedefs.lua] enableDepthMods=" .. tostring(enableDepthMods))
-print("\n\n\n\n\n\n\n\n")
---]]
 
 
 

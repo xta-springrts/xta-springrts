@@ -68,6 +68,14 @@ local options = {
 	},
 	]]--
 	{
+		key  = "zombies",
+		name = "Zombie Mode",
+		desc = "All dead units respawn as neutral zombies!",
+		type = "bool",
+		def  = true,
+	},
+
+	{
 		key="mode",
 		name="Game End Mode",
 		desc="What it takes to eliminate a player or team\nkey: mode",
