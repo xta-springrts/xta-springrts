@@ -28,70 +28,44 @@ local CommanderSounds = {
 	CommanderPerfectTargetsKilled      = "sounds/commander/comm_perfect_targets_killed.wav",
 	CommanderExcellentTargetsKilled    = "sounds/commander/comm_excellent_targets_killed.wav",
 	CommanderCloaked                   = "sounds/commander/comm_cloaked.wav",
-
+	
 	CommanderSongs = {
-		[ UnitDefNames["arm_commander"].id ] = {
-			[0] = "sounds/sing.wav",
-			[1] = "sounds/armcom1.wav",
-			[2] = "sounds/commander/comm_omelette_song.wav",
-			[3] = "sounds/commander/comm_omelette_speech.wav",
-			[4] = "sounds/honk.wav",
-			[5] = "sounds/commander/comm_trololo_intro.wav",
-			[6] = "sounds/commander/comm_trololo_outro.wav",
-		},
+		[ UnitDefNames["arm_commander"   ].id ] = {[0] = "sounds/sing.wav", [1] = "sounds/armcom1.wav", [2] = "sounds/commander/comm_omelette_song.wav", [3] = "sounds/commander/comm_omelette_speech.wav", [4] = "sounds/honk.wav", [5] = "sounds/commander/comm_trololo_1.wav", [6] = "sounds/commander/comm_trololo_2.wav"},
+		[ UnitDefNames["arm_nincommander"].id ] = {[0] = "sounds/sing.wav", [1] = "sounds/armcom1.wav", [2] = "sounds/commander/comm_omelette_song.wav", [3] = "sounds/commander/comm_omelette_speech.wav", [4] = "sounds/honk.wav", [5] = "sounds/commander/comm_trololo_1.wav", [6] = "sounds/commander/comm_trololo_2.wav"},
+		[ UnitDefNames["arm_scommander"  ].id ] = {[0] = "sounds/sing.wav", [1] = "sounds/armcom1.wav", [2] = "sounds/commander/comm_omelette_song.wav", [3] = "sounds/commander/comm_omelette_speech.wav", [4] = "sounds/honk.wav", [5] = "sounds/commander/comm_trololo_1.wav", [6] = "sounds/commander/comm_trololo_2.wav"},
+		[ UnitDefNames["arm_u0commander" ].id ] = {[0] = "sounds/sing.wav", [1] = "sounds/armcom1.wav", [2] = "sounds/commander/comm_omelette_song.wav", [3] = "sounds/commander/comm_omelette_speech.wav", [4] = "sounds/honk.wav", [5] = "sounds/commander/comm_trololo_1.wav", [6] = "sounds/commander/comm_trololo_2.wav"},
+		[ UnitDefNames["arm_ucommander"  ].id ] = {[0] = "sounds/sing.wav", [1] = "sounds/armcom1.wav", [2] = "sounds/commander/comm_omelette_song.wav", [3] = "sounds/commander/comm_omelette_speech.wav", [4] = "sounds/honk.wav", [5] = "sounds/commander/comm_trololo_1.wav", [6] = "sounds/commander/comm_trololo_2.wav"},
+		[ UnitDefNames["arm_u2commander" ].id ] = {[0] = "sounds/sing.wav", [1] = "sounds/armcom2.wav", [2] = "sounds/commander/comm_omelette_song.wav", [3] = "sounds/commander/comm_omelette_speech.wav", [4] = "sounds/honk.wav", [5] = "sounds/commander/comm_trololo_1.wav", [6] = "sounds/commander/comm_trololo_2.wav"},
+		[ UnitDefNames["arm_u3commander" ].id ] = {[0] = "sounds/sing.wav", [1] = "sounds/armcom2.wav", [2] = "sounds/commander/comm_omelette_song.wav", [3] = "sounds/commander/comm_omelette_speech.wav", [4] = "sounds/honk.wav", [5] = "sounds/commander/comm_trololo_1.wav", [6] = "sounds/commander/comm_trololo_2.wav"},
+		[ UnitDefNames["arm_u4commander" ].id ] = {[0] = "sounds/sing.wav", [1] = "sounds/armcom2.wav", [2] = "sounds/commander/comm_omelette_song.wav", [3] = "sounds/commander/comm_omelette_speech.wav", [4] = "sounds/honk.wav", [5] = "sounds/commander/comm_trololo_1.wav", [6] = "sounds/commander/comm_trololo_2.wav"},
 
-		[ UnitDefNames["arm_nincommander"].id ] = {},
-		[ UnitDefNames["arm_scommander"  ].id ] = {},
-		[ UnitDefNames["arm_u0commander" ].id ] = {},
-		[ UnitDefNames["arm_ucommander"  ].id ] = {},
-		[ UnitDefNames["arm_u2commander" ].id ] = {},
-		[ UnitDefNames["arm_u3commander" ].id ] = {},
-		[ UnitDefNames["arm_u4commander" ].id ] = {},
-
-		[ UnitDefNames["core_commander"].id ] = {
-			[0] = "sounds/sing2.wav",
-			[1] = "sounds/corcom1.wav",
-			[2] = "sounds/commander/comm_omelette_song.wav",
-			[3] = "sounds/commander/comm_omelette_speech.wav",
-			[4] = "sounds/honk2.wav",
-			[5] = "sounds/commander/comm_trololo_intro.wav",
-			[6] = "sounds/commander/comm_trololo_outro.wav",
-		},
-
-		[ UnitDefNames["core_nincommander"].id ] = {},
-		[ UnitDefNames["core_scommander"  ].id ] = {},
-		[ UnitDefNames["core_u0commander" ].id ] = {},
-		[ UnitDefNames["core_ucommander"  ].id ] = {},
-		[ UnitDefNames["core_u2commander" ].id ] = {},
-		[ UnitDefNames["core_u3commander" ].id ] = {},
-		[ UnitDefNames["core_u4commander" ].id ] = {},
+		[ UnitDefNames["core_commander"   ].id ] = {[0] = "sounds/sing2.wav", [1] = "sounds/corcom1.wav", [2] = "sounds/commander/comm_omelette_song.wav", [3] = "sounds/commander/comm_omelette_speech.wav", [4] = "sounds/honk2.wav", [5] = "sounds/commander/comm_trololo_1.wav", [6] = "sounds/commander/comm_trololo_2.wav"},
+		[ UnitDefNames["core_nincommander"].id ] = {[0] = "sounds/sing2.wav", [1] = "sounds/corcom1.wav", [2] = "sounds/commander/comm_omelette_song.wav", [3] = "sounds/commander/comm_omelette_speech.wav", [4] = "sounds/honk2.wav", [5] = "sounds/commander/comm_trololo_1.wav", [6] = "sounds/commander/comm_trololo_2.wav"},
+		[ UnitDefNames["core_scommander"  ].id ] = {[0] = "sounds/sing2.wav", [1] = "sounds/corcom1.wav", [2] = "sounds/commander/comm_omelette_song.wav", [3] = "sounds/commander/comm_omelette_speech.wav", [4] = "sounds/honk2.wav", [5] = "sounds/commander/comm_trololo_1.wav", [6] = "sounds/commander/comm_trololo_2.wav"},
+		[ UnitDefNames["core_u0commander" ].id ] = {[0] = "sounds/sing2.wav", [1] = "sounds/corcom1.wav", [2] = "sounds/commander/comm_omelette_song.wav", [3] = "sounds/commander/comm_omelette_speech.wav", [4] = "sounds/honk2.wav", [5] = "sounds/commander/comm_trololo_1.wav", [6] = "sounds/commander/comm_trololo_2.wav"},
+		[ UnitDefNames["core_ucommander"  ].id ] = {[0] = "sounds/sing2.wav", [1] = "sounds/corcom1.wav", [2] = "sounds/commander/comm_omelette_song.wav", [3] = "sounds/commander/comm_omelette_speech.wav", [4] = "sounds/honk2.wav", [5] = "sounds/commander/comm_trololo_1.wav", [6] = "sounds/commander/comm_trololo_2.wav"},
+		[ UnitDefNames["core_u2commander" ].id ] = {[0] = "sounds/sing2.wav", [1] = "sounds/corcom2.wav", [2] = "sounds/commander/comm_omelette_song.wav", [3] = "sounds/commander/comm_omelette_speech.wav", [4] = "sounds/honk2.wav", [5] = "sounds/commander/comm_trololo_1.wav", [6] = "sounds/commander/comm_trololo_2.wav"},
+		[ UnitDefNames["core_u3commander" ].id ] = {[0] = "sounds/sing2.wav", [1] = "sounds/corcom2.wav", [2] = "sounds/commander/comm_omelette_song.wav", [3] = "sounds/commander/comm_omelette_speech.wav", [4] = "sounds/honk2.wav", [5] = "sounds/commander/comm_trololo_1.wav", [6] = "sounds/commander/comm_trololo_2.wav"},
+		[ UnitDefNames["core_u4commander" ].id ] = {[0] = "sounds/sing2.wav", [1] = "sounds/corcom2.wav", [2] = "sounds/commander/comm_omelette_song.wav", [3] = "sounds/commander/comm_omelette_speech.wav", [4] = "sounds/honk2.wav", [5] = "sounds/commander/comm_trololo_1.wav", [6] = "sounds/commander/comm_trololo_2.wav"},
 	},
 	CommanderTaunts = {
-		[ UnitDefNames["arm_commander"].id ] = {
-			[0] = "sounds/commander/arm_comm_taunt_3.wav",
-			[1] = "sounds/commander/arm_comm_taunt_2.wav",
-			[2] = "sounds/commander/arm_comm_taunt_1.wav",
-		},
-		[ UnitDefNames["arm_nincommander"].id ] = {},
-		[ UnitDefNames["arm_scommander"  ].id ] = {},
-		[ UnitDefNames["arm_u0commander" ].id ] = {},
-		[ UnitDefNames["arm_ucommander"  ].id ] = {},
-		[ UnitDefNames["arm_u2commander" ].id ] = {},
-		[ UnitDefNames["arm_u3commander" ].id ] = {},
-		[ UnitDefNames["arm_u4commander" ].id ] = {},
+		[ UnitDefNames["arm_commander"   ].id ] = {[0] = "sounds/commander/arm_comm_taunt_3.wav", [1] = "sounds/commander/arm_comm_taunt_2.wav", [2] = "sounds/commander/arm_comm_taunt_1.wav"},
+		[ UnitDefNames["arm_nincommander"].id ] = {[0] = "sounds/commander/arm_comm_taunt_3.wav", [1] = "sounds/commander/arm_comm_taunt_2.wav", [2] = "sounds/commander/arm_comm_taunt_1.wav"},
+		[ UnitDefNames["arm_scommander"  ].id ] = {[0] = "sounds/commander/arm_comm_taunt_3.wav", [1] = "sounds/commander/arm_comm_taunt_2.wav", [2] = "sounds/commander/arm_comm_taunt_1.wav"},
+		[ UnitDefNames["arm_u0commander" ].id ] = {[0] = "sounds/commander/arm_comm_taunt_3.wav", [1] = "sounds/commander/arm_comm_taunt_2.wav", [2] = "sounds/commander/arm_comm_taunt_1.wav"},
+		[ UnitDefNames["arm_ucommander"  ].id ] = {[0] = "sounds/commander/arm_comm_taunt_3.wav", [1] = "sounds/commander/arm_comm_taunt_2.wav", [2] = "sounds/commander/arm_comm_taunt_1.wav"},
+		[ UnitDefNames["arm_u2commander" ].id ] = {[0] = "sounds/commander/arm_comm_taunt_3.wav", [1] = "sounds/commander/arm_comm_taunt_2.wav", [2] = "sounds/commander/arm_comm_taunt_1.wav"},
+		[ UnitDefNames["arm_u3commander" ].id ] = {[0] = "sounds/commander/arm_comm_taunt_3.wav", [1] = "sounds/commander/arm_comm_taunt_2.wav", [2] = "sounds/commander/arm_comm_taunt_1.wav"},
+		[ UnitDefNames["arm_u4commander" ].id ] = {[0] = "sounds/commander/arm_comm_taunt_3.wav", [1] = "sounds/commander/arm_comm_taunt_2.wav", [2] = "sounds/commander/arm_comm_taunt_1.wav"},
 
-		[ UnitDefNames["core_commander"].id ] = {
-			[0] = "sounds/commander/core_comm_taunt_3.wav",
-			[1] = "sounds/commander/core_comm_taunt_2.wav",
-			[2] = "sounds/commander/core_comm_taunt_1.wav",
-		},
-		[ UnitDefNames["core_nincommander"].id ] = {},
-		[ UnitDefNames["core_scommander"  ].id ] = {},
-		[ UnitDefNames["core_u0commander" ].id ] = {},
-		[ UnitDefNames["core_ucommander"  ].id ] = {},
-		[ UnitDefNames["core_u2commander" ].id ] = {},
-		[ UnitDefNames["core_u3commander" ].id ] = {},
-		[ UnitDefNames["core_u4commander" ].id ] = {},
+		[ UnitDefNames["core_commander"   ].id ] = {[0] = "sounds/commander/core_comm_taunt_3.wav", [1] = "sounds/commander/core_comm_taunt_2.wav", [2] = "sounds/commander/core_comm_taunt_1.wav"},
+		[ UnitDefNames["core_nincommander"].id ] = {[0] = "sounds/commander/core_comm_taunt_3.wav", [1] = "sounds/commander/core_comm_taunt_2.wav", [2] = "sounds/commander/core_comm_taunt_1.wav"},
+		[ UnitDefNames["core_scommander"  ].id ] = {[0] = "sounds/commander/core_comm_taunt_3.wav", [1] = "sounds/commander/core_comm_taunt_2.wav", [2] = "sounds/commander/core_comm_taunt_1.wav"},
+		[ UnitDefNames["core_u0commander" ].id ] = {[0] = "sounds/commander/core_comm_taunt_3.wav", [1] = "sounds/commander/core_comm_taunt_2.wav", [2] = "sounds/commander/core_comm_taunt_1.wav"},
+		[ UnitDefNames["core_ucommander"  ].id ] = {[0] = "sounds/commander/core_comm_taunt_3.wav", [1] = "sounds/commander/core_comm_taunt_2.wav", [2] = "sounds/commander/core_comm_taunt_1.wav"},
+		[ UnitDefNames["core_u2commander" ].id ] = {[0] = "sounds/commander/core_comm_taunt_3.wav", [1] = "sounds/commander/core_comm_taunt_2.wav", [2] = "sounds/commander/core_comm_taunt_1.wav"},
+		[ UnitDefNames["core_u3commander" ].id ] = {[0] = "sounds/commander/core_comm_taunt_3.wav", [1] = "sounds/commander/core_comm_taunt_2.wav", [2] = "sounds/commander/core_comm_taunt_1.wav"},
+		[ UnitDefNames["core_u4commander" ].id ] = {[0] = "sounds/commander/core_comm_taunt_3.wav", [1] = "sounds/commander/core_comm_taunt_2.wav", [2] = "sounds/commander/core_comm_taunt_1.wav"},
 	},
 	CommanderDamaged = {
 		[0] = "sounds/commander/arm_comm_damage_25.wav",
@@ -129,53 +103,6 @@ local CommanderTargets = {
 		[11] = UnitDefNames["core_warlord"],
 	},
 }
-
-local armComDefID = UnitDefNames["arm_commander" ].id
-local corComDefID = UnitDefNames["core_commander"].id
-
-local comSongs = CommanderSounds.CommanderSongs
-local comTaunts = CommanderSounds.CommanderTaunts
-
-for unitDefID, sndTable in pairs(comSongs) do
-	assert(type(sndTable) == type({}))
-
-	if (unitDefID ~= armComDefID and unitDefID ~= corComDefID) then
-		local songsList = nil
-		local unitDef = UnitDefs[unitDefID]
-
-		-- if fifth character of name is an underscore (ASCII code 95)
-		-- then the side prefix is (probably) "core" instead of "arm"
-		if (unitDef.name:byte(5) == 95) then
-			songsList = comSongs[corComDefID]
-		else
-			songsList = comSongs[armComDefID]
-		end
-
-		-- note: pairs because ipairs will never visit [0]
-		for sndIndex, sndFile in pairs(songsList) do
-			sndTable[sndIndex] = sndFile
-		end
-	end
-end
-
-for unitDefID, sndTable in pairs(comTaunts) do
-	assert(type(sndTable) == type({}))
-
-	if (unitDefID ~= armComDefID and unitDefID ~= corComDefID) then
-		local tauntsList = nil
-		local unitDef = UnitDefs[unitDefID]
-
-		if (unitDef.name:byte(5) == 95) then
-			tauntsList = comTaunts[corComDefID]
-		else
-			tauntsList = comTaunts[armComDefID]
-		end
-
-		for sndIndex, sndFile in pairs(tauntsList) do
-			sndTable[sndIndex] = sndFile
-		end
-	end
-end
 
 return CommanderUnitDefs, CommanderSounds, CommanderTargets
 
