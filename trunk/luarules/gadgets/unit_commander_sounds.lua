@@ -50,19 +50,20 @@ if (gadgetHandler:IsSyncedCode()) then
 			-- note:
 			--   in synced code, so these play for everyone (also non-positional)
 			--   return false for Sing/Taunt so they do not cancel normal orders
-			-- DO NOT CHANGE THE SOUND PROBABILITY DISTRIBUTION WITHOUT A GOOD REASON
 			if (cmdID == CommanderSingCmdDesc.id) then
-				local snds = CommanderSounds.CommanderSongs[unitDefID]
-				local sidx = rnd(0, #snds)
-
-				spPlaySoundFile(snds[sidx], volume)
+				local idx
+				local rnd2 = rnd(0,10)
+				if rnd2 < 8 then 
+					idx = 0
+				else
+					idx = rnd(1, #CommanderSounds.CommanderSongs[unitDefID])
+				end
+				spPlaySoundFile(CommanderSounds.CommanderSongs[unitDefID][idx], volume)
 				return false
 			end
 			if (cmdID == CommanderTauntCmdDesc.id) then
-				local snds = CommanderSounds.CommanderTaunts[unitDefID]
-				local sidx = rnd(0, #snds)
-
-				spPlaySoundFile(snds[sidx], volume)
+				local idx = rnd(0, #CommanderSounds.CommanderTaunts[unitDefID])
+				spPlaySoundFile(CommanderSounds.CommanderTaunts[unitDefID][idx], volume)
 				return false
 			end
 		end
