@@ -30,6 +30,7 @@
 		air=1;
 		count=1;
 		water=1;
+		underwater=1;
 	}
 	[spikes]
 	{
@@ -46,6 +47,7 @@
 		}
 		air=0;
 		water=1;
+		underwater=1;
 		ground=0;
   		count=3; 
 	}
@@ -67,6 +69,7 @@
       		}
 	air=0;
       	water=1;
+		underwater=1;
       	ground=0;
       	count=15;
 	}
@@ -88,6 +91,7 @@
       		}
 	air=0;
       	water=1;
+		underwater=1;
       	ground=0;
       	count=2;
 	}
@@ -122,7 +126,8 @@
 		useAirLos=1;
 		}
 	air=0;
-	water=1;
+	water=0;
+	underwater=0;
 	ground=0;
 	count=1;
 	}
@@ -146,7 +151,7 @@
       		[properties]
       		{
       		heat = 15;
-		Texture=firecloud;
+			Texture=firecloud;
       		maxheat = 15;
       		heatFalloff = 0.86;
       		size = 1.45;
@@ -156,7 +161,7 @@
       		speed = -0.2 r0.4, -0.2 r0.4, -0.2 r0.4;
       		pos = 0.1 r-0.2, 0.1 r-0.2, 0.1 r-0.2;
       		}
-	air=1;
+		air=1;
       	water=0;
       	ground=1;
       	count=4;
@@ -186,11 +191,12 @@
 			size = 10;
 			sizeExpansion = 0.5;
 			slowdown=1;
-			lifetime=160;
+			//lifetime=160; -- unknown tag in spring 95
 			pos = -2 r4,-2 r4, -2 r4;
 			speed=0.75 r-1.5, 1.5 r3.0, 0.75 r-1.5;
 		}
 		water=1;
+		underwater=0;
 		count=10;
 	}
 [groundflash]
@@ -201,7 +207,7 @@
       		circleAlpha = 0.55;
       		ttl = 20;
       		color = 0.7, 0.5, 0.0;
-		air=1;
+			air=1;
      		ground=1;
       		water=0;
 

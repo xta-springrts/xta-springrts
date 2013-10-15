@@ -35,7 +35,8 @@ else
 	
 	local splashCEG							= "verticalbomb"
 	local splashCEGshallow					= "torpedoold"
-	local shockCEG							= "torpedo"
+	local smokeCEG							= "torpedosmoke"
+	local subsurfaceCEG						= "torpedoold" 
 	local lavaCEG1							= "napalam"
 	local lavaCEG2							= "SMOKESHELL_Small"
 	--local duckCEG							= "blplasmaballbloom"
@@ -60,17 +61,18 @@ else
 		local aoe = WeaponDefs[weaponID]["damageAreaOfEffect"] / 2
 		local wType = WeaponDefs[weaponID].type
 		
-		-- Echo("Water depth = ", groundHeight, isWater, isShallow, py)
-		if not nonexplosiveWeapons[wType] and isWater and abs(py) <= aoe and py <= 0 then
+		--Echo("Explosion: ", wType, py)
+		if not nonexplosiveWeapons[wType] and isWater and py <= 0 then
 			if isLava then
-				SpawnCEG(lavaCEG1, px+random(-aoe,aoe), py, pz+random(-aoe,aoe),0,1,0,aoe,aoe)
+				SpawnCEG(lavaCEG1, px+random(-aoe,aoe), py, pz+random(-aoe,aoe),0,1,0,aoe,0)
 			else
 				if py > shallowHitLimit then -- hits close to water surface
-					SpawnCEG(splashCEG, px+random(-aoe,aoe), py, pz+random(-aoe,aoe),0,1,0,aoe,aoe)
+					SpawnCEG(splashCEG, px+random(-aoe,aoe), py, pz+random(-aoe,aoe),0,1,0,aoe,0)
 					if isShallow then SpawnCEG(splashCEGshallow, px, 0, pz) end
 				else -- subsurface hit
-					SpawnCEG(shockCEG, px+random(-aoe,aoe), py, pz+random(-aoe,aoe),0,1,0,aoe,aoe)
-					--Echo("Deep water explosion")
+				-- in spring 95, there seems to be a new ceg tag for underwater effects, but nevertheless it looks better if spawned close to surface
+					local spawnY = -aoe/4
+					SpawnCEG(subsurfaceCEG, px+random(-aoe,aoe), spawnY, pz+random(-aoe,aoe),0,1,0,aoe,0)
 				end
 				
 				if isShallow then

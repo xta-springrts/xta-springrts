@@ -60,7 +60,6 @@ function gadget:Initialize()
 	end
 
 	if (not haveZombies) then
-		spEcho("[game_zombiemode] zombies disabled")
 		gadgetHandler:RemoveGadget(self)
 		return
 	end
