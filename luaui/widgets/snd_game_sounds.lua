@@ -51,12 +51,14 @@ local CD4 = "sounds/count4.wav"
 local CD5 = "sounds/count5.wav"
 local CD6 = "sounds/count6.wav"
 local cancel = "sounds/cancel2.wav"
+local movefailed = "sounds/cantdo4.wav"
 
 local ADUnits = {}
 local CMD_SELFD = CMD.SELFD
 
 local volume = 3.0
 local Channel = 'battle'
+
 ----------------------------------------------------------------------------
 function widget:Initialize()
     localTeamID = spGetLocalTeamID()   
@@ -200,6 +202,10 @@ end
 
 function widget:UnitMoveFailed(unitID, unitDefID, unitTeam)
 	spEcho(UnitDefs[unitDefID].humanName .. ": Can't reach destination!")
+	local x,y,z = spGetUnitPosition(unitID)
+	if (x and y and z) then spSetLastMessagePosition(x,y,z) end
+	
+	spPlaySoundFile(movefailed, 1.0, nil, "ui")
 end 
 
 --changing teams, rejoin, becoming spec etc

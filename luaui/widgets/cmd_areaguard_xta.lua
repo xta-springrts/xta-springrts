@@ -360,16 +360,6 @@ function countItems(tbl)
 	return count
 end
 
-function widget:DefaultCommand(type,id)
-	if type == 'unit' then
-		--Echo("DefaultCommand",type,id)
-		local target_team = Spring.GetUnitTeam(id)
-		if Spring.AreTeamsAllied( target_team, Spring.GetLocalTeamID() ) then
-			return CMD_AREA_GUARD
-		end
-	end
-end	
-
 function widget:KeyPress(key, mods, isRepeat) 
 	if (key == 0x067) and (not isRepeat) and (not mods.ctrl) and not (mods.shift) and (not mods.alt) then --g
 		Spring.SetActiveCommand("areaguard")
