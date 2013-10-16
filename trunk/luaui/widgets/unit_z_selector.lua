@@ -6,13 +6,15 @@ function widget:GetInfo()
     name      = "Z Selector",
     desc      = "Hold Z to select the same types of unit only v1.1",
     author    = "TheFatController",
-    date      = "25 November 2008",
+    date      = "Oct 2013",
+	version   = 1.1
     license   = "GNU GPL, v2 or later",
     layer     = 0,
     enabled   = true  --  loaded by default?
   }
 end
 
+-- fixed by Jools
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
@@ -20,6 +22,7 @@ local GetMouseState = Spring.GetMouseState
 local mouseDown = false
 local zDown = false
 local selDefs = {}
+local Echo = Spring.Echo
 
 function mouseRelease()
   local zSelection = {}
@@ -48,21 +51,33 @@ function widget:DrawWorld()
 end
 
 function widget:KeyPress(key, mods, isRepeat)
-  if (key == 0x07A) and (not isRepeat) then
-    local newSelDefs = Spring.GetSelectedUnitsCounts()
-    if (#newSelDefs > 0) then
-      selDefs = newSelDefs
-    end
-    zDown = true
-  end
-  return false
+	if (key == 0x07A) and (not isRepeat) then
+		local newSelDefs = Spring.GetSelectedUnitsCounts()
+	
+		if not emptySelection(newSelDefs) then
+			selDefs = newSelDefs
+		end
+		zDown = true	
+		return false
+	end
 end
 
 function widget:KeyRelease(key, mods, isRepeat)
-  if (key == 0x07A) then
-    zDown = false
-  end
-  return false
+	if (key == 0x07A) then
+		zDown = false
+	end
+	return false
+ end
+
+function emptySelection(sel)
+	local empty = true
+	for _,val in pairs(sel) do
+        if val then
+			empty = false
+			break
+		end
+	end
+	return empty
 end
 
 --------------------------------------------------------------------------------
