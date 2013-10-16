@@ -7,7 +7,7 @@ function widget:GetInfo()
     desc      = "Hold Z to select the same types of unit only v1.1",
     author    = "TheFatController",
     date      = "Oct 2013",
-	version   = 1.1
+	version   = "1.1",
     license   = "GNU GPL, v2 or later",
     layer     = 0,
     enabled   = true  --  loaded by default?
