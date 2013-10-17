@@ -14,15 +14,7 @@ end
 
 -- shared synced/unsynced globals
 LUAUI_DIRNAME							= 'LuaUI/'
-local ipairs = ipairs
-
-local random  = math.random
-local tainsert = table.insert
-local taremove = table.remove
-local abs = math.abs
 local Echo = Spring.Echo
-local LUAMESSAGE = 	"20121130"
-
 
 local nukeWeapons = {
 	fmd_rocket = true, -- Core_Resistor, core_fortitude_missile_defense
@@ -36,17 +28,15 @@ local nukeWeapons = {
 	}
 
 	
-	
-local nukeList = {}
-	
 if gadgetHandler:IsSyncedCode() then
 	-----------------
 	-- SYNCED PART --
 	-----------------
-	local clientID, clientAllyID, clientIsSpec
+	
 	local GetProjectilePosition = Spring.GetProjectilePosition
 	local IsPosInRadar = Spring.IsPosInRadar
 	local GetUnitTeam = Spring.GetUnitTeam
+	local nukeList = {}
 				
 	function gadget:Initialize()	
 		for id,weaponDef in pairs(WeaponDefs) do
@@ -64,41 +54,30 @@ if gadgetHandler:IsSyncedCode() then
 			local wName = WeaponDefs[projectileWeaponDefID].name
 			--Echo("Weapon:",wName)
 			if nukeWeapons[wName] then
-				local x,y,z = GetProjectilePosition(projectileID)
-				local inRadar = IsPosInRadar(x, y, z, clientAllyID)
+				local x,_,z = GetProjectilePosition(projectileID)
 				local teamID = GetUnitTeam(projectileOwnerID)
-				nukeList[projectileID] = {x,y,z, inRadar,teamID}
-				--Echo("Nuke added:",#nukeList, inRadar, projectileOwnerID,teamID)
+				nukeList[projectileID] = {x,z,teamID}
+				-- if only minimap is used, there is no need for y component. However, y-coord is needed if radar check is to be enabled.
 			end
 		end
 	end
 
 	function gadget:ProjectileDestroyed(projectileID)
 		nukeList[projectileID] = nil
+		SendToUnsynced('MMX_ProjectileDestroyed', projectileID)
 	end
 	
 	function gadget:GameFrame(frame)
-		if frame%4 == 0 then
-			for i,array in pairs(nukeList) do
-				local x,y,z = GetProjectilePosition(i)
-				--local inRadar = IsPosInRadar(x, y, z, clientAllyID)
-				array[1] = x
-				array[2] = y
-				array[3] = z
-				array[4] = true
+		if frame%6 == 0 then
+			for i,nuke in pairs(nukeList) do
+				local x,_,z = GetProjectilePosition(i)
+				nuke[1] = x
+				nuke[2] = z
 			end
-			_G.nukeList = nukeList
-		end
-	end
-	
-	function gadget:RecvLuaMsg(msg, playerID)
-		--Spring.Echo("Got a message from " .. playerID .. " :",msg,string.len(msg))
-		local minimapX_msg = (msg:find(LUAMESSAGE,1,true))
-		if msg and string.len(msg) >= 9 and minimapX_msg then	
-			local sms = string.sub(msg, string.len(LUAMESSAGE)+1) 
-			clientID = tonumber(string.sub(sms,1,1))
-			--Echo("Local client = ", clientID)
-			_,_,clientIsSpec,_,clientAllyID = Spring.GetPlayerInfo(clientID)
+			
+			for id, nuke in pairs (nukeList) do
+				SendToUnsynced('MMX_ShowProjectile', id, nuke[1], nuke[2],nuke[3]) -- eventID, nukeID, x, z, teamID
+			end
 		end
 	end
 	
@@ -118,34 +97,44 @@ else
 	local glColor = gl.Color
 	local glText = gl.Text
 	local glPopMatrix = gl.PopMatrix
-	local spairs = spairs
 	
 	local mapX = Game.mapX * 512
 	local mapY = Game.mapY * 512
 	local GetTeamColor = Spring.GetTeamColor
+	local clientIsSpec, clientAllyID
+	local drawList = {}
+	
+	local function MMX_ShowProjectile(_,projectileID, x, z, teamID)
+		drawList[projectileID] = {x,z,teamID}
+	end
+	
+	local function MMX_ProjectileDestroyed(_,projectileID)
+		drawList[projectileID] = nil
+	end
+	
 	
 	function gadget:Initialize()
-		local pID = Spring.GetLocalPlayerID()
-		Spring.SendLuaRulesMsg(LUAMESSAGE .. pID)
+		local clientID = Spring.GetLocalPlayerID()
+		_,_,clientIsSpec,_,clientAllyID = Spring.GetPlayerInfo(clientID)
+		
+		gadgetHandler:AddSyncAction('MMX_ShowProjectile', MMX_ShowProjectile)
+		gadgetHandler:AddSyncAction('MMX_ProjectileDestroyed', MMX_ProjectileDestroyed)	
 	end
-
+	
 	function gadget:DrawInMiniMap(sx, sy)
-		local drawList = SYNCED.nukeList
 		
 		if drawList then
 			local ratioX = sx / mapX
 			local ratioY = sy / mapY
 			glPushMatrix()
-			for _, nuke in spairs(drawList) do
-				--local id = nuke[1]
-				local x = nuke[1]
-				local y = nuke[3]
-				local inRadar = nuke[4]
-				local teamID = nuke[5]
+			for _, nuke in pairs(drawList) do
+				local x = nuke[1] -- x in world map
+				local y = nuke[2] -- z in world map
+				local teamID = nuke[3]
+				local inRadar = true -- IsPosInRadar(x, y, z, clientAllyID) -- needs y-coord to be sent from synced as well.
 				local red, green, blue = GetTeamColor(teamID)
 				glColor(red, green, blue, 1)
-				--Echo("Nuke ", x,y, inRadar)
-				if inRadar then
+				if inRadar or clientIsSpec then
 					glText("X", x*ratioX, sy-y*ratioY, 10, 'cv')
 				end
 			end
