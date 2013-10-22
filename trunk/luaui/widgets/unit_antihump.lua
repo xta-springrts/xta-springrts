@@ -17,7 +17,6 @@ local spGetUnitPosition     = Spring.GetUnitPosition
 local spGetUnitHeading		= Spring.GetUnitHeading
 local spGiveOrderToUnit		= Spring.GiveOrderToUnit
 local spGetGameFrame		= Spring.GetGameFrame
-local floor                 = math.floor
 local sqrt					= math.sqrt
 local abs					= math.abs
 local pairs					= pairs
@@ -26,15 +25,7 @@ local HeadToTR = 360/65536/0.16
 
 local movingUnits = {}
 
---local function diag(...)
 local function diag(x,y,z)
---[[
-	local res = 0
-	for i=1 to #... do
-		local val = ...
-		res = res + val*val
-	end
---]]
 	return sqrt(x*x + y*y + z*z)
 end
 
@@ -63,9 +54,7 @@ function widget:GameFrame(n)
 		for unitID, pos in pairs(movingUnits) do
 			local x,y,z = spGetUnitPosition(unitID)
 			local head = spGetUnitHeading(unitID)
-			local dist = diag(x - pos[1], y - pos[2], z - pos[3])
-			Spring.Echo(dist<udefTab[pos[5]].speed, abs(head - pos[4])*HeadToTR<udefTab[pos[5]].turnRate, n-pos[6]>=60)
-			if (dist < udefTab[pos[5]].speed) and (abs(head - pos[4])*HeadToTR < udefTab[pos[5]].turnRate) and (n-pos[6] >= 60) then
+			if (diag(x - pos[1], y - pos[2], z - pos[3]) < udefTab[pos[5]].speed) and (abs(head - pos[4])*HeadToTR < udefTab[pos[5]].turnRate) and (n-pos[6] >= 60) then
 				if Spring.GetUnitIsBuilding(unitID)==nil then
 					spGiveOrderToUnit(unitID, CMD.STOP, {}, {})
 				end
