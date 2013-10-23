@@ -3,143 +3,105 @@ function gadget:GetInfo()
   return {
     name      = "gui_minimapX",
     desc      = "Draws an X for nukes in minimap (when in radar)",
-	version   = "1.0",
-    author    = "Jools",
-    date      = "November,2012",
+	version   = "1.1",
+    author    = "Jools, DeadnightWarrior",
+    date      = "23 Oct 2013",
     license   = "GNU GPL, v2 or later",
     layer     = 0,
     enabled   = true,  --  loaded by default?
   }
 end
 
--- shared synced/unsynced globals
-LUAUI_DIRNAME							= 'LuaUI/'
-local Echo = Spring.Echo
-
-local nukeWeapons = {
-	fmd_rocket = true, -- Core_Resistor, core_fortitude_missile_defense
-	crblmssl = true, -- core_silencer
-	armscab_weapon = true, -- arm_scarab
-	nuclear_missile = true, -- arm_retaliator
-	amd_rocket = true, -- arm_protector, arm_repulsor
-	armemp_weapon = true, --arm_stunner
-	cortron_weapon = true, -- core_neutron 
-	corabm_weapon = true, -- core_hedgehog
-	}
-
-	
 if gadgetHandler:IsSyncedCode() then
 	-----------------
 	-- SYNCED PART --
 	-----------------
-	
-	local GetProjectilePosition = Spring.GetProjectilePosition
-	local IsPosInRadar = Spring.IsPosInRadar
-	local GetUnitTeam = Spring.GetUnitTeam
-	local nukeList = {}
-				
+
+	local spGetProjectileDefID = Spring.GetProjectileDefID
+	local spGetUnitTeam = Spring.GetUnitTeam
+
+	local nukeWeapons = {
+		[WeaponDefNames["fmd_rocket"].id] = true,		-- Core_Resistor, core_fortitude_missile_defense
+		[WeaponDefNames["crblmssl"].id] = true,			-- core_silencer
+		[WeaponDefNames["armscab_weapon"].id] = true,	-- arm_scarab
+		[WeaponDefNames["nuclear_missile"].id] = true,	-- arm_retaliator
+		[WeaponDefNames["amd_rocket"].id] = true,		-- arm_protector, arm_repulsor
+		[WeaponDefNames["armemp_weapon"].id] = true,	-- arm_stunner
+		[WeaponDefNames["cortron_weapon"].id] = true,	-- core_neutron 
+		[WeaponDefNames["cormabm_weapon"].id] = true,	-- core_hedgehog
+	}
+
 	function gadget:Initialize()	
-		for id,weaponDef in pairs(WeaponDefs) do
-			local wName = weaponDef.name
-			if nukeWeapons[wName] then 
-				Script.SetWatchWeapon(weaponDef.id, true) 
-				--Echo("Watching weapon: ",wName,weaponDef.id)
-			end
+		for id in pairs(nukeWeapons) do
+			Script.SetWatchWeapon(id, true) 
 		end
 	end
 
-	
 	function gadget:ProjectileCreated(projectileID, projectileOwnerID, projectileWeaponDefID)
-		if WeaponDefs[projectileWeaponDefID] then
-			local wName = WeaponDefs[projectileWeaponDefID].name
-			--Echo("Weapon:",wName)
-			if nukeWeapons[wName] then
-				local x,_,z = GetProjectilePosition(projectileID)
-				local teamID = GetUnitTeam(projectileOwnerID)
-				nukeList[projectileID] = {x,z,teamID}
-				-- if only minimap is used, there is no need for y component. However, y-coord is needed if radar check is to be enabled.
-			end
+		if nukeWeapons[projectileWeaponDefID] then
+			SendToUnsynced('MMX_ShowProjectile', projectileID, spGetUnitTeam(projectileOwnerID))
 		end
 	end
 
 	function gadget:ProjectileDestroyed(projectileID)
-		nukeList[projectileID] = nil
-		SendToUnsynced('MMX_ProjectileDestroyed', projectileID)
-	end
-	
-	function gadget:GameFrame(frame)
-		if frame%6 == 0 then
-			for i,nuke in pairs(nukeList) do
-				local x,_,z = GetProjectilePosition(i)
-				nuke[1] = x
-				nuke[2] = z
-			end
-			
-			for id, nuke in pairs (nukeList) do
-				SendToUnsynced('MMX_ShowProjectile', id, nuke[1], nuke[2],nuke[3]) -- eventID, nukeID, x, z, teamID
-			end
+		if nukeWeapons[spGetProjectileDefID(projectileID)] then
+			SendToUnsynced('MMX_ProjectileDestroyed', projectileID)
 		end
 	end
-	
+
 	function gadget:Shutdown()
-		for id,weaponDef in pairs(WeaponDefs) do
-			local wName = weaponDef.name
-			if weaponDef ~= nil and nukeWeapons[wName] then 
-				Script.SetWatchWeapon(weaponDef.id, false)
-			end
+		for id in pairs(nukeWeapons) do
+			Script.SetWatchWeapon(id, false)
 		end
 	end
+
 else
 	-------------------
 	-- UNSYNCED PART --
 	-------------------
-	local glPushMatrix = gl.PushMatrix
 	local glColor = gl.Color
 	local glText = gl.Text
-	local glPopMatrix = gl.PopMatrix
+	local glBeginText = gl.BeginText
+	local glEndText = gl.EndText
+	local spGetProjectilePosition = Spring.GetProjectilePosition
+	local schar = string.char
+	local floor = math.floor
 	
 	local mapX = Game.mapX * 512
 	local mapY = Game.mapY * 512
 	local GetTeamColor = Spring.GetTeamColor
-	local clientIsSpec, clientAllyID
 	local drawList = {}
+	local teamColour = {}
 	
-	local function MMX_ShowProjectile(_,projectileID, x, z, teamID)
-		drawList[projectileID] = {x,z,teamID}
+	local function MMX_ShowProjectile(_, projectileID, teamID)
+		drawList[projectileID] = teamID
 	end
-	
+
 	local function MMX_ProjectileDestroyed(_,projectileID)
 		drawList[projectileID] = nil
 	end
-	
-	
-	function gadget:Initialize()
-		local clientID = Spring.GetLocalPlayerID()
-		_,_,clientIsSpec,_,clientAllyID = Spring.GetPlayerInfo(clientID)
-		
+
+	function gadget:Initialize()		
 		gadgetHandler:AddSyncAction('MMX_ShowProjectile', MMX_ShowProjectile)
 		gadgetHandler:AddSyncAction('MMX_ProjectileDestroyed', MMX_ProjectileDestroyed)	
+		local teams = Spring.GetTeamList()
+		for _, teamID in pairs(teams) do
+			local r, g, b = Spring.GetTeamColor(teamID)
+			teamColour[teamID] = "\255" .. schar(floor(r*255)+0.5) .. schar(floor(g*255)+0.5) .. schar(floor(b*255)+0.5)
+		end
 	end
-	
+
 	function gadget:DrawInMiniMap(sx, sy)
-		
 		if drawList then
 			local ratioX = sx / mapX
 			local ratioY = sy / mapY
-			glPushMatrix()
-			for _, nuke in pairs(drawList) do
-				local x = nuke[1] -- x in world map
-				local y = nuke[2] -- z in world map
-				local teamID = nuke[3]
-				local inRadar = true -- IsPosInRadar(x, y, z, clientAllyID) -- needs y-coord to be sent from synced as well.
-				local red, green, blue = GetTeamColor(teamID)
-				glColor(red, green, blue, 1)
-				if inRadar or clientIsSpec then
-					glText("X", x*ratioX, sy-y*ratioY, 10, 'cv')
-				end
-			end
-			glPopMatrix()
 			glColor(1, 1, 1, 1)
+			glBeginText()
+			for projID, teamID in pairs(drawList) do
+				local x,y,z = spGetProjectilePosition(projID)
+				glText(teamColour[teamID] .. "X", x*ratioX, sy-z*ratioY, 10, 'cv')
+			end
+			glEndText()
 		end
 	end
 end
