@@ -236,12 +236,10 @@ local shaderProgs = {
 					float mdlDepth = texture2D(mdlZvalTex, texCoors).x;
 					float mapDepth = texture2D(mapZvalTex, texCoors).x;
 
-					// figure out which fragments belong to models
 					intensity *= float(mdlDepth < mapDepth);
 				}
 				#endif
 
-				// TODO: less discrete cutoff?
 				gl_FragData[0] = mix(vec4(color, 1.0), vec4(0.0, 0.0, 0.0, 1.0), float(intensity <= filterParams[3]));
 			}
 		]],
@@ -277,7 +275,6 @@ local shaderProgs = {
 
 			uniform float weights[numSamples];
 
-			// must be outside of main or driver freaks out
 			vec4 samples[numSamples];
 
 			void main(void) {
@@ -328,7 +325,6 @@ local shaderProgs = {
 				vec4 copy = texture2D(copyTex, gl_TexCoord[0].st);
 				vec4 mask = texture2D(maskTex, gl_TexCoord[0].st);
 
-				// simple additive blend if not in debug mode
 				gl_FragData[0] = mix(copy + mask, mask, float(debugMode == 1));
 			}
 		]],
