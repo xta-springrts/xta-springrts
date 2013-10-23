@@ -395,7 +395,7 @@ local function CreateTextures(viewResized)
 	textures[TARGET_TEXTURE_IDX] = gl.CreateTexture(ppTexSize[1], ppTexSize[2], ppTexParams)
 
 	textures[SCREEN_TEXTURE_IDX] = gl.CreateTexture(viewPortState[VIEWPORT_XDIM_IDX], viewPortState[VIEWPORT_YDIM_IDX], {
-		min_filter = GL.NEAREST, mag_filter = GL.NEAREST,
+		min_filter = GL.LINEAR, mag_filter = GL.LINEAR,
 	})
 
 	if (textures[SCREEN_TEXTURE_IDX] == nil or textures[SOURCE_TEXTURE_IDX] == nil or textures[TARGET_TEXTURE_IDX] == nil) then
