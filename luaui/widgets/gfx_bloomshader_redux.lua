@@ -458,7 +458,9 @@ local function DebugDrawTexture(tex, xpos, ypos, xsize, ysize)
 	return true
 end
 
-local function Bloom()
+
+
+function widget:DrawScreenEffects()
 	local filterShaderProg = shaderProgs[FILTER_SHADER_IDX]
 	local hBlurShaderProgUniforms = shaderProgs[H_BLUR_SHADER_IDX].uniformFloat
 	local vBlurShaderProgUniforms = shaderProgs[V_BLUR_SHADER_IDX].uniformFloat
@@ -573,10 +575,6 @@ function widget:Shutdown()
 	gl.DeleteShader(shaders[H_BLUR_SHADER_IDX] or 0)
 	gl.DeleteShader(shaders[V_BLUR_SHADER_IDX] or 0)
 	gl.DeleteShader(shaders[POSTFX_SHADER_IDX] or 0)
-end
-
-function widget:DrawScreenEffects()
-	Bloom()
 end
 
 function widget:TextCommand(command)
