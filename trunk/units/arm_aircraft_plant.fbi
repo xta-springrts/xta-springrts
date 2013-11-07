@@ -48,8 +48,8 @@
 	yardmap=yoooooo yoooooo yccccco occccco occccco occccco;
 	activatewhenbuilt=1;
 	collisionVolumeType=Box;
-	collisionVolumeScales=85 39 51;
-	collisionVolumeOffsets=11 -17 -22;
+	collisionVolumeScales=124 39 91;
+	collisionVolumeOffsets= 0 -17 0;
 	collisionVolumeTest = 1;
 
 	//************************************************************

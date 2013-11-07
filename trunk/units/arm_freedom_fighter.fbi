@@ -26,11 +26,11 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=431;
+	maxdamage=388; // was 431
 	healtime=30;
-	buildcostmetal=117; //132; -- OTA: 99
-	buildcostenergy=2587; //3234; -- OTA: 3234
-	buildtime=4407; //7346; -- OTA: 9182
+	buildcostmetal=129; //was 117, 132; -- OTA: 99
+	buildcostenergy=3234; //was 2587, 3234; -- OTA: 3234
+	buildtime=7346; //was 4407, 7346; -- OTA: 9182
 	footprintx=2;
 	footprintz=2;
 
@@ -45,7 +45,7 @@
 	//************************************************************
 	//  Building
 	//************
-
+	
 	//************************************************************
 	//  Constructor
 	//***************
@@ -84,7 +84,7 @@
 	//***********
 	weapon1=ARMVTOL_ADVMISSILE;
 	WeaponMainDir1= 0 0 1;
-	MaxAngleDif1=100;
+	MaxAngleDif1=70;
 	badtargetcategory=NOTAIR;
 	wpri_badtargetcategory=NOTAIR;
 	explodeas=SMALL_UNITEX;

@@ -26,11 +26,11 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=444;
+	maxdamage=400; // was 444
 	healtime=30;
-	buildcostmetal=107; //134; -- OTA: 101
-	buildcostenergy=2545; //3181; -- OTA: 3181
-	buildtime=4414; //7357 -- OTA: 9196
+	buildcostmetal=118; //was 107 134; -- OTA: 101
+	buildcostenergy=3181; //was 2545, 3181; -- OTA: 3181
+	buildtime=7357; //was 4414, 7357 -- OTA: 9196
 	footprintx=2;
 	footprintz=2;
 	ModelCenterOffset=0 -3 0;
@@ -85,7 +85,7 @@
 	//***********
 	weapon1=CORVTOL_ADVMISSILE;
 	WeaponMainDir1= 0 0 1;
-	MaxAngleDif1=100;
+	MaxAngleDif1=70;
 	badtargetcategory=NOTAIR;
 	wpri_badtargetcategory=NOTAIR;
 	explodeas=BIG_UNITEX;

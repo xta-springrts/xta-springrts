@@ -130,7 +130,7 @@ if (gadgetHandler:IsSyncedCode()) then
 			elseif (not UnitDefs[unitDefID].canFly) then
 				rs, hs, ws = 0.75, 0.75, 0.75
 			else
-				rs, hs, ws = 0.48, 0.225, 0.35
+				rs, hs, ws = 0.52, 0.24, 0.38
 			end
 			local xs, ys, zs, xo, yo, zo, vtype, htype, axis, _ = spGetUnitCollisionData(unitID)
 			if (vtype>=3 and xs==ys and ys==zs) then
@@ -146,7 +146,7 @@ if (gadgetHandler:IsSyncedCode()) then
 			elseif (not UnitDefs[unitDefID].canFly) then
 				rs, hs = 0.75, 0.75
 			else
-				rs, hs = 0.48, 0.225
+				rs, hs = 0.52, 0.24
 			end
 			spSetUnitRadiusAndHeight(unitID, spGetUnitRadius(unitID)*rs, spGetUnitHeight(unitID)*hs)
 		end
