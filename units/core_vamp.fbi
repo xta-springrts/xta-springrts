@@ -84,8 +84,8 @@
 	weapon2=CORVTOL_ADVMISSILE;
 	WeaponMainDir1= 0 0 1;
 	WeaponMainDir2= 0 0 1;
-	MaxAngleDif1=110;
-	MaxAngleDif2=110;
+	MaxAngleDif1=90;
+	MaxAngleDif2=90;
 	badtargetcategory=NOTAIR;
 	wpri_badtargetcategory=NOTAIR;
 	wsec_badtargetcategory=NOTAIR;

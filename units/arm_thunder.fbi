@@ -26,11 +26,11 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=511;
+	maxdamage=460; // was 511
 	healtime=30;
-	buildcostmetal=121; // OTA: 130
-	buildcostenergy=3396; // OTA: 5496
-	buildtime=5216; // OTA:  10155
+	buildcostmetal=130; // was 121 OTA: 130
+	buildcostenergy=5496; // was 3396 OTA: 5496
+	buildtime=8124; // was 5216 OTA: 10155
 	footprintx=3;
 	footprintz=3;
 	ModelCenterOffset=0 -3 0;
