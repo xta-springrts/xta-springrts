@@ -55,7 +55,7 @@ if (gadgetHandler:IsSyncedCode()) then
 	local contesters			= {}
 	local gameoverframe			= nil
 	local gamewinners			= nil
-	local gameoverdelay			= 120 -- check that this is less than the value in game_end gadget to make combomb forfeit work
+	local gameoverdelay			= 60 -- check that this is less than the value in game_end gadget to make combomb forfeit work
 	
 	local dgunWeapons = {		-- better to hardcode these, as many weapons are listed as dgun, for example bogus dgun
 	arm_disintegrator = true,
@@ -69,7 +69,6 @@ if (gadgetHandler:IsSyncedCode()) then
 	function gadget:Initialize()
 		if not endmodes[modOptions.mode] then
 			gadgetHandler:RemoveGadget(self)
-			Echo("Team Comends gadget: game is set to continue when commander dies, I am not needed.")
 			return
 		end
 		
