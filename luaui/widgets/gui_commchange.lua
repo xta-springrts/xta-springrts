@@ -106,12 +106,13 @@ local markedStates 					= {}
 local lastStartID
 local strInfo
 local infoOn 						= false
+local teamList						= Spring.GetTeamList()
+local myTeamID 						= Spring.GetMyTeamID()
 
 --------------------------------------------------------------------------------
 -- Speedups
 --------------------------------------------------------------------------------
-local teamList 						= Spring.GetTeamList()
-local myTeamID 						= Spring.GetMyTeamID()
+local GetTeamList					= Spring.GetTeamList
 local glTexCoord					= gl.TexCoord
 local glVertex 						= gl.Vertex
 local glColor 						= gl.Color
@@ -134,9 +135,15 @@ local spGetTeamRulesParam 			= Spring.GetTeamRulesParam
 local spGetGroundHeight	 			= Spring.GetGroundHeight
 local spSendLuaRulesMsg 			= Spring.SendLuaRulesMsg
 local spSendLuaUIMsg 				= Spring.SendLuaUIMsg
-local spGetTeamInfo 				= Spring.GetTeamInfo
+local GetTeamInfo 					= Spring.GetTeamInfo
 local PlaySoundFile 				= Spring.PlaySoundFile
+local IsGUIHidden					= Spring.IsGUIHidden
+local GetPlayerInfo					= Spring.GetPlayerInfo
+local GetPlayerList					= Spring.GetPlayerList
+local GetAllyTeamList				= Spring.GetAllyTeamList
+local GetAIInfo						= Spring.GetAIInfo
 local max, min 						= math.max, math.min
+local newSide		  				= {}
 
 --------------------------------------------------------------------------------
 -- Local functions
@@ -269,7 +276,7 @@ function widget:Initialize()
 	updateState()
 	
 	--marked states
-	for i,player in ipairs(Spring.GetTeamList()) do
+	for i,player in ipairs(teamList) do
 		markedStates[i] = false
 	end
 	
@@ -292,7 +299,7 @@ function widget:Initialize()
 	
 	-- update size for spectators
 	if spectator then
-		n = #(Spring.GetTeamList())-1
+		n = #(teamList)-1
 		sizeX = 380
 		sizeY = 50 + 20 * (n+1)
 	end
@@ -302,7 +309,8 @@ end
 
 function widget:RecvLuaMsg(msg, playerID)
 	local positionRegex = "181072"
-
+	local sidePrefix = '195' -- set by this widget gui_commchange.lua
+	
 	if msg and string.len(msg) >= 8 then	
 		local sms = string.sub(msg, string.len(positionRegex)+1) 
 		local state = tonumber(string.sub(sms,1,1))
@@ -314,6 +322,16 @@ function widget:RecvLuaMsg(msg, playerID)
 			elseif state == 1 then
 				markedStates[player+1] = true
 			end
+		end
+	elseif msg and string.len(msg) == 4 then
+		local sms = msg:sub(sidePrefix:len()+1) 
+		local side = tonumber(sms:sub(1,1))
+		local _, _,_, playerTeam = GetPlayerInfo(playerID)
+			
+		if side == 1 then
+			newSide[playerTeam] = 1
+		elseif side == 2 then
+			newSide[playerTeam] = 2
 		end
 	end
 end
@@ -332,7 +350,7 @@ function widget:ViewResize(viewSizeX, viewSizeY)
 end
 
 function widget:DrawWorld()
-	if Spring.IsGUIHidden() then return end
+	if IsGUIHidden() then return end
 	
 	checkState()
 	updateState()
@@ -343,7 +361,17 @@ function widget:DrawWorld()
         local teamID = teamList[i]
         local tsx, tsy, tsz = spGetTeamStartPosition(teamID)
         if tsx and tsx > 0 then
-            if mySide == "arm" then
+			local _,_,_,_,teamside = GetTeamInfo(teamID)
+			
+			if newSide[teamID] and newSide[teamID] > 0 then
+				if newSide[teamID] == 1 then
+					teamside = "arm"
+				elseif newSide[teamID] == 2 then
+					teamside = "core"
+				end
+			end
+			
+            if teamside == "arm" then
                 glTexture(imgARM)
                 glBeginEnd(GL_QUADS, QuadVerts, tsx, spGetGroundHeight(tsx, tsz), tsz, 80)
             else 
@@ -364,7 +392,7 @@ local function drawBorder(x0, y0, x1, y1, width)
 end
 
 function widget:DrawScreenEffects(vsx, vsy)
-	if Spring.IsGUIHidden() then return end
+	if IsGUIHidden() then return end
 		
 	local h = vsy/3
 	local x = vsx/2 - h/2
@@ -385,7 +413,7 @@ function widget:DrawScreenEffects(vsx, vsy)
 		elseif cntDown == "0" then
 			glTexture(img0)
 		else
-			Spring.Echo(cntDown)
+			Echo(cntDown)
 		end
 		
 		glTexRect(x,y,x1,y1)
@@ -393,7 +421,7 @@ function widget:DrawScreenEffects(vsx, vsy)
 		glColor(1, 1, 1, 1)
 		
 		if cntDown ~= lastCount then
-			Spring.PlaySoundFile(tock)
+			PlaySoundFile(tock)
 			lastCount = cntDown
 		end
 	end
@@ -498,7 +526,7 @@ function widget:DrawScreenEffects(vsx, vsy)
 end
 
 function widget:DrawScreen()
-	if Spring.IsGUIHidden() then return end
+	if IsGUIHidden() then return end
 	
 	local function firstToUpper(str)
 		return (str:gsub("^%l", string.upper))
@@ -516,7 +544,7 @@ function widget:DrawScreen()
 		glText("Players:", 10, y0 + th3+2, th3, 'xno')
 		
 		for i,ps in pairs(pStates) do
-			local leaderName,active,spec,team,_,_,_,country,rank	= Spring.GetPlayerInfo(i)
+			local leaderName,active,spec,team,_,_,_,country,rank	= GetPlayerInfo(i)
 			if not spec then
 				if not active then
 					glColor(0.6, 0.2, 0.2, 0.8) -- red
@@ -617,7 +645,7 @@ function widget:DrawScreen()
 			--player data
 			local as = 0 -- ally separation space
 			
-			for _, aID in pairs(Spring.GetAllyTeamList()) do
+			for _, aID in pairs(GetAllyTeamList()) do
 				as = 8
 				-- draw line between allies
 				glColor(0.1, 0.1, 0.1, 0.3)
@@ -626,19 +654,19 @@ function widget:DrawScreen()
 				glRect(col_0, prevposy - 8, col_6, prevposy - 9)
 				local newteam = true
 				
-				for i, tID in pairs(Spring.GetTeamList(aID)) do
+				for i, tID in pairs(GetTeamList(aID)) do
 					
 					local y1 		= prevposy - as - rh
 					prevposy		= y1
 					as = 0
 					
-					local _,leaderID,_,isAI,_,allyID = Spring.GetTeamInfo(tID)
-					local leaderName,active,spec,team,allyteam,_,_,country,rank	= Spring.GetPlayerInfo(leaderID)
-					local aiID, aiName, aiHostID, aiShortName = Spring.GetAIInfo(tID)
+					local _,leaderID,_,isAI,_,allyID = GetTeamInfo(tID)
+					local leaderName,active,spec,team,allyteam,_,_,country,rank	= GetPlayerInfo(leaderID)
+					local aiID, aiName, aiHostID, aiShortName = GetAIInfo(tID)
 					local isComShare = false
 					local pCount = 0
-					for _, pID in pairs (Spring.GetPlayerList(tID)) do
-						local lName,_,isSspec = Spring.GetPlayerInfo(pID)
+					for _, pID in pairs (GetPlayerList(tID)) do
+						local lName,_,isSspec = GetPlayerInfo(pID)
 						if isSpec == false then 
 							pCount = pCount + 1 
 						end
@@ -731,9 +759,6 @@ function widget:DrawScreen()
 								remarks = country
 							end
 						end						
-						--glText(remarks,				col_6, y1, th4, 'x')
-						--glText(tostring(startID),	col_7, y1, th4, 'x')
-						--Spring.Echo(i, leaderName, active,spec, team, startID, country, rank)
 					end
 				end
 			end
@@ -897,7 +922,7 @@ function widget:MousePress(mx, my, mButton)
 		if mButton == 1 then
 			if IsOnButton(mx,my,Button["exit"]["x0"],Button["exit"]["y0"],Button["exit"]["x1"],Button["exit"]["y1"]) then
 				widgetHandler:RemoveWidget(self)
-				Spring.Echo("Exit to native dialogue window.")
+				Echo("Exit to native dialogue window.")
 				playSound(cancel)
 				return true
 			elseif IsOnButton(mx,my,Button["duck"]["x0"],Button["duck"]["y0"],Button["duck"]["x1"],Button["duck"]["y1"]) then
@@ -991,7 +1016,7 @@ function widget:MousePress(mx, my, mButton)
 					end
 				elseif IsOnButton(mx,my,Button["exit"]["x0"],Button["exit"]["y0"],Button["exit"]["x1"],Button["exit"]["y1"]) then
 					widgetHandler:RemoveWidget(self)
-					Spring.Echo("Exit to native dialogue window.")
+					Echo("Exit to native dialogue window.")
 					playSound(cancel)
 					return true
 				end
@@ -1084,8 +1109,8 @@ function widget:IsAbove(mx,my)
 end
 
 function widget:GameStart()
-	Spring.PlaySoundFile(bell,4.0,0,0,0,0,0,0,'userinterface')
-	Spring.PlaySoundFile(beep,4.0,0,0,0,0,0,0,'unitreply')
+	PlaySoundFile(bell,4.0,0,0,0,0,0,0,'userinterface')
+	PlaySoundFile(beep,4.0,0,0,0,0,0,0,'unitreply')
     widgetHandler:RemoveWidget(self)
 end
 
