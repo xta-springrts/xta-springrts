@@ -30,11 +30,12 @@ local spEcho               = Spring.Echo
 local modOptions    = Spring.GetModOptions()
 local modOptionDefs = VFS.Include("modoptions.lua")
 
+-- "modOptions" is a <string, string> map (values are not numbers!)
+local haveZombies = ((modOptions["zombies"] + 0) ~= 0) or false
 local zombieConf  = "LuaRules/Configs/game_zombiemode_defs.lua"
 local zombieDefs  = VFS.FileExists(zombieConf) and include(zombieConf) or {}
 local zombieQueue = {}
 local zombieCount = 0
-local haveZombies = modOptions.zombies or false
 
 function gadget:Initialize()
 	assert(modOptionDefs ~= nil)
@@ -55,16 +56,22 @@ function gadget:Initialize()
 		for idx, tbl in ipairs(modOptionDefs) do
 			if (tbl.key == "zombies") then
 				haveZombies = haveZombies or tbl.def
+				break
 			end
 		end
 	end
 
 	if (not haveZombies) then
+		spEcho("[game_zombiemode] no zombies no fun")
 		gadgetHandler:RemoveGadget(self)
 		return
 	end
 end
 
+-- TODO:
+--   dgun should not trigger respawn? (config)
+--   reclaiming should NOT EVER trigger respawn
+--   nanoframe decay should NOT EVER trigger respawn
 function gadget:UnitDestroyed(unitID, unitDefID, unitTeam, attackerID, attackerDefID, attackerTeam)
 	local isZombie = spGetUnitNeutral(unitID)
 	local zombieDef = zombieDefs[unitDefID] or {}
