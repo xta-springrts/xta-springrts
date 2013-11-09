@@ -21,31 +21,54 @@
     ศอออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออผ
     Logo by ElementalGizmo
 
-------------------- Change Log of XTA 9.731 Svn 375 ------------------ by Kloot
+------------------- Change Log of XTA 9.731 Svn 547 ------------------ by Kloot
 -cure for zombie virus
 
-------------------- Change Log of XTA 9.73 Svn 375 ------------------ by Deadnight Warrior, Jools, Kloot and Noruas and knorke
-* Updated Xtaids, added new unitpack that functions, called spiders vs. tortoise. Both work need more balance tests. - Noruas
-* Increased cost of Guardian and Punisher shots to double, from 250 to 500 per shot, roughly twice as much and a bit more then a pop up cannon at 230 Energy. - Noruas
-* Reduced cost of stealthing for Cloakable fusion reactors and spy kbots by 50E
-* Added area guard gadget and widget combo. Works like area attack but for guard command. Enable/disable by toggling the Area 
-  Guard widget in F11 menu. Widget listens to keyboard shortcut "g". The widget has three modes:
-  - Basic mode: drag over units to guard, all selected units will guard all units.
-  - Distributive mode (hold alt and drag): distribute the guard task into squadrons based on how many units you have selected
-    to guard.
-  - Persistent mode (hold alt+ctrl and drag): makes the squadrons permanent. When one unit in the squadron gets damaged, the 
-    unit guarding the squadron will shift the guard task to prioritise the unit wth least health. Selecting a unit that is 
-    guarding a squadron and pressing "stop" will also clear the guard task.
-* New spectator mode in commander change widget
-* Added buttons for selecting game speed when watching replays
+------------------- Change Log of XTA 9.73 Svn 545 ------------------ by Deadnight Warrior, Jools, Kloot and Noruas and knorke
+* New things:
+  - Updated Xtaids, added new unitpack that functions, called spiders vs. tortoise. Both work need more balance tests. - Noruas
+  - Added area guard gadget and widget combo. Works like area attack but for guard command. Enable/disable by toggling the Area 
+	Guard widget in F11 menu. Widget listens to keyboard shortcut "g". The widget has three modes:
+	1) Basic mode: drag over units to guard, all selected units will guard all units.
+	2) Distributive mode (hold alt and drag): distribute the guard task into squadrons based on how many units you have selected
+	  to guard.
+	3) Persistent mode (hold alt+ctrl and drag): makes the squadrons permanent. When one unit in the squadron gets damaged, the 
+	  unit guarding the squadron will shift the guard task to prioritise the unit wth least health. Selecting a unit that is 
+	  guarding a squadron and pressing "stop" will also clear the guard task.
+  - New spectator mode in commander change widget
+  - Added buttons for selecting game speed when watching replays
+  - Zombie mode
+  - New mouse cursors: select, airstrike, bad load, bad unload, upgrade metal extractor
+  - New bloomshader widget
+  - Updated pause screen. It has music that can be disabled/enabled with commands /musicoff and /musicon or /disablemusic and /enablemusic
+  - New loading screen. Loading music can be enabled/disabled by setting "snd_intromusic" to 1/0 in springsettings.cfg
+  - New commander songs
+  - Team-died messages make their comeback: suggest new ones in forum
+  - Smarter logic for unit under attack warning sounds
+  
+* Changes:
+  - Increased cost of Guardian and Punisher shots to double, from 250 to 500 per shot, roughly twice as much and a bit more than 
+	a pop up cannon at 230 Energy.
+  - Reduced cost of stealthing for Cloakable fusion reactors and spy kbots by 50E
+  - Aircraft plants include runways for hit detection and selection
+  - Increase metal costs of Freedom Fighter, Avenger, Thunder and Shadow by about 10 %, increase energy cost and build time too.
+    Decrease HP of same units by 10 % and more for scout planes. Decrease fire angle of T1 fighters 100 => 70 and T2 fighters 110 => 90
+  - In game with commander ends: winner will not be last commander alive if he dguns enemy commander
+
 * Bugfixes: 
   - Added missing minelayer-limit icons, fixed bug for xtaids hovercraft minelayers. - Jools
   - Mine layer gadget fixed for XTAids units and other bugs - Noruas
-  - Fixed a bug with moho metal maker's missing explosions: they were set to "", now they use same explosions as in BA (ATOMIC_BLASTSML and ATOMIC_BLAST)
+  - Fixed a bug with moho metal maker's missing explosions: they were set to "", now they use same explosions as in BA
   - Fixed minelayer mine-limit exploit. Now it won't finish the mine if it's not in stock.
   - Fixed double projectile for CORE Garpike and ARM Crab, making then quite OP for their price
   - Fixed Dynamic Collision Volume gadget not scaling 3DO model radius and height if used for a unit with a dynamic CV
   - Fixed many oversized collision volumes, happened due to changes in 94.1 engine
+  - Fix same faction image always being drawn onto ground for all players
+  - Kamikaze units can also attack with the attack command in addition to self-destruct one.
+  - Fix Z-selector widget to work again.
+  - Add arrival sound for arm small hovercraft
+  - Fix sub pens not having move command
+  
 * Performance improvements:
   - Add flood protection to local sounds gadget
   - Optimizations in following widgets:
