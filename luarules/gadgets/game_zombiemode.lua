@@ -31,7 +31,7 @@ local modOptions    = Spring.GetModOptions()
 local modOptionDefs = VFS.Include("modoptions.lua")
 
 -- "modOptions" is a <string, string> map (values are not numbers!)
-local haveZombies = ((modOptions["zombies"] + 0) ~= 0) or false
+local haveZombies = (((modOptions["zombies"] or "0") + 0) ~= 0) or false
 local zombieConf  = "LuaRules/Configs/game_zombiemode_defs.lua"
 local zombieDefs  = VFS.FileExists(zombieConf) and include(zombieConf) or {}
 local zombieQueue = {}
