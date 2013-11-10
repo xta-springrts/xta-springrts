@@ -30,6 +30,7 @@ local spGetTeamInfo				= Spring.GetTeamInfo
 local spGetGameFrame			= Spring.GetGameFrame
 local spAreTeamsAllied			= Spring.AreTeamsAllied
 local random					= math.random
+local Echo						= Spring.Echo
 ----------------------------------------------------------------------------
 local lastAlarmTime				= nil
 local localTeamID				= nil
@@ -195,7 +196,9 @@ function widget:UnitDamaged (unitID, unitDefID, unitTeam, damage, paralyzer, wea
 	else
 		snd = 'sounds/warning1.wav'
 	end
-	spPlaySoundFile(snd, udef.sounds.underattack[1].volume, nil, "ui")
+	-- ALL units have volume = 1.0 in unitdef. Some units, such as critters and DT:s have no volume, making the widget fail on nil index.
+	-- this was the previous lookup code for volume: udef.sounds.underattack[1].volume
+	spPlaySoundFile(snd, 1.0, nil, "ui") 
 
 	if (x and y and z) then spSetLastMessagePosition(x,y,z) end
 end
