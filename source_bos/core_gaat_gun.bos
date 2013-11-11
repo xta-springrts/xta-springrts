@@ -55,7 +55,7 @@ Create()
 	dont-shade spindle;
 	dont-shade turret;
 	dont-shade stand;
-	gun_1 = flare;
+	gun_1 = 0;
 	start-script SmokeUnit();
 }
 
@@ -73,23 +73,11 @@ AimPrimary(heading, pitch)
 FirePrimary()
 {
 	emit-sfx 1024 from flare;
+	sleep 200;
 	++gun_1;
-	if( gun_1 == 4 )
-	{
-		gun_1 = flare;
-	}
-	if( gun_1 == 1 )
-	{
-		turn spindle to z-axis <0.000000> speed <400.093407>;
-	}
-	else if( gun_1 == 2 )
-	{
-		turn spindle to z-axis <120.027473> speed <400.093407>;
-	}
-	else if( gun_1 == 3 )
-	{
-		turn spindle to z-axis <-120.027473> speed <400.093407>;
-	}
+	if( gun_1 >= 3 ) gun_1 = 0;
+	
+	turn spindle to z-axis <120.027473>*gun_1 speed <400.093407>;
 	wait-for-turn spindle around z-axis;
 }
 
