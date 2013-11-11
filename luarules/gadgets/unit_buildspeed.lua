@@ -180,11 +180,13 @@ function gadget:GameFrame(n)
 end
 
 function gadget:AllowUnitBuildStep(builderID, builderTeamID, uID, uDefID, step)
-	if not buildspeedlist[builderID] then
-		return true
+	if buildspeedlist[builderID] then
+		return (step <= 0) or buildspeedlist[builderID].mode~=0 or not ((teamMetalStalling[builderTeamID] and requiresMetal[uDefID]) or (teamEnergyStalling[builderTeamID] and requiresEnergy[uDefID]))
+	else
+		return false
 	end
-    return (step <= 0) or not (buildspeedlist[builderID].mode==0 and ((teamMetalStalling[builderTeamID] and requiresMetal[uDefID]) or (teamEnergyStalling[builderTeamID] and requiresEnergy[uDefID])))
 end
+
 function gadget:AllowCommand(unitID, unitDefID, teamID, cmdID, cmdParams, _)
 	local returnvalue
 	if cmdID ~= CMD_BUILDSPEED or UnitDefs[unitDefID].buildSpeed==0 then

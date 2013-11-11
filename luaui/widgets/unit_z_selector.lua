@@ -24,7 +24,7 @@ local zDown = false
 local selDefs = {}
 local Echo = Spring.Echo
 
-function mouseRelease()
+local function mouseRelease()
   local zSelection = {}
   local selUnits = Spring.GetSelectedUnitsSorted()
   for i,v in pairs(selUnits) do
@@ -32,6 +32,7 @@ function mouseRelease()
       for _,k in ipairs(v) do 
         table.insert(zSelection, k)
       end
+	  break
     end
   end
   Spring.SelectUnitArray(zSelection)
@@ -54,7 +55,7 @@ function widget:KeyPress(key, mods, isRepeat)
 	if (key == 0x07A) and (not isRepeat) then
 		local newSelDefs = Spring.GetSelectedUnitsCounts()
 	
-		if not emptySelection(newSelDefs) then
+		if newSelDefs and newSelDefs.n>0 then
 			selDefs = newSelDefs
 		end
 		zDown = true	
@@ -68,17 +69,6 @@ function widget:KeyRelease(key, mods, isRepeat)
 	end
 	return false
  end
-
-function emptySelection(sel)
-	local empty = true
-	for _,val in pairs(sel) do
-        if val then
-			empty = false
-			break
-		end
-	end
-	return empty
-end
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------

@@ -6,7 +6,7 @@ function widget:GetInfo()
 		date      = "22 Oct 2013",
 		license   = "GNU LGPL v2",
 		layer     = 0,
-		enabled   = true
+		enabled   = false
 	}
 end
 
@@ -20,16 +20,28 @@ local spGetGameFrame		= Spring.GetGameFrame
 local sqrt					= math.sqrt
 local abs					= math.abs
 local pairs					= pairs
---local diag = math.diag
+local diag = math.diag
 local HeadToTR = 360/65536/0.16
 
 local movingUnits = {}
 
-local function diag(x,y,z)
-	return sqrt(x*x + y*y + z*z)
+----------------------------------------------------------------
+
+
+function widget:PlayerChanged(playerID)
+	local _, active = Spring.GetPlayerInfo(playerID)
+	if active~=true then
+		widgetHandler:RemoveWidget()
+	end
 end
 
-----------------------------------------------------------------
+function widget:Initialize()
+	local _, _, spec, _, _, _, _, _ = Spring.GetPlayerInfo(Spring.GetMyPlayerID())
+	if spec==true then
+		widgetHandler:RemoveWidget()
+	end
+end
+
 function widget:CommandNotify(id, params, options)
 	if id == CMD.MOVE or id<0 then
 		local selUnits = spGetSelectedUnits()
