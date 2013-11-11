@@ -60,7 +60,7 @@
   - Mine layer gadget fixed for XTAids units and other bugs - Noruas
   - Fixed a bug with moho metal maker's missing explosions: they were set to "", now they use same explosions as in BA
   - Fixed minelayer mine-limit exploit. Now it won't finish the mine if it's not in stock.
-  - Fixed double projectile for CORE Garpike and ARM Crab, making then quite OP for their price
+  - Fixed double projectile for CORE Garpike and ARM Crab, making them quite OP for their price
   - Fixed Dynamic Collision Volume gadget not scaling 3DO model radius and height if used for a unit with a dynamic CV
   - Fixed many oversized collision volumes, happened due to changes in 94.1 engine
   - Fix same faction image always being drawn onto ground for all players
@@ -78,6 +78,7 @@
   - Improve performance of Dynamic Lighting when used together with Local Sounds, otherwise no performance change
   - Updated CustomFormations to show end points for unit destinations, some other small fixes
   - Halved the number of flame projectiles per second for Pyros and Levelers, damage and visuals adjusted to look and feel as before
+
 * SVN:
   - Rename all files that had upper-case letters to lower-case (fixes possible linux vs windows issues)
 

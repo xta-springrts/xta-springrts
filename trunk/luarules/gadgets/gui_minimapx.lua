@@ -71,7 +71,7 @@ else
 	local mapY = Game.mapY * 512
 	local GetTeamColor = Spring.GetTeamColor
 	local drawList = {}
-	local teamColour = {}
+	local teamColourX = {}
 	
 	local function MMX_ShowProjectile(_, projectileID, teamID)
 		drawList[projectileID] = teamID
@@ -87,7 +87,7 @@ else
 		local teams = Spring.GetTeamList()
 		for _, teamID in pairs(teams) do
 			local r, g, b = Spring.GetTeamColor(teamID)
-			teamColour[teamID] = "\255" .. schar(floor(r*255)+0.5) .. schar(floor(g*255)+0.5) .. schar(floor(b*255)+0.5)
+			teamColourX[teamID] = "\255" .. schar(floor(r*255)+1) .. schar(floor(g*255)+1) .. schar(floor(b*255)+1) .. "X"
 		end
 	end
 
@@ -99,7 +99,7 @@ else
 			glBeginText()
 			for projID, teamID in pairs(drawList) do
 				local x,y,z = spGetProjectilePosition(projID)
-				glText(teamColour[teamID] .. "X", x*ratioX, sy-z*ratioY, 10, 'cv')
+				glText(teamColourX[teamID], x*ratioX, sy-z*ratioY, 10, 'cv')
 			end
 			glEndText()
 		end

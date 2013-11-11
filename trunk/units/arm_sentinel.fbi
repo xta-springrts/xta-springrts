@@ -49,7 +49,7 @@
 	yardmap=yoy ooo oyo;
 	collisionVolumeType=CylY;
 	collisionVolumeScales=43 66 43;
-	collisionVolumeOffsets=0 0 0;
+	collisionVolumeOffsets=0 0 -6;
 	collisionVolumeTest = 1;
 
 	//************************************************************

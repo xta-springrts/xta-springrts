@@ -1139,10 +1139,12 @@ function DrawShareButtons(posY, needm, neede)
 end
 
 function DrawSpecButton(team, posY)
-	gl_Texture(specPic)
-	gl_TexRect(m_spec.posX + widgetPosX  + 1, posY, m_spec.posX + widgetPosX  + 17, posY + 16)
+	gl_Color(1,1,1,1)
 	if specTarget == team then 
 		gl_Texture(selectPic)
+		gl_TexRect(m_spec.posX + widgetPosX  + 1, posY, m_spec.posX + widgetPosX  + 17, posY + 16)
+	else
+		gl_Texture(specPic)
 		gl_TexRect(m_spec.posX + widgetPosX  + 1, posY, m_spec.posX + widgetPosX  + 17, posY + 16)
 	end
 	gl_Texture(false)

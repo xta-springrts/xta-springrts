@@ -35,7 +35,6 @@ if (gadgetHandler:IsSyncedCode()) then
 	local FindUnitCmdDesc						= Spring.FindUnitCmdDesc
 	local InsertUnitCmdDesc						= Spring.InsertUnitCmdDesc
 	local RemoveUnitCmdDesc						= Spring.RemoveUnitCmdDesc
-	local GetUnitDefID							= Spring.GetUnitDefID
 	local GiveOrderToUnit						= Spring.GiveOrderToUnit
 	local ta_insert								= table.insert
 	
@@ -43,17 +42,14 @@ if (gadgetHandler:IsSyncedCode()) then
 	function gadget:Initialize()
 		gadgetHandler:RegisterCMDID(CMD_AIRSTRIKE)
 		Spring.AssignMouseCursor('Airstrike', "cursorairstrike", true, false)
-		Spring.SetCustomCommandDrawData(CMD_AIRSTRIKE, 'Airstrike', {0,1,0,.8},true)
+		Spring.SetCustomCommandDrawData(CMD_AIRSTRIKE, 'Airstrike', {0,1,0,.8}, true)
 	end
 		
 	function gadget:UnitCreated(unitID, unitDefID, teamID, builderID)
-		local uD = UnitDefs[GetUnitDefID(unitID)]
-		local canBomb = uD.isBomberAirUnit
-		
-		if canBomb then
-			local cmdAttackID = FindUnitCmdDesc(unitID,CMD_ATTACK)
+		if UnitDefs[unitDefID].isBomberAirUnit then
+			local cmdAttackID = FindUnitCmdDesc(unitID, MD_ATTACK)
 			if cmdAttackID then
-				EditUnitCmdDesc(unitID,cmdAttackID,{cursor= 'Airstrike'})
+				EditUnitCmdDesc(unitID, cmdAttackID, {cursor= 'Airstrike'})
 			end
 		end
 	end

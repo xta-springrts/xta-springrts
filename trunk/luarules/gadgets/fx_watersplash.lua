@@ -55,33 +55,30 @@ else
 	
 	
 	function gadget:Explosion(weaponID, px, py, pz, ownerID)
-		local groundHeight = GetGroundHeight(px,pz)
-		local isWater = groundHeight < 0
-		local isShallow = groundHeight > shallowLimit
-		local aoe = WeaponDefs[weaponID]["damageAreaOfEffect"] / 2
-		local wType = WeaponDefs[weaponID].type
-		
-		--Echo("Explosion: ", wType, py)
-		if not nonexplosiveWeapons[wType] and isWater and py <= 0 then
-			if isLava then
-				SpawnCEG(lavaCEG1, px+random(-aoe,aoe), py, pz+random(-aoe,aoe),0,1,0,aoe,0)
-			else
-				if py > shallowHitLimit then -- hits close to water surface
-					SpawnCEG(splashCEG, px+random(-aoe,aoe), py, pz+random(-aoe,aoe),0,1,0,aoe,0)
-					if isShallow then SpawnCEG(splashCEGshallow, px, 0, pz) end
-				else -- subsurface hit
-				-- in spring 95, there seems to be a new ceg tag for underwater effects, but nevertheless it looks better if spawned close to surface
-					local spawnY = -aoe/4
-					SpawnCEG(subsurfaceCEG, px+random(-aoe,aoe), spawnY, pz+random(-aoe,aoe),0,1,0,aoe,0)
-				end
-				
-				if isShallow then
-					local rnd = random()
-					--Echo(rnd)
-					if rnd > 0.999 then
-						PlaySoundFile(duckSND, volume, px, 100, pz,0,0,0,Channel)
-						--SpawnCEG(duckCEG, px, py, pz,0,0,0,aoe,0)
-						--Echo("Some ducks were hit")
+		if py <= 0 then
+			local groundHeight = GetGroundHeight(px,pz)
+			if groundHeight < 0 and not nonexplosiveWeapons[WeaponDefs[weaponID].type] then
+				local aoe = WeaponDefs[weaponID]["damageAreaOfEffect"] * 0.5
+				if isLava then
+					SpawnCEG(lavaCEG1, px+random(-aoe,aoe), py, pz+random(-aoe,aoe),0,1,0,aoe,0)
+				else
+					local isShallow = groundHeight > shallowLimit
+					if py > shallowHitLimit then -- hits close to water surface
+						SpawnCEG(splashCEG, px+random(-aoe,aoe), py, pz+random(-aoe,aoe),0,1,0,aoe,0)
+						if isShallow then SpawnCEG(splashCEGshallow, px, 0, pz) end
+					else -- subsurface hit
+					-- in spring 95, there seems to be a new ceg tag for underwater effects, but nevertheless it looks better if spawned close to surface
+						local spawnY = -aoe*0.25
+						SpawnCEG(subsurfaceCEG, px+random(-aoe,aoe), spawnY, pz+random(-aoe,aoe),0,1,0,aoe,0)
+					end
+					
+					if isShallow then
+						local rnd = random()
+						if rnd > 0.999 then
+							PlaySoundFile(duckSND, volume, px, 100, pz,0,0,0,Channel)
+							--SpawnCEG(duckCEG, px, py, pz,0,0,0,aoe,0)
+							--Echo("Some ducks were hit")
+						end
 					end
 				end
 			end

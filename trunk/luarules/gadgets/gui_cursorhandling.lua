@@ -81,7 +81,7 @@ local spAssignMouseCursor 	= Spring.AssignMouseCursor
 					local height = GetUnitDefDimensions(tDef.id)["height"]
 					local speed = tDef.speed
 				
-					if height and speed and baseY and speed and baseY + height < 0 and speed == 0 then
+					if height and speed and baseY and baseY + height < 0 and speed == 0 then
 						if not waterWeapons[unitDefID] then
 							SendToUnsynced("failsound", unitTeam, tID)
 							return false
