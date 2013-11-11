@@ -47,7 +47,7 @@ if (gadgetHandler:IsSyncedCode()) then
 		
 	function gadget:UnitCreated(unitID, unitDefID, teamID, builderID)
 		if UnitDefs[unitDefID].isBomberAirUnit then
-			local cmdAttackID = FindUnitCmdDesc(unitID, MD_ATTACK)
+			local cmdAttackID = FindUnitCmdDesc(unitID, CMD_ATTACK)
 			if cmdAttackID then
 				EditUnitCmdDesc(unitID, cmdAttackID, {cursor= 'Airstrike'})
 			end
