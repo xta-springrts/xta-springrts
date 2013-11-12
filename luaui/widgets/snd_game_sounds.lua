@@ -14,12 +14,12 @@ end
 local alarmInterval				= 60		-- seconds, interval between sound alarms for same unit type
 local commanderAlarmInterval	= 10 		-- seconds, interval for sound alarms for other units after commander was attacked
 local textNotifyInterval		= 10 		-- seconds, interval for text notifications for same unit type
+local generalAlarmInterval		= 10		-- seconds, interval between all alarms (affects all alarms except commander alarms)
 local commanderSoundInterval	= 3			-- seconds, interval between sound notifications for Commander
 local commanderTextInterval		= 3			-- seconds, interval between text notifications for Commander	
 ----------------------------------------------------------------------------                
 local spGetLocalTeamID			= Spring.GetLocalTeamID
 local spPlaySoundFile			= Spring.PlaySoundFile
-local spEcho					= Spring.Echo
 local spGetTimer				= Spring.GetTimer
 local spDiffTimers				= Spring.DiffTimers
 local spIsUnitInView			= Spring.IsUnitInView
@@ -39,6 +39,8 @@ local lastCommanderAlarm		= nil
 local alarmTimes				= {}
 alarmTimes["text"]				= {}
 alarmTimes["sound"]				= {}
+local spamBlock					= false
+
 ----------------------------------------------------------------------------
 local cloak1 = "sounds/kloak1.wav"
 local decloak1 = "sounds/kloak1un.wav"
@@ -58,8 +60,8 @@ local ADUnits = {}
 local CMD_SELFD = CMD.SELFD
 
 local volume = 3.0
-local Channel = 'battle'
-
+local VOLUI
+local VOLBATTLE
 ----------------------------------------------------------------------------
 function widget:Initialize()
     localTeamID = spGetLocalTeamID()   
@@ -76,8 +78,11 @@ function widget:Initialize()
 				commanderTable[id] = true
 			end
 		end
-	end	
+	end
 	
+	VOLUI = 0.015*Spring.GetConfigInt('snd_volui') or 1.0 					-- snd_volui = [0,200]
+	VOLBATTLE = 0.015*Spring.GetConfigInt('snd_volbattle') or 1.0	 		-- snd_volbattle = [0,200]
+	Echo("Unit sounds (XTA) loaded. Volumes (battle,ui):", VOLBATTLE,VOLUI)
 end
 
 function widget:UnitCloaked(unitID, unitDefID, teamID) 
@@ -85,9 +90,9 @@ function widget:UnitCloaked(unitID, unitDefID, teamID)
 	local _,_,_,_,side = spGetTeamInfo(teamID)
 		
 	if side == "arm" then
-		spPlaySoundFile(cloak1,volume,x,y,z,0,0,0,Channel)
+		spPlaySoundFile(cloak1,VOLBATTLE,x,y,z,0,0,0,'battle')
 	else
-		spPlaySoundFile(cloak2,volume,x,y,z,0,0,0,Channel)
+		spPlaySoundFile(cloak2,VOLBATTLE,x,y,z,0,0,0,'battle')
 	end
 end
 
@@ -96,9 +101,9 @@ function widget:UnitDecloaked(unitID, unitDefID, teamID)
 	local _,_,_,_,side = spGetTeamInfo(teamID)
 	
 	if side == "arm" then
-		spPlaySoundFile(decloak1,volume,x,y,z,0,0,0,Channel)
+		spPlaySoundFile(decloak1,VOLBATTLE,x,y,z,0,0,0,'battle')
 	else
-		spPlaySoundFile(decloak2,volume,x,y,z,0,0,0,Channel)
+		spPlaySoundFile(decloak2,VOLBATTLE,x,y,z,0,0,0,'battle')
 	end
 end
 
@@ -166,7 +171,7 @@ function widget:UnitDamaged (unitID, unitDefID, unitTeam, damage, paralyzer, wea
 		alarmTimes["text"][unitDefID] = now
 		
 		udef = UnitDefs[unitDefID]
-		spEcho("-> " .. udef.humanName  ..": under attack!") --print notification
+		Echo("-> " .. udef.humanName  ..": under attack!") --print notification
 		
 		-- return before sound notification condition
 		if alarmTimes["sound"][unitDefID] and (spDiffTimers(now, alarmTimes["sound"][unitDefID]) < commanderSoundInterval) then return end
@@ -177,8 +182,15 @@ function widget:UnitDamaged (unitID, unitDefID, unitTeam, damage, paralyzer, wea
 		alarmTimes["text"][unitDefID] = now
 		
 		udef = UnitDefs[unitDefID]
-		spEcho("-> " .. udef.humanName  ..": under attack!") --print notification
-
+		
+		if lastAlarmTime and (spDiffTimers(now, lastAlarmTime) < generalAlarmInterval) then
+			if not spamBlock then Echo("Units are under attack!") end --print notification
+			spamBlock	= true
+		else
+			Echo("-> " .. udef.humanName  ..": under attack!") --print notification
+			spamBlock	= false
+		end
+		
 		-- return before sound notification condition
 		if alarmTimes["sound"][unitDefID] and (spDiffTimers(now, alarmTimes["sound"][unitDefID]) < alarmInterval) then return end
 		
@@ -186,25 +198,30 @@ function widget:UnitDamaged (unitID, unitDefID, unitTeam, damage, paralyzer, wea
 		if lastCommanderAlarm and (spDiffTimers(now, lastCommanderAlarm) < commanderAlarmInterval) then return end
 	end
 	
-	alarmTimes["sound"][unitDefID] = now
-	
-	local x,y,z = spGetUnitPosition(unitID)
+	-- play alarm sound if it wasnt played recently
+	if (lastAlarmTime and (spDiffTimers(now, lastAlarmTime) > generalAlarmInterval)) or commanderTable[unitDefID] then	
+		
+		alarmTimes["sound"][unitDefID] = now
+		lastAlarmTime = now
+		local x,y,z = spGetUnitPosition(unitID)
 
-	local snd 
-	if commanderTable[unitDefID] then
-		snd = 'sounds/warning2.wav'
-	else
-		snd = 'sounds/warning1.wav'
+		local snd 
+		if commanderTable[unitDefID] then
+			snd = 'sounds/warning2.wav'
+		else
+			snd = 'sounds/warning1.wav'
+		end
+		-- ALL units have volume = 1.0 in unitdef. Some units, such as critters and DT:s have no volume, making the widget fail on nil index.
+		-- this was the previous lookup code for volume: udef.sounds.underattack[1].volume
+		-- now we read volume setting from spring config instead.
+		spPlaySoundFile(snd, VOLUI, nil, "ui") 
+
+		if (x and y and z) then spSetLastMessagePosition(x,y,z) end
 	end
-	-- ALL units have volume = 1.0 in unitdef. Some units, such as critters and DT:s have no volume, making the widget fail on nil index.
-	-- this was the previous lookup code for volume: udef.sounds.underattack[1].volume
-	spPlaySoundFile(snd, 1.0, nil, "ui") 
-
-	if (x and y and z) then spSetLastMessagePosition(x,y,z) end
 end
 
 function widget:UnitMoveFailed(unitID, unitDefID, unitTeam)
-	spEcho(UnitDefs[unitDefID].humanName .. ": Can't reach destination!")
+	Echo(UnitDefs[unitDefID].humanName .. ": Can't reach destination!")
 	local x,y,z = spGetUnitPosition(unitID)
 	if (x and y and z) then spSetLastMessagePosition(x,y,z) end
 	
