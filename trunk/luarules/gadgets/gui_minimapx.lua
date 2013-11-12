@@ -87,7 +87,7 @@ else
 		local teams = Spring.GetTeamList()
 		for _, teamID in pairs(teams) do
 			local r, g, b = Spring.GetTeamColor(teamID)
-			teamColourX[teamID] = "\255" .. schar(floor(r*255)+1) .. schar(floor(g*255)+1) .. schar(floor(b*255)+1) .. "X"
+			teamColourX[teamID] = "\255" .. schar(floor(r*255)+0.5) .. schar(floor(g*255)+0.5) .. schar(floor(b*255)+0.5) .. "X"
 		end
 	end
 
