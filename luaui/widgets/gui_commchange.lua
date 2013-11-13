@@ -90,8 +90,8 @@ Button["specinfo"] = {}
 local vsx, vsy 							= gl.GetViewSizes()
 local scale
 local px, py 							= 300, 300
-local sizex, sizey  					= 320, 180
-local mid 								= px + sizex/2
+local sizeX, sizeY  					= 320, 180
+local mid 								= px + sizeX/2
 local th 								= 16 -- text height for buttons
 local th2 								= 11 -- text height for body text
 local th3 								= 20 -- text height for player names
@@ -270,9 +270,9 @@ function widget:Initialize()
 	scale = vsy/1024
 	
 	--sizes:
-	sizex 	= sizex * scale
-	sizey 	= sizey * scale
-	mid = px + sizex/2
+	sizeX 	= sizex * scale
+	sizeY 	= sizey * scale
+	mid = px + sizeX/2
 	th = 16 * scale
 	th2 = 11 * scale
 	th3 = 20 * scale
@@ -304,8 +304,8 @@ function widget:Initialize()
 	-- update size for spectators
 	if spectator then
 		n = #(teamList)-1
-		sizex = 380
-		sizey = 50 + 20 * (n+2) -- add extra free row
+		sizeX = 380
+		sizeY = 50 + 20 * (n+2) -- add extra free row
 	end
 	
 	if Spring.IsReplay() then
@@ -320,8 +320,8 @@ function widget:Initialize()
 			end
 		end
 		
-		sizex = 380
-		sizey = 50 + 20 * (n+2) -- add extra free row
+		sizeX = 380
+		sizeY = 50 + 20 * (n+2) -- add extra free row
 	end
 	--buttons:
 	initButtons()
@@ -361,8 +361,8 @@ function widget:ViewResize(viewSizeX, viewSizeY)
 	scale = vsy/1024
 	
 	--sizes:
-	sizex 	= sizex * scale
-	sizey 	= sizey * scale
+	sizeX 	= sizex * scale
+	sizeY 	= sizey * scale
 	th = 16 * scale
 	th2 = 11 * scale
 	th3 = 20 * scale
