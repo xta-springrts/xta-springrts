@@ -66,6 +66,7 @@ else
 	local spGetProjectilePosition = Spring.GetProjectilePosition
 	local schar = string.char
 	local floor = math.floor
+	local max = math.max
 	
 	local mapX = Game.mapX * 512
 	local mapY = Game.mapY * 512
@@ -87,7 +88,7 @@ else
 		local teams = Spring.GetTeamList()
 		for _, teamID in pairs(teams) do
 			local r, g, b = Spring.GetTeamColor(teamID)
-			teamColourX[teamID] = "\255" .. schar(floor(r*255)+0.5) .. schar(floor(g*255)+0.5) .. schar(floor(b*255)+0.5) .. "X"
+			teamColourX[teamID] = "\255" .. schar(max(1, floor(r*255)+0.5)) .. schar(max(1, floor(g*255)+0.5)) .. schar(max(1, floor(b*255)+0.5)) .. "X"
 		end
 	end
 
