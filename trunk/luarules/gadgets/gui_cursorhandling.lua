@@ -73,15 +73,15 @@ local spAssignMouseCursor 	= Spring.AssignMouseCursor
 				end
 			elseif cmdParams and #cmdParams == 1 then
 				local tID = cmdParams[1]
-				local _,baseY = GetUnitPosition(tID)
-				if baseY and baseY < 0 then
+				local _,_,_,_,midY = GetUnitPosition(tID,true)
+				if midY and midY < 0 then
 					local tDef = UnitDefs[GetUnitDefID(tID) ]
 					if not tDef then return true end
 					
-					local height = GetUnitDefDimensions(tDef.id)["height"]
+					local radius = GetUnitDefDimensions(tDef.id)["radius"]
 					local speed = tDef.speed
 				
-					if height and speed and baseY and baseY + height < 0 and speed == 0 then
+					if radius and speed and midY and midY + radius < 0 and speed == 0 then
 						if not waterWeapons[unitDefID] then
 							SendToUnsynced("failsound", unitTeam, tID)
 							return false
