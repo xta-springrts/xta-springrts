@@ -32,6 +32,7 @@ local spAreTeamsAllied			= Spring.AreTeamsAllied
 local random					= math.random
 local Echo						= Spring.Echo
 ----------------------------------------------------------------------------
+local noAlertUnits				= {}
 local lastAlarmTime				= nil
 local localTeamID				= nil
 local commanderTable			= {}
@@ -78,6 +79,12 @@ function widget:Initialize()
 				commanderTable[id] = true
 			end
 		end
+		
+		if unitDef.customParams.noalert  then
+			noAlertUnits[id] = true
+		end
+		
+		
 	end
 	
 	VOLUI = 0.015*Spring.GetConfigInt('snd_volui') or 1.0 					-- snd_volui = [0,200]
@@ -158,8 +165,8 @@ function widget:UnitTaken(unitID, unitDefID, unitTeam, newTeam)
 end
 
 function widget:UnitDamaged (unitID, unitDefID, unitTeam, damage, paralyzer, weaponID, attackerID, attackerDefID, attackerTeam)
-	if (localTeamID ~= unitTeam or spIsUnitInView(unitID)) then
-		return --ignore other teams and units in view
+	if (localTeamID ~= unitTeam or spIsUnitInView(unitID) or noAlertUnits[unitDefID]) then
+		return --ignore other teams and units in view, and also units that have noalert tag
 	end
 	
 	local now = spGetTimer()
