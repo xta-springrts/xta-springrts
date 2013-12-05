@@ -257,6 +257,14 @@ local options = {
 		def    = false,
 		section= 'xtagame',
 	},
+	{
+		key		= "dynamiclights",
+		name	= "Dynamic lights",
+		desc	= "Enable dynamic lighting effects.\nkey: dynamiclights",
+		type	= "bool",
+		section	= 'xtagame',
+		def		= true,
+	},
 	
 	{
 		key		= "globalsounds",

@@ -5,36 +5,41 @@ Old issues, mostly details. From http://springrts.com/phpbb/viewtopic.php?f=48&t
 Existing:
 ---------
 
-* Lancet doesnt hit underwater targets: drops bomb when above target and not before.
+* Naval HLT can not be dgunned. Beam goes under it.
 
-* I got these errors on spring 94.1 when shooting with penetrator:
+* Seaplanes land on sea bed instead of water surface.
 
-[f=0003075] [UnitScript] Error: Invalid explosion generator index for emit-sfx (in scripts/arm_penetrator.cob:ON at 59)
-[f=0003077] [UnitScript] Error: Invalid explosion generator index for emit-sfx (in scripts/arm_penetrator.cob:ON at 55)
--Does not happen in dev build, it's also not a script error, must be related to FBI and explosiongenerator0=custom:UNITFIRE;
+explosiongenerator0=custom:UNITFIRE;
 
 
-* Units with oversized Collision Volumes: 
-- resolved
+* These units have a ModelCenterOffset tag in unitdef, but according to wiki it was removed in spring 89.0 and should be set with lua. Maybe it has already been dealt with but here is a list anyway:
 
-x 	arm_vanguard, 
-x	core_viking, 
-x	arm_fusion_reactor, 
-x	core_krogoth, 
-x	arm_advanced_radar_tower, 
-x	arm_naval_flakker, 
-x	core_naval_cobra, 
-x	arm_skeeter, 
-x	core_searcher, 
-x	arm_moho_mine, 
-x	core_moho_mine, 
-x	arm_sentry, 
-x	core_stinger, 
-x	core_underwater_metal_storage, 
-x	core_resistor, 
-x	core_pillager
-
-x = fixed
+	arm_albatross
+	arm_hawk
+	arm_metal_extractor
+	arm_ornith
+	arm_phoenix
+	arm_seahawk
+	arm_thunder
+	arm_tornado
+	core_adv_construction_aircraft
+	core_avenger
+	core_construction_aircraft
+	core_construction_seaplane
+	core_fink
+	core_hunter
+	core_hurricane
+	core_metal_extractor
+	core_rapier
+	core_shadow
+	core_titan
+	core_toaster
+	core_typhoon
+	core_valkyrie
+	core_vamp
+	core_viper
+	core_voodoo
+	core_vulture
 
 
 * Air labs keep their radar spinning no matter if they are on or off — except Arm T1 Airlab, whose radar is always in not spinning state.
@@ -46,9 +51,6 @@ x = fixed
 
 * Static turrets can not guard other units, althought they have canguard=1 in unitdef. Maybe redui bug, maybe engine bug, maybe feature?
 
-
-*Spiders are paralysed by fellow spiders EMP-overcharging. Feature or bug?
-- feature
 
 *Widgets that are known to be hungry:
 	- Healthbars (1st priority)
