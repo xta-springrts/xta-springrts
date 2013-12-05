@@ -69,6 +69,8 @@
 	canreclamate=1;
 	canstop=1;
 	canFight=1;
+	cansubmerge=0;
+	floater=1;
 	
 	//************************************************************
 	//  Movement
@@ -80,7 +82,6 @@
 	maxslope=10;
 	maxwaterdepth=255;
 	cruisealt=75;
-	cansubmerge=1;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
