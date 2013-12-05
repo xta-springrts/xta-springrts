@@ -62,6 +62,8 @@
 	canmove=1;
 	canpatrol=1;
 	canstop=1;
+	canSubmerge=0;
+	floater=1;
 
 	//************************************************************
 	//  Movement
@@ -109,7 +111,6 @@
 	designation=SB-BR4;
 	downloadable=1;
 	hoverattack=1;
-  	canSubmerge=1;
 	maneuverleashlength=1280;
 	moverate1=8;
 	shootme=1;
