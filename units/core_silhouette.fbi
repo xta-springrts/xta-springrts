@@ -61,6 +61,8 @@
 	canmove=1;
 	canpatrol=1;
 	canstop=1;
+	floater=1;
+	canSubmerge=0;
 
 	//************************************************************
 	//  Movement
@@ -127,7 +129,7 @@
 	collide=0;
 	pieceTrailCEGTag=NanoDebree;//bleh
 	pieceTrailCEGRange = 1;
-  	canSubmerge=1;
+  	
 
 	//************************************************************
 	//  To be removed

@@ -63,6 +63,8 @@
 	canmove=1;
 	canpatrol=1;
 	canstop=1;
+	canSubmerge=0;
+	floater=1;
 
 	//************************************************************
 	//  Movement
@@ -112,7 +114,6 @@
 	hoverattack=1;
 	maneuverleashlength=1280;
 	moverate1=8;
-	canSubmerge=1;
 	shootme=1;
 	steeringmode=1;
 	threed=1;
