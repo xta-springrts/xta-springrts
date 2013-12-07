@@ -177,6 +177,13 @@
 	CORE_Barracuda=99;
 }
 
+
+[group_snipertargets]
+{
+	core_the_can=99;
+	core_sumo=99;
+}
+
 [group_torpedo_launcher]
 {
 	arm_advanced_torpedo_launcher=99;

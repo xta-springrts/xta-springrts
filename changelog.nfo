@@ -21,6 +21,13 @@
     ศอออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออผ
     Logo by ElementalGizmo
 
+------------------- Change Log of XTA 9.732 Svn 568 ------------------ by Jools
+- Lua: Fixed adv. playerslist widget, buildspeed gadget. Improved unit under attack sounds widget to be less annoying.
+- Lua: Added some new widgets: specific unit reclaimer, smart area reclaim, mouse cursors, underwater blue, deferred lighting
+- Unit: fix bug with seaplanes landing under water
+- Unit: reinstate sniper's special damages versus core the Can and core Sumo, and as counterweight reduce it's hp from 1190 to 900.
+- Game: make dynamic lights a mod option
+	
 ------------------- Change Log of XTA 9.731 Svn 547 ------------------ by Kloot
 -cure for zombie virus
 
