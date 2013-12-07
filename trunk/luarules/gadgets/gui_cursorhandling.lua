@@ -19,6 +19,7 @@ local GetUnitWeaponState 		= Spring.GetUnitWeaponState
 local GetUnitWeaponTestRange	= Spring.GetUnitWeaponTestRange
 local GetUnitDefID 				= Spring.GetUnitDefID
 local GetUnitDefDimensions		= Spring.GetUnitDefDimensions
+local GetUnitRadius				= Spring.GetUnitRadius
 local GetUnitPosition			= Spring.GetUnitPosition
 local GetUnitTeam				= Spring.GetUnitTeam
 local CallAsTeam				= CallAsTeam
@@ -29,7 +30,8 @@ local CMD_ATTACKBAD 			= 35577
 local CMD_ATTACK 				= CMD.ATTACK
 local FIRSTWEAPON				= 1
 
-local waterWeapons = {}
+local waterWeapons 				= {}
+local unitDefRadius				= {}
 
 if gadgetHandler:IsSyncedCode() then	
 	-----------------
@@ -75,10 +77,16 @@ local spAssignMouseCursor 	= Spring.AssignMouseCursor
 				local tID = cmdParams[1]
 				local _,_,_,_,midY = GetUnitPosition(tID,true)
 				if midY and midY < 0 then
-					local tDef = UnitDefs[GetUnitDefID(tID) ]
+					local targetdefID = GetUnitDefID(tID)
+					local tDef = UnitDefs[targetdefID ]
 					if not tDef then return true end
 					
-					local radius = GetUnitDefDimensions(tDef.id)["radius"]
+					local radius = unitDefRadius[targetdefID]
+					
+					if not radius then
+						unitDefRadius[targetdefID] = GetUnitRadius(tID)
+						radius = unitDefRadius[targetdefID]
+					end
 					local speed = tDef.speed
 				
 					if radius and speed and midY and midY + radius < 0 and speed == 0 then
