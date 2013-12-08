@@ -127,6 +127,7 @@ local explosionsList  = {
 		'comfire1.wav',
 		'comfire2.wav',
 		'corcomgun.wav',
+		'crush3.wav',
 		'depth3.wav',
 		'disigun1.wav',
 		'exmine1.wav',

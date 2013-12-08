@@ -110,9 +110,6 @@ else
 	local PlaySoundFile				= Spring.PlaySoundFile
 	local failed					= "sounds/cantdo4.wav"
 	local myTeamID
-	local GetUnitPosition			= Spring.GetUnitPosition
-	local IsPosInLos				= Spring.IsPosInLos
-	local GetUnitAllyTeam			= Spring.GetUnitAllyTeam
 	local GetUnitDefID				= Spring.GetUnitDefID
 	
 	function gadget:Initialize()
