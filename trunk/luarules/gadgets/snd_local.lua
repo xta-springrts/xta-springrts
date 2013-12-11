@@ -256,7 +256,7 @@ else
 		end
 		
 		local waterColour = Game.waterBaseColor
-		if waterColour and waterColour[1] > waterColour[3] then -- primitive check: more red than blue means lava
+		if (waterColour and waterColour[1] > waterColour[3]) or Game.waterDamage > 0 then -- primitive check: more red than blue means lava
 			isLava = true
 		end
 			
