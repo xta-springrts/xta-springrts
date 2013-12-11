@@ -12,18 +12,40 @@
     
 if gadgetHandler:IsSyncedCode() then
 
+	-------------------
+	-- SYNCED PART --
+	-------------------
 	
 	local crushNames = {
 		arm_dragons_teeth_dead = true,
 		core_dragons_teeth_dead = true,
 	}
+	
+	local metalCloudNames = {
+		arm_metal_extractor = true,
+		arm_underwater_metal_extractor = true,
+		core_metal_extractor = true,
+		core_underwater_metal_extractor = true,
+		arm_moho_mine = true,
+		arm_underwater_moho_mine = true,
+		core_moho_mine = true,
+		core_underwater_moho_mine = true,
+	}
+	
 	local crushFeatures 					= {}
+	local metalCloudUnits					= {}
+	local cloudList							= {}
 	local crushCEG 							= "dirtballtrail"
 	local crushCEG2							= "FLAKFLARE"
 	local crushCEG3							= "Sparks"
+	local metalcloud1						= "buttsmoke"
+	local metalcloud2						= "smokeshell_small"
 	local GetFeatureHealth 					= Spring.GetFeatureHealth
 	local SpawnCEG							= Spring.SpawnCEG
 	local GetFeaturePosition				= Spring.GetFeaturePosition
+	local GetUnitPosition					= Spring.GetUnitPosition
+	local GetGameFrame						= Spring.GetGameFrame
+	local max								= math.max
 
 	function gadget:Initialize()
 		for id, featureDef in ipairs (FeatureDefs) do
@@ -31,6 +53,13 @@ if gadgetHandler:IsSyncedCode() then
 				crushFeatures[id] = true
 			end
 		end
+		
+		for id, unitDef in ipairs (UnitDefs) do
+			if metalCloudNames[unitDef.name] then
+				metalCloudUnits[id] = true
+			end
+		end
+		
 	end
 
 	function gadget:FeatureDamaged(featureID, featureDefID, _, damage , weaponDefID, projectileID , attackerID, attackerDefID)
@@ -46,7 +75,34 @@ if gadgetHandler:IsSyncedCode() then
 			end
 		end
 	end
+	
+	function gadget:UnitDestroyed(unitID, unitDefID, teamID, attackerID, attackerDefID, attackerTeamID) 
+		if metalCloudUnits[unitDefID] then
+			local x,y,z = GetUnitPosition(unitID)
+			local frame = GetGameFrame()
+			cloudList[frame] = {x,y,z}
+		end
+	end
+	
+	function gadget:GameFrame(frame)
+		if cloudList then
+			for f,cloud in pairs(cloudList) do
+				if frame-f > 55 then
+					local x,y,z = cloud[1],cloud[2],cloud[3]
+					SpawnCEG(metalcloud1,x,max(y,0),z,0,0,0,1000)
+					SpawnCEG(metalcloud2,x,max(y,0),z,0,0,0,1000)
+					cloudList[f] = nil
+				end
+			end
+		end
+	end
+
 else
+	
+	-------------------
+	-- UNSYNCED PART --
+	-------------------
+	
 	
 	local PlaySoundFile				= Spring.PlaySoundFile
 	local crushsnd					= "sounds/crush3.wav"
