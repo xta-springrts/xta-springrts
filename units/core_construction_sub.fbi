@@ -46,7 +46,7 @@
 	mobilestandorders=1;
 	standingmoveorder=1;
 	canguard=1;
-	waterline=35;
+	waterline=36; // set to equal minWaterDepth, was 35
 	steeringmode=1;
 	maneuverleashlength=640;
 	pieceTrailCEGTag=NanoDebree;//bleh
