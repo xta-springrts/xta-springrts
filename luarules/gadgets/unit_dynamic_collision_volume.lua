@@ -39,6 +39,7 @@ local spArmor = Spring.GetUnitArmored
 local spActive = Spring.GetUnitIsActive
 local pairs = pairs	
 local min = math.min
+local Echo = Spring.Echo
 
 
 if (gadgetHandler:IsSyncedCode()) then
@@ -154,6 +155,29 @@ if (gadgetHandler:IsSyncedCode()) then
 		--if UnitDefs[unitDefID].canFly and UnitDefs[unitDefID].transportCapacity>0 then
 		--	spSetUnitRadiusAndHeight(unitID, 16, 16)
 		--end
+		
+		-- adjust commander's radiuses to match their visible height
+		local ud = UnitDefs[unitDefID]
+		
+		if ud.customParams and ud.customParams.iscommander then
+			local radius = spGetUnitRadius(unitID)
+			local height = spGetUnitHeight(unitID)
+			
+			if ud.customParams.side == "arm" then			
+				spSetUnitRadiusAndHeight(unitID, radius-5, height)
+			else
+				spSetUnitRadiusAndHeight(unitID, radius-1, height)
+			end
+		end
+		
+		-- adjust units that are floating below water to have smaller radius (applies mostly to submarines but also to subpen e.g.)
+		local ud = UnitDefs[unitDefID]
+		if ud.waterline > 15 and ud.moveDef then
+			local radius = spGetUnitRadius(unitID)
+			local height = spGetUnitHeight(unitID)
+			spSetUnitRadiusAndHeight(unitID, min(radius,height*1.5), height)
+		end
+		
 	end
 
 
