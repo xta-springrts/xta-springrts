@@ -73,7 +73,7 @@
 	acceleration=0.07;
 	brakerate=0.08;
 	maxvelocity=1.525; //was 1.425//
-	minwaterdepth=1;
+	minwaterdepth=1;// not used, minWaterDepth in movedef used instead (36)
 
 	//************************************************************
 	//  Sight/Radar/Sonar

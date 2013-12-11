@@ -97,7 +97,7 @@
 	threed=1;
 	tidalgenerator=1;
 	version=1.2;
-	waterline=40;
+	waterline=60;
 	zbuffer=1;
 	pieceTrailCEGTag=Debree;//bleh
 	pieceTrailCEGRange = 4;

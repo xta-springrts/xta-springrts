@@ -54,7 +54,7 @@
 	kamikazedistance=32;
 	mincloakdistance=20;
 	MinWaterDepth=0;
-	WaterLine=1;
+	waterline=10;
 	[customParams]
 	{
 	dontCount=1;

@@ -60,9 +60,8 @@
 	canguard=1;
 	canmove=1;
 	canpatrol=1;
-	canstop=1;'
-	canSubmerge=0;
-	floater=1;
+	canstop=1;
+	canSubmerge=1;
 
 	//************************************************************
 	//  Movement

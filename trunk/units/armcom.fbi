@@ -97,6 +97,7 @@
 	[customparams] 	
 	{
 	iscommander=1;
+	side=arm;
 	}
 	
 }

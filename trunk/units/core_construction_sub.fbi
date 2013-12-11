@@ -20,7 +20,7 @@
 	acceleration=0.14;
 	brakerate=0.2;
 	maxvelocity=1.675;
-	minwaterdepth=20;
+	minwaterdepth=20;// not used, minWaterDepth in movedef used instead (36)
 	canmove=1;
 	builddistance=200;
 	builder=1;

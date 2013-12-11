@@ -41,7 +41,7 @@
 	buildpic=core_sub_pen.DDS;
 	icontype=building;
 	bmcode=0;
-	waterline=52;
+	waterline=62;
 	noautofire=0;
 	seismicsignature=0;
 	firestandorders=1;
