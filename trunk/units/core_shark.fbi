@@ -111,7 +111,7 @@
 	steeringmode=1;
 	threed=1;
 	version=1.2;
-	waterline=30;
+	waterline=36;// set to equal minWaterDepth, was 30
 	zbuffer=1;
 	collisionVolumeType = box;
 	collisionVolumeScales =35 18 49;

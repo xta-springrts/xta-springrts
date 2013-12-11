@@ -31,7 +31,7 @@
 	metalmake=0.1;
 	canstop=1;
 	floater=1;
-	waterline=35;
+	waterline=36;// set to equal minWaterDepth, was 35
 	autoheal=2;
 	sightdistance=160;
 	explodeas=NANO_UNITEX;

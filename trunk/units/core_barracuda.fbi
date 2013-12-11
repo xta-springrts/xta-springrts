@@ -45,7 +45,7 @@
 	MovementClass=BOATSUB;
 	canattack=1;
 	MinWaterDepth=20;// not used, minWaterDepth in movedef used instead (36)
-	WaterLine=30;
+	WaterLine=36;// set to equal minWaterDepth, was 30
 	kamikaze=1;
 	kamikazedistance=80;
 	SelfDestructCountdown=0;
