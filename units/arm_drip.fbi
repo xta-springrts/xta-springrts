@@ -54,7 +54,7 @@
 	init_cloaked=1;
 	mincloakdistance=24;
 	MinWaterDepth=0;
-	WaterLine=1;
+	waterline=10;
 	[customParams]
 	{
 	dontCount=1;

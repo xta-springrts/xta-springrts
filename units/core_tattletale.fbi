@@ -53,7 +53,7 @@
 	DefaultMissionType=Standby;
 	maneuverleashlength=640;
 	MovementClass=BOATSUB;
-	MinWaterDepth=20;
+	MinWaterDepth=20; // not used, minWaterDepth in movedef used instead (36)
 	WaterLine=30;
 	Downloadable=1;
 	Upright=0;

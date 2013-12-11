@@ -45,7 +45,7 @@
 	maneuverleashlength=640;
 	MovementClass=BOATSUB;
 	canattack=1;
-	MinWaterDepth=20;
+	MinWaterDepth=20;// not used, minWaterDepth in movedef used instead (36)
 	WaterLine=20;
 	kamikaze=1;
 	kamikazedistance=80;

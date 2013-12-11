@@ -26,7 +26,7 @@
 	collisionVolumeTest = 1;
 	builder=1;
 	workertime=110;
-	waterline=52;
+	waterline=62;
 	energystorage=150;
 	energyuse=0;
 	energymake=0;

@@ -53,7 +53,7 @@
 	init_cloaked=1;
 	mincloakdistance=20;
 	MinWaterDepth=0;
-	WaterLine=1;
+	waterline=10;
 	kamikazedistance=48;
 	[customParams]
 	{

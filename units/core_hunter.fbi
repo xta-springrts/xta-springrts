@@ -64,8 +64,6 @@
 	canstop=1;
 	stealth=1;
 	canfight=0;
-	canSubmerge=0;
-	floater=1;
 	
 	//************************************************************
 	//  Movement
@@ -107,6 +105,7 @@
 	bmcode=1;
 	designation=SS-UT;
 	downloadable=1;
+  	canSubmerge=1;
 	maneuverleashlength=1280;
 	moverate1=8;
 	shootme=1;

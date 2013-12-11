@@ -54,7 +54,7 @@
 	init_cloaked=1;
 	mincloakdistance=10;
 	MinWaterDepth=0;
-	WaterLine=1;
+	waterline=10;
 	pieceTrailCEGTag=Debree;//bleh
 	pieceTrailCEGRange = 4;
 	[customParams]
