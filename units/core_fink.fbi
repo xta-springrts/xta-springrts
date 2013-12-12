@@ -70,8 +70,8 @@
 	//************
 	turnrate=700;
 	acceleration=0.4;
-	brakerate=10;
-	maxvelocity=15; //11//
+	brakerate=6;
+	maxvelocity=9; //11//
 	maxslope=10;
 	maxwaterdepth=255;
 	cruisealt=200;

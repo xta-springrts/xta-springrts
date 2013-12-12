@@ -67,7 +67,7 @@
 	//  Movement
 	//************
 	turnrate=656;
-	acceleration=3.2;
+	acceleration=0.3;
 	brakerate=0.1;
 	maxvelocity=6.6;
 	maxslope=10;
