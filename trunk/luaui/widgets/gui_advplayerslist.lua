@@ -1470,9 +1470,23 @@ function SpecTip(mouseX)
 	end	
 end
 
+local function round(num, idp)
+	return string.format("%." .. (idp or 0) .. "f", num)
+end
+
 function PingCpuTip(mouseX, pingLvl, cpuLvl)
 	if mouseX >= m_cpuping.posX + widgetPosX  + 13 and mouseX <=  m_cpuping.posX + widgetPosX  + 23 then
-		tipText = "Ping: "..pingLvl.." ms"
+		if pingLvl < 1000 then
+			tipText = "Ping: "..pingLvl.." ms"
+		elseif pingLvl < 10000 then -- < 10 s
+			tipText = "Ping: "..tostring(round(pingLvl/1000,1)).." s"
+		elseif pingLvl < 60000 then -- < 1 min
+			tipText = "Ping: "..tostring(round(pingLvl/1000,0)).." s"
+		elseif pingLvl < 600000 then -- < 10 min
+			tipText = "Ping: "..tostring(round(pingLvl/60000,1)).." min"
+		else
+			tipText = "Ping: "..tostring(round(pingLvl/60000,0)).." min"
+		end
 	elseif mouseX >= m_cpuping.posX + widgetPosX  + 1 and mouseX <=  m_cpuping.posX + widgetPosX  + 11 then		
 		tipText = "Cpu Usage: "..cpuLvl.."%"
 	end
