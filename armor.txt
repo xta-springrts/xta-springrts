@@ -157,11 +157,9 @@
 [group_subs]
 {
 	arm_lurker=99;
-	arm_piranha=99;
         arm_adv_construction_sub=99;
 	core_snake=99;
 	core_leviathan=99;
-	core_shark=99;
         core_adv_construction_sub=99;
 	arm_construction_sub=99;
 	arm_valiant=99;
@@ -170,6 +168,13 @@
 	core_construction_sub=99;
 	CORE_Tattletale=99;
 }
+
+[group_subskillers]
+{
+	arm_piranha=99;
+	core_shark=99;
+}
+
 
 [group_stupidsubs]
 {
