@@ -1688,7 +1688,7 @@
 		group_subs=500;
 		group_stupidsubs=600;
 		group_ships=450;
-		group_ships=550;
+		group_large_ships=550;
 		group_torpedo_launcher=300;
 	}
 }
@@ -2401,6 +2401,7 @@
 	{
 		default=400;
 		group_subs=275;
+		group_subkillers=183;
 		group_stupidsubs=275;
 		group_ships=517;
 		group_large_ships=627;
@@ -3511,6 +3512,7 @@
 		default=333;
 		group_subs=215;
 		group_stupidsubs=215;
+		group_subkillers=183;
 		group_ships=477;
 		group_large_ships=547;
 		group_torpedo_launcher=183;

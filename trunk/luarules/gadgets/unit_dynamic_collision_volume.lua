@@ -178,6 +178,12 @@ if (gadgetHandler:IsSyncedCode()) then
 			spSetUnitRadiusAndHeight(unitID, min(radius,height*1.5), height)
 		end
 		
+		-- adjust arm adv.torpedo launcher some extra
+		if ud.name == "arm_advanced_torpedo_launcher" then
+			local radius = spGetUnitRadius(unitID)
+			local height = spGetUnitHeight(unitID)
+			spSetUnitRadiusAndHeight(unitID, radius*0.5, height)
+		end
 	end
 
 
