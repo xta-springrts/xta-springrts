@@ -1,12 +1,12 @@
 include("keysym.h.lua")
-local versionNumber = "1.31"
+local versionNumber = "1.32"
 
 function widget:GetInfo()
 	return {
 		name      = "Pause Screen - XTA",
 		desc      = "[v" .. string.format("%s", versionNumber ) .. "] Displays pause screen when game is paused.",
 		author    = "very_bad_soldier, Jools",
-		date      = "Oct, 2013",
+		date      = "Dec, 2013",
 		license   = "GNU GPL v2",
 		layer     = 0,
 		enabled   = true
