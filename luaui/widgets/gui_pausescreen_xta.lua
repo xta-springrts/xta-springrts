@@ -266,6 +266,9 @@ end
  end
  
 function widget:MousePress(x, y, button)
+	local _, _, paused = spGetGameSpeed()
+	if not paused then return false end
+	
 	if ( button == 2) and isOverWindow(x, y) then
 		Spring.StopSoundStream()
 		return true
