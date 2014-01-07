@@ -1114,7 +1114,6 @@ end
 --
 
 local gameFrame;
-local SYNCED = SYNCED
 local CallAsTeam = CallAsTeam
 local spairs = spairs
 local snext = snext
@@ -1210,7 +1209,7 @@ local function StartMorph(cmd, unitID, unitDefID, morphID)
         else readTeam = GetLocalTeamID() end
       CallAsTeam({ ['read'] = readTeam }, function()
         if (unitID)and(IsUnitVisible(unitID)) then
-          Script.LuaUI.MorphStart(unitID, (morphDefs[unitDefID] or {})[morphID] or nil) -- or SYNCED.extraUnitMorphDefs[unitID])
+          Script.LuaUI.MorphStart(unitID, (morphDefs[unitDefID] or {})[morphID] or nil)
         end
       end)
     end
@@ -1271,8 +1270,10 @@ local function ProgMph(cmd, unitID, prog)
 end
 
 
-local function MorphLuaUI(_, ml)
-  hasMorphLuaUI = (ml == "1")
+local function MorphLuaUI(_, _, data)
+  if data[2] == Spring.GetLocalPlayerID().."" then
+    hasMorphLuaUI = (data[1] == "1")
+  end
 end
 
 --------------------------------------------------------------------------------
@@ -1456,4 +1457,3 @@ end
 --------------------------------------------------------------------------------
 --  COMMON
 --------------------------------------------------------------------------------
-

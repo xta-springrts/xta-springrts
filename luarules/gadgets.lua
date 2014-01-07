@@ -85,6 +85,7 @@ gadgetHandler = {
 
 -- initialize the call-in lists
 do
+  table.insert(CALLIN_LIST, 'GotChatMsg')
   for _,listname in ipairs(CALLIN_LIST) do
     gadgetHandler[listname .. 'List'] = {}
   end

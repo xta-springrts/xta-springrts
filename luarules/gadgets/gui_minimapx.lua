@@ -100,7 +100,9 @@ else
 			glBeginText()
 			for projID, teamID in pairs(drawList) do
 				local x,y,z = spGetProjectilePosition(projID)
-				glText(teamColourX[teamID], x*ratioX, sy-z*ratioY, 10, 'cv')
+				if x then
+					glText(teamColourX[teamID], x*ratioX, sy-z*ratioY, 10, 'cv')
+				end
 			end
 			glEndText()
 		end

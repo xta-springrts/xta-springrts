@@ -251,7 +251,7 @@ end
 
 function widget:Shutdown()
   if Spring.GetGameFrame() > 0 then
-    Spring.SendCommands({"luarules morphluaui 0"})
+    Spring.SendCommands({"luarules morphluaui 0 "..Spring.GetLocalPlayerID()})
   end  
   --// catch f9
   widgetHandler:RemoveAction("showhealthbars", showhealthbars)
@@ -878,7 +878,7 @@ do
 
     gameFrame = GetGameFrame()
     if firstUpdate and gameFrame > 0 then
-      Spring.SendCommands({"luarules morphluaui 1"})
+      Spring.SendCommands({"luarules morphluaui 1 "..Spring.GetLocalPlayerID()})
       firstUpdate = false
     end    
 
