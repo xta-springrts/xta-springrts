@@ -242,6 +242,36 @@ if gadgetHandler:IsSyncedCode() then
 		end
 	end
 	
+
+
+	-- this is a horribly inefficient way to send a table, but it is only sent once
+	local function SendTableToUnsyncedHelper(name, el, key, ...)
+		if type(el) ~= "table" then
+			SendToUnsynced(name, el, key, ...)
+		elseif next(el) == nil then
+			SendToUnsynced(name, nil, nil, key, ...)
+		else
+			for k,v in pairs(el) do			
+				SendTableToUnsyncedHelper(name, v, k, key, ...)
+			end
+		end
+	end
+
+	local function SendTableToUnsynced(name, tab)
+		SendToUnsynced(name, nil, nil, nil)
+		if type(tab) ~= "table" then
+			SendToUnsynced(name, tab)
+		elseif next(tab) == nil then
+			SendToUnsynced(name, nil, nil)
+		else
+			for k,v in pairs(tab) do
+				SendTableToUnsyncedHelper(name, v, k)
+			end
+		end
+		SendToUnsynced(name, nil, nil, nil, nil)
+	end
+
+	
 	function gadget:GameOver()
 		readZoneOfControls()
 		
@@ -281,9 +311,9 @@ if gadgetHandler:IsSyncedCode() then
 			end
 		end
 		
-		_G.teamData = teamData
-		_G.heroUnits = heroUnits
-		_G.lostUnits = lostUnits
+		SendTableToUnsynced("teamData", teamData)
+		SendTableToUnsynced("heroUnits", heroUnits)
+		SendTableToUnsynced("lostUnits", lostUnits)
 		
 	end
 	
@@ -323,10 +353,10 @@ else
 	local max, min 						= math.max, math.min
 	local drawWindow					= false
 	local allyData						= {}
-	local nData							= {}
-	local teamData
-	local heroUnits
-	local lostUnits
+	local nData						= {}
+	local teamData						= nil
+	local heroUnits						= nil
+	local lostUnits						= nil
 	local bs 							= 10 	-- button space and also box size
 	local inited 						= false
 	local maxkilled						= 0
@@ -337,11 +367,56 @@ else
 	local teamTotals					= {}
 	local gaiaID						= Spring.GetGaiaTeamID()
 	
+	local function ReceiveTableFromSyncedHelper(n, tab, ...)
+		local args = {...}
+		if n == 1 then
+			tab = args[1]
+		elseif n > 1 and args[n] == nil then
+			tab = {}
+		else
+			local idx = args[n]
+			local cur = tab[idx]
+			if cur == nil then
+				cur = {}
+				tab[idx] = cur
+			end
+			tab[idx] = ReceiveTableFromSyncedHelper(n - 1, cur, ...)
+		end
+		return tab
+	end
+	
+	local function ReceiveTableFromSynced(reset, n, tab, ...)
+		local args = {...}
+		if n == 3 and args[3] == nil then
+			if reset then
+				tab = {}
+			end
+			return tab, true -- start of transfer
+		elseif n == 4 and args[4] == nil then
+			return tab, false -- end of transfer
+		else
+			if tab == nil then
+				tab = {}
+			end
+			return ReceiveTableFromSyncedHelper(n, tab, ...), nil -- in progress
+		end
+	end
+
+	function onTeamData(_, ...)
+		teamData, _ = ReceiveTableFromSynced(true, select('#', ...), teamData, ...)
+	end
+
+	function onHeroUnits(_, ...)
+		heroUnits, _ = ReceiveTableFromSynced(true, select('#', ...), heroUnits, ...)
+	end
+
+	function onLostUnits(_, ...)
+		lostUnits, _ = ReceiveTableFromSynced(true, select('#', ...), lostUnits, ...)
+	end
+	
 	local function getTotals()
 	
-		teamData = SYNCED.teamData
-	
-		for tID, data in spairs(teamData) do
+		for tID, data in pairs(teamData) do
 			teamTotals[tID] = {}
 			teamTotals[tID]["killed"] = 0
 			teamTotals[tID]["lost"] = data["lostHPmisc"]['total'] or 0
@@ -350,7 +425,7 @@ else
 				maxvalue = data["lostHPmisc"]['total']
 			end
 			
-			for _, dmg in spairs (data["killedHP"]) do
+			for _, dmg in pairs (data["killedHP"]) do
 				teamTotals[tID]["killed"] = teamTotals[tID]["killed"] + dmg
 				if teamTotals[tID]["killed"] > maxkilled then
 					maxkilled = teamTotals[tID]["killed"]
@@ -362,7 +437,7 @@ else
 				end
 			end
 			
-			for _, dmg in spairs (data["lostHP"]) do
+			for _, dmg in pairs (data["lostHP"]) do
 				teamTotals[tID]["lost"] = teamTotals[tID]["lost"] + dmg 
 				if teamTotals[tID]["lost"] > maxlost then
 					maxlost = teamTotals[tID]["lost"]
@@ -455,7 +530,7 @@ else
 		Button["lost"]["y1"]	= Panel["back"]["y1"] - 10
 		
 		if teamData then
-			for tID, _ in spairs (teamData) do
+			for tID, _ in pairs (teamData) do
 				if tID ~= gaiaID then
 					if not Button["legend"][tID] then Button["legend"][tID] = {} end
 					
@@ -498,6 +573,9 @@ else
 	function gadget:Initialize()
 	--register actions to SendToUnsynced messages
 		gadgetHandler:AddSyncAction("RecieveEndStats", RecieveEndStats)
+		gadgetHandler:AddSyncAction("teamData", onTeamData)
+		gadgetHandler:AddSyncAction("heroUnits", onHeroUnits)
+		gadgetHandler:AddSyncAction("lostUnits", onLostUnits)
 		
 		Button["exit"] 				= {}
 		Button["proceed"] 			= {}
@@ -537,8 +615,6 @@ else
 		if nData[allyNumber] and #allyData[allyNumber] >= nData[allyNumber] then
 			table.sort(allyData[allyNumber],sortBySmallest)
 		end
-		
-		teamData = SYNCED.teamData
 		
 		--don't show graph
 		Spring.SendCommands('endgraph 0')
@@ -720,8 +796,6 @@ else
 				glColor(1, 1, 1, 1)
 			elseif Button["matrix"]["On"] then
 				
-				if not teamData then teamData = SYNCED.teamData end
-				
 				-- charts
 				glColor(0.2, 0.2, 0.3, 0.6)
 				glRect(Panel["3"]["x0"],Panel["3"]["y0"],Panel["3"]["x1"], Panel["3"]["y1"])
@@ -785,7 +859,7 @@ else
 				glColor(1,1,1,1)
 				-- players legend
 				if teamData then
-					for tID, data in spairs (teamData) do
+					for tID, data in pairs (teamData) do
 						if tID ~= gaiaID then
 							local r,g,b = GetTeamColor(tID)
 							
@@ -835,14 +909,14 @@ else
 								-- player matrix
 								local w = 6 -- bar width
 								--kills
-								for eID, dmg in spairs(data.killedHP) do
+								for eID, dmg in pairs(data.killedHP) do
 									local value = dmg/maxvalue
 									local r3,g3,b3 = GetTeamColor(eID)
 									glColor(r3,g3,b3,1)
 									glRect(Panel["3"]["x0"]+(w+2)*eID+5,y00,Panel["3"]["x0"]+(w+2)*eID+w+5,y00+value*(y100-y00))
 								end
 								--losses
-								for eID, dmg in spairs(data.lostHP) do
+								for eID, dmg in pairs(data.lostHP) do
 									local value = dmg/maxvalue
 									local r4,g4,b4 = GetTeamColor(eID)
 									glColor(r4,g4,b4,1)
@@ -961,8 +1035,6 @@ else
 				end
 			elseif Button["heroes"]["On"] then
 			
-				if not heroUnits then heroUnits = SYNCED.heroUnits end
-				
 				--panel
 				glColor(0.3, 0.2, 0.2, 0.5)
 				glRect(Panel["5"]["x0"],Panel["5"]["y0"],Panel["5"]["x1"], Panel["5"]["y1"])
@@ -1011,8 +1083,6 @@ else
 				end
 		
 			elseif Button["lost"]["On"] then
-				
-				if not lostUnits then lostUnits = SYNCED.lostUnits end
 				
 				--panel
 				glColor(0.3, 0.2, 0.2, 0.5)
@@ -1164,6 +1234,11 @@ else
 	
 	function gadget:ShutDown()
 		Spring.SendCommands('endgraph 1')
+		
+		gadgetHandler:RemoveSyncAction("RecieveEndStats")
+		gadgetHandler:RemoveSyncAction("teamData")
+		gadgetHandler:RemoveSyncAction("heroUnits")
+		gadgetHandler:RemoveSyncAction("lostUnits")		
 	end
 	
 end

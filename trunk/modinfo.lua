@@ -8,5 +8,6 @@ return {
   game='Total Annihilation',
   shortGame='TA',
   modtype=1,
+  mt=1,
 }
 

@@ -104,17 +104,19 @@ end
 function widget:UnitDestroyed(unitID, unitDefID, unitTeam)
   if unitDamage[unitID] then
     local ux, uy, uz = GetUnitViewPosition(unitID)
-    table.insert(deadList,1,{})
-    local damage = math.ceil(unitDamage[unitID].damage - 0.5)
-    deadList[1].x = ux
-    deadList[1].y = (uy + unitHeight(unitDefID))
-    deadList[1].z = uz
-    deadList[1].lifeSpan = 1
-    deadList[1].fadeTime = math.max((0.03 - (damage / 333333)), 0.015) * 0.66
-    deadList[1].riseTime = (math.min((damage / 2500), 2) + 1)* 1.33
-    deadList[1].damage = damage
-    deadList[1].textSize = getTextSize(damage, false)
-    deadList[1].red = true
+    if ux then
+      table.insert(deadList,1,{})
+      local damage = math.ceil(unitDamage[unitID].damage - 0.5)
+      deadList[1].x = ux
+      deadList[1].y = (uy + unitHeight(unitDefID))
+      deadList[1].z = uz
+      deadList[1].lifeSpan = 1
+      deadList[1].fadeTime = math.max((0.03 - (damage / 333333)), 0.015) * 0.66
+      deadList[1].riseTime = (math.min((damage / 2500), 2) + 1)* 1.33
+      deadList[1].damage = damage
+      deadList[1].textSize = getTextSize(damage, false)
+      deadList[1].red = true
+    end
   end
   unitDamage[unitID] = nil
   unitParalyze[unitID] = nil
