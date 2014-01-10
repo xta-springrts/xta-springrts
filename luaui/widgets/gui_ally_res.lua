@@ -10,15 +10,38 @@
 
 function widget:GetInfo()
   return {
-    name      = "Ally Resource Bars",
+    name      = "Ally Resource Bars - XTA",
     desc      = "Shows your allies resources and allows quick resource transfer (v1.4)",
-    author    = "TheFatController & AF",
-    date      = "July 2, 2010",
+    author    = "TheFatController, AF & Jools",
+    date      = "Jan, 2014",
     license   = "MIT/x11",
     layer     = -9,
+	version   = 2.0,
     enabled   = true  --  loaded by default?
   }
 end
+
+-- The MIT License (MIT)
+
+-- Copyright (c) <year> <copyright holders>
+
+-- Permission is hereby granted, free of charge, to any person obtaining a copy
+-- of this software and associated documentation files (the "Software"), to deal
+-- in the Software without restriction, including without limitation the rights
+-- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+-- copies of the Software, and to permit persons to whom the Software is
+-- furnished to do so, subject to the following conditions:
+
+-- The above copyright notice and this permission notice shall be included in
+-- all copies or substantial portions of the Software.
+
+-- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+-- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+-- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+-- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+-- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+-- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+-- THE SOFTWARE.
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
@@ -48,16 +71,18 @@ local sF = string.format
 local displayList
 local staticList
 local viewSizeX, viewSizeY = 0,0
-local BAR_HEIGHT       = 6
+local BAR_HEIGHT       = 4
 local BAR_SPACER       = 3
-local BAR_WIDTH        = 120
-local BAR_GAP          = 7
+local BAR_WIDTH        = 60
+local BAR_GAP          = 18
+local LOGO_OFFSET	   = 6
+local RESTEXT		   = 25
 local TOTAL_BAR_HEIGHT = (BAR_SPACER + BAR_HEIGHT + BAR_HEIGHT)
 local TOP_HEIGHT       = (BAR_GAP + BAR_GAP)
 local BAR_OFFSET       = (TOP_HEIGHT + BAR_SPACER)
 local START_HEIGHT     = (TOTAL_BAR_HEIGHT + BAR_GAP + TOP_HEIGHT)
 local FULL_BAR         = (BAR_WIDTH + BAR_GAP + BAR_GAP + BAR_SPACER)
-local w                = (BAR_WIDTH + BAR_OFFSET + BAR_GAP)
+local w                = (BAR_WIDTH + BAR_OFFSET + BAR_GAP) + RESTEXT
 local h                = START_HEIGHT
 local x1               = - w
 local y1               = - h - 31
@@ -80,22 +105,50 @@ local labelText  = {}
 local sentEnergy = 0
 local sentMetal  = 0
 local myID
+local imgTex			= "LuaUI/Images/allyres/metaltex.png"
+local textsize			= 10
+local myFont	 		= gl.LoadFont("FreeSansBold.otf",textsize, 1.9, 40)
+
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
 local function getTeamNames()
-  local teamNames = {}
-  local playerList = Spring.GetPlayerList()
-  for _,playerID in ipairs(playerList) do
-    local name,_,spec,teamID = Spring.GetPlayerInfo(playerID)
-    if not spec then
-      if name and teamID then
-        teamNames[teamID] = name
-      end
-    end
-  end
-  return teamNames
+	local teamNames = {}
+	local playerList = Spring.GetPlayerList()
+	for _,playerID in ipairs(playerList) do
+		local name,_,spec,teamID = Spring.GetPlayerInfo(playerID)
+		if not spec then
+			if name and teamID then
+				teamNames[teamID] = name
+			end
+		end
+	end
+	return teamNames
+end
+
+local function firstToUpper(str)
+	if not str then return nil end
+	return (str:gsub("^%l", string.upper))
+end	
+	
+local function round(num, idp)
+	local mult = 10^(idp or 0)
+	return math.floor(num * mult + 0.5) / mult
+end
+
+local function formatRes(number)
+	local label
+	if number > 10000 then
+		label = table.concat({math.floor(round(number/1000)),"k"})
+	elseif number > 1000 then
+		label = table.concat({string.sub(round(number/1000,1),1,2+string.find(round(number/1000,1),".")),"k"})
+	elseif number > 10 then
+		label = string.sub(round(number,0),1,3+string.find(round(number,0),"."))
+	else
+		label = string.sub(round(number,1),1,2+string.find(round(number,1),"."))
+	end
+	return tostring(label)
 end
 
 function widget:Initialize()
@@ -161,18 +214,29 @@ end
 local function updateStatics()
   if (staticList) then gl.DeleteList(staticList) end
   staticList = gl.CreateList( function()
-    gl.Color(0.2, 0.2, 0.2, 0.8)
-    gl.Rect(x1, y1, x1+w,y1+h)
+    gl.Color(0, 0, 0, 0.2)
+    gl.Rect(x1, y1, x1+w,y1+h-20)
     local height = h - TOP_HEIGHT
     local teamNames = getTeamNames()
     teamIcons = {}
     for teamID in pairs(teamList) do
       if (teamID ~= myID or GetSpectatingState()) then
+		local x01 			= x1+BAR_GAP-LOGO_OFFSET
+		local y01 			= y1+height-TOTAL_BAR_HEIGHT
+		local w01 			= TOTAL_BAR_HEIGHT
+		local _,_,_,isAi,side = Spring.GetTeamInfo(teamID)
+		
+		gl.Color(0, 0, 0, 0.5)
+		gl.Rect(x01-1,y01-1,x01+w01+1,y01+w01+1)
         gl.Color(teamColors[teamID].r,teamColors[teamID].g,teamColors[teamID].b,1)
-        gl.Rect(x1+BAR_GAP,y1+height,x1+TOP_HEIGHT,y1+height-TOTAL_BAR_HEIGHT)
+		gl.Texture(imgTex)
+        gl.TexRect(x01,y01,x01+w01,y01+w01)
+		gl.Texture(false)
+		gl.Color(1, 1, 1, 1)
+		
         teamIcons[teamID] =
         {
-         name = teamNames[teamID] or "No Player",
+         name = (teamNames[teamID] or firstToUpper(side)) or "No player",
          iy1 = y1+height,
          iy2 = y1+height-TOTAL_BAR_HEIGHT,
         }
@@ -190,7 +254,7 @@ local function updateBars()
     end
     return false
   end
-  local eCur, eMax, mCur, mMax
+  local eCur, eMax, mCur, mMax, eInc,eRec,mInc,mRec
   local height = h - TOP_HEIGHT
   for teamID in pairs(teamList) do
     if (teamID ~= myID or GetSpectatingState()) then
@@ -198,20 +262,27 @@ local function updateBars()
       mCur, mMax = GetTeamResources(teamID, "metal")
       eCur = eCur + (sendEnergy[teamID] or 0)
       mCur = mCur + (sendMetal[teamID] or 0)
+	  _, _, _, eInc, _, _, _, eRec = GetTeamResources(teamID, "energy")
+      _, _, _, mInc, _, _, _, mRec = GetTeamResources(teamID, "metal")
+	  
       local xoffset = (x1+BAR_OFFSET)
       teamRes[teamID] =
       {
         ex1  = xoffset,
-        ey1  = y1+height,
+        ey1  = y1+height-BAR_HEIGHT-BAR_SPACER,--
         ex2  = xoffset+BAR_WIDTH,
         ex2b = xoffset+(BAR_WIDTH * (eCur / eMax)),
-        ey2  = y1+height-BAR_HEIGHT,
+        ey2  = y1+height-TOTAL_BAR_HEIGHT,--
         mx1  = xoffset,
-        my1  = y1+height-BAR_HEIGHT-BAR_SPACER,
+        my1  = y1+height,
         mx2  = xoffset+BAR_WIDTH,
         mx2b = xoffset+(BAR_WIDTH * (mCur / mMax)),
-        my2  = y1+height-TOTAL_BAR_HEIGHT,
+        my2  = y1+height-BAR_HEIGHT,
+		eVal = table.concat({"+", formatRes(eInc+eRec)}),
+		mVal = table.concat({"+", formatRes(mInc+mRec)}),
       }
+	  
+	  
       if (teamID == transferTeam) then
         if (transferType == "energy") then
           teamRes[teamID].eRec = true
@@ -236,16 +307,29 @@ local function updateBars()
         gl.Color(0.8, 0.8, 0, 0.3)
       end
       gl.Rect(d.ex1,d.ey1,d.ex2,d.ey2)
+	  
       gl.Color(1, 1, 0, 1)
       gl.Rect(d.ex1,d.ey1,d.ex2b,d.ey2)
+	  gl.Color(0.8, 0.8, 0, 1)
+	  gl.Rect(d.ex1,d.ey2,d.ex2b,d.ey2+1)
+	  
       if d.mRec then
         gl.Color(0.8, 0, 0, 0.8)
       else
         gl.Color(0.8, 0.8, 0.8, 0.3)
       end
-      gl.Rect(d.mx1,d.my1,d.mx2,d.my2)
-      gl.Color(1, 1, 1, 1)
-      gl.Rect(d.mx1,d.my1,d.mx2b,d.my2)
+		gl.Rect(d.mx1,d.my1,d.mx2,d.my2)
+		gl.Color(1, 1, 1, 1)
+		gl.Rect(d.mx1,d.my1,d.mx2b,d.my2)
+		gl.Color(0.8, 0.8, 0.8, 1)
+		gl.Rect(d.mx1,d.my2,d.mx2b,d.my2+1)
+		
+		myFont:Begin()
+		myFont:SetTextColor({1, 1, 0, 1})
+		myFont:Print(d.eVal,d.mx2+RESTEXT,d.my1-4-textsize,textsize,'rs')
+		myFont:SetTextColor({0.8,0.8,0.8,1})
+		myFont:Print(d.mVal,d.mx2+RESTEXT,d.my1-4,textsize,'rs')
+		myFont:End()
     end
   end)
 end
@@ -307,7 +391,7 @@ function widget:GameFrame(n)
 end
 
 function widget:Update()
-  if (gameFrame ~= lastFrame) then
+  if (gameFrame ~= lastFrame) and gameFrame%16 == 0 then
     if enabled then
 	  lastFrame = gameFrame
       updateBars()
@@ -337,10 +421,11 @@ function widget:Update()
           if (x > x1 + BAR_GAP) and (y > y1 + BAR_GAP) and (x < (x1 + FULL_BAR)) and (y < (y1 + h - TOP_HEIGHT)) then
             for teamID,defs in pairs(teamIcons) do
               if (y < defs.iy1) and (y >= defs.iy2) then
-                local _, _, _, eInc, _, _, _, eRec = GetTeamResources(teamID, "energy")
-                local _, _, _, mInc, _, _, _, mRec = GetTeamResources(teamID, "metal")
-                eRec = eRec + (trnsEnergy[teamID] or 0)
-                mRec = mRec + (trnsMetal[teamID] or 0)
+              
+				local eCur, eMax = GetTeamResources(teamID, "energy")
+				local mCur, mMax = GetTeamResources(teamID, "metal")
+               
+			   
                 labelText[1] =
                 {
                   label=defs.name,
@@ -351,7 +436,7 @@ function widget:Update()
                 }
                 labelText[2] =
                 {
-                  label="(E: +"..sF("%.1f",eInc+eRec) ..", M: +"..sF("%.2f",mInc+mRec)..")",
+                  label= table.concat({"(M: ",formatRes(mCur),", E: ", formatRes(eCur),")"}),
                   x=x1-BAR_SPACER,
                   y=defs.iy2-TOTAL_BAR_HEIGHT,
                   size=TOTAL_BAR_HEIGHT/1.25,
@@ -379,6 +464,7 @@ function widget:GameStart()
 end
 
 function widget:DrawScreen()
+  
   if enabled and (not IsGUIHidden()) then
     gl.PushMatrix()
       gl.CallList(staticList)
@@ -387,7 +473,7 @@ function widget:DrawScreen()
         gl.Color(1, 1, 1, 0.8)
         gl.Text(labelText[1].label,labelText[1].x,labelText[1].y,labelText[1].size,labelText[1].config)
         gl.Color(0.8, 0.8, 0.8, 0.8)
-        gl.Text(labelText[2].label,labelText[2].x,labelText[2].y,labelText[2].size,labelText[2].config)
+        gl.Text(labelText[2].label,labelText[2].x,labelText[2].y,labelText[2].size,labelText[2].config)		
       end
     gl.PopMatrix()
   end
