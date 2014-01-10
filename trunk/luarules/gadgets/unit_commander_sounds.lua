@@ -50,12 +50,17 @@ if (gadgetHandler:IsSyncedCode()) then
 			-- note:
 			--   in synced code, so these play for everyone (also non-positional)
 			--   return false for Sing/Taunt so they do not cancel normal orders
-			-- DO NOT CHANGE THE SOUND PROBABILITY DISTRIBUTION WITHOUT A GOOD REASON
+			--   Original cob-gadget had these probabilities, that's why they are retained.
+			--   The first sing sound is the original one, that's why it's more probable.
 			if (cmdID == CommanderSingCmdDesc.id) then
-				local snds = CommanderSounds.CommanderSongs[unitDefID]
-				local sidx = rnd(0, #snds)
-
-				spPlaySoundFile(snds[sidx], volume)
+				local idx
+				local rnd2 = rnd(0,10)
+				if rnd2 < 5 then 
+					idx = 0
+				else
+					idx = rnd(1, #CommanderSounds.CommanderSongs[unitDefID])
+				end
+				spPlaySoundFile(CommanderSounds.CommanderSongs[unitDefID][idx], volume)
 				return false
 			end
 			if (cmdID == CommanderTauntCmdDesc.id) then
@@ -66,7 +71,7 @@ if (gadgetHandler:IsSyncedCode()) then
 				return false
 			end
 		end
-
+		
 		return true
 	end
 
