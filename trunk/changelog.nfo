@@ -21,7 +21,8 @@
     ศอออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออผ
     Logo by ElementalGizmo
 
-------------------- Change Log of XTA 9.732 Svn 568 ------------------ by Jools
+------------------- Change Log of XTA 9.732 Svn 588 ------------------ by Jools
+
 - Lua: 	Fixed adv. playerslist widget, buildspeed gadget. Improved unit under attack sounds widget to be less annoying. Added new version 
 		of ally resource bars widget. New endgame statistics gadget.
 - Lua: 	Added some new widgets: specific unit reclaimer, smart area reclaim, mouse cursors, underwater blue, deferred lighting
@@ -32,9 +33,11 @@
 - Other:Bug fixes and performance imporovements as usual.
 	
 ------------------- Change Log of XTA 9.731 Svn 547 ------------------ by Kloot
+
 -cure for zombie virus
 
 ------------------- Change Log of XTA 9.73 Svn 545 ------------------ by Deadnight Warrior, Jools, Kloot and Noruas and knorke
+
 * New things:
   - Updated Xtaids, added new unitpack that functions, called spiders vs. tortoise. Both work need more balance tests. - Noruas
   - Added area guard gadget and widget combo. Works like area attack but for guard command. Enable/disable by toggling the Area 
