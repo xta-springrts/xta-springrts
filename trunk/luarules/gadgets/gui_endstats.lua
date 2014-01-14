@@ -30,7 +30,8 @@ if gadgetHandler:IsSyncedCode() then
 	local ignoreUnits = {}
 	local heroUnits = {}
 	local lostUnits = {}
-	local MINKILLS	= 25
+	local MINKILLS	= 25 -- minimum kills for awards
+	local SAMPLEFREQUENCY = 60 -- in seconds
 	
 	local GetTeamResources 		= Spring.GetTeamResources
 	local GetAllyTeamList 		= Spring.GetAllyTeamList
@@ -59,9 +60,11 @@ if gadgetHandler:IsSyncedCode() then
 			
 			if aID ~= gaiaAllyID then
 				allyData[i] = {}
+				allyData[i]["AID"] = aID
+				allyData[i]["values"] = {}
 			end
 			
-			for i,tID in ipairs(GetTeamList(aID)) do
+			for _,tID in ipairs(GetTeamList(aID)) do
 				
 				if true then --tID ~= gaiaID then
 					teamData[tID] = {}
@@ -147,8 +150,10 @@ if gadgetHandler:IsSyncedCode() then
 		end
 		
 		if chunks > 0 then
-			for i, aID in ipairs (allyData) do
-				allyData[i][#allyData[i]+1] = zoc[i]/chunks
+			for i,aID in ipairs (allyList) do
+				if allyData[i] and allyData[i]["values"] then
+					allyData[i]["values"][#allyData[i]["values"]+1] = zoc[i]/chunks
+				end
 			end
 		end
 	end
@@ -237,7 +242,7 @@ if gadgetHandler:IsSyncedCode() then
 	end
 	
 	function gadget:GameFrame(frame)
-		if frame%1800 == 0 then -- read every minute
+		if frame%(SAMPLEFREQUENCY*30) == 0 then -- read according to sample frequency
 			readZoneOfControls()
 		end
 	end
@@ -300,17 +305,7 @@ if gadgetHandler:IsSyncedCode() then
 			end
 		end
 		
-		for i, aData in ipairs (allyData) do
-			allyData[i]["n"] = #allyData[i]
-		end
-		
-		local dataID = "influence"
-		for i, aID in ipairs (allyData) do
-			for timeID, ZOC in pairs(allyData[i]) do
-				SendToUnsynced("RecieveEndStats", dataID, i, timeID, ZOC)
-			end
-		end
-		
+		SendTableToUnsynced("allyData", allyData)
 		SendTableToUnsynced("teamData", teamData)
 		SendTableToUnsynced("heroUnits", heroUnits)
 		SendTableToUnsynced("lostUnits", lostUnits)
@@ -324,7 +319,7 @@ else
 	
 	local teamList 						= Spring.GetTeamList()
 	local myTeamID 						= Spring.GetMyTeamID()
-	local GetTeamList					= Spring.GetTeamList
+	local GetTeamList 					= Spring.GetTeamList
 	local GetTeamColor					= Spring.GetTeamColor
 	local GetTeamInfo					= Spring.GetTeamInfo
 	local GetPlayerInfo  				= Spring.GetPlayerInfo
@@ -353,7 +348,7 @@ else
 	local max, min 						= math.max, math.min
 	local drawWindow					= false
 	local allyData						= {}
-	local nData						= {}
+	local nData							= {}
 	local teamData						= nil
 	local heroUnits						= nil
 	local lostUnits						= nil
@@ -366,53 +361,6 @@ else
 	local maxvalueplayer				
 	local teamTotals					= {}
 	local gaiaID						= Spring.GetGaiaTeamID()
-	
-	local function ReceiveTableFromSyncedHelper(n, tab, ...)
-		local args = {...}
-		if n == 1 then
-			tab = args[1]
-		elseif n > 1 and args[n] == nil then
-			tab = {}
-		else
-			local idx = args[n]
-			local cur = tab[idx]
-			if cur == nil then
-				cur = {}
-				tab[idx] = cur
-			end
-			tab[idx] = ReceiveTableFromSyncedHelper(n - 1, cur, ...)
-		end
-		return tab
-	end
-	
-	local function ReceiveTableFromSynced(reset, n, tab, ...)
-		local args = {...}
-		if n == 3 and args[3] == nil then
-			if reset then
-				tab = {}
-			end
-			return tab, true -- start of transfer
-		elseif n == 4 and args[4] == nil then
-			return tab, false -- end of transfer
-		else
-			if tab == nil then
-				tab = {}
-			end
-			return ReceiveTableFromSyncedHelper(n, tab, ...), nil -- in progress
-		end
-	end
-
-	function onTeamData(_, ...)
-		teamData, _ = ReceiveTableFromSynced(true, select('#', ...), teamData, ...)
-	end
-
-	function onHeroUnits(_, ...)
-		heroUnits, _ = ReceiveTableFromSynced(true, select('#', ...), heroUnits, ...)
-	end
-
-	function onLostUnits(_, ...)
-		lostUnits, _ = ReceiveTableFromSynced(true, select('#', ...), lostUnits, ...)
-	end
 	
 	local function getTotals()
 	
@@ -570,10 +518,68 @@ else
 		return v2[1] > v1[1]
 	end
 	
+	local function ReceiveTableFromSyncedHelper(n, tab, ...)
+		local args = {...}
+		if n == 1 then
+			tab = args[1]
+		elseif n > 1 and args[n] == nil then
+			tab = {}
+		else
+			local idx = args[n]
+			local cur = tab[idx]
+			if cur == nil then
+				cur = {}
+				tab[idx] = cur
+			end
+			tab[idx] = ReceiveTableFromSyncedHelper(n - 1, cur, ...)
+		end
+		return tab
+	end
+	
+	local function ReceiveTableFromSynced(reset, n, tab, ...)
+		local args = {...}
+		if n == 3 and args[3] == nil then
+			if reset then
+				tab = {}
+			end
+			return tab, true -- start of transfer
+		elseif n == 4 and args[4] == nil then
+			return tab, false -- end of transfer
+		else
+			if tab == nil then
+				tab = {}
+			end
+			return ReceiveTableFromSyncedHelper(n, tab, ...), nil -- in progress
+		end
+	end
+
+	function onTeamData(_, ...)
+		teamData, _ = ReceiveTableFromSynced(true, select('#', ...), teamData, ...)
+	end
+	
+	function onAllyData(_, ...)
+		allyData, _ = ReceiveTableFromSynced(true, select('#', ...), allyData, ...)
+		
+		--set up endgame graph
+		drawWindow = true
+		Spring.SendCommands('endgraph 0')
+		initButtons()
+		Button["influence"]["On"] = true
+		
+	end
+
+	function onHeroUnits(_, ...)
+		heroUnits, _ = ReceiveTableFromSynced(true, select('#', ...), heroUnits, ...)
+	end
+
+	function onLostUnits(_, ...)
+		lostUnits, _ = ReceiveTableFromSynced(true, select('#', ...), lostUnits, ...)
+	end
+	
 	function gadget:Initialize()
 	--register actions to SendToUnsynced messages
-		gadgetHandler:AddSyncAction("RecieveEndStats", RecieveEndStats)
 		gadgetHandler:AddSyncAction("teamData", onTeamData)
+		gadgetHandler:AddSyncAction("allyData", onAllyData)
 		gadgetHandler:AddSyncAction("heroUnits", onHeroUnits)
 		gadgetHandler:AddSyncAction("lostUnits", onLostUnits)
 		
@@ -594,34 +600,6 @@ else
 		Panel["5"] 					= {}
 		initButtons()
 	end	
-	
-	function RecieveEndStats(_, dataID, allyNumber, timeID, value)	
-		drawWindow = true
-						
-		if dataID == "influence" then
-			if timeID ~= "n" then
-				if not allyData[allyNumber] then allyData[allyNumber] = {} end
-				allyData[allyNumber][#allyData[allyNumber]+1] = {timeID,value}
-			else
-				nData[allyNumber] = value
-			end
-		end
-		
-		if nData[allyNumber] and #allyData[allyNumber] >= nData[allyNumber] then
-			for i, data in pairs(allyData[allyNumber]) do
-			end
-		end
-		
-		if nData[allyNumber] and #allyData[allyNumber] >= nData[allyNumber] then
-			table.sort(allyData[allyNumber],sortBySmallest)
-		end
-		
-		--don't show graph
-		Spring.SendCommands('endgraph 0')
-		initButtons()
-		Button["influence"]["On"] = true
-	
-	end
 	
 	function gadget:DrawScreen()
 		
@@ -714,18 +692,26 @@ else
 				glRect(Panel["1"]["x0"],Panel["1"]["y0"],Panel["1"]["x1"], Panel["1"]["y1"])
 				
 				-- legend
-				for i, _ in ipairs (allyData) do
+				for i, aData in ipairs (allyData) do
 					local y00 = Panel["1"]["y1"] - i*(bs+5)
 					local x00 = px + 15
-					local teamID1 = GetTeamList(i-1)[1]
-					local r,g,b = GetTeamColor(teamID1)
-					glColor(r, g, b, 1)
-					glRect(x00,y00,x00+bs,y00+bs)
-					glText("Team " .. tostring(i-1),x00+20,y00, 12,'b')
+					local aID = aData["AID"]
+					
+					local teamList = GetTeamList(aID)
+					if #teamList > 0 then
+						local teamID1 = teamList[1]
+						local r,g,b = GetTeamColor(teamID1)
+						glColor(r, g, b, 1)
+						glRect(x00,y00,x00+bs,y00+bs)
+						glText("Team " .. tostring(aID),x00+20,y00, 12,'b')
+					else
+						glColor(0.8, 0.8, 0.8, 0.7)
+						glText("(Empty)",x00+20,y00-2, 12,'b')
+					end
 				end
 				
 				-- axes
-				local n = #allyData[1]
+				local n = #allyData[1]["values"]
 				local y0 = Panel["1"]["y0"]
 				local y100 = Panel["1"]["y1"]
 				local y50 = Panel["1"]["y0"] + 0.50 * (Panel["1"]["y1"]-Panel["1"]["y0"])
@@ -753,45 +739,45 @@ else
 				local xspace 	= Panel["1"]["x1"]-Panel["1"]["x0"]
 				local yspace	= y100-y0
 				
-				local function DrawLine(array, i)
+				local function DrawLine(array,i)
 					local xscale
-					if nData[i] <= 1 then
+					if n <= 1 then
 						xscale = 1
 					else
-						xscale = 1/(nData[i]-1)
+						xscale = 1/(n-1)
 					end
-					
-					for _,data in ipairs (array) do
-						local x = data[1]
-						local y = data[2]
-						glVertex(x0+(x-1)*xspace*xscale, y0+y*yspace)
+					for x, y in ipairs (array) do
+						glVertex(x0+(x-1)*xspace*xscale, y0+y*yspace-(i-1))
 					end
 				end
 				
-				local function DrawLineShadow(array, i)
+				local function DrawLineShadow(array,i)
 					local xscale
-					if nData[i] <= 1 then
+					if n <= 1 then
 						xscale = 1
 					else
-						xscale = 1/(nData[i]-1)
+						xscale = 1/(n-1)
 					end
 					
-					for _,data in ipairs (array) do
-						local x = data[1]
-						local y = data[2]
-						glVertex(x0+(x-1)*xspace*xscale, y0+y*yspace-1)
+					for x, y in ipairs (array) do
+						glVertex(x0+(x-1)*xspace*xscale, y0+y*yspace-1-(i-1))
 					end
 				end
 				glLineStipple(false)
-				for i, _ in ipairs (allyData) do
-					local teamID1 = GetTeamList(i-1)[1]
-					r,g,b = GetTeamColor(teamID1)
-					glColor(r, g, b, 1)
-					glLineWidth (2.0)
-					gl.BeginEnd(GL.LINE_STRIP, DrawLine,allyData[i],i)
-					glColor(r*0.75, g*0.75, b*0.75,1)					
-					glLineWidth (1.0)
-					gl.BeginEnd(GL.LINE_STRIP, DrawLineShadow,allyData[i],i)
+				for i, aData in ipairs (allyData) do
+					local aID = aData["AID"]
+					local teamList = GetTeamList(aID)
+					if #teamList > 0 then
+						local teamID1 = teamList[1]
+						
+						r,g,b = GetTeamColor(teamID1)
+						glColor(r, g, b, 0.85) -- set a bit transparency to allow overlapping values
+						glLineWidth (2.0)
+						gl.BeginEnd(GL.LINE_STRIP, DrawLine,aData["values"],i)
+						glColor(r*0.75, g*0.75, b*0.75,0.85) -- set a bit transparency to allow overlapping values
+						glLineWidth (1.0)
+						gl.BeginEnd(GL.LINE_STRIP, DrawLineShadow,aData["values"],i)
+					end
 				end
 				glColor(1, 1, 1, 1)
 			elseif Button["matrix"]["On"] then
