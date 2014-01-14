@@ -3,9 +3,9 @@ function widget:GetInfo()
 	return {
 		name      = 'Commander Change',
 		desc      = 'Adds buttons to choose commander',
-		version   = "1.3",
+		version   = "1.31",
 		author    = 'Niobium, Jools',
-		date      = 'Sep, 2013',
+		date      = 'Jan, 2014',
 		license   = 'GNU GPL v2',
 		layer     = -9,
 		enabled   = true,
@@ -90,8 +90,9 @@ Button["specinfo"] = {}
 local vsx, vsy 							= gl.GetViewSizes()
 local scale
 local px, py 							= 300, 300
-local sizeX, sizeY  					= 320, 180
-local mid 								= px + sizeX/2
+local SIZEX, SIZEY  					= 320, 180 -- initial value before scaling
+local mid 								= px + SIZEX/2
+local sizex, sizey						-- values used after rescaling
 local th 								= 16 -- text height for buttons
 local th2 								= 11 -- text height for body text
 local th3 								= 20 -- text height for player names
@@ -270,9 +271,9 @@ function widget:Initialize()
 	scale = vsy/1024
 	
 	--sizes:
-	sizeX 	= sizex * scale
-	sizeY 	= sizey * scale
-	mid = px + sizeX/2
+	sizex = SIZEX * scale
+	sizey = SIZEY * scale
+	mid = px + sizex/2
 	th = 16 * scale
 	th2 = 11 * scale
 	th3 = 20 * scale
@@ -304,8 +305,8 @@ function widget:Initialize()
 	-- update size for spectators
 	if spectator then
 		n = #(teamList)-1
-		sizeX = 380
-		sizeY = 50 + 20 * (n+2) -- add extra free row
+		sizex = 380
+		sizey = 50 + 20 * (n+2) -- add extra free row
 	end
 	
 	if Spring.IsReplay() then
@@ -320,8 +321,8 @@ function widget:Initialize()
 			end
 		end
 		
-		sizeX = 380
-		sizeY = 50 + 20 * (n+2) -- add extra free row
+		sizex = 380
+		sizey = 50 + 20 * (n+2) -- add extra free row
 	end
 	--buttons:
 	initButtons()
@@ -361,8 +362,8 @@ function widget:ViewResize(viewSizeX, viewSizeY)
 	scale = vsy/1024
 	
 	--sizes:
-	sizeX 	= sizex * scale
-	sizeY 	= sizey * scale
+	sizex = SIZEX * scale
+	sizey = SIZEY * scale
 	th = 16 * scale
 	th2 = 11 * scale
 	th3 = 20 * scale
