@@ -21,6 +21,11 @@
     ศอออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออผ
     Logo by ElementalGizmo
 
+------------------- Change Log of XTA 9.733 Svn 592 ------------------ by Jools
+- Fixed many issues with ally resource bars widget
+- Fixed bug in commander change widget
+- Fixed crash in endgame stats widget when team numbers have gaps
+	
 ------------------- Change Log of XTA 9.732 Svn 588 ------------------ by Jools
 
 - Lua: 	Fixed adv. playerslist widget, buildspeed gadget. Improved unit under attack sounds widget to be less annoying. Added new version 
