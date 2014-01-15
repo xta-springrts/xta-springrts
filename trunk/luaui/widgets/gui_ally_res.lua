@@ -84,8 +84,8 @@ local START_HEIGHT     = (TOTAL_BAR_HEIGHT + BAR_GAP + TOP_HEIGHT)
 local FULL_BAR         = (BAR_WIDTH + BAR_GAP + BAR_GAP + BAR_SPACER)
 local w                = (BAR_WIDTH + BAR_OFFSET + BAR_GAP) + RESTEXT
 local h                = START_HEIGHT
-local x1               = - w
-local y1               = - h - 31
+local x1               = 600
+local y1               = 400
 local mx, my
 local sentSomething = false
 local enabled       = false
@@ -198,129 +198,138 @@ local function setUpTeam()
 end
 
 local function updateStatics()
-  if (staticList) then gl.DeleteList(staticList) end
+
+	if (staticList) then gl.DeleteList(staticList) end
   
-  staticList = gl.CreateList( function()
-    gl.Color(0, 0, 0, 0.2)
-    gl.Rect(x1, y1, x1+w,y1+h-20)
-    local height = h - TOP_HEIGHT
-    local teamNames = getTeamNames()
-    teamIcons = {}
-    for teamID in pairs(teamList) do
-      if (teamID ~= myID) then
-		local x01 			= x1+BAR_GAP-LOGO_OFFSET
-		local y01 			= y1+height-TOTAL_BAR_HEIGHT
-		local w01 			= TOTAL_BAR_HEIGHT
-		local _,_,_,_,side = Spring.GetTeamInfo(teamID)
-		
-		gl.Color(0, 0, 0, 0.5)
-		gl.Rect(x01-1,y01-1,x01+w01+1,y01+w01+1)
-        gl.Color(teamColors[teamID].r,teamColors[teamID].g,teamColors[teamID].b,1)
-		gl.Texture(imgTex)
-        gl.TexRect(x01,y01,x01+w01,y01+w01)
-		gl.Texture(false)
-		gl.Color(1, 1, 1, 1)
-		
-        teamIcons[teamID] =
-        {
-         name = (teamNames[teamID] or firstToUpper(side)) or "No player",
-         iy1 = y1+height,
-         iy2 = y1+height-TOTAL_BAR_HEIGHT,
-        }
-        height = (height - TOTAL_BAR_HEIGHT - BAR_GAP)
-      end
-    end
-  end)
+	local function staticFunction()
+		gl.Color(0, 0, 0, 0.2)
+		gl.Rect(x1, y1, x1+w,y1+h-20)
+		local height = h - TOP_HEIGHT
+		local teamNames = getTeamNames()
+		teamIcons = {}
+		for teamID in pairs(teamList) do
+			if (teamID ~= myID) then
+				local x01 			= x1+BAR_GAP-LOGO_OFFSET
+				local y01 			= y1+height-TOTAL_BAR_HEIGHT
+				local w01 			= TOTAL_BAR_HEIGHT
+				local _,_,_,_,side = Spring.GetTeamInfo(teamID)
+
+				gl.Color(0, 0, 0, 0.5)
+				gl.Rect(x01-1,y01-1,x01+w01+1,y01+w01+1)
+				gl.Color(teamColors[teamID].r,teamColors[teamID].g,teamColors[teamID].b,1)
+				gl.Texture(imgTex)
+				gl.TexRect(x01,y01,x01+w01,y01+w01)
+				gl.Texture(false)
+				gl.Color(1, 1, 1, 1)
+
+				teamIcons[teamID] =
+					{
+					name = (teamNames[teamID] or firstToUpper(side)) or "No player",
+					iy1 = y1+height,
+					iy2 = y1+height-TOTAL_BAR_HEIGHT,
+					}
+				height = (height - TOTAL_BAR_HEIGHT - BAR_GAP)
+			end
+		end
+	end
+ 
+	staticList = gl.CreateList( staticFunction )
+
 end
 
 local function updateBars()
-  if (myID ~= GetMyTeamID()) then
-    if setUpTeam() then
-      updateStatics()
-      updateBars()
-    end
-    return false
-  end
+	if (myID ~= GetMyTeamID()) then
+		if setUpTeam() then
+			updateStatics()
+			updateBars()
+		end
+		return false
+	end
   
-  local eCur, eMax, mCur, mMax, eInc,eRec,mInc,mRec
-  local height = h - TOP_HEIGHT
-  for teamID in pairs(teamList) do
-    if (teamID ~= myID) then
-      eCur, eMax = GetTeamResources(teamID, "energy")
-      mCur, mMax = GetTeamResources(teamID, "metal")
-      eCur = eCur + (sendEnergy[teamID] or 0)
-      mCur = mCur + (sendMetal[teamID] or 0)
-	  _, _, _, eInc, _, _, _, eRec = GetTeamResources(teamID, "energy")
-      _, _, _, mInc, _, _, _, mRec = GetTeamResources(teamID, "metal")
-	  
-      local xoffset = (x1+BAR_OFFSET)
-      teamRes[teamID] =
-      {
-        ex1  = xoffset,
-        ey1  = y1+height-BAR_HEIGHT-BAR_SPACER,--
-        ex2  = xoffset+BAR_WIDTH,
-        ex2b = xoffset+(BAR_WIDTH * (eCur / eMax)),
-        ey2  = y1+height-TOTAL_BAR_HEIGHT,--
-        mx1  = xoffset,
-        my1  = y1+height,
-        mx2  = xoffset+BAR_WIDTH,
-        mx2b = xoffset+(BAR_WIDTH * (mCur / mMax)),
-        my2  = y1+height-BAR_HEIGHT,
-		eVal = table.concat({"+", formatRes(eInc+eRec)}),
-		mVal = table.concat({"+", formatRes(mInc+mRec)}),
-      }
-	  
-	  
-      if (teamID == transferTeam) then
-        if (transferType == "energy") then
-          teamRes[teamID].eRec = true
-        else
-          teamRes[teamID].mRec = true
-        end
-      end
-      height = (height - TOTAL_BAR_HEIGHT - BAR_GAP)
-    end
-  end
+	local eCur, eMax, mCur, mMax, eInc,eRec,mInc,mRec
+	local height = h - TOP_HEIGHT
   
-  if (height ~= 0) then
-    h = (h - height)
-    updateStatics()
-  end
+	for teamID in pairs(teamList) do
+		if (teamID ~= myID) then
+			eCur, eMax = GetTeamResources(teamID, "energy")
+			mCur, mMax = GetTeamResources(teamID, "metal")
+			eCur = eCur + (sendEnergy[teamID] or 0)
+			mCur = mCur + (sendMetal[teamID] or 0)
+			_, _, _, eInc, _, _, _, eRec = GetTeamResources(teamID, "energy")
+			_, _, _, mInc, _, _, _, mRec = GetTeamResources(teamID, "metal")
+	  
+			local xoffset = (x1+BAR_OFFSET)
+			teamRes[teamID] =
+			{
+				ex1  = xoffset,
+				ey1  = y1+height-BAR_HEIGHT-BAR_SPACER,--
+				ex2  = xoffset+BAR_WIDTH,
+				ex2b = xoffset+(BAR_WIDTH * (eCur / eMax)),
+				ey2  = y1+height-TOTAL_BAR_HEIGHT,--
+				mx1  = xoffset,
+				my1  = y1+height,
+				mx2  = xoffset+BAR_WIDTH,
+				mx2b = xoffset+(BAR_WIDTH * (mCur / mMax)),
+				my2  = y1+height-BAR_HEIGHT,
+				eVal = table.concat({"+", formatRes(eInc+eRec)}),
+				mVal = table.concat({"+", formatRes(mInc+mRec)}),
+			}
+	  
+	  
+			if (teamID == transferTeam) then
+				if (transferType == "energy") then
+					teamRes[teamID].eRec = true
+				else
+					teamRes[teamID].mRec = true
+				end
+			end
+			height = (height - TOTAL_BAR_HEIGHT - BAR_GAP)
+		end
+	end
+
+	if (height ~= 0) then
+		h = (h - height)
+		updateStatics()
+	end
   
-  if (displayList) then gl.DeleteList(displayList) end
-  displayList = gl.CreateList( function()
-    for _,d in pairs(teamRes) do
-      if d.eRec then
-        gl.Color(0.8, 0, 0, 0.8)
-      else
-        gl.Color(0.8, 0.8, 0, 0.3)
-      end
-      gl.Rect(d.ex1,d.ey1,d.ex2,d.ey2)
-	  
-      gl.Color(1, 1, 0, 1)
-      gl.Rect(d.ex1,d.ey1,d.ex2b,d.ey2)
-	  gl.Color(0.8, 0.8, 0, 1)
-	  gl.Rect(d.ex1,d.ey2,d.ex2b,d.ey2+1)
-	  
-      if d.mRec then
-        gl.Color(0.8, 0, 0, 0.8)
-      else
-        gl.Color(0.8, 0.8, 0.8, 0.3)
-      end
-		gl.Rect(d.mx1,d.my1,d.mx2,d.my2)
-		gl.Color(1, 1, 1, 1)
-		gl.Rect(d.mx1,d.my1,d.mx2b,d.my2)
-		gl.Color(0.8, 0.8, 0.8, 1)
-		gl.Rect(d.mx1,d.my2,d.mx2b,d.my2+1)
-		
-		myFont:Begin()
-		myFont:SetTextColor({1, 1, 0, 1})
-		myFont:Print(d.eVal,d.mx2+RESTEXT,d.my1-4-textsize,textsize,'rs')
-		myFont:SetTextColor({0.8,0.8,0.8,1})
-		myFont:Print(d.mVal,d.mx2+RESTEXT,d.my1-4,textsize,'rs')
-		myFont:End()
-    end
-  end)
+	if (displayList) then gl.DeleteList(displayList) end
+  
+	local function displayFunction ()
+		for _,d in pairs(teamRes) do
+			if d.eRec then
+				gl.Color(0.8, 0, 0, 0.8)
+			else
+				gl.Color(0.8, 0.8, 0, 0.3)
+			end
+			gl.Rect(d.ex1,d.ey1,d.ex2,d.ey2)
+
+			gl.Color(1, 1, 0, 1)
+			gl.Rect(d.ex1,d.ey1,d.ex2b,d.ey2)
+			gl.Color(0.8, 0.8, 0, 1)
+			gl.Rect(d.ex1,d.ey2,d.ex2b,d.ey2+1)
+
+			if d.mRec then
+				gl.Color(0.8, 0, 0, 0.8)
+			else
+				gl.Color(0.8, 0.8, 0.8, 0.3)
+			end
+			gl.Rect(d.mx1,d.my1,d.mx2,d.my2)
+			gl.Color(1, 1, 1, 1)
+			gl.Rect(d.mx1,d.my1,d.mx2b,d.my2)
+			gl.Color(0.8, 0.8, 0.8, 1)
+			gl.Rect(d.mx1,d.my2,d.mx2b,d.my2+1)
+
+			myFont:Begin()
+			myFont:SetTextColor({1, 1, 0, 1})
+			myFont:Print(d.eVal,d.mx2+RESTEXT,d.my1-4-textsize,textsize,'rs')
+			myFont:SetTextColor({0.8,0.8,0.8,1})
+			myFont:Print(d.mVal,d.mx2+RESTEXT,d.my1-4,textsize,'rs')
+			myFont:End()
+		end
+	end
+  
+	displayList = gl.CreateList(displayFunction)
+	
 end
 
 local function transferResources(n)
