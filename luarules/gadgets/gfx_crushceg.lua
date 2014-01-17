@@ -46,6 +46,7 @@ if gadgetHandler:IsSyncedCode() then
 	local GetUnitPosition					= Spring.GetUnitPosition
 	local GetGameFrame						= Spring.GetGameFrame
 	local max								= math.max
+	local CRUSHID							= -7 -- this may change, before spring 96 this was -6
 
 	function gadget:Initialize()
 		for id, featureDef in ipairs (FeatureDefs) do
@@ -63,8 +64,8 @@ if gadgetHandler:IsSyncedCode() then
 	end
 
 	function gadget:FeatureDamaged(featureID, featureDefID, _, damage , weaponDefID, projectileID , attackerID, attackerDefID)
-
-		if weaponDefID == -6 and crushFeatures[featureDefID] then
+		
+		if weaponDefID == CRUSHID and crushFeatures[featureDefID] then
 			local health,hp = GetFeatureHealth(featureID)
 			if health < 0 then
 				local x,y,z = GetFeaturePosition(featureID)
