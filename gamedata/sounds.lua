@@ -236,6 +236,8 @@ local guiList = {
 		'beep6.wav',
 		'bell.ogg',
 		'button11.wav',
+		'button6.wav',
+		'button8.wav',
 		'button9.wav',
 		'cancel2.wav',
 		'corcom1.wav',

@@ -250,6 +250,7 @@ end
  function widget:Initialize()
 	myFont = glLoadFont( fontPath, fontSizeHeadline )
 	updateWindowCoords()
+	
 end
 
 function widget:Shutdown()
@@ -263,6 +264,7 @@ end
 	elseif command == 'musicon' or command == 'enablemusic'then
 		disableMusic = false
 	end
+	WG.disablePauseMusic = disableMusic
  end
  
 function widget:MousePress(x, y, button)
@@ -390,4 +392,5 @@ end
 
 function widget:SetConfigData(data) -- Load
 	disableMusic = data.disablemusic or false
+	WG.disablePauseMusic = disableMusic
 end
