@@ -1038,7 +1038,7 @@ else
 					glRect(Panel["5"]["x0"]+20,Panel["5"]["y1"]-94,Panel["5"]["x1"]-50,Panel["5"]["y1"]-95)
 					
 					glColor(0.8, 0.8, 1.0, 1)
-					for i, unitdata in sipairs (heroUnits) do
+					for i, unitdata in ipairs (heroUnits) do
 						local name = unitdata[1]
 						local kills = unitdata[2]
 						local birth = unitdata[3]
@@ -1088,7 +1088,7 @@ else
 					glRect(Panel["5"]["x0"]+20,Panel["5"]["y1"]-94,Panel["5"]["x1"]-50,Panel["5"]["y1"]-95)
 					
 					glColor(0.8, 0.8, 1.0, 1)
-					for i, unitdata in sipairs (lostUnits) do
+					for i, unitdata in ipairs (lostUnits) do
 						local name = unitdata[1]
 						local kills = unitdata[2]
 						local birth = unitdata[3]
