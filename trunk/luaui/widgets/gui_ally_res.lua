@@ -77,6 +77,7 @@ local BAR_WIDTH        = 60
 local BAR_GAP          = 18
 local LOGO_OFFSET	   = 6
 local RESTEXT		   = 30
+local HEIGHTADJUST	   = 20
 local TOTAL_BAR_HEIGHT = (BAR_SPACER + BAR_HEIGHT + BAR_HEIGHT)
 local TOP_HEIGHT       = (BAR_GAP + BAR_GAP)
 local BAR_OFFSET       = (TOP_HEIGHT + BAR_SPACER)
@@ -86,6 +87,7 @@ local w                = (BAR_WIDTH + BAR_OFFSET + BAR_GAP) + RESTEXT
 local h                = START_HEIGHT
 local x1               = 600
 local y1               = 400
+local topy			   = y1 + h - HEIGHTADJUST
 local mx, my
 local sentSomething = false
 local enabled       = false
@@ -197,20 +199,55 @@ local function setUpTeam()
 	end
 end
 
-local function updateStatics()
+local function transferResources(n)
+  local sCur, sMax = GetTeamResources(transferTeam, transferType)
+  local lCur, _, _, lInc, _, _, _, lRec = GetTeamResources(myID, transferType)
+  if (transferType == "metal") then
+    lCur = (lCur - sentMetal)
+    sCur = sCur + (sendMetal[transferTeam] or 0)
+  else
+    lCur = (lCur - sentEnergy)
+    sCur = sCur + (sendEnergy[transferTeam] or 0)
+  end
+  local send = mathMin(mathMin((sMax-sCur),((lInc+lRec)*0.2)),lCur)
+  if (send > 0) then
+    if (transferType == "energy") then
+      if sendEnergy[transferTeam] then
+        sendEnergy[transferTeam] = (sendEnergy[transferTeam] + send)
+      else
+        sendEnergy[transferTeam] = send
+        sentSomething = true
+      end
+      sentEnergy = (sentEnergy + send)
+      trnsEnergy[transferTeam] = (send * 30)
+    else
+      if sendMetal[transferTeam] then
+        sendMetal[transferTeam] = (sendMetal[transferTeam] + send)
+      else
+        sendMetal[transferTeam] = send
+        sentSomething = true
+      end
+      sentMetal = (sentMetal + send)
+      trnsMetal[transferTeam] = (send * 30)
+    end
+  end
+end
 
+local function updateStatics()
+	
 	if (staticList) then gl.DeleteList(staticList) end
-  
+	local y1 = topy - h
+	
 	local function staticFunction()
 		gl.Color(0, 0, 0, 0.2)
-		gl.Rect(x1, y1, x1+w,y1+h-20)
+		gl.Rect(x1, y1, x1+w,topy-HEIGHTADJUST)
 		local height = h - TOP_HEIGHT
 		local teamNames = getTeamNames()
 		teamIcons = {}
 		for teamID in pairs(teamList) do
 			if (teamID ~= myID) then
 				local x01 			= x1+BAR_GAP-LOGO_OFFSET
-				local y01 			= y1+height-TOTAL_BAR_HEIGHT
+				local y01 			= topy-TOTAL_BAR_HEIGHT - height - BAR_HEIGHT
 				local w01 			= TOTAL_BAR_HEIGHT
 				local _,_,_,_,side = Spring.GetTeamInfo(teamID)
 
@@ -225,8 +262,8 @@ local function updateStatics()
 				teamIcons[teamID] =
 					{
 					name = (teamNames[teamID] or firstToUpper(side)) or "No player",
-					iy1 = y1+height,
-					iy2 = y1+height-TOTAL_BAR_HEIGHT,
+					iy1 = topy- height - BAR_HEIGHT,
+					iy2 = topy-TOTAL_BAR_HEIGHT - height - BAR_HEIGHT,
 					}
 				height = (height - TOTAL_BAR_HEIGHT - BAR_GAP)
 			end
@@ -234,10 +271,13 @@ local function updateStatics()
 	end
  
 	staticList = gl.CreateList( staticFunction )
-
+	
 end
 
 local function updateBars()
+
+	local y1 = topy - h
+	
 	if (myID ~= GetMyTeamID()) then
 		if setUpTeam() then
 			updateStatics()
@@ -288,8 +328,10 @@ local function updateBars()
 	end
 
 	if (height ~= 0) then
+		
 		h = (h - height)
 		updateStatics()
+		checkScreen()
 	end
   
 	if (displayList) then gl.DeleteList(displayList) end
@@ -332,38 +374,15 @@ local function updateBars()
 	
 end
 
-local function transferResources(n)
-  local sCur, sMax = GetTeamResources(transferTeam, transferType)
-  local lCur, _, _, lInc, _, _, _, lRec = GetTeamResources(myID, transferType)
-  if (transferType == "metal") then
-    lCur = (lCur - sentMetal)
-    sCur = sCur + (sendMetal[transferTeam] or 0)
-  else
-    lCur = (lCur - sentEnergy)
-    sCur = sCur + (sendEnergy[transferTeam] or 0)
-  end
-  local send = mathMin(mathMin((sMax-sCur),((lInc+lRec)*0.2)),lCur)
-  if (send > 0) then
-    if (transferType == "energy") then
-      if sendEnergy[transferTeam] then
-        sendEnergy[transferTeam] = (sendEnergy[transferTeam] + send)
-      else
-        sendEnergy[transferTeam] = send
-        sentSomething = true
-      end
-      sentEnergy = (sentEnergy + send)
-      trnsEnergy[transferTeam] = (send * 30)
-    else
-      if sendMetal[transferTeam] then
-        sendMetal[transferTeam] = (sendMetal[transferTeam] + send)
-      else
-        sendMetal[transferTeam] = send
-        sentSomething = true
-      end
-      sentMetal = (sentMetal + send)
-      trnsMetal[transferTeam] = (send * 30)
-    end
-  end
+function checkScreen()
+		
+	topy = math.min(viewSizeY+HEIGHTADJUST,topy)
+	topy = math.max(0,topy)
+	x1 = math.min(viewSizeX-w,x1)
+	x1 = math.max(0,x1)
+	
+	updateBars()
+	updateStatics()
 end
 
 function widget:Initialize()
@@ -379,7 +398,8 @@ function widget:Initialize()
 		setUpTeam()
 		updateStatics()
 		updateBars()
-		updateBars() -- must be run twice because schmucks
+		updateBars() -- must be run twice because of schmucks
+		checkScreen()
 	end
 end
 
@@ -392,6 +412,7 @@ function widget:TeamDied(teamID)
   if setUpTeam() then
     updateStatics()
     updateBars()
+	checkScreen()
   end
 end
 
@@ -399,6 +420,7 @@ function widget:PlayerAdded()
 	if setUpTeam() then
 		updateStatics()
 		updateBars()
+		checkScreen()
 	end
  end
 
@@ -406,6 +428,7 @@ function widget:PlayerRemoved()
 	if setUpTeam() then
 		updateStatics()
 		updateBars()
+		checkScreen()
 	end
  end
  
@@ -413,6 +436,7 @@ function widget:PlayerRemoved()
 	if setUpTeam() then
 		updateStatics()
 		updateBars()
+		checkScreen()
 	end
  end
  
@@ -431,13 +455,24 @@ function widget:GameFrame(n)
 end
 
 function widget:Update()
-	
+	local speed,_,paused = Spring.GetGameSpeed()
+	local updateFreq
 	if GetMyTeamID() ~= myID then
 		updateBars()	-- must be run twice because schmucks
 		updateBars()
 	end
-			
-	if (gameFrame ~= lastFrame) and gameFrame%16 == 0 then
+	if speed < 0.5 then
+		updateFreq = 4
+	elseif speed < 1.0 then
+		updateFreq = 8
+	elseif speed < 2.0 then
+		updateFreq = 16
+	elseif speed < 4.0 then
+		updateFreq = 32
+	else
+		updateFreq = 128
+	end
+	if (gameFrame ~= lastFrame and gameFrame%updateFreq == 0) or paused then
 
 		if enabled then
 			lastFrame = gameFrame
@@ -467,11 +502,16 @@ function widget:Update()
 			
 		if TOOL_TIPS then
 			local x, y = GetMouseState()
+			
 			if (mx ~= x) or (my ~= y) or transferring or ((gameFrame % 15) == 0) then
 				mx = x
 				my = y
-				if (x > x1 + BAR_GAP) and (y > y1 + BAR_GAP) and (x < (x1 + FULL_BAR)) and (y < (y1 + h - TOP_HEIGHT)) then
+				local y1 = topy - h
+				
+				if (x > x1) and (y > y1 + BAR_GAP) and (x < (x1 + FULL_BAR)) and (y < (y1 + h - TOP_HEIGHT)) then
+					
 					for teamID,defs in pairs(teamIcons) do
+						
 						if (y < defs.iy1) and (y >= defs.iy2) then
 							local eCur, eMax = GetTeamResources(teamID, "energy")
 							local mCur, mMax = GetTeamResources(teamID, "metal")
@@ -505,7 +545,7 @@ function widget:Update()
 							return
 						end
 					end
-					
+					updateStatics()
 					if (labelText) then labelText = {} end
 				elseif (labelText) then labelText = {} end
 			end
@@ -546,9 +586,10 @@ function widget:MouseMove(x, y, dx, dy, button)
   if (enabled) then
     if moving then
       x1 = x1 + dx
-      y1 = y1 + dy
+      topy= topy + dy
       updateBars()
       updateStatics()
+	  checkScreen()
     elseif transferring then
       transferTeam = nil
       if (x > (x1+BAR_OFFSET)) and (x < (x1+BAR_OFFSET+BAR_WIDTH)) then
@@ -573,6 +614,7 @@ function widget:MouseMove(x, y, dx, dy, button)
 end
 
 function widget:MousePress(x, y, button)
+	local y1 = topy - h
   if (enabled) and ((x > x1) and (y > y1) and (x < (x1 + w)) and (y < (y1 + h))) then
     if y > (y1 + h - TOP_HEIGHT) then
       capture = true
@@ -585,6 +627,7 @@ function widget:MousePress(x, y, button)
           if (y < defs.ey1) and (y >= defs.ey2) then
           local tid = teamID
          Spring.SendCommands('specteam '..tid)
+		 checkScreen()
             --transferTeam = teamID
             --transferType = "energy"
             --transferring = true
@@ -592,6 +635,7 @@ function widget:MousePress(x, y, button)
           elseif (y < defs.my1) and (y >= defs.my2) then
             local tid = teamID
          Spring.SendCommands('specteam '..tid)
+		 checkScreen()
          --transferTeam = teamID
             --transferType = "metal"
             --transferring = true
@@ -632,6 +676,7 @@ function widget:ViewResize(vsx, vsy)
   viewSizeX, viewSizeY = vsx, vsy
   updateBars()
   updateStatics()
+  checkScreen()
 end
 
 function widget:GetConfigData(data)      -- save
@@ -640,7 +685,7 @@ function widget:GetConfigData(data)      -- save
 			vsx                	= vsx,
 			vsy                	= vsy,
 			x1         			= x1,
-			y1         			= y1,
+			topy				= topy,
 		}
 	end
 
@@ -648,5 +693,6 @@ function widget:SetConfigData(data)      -- load
 	viewSizeX					= data.vsx or viewSizeX
 	viewSizeY 					= data.vsy or viewSizeY
 	x1         					= data.x1 or x1
-	y1         					= data.y1 or y1
+	topy						= data.topy or topy,
+	checkScreen()
 end
