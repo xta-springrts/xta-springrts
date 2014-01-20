@@ -170,22 +170,22 @@ local function DetectCard(vendor,renderer)
                  (renderer:find("quadro fx 5[678]%d%d") and 10) or
                  (renderer:find("quadro fx 5[234]%d%d") and 8) or
                  (renderer:find("quadro fx [1-4]%d%d%d") and 8) or
-                 (renderer:find(" gf[xs]* [456]%d%d") and 11) or  --// Fermi (GF100)
-                 (renderer:find(" g[txs]* %d%d%d") and 10) or --// GTX280
-                 (renderer:find(" 9") and 9) or	--// G90,G92,G94
-                 (renderer:find(" 8") and 8) or	--// G80,G82,G84
-                 (renderer:find(" 7") and 7) or	--// G70
-                 (renderer:find(" 6") and 6) or	--// G60
+                 (renderer:find(" gf[xs]* 4%d%d") and 11) or  --// Fermi
+                 (renderer:find(" g[txs]* %d%d%d") and 10) or
+                 (renderer:find(" 9") and 9) or
+                 (renderer:find(" 8") and 8) or
+                 (renderer:find(" 7") and 7) or
+                 (renderer:find(" 6") and 6) or
                  (renderer:find(" 5") and 5) or
                  (renderer:find(" 4") and 4) or
                  (renderer:find(" 3") and 3) or 
                  (renderer:find(" 2") and 2) or math.huge
-              )) or 0
+               )) or 0
 
   ATIseries = ((isATI)and(
-                (renderer:find("radeon hd") and 3)or	--//RV500,RV600,RV700
-                (renderer:find("radeon x") and 2) or	--//R360,R400
-                (renderer:find("radeon 9") and 1) or 0	--//R330
+                (renderer:find("radeon hd") and 3)or
+                (renderer:find("radeon x") and 2) or
+                (renderer:find("radeon 9") and 1) or 0
               )) or 0
 
   canCTT = (gl.CopyToTexture ~= nil)
@@ -258,8 +258,7 @@ end
 --------------------------------------------------------------------------------
 
 --// some global vars (so the effects can use them)
-vsx, vsy        = 0,0
-vpx, vpy        = 0,0  --// view pos (only unequal zero, if dualscreen+minimapOnTheLeft)
+vsx, vsy, vpx, vpy = Spring.GetViewGeometry() --// screen pos & view pos (view pos only unequal zero if dualscreen+minimapOnTheLeft)
 LocalAllyTeamID = 0
 thisGameFrame   = 0
 frameOffset     = 0
@@ -663,7 +662,8 @@ local function DrawParticlesOpaque()
   vsx, vsy, vpx, vpy = Spring.GetViewGeometry()
   if (vsx~=oldVsx)or(vsy~=oldVsy) then
     for _,partClass in pairs(fxClasses) do
-      if partClass.ViewResize then partClass.ViewResize(viewSizeX, viewSizeY) end
+	  Spring.Echo(vsx,vsy,viewSizeX,viewSizeY)
+      if partClass.ViewResize then partClass.ViewResize(vsx, vsy) end
     end
     oldVsx, oldVsy = vsx, vsy
   end
@@ -871,6 +871,8 @@ end
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
+
+local this = widget or gadget
 
 local lastGameFrame = 0
 
@@ -1119,7 +1121,6 @@ end
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
-local this = widget or gadget
 
 this.GetInfo    = GetInfo
 this.Initialize = Initialize
