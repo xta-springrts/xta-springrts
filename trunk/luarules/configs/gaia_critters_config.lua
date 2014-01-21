@@ -1,9 +1,33 @@
 local critterConfig = {
 
+["Centre-command"] = {
+  {spawnCircle = {x=1550, z=3000, r=500}, unitNames = {["critter_gull"]=3, },  },
+  {spawnCircle = {x=1550, z=3000, r=1450}, unitNames = {["critter_gull"]=2, },  },
+},
+
+["duck"] = {
+  {spawnCircle = {x=800, z=700, r=200}, unitNames = {["critter_duck"]=2, },  },
+},
+
 ["Tabula-v2"] = {
  {spawnBox={x1=6100, z1=1700, x2=6300, z2=2000,} , unitNames = {["critter_duck"]=5, ["critter_gull"]=1},  },
  {spawnBox={x1=1500, z1=6000, x2=1800, z2=6600,} , unitNames = {["critter_duck"]=2, ["critter_gull"]=1,},  },
 },
+
+["Tabula-v4"] = {
+ {spawnBox={x1=6100, z1=1700, x2=6300, z2=2000,} , unitNames = {["critter_duck"]=5, ["critter_gull"]=1},  },
+ {spawnBox={x1=1500, z1=6000, x2=1800, z2=6600,} , unitNames = {["critter_duck"]=2, ["critter_gull"]=1,},  },
+ {spawnCircle = {x=6000, z=500, r=200}, unitNames = {["critter_goldfish"]=2, },  },
+ {spawnCircle = {x=2200, z=6800, r=200}, unitNames = {["critter_goldfish"]=2, },  },
+},
+
+["Tropical"] = {
+  {spawnCircle = {x=1000, z=5300, r=800}, unitNames = {["critter_goldfish"]=3, },  },
+  {spawnCircle = {x=8100, z=5300, r=800}, unitNames = {["critter_goldfish"]=3, },  },
+  {spawnCircle = {x=4600, z=5200, r=3500}, unitNames = {["critter_gull"]=2, },  },
+  {spawnCircle = {x=4600, z=5200, r=500}, unitNames = {["critter_duck"]=2, },  },
+},
+
 
 ["Sparewood-v01"] = {
 {spawnBox={x1=20, z1=2500, x2=700, z2=3350,} , unitNames = {["critter_duck"]=4,},  },
