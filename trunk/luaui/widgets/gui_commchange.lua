@@ -254,6 +254,33 @@ local function checkState()
 	end
 end
 
+local function updateSize()
+	-- update size for spectators
+	if spectator then
+		n = #(teamList)-1
+		sizex = 380
+		sizey = 50 + 20 * (n+2) -- add extra free row
+	end
+	
+	if Spring.IsReplay() then
+		n = 0
+		for i, pID in pairs(Spring.GetPlayerList()) do
+			local _,_,isSpec = Spring.GetPlayerInfo(pID)
+			if not isSpec then
+				if not pStates[pID] then
+					pStates[pID] = "missing"
+				end
+				n = n + 1
+			end
+		end
+		
+		sizex = 380
+		sizey = 50 + 20 * (n+2) -- add extra free row
+	end
+	--buttons:
+	initButtons()
+end
+
 local function playSound(snd)
 	PlaySoundFile(snd)
 end
@@ -301,31 +328,7 @@ function widget:Initialize()
 			spSendLuaUIMsg('195' .. 2)
 		end
 	end
-	
-	-- update size for spectators
-	if spectator then
-		n = #(teamList)-1
-		sizex = 380
-		sizey = 50 + 20 * (n+2) -- add extra free row
-	end
-	
-	if Spring.IsReplay() then
-		n = 0
-		for i, pID in pairs(Spring.GetPlayerList()) do
-			local _,_,isSpec = Spring.GetPlayerInfo(pID)
-			if not isSpec then
-				if not pStates[pID] then
-					pStates[pID] = "missing"
-				end
-				n = n + 1
-			end
-		end
-		
-		sizex = 380
-		sizey = 50 + 20 * (n+2) -- add extra free row
-	end
-	--buttons:
-	initButtons()
+	updateSize()
 end
 
 function widget:RecvLuaMsg(msg, playerID)
@@ -370,11 +373,17 @@ function widget:ViewResize(viewSizeX, viewSizeY)
 	initButtons()
 end
 
+function widget:Update()
+	updateSize()
+end
+
 function widget:DrawWorld()
 	if IsGUIHidden() then return end
 	
-	checkState()
-	updateState()
+	if not spectator then
+		checkState()
+		updateState()
+	end
 	
 	glColor(1, 1, 1, 0.5)
     glDepthTest(false)
