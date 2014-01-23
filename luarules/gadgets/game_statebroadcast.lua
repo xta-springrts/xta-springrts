@@ -38,7 +38,7 @@ if not gadgetHandler:IsSyncedCode() then
 				local posx = spGetTeamStartPosition(player)
 				local marked
 				
-				if posx and posx >= 0 then
+				if posx and posx > 0 then -- change 95+: engine places people at 0,0 instantly
 					marked = true
 				else
 					marked = false
