@@ -1719,7 +1719,7 @@
 		group_invincible=1;
 		group_commanders=1000;
 		group_landair=1212;
-		group_snipertargets=5500;
+		group_snipertargets=3500;
 	}
 }
 [ARMTRUCK_MISSILE]
