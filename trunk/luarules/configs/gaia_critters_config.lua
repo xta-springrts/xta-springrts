@@ -1,8 +1,20 @@
 local critterConfig = {
 
+["BarracudaBay"] = {
+  {spawnBox = {x1=2000, z1=400, x2=2500, z2=800 }, unitNames = {["critter_duck"]=5, },  },
+  {spawnBox = {x1=5200, z1=4200, x2=5600, z2=4700 }, unitNames = {["critter_duck"]=4, },  },
+  {spawnCircle = {x=3250, z=4400, r=500}, unitNames = {["critter_goldfish"]=2, },  },
+  {spawnCircle = {x=2800, z=1500, r=500}, unitNames = {["critter_goldfish"]=2, },  },
+},
+
 ["Centre-command"] = {
   {spawnCircle = {x=1550, z=3000, r=500}, unitNames = {["critter_gull"]=3, },  },
   {spawnCircle = {x=1550, z=3000, r=1450}, unitNames = {["critter_gull"]=2, },  },
+},
+
+["DesertTriad"] = {
+  {spawnBox = {x1=1800, z1=3400, x2=3900, z2=3900 }, unitNames = {["critter_gull"]=1, },  },
+  {spawnBox = {x1=1800, z1=20, x2=3900, z2=120 }, unitNames = {["critter_gull"]=1, },  },
 },
 
 ["duck"] = {
