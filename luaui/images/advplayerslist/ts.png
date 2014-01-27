@@ -1,0 +1,163 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  
+  
+
+
+  <head>
+    <title>
+      ts.png in trunk/luaui/images/advplayerslist
+     – Balanced Annihilation
+    </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!--[if IE]><script type="text/javascript">window.location.hash = window.location.hash;</script><![endif]-->
+        <link rel="search" href="/trac/balatest/search" />
+        <link rel="help" href="/trac/balatest/wiki/TracGuide" />
+        <link rel="alternate" href="/trac/balatest/export/2082/trunk/luaui/images/advplayerslist/ts.png" type="image/png; charset=iso-8859-15" title="Original Format" />
+        <link rel="start" href="/trac/balatest/wiki" />
+        <link rel="stylesheet" href="/trac/balatest/chrome/common/css/trac.css" type="text/css" /><link rel="stylesheet" href="/trac/balatest/chrome/common/css/code.css" type="text/css" /><link rel="stylesheet" href="/trac/balatest/chrome/common/css/browser.css" type="text/css" />
+        <link rel="shortcut icon" href="/trac/balatest/chrome/common/trac.ico" type="image/x-icon" />
+        <link rel="icon" href="/trac/balatest/chrome/common/trac.ico" type="image/x-icon" />
+      <link type="application/opensearchdescription+xml" rel="search" href="/trac/balatest/search/opensearch" title="Search Balanced Annihilation" />
+    <script type="text/javascript" src="/trac/balatest/chrome/common/js/jquery.js"></script><script type="text/javascript" src="/trac/balatest/chrome/common/js/babel.js"></script><script type="text/javascript" src="/trac/balatest/chrome/common/js/trac.js"></script><script type="text/javascript" src="/trac/balatest/chrome/common/js/search.js"></script>
+    <!--[if lt IE 7]>
+    <script type="text/javascript" src="/trac/balatest/chrome/common/js/ie_pre7_hacks.js"></script>
+    <![endif]-->
+    <script type="text/javascript" src="/trac/balatest/chrome/common/js/folding.js"></script>
+    <script type="text/javascript">
+      jQuery(document).ready(function($) {
+        $(".trac-toggledeleted").show().click(function() {
+                  $(this).siblings().find(".trac-deleted").toggle();
+                  return false;
+        }).click();
+        $("#jumploc input").hide();
+        $("#jumploc select").change(function () {
+          this.parentNode.parentNode.submit();
+        });
+          $('#preview table.code').enableCollapsibleColumns($('#preview table.code thead th.content'));
+      });
+    </script>
+  </head>
+  <body>
+    <div id="banner">
+      <div id="header">
+        <a id="logo" href="http://imolarpg.dyndns.org/trac/balatest/"><img src="http://imolarpg.dyndns.org/stuff/tracbalogo.jpg" alt="" /></a>
+      </div>
+      <form id="search" action="/trac/balatest/search" method="get">
+        <div>
+          <label for="proj-search">Search:</label>
+          <input type="text" id="proj-search" name="q" size="18" value="" />
+          <input type="submit" value="Search" />
+        </div>
+      </form>
+      <div id="metanav" class="nav">
+    <ul>
+      <li class="first"><a href="/trac/balatest/login">Login</a></li><li><a href="/trac/balatest/wiki/TracGuide">Help/Guide</a></li><li><a href="/trac/balatest/about">About Trac</a></li><li class="last"><a href="/trac/balatest/prefs">Preferences</a></li>
+    </ul>
+  </div>
+    </div>
+    <div id="mainnav" class="nav">
+    <ul>
+      <li class="first"><a href="/trac/balatest/wiki">Wiki</a></li><li><a href="/trac/balatest/timeline">Timeline</a></li><li><a href="/trac/balatest/roadmap">Roadmap</a></li><li class="active"><a href="/trac/balatest/browser">Browse Source</a></li><li><a href="/trac/balatest/report/1">View Tickets</a></li><li><a href="/trac/balatest/newticket">New Ticket</a></li><li class="last"><a href="/trac/balatest/search">Search</a></li>
+    </ul>
+  </div>
+    <div id="main">
+      <div id="ctxtnav" class="nav">
+        <h2>Context Navigation</h2>
+          <ul>
+              <li class="first"><a href="/trac/balatest/browser/trunk/luaui/images/advplayerslist/ts.png?annotate=blame" title="Annotate each line with the last changed revision (this can be time consuming...)">Blame</a></li><li class="last"><a href="/trac/balatest/log/trunk/luaui/images/advplayerslist/ts.png">Revision Log</a></li>
+          </ul>
+        <hr />
+      </div>
+    <div id="content" class="browser">
+          <h1>
+<a class="pathentry first" href="/trac/balatest/browser?order=name" title="Go to repository root">source:</a>
+<a class="pathentry" href="/trac/balatest/browser/trunk?order=name" title="View trunk">trunk</a><span class="pathentry sep">/</span><a class="pathentry" href="/trac/balatest/browser/trunk/luaui?order=name" title="View luaui">luaui</a><span class="pathentry sep">/</span><a class="pathentry" href="/trac/balatest/browser/trunk/luaui/images?order=name" title="View images">images</a><span class="pathentry sep">/</span><a class="pathentry" href="/trac/balatest/browser/trunk/luaui/images/advplayerslist?order=name" title="View advplayerslist">advplayerslist</a><span class="pathentry sep">/</span><a class="pathentry" href="/trac/balatest/browser/trunk/luaui/images/advplayerslist/ts.png?order=name" title="View ts.png">ts.png</a>
+<span class="pathentry sep">@</span>
+  <a class="pathentry" href="/trac/balatest/changeset/2082" title="View changeset 2082">2082</a>
+<br style="clear: both" />
+</h1>
+        <div id="jumprev">
+          <form action="" method="get">
+            <div>
+              <label for="rev">
+                View revision:</label>
+              <input type="text" id="rev" name="rev" size="6" />
+            </div>
+          </form>
+        </div>
+        <div id="jumploc">
+          <form action="" method="get">
+            <div class="buttons">
+              <label for="preselected">Visit:</label>
+              <select id="preselected" name="preselected">
+                <option selected="selected"></option>
+                <optgroup label="branches">
+                  <option value="/trac/balatest/browser/trunk">trunk</option><option value="/trac/balatest/browser/branches/alpha">branches/alpha</option><option value="/trac/balatest/browser/branches/BAR">branches/BAR</option><option value="/trac/balatest/browser/branches/BAR_ALPHA">branches/BAR_ALPHA</option><option value="/trac/balatest/browser/branches/chickens">branches/chickens</option><option value="/trac/balatest/browser/branches/chili">branches/chili</option><option value="/trac/balatest/browser/branches/inactive">branches/inactive</option>
+                </optgroup>
+              </select>
+              <input type="submit" value="Go!" title="Jump to the chosen preselected path" />
+            </div>
+          </form>
+        </div>
+      <table id="info" summary="Revision info">
+        <tr>
+          <th scope="col">Revision <a href="/trac/balatest/changeset/1707">1707</a>,
+            <span title="293 bytes">293 bytes</span>
+            checked in by Bluestone, <a class="timeline" href="/trac/balatest/timeline?from=2013-10-21T01%3A11%3A40%2B02%3A00&amp;precision=second" title="2013-10-21T01:11:40+02:00 in Timeline">3 months</a> ago
+            (<a href="/trac/balatest/changeset/1707/trunk/luaui/images/advplayerslist/ts.png">diff</a>)</th>
+        </tr>
+        <tr>
+          <td class="message searchable">
+              <p>
+added trueskill column to advpllist<br />
+</p>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <ul class="props">
+              <li>
+                  Property <strong>svn:mime-type</strong> set to
+                  <em><code>application/octet-stream</code></em>
+              </li>
+            </ul>
+          </td>
+        </tr>
+      </table>
+      <div id="preview" class="searchable">
+        
+  <div class="image-file"><img src="/trac/balatest/export/2082/trunk/luaui/images/advplayerslist/ts.png" alt="trunk/luaui/images/advplayerslist/ts.png" /></div>
+
+      </div>
+      <div id="help"><strong>Note:</strong> See <a href="/trac/balatest/wiki/TracBrowser">TracBrowser</a>
+        for help on using the repository browser.</div>
+      <div id="anydiff">
+        <form action="/trac/balatest/diff" method="get">
+          <div class="buttons">
+            <input type="hidden" name="new_path" value="/trunk/luaui/images/advplayerslist/ts.png" />
+            <input type="hidden" name="old_path" value="/trunk/luaui/images/advplayerslist/ts.png" />
+            <input type="hidden" name="new_rev" />
+            <input type="hidden" name="old_rev" />
+            <input type="submit" value="View changes..." title="Select paths and revs for Diff" />
+          </div>
+        </form>
+      </div>
+    </div>
+    <div id="altlinks">
+      <h3>Download in other formats:</h3>
+      <ul>
+        <li class="last first">
+          <a rel="nofollow" href="/trac/balatest/export/2082/trunk/luaui/images/advplayerslist/ts.png">Original Format</a>
+        </li>
+      </ul>
+    </div>
+    </div>
+    <div id="footer" lang="en" xml:lang="en"><hr />
+      <a id="tracpowered" href="http://trac.edgewall.org/"><img src="/trac/balatest/chrome/common/trac_logo_mini.png" height="30" width="107" alt="Trac Powered" /></a>
+      <p class="left">Powered by <a href="/trac/balatest/about"><strong>Trac 0.12.3</strong></a><br />
+        By <a href="http://www.edgewall.org/">Edgewall Software</a>.</p>
+      <p class="right">Visit the Trac open source project at<br /><a href="http://trac.edgewall.org/">http://trac.edgewall.org/</a></p>
+    </div>
+  </body>
+</html>
