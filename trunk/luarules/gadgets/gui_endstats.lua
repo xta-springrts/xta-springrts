@@ -682,9 +682,12 @@ else
 			elseif Button["lost"]["On"] then
 				glRect(Button["lost"]["x0"],Button["lost"]["y0"], Button["lost"]["x1"], Button["lost"]["y1"])
 			end
-			
+
 			-- chart window
 			if Button["influence"]["On"] then
+				--------------------
+				-- INFLUENCE TAB  --
+				--------------------		
 				-- title
 				glColor(0.8, 0.8, 1.0, 1)
 				glText("Territorial influence over time", (Panel["1"]["x0"]+Panel["1"]["x1"])/2,Panel["1"]["y1"] + 30, 16, 'vc')
@@ -781,7 +784,9 @@ else
 				end
 				glColor(1, 1, 1, 1)
 			elseif Button["matrix"]["On"] then
-				
+				-----------------------
+				-- PLAYER KILLS TAB  --
+				-----------------------	
 				-- charts
 				glColor(0.2, 0.2, 0.3, 0.6)
 				glRect(Panel["3"]["x0"],Panel["3"]["y0"],Panel["3"]["x1"], Panel["3"]["y1"])
@@ -1020,7 +1025,9 @@ else
 					end
 				end
 			elseif Button["heroes"]["On"] then
-			
+			-----------------
+			-- HEROES TAB  --
+			-----------------		
 				--panel
 				glColor(0.3, 0.2, 0.2, 0.5)
 				glRect(Panel["5"]["x0"],Panel["5"]["y0"],Panel["5"]["x1"], Panel["5"]["y1"])
@@ -1069,7 +1076,9 @@ else
 				end
 		
 			elseif Button["lost"]["On"] then
-				
+				---------------
+				-- LOST TAB  --
+				---------------		
 				--panel
 				glColor(0.3, 0.2, 0.2, 0.5)
 				glRect(Panel["5"]["x0"],Panel["5"]["y0"],Panel["5"]["x1"], Panel["5"]["y1"])

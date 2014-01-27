@@ -23,11 +23,18 @@ if (gadgetHandler:IsSyncedCode()) then
 	local CreateFeature				= Spring.CreateFeature
 	local DestroyUnit				= Spring.DestroyUnit
 	local Echo						= Spring.Echo
+	local SpawnCEG					= Spring.SpawnCEG
 	local random					= math.random
 		
 	local wreckNames = {}
 	local FeatureNames = {}
-	local weaponDefID
+	local expCEG					= "napalam"
+	
+	local function DestroyDeadUnit(unitID)
+		if unitID then
+			DestroyUnit(unitID)
+		end
+	end
 	
 	function gadget:Initialize()
 		for _, fdef in pairs (FeatureDefs) do
@@ -45,15 +52,16 @@ if (gadgetHandler:IsSyncedCode()) then
 				wreckNames[i]["heap"] = heap
 			end
 		end
+		
 	end
 	
 	function gadget:UnitDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weaponDefID)
 		local health = GetUnitHealth(unitID)
 		
-		if health < 0 and health > -1000 then
+		if health < 0 and health > -2000 then
 			local passengers = GetUnitIsTransporting(unitID)
 			if passengers and #passengers >0 then
-				local releaseHeld = UnitDefs[GetUnitDefID(unitID) ].releaseHeld
+				local releaseHeld = UnitDefs[unitDefID ].releaseHeld
 				local x0,y,z0 = GetUnitPosition(unitID)
 				if releaseHeld == false then
 					for i, pID in pairs (passengers) do
@@ -62,20 +70,17 @@ if (gadgetHandler:IsSyncedCode()) then
 						local rnd = random(0,100)
 						local passDefID = GetUnitDefID(pID)
 						local wreckName
-						if rnd > 70 then 
-							wreckName = wreckNames[passDefID]["heap"]
-						elseif rnd > 40 then
+						if rnd + health/40 > 50 then 
 							wreckName = wreckNames[passDefID]["dead"]
+						elseif rnd + health/40 > 0 then
+							wreckName = wreckNames[passDefID]["heap"]
 						end
 							
 						if wreckName then
 							local wreckID = CreateFeature(wreckName, x,y+20,z)
-	
-						elseif passDefID then
-							local deadID = CreateUnit(passDefID,x,y,z,0,unitTeam)
-							DestroyUnit(deadID)
 						end
 					end
+					SpawnCEG(expCEG,x0,y,z0)
 				end
 			end
 		end
