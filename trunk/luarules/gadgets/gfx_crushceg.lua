@@ -39,7 +39,8 @@ if gadgetHandler:IsSyncedCode() then
 	local crushCEG2							= "FLAKFLARE"
 	local crushCEG3							= "Sparks"
 	local metalcloud1						= "buttsmoke"
-	local metalcloud2						= "smokeshell_small"
+	local metalcloud2						= "smokeshell_medium"
+	local GetUnitHealth 					= Spring.GetUnitHealth
 	local GetFeatureHealth 					= Spring.GetFeatureHealth
 	local SpawnCEG							= Spring.SpawnCEG
 	local GetFeaturePosition				= Spring.GetFeaturePosition
@@ -66,7 +67,7 @@ if gadgetHandler:IsSyncedCode() then
 	function gadget:FeatureDamaged(featureID, featureDefID, _, damage , weaponDefID, projectileID , attackerID, attackerDefID)
 		
 		if weaponDefID == CRUSHID and crushFeatures[featureDefID] then
-			local health,hp = GetFeatureHealth(featureID)
+			local health = GetFeatureHealth(featureID)
 			if health < 0 then
 				local x,y,z = GetFeaturePosition(featureID)
 				SendToUnsynced("crushSound", featureID)
@@ -77,11 +78,16 @@ if gadgetHandler:IsSyncedCode() then
 		end
 	end
 	
-	function gadget:UnitDestroyed(unitID, unitDefID, teamID, attackerID, attackerDefID, attackerTeamID) 
-		if metalCloudUnits[unitDefID] then
-			local x,y,z = GetUnitPosition(unitID)
-			local frame = GetGameFrame()
-			cloudList[frame] = {x,y,z}
+	function gadget:UnitDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weaponDefID, projectileID, attackerID, attackerDefID, attackerTeam) 
+		
+		local health,_,_,_,buildProgress = GetUnitHealth(unitID)
+		if health < 0 and buildProgress == 1 then
+			
+			if metalCloudUnits[unitDefID] then
+				local x,y,z = GetUnitPosition(unitID)
+				local frame = GetGameFrame()
+				cloudList[frame] = {x,y,z}
+			end
 		end
 	end
 	
