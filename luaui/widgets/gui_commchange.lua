@@ -114,6 +114,9 @@ local CHOOSE,WAITING,COUNTDOWN,ERROR	= 0,1,2,-1
 -- local player states
 local PRESENT,MARKED,OTHER,READY		= 0,1,2,3
 
+--font
+local myFont	 		= gl.LoadFont("FreeSansBold.otf",th3, 1.9, 40)
+
 --------------------------------------------------------------------------------
 -- Speedups
 --------------------------------------------------------------------------------
@@ -127,12 +130,6 @@ local glTexRect 					= gl.TexRect
 local glDepthTest 					= gl.DepthTest
 local glBeginEnd 					= gl.BeginEnd
 local GL_QUADS 						= GL.QUADS
-local glPushMatrix 					= gl.PushMatrix
-local glPopMatrix 					= gl.PopMatrix
-local glTranslate 					= gl.Translate
-local glBeginText				 	= gl.BeginText
-local glEndText 					= gl.EndText
-local glText 						= gl.Text
 local Echo 							= Spring.Echo
 local spectator 					= Spring.GetSpectatingState()
 local spGetTeamStartPosition 		= Spring.GetTeamStartPosition
@@ -404,9 +401,11 @@ function widget:DrawWorld()
             if teamside == "arm" then
                 glTexture(imgARM)
                 glBeginEnd(GL_QUADS, QuadVerts, tsx, spGetGroundHeight(tsx, tsz), tsz, 80)
+				glTexture(false)
             else 
                 glTexture(imgCORE)
                 glBeginEnd(GL_QUADS, QuadVerts, tsx, spGetGroundHeight(tsx, tsz), tsz, 64)
+				glTexture(false)
             end
         end
     end
@@ -459,13 +458,17 @@ function widget:DrawScreenEffects(vsx, vsy)
 	if myState ~= READY then
 		if not spectator then
 			-- Infobutton
-			if infoOn then
-				glColor(1, 1, 1, 1)
-			else
-				glColor(1, 1, 1, 0.3)
-			end
+			glTexture(false)
+			glColor(1, 1, 1, 1)
 			drawBorder(Button["info"]["x0"],Button["info"]["y0"],Button["info"]["x1"],Button["info"]["y1"],1)
-			glText("info", 0.5 * (Button["info"]["x0"] + Button["info"]["x1"]) , 0.5 * (Button["info"]["y0"] + Button["info"]["y1"]) , th,'vc')
+			myFont:Begin()
+			if infoOn then
+				myFont:SetTextColor({1, 1, 1, 1})
+			else
+				myFont:SetTextColor({0.8, 0.8, 0.8, 1})
+			end
+			myFont:Print("info", 0.5 * (Button["info"]["x0"] + Button["info"]["x1"]) , 0.5 * (Button["info"]["y0"] + Button["info"]["y1"]) , th,'vcs')
+			myFont:End()
 			-- infopanel
 			if infoOn then
 				glColor(0, 0, 0, 0.5)
@@ -522,12 +525,12 @@ function widget:DrawScreenEffects(vsx, vsy)
 					end
 				end
 				local xofs, thofs = x0+10, th2+6
-				glBeginText()
-					glText(side .. " commander with " .. uptype .. ":", xofs, y1 - thofs, th, 'xn')
+				myFont:Begin()
+					myFont:Print(side .. " commander with " .. uptype .. ":", xofs, y1 - thofs, th, 'xn')
 					for i=1, #txt do
-						glText(txt[i], xofs, y1 - (i+2)*thofs, th2, 'xn')
+						myFont:Print(txt[i], xofs, y1 - (i+2)*thofs, th2, 'xn')
 					end
-				glEndText()
+				myFont:End()
 			end
 		end
 		
@@ -535,6 +538,7 @@ function widget:DrawScreenEffects(vsx, vsy)
 			-- Panel
 			glColor(0, 0, 0, 0.4)
 			glRect(px,py, px+sizex, py+sizey)
+			glColor(1,1,1,1)
 		end
 	end
 	
@@ -553,6 +557,7 @@ function widget:DrawScreenEffects(vsx, vsy)
 	elseif Button["duck"]["On"] then
 		glRect(Button["duck"]["x0"],Button["duck"]["y0"], Button["duck"]["x1"], Button["duck"]["y1"])
 	end
+	glColor(1,1,1,1)
 end
 
 function widget:DrawScreen()
@@ -564,72 +569,80 @@ function widget:DrawScreen()
 	
 	local startID = spGetTeamRulesParam(myTeamID, 'startUnit')
 	-- Draw list with player connection and ready up states
+	myFont:Begin()
 	if pStates then
 		local n = 0
 		for _,_ in pairs(pStates) do
 			n = n + 1
 		end
 		local y0 = 40 + 0.5*(vsy + n*th3)
-	
-		glText("Players:", 10, y0 + th3+2, th3, 'xno')
+		
+		myFont:SetTextColor({1,1,1,1})
+		myFont:Print("Players:", 10, y0 + th3+2, th3, 'xns')
+		myFont:End()
 		
 		for i,ps in pairs(pStates) do
 			local leaderName,active,spec,team,_,_,_,country,rank	= GetPlayerInfo(i)
 			if not spec then
+				myFont:Begin()
 				if not active then
-					glColor(0.6, 0.2, 0.2, 0.8) -- red
+					myFont:SetTextColor({0.6, 0.2, 0.2, 0.8}) -- red
 				else
 					if ps == "missing" then
 						if Spring.IsReplay() then
 							local posx = spGetTeamStartPosition(team)
 							if not posx or posx < 0 then
 								if markedStates and markedStates[i+1] then
-									glColor(0.3, 0.5, 0.7, 1) -- blue
+									myFont:SetTextColor({0.3, 0.5, 0.7, 1}) -- blue
 								else
-									glColor(0.6, 0.6, 0.2, 1) -- yellow
+									myFont:SetTextColor({0.6, 0.6, 0.2, 1}) -- yellow
 								end
 							else
-								glColor(0.3, 0.5, 0.7, 1) -- blue
+								myFont:SetTextColor({0.3, 0.5, 0.7, 1}) -- blue
 							end
 						else
-							glColor(0.6, 0.2, 0.2, 0.8) -- red
+							myFont:SetTextColor({0.6, 0.2, 0.2, 0.8}) -- red
 						end
 					elseif ps == "notready" then
 						local posx = spGetTeamStartPosition(team)
 						if not posx or posx < 0 then
 							if markedStates and markedStates[i+1] then
-								glColor(0.3, 0.5, 0.7, 1) -- blue
+								myFont:SetTextColor({0.3, 0.5, 0.7, 1}) -- blue
 							else
-								glColor(0.6, 0.6, 0.2, 1) -- yellow
+								myFont:SetTextColor({0.6, 0.6, 0.2, 1}) -- yellow
 							end
 						else
-							glColor(0.3, 0.5, 0.7, 1) -- blue
+							myFont:SetTextColor({0.3, 0.5, 0.7, 1}) -- blue
 						end
 					elseif ps == "ready" then
-						glColor(0.0, 0.5, 0.0, 1) -- green -- glColor(0.7, 0.9, 0.7, 1) -- white/green
+						myFont:SetTextColor({0.0, 0.5, 0.0, 1}) -- green -- glColor(0.7, 0.9, 0.7, 1) -- white/green
 					else
-						glColor(0.5, 0.5, 0.5, 0.8) -- grey -- glColor(0.7, 0.9, 0.7, 1) -- white/green
+						myFont:SetTextColor({0.5, 0.5, 0.5, 0.8}) -- grey -- glColor(0.7, 0.9, 0.7, 1) -- white/green
 					end
 				end
-				glText(leaderName, 25, y0 - (th3+2)* i, th3, 'xn')
+				myFont:Print(leaderName, 25, y0 - (th3+2)* i, th3, 'xno')
+				myFont:End()
 				glColor(0.4,0.4,0.4,1)
 				glTexture("LuaUI/Images/commchange/C-Rank" .. rank ..".png")
 				glTexRect(10, y0 - (th3+2)* i, 22, y0 - (th3+2)* i+12)
 				glTexture (false)
 			else
+				myFont:Begin()
 				if not active or ps == "missing" then
 					if Spring.IsReplay() then
-						glColor(0.6, 0.6, 0.2, 1) -- yellow
+						myFont:SetTextColor({0.6, 0.6, 0.2, 1}) -- yellow
 					else
-						glColor(0.6, 0.2, 0.2, 0.8) -- red
+						myFont:SetTextColor({0.6, 0.2, 0.2, 0.8}) -- red
 					end
 				else
-					glColor(0.5, 0.5, 0.5, 0.8) -- grey 
+					myFont:SetTextColor({0.5, 0.5, 0.5, 0.8}) -- grey 
 				end
-				glText(leaderName .. " (s)", 25, y0 - (th3+2)* i, th3, 'xn')
+				myFont:Print(leaderName .. " (s)", 25, y0 - (th3+2)* i, th3, 'xno')
+				myFont:End()
 			end
 		end
 	end
+	glColor(1,1,1,1)
 	
 	-- Draw window with info for spectators
 	if spectator then
@@ -640,11 +653,13 @@ function widget:DrawScreen()
 		glColor(0, 0, 0, 1)
 		drawBorder(Button["duck"]["x0"],Button["duck"]["y0"], Button["duck"]["x1"], Button["duck"]["y1"],1)
 		
+		myFont:Begin()
 		-- spectator info label
 		glColor(0, 0, 0, 0.4)
 		glRect(Button["speclabel"]["x0"],Button["speclabel"]["y0"], Button["speclabel"]["x1"], Button["speclabel"]["y1"])
-		glColor(1, 1, 1, 1)
-		glText("Info for spectators", Button["speclabel"]["x0"] + 78 ,Button["speclabel"]["y0"] + 10, th, 'x')
+		myFont:SetTextColor({1, 1, 1, 1})
+		
+		myFont:Print("Info for spectators", Button["speclabel"]["x0"] + 78 ,Button["speclabel"]["y0"] + 10, th, 'xs')
 		
 		--exit button
 		glColor(0, 0, 0, 0.4)
@@ -652,7 +667,9 @@ function widget:DrawScreen()
 		glColor(0, 0, 0, 1)
 		drawBorder(Button["exit"]["x0"],Button["exit"]["y0"], Button["exit"]["x1"], Button["exit"]["y1"],1)
 		glColor(1, 1, 1, 1)
-		glText("X", Button["exit"]["x0"] + 10 ,Button["exit"]["y0"] + 10, 20, 'x')
+		myFont:SetTextColor({1, 1, 1, 1})
+		myFont:Print("X", Button["exit"]["x0"] + 10 ,Button["exit"]["y0"] + 10, 20, 'xs')
+		myFont:End()
 		
 		-- textures
 		local fr = 3 -- frame
@@ -681,16 +698,18 @@ function widget:DrawScreen()
 		
 		if gameState ~= COUNTDOWN or Spring.IsReplay() then
 			--labels
-			glColor(0.6, 0.6, 0.8, 1)
-			glText("Team", 		col_0, y0 - 10, th4, 'x')
-			glText("Player", 	col_4, y0 - 10, th4, 'x')
-			glText("Status",	col_5, y0 - 10, th4, 'x')
-			--glText("Remarks",	col_6, y0 - 10, th4, 'x')
+			myFont:Begin()
+			myFont:SetTextColor({0.6, 0.6, 0.8, 1})
+			myFont:Print("Team", 		col_0, y0 - 10, th4, 'xo')
+			myFont:Print("Player", 	col_4, y0 - 10, th4, 'xo')
+			myFont:Print("Status",	col_5, y0 - 10, th4, 'xo')
+			--myFont:Print("Remarks",	col_6, y0 - 10, th4, 'x')
 			
 			-- Game state info label
-			glColor(1, 1, 1, 1)
+			myFont:SetTextColor({1, 1, 1, 1})
 			local txt = strInfo or ""
-			glText("Status: " .. txt, Button["specinfo"]["x0"] + 10 ,Button["specinfo"]["y0"] + 5, 11, 'x')
+			myFont:Print("Status: " .. txt, Button["specinfo"]["x0"] + 10 ,Button["specinfo"]["y0"] + 5, 11, 'xo')
+			myFont:End()
 			
 			--player data
 			local as = 0 -- ally separation space
@@ -749,13 +768,14 @@ function widget:DrawScreen()
 							commtype = '?'
 						end
 						
+						myFont:Begin()
 						--data
-						glColor(1, 1, 1, 1)
+						myFont:SetTextColor({1, 1, 1, 1})
 						if isAI then
-							glColor(0.8, 0.8, 0.8, 0.8)
+							myFont:SetTextColor({0.8, 0.8, 0.8, 0.8})
 						end
 						if newteam then
-							glText(allyID,	 		col_0, y1, th4, 'x')
+							myFont:Print(allyID,	 		col_0, y1, th4, 'xo')
 						end
 						newteam = false
 						--side
@@ -766,54 +786,60 @@ function widget:DrawScreen()
 						else
 							glTexture(img0)
 						end
+						glColor(1, 1, 1, 0.8)
 						glTexRect(					col_1, y1 - 5, col_1 + 15, y1 - 5 + 15)
+						glColor(1, 1, 1, 1)
 						glTexture(false)
-						glText(commtype, 			col_2, y1, th4, 'x')
+						myFont:Print(commtype, 			col_2, y1, th4, 'xo')
 						
 						--rank
 						if not spec then
+							glColor(0.7, 0.7, 0.9, 0.8)
 							glTexture("LuaUI/Images/commchange/C-Rank" .. rank ..".png")
 							glTexRect(				col_3, y1 - 2, col_3 + 14, y1 - 2 + 14)
 							glTexture(false)
+							glColor(1, 1, 1, 1)
 						end
 						--name
-						glText(tostring(leaderName),col_4, y1, th4, 'x')
+						myFont:Print(tostring(leaderName),col_4, y1, th4, 'xo')
 						-- status and remarks
 						local statustext, remarks
 						local posx = spGetTeamStartPosition(tID)
 						
 						if not active then
 							statustext = "Missing"
-							glColor(0.6, 0.2, 0.2, 0.8) -- red
+							myFont:SetTextColor({0.6, 0.2, 0.2, 0.8}) -- red
 						elseif ps == 'missing' then
 							if Spring.IsReplay() then
 								if posx and posx > 0 or marked then
 									statustext = "Marked"
-									glColor(0.3, 0.5, 0.7, 1) -- blue
+									myFont:SetTextColor({0.3, 0.5, 0.7, 1}) -- blue
 								else									
 									statustext = "Warming up ..."
-									glColor(0.6, 0.6, 0.2, 1) -- yellow
+									myFont:SetTextColor({0.6, 0.6, 0.2, 1}) -- yellow
 								end
 							else
 								statustext = "Missing"
-								glColor(0.6, 0.2, 0.2, 0.8) -- red
+								myFont:SetTextColor({0.6, 0.2, 0.2, 0.8}) -- red
 							end
 						elseif ps == 'notready' then
 							if posx and posx > 0 or marked then
 								statustext = "Marked"
-								glColor(0.3, 0.5, 0.7, 1) -- blue
+								myFont:SetTextColor({0.3, 0.5, 0.7, 1}) -- blue
 							else									
 								statustext = "Warming up ..."
-								glColor(0.6, 0.6, 0.2, 1) -- yellow
+								myFont:SetTextColor({0.6, 0.6, 0.2, 1}) -- yellow
 							end
 						elseif ps == 'ready' then
 							statustext = "Ready"
-							glColor(0.0, 0.5, 0.0, 1) -- green
+							myFont:SetTextColor({0.0, 0.5, 0.0, 1}) -- green
 						else
 							statustext = firstToUpper(ps)
-							glColor(0.5, 0.5, 0.5, 0.8) -- grey
+							myFont:SetTextColor({0.5, 0.5, 0.5, 0.8}) -- grey
 						end
-						glText(statustext,			col_5, y1, th4, 'x')
+						myFont:Print(statustext,			col_5, y1, th4, 'xo')
+						myFont:SetTextColor({1,1,1,1})
+						myFont:End()
 						glColor(1, 1, 1, 1)
 						if isAI then
 							remarks = "AI"
@@ -828,6 +854,7 @@ function widget:DrawScreen()
 				end
 			end
 		end
+		glColor(1,1,1,1)
 	else
 		-- draw window with options for active players
 		
@@ -835,30 +862,31 @@ function widget:DrawScreen()
 		glColor(1, 1, 1, 1)
 		drawBorder(Button["arm"]["x0"],Button["arm"]["y0"], Button["arm"]["x1"], Button["arm"]["y1"],1)
 		drawBorder(Button["core"]["x0"],Button["core"]["y0"], Button["core"]["x1"], Button["core"]["y1"],1)
-	
+		
+		myFont:Begin()
 		-- Ready button
 		local lbl
 		if myState == MARKED then -- green
-			glColor(0.5, 1, 0.5, 1)
+			myFont:SetTextColor({0.5, 1, 0.5, 1})
 			lbl = "Ready"
 		elseif myState == OTHER then -- red
-			glColor(1.0, 0.5, 0.5, 1)
+			myFont:SetTextColor({1.0, 0.5, 0.5, 1})
 			lbl = "Ready"
 		elseif myState == READY then -- white
-			glColor(1, 1, 1, 1)
+			myFont:SetTextColor({1, 1, 1, 1})
 			if gameState ~= COUNTDOWN then
 			lbl = "Go back"
 			else
 			lbl = "Ready"
 			end
 		else -- cannot ready, grey
-			glColor(0.8, 0.8, 0.8, 0.5)
+			myFont:SetTextColor({0.8, 0.8, 0.8, 0.5})
 			lbl = ""
 		end
 		if lbl == "Ready" then
 			drawBorder(Button["ready"]["x0"],Button["ready"]["y0"], Button["ready"]["x1"], Button["ready"]["y1"],1)
 		end
-		glText(lbl, 0.5*(Button["ready"]["x0"] + Button["ready"]["x1"]), 0.5 * (Button["ready"]["y0"] + Button["ready"]["y1"]) - 2, th, 'vc') --correction for strange alignment error in y position
+		myFont:Print(lbl, 0.5*(Button["ready"]["x0"] + Button["ready"]["x1"]), 0.5 * (Button["ready"]["y0"] + Button["ready"]["y1"])-1, th, 'vcs')
 		
 		-- label/info panel
 		glColor(0, 0, 0, 0.4)
@@ -880,29 +908,32 @@ function widget:DrawScreen()
 				txt = strInfo
 			end
 		end
-		glText(txt, Button["infolabel"]["x0"] + 10 ,Button["infolabel"]["y0"] + 10 , th2, 'd')
+		myFont:SetTextColor({1,1,1,1})
+		myFont:Print(txt, Button["infolabel"]["x0"] + 10 ,Button["infolabel"]["y0"] + 10 , th2, 'ds')
 		
 		--exit button
 		glColor(0, 0, 0, 0.4)
 		glRect(Button["exit"]["x0"],Button["exit"]["y0"], Button["exit"]["x1"], Button["exit"]["y1"])
 		glColor(0, 0, 0, 1)
 		drawBorder(Button["exit"]["x0"],Button["exit"]["y0"], Button["exit"]["x1"], Button["exit"]["y1"],1)
-		glColor(1, 1, 1, 1)
-		glText("X", Button["exit"]["x0"] + 10 ,Button["exit"]["y0"] + 10 , 20, 'x')
+		myFont:SetTextColor({1, 1, 1, 1})
+		myFont:Print("X", Button["exit"]["x0"] + 10 ,Button["exit"]["y0"] + 10 , 20, 'xs')
 		
 		-- arm/core buttons
 		if mySide == "arm" then
-			glColor(1, 1, 1, 1)
+			myFont:SetTextColor({1, 1, 1, 1})
 		else
-			glColor(1, 1, 1, 0.2)
+			myFont:SetTextColor({0.8, 0.8, 0.8, 0.4})
 		end
-		glText("Arm", 0.5*(Button["arm"]["x0"] + Button["arm"]["x1"]), 0.5 * (Button["arm"]["y0"] + Button["arm"]["y1"]), th, 'vc')
+		myFont:Print("Arm", 0.5*(Button["arm"]["x0"] + Button["arm"]["x1"]), 0.5 * (Button["arm"]["y0"] + Button["arm"]["y1"]), th, 'vcs')
 		if mySide == "core" then
-			glColor(1, 1, 1, 1)
+			myFont:SetTextColor({1, 1, 1, 1})
 		else
-			glColor(1, 1, 1, 0.2)
+			myFont:SetTextColor({0.8, 0.8, 0.8, 0.4})
 		end
-		glText("Core", 0.5* (Button["core"]["x0"] + Button["core"]["x1"]), 0.5 * (Button["core"]["y0"] + Button["core"]["y1"]), th, 'vc')
+		myFont:Print("Core", 0.5* (Button["core"]["x0"] + Button["core"]["x1"]), 0.5 * (Button["core"]["y0"] + Button["core"]["y1"]), th, 'vcs')
+		
+		myFont:SetTextColor({1, 1, 1, 1})
 		
 		if myState ~= READY then
 			-- Commander Icons
@@ -935,10 +966,14 @@ function widget:DrawScreen()
 				glTexture(false)
 			end
 			--commander text
-			glText("Automatic", px+sizex/4  , py + 10 , (th-2),'cxo')
-			glText("Manual", px+3*sizex/4  , py + 10 , (th-2),'cxo')
+			myFont:SetTextColor({1, 1, 1, 1})
+			myFont:Print("Automatic", px+sizex/4  , py + 10 , (th-2),'cxs')
+			myFont:Print("Manual", px+3*sizex/4  , py + 10 , (th-2),'cxs')
 		end
+		myFont:End()
+		glColor(1,1,1,1)
 	end
+	glColor(1,1,1,1)
 end
 
 function widget:GameSetup(state, ready, playerStates)
@@ -996,7 +1031,8 @@ function widget:MousePress(mx, my, mButton)
 				return true
 			end
 		elseif (mButton == 2 or mButton == 3) and mx < px + sizex then
-			if mx >= px and my >= py and my < py + sizey then
+			
+			if mx >= px and my >= py and my < Button["exit"]["y1"] then
 				-- Dragging
 				return true
 			end
@@ -1088,7 +1124,7 @@ function widget:MousePress(mx, my, mButton)
 				updateState()
 				return true
 			elseif (mButton == 2 or mButton == 3) and mx < px + sizex then
-				if mx >= px and my >= py and my < py + sizey then
+				if mx >= px and my >= py and my < Button["exit"]["y1"] then
 					-- Dragging
 					return true
 				end
