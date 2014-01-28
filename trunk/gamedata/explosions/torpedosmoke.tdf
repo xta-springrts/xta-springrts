@@ -1,0 +1,238 @@
+[Torpedosmoke]
+{
+	usedefaultexplosions=0;	
+	[spikes]
+	{
+		class=explspike;
+		[properties]
+		{
+			dir=-15 r30,-15 r30,-15 r30;
+			width=32;
+			length=1; //60;
+			alpha=1;
+			alphadecay=0.1;
+			color=0.7, 0.6, 0.5;
+			alwaysVisible=1;
+
+		}
+		air=1;
+		water=1;
+		ground=1;
+		underwater=0;
+  		count=4; 
+	}
+[waterbubble]
+   	{
+   	class=heatcloud;
+      		[properties]
+      		{
+      		heat = 5;
+			Texture=bubble;
+      		maxheat = 5;
+      		heatFalloff = 0.2;
+      		size = 6.00;
+      		sizeGrowth = -0.1;
+      		sizemod = 0;
+      		sizemodmod = 0;
+      		speed = -0.4 r0.8, -0.5 r0.4, -0.4 r0.8;
+      		pos = 0.1 r-0.2, 0.1 r-0.2, 0.1 r-0.2;
+      		}
+		air=0;
+      	water=1;
+      	ground=0;
+		underwater=1;
+      	count=3;
+	}
+[updirt]
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+		sizeGrowth=0.30;
+		sizeMod=1.0;
+		pos=0, 1, 0; 
+		gravity=0, -0.1, 0;
+		
+
+		Texture=lesslag;
+		airdrag=0.9;
+		colorMap=0.5 0.3 0.25 0.1 0.1 0.1 0.1 0.5 0.01 0.01 0.01 0.25 0.0 0.0 0.0 0.01;
+
+		particleLifeSpread=15; 
+		particleSpeedSpread=7;  
+		particleSizeSpread=1;   
+		
+		particleLife=55;
+		numParticles=10; 
+		particleSpeed=1; 
+		particleSize=20;
+		
+		
+		emitVector=0, 1, 0; 
+		//emitRot=80;
+		emitRot=10;
+		emitRotSpread=1; 
+		directional=0; 
+		alwaysVisible=0;
+
+		}
+	air=0;
+	water=0;
+	underwater=1;
+	ground=1;
+	count=1;
+	}
+
+[upstream]
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+		sizeGrowth=0.30;
+		sizeMod=1.0;
+		pos=0, 1, 0; 
+		gravity=0, -0.1, 0;
+		
+
+		Texture=lesslag;
+		airdrag=0.9;
+		colorMap=1.0 1.0 1.0 0.1 0.9 0.9 1.0 0.5 0.4 0.4 0.5 0.25 0.0 0.0 0.0 0.01;
+
+		particleLifeSpread=15; 
+		particleSpeedSpread=7;  
+		particleSizeSpread=1;   
+		
+		particleLife=55;
+		numParticles=10; 
+		particleSpeed=1; 
+		particleSize=20;
+		
+		
+		emitVector=0, 1, 0; 
+		//emitRot=80;
+		emitRot=5;
+		emitRotSpread=1; 
+		directional=0; 
+		alwaysVisible=0;
+
+		}
+	air=0;
+	water=1;
+	underwater=1;
+	ground=0;
+	count=1;
+	}
+
+[aroundstream]
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+		sizeGrowth=-0.10;
+		sizeMod=1.0;
+		pos=0, 1, 0; 
+		gravity=0, 0.05, 0;
+		
+
+		Texture=lesslag;
+		airdrag=0.9;
+		colorMap=1.0 1.0 1.0 0.1 0.9 0.9 1.0 0.5 0.4 0.4 0.5 0.25 0.0 0.0 0.0 0.01;
+
+		particleLifeSpread=5; 
+		particleSpeedSpread=1;  
+		particleSizeSpread=1;   
+		
+		particleLife=35;
+		numParticles=1; 
+		particleSpeed=1; 
+		particleSize=40;
+		
+		
+		emitVector=0, 1, 0; 
+		//emitRot=80;
+		emitRot=5;
+		emitRotSpread=1; 
+		directional=0; 
+		alwaysVisible=0;
+
+		}
+	air=0;
+	water=1;
+	underwater=1;
+	ground=0;
+	count=1;
+	}
+
+[burnstuff]
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+		sizeGrowth=0;
+		sizeMod=1.0;
+		pos=0, 0, 0; 
+		emitVector=0, 1, 0;
+	      gravity=0, -0.04, 0;  
+		colorMap=1 0.7 0.2 0.5   0.5 0.5 0.5 0.2   0 0 0 0.1;
+		Texture=lesslag;
+		airdrag=0.91;
+		particleLife=43;
+		particleLifeSpread=2;
+		numParticles=3;
+		particleSpeed=3.5;
+		particleSpeedSpread=1.8;
+		particleSize=5.9;
+		particleSizeSpread=10.6;
+		emitVector=dir; //direction of particles//
+		emitRot=33;
+		emitRotSpread=18; 
+		directional=1; 
+		alwaysVisible=1;
+		}
+	air=0;
+	water=0;
+	underwater=0;
+	ground=0;
+	count=0;
+	}
+[smokestream]
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+		sizeGrowth=-0.10;
+		sizeMod=1.0;
+		pos=0, 1, 0; 
+		gravity=0, 0.01, 0;
+		
+
+		Texture=lesslag;
+		airdrag=0.9;
+		colorMap=1.0 0.9 0.8 0.1 0.5 0.5 0.5 0.5 0.1 0.1 0.1 0.25 0.0 0.0 0.0 0.01;
+
+		particleLifeSpread=5; 
+		particleSpeedSpread=1;  
+		particleSizeSpread=1;   
+		
+		particleLife=65;
+		numParticles=1; 
+		particleSpeed=2; 
+		particleSize=50;
+		
+		
+		emitVector=0, 1, 0; 
+		//emitRot=80;
+		emitRot=5;
+		emitRotSpread=1; 
+		directional=0; 
+		alwaysVisible=0;
+
+		}
+	air=0;
+	water=1;
+	underwater=1;
+	ground=0;
+	count=1;
+	}
+
+}
