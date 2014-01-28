@@ -50,6 +50,7 @@ local boxspacing 							= 2 -- space between boxes
 local red									= 0.1 -- volume bar colour, 0 to 1.
 local green									= 0.7 -- volume bar colour, 0 to 1.
 local blue									= 0 -- volume bar colour, 0 to 1.
+local lastVolume
 --------------------------------------------------------------------------------
 
 function widget:Initialize()
@@ -62,8 +63,14 @@ function widget:KeyPress(key, mods, isRepeat)
 	if (key == pluskey or key == pluskey2) and (not mods.alt) and (not mods.shift) then -- KEY = Alt + pluskey
 		volume = Spring.GetConfigInt("snd_volmaster", 60)
 		volume = volume + step
+		
 		if volume < 0 then volume = 0 end
 		if volume > 100 then volume = 100 end
+		
+		if not lastVolume then
+			lastVolume = Spring.GetConfigInt("snd_volmaster")
+		end
+		
 		Spring.SetConfigInt("snd_volmaster", volume)
 		--if not isRepeat then Spring.PlaySoundFile(TEST_SOUND, 1.0) end
 		--Spring.Echo("Volume = " .. volume)
@@ -75,6 +82,11 @@ function widget:KeyPress(key, mods, isRepeat)
 		volume = volume - step
 		if volume < 0 then volume = 0 end
 		if volume > 100 then volume = 100 end
+		
+		if not lastVolume then
+			lastVolume = Spring.GetConfigInt("snd_volmaster")
+		end
+		
 		Spring.SetConfigInt("snd_volmaster", volume)
 		--pring.Echo("Volume = " .. volume)
 		--if not isRepeat then Spring.PlaySoundFile(TEST_SOUND, 1.0) end
@@ -88,7 +100,10 @@ end
 
 function widget:KeyRelease(key)
 	if not altdown and (key == pluskey or key == minuskey or key == pluskey2 or key == minuskey2) then
-		Spring.PlaySoundFile(TEST_SOUND, 1.0)
+		if lastVolume and volume ~= lastVolume then
+			Spring.PlaySoundFile(TEST_SOUND, 1.0)
+			lastVolume = nil
+		end
 	elseif key == 0x134 then --ALT
 		altdown = false
 	end
