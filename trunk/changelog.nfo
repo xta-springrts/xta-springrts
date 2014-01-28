@@ -20,6 +20,17 @@
     บÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜบ
     ศอออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออผ
     Logo by ElementalGizmo
+------------------- Change Log of XTA 9.734 Svn 609
+------------------ by Jools
+
+- Sniper special damage down to 3500 vs Can and Sumo
+- New menu in tweak mode to set basic run-time settings
+- Commander change widget has better font
+- Fixed metalcloud and dt crush effect
+- Bugfix in volume OSD with extra pop sound
+- More critters, on: Desert Triad, Barracuda Bay, Centre-Command, Duck, Tabula V4.
+- Fixed transporterwrecks error
+- Added missing TS-image to APL.
 
 ------------------- Change Log of XTA 9.733 Svn 592 ------------------ by Jools
 - Fixed many issues with ally resource bars widget

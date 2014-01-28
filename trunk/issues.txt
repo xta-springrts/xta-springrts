@@ -5,12 +5,6 @@ Old issues, mostly details. From http://springrts.com/phpbb/viewtopic.php?f=48&t
 Existing:
 ---------
 
-* Naval HLT can not be dgunned. Beam goes under it.
-
-* Seaplanes land on sea bed instead of water surface.
-
-explosiongenerator0=custom:UNITFIRE;
-
 
 * These units have a ModelCenterOffset tag in unitdef, but according to wiki it was removed in spring 89.0 and should be set with lua. Maybe it has already been dealt with but here is a list anyway:
 
