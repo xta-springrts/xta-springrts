@@ -56,7 +56,8 @@ if (gadgetHandler:IsSyncedCode()) then
 		local x0,z0 = 100,100
 		local mapx,mapz = Game.mapSizeX, Game.mapSizeZ
 		local step = 250 -- modify if needed on smaller map
-		for i, fdef in pairs (FeatureDefs) do
+		local count = 0
+		for i, fdef in ipairs (FeatureDefs) do
 			local x = x0 + col * step
 			local z 
 			if x > mapx then
@@ -68,23 +69,29 @@ if (gadgetHandler:IsSyncedCode()) then
 			z = z0 + row * step
 			y = Spring.GetGroundHeight(x,z)
 			
+			if z > mapz then row = 0.5 end
+			
 			if x and y and z then
-				Spring.CreateFeature(fdef.id,x,y,z)
-				--Echo("Feature:",i,x,z,fdef.name)
+				--if fdef.name:match("core_") then
+					Spring.CreateFeature(fdef.id,x,y,z)
 				
-				-- gl.PushMatrix()			
-				-- gl.Translate(x,y,z)
-				-- gl.Billboard()			
-				-- gl.Text(fdef.name,0,0,10)
-				-- gl.PopMatrix()
+					--Echo("Feature:",i,x,z,fdef.name)
+					
+					-- gl.PushMatrix()			
+					-- gl.Translate(x,y,z)
+					-- gl.Billboard()			
+					-- gl.Text(fdef.name,0,0,10)
+					-- gl.PopMatrix()
+					
+					if i%2 == 0 then z = z - 40 end
 				
-				if i%2 == 0 then z = z - 40 end
-				
-				Spring.MarkerAddPoint(x,y,z,fdef.name)
+					Spring.MarkerAddPoint(x,y,z,fdef.name)
+					count = count + 1
+					col = col + 1
+				--end
 			end
-			col = col + 1
-			if z > mapz then z = 0 end
 		end
+		Echo("Spawned " .. count .. "features.")
 	end
 	
 else
