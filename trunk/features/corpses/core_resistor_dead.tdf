@@ -3,33 +3,39 @@
 	world=All Worlds;
 	description=Wreckage;
 	category=arm_corpses;
-                    object=Core_Resistor_dead;
-                    featuredead=Core_Resistor_heap;
-                    footprintx=5;
-                    footprintz=5;
+    object=Core_Resistor_dead;
+    featuredead=Core_Resistor_heap;
+    footprintx=5;
+    footprintz=5;
 	height=20;
 	blocking=1;
 	hitdensity=100;
-                    metal=624;
-                    damage=531;
+    metal=624;
+    damage=531;
 	reclaimable=1;
 	featurereclamate=smudge01;
 	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=54 45 54;//#AUTO#
+	collisionVolumeOffsets=0 -2 0;//#AUTO#
 	}
 [Core_Resistor_heap]
 	{
 	world=All Worlds;
 	description=Wreckage;
 	category=heaps;
-                    object=5x5c;
-                    footprintx=5;
-                    footprintz=5;
+    object=5x5c;
+    footprintx=5;
+    footprintz=5;
 	height=4;
 	blocking=0;
 	hitdensity=100;
-                    metal=315;
-                    damage=257;
+    metal=315;
+    damage=257;
 	reclaimable=1;
 	featurereclamate=smudge01;
 	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=81 6 81;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
 	}
