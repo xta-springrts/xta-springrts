@@ -2621,7 +2621,7 @@
 	reclaimable=1;
 	seqnamereclamate=tree1reclamate;
 	collisionVolumeType=cyly;//#AUTO#
-	collisionVolumeScales=41 50 31;//#AUTO#
+	collisionVolumeScales=41 35 41;//#AUTO#
 	collisionVolumeOffsets=0 0 0;//#AUTO#
 }
 [arm_metal_extractor_heap]
@@ -2641,7 +2641,7 @@
 	featurereclamate=smudge01;
 	seqnamereclamate=tree1reclamate;
 	collisionVolumeType=cyly;//#AUTO#
-	collisionVolumeScales=41 12 31;//#AUTO#
+	collisionVolumeScales=41 12 41;//#AUTO#
 	collisionVolumeOffsets=0 0 0;//#AUTO#
 }
 [arm_wombat_dead]
@@ -3941,7 +3941,7 @@
 	featurereclamate=smudge01;
 	seqnamereclamate=tree1reclamate;
 	collisionVolumeType=cyly;//#AUTO#
-	collisionVolumeScales=39 41 39;//#AUTO#
+	collisionVolumeScales=39 31 39;//#AUTO#
 	collisionVolumeOffsets=0 0 0;//#AUTO#
 }
 [arm_underwater_metal_extractor_heap]
@@ -6196,7 +6196,7 @@
 	featurereclamate=smudge01;
 	seqnamereclamate=tree1reclamate;
 	collisionVolumeType=cyly;//#AUTO#
-	collisionVolumeScales=49 30 49;//#AUTO#
+	collisionVolumeScales=49 26 49;//#AUTO#
 	collisionVolumeOffsets=0 0 0;//#AUTO#
 }
 [core_metal_extractor_heap]
@@ -6216,7 +6216,7 @@
 	featurereclamate=smudge01;
 	seqnamereclamate=tree1reclamate;
 	collisionVolumeType=cyly;//#AUTO#
-	collisionVolumeScales=49 17 49;//#AUTO#
+	collisionVolumeScales=49 12 49;//#AUTO#
 	collisionVolumeOffsets=0 0 0;//#AUTO#
 }
 [core_nixer_dead]

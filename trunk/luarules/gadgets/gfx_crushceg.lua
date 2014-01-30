@@ -32,6 +32,8 @@ if gadgetHandler:IsSyncedCode() then
 		core_underwater_moho_mine = true,
 	}
 	
+	
+	
 	local crushFeatures 					= {}
 	local metalCloudUnits					= {}
 	local cloudList							= {}
@@ -47,6 +49,7 @@ if gadgetHandler:IsSyncedCode() then
 	local GetUnitPosition					= Spring.GetUnitPosition
 	local GetGameFrame						= Spring.GetGameFrame
 	local max								= math.max
+	local Echo								= Spring.Echo
 	local CRUSHID							= -7 -- this may change, before spring 96 this was -6
 
 	function gadget:Initialize()
@@ -86,6 +89,7 @@ if gadgetHandler:IsSyncedCode() then
 			if metalCloudUnits[unitDefID] then
 				local x,y,z = GetUnitPosition(unitID)
 				local frame = GetGameFrame()
+				
 				cloudList[frame] = {x,y,z}
 			end
 		end
