@@ -141,16 +141,14 @@ function script.Create()
 	Sleep(250)
 	buildprogress = select(5, Spring.GetUnitHealth(unitID))
 	end
-	Spin(radar, 2, 0.8)
-	StartThread(padchange)
+	--StartThread(padchange) -- doesn't seem to work and it screws up the pad spinning
 
 end
 
+-- attach unit to first pad, don't know why there are several pads, they didn't work anyway
 function script.QueryBuildInfo()
-	local buildinfo = build
-
-	return buildinfo
-
+	local buildinfo = pad1 
+	return buildinfo		
 end
 
 function script.QueryNanoPiece()
@@ -166,11 +164,27 @@ function script.QueryNanoPiece()
 	return nano
 end
 
+function script.StartBuilding()
+	
+	Spin(pad1, 2, 0.4)
+	Spin(pad2, 2, 0.4)
+	Spin(pad3, 2, 0.4)
+end
+
+function script.StopBuilding()
+	
+	StopSpin(pad1, 2, 0.1)
+	StopSpin(pad2, 2, 0.1)
+	StopSpin(pad3, 2, 0.1)
+end
+
 function script.Activate ( )
+	Spin(radar, 2, 0.8)
 	StartThread( Open ) --animation needs its own thread because Sleep and WaitForTurn will not work otherwise
 end
 
 function script.Deactivate ( )
+	StopSpin(radar, 2, 0.2)
 	StartThread( Close )
 end
 

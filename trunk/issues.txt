@@ -1,7 +1,3 @@
-
-Old issues, mostly details. From http://springrts.com/phpbb/viewtopic.php?f=48&t=29248&p=534115#p534115
--------------------------------------------------------------------------------------------------------
-
 Existing:
 ---------
 
@@ -34,9 +30,6 @@ Existing:
 	core_viper
 	core_voodoo
 	core_vulture
-
-
-* Air labs keep their radar spinning no matter if they are on or off — except Arm T1 Airlab, whose radar is always in not spinning state.
 
 
 * Pelicans are seen as hovers even when walking (had *2 speed on icy run)
