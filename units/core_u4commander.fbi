@@ -123,6 +123,7 @@
 	bmcode=1;
 	cloakcost=200;
 	cloakcostmoving=700;
+	cloakTimeout=90;
 	commander=1;
 	designation=CX-D3;
 	downloadable=1;

@@ -124,6 +124,7 @@
 	cancloak=1;
 	cloakcost=200;
 	cloakcostmoving=700;
+	cloakTimeout=85;
 	commander=1;
 	designation=ARM-WM;
 	downloadable=1;
