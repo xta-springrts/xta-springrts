@@ -338,7 +338,6 @@ else
 	local glTranslate 					= gl.Translate
 	local glBeginText				 	= gl.BeginText
 	local glEndText 					= gl.EndText
-	local glText 						= gl.Text
 	local glLineWidth					= gl.LineWidth
 	local Button 						= {}
 	local Panel 						= {}
@@ -361,6 +360,15 @@ else
 	local maxvalueplayer				
 	local teamTotals					= {}
 	local gaiaID						= Spring.GetGaiaTeamID()
+	local leaderNames					= {}
+	local textsize						= 12
+	local myFont	 					= gl.LoadFont("FreeSansBold.otf",textsize, 1.9, 40) 
+	local myFontBig	 					= gl.LoadFont("FreeSansBold.otf",16, 1.9, 40) 
+	local myFontMed	 					= gl.LoadFont("FreeSansBold.otf",14, 1.9, 40) 
+	local myFontHuge 					= gl.LoadFont("FreeSansBold.otf",20, 1.9, 40) 
+	local imgHero						= "LuaUI/Images/endstats/trophy.png"
+	local imgLost						= "LuaUI/Images/endstats/rose.png"
+	local imgSize						= 24
 	
 	local function getTotals()
 	
@@ -431,15 +439,15 @@ else
 		
 		--player matrix tab, kills chart
 		Panel["3"]["x0"] 		= px + 130 + 30
-		Panel["3"]["y0"] 		= py + 80
+		Panel["3"]["y0"] 		= py + 100
 		Panel["3"]["x1"] 		= px + sizex/2 - 15 + 30
-		Panel["3"]["y1"] 		= py + sizey - 200
+		Panel["3"]["y1"] 		= py + sizey - 180
 		
 		--player matrix tab, losses chart
 		Panel["4"]["x0"] 		= px + sizex/2 + 15 + 30
-		Panel["4"]["y0"] 		= py + 80
+		Panel["4"]["y0"] 		= py + 100
 		Panel["4"]["x1"] 		= px + sizex - 110 + 30
-		Panel["4"]["y1"] 		= py + sizey - 200
+		Panel["4"]["y1"] 		= py + sizey - 180
 		
 		--lost units panel
 		Panel["5"]["x0"] 		= px + 100
@@ -599,6 +607,12 @@ else
 		Panel["4"] 					= {}
 		Panel["5"] 					= {}
 		initButtons()
+		
+		for _, tID in ipairs(Spring.GetTeamList()) do
+			local _,leaderID = Spring.GetTeamInfo(tID)
+			local name = Spring.GetPlayerInfo(leaderID)
+			if name then leaderNames[tID] = name end
+		end
 	end	
 	
 	function gadget:DrawScreen()
@@ -612,50 +626,57 @@ else
 		
 		if drawWindow and not Spring.IsGUIHidden() then 
 			--back panel
-			glColor(0.3, 0.3, 0.4, 0.4)
+			glColor(0.3, 0.3, 0.4, 0.55)
 			glRect(Panel["back"]["x0"],Panel["back"]["y0"],Panel["back"]["x1"], Panel["back"]["y1"])
 			--exit button
 			glColor(0, 0, 0, 0.4)
 			glRect(Button["exit"]["x0"],Button["exit"]["y0"], Button["exit"]["x1"], Button["exit"]["y1"])
 			glColor(0, 0, 0, 1)
 			drawBorder(Button["exit"]["x0"],Button["exit"]["y0"], Button["exit"]["x1"], Button["exit"]["y1"],1)
-			glColor(1, 1, 1, 1)
-			glText("Exit", Button["exit"]["x0"] + 10 ,Button["exit"]["y0"] + 10, 14, 'x')
+			
 			--proceed button
 			glColor(0, 0, 0, 0.4)
 			glRect(Button["proceed"]["x0"],Button["proceed"]["y0"], Button["proceed"]["x1"], Button["proceed"]["y1"])
 			glColor(0, 0, 0, 1)
 			drawBorder(Button["proceed"]["x0"],Button["proceed"]["y0"], Button["proceed"]["x1"], Button["proceed"]["y1"],1)
 			glColor(1, 1, 1, 1)
-			glText("Proceed to engine statistics", Button["proceed"]["x0"] + 10 ,Button["proceed"]["y0"] + 10, 14, 'x')
+			
 			--influence tab button
 			glColor(0, 0, 0, 0.4)
 			glRect(Button["influence"]["x0"],Button["influence"]["y0"], Button["influence"]["x1"], Button["influence"]["y1"])
 			glColor(0, 0, 0, 1)
 			drawBorder(Button["influence"]["x0"],Button["influence"]["y0"], Button["influence"]["x1"], Button["influence"]["y1"],1)
-			glColor(1, 1, 1, 1)
-			glText("Influence", Button["influence"]["x0"] + 10 ,Button["influence"]["y0"] + 10, 14, 'x')
+						
 			-- player matrix tab button
 			glColor(0, 0, 0, 0.4)
 			glRect(Button["matrix"]["x0"],Button["matrix"]["y0"], Button["matrix"]["x1"], Button["matrix"]["y1"])
 			glColor(0, 0, 0, 1)
 			drawBorder(Button["matrix"]["x0"],Button["matrix"]["y0"], Button["matrix"]["x1"], Button["matrix"]["y1"],1)
-			glColor(1, 1, 1, 1)
-			glText("Player kills/losses", Button["matrix"]["x0"] + 10 ,Button["matrix"]["y0"] + 10, 14, 'x')
+						
 			--heroes tab button
 			glColor(0, 0, 0, 0.4)
 			glRect(Button["heroes"]["x0"],Button["heroes"]["y0"], Button["heroes"]["x1"], Button["heroes"]["y1"])
 			glColor(0, 0, 0, 1)
 			drawBorder(Button["heroes"]["x0"],Button["heroes"]["y0"], Button["heroes"]["x1"], Button["heroes"]["y1"],1)
-			glColor(1, 1, 1, 1)
-			glText("Heroes in victory", Button["heroes"]["x0"] + 10 ,Button["heroes"]["y0"] + 10, 14, 'x')
+						
 			--lost tab button
 			glColor(0, 0, 0, 0.4)
 			glRect(Button["lost"]["x0"],Button["lost"]["y0"], Button["lost"]["x1"], Button["lost"]["y1"])
 			glColor(0, 0, 0, 1)
 			drawBorder(Button["lost"]["x0"],Button["lost"]["y0"], Button["lost"]["x1"], Button["lost"]["y1"],1)
 			glColor(1, 1, 1, 1)
-			glText("Lost in service", Button["lost"]["x0"] + 10 ,Button["lost"]["y0"] + 10, 14, 'x')			
+		
+			-- text for buttons
+			myFontMed:Begin()
+			myFontMed:SetTextColor({1, 1, 1, 1})
+			myFontMed:Print("Exit", Button["exit"]["x0"] + 10 ,Button["exit"]["y0"] + 10, 14, 'xs')
+			myFontMed:Print("Proceed to engine statistics", Button["proceed"]["x0"] + 10 ,Button["proceed"]["y0"] + 10, 14, 'xs')
+			myFontMed:Print("Influence", Button["influence"]["x0"] + 10 ,Button["influence"]["y0"] + 10, 14, 'xs')
+			myFontMed:Print("Player kills/losses", Button["matrix"]["x0"] + 10 ,Button["matrix"]["y0"] + 10, 14, 'xs')
+			myFontMed:Print("Heroes in victory", Button["heroes"]["x0"] + 10 ,Button["heroes"]["y0"] + 10, 14, 'xs')
+			myFontMed:Print("Lost in service", Button["lost"]["x0"] + 10 ,Button["lost"]["y0"] + 10, 14, 'xs')
+			myFontMed:End()
+			
 			-- Highlight
 			glColor(0.8, 0.8, 0.2, 0.5)
 			if Button["exit"]["mouse"] then
@@ -689,8 +710,13 @@ else
 				-- INFLUENCE TAB  --
 				--------------------		
 				-- title
-				glColor(0.8, 0.8, 1.0, 1)
-				glText("Territorial influence over time", (Panel["1"]["x0"]+Panel["1"]["x1"])/2,Panel["1"]["y1"] + 30, 16, 'vc')
+				
+				myFontBig:Begin()
+				myFontBig:SetTextColor({0.8, 0.8, 1.0, 1})
+				myFontBig:Print("Territorial influence over time", (Panel["1"]["x0"]+Panel["1"]["x1"])/2,Panel["1"]["y1"] + 30, 16, 'vcs')
+				myFontBig:End()
+				
+				--panel
 				glColor(0.7, 0.7, 1.0, 0.4)
 				glRect(Panel["1"]["x0"],Panel["1"]["y0"],Panel["1"]["x1"], Panel["1"]["y1"])
 				
@@ -706,10 +732,15 @@ else
 						local r,g,b = GetTeamColor(teamID1)
 						glColor(r, g, b, 1)
 						glRect(x00,y00,x00+bs,y00+bs)
-						glText("Team " .. tostring(aID),x00+20,y00, 12,'b')
+						myFont:Begin()
+						myFont:SetTextColor({r,g,b,1})
+						myFont:Print("Team " .. tostring(aID),x00+20,y00, 12,'bo')
+						myFont:End()
 					else
-						glColor(0.8, 0.8, 0.8, 0.7)
-						glText("(Empty)",x00+20,y00-2, 12,'b')
+						myFont:Begin()
+						myFont:SetTextColor({0.8, 0.8, 0.8, 0.7})
+						myFont:Print("(Empty)",x00+20,y00-2, 12,'bo')
+						myFont:End()
 					end
 				end
 				
@@ -722,21 +753,25 @@ else
 				local y75 = Panel["1"]["y0"] + 0.75 * (Panel["1"]["y1"]-Panel["1"]["y0"])
 				glColor(0.2, 0.2, 0.2, 1)
 				glRect(Panel["1"]["x0"]-1,Panel["1"]["y0"],Panel["1"]["x0"], Panel["1"]["y1"]+10)
-				glText("Influence", Panel["1"]["x0"]-30,Panel["1"]["y1"] + 20, 12, 'x')
-				glText("0 %", Panel["1"]["x0"]-10, y0, 10, 'vr')
-				glText("50 %", Panel["1"]["x0"]-10, y50, 10, 'vr')
-				glText("100 %", Panel["1"]["x0"]-10, y100, 10, 'vr')
-				glText("Time: " .. n-1 .. " min", Panel["1"]["x1"]+10,Panel["1"]["y0"]-2, 12, 'x')
 				glRect(Panel["1"]["x0"]-5,y0,Panel["1"]["x1"],y0+1)
 				glRect(Panel["1"]["x0"]-5,y100,Panel["1"]["x1"],y100+1)
 				glRect(Panel["1"]["x0"]-5,y50,Panel["1"]["x1"],y50+1)
+				
+				myFont:Begin()
+				myFont:SetTextColor({0.2, 0.2, 0.2, 1})
+				myFont:Print("Influence", Panel["1"]["x0"]-30,Panel["1"]["y1"] + 20, 12, 'xo')
+				myFont:Print("0 %", Panel["1"]["x0"]-10, y0, 10, 'vro')
+				myFont:Print("50 %", Panel["1"]["x0"]-10, y50, 10, 'vro')
+				myFont:Print("100 %", Panel["1"]["x0"]-10, y100, 10, 'vro')
+				myFont:Print("Time: " .. n-1 .. " min", Panel["1"]["x1"]+10,Panel["1"]["y0"]-2, 12, 'xo')
+				myFont:End()
+				
 				glColor(0.3, 0.3, 0.3, 1)
 				glRect(Panel["1"]["x0"]-5,y25,Panel["1"]["x1"],y25+1)
 				glRect(Panel["1"]["x0"]-5,y75,Panel["1"]["x1"],y75+1)
 				
 				-- values
 				local r,g,b
-				
 				
 				local x0 		= Panel["1"]["x0"]
 				local xspace 	= Panel["1"]["x1"]-Panel["1"]["x0"]
@@ -788,45 +823,66 @@ else
 				-- PLAYER KILLS TAB  --
 				-----------------------	
 				-- charts
-				glColor(0.2, 0.2, 0.3, 0.6)
+				glColor(0.2, 0.2, 0.3, 0.6) --glColor(0.3, 0.2, 0.2, 0.5)
 				glRect(Panel["3"]["x0"],Panel["3"]["y0"],Panel["3"]["x1"], Panel["3"]["y1"])
 				glRect(Panel["4"]["x0"],Panel["4"]["y0"],Panel["4"]["x1"], Panel["4"]["y1"])
 				
 				-- title
-				glColor(0.8, 0.8, 1.0, 1)
-				glText("Most damage dealt:", Panel["2"]["x0"]+200,Panel["2"]["y1"], 12, 'v')
-				glText("Most damage received:", Panel["2"]["x0"]+200,Panel["2"]["y1"]-20, 12, 'v')
-				glText("Total kills:", (Panel["3"]["x0"]+Panel["3"]["x1"])/2,Panel["3"]["y1"]+20, 14, 'vr')
-				glText("Total losses:", (Panel["4"]["x0"]+Panel["4"]["x1"])/2,Panel["4"]["y1"]+20, 14, 'vr')
+				myFontBig:Begin()
+				myFontBig:SetTextColor({0.8, 0.8, 1.0, 1})
+				myFontBig:Print("Player-to-player kills (in hp)", Panel["2"]["x0"]+200,Panel["1"]["y1"]+30, 16, 'vs')
+				myFontBig:End()
+				
+				--subtitle
+				myFont:Begin()
+				myFont:SetTextColor({0.8, 0.8, 1.0, 1})
+				myFont:Print("Most damage dealt:", Panel["2"]["x0"]+450,Panel["2"]["y1"], textsize, 'vs')
+				myFont:Print("Most damage received:", Panel["2"]["x0"]+450,Panel["2"]["y1"]-20, textsize, 'vs')
+				myFont:End()
+				
+				-- chart titles
+				myFontBig:Begin()
+				myFontBig:SetTextColor({0.8, 0.8, 1.0, 1})
+				myFontBig:Print("Kills:", (Panel["3"]["x0"]+Panel["3"]["x1"])/2,Panel["3"]["y0"]-20, 16, 'vrs')
+				myFontBig:Print("losses:", (Panel["4"]["x0"]+Panel["4"]["x1"])/2,Panel["4"]["y0"]-20, 16, 'vrs')
+				myFontBig:End()
 				
 				--footnote
-				glColor(0.8, 0.8, 1.0, 0.75)
-				glText("Other: where there is no attacker (directly) involved (grey). Gaia team damage (if any) is shown as white.", Panel["2"]["x0"]+10,Panel["2"]["y0"]-60, 10, 'v')
+				myFont:Begin()
+				myFont:SetTextColor({0.9, 0.9, 1.0, 1.0})
+				myFont:Print("Other: where there is no attacker (directly) involved (grey). Gaia team damage (if any) is shown as white.", Panel["2"]["x0"]+10,Panel["2"]["y0"]-60, 10, 'v')
+				
+				
 				--max values
-				glText(tostring(round(maxkilled/1000,1)).. " khp", Panel["2"]["x0"]+400,Panel["2"]["y1"], 12, 'v')
-				glText(tostring(round(maxlost/1000,1)).. " khp", Panel["2"]["x0"]+400,Panel["2"]["y1"]-20, 12, 'v')
+				myFont:Print(tostring(round(maxkilled/1000,1)).. " k", Panel["2"]["x0"]+600,Panel["2"]["y1"], textsize, 'vs')
+				myFont:Print(tostring(round(maxlost/1000,1)).. " k", Panel["2"]["x0"]+600,Panel["2"]["y1"]-20, textsize, 'vs')
+				myFont:End()
 				
 				glColor(1,1,1,1)
 				
-				
 				if maxkiller then
 					local r1,g1,b1 = GetTeamColor(maxkiller)
-					glColor(r1,g1,b1, 1)
-					local maxkillername = teamData[maxkiller].leader or "N/A"
+					local maxkillername = teamData[maxkiller].leader or (leaderNames[maxkiller] or "N/A")
 					if teamData[maxkiller].isAI then maxkillername = "AI" end
 					if maxkiller == gaiaID then maxkillername = "Team gaia" end
 					
-					glText("(" .. maxkillername .. ")", Panel["2"]["x0"]+460,Panel["2"]["y1"]+2, 12, 'v')
+					myFont:Begin()
+					myFont:SetTextColor({r1,g1,b1, 1})
+					myFont:Print("(" .. maxkillername .. ")", Panel["2"]["x0"]+660,Panel["2"]["y1"]+2, 12, 'vs')
+					myFont:End()
+					
 				end
 				
 				if maxloser then
 					local r2,g2,b2 = GetTeamColor(maxloser)
-					glColor(r2,g2,b2, 1)
-					local maxlosername = teamData[maxloser].leader or "N/A"
+					local maxlosername = teamData[maxloser].leader or (leaderNames[maxloser] or "N/A")
 					if teamData[maxloser].isAI then maxlosername = "AI" end
 					if maxloser == gaiaID then maxlosername = "Team gaia" end
 					
-					glText("(" ..maxlosername .. ")", Panel["2"]["x0"]+460,Panel["2"]["y1"]-18, 12, 'v')
+					myFont:Begin()
+					myFont:SetTextColor({r2,g2,b2, 1})
+					myFont:Print("(" ..maxlosername .. ")", Panel["2"]["x0"]+660,Panel["2"]["y1"]-18, 12, 'vs')
+					myFont:End()
 				end
 				
 				-- axes
@@ -835,18 +891,21 @@ else
 				
 				glColor(0.8, 0.8, 0.8, 1)
 				glRect(Panel["3"]["x0"]-1,Panel["3"]["y0"],Panel["3"]["x0"], Panel["3"]["y1"]+10)
-				glText("0", Panel["3"]["x0"]-10, y00, 10, 'vr')
-				glText("max = " .. tostring(round(maxvalue/1000,1)) .. " khp", Panel["3"]["x0"]-10, y100, 10, 'vr')
 				glRect(Panel["3"]["x0"]-5,y00,Panel["3"]["x1"],y00+1)
 				glRect(Panel["3"]["x0"]-5,y100,Panel["3"]["x1"],y100+1)
-				
 				glRect(Panel["4"]["x0"]-1,Panel["4"]["y0"],Panel["4"]["x0"], Panel["4"]["y1"]+10)
-				glText("0", Panel["4"]["x1"]+10, y00, 10, 'v')
-				glText("max = " .. tostring(round(maxvalue/1000,1)) .. " khp", Panel["4"]["x1"]+10, y100, 10, 'v')
-				--glText("max = " .. tostring(round(maxvalue/1000,1)) .. " khp", Panel["4"]["x0"]-10, y100, 10, 'vr')
 				glRect(Panel["4"]["x0"]-5,y00,Panel["4"]["x1"],y00+1)
 				glRect(Panel["4"]["x0"]-5,y100,Panel["4"]["x1"],y100+1)
-							
+				
+				myFont:Begin()
+				myFont:SetTextColor({0.8, 0.8, 0.8, 1})
+				myFont:Print("0", Panel["3"]["x0"]-10, y00, 10, 'vrs')
+				myFont:Print("max = " .. tostring(round(maxvalue/1000,1)) .. " k", Panel["3"]["x0"]-10, y100, 10, 'vrs')
+				myFont:Print("0", Panel["4"]["x1"]+10, y00, 10, 'vs')
+				myFont:Print("max = " .. tostring(round(maxvalue/1000,1)) .. " k", Panel["4"]["x1"]+10, y100, 10, 'vs')
+				--myFont:Print("max = " .. tostring(round(maxvalue/1000,1)) .. " k", Panel["4"]["x0"]-10, y100, 10, 'vr')
+				myFont:End()
+				
 				glColor(1,1,1,1)
 				-- players legend
 				if teamData then
@@ -861,14 +920,17 @@ else
 							local x0 = Button["legend"][tID]["x0"]
 							local y0 = Button["legend"][tID]["y0"]			
 							
-							local leaderName = data.leader or "N/A"
+							local leaderName = data.leader or (leaderNames[tID] or "N/A")
 							if data.isAI then leaderName = "AI" end 
 							if tID == gaiaID then leaderName = "Gaia" end
 							
 							glColor(r, g, b, 1)
 							glRect(x0, y0, x0 + bs, y0 + bs)
-							glText(leaderName, x0 + bs + 10, y0, 12, 'b')
-							
+							myFont:Begin()
+							myFont:SetTextColor({r, g, b, 1})
+							myFont:Print(leaderName, x0 + bs + 10, y0, textsize, 'bs')
+							myFont:End()
+					
 							--highlight
 							if Button["legend"][tID]["mouse"] and not Button["legend"][tID]["On"] then
 								glColor(0.8, 0.8, 0.2,1)
@@ -890,12 +952,18 @@ else
 							--values
 							if Button["legend"][tID]["On"] then
 								-- player name big label
-								glColor(r, g, b, 1)
-								glText(tID .. " - " .. leaderName, Panel["2"]["x0"]+280, Panel["2"]["y1"] - 79, 20, 'v')
-								glColor(1, 1, 1, 1)
-								glText("Player:", Panel["2"]["x0"]+200, Panel["2"]["y1"] - 80, 20, 'v')
-								glText(tostring(round(teamTotals[tID]["killed"]/1000,1)) .. " khp", (Panel["3"]["x0"]+Panel["3"]["x1"])/2+10,Panel["3"]["y1"]+18, 14, 'v')
-								glText(tostring(round(teamTotals[tID]["lost"]/1000,1)) .. " khp", (Panel["4"]["x0"]+Panel["4"]["x1"])/2+10,Panel["4"]["y1"]+18, 14, 'v')
+								myFontHuge:Begin()
+								myFontHuge:SetTextColor(r, g, b, 1)
+								myFontHuge:Print(tID .. " - " .. leaderName, Panel["2"]["x0"]+280, Panel["2"]["y1"] - 79, 20, 'vs')
+								myFontHuge:Print("Player:", Panel["2"]["x0"]+200, Panel["2"]["y1"] - 80, 20, 'vs')
+								myFontHuge:End()
+								
+								-- killed/lost values
+								myFontMed:Begin()
+								myFontMed:SetTextColor({1, 1, 1, 1})
+								myFontMed:Print(tostring(round(teamTotals[tID]["killed"]/1000,1)) .. " k", (Panel["3"]["x0"]+Panel["3"]["x1"])/2+10,Panel["3"]["y0"]-21, 14, 'vs')
+								myFontMed:Print(tostring(round(teamTotals[tID]["lost"]/1000,1)) .. " k", (Panel["4"]["x0"]+Panel["4"]["x1"])/2+10,Panel["4"]["y0"]-21, 14, 'vs')
+								myFontMed:End()
 								
 								-- player matrix
 								local w = 6 -- bar width
@@ -937,7 +1005,11 @@ else
 								if dmgOther > 0 then
 									glColor(0.82,0.79,0.79,1) -- snow grey/white
 									glRect(x1, y1, x1 + bs, y1 + bs)
-									glText("Other", x1 + bs + 10, y1, 12, 'b')
+									
+									myFont:Begin()
+									myFont:SetTextColor({0.82,0.79,0.79,1})
+									myFont:Print("Other", x1 + bs + 10, y1, 12, 'bs')
+									myFont:End()
 								end
 								
 								glColor(0.82,0.79,0.79,1)
@@ -949,11 +1021,15 @@ else
 								if dmgDebris > 0 then
 									local y10 = Panel["2"]["y1"] - (n+1+min(dmgOther*maxvalue,1))*(bs+5) - bs
 									glRect(x1+bs/3, y10, x1 + 2*bs/3, y10 + bs)
-									
 									glColor(0.82,0.79,0.79,1)
-									glText("Debris", x1 + bs + 10, y10, 12, 'b')
 									glRect(x1, y10, x1 + bs/3, y10 + bs)
 									glRect(x1+2*bs/3, y10, x1 + bs, y10 + bs)
+									
+									myFont:Begin()
+									myFont:SetTextColor({0.82,0.79,0.79,1})
+									myFont:Print("Debris", x1 + bs + 10, y10, 12, 'bs')
+									myFont:End()
+									
 								end
 								
 								--ground
@@ -962,11 +1038,14 @@ else
 								if dmgGround > 0 then
 									local y10 = Panel["2"]["y1"] - (n+1+min(dmgOther,1)+min(dmgDebris,1))*(bs+5) - bs
 									glRect(x1+bs/3, y10, x1 + 2*bs/3, y10 + bs)
-									
 									glColor(0.82,0.79,0.79,1)
-									glText("Ground", x1 + bs + 10, y10, 12, 'b')
 									glRect(x1, y10, x1 + bs/3, y10 + bs)
 									glRect(x1+2*bs/3, y10, x1 + bs, y10 + bs)
+									
+									myFont:Begin()
+									myFont:SetTextColor({0.82,0.79,0.79,1})
+									myFont:Print("Ground", x1 + bs + 10, y10, 12, 'bs')
+									myFont:End()
 								end
 								
 								--object
@@ -975,11 +1054,14 @@ else
 								if dmgObject > 0 then
 									local y10 = Panel["2"]["y1"] - (n+1+min(dmgOther,1)+min(dmgDebris,1)+min(dmgGround,1))*(bs+5) - bs
 									glRect(x1+bs/3, y10, x1 + 2*bs/3, y10 + bs)
-									
 									glColor(0.82,0.79,0.79,1)
-									glText("Object", x1 + bs + 10, y10, 12, 'b')
 									glRect(x1, y10, x1 + bs/3, y10 + bs)
 									glRect(x1+2*bs/3, y10, x1 + bs, y10 + bs)
+									
+									myFont:Begin()
+									myFont:SetTextColor({0.82,0.79,0.79,1})
+									myFont:Print("Object", x1 + bs + 10, y10, 12, 'bs')
+									myFont:End()
 								end
 								
 								--fire
@@ -988,11 +1070,14 @@ else
 								if dmgFire > 0 then
 									local y10 = Panel["2"]["y1"] - (n+1+min(dmgOther,1)+min(dmgDebris,1)+min(dmgGround,1)+min(dmgObject,1))*(bs+5) - bs
 									glRect(x1+bs/3, y10, x1 + 2*bs/3, y10 + bs)
-									
 									glColor(0.82,0.79,0.79,1)
-									glText("Fire", x1 + bs + 10, y10, 12, 'b')
 									glRect(x1, y10, x1 + bs/3, y10 + bs)
 									glRect(x1+2*bs/3, y10, x1 + bs, y10 + bs)
+									
+									myFont:Begin()
+									myFont:SetTextColor({0.82,0.79,0.79,1})
+									myFont:Print("Fire", x1 + bs + 10, y10, 12, 'bs')
+									myFont:End()
 								end
 								
 								--water
@@ -1001,11 +1086,14 @@ else
 								if dmgWater > 0 then
 									local y10 = Panel["2"]["y1"] - (n+1+min(dmgOther,1)+min(dmgDebris,1)+min(dmgGround,1)+min(dmgObject,1)+min(dmgFire,1))*(bs+5) - bs
 									glRect(x1+bs/3, y10, x1 + 2*bs/3, y10 + bs)
-									
 									glColor(0.82,0.79,0.79,1)
-									glText("Water", x1 + bs + 10, y10, 12, 'b')
 									glRect(x1, y10, x1 + bs/3, y10 + bs)
 									glRect(x1+2*bs/3, y10, x1 + bs, y10 + bs)
+									
+									myFont:Begin()
+									myFont:SetTextColor({0.82,0.79,0.79,1})
+									myFont:Print("Water", x1 + bs + 10, y10, 12, 'bs')
+									myFont:End()
 								end
 								
 								--kill
@@ -1014,11 +1102,14 @@ else
 								if dmgKill > 0 then
 									local y10 = Panel["2"]["y1"] - (n+1+min(dmgOther,1)+min(dmgDebris,1)+min(dmgGround,1)+min(dmgObject,1)+min(dmgFire,1)+min(dmgWater,1))*(bs+5) - bs
 									glRect(x1+bs/3, y10, x1 + 2*bs/3, y10 + bs)
-									
 									glColor(0.82,0.79,0.79,1)
-									glText("Collateral", x1 + bs + 10, y10, 12, 'b')
 									glRect(x1, y10, x1 + bs/3, y10 + bs)
 									glRect(x1+2*bs/3, y10, x1 + bs, y10 + bs)
+									
+									myFont:Begin()
+									myFont:SetTextColor({0.82,0.79,0.79,1})
+									myFont:Print("Collateral", x1 + bs + 10, y10, 12, 'bs')
+									myFont:End()
 								end
 							end
 						end
@@ -1028,23 +1119,41 @@ else
 			-----------------
 			-- HEROES TAB  --
 			-----------------		
+				local imgposx = (Panel["5"]["x0"]+Panel["5"]["x1"])/2 - 120 - imgSize
+				local imgposx2 = (Panel["5"]["x0"]+Panel["5"]["x1"])/2 + 120
+				local imgposy = Panel["5"]["y1"]-30
+				
 				--panel
 				glColor(0.3, 0.2, 0.2, 0.5)
 				glRect(Panel["5"]["x0"],Panel["5"]["y0"],Panel["5"]["x1"], Panel["5"]["y1"])
 				
 				--title
+				myFontBig:Begin()
+				myFontBig:SetTextColor({0.8, 0.8, 1.0, 1})
+				myFontBig:Print("Heroes in victory", (Panel["5"]["x0"]+Panel["5"]["x1"])/2,Panel["5"]["y1"] - 20, 16, 'vcs')
+				myFontBig:End()
+				
+				-- pictures
+				glColor(1,1,1,1)
+				glTexture(imgHero)
+				glTexRect(imgposx,imgposy,imgposx + imgSize,imgposy + imgSize)
+				glTexRect(imgposx2,imgposy,imgposx2 + imgSize,imgposy + imgSize)
+				glTexture(false)
+				
 				glColor(0.8, 0.8, 1.0, 1)
-				glText("Heroes in victory", (Panel["5"]["x0"]+Panel["5"]["x1"])/2,Panel["5"]["y1"] - 20, 16, 'vc')
 				
 				if heroUnits and heroUnits[1] and heroUnits[1][1] then
+					myFont:Begin()
+					myFont:SetTextColor({1, 1, 1, 1})
+					myFont:Print("#",Panel["5"]["x0"]+20, Panel["5"]["y1"]-90, textsize, 'ds')
+					myFont:Print("Unit (owner)",Panel["5"]["x0"]+50, Panel["5"]["y1"]-90, textsize, 'ds')
+					myFont:Print("Confirmed kills",Panel["5"]["x1"]-100, Panel["5"]["y1"]-90, textsize, 'drs')
+					myFont:Print("Age",Panel["5"]["x1"]-50, Panel["5"]["y1"]-90, textsize, 'drs')
+					myFont:End()
 					glColor(1, 1, 1, 1)
-					glText("#",Panel["5"]["x0"]+20, Panel["5"]["y1"]-90, 12, 'd')
-					glText("Unit (owner)",Panel["5"]["x0"]+50, Panel["5"]["y1"]-90, 12, 'd')
-					glText("Confirmed kills",Panel["5"]["x1"]-100, Panel["5"]["y1"]-90, 12, 'dr')
-					glText("Age",Panel["5"]["x1"]-50, Panel["5"]["y1"]-90, 12, 'dr')
 					glRect(Panel["5"]["x0"]+20,Panel["5"]["y1"]-94,Panel["5"]["x1"]-50,Panel["5"]["y1"]-95)
 					
-					glColor(0.8, 0.8, 1.0, 1)
+					myFont:SetTextColor({0.8, 0.8, 1.0, 1})
 					for i, unitdata in ipairs (heroUnits) do
 						local name = unitdata[1]
 						local kills = unitdata[2]
@@ -1055,48 +1164,71 @@ else
 						local _,leaderID,_,isAI = GetTeamInfo(teamID)
 						local leaderName
 						if leaderID then
-							leaderName	= GetPlayerInfo(leaderID) or "N/A"
+							leaderName	= GetPlayerInfo(leaderID) or (leaderNames[teamID] or "N/A")
 						else
 							leaderName = "N/A"
 						end
 						
 						if isAI then leaderName = "AI" end	
 						if teamID == gaiaID then leaderName = "Gaia" end
-						
-						glText(tostring(i)..".",Panel["5"]["x0"]+20, Panel["5"]["y1"] - i * 3 * bs - 90, 12, 'd')
-						glText(name,Panel["5"]["x0"]+50, Panel["5"]["y1"] - i * 3 * bs - 90, 12, 'd')
-						glColor(r, g, b, 1)
-						glText("("..leaderName..")",Panel["5"]["x0"] + 12* gl.GetTextWidth(name) + 60, Panel["5"]["y1"] - i * 3 * bs - 90, 12, 'd')
-						glColor(0.8, 0.8, 1.0, 1)
-						glText(tostring(kills),Panel["5"]["x1"]-100, Panel["5"]["y1"]- i * 3 * bs - 90, 12, 'dr')
-						glText(tostring(age).." min",Panel["5"]["x1"]-50, Panel["5"]["y1"]- i * 3 * bs - 90, 12, 'dr')
+						myFont:Begin()
+						myFont:Print(tostring(i)..".",Panel["5"]["x0"]+20, Panel["5"]["y1"] - i * 3 * bs - 90, textsize, 'ds')
+						myFont:Print(name,Panel["5"]["x0"]+50, Panel["5"]["y1"] - i * 3 * bs - 90, textsize, 'ds')
+						myFont:SetTextColor({r, g, b, 1})
+						myFont:Print("("..leaderName..")",Panel["5"]["x0"] + 12* gl.GetTextWidth(name) + 60, Panel["5"]["y1"] - i * 3 * bs - 90, textsize, 'ds')
+						myFont:SetTextColor({0.8, 0.8, 1.0, 1})
+						myFont:Print(tostring(kills),Panel["5"]["x1"]-100, Panel["5"]["y1"]- i * 3 * bs - 90, textsize, 'dro')
+						myFont:Print(tostring(age).." min",Panel["5"]["x1"]-50, Panel["5"]["y1"]- i * 3 * bs - 90, textsize, 'dro')
+						myFont:End()
 					end
 				else
-					glText("(No awards)",(Panel["5"]["x0"]+Panel["5"]["x1"])/2, Panel["5"]["y1"]-90, 12, 'dc')
+					myFont:Begin()
+					myFont:Print("(No awards)",(Panel["5"]["x0"]+Panel["5"]["x1"])/2, Panel["5"]["y1"]-90, textsize, 'dcs')
+					myFont:End()
 				end
-		
+				glColor(1, 1, 1, 1)
+				
 			elseif Button["lost"]["On"] then
 				---------------
 				-- LOST TAB  --
-				---------------		
+				---------------	
+
+				local imgposx = (Panel["5"]["x0"]+Panel["5"]["x1"])/2 - 100 - imgSize
+				local imgposx2 = (Panel["5"]["x0"]+Panel["5"]["x1"])/2 + 100
+				local imgposy = Panel["5"]["y1"]-30
+				
 				--panel
 				glColor(0.3, 0.2, 0.2, 0.5)
 				glRect(Panel["5"]["x0"],Panel["5"]["y0"],Panel["5"]["x1"], Panel["5"]["y1"])
 				
 				--title
+				myFontBig:Begin()
+				myFontBig:SetTextColor({0.8, 0.8, 1.0, 1})
+				myFontBig:Print("Lost in service", (Panel["5"]["x0"]+Panel["5"]["x1"])/2,Panel["5"]["y1"] - 20, 16, 'vcs')
+				myFontBig:End()
+				
+				-- pictures
+				glColor(1,1,1,1)
+				glTexture(imgLost)
+				glTexRect(imgposx,imgposy,imgposx + imgSize,imgposy + imgSize)
+				glTexRect(imgposx2,imgposy,imgposx2 + imgSize,imgposy + imgSize)
+				glTexture(false)
+				
 				glColor(0.8, 0.8, 1.0, 1)
-				glText("Lost in service", (Panel["5"]["x0"]+Panel["5"]["x1"])/2,Panel["5"]["y1"] - 20, 16, 'vc')
 				
 				if lostUnits and lostUnits[1] and lostUnits[1][1] then
+					myFont:Begin()
+					myFont:SetTextColor({1, 1, 1, 1})
+					myFont:Print("#",Panel["5"]["x0"]+20, Panel["5"]["y1"]-90, textsize, 'ds')
+					myFont:Print("Unit (owner)",Panel["5"]["x0"]+50, Panel["5"]["y1"]-90, textsize, 'ds')
+					myFont:Print("Confirmed kills",Panel["5"]["x1"]-150, Panel["5"]["y1"]-90, textsize, 'drs')
+					myFont:Print("Birth",Panel["5"]["x1"]-100, Panel["5"]["y1"]-90, textsize, 'drs')
+					myFont:Print("Death",Panel["5"]["x1"]-50, Panel["5"]["y1"]-90, textsize, 'drs')
+					myFont:End()
 					glColor(1, 1, 1, 1)
-					glText("#",Panel["5"]["x0"]+20, Panel["5"]["y1"]-90, 12, 'd')
-					glText("Unit (owner)",Panel["5"]["x0"]+50, Panel["5"]["y1"]-90, 12, 'd')
-					glText("Confirmed kills",Panel["5"]["x1"]-150, Panel["5"]["y1"]-90, 12, 'dr')
-					glText("Birth",Panel["5"]["x1"]-100, Panel["5"]["y1"]-90, 12, 'dr')
-					glText("Death",Panel["5"]["x1"]-50, Panel["5"]["y1"]-90, 12, 'dr')
 					glRect(Panel["5"]["x0"]+20,Panel["5"]["y1"]-94,Panel["5"]["x1"]-50,Panel["5"]["y1"]-95)
 					
-					glColor(0.8, 0.8, 1.0, 1)
+					myFont:SetTextColor({0.8, 0.8, 1.0, 1})
 					for i, unitdata in ipairs (lostUnits) do
 						local name = unitdata[1]
 						local kills = unitdata[2]
@@ -1107,7 +1239,7 @@ else
 						local _,leaderID,_,isAI = GetTeamInfo(teamID)
 						local leaderName
 						if leaderID then
-							leaderName	= GetPlayerInfo(leaderID) or "N/A"
+							leaderName	= GetPlayerInfo(leaderID) or (leaderNames[teamID] or "N/A")
 						else
 							leaderName = "N/A"
 						end
@@ -1115,17 +1247,21 @@ else
 						if isAI then leaderName = "AI" end	
 						if teamID == gaiaID then leaderName = "Gaia" end
 						
-						glText(tostring(i)..".",Panel["5"]["x0"]+20, Panel["5"]["y1"] - i * 3 * bs - 90, 12, 'd')
-						glText(name,Panel["5"]["x0"]+50, Panel["5"]["y1"] - i * 3 * bs - 90, 12, 'd')
-						glColor(r, g, b, 1)
-						glText("("..leaderName..")",Panel["5"]["x0"] + 12* gl.GetTextWidth(name) + 60, Panel["5"]["y1"] - i * 3 * bs - 90, 12, 'd')
-						glColor(0.8, 0.8, 1.0, 1)
-						glText(tostring(kills),Panel["5"]["x1"]-150, Panel["5"]["y1"]- i * 3 * bs - 90, 12, 'dr')
-						glText(tostring(birth).." min",Panel["5"]["x1"]-100, Panel["5"]["y1"]- i * 3 * bs - 90, 12, 'dr')
-						glText(tostring(death).." min",Panel["5"]["x1"]-50, Panel["5"]["y1"]- i * 3 * bs - 90, 12, 'dr')
+						myFont:Begin()
+						myFont:Print(tostring(i)..".",Panel["5"]["x0"]+20, Panel["5"]["y1"] - i * 3 * bs - 90, textsize, 'ds')
+						myFont:Print(name,Panel["5"]["x0"]+50, Panel["5"]["y1"] - i * 3 * bs - 90, textsize, 'ds')
+						myFont:SetTextColor({r, g, b, 1})
+						myFont:Print("("..leaderName..")",Panel["5"]["x0"] + 12* gl.GetTextWidth(name) + 60, Panel["5"]["y1"] - i * 3 * bs - 90, textsize, 'ds')
+						myFont:SetTextColor({0.8, 0.8, 1.0, 1})
+						myFont:Print(tostring(kills),Panel["5"]["x1"]-150, Panel["5"]["y1"]- i * 3 * bs - 90, textsize, 'dro')
+						myFont:Print(tostring(birth).." min",Panel["5"]["x1"]-100, Panel["5"]["y1"]- i * 3 * bs - 90, textsize, 'dro')
+						myFont:Print(tostring(death).." min",Panel["5"]["x1"]-50, Panel["5"]["y1"]- i * 3 * bs - 90, textsize, 'dro')
+						myFont:End()
 					end
 				else
-					glText("(No awards)",(Panel["5"]["x0"]+Panel["5"]["x1"])/2, Panel["5"]["y1"]-90, 12, 'dc')
+					myFont:Begin()
+					myFont:Print("(No awards)",(Panel["5"]["x0"]+Panel["5"]["x1"])/2, Panel["5"]["y1"]-90, textsize, 'dcs')
+					myFont:End()
 				end
 			end
 		end
