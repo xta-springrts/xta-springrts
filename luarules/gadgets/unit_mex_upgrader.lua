@@ -29,6 +29,8 @@ local FindUnitCmdDesc = Spring.FindUnitCmdDesc
 local InsertUnitCmdDesc = Spring.InsertUnitCmdDesc 
 local EditUnitCmdDesc = Spring.EditUnitCmdDesc
 local SendMessageToTeam = Spring.SendMessageToTeam
+local ValidUnitID = Spring.ValidUnitID
+local GetUnitIsDead = Spring.GetUnitIsDead
 
 local builderDefs = {} 
 local mexDefs = {} 
@@ -90,7 +92,7 @@ function determine(ud, wd)
         local mexDef = {} 
         mexDef.extractsMetal = extractsMetal 
         if #unitDef.weapons <= 1 then
-          if (#unitDef.weapons == 1 and wd[unitDef.weapons[1].weaponDef].type == "Shield") then
+          if (#unitDef.weapons == 1 and wd[unitDef.weapons[1].weaponDef].isShield) then
 	    mexDef.armed = #unitDef.weapons < 0
           else
             mexDef.armed = #unitDef.weapons > 0      
@@ -484,8 +486,8 @@ function gadget:AllowCommand(unitID, unitDefID, teamID, cmdID, cmdParams, _)
     
     return false 
   elseif cmdID ~= CMD_AUTOMEX then 
-    if builder and builder.targetMex and mexes[teamID][builder.targetMex] and getUnitPhase(unitID, teamID) == RECLAIMING then 
-      mexes[teamID][builder.targetMex].assignedBuilder = nil 
+    if builder and builder.targetMex and ValidUnitID(builder.targetMex) and (not GetUnitIsDead(builder.targetMex)) and (getUnitPhase(unitID, teamID) == RECLAIMING) then 
+	  mexes[teamID][builder.targetMex].assignedBuilder = nil 
     end 
     return true 
   end 
