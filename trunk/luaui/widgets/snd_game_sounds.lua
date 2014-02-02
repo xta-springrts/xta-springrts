@@ -130,6 +130,10 @@ function widget:GameFrame(gameFrame)
 	end
 end
 
+function widget:GameOver()
+	widgetHandler:RemoveWidget()
+end
+
 function widget:UnitCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdOptions, cmdTag, synced)
 	if cmdID == CMD_SELFD then
 		if not ADUnits[unitID] then
