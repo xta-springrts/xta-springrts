@@ -58,6 +58,12 @@ for name, ud in pairs(UnitDefs) do
 		end
 	end
 	ud.collisionvolumetest = 1  --Prevent projectiles from flying through units
+	
+	--enable restore ability
+	if ud.terraformSpeed and  ud.terraformSpeed > 0 then
+		ud.canRestore = 1
+	end
+	
 end 
 
 -------------------------------------------------------------------------------
