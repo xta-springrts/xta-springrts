@@ -72,7 +72,8 @@ local aliveAllyTeamCount = 0
 local killedAllyTeams = {}
 local gameoverframe = nil
 local gamewinners 	= nil
-local gameoverdelay	= 90 -- check that this is more than the value in teamcomends gadget to make combomb forfeit work
+local gameoverdelay	= 16 -- check that this is more than the value in teamcomends gadget to make combomb forfeit work
+local handleGameOver = true
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
@@ -82,6 +83,13 @@ function gadget:GameOver()
 	--
 	--remove ourself after successful game over
 	gadgetHandler:RemoveGadget()
+end
+
+function gadget:GameStart()	
+	local waitForComends = Spring.GetGameRulesParam("WaitForComends")
+	if waitForComends then
+		handleGameOver = waitForComends == 0
+	end
 end
 
 local function IsCandidateWinner(allyTeamID)
@@ -155,9 +163,6 @@ local function CheckGameOver()
 		local frame = Spring.GetGameFrame()
 		gamewinners = winners
 		gameoverframe = frame + gameoverdelay
-		if teamDeathMode ~= COMENDS and teamDeathMode ~= COMMANDER then
-			Spring.PlaySoundFile("sounds/victory1.wav",8.0,0,0,0,0,0,0,'userinterface')
-		end
 	end
 end
 
@@ -209,21 +214,24 @@ end
 
 function gadget:GameFrame(frame)
 	-- trigger gameover with a delay to let all explosions calm down
-	if gameoverframe and frame >= gameoverframe then
-		spGameOver(gamewinners)
-	end
-
-	-- only do a check in slowupdate
-	-- change 16 => 32, no hurries here
-	if (frame%32) == 0 then
-		CheckGameOver()
-		-- kill teams after checking for gameover to avoid to trigger instantly gameover
-		if teamDeathMode == TEAMZERO or teamDeathMode == COMMANDER then
-			KillTeamsZeroUnits()
-		elseif teamDeathMode == ALLYZERO or teamDeathMode == COMENDS then
-			KillAllyTeamsZeroUnits()
+	if handleGameOver then
+		if gameoverframe and frame >= gameoverframe then
+			GG.gamewinners = gamewinners
+			spGameOver(gamewinners)
 		end
-		KillResignedTeams()
+
+		-- only do a check in slowupdate
+		-- change 16 => 32, no hurries here
+		if (frame%32) == 0 then
+			CheckGameOver()
+			-- kill teams after checking for gameover to avoid to trigger instantly gameover
+			if teamDeathMode == TEAMZERO or teamDeathMode == COMMANDER then
+				KillTeamsZeroUnits()
+			elseif teamDeathMode == ALLYZERO or teamDeathMode == COMENDS then
+				KillAllyTeamsZeroUnits()
+			end
+			KillResignedTeams()
+		end
 	end
 end
 

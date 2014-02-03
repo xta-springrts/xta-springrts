@@ -89,7 +89,7 @@ function widget:Initialize()
 	
 	VOLUI = 0.015*Spring.GetConfigInt('snd_volui') or 1.0 					-- snd_volui = [0,200]
 	VOLBATTLE = 0.015*Spring.GetConfigInt('snd_volbattle') or 1.0	 		-- snd_volbattle = [0,200]
-	Echo("Unit sounds (XTA) loaded. Volumes (battle,ui):", VOLBATTLE,VOLUI)
+	Echo("Unit sounds (XTA) loaded. Volumes (battle,ui,[0,200]):", VOLBATTLE/0.015,VOLUI/0.015)
 end
 
 function widget:UnitCloaked(unitID, unitDefID, teamID) 

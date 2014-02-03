@@ -62,7 +62,7 @@ function gadget:Initialize()
 	end
 
 	if (not haveZombies) then
-		spEcho("[game_zombiemode] no zombies no fun")
+		--Spring.Log("",LOG.INFO,"[game_zombiemode] no zombies no fun")
 		gadgetHandler:RemoveGadget(self)
 		return
 	end
