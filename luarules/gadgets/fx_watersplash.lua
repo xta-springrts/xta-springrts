@@ -91,7 +91,7 @@ else
 		if (waterColour and waterColour[1] > waterColour[3]) or Game.waterDamage > 0 then
 			isLava = true
 		end
-		Echo("Lava:", isLava)
+		Spring.Log("", LOG.INFO,"fx_watersplash: lava detected:",isLava)
 		for id,Def in pairs(WeaponDefs) do
 			if Def.damageAreaOfEffect ~= nil and Def.damageAreaOfEffect > 16 and not nonexplosiveWeapons[Def.type] then
 				SetWatchWeapon(Def.id, true)

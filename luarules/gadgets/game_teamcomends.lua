@@ -55,7 +55,9 @@ if (gadgetHandler:IsSyncedCode()) then
 	local contesters			= {}
 	local gameoverframe			= nil
 	local gamewinners			= nil
-	local gameoverdelay			= 60 -- check that this is less than the value in game_end gadget to make combomb forfeit work
+	local gameoverdelay			= 16 -- check that this is less than the value in game_end gadget to make combomb forfeit work
+	local queueFinished			= false
+	local gaiaAllyID 			= select(6, Spring.GetTeamInfo(Spring.GetGaiaTeamID()))
 	
 	local dgunWeapons = {		-- better to hardcode these, as many weapons are listed as dgun, for example bogus dgun
 	arm_disintegrator = true,
@@ -68,11 +70,12 @@ if (gadgetHandler:IsSyncedCode()) then
 	
 	function gadget:Initialize()
 		if not endmodes[modOptions.mode] then
+			Spring.SetGameRulesParam("WaitForComends",0)
 			gadgetHandler:RemoveGadget(self)
 			return
+		else
+			Spring.SetGameRulesParam("WaitForComends",1)	
 		end
-		
-		local gaiaAllyID = select(6, Spring.GetTeamInfo(Spring.GetGaiaTeamID()))
 		
 		for i,allyTeam in ipairs(Spring.GetAllyTeamList()) do
 			teamCommanders[allyTeam] = 0
@@ -131,7 +134,6 @@ if (gadgetHandler:IsSyncedCode()) then
 			local frame = Spring.GetGameFrame()
 			gameoverframe = frame + gameoverdelay
 			gamewinners = winners
-			Spring.PlaySoundFile("sounds/victory1.wav",8.0,0,0,0,0,0,0,'userinterface')
 			return true
 		end
 		return false
@@ -173,9 +175,29 @@ if (gadgetHandler:IsSyncedCode()) then
 		end
 	end
 	
+	local function CheckQueue()
+		
+		local totalcount = 0
+		for _,allyID in ipairs(Spring.GetAllyTeamList()) do
+			if allyID ~= gaiaAllyID and not gamewinners[allyID] then
+				local allycount = 0
+				for _,teamID in ipairs(GetTeamList(allyID)) do
+					local count = GetTeamUnitCount(teamID)
+					allycount = allycount + count
+				end
+				totalcount = totalcount + allycount
+			end
+		end
+		
+		if totalcount == 0 then 
+			queueFinished = true
+		end
+	end
+	
 	function gadget:GameFrame(t)
 		
 		if gameoverframe and t >= gameoverframe then
+			GG.gamewinners = gamewinners
 			Spring.GameOver(gamewinners)
 		end
 		
@@ -194,6 +216,15 @@ if (gadgetHandler:IsSyncedCode()) then
 						DestroySingleTeam(team)
 					end
 				end
+			end
+			
+		end
+		if gameoverframe and t >= gameoverframe then
+			
+			CheckQueue()
+			
+			if queueFinished then
+				Spring.SetGameRulesParam("WaitForComends",0)
 			end
 		end
 	end

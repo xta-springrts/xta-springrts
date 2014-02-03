@@ -51,7 +51,13 @@ function widget:Update()
 			unitList = Spring.GetTeamUnits(Spring.GetMyTeamID())
 		end
 		local x, y, z = Spring.GetUnitPosition(unitList[1])
-		Spring.SetCameraTarget(x, y, z)
+		local camState = Spring.GetCameraState()
+		camState["px"] = x
+		camState["py"] = y
+		camState["pz"] = z
+		camState["height"] = 1600
+		Spring.SetCameraState(camState,1.5)
+		
 		center = false
 	end
 	if select and t > 0 then

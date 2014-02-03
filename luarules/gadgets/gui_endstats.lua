@@ -346,6 +346,7 @@ else
 	local px, py 		 				= vsx/2-sizex/2, vsy/2-sizey/2
 	local max, min 						= math.max, math.min
 	local drawWindow					= false
+	--local drawEnd						= false
 	local allyData						= {}
 	local nData							= {}
 	local teamData						= nil
@@ -569,7 +570,7 @@ else
 		allyData, _ = ReceiveTableFromSynced(true, select('#', ...), allyData, ...)
 		
 		--set up endgame graph
-		drawWindow = true
+		--drawWindow = true
 		Spring.SendCommands('endgraph 0')
 		initButtons()
 		Button["influence"]["On"] = true
@@ -615,6 +616,13 @@ else
 		end
 	end	
 	
+	function gadget:Update(dt)
+		if not drawWindow then
+			drawWindow = Spring.GetGameRulesParam("ShowEnd") == 1
+			--drawEnd	= Spring.GetGameRulesParam("WaitForComends") == 0
+		end
+	end
+
 	function gadget:DrawScreen()
 		
 		local function drawBorder(x0, y0, x1, y1, width)
