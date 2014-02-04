@@ -21,7 +21,7 @@ if gadgetHandler:IsSyncedCode() then
 	-- SYNCED PART --
 	-------------------
 	local gameover 			= false
-	local ENDTIME			= 210 -- frames
+	local ENDTIME			= 180 -- frames
 	local endReadyFrame		
 	
 	function gadget:Initialize()
@@ -53,7 +53,7 @@ if gadgetHandler:IsSyncedCode() then
 	end
 	
 	function gadget:GameFrame(frame)
-		
+		--Echo(frame,"GF:",Spring.GetGameRulesParam("WaitForComends"),endReadyFrame)
 		if gameover and (Spring.GetGameRulesParam("WaitForComends") == 0) then
 			if not endReadyFrame then
 				endReadyFrame = Spring.GetGameFrame()
@@ -96,7 +96,7 @@ else
 	end
 	
 	function gadget:DrawScreen()
-		if not Spring.IsGUIHidden() and Spring.IsGameOver() and Spring.GetGameRulesParam("ShowEnd") ~= 1 then
+		if not Spring.IsGUIHidden() and Spring.IsGameOver() and Spring.GetGameRulesParam("ShowEnd") ~= 1 and transferComplete then
 			local label
 			myFontHuge:Begin()
 			if winners and winners[myAllyID] then

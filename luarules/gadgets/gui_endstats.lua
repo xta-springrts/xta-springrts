@@ -28,6 +28,14 @@ if gadgetHandler:IsSyncedCode() then
 	local gameData = {}
 	local mapX, mapZ
 	local ignoreUnits = {}
+	local ignoreForAwards = {}
+	local ignoreAwardsNames = {
+			arm_retaliator = true,
+			core_silencer  = true,
+			core_neutron  = true,
+			arm_stunner  = true,
+		}	
+	
 	local heroUnits = {}
 	local lostUnits = {}
 	local MINKILLS	= 25 -- minimum kills for awards
@@ -96,6 +104,9 @@ if gadgetHandler:IsSyncedCode() then
 		for id, unitDef in ipairs (UnitDefs) do
 			if unitDef.customParams.dontcount then
 				ignoreUnits[id] = true
+			end
+			if ignoreAwardsNames[unitDef.name] then
+				ignoreForAwards[id] = true
 			end
 		end
 	
@@ -182,7 +193,9 @@ if gadgetHandler:IsSyncedCode() then
 				teamData[attackerTeamID]['killedHP'][teamID] = teamData[attackerTeamID]['killedHP'][teamID] + hp
 				
 				local kills = Spring.GetUnitRulesParam(attackerID,'kills') or 0
-				kills = kills + 1
+				if (not ignoreForAwards[attackerDefID]) and (not ignoreUnits[attackerDefID]) then
+					kills = kills + 1
+				end
 				Spring.SetUnitRulesParam(attackerID,'kills',kills)
 			end
 			
@@ -974,20 +987,66 @@ else
 								myFontMed:End()
 								
 								-- player matrix
-								local w = 6 -- bar width
-								--kills
+								local killedcount = 0
+								local lostcount = 0
+								
+								local killsTable = {}
+								local lossesTable = {}
+								
 								for eID, dmg in pairs(data.killedHP) do
+									if dmg > 0 then
+										killedcount = killedcount + 1
+										killsTable[#killsTable+1] = {eID,dmg}
+									end
+								end
+								
+								for eID, dmg in pairs(data.lostHP) do
+									if dmg > 0 then
+										lostcount = lostcount + 1
+										lossesTable[#lossesTable+1] = {eID,dmg}
+									end
+								end
+								table.sort(killsTable, function(a,b) return a[2] > b[2] end)
+								table.sort(lossesTable, function(a,b) return a[2] > b[2] end)
+								
+								local w1 = 9 -- bar width
+								local w2 = 9 -- bar width
+								local gap  = 6
+								if killedcount >= 12 then
+									w1 = 6
+									gap = 4
+								end
+								
+								if lostcount >= 12 then
+									w2 = 6
+									gap = 4
+								end
+								
+								local x01 = Panel["3"]["x0"] + (Panel["3"]["x1"] - Panel["3"]["x0"])/2 - ((killedcount+2)*(w1+2))/2 - 10
+								local x02 = Panel["4"]["x0"] + (Panel["4"]["x1"] - Panel["4"]["x0"])/2 - ((lostcount+2)*(w2+2))/2 - 10
+								
+								
+								--kills
+								for x, killsData in ipairs(killsTable) do
+									local eID = killsData[1]
+									local dmg = killsData[2]
 									local value = dmg/maxvalue
 									local r3,g3,b3 = GetTeamColor(eID)
 									glColor(r3,g3,b3,1)
-									glRect(Panel["3"]["x0"]+(w+2)*eID+5,y00,Panel["3"]["x0"]+(w+2)*eID+w+5,y00+value*(y100-y00))
+									glRect(x01+(w1+gap)*x,y00,x01+(w1+gap)*x+w1,y00+value*(y100-y00))
+									glColor(0,0,0,1)
+									glRect(x01+(w1+gap)*x+w1,y00,x01+(w1+gap)*x+w1+1,y00+value*(y100-y00))
 								end
 								--losses
-								for eID, dmg in pairs(data.lostHP) do
+								for x, lossesData in ipairs(lossesTable) do
+									local eID = lossesData[1]
+									local dmg = lossesData[2]
 									local value = dmg/maxvalue
 									local r4,g4,b4 = GetTeamColor(eID)
 									glColor(r4,g4,b4,1)
-									glRect(Panel["4"]["x0"]+(w+2)*eID+5,y00,Panel["4"]["x0"]+(w+2)*eID+w+5,y00+value*(y100-y00))
+									glRect(x02+(w2+gap)*x,y00,x02+(w2+gap)*x+w2,y00+value*(y100-y00))
+									glColor(0,0,0,1)
+									glRect(x02+(w2+gap)*x+w2,y00,x02+(w2+gap)*x+w2+1,y00+value*(y100-y00))
 								end
 								-- other losses
 								local dmgOther = (data.lostHPmisc.total or 0)/maxvalue
@@ -1021,11 +1080,11 @@ else
 								end
 								
 								glColor(0.82,0.79,0.79,1)
-								glRect(Panel["4"]["x1"]-10-w,y00,Panel["4"]["x1"]-10,y00+dmgOther*(y100-y00))
+								glRect(Panel["4"]["x1"]-10-w2,y00,Panel["4"]["x1"]-10,y00+dmgOther*(y100-y00))
 								
 								-- debris
 								glColor(0,0,0,1) -- black
-								glRect(Panel["4"]["x1"]-10-(2*w/3),y00,Panel["4"]["x1"]-10-(w/3),y01)
+								glRect(Panel["4"]["x1"]-10-(2*w2/3),y00,Panel["4"]["x1"]-10-(w2/3),y01)
 								if dmgDebris > 0 then
 									local y10 = Panel["2"]["y1"] - (n+1+min(dmgOther*maxvalue,1))*(bs+5) - bs
 									glRect(x1+bs/3, y10, x1 + 2*bs/3, y10 + bs)
@@ -1042,7 +1101,7 @@ else
 								
 								--ground
 								glColor(0,1,0,1) -- green
-								glRect(Panel["4"]["x1"]-10-(2*w/3),y01,Panel["4"]["x1"]-10-(w/3),y02)
+								glRect(Panel["4"]["x1"]-10-(2*w2/3),y01,Panel["4"]["x1"]-10-(w2/3),y02)
 								if dmgGround > 0 then
 									local y10 = Panel["2"]["y1"] - (n+1+min(dmgOther,1)+min(dmgDebris,1))*(bs+5) - bs
 									glRect(x1+bs/3, y10, x1 + 2*bs/3, y10 + bs)
@@ -1058,7 +1117,7 @@ else
 								
 								--object
 								glColor(0.63,0.13,0.94,1) -- purple
-								glRect(Panel["4"]["x1"]-10-(2*w/3),y02,Panel["4"]["x1"]-10-(w/3),y03)
+								glRect(Panel["4"]["x1"]-10-(2*w2/3),y02,Panel["4"]["x1"]-10-(w2/3),y03)
 								if dmgObject > 0 then
 									local y10 = Panel["2"]["y1"] - (n+1+min(dmgOther,1)+min(dmgDebris,1)+min(dmgGround,1))*(bs+5) - bs
 									glRect(x1+bs/3, y10, x1 + 2*bs/3, y10 + bs)
@@ -1074,7 +1133,7 @@ else
 								
 								--fire
 								glColor(1,0,0,1) --red
-								glRect(Panel["4"]["x1"]-10-(2*w/3),y03,Panel["4"]["x1"]-10-(w/3),y04)
+								glRect(Panel["4"]["x1"]-10-(2*w2/3),y03,Panel["4"]["x1"]-10-(w2/3),y04)
 								if dmgFire > 0 then
 									local y10 = Panel["2"]["y1"] - (n+1+min(dmgOther,1)+min(dmgDebris,1)+min(dmgGround,1)+min(dmgObject,1))*(bs+5) - bs
 									glRect(x1+bs/3, y10, x1 + 2*bs/3, y10 + bs)
@@ -1090,7 +1149,7 @@ else
 								
 								--water
 								glColor(0,0,1,1) --blue
-								glRect(Panel["4"]["x1"]-10-(2*w/3),y04,Panel["4"]["x1"]-10-(w/3),y05)
+								glRect(Panel["4"]["x1"]-10-(2*w2/3),y04,Panel["4"]["x1"]-10-(w2/3),y05)
 								if dmgWater > 0 then
 									local y10 = Panel["2"]["y1"] - (n+1+min(dmgOther,1)+min(dmgDebris,1)+min(dmgGround,1)+min(dmgObject,1)+min(dmgFire,1))*(bs+5) - bs
 									glRect(x1+bs/3, y10, x1 + 2*bs/3, y10 + bs)
@@ -1106,7 +1165,7 @@ else
 								
 								--kill
 								glColor(0.63,0.32,0.18,1) --brown
-								glRect(Panel["4"]["x1"]-10-(2*w/3),y05,Panel["4"]["x1"]-10-(w/3),y06)
+								glRect(Panel["4"]["x1"]-10-(2*w2/3),y05,Panel["4"]["x1"]-10-(w2/3),y06)
 								if dmgKill > 0 then
 									local y10 = Panel["2"]["y1"] - (n+1+min(dmgOther,1)+min(dmgDebris,1)+min(dmgGround,1)+min(dmgObject,1)+min(dmgFire,1)+min(dmgWater,1))*(bs+5) - bs
 									glRect(x1+bs/3, y10, x1 + 2*bs/3, y10 + bs)
