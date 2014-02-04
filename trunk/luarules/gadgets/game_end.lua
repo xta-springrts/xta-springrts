@@ -72,7 +72,7 @@ local aliveAllyTeamCount = 0
 local killedAllyTeams = {}
 local gameoverframe = nil
 local gamewinners 	= nil
-local gameoverdelay	= 16 -- check that this is more than the value in teamcomends gadget to make combomb forfeit work
+local gameoverdelay	= 32 -- check that this is more than the value in teamcomends gadget to make combomb forfeit work
 local handleGameOver = true
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------

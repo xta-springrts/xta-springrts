@@ -55,7 +55,7 @@ if (gadgetHandler:IsSyncedCode()) then
 	local contesters			= {}
 	local gameoverframe			= nil
 	local gamewinners			= nil
-	local gameoverdelay			= 16 -- check that this is less than the value in game_end gadget to make combomb forfeit work
+	local gameoverdelay			= 90 -- let some time pass to let all explosions calm down, which are usually present on comends
 	local queueFinished			= false
 	local gaiaAllyID 			= select(6, Spring.GetTeamInfo(Spring.GetGaiaTeamID()))
 	
@@ -179,13 +179,25 @@ if (gadgetHandler:IsSyncedCode()) then
 		
 		local totalcount = 0
 		for _,allyID in ipairs(Spring.GetAllyTeamList()) do
-			if allyID ~= gaiaAllyID and not gamewinners[allyID] then
-				local allycount = 0
-				for _,teamID in ipairs(GetTeamList(allyID)) do
-					local count = GetTeamUnitCount(teamID)
-					allycount = allycount + count
+			if allyID ~= gaiaAllyID then 
+				local winnerTeam
+				for _, winner in pairs(gamewinners) do
+					if winner and winner == allyID then
+						winnerTeam = true
+						break;
+					end
 				end
-				totalcount = totalcount + allycount
+				
+				if not winnerTeam then
+				
+					local allycount = 0
+					for _,teamID in ipairs(GetTeamList(allyID)) do
+						local count = GetTeamUnitCount(teamID)
+						allycount = allycount + count
+					end
+					totalcount = totalcount + allycount
+				end
+				
 			end
 		end
 		
