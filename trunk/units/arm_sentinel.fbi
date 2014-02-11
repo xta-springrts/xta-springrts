@@ -74,7 +74,8 @@
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=839; // 920 in 9.725
+	sightdistance=600; // 920 in 9.725
+	airsightdistance=900;
 	radardistance=0;
 	losemitheight=60;
 
