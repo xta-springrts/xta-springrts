@@ -514,20 +514,20 @@ Idle()
 		sleep 2500;
 	}
 	idling=1;
-	turn lthigh to y-axis <30> speed <30>;
-	turn rthigh to y-axis <-30> speed <30>;
+	turn lthigh to y-axis <-18> speed <30>;
+	turn rthigh to y-axis <-18> speed <30>;
 	turn lthigh to x-axis <-90> speed <60>;
 	turn rthigh to x-axis <-120> speed <80>;
 	turn lleg to x-axis <20> speed <13.333>;
 	turn rleg to x-axis <80> speed <53.333>;
 	turn l_foot to x-axis <20> speed <13.333>;
 	turn r_foot to x-axis <20> speed <13.333>;
-	move pelvis to y-axis [-25.0] speed [16.666];
+	move pelvis to y-axis [-13] speed [16.666];
 	turn pelvis to x-axis <-20> speed <13.333>;
 	turn luparm to x-axis <-65> speed <50>;
 	turn ruparm to x-axis <-70> speed <70>;
 	turn nanolathe to x-axis <15> speed <10>;
-	turn nanolathe to y-axis <-80> speed <53.333>;
+	turn nanolathe to y-axis <-63> speed <53.333>;
 	wait-for-move pelvis along y-axis;
 	while(idling AND !(get CLOAKED))
 	{
