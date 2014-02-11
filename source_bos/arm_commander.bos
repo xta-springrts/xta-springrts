@@ -517,18 +517,18 @@ Idle()
 		sleep 2500;
 	}
 	idling=1;
-	turn lthigh to y-axis <30> speed <30>;
-	turn rthigh to y-axis <-30> speed <30>;
+	turn lthigh to y-axis <-18> speed <30>;
+	turn rthigh to y-axis <-18> speed <30>;
 	turn lthigh to x-axis <-90> speed <60>;
 	turn rthigh to x-axis <-120> speed <80>;
 	turn lleg to x-axis <20> speed <13.333>;
 	turn rleg to x-axis <80> speed <53.333>;
 	turn nanolath to x-axis <0> speed <30>;
-	move pelvis to y-axis [-23.0] speed [15.333];
+	move pelvis to y-axis [-11] speed [15.333];
 	turn pelvis to x-axis <-20> speed <13.333>;
 	turn luparm to x-axis <-50> speed <50>;
-	turn luparm to y-axis <-28> speed <50>;
-	turn nanolath to y-axis <2> speed <45>;
+	turn luparm to y-axis <-16> speed <50>;
+	turn nanolath to y-axis <4> speed <45>;
 	turn nanolath to z-axis <48> speed <38>;
 	wait-for-move pelvis along y-axis;
 	show dong;

@@ -8,7 +8,7 @@ function gadget:GetInfo()
     author    = "quantum",
     date      = "April 29, 2008",
     license   = "GNU GPL, v2 or later",
-    layer     = 0,
+    layer     = 20,
     enabled   = true --  loaded by default?
   }
 end
