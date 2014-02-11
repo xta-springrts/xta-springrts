@@ -3706,12 +3706,12 @@
 	Texture3=null;
 	Texture4=null;
 	range=400;
-	reloadtime=3.7;
+	reloadtime=4;
 	weapontimer=2;
 	weaponvelocity=300;
 	startvelocity=300;
 	weaponacceleration=0;
-	areaofeffect=48;
+	areaofeffect=65;
 	soundstart=rocklit1;
 	soundhitdry=xplosml2;
 	firestarter=70;
@@ -3719,7 +3719,7 @@
 	startsmoke=0;
 	[DAMAGE]
 	{
-		default=125;
+		default=152;
 		group_invincible=1;
 	}
 }
@@ -5311,12 +5311,12 @@
 	turret=1;
 	model=missile.s3o;
 	range=400;
-	reloadtime=4;
+	reloadtime=3.7;
 	weapontimer=2;
 	weaponvelocity=300;
 	startvelocity=300;
 	weaponacceleration=0;
-	areaofeffect=48;
+	areaofeffect=65;
 	soundstart=rocklit1;
 	soundhitdry=xplosml2;
 	firestarter=70;
@@ -5326,7 +5326,7 @@
 	startsmoke=0;
 	[DAMAGE]
 	{
-		default=138;
+		default=145;
 		group_invincible=1;
 	}
 }
