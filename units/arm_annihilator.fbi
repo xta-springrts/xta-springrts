@@ -86,7 +86,7 @@
 	//***********
 	weapon1=ARM_TOTAL_ANNIHILATOR;
 	wpri_badtargetcategory=VTOL;
-	explodeas=ATOMIC_BLASTPEN;
+	explodeas=ATOMIC_BLASTSML;
 	selfdestructas=ATOMIC_BLAST;
 
 	//************************************************************

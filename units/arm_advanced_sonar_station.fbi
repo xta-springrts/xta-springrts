@@ -29,7 +29,7 @@
 	//********************
 	maxdamage=320;
 	buildcostmetal=263; //was 163//
-	buildcostenergy=9876; //was 2469//
+	buildcostenergy=4876; //was 2469//
 	buildtime=6152;
 	footprintx=4;
 	footprintz=4;
@@ -80,7 +80,7 @@
 	//  Sight/Radar/Sonar
 	//*********************
 	sightdistance=323.75;
-	sonardistance=1550; //was 2250//
+	sonardistance=2050; //was 2250//
 
 	//************************************************************
 	//  Weapons

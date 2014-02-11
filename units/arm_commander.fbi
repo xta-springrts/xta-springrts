@@ -93,7 +93,7 @@
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=768;
+	sightdistance=720;
 	radardistance=800;
 	sonardistance=800;
 	losemitheight=44;

@@ -87,7 +87,7 @@
 	badtargetcategory=VTOL;
 	wpri_badtargetcategory=VTOL;
 	wsec_badtargetcategory=VTOL;
-	explodeas=LARGE_BUILDINGEX;
+	explodeas=ATOMIC_BLASTSML;
 	selfdestructas=CRAWL_BLASTSML;
 
 	//************************************************************

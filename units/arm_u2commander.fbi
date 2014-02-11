@@ -91,9 +91,9 @@
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=768;
+	sightdistance=720;
 	radardistance=2400;
-	sonardistance=2400;
+	sonardistance=1800;
 
 	//************************************************************
 	//  Weapons
