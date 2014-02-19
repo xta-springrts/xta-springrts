@@ -20,6 +20,33 @@
     ºÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜº
     ÈÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ¼
     Logo by ElementalGizmo
+------------------- Change Log of XTA 9.735 Svn 628
+------------------ by Jools, Raaar
+- Fixed collisionvolumes of all wrecks of standard units, thanks to raaar
+- Decreased LOS of some turrets, such as LLT, MT and Radars. Instead they have increased air-LOS. LOS: Flakkers: 600, HLT: 600,
+  LLT: 420, floating LLT: 480, MT: 450, radar jammer tower: 450, radar tower: 500, adv. radar tower: 550, nuke/mininuke: 500
+- Decreased LOS of commanders: 768-> 720.
+- Decreased sonars: u4commander: 6000->4000, u3commander:2500->2250, u2commander: 2400->1800, ninja/u-commander, 1600->1200
+- Increased sonars: adv.sonar stations: arm: 1550->2050, core: 1500->2010 (t1 sonar stations unchanged at 1210/1200)
+- Decreased cloaktimeout for automatic commanders: arm: 4.2 s -> 2.8, core: 4.2 s -> 3.0. The commander is visible somewhat longer 
+  than this time due to the silhouette effect. Also decreased for level 2 manual commanders: 4.2-> 3.4/3.6; L3 and L4 have 
+  same values as automatic commanders.
+- Increased area of effect of rocko/storm: 48 -> 65. This will deal a little damage to walled mexxes/llt:s
+- Increased annihilator/doomsday machine explodeas-radius: 180->360 and damage 800->1400.
+- All builders can now restore again
+- Increased missile velocities a little
+- Increased phalanx/copperhead *air*-los
+- Bugfixes: 
+  * fixed bug where automatic commander is invisible when idle
+  * fixed radars not spinning/spinning bugs for airlabs
+  * fixed bug where core t1 airlab's pad isn't rotating when building
+  * fixed missing ceg warning for metalclouds
+  * fixed mexx-upgrader bug
+  * removed lups.lua debug echo
+  * unload unit warning sounds widget after game ends to prevent it from warning at gameover
+- other: better fonts for some widgets/gadgets
+  
+	
 ------------------- Change Log of XTA 9.734 Svn 609
 ------------------ by Jools
 
@@ -46,7 +73,7 @@
 		planes are slower so that they can be intercepted more easily.
 - Game: make dynamic lights a mod option. New: DT crush effect, Mexx cloud explosion, Loaded non-air transporters can leave wrecks of 
 		destroyed units when they die.
-- Other:Bug fixes and performance imporovements as usual.
+- Other:Bug fixes and performance improvements as usual.
 	
 ------------------- Change Log of XTA 9.731 Svn 547 ------------------ by Kloot
 
