@@ -69,6 +69,7 @@ local spGetUnitHealth = Spring.GetUnitHealth
 local spSetUnitCOBValue = Spring.SetUnitCOBValue
 local spGetUnitTeam = Spring.GetUnitTeam
 local spGetUnitDefID = Spring.GetUnitDefID
+local ValidUnitID	= Spring.ValidUnitID
 
 ----------------------------------------------------------------
 -- Functions
@@ -313,7 +314,7 @@ end
 
 function gadget:UnitFinished(uID, uDefID, uTeam)
     local cDefs = convertCapacities[uDefID]
-    if cDefs then
+    if cDefs and ValidUnitID(uID) then
         teamMMList[uTeam][cDefs.e][uID].capacity = cDefs.c
 		teamMMList[uTeam][cDefs.e][uID].built = true
 		if not teamMMList[uTeam][cDefs.e][uID].emped then
@@ -341,7 +342,7 @@ end
 
 function gadget:UnitDestroyed(uID, uDefID, uTeam)
     local cDefs = convertCapacities[uDefID]
-    if cDefs then
+    if cDefs and ValidUnitID(uID) then
         if teamMMList[uTeam][cDefs.e][uID].built then
 			if (teamMMList[uTeam][cDefs.e][uID].status == 1) then
 				teamActiveMM[uTeam] = teamActiveMM[uTeam] - 1
