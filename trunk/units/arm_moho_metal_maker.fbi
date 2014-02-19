@@ -70,7 +70,7 @@
 	//  Movement
 	//************
 	maxslope=10;
-	maxwaterdepth=255; //was 0//
+	maxwaterdepth=28; //was 255, 0// so that water does not overflow the wall
 
 	//************************************************************
 	//  Sight/Radar/Sonar
