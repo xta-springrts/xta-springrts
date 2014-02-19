@@ -1307,7 +1307,7 @@
 	range=700;
 	reloadtime=2;
 	weapontimer=5;
-	weaponvelocity=660;
+	weaponvelocity=860;
 	startvelocity=470;
 	weaponacceleration=154;
 	turnrate=41660;
@@ -1732,7 +1732,7 @@
 	range=710;
 	reloadtime=2.1;
 	weapontimer=5;
-	weaponvelocity=740;
+	weaponvelocity=910;
 	startvelocity=550;
 	weaponacceleration=141;
 	turnrate=41660;
@@ -4224,7 +4224,7 @@
 	range=700;
 	reloadtime=2;
 	weapontimer=5;
-	weaponvelocity=650;
+	weaponvelocity=850;
 	startvelocity=460;
 	weaponacceleration=152;
 	turnrate=41660;
@@ -4595,7 +4595,7 @@
 	range=700;
 	reloadtime=2.05;
 	weapontimer=5;
-	weaponvelocity=745;
+	weaponvelocity=915;
 	startvelocity=550;
 	weaponacceleration=136;
 	explosiongenerator=custom:KBOTMISSILEHIT;
@@ -5841,7 +5841,7 @@
 	range=700;
 	reloadtime=2;
 	weapontimer=5;
-	weaponvelocity=700;
+	weaponvelocity=900;
 	startvelocity=470;
 	weaponacceleration=230;
 	turnrate=41660;
