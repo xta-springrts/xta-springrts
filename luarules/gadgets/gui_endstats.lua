@@ -584,7 +584,7 @@ else
 		
 		--set up endgame graph
 		--drawWindow = true
-		Spring.SendCommands('endgraph 0')
+		--Spring.SendCommands('endgraph 0')
 		initButtons()
 		Button["influence"]["On"] = true
 		
@@ -630,14 +630,15 @@ else
 	end	
 	
 	function gadget:Update(dt)
+		
 		if not drawWindow then
+			--Echo("DW1:",drawWindow,Spring.GetGameRulesParam("ShowEnd"),GG.showXTAStats)
 			drawWindow = Spring.GetGameRulesParam("ShowEnd") == 1
-			--drawEnd	= Spring.GetGameRulesParam("WaitForComends") == 0
 		end
 	end
 
 	function gadget:DrawScreen()
-		
+	
 		local function drawBorder(x0, y0, x1, y1, width)
 			glRect(x0, y0, x1, y0 + width)
 			glRect(x0, y1, x1, y1 - width)
@@ -645,7 +646,9 @@ else
 			glRect(x1, y0, x1 - width, y1)
 		end
 		
-		if drawWindow and not Spring.IsGUIHidden() then 
+		--Echo("ES-DS:",drawWindow,Spring.GetGameRulesParam("ShowEnd"),GG.showXTAStats)
+		
+		if drawWindow and not Spring.IsGUIHidden() and GG.showXTAStats then 
 			--back panel
 			glColor(0.3, 0.3, 0.4, 0.55)
 			glRect(Panel["back"]["x0"],Panel["back"]["y0"],Panel["back"]["x1"], Panel["back"]["y1"])
@@ -1335,21 +1338,18 @@ else
 	end
 	
 	function gadget:MousePress(mx, my, mButton)
-		if drawWindow then
-			if (mButton == 2 or mButton == 3) and mx < Panel["back"]["x1"] then
-				if mx >= Panel["back"]["x0"] and my >= Panel["back"]["y0"] and my < Panel["back"]["y1"] then
-					-- Dragging
-					return true
-				end
-			elseif mButton == 1 then								
+		if drawWindow and GG.showXTAStats and IsOnButton(mx,my, Panel["back"]["x0"], Panel["back"]["y0"], Panel["back"]["x1"], Panel["back"]["y1"]) then
+			if (mButton == 2 or mButton == 3) then
+				-- Dragging
+				return true
+			elseif mButton == 1 then
 				if IsOnButton(mx,my,Button["exit"]["x0"],Button["exit"]["y0"],Button["exit"]["x1"],Button["exit"]["y1"]) then
 					Spring.SendCommands("quitforce")
 					gadgetHandler:RemoveGadget()
-					return true
+					--return true
 				elseif IsOnButton(mx,my,Button["proceed"]["x0"],Button["proceed"]["y0"],Button["proceed"]["x1"],Button["proceed"]["y1"]) then
 					Spring.SendCommands('endgraph 1')
-					gadgetHandler:RemoveGadget()
-					return true
+					GG.showXTAStats = false
 				elseif IsOnButton(mx,my,Button["influence"]["x0"],Button["influence"]["y0"],Button["influence"]["x1"],Button["influence"]["y1"]) then
 					Button["influence"]["On"] = true
 					Button["matrix"]["On"] = false
@@ -1382,10 +1382,11 @@ else
 				end
 			end
 		end
+		return false
 	end
 			
 	function gadget:MouseMove(mx, my, dx, dy, mButton)
-		if drawWindow then
+		if drawWindow and GG.showXTAStats then
 			-- Dragging
 			if mButton == 2 or mButton == 3 then
 				px = max(0, min(px+dx, vsx-sizex))	--prevent moving off screen
@@ -1393,10 +1394,11 @@ else
 			end
 			initButtons()
 		end
+		return false
 	end
 	
 	function gadget:IsAbove(mx,my)
-		if drawWindow then
+		if drawWindow and GG.showXTAStats then
 			Button["exit"]["mouse"] = false
 			Button["proceed"]["mouse"] = false
 			Button["influence"]["mouse"] = false
@@ -1431,12 +1433,10 @@ else
 	end
 	
 	function gadget:ShutDown()
-		Spring.SendCommands('endgraph 1')
-		
+		Spring.SendCommands('endgraph 1')		
 		gadgetHandler:RemoveSyncAction("RecieveEndStats")
 		gadgetHandler:RemoveSyncAction("teamData")
 		gadgetHandler:RemoveSyncAction("heroUnits")
 		gadgetHandler:RemoveSyncAction("lostUnits")		
 	end
-	
 end

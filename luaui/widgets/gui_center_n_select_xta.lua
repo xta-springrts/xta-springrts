@@ -56,7 +56,7 @@ function widget:Update()
 		camState["py"] = y
 		camState["pz"] = z
 		camState["height"] = 1600
-		Spring.SetCameraState(camState,1.5)
+		Spring.SetCameraState(camState,0.5)
 		
 		center = false
 	end

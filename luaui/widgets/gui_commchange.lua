@@ -56,6 +56,9 @@ local bell = 'sounds/bell.ogg'
 local beep = 'sounds/BEEP1.wav'
 local tock = 'sounds/ticktock.wav'
 local button = 'sounds/button9.wav'
+local button1 = 'sounds/button1.wav'
+local button2 = 'sounds/button2.wav'
+local button3 = 'sounds/buttn01.wav'
 local cancel = 'sounds/cancel2.wav'
 
 local duckSounds =	 {
@@ -1055,7 +1058,7 @@ function widget:MousePress(mx, my, mButton)
 							spSendLuaUIMsg('195' .. 1)
 							lastStartID = armman
 						end
-						playSound(button)
+						playSound(button3)
 					end
 				elseif IsOnButton(mx,my,Button["core"]["x0"],Button["core"]["y0"],Button["core"]["x1"],Button["core"]["y1"]) then
 					if startID == armauto or startID == armman then
@@ -1068,7 +1071,7 @@ function widget:MousePress(mx, my, mButton)
 							spSendLuaUIMsg('195' .. 2)
 							lastStartID = coreman
 						end
-						playSound(button)
+						playSound(button3)
 					end
 				elseif IsOnButton(mx,my,Button["auto"]["x0"],Button["auto"]["y0"],Button["auto"]["x1"],Button["auto"]["y1"]) then
 					if startID == armman or startID == coreman then
@@ -1081,7 +1084,7 @@ function widget:MousePress(mx, my, mButton)
 							spSendLuaUIMsg('195' .. 2)
 							lastStartID = coreauto
 						end
-						playSound(button)
+						playSound(button2)
 					end
 				elseif IsOnButton(mx,my,Button["manual"]["x0"],Button["manual"]["y0"],Button["manual"]["x1"],Button["manual"]["y1"]) and myState ~= READY then
 					if startID == armauto or startID == coreauto then
@@ -1094,7 +1097,7 @@ function widget:MousePress(mx, my, mButton)
 							spSendLuaUIMsg('195' .. 2)
 							lastStartID = coreman
 						end
-						playSound(button)
+						playSound(button2)
 					end
 				elseif IsOnButton(mx,my,Button["ready"]["x0"],Button["ready"]["y0"],Button["ready"]["x1"],Button["ready"]["y1"]) and gameState ~= COUNTDOWN then
 					local pos = spGetTeamStartPosition(myTeamID)
@@ -1104,7 +1107,7 @@ function widget:MousePress(mx, my, mButton)
 						elseif myState == READY then
 							myState = MARKED
 						end
-						playSound(button)
+						playSound(button1)
 					end
 				elseif IsOnButton(mx,my,Button["info"]["x0"],Button["info"]["y0"],Button["info"]["x1"],Button["info"]["y1"]) and myState ~= READY then
 					if myState ~= READY then
