@@ -12,7 +12,7 @@ end
 
 local posX, posY					  	= 600, 400
 local buttonsize					  	= 16
-local width, height					  	= 360, 500
+local width, height					  	= 360, 540
 local rowgap						  	= 36
 local leftmargin						= 20
 local buttontab							= 310			
@@ -57,6 +57,7 @@ function widget:Initialize()
 	Button[10]						= {} -- qui opacity
 	Button[11]						= {} -- info table
 	Button[12]						= {} -- water
+	Button[13]						= {} -- stats window order
 	Panel["main"]					= {}
 	InitButtons()
 end
@@ -162,6 +163,11 @@ function InitButtons()
 
 	Button[12]["label"]			= table.concat{"Water type: "," (", tonumber(Button[12]["value"])," – ",waterType ,")"}
 	
+	Button[13]["click"]			= tonumber(Spring.GetConfigInt("EngineGraphFirst") or 0) == 1
+	Button[13]["command"]		= "EngineGraphFirst"
+	Button[13]["label"]			= "Show engine graph first:"
+	
+	
 	Panel["main"]["x1"]			= posX
 	Panel["main"]["x2"]			= posX + width
 	Panel["main"]["y1"]			= posY
@@ -259,6 +265,12 @@ function ButtonHandler (cmd)
 			Spring.SendCommands("water " .. tonumber(Button[12]["value"]))
 		end
 		InitButtons()
+	elseif cmd == "EngineGraphFirst" then
+		if Button[13]["click"] then
+			Spring.SetConfigInt("EngineGraphFirst",0)
+		else
+			Spring.SetConfigInt("EngineGraphFirst",1)
+		end
 	else
 		Echo("Local command:",cmd)
 	end
