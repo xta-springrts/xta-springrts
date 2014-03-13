@@ -6,7 +6,7 @@
 piece  bombay, base, winga, wingb, thrusta1, thrusta2, thrustb, thrust1,
        thrust2;
 
-static-var  statechg_DesiredState, statechg_StateChanging, Static_Var_3;
+static-var  Static_Var_1, Static_Var_2, Static_Var_3;
 
 
 SmokeUnit(healthpercent, sleeptime, smoketype)
@@ -40,44 +40,27 @@ Go()
 {
 	turn winga to z-axis <-90.016484> speed <60.005495>;
 	turn wingb to z-axis <90.016484> speed <60.005495>;
-	//Static_Var_3 = 1;
 }
-
-/*
-Flamers()
-{
-	while( TRUE )
-	{
-		if( Static_Var_3 == 1 )
-		{
-			emit-sfx 1024 from thrust1;
-			emit-sfx 1024 from thrust2;
-		}
-		sleep 1;
-	}
-}
-*/
 
 Stop()
 {
 	turn winga to z-axis <0.000000> speed <20.000000>;
 	turn wingb to z-axis <0.000000> speed <20.000000>;
-	//Static_Var_3 = 0;
 }
 
 RequestState(requestedstate, currentstate)
 {
-	if( statechg_StateChanging )
+	if( Static_Var_2 )
 	{
-		statechg_DesiredState = requestedstate;
+		Static_Var_1 = requestedstate;
 		return (0);
 	}
-	statechg_StateChanging = TRUE;
-	currentstate = statechg_DesiredState;
-	statechg_DesiredState = requestedstate;
-	while( statechg_DesiredState != currentstate )
+	Static_Var_2 = 1;
+	currentstate = Static_Var_1;
+	Static_Var_1 = requestedstate;
+	while( Static_Var_1 != currentstate )
 	{
-		if( statechg_DesiredState )
+		if( Static_Var_1 )
 		{
 			call-script Stop();
 			currentstate = 1;
@@ -88,15 +71,14 @@ RequestState(requestedstate, currentstate)
 			currentstate = 0;
 		}
 	}
-	statechg_StateChanging = FALSE;
+	Static_Var_2 = 0;
 }
 
 Create()
 {
-	statechg_DesiredState = TRUE;
-	statechg_StateChanging = FALSE;
+	Static_Var_1 = 1;
+	Static_Var_2 = 0;
 	start-script SmokeUnit();
-	//start-script Flamers();
 }
 
 Activate()

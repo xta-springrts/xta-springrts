@@ -7,9 +7,15 @@ piece  GP, base, wake1, wake2, lwing, rwing, bombs;
 
 static-var  Static_Var_1, statechg_DesiredState, statechg_StateChanging;
 
-// Signal definitions
-#define SIG_MOVE			2
-
+lua_UnitLanded()
+{ 
+ 	return 0; 
+}
+ 
+lua_UnitLeftLand() 
+{ 
+	return 0; 
+}
 
 SmokeUnit(healthpercent, sleeptime, smoketype)
 {
@@ -40,19 +46,19 @@ SmokeUnit(healthpercent, sleeptime, smoketype)
 
 activatescr()
 {
-	move lwing to x-axis [-9.974991] speed [2.500000];
-	move lwing to z-axis [-5.599991] speed [2.500000];
-	move rwing to x-axis [9.974991] speed [2.500000];
-	move rwing to z-axis [-5.599991] speed [2.500000];
+	move lwing to x-axis [-3.989996] speed [1.000000];
+	move lwing to z-axis [-2.239996] speed [1.000000];
+	move rwing to x-axis [3.989996] speed [1.000000];
+	move rwing to z-axis [-2.239996] speed [1.000000];
 	sleep 690;
 }
 
 deactivatescr()
 {
-	move lwing to x-axis [0.000000] speed [2.500000];
-	move lwing to z-axis [0.000000] speed [2.500000];
-	move rwing to x-axis [0.000000] speed [2.500000];
-	move rwing to z-axis [0.000000] speed [2.500000];
+	move lwing to x-axis [0.000000] speed [1.000000];
+	move lwing to z-axis [0.000000] speed [1.000000];
+	move rwing to x-axis [0.000000] speed [1.000000];
+	move rwing to z-axis [0.000000] speed [1.000000];
 	sleep 990;
 }
 
@@ -63,7 +69,7 @@ RequestState(requestedstate, currentstate)
 		statechg_DesiredState = requestedstate;
 		return (0);
 	}
-	statechg_StateChanging = TRUE;
+	statechg_StateChanging = 1;
 	currentstate = statechg_DesiredState;
 	statechg_DesiredState = requestedstate;
 	while( statechg_DesiredState != currentstate )
@@ -79,13 +85,13 @@ RequestState(requestedstate, currentstate)
 			currentstate = 0;
 		}
 	}
-	statechg_StateChanging = FALSE;
+	statechg_StateChanging = 0;
 }
 
 Create()
 {
-	statechg_DesiredState = TRUE;
-	statechg_StateChanging = FALSE;
+	statechg_DesiredState = 1;
+	statechg_StateChanging = 0;
 	start-script SmokeUnit();
 }
 
@@ -101,8 +107,9 @@ Deactivate()
 
 StartMoving()
 {
-	signal SIG_MOVE;
-	set-signal-mask SIG_MOVE;
+	signal 2;
+	set-signal-mask 2;
+	call-script lua_UnitLeftLand();
 	while( TRUE )
 	{
 		if( Static_Var_1 == 3 )
@@ -119,7 +126,8 @@ StartMoving()
 
 StopMoving()
 {
-	signal SIG_MOVE;
+	signal 2;
+	call-script lua_UnitLanded();
 }
 
 QueryPrimary(piecenum)

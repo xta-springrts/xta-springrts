@@ -5,10 +5,7 @@
 
 piece  emitter1, emitter2, base, wake1, wake2, wing1, wing2;
 
-static-var  gun_1, Static_Var_2, Static_Var_3, statechg_DesiredState, statechg_StateChanging;
-
-// Signal definitions
-#define SIG_MOVE			2
+static-var  Static_Var_1, Static_Var_2, Static_Var_3, Static_Var_4, Static_Var_5;
 
 
 activatescr()
@@ -58,17 +55,17 @@ SmokeUnit(healthpercent, sleeptime, smoketype)
 
 RequestState(requestedstate, currentstate)
 {
-	if( statechg_StateChanging )
+	if( Static_Var_5 )
 	{
-		statechg_DesiredState = requestedstate;
+		Static_Var_4 = requestedstate;
 		return (0);
 	}
-	statechg_StateChanging = TRUE;
-	currentstate = statechg_DesiredState;
-	statechg_DesiredState = requestedstate;
-	while( statechg_DesiredState != currentstate )
+	Static_Var_5 = 1;
+	currentstate = Static_Var_4;
+	Static_Var_4 = requestedstate;
+	while( Static_Var_4 != currentstate )
 	{
-		if( statechg_DesiredState )
+		if( Static_Var_4 )
 		{
 			call-script deactivatescr();
 			currentstate = 1;
@@ -79,7 +76,7 @@ RequestState(requestedstate, currentstate)
 			currentstate = 0;
 		}
 	}
-	statechg_StateChanging = FALSE;
+	Static_Var_5 = 0;
 }
 
 moverate2()
@@ -98,10 +95,9 @@ moverate2()
 
 Create()
 {
-	gun_1 = emitter1;
-	statechg_DesiredState = TRUE;
-	statechg_StateChanging = FALSE;
-
+	Static_Var_1 = 0;
+	Static_Var_4 = 1;
+	Static_Var_5 = 0;
 	start-script SmokeUnit();
 }
 
@@ -117,8 +113,8 @@ Deactivate()
 
 StartMoving()
 {
-	signal SIG_MOVE;
-	set-signal-mask SIG_MOVE;
+	signal 2;
+	set-signal-mask 2;
 	while( TRUE )
 	{
 		if( Static_Var_3 == 3 )
@@ -137,17 +133,17 @@ StartMoving()
 
 StopMoving()
 {
-	signal SIG_MOVE;
+	signal 2;
 }
 
 FirePrimary()
 {
-	gun_1 = !gun_1;
+	Static_Var_1 = !Static_Var_1;
 }
 
 QueryPrimary(piecenum)
 {
-	if( gun_1 )
+	if( Static_Var_1 )
 	{
 		piecenum = emitter2;
 	}

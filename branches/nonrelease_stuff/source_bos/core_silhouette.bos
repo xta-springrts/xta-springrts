@@ -7,6 +7,15 @@ piece  fuselage, wing1, wing2, bomb;
 
 static-var  Static_Var_1, Static_Var_2;
 
+lua_UnitLanded()
+{ 
+ 	return 0; 
+}
+ 
+lua_UnitLeftLand() 
+{ 
+	return 0; 
+}
 
 SmokeUnit(healthpercent, sleeptime, smoketype)
 {
@@ -45,6 +54,16 @@ Deactivate()
 {
 	turn wing1 to z-axis <0.000000> speed <75.000000>;
 	turn wing2 to z-axis <0.000000> speed <75.000000>;
+}
+
+StartMoving()
+{
+	call-script lua_UnitLeftLand();
+}
+
+StopMoving()
+{
+	call-script lua_UnitLanded();
 }
 
 Create()
