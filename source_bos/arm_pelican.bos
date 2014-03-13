@@ -3,21 +3,22 @@
 #include "sfxtype.h"
 #include "exptype.h"
 
-#define SPEEDUP_FACTOR 170
-
 piece  body, flare, rmispoint, lmispoint, lhippivot, rhippivot, rupleg, rfoot,
        lupleg, lleg, lfoot, rleg, lasturret, misturret, pontoons, wake1,
        wake2, wake3, wake4, lasbarrel, lexhaust, rexhaust;
 
-static-var  bMoving, bAiming, Static_Var_3, Static_Var_4, gun_2,
-            restore_delay, Static_Var_7, Static_Var_8, moveSpeed, currentSpeed;
+static-var  bMoving, bAiming, Static_Var_3, transformed, gun_2,
+            restore_delay, Static_terrain, Static_Var_8, moveSpeed, currentSpeed;
 
-// Signal definitions
-#define SIG_MOVE			2
-#define SIG_AIM				4
-#define SIG_AIM_2			8
-
-
+lua_PelicanTransform()
+{ 
+ 	return 0; 
+}
+ 
+lua_PelicanReform() 
+{ 
+	return 0; 
+}
 
 walk()
 {
@@ -91,7 +92,7 @@ walk()
 	if( bMoving )
 	{
 		move body to y-axis [0.000000] now;
-		move rupleg to y-axis [2.500000] now;
+		move rupleg to y-axis [1.000000] now;
 		move lupleg to y-axis [0.000000] now;
 		turn body to x-axis <8.000000> now;
 		turn lasturret to x-axis <8.000000> now;
@@ -141,7 +142,7 @@ walk()
 	if( bMoving )
 	{
 		move body to y-axis [0.000000] now;
-		move rupleg to y-axis [2.500000] now;
+		move rupleg to y-axis [1.000000] now;
 		move lupleg to y-axis [0.000000] now;
 		move lleg to y-axis [0.000000] now;
 		turn body to x-axis <4.000000> now;
@@ -160,7 +161,7 @@ walk()
 		move body to y-axis [0.000000] now;
 		move rupleg to y-axis [0.000000] now;
 		move lupleg to y-axis [0.000000] now;
-		move lleg to y-axis [2.500000] now;
+		move lleg to y-axis [1.000000] now;
 		turn body to x-axis <3.000000> now;
 		turn lasturret to x-axis <4.000000> now;
 		turn misturret to x-axis <2.000000> now;
@@ -212,7 +213,7 @@ walk()
 		move body to y-axis [0.000000] now;
 		move rupleg to y-axis [0.000000] now;
 		move lupleg to y-axis [0.000000] now;
-		move lleg to y-axis [-2.500000] now;
+		move lleg to y-axis [-1.000000] now;
 		turn body to x-axis <-3.000000> now;
 		turn lasturret to x-axis <1.000000> now;
 		turn misturret to x-axis <1.000000> now;
@@ -228,7 +229,7 @@ walk()
 	{
 		move body to y-axis [0.000000] now;
 		move rupleg to y-axis [0.000000] now;
-		move lupleg to y-axis [-2.500000] now;
+		move lupleg to y-axis [-1.000000] now;
 		move lleg to y-axis [0.000000] now;
 		move lfoot to y-axis [0.000000] now;
 		turn body to x-axis <-5.000000> now;
@@ -246,8 +247,8 @@ walk()
 	{
 		move body to y-axis [0.000000] now;
 		move rupleg to y-axis [0.000000] now;
-		move rfoot to y-axis [-2.500000] now;
-		move lupleg to y-axis [-2.500000] now;
+		move rfoot to y-axis [-1.000000] now;
+		move lupleg to y-axis [-1.000000] now;
 		move lleg to y-axis [0.000000] now;
 		turn body to x-axis <-4.000000> now;
 		turn rupleg to x-axis <-17.000000> now;
@@ -260,7 +261,7 @@ walk()
 	if( bMoving )
 	{
 		move body to y-axis [0.000000] now;
-		move rupleg to y-axis [-2.500000] now;
+		move rupleg to y-axis [-1.000000] now;
 		move rfoot to y-axis [0.000000] now;
 		move lupleg to y-axis [0.000000] now;
 		move lleg to y-axis [0.000000] now;
@@ -274,7 +275,7 @@ walk()
 	}
 	if( bMoving )
 	{
-		move body to y-axis [2.500000] now;
+		move body to y-axis [1.000000] now;
 		move rupleg to y-axis [0.000000] now;
 		move rfoot to y-axis [0.000000] now;
 		move lupleg to y-axis [0.000000] now;
@@ -306,7 +307,7 @@ walk()
 	{
 		move body to y-axis [0.000000] now;
 		move rupleg to y-axis [0.000000] now;
-		move rleg to y-axis [0.002777] now;
+		move rleg to y-axis [0.001105] now;
 		move lupleg to y-axis [0.000000] now;
 		move lleg to y-axis [0.000000] now;
 		move lfoot to y-axis [0.000000] now;
@@ -324,7 +325,7 @@ walk()
 	if( bMoving )
 	{
 		move body to y-axis [0.000000] now;
-		move rupleg to y-axis [-2.500000] now;
+		move rupleg to y-axis [-1.000000] now;
 		move rleg to y-axis [0.000000] now;
 		move lupleg to y-axis [0.000000] now;
 		move lleg to y-axis [0.000000] now;
@@ -345,9 +346,9 @@ walk()
 		move body to y-axis [0.000000] now;
 		move rupleg to y-axis [0.000000] now;
 		move rleg to y-axis [0.000000] now;
-		move lupleg to y-axis [-2.500000] now;
-		move lleg to y-axis [2.500000] now;
-		move lfoot to y-axis [-2.500000] now;
+		move lupleg to y-axis [-1.000000] now;
+		move lleg to y-axis [1.000000] now;
+		move lfoot to y-axis [-1.000000] now;
 		turn body to x-axis <6.000000> now;
 		turn lasturret to x-axis <5.000000> now;
 		turn misturret to x-axis <4.000000> now;
@@ -383,7 +384,7 @@ walk()
 		move body to y-axis [0.000000] now;
 		move rupleg to y-axis [0.000000] now;
 		move rleg to y-axis [0.000000] now;
-		move lupleg to y-axis [2.500000] now;
+		move lupleg to y-axis [1.000000] now;
 		turn body to x-axis <6.000000> now;
 		turn lasturret to x-axis <6.000000> now;
 		turn misturret to x-axis <4.000000> now;
@@ -397,8 +398,8 @@ walk()
 	}
 	if( bMoving )
 	{
-		move body to y-axis [-2.500000] now;
-		move rupleg to y-axis [-2.500000] now;
+		move body to y-axis [-1.000000] now;
+		move rupleg to y-axis [-1.000000] now;
 		move rleg to y-axis [0.000000] now;
 		move lupleg to y-axis [0.000000] now;
 		turn body to x-axis <5.000000> now;
@@ -433,7 +434,7 @@ walk()
 	{
 		move body to y-axis [0.000000] now;
 		move rupleg to y-axis [0.000000] now;
-		move rleg to y-axis [2.500000] now;
+		move rleg to y-axis [1.000000] now;
 		move lupleg to y-axis [0.000000] now;
 		turn body to x-axis <3.000000> now;
 		turn lasturret to x-axis <4.000000> now;
@@ -466,7 +467,7 @@ walk()
 	{
 		move body to y-axis [0.000000] now;
 		move rupleg to y-axis [0.000000] now;
-		move lupleg to y-axis [-2.500000] now;
+		move lupleg to y-axis [-1.000000] now;
 		turn body to x-axis <-1.000000> now;
 		turn lasturret to x-axis <2.000000> now;
 		turn misturret to x-axis <3.000000> now;
@@ -498,7 +499,7 @@ walk()
 	{
 		move body to y-axis [0.000000] now;
 		move rupleg to y-axis [0.000000] now;
-		move lupleg to y-axis [-2.500000] now;
+		move lupleg to y-axis [-1.000000] now;
 		turn body to x-axis <-5.000000> now;
 		turn lasturret to x-axis <0.000000> now;
 		turn misturret to x-axis <0.000000> now;
@@ -514,11 +515,11 @@ walk()
 	{
 		move body to y-axis [0.000000] now;
 		move rupleg to y-axis [0.000000] now;
-		move rleg to y-axis [2.500000] now;
+		move rleg to y-axis [1.000000] now;
 		move rfoot to y-axis [0.000000] now;
 		move lupleg to y-axis [0.000000] now;
-		move lleg to y-axis [2.500000] now;
-		move lfoot to y-axis [-2.500000] now;
+		move lleg to y-axis [1.000000] now;
+		move lfoot to y-axis [-1.000000] now;
 		turn body to x-axis <-3.000000> now;
 		turn rupleg to x-axis <28.000000> now;
 		turn rleg to x-axis <-9.000000> now;
@@ -532,7 +533,7 @@ walk()
 	{
 		move body to y-axis [0.000000] now;
 		move rupleg to y-axis [0.000000] now;
-		move rleg to y-axis [2.500000] now;
+		move rleg to y-axis [1.000000] now;
 		move rfoot to y-axis [0.000000] now;
 		move lupleg to y-axis [0.000000] now;
 		move lleg to y-axis [0.000000] now;
@@ -546,10 +547,10 @@ walk()
 		turn lfoot to x-axis <-3.000000> now;
 		sleep 2200 / currentSpeed;
 	}
-	move body to y-axis [2.500000] now;
+	move body to y-axis [1.000000] now;
 	move rupleg to y-axis [0.000000] now;
 	move rleg to y-axis [0.000000] now;
-	move rfoot to y-axis [-2.500000] now;
+	move rfoot to y-axis [-1.000000] now;
 	move lupleg to y-axis [0.000000] now;
 	move lleg to y-axis [0.000000] now;
 	move lfoot to y-axis [0.000000] now;
@@ -635,7 +636,7 @@ walklegs()
 	if( bMoving )
 	{
 		move body to y-axis [0.000000] now;
-		move rupleg to y-axis [-2.500000] now;
+		move rupleg to y-axis [-1.000000] now;
 		move lupleg to y-axis [0.000000] now;
 		turn body to x-axis <8.000000> now;
 		turn lasturret to x-axis <8.000000> now;
@@ -685,7 +686,7 @@ walklegs()
 	if( bMoving )
 	{
 		move body to y-axis [0.000000] now;
-		move rupleg to y-axis [2.500000] now;
+		move rupleg to y-axis [1.000000] now;
 		move lupleg to y-axis [0.000000] now;
 		move lleg to y-axis [0.000000] now;
 		turn body to x-axis <4.000000> now;
@@ -704,7 +705,7 @@ walklegs()
 		move body to y-axis [0.000000] now;
 		move rupleg to y-axis [0.000000] now;
 		move lupleg to y-axis [0.000000] now;
-		move lleg to y-axis [2.500000] now;
+		move lleg to y-axis [1.000000] now;
 		turn body to x-axis <3.000000> now;
 		turn lasturret to x-axis <4.000000> now;
 		turn misturret to x-axis <2.000000> now;
@@ -756,7 +757,7 @@ walklegs()
 		move body to y-axis [0.000000] now;
 		move rupleg to y-axis [0.000000] now;
 		move lupleg to y-axis [0.000000] now;
-		move lleg to y-axis [-2.500000] now;
+		move lleg to y-axis [-1.000000] now;
 		turn body to x-axis <-3.000000> now;
 		turn lasturret to x-axis <1.000000> now;
 		turn misturret to x-axis <1.000000> now;
@@ -772,7 +773,7 @@ walklegs()
 	{
 		move body to y-axis [0.000000] now;
 		move rupleg to y-axis [0.000000] now;
-		move lupleg to y-axis [-2.500000] now;
+		move lupleg to y-axis [-1.000000] now;
 		move lleg to y-axis [0.000000] now;
 		move lfoot to y-axis [0.000000] now;
 		turn body to x-axis <-5.000000> now;
@@ -790,8 +791,8 @@ walklegs()
 	{
 		move body to y-axis [0.000000] now;
 		move rupleg to y-axis [0.000000] now;
-		move rfoot to y-axis [-2.500000] now;
-		move lupleg to y-axis [-2.500000] now;
+		move rfoot to y-axis [-1.000000] now;
+		move lupleg to y-axis [-1.000000] now;
 		move lleg to y-axis [0.000000] now;
 		turn body to x-axis <-4.000000> now;
 		turn rupleg to x-axis <-17.000000> now;
@@ -804,7 +805,7 @@ walklegs()
 	if( bMoving )
 	{
 		move body to y-axis [0.000000] now;
-		move rupleg to y-axis [-2.500000] now;
+		move rupleg to y-axis [-1.000000] now;
 		move rfoot to y-axis [0.000000] now;
 		move lupleg to y-axis [0.000000] now;
 		move lleg to y-axis [0.000000] now;
@@ -818,7 +819,7 @@ walklegs()
 	}
 	if( bMoving )
 	{
-		move body to y-axis [2.500000] now;
+		move body to y-axis [1.000000] now;
 		move rupleg to y-axis [0.000000] now;
 		move rfoot to y-axis [0.000000] now;
 		move lupleg to y-axis [0.000000] now;
@@ -850,7 +851,7 @@ walklegs()
 	{
 		move body to y-axis [0.000000] now;
 		move rupleg to y-axis [0.000000] now;
-		move rleg to y-axis [2.500000] now;
+		move rleg to y-axis [1.000000] now;
 		move lupleg to y-axis [0.000000] now;
 		move lleg to y-axis [0.000000] now;
 		move lfoot to y-axis [0.000000] now;
@@ -868,7 +869,7 @@ walklegs()
 	if( bMoving )
 	{
 		move body to y-axis [0.000000] now;
-		move rupleg to y-axis [-2.500000] now;
+		move rupleg to y-axis [-1.000000] now;
 		move rleg to y-axis [0.000000] now;
 		move lupleg to y-axis [0.000000] now;
 		move lleg to y-axis [0.000000] now;
@@ -889,9 +890,9 @@ walklegs()
 		move body to y-axis [0.000000] now;
 		move rupleg to y-axis [0.000000] now;
 		move rleg to y-axis [0.000000] now;
-		move lupleg to y-axis [-2.500000] now;
-		move lleg to y-axis [2.500000] now;
-		move lfoot to y-axis [-2.500000] now;
+		move lupleg to y-axis [-1.000000] now;
+		move lleg to y-axis [1.000000] now;
+		move lfoot to y-axis [-1.000000] now;
 		turn body to x-axis <6.000000> now;
 		turn lasturret to x-axis <5.000000> now;
 		turn misturret to x-axis <4.000000> now;
@@ -927,7 +928,7 @@ walklegs()
 		move body to y-axis [0.000000] now;
 		move rupleg to y-axis [0.000000] now;
 		move rleg to y-axis [0.000000] now;
-		move lupleg to y-axis [2.500000] now;
+		move lupleg to y-axis [1.000000] now;
 		turn body to x-axis <6.000000> now;
 		turn lasturret to x-axis <6.000000> now;
 		turn misturret to x-axis <4.000000> now;
@@ -941,8 +942,8 @@ walklegs()
 	}
 	if( bMoving )
 	{
-		move body to y-axis [-2.500000] now;
-		move rupleg to y-axis [-2.500000] now;
+		move body to y-axis [-1.000000] now;
+		move rupleg to y-axis [-1.000000] now;
 		move rleg to y-axis [0.000000] now;
 		move lupleg to y-axis [0.000000] now;
 		turn body to x-axis <5.000000> now;
@@ -977,7 +978,7 @@ walklegs()
 	{
 		move body to y-axis [0.000000] now;
 		move rupleg to y-axis [0.000000] now;
-		move rleg to y-axis [2.500000] now;
+		move rleg to y-axis [1.000000] now;
 		move lupleg to y-axis [0.000000] now;
 		turn body to x-axis <3.000000> now;
 		turn lasturret to x-axis <4.000000> now;
@@ -1010,7 +1011,7 @@ walklegs()
 	{
 		move body to y-axis [0.000000] now;
 		move rupleg to y-axis [0.000000] now;
-		move lupleg to y-axis [-2.500000] now;
+		move lupleg to y-axis [-1.000000] now;
 		turn body to x-axis <-1.000000> now;
 		turn lasturret to x-axis <2.000000> now;
 		turn misturret to x-axis <1.000000> now;
@@ -1042,7 +1043,7 @@ walklegs()
 	{
 		move body to y-axis [0.000000] now;
 		move rupleg to y-axis [0.000000] now;
-		move lupleg to y-axis [-2.500000] now;
+		move lupleg to y-axis [-1.000000] now;
 		turn body to x-axis <-5.000000> now;
 		turn lasturret to x-axis <0.000000> now;
 		turn misturret to x-axis <0.000000> now;
@@ -1058,11 +1059,11 @@ walklegs()
 	{
 		move body to y-axis [0.000000] now;
 		move rupleg to y-axis [0.000000] now;
-		move rleg to y-axis [2.500000] now;
+		move rleg to y-axis [1.000000] now;
 		move rfoot to y-axis [0.000000] now;
 		move lupleg to y-axis [0.000000] now;
-		move lleg to y-axis [2.500000] now;
-		move lfoot to y-axis [-2.500000] now;
+		move lleg to y-axis [1.000000] now;
+		move lfoot to y-axis [-1.000000] now;
 		turn body to x-axis <-3.000000> now;
 		turn rupleg to x-axis <28.000000> now;
 		turn rleg to x-axis <-9.000000> now;
@@ -1076,7 +1077,7 @@ walklegs()
 	{
 		move body to y-axis [0.000000] now;
 		move rupleg to y-axis [0.000000] now;
-		move rleg to y-axis [2.500000] now;
+		move rleg to y-axis [1.000000] now;
 		move rfoot to y-axis [0.000000] now;
 		move lupleg to y-axis [0.000000] now;
 		move lleg to y-axis [0.000000] now;
@@ -1090,10 +1091,10 @@ walklegs()
 		turn lfoot to x-axis <-3.000000> now;
 		sleep 2200 / currentSpeed;
 	}
-	move body to y-axis [2.500000] now;
+	move body to y-axis [1.000000] now;
 	move rupleg to y-axis [0.000000] now;
 	move rleg to y-axis [0.000000] now;
-	move rfoot to y-axis [-2.500000] now;
+	move rfoot to y-axis [-1.000000] now;
 	move lupleg to y-axis [0.000000] now;
 	move lleg to y-axis [0.000000] now;
 	move lfoot to y-axis [0.000000] now;
@@ -1109,82 +1110,79 @@ walklegs()
 
 transform()
 {
+	call-script lua_PelicanTransform();
 	move lhippivot to z-axis [0.000000] now;
 	move rhippivot to z-axis [0.000000] now;
 	move rfoot to y-axis [0.000000] now;
-	move rfoot to y-axis [0.000000] speed [5.000000];
+	move rfoot to y-axis [0.000000] speed [2.000000];
 	move rfoot to z-axis [0.000000] now;
-	move rfoot to z-axis [2.500000] speed [12.500000];
+	move rfoot to z-axis [1.000000] speed [5.000000];
 	move lfoot to y-axis [0.000000] now;
-	move lfoot to y-axis [0.000000] speed [2.500000];
+	move lfoot to y-axis [0.000000] speed [1.000000];
 	move lfoot to z-axis [0.000000] now;
-	move lfoot to z-axis [2.500000] speed [12.500000];
+	move lfoot to z-axis [1.000000] speed [5.000000];
 	turn rfoot to x-axis <0.000000> now;
 	turn rfoot to x-axis <48.000000> speed <313.000000>;
 	turn lfoot to x-axis <0.000000> now;
 	turn lfoot to x-axis <50.000000> speed <324.000000>;
 	sleep 153;
-
-	move rleg to y-axis [0.000000] speed [2.500000];
-	move rleg to z-axis [2.500000] speed [7.500000];
-	move lleg to y-axis [0.000000] speed [2.500000];
-	move lleg to z-axis [2.500000] speed [5.000000];
+	move rleg to y-axis [0.000000] speed [1.000000];
+	move rleg to z-axis [1.000000] speed [3.000000];
+	move lleg to y-axis [0.000000] speed [1.000000];
+	move lleg to z-axis [1.000000] speed [2.000000];
 	turn rleg to x-axis <30.000000> speed <117.000000>;
 	turn lleg to x-axis <29.000000> speed <114.000000>;
 	sleep 253;
-
-	move lhippivot to x-axis [2.500000] speed [5.000000];
-	move lhippivot to y-axis [-7.500000] speed [15.000000];
-	move rhippivot to x-axis [-2.500000] speed [5.000000];
-	move rhippivot to y-axis [-7.500000] speed [15.000000];
+	move lhippivot to x-axis [1.000000] speed [2.000000];
+	move lhippivot to y-axis [-3.000000] speed [6.000000];
+	move rhippivot to x-axis [-1.000000] speed [2.000000];
+	move rhippivot to y-axis [-3.000000] speed [6.000000];
 	turn rupleg to z-axis <90.000000> speed <208.000000>;
 	turn lupleg to z-axis <-90.000000> speed <208.000000>;
 	sleep 433;
-
-	move lhippivot to z-axis [7.500000] speed [7.500000];
-	move rhippivot to z-axis [7.500000] speed [7.500000];
+	move lhippivot to z-axis [3.000000] speed [3.000000];
+	move rhippivot to z-axis [3.000000] speed [3.000000];
 	turn lhippivot to y-axis <-90.000000> speed <98.000000>;
 	turn rhippivot to y-axis <90.000000> speed <98.000000>;
 	sleep 923;
-
 	turn body to x-axis <-9.000000> speed <51.000000>;
 	sleep 173;
-
 	turn body to x-axis <0.000000> speed <120.000000>;
 	sleep 146;
 }
 
 reform()
 {
+	call-script lua_PelicanReform();
 	move body to y-axis [0.000000] now;
-	move body to y-axis [5.000000] speed [22.500000];
-	move lhippivot to x-axis [2.500000] now;
-	move lhippivot to x-axis [0.000000] speed [10.000000];
-	move lhippivot to y-axis [-7.500000] now;
-	move lhippivot to y-axis [0.000000] speed [30.000000];
-	move lhippivot to z-axis [7.500000] now;
-	move lhippivot to z-axis [7.500000] speed [5.000000];
-	move rhippivot to x-axis [-2.500000] now;
-	move rhippivot to x-axis [0.000000] speed [10.000000];
-	move rhippivot to y-axis [-7.500000] now;
-	move rhippivot to y-axis [0.000000] speed [30.000000];
-	move rhippivot to z-axis [7.500000] now;
-	move rhippivot to z-axis [7.500000] speed [5.000000];
+	move body to y-axis [2.000000] speed [9.000000];
+	move lhippivot to x-axis [1.000000] now;
+	move lhippivot to x-axis [0.000000] speed [4.000000];
+	move lhippivot to y-axis [-3.000000] now;
+	move lhippivot to y-axis [0.000000] speed [12.000000];
+	move lhippivot to z-axis [3.000000] now;
+	move lhippivot to z-axis [3.000000] speed [2.000000];
+	move rhippivot to x-axis [-1.000000] now;
+	move rhippivot to x-axis [0.000000] speed [4.000000];
+	move rhippivot to y-axis [-3.000000] now;
+	move rhippivot to y-axis [0.000000] speed [12.000000];
+	move rhippivot to z-axis [3.000000] now;
+	move rhippivot to z-axis [3.000000] speed [2.000000];
 	move rleg to y-axis [0.000000] now;
 	move rleg to y-axis [0.000000] speed [0.000000];
-	move rleg to z-axis [2.500000] now;
-	move rleg to z-axis [2.500000] speed [0.000000];
+	move rleg to z-axis [1.000000] now;
+	move rleg to z-axis [1.000000] speed [0.000000];
 	move rfoot to y-axis [0.000000] now;
 	move rfoot to y-axis [0.000000] speed [0.000000];
-	move rfoot to z-axis [2.500000] now;
-	move rfoot to z-axis [2.500000] speed [0.000000];
+	move rfoot to z-axis [1.000000] now;
+	move rfoot to z-axis [1.000000] speed [0.000000];
 	move lleg to y-axis [0.000000] now;
-	move lleg to z-axis [2.500000] now;
+	move lleg to z-axis [1.000000] now;
 	move lleg to z-axis [0.000000] speed [0.000000];
 	move lfoot to y-axis [0.000000] now;
 	move lfoot to y-axis [0.000000] speed [0.000000];
-	move lfoot to z-axis [2.500000] now;
-	move lfoot to z-axis [2.500000] speed [0.000000];
+	move lfoot to z-axis [1.000000] now;
+	move lfoot to z-axis [1.000000] speed [0.000000];
 	turn body to x-axis <0.000000> now;
 	turn body to x-axis <-5.000000> speed <23.000000>;
 	turn lhippivot to y-axis <-90.000000> now;
@@ -1203,83 +1201,75 @@ reform()
 	turn lfoot to x-axis <50.000000> now;
 	turn lfoot to x-axis <40.000000> speed <41.000000>;
 	sleep 225;
-
-	move body to y-axis [5.000000] speed [0.000000];
-	move lhippivot to z-axis [0.000000] speed [32.500000];
-	move rhippivot to z-axis [0.000000] speed [32.500000];
+	move body to y-axis [2.000000] speed [0.000000];
+	move lhippivot to z-axis [0.000000] speed [13.000000];
+	move rhippivot to z-axis [0.000000] speed [13.000000];
 	turn body to x-axis <-3.000000> speed <8.000000>;
 	sleep 257;
-
-	move body to y-axis [5.000000] speed [2.500000];
+	move body to y-axis [2.000000] speed [1.000000];
 	turn body to x-axis <0.000000> speed <15.000000>;
 	turn lhippivot to y-axis <0.000000> speed <431.000000>;
 	turn rhippivot to y-axis <0.000000> speed <431.000000>;
 	sleep 209;
-
-	move body to y-axis [7.500000] speed [7.500000];
-	move rleg to y-axis [0.000000] speed [5.000000];
-	move lleg to y-axis [0.000000] speed [7.500000];
+	move body to y-axis [3.000000] speed [3.000000];
+	move rleg to y-axis [0.000000] speed [2.000000];
+	move lleg to y-axis [0.000000] speed [3.000000];
 	sleep 146;
-
-	move body to y-axis [2.500000] speed [45.000000];
-	move rleg to z-axis [0.000000] speed [20.000000];
-	move lleg to z-axis [0.000000] speed [22.500000];
+	move body to y-axis [1.000000] speed [18.000000];
+	move rleg to z-axis [0.000000] speed [8.000000];
+	move lleg to z-axis [0.000000] speed [9.000000];
 	turn body to x-axis <1.000000> speed <13.000000>;
 	turn rleg to x-axis <0.000000> speed <367.000000>;
 	turn lleg to x-axis <0.000000> speed <372.000000>;
 	sleep 80;
-
-	move body to y-axis [2.500000] speed [5.000000];
-	move rfoot to y-axis [0.000000] speed [5.000000];
-	move lfoot to y-axis [0.000000] speed [2.500000];
+	move body to y-axis [1.000000] speed [2.000000];
+	move rfoot to y-axis [0.000000] speed [2.000000];
+	move lfoot to y-axis [0.000000] speed [1.000000];
 	turn body to x-axis <-3.000000> speed <31.000000>;
 	sleep 138;
-
-	move body to y-axis [0.000000] speed [12.500000];
-	move rfoot to z-axis [0.000000] speed [20.000000];
-	move lfoot to z-axis [0.000000] speed [15.000000];
+	move body to y-axis [0.000000] speed [5.000000];
+	move rfoot to z-axis [0.000000] speed [8.000000];
+	move lfoot to z-axis [0.000000] speed [6.000000];
 	turn body to x-axis <0.000000> speed <25.000000>;
 	turn rfoot to x-axis <0.000000> speed <306.000000>;
 	turn lfoot to x-axis <0.000000> speed <318.000000>;
 	sleep 127;
-
-	move body to y-axis [-2.500000] speed [25.000000];
-	move rupleg to y-axis [2.500000] speed [12.500000];
-	move lupleg to y-axis [2.500000] speed [10.000000];
+	move body to y-axis [-1.000000] speed [10.000000];
+	move rupleg to y-axis [1.000000] speed [5.000000];
+	move lupleg to y-axis [1.000000] speed [4.000000];
 	turn body to x-axis <6.000000> speed <57.000000>;
 	turn rupleg to x-axis <9.000000> speed <88.000000>;
 	turn rleg to x-axis <-16.000000> speed <156.000000>;
 	turn lupleg to x-axis <18.000000> speed <172.000000>;
 	turn lleg to x-axis <-26.000000> speed <247.000000>;
 	sleep 104;
-
-	move body to y-axis [0.000000] speed [27.500000];
-	move rupleg to y-axis [0.000000] speed [15.000000];
-	move lupleg to y-axis [0.000000] speed [12.500000];
+	move body to y-axis [0.000000] speed [11.000000];
+	move rupleg to y-axis [0.000000] speed [6.000000];
+	move lupleg to y-axis [0.000000] speed [5.000000];
 	turn body to x-axis <1.000000> speed <56.000000>;
 	turn rupleg to x-axis <0.000000> speed <97.000000>;
 	turn rleg to x-axis <0.000000> speed <172.000000>;
 	turn lupleg to x-axis <0.000000> speed <191.000000>;
 	turn lleg to x-axis <0.000000> speed <273.000000>;
-	sleep 171;		
+	sleep 171;
 }
 
 swim()
 {
-	move lhippivot to x-axis [2.500000] now;
-	move lhippivot to y-axis [-7.500000] now;
-	move lhippivot to z-axis [7.500000] now;
-	move rhippivot to x-axis [-2.500000] now;
-	move rhippivot to y-axis [-7.500000] now;
-	move rhippivot to z-axis [7.500000] now;
+	move lhippivot to x-axis [1.000000] now;
+	move lhippivot to y-axis [-3.000000] now;
+	move lhippivot to z-axis [3.000000] now;
+	move rhippivot to x-axis [-1.000000] now;
+	move rhippivot to y-axis [-3.000000] now;
+	move rhippivot to z-axis [3.000000] now;
 	move rleg to y-axis [0.000000] now;
-	move rleg to z-axis [2.500000] now;
+	move rleg to z-axis [1.000000] now;
 	move rfoot to y-axis [0.000000] now;
-	move rfoot to z-axis [2.500000] now;
+	move rfoot to z-axis [1.000000] now;
 	move lleg to y-axis [0.000000] now;
-	move lleg to z-axis [2.500000] now;
+	move lleg to z-axis [1.000000] now;
 	move lfoot to y-axis [0.000000] now;
-	move lfoot to z-axis [2.500000] now;
+	move lfoot to z-axis [1.000000] now;
 	turn lhippivot to y-axis <-90.000000> now;
 	turn rhippivot to y-axis <90.000000> now;
 	turn rupleg to z-axis <90.000000> now;
@@ -1291,29 +1281,29 @@ swim()
 	sleep 200;
 }
 
-MotionControl(Func_Var_1)
+MotionControl(Func_terrain)
 {
-	Func_Var_1 = 1;
+	Func_terrain = 1;
 	while( TRUE )
 	{
-		if( Static_Var_7 == 2 AND ( !Static_Var_4 ) )
+		if( Static_terrain == 2 AND ( !transformed ) )
 		{
 			call-script transform();
-			Static_Var_4 = 1;
-			Func_Var_1 = 1;
+			transformed = 1;
+			Func_terrain = 1;
 		}
-		if( Static_Var_4 AND Static_Var_7 == 1 OR Static_Var_7 == 4 )
+		if( transformed AND Static_terrain == 1 OR Static_terrain == 4 )
 		{
 			call-script reform();
-			Static_Var_4 = 0;
-			Func_Var_1 = 1;
+			transformed = 0;
+			Func_terrain = 1;
 		}
 		if( bMoving )
 		{
 			if( bAiming )
 			{
 				Static_Var_3 = 1;
-				if( Static_Var_4 )
+				if( transformed )
 				{
 					call-script swim();
 				}
@@ -1325,7 +1315,7 @@ MotionControl(Func_Var_1)
 			else
 			{
 				Static_Var_3 = 0;
-				if( Static_Var_4 )
+				if( transformed )
 				{
 					call-script swim();
 				}
@@ -1334,21 +1324,21 @@ MotionControl(Func_Var_1)
 					call-script walk();
 				}
 			}
-			Func_Var_1 = 1;
+			Func_terrain = 1;
 		}
 		else
 		{
 			Static_Var_3 = 1;
-			if( Func_Var_1 AND ( !Static_Var_4 ) )
+			if( Func_terrain AND ( !transformed ) )
 			{
-				move body to x-axis [0.000000] speed [0.002777];
+				move body to x-axis [0.000000] speed [0.001105];
 				turn rupleg to x-axis <0.000000> speed <200.000000>;
 				turn rleg to x-axis <0.000000> speed <200.000000>;
 				turn rfoot to x-axis <0.000000> speed <200.000000>;
 				turn lupleg to x-axis <0.000000> speed <200.000000>;
 				turn lleg to x-axis <0.000000> speed <200.000000>;
 				turn lfoot to x-axis <0.000000> speed <200.000000>;
-				Func_Var_1 = 0;
+				Func_terrain = 0;
 			}
 			sleep 100;
 		}
@@ -1357,10 +1347,13 @@ MotionControl(Func_Var_1)
 
 UnitSpeed()
 {
-	while(TRUE)
+	while( TRUE )
 	{
-		currentSpeed = (get CURRENT_SPEED)*100/moveSpeed;
-		if (currentSpeed<20) currentSpeed=20;
+		currentSpeed = (get CURRENT_SPEED) * 100 / moveSpeed;
+		if( currentSpeed < 20 )
+		{
+			currentSpeed = 20;
+		}
 		sleep 142;
 	}
 }
@@ -1378,10 +1371,10 @@ SmokeUnit(healthpercent, sleeptime, smoketype)
 		healthpercent = get HEALTH;
 		if( healthpercent < 66 )
 		{
-			smoketype = SFXTYPE_BLACKSMOKE;
+			smoketype = 258;
 			if( Rand( 1, 66 ) < healthpercent )
 			{
-				smoketype = SFXTYPE_WHITESMOKE;
+				smoketype = 257;
 			}
 			emit-sfx smoketype from body;
 		}
@@ -1396,11 +1389,11 @@ SmokeUnit(healthpercent, sleeptime, smoketype)
 
 Create()
 {
-	bMoving = FALSE;
-	bAiming = FALSE;
+	bMoving = 0;
+	bAiming = 0;
 	Static_Var_3 = 1;
-	Static_Var_4 = 0;
-	gun_2 = body;
+	transformed = 0;
+	gun_2 = 0;
 	Static_Var_8 = 1;
 	hide flare;
 	hide pontoons;
@@ -1414,19 +1407,19 @@ Create()
 
 StartMoving()
 {
-	bMoving = TRUE;
-	signal SIG_MOVE;
-	set-signal-mask SIG_MOVE;
+	bMoving = 1;
+	signal 2;
+	set-signal-mask 2;
 	while( TRUE )
 	{
-		if( Static_Var_7 == 2 )
+		if( Static_terrain == 2 )
 		{
 			emit-sfx 2 from wake1;
 			emit-sfx 2 from wake2;
 			emit-sfx 2 from wake3;
 			emit-sfx 2 from wake4;
 		}
-		else if( Static_Var_7 == 1 )
+		else if( Static_terrain == 1 )
 		{
 			emit-sfx 2 from wake1;
 			emit-sfx 2 from wake2;
@@ -1439,18 +1432,18 @@ StartMoving()
 
 StopMoving()
 {
-	bMoving = FALSE;
-	signal SIG_MOVE;
+	bMoving = 0;
+	signal 2;
 }
 
-setSFXoccupy(Func_Var_1)
+setSFXoccupy(Func_terrain)
 {
-	Static_Var_7 = Func_Var_1;
+	Static_terrain = Func_terrain;
 }
 
-SetMaxReloadTime(Func_Var_1)
+SetMaxReloadTime(Func_terrain)
 {
-	restore_delay = Func_Var_1 * 2;
+	restore_delay = Func_terrain * 2;
 }
 
 SweetSpot(piecenum)
@@ -1469,14 +1462,14 @@ RestoreAfterDelay()
 	wait-for-turn lasturret around x-axis;
 	wait-for-turn misturret around y-axis;
 	wait-for-turn misturret around x-axis;
-	bAiming = FALSE;
+	bAiming = 0;
 }
 
 AimPrimary(heading, pitch)
 {
-	signal SIG_AIM;
-	set-signal-mask SIG_AIM;
-	bAiming = TRUE;
+	signal 4;
+	set-signal-mask 4;
+	bAiming = 1;
 	turn lasturret to y-axis heading speed <240.000000>;
 	turn lasturret to x-axis <0.000000> - pitch speed <180.000000>;
 	wait-for-turn lasturret around y-axis;
@@ -1509,27 +1502,27 @@ AimFromSecondary(piecenum)
 
 QuerySecondary(piecenum)
 {
-	piecenum = rmispoint + gun_2;
+	piecenum = 2 + gun_2;
 }
 
 FireSecondary()
 {
 	if( gun_2 )
 	{
-		emit-sfx UNIT_SFX1 from lexhaust;
+		emit-sfx 1024 from lexhaust;
 	}
 	else
 	{
-		emit-sfx UNIT_SFX1 from rexhaust;
+		emit-sfx 1024 from rexhaust;
 	}
 	gun_2 = !gun_2;
 }
 
 AimSecondary(heading, pitch)
 {
-	signal SIG_AIM_2;
-	set-signal-mask SIG_AIM_2;
-	bAiming = TRUE;
+	signal 8;
+	set-signal-mask 8;
+	bAiming = 1;
 	turn misturret to y-axis heading speed <200.000000>;
 	turn misturret to x-axis <0.000000> - pitch speed <200.000000>;
 	wait-for-turn misturret around y-axis;
@@ -1543,7 +1536,7 @@ Killed(severity, corpsetype)
 	Static_Var_8 = 1;
 	if( severity <= 25 )
 	{
-		if( Static_Var_7 == 2 )
+		if( Static_terrain == 2 )
 		{
 			corpsetype = 1;
 			Static_Var_8 = 0;
@@ -1633,5 +1626,4 @@ Killed(severity, corpsetype)
 	explode wake2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
 	explode wake3 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
 	explode wake4 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
-	return (0);
 }
