@@ -72,8 +72,8 @@ local aliveAllyTeamCount = 0
 local killedAllyTeams = {}
 local gameoverframe = nil
 local gamewinners 	= nil
-local gameoverdelay	= 32 -- check that this is more than the value in teamcomends gadget to make combomb forfeit work
-local handleGameOver = true
+local gameoverdelay	= 16 -- check that this is more than the value in teamcomends gadget to make combomb forfeit work
+
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
@@ -87,9 +87,6 @@ end
 
 function gadget:GameStart()	
 	local waitForComends = Spring.GetGameRulesParam("WaitForComends")
-	if waitForComends then
-		handleGameOver = waitForComends == 0
-	end
 end
 
 local function IsCandidateWinner(allyTeamID)
@@ -214,24 +211,22 @@ end
 
 function gadget:GameFrame(frame)
 	-- trigger gameover with a delay to let all explosions calm down
-	if handleGameOver then
-		if gameoverframe and frame >= gameoverframe then
-			GG.gamewinners = gamewinners
-			spGameOver(gamewinners)
-		end
+	if gameoverframe and frame >= gameoverframe then
+		GG.gamewinners = gamewinners
+		spGameOver(gamewinners)
+	end
 
-		-- only do a check in slowupdate
-		-- change 16 => 32, no hurries here
-		if (frame%32) == 0 then
-			CheckGameOver()
-			-- kill teams after checking for gameover to avoid to trigger instantly gameover
-			if teamDeathMode == TEAMZERO or teamDeathMode == COMMANDER then
-				KillTeamsZeroUnits()
-			elseif teamDeathMode == ALLYZERO or teamDeathMode == COMENDS then
-				KillAllyTeamsZeroUnits()
-			end
-			KillResignedTeams()
+	-- only do a check in slowupdate
+	-- change 16 => 32, no hurries here
+	if (frame%32) == 0 then
+		CheckGameOver()
+		-- kill teams after checking for gameover to avoid to trigger instantly gameover
+		if teamDeathMode == TEAMZERO or teamDeathMode == COMMANDER then
+			KillTeamsZeroUnits()
+		elseif teamDeathMode == ALLYZERO or teamDeathMode == COMENDS then
+			KillAllyTeamsZeroUnits()
 		end
+		KillResignedTeams()
 	end
 end
 

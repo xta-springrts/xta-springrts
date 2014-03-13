@@ -28,8 +28,10 @@ if (gadgetHandler:IsSyncedCode()) then
 	local destroySingleQueue	= {}
 	local teamCommanders 		= {}	-- table of commander's count per team (allyteam)
 	local playerCommanders 		= {}	-- table of commanders per player (team)
-	local commanderTable 		= {} 	-- table of commander unitdefid:s
+	local commanderTable 		= {} 	-- table by commander unitdefid:s = true
+	local commanderDefs			= {}	-- table of commander unitdefid:s
 	local isAlive 				= {}
+	local deadTeams				= {}    -- needed because select(3,Spring.GetTeamInfo(teamID)) returns true 1 frame too late
 
 	local GetTeamList			= Spring.GetTeamList
 	local GetTeamUnits 			= Spring.GetTeamUnits
@@ -55,7 +57,8 @@ if (gadgetHandler:IsSyncedCode()) then
 	local contesters			= {}
 	local gameoverframe			= nil
 	local gamewinners			= nil
-	local gameoverdelay			= 90 -- let some time pass to let all explosions calm down, which are usually present on comends
+	local gameoverdelay			= 32 -- let some time pass to let all explosions calm down, which are usually present on comends
+	local timeoutDelay			= 320 -- force end after this delay
 	local queueFinished			= false
 	local gaiaAllyID 			= select(6, Spring.GetTeamInfo(Spring.GetGaiaTeamID()))
 	
@@ -77,10 +80,10 @@ if (gadgetHandler:IsSyncedCode()) then
 			Spring.SetGameRulesParam("WaitForComends",1)	
 		end
 		
-		for i,allyTeam in ipairs(Spring.GetAllyTeamList()) do
+		for _,allyTeam in ipairs(Spring.GetAllyTeamList()) do
 			teamCommanders[allyTeam] = 0
-			if allyTeam ~= gaiaAllyID then
-				contesters[i] = allyTeam
+			if allyTeam ~= gaiaAllyID and (#Spring.GetTeamList(allyTeam) > 0) then
+				contesters[#contesters+1] = allyTeam
 			end
 		end
 		
@@ -90,7 +93,6 @@ if (gadgetHandler:IsSyncedCode()) then
 		
 		for id,weaponDef in pairs(WeaponDefs) do
 			local wName = weaponDef.name
-			--Echo("Weapon: ", wName)
 			if dgunWeapons[wName] then
 				dgunTable[weaponDef.id] = true
 			end
@@ -101,6 +103,7 @@ if (gadgetHandler:IsSyncedCode()) then
 				if unitDef.customParams.iscommander then
 					if unitDef.name then
 						commanderTable[id] = true
+						commanderDefs[#commanderDefs+1]=id
 					end
 				end
 			end	
@@ -109,10 +112,15 @@ if (gadgetHandler:IsSyncedCode()) then
 				if unitDef.customParams.iscommander and (not unitDef.customParams.isdecoycommander) then
 					if unitDef.name then
 						commanderTable[id] = true
+						commanderDefs[#commanderDefs+1]=id
 					end				
 				end
 			end
 		end
+	end
+	
+	function gadget:ShutDown()
+		Spring.SetGameRulesParam("WaitForComends",0)
 	end
 	
 	local function removeContester(allyID)
@@ -130,13 +138,20 @@ if (gadgetHandler:IsSyncedCode()) then
 		elseif #contesters < 1 then
 			winners = {}
 		end
-		if winners then
-			local frame = Spring.GetGameFrame()
+		local frame = Spring.GetGameFrame()
+		if winners or Spring.IsGameOver() then -- add extra check for game over in case the first check failed somehow 
+			
 			gameoverframe = frame + gameoverdelay
 			gamewinners = winners
 			return true
 		end
 		return false
+	end
+	
+	function gadget:GameOver()
+		if not gameoverframe then
+			checkWinners()
+		end
 	end
 			
 	local function DestroySingleTeam(team)
@@ -175,11 +190,11 @@ if (gadgetHandler:IsSyncedCode()) then
 		end
 	end
 	
-	local function CheckQueue()
+	local function GetQueue()
 		
 		local totalcount = 0
 		for _,allyID in ipairs(Spring.GetAllyTeamList()) do
-			if allyID ~= gaiaAllyID then 
+			if allyID ~= gaiaAllyID and gamewinners then 
 				local winnerTeam
 				for _, winner in pairs(gamewinners) do
 					if winner and winner == allyID then
@@ -200,23 +215,54 @@ if (gadgetHandler:IsSyncedCode()) then
 				
 			end
 		end
+		return totalcount
+	end
+	
+	local function GetTeamCommanders(teamID)
+		local teamComms = 0	
 		
-		if totalcount == 0 then 
-			queueFinished = true
+		for _,cID in pairs(commanderDefs) do
+			local count = GetTeamUnitDefCount(teamID,cID)
+			teamComms = teamComms+count
 		end
+		return teamComms
+	end
+	
+	local function GetControlledCommanders(allyTeamID)
+		
+		-- get allyteam commanders, but only those that are controlled
+		local allyComms = 0
+		for _, tID in pairs (Spring.GetTeamList(allyTeamID)) do
+			local _,_,isDead,isAI 	= Spring.GetTeamInfo(tID)
+			local active = #(Spring.GetPlayerList(tID,true)) > 0
+			if tID ~= Spring.GetGaiaTeamID() and (not (isDead or deadTeams[tID])) and (active or isAI) then
+				for _,cID in pairs(commanderDefs) do
+					local count = GetTeamUnitDefCount(tID,cID)
+					
+					-- when unit is killed it will still yield positive counts the same game frame. Therefore do an extra check
+					for i, unitID in pairs (Spring.GetTeamUnitsByDefs(tID,cID)) do
+						if Spring.GetUnitIsDead(unitID) and count > 0 then
+							count = count - 1 
+						end
+					end
+					allyComms = allyComms + count
+				end
+			end
+		end
+		return allyComms
 	end
 	
 	function gadget:GameFrame(t)
-		
+				
 		if gameoverframe and t >= gameoverframe then
-			GG.gamewinners = gamewinners
-			Spring.GameOver(gamewinners)
+			GG.gamewinners = gamewinners or {}
+			Spring.GameOver(gamewinners or {})
 		end
 		
 		if t % frequency == 0 then
 			for ateam,_ in pairs(destroyQueue) do
-				if not commanderEnds then				
-					if teamCommanders[ateam] <= 0 then --safety check, triggers on transferring the last com otherwise
+				if not commanderEnds then
+					if GetControlledCommanders(ateam) <= 0 then --safety check, triggers on transferring the last com otherwise
 						DestroyAllyTeam(ateam)
 					end
 				end
@@ -228,16 +274,42 @@ if (gadgetHandler:IsSyncedCode()) then
 						DestroySingleTeam(team)
 					end
 				end
-			end
-			
+			end	
 		end
+		
 		if gameoverframe and t >= gameoverframe then
-			
-			CheckQueue()
-			
-			if queueFinished then
+			if GetQueue() == 0 then
 				Spring.SetGameRulesParam("WaitForComends",0)
-			end
+			end	
+		end
+		if gameoverframe and t > gameoverframe + timeoutDelay and Spring.GetGameRulesParam("WaitForComends") == 1 then
+			Spring.SetGameRulesParam("WaitForComends",0)
+			Echo("Team commander ends timeouted, proceeding... Please tell Jools to stop taking those pills while coding!")
+			gadgetHandler:RemoveGadget()
+		end
+	end
+	
+	function gadget:TeamDied(teamID)
+		deadTeams[teamID] = true
+		
+		local teamComms = GetTeamCommanders(teamID)
+		local allyTeamID = select(6,Spring.GetTeamInfo(teamID))
+		local allyComms = GetControlledCommanders(allyTeamID)
+		local isdead = select(3,Spring.GetTeamInfo(teamID))
+		
+		-- only proceed if team that died had a commander
+		if teamComms > 0 then
+			if allyComms <= 0 then
+				killX, _, killZ = Spring.GetTeamStartPosition(teamID)
+				destroyQueue[allyTeamID] = true
+				if not gameHasEnded then
+					removeContester(allyTeamID)
+					if checkWinners() then
+						Echo("Game ends: team's last commander resigned")
+						gameHasEnded = true
+					end
+				end
+			end	
 		end
 	end
 	
@@ -254,8 +326,19 @@ if (gadgetHandler:IsSyncedCode()) then
 	function gadget:UnitGiven(unitID, unitDefID, unitTeam, oldTeam)
 		if commanderTable[unitDefID] then
 			local allyTeam = GetUnitAllyTeam(unitID)
+			local oldAllyTeam = select(6,Spring.GetTeamInfo(oldTeam))
 			teamCommanders[allyTeam] = teamCommanders[allyTeam] + 1
 			playerCommanders[unitTeam] = playerCommanders[unitTeam] + 1
+			
+			if teamCommanders[oldAllyTeam] <= 0 or GetControlledCommanders(oldAllyTeam) <= 0 then
+				if not gameHasEnded then
+					removeContester(oldAllyTeam)
+					if checkWinners() then
+						Echo("Game ends: last commander was given away")
+						gameHasEnded = true
+					end
+				end
+			end
 		end
 		return false
 	end
@@ -271,7 +354,7 @@ if (gadgetHandler:IsSyncedCode()) then
 					if not gameHasEnded then
 						removeContester(enemyAllyID)
 						if checkWinners() then
-							Echo("Game ends: last team commander d-gunned enemy commander")
+							Echo("Game ends: team's last commander d-gunned enemy commander")
 							gameHasEnded = true
 						end
 					end
@@ -285,6 +368,7 @@ if (gadgetHandler:IsSyncedCode()) then
 		isAlive[unitID] = nil
 		
 		if commanderTable[unitDefID] then
+						
 			local allyTeam = GetUnitAllyTeam(unitID)
 			teamCommanders[allyTeam] = teamCommanders[allyTeam] - 1
 			playerCommanders[team] = playerCommanders[team] - 1
@@ -306,16 +390,27 @@ if (gadgetHandler:IsSyncedCode()) then
 				end
 				
 			else -- team comends option
-				if teamCommanders[allyTeam] <= 0 then
+				if teamCommanders[allyTeam] <= 0 then 
 					killX, _, killZ = GetUnitPosition(unitID)
 					destroyQueue[allyTeam] = true
 					if not gameHasEnded then
 						removeContester(allyTeam)
 						if checkWinners() then
-							Echo("Game ends: last team commander is killed")
+							Echo("Game ends: team's last commander is killed")
 							gameHasEnded = true
 						end
 					end
+				elseif GetControlledCommanders(allyTeam) <= 0 then -- kill teams with uncontrolled commanders
+					killX, _, killZ = GetUnitPosition(unitID)
+					destroyQueue[allyTeam] = true
+					if not gameHasEnded then
+						removeContester(allyTeam)
+						if checkWinners() then
+							Echo("Game ends: team's commander is killed and remaining ones are uncontrolled")
+							gameHasEnded = true
+						end
+					end
+					
 				end
 			end
 		end
