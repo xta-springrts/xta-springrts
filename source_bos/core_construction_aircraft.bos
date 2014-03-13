@@ -5,24 +5,33 @@
 
 piece  base, winga, wingb, thrusta1, thrusta2;
 
-static-var  statechg_DesiredState, statechg_StateChanging;
+static-var  Static_Var_1, Static_Var_2;
 
+lua_UnitLanded()
+{ 
+ 	return 0; 
+}
+ 
+lua_UnitLeftLand() 
+{ 
+	return 0; 
+}
 
 activatescr()
 {
 	turn winga to z-axis <0.000000> now;
-	turn winga to z-axis <-90.142857> speed <61.868132>;
+	turn winga to z-axis <-90.137363> speed <61.868132>;
 	turn wingb to z-axis <0.000000> now;
-	turn wingb to z-axis <90.142857> speed <61.868132>;
+	turn wingb to z-axis <90.137363> speed <61.868132>;
 	sleep 1457;
 }
 
 deactivatescr()
 {
-	turn winga to z-axis <-90.142857> now;
-	turn winga to z-axis <0.000000> speed <61.950549>;
-	turn wingb to z-axis <90.142857> now;
-	turn wingb to z-axis <0.000000> speed <61.950549>;
+	turn winga to z-axis <-90.137363> now;
+	turn winga to z-axis <0.000000> speed <61.945055>;
+	turn wingb to z-axis <90.137363> now;
+	turn wingb to z-axis <0.000000> speed <61.945055>;
 	sleep 1455;
 }
 
@@ -55,17 +64,17 @@ SmokeUnit(healthpercent, sleeptime, smoketype)
 
 RequestState(requestedstate, currentstate)
 {
-	if( statechg_StateChanging )
+	if( Static_Var_2 )
 	{
-		statechg_DesiredState = requestedstate;
+		Static_Var_1 = requestedstate;
 		return (0);
 	}
-	statechg_StateChanging = TRUE;
-	currentstate = statechg_DesiredState;
-	statechg_DesiredState = requestedstate;
-	while( statechg_DesiredState != currentstate )
+	Static_Var_2 = 1;
+	currentstate = Static_Var_1;
+	Static_Var_1 = requestedstate;
+	while( Static_Var_1 != currentstate )
 	{
-		if( statechg_DesiredState )
+		if( Static_Var_1 )
 		{
 			call-script deactivatescr();
 			currentstate = 1;
@@ -76,13 +85,13 @@ RequestState(requestedstate, currentstate)
 			currentstate = 0;
 		}
 	}
-	statechg_StateChanging = FALSE;
+	Static_Var_2 = 0;
 }
 
 Create()
 {
-	statechg_DesiredState = TRUE;
-	statechg_StateChanging = FALSE;
+	Static_Var_1 = 1;
+	Static_Var_2 = 0;
 	start-script SmokeUnit();
 }
 
@@ -94,6 +103,16 @@ Activate()
 Deactivate()
 {
 	start-script RequestState(1);
+}
+
+StartMoving()
+{
+	call-script lua_UnitLeftLand();
+}
+
+StopMoving()
+{
+	call-script lua_UnitLanded();
 }
 
 StartBuilding()

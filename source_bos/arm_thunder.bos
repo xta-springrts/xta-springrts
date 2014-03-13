@@ -8,6 +8,15 @@ piece  base, jets, wing1, wing2, nose, vertjet1, vertjet2, THrust1,
 
 static-var  statechg_DesiredState, statechg_StateChanging, Static_Var_3, Static_Var_4;
 
+lua_UnitLanded()
+{ 
+ 	return 0; 
+}
+ 
+lua_UnitLeftLand() 
+{ 
+	return 0; 
+}
 
 RolltheDice()
 {
@@ -129,6 +138,16 @@ Activate()
 Deactivate()
 {
 	start-script RequestState(1);
+}
+
+StartMoving()
+{
+	call-script lua_UnitLeftLand();
+}
+
+StopMoving()
+{
+	call-script lua_UnitLanded();
 }
 
 QueryPrimary(piecenum)

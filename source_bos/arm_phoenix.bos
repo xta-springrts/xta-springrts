@@ -7,49 +7,39 @@ piece  flare1, flare2, base, bombdrop, gun, wing1, wing2, thrust;
 
 static-var  Static_Var_1, gun_2, statechg_DesiredState, statechg_StateChanging, Static_Var_5;
 
-// Signal definitions
-#define SIG_AIM_2			2
-
+lua_UnitLanded()
+{ 
+ 	return 0; 
+}
+ 
+lua_UnitLeftLand() 
+{ 
+	return 0; 
+}
 
 activatescr()
 {
 	move wing1 to x-axis [0.000000] now;
-	move wing1 to x-axis [16.875000] speed [16.908798];
+	move wing1 to x-axis [6.750000] speed [6.763513];
 	move wing1 to z-axis [0.000000] now;
-	move wing1 to z-axis [-4.375000] speed [4.383743];
+	move wing1 to z-axis [-1.750000] speed [1.753491];
 	move wing2 to x-axis [0.000000] now;
-	move wing2 to x-axis [-17.375000] speed [17.409805];
-	//Static_Var_5 = 1;
+	move wing2 to x-axis [-6.950000] speed [6.963916];
 	move wing2 to z-axis [0.000000] now;
-	move wing2 to z-axis [-4.625000] speed [4.634262];
+	move wing2 to z-axis [-1.850000] speed [1.853699];
 	sleep 998;
 }
 
-/*
-Flamers()
-{
-	while( TRUE )
-	{
-		if( Static_Var_5 == 1 )
-		{
-			emit-sfx 1024 from thrust;
-		}
-		sleep 1;
-	}
-}
-*/
-
 deactivatescr()
 {
-	move wing1 to x-axis [16.875000] now;
-	move wing1 to x-axis [0.000000] speed [16.908798];
-	move wing1 to z-axis [-4.375000] now;
-	move wing1 to z-axis [0.000000] speed [4.383743];
-	move wing2 to x-axis [-17.375000] now;
-	move wing2 to x-axis [0.000000] speed [17.409805];
-	//Static_Var_5 = 0;
-	move wing2 to z-axis [-4.625000] now;
-	move wing2 to z-axis [0.000000] speed [4.634262];
+	move wing1 to x-axis [6.750000] now;
+	move wing1 to x-axis [0.000000] speed [6.763513];
+	move wing1 to z-axis [-1.750000] now;
+	move wing1 to z-axis [0.000000] speed [1.753491];
+	move wing2 to x-axis [-6.950000] now;
+	move wing2 to x-axis [0.000000] speed [6.963916];
+	move wing2 to z-axis [-1.850000] now;
+	move wing2 to z-axis [0.000000] speed [1.853699];
 	sleep 998;
 }
 
@@ -87,7 +77,7 @@ RequestState(requestedstate, currentstate)
 		statechg_DesiredState = requestedstate;
 		return (0);
 	}
-	statechg_StateChanging = TRUE;
+	statechg_StateChanging = 1;
 	currentstate = statechg_DesiredState;
 	statechg_DesiredState = requestedstate;
 	while( statechg_DesiredState != currentstate )
@@ -103,18 +93,17 @@ RequestState(requestedstate, currentstate)
 			currentstate = 0;
 		}
 	}
-	statechg_StateChanging = FALSE;
+	statechg_StateChanging = 0;
 }
 
 Create()
 {
 	hide flare1;
 	hide flare2;
-	gun_2 = flare1;
+	gun_2 = 0;
 	Static_Var_1 = 3000;
-	statechg_DesiredState = TRUE;
-	statechg_StateChanging = FALSE;
-	//start-script Flamers();
+	statechg_DesiredState = 1;
+	statechg_StateChanging = 0;
 	start-script SmokeUnit();
 }
 
@@ -126,6 +115,16 @@ Activate()
 Deactivate()
 {
 	start-script RequestState(1);
+}
+
+StartMoving()
+{
+	call-script lua_UnitLeftLand();
+}
+
+StopMoving()
+{
+	call-script lua_UnitLanded();
 }
 
 RestoreAfterDelay()
@@ -147,8 +146,8 @@ QuerySecondary(piecenum)
 
 AimSecondary(heading, pitch)
 {
-	signal SIG_AIM_2;
-	set-signal-mask SIG_AIM_2;
+	signal 2;
+	set-signal-mask 2;
 	turn gun to y-axis heading speed <390.093407>;
 	turn gun to x-axis <0.000000> - pitch speed <350.082418>;
 	wait-for-turn gun around y-axis;
@@ -179,12 +178,12 @@ AimFromSecondary(piecenum)
 	piecenum = gun;
 }
 
-QueryWeapon3(piecenum)
+QueryWeapon3(Func_Var_1)
 {
-	piecenum = bombdrop;
+	Func_Var_1 = 3;
 }
 
-AimWeapon3(heading, pitch)
+AimWeapon3(Func_Var_1, Func_Var_2)
 {
 	signal 4;
 	set-signal-mask 4;
