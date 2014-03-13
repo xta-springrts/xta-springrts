@@ -5,8 +5,17 @@
 
 piece  missilea, missileb, base, winga, wingb, thrustb;
 
-static-var  statechg_DesiredState, statechg_StateChanging, Static_Var_3;
+static-var  statechg_DesiredState, statechg_StateChanging, Static_Var_3, MissilesOn;
 
+lua_UnitLanded()
+{ 
+ 	return 0; 
+}
+ 
+lua_UnitLeftLand() 
+{ 
+	return 0; 
+}
 
 /*
 Crashing(Func_Var_1)
@@ -123,6 +132,7 @@ Create()
 	//start-script Flamers();
 	//start-script Crashing();
 	start-script SmokeUnit();
+	MissilesOn = 1;
 }
 
 Activate()
@@ -135,6 +145,30 @@ Deactivate()
 	start-script RequestState(1);
 }
 
+StartMoving()
+{
+	MissilesOn = 1;
+	call-script lua_UnitLeftLand();
+}
+
+StopMoving()
+{
+	MissilesOn = 0;
+	call-script lua_UnitLanded();
+}
+
+MoveRate0()
+{
+	MissilesOn = 0;
+	call-script lua_UnitLanded();
+}
+
+MoveRate1()
+{
+	MissilesOn = 1;
+	call-script lua_UnitLeftLand();	
+}
+
 AimFromPrimary(piecenum)
 {
 	piecenum = missilea;
@@ -142,7 +176,8 @@ AimFromPrimary(piecenum)
 
 AimPrimary(piecenum)
 {
-	return 1;
+	if (MissilesOn) {return 1;   }
+	return 0;
 }
 
 QueryPrimary(piecenum)
@@ -157,7 +192,8 @@ AimFromSecondary(piecenum)
 
 AimSecondary(piecenum)
 {
-	return 1;
+	if (MissilesOn) {return 1;   }
+	return 0;
 }
 
 QuerySecondary(piecenum)
