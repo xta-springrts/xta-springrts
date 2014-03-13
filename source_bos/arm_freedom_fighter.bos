@@ -5,7 +5,17 @@
 
 piece  flare1, flare2, base, wing1, wing2, rearthrust, rearthrust2;
 
-static-var  Static_Var_1, gun_1, statechg_DesiredState, statechg_StateChanging, Static_Var_5;
+static-var  Static_Var_1, gun_1, statechg_DesiredState, statechg_StateChanging, Static_Var_5,MissilesOn;
+
+lua_UnitLanded()
+{ 
+ 	return 0; 
+}
+ 
+lua_UnitLeftLand() 
+{ 
+	return 0; 
+}
 
 
 /*
@@ -171,6 +181,18 @@ Deactivate()
 	start-script RequestState(1);
 }
 
+StartMoving()
+{
+	MissilesOn = 1;
+	call-script lua_UnitLeftLand();
+}
+
+StopMoving()
+{
+	MissilesOn = 0;
+	call-script lua_UnitLanded();
+}
+
 AimFromPrimary(piecenum)
 {
 	piecenum = gun_1;
@@ -178,7 +200,8 @@ AimFromPrimary(piecenum)
 
 AimPrimary()
 {
-	return 1;
+	if (MissilesOn) {return 1;   }
+	return 0;
 }
 
 FirePrimary()
