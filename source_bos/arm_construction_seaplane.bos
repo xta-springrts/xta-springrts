@@ -5,7 +5,7 @@
 
 piece  base, LWing, RWing, wake1, wake2, cab, nanopoint;
 
-static-var  Static_Var_1, Static_Var_2, Static_Var_3;
+static-var  Terraintype, Static_Var_2, Static_Var_3;
 
 lua_UnitLanded()
 { 
@@ -102,10 +102,32 @@ RequestState(requestedstate, currentstate)
 	Static_Var_3 = 0;
 }
 
+WakeBubbles(altitude)
+{
+	while ( TRUE )
+	{
+		while ( Terraintype == 1)
+		{
+			altitude = get UNIT_Y;
+			if (altitude < [8] AND altitude > 0)
+			{
+				emit-sfx 2 from wake1;
+				emit-sfx 3 from wake2;
+				emit-sfx 256 | 3 from LWing;
+				emit-sfx 256 | 3 from RWing;
+			}
+			sleep 32;
+		}
+		sleep 64;
+	}
+	sleep 64;
+}
+
 Create()
 {
 	call-script InitState();
 	start-script SmokeUnit();
+	start-script WakeBubbles();
 }
 
 Activate()
@@ -125,7 +147,7 @@ StartMoving()
 	call-script lua_UnitLeftLand();
 	while( TRUE )
 	{
-		if( Static_Var_1 == 3 )
+		if( Terraintype == 1 AND (get IN_WATER) )
 		{
 			emit-sfx 256 | 3 from base;
 			emit-sfx 256 | 3 from LWing;
@@ -212,7 +234,7 @@ Killed(severity, corpsetype)
 	explode wake2 type FALL | FIRE | SMOKE | EXPLODE_ON_HIT | BITMAP2;
 }
 
-setSFXoccupy(Func_Var_1)
+setSFXoccupy(_terraintype)
 {
-	Static_Var_1 = Func_Var_1;
+	Terraintype = _terraintype;
 }
