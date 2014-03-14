@@ -5,7 +5,7 @@
 
 piece  fuselage, wing1, wing2, bomb;
 
-static-var  Static_Var_1, Static_Var_2;
+static-var  Static_Var_1, Static_Var_2,Terraintype;
 
 lua_UnitLanded()
 { 
@@ -58,7 +58,39 @@ Deactivate()
 
 StartMoving()
 {
+	signal 2;
+	set-signal-mask 2;
 	call-script lua_UnitLeftLand();
+	while( TRUE )
+	{
+		if( Terraintype == 1 AND (get IN_WATER) )
+		{
+			emit-sfx 259 from fuselage;
+			emit-sfx 259 from wing1;
+			emit-sfx 259 from wing2;
+		}
+		sleep 150;
+	}
+}
+
+WakeBubbles(altitude)
+{
+	while ( TRUE )
+	{
+		while ( Terraintype == 1)
+		{
+			altitude = get UNIT_Y;
+			if (altitude < [8] AND altitude > 0)
+			{
+				emit-sfx 2 from wing1;
+				emit-sfx 3 from wing2;
+				emit-sfx 256 | 3 from fuselage;
+			}
+			sleep 32;
+		}
+		sleep 64;
+	}
+	sleep 64;
 }
 
 StopMoving()
@@ -66,9 +98,15 @@ StopMoving()
 	call-script lua_UnitLanded();
 }
 
+setSFXoccupy(_terraintype)
+{
+	Terraintype = _terraintype;
+}
+
 Create()
 {
 	start-script SmokeUnit();
+	start-script WakeBubbles();
 }
 
 SweetSpot(piecenum)

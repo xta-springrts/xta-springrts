@@ -5,7 +5,7 @@
 
 piece  base, rsonar, lsonar, lwing, rwing, ltail, rtail, wake1;
 
-static-var  Static_Var_1, Static_Var_2, Static_Var_3;
+static-var  Terraintype, Static_Var_2, Static_Var_3;
 
 lua_UnitLanded()
 { 
@@ -130,10 +130,34 @@ RequestState(requestedstate, currentstate)
 	Static_Var_3 = 0;
 }
 
+WakeBubbles(altitude)
+{
+	while ( TRUE )
+	{
+		while ( Terraintype == 1)
+		{
+			altitude = get UNIT_Y;
+			if (altitude < [8] AND altitude > 0)
+			{
+				emit-sfx 2 from rsonar;
+				emit-sfx 3 from lsonar;
+				emit-sfx 256 | 3 from lwing;
+				emit-sfx 256 | 3 from rwing;
+				emit-sfx 256 | 3 from ltail;
+				emit-sfx 256 | 3 from rtail;
+			}
+			sleep 32;
+		}
+		sleep 64;
+	}
+	sleep 64;
+}
+
 Create()
 {
 	call-script InitState();
 	start-script SmokeUnit();
+	start-script WakeBubbles();
 }
 
 Activate()
@@ -157,7 +181,7 @@ StartMoving()
 	call-script lua_UnitLeftLand();
 	while( TRUE )
 	{
-		if( Static_Var_1 == 3 )
+		if( Terraintype == 1 AND (get IN_WATER) )
 		{
 			emit-sfx 256 | 3 from rtail;
 			emit-sfx 256 | 3 from ltail;
@@ -177,9 +201,9 @@ StopMoving()
 	call-script lua_UnitLanded();
 }
 
-setSFXoccupy(Func_Var_1)
+setSFXoccupy(_terraintype)
 {
-	Static_Var_1 = Func_Var_1;
+	Terraintype = _terraintype;
 }
 
 SweetSpot(piecenum)
