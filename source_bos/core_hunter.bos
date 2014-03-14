@@ -7,12 +7,12 @@ piece  base, rsonar, lsonar, lwing, rwing, ltail, rtail, wake1;
 
 static-var  Terraintype, Static_Var_2, Static_Var_3;
 
-lua_UnitLanded()
+lua_UnitStoppedMoving()
 { 
  	return 0; 
 }
  
-lua_UnitLeftLand() 
+lua_UnitStartedMoving() 
 { 
 	return 0; 
 }
@@ -178,7 +178,7 @@ StartMoving()
 {
 	signal 2;
 	set-signal-mask 2;
-	call-script lua_UnitLeftLand();
+	call-script lua_UnitStartedMoving();
 	while( TRUE )
 	{
 		if( Terraintype == 1 AND (get IN_WATER) )
@@ -198,7 +198,7 @@ StartMoving()
 StopMoving()
 {
 	signal 2;
-	call-script lua_UnitLanded();
+	call-script lua_UnitStoppedMoving();
 }
 
 setSFXoccupy(_terraintype)

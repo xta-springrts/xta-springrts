@@ -7,12 +7,12 @@ piece  fuselage, wing1, wing2, bomb;
 
 static-var  Static_Var_1, Static_Var_2,Terraintype;
 
-lua_UnitLanded()
+lua_UnitStoppedMoving()
 { 
  	return 0; 
 }
  
-lua_UnitLeftLand() 
+lua_UnitStartedMoving() 
 { 
 	return 0; 
 }
@@ -60,7 +60,7 @@ StartMoving()
 {
 	signal 2;
 	set-signal-mask 2;
-	call-script lua_UnitLeftLand();
+	call-script lua_UnitStartedMoving();
 	while( TRUE )
 	{
 		if( Terraintype == 1 AND (get IN_WATER) )
@@ -95,7 +95,7 @@ WakeBubbles(altitude)
 
 StopMoving()
 {
-	call-script lua_UnitLanded();
+	call-script lua_UnitStoppedMoving();
 }
 
 setSFXoccupy(_terraintype)

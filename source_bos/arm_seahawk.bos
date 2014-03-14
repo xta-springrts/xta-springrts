@@ -9,12 +9,12 @@ static-var  Terraintype, Static_Var_2, Static_Var_3;
 
 #DEFINE verticalbomb 1024
 
-lua_UnitLanded()
+lua_UnitStoppedMoving()
 { 
  	return 0; 
 }
  
-lua_UnitLeftLand() 
+lua_UnitStartedMoving() 
 { 
 	return 0; 
 }
@@ -184,7 +184,7 @@ StartMoving()
 {
 	signal 2;
 	set-signal-mask 2;
-	call-script lua_UnitLeftLand();
+	call-script lua_UnitStartedMoving();
 	emit-sfx 259 from lwing;
 	emit-sfx 259 from rwing;
 	
@@ -207,7 +207,7 @@ StartMoving()
 StopMoving()
 {
 	signal 2;
-	call-script lua_UnitLanded();
+	call-script lua_UnitStoppedMoving();
 }
 
 setSFXoccupy(_terraintype)

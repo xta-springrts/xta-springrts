@@ -5,12 +5,12 @@
 
 piece  base, Rwing, Lwing, radar;
 
-lua_UnitLanded()
+lua_UnitStoppedMoving()
 { 
  	return 0; 
 }
  
-lua_UnitLeftLand() 
+lua_UnitStartedMoving() 
 { 
 	return 0; 
 }
@@ -56,12 +56,12 @@ Activate()
 
 StartMoving()
 {
-	call-script lua_UnitLeftLand();
+	call-script lua_UnitStartedMoving();
 }
 
 StopMoving()
 {
-	call-script lua_UnitLanded();
+	call-script lua_UnitStoppedMoving();
 }
 
 Deactivate()

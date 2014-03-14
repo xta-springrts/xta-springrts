@@ -7,12 +7,12 @@ piece  base, wing1, wing2, flare1, flare2, thrusta1, thrusta2, thrustb;
 
 static-var  Static_Var_1, Static_Var_2, Static_Var_3, Static_Var_4, Static_Var_5;
 
-lua_UnitLanded()
+lua_UnitStoppedMoving()
 { 
  	return 0; 
 }
  
-lua_UnitLeftLand() 
+lua_UnitStartedMoving() 
 { 
 	return 0; 
 }
@@ -121,12 +121,12 @@ Deactivate()
 
 StartMoving()
 {
-	call-script lua_UnitLeftLand();
+	call-script lua_UnitStartedMoving();
 }
 
 StopMoving()
 {
-	call-script lua_UnitLanded();
+	call-script lua_UnitStoppedMoving();
 }
 
 SweetSpot(piecenum)

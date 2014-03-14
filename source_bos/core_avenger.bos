@@ -7,12 +7,12 @@ piece  missle1, missle2, base, winga, wingb, thrust1, thrust2;
 
 static-var  Static_Var_1, gun_1, statechg_DesiredState, statechg_StateChanging, Static_Var_5,MissilesOn;
 
-lua_UnitLanded()
+lua_UnitStoppedMoving()
 { 
  	return 0; 
 }
  
-lua_UnitLeftLand() 
+lua_UnitStartedMoving() 
 { 
 	return 0; 
 }
@@ -165,13 +165,13 @@ Deactivate()
 StartMoving()
 {
 	MissilesOn = 1;
-	call-script lua_UnitLeftLand();
+	call-script lua_UnitStartedMoving();
 }
 
 StopMoving()
 {
 	MissilesOn = 0;
-	call-script lua_UnitLanded();
+	call-script lua_UnitStoppedMoving();
 }
 
 AimFromPrimary(piecenum)
