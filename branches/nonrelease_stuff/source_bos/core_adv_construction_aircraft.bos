@@ -7,12 +7,12 @@ piece  base, wing1, wing2, thrustb;
 
 static-var  Static_Var_1, Static_Var_2;
 
-lua_UnitLanded()
+lua_UnitStoppedMoving()
 { 
  	return 0; 
 }
  
-lua_UnitLeftLand() 
+lua_UnitStartedMoving() 
 { 
 	return 0; 
 }
@@ -107,12 +107,12 @@ Deactivate()
 
 StartMoving()
 {
-	call-script lua_UnitLeftLand();
+	call-script lua_UnitStartedMoving();
 }
 
 StopMoving()
 {
-	call-script lua_UnitLanded();
+	call-script lua_UnitStoppedMoving();
 }
 
 StartBuilding()

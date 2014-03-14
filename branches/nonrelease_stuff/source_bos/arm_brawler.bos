@@ -8,12 +8,12 @@ piece  flare1b, flare2b, flare1a, flare2a, flare1c, flare2c, base, wing1,
 
 static-var  gun_1, gun_2, statechg_DesiredState, statechg_StateChanging;
 
-lua_UnitLanded()
+lua_UnitStoppedMoving()
 { 
  	return 0; 
 }
  
-lua_UnitLeftLand() 
+lua_UnitStartedMoving() 
 { 
 	return 0; 
 }
@@ -106,12 +106,12 @@ Deactivate()
 
 StartMoving()
 {
-	call-script lua_UnitLeftLand();
+	call-script lua_UnitStartedMoving();
 }
 
 StopMoving()
 {
-	call-script lua_UnitLanded();
+	call-script lua_UnitStoppedMoving();
 }
 
 SweetSpot(piecenum)

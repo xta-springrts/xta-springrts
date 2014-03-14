@@ -10,12 +10,12 @@ static-var  gun_1, Static_Var_2, Static_Var_3, statechg_DesiredState, statechg_S
 // Signal definitions
 #define SIG_MOVE			2
 
-lua_UnitLanded()
+lua_UnitStoppedMoving()
 { 
  	return 0; 
 }
  
-lua_UnitLeftLand() 
+lua_UnitStartedMoving() 
 { 
 	return 0; 
 }
@@ -127,7 +127,7 @@ StartMoving()
 {
 	signal SIG_MOVE;
 	set-signal-mask SIG_MOVE;
-	call-script lua_UnitLeftLand();
+	call-script lua_UnitStartedMoving();
 	while( TRUE )
 	{
 		if( Static_Var_2 == 3 )
@@ -147,7 +147,7 @@ StartMoving()
 StopMoving()
 {
 	signal SIG_MOVE;
-	call-script lua_UnitLanded();
+	call-script lua_UnitStoppedMoving();
 }
 
 FirePrimary()

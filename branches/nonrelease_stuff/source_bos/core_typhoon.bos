@@ -7,12 +7,12 @@ piece  wing1r, wing1l, flare1, flare2, base, wing2L, wing2R, bombdrop;
 
 static-var  Static_Var_1, Terraintype, Static_Var_3, Static_Var_4;
 
-lua_UnitLanded()
+lua_UnitStoppedMoving()
 { 
  	return 0; 
 }
  
-lua_UnitLeftLand() 
+lua_UnitStartedMoving() 
 { 
 	return 0; 
 }
@@ -159,7 +159,7 @@ StartMoving()
 {
 	signal 2;
 	set-signal-mask 2;
-	call-script lua_UnitLeftLand();
+	call-script lua_UnitStartedMoving();
 	while( TRUE )
 	{
 		if( Terraintype == 1 AND (get IN_WATER) )
@@ -180,7 +180,7 @@ StartMoving()
 StopMoving()
 {
 	signal 2;
-	call-script lua_UnitLanded();
+	call-script lua_UnitStoppedMoving();
 }
 
 QueryTertiary(piecenum)

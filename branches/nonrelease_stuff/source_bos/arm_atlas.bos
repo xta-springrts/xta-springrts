@@ -7,12 +7,12 @@ piece  base, link, arm1, arm2, arm3, jet1, jet2, jet3;
 
 static-var  Static_Var_1, Static_Var_2, Static_Var_3, Static_Var_4;
 
-lua_UnitLanded()
+lua_UnitStoppedMoving()
 { 
  	return 0; 
 }
  
-lua_UnitLeftLand() 
+lua_UnitStartedMoving() 
 { 
 	return 0; 
 }
@@ -185,12 +185,12 @@ StopMoving()
 {
 	signal 2;
 	Static_Var_1 = 0;
-	call-script lua_UnitLanded();
+	call-script lua_UnitStoppedMoving();
 }
 
 MoveRate0()
 {
-	call-script lua_UnitLanded();
+	call-script lua_UnitStoppedMoving();
 }
 
 MoveRate1()
@@ -199,7 +199,7 @@ MoveRate1()
 	set-signal-mask 2;
 	start-script ProcessFlames();
 	Static_Var_1 = 1;
-	call-script lua_UnitLeftLand();	
+	call-script lua_UnitStartedMoving();	
 }
 
 MoveRate2()
