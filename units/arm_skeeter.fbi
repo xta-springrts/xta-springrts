@@ -48,8 +48,8 @@
 	//  Building
 	//************
 	collisionVolumeType = box;
-	collisionVolumeScales =16 19 51;
-	collisionVolumeOffsets = 0 -4 -1;
+	collisionVolumeScales =16 24 51;
+	collisionVolumeOffsets = 0 -10 -1;
 	collisionVolumeTest = 1;
 	
 	//************************************************************

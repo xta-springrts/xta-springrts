@@ -91,9 +91,11 @@
 	//***********
 	weapon1=ARM_ROY;
 	weapon3=ARMDEPTHCHARGE;
+	wpri_badtargetcategory=VTOL;
 	wspe_badtargetcategory=NOTSUB;
 	explodeas=BIG_UNITEX;
 	selfdestructas=BIG_UNIT;
+	onlytargetcategory3=NOTAIR;
 
 	//************************************************************
 	//  Orders
@@ -119,8 +121,8 @@
 	version=1.2;
 	zbuffer=1;
 	collisionVolumeType = box;
-	collisionVolumeScales =30 30 60;
-	collisionVolumeOffsets = 0 -10 0;
+	collisionVolumeScales =30 35 60;
+	collisionVolumeOffsets = 0 -15 0;
 	collisionVolumeTest = 1;
 	pieceTrailCEGTag=Debree;//bleh
 	pieceTrailCEGRange = 4;

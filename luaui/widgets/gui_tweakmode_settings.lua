@@ -13,7 +13,7 @@ end
 local posX, posY					  	= 600, 400
 local buttonsize					  	= 16
 local width, height					  	= 360, 540
-local rowgap						  	= 36
+local rowgap						  	= 30
 local leftmargin						= 20
 local buttontab							= 310			
 local vsx, vsy 						  	= gl.GetViewSizes()
@@ -58,6 +58,8 @@ function widget:Initialize()
 	Button[11]						= {} -- info table
 	Button[12]						= {} -- water
 	Button[13]						= {} -- stats window order
+	Button[14]						= {} -- disable move-failed sounds
+	Button[15]						= {} -- full screen
 	Panel["main"]					= {}
 	InitButtons()
 end
@@ -167,6 +169,14 @@ function InitButtons()
 	Button[13]["command"]		= "EngineGraphFirst"
 	Button[13]["label"]			= "Show engine graph first:"
 	
+	Button[14]["click"]			= tonumber(Spring.GetConfigInt("DisableMoveFailedSound",0) or 0) == 1
+	Button[14]["command"]		= "disableMoveFailed"
+	Button[14]["label"]			= "Disable move-failed sounds:"
+	
+	Button[15]["click"]			= tonumber(Spring.GetConfigInt("Fullscreen",1) or 1) == 1
+	Button[15]["command"]		= "fullscreen"
+	Button[15]["label"]			= "Full screen:"
+	
 	
 	Panel["main"]["x1"]			= posX
 	Panel["main"]["x2"]			= posX + width
@@ -270,6 +280,18 @@ function ButtonHandler (cmd)
 			Spring.SetConfigInt("EngineGraphFirst",0)
 		else
 			Spring.SetConfigInt("EngineGraphFirst",1)
+		end
+	elseif cmd == "disableMoveFailed" then
+		if Button[14]["click"] then
+			Spring.SetConfigInt("DisableMoveFailedSound",0)
+		else
+			Spring.SetConfigInt("DisableMoveFailedSound",1)
+		end
+	elseif cmd == "fullscreen" then
+		if Button[15]["click"] then
+			Spring.SendCommands("fullscreen 0")
+		else
+			Spring.SendCommands("fullscreen 1")
 		end
 	else
 		Echo("Local command:",cmd)
