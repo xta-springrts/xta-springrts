@@ -413,15 +413,6 @@ local options = {
 		name = "Enable MoveDef slope-modifiers",
 		desc = "Determines if ground-units slow down on slopes\nkey: enableSlopeMods",
 	},
-	{
-		key  = "enableDepthMods",
-		def  = true,
-		type = bool,
-		name = "Enable MoveDef depth-modifiers",
-		desc = "Determines if ground-units slow down in water\nkey: enableDepthMods",
-	},
-	
-
 	--[[ Removed till spawner is fixed
 	{
 		key    = "BOSSES",
