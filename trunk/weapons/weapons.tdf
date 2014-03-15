@@ -1426,7 +1426,7 @@
 	weaponvelocity=150;
 	startvelocity=150;
 	weaponacceleration=15;
-	turnrate=15000;
+	turnrate=25000;
 	areaofeffect=16;
 	soundstart=bombrel;
 	soundhitdry=xplodep2;

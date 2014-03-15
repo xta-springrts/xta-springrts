@@ -96,6 +96,7 @@
 	wspe_badtargetcategory=VTOL;
 	explodeas=ATOMIC_BLASTPEN;
 	selfdestructas=ATOMIC_BLASTSML;
+	onlytargetcategory1=NOTAIR;
 
 	//************************************************************
 	//  Orders
@@ -120,8 +121,8 @@
 	version=1.2;
 	zbuffer=1;
 	collisionVolumeType = box;
-	collisionVolumeScales =60 55 120;
-	collisionVolumeOffsets = 0 -20 0;
+	collisionVolumeScales =60 60 120;
+	collisionVolumeOffsets = 0 -25 0;
 	collisionVolumeTest = 1;
 	pieceTrailCEGTag=Debree;//bleh
 	pieceTrailCEGRange = 4;

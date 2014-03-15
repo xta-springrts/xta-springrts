@@ -117,8 +117,8 @@
 	version=1.2;
 	zbuffer=1;
 	collisionVolumeType = box;
-	collisionVolumeScales =65 40 120;
-	collisionVolumeOffsets = 0 -20 0;
+	collisionVolumeScales =65 45 120;
+	collisionVolumeOffsets = 0 -25 0;
 	collisionVolumeTest = 1;
 	pieceTrailCEGTag=Debree;//bleh
 	pieceTrailCEGRange = 4;

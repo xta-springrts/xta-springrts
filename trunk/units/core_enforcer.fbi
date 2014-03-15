@@ -97,6 +97,7 @@
 	wspe_badtargetcategory=NOTSUB;
 	explodeas=SMALL_UNITEX;
 	selfdestructas=SMALL_UNIT;
+	onlytargetcategory3=NOTAIR;
 
 	//************************************************************
 	//  Orders
@@ -122,8 +123,8 @@
 	version=1.2;
 	zbuffer=1;
 	collisionVolumeType = box;
-	collisionVolumeScales =30 30 60;
-	collisionVolumeOffsets = 0 -10 0;
+	collisionVolumeScales =30 35 60;
+	collisionVolumeOffsets = 0 -15 0;
 	collisionVolumeTest = 1;
 	pieceTrailCEGTag=Debree;//bleh
 	pieceTrailCEGRange = 4;

@@ -226,7 +226,7 @@ else
 	
 	function gadget:MousePress(mx, my, mButton)
 		
-		if not Spring.IsGUIHidden() and Spring.IsGameOver() and transferComplete then
+		if (not Spring.IsGUIHidden()) and Spring.IsGameOver() and transferComplete then
 			if IsOnButton(mx,my,Button["xta"]["x0"],Button["xta"]["y0"],Button["engine"]["x1"],Button["engine"]["y1"]) then
 				if mButton == 1 then
 					local showGraph = Spring.GetGameRulesParam("ShowEnd") == 1
@@ -260,7 +260,7 @@ else
 	end
 	
 	function gadget:MouseMove(mx, my, dx, dy, mButton)
-		if not Spring.IsGUIHidden() and Spring.IsGameOver() and transferComplete then
+		if (not Spring.IsGUIHidden()) and Spring.IsGameOver() and transferComplete then
 			-- Dragging
 			if mButton == 2 then
 				bbx = math.max(0, math.min(bbx+dx, vsx-buttonBarW))	--prevent moving off screen
@@ -272,7 +272,7 @@ else
 	end
 	
 	function gadget:IsAbove(mx,my)
-		if not Spring.IsGUIHidden() and Spring.IsGameOver() and transferComplete then
+		if (not Spring.IsGUIHidden()) and Spring.IsGameOver() and transferComplete then
 			Button["xta"]["mouse"] = false
 			Button["engine"]["mouse"] = false
 			if IsOnButton(mx,my,Button["xta"]["x0"],Button["xta"]["y0"],Button["xta"]["x1"],Button["xta"]["y1"]) then

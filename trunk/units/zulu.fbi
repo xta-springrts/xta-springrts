@@ -96,6 +96,7 @@
 	nochasecategory=VTOL;
 	badtargetcategory=VTOL;
 	wpri_badtargetcategory=VTOL;
+	wsec_badtargetcategory=VTOL;
 	wspe_badtargetcategory=NOTSUB;
 	explodeas=ATOMIC_BLASTPEN;
 	selfdestructas=CRAWL_BLASTSML;
@@ -124,8 +125,8 @@
 	version=1.2;
 	zbuffer=1;
 	collisionVolumeType = box;
-	collisionVolumeScales =45 40 90;
-	collisionVolumeOffsets = 0 -15 0;
+	collisionVolumeScales =45 45 90;
+	collisionVolumeOffsets = 0 -20 0;
 	collisionVolumeTest = 1;
 	pieceTrailCEGTag=Debree;//bleh
 	pieceTrailCEGRange = 4;

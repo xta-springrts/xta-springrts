@@ -92,6 +92,7 @@
 	badtargetcategory=VTOL;
 	explodeas=BIG_UNITEX;
 	selfdestructas=BIG_UNIT;
+	onlytargetcategory1=NOTAIR;
 
 	//************************************************************
 	//  Orders
@@ -117,8 +118,8 @@
 	version=1.2;
 	zbuffer=1;
 	collisionVolumeType = box;
-	collisionVolumeScales =40 40 84;
-	collisionVolumeOffsets = 0 -20 0;
+	collisionVolumeScales =40 45 84;
+	collisionVolumeOffsets = 0 -25 0;
 	collisionVolumeTest = 1;
 	pieceTrailCEGTag=Debree;//bleh
 	pieceTrailCEGRange = 4;
