@@ -3,16 +3,12 @@ local modOptions = Spring.GetModOptions()
 local modOptionDefs = VFS.Include("modoptions.lua")
 
 local enableSlopeMods = modOptions.enableSlopeMods
-local enableDepthMods = modOptions.enableDepthMods
 
 assert(modOptionDefs ~= nil)
 
 for idx, tbl in ipairs(modOptionDefs) do
 	if (tbl.key == "enableSlopeMods") then
 		enableSlopeMods = enableSlopeMods or tbl.def
-	end
-	if (tbl.key == "enableDepthMods") then
-		enableDepthMods = enableDepthMods or tbl.def
 	end
 end
 
@@ -62,13 +58,18 @@ local moveDefs = {
 
 	-- BOTS
 	[5] = {
-		name = "KBOTSF2",
+		name = "KBOTSF2", -- fido, maverick, can
 		footprintX = 2,
 		footprintZ = 2,
 		maxWaterDepth = 25.0,
 		maxSlope = 36.0,
 		slopeMod = (enableSlopeMods and EngineDefaultSlopeMod(36.0)) or 0.0,
 		crushStrength = 30.0,
+		depthModParams = 	{
+							minHeight = 4,
+							linearCoeff = 0.03,
+							maxScale = 1.5,
+							},
 	},
 	[6] = {
 		name = "KBOTSf3",
@@ -89,7 +90,7 @@ local moveDefs = {
 		crushStrength = 10.0,
 	},
 	[8] = {
-		name = "KBOTUW3",
+		name = "KBOTUW3", -- gimp, spiders
 		footprintX = 3,
 		footprintZ = 3,
 		maxWaterDepth = 255.0,
@@ -98,12 +99,14 @@ local moveDefs = {
 		slopeMod = (enableSlopeMods and EngineDefaultSlopeMod(36.0)) or 0.0,
 		crushStrength = 30.0,
 
-		depthModParams = {
-			linearCoeff = (enableDepthMods and 0.003) or 0.0,
-		}
+		depthModParams = 	{
+							minHeight = 4,
+							linearCoeff = 0.03,
+							maxScale = 2,
+							},
 	},
 	[9] = {
-		name = "KBOTDS2",
+		name = "KBOTDS2", -- commanders
 		footprintX = 2,
 		footprintZ = 2,
 		maxWaterDepth = 255.0,
@@ -112,9 +115,11 @@ local moveDefs = {
 		slopeMod = (enableSlopeMods and EngineDefaultSlopeMod(32.0)) or 0.0,
 		crushStrength = 150.0,
 
-		depthModParams = {
-			linearCoeff = (enableDepthMods and 0.002) or 0.0,
-		}
+		depthModParams = 	{
+							minHeight = 4,
+							linearCoeff = 0.03,
+							maxScale = 1.8,
+							},
 	},
 
 	-- TANKS
@@ -128,7 +133,7 @@ local moveDefs = {
 		crushStrength = 300.0,
 	},
 	[11] = {
-		name = "TANKDH3",
+		name = "TANKDH3", -- beaver, crab, triton, crock, garpike, muskrat, zulu
 		footprintX = 3,
 		footprintZ = 3,
 		maxWaterDepth = 255.0,
@@ -137,9 +142,11 @@ local moveDefs = {
 		slopeMod = (enableSlopeMods and EngineDefaultSlopeMod(31.0)) or 0.0,
 		crushStrength = 30.0,
 
-		depthModParams = {
-			linearCoeff = (enableDepthMods and 0.003) or 0.0,
-		}
+		depthModParams = 	{
+							minHeight = 4,
+							linearCoeff = 0.03,
+							maxScale = 2,
+							},
 	},
 	[12] = {
 		name = "TANKSH2",
@@ -241,16 +248,18 @@ local moveDefs = {
 		crushStrength = 500.0,
 	},
 	[23] = {
-		name = "CRAWLBOMB",
+		name = "CRAWLBOMB", -- crawling bombs
 		footprintX = 1,
 		footprintZ = 1,
 		maxWaterDepth = 255.0,
 		maxSlope = 48.0,
 		crushStrength = 1.0,
 
-		depthModParams = {
-			linearCoeff = (enableDepthMods and 0.002) or 0.0,
-		}
+		depthModParams = 	{
+							minHeight = 4,
+							linearCoeff = 0.03,
+							maxScale = 1.5,
+							},
 	},
 }
 

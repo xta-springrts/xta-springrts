@@ -20,6 +20,27 @@
     ºÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜº
     ÈÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ¼
     Logo by ElementalGizmo
+------------------- Change Log of XTA 9.736 Svn 642
+------------------ by Jools	
+- Fixed (hopefully) all bugs relating to end statistics and the internal procedure relating to it. Added two small buttons in 
+  top right corner that let's you toggle between both graphs
+- Airplanes now have less LOS and less AirLOS when they are landed. Now you can't land a peeper in a remote corner and gain LOS of
+  it until enemy discovers it.
+- Fixed bug where landed fighters keep shooting at enemy stuff
+- Increased turnrate of torpedoes from seaplanes so that they won't miss ships if dropped too close to them (15000 -> 25000)
+- Added visual effects that help you see when a seaplane has submerged under water and risen above it again
+- Fixed some ships shooting at aircraft (missile frigates, warlord, etc)
+- Fixed bug where only arm construction seaplane could submerge and not core: now they both can
+- Enable depthmod for some kbots and tanks, means that units move slower the deeper the water is: 
+  Fido, maverick, can: max.slowdown in water = 33% 
+  gimp, spiders: 50% 
+  commanders: 45%
+  beaver, crab, triton, crock, garpike, muskrat: 50%
+  crawling bombs: 33%
+- Widgets: mex upgrader error fixed, added options to tweak-gui widget: fullscreen option (requires spring 97), option to turn off
+  move-failed notifications when builder can't reach target), made select and center widget faster to zoom.
+
+	
 ------------------- Change Log of XTA 9.735 Svn 628
 ------------------ by Jools, Raaar
 - Fixed collisionvolumes of all wrecks of standard units, thanks to raaar
