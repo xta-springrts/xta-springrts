@@ -2,35 +2,6 @@ Existing:
 ---------
 
 
-* These units have a ModelCenterOffset tag in unitdef, but according to wiki it was removed in spring 89.0 and should be set with lua. Maybe it has already been dealt with but here is a list anyway:
-
-	arm_albatross
-	arm_hawk
-	arm_metal_extractor
-	arm_ornith
-	arm_phoenix
-	arm_seahawk
-	arm_thunder
-	arm_tornado
-	core_adv_construction_aircraft
-	core_avenger
-	core_construction_aircraft
-	core_construction_seaplane
-	core_fink
-	core_hunter
-	core_hurricane
-	core_metal_extractor
-	core_rapier
-	core_shadow
-	core_titan
-	core_toaster
-	core_typhoon
-	core_valkyrie
-	core_vamp
-	core_viper
-	core_voodoo
-	core_vulture
-
 
 * Pelicans are seen as hovers even when walking (had *2 speed on icy run)
   Next spring has a possibility to set movetype on the run, then this can be fixed.
@@ -38,11 +9,4 @@ Existing:
 
 * Static turrets can not guard other units, althought they have canguard=1 in unitdef. Maybe redui bug, maybe engine bug, maybe feature?
 
-
-*Widgets that are known to be hungry:
-	- Healthbars (1st priority)
-	- Ghost Radar
-	- Ghost Site
-	- Advanced playerslist (with version 9.729, may be already fixed)
-	- RedUI Drawing
-	- RedUI Framework
+* Mex upgrader doesn't work in area mode.
