@@ -102,7 +102,7 @@ local moveDefs = {
 		depthModParams = 	{
 							minHeight = 4,
 							linearCoeff = 0.03,
-							maxScale = 2,
+							maxScale = 1.33,
 							},
 	},
 	[9] = {
@@ -118,7 +118,7 @@ local moveDefs = {
 		depthModParams = 	{
 							minHeight = 4,
 							linearCoeff = 0.03,
-							maxScale = 1.8,
+							maxScale = 1.33,
 							},
 	},
 
