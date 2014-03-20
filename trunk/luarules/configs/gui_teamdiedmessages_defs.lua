@@ -22,6 +22,7 @@ local messages = {
 	'<tn> will not buy this record, it is scratched.',
 	'<tn> fought like a dairy farmer.',
 	'<tn> could really use a breath mint.',
+	'<tn> has gone missing. The last transmission received was the word STENDEC',
 }
 
 local defaultmessages = {
