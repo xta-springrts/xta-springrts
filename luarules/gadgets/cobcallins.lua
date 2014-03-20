@@ -17,12 +17,12 @@ if gadgetHandler:IsSyncedCode() then
 	-- SYNCED PART --
 	-----------------
 	
-	local Echo 		= Spring.Echo
-	local airlos	= {}
-	local los		= {}
-	local max		= math.max
-	local min		= math.min
-	
+	local Echo 			= Spring.Echo
+	local airlos		= {}
+	local los			= {}
+	local max			= math.max
+	local min			= math.min
+		
 	function gadget:Initialize()	
 		gadgetHandler:RegisterGlobal("UnitStoppedMoving", UnitStoppedMoving)
 		gadgetHandler:RegisterGlobal("UnitStartedMoving", UnitStartedMoving)
@@ -67,13 +67,11 @@ if gadgetHandler:IsSyncedCode() then
 	end
 	
 	function PelicanTransform(unitID,unitDefID,teamID)
-		local success = Spring.MoveCtrl.SetMoveDef(unitID,16)
-		Echo("Pelican transformed:",success,Spring.MoveCtrl.GetTag(unitID))
+		local success = Spring.MoveCtrl.SetMoveDef(unitID,"hover2")
 	end
 	
 	function PelicanReform(unitID,unitDefID,teamID)
-		local success = Spring.MoveCtrl.SetMoveDef(unitID,5)
-		Echo("Pelican reformed:",success,Spring.MoveCtrl.GetTag(unitID))
+		local success = Spring.MoveCtrl.SetMoveDef(unitID,"kbotsf2")
 	end	
 else
 	return false
