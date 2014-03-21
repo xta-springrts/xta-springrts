@@ -5625,7 +5625,7 @@
 
 [SMALL_BUILDINGEX2] // copied from OTA, larger aoe
 {
-	name=Small building;
+	name=Small building_2;
 	weaponType=Cannon;
 	turret=1;
 	range=480;
@@ -5642,7 +5642,7 @@
 		default=40;
 		group_invincible=1;
 	}
-
+}
 [SMALL_UNIT]
 {
 	name=Small tank;
