@@ -5622,6 +5622,27 @@
 		group_invincible=1;
 	}
 }
+
+[SMALL_BUILDINGEX2] // copied from OTA, larger aoe
+{
+	name=Small building;
+	weaponType=Cannon;
+	turret=1;
+	range=480;
+	reloadtime=3.6;
+	weaponvelocity=70;
+	areaofeffect=205;
+	soundstart=largegun;
+	soundhitdry=xplosml3;
+	shakemagnitude=0;
+	shakeduration=0;
+	explosiongenerator=custom:E100;
+	[DAMAGE]
+	{
+		default=40;
+		group_invincible=1;
+	}
+
 [SMALL_UNIT]
 {
 	name=Small tank;

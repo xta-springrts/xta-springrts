@@ -83,8 +83,8 @@
 	//************************************************************
 	//  Weapons
 	//***********
-	explodeas=SMALL_BUILDINGEX;
-	selfdestructas=SMALL_BUILDING;
+	explodeas=SMALL_BUILDINGEX2;
+	selfdestructas=MEDIUM_BUILDING;
 
 	//************************************************************
 	//  Orders
