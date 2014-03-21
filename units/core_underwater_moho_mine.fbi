@@ -36,8 +36,8 @@
 	activatewhenbuilt=1;
 	sightdistance=367;
 	damagemodifier=0.35;
-	explodeas=SMALL_BUILDINGEX;
-	selfdestructas=SMALL_BUILDING;
+	explodeas=MEDIUM_BUILDINGEX;
+	selfdestructas=MEDIUM_BUILDING;
 	minwaterdepth=22;
 	corpse=Core_underwater_moho_mine_DEAD;
 	buildpic=Core_underwater_moho_mine.DDS;

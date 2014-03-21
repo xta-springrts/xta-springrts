@@ -35,8 +35,8 @@
 	idleautoheal=5;
 	activatewhenbuilt=1;
 	sightdistance=367;
-	explodeas=SMALL_BUILDINGEX;
-	selfdestructas=SMALL_BUILDING;
+	explodeas=MEDIUM_BUILDINGEX;
+	selfdestructas=MEDIUM_BUILDING;
 	minwaterdepth=22;
 	corpse=ARM_Underwater_moho_mine_DEAD;
 	buildpic=ARM_Underwater_moho_mine.DDS;
