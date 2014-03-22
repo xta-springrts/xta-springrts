@@ -241,8 +241,9 @@ function GroupGuard(unitArray,cmdParams, cmdOptions)
 			end
 			
 			
-			--filter out selected units from target units
-			--filter out enemy units
+			-- filter out selected units from target units
+			-- filter out enemy units
+			-- filter out buidlings
 			local baseUnit = sU[1]
 			local sTeam = GetUnitTeam(baseUnit)
 			
@@ -250,9 +251,10 @@ function GroupGuard(unitArray,cmdParams, cmdOptions)
 				local tUD = UnitDefs[GetUnitDefID(tID)]
 				local dist = GetUnitSeparation(baseUnit, tID)
 				local tTeam = GetUnitTeam(tID)
+				local isMovingUnit = tUD.canMove and (not tUD.isBuilding)
 				local areTeamsAllied = AreTeamsAllied(sTeam,tTeam)
 				
-				if not squadron[tID] and areTeamsAllied then 
+				if not squadron[tID] and areTeamsAllied and isMovingUnit then 
 					targetTable[#targetTable+1] = {tID,dist}
 				end
 			end
