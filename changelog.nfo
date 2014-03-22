@@ -20,6 +20,19 @@
     บÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜบ
     ศอออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออผ
     Logo by ElementalGizmo
+	
+------------------- Change Log of XTA 9.737 Svn 652
+------------------ by Jools	
+- Fixed (again, hopefully) the bug that prevents end window to show up. It's however a difficult bug to reproduce, so it's hard to 
+  know exactly what to fix. Reduced the time the victory/defeat text is shown from 4 to 2 secs.
+- Fixed bug with Pelican not changing movement type when transforming to hover/reforming to kbot
+- Made area guard widget only select mobile units when using advanced modes (adv. modes are: alt: distribute squads, ctrl: persistent squads)
+- Added Enemy spotter widget by floris (is another teamplatter widget)
+- Fixed cob-error about missing functions for some aircraft.
+- Fixed mex-upgrader to again work with area command. It reverses one lua-error fix, but it's a rare one and it's better than area command works
+- Now there are no more bugs in xta: please report more bugs to http://code.google.com/p/xta-springrts/issues/list
+- Reduce non-gunship aircraft brakerate to 10% like it was before engine removed the scale factor. However, it doesn't seem to fix stopping bombers
+	
 ------------------- Change Log of XTA 9.736 Svn 642
 ------------------ by Jools	
 - Fixed (hopefully) all bugs relating to end statistics and the internal procedure relating to it. Added two small buttons in 
