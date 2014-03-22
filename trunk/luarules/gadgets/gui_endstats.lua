@@ -29,7 +29,7 @@ if gadgetHandler:IsSyncedCode() then
 	local mapX, mapZ
 	local ignoreUnits = {}
 	local ignoreForAwards = {}
-	local ignoreAwardsNames = {
+	local ignoreAwardsNames = { -- these units can't receive any awards (nuke units, not fair)
 			arm_retaliator = true,
 			core_silencer  = true,
 			core_neutron  = true,

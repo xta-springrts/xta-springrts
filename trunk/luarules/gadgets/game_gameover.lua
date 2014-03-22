@@ -34,12 +34,17 @@ if gadgetHandler:IsSyncedCode() then
 	-- SYNCED PART --
 	-------------------
 	local gameover 			= false
-	local ENDTIME			= 120 -- frames
+	local ENDTIME			= 60 -- frames
 	local endReadyFrame		
 	
 	function gadget:Initialize()
 		Spring.SetGameRulesParam("ShowEnd",0)
 	end
+	
+	function gadget:ShutDown()
+		Spring.SetGameRulesParam("ShowEnd",1)
+	end
+	
 	
 	function gadget:GameOver()
 	-- GameOver callin gets trapped if called from other gadgets with a lower layer first.
@@ -55,19 +60,21 @@ if gadgetHandler:IsSyncedCode() then
 	end
 	
 	function ShowEndGraphs()
-		for _, unitID in ipairs(Spring.GetAllUnits()) do
-			Spring.SetUnitNeutral(unitID, true)
-			--Spring.SetUnitNoSelect(unitID, true)
-			Spring.GiveOrderToUnit(unitID, CMD_FIRE_STATE, {0}, {})
-			Spring.GiveOrderToUnit(unitID, CMD_STOP,{},{})
+		if Spring.GetGameRulesParam("ShowEnd") == 0 then
+			for _, unitID in ipairs(Spring.GetAllUnits()) do
+				Spring.SetUnitNeutral(unitID, true)
+				--Spring.SetUnitNoSelect(unitID, true)
+				Spring.GiveOrderToUnit(unitID, CMD_FIRE_STATE, {0}, {})
+				Spring.GiveOrderToUnit(unitID, CMD_STOP,{},{})
+			end
+			Spring.PlaySoundFile("sounds/beep1.wav",3.0,0,0,0,0,0,0,'userinterface')
+			Spring.SetGameRulesParam("ShowEnd",1)
 		end
-		Spring.PlaySoundFile("sounds/beep1.wav",3.0,0,0,0,0,0,0,'userinterface')
-		Spring.SetGameRulesParam("ShowEnd",1)
-		gadgetHandler:RemoveGadget()
+		--gadgetHandler:RemoveGadget()
 	end
 	
 	function gadget:GameFrame(frame)
-		if gameover then 
+		if gameover then
 			if (Spring.GetGameRulesParam("WaitForComends") == 0) then
 				if not endReadyFrame then
 					endReadyFrame = Spring.GetGameFrame()
@@ -101,6 +108,7 @@ else
 	local Button						= {}
 	GG.showXTAStats						= true
 	local hideEndGraphs					= true
+	local debugMode						= false
 	
 	local function SetUpButtons()
 		Button["xta"]		= {}
@@ -221,6 +229,26 @@ else
 				myFontHuge:Print(label,vsx/2,vsy/2,72,'cbs')
 				myFontHuge:End()
 			end
+		end
+	end
+	
+	function gadget:KeyPress(key, mods, isRepeat)
+		if mods['alt'] and mods['ctrl'] then -- numpad5			
+			if key == 0x105 then			
+				if not debugMode then
+					Echo("XTA debug mode activated, press Ctrl-Alt-NumPad 5 to disable it")
+				else
+					Echo("XTA debug mode deactivated")
+				end
+				debugMode = not debugMode
+			end
+		end
+		return false
+	end
+	
+	function gadget:Update()
+		if debugMode and Spring.IsGameOver() then
+			Echo("Debug info: Wait comends status:", Spring.GetGameRulesParam("WaitForComends"), "Show End status:", Spring.GetGameRulesParam("ShowEnd"))		
 		end
 	end
 	

@@ -121,6 +121,9 @@ if (gadgetHandler:IsSyncedCode()) then
 	
 	function gadget:ShutDown()
 		Spring.SetGameRulesParam("WaitForComends",0)
+		if Spring.IsGameOver() then
+			Spring.SetGameRulesParam("ShowEnd",1)
+		end
 	end
 	
 	local function removeContester(allyID)

@@ -64,6 +64,14 @@ for name, ud in pairs(UnitDefs) do
 		ud.canRestore = 1
 	end
 	
+	-- scale brakerates for air
+	 if (ud.brakerate) then  
+		if ud.canfly then 
+			if not ud.hoverattack then 
+				ud.brakerate = ud.brakerate * 0.1 
+			end
+		end
+	end
 end 
 
 -------------------------------------------------------------------------------
