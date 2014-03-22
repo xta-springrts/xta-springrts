@@ -59,7 +59,8 @@ function widget:Initialize()
 	Button[12]						= {} -- water
 	Button[13]						= {} -- stats window order
 	Button[14]						= {} -- disable move-failed sounds
-	Button[15]						= {} -- full screen
+	Button[15]						= {} -- disable move-failed sounds
+	Button[16]						= {} -- full screen
 	Panel["main"]					= {}
 	InitButtons()
 end
@@ -171,11 +172,15 @@ function InitButtons()
 	
 	Button[14]["click"]			= tonumber(Spring.GetConfigInt("DisableMoveFailedSound",0) or 0) == 1
 	Button[14]["command"]		= "disableMoveFailed"
-	Button[14]["label"]			= "Disable move-failed sounds:"
+	Button[14]["label"]			= "Disable move-failed unit reply sound:"
 	
-	Button[15]["click"]			= tonumber(Spring.GetConfigInt("Fullscreen",1) or 1) == 1
-	Button[15]["command"]		= "fullscreen"
-	Button[15]["label"]			= "Full screen:"
+	Button[15]["click"]			= tonumber(Spring.GetConfigInt("DisableMoveFailedText",0) or 0) == 1
+	Button[15]["command"]		= "disableMoveFailedText"
+	Button[15]["label"]			= "Disable move-failed unit reply text:"
+	
+	Button[16]["click"]			= tonumber(Spring.GetConfigInt("Fullscreen",1) or 1) == 1
+	Button[16]["command"]		= "fullscreen"
+	Button[16]["label"]			= "Full screen:"
 	
 	
 	Panel["main"]["x1"]			= posX
@@ -287,8 +292,15 @@ function ButtonHandler (cmd)
 		else
 			Spring.SetConfigInt("DisableMoveFailedSound",1)
 		end
-	elseif cmd == "fullscreen" then
+		
+	elseif cmd == "disableMoveFailedText" then
 		if Button[15]["click"] then
+			Spring.SetConfigInt("DisableMoveFailedText",0)
+		else
+			Spring.SetConfigInt("DisableMoveFailedText",1)
+		end	
+	elseif cmd == "fullscreen" then
+		if Button[16]["click"] then
 			Spring.SendCommands("fullscreen 0")
 		else
 			Spring.SendCommands("fullscreen 1")

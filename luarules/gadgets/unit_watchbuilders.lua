@@ -77,15 +77,20 @@ else
 		local uDefID = CallAsTeam(myTeamID,GetUnitDefID, unitID)
 		local x,y,z = Spring.GetUnitPosition(unitID)
 		
-		if uDefID and (x and y and z) then 
-			Echo(UnitDefs[uDefID].humanName .. ": Can't reach destination!")
-			Spring.SetLastMessagePosition(x,y,z) 
-		end
-		
 		if teamID == myTeamID and uDefID then
+			local disableText = (Spring.GetConfigInt("DisableMoveFailedText",0) or 0) == 1 
 			local disablesounds = (Spring.GetConfigInt("DisableMoveFailedSound",0) or 0) == 1
-			if not disablesounds then
-				Spring.PlaySoundFile("sounds/cantdo4.wav", 1.0, nil, "ui")
+		
+			if uDefID and (x and y and z) then
+				
+				if not disableText then
+					Echo(UnitDefs[uDefID].humanName .. ": Can't reach destination!")
+					Spring.SetLastMessagePosition(x,y,z) 
+				end
+		
+				if not disablesounds then
+					Spring.PlaySoundFile("sounds/cantdo4.wav", 1.0, nil, "ui")
+				end
 			end
 		end	
 	end	

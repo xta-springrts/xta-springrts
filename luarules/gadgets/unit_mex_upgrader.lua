@@ -549,8 +549,7 @@ function gadget:CommandFallback(unitID, unitDefID, teamID, cmdID, cmdParams, cmd
         canUpgrade = true 
       end 
     end 
-    if canUpgrade and builder and ValidUnitID(builder.unitDefID) then        
-    
+    if canUpgrade and builder and builder.unitDefID then        
       local upgradePairs = builderDefs[builder.unitDefID]  
       local mexID = getClosestMex(unitID, upgradePairs, teamID, mexesInRange) 
       

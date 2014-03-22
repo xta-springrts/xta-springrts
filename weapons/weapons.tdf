@@ -5639,7 +5639,7 @@
 	explosiongenerator=custom:E100;
 	[DAMAGE]
 	{
-		default=40;
+		default=80;
 		group_invincible=1;
 	}
 }
