@@ -12,6 +12,7 @@ end
 local center = true
 local select = true
 local unitList = {}
+local ZOOMHEIGHT = 1600
 
 local commanders = {
 	UnitDefNames["arm_commander"].id,
@@ -52,11 +53,14 @@ function widget:Update()
 		end
 		local x, y, z = Spring.GetUnitPosition(unitList[1])
 		local camState = Spring.GetCameraState()
+		local currentHeight = camState["height"]
 		camState["px"] = x
 		camState["py"] = y
 		camState["pz"] = z
-		camState["height"] = 1600
-		Spring.SetCameraState(camState,0.5)
+		camState["height"] = ZOOMHEIGHT
+		if currentHeight > ZOOMHEIGHT then
+			Spring.SetCameraState(camState,0.5)
+		end
 		
 		center = false
 	end
