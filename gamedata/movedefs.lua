@@ -32,6 +32,7 @@ local moveDefs = {
 		footprintZ = 3,
 		minWaterDepth = 5.0,
 		crushStrength = 50.0,
+		speedModClass = 3, -- 0 = tank, 1 = kbot, 2 = hover, 3 = ship 
 	},
 	[2] = {
 		name = "MEDIUMBOAT",
@@ -39,6 +40,7 @@ local moveDefs = {
 		footprintZ = 4,
 		minWaterDepth = 25.0,
 		crushStrength = 200.0,
+		speedModClass = 3, -- 0 = tank, 1 = kbot, 2 = hover, 3 = ship 
 	},
 	[3] = {
 		name = "LARGEBOAT",
@@ -46,6 +48,7 @@ local moveDefs = {
 		footprintZ = 6,
 		minWaterDepth = 50.0,
 		crushStrength = 1600.0,
+		speedModClass = 3, -- 0 = tank, 1 = kbot, 2 = hover, 3 = ship 
 	},
 	[4] = {
 		name = "BOATSUB",
@@ -54,6 +57,7 @@ local moveDefs = {
 		minWaterDepth = 36.0,
 		crushStrength = 100.0,
 		submarine = true,
+		speedModClass = 3, -- 0 = tank, 1 = kbot, 2 = hover, 3 = ship 
 	},
 
 	-- BOTS
@@ -70,6 +74,7 @@ local moveDefs = {
 							linearCoeff = 0.03,
 							maxScale = 1.5,
 							},
+		speedModClass = 1, -- 0 = tank, 1 = kbot, 2 = hover, 3 = ship 
 	},
 	[6] = {
 		name = "KBOTSf3",
@@ -79,6 +84,7 @@ local moveDefs = {
 		maxSlope = 24.0,
 		slopeMod = (enableSlopeMods and EngineDefaultSlopeMod(24.0)) or 0.0,
 		crushStrength = 100.0,
+		speedModClass = 1, -- 0 = tank, 1 = kbot, 2 = hover, 3 = ship 
 	},
 	[7] = {
 		name = "KBOTSS2",
@@ -88,6 +94,7 @@ local moveDefs = {
 		maxSlope = 36.0,
 		slopeMod = (enableSlopeMods and EngineDefaultSlopeMod(36.0)) or 0.0,
 		crushStrength = 10.0,
+		speedModClass = 1, -- 0 = tank, 1 = kbot, 2 = hover, 3 = ship 
 	},
 	[8] = {
 		name = "KBOTUW3", -- gimp, spiders
@@ -104,6 +111,7 @@ local moveDefs = {
 							linearCoeff = 0.03,
 							maxScale = 1.33,
 							},
+		speedModClass = 1, -- 0 = tank, 1 = kbot, 2 = hover, 3 = ship 
 	},
 	[9] = {
 		name = "KBOTDS2", -- commanders
@@ -120,6 +128,7 @@ local moveDefs = {
 							linearCoeff = 0.03,
 							maxScale = 1.33,
 							},
+		speedModClass = 1, -- 0 = tank, 1 = kbot, 2 = hover, 3 = ship 
 	},
 
 	-- TANKS
@@ -131,6 +140,7 @@ local moveDefs = {
 		maxSlope = 18.0,
 		slopeMod = (enableSlopeMods and EngineDefaultSlopeMod(18.0)) or 0.0,
 		crushStrength = 300.0,
+		speedModClass = 0, -- 0 = tank, 1 = kbot, 2 = hover, 3 = ship 
 	},
 	[11] = {
 		name = "TANKDH3", -- beaver, crab, triton, crock, garpike, muskrat, zulu
@@ -147,6 +157,7 @@ local moveDefs = {
 							linearCoeff = 0.03,
 							maxScale = 2,
 							},
+		speedModClass = 0, -- 0 = tank, 1 = kbot, 2 = hover, 3 = ship 
 	},
 	[12] = {
 		name = "TANKSH2",
@@ -156,6 +167,7 @@ local moveDefs = {
 		maxSlope = 18.0,
 		slopeMod = (enableSlopeMods and EngineDefaultSlopeMod(18.0)) or 0.0,
 		crushStrength = 10.0,
+		speedModClass = 0, -- 0 = tank, 1 = kbot, 2 = hover, 3 = ship 
 	},
 	[13] = {
 		name = "TANKSH3",
@@ -165,6 +177,7 @@ local moveDefs = {
 		maxSlope = 18.0,
 		slopeMod = (enableSlopeMods and EngineDefaultSlopeMod(18.0)) or 0.0,
 		crushStrength = 15.0,
+		speedModClass = 0, -- 0 = tank, 1 = kbot, 2 = hover, 3 = ship 
 	},
 	[14] = {
 		name = "TANKSH4",
@@ -174,6 +187,7 @@ local moveDefs = {
 		maxSlope = 18.0,
 		slopeMod = (enableSlopeMods and EngineDefaultSlopeMod(18.0)) or 0.0,
 		crushStrength = 100.0,
+		speedModClass = 0, -- 0 = tank, 1 = kbot, 2 = hover, 3 = ship 
 	},
 	[15] = {
 		-- Bulldog/Reaper/Goliath can crush DT's
@@ -184,6 +198,7 @@ local moveDefs = {
 		maxSlope = 18.0,
 		slopeMod = (enableSlopeMods and EngineDefaultSlopeMod(18.0)) or 0.0,
 		crushStrength = 400.0,
+		speedModClass = 0, -- 0 = tank, 1 = kbot, 2 = hover, 3 = ship 
 	},
 
 	-- HOVERS
@@ -194,6 +209,7 @@ local moveDefs = {
 		maxSlope = 21.0,
 		slopeMod = (enableSlopeMods and EngineDefaultSlopeMod(21.0)) or 0.0,
 		crushStrength = 10.0,
+		speedModClass = 2, -- 0 = tank, 1 = kbot, 2 = hover, 3 = ship 
 	},
 	[17] = {
 		name = "HOVER3",
@@ -202,6 +218,7 @@ local moveDefs = {
 		maxSlope = 21.0,
 		slopeMod = (enableSlopeMods and EngineDefaultSlopeMod(21.0)) or 0.0,
 		crushStrength = 30.0,
+		speedModClass = 2, -- 0 = tank, 1 = kbot, 2 = hover, 3 = ship 
 	},
 	[18] = {
 		name = "HOVER4",
@@ -210,6 +227,7 @@ local moveDefs = {
 		maxSlope = 21.0,
 		slopeMod = (enableSlopeMods and EngineDefaultSlopeMod(21.0)) or 0.0,
 		crushStrength = 50.0,
+		speedModClass = 2, -- 0 = tank, 1 = kbot, 2 = hover, 3 = ship 
 	},
 	[19] = {
 		name = "HOVER9",
@@ -219,6 +237,7 @@ local moveDefs = {
 		maxSlope = 60.0, -- ??
 		slopeMod = (enableSlopeMods and EngineDefaultSlopeMod(60.0)) or 0.0,
 		crushStrength = 30.0,
+		speedModClass = 2, -- 0 = tank, 1 = kbot, 2 = hover, 3 = ship 
 	},
 	[20] = {
 		name = "HOVER10",
@@ -228,6 +247,7 @@ local moveDefs = {
 		maxSlope = 35.0,
 		slopeMod = (enableSlopeMods and EngineDefaultSlopeMod(35.0)) or 0.0,
 		crushStrength = 3000.0, -- ??
+		speedModClass = 2, -- 0 = tank, 1 = kbot, 2 = hover, 3 = ship 
 	},
 
 	-- MISC
@@ -237,6 +257,7 @@ local moveDefs = {
 		footprintZ = 2,
 		maxWaterDepth = 16.0,
 		crushStrength = 30.0,
+		speedModClass = 1, -- 0 = tank, 1 = kbot, 2 = hover, 3 = ship 
 	},
 	[22] = {
 		name = "Krogoth",
@@ -246,6 +267,8 @@ local moveDefs = {
 		maxSlope = 25.0,
 		slopeMod = (enableSlopeMods and EngineDefaultSlopeMod(25.0)) or 0.0,
 		crushStrength = 500.0,
+		speedModClass = 1, -- 0 = tank, 1 = kbot, 2 = hover, 3 = ship 
+		
 	},
 	[23] = {
 		name = "CRAWLBOMB", -- crawling bombs
@@ -254,12 +277,12 @@ local moveDefs = {
 		maxWaterDepth = 255.0,
 		maxSlope = 48.0,
 		crushStrength = 1.0,
-
 		depthModParams = 	{
 							minHeight = 4,
 							linearCoeff = 0.03,
 							maxScale = 1.5,
 							},
+		speedModClass = 1, -- 0 = tank, 1 = kbot, 2 = hover, 3 = ship 
 	},
 }
 

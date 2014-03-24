@@ -95,7 +95,7 @@ local modrules  = {
 
   transportability = {
     transportGround = 1,  -- defaults to 1
-    transportHover  = 0,  -- defaults to 0
+    transportHover  = (Spring.GetModOptions() and (Spring.GetModOptions().mo_transporthover == "1") and 1) or 0,  -- defaults to 0
     transportShip   = 0,  -- defaults to 0
     transportAir    = 1,  -- defaults to 0
   },

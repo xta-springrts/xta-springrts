@@ -123,6 +123,22 @@ local options = {
 			{key="all", name="Disallow All", desc="No enemy units can be napped"},
 		}
 	},
+	
+	{
+		key="mo_transporthover",
+		name="Hovercraft Transporting",
+		desc="Toggle whether hovercraft can be transported\nkey: mo_transporthover",
+		type="list",
+		def="1",
+		section="xtagame",
+		items={
+			{key="1", name="Yes", desc="Hovercraft can be transported"},
+			{key="0", name="No", desc="Hovercraft cannot be transported"},
+		}
+	},
+	
+	
+	
 	{
 		key="qtpfs",
 		name="Pathfinding system",
