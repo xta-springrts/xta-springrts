@@ -29,7 +29,7 @@ local CMD_UNLOAD							= CMD.UNLOAD_UNIT
 local CMD_UNLOAD_ALL						= CMD.UNLOAD_UNITS
 local CMD_RECLAIM							= CMD.RECLAIM
 
-
+local Echo									= Spring.Echo
 local EditUnitCmdDesc						= Spring.EditUnitCmdDesc
 local FindUnitCmdDesc						= Spring.FindUnitCmdDesc
 local InsertUnitCmdDesc						= Spring.InsertUnitCmdDesc
@@ -54,7 +54,7 @@ local myTeamID
 local FIRSTWEAPON							= 1
 local GetSelectedUnitsCounts				= Spring.GetSelectedUnitsCounts
 local AreTeamsAllied						= Spring.AreTeamsAllied
-
+local transportHovers						= (Spring.GetModOptions() and (Spring.GetModOptions().mo_transporthover == "1") and 1) or 0 == 1
 local waterWeapons = {}
 
 
@@ -282,8 +282,10 @@ function widget:DefaultCommand(type, uID)
 				end
 			-- load command: currently only ground can be transported
 			elseif activeCmdID == CMD_LOAD then
+				
 				if type == 'unit' then
 					local unitDef = UnitDefs[GetUnitDefID(uID) ]
+					
 					if unitDef.isBuilding then
 						if unitDef.cantBeTransported == true then -- atm no buildings can be transported, but it could be possible in the future
 							SetMouseCursor('LoadBad')
@@ -292,6 +294,10 @@ function widget:DefaultCommand(type, uID)
 						SetMouseCursor('LoadBad')
 					elseif (not IsUnitAllied(uID) ) then
 						if not unitDef.transportByEnemy then
+							SetMouseCursor('LoadBad')
+						end
+					elseif (not transportHovers) then
+						if unitDef.moveDef.type == "hover" then
 							SetMouseCursor('LoadBad')
 						end
 					end
