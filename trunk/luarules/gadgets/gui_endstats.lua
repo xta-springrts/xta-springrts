@@ -52,7 +52,9 @@ if gadgetHandler:IsSyncedCode() then
 	local IsPosInLos			= Spring.IsPosInLos
 	local AreTeamsAllied		= Spring.AreTeamsAllied
 	local GetUnitHealth			= Spring.GetUnitHealth
-	local gaiaID				= Spring.GetGaiaTeamID()	
+	local gaiaID				= Spring.GetGaiaTeamID()
+
+	local XTA_AWARDMARKER		= '\199'
 	
 	local function round(num, idp)
 		return string.format("%." .. (idp or 0) .. "f", num)
@@ -222,6 +224,7 @@ if gadgetHandler:IsSyncedCode() then
 		end
 	end
 	
+	
 	function gadget:UnitDamaged(unitID, unitDefID, teamID, damage, paralyzer, weaponDefID, projectileID, attackerID, attackerDefID, attackerTeam)
 		if teamID and isUnitComplete(unitID) and weaponDefID < 0 then --and teamID ~= gaiaID and attackerTeam ~= gaiaID then
 			local health,hp = GetUnitHealth(unitID)
@@ -259,8 +262,6 @@ if gadgetHandler:IsSyncedCode() then
 			readZoneOfControls()
 		end
 	end
-	
-
 
 	-- this is a horribly inefficient way to send a table, but it is only sent once
 	local function SendTableToUnsyncedHelper(name, el, key, ...)
@@ -288,7 +289,6 @@ if gadgetHandler:IsSyncedCode() then
 		end
 		SendToUnsynced(name, nil, nil, nil, nil)
 	end
-
 	
 	function gadget:GameOver()
 		readZoneOfControls()
@@ -323,6 +323,34 @@ if gadgetHandler:IsSyncedCode() then
 		SendTableToUnsynced("heroUnits", heroUnits)
 		SendTableToUnsynced("lostUnits", lostUnits)
 		
+		-- send luarules msg for replay site awards
+		
+		for i, unitData in pairs(heroUnits) do
+			local name = unitData[1]
+			local kills = unitData[2]
+			local birth = unitData[3]
+			local age = unitData[4]
+			local team = unitData[5]
+			local isAlive = 1
+		
+			local awardsMsg = table.concat({XTA_AWARDMARKER,":",isAlive,":",team,":",name,":",kills,":",birth,":",age})
+			--Echo("Hero:",i, awardsMsg)
+			Spring.SendLuaRulesMsg(awardsMsg)
+		end
+		
+		for i, unitData in pairs(lostUnits) do
+			local name = unitData[1]
+			local kills = unitData[2]
+			local birth = unitData[3]
+			local death = unitData[4]
+			local team = unitData[5]
+			local isAlive = 0
+			local age = death - birth
+		
+			local awardsMsg = table.concat({XTA_AWARDMARKER,":",isAlive,":",team,":",name,":",kills,":",age})
+			--Echo("Lost:",i, awardsMsg)
+			Spring.SendLuaRulesMsg(awardsMsg)
+		end
 	end
 	
 else
@@ -632,7 +660,6 @@ else
 	function gadget:Update(dt)
 		
 		if not drawWindow then
-			--Echo("DW1:",drawWindow,Spring.GetGameRulesParam("ShowEnd"),GG.showXTAStats)
 			drawWindow = Spring.GetGameRulesParam("ShowEnd") == 1
 		end
 	end
@@ -645,8 +672,6 @@ else
 			glRect(x0, y0, x0 + width, y1)
 			glRect(x1, y0, x1 - width, y1)
 		end
-		
-		--Echo("ES-DS:",drawWindow,Spring.GetGameRulesParam("ShowEnd"),GG.showXTAStats)
 		
 		if drawWindow and not Spring.IsGUIHidden() and GG.showXTAStats then 
 			--back panel
