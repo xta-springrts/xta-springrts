@@ -33,29 +33,30 @@ if gadgetHandler:IsSyncedCode() then
 	-------------------
 	-- SYNCED PART --
 	-------------------
-	local gameover 			= false
 	local ENDTIME			= 60 -- frames
-	local endReadyFrame		
+	local gameOverFrame
+	local transferStarted	= false
 	
 	function gadget:Initialize()
 		Spring.SetGameRulesParam("ShowEnd",0)
 	end
 	
 	function gadget:ShutDown()
+		ShowEndGraphs()
 		Spring.SetGameRulesParam("ShowEnd",1)
 	end
 	
-	
 	function gadget:GameOver()
 	-- GameOver callin gets trapped if called from other gadgets with a lower layer first.
-		gameover = true
-		Spring.PlaySoundFile("sounds/victory1.wav",8.0,0,0,0,0,0,0,'userinterface')
-		if GG.gamewinners then
-			for _, winner in pairs (GG.gamewinners) do
-				SendToUnsynced("gameWinnners",winner, #GG.gamewinners)
+		gameOverFrame = Spring.GetGameFrame()
+		if not transferStarted then
+			if GG.gamewinners then
+				for _, winner in pairs (GG.gamewinners) do
+					SendToUnsynced("gameWinnners",winner, #GG.gamewinners)
+				end
+			else
+				SendToUnsynced("gameWinnners",nil, 0)
 			end
-		else
-			SendToUnsynced("gameWinnners",nil, 0)
 		end
 	end
 	
@@ -74,16 +75,19 @@ if gadgetHandler:IsSyncedCode() then
 	end
 	
 	function gadget:GameFrame(frame)
-		if gameover then
-			if (Spring.GetGameRulesParam("WaitForComends") == 0) then
-				if not endReadyFrame then
-					endReadyFrame = Spring.GetGameFrame()
-				end
-				
-				if endReadyFrame and (frame > endReadyFrame + ENDTIME) then
+		if Spring.IsGameOver() then
+			if (Spring.GetGameRulesParam("WaitForComends") == 0) or (not Spring.GetGameRulesParam("WaitForComends")) then
+				if gameOverFrame and (frame > gameOverFrame + ENDTIME) then
 					ShowEndGraphs()
 				end
 			end	
+		end
+		
+		if not transferStarted and frame%16 == 0 and GG.gamewinners then
+			transferStarted = true
+			for _, winner in pairs (GG.gamewinners) do
+				SendToUnsynced("gameWinnners",winner, #GG.gamewinners)
+			end
 		end
 	end
 else
@@ -109,6 +113,7 @@ else
 	GG.showXTAStats						= true
 	local hideEndGraphs					= true
 	local debugMode						= false
+	local mySpectatingState
 	
 	local function SetUpButtons()
 		Button["xta"]		= {}
@@ -141,6 +146,7 @@ else
 	function gadget:Initialize()
 		gadgetHandler:AddSyncAction("gameWinnners", GetGameWinners)
 		SetUpButtons()
+		mySpectatingState = Spring.GetSpectatingState()
 	end
 		
 	function GetGameWinners(_, winner, n)
@@ -158,67 +164,79 @@ else
 			GG.showXTAStats	= tonumber(Spring.GetConfigInt("EngineGraphFirst",0) or 0) == 0
 			
 			-- hide end graphs while the end text is displayed
-			Spring.SendCommands('endgraph 0') 
+			Spring.SendCommands('endgraph 0')
+			
+			-- play victory/defeat sounds
+			
+			if winners and winners[myAllyID] and (not mySpectatingState) then
+				Spring.PlaySoundFile("sounds/victory1.wav",8.0,0,0,0,0,0,0,'userinterface')
+			elseif mySpectatingState then
+				Spring.PlaySoundFile("sounds/victory1.wav",8.0,0,0,0,0,0,0,'userinterface')
+			end
 		end
 	end
 	
 	function gadget:DrawScreen()
-		if (not Spring.IsGUIHidden()) and Spring.IsGameOver() and transferComplete then
-			-- show stats buttons
+		if (not Spring.IsGUIHidden()) and transferComplete then
+			
 			local showGraph = Spring.GetGameRulesParam("ShowEnd") == 1
-			
-			-- unhide end graphs
-			if showGraph and (not GG.showXTAStats) and hideEndGraphs then
-				hideEndGraphs = false
-				Spring.SendCommands('endgraph 1')
+			-- end graph related options
+			if Spring.IsGameOver() then
+				-- show stats buttons
+				-- unhide end graphs
+				if showGraph and (not GG.showXTAStats) and hideEndGraphs then
+					hideEndGraphs = false
+					Spring.SendCommands('endgraph 1')
+				end
+				
+				-- show buttons to choose between xta/engine graphs
+				--background
+				if Button["xta"]["mouse"] then
+					gl.Color(0.8, 0.8, 0.2, 0.5) -- yellow on mouseover
+				else
+					gl.Color(0.3, 0.3, 0.4, 0.55) -- grey
+				end
+				gl.Rect(Button["xta"]["x0"],Button["xta"]["y0"],Button["xta"]["x1"],Button["xta"]["y1"])
+				
+				if Button["engine"]["mouse"] then
+					gl.Color(0.8, 0.8, 0.2, 0.5) -- yellow on mouseover
+				else
+					gl.Color(0.3, 0.3, 0.4, 0.55) -- grey
+				end
+				gl.Rect(Button["engine"]["x0"],Button["engine"]["y0"],Button["engine"]["x1"],Button["engine"]["y1"])
+				
+				-- button text
+				myFont:Begin()
+				
+				-- xta stats button
+				if GG.showXTAStats then  
+					myFont:SetTextColor({1, 1, 1, 1})
+				else
+					myFont:SetTextColor({0.6, 0.6, 0.6, 1})
+				end
+				myFont:Print("XTA stats",Button["xta"]["x0"]+buttonBarW/4,Button["engine"]["y0"]+6,12,'cs')
+				
+				-- engine stats button
+				if GG.showXTAStats then 
+					myFont:SetTextColor({0.6, 0.6, 0.6, 1})
+				else
+					myFont:SetTextColor({1, 1, 1, 1})
+				end
+				myFont:Print("Engine stats",Button["engine"]["x0"]+buttonBarW/4,Button["engine"]["y0"]+6,12,'cs')
+				myFont:End()
+				gl.Color(1,1,1,1)
 			end
-			
-			-- show buttons to choose between xta/engine graphs
-			--background
-			if Button["xta"]["mouse"] then
-				gl.Color(0.8, 0.8, 0.2, 0.5) -- yellow on mouseover
-			else
-				gl.Color(0.3, 0.3, 0.4, 0.55) -- grey
-			end
-			gl.Rect(Button["xta"]["x0"],Button["xta"]["y0"],Button["xta"]["x1"],Button["xta"]["y1"])
-			
-			if Button["engine"]["mouse"] then
-				gl.Color(0.8, 0.8, 0.2, 0.5) -- yellow on mouseover
-			else
-				gl.Color(0.3, 0.3, 0.4, 0.55) -- grey
-			end
-			gl.Rect(Button["engine"]["x0"],Button["engine"]["y0"],Button["engine"]["x1"],Button["engine"]["y1"])
-			
-			-- button text
-			myFont:Begin()
-			
-			-- xta stats button
-			if GG.showXTAStats then  
-				myFont:SetTextColor({1, 1, 1, 1})
-			else
-				myFont:SetTextColor({0.6, 0.6, 0.6, 1})
-			end
-			myFont:Print("XTA stats",Button["xta"]["x0"]+buttonBarW/4,Button["engine"]["y0"]+6,12,'cs')
-			
-			-- engine stats button
-			if GG.showXTAStats then 
-				myFont:SetTextColor({0.6, 0.6, 0.6, 1})
-			else
-				myFont:SetTextColor({1, 1, 1, 1})
-			end
-			myFont:Print("Engine stats",Button["engine"]["x0"]+buttonBarW/4,Button["engine"]["y0"]+6,12,'cs')
-			myFont:End()
-			gl.Color(1,1,1,1)
 			
 			-- End text
 			if not showGraph then
 				-- show victory/defeat text		
 				local label
 				myFontHuge:Begin()
-				if winners and winners[myAllyID] then
+				
+				if winners and winners[myAllyID] and (not mySpectatingState) then
 					label = "VICTORY"
 					myFontHuge:SetTextColor({1, 1, 1, 1})
-				elseif winners then
+				elseif winners and (not mySpectatingState) then
 					label = "DEFEAT"
 					myFontHuge:SetTextColor({1, 0, 0, 1})
 				else

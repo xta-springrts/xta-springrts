@@ -212,7 +212,11 @@ end
 function gadget:GameFrame(frame)
 	-- trigger gameover with a delay to let all explosions calm down
 	if gameoverframe and frame >= gameoverframe then
-		GG.gamewinners = gamewinners
+		if not GG.gamewinners then
+			GG.gamewinners = gamewinners
+		else
+			gamewinners = GG.gamewinners
+		end
 		spGameOver(gamewinners)
 	end
 
