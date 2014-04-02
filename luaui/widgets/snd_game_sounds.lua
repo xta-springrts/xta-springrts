@@ -12,11 +12,11 @@ function widget:GetInfo()
 end
 ----------------------------------------------------------------------------
 local alarmInterval				= 60		-- seconds, interval between sound alarms for same unit type
-local commanderAlarmInterval	= 10 		-- seconds, interval for sound alarms for other units after commander was attacked
+local commanderAlarmInterval	= 20 		-- seconds, interval for sound alarms for other units after commander was attacked
 local textNotifyInterval		= 10 		-- seconds, interval for text notifications for same unit type
-local generalAlarmInterval		= 10		-- seconds, interval between all alarms (affects all alarms except commander alarms)
-local commanderSoundInterval	= 3			-- seconds, interval between sound notifications for Commander
-local commanderTextInterval		= 3			-- seconds, interval between text notifications for Commander	
+local generalAlarmInterval		= 20		-- seconds, interval between all alarms (affects all alarms except commander alarms)
+local commanderSoundInterval	= 7			-- seconds, interval between sound notifications for Commander
+local commanderTextInterval		= 5			-- seconds, interval between text notifications for Commander	
 ----------------------------------------------------------------------------                
 local spGetLocalTeamID			= Spring.GetLocalTeamID
 local spPlaySoundFile			= Spring.PlaySoundFile

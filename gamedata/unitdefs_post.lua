@@ -190,11 +190,11 @@ end
 --------------------------------------------------------------------------------
 -- Unit napping settings
 if (modOptions and modOptions.mo_transportenemy) then
-  if (modOptions.mo_transportenemy == "com") then
+  if (modOptions.mo_transportenemy == "notcom") then
     for name,ud in pairs(commanderList) do  
       UnitDefs[name].transportbyenemy = false
     end
-  elseif (modOptions.mo_transportenemy == "all") then
+  elseif (modOptions.mo_transportenemy == "none") then
     for name, ud in pairs(UnitDefs) do  
       ud.transportbyenemy = false
     end

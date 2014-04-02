@@ -378,11 +378,11 @@ function widget:DrawInMiniMap(sx, sz)
 			local x0 = (xn+xp)/2 * ratioX
 			local z0 = sz - ((zn+zp)/2 * ratioY)
 			local rs = textSize*1.1 --recsize
-			gl.Color({0,0,0,0.8})
+			gl.Color({0,0,0,0.5})
 			gl.Rect(x0-rs/2, z0-rs/2, x0+rs/2, z0+rs/2)
 			myFont:Begin()
 			myFont:SetTextColor({r, g, b, a})
-			myFont:Print(tostring(at), x0 , z0, textSize, 'vcs')
+			myFont:Print(tostring(at), x0 , z0, textSize, 'vco')
 			myFont:End()
 		end
 	end
@@ -397,18 +397,6 @@ function widget:DrawInMiniMap(sx, sz)
     if (at ~= gaiaAllyTeamID) then
       local xn, zn, xp, zp = Spring.GetAllyTeamStartBox(at)
       if (xn and ((xn ~= 0) or (zn ~= 0) or (xp ~= msx) or (zp ~= msz))) then
-		
-		--local x0 = (xn+xp)/2
-		--local z0 = (zn+zp)/2
-		--local rs = 16*50 	--recsize
-		--gl.Color({0,0,0,0.7})
-		--gl.Rect(x0-rs/2, z0-rs/2, x0+rs/2, z0+rs/2)
-		--Spring.Echo("DIMM:",at,xn,xp,zn,zp)
-		--myFont:Begin()
-		--myFont:SetTextColor({1, 1, 1, 1})
-		--myFont:Print(tostring(at), x0, z0, textSize*-50, 'vco')
-		--myFont:End()
-		
         local color
         if (at == Spring.GetMyAllyTeamID()) then
           color = { 0, 1, 0, 0.1 }  --  green
