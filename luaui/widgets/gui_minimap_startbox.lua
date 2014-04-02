@@ -64,7 +64,8 @@ local startTimer = Spring.GetTimer()
 
 local texName = LUAUI_DIRNAME .. 'Images/highlight_strip.png'
 local texScale = 512
-
+local textSize = 18
+local myFont = gl.LoadFont("FreeSansBold.otf",textSize, 1.9, 40)
 --------------------------------------------------------------------------------
 
 GL.KEEP = 0x1E00
@@ -131,7 +132,7 @@ function widget:Initialize()
     gl.Translate(0, 1, 0)
     gl.Scale(1 / msx, -1 / msz, 1)
   end)
-
+   
   -- cone list for world start positions
   coneList = gl.CreateList(function()
     local h = 100
@@ -351,23 +352,63 @@ function widget:DrawInMiniMap(sx, sz)
     widgetHandler:RemoveWidget()
   end
 
-  gl.PushMatrix()
-  gl.CallList(xformList)
-
-  gl.LineWidth(1.49)
-
   local gaiaAllyTeamID
   local gaiaTeamID = Spring.GetGaiaTeamID()
   if (gaiaTeamID) then
     local _,_,_,_,_,atid = Spring.GetTeamInfo(gaiaTeamID)
     gaiaAllyTeamID = atid
   end
+  
+  local ratioX = sx / (Game.mapX * 512)
+  local ratioY =  sz / (Game.mapY * 512)
+    
+  -- add team numbers to start boxes
+	for _,at in ipairs(Spring.GetAllyTeamList()) do
+		if (at ~= gaiaAllyTeamID) then
+			local xn, zn, xp, zp = Spring.GetAllyTeamStartBox(at)
+			local team1 = (#(Spring.GetTeamList(at)) > 0 and Spring.GetTeamList(at)[1]) or nil
+			local r,g,b,a = 1,1,1,0.3
+			local color
+			
+			if team1 then
+				color = GetTeamColor(team1)
+				r, g, b, a = color[1], color[2], color[3], 1
+			end
+						
+			local x0 = (xn+xp)/2 * ratioX
+			local z0 = sz - ((zn+zp)/2 * ratioY)
+			local rs = textSize*1.1 --recsize
+			gl.Color({0,0,0,0.8})
+			gl.Rect(x0-rs/2, z0-rs/2, x0+rs/2, z0+rs/2)
+			myFont:Begin()
+			myFont:SetTextColor({r, g, b, a})
+			myFont:Print(tostring(at), x0 , z0, textSize, 'vcs')
+			myFont:End()
+		end
+	end
+    
+  gl.PushMatrix()
+  gl.CallList(xformList)
+
+  gl.LineWidth(1.49)
 
   -- show all start boxes
   for _,at in ipairs(Spring.GetAllyTeamList()) do
     if (at ~= gaiaAllyTeamID) then
       local xn, zn, xp, zp = Spring.GetAllyTeamStartBox(at)
       if (xn and ((xn ~= 0) or (zn ~= 0) or (xp ~= msx) or (zp ~= msz))) then
+		
+		--local x0 = (xn+xp)/2
+		--local z0 = (zn+zp)/2
+		--local rs = 16*50 	--recsize
+		--gl.Color({0,0,0,0.7})
+		--gl.Rect(x0-rs/2, z0-rs/2, x0+rs/2, z0+rs/2)
+		--Spring.Echo("DIMM:",at,xn,xp,zn,zp)
+		--myFont:Begin()
+		--myFont:SetTextColor({1, 1, 1, 1})
+		--myFont:Print(tostring(at), x0, z0, textSize*-50, 'vco')
+		--myFont:End()
+		
         local color
         if (at == Spring.GetMyAllyTeamID()) then
           color = { 0, 1, 0, 0.1 }  --  green
