@@ -115,12 +115,12 @@ local options = {
 		name="Enemy Transporting",
 		desc="Toggle which enemy units you can kidnap with a transport vessel\nkey: mo_transportenemy",
 		type="list",
-		def="none",
+		def="all",
 		section="xtagame",
 		items={
-			{key="none", name="Allow All", desc="All enemy units can be napped"},
-			{key="com", name="All But Commanders", desc="Only commanders are immune to napping"},
-			{key="all", name="Disallow All", desc="No enemy units can be napped"},
+			{key="all", name="Allow All", desc="All enemy units can be napped"},
+			{key="notcom", name="All But Commanders", desc="Only commanders are immune to napping"},
+			{key="none", name="Disallow All", desc="No enemy units can be napped"},
 		}
 	},
 	
@@ -136,8 +136,6 @@ local options = {
 			{key="0", name="No", desc="Hovercraft cannot be transported"},
 		}
 	},
-	
-	
 	
 	{
 		key="qtpfs",
@@ -428,6 +426,7 @@ local options = {
 		type = bool,
 		name = "Enable MoveDef slope-modifiers",
 		desc = "Determines if ground-units slow down on slopes\nkey: enableSlopeMods",
+		section= 'other',
 	},
 	--[[ Removed till spawner is fixed
 	{
