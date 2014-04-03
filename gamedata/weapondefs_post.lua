@@ -237,7 +237,7 @@ end
 ---    dguns are excluded from this since the gadget breaks Spring's ability to
 ---    limit playback concurrency which we want for the dgun's explosion sounds
 ---    EDIT: Jan, 25: Should be fixed now, so dguns are again included
-if modOptions.globalsounds == nil or modOptions.globalsounds == '0' then
+if modOptions.sounds == nil or modOptions.sounds ~= 'global' then
 	Spring.Echo("Weapons_post: Local sound option detected, moving sounds to customparams")
 
 	for id, weaponDef in pairs(WeaponDefs) do
@@ -267,7 +267,8 @@ if modOptions.globalsounds == nil or modOptions.globalsounds == '0' then
 		weaponDef.soundhitdry = nil
 		weaponDef.soundstart = nil
 		if weaponDef.customparams then 
-			--Spring.Echo("New weaponsdef (wd -> cp):",id,WeaponDefs[id].soundhitwet,"-->", weaponDef.customparams.soundhitwet)
+			--Spring.Echo("New dry weaponsdef (wd -> cp):",id,weaponDef.soundhitdry,"-->", weaponDef.customparams.soundhitdry)
+			--Spring.Echo("New wet weaponsdef (wd -> cp):",id,weaponDef.soundhitwet,"-->", weaponDef.customparams.soundhitwet)
 		else
 			Spring.Echo("No customparams:", id)
 		end

@@ -143,9 +143,9 @@ function widget:Initialize()
 			},
 			
 			{
-			name	= "Global sounds:",
-			type	= "bool",
-			value	= modOptions["globalsounds"] or "N/A",
+			name	= "Sounds mode:",
+			type	= "value",
+			value	= modOptions["sounds"] or "N/A",
 			},
 			
 			{

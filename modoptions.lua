@@ -148,7 +148,7 @@ local options = {
 		items={
 			{key="0", name="Default", desc="Default Spring path finding engine"},
 			{key="1", name="QTPFS", desc="QuadTree Path Finding System"},
-		}
+		},
 	},
 	{
 		key="reclaim_method",
@@ -160,9 +160,8 @@ local options = {
 		def="0",
 		items={
 			{key="0", name="Continuous", desc="Receive metal gradually for the duration of the reclaim"},
-			{key="1", name="Discrete", desc="Receive all metal at once after reclaim finishes"},
-			
-		}
+			{key="1", name="Discrete", desc="Receive all metal at once after reclaim finishes"},	
+		},
 	},
 	{
 		key    = "gravity",
@@ -281,12 +280,20 @@ local options = {
 	},
 	
 	{
-		key		= "globalsounds",
-		name	= "Global sounds",
-		desc	= "Is sound heard out of player's line of sight? \nkey: globalsounds",
-		type	= "bool",
+		key		= "sounds",
+		name	= "Sounds mode",
+		desc	= "Is sound heard out of player's line of sight? \nkey: sounds",
+		type	= "list",
+		def		= "global",
+		items={
+			{key="local", name="Local", desc="Battle sounds are only heard in area in line-of-sight"},
+			{key="global", name="Global", desc="battle sounds are always heard"},
+			{key="dampened15", name="Dampened to 15 %", desc="Battle sounds are 15 % volume outside LOS"},
+			{key="dampened30", name="Dampened to 30 %", desc="Battle sounds are 30 % volume outside LOS"},
+			{key="dampened50", name="Dampened to 50 %", desc="Battle sounds are 50 % volume outside LOS"},
+			{key="dampened65", name="Dampened to 65 %", desc="Battle sounds are 65 % volume outside LOS"},
+		},
 		section	= 'xtagame',
-		def		= true,
 	},
 	
 	{
