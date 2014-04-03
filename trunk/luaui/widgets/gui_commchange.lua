@@ -103,6 +103,7 @@ local n 								= 0 -- amount of players
 local mySide, myType
 local myState 							= 0
 local gameState 						= 0
+local gameStarted						= false
 local cntDown 							= -1
 local lastCount
 local pStates							= {}
@@ -118,7 +119,8 @@ local CHOOSE,WAITING,COUNTDOWN,ERROR	= 0,1,2,-1
 local PRESENT,MARKED,OTHER,READY		= 0,1,2,3
 
 --font
-local myFont	 		= gl.LoadFont("FreeSansBold.otf",th3, 1.9, 40)
+local myFont	 						= gl.LoadFont("FreeSansBold.otf",th3, 1.9, 40)
+local myFontHuge						= gl.LoadFont("FreeSansBold.otf",60, 1.9, 40)
 
 --------------------------------------------------------------------------------
 -- Speedups
@@ -275,7 +277,7 @@ local function updateSize()
 		end
 		
 		sizex = 380
-		sizey = 50 + 20 * (n+2) -- add extra free row
+		sizey = 80 + 20 * (n+2) -- add extra free row
 	end
 	--buttons:
 	initButtons()
@@ -378,7 +380,7 @@ function widget:Update()
 end
 
 function widget:DrawWorld()
-	if IsGUIHidden() then return end
+	if IsGUIHidden() or gameStarted then return end
 	
 	if not spectator then
 		checkState()
@@ -425,146 +427,162 @@ end
 
 function widget:DrawScreenEffects(vsx, vsy)
 	if IsGUIHidden() then return end
-		
-	local h = vsy/3
-	local x = vsx/2 - h/2
-	local y = vsy/2 - h/2
-	local x1 = x + h
-	local y1 = y + h
 	
-	--CountDown
-	if gameState == COUNTDOWN then
-		glColor(0.8, 0.8, 1, 1)
+	if not gameStarted then
+		local h = vsy/3
+		local x = vsx/2 - h/2
+		local y = vsy/2 - h/2
+		local x1 = x + h
+		local y1 = y + h
 		
-		if cntDown == "3" then
-			glTexture(img3)
-		elseif cntDown == "2" then
-			glTexture(img2)
-		elseif cntDown == "1" then
-			glTexture(img1)
-		elseif cntDown == "0" then
-			glTexture(img0)
-		else
-			Echo(cntDown)
-		end
-		
-		glTexRect(x,y,x1,y1)
-		glTexture(false)
-		glColor(1, 1, 1, 1)
-		
-		if cntDown ~= lastCount then
-			PlaySoundFile(tock)
-			lastCount = cntDown
-		end
-	end
-	
-	if myState ~= READY then
-		if not spectator then
-			-- Infobutton
+		--CountDown
+		if gameState == COUNTDOWN and not Spring.IsReplay() then
+			glColor(0.8, 0.8, 1, 1)
+			
+			if cntDown == "3" then
+				glTexture(img3)
+			elseif cntDown == "2" then
+				glTexture(img2)
+			elseif cntDown == "1" then
+				glTexture(img1)
+			elseif cntDown == "0" then
+				glTexture(img0)
+			else
+				Echo(cntDown)
+			end
+			
+			glTexRect(x,y,x1,y1)
 			glTexture(false)
 			glColor(1, 1, 1, 1)
-			drawBorder(Button["info"]["x0"],Button["info"]["y0"],Button["info"]["x1"],Button["info"]["y1"],1)
-			myFont:Begin()
-			if infoOn then
-				myFont:SetTextColor({1, 1, 1, 1})
-			else
-				myFont:SetTextColor({0.8, 0.8, 0.8, 1})
-			end
-			myFont:Print("info", 0.5 * (Button["info"]["x0"] + Button["info"]["x1"]) , 0.5 * (Button["info"]["y0"] + Button["info"]["y1"]) , th,'vcs')
-			myFont:End()
-			-- infopanel
-			if infoOn then
-				glColor(0, 0, 0, 0.5)
-				glRect(Button["infopanel"]["x0"],Button["infopanel"]["y0"],Button["infopanel"]["x1"],Button["infopanel"]["y1"])
-				glColor(1, 1, 1, 1)
-				drawBorder(Button["infopanel"]["x0"],Button["infopanel"]["y0"],Button["infopanel"]["x1"],Button["infopanel"]["y1"],1)
-				
-				local x0 = Button["infopanel"]["x0"]
-				local y0 = Button["infopanel"]["y0"]
-				local x1 = Button["infopanel"]["x1"]
-				local y1 = Button["infopanel"]["y1"]
-				local txt
-				local side
-				local uptype
-				if mySide == "arm" then
-					side = "Arm"
-					if myType == "auto" then
-						uptype = "automatic upgrades"
-						txt = {"* Arm Commander is faster than Core.",
-							"* Increases radar, sonar, laser range, and speed with more XP",
-							"* Gets 20% armour and secondary laser at 0.15 XP",
-							"* Paralyser beam at 0.3, Sniper Laser at 0.6 and Sat. Strike at 1.2 XP",
-							"* Good to use if you will be at the front a lot as upgrades are effortless",
-							"* Upgrading is very dependent on experience"}
-					elseif myType == "manual" then
-						uptype = "regular upgrades"
-						txt = {"* Arm Commander is faster than Core.",
-							"* With each upg. level commander gets more HP, build power and",
-							"  produces more resources",
-							"* Paralyser laser and longer D-Gun at level 2",
-							"* Self-repair at level 3, Sat. Strike and at Level 4.",
-							"* Commander will be stunned during manual upgrade",
-							"* A manually morphed commander will increase his D-Gun range"}
-					end
-				else
-					side = "Core"
-					if myType == "auto" then
-						uptype = "automatic upgrades"
-						txt = {"* Core is slow in the beginning, but has longer D-Gun range.",
-							"* Increases radar, sonar, laser range, and speed with more XP",
-							"* Gets 20% armour and secondary laser at 0.15 XP",
-							"* Ion Beam at 0.3, Sumo Laser at 0.6, and Sat. Strike at 1.2 XP.",
-							"* Good to use if you will be at the front a lot as upgrades are effortless",
-							"* Upgrading is very dependent on experience"}
-					elseif myType == "manual" then
-						uptype = "regular upgrades"
-						txt = {"* Core Commander is slower, but has longer D-Gun.",
-							"* With each upg. level commander gets more HP, build power and",
-							"  produces more resources",
-							"* Gets a longer D-Gun when upgraded, and laser beam at level 2.",
-							"* A level 4 Commander will have a Sat. Artillery shot.",
-							"* Commander will be stunned during manual upgrade",
-							"* A manually morphed commander will increase his D-Gun range"}
-					end
-				end
-				local xofs, thofs = x0+10, th2+6
-				myFont:Begin()
-					myFont:Print(side .. " commander with " .. uptype .. ":", xofs, y1 - thofs, th, 'xn')
-					for i=1, #txt do
-						myFont:Print(txt[i], xofs, y1 - (i+2)*thofs, th2, 'xn')
-					end
-				myFont:End()
+			
+			if cntDown ~= lastCount then
+				PlaySoundFile(tock)
+				lastCount = cntDown
 			end
 		end
 		
-		if gameState ~= COUNTDOWN or Spring.IsReplay() then -- replay has countdown before everything
-			-- Panel
-			glColor(0, 0, 0, 0.4)
-			glRect(px,py, px+sizex, py+sizey)
-			glColor(1,1,1,1)
+		if myState ~= READY then
+			if not spectator then
+				-- Infobutton
+				glTexture(false)
+				glColor(1, 1, 1, 1)
+				drawBorder(Button["info"]["x0"],Button["info"]["y0"],Button["info"]["x1"],Button["info"]["y1"],1)
+				myFont:Begin()
+				if infoOn then
+					myFont:SetTextColor({1, 1, 1, 1})
+				else
+					myFont:SetTextColor({0.8, 0.8, 0.8, 1})
+				end
+				myFont:Print("info", 0.5 * (Button["info"]["x0"] + Button["info"]["x1"]) , 0.5 * (Button["info"]["y0"] + Button["info"]["y1"]) , th,'vcs')
+				myFont:End()
+				-- infopanel
+				if infoOn then
+					glColor(0, 0, 0, 0.5)
+					glRect(Button["infopanel"]["x0"],Button["infopanel"]["y0"],Button["infopanel"]["x1"],Button["infopanel"]["y1"])
+					glColor(1, 1, 1, 1)
+					drawBorder(Button["infopanel"]["x0"],Button["infopanel"]["y0"],Button["infopanel"]["x1"],Button["infopanel"]["y1"],1)
+					
+					local x0 = Button["infopanel"]["x0"]
+					local y0 = Button["infopanel"]["y0"]
+					local x1 = Button["infopanel"]["x1"]
+					local y1 = Button["infopanel"]["y1"]
+					local txt
+					local side
+					local uptype
+					if mySide == "arm" then
+						side = "Arm"
+						if myType == "auto" then
+							uptype = "automatic upgrades"
+							txt = {"* Arm Commander is faster than Core.",
+								"* Increases radar, sonar, laser range, and speed with more XP",
+								"* Gets 20% armour and secondary laser at 0.15 XP",
+								"* Paralyser beam at 0.3, Sniper Laser at 0.6 and Sat. Strike at 1.2 XP",
+								"* Good to use if you will be at the front a lot as upgrades are effortless",
+								"* Upgrading is very dependent on experience"}
+						elseif myType == "manual" then
+							uptype = "regular upgrades"
+							txt = {"* Arm Commander is faster than Core.",
+								"* With each upg. level commander gets more HP, build power and",
+								"  produces more resources",
+								"* Paralyser laser and longer D-Gun at level 2",
+								"* Self-repair at level 3, Sat. Strike and at Level 4.",
+								"* Commander will be stunned during manual upgrade",
+								"* A manually morphed commander will increase his D-Gun range"}
+						end
+					else
+						side = "Core"
+						if myType == "auto" then
+							uptype = "automatic upgrades"
+							txt = {"* Core is slow in the beginning, but has longer D-Gun range.",
+								"* Increases radar, sonar, laser range, and speed with more XP",
+								"* Gets 20% armour and secondary laser at 0.15 XP",
+								"* Ion Beam at 0.3, Sumo Laser at 0.6, and Sat. Strike at 1.2 XP.",
+								"* Good to use if you will be at the front a lot as upgrades are effortless",
+								"* Upgrading is very dependent on experience"}
+						elseif myType == "manual" then
+							uptype = "regular upgrades"
+							txt = {"* Core Commander is slower, but has longer D-Gun.",
+								"* With each upg. level commander gets more HP, build power and",
+								"  produces more resources",
+								"* Gets a longer D-Gun when upgraded, and laser beam at level 2.",
+								"* A level 4 Commander will have a Sat. Artillery shot.",
+								"* Commander will be stunned during manual upgrade",
+								"* A manually morphed commander will increase his D-Gun range"}
+						end
+					end
+					local xofs, thofs = x0+10, th2+6
+					myFont:Begin()
+						myFont:Print(side .. " commander with " .. uptype .. ":", xofs, y1 - thofs, th, 'xn')
+						for i=1, #txt do
+							myFont:Print(txt[i], xofs, y1 - (i+2)*thofs, th2, 'xn')
+						end
+					myFont:End()
+				end
+			end
+			
+			if gameState ~= COUNTDOWN or Spring.IsReplay() then -- replay has countdown before everything
+				-- Panel
+				glColor(0, 0, 0, 0.4)
+				glRect(px,py, px+sizex, py+sizey)
+				glColor(1,1,1,1)
+			end
+		end
+		
+		-- Highlight
+		glColor(0.8, 0.8, 0.2, 0.5)
+		if Button["arm"]["On"] then
+			glRect(Button["arm"]["x0"],Button["arm"]["y0"], Button["arm"]["x1"], Button["arm"]["y1"])
+		elseif Button["core"]["On"] then
+			glRect(Button["core"]["x0"],Button["core"]["y0"], Button["core"]["x1"], Button["core"]["y1"])
+		elseif Button["ready"]["On"] then
+			glRect(Button["ready"]["x0"],Button["ready"]["y0"], Button["ready"]["x1"], Button["ready"]["y1"])
+		elseif Button["info"]["On"] and myState ~= READY then
+			glRect(Button["info"]["x0"],Button["info"]["y0"], Button["info"]["x1"], Button["info"]["y1"])
+		elseif Button["exit"]["On"] then
+			glRect(Button["exit"]["x0"],Button["exit"]["y0"], Button["exit"]["x1"], Button["exit"]["y1"])
+		elseif Button["duck"]["On"] then
+			glRect(Button["duck"]["x0"],Button["duck"]["y0"], Button["duck"]["x1"], Button["duck"]["y1"])
+		end
+		glColor(1,1,1,1)
+	else
+		-- game started text
+		if Spring.IsReplay() or spectator then
+			local frame = Spring.GetGameFrame()
+			local gs = Spring.GetGameSpeed() or 1
+			local x0 = vsx/2
+			if frame > 150 then
+				x0 = vsx/2 + (frame - 150)*(frame - 150)*10
+			end
+			myFontHuge:Begin()
+			myFontHuge:SetTextColor({0.75-0.5*math.sin(frame/2/gs), 0.75-0.25*math.sin(frame/2/gs), 1-0.25*math.sin(frame/2/gs), 1-0.25*math.sin(frame/2/gs)})
+			myFontHuge:Print("GAME STARTED",x0,vsy/2,60,'cbs')
+			myFontHuge:End()
 		end
 	end
-	
-	-- Highlight
-	glColor(0.8, 0.8, 0.2, 0.5)
-	if Button["arm"]["On"] then
-		glRect(Button["arm"]["x0"],Button["arm"]["y0"], Button["arm"]["x1"], Button["arm"]["y1"])
-	elseif Button["core"]["On"] then
-		glRect(Button["core"]["x0"],Button["core"]["y0"], Button["core"]["x1"], Button["core"]["y1"])
-	elseif Button["ready"]["On"] then
-		glRect(Button["ready"]["x0"],Button["ready"]["y0"], Button["ready"]["x1"], Button["ready"]["y1"])
-	elseif Button["info"]["On"] and myState ~= READY then
-		glRect(Button["info"]["x0"],Button["info"]["y0"], Button["info"]["x1"], Button["info"]["y1"])
-	elseif Button["exit"]["On"] then
-		glRect(Button["exit"]["x0"],Button["exit"]["y0"], Button["exit"]["x1"], Button["exit"]["y1"])
-	elseif Button["duck"]["On"] then
-		glRect(Button["duck"]["x0"],Button["duck"]["y0"], Button["duck"]["x1"], Button["duck"]["y1"])
-	end
-	glColor(1,1,1,1)
 end
 
 function widget:DrawScreen()
-	if IsGUIHidden() then return end
+	if IsGUIHidden() or gameStarted then return end
 	
 	local function firstToUpper(str)
 		return (str:gsub("^%l", string.upper))
@@ -1021,7 +1039,7 @@ local function IsOnButton(x, y, BLcornerX, BLcornerY,TRcornerX,TRcornerY)
 end
 
 function widget:MousePress(mx, my, mButton)
-	if spectator then
+	if spectator and not gameStarted then
 		if mButton == 1 then
 			if IsOnButton(mx,my,Button["exit"]["x0"],Button["exit"]["y0"],Button["exit"]["x1"],Button["exit"]["y1"]) then
 				widgetHandler:RemoveWidget(self)
@@ -1145,7 +1163,7 @@ end
 
 function widget:MouseMove(mx, my, dx, dy, mButton)
     -- Dragging
-    if mButton == 2 or mButton == 3 then
+    if mButton == 2 or mButton == 3 and not gameStarted then
 		px = max(0, min(px+dx, vsx-sizex))	--prevent moving off screen
 		py = max(0, min(py+dy, vsy-sizey))
 		initButtons()
@@ -1154,7 +1172,7 @@ function widget:MouseMove(mx, my, dx, dy, mButton)
 end
 
 function widget:IsAbove(mx,my)	
-	if spectator then
+	if spectator and not gameStarted then
 		Button["arm"]["On"] = false
 		Button["core"]["On"] = false
 		Button["ready"]["On"] = false
@@ -1212,10 +1230,18 @@ function widget:IsAbove(mx,my)
 	end
 end
 
+function widget:GameFrame(frame)
+	if frame > 240 then
+		widgetHandler:RemoveWidget()
+	end
+end
+
 function widget:GameStart()
 	PlaySoundFile(bell,4.0,0,0,0,0,0,0,'userinterface')
-	PlaySoundFile(beep,4.0,0,0,0,0,0,0,'unitreply')
-    widgetHandler:RemoveWidget()
+	if not spectator then
+		PlaySoundFile(beep,4.0,0,0,0,0,0,0,'unitreply')
+	end
+	gameStarted = true
 end
 
 function widget:GetConfigData() -- Save
