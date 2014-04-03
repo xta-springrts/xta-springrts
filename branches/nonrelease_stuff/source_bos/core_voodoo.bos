@@ -5,8 +5,17 @@
 
 piece  emitter1, emitter2, base, wake1, wake2, wing1, wing2;
 
-static-var  Static_Var_1, Static_Var_2, Static_Var_3, Static_Var_4, Static_Var_5;
+static-var  gun_1, Static_Var_2, Static_Var_3, statechg_DesiredState, statechg_StateChanging;
 
+lua_UnitStoppedMoving()
+{ 
+ 	return 0; 
+}
+ 
+lua_UnitStartedMoving() 
+{ 
+	return 0; 
+}
 
 activatescr()
 {
@@ -55,17 +64,17 @@ SmokeUnit(healthpercent, sleeptime, smoketype)
 
 RequestState(requestedstate, currentstate)
 {
-	if( Static_Var_5 )
+	if( statechg_StateChanging )
 	{
-		Static_Var_4 = requestedstate;
+		statechg_DesiredState = requestedstate;
 		return (0);
 	}
-	Static_Var_5 = 1;
-	currentstate = Static_Var_4;
-	Static_Var_4 = requestedstate;
-	while( Static_Var_4 != currentstate )
+	statechg_StateChanging = 1;
+	currentstate = statechg_DesiredState;
+	statechg_DesiredState = requestedstate;
+	while( statechg_DesiredState != currentstate )
 	{
-		if( Static_Var_4 )
+		if( statechg_DesiredState )
 		{
 			call-script deactivatescr();
 			currentstate = 1;
@@ -76,7 +85,7 @@ RequestState(requestedstate, currentstate)
 			currentstate = 0;
 		}
 	}
-	Static_Var_5 = 0;
+	statechg_StateChanging = 0;
 }
 
 moverate2()
@@ -95,9 +104,9 @@ moverate2()
 
 Create()
 {
-	Static_Var_1 = 0;
-	Static_Var_4 = 1;
-	Static_Var_5 = 0;
+	gun_1 = 0;
+	statechg_DesiredState = 1;
+	statechg_StateChanging = 0;
 	start-script SmokeUnit();
 }
 
@@ -115,6 +124,7 @@ StartMoving()
 {
 	signal 2;
 	set-signal-mask 2;
+	call-script lua_UnitStartedMoving();
 	while( TRUE )
 	{
 		if( Static_Var_3 == 3 )
@@ -134,16 +144,17 @@ StartMoving()
 StopMoving()
 {
 	signal 2;
+	call-script lua_UnitStoppedMoving();
 }
 
 FirePrimary()
 {
-	Static_Var_1 = !Static_Var_1;
+	gun_1 = !gun_1;
 }
 
 QueryPrimary(piecenum)
 {
-	if( Static_Var_1 )
+	if( gun_1 )
 	{
 		piecenum = emitter2;
 	}

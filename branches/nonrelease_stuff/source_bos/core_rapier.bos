@@ -5,8 +5,17 @@
 
 piece  flare1, flare2, base, winga, wingb, gun1, gun2;
 
-static-var  Static_Var_1, Static_Var_2, Static_Var_3;
+static-var  gun_1, statechg_DesiredState, statechg_StateChanging;
 
+lua_UnitStoppedMoving()
+{ 
+ 	return 0; 
+}
+ 
+lua_UnitStartedMoving() 
+{ 
+	return 0; 
+}
 
 SmokeUnit(healthpercent, sleeptime, smoketype)
 {
@@ -49,17 +58,17 @@ Stop()
 
 RequestState(requestedstate, currentstate)
 {
-	if( Static_Var_3 )
+	if( statechg_StateChanging )
 	{
-		Static_Var_2 = requestedstate;
+		statechg_DesiredState = requestedstate;
 		return (0);
 	}
-	Static_Var_3 = 1;
-	currentstate = Static_Var_2;
-	Static_Var_2 = requestedstate;
-	while( Static_Var_2 != currentstate )
+	statechg_StateChanging = 1;
+	currentstate = statechg_DesiredState;
+	statechg_DesiredState = requestedstate;
+	while( statechg_DesiredState != currentstate )
 	{
-		if( Static_Var_2 )
+		if( statechg_DesiredState )
 		{
 			call-script Stop();
 			currentstate = 1;
@@ -70,16 +79,16 @@ RequestState(requestedstate, currentstate)
 			currentstate = 0;
 		}
 	}
-	Static_Var_3 = 0;
+	statechg_StateChanging = 0;
 }
 
 Create()
 {
 	hide flare1;
 	hide flare2;
-	Static_Var_1 = 0;
-	Static_Var_2 = 1;
-	Static_Var_3 = 0;
+	gun_1 = 0;
+	statechg_DesiredState = 1;
+	statechg_StateChanging = 0;
 	start-script SmokeUnit();
 }
 
@@ -93,9 +102,19 @@ Deactivate()
 	start-script RequestState(1);
 }
 
+StartMoving()
+{
+	call-script lua_UnitStartedMoving();
+}
+
+StopMoving()
+{
+	call-script lua_UnitStoppedMoving();
+}
+
 QueryPrimary(piecenum)
 {
-	piecenum = Static_Var_1;
+	piecenum = gun_1;
 }
 
 AimFromPrimary(piecenum)
@@ -110,7 +129,7 @@ AimPrimary()
 
 FirePrimary()
 {
-	if( Static_Var_1 )
+	if( gun_1 )
 	{
 		show flare2;
 		sleep 150;
@@ -122,7 +141,7 @@ FirePrimary()
 		sleep 150;
 		hide flare1;
 	}
-	Static_Var_1 = !Static_Var_1;
+	gun_1 = !gun_1;
 }
 
 SweetSpot(piecenum)

@@ -6,9 +6,18 @@
 piece  flare1, flare2, base, bombs, turret, wing1, wing2, tail1,
        thrust, tail2, barrels, thrusta1, thrusta2;
 
-static-var  Static_Var_1, Static_Var_2, Static_Var_3, Static_Var_4, Static_Var_5,
+static-var  gun_1, gun_2, Static_Var_3, statechg_DesiredState, statechg_StateChanging,
             Static_Var_6;
 
+lua_UnitStoppedMoving()
+{ 
+ 	return 0; 
+}
+ 
+lua_UnitStartedMoving() 
+{ 
+	return 0; 
+}
 
 activatescr()
 {
@@ -65,17 +74,17 @@ SmokeUnit(healthpercent, sleeptime, smoketype)
 
 RequestState(requestedstate, currentstate)
 {
-	if( Static_Var_5 )
+	if( statechg_StateChanging )
 	{
-		Static_Var_4 = requestedstate;
+		statechg_DesiredState = requestedstate;
 		return (0);
 	}
-	Static_Var_5 = 1;
-	currentstate = Static_Var_4;
-	Static_Var_4 = requestedstate;
-	while( Static_Var_4 != currentstate )
+	statechg_StateChanging = 1;
+	currentstate = statechg_DesiredState;
+	statechg_DesiredState = requestedstate;
+	while( statechg_DesiredState != currentstate )
 	{
-		if( Static_Var_4 )
+		if( statechg_DesiredState )
 		{
 			call-script deactivatescr();
 			currentstate = 1;
@@ -86,17 +95,17 @@ RequestState(requestedstate, currentstate)
 			currentstate = 0;
 		}
 	}
-	Static_Var_5 = 0;
+	statechg_StateChanging = 0;
 }
 
 Create()
 {
 	hide flare1;
 	hide flare2;
-	Static_Var_2 = 0;
-	Static_Var_1 = 3000;
-	Static_Var_4 = 1;
-	Static_Var_5 = 0;
+	gun_2 = 0;
+	gun_1 = 3000;
+	statechg_DesiredState = 1;
+	statechg_StateChanging = 0;
 	start-script SmokeUnit();
 }
 
@@ -110,9 +119,19 @@ Deactivate()
 	start-script RequestState(1);
 }
 
+StartMoving()
+{
+	call-script lua_UnitStartedMoving();
+}
+
+StopMoving()
+{
+	call-script lua_UnitStoppedMoving();
+}
+
 RestoreAfterDelay()
 {
-	sleep Static_Var_1;
+	sleep gun_1;
 	turn turret to y-axis <0.000000> speed <90.000000>;
 	turn barrels to x-axis <0.000000> speed <50.000000>;
 }
@@ -124,7 +143,7 @@ QueryPrimary(piecenum)
 
 QuerySecondary(piecenum)
 {
-	piecenum = Static_Var_2;
+	piecenum = gun_2;
 }
 
 AimSecondary(heading, pitch)
@@ -146,7 +165,7 @@ AimSecondary(heading, pitch)
 
 FireSecondary()
 {
-	if( Static_Var_2 )
+	if( gun_2 )
 	{
 		show flare2;
 		sleep 150;
@@ -158,7 +177,7 @@ FireSecondary()
 		sleep 150;
 		hide flare1;
 	}
-	Static_Var_2 = !Static_Var_2;
+	gun_2 = !gun_2;
 }
 
 AimFromSecondary(piecenum)
