@@ -67,6 +67,7 @@
 	kamikaze=1;
 	stealth=1;
 	canguard=0;
+	sonarStealth=1;
 
 	//************************************************************
 	//  Movement

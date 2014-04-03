@@ -157,77 +157,78 @@ local inertialessWeapons = {
 local modOptions = Spring.GetModOptions()
 
 -- Adjustment of terrain damage, area of effect, kinetic force of weapons and cannon trajectory height
-local customGravity = 0.45
-local maxRangeAngle = 38  --in degrees >0 and <=45
+local customGravity = 0.25
+local maxRangeAngle = 30  --in degrees >0 and <=45
 if modOptions and modOptions.gravity then customGravity=modOptions.gravity end
 local velGravFactor = customGravity * 900 / math.sin(math.rad(2 * maxRangeAngle))
 local interceptorStyle = 2
 if modOptions and modOptions.nuke and not tobool(modOptions.nuke) then interceptorStyle = 1 end
 
-for id in pairs(WeaponDefs) do
-	WeaponDefs[id].soundhitwet = ""
-	if WeaponDefs[id].range and tonumber(WeaponDefs[id].range) < 550 or 
-		WeaponDefs[id].reloadtime and tonumber(WeaponDefs[id].reloadtime)<1.5 or
-		explosiveWeapons[WeaponDefs[id].weapontype] then
-			WeaponDefs[id].avoidfeature = false	-- don't avoid features if short range, explosive or rapid fire weapon
+for id, weaponDef in pairs(WeaponDefs) do
+	
+	weaponDef.soundhitwet = ""
+	if weaponDef.range and tonumber(weaponDef.range) < 550 or 
+		weaponDef.reloadtime and tonumber(weaponDef.reloadtime)<1.5 or
+		explosiveWeapons[weaponDef.weapontype] then
+			weaponDef.avoidfeature = false	-- don't avoid features if short range, explosive or rapid fire weapon
 	end
-	if explosiveWeapons[WeaponDefs[id].weapontype] then
-		if WeaponDefs[id].edgeeffectiveness and tonumber(WeaponDefs[id].edgeeffectiveness)>0 and tonumber(WeaponDefs[id].areaofeffect)<145 then
-			WeaponDefs[id].areaofeffect = math.min(WeaponDefs[id].areaofeffect / (1 - WeaponDefs[id].edgeeffectiveness), 160)
-			WeaponDefs[id].edgeeffectiveness = 0
+	if explosiveWeapons[weaponDef.weapontype] then
+		if weaponDef.edgeeffectiveness and tonumber(weaponDef.edgeeffectiveness)>0 and tonumber(weaponDef.areaofeffect)<145 then
+			weaponDef.areaofeffect = math.min(weaponDef.areaofeffect / (1 - weaponDef.edgeeffectiveness), 160)
+			weaponDef.edgeeffectiveness = 0
 		end
-		if WeaponDefs[id].weapontype == "Cannon" and WeaponDefs[id].range and not WeaponDefs[id].mygravity and not WeaponDefs[id].cylindertargeting then
-			WeaponDefs[id].mygravity = customGravity
-			WeaponDefs[id].weaponvelocity = math.sqrt(WeaponDefs[id].range * velGravFactor)
-			WeaponDefs[id].gravityaffected = true
-			WeaponDefs[id].heightboostfactor = 0.04
-		elseif WeaponDefs[id].interceptor then
-			WeaponDefs[id].interceptor = interceptorStyle
+		if weaponDef.weapontype == "Cannon" and weaponDef.range and not weaponDef.mygravity and not weaponDef.cylindertargeting and id:find("armsfig_weapon") == nil then -- exclude arm tornado weapon, because it fires cannon weapon type from the air down on land
+			weaponDef.mygravity = customGravity
+			weaponDef.weaponvelocity = math.sqrt(weaponDef.range * velGravFactor)
+			weaponDef.gravityaffected = true
+			weaponDef.heightboostfactor = 0.04
+		elseif weaponDef.interceptor then
+			weaponDef.interceptor = interceptorStyle
 		end
-		if WeaponDefs[id].weapontype == "TorpedoLauncher" then
-			WeaponDefs[id].soundhitwet = WeaponDefs[id].soundhitdry
+		if weaponDef.weapontype == "TorpedoLauncher" then
+			weaponDef.soundhitwet = weaponDef.soundhitdry
 		else
-			local AoE = tonumber(WeaponDefs[id].areaofeffect) or 0
+			local AoE = tonumber(weaponDef.areaofeffect) or 0
 			if AoE<50 then
-				WeaponDefs[id].soundhitwet = "splshbig"
+				weaponDef.soundhitwet = "splshbig"
 			elseif AoE<88 then
-				WeaponDefs[id].soundhitwet = "splssml"
+				weaponDef.soundhitwet = "splssml"
 			elseif AoE<145 then
-				WeaponDefs[id].soundhitwet = "splsmed"
+				weaponDef.soundhitwet = "splsmed"
 			elseif AoE>450 then
-				WeaponDefs[id].soundhitwet = WeaponDefs[id].soundhitdry
+				weaponDef.soundhitwet = weaponDef.soundhitdry
 			else
-				WeaponDefs[id].soundhitwet = "splslrg"
+				weaponDef.soundhitwet = "splslrg"
 			end
 		end
-	elseif inertialessWeapons[WeaponDefs[id].weapontype] then
-		WeaponDefs[id].impulseboost = 0
-		WeaponDefs[id].impulsefactor = 0
-		WeaponDefs[id].soundhitwet = "sizzle"		
-		if WeaponDefs[id].weapontype == "LaserCannon" or WeaponDefs[id].weapontype == "EmgCannon" then
-			WeaponDefs[id].cegtag = ""	-- we use the projectile lights widget now
-		elseif WeaponDefs[id].weapontype == "BeamLaser" then
-			WeaponDefs[id].soundhitdry = ""
-			WeaponDefs[id].soundtrigger = 1
-			--WeaponDefs[id].sweepfire = 0	-- at least till test phase of spring is over
-		elseif WeaponDefs[id].weapontype == "DGun" then
-			WeaponDefs[id].waterweapon = true	-- make DGun ball piece water, but don't allow firing while under water
-			WeaponDefs[id].firesubmersed = false
-			WeaponDefs[id].avoidFriendly = false	-- make DGun ball shoot through anything, anywhere, anytime
-			WeaponDefs[id].avoidFeature = false
-			WeaponDefs[id].avoidGround = false
-			WeaponDefs[id].avoidNeutral = false
+	elseif inertialessWeapons[weaponDef.weapontype] then
+		weaponDef.impulseboost = 0
+		weaponDef.impulsefactor = 0
+		weaponDef.soundhitwet = "sizzle"		
+		if weaponDef.weapontype == "LaserCannon" or weaponDef.weapontype == "EmgCannon" then
+			weaponDef.cegtag = ""	-- we use the projectile lights widget now
+		elseif weaponDef.weapontype == "BeamLaser" then
+			weaponDef.soundhitdry = ""
+			weaponDef.soundtrigger = 1
+			--weaponDef.sweepfire = 0	-- at least till test phase of spring is over
+		elseif weaponDef.weapontype == "DGun" then
+			weaponDef.waterweapon = true	-- make DGun ball pierce water, but don't allow firing while under water
+			weaponDef.firesubmersed = false
+			weaponDef.avoidFriendly = false	-- make DGun ball shoot through anything, anywhere, anytime
+			weaponDef.avoidFeature = false
+			weaponDef.avoidGround = false
+			weaponDef.avoidNeutral = false
 		end
 	end	
-	if WeaponDefs[id].cratermult then 
-		WeaponDefs[id].cratermult = WeaponDefs[id].cratermult * 0.4
+	if weaponDef.cratermult then 
+		weaponDef.cratermult = weaponDef.cratermult * 0.4
 	else
-		WeaponDefs[id].cratermult = 0.4
+		weaponDef.cratermult = 0.4
 	end
-	if WeaponDefs[id].craterboost then
-		WeaponDefs[id].craterboost = WeaponDefs[id].craterboost * 0.4
+	if weaponDef.craterboost then
+		weaponDef.craterboost = weaponDef.craterboost * 0.4
 	else
-		WeaponDefs[id].craterboost = 0
+		weaponDef.craterboost = 0
 	end
 end
 
