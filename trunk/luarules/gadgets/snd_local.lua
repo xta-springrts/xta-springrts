@@ -47,8 +47,8 @@ if gadgetHandler:IsSyncedCode() then
 	function gadget:Initialize()	
 		local modOptions = Spring.GetModOptions()
 		
-		if modOptions and modOptions.globalsounds == '1' then
-			Echo("Local sounds disabled")
+		if modOptions and modOptions.sounds == 'global' then
+			Echo("Local sounds disabled: global sounds")
 			gadgetHandler:RemoveGadget()
 			return
 		end
@@ -155,6 +155,7 @@ else
 	local len 							= string.len
 	local tainsert						= table.insert
 	local taremove						= table.remove
+	local taconcat						= table.concat
 	local clientIsSpec					
 	local GetGameFrame					= Spring.GetGameFrame
 	
@@ -166,10 +167,12 @@ else
 	local pID
 	local allyID
 	local Channel 						= 'battle'
-	local volume 						= 3.0
+	local fullVolume 					= 3.0
+	local dampenedVolume				= 0.6
 	local shallowLimit 					= -25
 	local shallowHitLimit				= -5
 	local isLava						= false
+	local isDampenedMode				= false
 	
 	local nonexplosiveWeapons = {
 		LaserCannon = true,
@@ -190,8 +193,16 @@ else
 
 	local function LS_ProjectileCreated(_, projectileID, projectileOwnerID, projectileWeaponDefID,x,y,z)		
 		local LOS = clientIsSpec or IsPosInLos(x,y,z,allyID)
-		if LOS and projectileWeaponDefID and sndstart[projectileWeaponDefID] then
-			PlaySoundFile("sounds/"..sndstart[projectileWeaponDefID]..".wav",volume,x,y,z,0,0,0,Channel)
+		
+		local volume
+		if LOS or (not isDampenedMode) then
+			volume = fullVolume
+		else
+			volume = dampenedVolume
+		end
+		
+		if (LOS or isDampenedMode) and projectileWeaponDefID and sndstart[projectileWeaponDefID] then
+			PlaySoundFile(taconcat({"sounds/",sndstart[projectileWeaponDefID],".wav"}),volume,x,y,z,0,0,0,Channel)
 		end
 		return true
 	end
@@ -203,35 +214,42 @@ else
 		-- shallow water, we want both splash and land explosion. 
 		
 		local LOS = clientIsSpec or IsPosInLos(x,y,z,allyID)
-		if LOS and weaponDefID then		
+		local volume
+		if LOS or (not isDampenedMode) then
+			volume = fullVolume
+		else
+			volume = dampenedVolume
+		end
+		
+		if (LOS or isDampenedMode) and weaponDefID then		
 			if gh >= 0 then -- explosion on land
-				if snddry[weaponDefID] then PlaySoundFile("sounds/"..snddry[weaponDefID]..".wav",volume,x,y,z,0,0,0,Channel) end
+				if snddry[weaponDefID] then PlaySoundFile(taconcat({"sounds/",snddry[weaponDefID],".wav"}),volume,x,y,z,0,0,0,Channel) end
 				--Echo("Land")
 			else -- explosion on water
 				if y > 0 then -- hits something above water level, use dry sounds
-					if snddry[weaponDefID] then PlaySoundFile("sounds/"..snddry[weaponDefID]..".wav",volume,x,y,z,0,0,0,Channel) end
+					if snddry[weaponDefID] then PlaySoundFile(taconcat({"sounds/",snddry[weaponDefID],".wav"}),volume,x,y,z,0,0,0,Channel) end
 					--Echo("On water but above water level")
 				else -- hits under or on water surface
 					if isLava then
 						--Echo("Lava hit",sndlava[weaponDefID])
-						if snddry[weaponDefID] then PlaySoundFile("sounds/"..snddry[weaponDefID]..".wav",volume/3,x,y,z,0,0,0,Channel) end
-						if sndlava[weaponDefID] then PlaySoundFile("sounds/"..sndlava[weaponDefID]..".wav",volume,x,y,z,0,0,0,Channel) end
+						if snddry[weaponDefID] then PlaySoundFile(taconcat({"sounds/",snddry[weaponDefID],".wav"}),volume/3,x,y,z,0,0,0,Channel) end
+						if sndlava[weaponDefID] then PlaySoundFile(taconcat({"sounds/",sndlava[weaponDefID],".wav"}),volume,x,y,z,0,0,0,Channel) end
 					else
 						--Echo("water hit",sndwet[weaponDefID])
 						if y > shallowHitLimit then -- projectile hits close to surface
 							if gh > shallowLimit then -- water is shallow
 								--Echo("Shallow water")
-								if snddry[weaponDefID] then PlaySoundFile("sounds/"..snddry[weaponDefID]..".wav",volume/2,x,y,z,0,0,0,Channel) end
-								if sndwet[weaponDefID] then PlaySoundFile("sounds/"..sndwet[weaponDefID]..".wav",volume/2,x,y,z,0,0,0,Channel) end
+								if snddry[weaponDefID] then PlaySoundFile(taconcat({"sounds/",snddry[weaponDefID],".wav"}),volume/2,x,y,z,0,0,0,Channel) end
+								if sndwet[weaponDefID] then PlaySoundFile(taconcat({"sounds/",sndwet[weaponDefID],".wav"}),volume/2,x,y,z,0,0,0,Channel) end
 								
 							else -- hits deep water
 								--Echo("Deep water")
-								if sndwet[weaponDefID] then PlaySoundFile("sounds/"..sndwet[weaponDefID]..".wav",volume,x,y,z,0,0,0,Channel) end
+								if sndwet[weaponDefID] then PlaySoundFile(taconcat({"sounds/",sndwet[weaponDefID],".wav"}),volume,x,y,z,0,0,0,Channel) end
 							end
 						else -- projectile hits at a depth, ideally, there would be another type of explosion sound in this case. However,
 							-- this is already considered in weapon explosions, for example the wet sound of torpedoes is xplodep2, which is
 							-- a deep water sound. We still use standard wet sounds, this division is kept for future needs.
-							if sndwet[weaponDefID] then PlaySoundFile("sounds/"..sndwet[weaponDefID]..".wav",volume,x,y,z,0,0,0,Channel) end
+							if sndwet[weaponDefID] then PlaySoundFile(taconcat({"sounds/",sndwet[weaponDefID],".wav"}),volume,x,y,z,0,0,0,Channel) end
 						end
 					end
 				end
@@ -249,10 +267,28 @@ else
 	
 		local modOptions = Spring.GetModOptions()
 		
-		if modOptions and modOptions.globalsounds == '1' then
-			Echo("Local sounds disabled")
+		if modOptions and modOptions.sounds == 'global' then
+			Echo("Local sounds disabled (unsynced): global sounds")
 			gadgetHandler:RemoveGadget()
 			return
+		elseif modOptions and modOptions.sounds == 'dampened15' then
+			Echo("Local sounds: dampened15 mode")
+			isDampenedMode = true
+			dampenedVolume				= 0.45
+		elseif modOptions and modOptions.sounds == 'dampened30' then
+			Echo("Local sounds: dampened30 mode")
+			isDampenedMode = true
+			dampenedVolume				= 0.90
+		elseif modOptions and modOptions.sounds == 'dampened50' then
+			Echo("Local sounds: dampened50 mode")
+			isDampenedMode = true
+			dampenedVolume				= 1.5
+		elseif modOptions and modOptions.sounds == 'dampened65' then
+			Echo("Local sounds: dampened65 mode")
+			isDampenedMode = true
+			dampenedVolume				= 1.95
+		else
+			Echo("Local sounds: local mode")
 		end
 		
 		local waterColour = Game.waterBaseColor
@@ -323,28 +359,6 @@ else
 			end
 			--end
 		end
-		
-		--[[ Make a soundcheck of the available sounds
-		local vol = 0
-		--Echo("Loading sounds:", Spring.LoadSoundDef("gamedata/sounds.lua"))
-		for i, snd in pairs(sndstart) do
-			--Echo("Testing start sound:",i,snd)
-			PlaySoundFile("sounds/" .. snd .. ".wav",vol,0,0,0,0,0,0,Channel)
-		end
-		for i, snd in pairs(sndwet) do
-			--Echo("Testing wet sound:",i,snd)
-			PlaySoundFile("sounds/" .. snd .. ".wav",vol,0,0,0,0,0,0,Channel)
-		end
-		for i, snd in pairs(snddry) do
-			--Echo("Testing dry sound:",i,snd)
-			PlaySoundFile("sounds/" .. snd .. ".wav",vol,0,0,0,0,0,0,Channel)
-		end
-		for i, snd in pairs(sndlava) do
-			--Echo("Testing lava sound:",i,snd)
-			PlaySoundFile("sounds/" .. snd .. ".wav",vol,0,0,0,0,0,0,Channel)
-		end
-		--]]
-		
 	end
 		
 end
