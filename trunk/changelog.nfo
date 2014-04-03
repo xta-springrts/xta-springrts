@@ -21,6 +21,19 @@
     ศอออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออผ
     Logo by ElementalGizmo
 	
+------------------- Change Log of XTA 9.738 Svn 661
+------------------ by Jools	
+	
+- Core Pillager is now transportable by air
+- Added mod option to allow transportation of hovercrafts (key: mo_transporthover 0|1).
+- Fixed (again, hopefully) the bug that prevents end window to show up. Now the whole end procedure happens before gameover is called.
+- Fixed cannon velocity parameter messing with Arm Tornado
+- Changed mines and critters to not show on sonar
+- Added option to show modoptions in-game by pressing ctrl-i (needs <<XTA Settings GUI>> widget enabled)
+- Added player start positions to show on <<MiniMap Start Boxes>> widget
+- Added dampened sound modes to local sounds gadget
+- Relay awards to replays.springrts.com
+	
 ------------------- Change Log of XTA 9.737 Svn 652
 ------------------ by Jools	
 - Fixed (again, hopefully) the bug that prevents end window to show up. It's however a difficult bug to reproduce, so it's hard to 
