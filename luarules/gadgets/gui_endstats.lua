@@ -331,9 +331,9 @@ if gadgetHandler:IsSyncedCode() then
 			local birth = unitData[3]
 			local age = unitData[4]
 			local team = unitData[5]
-			local isAlive = 1
+			local isHeroType = 1
 		
-			local awardsMsg = table.concat({XTA_AWARDMARKER,":",isAlive,":",team,":",name,":",kills,":",birth,":",age})
+			local awardsMsg = table.concat({XTA_AWARDMARKER,":",isHeroType,":",team,":",name,":",kills,":",age})
 			--Echo("Hero:",i, awardsMsg)
 			Spring.SendLuaRulesMsg(awardsMsg)
 		end
@@ -344,10 +344,10 @@ if gadgetHandler:IsSyncedCode() then
 			local birth = unitData[3]
 			local death = unitData[4]
 			local team = unitData[5]
-			local isAlive = 0
+			local isHeroType = 0
 			local age = death - birth
 		
-			local awardsMsg = table.concat({XTA_AWARDMARKER,":",isAlive,":",team,":",name,":",kills,":",age})
+			local awardsMsg = table.concat({XTA_AWARDMARKER,":",isHeroType,":",team,":",name,":",kills,":",age})
 			--Echo("Lost:",i, awardsMsg)
 			Spring.SendLuaRulesMsg(awardsMsg)
 		end
