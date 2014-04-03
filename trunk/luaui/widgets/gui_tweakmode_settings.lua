@@ -13,7 +13,10 @@ end
 local posX, posY					  	= 600, 400
 local buttonsize					  	= 16
 local width, height					  	= 360, 540
-local iWidth, iHeight					= 400, 740
+local iWidth							= 400
+local iRowHeight						= 14
+local rows								= 0
+local iHeight							= 250 + iRowHeight * rows
 local rowgap						  	= 30
 local leftmargin						= 20
 local buttontab							= 310			
@@ -428,17 +431,18 @@ function InitButtons()
 	Button[16]["command"]		= "fullscreen"
 	Button[16]["label"]			= "Full screen:"
 	
-	
 	Panel["main"]["x1"]			= posX
 	Panel["main"]["x2"]			= posX + width
 	Panel["main"]["y1"]			= posY
 	Panel["main"]["y2"]			= posY + height
 	
+	iHeight						= 250  + rows * iRowHeight
+	
 	Panel["info"]["x1"]			= posX
 	Panel["info"]["x2"]			= posX + iWidth
 	Panel["info"]["y1"]			= posY
 	Panel["info"]["y2"]			= posY + iHeight
-
+	
 end
 
 local function IsOnButton(x, y, BLcornerX, BLcornerY,TRcornerX,TRcornerY)
@@ -565,6 +569,69 @@ end
 -- Tweak-mode
 --------------------------------------------------------------------------------
 
+local function formatLabel(value,type,name)
+	local label 
+
+	if type == "bool" then
+		if value == 1 or value == "1" then
+			label = "Yes"
+			myFont:SetTextColor({0.2, 0.8, 0.2, 1}) -- green
+		elseif value == 0 or value == "0" then
+			label = "No"
+			myFont:SetTextColor({0.8, 0.2, 0.2, 1}) -- red
+		else
+			label = "N/A"
+			myFont:SetTextColor({0.8, 0.8, 0.8, 0.2}) -- grey
+		end
+	else
+		label = firstToUpper(tostring(value))
+		if name == "Game mode:" then
+			if label == "Killall" or label == "None" then
+				myFont:SetTextColor({0.8, 0.2, 0.2, 1}) -- red
+			elseif label ~= "N/A" then
+				myFont:SetTextColor({0.2, 0.8, 0.2, 1}) -- green
+			else
+				myFont:SetTextColor({0.8, 0.8, 0.8, 0.2}) -- grey
+			end
+		else
+			myFont:SetTextColor({0.8, 0.8, 0.8, 1})
+		end
+		if label == "N/A" then
+			myFont:SetTextColor({0.8, 0.8, 0.8, 0.2}) -- grey
+		end
+	end
+	return label
+end
+
+local function drawRow(optData,i,lastY)
+	local name = optData["name"]
+	local type = optData["type"]
+	local value = optData["value"]
+	
+	local yi = lastY - 14
+	lastY = lastY - 14
+	
+	local label = formatLabel(value,type,name)
+	
+	if label ~= "N/A" and type then
+		myFont:Print(label, Panel["info"]["x2"] - leftmargin, yi,textSize,'rdo')
+		myFont:SetTextColor({0.8, 0.8, 0.8, 1})
+		myFont:Print(name, Panel["info"]["x1"] + leftmargin, yi,textSize,'do')
+		i = i + 1
+		rows = rows + 1
+	else
+		lastY = lastY + 14
+	end
+	myFont:SetTextColor({0.8, 0.8, 0.8, 1})
+	
+	if i%2 ~= 0 and type and label ~= "N/A" then
+		gl.Color(0.2,0.6,0.9,0.1)
+		gl.Rect(Panel["info"]["x1"]+ leftmargin, yi, Panel["info"]["x2"]-leftmargin,yi + 14)
+		gl.Color(1,1,1,1)
+	end
+	return i,lastY
+end
+
 local function drawInfo()
 
 	--background panel
@@ -585,6 +652,7 @@ local function drawInfo()
 	myFontBigger:End()
 	-- content
 	local lastY = Panel["info"]["y2"] - 20
+	rows = 0
 	
 	myFontBig:Begin()
 	if Options["general"] then
@@ -596,39 +664,10 @@ local function drawInfo()
 	
 	--General options
 	myFont:Begin()
-	for i,opt in pairs(Options["general"]) do
-		local yi = lastY - 14
-		lastY = lastY - 14
-		if i%2 == 0 then
-			gl.Color(0.2,0.6,0.9,0.1)
-			gl.Rect(Panel["info"]["x1"]+ leftmargin, yi, Panel["info"]["x2"]-leftmargin,yi + 14)
-			gl.Color(1,1,1,1)
-		end
-		
-		myFont:SetTextColor({0.8, 0.8, 0.8, 1})
-		myFont:Print(opt["name"], Panel["info"]["x1"] + leftmargin, yi,textSize,'do')
-		local label
-		if opt["type"] == "bool" then
-			if opt["value"] == 1 or opt["value"] == "1" then
-				label = "Yes"
-				myFont:SetTextColor({0.2, 0.8, 0.2, 1}) -- green
-			else
-				label = "No"
-				myFont:SetTextColor({0.8, 0.2, 0.2, 1}) -- red
-			end
-		else
-			label = firstToUpper(tostring(opt["value"]))
-			if opt["name"] == "Game mode:" then
-				if label == "Killall" or label == "None" then
-					myFont:SetTextColor({0.8, 0.2, 0.2, 1}) -- red
-				else
-					myFont:SetTextColor({0.2, 0.8, 0.2, 1}) -- green
-				end
-			else
-				myFont:SetTextColor({0.8, 0.8, 0.8, 1})
-			end
-		end
-		myFont:Print(label, Panel["info"]["x2"] - leftmargin, yi,textSize,'rdo')
+	local i = 0
+	
+	for _,opt in pairs(Options["general"]) do
+		i,lastY = drawRow(opt,i,lastY)
 	end
 	myFont:End()
 	
@@ -642,32 +681,9 @@ local function drawInfo()
 	
 	--Other options
 	myFont:Begin()
-	for i,opt in pairs(Options["other"]) do
-		local yi = lastY - 14
-		lastY = lastY - 14
-		
-		if i%2 == 0 then
-			gl.Color(0.2,0.6,0.9,0.1)
-			gl.Rect(Panel["info"]["x1"]+ leftmargin, yi, Panel["info"]["x2"]-leftmargin,yi + 14)
-			gl.Color(1,1,1,1)
-		end
-		
-		myFont:SetTextColor({0.8, 0.8, 0.8, 1})
-		myFont:Print(opt["name"], Panel["info"]["x1"] + leftmargin, yi,textSize,'do')
-		local label
-		if opt["type"] == "bool" then
-			if opt["value"] == 1 or opt["value"] == "1" then
-				label = "Yes"
-				myFont:SetTextColor({0.2, 0.8, 0.2, 1})
-			else
-				label = "No"
-				myFont:SetTextColor({0.8, 0.2, 0.2, 1})
-			end
-		else
-			label = firstToUpper(tostring(opt["value"]))
-			myFont:SetTextColor({0.8, 0.8, 0.8, 1})
-		end
-		myFont:Print(label, Panel["info"]["x2"] - leftmargin, yi,textSize,'rdo')
+	local i = 0
+	for _,opt in pairs(Options["other"]) do
+		i,lastY = drawRow(opt,i,lastY)
 	end
 	myFont:End()
 	
@@ -681,32 +697,9 @@ local function drawInfo()
 	
 	--multiplier options
 	myFont:Begin()
-	for i,opt in pairs(Options["multiplier"]) do
-		local yi = lastY - 14
-		lastY = lastY - 14
-		
-		if i%2 == 0 then
-			gl.Color(0.2,0.6,0.9,0.1)
-			gl.Rect(Panel["info"]["x1"]+ leftmargin, yi, Panel["info"]["x2"]-leftmargin,yi + 14)
-			gl.Color(1,1,1,1)
-		end
-		
-		myFont:SetTextColor({0.8, 0.8, 0.8, 1})
-		myFont:Print(opt["name"], Panel["info"]["x1"] + leftmargin, yi,textSize,'do')
-		local label
-		if opt["type"] == "bool" then
-			if opt["value"] == 1 or opt["value"] == "1" then
-				label = "Yes"
-				myFont:SetTextColor({0.2, 0.8, 0.2, 1})
-			else
-				label = "No"
-				myFont:SetTextColor({0.8, 0.2, 0.2, 1})
-			end
-		else
-			label = firstToUpper(tostring(opt["value"]))
-			myFont:SetTextColor({0.8, 0.8, 0.8, 1})
-		end
-		myFont:Print(label, Panel["info"]["x2"] - leftmargin, yi,textSize,'rdo')
+	local i = 0
+	for _,opt in pairs(Options["multiplier"]) do
+		i,lastY = drawRow(opt,i,lastY)
 	end
 	myFont:End()
 	
@@ -721,32 +714,9 @@ local function drawInfo()
 		
 		--KOTH options
 		myFont:Begin()
-		for i,opt in pairs(Options["koth"]) do
-			local yi = lastY - 14
-			lastY = lastY - 14
-			
-			if i%2 == 0 then
-				gl.Color(0.2,0.6,0.9,0.1)
-				gl.Rect(Panel["info"]["x1"]+ leftmargin, yi, Panel["info"]["x2"]-leftmargin,yi + 14)
-				gl.Color(1,1,1,1)
-			end
-			
-			myFont:SetTextColor({0.8, 0.8, 0.8, 1})
-			myFont:Print(opt["name"], Panel["info"]["x1"] + leftmargin, yi,textSize,'do')
-			local label
-			if opt["type"] == "bool" then
-				if opt["value"] == 1 or opt["value"] == "1" then
-					label = "Yes"
-					myFont:SetTextColor({0.2, 0.8, 0.2, 1})
-				else
-					label = "No"
-					myFont:SetTextColor({0.8, 0.2, 0.2, 1})
-				end
-			else
-				label = firstToUpper(tostring(opt["value"]))
-				myFont:SetTextColor({0.8, 0.8, 0.8, 1})
-			end
-			myFont:Print(label, Panel["info"]["x2"] - leftmargin, yi,textSize,'rdo')
+		local i = 0
+		for _,opt in pairs(Options["koth"]) do
+			i,lastY = drawRow(opt,i,lastY)
 		end
 		myFont:End()
 	end
@@ -761,35 +731,16 @@ local function drawInfo()
 	
 	--Experimental options
 	myFont:Begin()
-	for i,opt in pairs(Options["experimental"]) do
-		local yi = lastY - 14
-		lastY = lastY - 14
-		
-		if i%2 == 0 then
-			gl.Color(0.2,0.6,0.9,0.1)
-			gl.Rect(Panel["info"]["x1"]+ leftmargin, yi, Panel["info"]["x2"]-leftmargin,yi + 14)
-			gl.Color(1,1,1,1)
-		end
-		
-		myFont:SetTextColor({0.8, 0.8, 0.8, 1})
-		myFont:Print(opt["name"], Panel["info"]["x1"] + leftmargin, yi,textSize,'do')
-		local label
-		if opt["type"] == "bool" then
-			if opt["value"] == 1 or opt["value"] == "1" then
-				label = "Yes"
-				myFont:SetTextColor({0.2, 0.8, 0.2, 1})
-			else
-				label = "No"
-				myFont:SetTextColor({0.8, 0.2, 0.2, 1})
-			end
-		else
-			label = firstToUpper(tostring(opt["value"]))
-			myFont:SetTextColor({0.8, 0.8, 0.8, 1})
-		end
-		myFont:Print(label, Panel["info"]["x2"] - leftmargin, yi,textSize,'rdo')
+	local i = 0
+	for _,opt in pairs(Options["experimental"]) do
+		i,lastY = drawRow(opt,i,lastY)
 	end
 	myFont:End()
 	
+	-- update height and position of window
+	iHeight						= 250  + rows * iRowHeight
+	Panel["info"]["y2"]			= posY + iHeight
+		
 	--reset state
 	gl.Texture(false)
 	gl.Color(1,1,1,1)
@@ -890,14 +841,16 @@ function widget:TweakIsAbove(x,y)
 		 end
 	elseif button == 2 or button == 3 then
 		if IsOnButton(x, y, Panel["info"]["x1"],Panel["info"]["y1"], Panel["info"]["x2"], Panel["info"]["y2"]) then
-			--Dragging
-			return true
+			if showInfo then
+				--Dragging
+				return true
+			end
 		end	
 	end
 	return false
  end
  
- function widget:KeyPress(key, mods, isRepeat) -- used for getting debugging info quickly
+ function widget:KeyPress(key, mods, isRepeat) 
 	if (key == 0x069) and mods["ctrl"] and (not isRepeat) then 				-- i-key
 		showInfo = not showInfo
 		return true

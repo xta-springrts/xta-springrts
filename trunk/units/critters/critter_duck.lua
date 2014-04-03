@@ -19,6 +19,7 @@ unitDef = {
   category            = [[MOBILE NOWEAPON NOTAIR NOTSUB]],  
   reclaimable         = true,
   stealth 			  = true,
+  sonarStealth		  = true,
 	----------	
   defaultmissiontype  = [[Standby]],
   --explodeAs           = [[MEDIUM_UNIT]],

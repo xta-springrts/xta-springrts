@@ -63,6 +63,7 @@
 	BadTargetCategory=VTOL;
 	NoChaseCategory=VTOL;
 	Stealth=1;
+	sonarStealth=1;
 	MinCollisionSpeed=10;//weight
 	collisionVolumeType = box;
 	collisionVolumeScales =8 10 8;

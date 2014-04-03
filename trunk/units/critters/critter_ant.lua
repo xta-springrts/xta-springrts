@@ -20,6 +20,7 @@ unitDef = {
 --  corpse              = [[DEAD]],
   reclaimable         = true,
   stealth 			  = true,
+  sonarStealth		  = true,
 	----------	
   defaultmissiontype  = [[Standby]],
   --explodeAs           = [[MEDIUM_UNIT]],
