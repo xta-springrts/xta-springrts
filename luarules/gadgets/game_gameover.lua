@@ -114,6 +114,7 @@ else
 	local hideEndGraphs					= true
 	local debugMode						= false
 	local mySpectatingState
+	local victoryPlayed					= false
 	
 	local function SetUpButtons()
 		Button["xta"]		= {}
@@ -168,10 +169,14 @@ else
 			
 			-- play victory/defeat sounds
 			
-			if winners and winners[myAllyID] and (not mySpectatingState) then
-				Spring.PlaySoundFile("sounds/victory1.wav",8.0,0,0,0,0,0,0,'userinterface')
-			elseif mySpectatingState then
-				Spring.PlaySoundFile("sounds/victory1.wav",8.0,0,0,0,0,0,0,'userinterface')
+			if not victoryPlayed then
+				if winners and winners[myAllyID] and (not mySpectatingState) then
+					Spring.PlaySoundFile("sounds/victory1.wav",8.0,0,0,0,0,0,0,'userinterface')
+					victoryPlayed = true
+				elseif mySpectatingState then
+					Spring.PlaySoundFile("sounds/victory1.wav",8.0,0,0,0,0,0,0,'userinterface')
+					victoryPlayed = true
+				end
 			end
 		end
 	end
