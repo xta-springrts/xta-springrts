@@ -61,11 +61,15 @@ local gaiaTeamID
 local gaiaAllyTeamID
 
 local startTimer = Spring.GetTimer()
+local Echo = Spring.Echo
 
 local texName = LUAUI_DIRNAME .. 'Images/highlight_strip.png'
 local texScale = 512
 local textSize = 18
+local textSize2 = 96
 local myFont = gl.LoadFont("FreeSansBold.otf",textSize, 1.9, 40)
+local myFontBig = gl.LoadFont(LUAUI_DIRNAME .. "fonts/riesling.ttf",textSize2, 8, 6)
+Echo("Dir:",LUAUI_DIRNAME)
 --------------------------------------------------------------------------------
 
 GL.KEEP = 0x1E00
@@ -107,6 +111,24 @@ local function DrawMyBox(minX,minY,minZ, maxX,maxY,maxZ)
     gl.Vertex(minX, minY, minZ);
     gl.Vertex(minX, maxY, minZ);
   end);
+end
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+local teamColors = {}
+
+local function GetTeamColor(teamID)
+  local color = teamColors[teamID]
+  if (color) then
+    return color
+  end
+  local r,g,b = Spring.GetTeamColor(teamID)
+  
+  color = { r, g, b }
+  teamColors[teamID] = color
+  return color
 end
 
 --------------------------------------------------------------------------------
@@ -179,7 +201,7 @@ function widget:Initialize()
         if (true or at ~= gaiaAllyTeamID) then
           local xn, zn, xp, zp = Spring.GetAllyTeamStartBox(at)
           if (xn and ((xn ~= 0) or (zn ~= 0) or (xp ~= msx) or (zp ~= msz))) then
-
+			
             if (at == Spring.GetMyAllyTeamID()) then
               gl.Color( 0, 1, 0, 0.3 )  --  green
               gl.StencilMask(stencilBit2);
@@ -205,25 +227,6 @@ function widget:Shutdown()
   gl.DeleteList(startboxDListStencil)
   gl.DeleteList(startboxDListColor)
 end
-
-
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-
-local teamColors = {}
-
-local function GetTeamColor(teamID)
-  local color = teamColors[teamID]
-  if (color) then
-    return color
-  end
-  local r,g,b = Spring.GetTeamColor(teamID)
-  
-  color = { r, g, b }
-  teamColors[teamID] = color
-  return color
-end
-
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
@@ -292,7 +295,45 @@ end
 function widget:DrawWorld()
   gl.Fog(false)
 
-  local time = Spring.DiffTimers(Spring.GetTimer(), startTimer)
+	local time = Spring.DiffTimers(Spring.GetTimer(), startTimer)
+  
+	-- draw ally names
+	
+	for _,at in ipairs(Spring.GetAllyTeamList()) do
+		if (true or at ~= gaiaAllyTeamID) then
+			local xn, zn, xp, zp = Spring.GetAllyTeamStartBox(at)
+			if (xn and ((xn ~= 0) or (zn ~= 0) or (xp ~= msx) or (zp ~= msz))) then
+	
+				local teamlist = Spring.GetTeamList(at)
+				local r,g,b,a = 1,1,1,0.3
+				local color	
+				local leader,isAI, name
+				local team1 = teamlist[1]
+				
+				if team1 then
+					color = GetTeamColor(team1)
+					r, g, b, a = color[1], color[2], color[3], 0.8
+					_,leader,_,isAI = Spring.GetTeamInfo(team1)
+					name = Spring.GetPlayerInfo(leader)
+				end
+				if isAI then name = "AI" end
+				name = name or ""
+				if #teamlist > 1 then name = table.concat({name," et al."}) end
+								
+				local x0 = (xn+xp)/2 
+				local z0 = (zn+zp)/2 
+				local y0 = Spring.GetGroundHeight(x0,z0)
+				gl.PushMatrix()
+				gl.Translate(x0,y0+100,z0)
+				gl.Billboard()			
+				myFontBig:Begin()
+				myFontBig:SetTextColor({r, g, b, a})
+				myFontBig:Print(tostring(name), 0 , 0, textSize2*2, 'vcs')
+				myFontBig:End()
+				gl.PopMatrix()
+			end
+		end
+	end
 
   -- show the ally startboxes
   DrawStartboxes3dWithStencil()
