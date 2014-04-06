@@ -23,6 +23,7 @@ local messages = {
 	'<tn> fought like a dairy farmer.',
 	'<tn> could really use a breath mint.',
 	'<tn> has gone missing. The last transmission received was the word STENDEC',
+	'<tn> is waiting for Godot to arrive...',
 }
 
 local defaultmessages = {
