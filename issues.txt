@@ -3,10 +3,8 @@ Existing:
 
 
 
-* Pelicans are seen as hovers even when walking (had *2 speed on icy run)
-  Next spring has a possibility to set movetype on the run, then this can be fixed.
-
-
 * Static turrets can not guard other units, althought they have canguard=1 in unitdef. Maybe redui bug, maybe engine bug, maybe feature?
 
-* Mex upgrader doesn't work in area mode.
+* Atlas brakerate too low
+
+* Teamcomends works only after gameover

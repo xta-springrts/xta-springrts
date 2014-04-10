@@ -66,9 +66,9 @@ local Echo = Spring.Echo
 local texName = LUAUI_DIRNAME .. 'Images/highlight_strip.png'
 local texScale = 512
 local textSize = 18
-local textSize2 = 96
+local textSize2 = 72
 local myFont = gl.LoadFont("FreeSansBold.otf",textSize, 1.9, 40)
-local myFontBig = gl.LoadFont(LUAUI_DIRNAME .. "fonts/riesling.ttf",textSize2, 8, 6)
+local myFontBig = gl.LoadFont(LUAUI_DIRNAME .. "fonts/riesling.ttf",textSize2, 4, 2)
 Echo("Dir:",LUAUI_DIRNAME)
 --------------------------------------------------------------------------------
 
