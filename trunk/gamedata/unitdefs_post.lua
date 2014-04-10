@@ -67,7 +67,7 @@ for name, ud in pairs(UnitDefs) do
 	-- scale brakerates for air
 	 if (ud.brakerate) then  
 		if ud.canfly then 
-			if not ud.hoverattack then 
+			if not ud.hoverattack and (ud.transportCapacity and not ud.transportCapacity > 0) then -- exclude gunships and transports
 				ud.brakerate = ud.brakerate * 0.1 
 			end
 		end
