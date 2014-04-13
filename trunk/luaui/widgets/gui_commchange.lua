@@ -1244,6 +1244,12 @@ function widget:GameStart()
 	gameStarted = true
 end
 
+function widget:GameOver()
+	-- this can happen if game is abandoned before it starts
+	widgetHandler:RemoveWidget()
+	return false
+end
+
 function widget:GetConfigData() -- Save
 	local vsx, vsy = gl.GetViewSizes()
 	return {

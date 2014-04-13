@@ -69,7 +69,7 @@ local textSize = 18
 local textSize2 = 72
 local myFont = gl.LoadFont("FreeSansBold.otf",textSize, 1.9, 40)
 local myFontBig = gl.LoadFont(LUAUI_DIRNAME .. "fonts/riesling.ttf",textSize2, 4, 2)
-Echo("Dir:",LUAUI_DIRNAME)
+
 --------------------------------------------------------------------------------
 
 GL.KEEP = 0x1E00
