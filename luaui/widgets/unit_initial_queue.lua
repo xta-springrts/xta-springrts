@@ -489,6 +489,10 @@ function widget:GameFrame(n)
 	end
 end
 
+function widget:GameOver()
+	-- this can happen if game is abandoned before it starts
+	widgetHandler:RemoveWidget()
+end
 ------------------------------------------------------------
 -- Mouse
 ------------------------------------------------------------
