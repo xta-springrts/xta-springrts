@@ -115,6 +115,7 @@ local teamList							= Spring.GetTeamList()
 local myTeamID 							= Spring.GetMyTeamID()
 --gamestates
 local CHOOSE,WAITING,COUNTDOWN,ERROR	= 0,1,2,-1
+local gameOver							= false
 -- local player states
 local PRESENT,MARKED,OTHER,READY		= 0,1,2,3
 
@@ -428,7 +429,7 @@ end
 function widget:DrawScreenEffects(vsx, vsy)
 	if IsGUIHidden() then return end
 	
-	if not gameStarted then
+	if not gameStarted and not gameOver then
 		local h = vsy/3
 		local x = vsx/2 - h/2
 		local y = vsy/2 - h/2
@@ -564,14 +565,14 @@ function widget:DrawScreenEffects(vsx, vsy)
 			glRect(Button["duck"]["x0"],Button["duck"]["y0"], Button["duck"]["x1"], Button["duck"]["y1"])
 		end
 		glColor(1,1,1,1)
-	else
+	elseif not gameOver then
 		-- game started text
 		if Spring.IsReplay() or spectator then
 			local frame = Spring.GetGameFrame()
 			local gs = Spring.GetGameSpeed() or 1
 			local x0 = vsx/2
-			if frame > 150 then
-				x0 = vsx/2 + (frame - 150)*(frame - 150)*10
+			if frame > 120 then
+				x0 = vsx/2 + (frame - 120)*(frame - 120)*10
 			end
 			myFontHuge:Begin()
 			myFontHuge:SetTextColor({0.75-0.5*math.sin(frame/2/gs), 0.75-0.25*math.sin(frame/2/gs), 1-0.25*math.sin(frame/2/gs), 1-0.25*math.sin(frame/2/gs)})
@@ -666,7 +667,7 @@ function widget:DrawScreen()
 	glColor(1,1,1,1)
 	
 	-- Draw window with info for spectators
-	if spectator then
+	if spectator and not gameOver then
 		
 		-- duck button
 		glColor(0, 0, 0, 0.4)
@@ -876,7 +877,7 @@ function widget:DrawScreen()
 			end
 		end
 		glColor(1,1,1,1)
-	else
+	elseif not gameOver then
 		-- draw window with options for active players
 		
 		-- border
@@ -1003,29 +1004,33 @@ function widget:GameSetup(state, ready, playerStates)
 	pStates = playerStates
 	strInfo = state
 	
-	if strS == "Choose" then 
-		gameState = CHOOSE -- gamestate == 0
-	elseif strS == "Waitin" then
-		gameState = WAITING -- gamestate == 1
-	elseif strS == "Starti" then
-		gameState = COUNTDOWN -- gamestate == 2
-		cntDown = strN
-	else
-		gameState = ERROR -- gamestate == -1
-	end
-	
-	if gameState == COUNTDOWN then
-		return true, true
-	else	
-		if myState == PRESENT then
-			return true, false
-		elseif myState == MARKED then
-			return true, false
-		elseif myState == READY then
-			return true, true
+	if not gameOver then
+		if strS == "Choose" then 
+			gameState = CHOOSE -- gamestate == 0
+		elseif strS == "Waitin" then
+			gameState = WAITING -- gamestate == 1
+		elseif strS == "Starti" then
+			gameState = COUNTDOWN -- gamestate == 2
+			cntDown = strN
 		else
-			return true, false
+			gameState = ERROR -- gamestate == -1
 		end
+		
+		if gameState == COUNTDOWN then
+			return true, true
+		else	
+			if myState == PRESENT then
+				return true, false
+			elseif myState == MARKED then
+				return true, false
+			elseif myState == READY then
+				return true, true
+			else
+				return true, false
+			end
+		end
+	else
+		return true, false
 	end
 end
 
@@ -1039,112 +1044,21 @@ local function IsOnButton(x, y, BLcornerX, BLcornerY,TRcornerX,TRcornerY)
 end
 
 function widget:MousePress(mx, my, mButton)
-	if spectator and not gameStarted then
-		if mButton == 1 then
-			if IsOnButton(mx,my,Button["exit"]["x0"],Button["exit"]["y0"],Button["exit"]["x1"],Button["exit"]["y1"]) then
-				widgetHandler:RemoveWidget(self)
-				Echo("Exit to native dialogue window.")
-				playSound(cancel)
-				return true
-			elseif IsOnButton(mx,my,Button["duck"]["x0"],Button["duck"]["y0"],Button["duck"]["x1"],Button["duck"]["y1"]) then
-				local idx = math.random(1,#duckSounds)
-				playSound(duckSounds[idx])
-				return true
-			end
-		elseif (mButton == 2 or mButton == 3) and mx < px + sizex then
-			
-			if mx >= px and my >= py and my < Button["exit"]["y1"] then
-				-- Dragging
-				return true
-			end
-		end
-		updateState()
-		initButtons()
-	else
-		if IsOnButton(mx,my, px,py, px+sizex, Button["exit"]["y1"]) then
-			-- Check buttons
+	if not gameOver then
+		if spectator and not gameStarted then
 			if mButton == 1 then
-				local startID = spGetTeamRulesParam(myTeamID, 'startUnit')			
-				if IsOnButton(mx,my,Button["arm"]["x0"],Button["arm"]["y0"],Button["arm"]["x1"],Button["arm"]["y1"]) then	
-					if startID == coreauto or startID == coreman then
-						if startID == coreauto then
-							spSendLuaRulesMsg('\177' .. armauto)
-							spSendLuaUIMsg('195' .. 1)
-							lastStartID = armauto
-						else
-							spSendLuaRulesMsg('\177' .. armman)
-							spSendLuaUIMsg('195' .. 1)
-							lastStartID = armman
-						end
-						playSound(button3)
-					end
-				elseif IsOnButton(mx,my,Button["core"]["x0"],Button["core"]["y0"],Button["core"]["x1"],Button["core"]["y1"]) then
-					if startID == armauto or startID == armman then
-						if startID == armauto then
-							spSendLuaRulesMsg('\177' .. coreauto)
-							spSendLuaUIMsg('195' .. 2)
-							lastStartID = coreauto
-						else
-							spSendLuaRulesMsg('\177' .. coreman)
-							spSendLuaUIMsg('195' .. 2)
-							lastStartID = coreman
-						end
-						playSound(button3)
-					end
-				elseif IsOnButton(mx,my,Button["auto"]["x0"],Button["auto"]["y0"],Button["auto"]["x1"],Button["auto"]["y1"]) then
-					if startID == armman or startID == coreman then
-						if startID == armman then
-							spSendLuaRulesMsg('\177' .. armauto)
-							spSendLuaUIMsg('195' .. 1)
-							lastStartID = armauto
-						else
-							spSendLuaRulesMsg('\177' .. coreauto)
-							spSendLuaUIMsg('195' .. 2)
-							lastStartID = coreauto
-						end
-						playSound(button2)
-					end
-				elseif IsOnButton(mx,my,Button["manual"]["x0"],Button["manual"]["y0"],Button["manual"]["x1"],Button["manual"]["y1"]) and myState ~= READY then
-					if startID == armauto or startID == coreauto then
-						if startID == armauto then
-							spSendLuaRulesMsg('\177' .. armman)
-							spSendLuaUIMsg('195' .. 1)
-							lastStartID = armman
-						else
-							spSendLuaRulesMsg('\177' .. coreman)
-							spSendLuaUIMsg('195' .. 2)
-							lastStartID = coreman
-						end
-						playSound(button2)
-					end
-				elseif IsOnButton(mx,my,Button["ready"]["x0"],Button["ready"]["y0"],Button["ready"]["x1"],Button["ready"]["y1"]) and gameState ~= COUNTDOWN then
-					local pos = spGetTeamStartPosition(myTeamID)
-					if pos >= 0 then
-						if myState ~= READY then 
-							myState = READY
-						elseif myState == READY then
-							myState = MARKED
-						end
-						playSound(button1)
-					end
-				elseif IsOnButton(mx,my,Button["info"]["x0"],Button["info"]["y0"],Button["info"]["x1"],Button["info"]["y1"]) and myState ~= READY then
-					if myState ~= READY then
-						infoOn = not infoOn
-						if infoOn then
-							playSound(button)
-						else
-							playSound(cancel)
-						end
-					end
-				elseif IsOnButton(mx,my,Button["exit"]["x0"],Button["exit"]["y0"],Button["exit"]["x1"],Button["exit"]["y1"]) then
+				if IsOnButton(mx,my,Button["exit"]["x0"],Button["exit"]["y0"],Button["exit"]["x1"],Button["exit"]["y1"]) then
 					widgetHandler:RemoveWidget(self)
 					Echo("Exit to native dialogue window.")
 					playSound(cancel)
 					return true
+				elseif IsOnButton(mx,my,Button["duck"]["x0"],Button["duck"]["y0"],Button["duck"]["x1"],Button["duck"]["y1"]) then
+					local idx = math.random(1,#duckSounds)
+					playSound(duckSounds[idx])
+					return true
 				end
-				updateState()
-				return true
 			elseif (mButton == 2 or mButton == 3) and mx < px + sizex then
+				
 				if mx >= px and my >= py and my < Button["exit"]["y1"] then
 					-- Dragging
 					return true
@@ -1152,10 +1066,103 @@ function widget:MousePress(mx, my, mButton)
 			end
 			updateState()
 			initButtons()
-			return true
-		elseif mButton == 3 and IsOnButton(mx,my,Button["infopanel"]["x0"],Button["infopanel"]["y0"],Button["infopanel"]["x1"],Button["infopanel"]["y1"]) and myState ~= READY then
-			infoOn = false
-			return true
+		else
+			if IsOnButton(mx,my, px,py, px+sizex, Button["exit"]["y1"]) then
+				-- Check buttons
+				if mButton == 1 then
+					local startID = spGetTeamRulesParam(myTeamID, 'startUnit')			
+					if IsOnButton(mx,my,Button["arm"]["x0"],Button["arm"]["y0"],Button["arm"]["x1"],Button["arm"]["y1"]) then	
+						if startID == coreauto or startID == coreman then
+							if startID == coreauto then
+								spSendLuaRulesMsg('\177' .. armauto)
+								spSendLuaUIMsg('195' .. 1)
+								lastStartID = armauto
+							else
+								spSendLuaRulesMsg('\177' .. armman)
+								spSendLuaUIMsg('195' .. 1)
+								lastStartID = armman
+							end
+							playSound(button3)
+						end
+					elseif IsOnButton(mx,my,Button["core"]["x0"],Button["core"]["y0"],Button["core"]["x1"],Button["core"]["y1"]) then
+						if startID == armauto or startID == armman then
+							if startID == armauto then
+								spSendLuaRulesMsg('\177' .. coreauto)
+								spSendLuaUIMsg('195' .. 2)
+								lastStartID = coreauto
+							else
+								spSendLuaRulesMsg('\177' .. coreman)
+								spSendLuaUIMsg('195' .. 2)
+								lastStartID = coreman
+							end
+							playSound(button3)
+						end
+					elseif IsOnButton(mx,my,Button["auto"]["x0"],Button["auto"]["y0"],Button["auto"]["x1"],Button["auto"]["y1"]) then
+						if startID == armman or startID == coreman then
+							if startID == armman then
+								spSendLuaRulesMsg('\177' .. armauto)
+								spSendLuaUIMsg('195' .. 1)
+								lastStartID = armauto
+							else
+								spSendLuaRulesMsg('\177' .. coreauto)
+								spSendLuaUIMsg('195' .. 2)
+								lastStartID = coreauto
+							end
+							playSound(button2)
+						end
+					elseif IsOnButton(mx,my,Button["manual"]["x0"],Button["manual"]["y0"],Button["manual"]["x1"],Button["manual"]["y1"]) and myState ~= READY then
+						if startID == armauto or startID == coreauto then
+							if startID == armauto then
+								spSendLuaRulesMsg('\177' .. armman)
+								spSendLuaUIMsg('195' .. 1)
+								lastStartID = armman
+							else
+								spSendLuaRulesMsg('\177' .. coreman)
+								spSendLuaUIMsg('195' .. 2)
+								lastStartID = coreman
+							end
+							playSound(button2)
+						end
+					elseif IsOnButton(mx,my,Button["ready"]["x0"],Button["ready"]["y0"],Button["ready"]["x1"],Button["ready"]["y1"]) and gameState ~= COUNTDOWN then
+						local pos = spGetTeamStartPosition(myTeamID)
+						if pos >= 0 then
+							if myState ~= READY then 
+								myState = READY
+							elseif myState == READY then
+								myState = MARKED
+							end
+							playSound(button1)
+						end
+					elseif IsOnButton(mx,my,Button["info"]["x0"],Button["info"]["y0"],Button["info"]["x1"],Button["info"]["y1"]) and myState ~= READY then
+						if myState ~= READY then
+							infoOn = not infoOn
+							if infoOn then
+								playSound(button)
+							else
+								playSound(cancel)
+							end
+						end
+					elseif IsOnButton(mx,my,Button["exit"]["x0"],Button["exit"]["y0"],Button["exit"]["x1"],Button["exit"]["y1"]) then
+						widgetHandler:RemoveWidget(self)
+						Echo("Exit to native dialogue window.")
+						playSound(cancel)
+						return true
+					end
+					updateState()
+					return true
+				elseif (mButton == 2 or mButton == 3) and mx < px + sizex then
+					if mx >= px and my >= py and my < Button["exit"]["y1"] then
+						-- Dragging
+						return true
+					end
+				end
+				updateState()
+				initButtons()
+				return true
+			elseif mButton == 3 and IsOnButton(mx,my,Button["infopanel"]["x0"],Button["infopanel"]["y0"],Button["infopanel"]["x1"],Button["infopanel"]["y1"]) and myState ~= READY then
+				infoOn = false
+				return true
+			end
 		end
 	end
 	return false
@@ -1171,61 +1178,63 @@ function widget:MouseMove(mx, my, dx, dy, mButton)
 	
 end
 
-function widget:IsAbove(mx,my)	
-	if spectator and not gameStarted then
-		Button["arm"]["On"] = false
-		Button["core"]["On"] = false
-		Button["ready"]["On"] = false
-		Button["info"]["On"] = false
-		
-		if IsOnButton(mx,my,Button["exit"]["x0"],Button["exit"]["y0"],Button["exit"]["x1"],Button["exit"]["y1"]) then		
-			Button["exit"]["On"] = true
-			Button["duck"]["On"] = false
-		elseif IsOnButton(mx,my,Button["duck"]["x0"],Button["duck"]["y0"],Button["duck"]["x1"],Button["duck"]["y1"]) then
-			Button["exit"]["On"] = false
-			Button["duck"]["On"] = true
+function widget:IsAbove(mx,my)
+	if not gameOver then	
+		if spectator and not gameStarted then
+			Button["arm"]["On"] = false
+			Button["core"]["On"] = false
+			Button["ready"]["On"] = false
+			Button["info"]["On"] = false
+			
+			if IsOnButton(mx,my,Button["exit"]["x0"],Button["exit"]["y0"],Button["exit"]["x1"],Button["exit"]["y1"]) then		
+				Button["exit"]["On"] = true
+				Button["duck"]["On"] = false
+			elseif IsOnButton(mx,my,Button["duck"]["x0"],Button["duck"]["y0"],Button["duck"]["x1"],Button["duck"]["y1"]) then
+				Button["exit"]["On"] = false
+				Button["duck"]["On"] = true
+			else
+				Button["exit"]["On"] = false
+				Button["duck"]["On"] = false
+			end
 		else
-			Button["exit"]["On"] = false
-			Button["duck"]["On"] = false
-		end
-	else
-		
-		if IsOnButton(mx,my,Button["arm"]["x0"],Button["arm"]["y0"],Button["arm"]["x1"],Button["arm"]["y1"]) and mySide == "core" then
-			Button["arm"]["On"] = true
-			Button["core"]["On"] = false
-			Button["ready"]["On"] = false
-			Button["info"]["On"] = false
-			Button["exit"]["On"] = false
-		elseif IsOnButton(mx,my,Button["core"]["x0"],Button["core"]["y0"],Button["core"]["x1"],Button["core"]["y1"]) and mySide == "arm" then
-			Button["arm"]["On"] = false
-			Button["core"]["On"] = true
-			Button["ready"]["On"] = false
-			Button["info"]["On"] = false
-			Button["exit"]["On"] = false
-		elseif IsOnButton(mx,my,Button["ready"]["x0"],Button["ready"]["y0"],Button["ready"]["x1"],Button["ready"]["y1"]) and myState > PRESENT and gameState ~= COUNTDOWN then
-			Button["arm"]["On"] = false
-			Button["core"]["On"] = false
-			Button["ready"]["On"] = true
-			Button["info"]["On"] = false
-			Button["exit"]["On"] = false
-		elseif IsOnButton(mx,my,Button["info"]["x0"],Button["info"]["y0"],Button["info"]["x1"],Button["info"]["y1"]) then
-			Button["arm"]["On"] = false
-			Button["core"]["On"] = false
-			Button["ready"]["On"] = false
-			Button["info"]["On"] = true
-			Button["exit"]["On"] = false
-		elseif IsOnButton(mx,my,Button["exit"]["x0"],Button["exit"]["y0"],Button["exit"]["x1"],Button["exit"]["y1"]) then
-			Button["arm"]["On"] = false
-			Button["core"]["On"] = false
-			Button["ready"]["On"] = false
-			Button["info"]["On"] = false
-			Button["exit"]["On"] = true
-		else
-			Button["arm"]["On"] = false
-			Button["core"]["On"] = false
-			Button["ready"]["On"] = false
-			Button["info"]["On"] = false
-			Button["exit"]["On"] = false
+			
+			if IsOnButton(mx,my,Button["arm"]["x0"],Button["arm"]["y0"],Button["arm"]["x1"],Button["arm"]["y1"]) and mySide == "core" then
+				Button["arm"]["On"] = true
+				Button["core"]["On"] = false
+				Button["ready"]["On"] = false
+				Button["info"]["On"] = false
+				Button["exit"]["On"] = false
+			elseif IsOnButton(mx,my,Button["core"]["x0"],Button["core"]["y0"],Button["core"]["x1"],Button["core"]["y1"]) and mySide == "arm" then
+				Button["arm"]["On"] = false
+				Button["core"]["On"] = true
+				Button["ready"]["On"] = false
+				Button["info"]["On"] = false
+				Button["exit"]["On"] = false
+			elseif IsOnButton(mx,my,Button["ready"]["x0"],Button["ready"]["y0"],Button["ready"]["x1"],Button["ready"]["y1"]) and myState > PRESENT and gameState ~= COUNTDOWN then
+				Button["arm"]["On"] = false
+				Button["core"]["On"] = false
+				Button["ready"]["On"] = true
+				Button["info"]["On"] = false
+				Button["exit"]["On"] = false
+			elseif IsOnButton(mx,my,Button["info"]["x0"],Button["info"]["y0"],Button["info"]["x1"],Button["info"]["y1"]) then
+				Button["arm"]["On"] = false
+				Button["core"]["On"] = false
+				Button["ready"]["On"] = false
+				Button["info"]["On"] = true
+				Button["exit"]["On"] = false
+			elseif IsOnButton(mx,my,Button["exit"]["x0"],Button["exit"]["y0"],Button["exit"]["x1"],Button["exit"]["y1"]) then
+				Button["arm"]["On"] = false
+				Button["core"]["On"] = false
+				Button["ready"]["On"] = false
+				Button["info"]["On"] = false
+				Button["exit"]["On"] = true
+			else
+				Button["arm"]["On"] = false
+				Button["core"]["On"] = false
+				Button["ready"]["On"] = false
+				Button["info"]["On"] = false
+				Button["exit"]["On"] = false
+			end
 		end
 	end
 end
@@ -1246,7 +1255,7 @@ end
 
 function widget:GameOver()
 	-- this can happen if game is abandoned before it starts
-	widgetHandler:RemoveWidget()
+	gameOver = true
 	return false
 end
 

@@ -44,7 +44,7 @@ function speedButtonColor (i)
 end
 
 function widget:DrawScreen()
-	if not isActive then return end
+	if not isActive or Spring.IsGameOver() then return end
 	draw_buttons(speedbuttons)
 	draw_buttons(buttons)
 end
