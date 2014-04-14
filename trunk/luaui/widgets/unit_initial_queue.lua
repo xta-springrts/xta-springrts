@@ -372,79 +372,83 @@ local queueTimeFormat = whiteColor .. 'Queued ' .. metalColor .. '%dm ' .. energ
 
 
 function widget:DrawScreen()
-	gl.PushMatrix()
-		gl.Translate(wl, wt, 0)
-		gl.CallList(panelList)
-		if #buildQueue > 0 then
-			local mCost, eCost, bCost = GetQueueCosts()
-			gl.Text(string.format(queueTimeFormat, mCost, eCost, bCost / sDef.buildSpeed), 0, 0, fontSize, 'do')
-		end
-	gl.PopMatrix()
+	if not Spring.IsGameOver() then
+		gl.PushMatrix()
+			gl.Translate(wl, wt, 0)
+			gl.CallList(panelList)
+			if #buildQueue > 0 then
+				local mCost, eCost, bCost = GetQueueCosts()
+				gl.Text(string.format(queueTimeFormat, mCost, eCost, bCost / sDef.buildSpeed), 0, 0, fontSize, 'do')
+			end
+		gl.PopMatrix()
+	end
 end
+
 function widget:DrawWorld()
-	
-	-- Set up gl
-	gl.LineWidth(1.49)
-	
-	-- We need data about currently selected building, for drawing clashes etc
-	local selBuildData
-	if selDefID then
-		local mx, my = Spring.GetMouseState()
-		local _, pos = Spring.TraceScreenRay(mx, my, true)
-		if pos then
-			local bx, by, bz = Spring.Pos2BuildPos(selDefID, pos[1], pos[2], pos[3])
-			local buildFacing = Spring.GetBuildFacing()
-			selBuildData = {selDefID, bx, by, bz, buildFacing}	
-		end
-	end
-	
-	local sx, sy, sz = Spring.GetTeamStartPosition(myTeamID) -- Returns -100, -100, -100 when none chosen
-	local startChosen = (sx ~= -100)
-	if startChosen then
+	if not Spring.IsGameOver() then
+		-- Set up gl
+		gl.LineWidth(1.49)
 		
-		-- Correction for start positions in the air
-		sy = Spring.GetGroundHeight(sx, sz)
-		
-		-- Draw the starting unit at start position
-		DrawUnitDef(sDefID, myTeamID, sx, sy, sz)
-		
-		-- Draw start units build radius
-		gl.Color(buildDistanceColor)
-		gl.DrawGroundCircle(sx, sy, sz, sDef.buildDistance, 40)
-	end
-	
-	-- Draw all the buildings
-	local queueLineVerts = startChosen and {{v={sx, sy, sz}}} or {}
-	for b = 1, #buildQueue do
-		local buildData = buildQueue[b]
-		
-		if selBuildData and DoBuildingsClash(selBuildData, buildData) then
-			DrawBuilding(buildData, borderClashColor, buildingQueuedAlpha)
-		else
-			DrawBuilding(buildData, borderNormalColor, buildingQueuedAlpha)
+		-- We need data about currently selected building, for drawing clashes etc
+		local selBuildData
+		if selDefID then
+			local mx, my = Spring.GetMouseState()
+			local _, pos = Spring.TraceScreenRay(mx, my, true)
+			if pos then
+				local bx, by, bz = Spring.Pos2BuildPos(selDefID, pos[1], pos[2], pos[3])
+				local buildFacing = Spring.GetBuildFacing()
+				selBuildData = {selDefID, bx, by, bz, buildFacing}	
+			end
 		end
 		
-		queueLineVerts[#queueLineVerts + 1] = {v={buildData[2], buildData[3], buildData[4]}}
-	end
-	
-	-- Draw queue lines
-	gl.Color(buildLinesColor)
-	gl.LineStipple("springdefault")
-		gl.Shape(GL.LINE_STRIP, queueLineVerts)
-	gl.LineStipple(false)
-	
-	-- Draw selected building
-	if selBuildData then
-		if Spring.TestBuildOrder(selDefID, selBuildData[2], selBuildData[3], selBuildData[4], selBuildData[5]) ~= 0 then
-			DrawBuilding(selBuildData, borderValidColor, 1.0, true)
-		else
-			DrawBuilding(selBuildData, borderInvalidColor, 1.0, true)
+		local sx, sy, sz = Spring.GetTeamStartPosition(myTeamID) -- Returns -100, -100, -100 when none chosen
+		local startChosen = (sx ~= -100)
+		if startChosen then
+			
+			-- Correction for start positions in the air
+			sy = Spring.GetGroundHeight(sx, sz)
+			
+			-- Draw the starting unit at start position
+			DrawUnitDef(sDefID, myTeamID, sx, sy, sz)
+			
+			-- Draw start units build radius
+			gl.Color(buildDistanceColor)
+			gl.DrawGroundCircle(sx, sy, sz, sDef.buildDistance, 40)
 		end
+		
+		-- Draw all the buildings
+		local queueLineVerts = startChosen and {{v={sx, sy, sz}}} or {}
+		for b = 1, #buildQueue do
+			local buildData = buildQueue[b]
+			
+			if selBuildData and DoBuildingsClash(selBuildData, buildData) then
+				DrawBuilding(buildData, borderClashColor, buildingQueuedAlpha)
+			else
+				DrawBuilding(buildData, borderNormalColor, buildingQueuedAlpha)
+			end
+			
+			queueLineVerts[#queueLineVerts + 1] = {v={buildData[2], buildData[3], buildData[4]}}
+		end
+		
+		-- Draw queue lines
+		gl.Color(buildLinesColor)
+		gl.LineStipple("springdefault")
+			gl.Shape(GL.LINE_STRIP, queueLineVerts)
+		gl.LineStipple(false)
+		
+		-- Draw selected building
+		if selBuildData then
+			if Spring.TestBuildOrder(selDefID, selBuildData[2], selBuildData[3], selBuildData[4], selBuildData[5]) ~= 0 then
+				DrawBuilding(selBuildData, borderValidColor, 1.0, true)
+			else
+				DrawBuilding(selBuildData, borderInvalidColor, 1.0, true)
+			end
+		end
+		
+		-- Reset gl
+		gl.Color(1.0, 1.0, 1.0, 1.0)
+		gl.LineWidth(1.0)
 	end
-	
-	-- Reset gl
-	gl.Color(1.0, 1.0, 1.0, 1.0)
-	gl.LineWidth(1.0)
 end
 
 ------------------------------------------------------------
