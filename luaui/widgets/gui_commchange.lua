@@ -330,6 +330,17 @@ function widget:Initialize()
 			spSendLuaRulesMsg('\177' .. coreman)
 			spSendLuaUIMsg('195' .. 2)
 		end
+	else -- set manual commander as default for newbies
+		mySide = (mySide or select(5,Spring.GetTeamInfo(myTeamID))) or "arm"
+		if mySide == "arm" then
+			spSendLuaRulesMsg('\177' .. armman)
+			spSendLuaUIMsg('195' .. 1)
+			lastStartID = armman
+		elseif mySide == "core" then
+			spSendLuaRulesMsg('\177' .. coreman)
+			spSendLuaUIMsg('195' .. 2)
+			lastStartID = coreman
+		end	
 	end
 	updateSize()
 end
@@ -1044,8 +1055,8 @@ local function IsOnButton(x, y, BLcornerX, BLcornerY,TRcornerX,TRcornerY)
 end
 
 function widget:MousePress(mx, my, mButton)
-	if not gameOver then
-		if spectator and not gameStarted then
+	if not gameOver and not gameStarted then
+		if spectator  then
 			if mButton == 1 then
 				if IsOnButton(mx,my,Button["exit"]["x0"],Button["exit"]["y0"],Button["exit"]["x1"],Button["exit"]["y1"]) then
 					widgetHandler:RemoveWidget(self)
@@ -1066,7 +1077,7 @@ function widget:MousePress(mx, my, mButton)
 			end
 			updateState()
 			initButtons()
-		else
+		else -- player
 			if IsOnButton(mx,my, px,py, px+sizex, Button["exit"]["y1"]) then
 				-- Check buttons
 				if mButton == 1 then
