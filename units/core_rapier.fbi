@@ -85,7 +85,7 @@
 	//***********
 	weapon1=VTOL_ROCKET;
 	WeaponMainDir1= 0 0 1;
-	MaxAngleDif1=52;//130 in 9.725
+	MaxAngleDif1=64;//130 in 9.725
 	nochasecategory=VTOL;
 	badtargetcategory=VTOL;
 	wpri_badtargetcategory=VTOL;

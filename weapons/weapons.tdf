@@ -1685,7 +1685,7 @@
 	{
 		default=400;
 		group_invincible=1;
-		group_subs=500;
+		group_subs=600;
 		group_stupidsubs=600;
 		group_ships=450;
 		group_large_ships=550;
@@ -2604,7 +2604,7 @@
 	model=weapon_torpedo;
 	propeller=1;
 	range=900;
-	reloadtime=3;
+	reloadtime=5;
 	weapontimer=10.5;
 	weaponvelocity=250;
 	startvelocity=150;
@@ -2621,10 +2621,10 @@
 	explosiongenerator=custom:DepthCharge;
 	[DAMAGE]
 	{
-		default=150;
-		group_subs=175;
-		group_stupidsubs=228;
-		group_torpedo_launcher=110;
+		default=300;
+		group_subs=350;
+		group_stupidsubs=456;
+		group_torpedo_launcher=210;
 		group_invincible=1;
 	}
 }
@@ -4424,8 +4424,8 @@
 	{
 		default=275;
 		group_invincible=1;
-		group_subs=410;
-		group_stupidsubs=470;
+		group_subs=480;
+		group_stupidsubs=480;
 		group_ships=295;
 		group_large_ships=335;
 		group_torpedo_launcher=200;
@@ -5840,7 +5840,7 @@
 	firestarter=70;
 	smokedelay=0.1;
 	smoketrail=0;
-	tolerance=8000;
+	tolerance=16000;
 	startsmoke=1;
 	pitchtolerance=18000;
 	tracks=1;
