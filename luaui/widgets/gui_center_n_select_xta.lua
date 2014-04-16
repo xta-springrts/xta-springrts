@@ -70,3 +70,9 @@ function widget:Update()
 		select = false
 	end
 end
+
+function widget:Initialize()
+	if Spring.GetSpectatingState() or Spring.IsReplay() then
+		widgetHandler:RemoveWidget()
+	end
+end
