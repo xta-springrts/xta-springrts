@@ -21,8 +21,6 @@ local random  = math.random
 local abs = math.abs
 local Echo = Spring.Echo
 
-local LUAMESSAGE = 	"20121120"
-
 local loopWeapons = {
 	Flame = true,
 	BeamLaser = true,
@@ -147,7 +145,6 @@ else
 	-------------------
 	
 	local GetLocalPlayerID				= Spring.GetLocalPlayerID
-	local SendLuaRulesMsg				= Spring.SendLuaRulesMsg
 	local PlaySoundFile					= Spring.PlaySoundFile
 	local IsPosInLos					= Spring.IsPosInLos
 	local GetLocalAllyTeamID			= Spring.GetLocalAllyTeamID
@@ -189,7 +186,6 @@ else
 		Cannon = true,
 		AircraftBomb = true,
 	}
-
 
 	local function LS_ProjectileCreated(_, projectileID, projectileOwnerID, projectileWeaponDefID,x,y,z)		
 		local LOS = clientIsSpec or IsPosInLos(x,y,z,allyID)

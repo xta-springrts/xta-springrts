@@ -98,5 +98,6 @@ if (Spring.GetModOptions() or {}).commander == 'choose' then
 end
 
 function gadget:GameStart()
-	 gadgetHandler:RemoveCallIn("RecvLuaMsg")	
+	-- needed for voting
+	--gadgetHandler:RemoveCallIn("RecvLuaMsg")	
 end

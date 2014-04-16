@@ -73,8 +73,6 @@ if (gadgetHandler:IsSyncedCode()) then
 			Spring.SetGameRulesParam("WaitForComends",0)
 			gadgetHandler:RemoveGadget(self)
 			return
-		else
-			Spring.SetGameRulesParam("WaitForComends",1)	
 		end
 		
 		for _,allyTeam in ipairs(Spring.GetAllyTeamList()) do
@@ -192,6 +190,12 @@ if (gadgetHandler:IsSyncedCode()) then
 					Spring.KillTeam(teamID)
 				end
 			end
+		end
+	end
+	
+	function gadget:GameStart()
+		if endmodes[modOptions.mode] then
+			Spring.SetGameRulesParam("WaitForComends",1)	
 		end
 	end
 	
