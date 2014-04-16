@@ -1,6 +1,6 @@
 function widget:GetInfo()
    return {
-      name      = "XTA Settings GUI",
+      name      = "XTA Options GUI",
       desc      = "Provide a GUI for some options",
       author    = "Jools",
       date      = "jan, 2014",
@@ -27,7 +27,7 @@ local showInfo							= false
 local textSize							= 10
 local myFont							= gl.LoadFont("FreeSansBold.otf",textSize, 1.9, 40)
 local myFontBig							= gl.LoadFont("FreeSansBold.otf",14, 1.9, 40)
-local myFontBigger							= gl.LoadFont("FreeSansBold.otf",18, 1.9, 40)
+local myFontBigger						= gl.LoadFont("FreeSansBold.otf",18, 1.9, 40)
 -- images
 local optContrast						= "LuaUI/Images/tweaksettings/contrast.png"
 local optCheckBoxOn						= "LuaUI/Images/tweaksettings/chkBoxOn.png"
@@ -833,7 +833,16 @@ function widget:TweakIsAbove(x,y)
 	drawIsAbove(x,y)
  end
 
- function widget:MousePress(x, y, button)
+function widget:TextCommand(command)
+	if command == 'draw' or command == 'votefordraw' then
+		Spring.SendCommands("luarules votefordraw")
+	elseif command == 'voting' or command == 'voteforend'then
+		Spring.SendCommands("luarules voteforend")
+	end
+end
+ 
+ 
+function widget:MousePress(x, y, button)
 	 if button == 1 then
 		 if IsOnButton(x, y, Panel["info"]["x1"],Panel["info"]["y1"], Panel["info"]["x2"], Panel["info"]["y2"]) then
 			 showInfo = false
@@ -850,7 +859,7 @@ function widget:TweakIsAbove(x,y)
 	return false
  end
  
- function widget:KeyPress(key, mods, isRepeat) 
+function widget:KeyPress(key, mods, isRepeat) 
 	if (key == 0x069) and mods["ctrl"] and (not isRepeat) then 				-- i-key
 		showInfo = not showInfo
 		return true
@@ -922,7 +931,7 @@ function widget:TweakMouseMove(mx, my, dx, dy, mButton)
      end
  end
 
- function widget:GetConfigData(data)      -- save
+function widget:GetConfigData(data)      -- save
 	local vsx, vsy = gl.GetViewSizes()
 	return {
 			posX         		= posX,
