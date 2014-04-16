@@ -248,7 +248,7 @@ function gadget:GameStart()
 		gadgetHandler:RemoveGadget()	-- this mission has no triggers, we're done
 	end
 	spawnData = nil		-- kill table once not needed
-	gadgetHandler:RemoveCallIn("RecvLuaMsg")
+	--gadgetHandler:RemoveCallIn("RecvLuaMsg")
 end
 
 local function testCondition(cond, teamID)

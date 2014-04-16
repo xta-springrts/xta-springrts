@@ -658,14 +658,16 @@ else
 	end	
 	
 	function gadget:Update(dt)
-		
-		if not drawWindow then
-			drawWindow = Spring.GetGameRulesParam("ShowEnd") == 1
+
+		if Spring.IsGameOver() then
+			if not drawWindow then
+				drawWindow = Spring.GetGameRulesParam("ShowEnd") == 1
+			end
 		end
 	end
 
 	function gadget:DrawScreen()
-	
+		
 		local function drawBorder(x0, y0, x1, y1, width)
 			glRect(x0, y0, x1, y0 + width)
 			glRect(x0, y1, x1, y1 - width)
@@ -1363,7 +1365,7 @@ else
 	end
 	
 	function gadget:MousePress(mx, my, mButton)
-		if drawWindow and GG.showXTAStats and IsOnButton(mx,my, Panel["back"]["x0"], Panel["back"]["y0"], Panel["back"]["x1"], Panel["back"]["y1"]) then
+		if (not Spring.IsGUIHidden()) and drawWindow and GG.showXTAStats and IsOnButton(mx,my, Panel["back"]["x0"], Panel["back"]["y0"], Panel["back"]["x1"], Panel["back"]["y1"]) then
 			if (mButton == 2 or mButton == 3) then
 				-- Dragging
 				return true

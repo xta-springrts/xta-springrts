@@ -33,7 +33,7 @@ if gadgetHandler:IsSyncedCode() then
 	-------------------
 	-- SYNCED PART --
 	-------------------
-	local ENDTIME			= 60 -- frames
+	local ENDTIME			= 8 -- frames
 	local gameOverFrame
 	local transferStarted	= false
 	
@@ -50,9 +50,12 @@ if gadgetHandler:IsSyncedCode() then
 	-- GameOver callin gets trapped if called from other gadgets with a lower layer first.
 		gameOverFrame = Spring.GetGameFrame()
 		if not transferStarted then
-			if GG.gamewinners then
+			if GG.gamewinners then -- send winning teams to unsynced
 				for _, winner in pairs (GG.gamewinners) do
 					SendToUnsynced("gameWinnners",winner, #GG.gamewinners)
+				end
+				if #GG.gamewinners == 0 then
+					SendToUnsynced("gameWinnners",nil, 0)
 				end
 			else
 				SendToUnsynced("gameWinnners",nil, 0)
@@ -60,6 +63,10 @@ if gadgetHandler:IsSyncedCode() then
 		end
 	end
 	
+	function gadget:GameStart()
+		Spring.SetGameRulesParam("GameStarted",1)
+	end
+		
 	function ShowEndGraphs()
 		if Spring.GetGameRulesParam("ShowEnd") == 0 then
 			for _, unitID in ipairs(Spring.GetAllUnits()) do
@@ -75,11 +82,9 @@ if gadgetHandler:IsSyncedCode() then
 	end
 	
 	function gadget:GameFrame(frame)
-		if Spring.IsGameOver() then
-			if (Spring.GetGameRulesParam("WaitForComends") == 0) or (not Spring.GetGameRulesParam("WaitForComends")) then
-				if gameOverFrame and (frame > gameOverFrame + ENDTIME) then
-					ShowEndGraphs()
-				end
+		if Spring.IsGameOver() then					
+			if gameOverFrame and (frame > gameOverFrame + ENDTIME) then
+				ShowEndGraphs()
 			end	
 		end
 		
@@ -87,6 +92,9 @@ if gadgetHandler:IsSyncedCode() then
 			transferStarted = true
 			for _, winner in pairs (GG.gamewinners) do
 				SendToUnsynced("gameWinnners",winner, #GG.gamewinners)
+			end
+			if #GG.gamewinners == 0 then
+				SendToUnsynced("gameWinnners",nil, 0)
 			end
 		end
 	end
@@ -98,27 +106,37 @@ else
 	
 	local myFontHuge 	 				= gl.LoadFont("FreeSansBold.otf",72, 1.9, 40)
 	local myFont						= gl.LoadFont("FreeSansBold.otf",12, 1.9, 40)
+	local myFontBig						= gl.LoadFont("FreeSansBold.otf",14, 1.9, 40)
 	local vsx, vsy 						= gl.GetViewSizes()
 	local myTeamID 						= Spring.GetMyTeamID()
 	local myAllyID 						= select(6, Spring.GetTeamInfo(myTeamID))
 	local gaiaID						= Spring.GetGaiaTeamID()
 	local gaiaAllyID 					= select(6, Spring.GetTeamInfo(gaiaID))
-	local winners						= {}
-	local transferComplete				= false
+	local isWinner						= {}
+	local winnerList					= {}
+	local transferComplete				= false -- whether uncynced part has all winner information
 	local buttonBarW					= 200
 	local buttonBarH					= 20
+	local windowW						= 300
+	local windowH						= 100
 	local bbx							= vsx - buttonBarW
 	local bby							= vsy - buttonBarH
 	local Button						= {}
+	local Window						= {}
 	GG.showXTAStats						= true
 	local hideEndGraphs					= true
 	local debugMode						= false
-	local mySpectatingState
+	local mySpectatingState				= Spring.GetSpectatingState()
 	local victoryPlayed					= false
-	
+	local gameStarted					= false
+	local showGraph 					= false
+		
 	local function SetUpButtons()
 		Button["xta"]		= {}
 		Button["engine"]	= {}
+		Button["exit"]		= {}
+		Button["force"]		= {}
+		Window["exit"]		= {}
 		
 		Button["xta"]["x0"]		= bbx 
 		Button["xta"]["x1"]		= bbx + buttonBarW/2
@@ -132,7 +150,26 @@ else
 		Button["engine"]["y0"]		= bby
 		Button["engine"]["y1"] 		= bby + buttonBarH
 		Button["engine"]["click"]  	= GG.showXTAStats
-		Button["engine"]["mouse"]	= false	
+		Button["engine"]["mouse"]	= false
+		
+		-- exit window and button
+		Window["exit"]["x0"]		= vsx/2 - windowW/2
+		Window["exit"]["x1"]		= vsx/2 + windowW/2
+		Window["exit"]["y0"]		= vsy/2 - windowH/2
+		Window["exit"]["y1"]		= vsy/2 + windowH/2
+		
+		Button["exit"]["x0"]		= Window["exit"]["x0"] + 25
+		Button["exit"]["x1"]		= Window["exit"]["x0"] + 75
+		Button["exit"]["y0"]		= Window["exit"]["y0"] + 10
+		Button["exit"]["y1"]		= Window["exit"]["y0"] + 35
+		Button["exit"]["mouse"]		= false
+		
+		Button["force"]["x0"]		= Window["exit"]["x0"] + 150
+		Button["force"]["x1"]		= Window["exit"]["x0"] + 275
+		Button["force"]["y0"]		= Window["exit"]["y0"] + 10
+		Button["force"]["y1"]		= Window["exit"]["y0"] + 35
+		Button["force"]["mouse"]	= false
+		
 	end
 	
 	local function IsOnButton(x, y, BLcornerX, BLcornerY,TRcornerX,TRcornerY)
@@ -147,20 +184,15 @@ else
 	function gadget:Initialize()
 		gadgetHandler:AddSyncAction("gameWinnners", GetGameWinners)
 		SetUpButtons()
-		mySpectatingState = Spring.GetSpectatingState()
 	end
 		
 	function GetGameWinners(_, winner, n)
-		if winner then
-			winners[winner] = true
+		if winner and not transferComplete then
+			isWinner[winner] = true
+			winnerList[#winnerList+1] = winner
 		end
 		
-		local count = 0
-		for _,_ in pairs(winners) do
-			count = count + 1
-		end
-		
-		if n >= count or (not winner) then 
+		if #winnerList >= n or (not winner) then 
 			transferComplete = true
 			GG.showXTAStats	= tonumber(Spring.GetConfigInt("EngineGraphFirst",0) or 0) == 0
 			
@@ -170,9 +202,18 @@ else
 			-- play victory/defeat sounds
 			
 			if not victoryPlayed then
-				if winners and winners[myAllyID] and (not mySpectatingState) then
+				-- winners
+				if isWinner and isWinner[myAllyID] and (not mySpectatingState) then
 					Spring.PlaySoundFile("sounds/victory1.wav",8.0,0,0,0,0,0,0,'userinterface')
 					victoryPlayed = true
+				-- losers
+				elseif #winnerList > 0 then
+					-- no action
+				--draw
+				elseif #winnerList == 0 then
+					Spring.PlaySoundFile("sounds/victory3.wav",8.0,0,0,0,0,0,0,'userinterface')
+					victoryPlayed = true
+				--spectators
 				elseif mySpectatingState then
 					Spring.PlaySoundFile("sounds/victory1.wav",8.0,0,0,0,0,0,0,'userinterface')
 					victoryPlayed = true
@@ -181,12 +222,24 @@ else
 		end
 	end
 	
+	function gadget:Update()
+		if not gameStarted then gameStarted = Spring.GetGameRulesParam("GameStarted") == 1 end
+		
+		if Spring.IsGameOver() and gameStarted then
+			showGraph = Spring.GetGameRulesParam("ShowEnd") == 1
+		end
+		
+		if debugMode and Spring.IsGameOver() then
+			Echo("Debug info: Wait comends status:", Spring.GetGameRulesParam("WaitForComends"), "Show End status:", Spring.GetGameRulesParam("ShowEnd"))		
+		end
+	end
+		
 	function gadget:DrawScreen()
+		
 		if (not Spring.IsGUIHidden()) and transferComplete then
 			
-			local showGraph = Spring.GetGameRulesParam("ShowEnd") == 1
 			-- end graph related options
-			if Spring.IsGameOver() then
+			if Spring.IsGameOver() and gameStarted then
 				-- show stats buttons
 				-- unhide end graphs
 				if showGraph and (not GG.showXTAStats) and hideEndGraphs then
@@ -233,28 +286,85 @@ else
 			end
 			
 			-- End text
-			if not showGraph then
-				-- show victory/defeat text		
-				local label
-				myFontHuge:Begin()
-				
-				if winners and winners[myAllyID] and (not mySpectatingState) then
-					label = "VICTORY"
-					myFontHuge:SetTextColor({1, 1, 1, 1})
-				elseif winners and (not mySpectatingState) then
-					label = "DEFEAT"
-					myFontHuge:SetTextColor({1, 0, 0, 1})
+			if gameStarted then 
+				if not showGraph then					
+					-- show victory/defeat text		
+					local label
+					myFontHuge:Begin()
+					
+					if isWinner and isWinner[myAllyID] and (not mySpectatingState) then
+						label = "VICTORY"
+						myFontHuge:SetTextColor({1, 1, 1, 1})
+					elseif isWinner and (not mySpectatingState) and #winnerList > 0 then
+						label = "DEFEAT"
+						myFontHuge:SetTextColor({1, 0, 0, 1})
+					elseif #winnerList == 0 then
+						label = "DRAW"
+						myFontHuge:SetTextColor({1, 1, 1, 1})
+					else
+						label = "THE END"
+						myFontHuge:SetTextColor({1, 0, 0, 1})
+					end
+					
+					myFontHuge:Print(label,vsx/2,vsy/2,72,'cbs')
+					myFontHuge:End()
 				else
-					label = "THE END"
-					myFontHuge:SetTextColor({1, 0, 0, 1})
+					local label
+					myFontBig:Begin()
+					
+					if isWinner and isWinner[myAllyID] and (not mySpectatingState) then
+						label = "VICTORY"
+						myFontBig:SetTextColor({1, 1, 1, 1})
+					elseif isWinner and (not mySpectatingState) and #winnerList > 0 then
+						label = "DEFEAT"
+						myFontBig:SetTextColor({1, 0, 0, 1})
+					elseif #winnerList == 0 then
+						label = "DRAW"
+						myFontBig:SetTextColor({1, 1, 1, 1})
+					else
+						local wteam = (#winnerList > 0 and table.concat({"team ",winnerList[1]})) or "none"
+						local plur = (#winnerList > 1 and "+") or ""
+						label = table.concat({"Winner: ",wteam,plur})
+						myFontBig:SetTextColor({0.75, 0.75, 0.85, 1})
+					end
+					
+					myFontBig:Print(label,vsx-60,vsy-60,14,'rbs')
+					myFontBig:End()
 				end
+			elseif not showGraph and Spring.IsGameOver() and #winnerList == 0 then
+			-- exit window and button
+				-- window
+				gl.Color(0.3, 0.3, 0.4, 0.4) -- grey
+				gl.Rect(Window["exit"]["x0"],Window["exit"]["y0"],Window["exit"]["x1"],Window["exit"]["y1"])
+				--exit button 
+				if Button["exit"]["mouse"] then
+					gl.Color(0.8, 0.8, 0.2, 0.5) -- yellow on mouseover
+				else
+					gl.Color(0.3, 0.3, 0.4, 0.55) -- grey
+				end
+				gl.Rect(Button["exit"]["x0"],Button["exit"]["y0"],Button["exit"]["x1"],Button["exit"]["y1"])
 				
-				myFontHuge:Print(label,vsx/2,vsy/2,72,'cbs')
-				myFontHuge:End()
-			end
+				--force button 
+				if Button["force"]["mouse"] then
+					gl.Color(0.8, 0.8, 0.2, 0.5) -- yellow on mouseover
+				else
+					gl.Color(0.3, 0.3, 0.4, 0.55) -- grey
+				end
+				gl.Rect(Button["force"]["x0"],Button["force"]["y0"],Button["force"]["x1"],Button["force"]["y1"])
+				
+				--text
+				myFontBig:Begin()
+				myFontBig:SetTextColor({0.8, 0.8, 0.4, 1.0})
+				myFontBig:Print("Game was abandoned by a higher Force",Window["exit"]["x0"]+10,Window["exit"]["y1"]-30,14,'bs')
+				myFontBig:SetTextColor({1, 1, 1, 1.0})
+				myFontBig:Print("Exit",(Button["exit"]["x0"]+Button["exit"]["x1"])/2,Button["exit"]["y0"]+3,14,'cds')
+				myFontBig:Print("Join the Force",(Button["force"]["x0"]+Button["force"]["x1"])/2,Button["force"]["y0"]+3,14,'cds')
+				myFontBig:End()
+				gl.Color(1, 1, 1, 1)
+			end			
 		end
 	end
-	
+		
 	function gadget:KeyPress(key, mods, isRepeat)
 		if mods['alt'] and mods['ctrl'] then -- numpad5			
 			if key == 0x105 then			
@@ -268,19 +378,12 @@ else
 		end
 		return false
 	end
-	
-	function gadget:Update()
-		if debugMode and Spring.IsGameOver() then
-			Echo("Debug info: Wait comends status:", Spring.GetGameRulesParam("WaitForComends"), "Show End status:", Spring.GetGameRulesParam("ShowEnd"))		
-		end
-	end
-	
+			
 	function gadget:MousePress(mx, my, mButton)
 		
-		if (not Spring.IsGUIHidden()) and Spring.IsGameOver() and transferComplete then
+		if (not Spring.IsGUIHidden()) and Spring.IsGameOver() and transferComplete and gameStarted then
 			if IsOnButton(mx,my,Button["xta"]["x0"],Button["xta"]["y0"],Button["engine"]["x1"],Button["engine"]["y1"]) then
 				if mButton == 1 then
-					local showGraph = Spring.GetGameRulesParam("ShowEnd") == 1
 					if showGraph then
 						if IsOnButton(mx,my,Button["xta"]["x0"],Button["xta"]["y0"],Button["xta"]["x1"],Button["xta"]["y1"]) then
 							Spring.SendCommands('endgraph 0')
@@ -302,6 +405,17 @@ else
 					return true
 				end
 			end
+		elseif (not Spring.IsGUIHidden()) and Spring.IsGameOver() and not gameStarted then
+			if IsOnButton(mx,my,Window["exit"]["x0"],Window["exit"]["y0"],Window["exit"]["x1"],Window["exit"]["y1"]) then
+				if mButton == 1 then
+					if IsOnButton(mx,my,Button["exit"]["x0"],Button["exit"]["y0"],Button["exit"]["x1"],Button["exit"]["y1"]) then
+						Spring.SendCommands("quitforce")
+					elseif IsOnButton(mx,my,Button["force"]["x0"],Button["force"]["y0"],Button["force"]["x1"],Button["force"]["y1"]) then
+						Echo("You have joined the Force!")
+						Spring.SendCommands("quitforce")
+					end	
+				end
+			end
 		end
 		return false
 	end
@@ -311,9 +425,9 @@ else
 	end
 	
 	function gadget:MouseMove(mx, my, dx, dy, mButton)
-		if (not Spring.IsGUIHidden()) and Spring.IsGameOver() and transferComplete then
+		if (not Spring.IsGUIHidden()) and Spring.IsGameOver() and (transferComplete or not gameStarted) then
 			-- Dragging
-			if mButton == 2 then
+			if mButton == 2 or mButton == 3 then
 				bbx = math.max(0, math.min(bbx+dx, vsx-buttonBarW))	--prevent moving off screen
 				bby = math.max(0, math.min(bby+dy, vsy-buttonBarH))
 			end
@@ -323,13 +437,24 @@ else
 	end
 	
 	function gadget:IsAbove(mx,my)
-		if (not Spring.IsGUIHidden()) and Spring.IsGameOver() and transferComplete then
+		if (not Spring.IsGUIHidden()) and Spring.IsGameOver() then
 			Button["xta"]["mouse"] = false
 			Button["engine"]["mouse"] = false
-			if IsOnButton(mx,my,Button["xta"]["x0"],Button["xta"]["y0"],Button["xta"]["x1"],Button["xta"]["y1"]) then
-				Button["xta"]["mouse"] = true
-			elseif IsOnButton(mx,my,Button["engine"]["x0"],Button["engine"]["y0"],Button["engine"]["x1"],Button["engine"]["y1"]) then
-				Button["engine"]["mouse"] = true
+			Button["exit"]["mouse"] = false
+			Button["force"]["mouse"] = false
+						
+			if transferComplete then
+				if IsOnButton(mx,my,Button["xta"]["x0"],Button["xta"]["y0"],Button["xta"]["x1"],Button["xta"]["y1"]) then
+					Button["xta"]["mouse"] = true
+				elseif IsOnButton(mx,my,Button["engine"]["x0"],Button["engine"]["y0"],Button["engine"]["x1"],Button["engine"]["y1"]) then
+					Button["engine"]["mouse"] = true
+				end
+			end
+			
+			if IsOnButton(mx,my,Button["exit"]["x0"],Button["exit"]["y0"],Button["exit"]["x1"],Button["exit"]["y1"]) then
+				Button["exit"]["mouse"] = true
+			elseif IsOnButton(mx,my,Button["force"]["x0"],Button["force"]["y0"],Button["force"]["x1"],Button["force"]["y1"]) then
+				Button["force"]["mouse"] = true
 			end
 		end
 	end
