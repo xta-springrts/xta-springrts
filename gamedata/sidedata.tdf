@@ -38,7 +38,7 @@
 		canbuild7=arm_fusion_reactor;
 		canbuild8=arm_advanced_radar_tower;
 		canbuild9=arm_radar_jamming_tower;
-		canbuild10=arm_light_laser_tower;
+		canbuild10=arm_easter_egg;
 		canbuild11=arm_sentinel;
 		canbuild12=arm_flakker;
 		canbuild13=arm_guardian;
@@ -79,7 +79,7 @@
 		canbuild7=arm_fusion_reactor;
 		canbuild8=arm_advanced_radar_tower;
 		canbuild9=arm_radar_jamming_tower;
-		canbuild10=arm_light_laser_tower;
+		canbuild10=arm_easter_egg;
 		canbuild11=arm_sentinel;
 		canbuild12=arm_flakker;
 		canbuild13=arm_guardian;
@@ -148,7 +148,7 @@
 		canbuild7=arm_fusion_reactor;
 		canbuild8=arm_advanced_radar_tower;
 		canbuild9=arm_radar_jamming_tower;
-		canbuild10=arm_light_laser_tower;
+		canbuild10=arm_easter_egg;
 		canbuild11=arm_sentinel;
 		canbuild12=arm_flakker;
 		canbuild13=arm_guardian;
@@ -264,7 +264,7 @@
 		canbuild10=arm_shipyard;
 		canbuild11=arm_sub_pen;
 		canbuild12=arm_nano_tower;
-		canbuild13=arm_light_laser_tower;
+		canbuild13=arm_easter_egg;
 		canbuild14=arm_radar_tower;
 		canbuild15=arm_adv_aircraft_plant;
 		canbuild16=arm_geothermal_powerplant;
@@ -292,7 +292,7 @@
 		canbuild9=arm_aircraft_plant;
 		canbuild10=arm_shipyard;
 		canbuild11=arm_sub_pen;
-		canbuild12=arm_light_laser_tower;
+		canbuild12=arm_easter_egg;
 		canbuild13=arm_radar_tower;
 		canbuild14=arm_adv_kbot_lab;
 		canbuild15=arm_geothermal_powerplant;
@@ -340,7 +340,7 @@
 		canbuild9=arm_aircraft_plant;
 		canbuild10=arm_shipyard;
 		canbuild11=arm_sub_pen;
-		canbuild12=arm_light_laser_tower;
+		canbuild12=arm_easter_egg;
 		canbuild13=arm_radar_tower;
 		canbuild14=arm_adv_kbot_lab;
 		canbuild15=arm_geothermal_powerplant;
@@ -374,7 +374,7 @@
 		canbuild10=arm_shipyard;
 		canbuild11=arm_sub_pen;
 		canbuild12=arm_nano_tower;
-		canbuild13=arm_light_laser_tower;
+		canbuild13=arm_easter_egg;
 		canbuild14=arm_radar_tower;
 		canbuild15=arm_torpedo_launcher; //added v9 Beta
 		canbuild16=arm_adv_kbot_lab;
@@ -403,7 +403,7 @@
 		canbuild9=arm_aircraft_plant;
 		canbuild10=arm_shipyard;
 		canbuild11=arm_sub_pen;
-		canbuild12=arm_light_laser_tower;
+		canbuild12=arm_easter_egg;
 		canbuild13=arm_radar_tower;
 		canbuild14=arm_floating_radar;
 		canbuild15=arm_sonar_station;
@@ -436,7 +436,7 @@
 		canbuild9=arm_aircraft_plant;
 		canbuild10=arm_shipyard;
 		canbuild11=arm_sub_pen;
-		canbuild12=arm_light_laser_tower;
+		canbuild12=arm_easter_egg;
 		canbuild13=arm_radar_tower;
 		canbuild14=arm_floating_radar;
 		canbuild15=arm_sonar_station;
@@ -470,7 +470,7 @@
 		canbuild9=arm_aircraft_plant;
 		canbuild10=arm_shipyard;
 		canbuild11=arm_sub_pen;
-		canbuild12=arm_light_laser_tower;
+		canbuild12=arm_easter_egg;
 		canbuild13=arm_radar_tower;
 		canbuild14=arm_floating_radar;
 		canbuild15=arm_sonar_station;
@@ -504,7 +504,7 @@
 		canbuild9=arm_aircraft_plant;
 		canbuild10=arm_shipyard;
 		canbuild11=arm_sub_pen;
-		canbuild12=arm_light_laser_tower;
+		canbuild12=arm_easter_egg;
 		canbuild13=arm_radar_tower;
 		canbuild14=arm_floating_radar;
 		canbuild15=arm_sonar_station;
@@ -553,7 +553,7 @@
 		canbuild9=arm_aircraft_plant;
 		canbuild10=arm_shipyard;
 		canbuild11=arm_sub_pen;
-		canbuild12=arm_light_laser_tower;
+		canbuild12=arm_easter_egg;
 		canbuild13=arm_radar_tower;
 		canbuild14=arm_floating_radar;
 		canbuild15=arm_sonar_station;
@@ -587,7 +587,7 @@
 		canbuild9=arm_aircraft_plant;
 		canbuild10=arm_shipyard;
 		canbuild11=arm_sub_pen;
-		canbuild12=arm_light_laser_tower;
+		canbuild12=arm_easter_egg;
 		canbuild13=arm_radar_tower;
 		canbuild14=arm_floating_radar;
 		canbuild15=arm_sonar_station;
@@ -621,7 +621,7 @@
 		canbuild9=arm_aircraft_plant;
 		canbuild10=arm_shipyard;
 		canbuild11=arm_sub_pen;
-		canbuild12=arm_light_laser_tower;
+		canbuild12=arm_easter_egg;
 		canbuild13=arm_radar_tower;
 		canbuild14=arm_floating_radar;
 		canbuild15=arm_sonar_station;
@@ -655,7 +655,7 @@
 		canbuild9=arm_aircraft_plant;
 		canbuild10=arm_shipyard;
 		canbuild11=arm_sub_pen;
-		canbuild12=arm_light_laser_tower;
+		canbuild12=arm_easter_egg;
 		canbuild13=arm_radar_tower;
 		canbuild14=arm_floating_radar;
 		canbuild15=arm_sonar_station;
@@ -689,7 +689,7 @@
 		canbuild9=arm_aircraft_plant;
 		canbuild10=arm_shipyard;
 		canbuild11=arm_sub_pen;
-		canbuild12=arm_light_laser_tower;
+		canbuild12=arm_easter_egg;
 		canbuild13=arm_radar_tower;
 		canbuild14=arm_floating_radar;
 		canbuild15=arm_sonar_station;
@@ -723,7 +723,7 @@
 		canbuild9=arm_aircraft_plant;
 		canbuild10=arm_shipyard;
 		canbuild11=arm_sub_pen;
-		canbuild12=arm_light_laser_tower;
+		canbuild12=arm_easter_egg;
 		canbuild13=arm_radar_tower;
 		canbuild14=arm_floating_radar;
 		canbuild15=arm_sonar_station;
@@ -751,7 +751,7 @@
 		canbuild3=arm_tidal_generator;
 		canbuild4=arm_sonar_station;
 		canbuild5=arm_floating_radar;
-		canbuild6=arm_light_laser_tower;
+		canbuild6=arm_easter_egg;
 		canbuild7=arm_floating_light_laser_tower;
 		canbuild8=arm_shipyard;
 		canbuild9=arm_sub_pen;
@@ -809,7 +809,7 @@
 		canbuild9=arm_aircraft_plant;
 		canbuild10=arm_shipyard;
 		canbuild11=arm_sub_pen;
-		canbuild12=arm_light_laser_tower;
+		canbuild12=arm_easter_egg;
 		canbuild13=arm_radar_tower;
 		canbuild14=arm_adv_aircraft_plant;
 		canbuild15=arm_geothermal_powerplant;
@@ -856,7 +856,7 @@
 		canbuild10=arm_shipyard;
 		canbuild11=arm_sub_pen;
 		canbuild12=arm_nano_tower;
-		canbuild13=arm_light_laser_tower;
+		canbuild13=arm_easter_egg;
 		canbuild14=arm_radar_tower;
 		canbuild15=arm_torpedo_launcher; //added v9 beta
 		canbuild16=arm_adv_vehicle_plant;
@@ -886,7 +886,7 @@
 		canbuild10=arm_shipyard;
 		canbuild11=arm_sub_pen;
 		canbuild12=arm_nano_tower;
-		canbuild13=arm_light_laser_tower;
+		canbuild13=arm_easter_egg;
 		canbuild14=arm_radar_tower;
 		canbuild15=arm_torpedo_launcher; //added v9 beta
 		canbuild16=arm_adv_vehicle_plant;
@@ -927,7 +927,7 @@
 		canbuild9=arm_aircraft_plant;
 		canbuild10=arm_shipyard;
 		canbuild11=arm_sub_pen;
-		canbuild12=arm_light_laser_tower;
+		canbuild12=arm_easter_egg;
 		canbuild13=arm_radar_tower;
 		canbuild14=arm_floating_radar;
 		canbuild15=arm_sonar_station;
@@ -961,7 +961,7 @@
 		canbuild9=arm_aircraft_plant;
 		canbuild10=arm_shipyard;
 		canbuild11=arm_sub_pen;
-		canbuild12=arm_light_laser_tower;
+		canbuild12=arm_easter_egg;
 		canbuild13=arm_radar_tower;
 		canbuild14=arm_floating_radar;
 		canbuild15=arm_sonar_station;
@@ -995,7 +995,7 @@
 		canbuild9=arm_aircraft_plant;
 		canbuild10=arm_shipyard;
 		canbuild11=arm_sub_pen;
-		canbuild12=arm_light_laser_tower;
+		canbuild12=arm_easter_egg;
 		canbuild13=arm_radar_tower;
 		canbuild14=arm_floating_radar;
 		canbuild15=arm_sonar_station;
@@ -1025,7 +1025,7 @@
 		canbuild5=arm_metal_extractor;
 		canbuild6=arm_metal_maker;
 		canbuild7=arm_advanced_radar_tower;
-		canbuild8=arm_light_laser_tower;
+		canbuild8=arm_easter_egg;
 		canbuild9=arm_moho_mine;
 		canbuild10=arm_dragons_teeth;
 		canbuild11=arm_fortification_wall;
@@ -1079,7 +1079,7 @@
 		canbuild10=arm_shipyard;
 		canbuild11=arm_sub_pen;
 		canbuild12=arm_nano_tower;
-		canbuild13=arm_light_laser_tower;
+		canbuild13=arm_easter_egg;
 		canbuild14=arm_radar_tower;
 		canbuild15=arm_torpedo_launcher; //added v9 beta
 		canbuild16=arm_adv_vehicle_plant;
@@ -1221,7 +1221,7 @@
 		canbuild7=core_fusion_power_plant;
 		canbuild8=core_advanced_radar_tower;
 		canbuild9=core_radar_jamming_tower;
-		canbuild10=core_light_laser_tower;
+		canbuild10=core_easter_egg;
 		canbuild11=core_gaat_gun;
 		canbuild12=core_cobra;
 		canbuild13=core_punisher;
@@ -1265,7 +1265,7 @@
 		canbuild7=core_fusion_power_plant;
 		canbuild8=core_advanced_radar_tower;
 		canbuild9=core_radar_jamming_tower;
-		canbuild10=core_light_laser_tower;
+		canbuild10=core_easter_egg;
 		canbuild11=core_gaat_gun;
 		canbuild12=core_cobra;
 		canbuild13=core_punisher;
@@ -1338,7 +1338,7 @@
 		canbuild7=core_fusion_power_plant;
 		canbuild8=core_advanced_radar_tower;
 		canbuild9=core_radar_jamming_tower;
-		canbuild10=core_light_laser_tower;
+		canbuild10=core_easter_egg;
 		canbuild11=core_gaat_gun;
 		canbuild12=core_cobra;
 		canbuild13=core_punisher;
@@ -1451,7 +1451,7 @@
 		canbuild10=core_shipyard;
 		canbuild11=core_sub_pen;
 		canbuild12=core_nano_tower;
-		canbuild13=core_light_laser_tower;
+		canbuild13=core_easter_egg;
 		canbuild14=core_radar_tower;
 		canbuild15=core_adv_aircraft_plant;
 		canbuild16=core_geothermal_powerplant;
@@ -1479,7 +1479,7 @@
 		canbuild9=core_aircraft_plant;
 		canbuild10=core_shipyard;
 		canbuild11=core_sub_pen;
-		canbuild12=core_light_laser_tower;
+		canbuild12=core_easter_egg;
 		canbuild13=core_radar_tower;
 		canbuild14=core_adv_vehicle_plant;
 		canbuild15=core_geothermal_powerplant;
@@ -1526,7 +1526,7 @@
 		canbuild10=core_shipyard;
 		canbuild11=core_sub_pen;
 		canbuild12=core_nano_tower;
-		canbuild13=core_light_laser_tower;
+		canbuild13=core_easter_egg;
 		canbuild14=core_radar_tower;
 		canbuild15=core_torpedo_launcher; //added v9beta
 		canbuild16=core_adv_kbot_lab;
@@ -1555,7 +1555,7 @@
 		canbuild9=core_aircraft_plant;
 		canbuild10=core_shipyard;
 		canbuild11=core_sub_pen;
-		canbuild12=core_light_laser_tower;
+		canbuild12=core_easter_egg;
 		canbuild13=core_radar_tower;
 		canbuild14=core_adv_vehicle_plant;
 		canbuild15=core_geothermal_powerplant;
@@ -1601,7 +1601,7 @@
 		canbuild9=core_aircraft_plant;
 		canbuild10=core_shipyard;
 		canbuild11=core_sub_pen;
-		canbuild12=core_light_laser_tower;
+		canbuild12=core_easter_egg;
 		canbuild13=core_radar_tower;
 		canbuild14=core_floating_radar;
 		canbuild15=core_sonar_station;
@@ -1634,7 +1634,7 @@
 		canbuild9=core_aircraft_plant;
 		canbuild10=core_shipyard;
 		canbuild11=core_sub_pen;
-		canbuild12=core_light_laser_tower;
+		canbuild12=core_easter_egg;
 		canbuild13=core_radar_tower;
 		canbuild14=core_floating_radar;
 		canbuild15=core_sonar_station;
@@ -1668,7 +1668,7 @@
 		canbuild9=core_aircraft_plant;
 		canbuild10=core_shipyard;
 		canbuild11=core_sub_pen;
-		canbuild12=core_light_laser_tower;
+		canbuild12=core_easter_egg;
 		canbuild13=core_radar_tower;
 		canbuild14=core_floating_radar;
 		canbuild15=core_sonar_station;
@@ -1702,7 +1702,7 @@
 		canbuild9=core_aircraft_plant;
 		canbuild10=core_shipyard;
 		canbuild11=core_sub_pen;
-		canbuild12=core_light_laser_tower;
+		canbuild12=core_easter_egg;
 		canbuild13=core_radar_tower;
 		canbuild14=core_floating_radar;
 		canbuild15=core_sonar_station;
@@ -1736,7 +1736,7 @@
 		canbuild9=core_aircraft_plant;
 		canbuild10=core_shipyard;
 		canbuild11=core_sub_pen;
-		canbuild12=core_light_laser_tower;
+		canbuild12=core_easter_egg;
 		canbuild13=core_radar_tower;
 		canbuild14=core_floating_radar;
 		canbuild15=core_sonar_station;
@@ -1770,7 +1770,7 @@
 		canbuild9=core_aircraft_plant;
 		canbuild10=core_shipyard;
 		canbuild11=core_sub_pen;
-		canbuild12=core_light_laser_tower;
+		canbuild12=core_easter_egg;
 		canbuild13=core_radar_tower;
 		canbuild14=core_floating_radar;
 		canbuild15=core_sonar_station;
@@ -1804,7 +1804,7 @@
 		canbuild9=core_aircraft_plant;
 		canbuild10=core_shipyard;
 		canbuild11=core_sub_pen;
-		canbuild12=core_light_laser_tower;
+		canbuild12=core_easter_egg;
 		canbuild13=core_radar_tower;
 		canbuild14=core_floating_radar;
 		canbuild15=core_sonar_station;
@@ -1838,7 +1838,7 @@
 		canbuild9=core_aircraft_plant;
 		canbuild10=core_shipyard;
 		canbuild11=core_sub_pen;
-		canbuild12=core_light_laser_tower;
+		canbuild12=core_easter_egg;
 		canbuild13=core_radar_tower;
 		canbuild14=core_floating_radar;
 		canbuild15=core_sonar_station;
@@ -1872,7 +1872,7 @@
 		canbuild9=core_aircraft_plant;
 		canbuild10=core_shipyard;
 		canbuild11=core_sub_pen;
-		canbuild12=core_light_laser_tower;
+		canbuild12=core_easter_egg;
 		canbuild13=core_radar_tower;
 		canbuild14=core_floating_radar;
 		canbuild15=core_sonar_station;
@@ -1906,7 +1906,7 @@
 		canbuild9=core_aircraft_plant;
 		canbuild10=core_shipyard;
 		canbuild11=core_sub_pen;
-		canbuild12=core_light_laser_tower;
+		canbuild12=core_easter_egg;
 		canbuild13=core_radar_tower;
 		canbuild14=core_floating_radar;
 		canbuild15=core_sonar_station;
@@ -1934,7 +1934,7 @@
 		canbuild3=core_tidal_generator;
 		canbuild4=core_floating_radar;
 		canbuild5=core_sonar_station;
-		canbuild6=core_light_laser_tower;
+		canbuild6=core_easter_egg;
 		canbuild7=core_floating_light_laser_tower;
 		canbuild8=core_shipyard;
 		canbuild9=core_sub_pen;
@@ -1994,7 +1994,7 @@
 		canbuild9=core_aircraft_plant;
 		canbuild10=core_shipyard;
 		canbuild11=core_sub_pen;
-		canbuild12=core_light_laser_tower;
+		canbuild12=core_easter_egg;
 		canbuild13=core_radar_tower;
 		canbuild14=core_adv_aircraft_plant;
 		canbuild15=core_geothermal_powerplant;
@@ -2041,7 +2041,7 @@
 		canbuild10=core_shipyard;
 		canbuild11=core_sub_pen;
 		canbuild12=core_nano_tower;
-		canbuild13=core_light_laser_tower;
+		canbuild13=core_easter_egg;
 		canbuild14=core_radar_tower;
 		canbuild15=core_torpedo_launcher; //added v9Beta
 		canbuild16=core_adv_vehicle_plant;
@@ -2071,7 +2071,7 @@
 		canbuild10=core_shipyard;
 		canbuild11=core_sub_pen;
 		canbuild12=core_nano_tower;
-		canbuild13=core_light_laser_tower;
+		canbuild13=core_easter_egg;
 		canbuild14=core_radar_tower;
 		canbuild15=core_torpedo_launcher; //added v9Beta
 		canbuild16=core_adv_vehicle_plant;
@@ -2113,7 +2113,7 @@
 		canbuild9=core_aircraft_plant;
 		canbuild10=core_shipyard;
 		canbuild11=core_sub_pen;
-		canbuild12=core_light_laser_tower;
+		canbuild12=core_easter_egg;
 		canbuild13=core_radar_tower;
 		canbuild14=core_floating_radar;
 		canbuild15=core_sonar_station;
@@ -2147,7 +2147,7 @@
 		canbuild9=core_aircraft_plant;
 		canbuild10=core_shipyard;
 		canbuild11=core_sub_pen;
-		canbuild12=core_light_laser_tower;
+		canbuild12=core_easter_egg;
 		canbuild13=core_radar_tower;
 		canbuild14=core_floating_radar;
 		canbuild15=core_sonar_station;
@@ -2181,7 +2181,7 @@
 		canbuild9=core_aircraft_plant;
 		canbuild10=core_shipyard;
 		canbuild11=core_sub_pen;
-		canbuild12=core_light_laser_tower;
+		canbuild12=core_easter_egg;
 		canbuild13=core_radar_tower;
 		canbuild14=core_floating_radar;
 		canbuild15=core_sonar_station;
@@ -2268,7 +2268,7 @@
 		canbuild5=core_metal_extractor;
 		canbuild6=core_metal_maker;
 		canbuild7=core_advanced_radar_tower;
-		canbuild8=core_light_laser_tower;
+		canbuild8=core_easter_egg;
 		canbuild9=core_moho_mine;
 		canbuild10=core_geothermal_powerplant;
 		canbuild11=core_dragons_teeth;
@@ -2396,7 +2396,7 @@
 		//canbuild9=arm_aircraft_plant;
 		//canbuild10=arm_shipyard;
 		//canbuild11=arm_sub_pen;
-		//canbuild12=arm_light_laser_tower;
+		//canbuild12=arm_easter_egg;
 		canbuild13=arm_radar_tower;
 		canbuild14=arm_floating_radar;
 		canbuild15=arm_sonar_station;
@@ -2422,7 +2422,7 @@
 		//canbuild9=core_aircraft_plant;
 		//canbuild10=core_shipyard;
 		//canbuild11=core_sub_pen;
-		//canbuild12=core_light_laser_tower;
+		//canbuild12=core_easter_egg;
 		canbuild13=core_radar_tower;
 		canbuild14=core_floating_radar;
 		canbuild15=core_sonar_station;
