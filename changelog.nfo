@@ -21,6 +21,23 @@
     ศอออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออผ
     Logo by ElementalGizmo
 	
+------------------- Change Log of XTA 9.739 Svn 674
+------------------ by Jools		
+- Fix slow brakerate of transports
+- Increased tolerance and max fire angle (52 -> 64 degrees, or 26 -> 32 per side) of core rapier to help it overcome targetting issues
+  on steep slopes, which arm brawler didn't have in spite of similar values of those parameters.
+- Reduce arm zeus hp 4200 -> 3800
+- arm/core torpedo launcher: double damage and increase reloadtime from 3.0 to 5.0.
+- Increase t2 sub's damage against other subs by 20 %, because otherwise t1 sub would deal more dps per build cost
+- Increase slope tolerance of metal makers, solars, windgens, storages 10 -> 15 degrees, and t1 metal extractors 14 -> 18 degrees.
+- Fix team commander ends fault in games with more than 2 teams
+- Remove countdown text before replay starts
+- Add commands /draw (alias votefordraw)  and /voting (alias voteforend). The first allows you to agree to mutually draw, the second 
+  allows you vote to declare game over if all enemies are abandoned
+- Carry over commander kills when morphing
+- Various small fixes: unload some widgets on gameover etc...
+- Some easter eggs :)
+
 ------------------- Change Log of XTA 9.738 Svn 661
 ------------------ by Jools	
 	
