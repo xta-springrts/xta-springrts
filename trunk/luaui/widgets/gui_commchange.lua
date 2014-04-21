@@ -740,7 +740,8 @@ function widget:DrawScreen()
 			
 			-- Game state info label
 			myFont:SetTextColor({1, 1, 1, 1})
-			local txt = strInfo or ""
+			local txt = (Spring.IsReplay() and "Waiting for replay to start...") or (strInfo or "")
+			
 			myFont:Print("Status: " .. txt, Button["specinfo"]["x0"] + 10 ,Button["specinfo"]["y0"] + 5, 11, 'xo')
 			myFont:End()
 			
