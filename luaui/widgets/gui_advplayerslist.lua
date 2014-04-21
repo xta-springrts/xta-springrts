@@ -1617,8 +1617,8 @@ end
 -- Set up array to handle dynamic side changes
 function SetNewSides()
 	teamList = Spring_GetTeamList()
-	for _, team in ipairs(teamList) do
-		if not newSide[team] then newSide[team] = 0 end
+	for _, teamID in ipairs(teamList) do
+		if not newSide[teamID] then newSide[teamID] = 0 end
 	end
 end
 function SetSidePics()
@@ -1629,36 +1629,41 @@ function SetSidePics()
 -- if none of those are found, uses default image and notify the missing image.
 -- Include new function that determines dynamic side, 1 = arm, 2 = core. Expand at will to include more factions.
 	teamList = Spring_GetTeamList()
-	for _, team in ipairs(teamList) do
-		_,_,_,_,teamside = Spring_GetTeamInfo(team)
-		if newSide[team] and newSide[team] > 0 then
-			if newSide[team] == 1 then
+	for _, teamID in ipairs(teamList) do
+		_,_,_,_,teamside = Spring_GetTeamInfo(teamID)
+		if newSide[teamID] and newSide[teamID] > 0 then
+			if newSide[teamID] == 1 then
 				teamside = "arm"
-			elseif newSide[team] == 2 then
+			elseif newSide[teamID] == 2 then
 				teamside = "core"
 			end
+		else
+			local startUnitID = Spring.GetTeamRulesParam(teamID, 'startUnit')
+			local startUnitDefID = (startUnitID and Spring.GetUnitDefID(startUnitID)) or nil
+			local cp = ((startUnitDefID and UnitDefs[startUnitDefID]) and UnitDefs[startUnitDefID].customparams) or nil
+			if cp and cp.side then teamside = cp.side end
 		end
 		if VFS.FileExists(LUAUI_DIRNAME.."Images/Advplayerslist/"..teamside..".png") then
-			sidePics[team] = ":n:LuaUI/Images/Advplayerslist/"..teamside..".png"
+			sidePics[teamID] = ":n:LuaUI/Images/Advplayerslist/"..teamside..".png"
 			if VFS.FileExists(LUAUI_DIRNAME.."Images/Advplayerslist/"..teamside.."WO.png") then
-				sidePicsWO[team] = ":n:LuaUI/Images/Advplayerslist/"..teamside.."WO.png"
+				sidePicsWO[teamID] = ":n:LuaUI/Images/Advplayerslist/"..teamside.."WO.png"
 			else
-				sidePicsWO[team] = ":n:LuaUI/Images/Advplayerslist/noWO.png"
+				sidePicsWO[teamID] = ":n:LuaUI/Images/Advplayerslist/noWO.png"
 			end
 		else
 			if VFS.FileExists(LUAUI_DIRNAME.."Images/Advplayerslist/"..teamside.."_default.png") then
-				sidePics[team] = ":n:LuaUI/Images/Advplayerslist/"..teamside.."_default.png"
+				sidePics[teamID] = ":n:LuaUI/Images/Advplayerslist/"..teamside.."_default.png"
 				if VFS.FileExists(LUAUI_DIRNAME.."Images/Advplayerslist/"..teamside.."WO_default.png") then
-					sidePicsWO[team] = ":n:LuaUI/Images/Advplayerslist/"..teamside.."WO_default.png"
+					sidePicsWO[teamID] = ":n:LuaUI/Images/Advplayerslist/"..teamside.."WO_default.png"
 				else
-					sidePicsWO[team] = ":n:LuaUI/Images/Advplayerslist/noWO.png"
+					sidePicsWO[teamID] = ":n:LuaUI/Images/Advplayerslist/noWO.png"
 				end
 			else
 				if teamside ~= "" then
 					Echo("Image missing for side "..teamside..", using default.")
 				end
-				sidePics[team] = ":n:"..LUAUI_DIRNAME.."Images/Advplayerslist/default.png"
-				sidePicsWO[team] = ":n:"..LUAUI_DIRNAME.."Images/Advplayerslist/defaultWO.png"
+				sidePics[teamID] = ":n:"..LUAUI_DIRNAME.."Images/Advplayerslist/default.png"
+				sidePicsWO[teamID] = ":n:"..LUAUI_DIRNAME.."Images/Advplayerslist/defaultWO.png"
 			end
 		end
 	end
@@ -2252,18 +2257,16 @@ end
 ---------------------------------------------------------------------------------------------------
 
 function IsTakeable(teamID)
-	if Spring_GetTeamRulesParam(teamID, "numActivePlayers") == 0 then
-		local units = Spring_GetTeamUnitCount(teamID)
-		local energy = Spring_GetTeamResources(teamID,"energy")
-		local metal = Spring_GetTeamResources(teamID,"metal")
-		if units and energy and metal then
-			if (units > 0) or (energy > 1000) or (metal > 100) then			
-				return true
-			end
+	-- don't rely on cmd_idle_players for takeable staus as it doesn't always work
+	local units = Spring_GetTeamUnitCount(teamID)
+	local energy = Spring_GetTeamResources(teamID,"energy")
+	local metal = Spring_GetTeamResources(teamID,"metal")
+	if units and energy and metal then
+		if (units > 0) or (energy > 1000) or (metal > 100) then			
+			return true
 		end
-	else
-		return false					
-	end
+	end	
+	return false
 end
 		
 --timers
