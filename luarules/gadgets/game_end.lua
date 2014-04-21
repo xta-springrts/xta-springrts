@@ -491,6 +491,7 @@ if (gadgetHandler:IsSyncedCode()) then
 	gadget.UnitTaken = gadget.UnitDestroyed
 	
 	function CallEndVote()
+		-- needs spec-check
 		if not voteForEnd and not voteForDraw then
 			Echo("Calling vote on accepting enemy surrender...")
 			local aliveCount,controlledCount,winningTeam = GetControlledAllyTeams()
@@ -517,6 +518,7 @@ if (gadgetHandler:IsSyncedCode()) then
 	end
 	
 	function CallDrawVote()
+		-- needs spec-check
 		if not voteForEnd and not voteForDraw then
 			Echo("Calling vote to agree to truce...")
 			votingDrawTable = Spring.GetPlayerList(-1,true)
