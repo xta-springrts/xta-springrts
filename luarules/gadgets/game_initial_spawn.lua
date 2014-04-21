@@ -23,7 +23,6 @@ end
 -- Config
 ----------------------------------------------------------------
 local changeStartUnitRegex = '^\177(%d+)$'
-local startUnitParamName = 'startUnit'
 
 ----------------------------------------------------------------
 -- Var
@@ -75,9 +74,9 @@ function gadget:Initialize()
         if teamID ~= gaiaTeamID then
             local _, _, _, _, teamSide, teamAllyID = spGetTeamInfo(teamID)
             if teamSide == 'core' then
-                spSetTeamRulesParam(teamID, startUnitParamName, corcomDefID)
+                spSetTeamRulesParam(teamID, 'startUnit', corcomDefID)
             else
-                spSetTeamRulesParam(teamID, startUnitParamName, armcomDefID)
+                spSetTeamRulesParam(teamID, 'startUnit', armcomDefID)
             end
             spawnTeams[teamID] = teamAllyID
         end
@@ -90,7 +89,7 @@ if (Spring.GetModOptions() or {}).commander == 'choose' then
         if startUnit and validStartUnits[startUnit] then
             local localName, _, playerIsSpec, playerTeam = spGetPlayerInfo(playerID)
             if not playerIsSpec then
-                spSetTeamRulesParam(playerTeam, startUnitParamName, startUnit)
+                spSetTeamRulesParam(playerTeam, 'startUnit', startUnit)
                 return true
             end
         end
