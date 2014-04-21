@@ -695,6 +695,7 @@ local function FinishMorph(unitID, morphData)
 --// copy age and kills
 	Spring.SetUnitRulesParam(newUnit,'born',Spring.GetUnitRulesParam(unitID,'born') or Spring.GetGameFrame())
 	Spring.SetUnitRulesParam(newUnit,'kills',Spring.GetUnitRulesParam(unitID,'kills') or 0)
+	Spring.SetUnitRulesParam(unitID,'kills',0)
 
  -- local lineage = Spring.GetUnitLineage(unitID)
  -- Spring.SetUnitLineage(newUnit,lineage,true)
