@@ -346,11 +346,15 @@ function widget:Initialize()
 end
 
 function widget:RecvLuaMsg(msg, playerID)
-	local positionRegex = "181072"
-	local sidePrefix = '195' -- set by this widget gui_commchange.lua
+	local STATEMSG = "181072"
+	local SIDEMSG = '195' -- set by this widget gui_commchange.lua
+		
+	if (msg:sub(1,#STATEMSG) ~= STATEMSG) or (msg:sub(1,#SIDEMSG) ~= SIDEMSG)  then --invalid message
+		return
+	end
 	
 	if msg and string.len(msg) >= 8 then	
-		local sms = string.sub(msg, string.len(positionRegex)+1) 
+		local sms = string.sub(msg, string.len(STATEMSG)+1) 
 		local state = tonumber(string.sub(sms,1,1))
 		local player = tonumber(string.sub(sms,2))
 		
@@ -362,7 +366,7 @@ function widget:RecvLuaMsg(msg, playerID)
 			end
 		end
 	elseif msg and string.len(msg) == 4 then
-		local sms = msg:sub(sidePrefix:len()+1) 
+		local sms = msg:sub(SIDEMSG:len()+1) 
 		local side = tonumber(sms:sub(1,1))
 		local _, _,_, playerTeam = GetPlayerInfo(playerID)
 			

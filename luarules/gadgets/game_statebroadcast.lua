@@ -21,7 +21,7 @@ if not gadgetHandler:IsSyncedCode() then
 	-- UNSYNCED PART --
 	-------------------
 	
-	local positionRegex = "181072"
+	local STATEMSG = "181072"
 	local spGetTeamStartPosition = Spring.GetTeamStartPosition
 	local GetGameFrame = Spring.GetGameFrame
 	local PlaySoundFile = Spring.PlaySoundFile
@@ -46,14 +46,14 @@ if not gadgetHandler:IsSyncedCode() then
 				
 				if marked then 
 					if not playerMarked[i] then
-						Spring.SendLuaUIMsg (positionRegex .. 1 .. player)
+						Spring.SendLuaUIMsg (STATEMSG .. 1 .. player)
 						playerMarked[i] = true
 						--PlaySoundFile(snd)
 						--Echo("mark state: ",i,player, marked)
 					end
 				else
 					if playerMarked[i] then
-						Spring.SendLuaUIMsg (positionRegex .. 0 .. player)
+						Spring.SendLuaUIMsg (STATEMSG .. 0 .. player)
 						playerMarked[i] = false
 						--PlaySoundFile(snd)
 						--Echo("mark state: ",i,player, marked)

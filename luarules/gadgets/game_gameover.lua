@@ -82,9 +82,12 @@ if gadgetHandler:IsSyncedCode() then
 	end
 	
 	function gadget:GameFrame(frame)
+		
 		if Spring.IsGameOver() then					
 			if gameOverFrame and (frame > gameOverFrame + ENDTIME) then
 				ShowEndGraphs()
+			elseif not gameOverFrame then 
+				gameOverFrame = frame
 			end	
 		end
 		
