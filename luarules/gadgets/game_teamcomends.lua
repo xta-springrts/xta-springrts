@@ -57,7 +57,8 @@ if (gadgetHandler:IsSyncedCode()) then
 	local TIMEOUTDELAY			= 960 -- force end after this delay
 	local isGameWinner			= false
 	local gameOverFrame			= nil
-	local gaiaAllyID 			= select(6, Spring.GetTeamInfo(Spring.GetGaiaTeamID()))
+	local gaiaTeamID			= Spring.GetGaiaTeamID()
+	local gaiaAllyID 			= select(6, Spring.GetTeamInfo(gaiaTeamID))
 	
 	local dgunWeapons = {		-- better to hardcode these, as many weapons are listed as dgun, for example bogus dgun
 	arm_disintegrator = true,
@@ -256,7 +257,7 @@ if (gadgetHandler:IsSyncedCode()) then
 		for _, tID in pairs (Spring.GetTeamList(allyTeamID)) do
 			local _,_,isDead,isAI 	= Spring.GetTeamInfo(tID)
 			local active = #(Spring.GetPlayerList(tID,true)) > 0
-			if tID ~= Spring.GetGaiaTeamID() and (not (isDead or deadTeams[tID])) and (active or isAI) then
+			if tID ~= gaiaTeamID and (not (isDead or deadTeams[tID])) and (active or isAI) then
 				for _,cID in pairs(commanderDefs) do
 					local count = GetTeamUnitDefCount(tID,cID)
 					
@@ -407,7 +408,7 @@ if (gadgetHandler:IsSyncedCode()) then
 				end
 				
 			else -- team comends option
-				if teamCommanders[allyTeam] <= 0 then 
+				if teamCommanders[allyTeam] <= 0 and allyTeam ~= gaiaAllyID then 
 					killX, _, killZ = GetUnitPosition(unitID)
 					destroyQueue[allyTeam] = true
 					if not isGameWinner then
@@ -416,7 +417,7 @@ if (gadgetHandler:IsSyncedCode()) then
 							Echo("Game ends: team's last commander is killed")
 						end
 					end
-				elseif GetControlledCommanders(allyTeam) <= 0 then -- kill teams with uncontrolled commanders
+				elseif GetControlledCommanders(allyTeam) <= 0 and allyTeam ~= gaiaAllyID then -- kill teams with uncontrolled commanders
 					killX, _, killZ = GetUnitPosition(unitID)
 					destroyQueue[allyTeam] = true
 					if not isGameWinner then
@@ -425,7 +426,6 @@ if (gadgetHandler:IsSyncedCode()) then
 							Echo("Game ends: team's commander is killed and remaining ones are uncontrolled")
 						end
 					end
-					
 				end
 			end
 		end
