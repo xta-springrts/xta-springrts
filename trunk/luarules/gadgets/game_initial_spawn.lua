@@ -81,6 +81,14 @@ function gadget:Initialize()
             spawnTeams[teamID] = teamAllyID
         end
     end
+	
+	-- mark all players as not placed
+	local initState = (Game.startPosType ~= 2 and -1) or 0
+	local playerList = Spring.GetPlayerList()
+	for _,playerID in pairs(playerList) do
+		Spring.SetGameRulesParam("player_" .. playerID .. "_readyState" , initState)
+	end
+	
 end
 
 if (Spring.GetModOptions() or {}).commander == 'choose' then
@@ -100,3 +108,45 @@ function gadget:GameStart()
 	-- needed for voting
 	--gadgetHandler:RemoveCallIn("RecvLuaMsg")	
 end
+
+-------------------------------------------------------------------------
+-- communicate player ready states (in addition to statebroadcast gadget)
+-------------------------------------------------------------------------
+function gadget:AllowStartPosition(x,y,z,playerID,readyState)
+	-- communicate readyState to all
+	-- 0: unready, 1: ready, 2: game forcestarted & player not ready, 3: game forcestarted & player absent
+	-- for some reason 2 is sometimes used in place of 1 and is always used for the last player to become ready
+	-- we also add (only used in Initialize) the following
+	-- -1: players will not be allowed to place startpoints; automatically readied once ingame
+	--  4: player has placed a startpoint but is not yet ready == xta marked state (sent from statebroadcast gadget)
+	
+	if Game.startPosType == 2 then -- choose in game mode
+		Spring.SetGameRulesParam("player_" .. playerID .. "_readyState" , readyState) 
+	end
+	
+	local _,_,_,teamID,allyTeamID,_,_,_,_,_ = Spring.GetPlayerInfo(playerID)
+	if not teamID or not allyTeamID then return false end --fail
+	
+	return true
+end
+
+function gadget:RecvLuaMsg(msg, playerID)
+	local STATEMSG = "181072"
+			
+	if msg:sub(1,#STATEMSG) ~= STATEMSG then --invalid message
+		return
+	end
+		
+	local sms = string.sub(msg, string.len(STATEMSG)+1) 
+	local state = tonumber(string.sub(sms,1,1))
+		
+	if playerID then
+		if state == 0 then
+			Spring.SetGameRulesParam("player_" .. playerID .. "_readyState" , 0)
+		elseif state == 1 then
+			Spring.SetGameRulesParam("player_" .. playerID .. "_readyState" , 4)
+		end
+	end
+end
+
+

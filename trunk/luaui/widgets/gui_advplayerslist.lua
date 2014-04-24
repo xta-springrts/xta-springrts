@@ -120,10 +120,10 @@ local rank6      = "LuaUI/Images/advplayerslist/Ranks/rank6.png"
 local rank7      = "LuaUI/Images/advplayerslist/Ranks/rank7.png"
 local rank8      = "LuaUI/Images/advplayerslist/Ranks/rank_unknown.png"
 
-local sidePics        = {}  -- loaded in Sem_sidePics function
-local sidePicsWO      = {}  -- loaded in Sem_sidePics function
-local newSide		  = {}
-
+local sidePics        = {}  -- loaded in SetSidePics function
+local sidePicsWO      = {}  -- loaded in SetSidePics function
+local originalColourNames = {} -- loaded in SetOriginalColourNames, format is originalColourNames['name'] = colourString
+local readyTexture = "LuaUI/Images/advplayerslist/blob_small.png"
 --------------------------------------------------------------------------------
 -- Colors
 --------------------------------------------------------------------------------
@@ -165,11 +165,18 @@ local mySpecStatus,_,_ = Spring.GetSpectatingState()
 
 --General players/spectator count and tables
 local player = {}
+local playerReadyState = {}
 
 --To determine faction at start
-local armcomDefID = UnitDefNames.armcom.id
-local corcomDefID = UnitDefNames.corcom.id
 
+--Name for absent/resigned players
+local absentName1 = "- no player yet -"
+local absentName2 = "- aband. units -"
+local absentName3 = "- dead team -"
+local nilName = "---"
+
+--Did the game start yet?
+local gameStarted = false
 --------------------------------------------------------------------------------
 -- Button check variable
 --------------------------------------------------------------------------------
@@ -414,7 +421,7 @@ end
 function SetMaxPlayerNameWidth()
 	-- determines the maximal player name width (in order to set the width of the widget)
 	local t = Spring_GetPlayerList()
-	local maxWidth = 15*gl_GetTextWidth("- aband. units -") + 8 -- 8 is minimal width
+	local maxWidth = 15*gl_GetTextWidth(absentName2) + 8 -- 8 is minimal width
 	local name = ""
 	local nextWidth = 0
 	for _,wplayer in ipairs(t) do
@@ -447,74 +454,58 @@ end
 --  Init/GameStart (creating players)
 ---------------------------------------------------------------------------------------------------
 
-function Init()
-	SetNewSides()
-	SetSidePics()
-	SetPingCpuColors()
-	InitializePlayers()
-	SortList()
-	SetModulesPositionX()
-	GeometryChange()
-end
-
-
 function widget:Initialize()
 	if (Spring.GetConfigInt("ShowPlayerInfo")==1) then
 		Spring.SendCommands("info 0")
 	end
+	
+	if Spring.GetGameFrame()>0 then
+		gameStarted = true
+	end
 
-	Init()
+	GeometryChange()	
+	SetModulesPositionX() 
+	SetSidePics() 
+	InitializePlayers()
+	SortList()	
 end
 
 function widget:GameStart()
+	gameStarted = true
 	SetSidePics()
-	Init()
+	InitializePlayers()
+	SetOriginalColourNames()
 	SortList()
 end
 
-function SetSidePics() --set factions, from TeamRulesParam when possible and from initial info if not
-	
+function SetSidePics() 
+	--record readyStates
+	playerList = Spring.GetPlayerList()
+	for _,playerID in pairs (playerList) do
+		playerReadyState[playerID] = Spring.GetGameRulesParam("player_" .. tostring(playerID) .. "_readyState")
+	end
+
+	--set factions, from TeamRulesParam when possible and from initial info if not
 	teamList = Spring_GetTeamList()
-	for _, team in ipairs(teamList) do
+	for _, teamID in ipairs(teamList) do
 		local teamside
-		if Spring_GetTeamRulesParam(team, 'startUnit') then
-			local startunit = Spring_GetTeamRulesParam(team, 'startUnit')
-			if startunit == armcomDefID then 
-				teamside = "arm"
-			else
-				teamside = "core"
-			end
+		local startUnit = Spring.GetTeamRulesParam(teamID, 'startUnit')
+		if startUnit then
+			local cp = ((startUnit and UnitDefs[startUnit]) and UnitDefs[startUnit].customParams) or nil
+			if cp and cp.side then teamside = cp.side end
 		else
-			_,_,_,_,teamside = Spring_GetTeamInfo(team)
+			_,_,_,_,teamside = Spring_GetTeamInfo(teamID)
 		end
-		-- first look if there is any image in the mod file for the specific side, then looks in the user files for specific side
-		-- if none of those are found, uses default image and notify the missing image
-		if VFS.FileExists(LUAUI_DIRNAME.."Images/Advplayerslist/"..teamside..".png") then
-			sidePics[team] = ":n:LuaUI/Images/Advplayerslist/"..teamside..".png"
-			if VFS.FileExists(LUAUI_DIRNAME.."Images/Advplayerslist/"..teamside.."WO.png") then
-				sidePicsWO[team] = ":n:LuaUI/Images/Advplayerslist/"..teamside.."WO.png"
-			else
-				sidePicsWO[team] = ":n:LuaUI/Images/Advplayerslist/noWO.png"
-			end
+			
+		if teamside then
+			sidePics[teamID] = ":n:LuaUI/Images/Advplayerslist/"..teamside.."_default.png"
+			sidePicsWO[teamID] = ":n:LuaUI/Images/Advplayerslist/"..teamside.."WO_default.png"
 		else
-			if VFS.FileExists(LUAUI_DIRNAME.."Images/Advplayerslist/"..teamside.."_default.png") then
-				sidePics[team] = ":n:LuaUI/Images/Advplayerslist/"..teamside.."_default.png"
-				if VFS.FileExists(LUAUI_DIRNAME.."Images/Advplayerslist/"..teamside.."WO_default.png") then
-					sidePicsWO[team] = ":n:LuaUI/Images/Advplayerslist/"..teamside.."WO_default.png"
-				else
-					sidePicsWO[team] = ":n:LuaUI/Images/Advplayerslist/noWO.png"
-				end
-			else
-				if teamside ~= "" then
-					Echo("Image missing for side "..teamside..", using default.")
-				end
-				sidePics[team] = ":n:"..LUAUI_DIRNAME.."Images/Advplayerslist/default.png"
-				sidePicsWO[team] = ":n:"..LUAUI_DIRNAME.."Images/Advplayerslist/defaultWO.png"
-			end
+			sidePics[teamID] = ":n:"..LUAUI_DIRNAME.."Images/Advplayerslist/default.png"
+			sidePicsWO[teamID] = ":n:"..LUAUI_DIRNAME.."Images/Advplayerslist/defaultWO.png"
 		end
 	end
 end
-
 
 function InitializePlayers()
 	myPlayerID = Spring_GetLocalPlayerID()
@@ -547,20 +538,6 @@ function GetAllPlayers()
 		end
 	end
 end
-
-function SetPingCpuColors()
-
-	-- Sets the colors for ping and CPU icons (green to red)
-
-	pingCpuColors = {
-	[1] = {r = 0, g = 1, b = 0},
-	[2] = {r = 0.7, g = 1, b = 0},
-	[3] = {r = 1, g = 1, b = 0},
-	[4] = {r = 1, g = 0.6, b = 0},
-	[5] = {r = 1, g = 0, b = 0}
-	}
-end
-
 
 function round(num, idp)
   local mult = 10^(idp or 0)
@@ -609,7 +586,6 @@ function GetSkill(playerID)
 	return tskill
 end
 
-
 function CreatePlayer(playerID)
 
 	--generic player data
@@ -644,13 +620,12 @@ function CreatePlayer(playerID)
 		cpu              = tcpu,
 		tdead            = false,
 		spec             = tspec,
+		ai				 = false,
 	}
 	
 end
 
-
-
-function CreatePlayerFromTeam(teamID) --for when we don't have a human player occupying the slot
+function CreatePlayerFromTeam(teamID) -- for when we don't have a human player occupying the slot, also when a player changes team (dies)
 
 	local _,_, isDead, isAI, tside, tallyteam = Spring_GetTeamInfo(teamID)
 	local tred, tgreen, tblue                 = Spring_GetTeamColor(teamID)
@@ -670,27 +645,30 @@ function CreatePlayerFromTeam(teamID) --for when we don't have a human player oc
 		
 		ttotake = false
 		tdead = false
+		tai = true
 		
 	else
 	
 		if Spring_GetGameSeconds() < 0.1 then
-			tname = "no player yet"
+			tname = absentName1
 			ttotake = false
 			tdead = false
 		else
 			ttotake = IsTakeable(teamID)
 			if ttotake then
-				tname = "- aband. units -"
+				tname = absentName2
 				tdead = false
 			else
-				tname = "- dead team -"
+				tname = absentName3
 				tdead = true
 			end
 		end
+		
+		tai = false
 	end
 	
 	if tname == nil then
-		tname = "- aband. units -"
+		tname = nilName
 	end
 	
 	tskill = ""
@@ -709,10 +687,10 @@ function CreatePlayerFromTeam(teamID) --for when we don't have a human player oc
 		totake           = ttotake,
 		dead             = tdead,
 		spec             = false,
+		ai 				 = tai,
 	}
 	
 end
-
 
 function GetDark(red,green,blue)                  	
 	-- Determines if the player color is dark (i.e. if a white outline for the sidePic is needed)
@@ -720,8 +698,18 @@ function GetDark(red,green,blue)
 	return false
 end
 
-
-
+function SetOriginalColourNames()
+	-- Saves the original team colours associated to team teamID
+	for playerID,_ in pairs(player) do
+		if player[playerID].name then
+			if player[playerID].spec then
+				originalColourNames[playerID] = "\255\255\255\255"
+			else
+				originalColourNames[playerID] = colourNames(player[playerID].team)
+			end
+		end
+	end
+end
 		
 ---------------------------------------------------------------------------------------------------
 --  Sorting player data
@@ -785,7 +773,6 @@ function SortList()
 	end
 	
 end
-
 
 function SortAllyTeams(vOffset)
 	-- adds ally teams to the draw list (own ally team first)
@@ -933,8 +920,6 @@ function SortSpecs(vOffset)
 	return vOffset
 end
 
-
-
 ---------------------------------------------------------------------------------------------------
 --  Draw control
 ---------------------------------------------------------------------------------------------------
@@ -952,7 +937,7 @@ function widget:DrawScreen()
 		return
 	end
 
-	-- decides when to updates lists 
+	-- update lists frequently if there is mouse interaction
 	local NeedUpdate = false 
 	local mouseX,mouseY = Spring_GetMouseState()
 	if (mouseX > widgetPosX + m_name.posX + m_name.width - 5) and (mouseX < widgetPosX + widgetWidth) and (mouseY > widgetPosY - 16) and (mouseY < widgetPosY + widgetHeight) then
@@ -965,34 +950,32 @@ function widget:DrawScreen()
 		end
 	end
 	
-	if NeedUpdate then
-
-		--Spring.Echo(GameFrame)
 	
-		--local vOffset                 = 0         -- position of the next object to draw
-		--local firstDrawnPlayer, firstEnemy, previousAllyTeam = true, true, nil
-			
+	if NeedUpdate then
+		--Spring.Echo("DS APL update")			
 		CreateLists()
 		PrevGameFrame = GameFrame
-	else
-	if (not Background) then CreateBackground() end
-	if (not MainList) then CreateMainList() end
-	if (not ShareSlider) then CreateShareSlider() end
 	end
 	
 	-- draws the background
 	if Background then
 		gl_CallList(Background)
+	else
+		CreateBackground()
 	end
 	
 	-- draws the main list
 	if MainList then
 		gl_CallList(MainList)
+	else
+		CreateMainList()
 	end
 
 	-- draws share energy/metal sliders
 	if ShareSlider then
 		gl_CallList(ShareSlider)
+	else
+		CreateShareSlider()
 	end
 end
 
@@ -1171,6 +1154,7 @@ function DrawPlayer(playerID, leader, vOffset, mouseX, mouseY)
 	local needm    = player[playerID].needm
 	local neede    = player[playerID].neede
 	local dead     = player[playerID].dead
+	local ai	   = player[playerID].ai
 	local posY     = widgetPosY + widgetHeight - vOffset
 	
 	if mouseY >= posY and mouseY <= posY + 16 then tipY = true end
@@ -1214,7 +1198,7 @@ function DrawPlayer(playerID, leader, vOffset, mouseX, mouseY)
 		end
 		gl_Color(red,green,blue,1)
 		if m_side.active == true then                        
-			DrawSidePic(team, posY, leader, dark)   
+			DrawSidePic(team, playerID, posY, leader, dark, ai)   
 		end
 		gl_Color(red,green,blue,1)	
 		if m_name.active == true then
@@ -1223,7 +1207,7 @@ function DrawPlayer(playerID, leader, vOffset, mouseX, mouseY)
 	else -- spectator
 		gl_Color(1,1,1,1)	
 		if m_chat.active == true and m_name.active == true then
-			DrawSmallName(name, posY, false)
+			DrawSmallName(name, posY, false, playerID)
 		end		
 	end
 
@@ -1312,24 +1296,47 @@ function DrawChatButton(posY)
 	gl_TexRect(m_chat.posX + widgetPosX  + 1, posY, m_chat.posX + widgetPosX  + 17, posY + 16)	
 end
 
-function DrawSidePic(team, posY, leader, dark)
-	if leader == true then
-		gl_Texture(sidePics[team])                       -- sets side image (for leaders)
-	else
-		gl_Texture(notFirstPic)                          -- sets image for not leader of team players
-	end
-	gl_TexRect(m_side.posX + widgetPosX  + 1, posY, m_side.posX + widgetPosX  + 17, posY + 16) -- draws side image
-	if dark == true then	-- draws outline if player color is dark
-		gl_Color(1,1,1)
+function DrawSidePic(team, playerID, posY, leader, dark, ai)
+	if gameStarted then
 		if leader == true then
-			gl_Texture(sidePicsWO[team])
+			gl_Texture(sidePics[team])                       -- sets side image (for leaders)
 		else
-			gl_Texture(notFirstPicWO)
+			gl_Texture(notFirstPic)                          -- sets image for not leader of team players
 		end
-		gl_TexRect(m_side.posX + widgetPosX +1, posY,m_side.posX + widgetPosX +17, posY + 16)
+		gl_TexRect(m_side.posX + widgetPosX  + 1, posY, m_side.posX + widgetPosX  + 17, posY + 16) -- draws side image
+		if dark == true then	-- draws outline if player color is dark
+			gl_Color(1,1,1)
+			if leader == true then
+				gl_Texture(sidePicsWO[team])
+			else
+				gl_Texture(notFirstPicWO)
+			end
+			gl_TexRect(m_side.posX + widgetPosX + 1, posY,m_side.posX + widgetPosX + 17, posY + 16)
+			gl_Texture(false)
+		end
 		gl_Texture(false)
+	else
+		-- are we ready?
+		-- note that adv pl list uses a phantom pID for absent players, so this will always show unready for players not ingame
+		local ready = (playerReadyState[playerID]==1) or (playerReadyState[playerID]==2) or (playerReadyState[playerID]==-1)
+		local hasStartPoint = (playerReadyState[playerID]==4)
+		if ai then
+			gl_Color(0.1,0.1,0.97,1)
+		else 
+			if ready then
+				gl_Color(0.1,0.95,0.2,1)
+			else
+				if hasStartPoint then
+					gl_Color(1,0.65,0.1,1)
+				else
+					gl_Color(0.8,0.1,0.1,1)	
+				end
+			end
+		end
+		gl_Texture(readyTexture)
+		gl_TexRect(m_side.posX + widgetPosX + 2, posY - 1, m_side.posX + widgetPosX + 18, posY + 15)			
+		gl_Color(1,1,1,1)
 	end
-	gl_Texture(false)	
 end
 
 function DrawRank(rank, posY, dark)
@@ -1383,7 +1390,10 @@ function DrawName(name, team, posY, dark)
 	gl_Color(1,1,1)
 end
 
-function DrawSmallName(name, posY, dark)
+function DrawSmallName(name, posY, dark, playerID)
+	if originalColourNames[playerID] then
+		name = originalColourNames[playerID] .. name
+	end
 	gl_Text(name, m_name.posX + widgetPosX + 3, posY + 3, 12, "o")
 	gl_Color(1,1,1)
 end
@@ -1470,23 +1480,9 @@ function SpecTip(mouseX)
 	end	
 end
 
-local function round(num, idp)
-	return string.format("%." .. (idp or 0) .. "f", num)
-end
-
 function PingCpuTip(mouseX, pingLvl, cpuLvl)
 	if mouseX >= m_cpuping.posX + widgetPosX  + 13 and mouseX <=  m_cpuping.posX + widgetPosX  + 23 then
-		if pingLvl < 1000 then
-			tipText = "Ping: "..pingLvl.." ms"
-		elseif pingLvl < 10000 then -- < 10 s
-			tipText = "Ping: "..tostring(round(pingLvl/1000,1)).." s"
-		elseif pingLvl < 60000 then -- < 1 min
-			tipText = "Ping: "..tostring(round(pingLvl/1000,0)).." s"
-		elseif pingLvl < 600000 then -- < 10 min
-			tipText = "Ping: "..tostring(round(pingLvl/60000,1)).." min"
-		else
-			tipText = "Ping: "..tostring(round(pingLvl/60000,0)).." min"
-		end
+		tipText = "Ping: "..pingLvl.." ms"
 	elseif mouseX >= m_cpuping.posX + widgetPosX  + 1 and mouseX <=  m_cpuping.posX + widgetPosX  + 11 then		
 		tipText = "Cpu Usage: "..cpuLvl.."%"
 	end
@@ -1594,78 +1590,6 @@ function GetPingLvl(ping)
 	elseif ping < 0.7 then return 3
 	elseif ping < 1.5 then return 4
 	else return 5
-	end
-end
-
-
--- customisation for XTA side changes:
-
-function widget:RecvLuaMsg(msg, playerID)
-	local sidePrefix = '195' -- set by widget gui_commchange.lua
-	local sms = msg:sub(sidePrefix:len()+1) 
-	
-	local side = tonumber(sms:sub(1,1))
-	local _, _,_, playerTeam = Spring_GetPlayerInfo(playerID)
-	if side == 1 then
-		newSide[playerTeam] = 1
-	elseif side == 2 then
-		newSide[playerTeam] = 2
-	end
-	SetSidePics()
-end
-
--- Set up array to handle dynamic side changes
-function SetNewSides()
-	teamList = Spring_GetTeamList()
-	for _, teamID in ipairs(teamList) do
-		if not newSide[teamID] then newSide[teamID] = 0 end
-	end
-end
-function SetSidePics()
-
--- Loads the side pics and side pics outlines for each side.
--- It first tries to look if there is any image in the mod file for the specific side
--- then it looks in the user files for specific side
--- if none of those are found, uses default image and notify the missing image.
--- Include new function that determines dynamic side, 1 = arm, 2 = core. Expand at will to include more factions.
-	teamList = Spring_GetTeamList()
-	for _, teamID in ipairs(teamList) do
-		_,_,_,_,teamside = Spring_GetTeamInfo(teamID)
-		if newSide[teamID] and newSide[teamID] > 0 then
-			if newSide[teamID] == 1 then
-				teamside = "arm"
-			elseif newSide[teamID] == 2 then
-				teamside = "core"
-			end
-		else
-			local startUnitID = Spring.GetTeamRulesParam(teamID, 'startUnit')
-			local startUnitDefID = (startUnitID and Spring.GetUnitDefID(startUnitID)) or nil
-			local cp = ((startUnitDefID and UnitDefs[startUnitDefID]) and UnitDefs[startUnitDefID].customparams) or nil
-			if cp and cp.side then teamside = cp.side end
-		end
-		if VFS.FileExists(LUAUI_DIRNAME.."Images/Advplayerslist/"..teamside..".png") then
-			sidePics[teamID] = ":n:LuaUI/Images/Advplayerslist/"..teamside..".png"
-			if VFS.FileExists(LUAUI_DIRNAME.."Images/Advplayerslist/"..teamside.."WO.png") then
-				sidePicsWO[teamID] = ":n:LuaUI/Images/Advplayerslist/"..teamside.."WO.png"
-			else
-				sidePicsWO[teamID] = ":n:LuaUI/Images/Advplayerslist/noWO.png"
-			end
-		else
-			if VFS.FileExists(LUAUI_DIRNAME.."Images/Advplayerslist/"..teamside.."_default.png") then
-				sidePics[teamID] = ":n:LuaUI/Images/Advplayerslist/"..teamside.."_default.png"
-				if VFS.FileExists(LUAUI_DIRNAME.."Images/Advplayerslist/"..teamside.."WO_default.png") then
-					sidePicsWO[teamID] = ":n:LuaUI/Images/Advplayerslist/"..teamside.."WO_default.png"
-				else
-					sidePicsWO[teamID] = ":n:LuaUI/Images/Advplayerslist/noWO.png"
-				end
-			else
-				if teamside ~= "" then
-					Echo("Image missing for side "..teamside..", using default.")
-				end
-				sidePics[teamID] = ":n:"..LUAUI_DIRNAME.."Images/Advplayerslist/default.png"
-				sidePicsWO[teamID] = ":n:"..LUAUI_DIRNAME.."Images/Advplayerslist/defaultWO.png"
-			end
-		end
 	end
 end
 
@@ -2208,8 +2132,6 @@ function CheckPlayersChange()
 
 end
 
-
-
 function GetNeed(resType,teamID)
 	local current, _, pull, income = Spring_GetTeamResources(teamID, resType)
 		if current == nil then return false end
@@ -2257,21 +2179,29 @@ end
 ---------------------------------------------------------------------------------------------------
 
 function IsTakeable(teamID)
-	-- don't rely on cmd_idle_players for takeable staus as it doesn't always work
-	local units = Spring_GetTeamUnitCount(teamID)
-	local energy = Spring_GetTeamResources(teamID,"energy")
-	local metal = Spring_GetTeamResources(teamID,"metal")
-	if units and energy and metal then
-		if (units > 0) or (energy > 1000) or (metal > 100) then			
-			return true
+
+	local _,leaderID,isDead,isAI = Spring.GetTeamInfo(teamID)
+	local name, active = Spring.GetPlayerInfo(leaderID)
+	active = active or isAI
+	
+	if name ~= nil and (not active) and not isAI or Spring_GetTeamRulesParam(teamID, "numActivePlayers") == 0 then
+		local units = Spring_GetTeamUnitCount(teamID)
+		local energy = Spring_GetTeamResources(teamID,"energy")
+		local metal = Spring_GetTeamResources(teamID,"metal")
+		if units and energy and metal then
+			if (units > 0) or (energy > 1000) or (metal > 100) then			
+				return true
+			end
 		end
-	end	
-	return false
+	else
+		return false					
+	end
 end
 		
 --timers
 local timeCounter = 0
-local updateRate = 0.5
+local updateRate = 1
+local updateRatePreStart = 0.25
 local lastTakeMsg = -120
 
 function widget:Update(delta) --handles takes & related messages 
@@ -2311,6 +2241,18 @@ function widget:Update(delta) --handles takes & related messages
 		end
 	end
 	
+	-- update lists to take account of allyteam faction changes before gamestart
+	if not curFrame or curFrame <=0 then 
+		if timeCounter < updateRatePreStart then
+			return
+		else
+			timeCounter = 0
+			SetSidePics() --if the game hasn't started, update factions
+			CreateLists()
+		end
+	end
+	
+	-- update lists every now and then, just to make sure
 	if timeCounter < updateRate then
 		return
 	else
@@ -2319,11 +2261,9 @@ function widget:Update(delta) --handles takes & related messages
 	end
 end
 
-
 ---------------------------------------------------------------------------------------------------
 --  Other callins
 ---------------------------------------------------------------------------------------------------
-
 
 function widget:ViewResize(viewSizeX, viewSizeY)
 	local dx, dy = vsx - viewSizeX, vsy - viewSizeY
