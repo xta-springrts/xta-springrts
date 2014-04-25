@@ -91,19 +91,6 @@ function gadget:Initialize()
 	
 end
 
-if (Spring.GetModOptions() or {}).commander == 'choose' then
-    function gadget:RecvLuaMsg(msg, playerID)
-        local startUnit = tonumber(msg:match(changeStartUnitRegex))
-        if startUnit and validStartUnits[startUnit] then
-            local localName, _, playerIsSpec, playerTeam = spGetPlayerInfo(playerID)
-            if not playerIsSpec then
-                spSetTeamRulesParam(playerTeam, 'startUnit', startUnit)
-                return true
-            end
-        end
-    end
-end
-
 function gadget:GameStart()
 	-- needed for voting
 	--gadgetHandler:RemoveCallIn("RecvLuaMsg")	
@@ -132,19 +119,27 @@ end
 
 function gadget:RecvLuaMsg(msg, playerID)
 	local STATEMSG = "181072"
-			
-	if msg:sub(1,#STATEMSG) ~= STATEMSG then --invalid message
-		return
-	end
+	local COMMMSG = "\177"
 		
-	local sms = string.sub(msg, string.len(STATEMSG)+1) 
-	local state = tonumber(string.sub(sms,1,1))
+	if msg:sub(1,#STATEMSG) == STATEMSG then
+		local sms = string.sub(msg, string.len(STATEMSG)+1) 
+		local state = tonumber(string.sub(sms,1,1))			
 		
-	if playerID then
-		if state == 0 then
-			Spring.SetGameRulesParam("player_" .. playerID .. "_readyState" , 0)
-		elseif state == 1 then
-			Spring.SetGameRulesParam("player_" .. playerID .. "_readyState" , 4)
+		if playerID then
+			if state == 0 then
+				Spring.SetGameRulesParam("player_" .. playerID .. "_readyState" , 0)
+			elseif state == 1 then
+				Spring.SetGameRulesParam("player_" .. playerID .. "_readyState" , 4)
+			end
+		end
+	elseif msg:sub(1,#COMMMSG) == COMMMSG then
+		local startUnit = tonumber(msg:match(changeStartUnitRegex))
+		if startUnit and validStartUnits[startUnit] then
+			local localName, _, playerIsSpec, playerTeam = spGetPlayerInfo(playerID)
+			if not playerIsSpec then
+				spSetTeamRulesParam(playerTeam, 'startUnit', startUnit)
+				return true
+			end
 		end
 	end
 end
