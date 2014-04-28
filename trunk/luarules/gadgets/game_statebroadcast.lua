@@ -24,15 +24,13 @@ if not gadgetHandler:IsSyncedCode() then
 	local STATEMSG = "181072"
 	local spGetTeamStartPosition = Spring.GetTeamStartPosition
 	local GetGameFrame = Spring.GetGameFrame
-	local PlaySoundFile = Spring.PlaySoundFile
-	local snd = 'sounds/button11.wav'
-		
+			
 	function gadget:Update()
 		local frame = GetGameFrame()
 		if frame > 0 then 
 			gadgetHandler:RemoveGadget(self)
 		end
-		--Echo("State Broadcasting...")
+		
 		for i,player in ipairs(Spring.GetTeamList()) do
 			if player ~= Spring.GetGaiaTeamID() then	
 				local posx = spGetTeamStartPosition(player)
@@ -48,15 +46,11 @@ if not gadgetHandler:IsSyncedCode() then
 					if not playerMarked[i] then
 						Spring.SendLuaUIMsg (STATEMSG .. 1 .. player)
 						playerMarked[i] = true
-						--PlaySoundFile(snd)
-						--Echo("mark state: ",i,player, marked)
 					end
 				else
 					if playerMarked[i] then
 						Spring.SendLuaUIMsg (STATEMSG .. 0 .. player)
 						playerMarked[i] = false
-						--PlaySoundFile(snd)
-						--Echo("mark state: ",i,player, marked)
 					end
 				end
 			end
@@ -65,18 +59,8 @@ if not gadgetHandler:IsSyncedCode() then
 	end
 	
 	function gadget:GameStart()
-		--Echo("State Broadcast ended")
 		gadgetHandler:RemoveGadget(self)
 	end
-		
-		
-	--function gadget:MapDrawCmd(playerID, cmdType, px, py, pz, labeltext) 
-		-- Spring.Echo("Yo yo")
-		-- the ideal location to catch changes in player state would be this callin, but it is not yet implemented in Spring (marked FIXME)
-		-- https://github.com/spring/spring/blob/master/cont/base/springcontent/LuaGadgets/gadgets.lua
-		-- We use update as a temporal fix
-	--end
-	
 	
 else
 	-----------------

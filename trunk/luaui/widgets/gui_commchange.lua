@@ -90,38 +90,41 @@ Button["specinfo"] = {}
 --------------------------------------------------------------------------------
 -- Variables
 --------------------------------------------------------------------------------
-local vsx, vsy 							= gl.GetViewSizes()
+local vsx, vsy 								= gl.GetViewSizes()
 local scale
-local px, py 							= 300, 300
-local SIZEX, SIZEY  					= 320, 180 -- initial value before scaling
-local mid 								= px + SIZEX/2
-local sizex, sizey						-- values used after rescaling
-local th 								= 16 -- text height for buttons
-local th2 								= 11 -- text height for body text
-local th3 								= 20 -- text height for player names
-local n 								= 0 -- amount of players
-local mySide, myType
-local myState 							= 0
-local gameState 						= 0
-local gameStarted						= false
-local cntDown 							= -1
+local px, py 								= 300, 300
+local SIZEX, SIZEY  						= 320, 180 -- initial value before scaling
+local mid 									= px + SIZEX/2
+local sizex, sizey							-- values used after rescaling
+local th 									= 16 -- text height for buttons
+local th2 									= 11 -- text height for body text
+local th3 									= 20 -- text height for player names
+local n 									= 0 -- amount of players
+local mySide, myType	
+local myState 								= 0
+local gameState 							= 0
+local gameStarted							= false
+local cntDown 								= -1
 local lastCount
-local pStates							= {}
-local markedStates 						= {}
+local playerStates							= {}
+local markedStates 							= {}
+local APLStates								= {} -- secondary source of player states, used by adv.playerslist
+local readyStates							= {}
 local lastStartID
 local strInfo							
-local infoOn 							= false
-local teamList							= Spring.GetTeamList()
-local myTeamID 							= Spring.GetMyTeamID()
+local infoOn 								= false
+local teamList								= Spring.GetTeamList()
+local playerList 							= Spring.GetPlayerList()
+local myTeamID 								= Spring.GetMyTeamID()
 --gamestates
-local CHOOSE,WAITING,COUNTDOWN,ERROR	= 0,1,2,-1
-local gameOver							= false
+local CHOOSE,WAITING,COUNTDOWN,ERROR		= 0,1,2,-1
+local gameOver								= false
 -- local player states
-local PRESENT,MARKED,OTHER,READY		= 0,1,2,3
+local PRESENT,MARKED,OTHER,READY,MISSING 	= 0,1,2,3,-1
 
 --font
-local myFont	 						= gl.LoadFont("FreeSansBold.otf",th3, 1.9, 40)
-local myFontHuge						= gl.LoadFont("FreeSansBold.otf",60, 1.9, 40)
+local myFont	 							= gl.LoadFont("FreeSansBold.otf",th3, 1.9, 40)
+local myFontHuge							= gl.LoadFont("FreeSansBold.otf",60, 1.9, 40)
 
 --------------------------------------------------------------------------------
 -- Speedups
@@ -270,8 +273,8 @@ local function updateSize()
 		for i, pID in pairs(Spring.GetPlayerList()) do
 			local _,_,isSpec = Spring.GetPlayerInfo(pID)
 			if not isSpec then
-				if not pStates[pID] then
-					pStates[pID] = "missing"
+				if not playerStates[pID] then
+					playerStates[pID] = "missing"
 				end
 				n = n + 1
 			end
@@ -282,6 +285,30 @@ local function updateSize()
 	end
 	--buttons:
 	initButtons()
+end
+
+local function updateStates()
+	
+	for _,playerID in pairs (playerList) do
+		local leaderName,active,spec,team,_,_,_,country,rank	= GetPlayerInfo(playerID)
+		local posx = spGetTeamStartPosition(team)
+		
+		if not active or APLStates[playerID] == 3 then
+			readyStates[playerID] = MISSING
+		elseif APLStates[playerID] == 1 or APLStates[playerID] == 2 then
+			readyStates[playerID] = READY
+		elseif APLStates[playerID] == 4 or markedStates[playerID] or (posx and posx > 0)then
+			readyStates[playerID] = MARKED
+		elseif APLStates[playerID] == 0 then
+			readyStates[playerID] = PRESENT
+		else
+			if Spring.IsReplay() and active then
+				readyStates[playerID] = PRESENT
+			else
+				readyStates[playerID] = OTHER
+			end
+		end
+	end
 end
 
 local function playSound(snd)
@@ -393,6 +420,11 @@ end
 
 function widget:Update()
 	updateSize()
+	
+	for _,playerID in pairs (playerList) do
+		APLStates[playerID] = Spring.GetGameRulesParam("player_" .. tostring(playerID) .. "_readyState")
+	end	
+	updateStates()
 end
 
 function widget:DrawWorld()
@@ -605,11 +637,12 @@ function widget:DrawScreen()
 	end	
 	
 	local startID = spGetTeamRulesParam(myTeamID, 'startUnit')
+	
 	-- Draw list with player connection and ready up states
 	myFont:Begin()
-	if pStates then
+	if playerStates then
 		local n = 0
-		for _,_ in pairs(pStates) do
+		for _,_ in pairs(playerStates) do
 			n = n + 1
 		end
 		local y0 = 40 + 0.5*(vsy + n*th3)
@@ -618,65 +651,37 @@ function widget:DrawScreen()
 		myFont:Print("Players:", 10, y0 + th3+2, th3, 'xns')
 		myFont:End()
 		
-		for i,ps in pairs(pStates) do
-			local leaderName,active,spec,team,_,_,_,country,rank	= GetPlayerInfo(i)
+		for playerID,v in pairs(playerStates) do
+			local leaderName,active,spec,team,_,_,_,country,rank	= GetPlayerInfo(playerID)
+						
+			myFont:Begin()
+			if readyStates[playerID] == MISSING then
+				myFont:SetTextColor({0.6, 0.2, 0.2, 0.8}) -- red
+			elseif readyStates[playerID] == PRESENT then
+				myFont:SetTextColor({0.6, 0.6, 0.2, 1}) -- yellow
+			elseif readyStates[playerID] == MARKED then
+				myFont:SetTextColor({0.3, 0.5, 0.7, 1}) -- blue
+			elseif readyStates[playerID] == READY then
+				myFont:SetTextColor({0.0, 0.5, 0.0, 1}) -- green
+			elseif readyStates[playerID] == OTHER then
+				myFont:SetTextColor({0.5, 0.5, 0.5, 0.8}) -- grey 
+			end
+						
 			if not spec then
-				myFont:Begin()
-				if not active then
-					myFont:SetTextColor({0.6, 0.2, 0.2, 0.8}) -- red
-				else
-					if ps == "missing" then
-						if Spring.IsReplay() then
-							local posx = spGetTeamStartPosition(team)
-							if not posx or posx < 0 then
-								if markedStates and markedStates[i+1] then
-									myFont:SetTextColor({0.3, 0.5, 0.7, 1}) -- blue
-								else
-									myFont:SetTextColor({0.6, 0.6, 0.2, 1}) -- yellow
-								end
-							else
-								myFont:SetTextColor({0.3, 0.5, 0.7, 1}) -- blue
-							end
-						else
-							myFont:SetTextColor({0.6, 0.2, 0.2, 0.8}) -- red
-						end
-					elseif ps == "notready" then
-						local posx = spGetTeamStartPosition(team)
-						if not posx or posx < 0 then
-							if markedStates and markedStates[i+1] then
-								myFont:SetTextColor({0.3, 0.5, 0.7, 1}) -- blue
-							else
-								myFont:SetTextColor({0.6, 0.6, 0.2, 1}) -- yellow
-							end
-						else
-							myFont:SetTextColor({0.3, 0.5, 0.7, 1}) -- blue
-						end
-					elseif ps == "ready" then
-						myFont:SetTextColor({0.0, 0.5, 0.0, 1}) -- green -- glColor(0.7, 0.9, 0.7, 1) -- white/green
-					else
-						myFont:SetTextColor({0.5, 0.5, 0.5, 0.8}) -- grey -- glColor(0.7, 0.9, 0.7, 1) -- white/green
-					end
-				end
-				myFont:Print(leaderName, 25, y0 - (th3+2)* i, th3, 'xno')
-				myFont:End()
+				myFont:Print(leaderName, 25, y0 - (th3+2) * playerID, th3, 'xno')
 				glColor(0.4,0.4,0.4,1)
 				glTexture("LuaUI/Images/commchange/C-Rank" .. rank ..".png")
-				glTexRect(10, y0 - (th3+2)* i, 22, y0 - (th3+2)* i+12)
+				glTexRect(10, y0 - (th3+2)* playerID, 22, y0 - (th3+2) * playerID+12)
 				glTexture (false)
 			else
-				myFont:Begin()
-				if not active or ps == "missing" then
-					if Spring.IsReplay() then
-						myFont:SetTextColor({0.6, 0.6, 0.2, 1}) -- yellow
-					else
-						myFont:SetTextColor({0.6, 0.2, 0.2, 0.8}) -- red
-					end
+				if readyStates[playerID] == MISSING then
+					myFont:SetTextColor({0.6, 0.2, 0.2, 0.8}) -- red
 				else
 					myFont:SetTextColor({0.5, 0.5, 0.5, 0.8}) -- grey 
 				end
 				myFont:Print(leaderName .. " (s)", 25, y0 - (th3+2)* i, th3, 'xno')
-				myFont:End()
 			end
+			myFont:End()
 		end
 	end
 	glColor(1,1,1,1)
@@ -787,7 +792,7 @@ function widget:DrawScreen()
 					if tID ~= Spring.GetGaiaTeamID() then
 						local marked = markedStates[i]
 						local startID = spGetTeamRulesParam(tID, 'startUnit')
-						local ps = tostring(pStates[leaderID] or "?")
+						local ps = tostring(playerStates[leaderID] or "?")
 						
 						if startID == armauto then
 							commside = 'arm'
@@ -844,36 +849,31 @@ function widget:DrawScreen()
 						local statustext, remarks
 						local posx = spGetTeamStartPosition(tID)
 						
-						if not active then
-							statustext = "Missing"
-							myFont:SetTextColor({0.6, 0.2, 0.2, 0.8}) -- red
-						elseif ps == 'missing' then
-							if Spring.IsReplay() then
-								if posx and posx > 0 or marked then
-									statustext = "Marked"
-									myFont:SetTextColor({0.3, 0.5, 0.7, 1}) -- blue
-								else									
-									statustext = "Warming up ..."
-									myFont:SetTextColor({0.6, 0.6, 0.2, 1}) -- yellow
-								end
+						if isAI then
+							if readyStates[leaderID] == MISSING then
+								myFont:SetTextColor({0.5, 0.5, 0.5, 0.8}) -- grey
+								statustext = "Computing"
 							else
-								statustext = "Missing"
+								myFont:SetTextColor({0.3, 0.3, 0.9, 1}) -- blue
+								statustext = "Prepared"
+							end
+						else						
+							if readyStates[leaderID] == MISSING then
 								myFont:SetTextColor({0.6, 0.2, 0.2, 0.8}) -- red
-							end
-						elseif ps == 'notready' then
-							if posx and posx > 0 or marked then
-								statustext = "Marked"
-								myFont:SetTextColor({0.3, 0.5, 0.7, 1}) -- blue
-							else									
-								statustext = "Warming up ..."
+								statustext = "Missing"
+							elseif readyStates[leaderID] == PRESENT then
 								myFont:SetTextColor({0.6, 0.6, 0.2, 1}) -- yellow
+								statustext = "Warming up ..."
+							elseif readyStates[leaderID] == MARKED then
+								myFont:SetTextColor({0.3, 0.5, 0.7, 1}) -- blue
+								statustext = "Marked"
+							elseif readyStates[leaderID] == READY then
+								myFont:SetTextColor({0.0, 0.5, 0.0, 1}) -- green
+								statustext = "Ready"
+							elseif readyStates[leaderID] == OTHER then
+								myFont:SetTextColor({0.5, 0.5, 0.5, 0.8}) -- grey
+								statustext = firstToUpper(ps)							
 							end
-						elseif ps == 'ready' then
-							statustext = "Ready"
-							myFont:SetTextColor({0.0, 0.5, 0.0, 1}) -- green
-						else
-							statustext = firstToUpper(ps)
-							myFont:SetTextColor({0.5, 0.5, 0.5, 0.8}) -- grey
 						end
 						myFont:Print(statustext,			col_5, y1, th4, 'xo')
 						myFont:SetTextColor({1,1,1,1})
@@ -1017,7 +1017,7 @@ end
 function widget:GameSetup(state, ready, playerStates)
 	local strS = string.sub(state,1,6)
 	local strN = string.sub(state,13,13)
-	pStates = playerStates
+	playerStates = playerStates
 	strInfo = state
 	
 	if not gameOver then

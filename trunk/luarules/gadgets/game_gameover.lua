@@ -325,10 +325,17 @@ else
 						label = "DRAW"
 						myFontBig:SetTextColor({1, 1, 1, 1})
 					else
-						local wteam = (#winnerList > 0 and table.concat({"team ",winnerList[1]})) or "none"
-						local plur = (#winnerList > 1 and "+") or ""
-						label = table.concat({"Winner: ",wteam,plur})
+						-- print winner + team (n)
 						myFontBig:SetTextColor({0.75, 0.75, 0.85, 1})
+						local wteam = (#winnerList > 0 and table.concat({"Team ",winnerList[1]})) or "None"
+						local plur = (#winnerList > 1 and "+") or ""
+						label = table.concat({wteam,plur})
+						local team1 = #winnerList > 0 and Spring.GetTeamList(winnerList[1])[1]
+						local rgba = (team1 and {Spring.GetTeamColor(team1)}) or {0.75, 0.75, 0.85, 1}
+						rgba[4] = 1
+						local tw = gl.GetTextWidth(label)
+						myFontBig:Print("Winner:",vsx-60-14*tw-10,vsy-60,14,'rbs')
+						myFontBig:SetTextColor(rgba)
 					end
 					
 					myFontBig:Print(label,vsx-60,vsy-60,14,'rbs')
