@@ -483,6 +483,7 @@ function SetSidePics()
 	playerList = Spring.GetPlayerList()
 	for _,playerID in pairs (playerList) do
 		playerReadyState[playerID] = Spring.GetGameRulesParam("player_" .. tostring(playerID) .. "_readyState")
+		--Echo("Player state:",playerID,playerReadyState[playerID])
 	end
 
 	--set factions, from TeamRulesParam when possible and from initial info if not
@@ -1320,16 +1321,21 @@ function DrawSidePic(team, playerID, posY, leader, dark, ai)
 		-- note that adv pl list uses a phantom pID for absent players, so this will always show unready for players not ingame
 		local ready = (playerReadyState[playerID]==1) or (playerReadyState[playerID]==2) or (playerReadyState[playerID]==-1)
 		local hasStartPoint = (playerReadyState[playerID]==4)
+		local active = select(2,Spring_GetPlayerInfo(playerID)) or (playerReadyState[playerID]==3)
 		if ai then
-			gl_Color(0.1,0.1,0.97,1)
+			gl_Color(0.1,0.1,0.97,1) -- dark blue
 		else 
 			if ready then
-				gl_Color(0.1,0.95,0.2,1)
+				gl_Color(0.1,0.95,0.2,1) -- green
 			else
 				if hasStartPoint then
-					gl_Color(1,0.65,0.1,1)
+					gl_Color(0.3, 0.5, 0.7, 1) -- light blue, same as in commchange
 				else
-					gl_Color(0.8,0.1,0.1,1)	
+					if active then
+						gl_Color(1,0.65,0.1,1) -- amber
+					else
+						gl_Color(0.8,0.1,0.1,1)	 -- red
+					end
 				end
 			end
 		end

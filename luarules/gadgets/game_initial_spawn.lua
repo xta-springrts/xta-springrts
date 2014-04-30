@@ -108,7 +108,7 @@ function gadget:AllowStartPosition(x,y,z,playerID,readyState)
 	--  4: player has placed a startpoint but is not yet ready == xta marked state (sent from statebroadcast gadget)
 	
 	if Game.startPosType == 2 then -- choose in game mode
-		Spring.SetGameRulesParam("player_" .. playerID .. "_readyState" , readyState) 
+		Spring.SetGameRulesParam("player_" .. playerID .. "_readyState" , readyState)
 	end
 	
 	local _,_,_,teamID,allyTeamID,_,_,_,_,_ = Spring.GetPlayerInfo(playerID)
@@ -120,16 +120,21 @@ end
 function gadget:RecvLuaMsg(msg, playerID)
 	local STATEMSG = "181072"
 	local COMMMSG = "\177"
-		
+	
 	if msg:sub(1,#STATEMSG) == STATEMSG then
 		local sms = string.sub(msg, string.len(STATEMSG)+1) 
 		local state = tonumber(string.sub(sms,1,1))			
+		local playerIDMsg = tonumber(string.sub(sms,2))
 		
-		if playerID then
+		if playerIDMsg then -- player id is included in message and needs to be used if this was sent from gadget
 			if state == 0 then
-				Spring.SetGameRulesParam("player_" .. playerID .. "_readyState" , 0)
+				Spring.SetGameRulesParam("player_" .. playerIDMsg .. "_readyState" , 0)
 			elseif state == 1 then
-				Spring.SetGameRulesParam("player_" .. playerID .. "_readyState" , 4)
+				-- set state to marked if previous state = unready
+				local prevState = Spring.GetGameRulesParam("player_" .. playerIDMsg .. "_readyState")
+				if prevState == 0 then
+					Spring.SetGameRulesParam("player_" .. playerIDMsg .. "_readyState" , 4)
+				end
 			end
 		end
 	elseif msg:sub(1,#COMMMSG) == COMMMSG then
