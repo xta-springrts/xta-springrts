@@ -21,9 +21,11 @@ if not gadgetHandler:IsSyncedCode() then
 	-- UNSYNCED PART --
 	-------------------
 	
-	local STATEMSG = "181072"
-	local spGetTeamStartPosition = Spring.GetTeamStartPosition
-	local GetGameFrame = Spring.GetGameFrame
+	local STATEMSG 					= "181072"
+	local GetTeamStartPosition 		= Spring.GetTeamStartPosition
+	local GetGameFrame 				= Spring.GetGameFrame
+	local gaiaTeamID 				= Spring.GetGaiaTeamID()
+	local GetTeamInfo 				= Spring.GetTeamInfo
 			
 	function gadget:Update()
 		local frame = GetGameFrame()
@@ -31,11 +33,11 @@ if not gadgetHandler:IsSyncedCode() then
 			gadgetHandler:RemoveGadget(self)
 		end
 		
-		for i,player in ipairs(Spring.GetTeamList()) do
-			if player ~= Spring.GetGaiaTeamID() then	
-				local posx = spGetTeamStartPosition(player)
+		for i,teamID in ipairs(Spring.GetTeamList()) do
+			if teamID ~= gaiaTeamID then	
+				local posx = GetTeamStartPosition(teamID)
 				local marked
-				
+				local _,leaderID = GetTeamInfo(teamID)
 				if posx and posx > 0 then -- change 95+: engine places people at 0,0 instantly
 					marked = true
 				else
@@ -44,12 +46,12 @@ if not gadgetHandler:IsSyncedCode() then
 				
 				if marked then 
 					if not playerMarked[i] then
-						Spring.SendLuaUIMsg (STATEMSG .. 1 .. player)
+						Spring.SendLuaRulesMsg(STATEMSG .. 1 .. leaderID) -- to gadget initial spawn
 						playerMarked[i] = true
 					end
 				else
 					if playerMarked[i] then
-						Spring.SendLuaUIMsg (STATEMSG .. 0 .. player)
+						Spring.SendLuaRulesMsg(STATEMSG .. 0 .. leaderID)
 						playerMarked[i] = false
 					end
 				end

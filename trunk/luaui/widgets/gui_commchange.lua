@@ -232,7 +232,7 @@ local function initButtons()
 	
 end
 
-local function updateState()
+local function updateMyStartUnit()
 	local startID = spGetTeamRulesParam(myTeamID, 'startUnit')
 	if startID == armauto or startID == armman then
 		mySide = "arm"
@@ -244,19 +244,6 @@ local function updateState()
 		myType = "auto"
 	else
 		myType = "manual"
-	end
-end
-
-local function checkState()
-	local pos = spGetTeamStartPosition(myTeamID)
-	if pos and pos >= 0 then
-		if myState ~= READY then 
-			myState = MARKED
-		else
-			myState = READY
-		end
-	else
-		myState = PRESENT
 	end
 end
 
@@ -289,9 +276,9 @@ end
 
 local function updateStates()
 	
-	for _,playerID in pairs (playerList) do
-		local leaderName,active,spec,team,_,_,_,country,rank	= GetPlayerInfo(playerID)
-		local posx = spGetTeamStartPosition(team)
+	for i,playerID in pairs (playerList) do
+		local leaderName,active,spec,teamID,_,_,_,country,rank	= GetPlayerInfo(playerID)
+		local posx = spGetTeamStartPosition(teamID)
 		
 		if not active or APLStates[playerID] == 3 then
 			readyStates[playerID] = MISSING
@@ -308,11 +295,34 @@ local function updateStates()
 				readyStates[playerID] = OTHER
 			end
 		end
+		
+		-- update myState variable
+		if teamID == myTeamID and not spec then
+			if myState ~= READY and myState ~= MARKED then -- those are set by player in mousepress event
+				myState = readyStates[playerID]
+			end
+		end
 	end
 end
 
 local function playSound(snd)
 	PlaySoundFile(snd)
+end
+
+local function drawBorder(x0, y0, x1, y1, width)
+	glRect(x0, y0, x1, y0 + width)
+	glRect(x0, y1, x1, y1 - width)
+	glRect(x0, y0, x0 + width, y1)
+	glRect(x1, y0, x1 - width, y1)
+end
+
+local function IsOnButton(x, y, BLcornerX, BLcornerY,TRcornerX,TRcornerY)
+	if BLcornerX == nil then return false end
+	-- check if the mouse is in a rectangle
+
+	return x >= BLcornerX and x <= TRcornerX
+	                      and y >= BLcornerY
+	                      and y <= TRcornerY
 end
 
 --------------------------------------------------------------------------------
@@ -335,7 +345,7 @@ function widget:Initialize()
 	th2 = 11 * scale
 	th3 = 20 * scale
 	
-	updateState()
+	updateMyStartUnit()
 	
 	--marked states
 	for i,player in ipairs(teamList) do
@@ -372,39 +382,6 @@ function widget:Initialize()
 	updateSize()
 end
 
-function widget:RecvLuaMsg(msg, playerID)
-	local STATEMSG = "181072"
-	local SIDEMSG = '195' -- set by this widget gui_commchange.lua
-		
-	if (msg:sub(1,#STATEMSG) ~= STATEMSG) or (msg:sub(1,#SIDEMSG) ~= SIDEMSG)  then --invalid message
-		return
-	end
-	
-	if msg and string.len(msg) >= 8 then	
-		local sms = string.sub(msg, string.len(STATEMSG)+1) 
-		local state = tonumber(string.sub(sms,1,1))
-		local player = tonumber(string.sub(sms,2))
-		
-		if player then
-			if state == 0 then
-				markedStates[player+1] = false
-			elseif state == 1 then
-				markedStates[player+1] = true
-			end
-		end
-	elseif msg and string.len(msg) == 4 then
-		local sms = msg:sub(SIDEMSG:len()+1) 
-		local side = tonumber(sms:sub(1,1))
-		local _, _,_, playerTeam = GetPlayerInfo(playerID)
-			
-		if side == 1 then
-			newSide[playerTeam] = 1
-		elseif side == 2 then
-			newSide[playerTeam] = 2
-		end
-	end
-end
-
 function widget:ViewResize(viewSizeX, viewSizeY)
 	vsx, vsy = gl.GetViewSizes()
 	scale = vsy/1024
@@ -422,19 +399,20 @@ function widget:Update()
 	updateSize()
 	
 	for _,playerID in pairs (playerList) do
+		local leaderName,active,spec,teamID,_,_,_,country,rank	= GetPlayerInfo(playerID)
 		APLStates[playerID] = Spring.GetGameRulesParam("player_" .. tostring(playerID) .. "_readyState")
 	end	
 	updateStates()
+	
+	if not spectator then
+		updateMyStartUnit()
+	end
+	
 end
 
 function widget:DrawWorld()
 	if IsGUIHidden() or gameStarted then return end
-	
-	if not spectator then
-		checkState()
-		updateState()
-	end
-	
+		
 	glColor(1, 1, 1, 0.5)
     glDepthTest(false)
     for i = 1, #teamList do
@@ -442,13 +420,10 @@ function widget:DrawWorld()
         local tsx, tsy, tsz = spGetTeamStartPosition(teamID)
         if tsx and tsx > 0 then
 			local _,_,_,_,teamside = GetTeamInfo(teamID)
-			
-			if newSide[teamID] and newSide[teamID] > 0 then
-				if newSide[teamID] == 1 then
-					teamside = "arm"
-				elseif newSide[teamID] == 2 then
-					teamside = "core"
-				end
+			local startUnit = Spring.GetTeamRulesParam(teamID, 'startUnit')
+			if startUnit then
+				local cp = ((startUnit and UnitDefs[startUnit]) and UnitDefs[startUnit].customParams) or nil
+				if cp and cp.side then teamside = cp.side end
 			end
 			
             if teamside == "arm" then
@@ -464,13 +439,6 @@ function widget:DrawWorld()
     end
     glTexture(false)
 	
-end
-
-local function drawBorder(x0, y0, x1, y1, width)
-	glRect(x0, y0, x1, y0 + width)
-	glRect(x0, y1, x1, y1 - width)
-	glRect(x0, y0, x0 + width, y1)
-	glRect(x1, y0, x1 - width, y1)
 end
 
 function widget:DrawScreenEffects(vsx, vsy)
@@ -651,7 +619,7 @@ function widget:DrawScreen()
 		myFont:Print("Players:", 10, y0 + th3+2, th3, 'xns')
 		myFont:End()
 		
-		for playerID,v in pairs(playerStates) do
+		for _,playerID in pairs(playerList) do
 			local leaderName,active,spec,team,_,_,_,country,rank	= GetPlayerInfo(playerID)
 						
 			myFont:Begin()
@@ -679,7 +647,7 @@ function widget:DrawScreen()
 				else
 					myFont:SetTextColor({0.5, 0.5, 0.5, 0.8}) -- grey 
 				end
-				myFont:Print(leaderName .. " (s)", 25, y0 - (th3+2)* i, th3, 'xno')
+				myFont:Print(leaderName .. " (s)", 25, y0 - (th3+2)* playerID, th3, 'xno')
 			end
 			myFont:End()
 		end
@@ -1050,15 +1018,6 @@ function widget:GameSetup(state, ready, playerStates)
 	end
 end
 
-local function IsOnButton(x, y, BLcornerX, BLcornerY,TRcornerX,TRcornerY)
-	if BLcornerX == nil then return false end
-	-- check if the mouse is in a rectangle
-
-	return x >= BLcornerX and x <= TRcornerX
-	                      and y >= BLcornerY
-	                      and y <= TRcornerY
-end
-
 function widget:MousePress(mx, my, mButton)
 	if not gameOver and not gameStarted then
 		if spectator  then
@@ -1080,13 +1039,14 @@ function widget:MousePress(mx, my, mButton)
 					return true
 				end
 			end
-			updateState()
+			updateMyStartUnit()
 			initButtons()
 		else -- player
 			if IsOnButton(mx,my, px,py, px+sizex, Button["exit"]["y1"]) then
 				-- Check buttons
 				if mButton == 1 then
-					local startID = spGetTeamRulesParam(myTeamID, 'startUnit')			
+					local startID = spGetTeamRulesParam(myTeamID, 'startUnit')
+					-- arm
 					if IsOnButton(mx,my,Button["arm"]["x0"],Button["arm"]["y0"],Button["arm"]["x1"],Button["arm"]["y1"]) then	
 						if startID == coreauto or startID == coreman then
 							if startID == coreauto then
@@ -1100,6 +1060,7 @@ function widget:MousePress(mx, my, mButton)
 							end
 							playSound(button3)
 						end
+					-- core
 					elseif IsOnButton(mx,my,Button["core"]["x0"],Button["core"]["y0"],Button["core"]["x1"],Button["core"]["y1"]) then
 						if startID == armauto or startID == armman then
 							if startID == armauto then
@@ -1113,7 +1074,8 @@ function widget:MousePress(mx, my, mButton)
 							end
 							playSound(button3)
 						end
-					elseif IsOnButton(mx,my,Button["auto"]["x0"],Button["auto"]["y0"],Button["auto"]["x1"],Button["auto"]["y1"]) then
+					-- automatic
+					elseif IsOnButton(mx,my,Button["auto"]["x0"],Button["auto"]["y0"],Button["auto"]["x1"],Button["auto"]["y1"]) and myState ~= READY then
 						if startID == armman or startID == coreman then
 							if startID == armman then
 								spSendLuaRulesMsg('\177' .. armauto)
@@ -1126,6 +1088,7 @@ function widget:MousePress(mx, my, mButton)
 							end
 							playSound(button2)
 						end
+					-- manual
 					elseif IsOnButton(mx,my,Button["manual"]["x0"],Button["manual"]["y0"],Button["manual"]["x1"],Button["manual"]["y1"]) and myState ~= READY then
 						if startID == armauto or startID == coreauto then
 							if startID == armauto then
@@ -1139,9 +1102,10 @@ function widget:MousePress(mx, my, mButton)
 							end
 							playSound(button2)
 						end
+					-- ready
 					elseif IsOnButton(mx,my,Button["ready"]["x0"],Button["ready"]["y0"],Button["ready"]["x1"],Button["ready"]["y1"]) and gameState ~= COUNTDOWN then
 						local pos = spGetTeamStartPosition(myTeamID)
-						if pos >= 0 then
+						if pos > 0 then
 							if myState ~= READY then 
 								myState = READY
 							elseif myState == READY then
@@ -1149,6 +1113,7 @@ function widget:MousePress(mx, my, mButton)
 							end
 							playSound(button1)
 						end
+					-- info
 					elseif IsOnButton(mx,my,Button["info"]["x0"],Button["info"]["y0"],Button["info"]["x1"],Button["info"]["y1"]) and myState ~= READY then
 						if myState ~= READY then
 							infoOn = not infoOn
@@ -1158,13 +1123,14 @@ function widget:MousePress(mx, my, mButton)
 								playSound(cancel)
 							end
 						end
+					-- exit
 					elseif IsOnButton(mx,my,Button["exit"]["x0"],Button["exit"]["y0"],Button["exit"]["x1"],Button["exit"]["y1"]) then
 						widgetHandler:RemoveWidget(self)
 						Echo("Exit to native dialogue window.")
 						playSound(cancel)
 						return true
 					end
-					updateState()
+					updateMyStartUnit()
 					return true
 				elseif (mButton == 2 or mButton == 3) and mx < px + sizex then
 					if mx >= px and my >= py and my < Button["exit"]["y1"] then
@@ -1172,7 +1138,7 @@ function widget:MousePress(mx, my, mButton)
 						return true
 					end
 				end
-				updateState()
+				updateMyStartUnit()
 				initButtons()
 				return true
 			elseif mButton == 3 and IsOnButton(mx,my,Button["infopanel"]["x0"],Button["infopanel"]["y0"],Button["infopanel"]["x1"],Button["infopanel"]["y1"]) and myState ~= READY then
