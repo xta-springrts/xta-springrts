@@ -286,6 +286,7 @@ else
 		UpdatePlayerInfos()
 	end
 
+	-- also remove some code that violates user privacy from the following
 	function gadget:RecvLuaMsg(msg, playerID)
 		if msg:sub(1,AFKMessageSize) ~= AFKMessage then --invalid message
 			return
@@ -295,16 +296,6 @@ else
 		local previousPresent = playerInfoTableEntry.present
 		playerInfoTableEntry.present = afk == 0
 		playerInfoTable[playerID] = playerInfoTableEntry
-		local _,active,spectator,teamID,allyTeamID,ping = GetPlayerInfo(playerID)
-		if not spectator then
-			if currentGameFrame > minTimeToTake*gameSpeed then
-				if previousPresent and not playerInfoTableEntry.present then
-					SendMessageToAllyTeam(allyTeamID,"Player " .. GetPlayerInfo(playerID) .. " went AFK")
-				elseif not previousPresent and playerInfoTableEntry.present then
-					SendMessageToAllyTeam(allyTeamID,"Player " .. GetPlayerInfo(playerID) .. " came back")
-				end
-			end
-		end
 	end
 
 	function gadget:AllowResourceTransfer(fromTeamID, toTeamID, restype, level)

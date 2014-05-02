@@ -77,48 +77,48 @@ local gl_GetTextWidth	  = gl.GetTextWidth
 -- IMAGES
 --------------------------------------------------------------------------------
 
-local unitsPic        = ":n:"..LUAUI_DIRNAME.."Images/advplayerslist/units.png"
-local energyPic       = ":n:"..LUAUI_DIRNAME.."Images/advplayerslist/energy.png"
-local metalPic        = ":n:"..LUAUI_DIRNAME.."Images/advplayerslist/metal.png"
-local notFirstPic     = ":n:"..LUAUI_DIRNAME.."Images/advplayerslist/notfirst.png"
-local notFirstPicWO   = ":n:"..LUAUI_DIRNAME.."Images/advplayerslist/notfirstWO.png"
-local pingPic         = ":n:"..LUAUI_DIRNAME.."Images/advplayerslist/ping.png"
-local cpuPic          = ":n:"..LUAUI_DIRNAME.."Images/advplayerslist/cpu.png"
-local selectPic       = ":n:"..LUAUI_DIRNAME.."Images/advplayerslist/select.png"
-local barPic          = ":n:"..LUAUI_DIRNAME.."Images/advplayerslist/bar.png"
-local amountPic       = ":n:"..LUAUI_DIRNAME.."Images/advplayerslist/amount.png"
-local pointPic        = ":n:"..LUAUI_DIRNAME.."Images/advplayerslist/point.png"
-local lowPic          = ":n:"..LUAUI_DIRNAME.."Images/advplayerslist/low.png"
-local settingsPic     = ":n:"..LUAUI_DIRNAME.."Images/advplayerslist/settings.png"
-local rankPic         = ":n:"..LUAUI_DIRNAME.."Images/advplayerslist/ranks.png"
-local arrowPic        = ":n:"..LUAUI_DIRNAME.."Images/advplayerslist/arrow.png"
-local arrowdPic       = ":n:"..LUAUI_DIRNAME.."Images/advplayerslist/arrowd.png"
-local takePic         = ":n:"..LUAUI_DIRNAME.."Images/advplayerslist/take.png"
-local crossPic        = ":n:"..LUAUI_DIRNAME.."Images/advplayerslist/cross.png"
-local pointbPic       = ":n:"..LUAUI_DIRNAME.."Images/advplayerslist/pointb.png"
-local takebPic        = ":n:"..LUAUI_DIRNAME.."Images/advplayerslist/takeb.png"
-local seespecPic      = ":n:"..LUAUI_DIRNAME.."Images/advplayerslist/seespec.png"
+local unitsPic        = ":n:"..LUAUI_DIRNAME.."images/advplayerslist/units.png"
+local energyPic       = ":n:"..LUAUI_DIRNAME.."images/advplayerslist/energy.png"
+local metalPic        = ":n:"..LUAUI_DIRNAME.."images/advplayerslist/metal.png"
+local notFirstPic     = ":n:"..LUAUI_DIRNAME.."images/advplayerslist/notfirst.png"
+local notFirstPicWO   = ":n:"..LUAUI_DIRNAME.."images/advplayerslist/notfirstWO.png"
+local pingPic         = ":n:"..LUAUI_DIRNAME.."images/advplayerslist/ping.png"
+local cpuPic          = ":n:"..LUAUI_DIRNAME.."images/advplayerslist/cpu.png"
+local selectPic       = ":n:"..LUAUI_DIRNAME.."images/advplayerslist/select.png"
+local barPic          = ":n:"..LUAUI_DIRNAME.."images/advplayerslist/bar.png"
+local amountPic       = ":n:"..LUAUI_DIRNAME.."images/advplayerslist/amount.png"
+local pointPic        = ":n:"..LUAUI_DIRNAME.."images/advplayerslist/point.png"
+local lowPic          = ":n:"..LUAUI_DIRNAME.."images/advplayerslist/low.png"
+local settingsPic     = ":n:"..LUAUI_DIRNAME.."images/advplayerslist/settings.png"
+local rankPic         = ":n:"..LUAUI_DIRNAME.."images/advplayerslist/ranks.png"
+local arrowPic        = ":n:"..LUAUI_DIRNAME.."images/advplayerslist/arrow.png"
+local arrowdPic       = ":n:"..LUAUI_DIRNAME.."images/advplayerslist/arrowd.png"
+local takePic         = ":n:"..LUAUI_DIRNAME.."images/advplayerslist/take.png"
+local crossPic        = ":n:"..LUAUI_DIRNAME.."images/advplayerslist/cross.png"
+local pointbPic       = ":n:"..LUAUI_DIRNAME.."images/advplayerslist/pointb.png"
+local takebPic        = ":n:"..LUAUI_DIRNAME.."images/advplayerslist/takeb.png"
+local seespecPic      = ":n:"..LUAUI_DIRNAME.."images/advplayerslist/seespec.png"
 
 --module pics
-local specPic         = ":n:"..LUAUI_DIRNAME.."Images/advplayerslist/spec.png" 
-local chatPic         = ":n:"..LUAUI_DIRNAME.."Images/advplayerslist/chat.png"
-local sidePic         = ":n:"..LUAUI_DIRNAME.."Images/advplayerslist/side.png"
-local cpuPingPic      = ":n:"..LUAUI_DIRNAME.."Images/advplayerslist/cpuping.png"
-local sharePic        = ":n:"..LUAUI_DIRNAME.."Images/advplayerslist/share.png"
-local namePic         = ":n:"..LUAUI_DIRNAME.."Images/advplayerslist/name.png"
-local idPic           = ":n:"..LUAUI_DIRNAME.."Images/advplayerslist/ID.png"
-local tsPic           = ":n:"..LUAUI_DIRNAME.."Images/advplayerslist/TS.png"
+local specPic         = ":n:"..LUAUI_DIRNAME.."images/advplayerslist/spec.png" 
+local chatPic         = ":n:"..LUAUI_DIRNAME.."images/advplayerslist/chat.png"
+local sidePic         = ":n:"..LUAUI_DIRNAME.."images/advplayerslist/side.png"
+local cpuPingPic      = ":n:"..LUAUI_DIRNAME.."images/advplayerslist/cpuping.png"
+local sharePic        = ":n:"..LUAUI_DIRNAME.."images/advplayerslist/share.png"
+local namePic         = ":n:"..LUAUI_DIRNAME.."images/advplayerslist/name.png"
+local idPic           = ":n:"..LUAUI_DIRNAME.."images/advplayerslist/ID.png"
+local tsPic           = ":n:"..LUAUI_DIRNAME.."images/advplayerslist/TS.png"
 
 --rank pics
-local rank0      = "LuaUI/Images/advplayerslist/Ranks/rank0.png"
-local rank1      = "LuaUI/Images/advplayerslist/Ranks/rank1.png"
-local rank2      = "LuaUI/Images/advplayerslist/Ranks/rank2.png"
-local rank3      = "LuaUI/Images/advplayerslist/Ranks/rank3.png"
-local rank4      = "LuaUI/Images/advplayerslist/Ranks/rank4.png"
-local rank5      = "LuaUI/Images/advplayerslist/Ranks/rank5.png"
-local rank6      = "LuaUI/Images/advplayerslist/Ranks/rank6.png"
-local rank7      = "LuaUI/Images/advplayerslist/Ranks/rank7.png"
-local rank8      = "LuaUI/Images/advplayerslist/Ranks/rank_unknown.png"
+local rank0      = LUAUI_DIRNAME.."images/advplayerslist/Ranks/rank0.png"
+local rank1      = LUAUI_DIRNAME.."images/advplayerslist/Ranks/rank1.png"
+local rank2      = LUAUI_DIRNAME.."images/advplayerslist/Ranks/rank2.png"
+local rank3      = LUAUI_DIRNAME.."images/advplayerslist/Ranks/rank3.png"
+local rank4      = LUAUI_DIRNAME.."images/advplayerslist/Ranks/rank4.png"
+local rank5      = LUAUI_DIRNAME.."images/advplayerslist/Ranks/rank5.png"
+local rank6      = LUAUI_DIRNAME.."images/advplayerslist/Ranks/rank6.png"
+local rank7      = LUAUI_DIRNAME.."images/advplayerslist/Ranks/rank7.png"
+local rank8      = LUAUI_DIRNAME.."images/advplayerslist/Ranks/rank_unknown.png"
 
 local sidePics        = {}  -- loaded in SetSidePics function
 local sidePicsWO      = {}  -- loaded in SetSidePics function
@@ -501,12 +501,13 @@ function SetSidePics()
 			_,_,_,_,teamside = Spring_GetTeamInfo(teamID)
 		end
 			
-		if teamside then
-			sidePics[teamID] = ":n:LuaUI/Images/Advplayerslist/"..teamside.."_default.png"
-			sidePicsWO[teamID] = ":n:LuaUI/Images/Advplayerslist/"..teamside.."WO_default.png"
+		if teamside and #teamside > 0 then
+			
+			sidePics[teamID] = LUAUI_DIRNAME.."images/advplayerslist/"..teamside.."_default.png"
+			sidePicsWO[teamID] = LUAUI_DIRNAME.."images/advplayerslist/"..teamside.."WO_default.png"
 		else
-			sidePics[teamID] = ":n:"..LUAUI_DIRNAME.."Images/Advplayerslist/default.png"
-			sidePicsWO[teamID] = ":n:"..LUAUI_DIRNAME.."Images/Advplayerslist/defaultWO.png"
+			sidePics[teamID] = LUAUI_DIRNAME.."images/advplayerslist/default.png"
+			sidePicsWO[teamID] = LUAUI_DIRNAME.."images/advplayerslist/defaultWO.png"
 		end
 	end
 end
@@ -929,7 +930,6 @@ local Background
 local ShareSlider
 
 function widget:DrawScreen()
-
 
 	-- cancels the drawing if GUI is hidden
 	if Spring_IsGUIHidden() then
