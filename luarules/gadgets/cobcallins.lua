@@ -22,12 +22,21 @@ if gadgetHandler:IsSyncedCode() then
 	local los			= {}
 	local max			= math.max
 	local min			= math.min
+	
+	local gunships		= {}
 		
 	function gadget:Initialize()	
 		gadgetHandler:RegisterGlobal("UnitStoppedMoving", UnitStoppedMoving)
 		gadgetHandler:RegisterGlobal("UnitStartedMoving", UnitStartedMoving)
 		gadgetHandler:RegisterGlobal("PelicanTransform", PelicanTransform)
 		gadgetHandler:RegisterGlobal("PelicanReform", PelicanReform)
+		
+		for id,unitDef in pairs(UnitDefs) do
+			if unitDef.hoverAttack then				
+				gunships[id] = true
+			end
+		end
+		
 	end	
 	
 	function gadget:ShutDown()
@@ -38,24 +47,28 @@ if gadgetHandler:IsSyncedCode() then
 	end
 	
 	function UnitStoppedMoving(unitID,unitDefID,teamID)
-		--Echo("Unit landed:",unitID,unitDefID,teamID)
 		
 		if not airlos[unitDefID] then
 			airlos[unitDefID] = Spring.GetUnitSensorRadius(unitID,"airLos")
 		end
-		--Echo("Airlos:",airlos[unitDefID])
-		Spring.SetUnitSensorRadius(unitID,"airLos",min(airlos[unitDefID],50))
 		
+		if gunships[unitDefID] then
+			Spring.SetUnitSensorRadius(unitID,"airLos",min(airlos[unitDefID],400))
+		else
+			Spring.SetUnitSensorRadius(unitID,"airLos",min(airlos[unitDefID],50))
+		end
 		if not los[unitDefID] then
 			los[unitDefID] = Spring.GetUnitSensorRadius(unitID,"los")
 		end
-		--Echo("LOS:",los[unitDefID])
-		Spring.SetUnitSensorRadius(unitID,"los",min(los[unitDefID],100))
 		
+		if gunships[unitDefID] then
+			Spring.SetUnitSensorRadius(unitID,"los",min(los[unitDefID],300))
+		else
+			Spring.SetUnitSensorRadius(unitID,"los",min(los[unitDefID],100))
+		end
 	end
 	
 	function UnitStartedMoving(unitID,unitDefID,teamID)
-		--Echo("Unit left land:",unitID,unitDefID,teamID)
 		
 		if airlos[unitDefID] then 
 			Spring.SetUnitSensorRadius(unitID,"airLos",airlos[unitDefID])
