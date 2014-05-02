@@ -1,6 +1,6 @@
 function widget:GetInfo()
    return {
-      name      = "XTA Options GUI",
+      name      = "XTA Options",
       desc      = "Provide a GUI for some options",
       author    = "Jools",
       date      = "jan, 2014",
