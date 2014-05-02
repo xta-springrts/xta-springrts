@@ -1350,7 +1350,7 @@
 		canbuild19=core_viper;
 		canbuild20=core_immolator;
 		canbuild21=core_doomsday_machine;
-		canbuild43=core_intimidator;
+		canbuild22=core_intimidator;
 		canbuild23=core_kbot_lab;
 		canbuild24=core_adv_kbot_lab;
 		canbuild25=core_vehicle_plant;
@@ -1360,7 +1360,7 @@
 		canbuild29=core_shipyard;
 		canbuild30=core_sub_pen;
 		canbuild31=core_adv_shipyard;
-		canbuild22=core_tortoise_plant;//spiders vs. tortoise
+		canbuild32=core_tortoise_plant;//spiders vs. tortoise
 		canbuild33=core_hovercraft_platform;
 		canbuild34=core_neutron;
 		canbuild35=core_silencer;
