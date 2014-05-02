@@ -9,7 +9,7 @@
 	description=Well-Rounded Armored Mech;
 	footprintx=3;
 	footprintz=3;
-	maxdamage=16533;
+	maxdamage=28533;//+12000
 	objectname=arm_bantha;
 	side=ARM;
 	soundcategory=MAVERICK;
