@@ -5,7 +5,7 @@
 
 piece  weapon1, weapon2, base, wake1, wake2, lwing, rwing;
 
-static-var  gun_1, Static_Var_2, Static_Var_3, statechg_DesiredState, statechg_StateChanging;
+static-var  gun_1, Terraintype, Static_Var_3, statechg_DesiredState, statechg_StateChanging;
 
 // Signal definitions
 #define SIG_MOVE			2
@@ -130,7 +130,7 @@ StartMoving()
 	call-script lua_UnitStartedMoving();
 	while( TRUE )
 	{
-		if( Static_Var_2 == 3 )
+		if( Terraintype == 3 )
 		{
 			emit-sfx 259 from wake1;
 			emit-sfx 259 from wake2;
@@ -220,7 +220,7 @@ Killed(severity, corpsetype)
 	explode wake2 type FALL | FIRE | SMOKE | EXPLODE_ON_HIT | BITMAP3;
 }
 
-setsfxoccupy(Func_Var_1)
+setsfxoccupy(_terrain)
 {
-	Static_Var_2 = Func_Var_1;
+	Terraintype = _terrain;
 }
