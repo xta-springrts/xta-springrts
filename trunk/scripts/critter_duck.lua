@@ -7,7 +7,7 @@ local SIG_WALK = 2
 local tspeed = math.rad (180)
 local ta = math.rad (30)
 
-local volume 			= 5.0
+local volume 			= 1.0
 local soundPause 		= 300
 local lastSound 		= 0
 local PlaySoundFile 	= Spring.PlaySoundFile
