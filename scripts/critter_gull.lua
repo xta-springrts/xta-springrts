@@ -1,7 +1,7 @@
 local wingr = piece "rwing"
 local wingl = piece "lwing"
 local flapSpeed = math.rad(360)
-local volume 			= 5.0
+local volume 			= 1.0
 local soundPause 		= 300
 local lastSound		 	= 0
 local PlaySoundFile 	= Spring.PlaySoundFile
