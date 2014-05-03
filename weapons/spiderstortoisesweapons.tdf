@@ -74,7 +74,7 @@
 	turret=1;
 	beamtime=0.6;
 	rgbcolor=0.6 0.6 1.000;
-	range=330;
+	range=345;
 	reloadtime=1.2;
 	weapontimer=1;
 	weaponvelocity=500;
@@ -113,15 +113,15 @@
 	alphadecay=0.3;
 	sizedecay=-0.08;
 	energypershot=150;
-	reloadtime=2.5;
+	reloadtime=2.25;
 	weaponvelocity=600;
 	//mygravity=0.24;
 	areaofeffect=64;
 	explosiongenerator=custom:WindkbotRocket;
 	soundstart=cannhvy2;
 	soundhitdry=xplomed4;
-	accuracy=600;
-	movingaccuracy=1200;
+	accuracy=900;
+	movingaccuracy=1700;
 	tolerance=500;
 	//minbarrelangle=-40;
 	startsmoke=1;
@@ -269,7 +269,7 @@
 	name=PewPew;
 	noselfdamage=1;
 	pulsespeed=7.0;
-	range=370;
+	range=380;
 	reloadtime=1;
 	rgbcolor=0.7 0.2 1;
 	//soundhitdry=xplolrg;
@@ -294,7 +294,7 @@
 	turret=1;
 	model=missile.s3o;
 	Texture1=null;
-	range=675;
+	range=685;
 	reloadtime=3;
 	weapontimer=5;
 	weaponvelocity=750;
@@ -340,7 +340,7 @@
 	firestarter=90;
 	rgbcolor=0.1 0.2 1.000;
 	explosiongenerator=custom:PINKFLASH;
-	pulseSpeed=4.0;
+	pulseSpeed=0.5;
 	thickness=3.5;
 	[DAMAGE]
 	{
@@ -357,14 +357,14 @@
 	turret=1;
 	//minbarrelangle=-25;
 	range=900;
-	reloadtime=5;
+	reloadtime=4;
 	weaponvelocity=700;
 	areaofeffect=96;
 	explosiongenerator=custom:popupcannon;
 	soundstart=cannhvy1;
 	soundhitdry=xplomed2;
-	accuracy=400;
-	movingaccuracy=500;
+	accuracy=1100;
+	movingaccuracy=1400;
 	tolerance=500;
 	startsmoke=1;
 	size=3.45;
@@ -394,14 +394,15 @@
 	Texture2=null;
 	Texture3=null;
 	Texture4=null;
-	range=550;
+	range=560;
 	reloadtime=7.2;
 	weapontimer=5;
 	flighttime=2;
-	Trajectoryheight=1;
+	Trajectoryheight=0.2;
 	weaponvelocity=500;
 	startvelocity=100;
 	weaponacceleration=200;
+	turnrate=5000;
 	areaofeffect=48;
 	soundstart=Rockhvy1;
 	soundhitdry=xplomed4;
@@ -464,7 +465,7 @@
 	Texture3=null;
 	Texture4=null;
 	turret=1;
-	range=300;
+	range=290;
 	reloadtime=0.5;
 	weapontimer=4.5;
 	weaponvelocity=180;
@@ -473,7 +474,7 @@
 	sizegrowth=0.7;
 	burst=15;
 	burstrate=0.01;
-	sprayangle=2048;
+	sprayangle=1024;
 	randomdecay=0;
 	soundstart=Flamhvy1;
 	soundhitdry=;
@@ -522,5 +523,30 @@
 		//group_commanders=75;
 		//group_landair=191;
 
+	}
+}
+
+[TortoiseAngryBomb]
+{
+	name=Boom Mine;
+	weaponType=Cannon;
+	range=1;
+	turret=1;
+	range=200;
+	reloadtime=3.6;
+	weaponvelocity=250;
+	areaofeffect=275;
+	soundstart=largegun;
+	soundhitdry=exmine3;
+	edgeeffectiveness=0.5;
+	shakemagnitude=0;
+	shakeduration=0;
+	explosiongenerator=custom:LaunchNuke;
+	[DAMAGE]
+	{
+		default=2500;
+		group_commanders=1575;
+		group_mines=0.5;
+		group_invincible=1;
 	}
 }
