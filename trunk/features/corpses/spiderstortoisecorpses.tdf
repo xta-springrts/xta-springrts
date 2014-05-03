@@ -577,6 +577,44 @@ Featurereclamate=smudge01;
 Seqnamereclamate=tree1reclamate;
 }
 
+[core_replenisher_dead]
+{
+World=All Worlds;
+Description=Wreckage;
+Category=core_corpses;
+Object=core_replenisher_dead;
+featuredead=core_replenisher_heap;
+Footprintx=3;
+Footprintz=3;
+Height=25;
+Blocking=1;
+HitDensity=100;
+Metal=247;
+Damage=1360;
+Reclaimable=1;
+Featurereclamate=smudge01;
+Seqnamereclamate=tree1reclamate;
+}
+
+[core_replenisher_heap]
+{
+World=All Worlds;
+Description=Wreckage;
+Category=core_heaps;
+Object=3x3c;
+Footprintx=3;
+Footprintz=3;
+Height=4;
+Blocking=0;
+HitDensity=100;
+Metal=174;
+Damage=1360;
+Reclaimable=1;
+
+Featurereclamate=smudge01;
+Seqnamereclamate=tree1reclamate;
+}
+
 [core_caliber_dead]
 {
 world=All Worlds;

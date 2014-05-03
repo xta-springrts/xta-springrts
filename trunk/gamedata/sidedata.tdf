@@ -2320,11 +2320,11 @@
 		canbuild2=core_hatchling;
 		canbuild3=core_slingshot;
 		canbuild4=core_Chelonian;
-		canbuild5=CORe_Caliber;
+		canbuild5=CORe_tnt;
 		canbuild6=core_Avalanche;
 		canbuild7=core_wrecker;
 		canbuild8=core_outback;
-		//canbuild9=arm_huntsman;
+		canbuild9=core_Replenisher;
 		//canbuild10=arm_widow;
 	}
 
