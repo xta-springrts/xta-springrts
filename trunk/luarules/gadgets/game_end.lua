@@ -756,9 +756,9 @@ else
 						
 						local label_1,label_2,label_3
 						if voteForEnd then
-							label_1 = "All remaining enemies are inactive, but they may rejoin if"
-							label_2 = "you wait for them."
-							label_3 = "Do you want to end this game now and declare game over?"
+							label_1 = "Sir, all enemy commanders have deserted their ranks"
+							label_2 = "and the remaining units wish to surrender. "
+							label_3 = "Do you want to accept this and end the game?"
 						else
 							label_1 = "Do you agree to mutually end this game and call"
 							label_2 = "it a draw?"
