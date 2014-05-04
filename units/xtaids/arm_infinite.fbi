@@ -77,7 +77,7 @@
 	brakerate=0.013;
 	maxvelocity=1.4; //was 2//
 	minwaterdepth=30;
-	waterline=13;
+	waterline=5;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
