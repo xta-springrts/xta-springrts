@@ -24,7 +24,7 @@ function widget:GetInfo()
 end
 
 --Changelog
--- before v8.0 developed outside of XTA by Marmoth
+-- before v8.0 developed outside of BA by Marmoth
 -- v9.0 (Bluestone): modifications to deal with twice as many players/specs; specs are rendered in a small font and cpu/ping does not show for them. 
 -- v9.1 ([teh]decay): added notification about shared resources
 -- v10  (Bluestone): Better use of opengl for a big speed increase & less spaghetti
@@ -654,7 +654,6 @@ function CreatePlayerFromTeam(teamID) -- for when we don't have a human player o
 		tai = true
 		
 	else
-		
 		if Spring_GetGameSeconds() < 0.1 then
 			tname = absentName1
 			ttotake = false
@@ -947,18 +946,17 @@ function widget:DrawScreen()
 	local mouseX,mouseY = Spring_GetMouseState()
 	if (mouseX > widgetPosX + m_name.posX + m_name.width - 5) and (mouseX < widgetPosX + widgetWidth) and (mouseY > widgetPosY - 16) and (mouseY < widgetPosY + widgetHeight) then
 		local DrawFrame = Spring_GetDrawFrame()
-		local GameFrame = Spring_GetGameFrame()
-		if PrevGameFrame == nil then PrevGameFrame = GameFrame end
-		if (DrawFrame%5==0) or (GameFrame>PrevGameFrame+1) then
+		local frame = Spring_GetGameFrame()
+		if PrevGameFrame == nil then PrevGameFrame = frame end
+		if (DrawFrame%5==0) or (frame>PrevGameFrame+1) then
 			NeedUpdate = true
 		end
 	end
 	
 	
 	if NeedUpdate then
-		
 		CreateLists()
-		PrevGameFrame = GameFrame
+		PrevGameFrame = frame
 	end
 	
 	-- draws the background
