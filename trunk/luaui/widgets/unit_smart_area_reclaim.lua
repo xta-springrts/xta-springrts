@@ -36,6 +36,7 @@ local GetFeaturePosition = Spring.GetFeaturePosition
 local GetFeatureRadius = Spring.GetFeatureRadius
 local GetFeatureResources = Spring.GetFeatureResources
 local GiveOrderToUnit = Spring.GiveOrderToUnit
+local Echo = Spring.Echo
 
 local WorldToScreenCoords = Spring.WorldToScreenCoords
 local TraceScreenRay = Spring.TraceScreenRay
@@ -141,10 +142,12 @@ function widget:CommandNotify(id, params, options)
 		local mobiles, stationaries = {}, {}
 		local mobileb, stationaryb = false, false
 		
-		local rUnits = {}
-		local sUnits = GetSelectedUnits()
-		for i=1,#sUnits do
-			local uid = sUnits[i]
+		local reclaimUnits = {}
+		local selectedUnits = GetSelectedUnits()
+		
+		--Echo("CN:",id,options.shift,options.alt)
+		for i=1,#selectedUnits do
+			local uid = selectedUnits[i]
 			local udid = GetUnitDefID(uid)
 			local unitDef = UnitDefs[udid]
 			if (unitDef.canReclaim == true) then
@@ -168,14 +171,14 @@ function widget:CommandNotify(id, params, options)
 					end
 				end
 				
-				rUnits[#rUnits+1] = {uid=uid, ux=ux, uz=uz}
+				reclaimUnits[#reclaimUnits+1] = {uid=uid, ux=ux, uz=uz}
 			end
 		end
 		
-		if (#rUnits > 0) then
+		if (#reclaimUnits > 0) then
 			local len = #params
-			local ret = {}
-			local rmt = {}
+			local reclaimEnergyTask = {}
+			local reclaimMetalTask = {}
 			
 			if (len == 4) then
 				local x, y, z, r = params[1], params[2], params[3], params[4]
@@ -197,12 +200,20 @@ function widget:CommandNotify(id, params, options)
 						local urx, urz = abs(ux - x), abs(uz - z)
 						local ud = sqrt((urx * urx) + (urz * urz))-ur*.5
 						
-						if (ud < r) then
-							local mr, _, er, _, _ = GetFeatureResources(uid)
-							if (mr > 0) then
-								rmt[#rmt+1] = uid
-							elseif (er > 0) then
-								ret[#ret+1] = uid
+						local fdid = Spring.GetFeatureDefID(uid)
+						local fdef = fdid and FeatureDefs[fdid]
+						local cp = fdef and fdef.customParams
+						local centrefdid = Spring.GetFeatureDefID(id)
+						
+						-- include no-alert units (dt:s and fortwalls) only if alt is pressed or that kind of unit was pointed at specifically
+						if (not (cp and cp.noalert)) or fdid == centrefdid or (options.alt) then						
+							if (ud < r) then
+								local mr, _, er, _, _ = GetFeatureResources(uid)
+								if (mr > 0) then
+									reclaimMetalTask[#reclaimMetalTask+1] = uid
+								elseif (er > 0) then
+									reclaimEnergyTask[#reclaimEnergyTask+1] = uid
+								end
 							end
 						end
 					end
@@ -213,18 +224,18 @@ function widget:CommandNotify(id, params, options)
 					local mList, sList = {}, {}
 					local source = {}
 					
-					if (#rmt > 0)and(mr > 0) then
-						source = rmt
-					elseif (#ret > 0)and(er > 0) then
-						source = ret
+					if (#reclaimMetalTask > 0)and(mr > 0) then
+						source = reclaimMetalTask
+					elseif (#reclaimEnergyTask > 0)and(er > 0) then
+						source = reclaimEnergyTask
 					end
 					
 					for i=1,#source do
 						local fid = source[i]
 						if (fid ~= nil) then
 							local fx, _, fz = GetFeaturePosition(fid)
-							for ui=1,#rUnits do
-								local unit = rUnits[ui]
+							for ui=1,#reclaimUnits do
+								local unit = reclaimUnits[ui]
 								local uid, ux, uz = unit.uid, unit.ux, unit.uz
 								local dx, dz = ux-fx, uz-fz
 								local dist = dx + dz
