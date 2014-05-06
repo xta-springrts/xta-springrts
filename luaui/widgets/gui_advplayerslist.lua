@@ -654,7 +654,7 @@ function CreatePlayerFromTeam(teamID) -- for when we don't have a human player o
 		tai = true
 		
 	else
-		Echo("APL:",Spring_GetGameSeconds(),teamID,IsTakeable(teamID))
+		
 		if Spring_GetGameSeconds() < 0.1 then
 			tname = absentName1
 			ttotake = false
@@ -950,14 +950,13 @@ function widget:DrawScreen()
 		local GameFrame = Spring_GetGameFrame()
 		if PrevGameFrame == nil then PrevGameFrame = GameFrame end
 		if (DrawFrame%5==0) or (GameFrame>PrevGameFrame+1) then
-			--Echo(DrawFrame)
 			NeedUpdate = true
 		end
 	end
 	
 	
 	if NeedUpdate then
-		--Spring.Echo("DS APL update")			
+		
 		CreateLists()
 		PrevGameFrame = GameFrame
 	end
@@ -1081,8 +1080,6 @@ end
 
 
 function CreateMainList(tip)
-
-	--Spring.Echo("List Updated")
 
 	local mouseX,mouseY = Spring_GetMouseState()
 	local leader

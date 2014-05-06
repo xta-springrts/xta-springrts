@@ -36,14 +36,14 @@ local spRemoveUnitCmdDesc = Spring.RemoveUnitCmdDesc
 --------------------------------------------------------------------------------
 
 CMD_BUILDSPEED = 33455
-local passiveBuilders = {} -- passiveBuilders[uID] = nil / bool
-local requiresMetal = {} -- requiresMetal[uDefID] = bool
-local requiresEnergy = {} -- requiresEnergy[uDefID] = bool
-local teamList = {} -- teamList[1..n] = teamID
-local teamMetalStalling = {} -- teamStalling[teamID] = nil / bool
-local teamEnergyStalling = {} -- teamStalling[teamID] = nil / bool
-
-local buildspeedlist = {}
+local passiveBuilders 			= {} -- passiveBuilders[uID] = nil / bool
+local requiresMetal			 	= {} -- requiresMetal[uDefID] = bool
+local requiresEnergy 			= {} -- requiresEnergy[uDefID] = bool
+local teamList 					= {} -- teamList[1..n] = teamID
+local teamMetalStalling 		= {} -- teamStalling[teamID] = nil / bool
+local teamEnergyStalling 		= {} -- teamStalling[teamID] = nil / bool
+local modOptions    			= Spring.GetModOptions()
+local buildspeedlist 			= {}
 
 local buildspeedCmdDesc = {
   id      = CMD_BUILDSPEED,
@@ -150,6 +150,9 @@ function gadget:Initialize()
 		local teamID = Spring.GetUnitTeam(unitID)
 		local unitDefID = GetUnitDefID(unitID)
 		gadget:UnitCreated(unitID, unitDefID, teamID)
+	end
+	if modOptions and modOptions.buildspeed and modOptions.buildspeed == '0' then
+		gadgetHandler:RemoveGadget()
 	end
 end
 

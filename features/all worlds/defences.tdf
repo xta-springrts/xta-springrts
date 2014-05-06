@@ -20,6 +20,13 @@
 	collisionVolumeScales =26 34 26;
 	collisionVolumeOffsets = 0 -2 0;   //0 0 0
 	collisionVolumeTest = 1;
+	
+	[customparams] 	
+	{
+	noalert=1;
+	dontCount=1;
+	}
+	
 }
 [core_dragons_teeth_dead]
 {
@@ -43,6 +50,12 @@
 	collisionVolumeScales =26 36 26;
 	collisionVolumeOffsets = 0 -3 0;   //0 -1 0
 	collisionVolumeTest = 1;
+	
+	[customparams] 	
+	{
+	noalert=1;
+	dontCount=1;
+	}
 }
 [rock_teeth]
 {
@@ -82,6 +95,12 @@
 	collisionVolumeScales =32 30 32;
 	collisionVolumeOffsets = 0 -4 0;
 	collisionVolumeTest = 1;
+	
+	[customparams] 	
+	{
+	noalert=1;
+	dontCount=1;
+	}
 }
 [core_floating_dragons_teeth_dead]
 {
@@ -104,6 +123,12 @@
 	collisionVolumeScales =32 30 32;
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
+	
+	[customparams] 	
+	{
+	noalert=1;
+	dontCount=1;
+	}
 }
 [arm_fortification_wall_dead]
 {
@@ -128,6 +153,12 @@
 	collisionVolumeScales =32 42 32;
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
+	
+	[customparams] 	
+	{
+	noalert=1;
+	dontCount=1;
+	}
 }
 [core_fortification_wall_dead]
 {
@@ -152,6 +183,12 @@
 	collisionVolumeScales =32 42 32;
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
+	
+	[customparams] 	
+	{
+	noalert=1;
+	dontCount=1;
+	}
 }
 [rock_fort]
 {

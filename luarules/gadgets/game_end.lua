@@ -98,14 +98,20 @@ if (gadgetHandler:IsSyncedCode()) then
 		local gaiaCheck = (ignoreGaia == 0) or (allyTeamID ~= gaiaAllyTeamID)
 		return isAlive and gaiaCheck
 	end
+	
+	local function IsTeamActive(teamID)
+		for _, pID in pairs (Spring.GetPlayerList(teamID, true)) do
+			local _,active, spec = Spring.GetPlayerInfo(pID)
+			if active and not spec then return true end
+		end
+		return false
+	end
 
 	local function IsAllyControlled(allyTeamID)
 		
 		for _, tID in pairs (Spring.GetTeamList(allyTeamID)) do
-			local _,_,isDead,isAI 	= Spring.GetTeamInfo(tID)
-			local active = #(Spring.GetPlayerList(tID,true)) > 0
-
-			if tID ~= gaiaTeamID and (not isDead or teamsUnitCount[tID] == 0) and (active or isAI) then
+			local _,_,isDead,isAI = Spring.GetTeamInfo(tID)
+			if tID ~= gaiaTeamID and not (isDead or teamsUnitCount[tID] == 0) and (isAI or IsTeamActive(tID)) then
 				return true
 			end
 		end
