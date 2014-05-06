@@ -35,7 +35,8 @@ local dt									= -1
 -- SETTINGS, configurable
 --------------------------------------------------------------------------------
 local TEST_SOUND 							= LUAUI_DIRNAME .. 'sounds/volume_osd/pop.wav'
-local font         							= "luaui/fonts/freesansbold_14"
+local textsize								= 14
+local myFont								= gl.LoadFont("FreeSansBold.otf",textsize, 1.9, 40)
 local step 									= 2 -- how many steps to change sound volume on one key press
 local pluskey								= 270 -- numpad+ (look in uikeys.txt in spring folder for key symbols)
 local minuskey								= 269 -- numpad-
@@ -55,8 +56,6 @@ local lastVolume
 
 function widget:Initialize()
   volume = Spring.GetConfigInt("snd_volmaster", 60)
-  Spring.Echo("Volume = " .. volume)
-  fontHandler.UseFont(font)
 end
 
 function widget:KeyPress(key, mods, isRepeat)
@@ -64,32 +63,30 @@ function widget:KeyPress(key, mods, isRepeat)
 		volume = Spring.GetConfigInt("snd_volmaster", 60)
 		volume = volume + step
 		
-		if volume < 0 then volume = 0 end
-		if volume > 100 then volume = 100 end
-		
+		volume = math.max(volume,0)
+		volume = math.min(volume,100)
+				
 		if not lastVolume then
 			lastVolume = Spring.GetConfigInt("snd_volmaster")
 		end
 		
 		Spring.SetConfigInt("snd_volmaster", volume)
-		--if not isRepeat then Spring.PlaySoundFile(TEST_SOUND, 1.0) end
-		--Spring.Echo("Volume = " .. volume)
 		dt = os.clock()
 		return true
 		
 	elseif (key == minuskey or key == minuskey2) and (not mods.alt) and (not mods.shift) then -- KEY = Alt + minuskey
 		volume = Spring.GetConfigInt("snd_volmaster", 60)
 		volume = volume - step
-		if volume < 0 then volume = 0 end
-		if volume > 100 then volume = 100 end
+		
+		volume = math.max(volume,0)
+		volume = math.min(volume,100)
 		
 		if not lastVolume then
 			lastVolume = Spring.GetConfigInt("snd_volmaster")
 		end
 		
 		Spring.SetConfigInt("snd_volmaster", volume)
-		--pring.Echo("Volume = " .. volume)
-		--if not isRepeat then Spring.PlaySoundFile(TEST_SOUND, 1.0) end
+		
 		dt = os.clock()
 		return true
 	elseif key == 0x134 then --ALT
@@ -119,8 +116,6 @@ function widget:DrawScreen()
 		local t = ostime - dt
 		local boxwidth = widgetWidth/rectangles
 		
-		fontHandler.UseFont(font)
-		
 		if t < dtime and dt >= 0 then --dtime = 3
 			local alpha
 			if t < ftime then --ftime = 2
@@ -128,11 +123,14 @@ function widget:DrawScreen()
 			else
 				alpha = 3*(dtime-t)/dtime
 			end
-			gl.Color(0,0,0,0.1*alpha)                              -- draws background rectangle
+			myFont:Begin()
+			myFont:SetTextColor({0.5,1,0.5,alpha})
+			myFont:Print(table.concat({"Volume: ",volume,"%"}),x1+5,y2+5,textsize,'xs')
+			myFont:End()
+			
+			gl.Color(0,0,0,0.1*alpha)                          			-- draws background rectangle
 			gl.Rect(x1,y1,x2-1,y2)
-			gl.Color(0.5,1,0.5,alpha)
-			TextDraw("Volume: ".. volume .. "%",x1+5,y2+5)
-			gl.Color(0.3,0.3,0.3,0.6*alpha)                              -- draws empty rectangles
+			gl.Color(0.3,0.3,0.3,0.6*alpha)                             -- draws empty rectangles
 			
 			for i = 1,rectangles do
 				local u1 = x1+(i-1)*boxwidth
@@ -151,6 +149,7 @@ function widget:DrawScreen()
 				gl.Rect(u1+2,y1+1,u2-1,y2-1)
 			end
 		end
+		gl.Color(1,1,1,1)
 	end
 
 function widget:TweakDrawScreen()
@@ -158,14 +157,18 @@ function widget:TweakDrawScreen()
 	local y2 = widgetPosY + widgetHeight
 	local x1 = widgetPosX
 	local x2 = widgetPosX + widgetWidth
-	fontHandler.UseFont(font)
+	
+	myFont:Begin()
+	myFont:SetTextColor({0.5,1,0.5,1})
+	myFont:Print(table.concat({"Volume: ",volume,"%"}),x1+5,y2+5,textsize,'xs')
+	myFont:End()
+	
 	gl.Color(0,0,0.5,1)
 	gl.Rect(x1-1,y1-1,x1,y2+1)
 	gl.Rect(x2-1,y1-1,x2,y2+1)
 	gl.Rect(x1-1,y1-1,x2,y1)
 	gl.Rect(x1-1,y2,x2,y2+1)
-	gl.Color(0.5,1,0.5,1)
-	TextDraw("Volume: ".. volume .. "%",x1+5,y2+5)
+	
 	gl.Color(0,0,0,0.2)                              -- draws empty rectangles
 	for i = 1,40 do
 		local u1 = x1+(i-1)*10
@@ -179,7 +182,8 @@ function widget:TweakDrawScreen()
 		local u1 = x1+(i-1)*10
 		local u2= u1+8
 		gl.Rect(u1+1,y1+1,u2-1,y2-1)
-	end	
+	end
+	gl.Color(1,1,1,1)
 end
 
 	-----------------
