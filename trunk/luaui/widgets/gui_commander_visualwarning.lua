@@ -97,7 +97,7 @@ local function getCommandName(cmdID)
 end
 
 function widget:UnitDamaged (unitID, unitDefID, unitTeam, damage, paralyzer, weaponID, attackerID, attackerDefID, attackerTeam)
-	if localTeamID ~= unitTeam Spring.IsUnitInView(unitID) then
+	if localTeamID ~= unitTeam or Spring.IsUnitInView(unitID) then
 		return --ignore other teams and units in view
 	end
 	
@@ -112,21 +112,22 @@ function widget:UnitDamaged (unitID, unitDefID, unitTeam, damage, paralyzer, wea
 				aName = table.concat({"by ",(UnitDefs[attackerDefID] or "enemy"),"!"})
 			end
 			warningList[1] = udef.humanName
-			warningList[2] = health/maxhealth
+			warningList[2] = (health and health/maxhealth) or 0
 			warningList[3] = aName
 			warningList[4] = now
 			warningList[5] = unitID
 			warningList[6] = commanderStates["firestate"]
 			warningList[7] = commanderStates["movestate"]
 			
-			local cloakstate = commanderStates["cloak"]
-			local cloaked = Spring.GetUnitIsCloaked(unitID)
-			local _,_,_,_,midY = Spring.GetUnitPosition(unitID,true)
+			local cloakstate = (commanderStates and commanderStates["cloak"]) or false
+			local cloaked = unitID and Spring.GetUnitIsCloaked(unitID)
+			local _,_,_,_,midY = unitID and Spring.GetUnitPosition(unitID,true)
 			local radius = commanderRadiuses[unitDefID]
 			local submerged = midY and (midY < 0) and radius and (midY + radius < 0)
 			warningList[8] = getVisibleState(cloaked,cloakstate,submerged)
 			
-			local cmd1 = Spring.GetUnitCommands(unitID,1)[1]
+			local cmd = unitID and Spring.GetUnitCommands(unitID,1)
+			local cmd1 = cmd and cmd[1]
 			warningList[9] = getCommandName(cmd1 and cmd1.id or 0)
 		end
 	end
@@ -139,18 +140,21 @@ function widget:GameFrame(frame)
 		elseif warningList[5] and frame%16 == 0 then
 			local unitID = warningList[5]
 			local commanderStates = Spring.GetUnitStates(unitID)
+			local health, maxhealth = Spring.GetUnitHealth(unitID)
 			
-			warningList[6] = commanderStates["firestate"]
-			warningList[7] = commanderStates["movestate"]
+			warningList[2] = (health and health/maxhealth) or 0
+			warningList[6] = (commanderStates and commanderStates["firestate"]) or 0
+			warningList[7] = (commanderStates and commanderStates["movestate"]) or 0
 			
-			local cloakstate = commanderStates["cloak"]
-			local cloaked = Spring.GetUnitIsCloaked(unitID)
-			local _,_,_,_,midY = Spring.GetUnitPosition(unitID,true)
-			local unitDefID = Spring.GetUnitDefID(unitID)
+			local cloakstate = (commanderStates and commanderStates["cloak"]) or false
+			local cloaked = unitID and Spring.GetUnitIsCloaked(unitID)
+			local _,_,_,_,midY = unitID and Spring.GetUnitPosition(unitID,true)
+			local unitDefID = unitID and Spring.GetUnitDefID(unitID)
 			local radius = commanderRadiuses[unitDefID]
 			local submerged = midY and (midY < 0) and radius and (midY + radius < 0)
 			warningList[8] = getVisibleState(cloaked,cloakstate,submerged)
-			local cmd1 = Spring.GetUnitCommands(unitID,1)[1]
+			local cmd = unitID and Spring.GetUnitCommands(unitID,1)
+			local cmd1 = cmd and cmd[1]
 			warningList[9] = getCommandName(cmd1 and cmd1.id or 0)
 		end
 	end
