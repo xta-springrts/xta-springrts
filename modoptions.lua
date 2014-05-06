@@ -239,6 +239,14 @@ local options = {
 		section= "xtagame",
 	},
 	{
+		key    = "buildspeed",
+		name   = 'Enable variable production rate',
+		desc   = "Enable variable production rate button to be added to build menu (may be expensive)\nkey: buildspeed",
+		type   = "bool",
+		def    = false,
+		section= "xtagame",
+	},
+	{
 		key    = "rockettoggle",
 		name   = "Enable togglable rocket type?",
 		desc   = "** ThirdParty ** Enable additional rocket type for several rocket/missile units  Author: Deadnight Warrior\nkey: rockettoggle",
