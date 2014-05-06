@@ -182,6 +182,7 @@ function widget:UnitTaken(unitID, unitDefID, unitTeam, newTeam)
 end
 
 function widget:UnitDamaged (unitID, unitDefID, unitTeam, damage, paralyzer, weaponID, attackerID, attackerDefID, attackerTeam)
+	
 	if (localTeamID ~= unitTeam or IsUnitInView(unitID) or noAlertUnits[unitDefID]) then
 		return --ignore other teams and units in view, and also units that have noalert tag
 	end
@@ -200,8 +201,6 @@ function widget:UnitDamaged (unitID, unitDefID, unitTeam, damage, paralyzer, wea
 	local soundBlock = alarmTimes["sound"][unitDefID] and DiffTimers(now, alarmTimes["sound"][unitDefID]) < soundValue
 	local positionBlock = alarmTimes["position"][zone] and (DiffTimers(now, alarmTimes["position"][zone]) < positionAlarmInterval)
 		
-	--Echo("UD:",unitID,unitDefID,zone,"T:",textBlock or "","S:",soundBlock or "","A:",sameAttackerBlock or "","P:",positionBlock or "")
-	
 	-- return before text notification condition
 	if textBlock then return end
 	
