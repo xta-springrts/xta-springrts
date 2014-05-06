@@ -14,8 +14,8 @@ function widget:GetInfo()
 		name      = "AdvPlayersList",
 		desc      = "Players list with useful information / shortcuts. Use tweakmode (ctrl+F11) to customize.",
 		author    = "Marmoth.",
-		date      = "11.06.2013",
-		version   = "11.1",
+		date      = "May,2014",
+		version   = "11.4",
 		license   = "GNU GPL, v2 or later",
 		layer     = -4,
 		enabled   = true,  --  loaded by default?
@@ -31,7 +31,8 @@ end
 -- v11  (Bluestone): Get take info from cmd_idle_players
 -- v11.1 (Bluestone): Added TrueSkill column
 -- v11.2 (Bluestone): Remove lots of hardcoded crap about module names/pictures
--- v11.3 (Bluestone): More cleaning up 
+-- v11.3 (Bluestone): More cleaning up
+-- v11.4 Jools: fix bug when team with spectators dies 
 
 --------------------------------------------------------------------------------
 -- SPEED UPS
@@ -481,12 +482,17 @@ function widget:GameStart()
 	SortList()
 end
 
+function widget:GameFrame(frame)
+	if frame < 30 then -- seems some things aren't ready on gamestart
+		SetSidePics()
+	end
+end
+
 function SetSidePics() 
 	--record readyStates
 	playerList = Spring.GetPlayerList()
 	for _,playerID in pairs (playerList) do
 		playerReadyState[playerID] = Spring.GetGameRulesParam("player_" .. tostring(playerID) .. "_readyState")
-		--Echo("Player state:",playerID,playerReadyState[playerID])
 	end
 
 	--set factions, from TeamRulesParam when possible and from initial info if not
@@ -648,7 +654,7 @@ function CreatePlayerFromTeam(teamID) -- for when we don't have a human player o
 		tai = true
 		
 	else
-	
+		Echo("APL:",Spring_GetGameSeconds(),teamID,IsTakeable(teamID))
 		if Spring_GetGameSeconds() < 0.1 then
 			tname = absentName1
 			ttotake = false
@@ -1047,7 +1053,7 @@ function UpdateRessources()
 end
 
 function CheckTime()
-	local period = 0.5
+	local period = 3.0
 	now = os.clock()
 	if  now > (lastTime + period) then
 		lastTime = now
@@ -2067,6 +2073,14 @@ end
 --  Player related changes
 ---------------------------------------------------------------------------------------------------
 
+local function IsTeamActive(teamID)
+	for _, pID in pairs (Spring.GetPlayerList(teamID, true)) do
+		local _,active, spec = Spring.GetPlayerInfo(pID)
+		if active and not spec then return true end
+	end
+	return false
+end
+
 function CheckPlayersChange()
 	local sorting = false
 	for i = 0,63 do
@@ -2074,7 +2088,7 @@ function CheckPlayersChange()
 		if active == false then
 			if player[i].name ~= nil then                                             -- NON SPEC PLAYER LEAVING
 				if player[i].spec==false then
-					if table.maxn(Spring_GetPlayerList(player[i].team,true)) == 0 then
+					if not IsTeamActive(player[i].team) then
 						player[player[i].team + 64] = CreatePlayerFromTeam(player[i].team)
 						sorting = true
 					end
@@ -2197,7 +2211,6 @@ function IsTakeable(teamID)
 	local _,leaderID,isDead,isAI = Spring.GetTeamInfo(teamID)
 	local name, active = Spring.GetPlayerInfo(leaderID)
 	active = active or isAI
-	
 	if name ~= nil and (not active) and not isAI or Spring_GetTeamRulesParam(teamID, "numActivePlayers") == 0 then
 		local units = Spring_GetTeamUnitCount(teamID)
 		local energy = Spring_GetTeamResources(teamID,"energy")
