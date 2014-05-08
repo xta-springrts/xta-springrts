@@ -20,6 +20,31 @@
     ºÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜº
     ÈÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ¼
     Logo by ElementalGizmo
+
+------------------- Change Log of XTA 9.74 Svn 701
+------------------ by Jools and Noruas
+- No balance changes
+- Enhancements:
+  * Tortoises: Remove Caliber (broken), add mobile Air repair pad tortoise and walking bomb variant. 
+  * Make units that are attacked blink for 3 seconds on minimap
+  * Add location based spam filter to units under attack widget
+  * Add ready state indicator to advanced playlist. Colours used are same as in other xta widgets but differ from ba ones.
+  * Add commander under attack visual warning for Cirakon
+  * Performance improvement by making buildspeed gadget optional
+- Fixes:
+  * Set old unit's kill score to 0 after it has morphed to new unit
+  * Fix error that Intimidator was missing from buildmenu of adv. construction vehicle
+  * Fix rapier and brawler targetting issues
+  * Fix some xtaids buildpictures that were missing
+  * Decrease critter squawk volumes
+  * Fixes zombie mode to not spawn zombies when unfinished units die, when units are dgunned, reclaimed or when morphing
+-Widgets: 
+  * Fix bug in adv.playerslist showing dropped players as dead
+  * Enhance xta defenceranges and add textcommand: <hide/show> ui with /defrange <hide/show>. Toggle <on/off> <ground/air/nuke> ranges with command /defrange <ground/air/nuke> <on/off> (or <+/-> or <show/hide>).
+  * Improve smart area reclaim widget: now it excludes dt:s and fortwalls unless you press alt while giving command or point specifically at that
+	type of unit
+  * Modernise font handling in volume OSD widget
+- Remove easter eggs (buhuuuu)		
 	
 ------------------- Change Log of XTA 9.739 Svn 674
 ------------------ by Jools		
