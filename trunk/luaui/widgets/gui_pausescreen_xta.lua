@@ -165,7 +165,7 @@ local function drawPause()
 		--we are sliding
 		if ( paused ) then
 			if not soundPlayed then
-				--Spring.Echo("Playing in sound")
+				
 				spPlaySoundFile(sound_1, 1)
 				soundPlayed = true
 			end
@@ -173,7 +173,7 @@ local function drawPause()
 			group1XOffset = ( screenx - wndX1 ) * ( 1.0 - ( diffPauseTime / slideTime ) )
 		else
 			if not soundPlayed then
-				--Spring.Echo("Playing out sound")
+				
 				spPlaySoundFile(sound_4, 1)
 				soundPlayed = true
 			end
@@ -222,7 +222,7 @@ local function drawPause()
 		--we are sliding
 		if ( paused ) then
 			if not soundPlayed then
-				--Spring.Echo("Playing in sound")
+				
 				spPlaySoundFile(sound_1, 1)
 				soundPlayed = true
 			end
@@ -230,7 +230,7 @@ local function drawPause()
 			glTranslate( 0, ( ( yCenter + imgWidthHalf ) * ( 1.0 - ( diffPauseTime / slideTime ) ) ), 0)
 		else
 			if not soundPlayed then
-				--Spring.Echo("Playing out sound")
+				
 				spPlaySoundFile(sound_4, 1)
 				soundPlayed = true
 			end

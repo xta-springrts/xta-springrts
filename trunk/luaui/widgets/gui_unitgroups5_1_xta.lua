@@ -233,7 +233,7 @@ function widget:Shutdown()
 end
 
 function widget:GroupChanged(groupId)
-  --echo("GroupChanged " .. groupId)
+  
   groupId = GetNumFromGroupId(groupId)
   if groupId <= 10 and groupId >=1 then
     updated = true
@@ -475,7 +475,7 @@ local function GetBoxForIcon(iconNum)
   end
   local xEdge = 0
   local yEdge = 0
-  --    echo("c:"..(vsx - iconSizeX))
+  
   if iconNum ~= 0 and (iconWindows[iconNum].windowHidden == 1 and iconsAlwaysOn == false)  then
     -- This icon is currently fully hidden, so we won't draw it here.
     return nil

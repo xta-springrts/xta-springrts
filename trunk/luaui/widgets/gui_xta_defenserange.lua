@@ -448,8 +448,7 @@ local hideButtons = false
 --------------------------------------------------------------------------------
 
 function widget:TextCommand(command)
-	--Spring.Echo("DEFRANGE", command, mycommand)
-	
+		
 	if (string.find(command, "defrange")) then 
 		local ally			= 'ally'
 		local rangetype		='ground'

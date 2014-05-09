@@ -61,7 +61,7 @@ function widget:Initialize()
 		if (cmds[i].id == CMD_GUARD) then
 			hideGuard = cmds[i].hidden
 			cmds[i].hidden = true
-			--Echo("Guard hidden:", hideGuard)
+			
 		elseif (cmds[i].id == CMD_AREA_GUARD) then
 			cmds[i].hidden = false
 		end
@@ -77,7 +77,7 @@ function widget:ShutDown()
 		for i=1,n do
 			if (cmds[i].id == CMD_GUARD) then
 				cmds[i].hidden = false
-				--Echo("Area guard: restoring old guard command")
+				
 			elseif (cmds[i].id == CMD_AREA_GUARD) then
 				cmds[i].hidden = true
 			end
@@ -131,7 +131,7 @@ end
 
 function widget:UnitCommand(unitID, unitDefID, unitTeam, cmdID, cmdOpts, cmdParams) 	
 	if cmdID == CMD_STOP then
-	--Echo("Stop command")
+	
 		if squadron[unitID] then 
 			squadron[unitID] = nil 
 			for tID, sID in pairs (guardianTable) do
@@ -142,7 +142,7 @@ function widget:UnitCommand(unitID, unitDefID, unitTeam, cmdID, cmdOpts, cmdPara
 end
 
 function widget:UnitDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weaponDefID, attackerID, attackerDefID, attackerTeam)
-	--Echo("UnitDamaged",unitID,guardianTable[unitID],countIndex(guardianTable))
+	
 	local function sortByHP(v1,v2)
 		return v1[2] < v2[2]
 	end
@@ -165,23 +165,13 @@ function widget:UnitDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weap
 		
 		ta_sort(sortedTable,sortByHP)
 		local newTarget = sortedTable[1][1]
-		--Echo(newTarget)
-		--GiveOrderToUnit(sID, CMD_STOP,{},{})
-		--if newTarget ~=unitID then
 		GiveOrderToUnit(sID, CMD_INSERT,{0,CMD_REPAIR,CMD_OPT_SHIFT,newTarget},{"alt"})
-		--end
-		-- for i, array in ipairs(sortedTable) do
-			-- local targetID = array[1]
-			-- local hp = array[2]
-			-- GiveOrderToUnit(sID, CMD_INSERT,{1,CMD_GUARD,CMD_OPT_SHIFT,targetID},{"alt"})
-			-- Echo(i, "Guarding:",targetID, hp)
-		-- end
 	end
-	--Echo("UnitDamaged2",unitID,guardianTable[unitID],countIndex(guardianTable))
+	
 end
 
 function widget:UnitDestroyed(unitID, unitDefID, teamID, attackerID, attackerDefID, attackerTeamID)
-	--Echo("UnitDestroyed",unitID)
+	
 	if guardianTable[unitID] then
 		local sID = guardianTable[unitID]
 		guardianTable[unitID] = nil
@@ -233,7 +223,6 @@ function GroupGuard(unitArray,cmdParams, cmdOptions)
 				local sUD = UnitDefs[GetUnitDefID(sID)]
 				local canAttack = #sUD.weapons > 0 or false
 				local canGuard = sUD.canGuard and (sUD.canRepair or sUD.canMove or canAttack) 
-				--Echo(sUD.name, " canGuard:", canGuard, sUD.canRepair, sUD.canMove, canAttack)
 				if canGuard then
 					squadron[sID] = {}
 					squadronList[#squadronList+1] = sID
@@ -315,8 +304,7 @@ function GroupGuard(unitArray,cmdParams, cmdOptions)
 			
 			for sID, targets in pairs(squadron) do
 				local sUD = UnitDefs[GetUnitDefID(sID)]
-				for j, tID in pairs (targets) do
-					--Echo("Guarding:",sID,tID)
+				for j, tID in pairs (targets) do					
 					GiveOrderToUnit(sID, CMD_INSERT,{-1,CMD_GUARD,CMD_OPT_SHIFT,tID},{"alt"})
 					guardianTable[tID] = sID
 				end
@@ -344,7 +332,6 @@ end
 function countIndex(tbl)
 	local count = 0
 	for i, _ in pairs (tbl) do
-		--Echo(i,item,item[1])
 		if i then
 			count = count + 1
 		end

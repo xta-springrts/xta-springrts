@@ -61,7 +61,6 @@ function widget:UnitCloaked(unitID, unitDefID, teamID)
 	cloakUnit[unitID] = states.firestate	--store last state
 	if states.firestate ~= 0 then
 		GiveOrderToUnit(unitID, CMD.FIRE_STATE, {0}, {})
-		--Spring.Echo("Unit holding fire")
 	end
 end
 
@@ -71,7 +70,6 @@ function widget:UnitDecloaked(unitID, unitDefID, teamID)
 	if states.firestate == 0 then
 		local targetState = cloakUnit[unitID] or 2
 		GiveOrderToUnit(unitID, CMD.FIRE_STATE, {targetState}, {})	--revert to last state
-		--Spring.Echo("Unit compromised - weapons free!")
 	end
 end
 
@@ -97,7 +95,7 @@ end
 
 local function CheckSpecState()
   if Spring.GetSpectatingState() then
-	Spring.Echo("<Cloak Fire State> Spectator mode. Widget removed.")
+	Spring.Log("widget", LOG.INFO, "<Cloak Fire State> Spectator mode. Widget removed.")
 	widgetHandler:RemoveWidget()
   end
 end

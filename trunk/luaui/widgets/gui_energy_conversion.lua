@@ -50,7 +50,7 @@ function widget:Initialize()
 	local _, _, spec, _, _, _, _, _ = Spring.GetPlayerInfo(playerID)
 		
 	if ( spec == true ) then
-		Spring.Echo("<Energy Conversion Info> Spectator mode. Widget removed.")
+		Spring.Log("widget", LOG.INFO, "<Energy Conversion Info> Spectator mode. Widget removed.")
 		widgetHandler:RemoveWidget()
 	end
 	scaling = Y/1200

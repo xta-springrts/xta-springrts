@@ -196,7 +196,7 @@ function widget:Shutdown()
 	glDeleteList(StartList)
 	
 	if (WG[TN].LastWidget) then
-		Spring.Echo(widget:GetInfo().name..">> last processed widget was \""..WG[TN].LastWidget.."\"") --for debugging
+		Spring.Log("widget", LOG.INFO, widget:GetInfo().name..">> last processed widget was \""..WG[TN].LastWidget.."\"") --for debugging
 	end
 	
 	
