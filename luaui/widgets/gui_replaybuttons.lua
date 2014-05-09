@@ -22,7 +22,7 @@ local isActive = true --is the widget shown and reacts to clicks?
 
 function widget:Initialize()	
 	if (not Spring.IsReplay()) then
-		Spring.Echo ("replaycontrol: Not a replay, removing myself.")
+		Spring.Log("widget", LOG.INFO, "replaycontrol: Not a replay, removing myself.")
 		widgetHandler:RemoveWidget(self)
 		return
 	end
@@ -81,7 +81,6 @@ end
 
 function setReplaySpeed (speed, i)
 	local s = Spring.GetGameSpeed()	
-	--Spring.Echo ("setting speed to: " , speed , " current is " , s)
 	if (speed > s) then	--speedup
 		Spring.SendCommands ("setminspeed " .. speed)
 		Spring.SendCommands ("setminspeed " ..0.1)

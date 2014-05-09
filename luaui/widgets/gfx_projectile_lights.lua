@@ -106,7 +106,7 @@ end)
 function widget:Initialize() -- create lighttable
 	local modOptions = Spring.GetModOptions()
 	if modOptions and modOptions.lowcpu == "1" then
-		Spring.Echo('Low performance mode is on, removing "Projectile lights" widget')
+		Spring.Log("widget", LOG.INFO, 'Low performance mode is on, removing "Projectile lights" widget')
 		widgetHandler:RemoveWidget()
 	end
 	-- These projectiles should have lights:

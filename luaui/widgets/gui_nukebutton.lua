@@ -323,7 +323,7 @@ function widget:UnitFinished( unitID, unitDefID, unitTeam )
 end
 
 function widget:UnitTaken( unitID, unitDefID, unitTeam, newTeam )
-	--Spring.Echo( "unitTeam: " .. unitTeam .. " newTeam: " .. newTeam )
+	
 	if ( newTeam == spGetMyTeamID() ) then
 		addPossibleNuke( unitID, unitDefID )
 	end
@@ -475,7 +475,7 @@ function CheckSpecState()
 	local _, _, spec, _, _, _, _, _ = spGetPlayerInfo(playerID)
 		
 	if ( spec == true ) then
-		spEcho("<Nuke Icon> Spectator mode. Widget removed.")
+		Spring.Log("widget", LOG.INFO, "<Nuke Icon> Spectator mode. Widget removed.")
 		widgetHandler:RemoveWidget()
 		return false
 	end

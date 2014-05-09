@@ -296,7 +296,7 @@ function checkSpecstate()
 	local _, _, spec, _, _, _, _, _ = spGetPlayerInfo(myPlayerId)
 	
 	if ( spec == true ) then
-		spEcho("<CoopSelectedUnits> Spectator mode. Widget removed.")
+		Spring.Log("widget", LOG.INFO, "<CoopSelectedUnits> Spectator mode. Widget removed.")
 		widgetHandler:RemoveWidget()
 		return false
 	end
