@@ -71,9 +71,11 @@ if (gadgetHandler:IsSyncedCode()) then
 	local gameoverframe 					= nil
 	local gamewinners 						= nil
 	local GAMEOVERDELAY						= 96 -- To allow explosions to calm down and to show end text before end graph
+	local VOTEDELAY							= 150 -- 5 seconds
 	local voteForEnd						= false
 	local voteForDraw						= false
 	local voteStartFrame					= nil
+	local votingStarted						= false
 	local VOTETIME							= 30 -- seconds
 	local voteRegex 						= '^\174(%d+)$'
 	local votingAllyID						= nil
@@ -119,6 +121,7 @@ if (gadgetHandler:IsSyncedCode()) then
 	end
 
 	local function CheckSingleAllyVictoryEnd()
+		
 		if aliveAllyTeamCount ~= 1 then
 			
 			local controlledCount = 0
@@ -137,19 +140,21 @@ if (gadgetHandler:IsSyncedCode()) then
 				return false
 			elseif controlledCount == 0 then
 				return {}
-			elseif not hideVoting then
+			elseif not hideVoting then -- one controlled team left and more uncontrolled
+				Echo("Uncontrolled teams voting...")
 				voteForEnd = true
 				if not voteStartFrame then
-					voteStartFrame = Spring.GetGameFrame()
+					voteStartFrame = Spring.GetGameFrame() + VOTEDELAY
 				end
-				Spring.SetGameRulesParam("VoteForEnd",1)
 				voteForDraw = false
 				Spring.SetGameRulesParam("VoteForDraw",0)
+				
 				-- find last remaining allyteam that is controlled
 				for i,candidateWinner in ipairs(allyTeams) do
 					if IsCandidateWinner(candidateWinner) and IsAllyControlled(candidateWinner) then
 						votingAllyID = candidateWinner
-						return {candidateWinner}
+						Spring.SetGameRulesParam("VotingAllyID",votingAllyID)
+						return false
 					end
 				end
 			else
@@ -182,13 +187,11 @@ if (gadgetHandler:IsSyncedCode()) then
 		end
 		
 		if winners and (not gameoverframe) then
-			if not voteForEnd then
+			if not voteStarted then
 				local frame = Spring.GetGameFrame()
 				gamewinners = winners
 				GG.gamewinners = winners -- pass information to game_gameover.lua
 				gameoverframe = frame + GAMEOVERDELAY
-			else
-				Spring.SetGameRulesParam("VotingAllyID",votingAllyID)
 			end
 		end
 	end
@@ -305,6 +308,7 @@ if (gadgetHandler:IsSyncedCode()) then
 		Spring.SetGameRulesParam("VoteTime",0)
 		votingDrawPlayers = {}
 		votingDrawTable	= nil
+		votingStarted = false
 	end
 	
 	local function ResetVotes(votingAllyID)
@@ -337,7 +341,7 @@ if (gadgetHandler:IsSyncedCode()) then
 		end
 
 		-- only do a check in slowupdate
-		if not voteForEnd and not voteForDraw then
+		if not votingStarted then
 			if (frame%32) == 0 then
 				CheckGameOver()
 				-- kill teams after checking for gameover to avoid to trigger instantly gameover
@@ -348,8 +352,24 @@ if (gadgetHandler:IsSyncedCode()) then
 				end
 				KillResignedTeams()
 			end
-		else
-			if voteStartFrame then
+		end
+		
+		if voteStartFrame and frame > voteStartFrame then
+			if not votingStarted then
+				if voteForEnd then
+					Spring.SetGameRulesParam("VoteForEnd",1)
+					votingStarted = true
+					 voteForDraw = false
+					 Spring.SetGameRulesParam("VoteForDraw",0)
+				elseif voteForDraw then
+					Spring.SetGameRulesParam("VoteForDraw",1)
+					votingStarted = true
+					voteForEnd = false
+					Spring.SetGameRulesParam("VoteForEnd",0)
+				else
+					EndVoting()
+				end
+			else
 				if (frame%30) == 0 then
 					local timeRemaining = VOTETIME*30 - (frame - voteStartFrame)
 					Spring.SetGameRulesParam("VoteTime",timeRemaining)
@@ -764,7 +784,7 @@ else
 						if voteForEnd then
 							label_1 = "Sir, all enemy commanders have deserted their ranks"
 							label_2 = "and the remaining units wish to surrender. "
-							label_3 = "Do you want to accept this and end the game?"
+							label_3 = "Do you wish to accept the surrender and end the game?"
 						else
 							label_1 = "Do you agree to mutually end this game and call"
 							label_2 = "it a draw?"
