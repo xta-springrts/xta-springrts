@@ -36,7 +36,7 @@ if (gadgetHandler:IsSyncedCode()) then
 
 	local TEAMZERO = "killall" -- each player is removed if he has no units left
 	local ALLYZERO = "team" -- players are left alive and only removed if whole team dies
-	local COMENDS = "comends" -- team commander ends, teams are killed if they have no commanders left
+	local TEAMCOMENDS = "comends" -- team commander ends, teams are killed if they have no commanders left
 	local COMMANDER = "commander" -- classic commander ends, if commander is killed, all units die of that player.
 
 
@@ -112,7 +112,7 @@ if (gadgetHandler:IsSyncedCode()) then
 	local function IsAllyControlled(allyTeamID)
 		
 		for _, tID in pairs (Spring.GetTeamList(allyTeamID)) do
-			local _,_,isDead,isAI = Spring.GetTeamInfo(tID)
+			local _,_,isDead,isAI = GetTeamInfo(tID)
 			if tID ~= gaiaTeamID and not (isDead or teamsUnitCount[tID] == 0) and (isAI or IsTeamActive(tID)) then
 				return true
 			end
@@ -141,7 +141,7 @@ if (gadgetHandler:IsSyncedCode()) then
 			elseif controlledCount == 0 then
 				return {}
 			elseif not hideVoting then -- one controlled team left and more uncontrolled
-				Echo("Uncontrolled teams voting...")
+				--Echo("Uncontrolled teams voting...")
 				voteForEnd = true
 				if not voteStartFrame then
 					voteStartFrame = Spring.GetGameFrame() + VOTEDELAY
@@ -234,12 +234,11 @@ if (gadgetHandler:IsSyncedCode()) then
 
 		for allyTeamID, unitCount in pairs(allyTeamUnitCount) do
 			if unitCount == 0 then
-
 				-- kill all the teams in the allyteam
 				local teamList = GetTeamList(allyTeamID)
 				for _,teamID in ipairs(teamList) do
 					KillTeam( teamID )
-				end
+				end				
 			end
 		end
 	end
@@ -347,7 +346,7 @@ if (gadgetHandler:IsSyncedCode()) then
 				-- kill teams after checking for gameover to avoid to trigger instantly gameover
 				if teamDeathMode == TEAMZERO or teamDeathMode == COMMANDER then
 					KillTeamsZeroUnits()
-				elseif teamDeathMode == ALLYZERO or teamDeathMode == COMENDS then
+				elseif teamDeathMode == ALLYZERO or teamDeathMode == TEAMCOMENDS then
 					KillAllyTeamsZeroUnits()
 				end
 				KillResignedTeams()
@@ -434,12 +433,23 @@ if (gadgetHandler:IsSyncedCode()) then
 	end
 
 	function gadget:TeamDied(teamID)
+		
+		local teamUnitCount = teamsUnitCount[teamID] or 0
 		teamsUnitCount[teamID] = nil
+		
 		local allyTeamID = teamToAllyTeam[teamID]
 		local aliveTeamCount = allyTeamAliveTeamsCount[allyTeamID]
 		if aliveTeamCount then
 			aliveTeamCount = aliveTeamCount - 1
 			allyTeamAliveTeamsCount[allyTeamID] = aliveTeamCount
+			
+			
+			
+			-- teams can die with units alive	
+			local allyUnitCount = allyTeamUnitCount[allyTeamID] or 0
+			allyUnitCount = allyUnitCount - teamUnitCount
+			allyTeamUnitCount[allyTeamID] = allyUnitCount
+			
 			if aliveTeamCount <= 0 then
 				-- one allyteam just died
 				aliveAllyTeamCount = aliveAllyTeamCount - 1
@@ -484,13 +494,18 @@ if (gadgetHandler:IsSyncedCode()) then
 	end
 
 	function gadget:UnitCreated(unitID, unitDefID, unitTeamID)
-		local teamUnitCount = teamsUnitCount[unitTeamID] or 0
-		teamUnitCount = teamUnitCount + 1
-		teamsUnitCount[unitTeamID] = teamUnitCount
-		local allyTeamID = teamToAllyTeam[unitTeamID]
-		local allyUnitCount = allyTeamUnitCount[allyTeamID] or 0
-		allyUnitCount = allyUnitCount + 1
-		allyTeamUnitCount[allyTeamID] = allyUnitCount
+	
+		local _,_,isTeamDead = GetTeamInfo(unitTeamID)
+		
+		if not isTeamDead then
+			local teamUnitCount = teamsUnitCount[unitTeamID] or 0
+			teamUnitCount = teamUnitCount + 1
+			teamsUnitCount[unitTeamID] = teamUnitCount
+			local allyTeamID = teamToAllyTeam[unitTeamID]
+			local allyUnitCount = allyTeamUnitCount[allyTeamID] or 0
+			allyUnitCount = allyUnitCount + 1
+			allyTeamUnitCount[allyTeamID] = allyUnitCount		
+		end
 	end
 
 	gadget.UnitGiven = gadget.UnitCreated
@@ -501,16 +516,20 @@ if (gadgetHandler:IsSyncedCode()) then
 			-- skip gaia
 			return
 		end
-		local teamUnitCount = teamsUnitCount[unitTeamID]
-		if teamUnitCount then
-			teamUnitCount = teamUnitCount - 1
-			teamsUnitCount[unitTeamID] = teamUnitCount
-		end
-		local allyTeamID = teamToAllyTeam[unitTeamID]
-		local allyUnitCount = allyTeamUnitCount[allyTeamID]
-		if allyUnitCount then
-			allyUnitCount = allyUnitCount - 1
-			allyTeamUnitCount[allyTeamID] = allyUnitCount
+		
+		local _,_,isTeamDead = GetTeamInfo(unitTeamID)
+		if not isTeamDead then
+			local teamUnitCount = teamsUnitCount[unitTeamID]
+			if teamUnitCount then
+				teamUnitCount = teamUnitCount - 1
+				teamsUnitCount[unitTeamID] = teamUnitCount
+			end
+			local allyTeamID = teamToAllyTeam[unitTeamID]
+			local allyUnitCount = allyTeamUnitCount[allyTeamID]
+			if allyUnitCount then
+				allyUnitCount = allyUnitCount - 1
+				allyTeamUnitCount[allyTeamID] = allyUnitCount
+			end
 		end
 	end
 
@@ -521,7 +540,7 @@ if (gadgetHandler:IsSyncedCode()) then
 		if not voteForEnd and not voteForDraw then
 			Echo("Calling vote on accepting enemy surrender...")
 			local aliveCount,controlledCount,winningTeam = GetControlledAllyTeams()
-			Echo("Alive teams:",aliveCount,"Controlled:",controlledCount,"Winner:",winningTeam or "no-one")
+			--Echo("Alive teams:",aliveCount,"Controlled:",controlledCount,"Winner:",winningTeam or "no-one")
 						
 			if winningTeam then
 				voteForEnd = true
@@ -578,7 +597,7 @@ if (gadgetHandler:IsSyncedCode()) then
 
 		local vote  = tonumber(msg:match(voteRegex))
 		local _, _, playerIsSpec, teamID, allyID = GetPlayerInfo(playerID)
-		local _,_,isDead,isAI 	= Spring.GetTeamInfo(teamID)
+		local _,_,isDead,isAI 	= GetTeamInfo(teamID)
 		
 		if votingAllyID and votingAllyID == allyID and not playerIsSpec then
 			if vote == 1 or vote == 0 then
@@ -784,7 +803,7 @@ else
 						if voteForEnd then
 							label_1 = "Sir, all enemy commanders have deserted their ranks"
 							label_2 = "and the remaining units wish to surrender. "
-							label_3 = "Do you wish to accept the surrender and end the game?"
+							label_3 = "Do you wish to accept and end the game now?"
 						else
 							label_1 = "Do you agree to mutually end this game and call"
 							label_2 = "it a draw?"
