@@ -1416,8 +1416,9 @@ else
 		if drawWindow and GG.showXTAStats then
 			-- Dragging
 			if mButton == 2 or mButton == 3 then
-				px = max(0, min(px+dx, vsx-sizex))	--prevent moving off screen
-				py = max(0, min(py+dy, vsy-sizey))
+				-- allow moving off screen
+				px = px+dx
+				py = py+dy
 			end
 			initButtons()
 		end
