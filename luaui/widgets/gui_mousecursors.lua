@@ -55,8 +55,10 @@ local FIRSTWEAPON							= 1
 local GetSelectedUnitsCounts				= Spring.GetSelectedUnitsCounts
 local AreTeamsAllied						= Spring.AreTeamsAllied
 local transportHovers						= (Spring.GetModOptions() and (Spring.GetModOptions().mo_transporthover == "1") and 1) or 0 == 1
-local waterWeapons = {}
-
+local waterWeapons 							= {}
+local unitDefRadius							= {}
+local unitDefWaterLine						= {}
+local unitDefMidY							= {}
 
 function widget:Initialize()
 	AssignMouseCursor('Airstrike', "cursorairstrike", true, false)
@@ -64,6 +66,8 @@ function widget:Initialize()
 	AssignMouseCursor('Select', 'cursorselect', true, false)
 	AssignMouseCursor('UnloadBad', 'cursorunloadbad', true, false)
 	AssignMouseCursor('LoadBad', 'cursorpickupbad', true, false)
+	AssignMouseCursor('BuildSurfaced', 'cursorsurfaced', true, false)
+	AssignMouseCursor('BuildSubmerged', 'cursorsubmerged', true, false)
 	myTeamID = Spring.GetMyTeamID()
 	
 	if Game.version <= "94.1" then 
@@ -155,7 +159,7 @@ function widget:DefaultCommand(type, uID)
 			if myTeamID == GetUnitTeam(uID) or GetSpectatingState() then
 				SetMouseCursor('Select')
 			end
-		end	
+		end		
 	else
 		-- user has selected one or more units
 		local _, activeCmdID = GetActiveCommand()
@@ -196,7 +200,7 @@ function widget:DefaultCommand(type, uID)
 		---------------------------------------------------------
 		-- user has chosen a command: check if it can be given --
 		---------------------------------------------------------
-		else
+		elseif activeCmdID >= 0 then
 			----------------------------
 			-- commands given on self --
 			----------------------------
@@ -348,6 +352,48 @@ function widget:DefaultCommand(type, uID)
 					end
 				end
 			end		
+		---------------------------------------------------------
+		-- build command from menu --
+		---------------------------------------------------------
+		elseif activeCmdID < 0 then
+			local unitDefID = activeCmdID * -1
+			
+			local radius = unitDefRadius[unitDefID]
+			if not radius then
+				unitDefRadius[unitDefID] = math.floor(Spring.GetUnitDefDimensions(unitDefID)["radius"])
+			end
+			local midy = unitDefMidY[unitDefID]
+			
+			if not midy then
+				unitDefMidY[unitDefID] = math.floor(Spring.GetUnitDefDimensions(unitDefID)["midy"])
+			end
+						
+			local waterline = unitDefWaterLine[unitDefID]
+			if not waterline then
+				unitDefWaterLine[unitDefID] = UnitDefs[unitDefID].waterline
+			end
+				
+			if radius and midy then
+				local floater = UnitDefs[unitDefID].floatOnWater
+				local mx, my = Spring.GetMouseState()
+				local type, data = Spring.TraceScreenRay(mx,my)
+					
+				if type == 'ground' then
+					local x,y0,z = math.floor(data[1]),math.floor(data[2]),math.floor(data[3])
+					local y = math.floor(Spring.GetGroundHeight(x,z))
+
+					local mcentre = y + midy - 5 -- put safety margin because of build position from world position
+			
+					if mcentre and mcentre < 0 then
+					
+						if mcentre + radius < 0 and (not floater or floater and radius < waterline) then
+							SetMouseCursor('BuildSubmerged')
+						else
+							SetMouseCursor('BuildSurfaced')						
+						end						
+					end
+				end
+			end
 		end
 	end
 end

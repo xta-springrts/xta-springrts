@@ -17,6 +17,7 @@ local texName 					= LUAUI_DIRNAME .. 'Images/highlight_strip.png'
 local outlineWidth 				= 1
 local gaiaID					= Spring.GetGaiaTeamID()
 local unitDefRadius				= {}
+local Echo						= Spring.Echo
 
 function widget:Initialize()
 	for i, uID in pairs(Spring.GetAllUnits()) do
@@ -117,7 +118,7 @@ function widget:DrawWorld()
 				if not radius then
 					unitDefRadius[unitDefID] = Spring.GetUnitDefDimensions(unitDefID)["radius"]
 				end
-
+				
 				if midY and (midY < 0) and radius and (midY + radius < 0) then
 					gl.Color(r,g,b,a)
 					gl.Unit(uID,true)
