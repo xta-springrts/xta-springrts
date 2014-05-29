@@ -837,7 +837,7 @@ else
 									if isAI then
 										leaderName = "AI"
 									else
-										leaderName = GetPlayerInfo(leaderID)
+										leaderName = GetPlayerInfo(leaderID) or "N/A"
 									end
 								else
 									leaderName = "N/A"
