@@ -69,7 +69,7 @@ local options = {
 	]]--
 	{
 		key  = "zombies",
-		name = "Zombie Mode",
+		name = "Zombie Mode 7",
 		desc = "All dead units respawn as hostile neutral zombies!",
 		type = "bool",
 		def  = false,
@@ -150,6 +150,24 @@ local options = {
 			{key="1", name="QTPFS", desc="QuadTree Path Finding System"},
 		},
 	},
+	
+	{
+		key="lua_model",
+		name="LuaThreadingModel",
+		desc="Which luathreading system to use\nkey: luamodel",
+		type="list",
+		section= 'xtagame',
+		def="4",
+		items={
+			{key="1", name="1", desc="1"},
+			{key="2", name="2", desc="2"},
+			{key="3", name="3", desc="3"},
+			{key="4", name="4", desc="4"},
+			{key="5", name="5", desc="5"},
+			{key="6", name="6", desc="6"},
+		},
+	},
+		
 	{
 		key="reclaim_method",
 		name="Reclaim method",
