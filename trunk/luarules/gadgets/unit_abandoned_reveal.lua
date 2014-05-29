@@ -111,21 +111,23 @@ if (gadgetHandler:IsSyncedCode()) then
 		
 		if frame%90 == 0 then
 			
+			-- process and reveal visible commander candidates
 			for commanderID, data in pairs (visibleCommanders) do
-				local alive = not GetUnitIsDead(commanderID)
+				local isUnitAlive = not GetUnitIsDead(commanderID)
 				local allyID = GetUnitAllyTeam(commanderID)
-				
-				if alive and not IsAllyControlled(allyID) then
+				--Echo("Commanders:",commanderID,isUnitAlive,allyID,IsAllyControlled(allyID))
+				if isUnitAlive and not IsAllyControlled(allyID) then
 					if frame > data.revealFrame and not data.visible then
 						makeVisible(commanderID)
 						data.visible = true
 					end
-				elseif alive then
+				elseif isUnitAlive then
 					makeHidden(commanderID)
 					visibleCommanders[commanderID] = nil
 				end
 			end
 			
+			-- check if commanders are abandoned
 			for _, playerID in pairs(GetPlayerList()) do
 				local _,active, spectator, teamID = GetPlayerInfo(playerID)
 				
@@ -154,20 +156,24 @@ if (gadgetHandler:IsSyncedCode()) then
 	
 	function gadget:TeamDied(teamID)
 				
-		local teamComms = GetTeamCommanders(teamID)
+		
 		local allyTeamID = select(6,Spring.GetTeamInfo(teamID))
 		
-		-- only proceed if team that died had a commander
-		if teamComms > 0 and not IsAllyControlled(allyTeamID) then
-			
-			local frame = GetGameFrame()
-			
-			for _,commDef in pairs(commanderDefs) do
-				for _, commanderID in pairs( GetTeamUnitsByDefs(teamID,commDef)) do
-					visibleCommanders[commanderID] = {
-						revealFrame						= frame + REVEALWAIT,
-						visible 						= false,
-					}
+		for _,tID in pairs(GetTeamList(allyTeamID)) do
+			local teamComms = GetTeamCommanders(tID)
+		
+			-- check if allyteam has a commander
+			if teamComms > 0 then
+				
+				local frame = GetGameFrame()
+				
+				for _,commDef in pairs(commanderDefs) do
+					for _, commanderID in pairs( GetTeamUnitsByDefs(tID,commDef)) do
+						visibleCommanders[commanderID] = {
+							revealFrame						= frame + REVEALWAIT,
+							visible 						= false,
+						}
+					end
 				end
 			end
 		end

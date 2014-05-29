@@ -44,6 +44,8 @@
   * Improve smart area reclaim widget: now it excludes dt:s and fortwalls unless you press alt while giving command or point specifically at that
 	type of unit
   * Modernise font handling in volume OSD widget
+  * Allyresourcebars widget: show all players when spectating with command "/allyres showall", show only team allies with command 
+	"/allyres team"
 - Remove easter eggs (buhuuuu)		
 	
 ------------------- Change Log of XTA 9.739 Svn 674
