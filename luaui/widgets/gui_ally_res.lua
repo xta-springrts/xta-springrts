@@ -64,6 +64,7 @@ local Echo = Spring.Echo
 local mathMin = math.min
 local gl, GL = gl, GL
 local sF = string.format
+local showAll = false
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
@@ -162,7 +163,11 @@ local function setUpTeam()
 	if GetSpectatingState() or IsReplay() then
 		local myAllyID = Spring.GetMyAllyTeamID()
 		
-		getTeams = Spring.GetTeamList(myAllyID)
+		if showAll then
+			getTeams = Spring.GetTeamList()
+		else
+			getTeams = Spring.GetTeamList(myAllyID)
+		end
 		
 		if getTeams ~= nil then
 			for _,teamID in pairs(getTeams) do				
@@ -179,6 +184,7 @@ local function setUpTeam()
 		for _,teamID in pairs(getTeams) do
 			local eCur = GetTeamResources(teamID, "energy")
 			if eCur and (not deadTeams[teamID]) then
+				
 				teamList[teamID] = true
 				teamCount = (teamCount + 1)
 			end
@@ -245,7 +251,7 @@ local function updateStatics()
 		local teamNames = getTeamNames()
 		teamIcons = {}
 		for teamID in pairs(teamList) do
-			if (teamID ~= myID) then
+			if (teamID ~= myID or showAll) then
 				local x01 			= x1+BAR_GAP-LOGO_OFFSET
 				local y01 			= topy-TOTAL_BAR_HEIGHT - height - BAR_HEIGHT
 				local w01 			= TOTAL_BAR_HEIGHT
@@ -290,7 +296,7 @@ local function updateBars()
 	local height = h - TOP_HEIGHT
   
 	for teamID in pairs(teamList) do
-		if (teamID ~= myID) then
+		if (teamID ~= myID or showAll) then
 			eCur, eMax = GetTeamResources(teamID, "energy")
 			mCur, mMax = GetTeamResources(teamID, "metal")
 			eCur = eCur + (sendEnergy[teamID] or 0)
@@ -416,6 +422,24 @@ function widget:TeamDied(teamID)
   end
 end
 
+function widget:TextCommand(command)
+		
+	if (string.find(command, "allyres")) then 
+			
+		if (string.find(command, "showall")) then 
+			showAll = true
+		else
+			showAll = false
+		end
+		setUpTeam()
+		updateBars()
+		updateStatics()
+		checkScreen()
+	end
+		
+	return false
+end
+
 function widget:PlayerAdded()
 	if setUpTeam() then
 		updateStatics()
@@ -432,7 +456,7 @@ function widget:PlayerRemoved()
 	end
  end
  
- function widget:PlayerChanged()
+function widget:PlayerChanged()
 	if setUpTeam() then
 		updateStatics()
 		updateBars()
@@ -457,7 +481,7 @@ end
 function widget:Update()
 	local speed,_,paused = Spring.GetGameSpeed()
 	local updateFreq
-	if GetMyTeamID() ~= myID then
+	if GetMyTeamID() ~= myID or showAll then
 		updateBars()	-- must be run twice because schmucks
 		updateBars()
 	end
@@ -686,6 +710,7 @@ function widget:GetConfigData(data)      -- save
 			vsy                	= vsy,
 			x1         			= x1,
 			topy				= topy,
+			showAll				= showAll,
 		}
 	end
 
@@ -693,6 +718,7 @@ function widget:SetConfigData(data)      -- load
 	viewSizeX					= data.vsx or viewSizeX
 	viewSizeY 					= data.vsy or viewSizeY
 	x1         					= data.x1 or x1
-	topy						= data.topy or topy,
+	topy						= data.topy or topy
+	showAll 					= data.showAll or false
 	checkScreen()
 end
