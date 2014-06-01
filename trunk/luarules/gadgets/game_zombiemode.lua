@@ -20,12 +20,12 @@ local MOVESTATE_ROAM = 2
 local spGetUnitNeutral     = Spring.GetUnitNeutral
 local spSetUnitNeutral     = Spring.SetUnitNeutral
 local spGetGameFrame       = Spring.GetGameFrame
-local spGetGaiaTeamID      = Spring.GetGaiaTeamID
 local spGetUnitPosition    = Spring.GetUnitPosition
 local spGetUnitBuildFacing = Spring.GetUnitBuildFacing
 local spCreateUnit         = Spring.CreateUnit
 local spGiveOrderToUnit    = Spring.GiveOrderToUnit
 local Echo              	= Spring.Echo
+local gaiaTeamID			= Spring.GetGaiaTeamID()
 
 local modOptions    = Spring.GetModOptions()
 local modOptionDefs = VFS.Include("modoptions.lua")
@@ -54,7 +54,7 @@ function gadget:Initialize()
 		return
 	end
 
-	if (spGetGaiaTeamID() == 0) then
+	if (gaiaTeamID == 0) then
 		Echo("[game_zombiemode] no Gaia-team")
 		gadgetHandler:RemoveGadget(self)
 		return
@@ -91,7 +91,7 @@ end
 function gadget:UnitDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weaponDefID, projectileID, attackerID, attackerDefID, attackerTeam)
 	local health,_,_,_,buildProgress = Spring.GetUnitHealth(unitID)
 	if health < 0 and buildProgress >= 1 and not dgunTable[weaponDefID] then
-		local isZombie = spGetUnitNeutral(unitID)
+		local isZombie = unitTeam == gaiaTeamID
 		local zombieDef = zombieDefs[unitDefID] or {}
 		local canRespawn = zombieDef.canRespawn
 		local respawnTime = zombieDef.respawnTime
@@ -117,12 +117,12 @@ end
 function gadget:GameFrame(n)
 	for index, spawn in pairs(zombieQueue) do
 		if (spawn.frame == n) then
-			local unitID = spCreateUnit(spawn.defID, spawn.pos[1], spawn.pos[2], spawn.pos[3], spawn.facing, spGetGaiaTeamID())
+			local unitID = spCreateUnit(spawn.defID, spawn.pos[1], spawn.pos[2], spawn.pos[3], spawn.facing, gaiaTeamID)
 
 			if (unitID ~= nil) then
 				spGiveOrderToUnit(unitID, CMD.FIRE_STATE, {[1] = CMD_FIRESTATE_FATW}, {})
 				spGiveOrderToUnit(unitID, CMD.MOVE_STATE, {[1] = CMD_MOVESTATE_ROAM}, {})
-				spSetUnitNeutral(unitID, true)
+				--spSetUnitNeutral(unitID, true)
 			end
 
 			zombieQueue[index] = nil

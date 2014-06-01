@@ -69,7 +69,7 @@ local options = {
 	]]--
 	{
 		key  = "zombies",
-		name = "Zombie Mode 7",
+		name = "Zombie Mode",
 		desc = "All dead units respawn as hostile neutral zombies!",
 		type = "bool",
 		def  = false,
