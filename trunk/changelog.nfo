@@ -21,7 +21,12 @@
     ศอออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออผ
     Logo by ElementalGizmo
 
-------------------- Change Log of XTA 9.74 Svn 701
+------------------- Change Log of XTA 9.741 Svn 721
+------------------ by Jools
+ * Fix zombie units being neutral
+ * Fix lua error in voting
+ 
+------------------- Change Log of XTA 9.74 Svn 718
 ------------------ by Jools and Noruas
 - No balance changes
 - Enhancements:
@@ -41,8 +46,7 @@
 -Widgets: 
   * Fix bug in adv.playerslist showing dropped players as dead
   * Enhance xta defenceranges and add textcommand: <hide/show> ui with /defrange <hide/show>. Toggle <on/off> <ground/air/nuke> ranges with command /defrange <ground/air/nuke> <on/off> (or <+/-> or <show/hide>).
-  * Improve smart area reclaim widget: now it excludes dt:s and fortwalls unless you press alt while giving command or point specifically at that
-	type of unit
+  * Improve smart area reclaim widget: now it excludes dt:s and fortwalls unless you press alt while giving command or point specifically at that type of unit
   * Modernise font handling in volume OSD widget
   * Allyresourcebars widget: show all players when spectating with command "/allyres showall", show only team allies with command 
 	"/allyres team"
