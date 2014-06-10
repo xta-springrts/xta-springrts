@@ -190,7 +190,9 @@ if (gadgetHandler:IsSyncedCode()) then
 			if not voteStarted then
 				local frame = Spring.GetGameFrame()
 				gamewinners = winners
-				GG.gamewinners = winners -- pass information to game_gameover.lua
+				if not GG.gamewinners then
+					GG.gamewinners = winners -- pass information to game_gameover.lua
+				end
 				gameoverframe = frame + GAMEOVERDELAY
 			end
 		end

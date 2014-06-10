@@ -168,7 +168,9 @@ if (gadgetHandler:IsSyncedCode()) then
 		end
 		local frame = Spring.GetGameFrame()
 		if winners or Spring.IsGameOver() then -- add extra check for game over in case the first check failed somehow
-			GG.gamewinners = winners
+			if not GG.gamewinners then -- other gadgets may declare winners
+				GG.gamewinners = winners
+			end
 			isGameWinner = true
 			gameOverFrame = frame
 			return true
