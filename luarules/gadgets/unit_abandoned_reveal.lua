@@ -237,6 +237,7 @@ else
 	end
 	
 	local function IsAllyControlled(allyTeamID)
+		if not allyTeamID then return false end
 		
 		for _, tID in pairs (GetTeamList(allyTeamID)) do
 			local _,_,isDead,isAI = GetTeamInfo(tID)
@@ -257,17 +258,20 @@ else
 		if frame%180 == 0 then
 			for unitID, _ in pairs(abandonedCommanders) do
 				local allyID = GetUnitAllyTeam(unitID)
-			
-				if GetUnitIsDead(unitID) or IsAllyControlled(allyID) then
+				local isUnitAlive = not GetUnitIsDead(unitID)
+				
+				if not isUnitAlive or IsAllyControlled(allyID) then
 					abandonedCommanders[unitID] = nil
 				else
-					local x,y,z = GetUnitPosition(unitID) 
-					if frame%PINGFREQUENCY == 0 then
-						lightTableMap[unitID] = Spring.AddMapLight(getLightTable(x,y,z,"map"))
-						lightTableModel[unitID] = Spring.AddModelLight(getLightTable(x,y,z,"model"))
-					else
-						if lightTableModel[unitID] then
-							Spring.UpdateModelLight(lightTableModel[unitID],getLightTable(x,y,z,"model"))
+					local x,y,z = GetUnitPosition(unitID)
+					if x and y and z then
+						if frame%PINGFREQUENCY == 0 then
+							lightTableMap[unitID] = Spring.AddMapLight(getLightTable(x,y,z,"map"))
+							lightTableModel[unitID] = Spring.AddModelLight(getLightTable(x,y,z,"model"))
+						else
+							if lightTableModel[unitID] then
+								Spring.UpdateModelLight(lightTableModel[unitID],getLightTable(x,y,z,"model"))
+							end
 						end
 					end
 				end
