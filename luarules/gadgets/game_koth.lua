@@ -288,7 +288,7 @@ end
 							lastTeamName = "Team gaia"
 						end
 					else
-						lastTeamName = table.concat({"Team ", (lastHolder or -2) + 1})
+						lastTeamName = table.concat({"Team ", (lastHolder or " X")})
 					end
 					
 					if (control == -2) then
@@ -316,7 +316,7 @@ end
 								teamName = "Team gaia is"
 							end
 						else
-							teamName = table.concat({"Team ", (control or -2) + 1, " is"})
+							teamName = table.concat({"Team ", (control or " X"), " is"})
 						end
 						
 						Echo(teamName .. " now in control.")
@@ -333,7 +333,7 @@ end
 			end
 
 			if(control >= 0 and timer == 0) then
-				Echo("Team " .. control + 1 .. " has won!")
+				Echo("Team " .. control .. " has won!")
 				GG.gamewinners = {actualTeam}
 				gameOver(actualTeam)
 			end 
