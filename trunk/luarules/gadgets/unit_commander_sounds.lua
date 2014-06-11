@@ -53,13 +53,12 @@ if (gadgetHandler:IsSyncedCode()) then
 			--   Original cob-gadget had these probabilities, that's why they are retained.
 			--   The first sing sound is the original one, that's why it's more probable.
 			if (cmdID == CommanderSingCmdDesc.id) then
-				local idx
-				local rnd2 = rnd(0,10)
-				if rnd2 < 5 then 
-					idx = 0
-				else
+				local idx = 0
+
+				if (rnd(0, 10) >= 5) then 
 					idx = rnd(1, #CommanderSounds.CommanderSongs[unitDefID])
 				end
+
 				spPlaySoundFile(CommanderSounds.CommanderSongs[unitDefID][idx], volume)
 				return false
 			end

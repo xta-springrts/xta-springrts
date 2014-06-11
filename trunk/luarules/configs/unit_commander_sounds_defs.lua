@@ -39,6 +39,7 @@ local CommanderSounds = {
 			[5] = "sounds/commander/comm_omelette_speech.wav",
 			[6] = "sounds/commander/comm_trololo_intro.wav",
 			[7] = "sounds/commander/comm_trololo_outro.wav",
+			[8] = "sounds/commander/comm_gast_sample.wav",
 		},
 
 		[ UnitDefNames["arm_nincommander"].id ] = {},
@@ -58,6 +59,7 @@ local CommanderSounds = {
 			[5] = "sounds/commander/comm_omelette_speech.wav",
 			[6] = "sounds/commander/comm_trololo_intro.wav",
 			[7] = "sounds/commander/comm_trololo_outro.wav",
+			[8] = "sounds/commander/comm_gast_sample.wav",
 		},
 
 		[ UnitDefNames["core_nincommander"].id ] = {},
