@@ -21,10 +21,13 @@
     ศอออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออผ
     Logo by ElementalGizmo
 
-------------------- Change Log of XTA 9.741 Svn 721
+------------------- Change Log of XTA 9.741 Svn 723
 ------------------ by Jools
- * Fix zombie units being neutral
- * Fix lua error in voting
+ * Fix zombie units being neutral -> not neutral, so they are automatically targetted
+ * Fix lua error in voting screen
+ * Fix lua error when abandoned commander is killed
+ * Fix Justice and Yeomen movement bug, make them on/offable and have same radar range.
+ * Make KOTH mode compatible with zombie mode, display koth box on minimap. Zombies can also win in koth mode.
  
 ------------------- Change Log of XTA 9.74 Svn 718
 ------------------ by Jools and Noruas
