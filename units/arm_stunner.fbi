@@ -86,6 +86,8 @@
 	wpri_badtargetcategory=VTOL;
 	explodeas=ATOMIC_BLASTSML;
 	selfdestructas=NUCLEAR_MISSILE;
+	onlytargetcategory1=NOTAIR;
+	onlytargetcategory2=NOTAIR;
 
 	//************************************************************
 	//  Orders
