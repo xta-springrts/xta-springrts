@@ -21,7 +21,7 @@
 local allDynLightDefs = include("LuaRules/Configs/gfx_dynamic_lighting_defs.lua")
 local modDynLightDefs = allDynLightDefs[Game.modShortName] or {}
 local weaponLightDefs = modDynLightDefs.weaponLightDefs or {}
-
+local Echo = Spring.Echo
 
 
 if (gadgetHandler:IsSyncedCode()) then
@@ -29,7 +29,12 @@ if (gadgetHandler:IsSyncedCode()) then
 
 	local projectileLightDefs = {}
 	local explosionLightDefs = {}
-
+	local GetGroundHeight = Spring.GetGroundHeight
+	
+	local nukeWeapons = {
+		[WeaponDefNames["nuclear_missile"].id] = true
+	}
+			
 	function gadget:GetInfo()
 		return { 		
 			-- put this gadget in a lower layer than fx_watersplash and exp_no_air_nuke
@@ -76,16 +81,19 @@ if (gadgetHandler:IsSyncedCode()) then
 
 	function gadget:ProjectileDestroyed(projectileID)
 		-- returns weaponDefID for weapon-projectiles, nil otherwise
+		
 		local pDefID = SpringGetProjectileDefID(projectileID)
-
+		
 		if (projectileLightDefs[pDefID] ~= nil) then
 			SendToUnsynced("DL_ProjectileDestroyed", projectileID)
 		end
 	end
 
 	function gadget:Explosion(weaponDefID, posx, posy, posz, ownerID)
-		if (explosionLightDefs[weaponDefID]) then
-			SendToUnsynced("DL_ProjectileExplosion", weaponDefID, posx, posy, posz)
+		if (explosionLightDefs[weaponDefID]) then 
+			if (not nukeWeapons[weaponDefID]) or (posy-GetGroundHeight(posx,posz) < 100)  then -- dont show if nuke explodes in air
+				SendToUnsynced("DL_ProjectileExplosion", weaponDefID, posx, posy, posz)
+			end
 		end
 		return false
 	end

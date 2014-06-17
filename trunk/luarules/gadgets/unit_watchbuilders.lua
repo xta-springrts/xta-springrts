@@ -39,7 +39,6 @@ if (gadgetHandler:IsSyncedCode()) then
 			
 			if watchUnits[unitDef.name] then
 				Script.SetWatchUnit(unitDef.id,true)
-				Echo("Watching unit: ", unitDef.name)
 			end
 		end			
 	end
