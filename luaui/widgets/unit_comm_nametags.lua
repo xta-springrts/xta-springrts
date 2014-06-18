@@ -39,6 +39,7 @@ local glTranslate         = gl.Translate
 local glBillboard         = gl.Billboard
 local glPopMatrix         = gl.PopMatrix
 local GetGaiaTeamID		  = Spring.GetGaiaTeamID
+local haveZombies 		  = (tonumber(Spring.GetModOptions().zombies) or 0) == 1
 
 --------------------------------------------------------------------------------
 -- vars
@@ -68,7 +69,11 @@ function widget:Initialize()
 				else name = side
 			end
 		elseif isGaia then
-			name = "Gaia"
+			if haveZombies then
+				name = "Zombie"
+			else
+				name = "Gaia"
+			end
 		else
 			name = GetPlayerInfo(player)
 		end
