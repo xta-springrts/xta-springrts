@@ -131,10 +131,11 @@ function gadget:GameFrame(n)
 				-- sightDist = losRadius * SQUARE_SIZE * math.pow(2, losMipLevel) / losResMult
 				local losRadius = UnitDefs[spawn.defID].losRadius
 				local sightDist = losRadius * 8 * math.pow(2, losMipLevel) / losResMult
-				local patrolVec = {spawn.dir[1] * sightDist * 0.75, 0.0, spawn.dir[3] * sightDist * 0.75}
+				local patrolVec = {spawn.dir[1] * sightDist * 0.666, 0.0, spawn.dir[3] * sightDist * 0.666}
 
 				if (not UnitDefs[spawn.defID].isImmobile) then
-					spGiveOrderToUnit(unitID, CMD.PATROL, {spawn.pos[1] + patrolVec[1], spawn.pos[2], spawn.pos[3] + patrolVec[3]}, {})
+					spGiveOrderToUnit(unitID, CMD.PATROL, {spawn.pos[1] + patrolVec[1], spawn.pos[2], spawn.pos[3] + patrolVec[3]}, {"shift"})
+					spGiveOrderToUnit(unitID, CMD.PATROL, {spawn.pos[1] - patrolVec[1], spawn.pos[2], spawn.pos[3] - patrolVec[3]}, {"shift"})
 				end
 			end
 
