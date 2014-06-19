@@ -23,6 +23,8 @@ local spGetGameFrame           = Spring.GetGameFrame
 local spGetUnitPosition        = Spring.GetUnitPosition
 local spGetUnitDirection       = Spring.GetUnitDirection
 local spGetUnitBuildFacing     = Spring.GetUnitBuildFacing
+local spGetFeaturePosition     = Spring.GetFeaturePosition
+local spGetFeatureDefID        = Spring.GetFeatureDefID
 local spGetFeaturesInRectangle = Spring.GetFeaturesInRectangle
 local spCreateUnit             = Spring.CreateUnit
 local spDestroyFeature         = Spring.DestroyFeature
@@ -91,15 +93,16 @@ function gadget:Initialize()
 	end
 end
 
--- TODO:
+-- NOTE:
 --   dgun should not trigger respawn (config) *FIXED*
 --   reclaiming should NOT EVER trigger respawn (ok, does not trigger UnitDamaged)
 --   nanoframe decay should NOT EVER trigger respawn *FIXED*
 --	 morphing should not trigger respawn *FIXED*
 function gadget:UnitDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weaponDefID, projectileID, attackerID, attackerDefID, attackerTeam)
-	local health,_,_,_,buildProgress = Spring.GetUnitHealth(unitID)
+	local health, _,_,_, buildProgress = Spring.GetUnitHealth(unitID)
+	local killed = (health > 0 and (health - damage) <= 0.0)
 
-	if (health < 0.0 and buildProgress >= 1.0 and not dgunTable[weaponDefID]) then
+	if (killed and buildProgress >= 1.0 and not dgunTable[weaponDefID]) then
 		local isZombie = (unitTeam == gaiaTeamID)
 		local zombieDef = zombieDefs[unitDefID] or {}
 		local canRespawn = zombieDef.canRespawn
@@ -109,7 +112,10 @@ function gadget:UnitDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weap
 			return
 		end
 		if (attackerTeam ~= nil and attackerTeam == unitTeam) then
-			return
+			-- for team kills, self-damage will spawn a zombie
+			if (unitID ~= attackerID) then
+				return
+			end
 		end
 
 		zombieCount = zombieCount + 1
@@ -124,6 +130,20 @@ function gadget:UnitDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weap
 	end
 end
 
+--[[
+function gadget:AllowCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdOpts)
+	if (unitTeam ~= gaiaTeamID) then
+		return true
+	end
+
+	if (cmdID ~= CMD_RECLAIM) then
+		return true
+	end
+
+	return true
+end
+--]]
+
 function gadget:GameFrame(n)
 	for index, spawn in pairs(zombieQueue) do
 		if (spawn.frame == n) then
@@ -133,40 +153,78 @@ function gadget:GameFrame(n)
 end
 
 
-function SpawnZombie(index, spawn)
-	local spawnPos = spawn.pos
-	local spawnDir = spawn.dir
-	local features = spGetFeaturesInRectangle(spawnPos[1] - 8.0, spawnPos[3] - 8.0,  spawnPos[1] + 8.0, spawnPos[3] + 8.0)
 
-	if (features ~= nil) then
-		-- make sure zombies are not stuck in their own corpses
-		-- player can still suck the wrecks if he acts quickly
-		-- (could be an option to prevent spawns if the player
-		-- manages to reclaim >= 75% of a corpse in time)
-		for _, featureID in ipairs(features) do
-			spDestroyFeature(featureID)
+function DestroyWreck(unitDef, spawnPos)
+	local featureIDs = spGetFeaturesInRectangle(spawnPos[1] - 64.0, spawnPos[3] - 64.0,  spawnPos[1] + 64.0, spawnPos[3] + 64.0)
+
+	if (featureIDs == nil) then
+		return false
+	end
+
+	-- try to make sure zombies are not stuck in their own corpses
+	-- player can still suck the wrecks if he acts quickly enough
+	--
+	-- (could be an option to prevent spawns *if* the player manages
+	-- to reclaim >= 75% of a corpse in time, but would have to make
+	-- an exception for units that don't leave wrecks and for zombie
+	-- builders which might reclaim corpses before they could spawn:
+	-- zombies should never hurt the chances of their own "team", so
+	-- with such an option feature-reclaim orders should be blocked
+	-- from all patrolling zombie builders)
+	--
+	-- note: a corpse might have kept sliding along the ground after
+	-- dying so this loop won't always find a match, but there is no
+	-- general way to link a corpse back to the unit which created it
+	local minFeatureID = -1
+	local minFeatureDist = math.huge
+
+	for _, featureID in ipairs(featureIDs) do
+		local featureDefID = spGetFeatureDefID(featureID)
+		local featureName = FeatureDefs[featureDefID].name
+		local featurePos = {spGetFeaturePosition(featureID)}
+		local featureDist = (featurePos[1] - spawnPos[1])^2 + (featurePos[3] - spawnPos[3])^2
+
+		if (featureDist < minFeatureDist and featureName == unitDef.wreckName) then
+			minFeatureDist = featureDist
+			minFeatureID = featureID
 		end
 	end
 
-	local udefID = spawn.defID
-	local unitID = spCreateUnit(udefID, spawnPos[1], spawnPos[2], spawnPos[3], spawn.facing, gaiaTeamID)
+	if (minFeatureID ~= -1) then
+		spDestroyFeature(minFeatureID)
+		return true
+	end
+
+	return false
+end
+
+function SpawnZombie(index, spawn)
+	local spawnPos = spawn.pos
+	local spawnDir = spawn.dir
+
+	local unitDefID = spawn.defID
+	local unitDef = UnitDefs[unitDefID]
+
+	local unitID = spCreateUnit(unitDefID, spawnPos[1], spawnPos[2], spawnPos[3], spawn.facing, gaiaTeamID)
+
+	DestroyWreck(unitDef, spawnPos)
 
 	if (unitID ~= nil) then
 		spGiveOrderToUnit(unitID, CMD.FIRE_STATE, {[1] = CMD_FIRESTATE_FATW}, {})
 		spGiveOrderToUnit(unitID, CMD.MOVE_STATE, {[1] = CMD_MOVESTATE_ROAM}, {})
 		--spSetUnitNeutral(unitID, true)
 
-		local losRadius = UnitDefs[udefID].losRadius
+		local losRadius = unitDef.losRadius
 		local sightDist = losRadius * losToElmos
 		local patrolVec = {spawnDir[1] * sightDist * 0.666, 0.0, spawnDir[3] * sightDist * 0.666}
 
-		if (not UnitDefs[udefID].isImmobile) then
+		if (not unitDef.isImmobile) then
 			local p0 = {spawnPos[1] + patrolVec[1], spawnPos[2], spawnPos[3] + patrolVec[3]}
 			local p1 = {spawnPos[1] - patrolVec[1], spawnPos[2], spawnPos[3] - patrolVec[3]}
 
 			-- test validity of orders
-			local b0 = spTestMoveOrder(udefID,  p0[1], p0[2], p0[3], 0.0, 0.0, 0.0,  true, true, true)
-			local b1 = spTestMoveOrder(udefID,  p1[1], p1[2], p1[3], 0.0, 0.0, 0.0,  true, true, true)
+			local b0 = spTestMoveOrder(unitDefID,  p0[1], p0[2], p0[3], 0.0, 0.0, 0.0,  true, true, true)
+			local b1 = spTestMoveOrder(unitDefID,  p1[1], p1[2], p1[3], 0.0, 0.0, 0.0,  true, true, true)
 
 			if (b0) then spGiveOrderToUnit(unitID, CMD.PATROL, p0, {"shift"}) end
 			if (b1) then spGiveOrderToUnit(unitID, CMD.PATROL, p1, {"shift"}) end
