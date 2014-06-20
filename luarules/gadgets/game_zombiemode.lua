@@ -41,8 +41,9 @@ local gaiaTeamID = Spring.GetGaiaTeamID()
 -- "modOptions" is a <string, string> map (values are not numbers!)
 local haveZombies = (((modOptions["zombies"] or "0") + 0) ~= 0)
 local zombieConf  = "LuaRules/Configs/game_zombiemode_defs.lua"
-local zombieDefs  = VFS.FileExists(zombieConf) and include(zombieConf) or {}
+local zombieDefs  = (VFS.FileExists(zombieConf) and include(zombieConf)) or {}
 local zombieQueue = {}
+local zombieTable = {}
 local zombieCount = 0
 
 -- better to hardcode these, as many weapons are listed as dgun, for example bogus dgun
@@ -100,22 +101,40 @@ end
 --	 morphing should not trigger respawn *FIXED*
 function gadget:UnitDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weaponDefID, projectileID, attackerID, attackerDefID, attackerTeam)
 	local health, _,_,_, buildProgress = Spring.GetUnitHealth(unitID)
-	local killed = (health > 0 and (health - damage) <= 0.0)
+	local killed = ((health - damage) <= 0.0)
+	local dgunned = dgunTable[weaponDefID]
 
-	if (killed and buildProgress >= 1.0 and not dgunTable[weaponDefID]) then
+	if (dgunned) then
+		return
+	end
+	if (not killed) then
+		return
+	end
+	if (zombieTable[unitID]) then
+		return
+	end
+
+	if (buildProgress >= 1.0) then
 		local isZombie = (unitTeam == gaiaTeamID)
 		local zombieDef = zombieDefs[unitDefID] or {}
-		local canRespawn = zombieDef.canRespawn
-		local respawnTime = zombieDef.respawnTime
 
-		if ((isZombie) or (not canRespawn)) then
+		if ((isZombie and (not zombieDef.allowRepeatSpawn)) or (not zombieDef.allowZombieSpawn)) then
 			return
 		end
-		if (attackerTeam ~= nil and attackerTeam == unitTeam) then
-			-- for team kills, self-damage will spawn a zombie
-			if (unitID ~= attackerID) then
-				return
-			end
+
+		if ((attackerID == nil or attackerTeam == nil) and (not zombieDef.allowDebrisSpawn)) then
+			return
+		end
+
+		local teamKill, allowTeamKill = (attackerTeam == unitTeam), zombieDef.allowTeamKillSpawn
+		local selfKill, allowSelfKill = (attackerID == unitID), zombieDef.allowSelfKillSpawn
+
+		-- self-kills are also team-kills, check those separately
+		if ((teamKill and (not selfKill)) and (not allowTeamKill)) then
+			return
+		end
+		if (selfKill and (not allowSelfKill)) then
+			return
 		end
 
 		zombieCount = zombieCount + 1
@@ -125,8 +144,11 @@ function gadget:UnitDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weap
 			pos    = {spGetUnitPosition(unitID)},
 			dir    = {spGetUnitDirection(unitID)},
 			facing = spGetUnitBuildFacing(unitID),
-			frame  = spGetGameFrame() + respawnTime
+			frame  = spGetGameFrame() + zombieDef.respawnTime
 		}
+
+		-- prevent double spawns
+		zombieTable[unitID] = true
 	end
 end
 
@@ -210,9 +232,9 @@ function SpawnZombie(index, spawn)
 	DestroyWreck(unitDef, spawnPos)
 
 	if (unitID ~= nil) then
-		spGiveOrderToUnit(unitID, CMD.FIRE_STATE, {[1] = CMD_FIRESTATE_FATW}, {})
-		spGiveOrderToUnit(unitID, CMD.MOVE_STATE, {[1] = CMD_MOVESTATE_ROAM}, {})
-		--spSetUnitNeutral(unitID, true)
+		spGiveOrderToUnit(unitID, CMD.FIRE_STATE, {[1] = FIRESTATE_FATW}, {})
+		spGiveOrderToUnit(unitID, CMD.MOVE_STATE, {[1] = MOVESTATE_ROAM}, {})
+		-- spSetUnitNeutral(unitID, true)
 
 		local losRadius = unitDef.losRadius
 		local sightDist = losRadius * losToElmos
@@ -232,5 +254,6 @@ function SpawnZombie(index, spawn)
 	end
 
 	zombieQueue[index] = nil
+	zombieTable[spawn.id] = nil
 end
 
