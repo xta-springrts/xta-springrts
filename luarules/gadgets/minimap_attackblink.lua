@@ -8,7 +8,7 @@ function gadget:GetInfo()
 	date = "May, 2014",
 	license = "tango",
 	layer = 2,
-	enabled = true,
+	enabled = false,
 	}
 end
 
