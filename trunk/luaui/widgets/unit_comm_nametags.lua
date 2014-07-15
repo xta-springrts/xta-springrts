@@ -39,7 +39,7 @@ local glTranslate         = gl.Translate
 local glBillboard         = gl.Billboard
 local glPopMatrix         = gl.PopMatrix
 local GetGaiaTeamID		  = Spring.GetGaiaTeamID
-local haveZombies 		  = (tonumber(Spring.GetModOptions().zombies) or 0) == 1
+local haveZombies 		  = (tonumber((Spring.GetModOptions() or {}).zombies) or 0) == 1
 
 --------------------------------------------------------------------------------
 -- vars
