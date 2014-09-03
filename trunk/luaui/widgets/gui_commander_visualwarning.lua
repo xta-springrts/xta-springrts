@@ -96,6 +96,15 @@ local function getCommandName(cmdID)
 	end
 end
 
+local function IsOnButton(x, y, BLcornerX, BLcornerY,TRcornerX,TRcornerY)
+	if BLcornerX == nil then return false end
+	-- check if the mouse is in a rectangle
+
+	return x >= BLcornerX and x <= TRcornerX
+						  and y >= BLcornerY
+						  and y <= TRcornerY
+end
+
 function widget:UnitDamaged (unitID, unitDefID, unitTeam, damage, paralyzer, weaponID, attackerID, attackerDefID, attackerTeam)
 	if localTeamID ~= unitTeam or Spring.IsUnitInView(unitID) then
 		return --ignore other teams and units in view
@@ -284,6 +293,25 @@ function widget:DrawScreen()
 	end
 end
 
+function widget:MousePress(mx, my, mButton)
+	if (not Spring.IsGUIHidden()) and (#warningList > 0) then
+		if mButton == 2 or mButton == 3 then
+			if IsOnButton(mx,my,posx,posy,posx+sizeX,posy+sizeY) then
+				-- Dragging
+				return true
+			end
+		end
+	end
+end
+					
+function widget:MouseMove(mx, my, dx, dy, mButton)
+	if (not Spring.IsGUIHidden()) and (#warningList > 0) then
+		-- Dragging
+		posx = math.max(0, math.min(posx+dx, vsx-sizeX))	--prevent moving off screen
+		posy = math.max(0, math.min(posy+dy, vsy-sizeY))
+	end
+end
+
 function widget:TweakDrawScreen()
 	
 	local x0 = posx + MARGIN
@@ -303,15 +331,6 @@ function widget:TweakDrawScreen()
 	myFont:Print("Commander warning GUI",posx+MARGIN,posy+MARGIN,12,'bs')
 	myFont:End()
 	
-end
-
-local function IsOnButton(x, y, BLcornerX, BLcornerY,TRcornerX,TRcornerY)
-	if BLcornerX == nil then return false end
-	-- check if the mouse is in a rectangle
-
-	return x >= BLcornerX and x <= TRcornerX
-						  and y >= BLcornerY
-						  and y <= TRcornerY
 end
 
 function widget:TweakMousePress(mx, my, mButton)
