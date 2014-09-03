@@ -996,6 +996,7 @@ function widget:GameSetup(state, ready, playerStates)
 		elseif strS == "Starti" then
 			gameState = COUNTDOWN -- gamestate == 2
 			cntDown = strN
+			spSendLuaUIMsg('776-717')
 		else
 			gameState = ERROR -- gamestate == -1
 		end
