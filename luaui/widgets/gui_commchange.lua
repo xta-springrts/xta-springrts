@@ -877,7 +877,7 @@ function widget:DrawScreen()
 			lbl = "Ready"
 		elseif myState == OTHER then -- red
 			myFont:SetTextColor({1.0, 0.5, 0.5, 1})
-			lbl = "Ready"
+			lbl = ""
 		elseif myState == READY then -- white
 			myFont:SetTextColor({1, 1, 1, 1})
 			if gameState ~= COUNTDOWN then
@@ -902,11 +902,11 @@ function widget:DrawScreen()
 		local txt = strInfo or "..."
 		
 		if myState == PRESENT then
-			txt = strInfo .. " (click to change Commander)"
+			txt = table.concat({strInfo," (click to change Commander)"})
 		elseif myState == MARKED then
 			txt = "Press ready (or click to change Commander)"
 		elseif myState == OTHER then
-			txt = "Press ready..."
+			txt = strInfo
 		elseif myState == READY then
 			if gameState ~= COUNTDOWN then
 				txt = strInfo
