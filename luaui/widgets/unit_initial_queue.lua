@@ -12,15 +12,19 @@ function widget:GetInfo()
 		handler   = true
 	}
 end
+-- 09.2014: improved by fixed to work with uikeys.txt keybinds, retain build orders when faction changes and some white
+-- buildmenu bug troubleshooting. It's still sometimes present, I think it's related to updating drawlist too often. Therefore
+-- it's only updates once in widget:update, and there are also various hacks to set alpha to 0 instead of not showing drawlist
+-- (yes, it may also be related to calling the drawlist too late). This purely empiric observation. Jools
 
 ------------------------------------------------------------
 -- Config
 ------------------------------------------------------------
 -- Panel
 local iconSize = 40
-local borderSize = 1
+local borderSize = 2
 local maxCols = 5
-local fontSize = 16
+local fontSize = 14
 
 -- Colors
 local buildDistanceColor = {0.3, 1.0, 0.3, 0.7}
@@ -50,17 +54,32 @@ local buildNameToID = {}
 local wl, wt = 500, 300
 local cellRows = {} -- {{bDefID, bDefID, ...}, ...}
 local panelList = nil -- Display list for panel
+local borderList = nil -- Display list for border
 local areDragging = false
 
 local isMex = {} -- isMex[uDefID] = true / nil
 local weaponRange = {} -- weaponRange[uDefID] = # / nil
 local spGetTeamRulesParam = Spring.GetTeamRulesParam
+local index = 0 -- for going through buildoptions with multiple key presses
+local cycles = 0 -- for parsing multiple commands with one press
+local maxcycles = 0
+local keypress = nil
+local lastkey = nil
+local indexAdjusted = false
+local tracedDefID = nil
+local sBuilds
 
 -- Maps units that could get disabled because of map conditions
 local disablable = {}
 
 local modOptions = Spring.GetModOptions()
-
+local requireCommander = (Spring.GetModOptions() or {}).commander == "choose"
+local Echo = Spring.Echo
+local GetTeamStartPosition = Spring.GetTeamStartPosition
+local startChosen = false
+local myFont = gl.LoadFont("FreeSansBold.otf",textsize, 1.9, 40)
+local gameStarting = false
+local updateHacked = false
 
 ------------------------------------------------------------
 -- Local functions
@@ -199,7 +218,7 @@ end
 -- Initialize/shutdown
 ------------------------------------------------------------
 function widget:Initialize()
-
+	startChosen = false
 	if (Game.startPosType == 1) or			-- Don't run if start positions are random
 	   (Game.startPosType == 0) or			-- Don't run if start positions are fixed or n/a
 	   (Spring.GetGameFrame() > 0) or		-- Don't run if game has already started
@@ -246,7 +265,6 @@ function widget:Initialize()
 	local startID = spGetTeamRulesParam(myTeamID, 'startUnit')
 	if startID and startID ~= "" then sDefID = startID end
 	InitializeFaction(sDefID)
-	
 end
 
 function widget:Shutdown()
@@ -255,10 +273,131 @@ function widget:Shutdown()
 	end
 end
 
+local function drawBorder()
+	
+	-- delete any pre-existing displaylist
+	if borderList then
+		gl.DeleteList(borderList)
+	end
+
+	-- Set up cells
+	local numCols = math.min(#sBuilds, maxCols)
+	local numRows = math.ceil(#sBuilds / numCols)
+	for r = 1, numRows do
+		cellRows[r] = {}
+	end
+	for b = 0, #sBuilds - 1 do
+		cellRows[1 + math.floor(b / numCols)][1 + b % numCols] = sBuilds[b + 1]
+	end
+	
+	-- Set up drawing function
+	local drawFunc = function()
+		local w = iconSize + borderSize
+		local x0 = wl - w
+		local y0 = wt + w
+			
+		for r = 1, #cellRows do
+			local y1 = y0 - r * w
+			local y2 = y1 - w + 1
+			local cellRow = cellRows[r]
+			for c = 1, #cellRow do
+				local x1 = x0 + c * w
+				local x2 = x1 + w - 1
+				local highlight = tracedDefID == cellRow[c]
+				local selection = selDefID == cellRow[c]
+				
+				if startChosen or (not requireCommander) then
+					if highlight then
+						gl.Color(1, 1, 0, 1)
+					elseif selection then
+						gl.Color(1, 1, 1, 1)
+					else
+						gl.Color(0.4, 0.4, 0.4, 1)
+					end
+				else
+					gl.Color(0, 0, 0, 0)
+				end
+				if highlight or selection or c == 1 then
+					gl.Rect(x1-1,	y1,		x1,		y2)
+				end
+				
+				gl.Rect(x2,		y1,		x2+1,	y2)
+				
+				if highlight or selection or r == 1 then
+					gl.Rect(x1,		y1+1,	x2,		y1)
+				end
+				
+				gl.Rect(x1,		y2,		x2,		y2-1)
+				
+			end
+		end
+	end
+	
+	borderList = gl.CreateList(drawFunc)
+end
+	
+local function drawPanel()
+	
+	-- delete any pre-existing displaylist
+	if panelList then
+		gl.DeleteList(panelList)
+	end
+
+	-- Set up cells
+	local numCols = math.min(#sBuilds, maxCols)
+	local numRows = math.ceil(#sBuilds / numCols)
+	for r = 1, numRows do
+		cellRows[r] = {}
+	end
+	for b = 0, #sBuilds - 1 do
+		cellRows[1 + math.floor(b / numCols)][1 + b % numCols] = sBuilds[b + 1]
+	end
+
+	-- Set up drawing function
+	local drawFunc = function()
+
+		gl.PushMatrix()
+		gl.Translate(0, borderSize, 0)
+
+		for r = 1, #cellRows do
+			local cellRow = cellRows[r]
+
+			gl.Translate(0, -iconSize - borderSize, 0)
+			gl.PushMatrix()
+
+				for c = 1, #cellRow do
+					if startChosen or (not requireCommander) then
+						gl.Color(0.3, 0.3, 0.3, 0.5)
+					else
+						gl.Color(0, 0, 0, 0)
+					end
+					gl.Rect(-borderSize, -borderSize, iconSize + borderSize, iconSize + borderSize)
+					
+					if startChosen or (not requireCommander) then
+						gl.Color(1, 1, 1, 0.85)
+					else
+						gl.Color(0, 0, 0, 0)
+					end
+					gl.Texture("#" .. cellRow[c])
+						gl.TexRect(0, 0, iconSize, iconSize)
+					gl.Texture(false)
+
+					gl.Translate(iconSize + borderSize, 0, 0)
+				end
+			gl.PopMatrix()
+		end
+
+		gl.PopMatrix()	
+	end
+	
+	panelList = gl.CreateList(drawFunc)
+end
+
 function InitializeFaction(sDefID)
+	
 	sDef = UnitDefs[sDefID]
 	-- Don't run if theres nothing to show
-	local sBuilds = sDef.buildOptions
+	sBuilds = sDef.buildOptions
 	if not sBuilds or (#sBuilds == 0) then
 		widgetHandler:RemoveWidget(self)
 		return
@@ -282,68 +421,20 @@ function InitializeFaction(sDefID)
 		newBuilds[#newBuilds + 1] = waterBuilds[i]
 	end
 	sBuilds = newBuilds
-
-
-	-- Set up cells
-	local numCols = math.min(#sBuilds, maxCols)
-	local numRows = math.ceil(#sBuilds / numCols)
-	for r = 1, numRows do
-		cellRows[r] = {}
-	end
-	for b = 0, #sBuilds - 1 do
-		cellRows[1 + math.floor(b / numCols)][1 + b % numCols] = sBuilds[b + 1]
-	end
-
-	-- Set up drawing function
-	local drawFunc = function()
-
-		gl.PushMatrix()
-			gl.Translate(0, borderSize, 0)
-
-			for r = 1, #cellRows do
-				local cellRow = cellRows[r]
-
-				gl.Translate(0, -iconSize - borderSize, 0)
-				gl.PushMatrix()
-
-					for c = 1, #cellRow do
-
-						gl.Color(0, 0, 0, 1)
-						gl.Rect(-borderSize, -borderSize, iconSize + borderSize, iconSize + borderSize)
-
-						gl.Color(1, 1, 1, 1)
-						gl.Texture("#" .. cellRow[c])
-							gl.TexRect(0, 0, iconSize, iconSize)
-						gl.Texture(false)
-
-						gl.Translate(iconSize + borderSize, 0, 0)
-					end
-				gl.PopMatrix()
-			end
-
-		gl.PopMatrix()
-	end
-
-	-- delete any pre-existing displaylist
-	if panelList then
-		gl.DeleteList(panelList)
-	end
-
-	panelList = gl.CreateList(drawFunc)
-
+	
+	drawBorder()
+	drawPanel()
+	
+	-- populate mex/range tables
 	for uDefID, uDef in pairs(UnitDefs) do
-
 		if uDef.extractsMetal > 0 then
 			isMex[uDefID] = true
 		end
-
 		if uDef.maxWeaponRange > 16 then
 			weaponRange[uDefID] = uDef.maxWeaponRange
 		end
 	end
 end
-
-
 
 ------------------------------------------------------------
 -- Config
@@ -369,18 +460,28 @@ local queueTimeFormat = whiteColor .. 'Queued ' .. metalColor .. '%dm ' .. energ
 -- "Queued 23.9 seconds (820m / 2012e)" (I think this one is the best. Time first emphasises point and goodness of widget)
 	-- Also, it is written like english and reads well, none of this colon stuff or figures stacked together
 
-
+-- It's though a bit hard to maintain because of the dreaded white-ui bug. We suspect it's because of the many instances of
+-- push/pop-matrices.
 
 function widget:DrawScreen()
-	if not Spring.IsGameOver() then
+	if not Spring.IsGameOver() and not gameStarting then
+		
 		gl.PushMatrix()
-			gl.Translate(wl, wt, 0)
-			gl.CallList(panelList)
-			if #buildQueue > 0 then
-				local mCost, eCost, bCost = GetQueueCosts()
-				gl.Text(string.format(queueTimeFormat, mCost, eCost, bCost / sDef.buildSpeed), 0, 0, fontSize, 'do')
-			end
+		gl.Translate(wl, wt, 0)
+		gl.CallList(panelList)
 		gl.PopMatrix()
+		
+		drawBorder()
+		gl.PushMatrix()
+		gl.CallList(borderList)
+		gl.PopMatrix()
+	end
+	
+	if #buildQueue > 0 then
+		local mCost, eCost, bCost = GetQueueCosts()
+		myFont:Begin()
+		myFont:Print(string.format(queueTimeFormat, mCost, eCost, bCost / sDef.buildSpeed), wl, wt, fontSize, 'ds')
+		myFont:End()
 	end
 end
 
@@ -402,7 +503,9 @@ function widget:DrawWorld()
 		end
 		
 		local sx, sy, sz = Spring.GetTeamStartPosition(myTeamID) -- Returns -100, -100, -100 when none chosen
-		local startChosen = (sx ~= -100)
+		-- not anymore, now default pos is (0,0) for some reason
+		startChosen = (sx > 0 and sz > 0)
+		
 		if startChosen then
 			
 			-- Correction for start positions in the air
@@ -501,8 +604,17 @@ end
 -- Mouse
 ------------------------------------------------------------
 function widget:IsAbove(mx, my)
-	return TraceDefID(mx, my)
+	if requireCommander then
+		local posx = GetTeamStartPosition(myTeamID)
+		if not posx or posx <= 0 then return false end
+	end
+	tracedDefID = TraceDefID(mx, my)
+	--drawPanel()
+	
+	return tracedDefID
+	
 end
+
 local tooltipFormat = 'Build %s\n%s\n' .. metalColor .. '%d m ' .. whiteColor .. '/ ' .. energyColor .. '%d e ' .. whiteColor .. '/ ' .. buildColor .. '%.1f sec'
 function widget:GetTooltip(mx, my)
 	local bDefID = TraceDefID(mx, my)
@@ -510,11 +622,14 @@ function widget:GetTooltip(mx, my)
 	return string.format(tooltipFormat, bDef.humanName, bDef.tooltip, bDef.metalCost, bDef.energyCost, bDef.buildTime / sDef.buildSpeed)
 end
 function widget:MousePress(mx, my, mButton)
+		
+	if requireCommander and not startChosen then return end
 	
-	local tracedDefID = TraceDefID(mx, my)
+	--tracedDefID = TraceDefID(mx, my)
 	if tracedDefID then
 		if mButton == 1 then
 			SetSelDefID(tracedDefID)
+			drawPanel()
 			return true
 		elseif mButton == 3 then
 			areDragging = true
@@ -523,6 +638,8 @@ function widget:MousePress(mx, my, mButton)
 	else
 		if selDefID then
 			if mButton == 1 then
+				
+				index = 0 -- reset buildselection list
 				
 				local mx, my = Spring.GetMouseState()
 				local _, pos = Spring.TraceScreenRay(mx, my, true)
@@ -573,6 +690,7 @@ function widget:MouseMove(mx, my, dx, dy, mButton)
 	if areDragging then
 		wl = wl + dx
 		wt = wt + dy
+		drawPanel()
 	end
 end
 function widget:MouseRelease(mx, my, mButton)
@@ -580,24 +698,96 @@ function widget:MouseRelease(mx, my, mButton)
 end
 
 ------------------------------------------------------------
+-- Keyboard
+------------------------------------------------------------
+-- works with any game as long as keybinds are defined for that game in uikeys.txt
+
+function widget:KeyPress(key, mods, isRepeat)
+		
+	if requireCommander then
+		local posx = GetTeamStartPosition(myTeamID)
+		if not posx or posx <= 0 then return end
+	end
+	
+	if not isRepeat and not mods.alt and not mods.ctrl and not mods.meta and not mods.shift then
+		--Echo("Keypress:",key)
+		cycles = 0
+		keypress = key
+		indexAdjusted = false
+	end
+	if key == 0x01B then -- ESC 
+		SetSelDefID(nil)
+		drawPanel()
+	end
+	return false
+end
+function widget:KeyRelease(key, mods, isRepeat)
+	
+	keypress = nil
+	if index >= maxcycles then index = 0 end
+	maxcycles = 0
+	return false
+end
+------------------------------------------------------------
 -- Misc
 ------------------------------------------------------------
+function widget:Update()
+	if startChosen and not updateHacked then
+		drawPanel()
+		updateHacked = true
+	end
+end
+
 function widget:RecvLuaMsg(msg, playerID)
 	-- we just use this function to trigger side change update.
 	
 	local sidePrefix = '195' -- set by widget gui_commchange.lua
-	
+	local startingPrefix = '776-717' -- set by widget gui_commchange.lua
+		
 	if string.find(msg,sidePrefix) then	
 		local myTeamID = Spring.GetMyTeamID()
 		local startID = spGetTeamRulesParam(myTeamID, 'startUnit')
 		if startID and startID ~= "" then sDefID = startID end
+		
+		for b = 1, #buildQueue do
+			local buildData = buildQueue[b]
+			local buildDataId = buildData[1]
+			local oldSide = sDef.customParams and sDef.customParams.side
+			
+			if oldSide then
+				if oldSide == "arm" then
+					local newID = (UnitDefNames[string.gsub(UnitDefs[buildDataId].name,"arm_","core_")] or {}).id
+					if newID then
+						buildData[1] = newID
+						buildQueue[b] = buildData
+					else
+						Echo("Warning: could not convert to core: ",(UnitDefs[buildDataId] or {}).name)
+					end
+				elseif oldSide == "core" then
+					local newID = (UnitDefNames[string.gsub(UnitDefs[buildDataId].name,"core_","arm_")] or {}).id
+					if newID then
+						buildData[1] = newID
+						buildQueue[b] = buildData
+					else
+						Echo("Warning: could not convert to arm: ",(UnitDefs[buildDataId] or {}).name)
+					end
+				end
+			end
+        end
+		
+		buildNameToID = {}
+		SetSelDefID(nil)
 		InitializeFaction(sDefID)
+	elseif msg == startingPrefix then	
+		SetSelDefID(nil) -- remove selection, game is starting
+		gameStarting = true
 	end
 end
-
-
-
 function widget:TextCommand(cmd)
+	if requireCommander then
+		local posx = GetTeamStartPosition(myTeamID)
+		if not posx or posx <= 0 then return end
+	end
 	
 	-- Facing commands are only handled by spring if we have a building selected, which isn't possible pre-game
 	local m = cmd:match("^buildfacing (.+)$")
@@ -619,11 +809,28 @@ function widget:TextCommand(cmd)
 	end
 	
 	local buildName = cmd:match("^buildunit_([^%s]+)$")
-	if buildName then
+	local isBuildable = false
+	if buildName then	
 		local bDefID = buildNameToID[buildName]
+		
 		if bDefID then
-			SetSelDefID(bDefID)
-			return true
+			cycles = cycles + 1
+			if cycles > maxcycles then maxcycles = cycles end
+			if not indexAdjusted then
+				if keypress == lastpress then
+					index = index + 1
+				else
+					index = 1
+					lastpress = keypress
+				end
+				indexAdjusted = true
+			end
+			
+			if cycles == index then			
+				--Spring.Echo(cycles, " -- ",buildName, "i:",index, "key:",keypress,lastpress)
+				SetSelDefID(bDefID)
+				return true
+			end
 		end
 	end
 end
