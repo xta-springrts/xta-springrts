@@ -118,7 +118,7 @@ else
 	local isWinner						= {}
 	local winnerList					= {}
 	local transferComplete				= false -- whether uncynced part has all winner information
-	local buttonBarW					= 200
+	local buttonBarW					= 300
 	local buttonBarH					= 20
 	local windowW						= 300
 	local windowH						= 100
@@ -133,27 +133,38 @@ else
 	local victoryPlayed					= false
 	local gameStarted					= false
 	local showGraph 					= false
+	local hideAllStats					= false
+	local lastSelection					= nil
 		
 	local function SetUpButtons()
 		Button["xta"]		= {}
 		Button["engine"]	= {}
+		Button["none"]	= {}
 		Button["exit"]		= {}
 		Button["force"]		= {}
 		Window["exit"]		= {}
 		
-		Button["xta"]["x0"]		= bbx 
-		Button["xta"]["x1"]		= bbx + buttonBarW/2
+		Button["none"]["x0"]		= bbx 
+		Button["none"]["x1"]		= bbx + buttonBarW/3
+		Button["none"]["y0"]		= bby
+		Button["none"]["y1"] 		= bby + buttonBarH
+		Button["none"]["click"]  	= false
+		Button["none"]["mouse"]		= false
+		
+		Button["xta"]["x0"]		= bbx + buttonBarW/3
+		Button["xta"]["x1"]		= bbx + 2*buttonBarW/3
 		Button["xta"]["y0"]		= bby
 		Button["xta"]["y1"] 	= bby + buttonBarH
 		Button["xta"]["click"]  = GG.showXTAStats
 		Button["xta"]["mouse"] 	= false
 		
-		Button["engine"]["x0"]		= bbx + buttonBarW/2
+		Button["engine"]["x0"]		= bbx + 2*buttonBarW/3
 		Button["engine"]["x1"]		= bbx + buttonBarW
 		Button["engine"]["y0"]		= bby
 		Button["engine"]["y1"] 		= bby + buttonBarH
-		Button["engine"]["click"]  	= GG.showXTAStats
+		Button["engine"]["click"]  	= not GG.showXTAStats
 		Button["engine"]["mouse"]	= false
+				
 		
 		-- exit window and button
 		Window["exit"]["x0"]		= vsx/2 - windowW/2
@@ -229,7 +240,7 @@ else
 		if not gameStarted then gameStarted = Spring.GetGameRulesParam("GameStarted") == 1 end
 		
 		if Spring.IsGameOver() and gameStarted then
-			showGraph = Spring.GetGameRulesParam("ShowEnd") == 1
+			showGraph = Spring.GetGameRulesParam("ShowEnd") == 1 and not hideAllStats
 		end
 		
 		if debugMode and Spring.IsGameOver() then
@@ -250,7 +261,7 @@ else
 					Spring.SendCommands('endgraph 1')
 				end
 				
-				-- show buttons to choose between xta/engine graphs
+				-- show buttons to choose between xta/engine/none graphs
 				--background
 				if Button["xta"]["mouse"] then
 					gl.Color(0.8, 0.8, 0.2, 0.5) -- yellow on mouseover
@@ -266,6 +277,13 @@ else
 				end
 				gl.Rect(Button["engine"]["x0"],Button["engine"]["y0"],Button["engine"]["x1"],Button["engine"]["y1"])
 				
+				if Button["none"]["mouse"] then
+					gl.Color(0.8, 0.8, 0.2, 0.5) -- yellow on mouseover
+				else
+					gl.Color(0.3, 0.3, 0.4, 0.55) -- grey
+				end
+				gl.Rect(Button["none"]["x0"],Button["none"]["y0"],Button["none"]["x1"],Button["none"]["y1"])
+				
 				-- button text
 				myFont:Begin()
 				
@@ -275,22 +293,30 @@ else
 				else
 					myFont:SetTextColor({0.6, 0.6, 0.6, 1})
 				end
-				myFont:Print("XTA stats",Button["xta"]["x0"]+buttonBarW/4,Button["engine"]["y0"]+6,12,'cs')
+				myFont:Print("XTA stats",Button["xta"]["x0"]+buttonBarW/6,Button["engine"]["y0"]+6,12,'cs')
 				
 				-- engine stats button
-				if GG.showXTAStats then 
+				if GG.showXTAStats or hideAllStats then 
 					myFont:SetTextColor({0.6, 0.6, 0.6, 1})
 				else
 					myFont:SetTextColor({1, 1, 1, 1})
 				end
-				myFont:Print("Engine stats",Button["engine"]["x0"]+buttonBarW/4,Button["engine"]["y0"]+6,12,'cs')
+				myFont:Print("Engine stats",Button["engine"]["x0"]+buttonBarW/6,Button["engine"]["y0"]+6,12,'cs')
+				
+				-- no stats button
+				if not hideAllStats then 
+					myFont:SetTextColor({0.6, 0.6, 0.6, 1})
+				else
+					myFont:SetTextColor({1, 0.2, 0.2, 1})
+				end
+				myFont:Print("Hide stats",Button["none"]["x0"]+buttonBarW/6,Button["none"]["y0"]+6,12,'cs')
 				myFont:End()
 				gl.Color(1,1,1,1)
 			end
 			
 			-- End text
 			if gameStarted then 
-				if not showGraph then					
+				if not showGraph and not hideAllStats then					
 					-- show victory/defeat text		
 					local label
 					myFontHuge:Begin()
@@ -392,21 +418,48 @@ else
 	function gadget:MousePress(mx, my, mButton)
 		
 		if (not Spring.IsGUIHidden()) and Spring.IsGameOver() and transferComplete and gameStarted then
-			if IsOnButton(mx,my,Button["xta"]["x0"],Button["xta"]["y0"],Button["engine"]["x1"],Button["engine"]["y1"]) then
+			if IsOnButton(mx,my,Button["none"]["x0"],Button["none"]["y0"],Button["engine"]["x1"],Button["engine"]["y1"]) then
 				if mButton == 1 then
+					
 					if showGraph then
 						if IsOnButton(mx,my,Button["xta"]["x0"],Button["xta"]["y0"],Button["xta"]["x1"],Button["xta"]["y1"]) then
 							Spring.SendCommands('endgraph 0')
 							GG.showXTAStats = true
+							hideAllStats = false
+							lastSelection = 1
 						elseif IsOnButton(mx,my,Button["engine"]["x0"],Button["engine"]["y0"],Button["engine"]["x1"],Button["engine"]["y1"]) then
 							Spring.SendCommands('endgraph 1')
 							GG.showXTAStats = false
+							hideAllStats = false
+							lastSelection = 2
+						elseif IsOnButton(mx,my,Button["none"]["x0"],Button["none"]["y0"],Button["none"]["x1"],Button["none"]["y1"]) then
+							Spring.SendCommands('endgraph 0')
+							GG.showXTAStats = false
+							hideAllStats = true
 						end
 					else
 						if IsOnButton(mx,my,Button["xta"]["x0"],Button["xta"]["y0"],Button["xta"]["x1"],Button["xta"]["y1"]) then
+							Spring.SendCommands('endgraph 0')
 							GG.showXTAStats = true
+							showGraph = true
+							hideAllStats = false
+							lastSelection = 1
 						elseif IsOnButton(mx,my,Button["engine"]["x0"],Button["engine"]["y0"],Button["engine"]["x1"],Button["engine"]["y1"]) then
+							Spring.SendCommands('endgraph 1')
 							GG.showXTAStats = false
+							hideAllStats = false
+							showGraph = true
+							lastSelection = 2
+						elseif IsOnButton(mx,my,Button["none"]["x0"],Button["none"]["y0"],Button["none"]["x1"],Button["none"]["y1"]) then
+							if lastSelection and lastSelection == 2 then
+								GG.showXTAStats = false
+								Spring.SendCommands('endgraph 1')
+							else
+								GG.showXTAStats = true
+								Spring.SendCommands('endgraph 0')
+							end
+							hideAllStats = false
+							showGraph = true
 						end
 					end
 				elseif mButton == 2 then
@@ -448,6 +501,7 @@ else
 	
 	function gadget:IsAbove(mx,my)
 		if (not Spring.IsGUIHidden()) and Spring.IsGameOver() then
+			Button["none"]["mouse"] = false
 			Button["xta"]["mouse"] = false
 			Button["engine"]["mouse"] = false
 			Button["exit"]["mouse"] = false
@@ -458,6 +512,8 @@ else
 					Button["xta"]["mouse"] = true
 				elseif IsOnButton(mx,my,Button["engine"]["x0"],Button["engine"]["y0"],Button["engine"]["x1"],Button["engine"]["y1"]) then
 					Button["engine"]["mouse"] = true
+				elseif IsOnButton(mx,my,Button["none"]["x0"],Button["none"]["y0"],Button["none"]["x1"],Button["none"]["y1"]) then
+					Button["none"]["mouse"] = true
 				end
 			end
 			

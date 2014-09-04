@@ -27,6 +27,8 @@ if gadgetHandler:IsSyncedCode() then
 	local allyData = {}
 	local gameData = {}
 	local badges = {}
+	badges["special"] = {}
+	badges["special"]["n"] = 0
 	local mapX, mapZ
 	local ignoreUnits = {}
 	local ignoreForAwards = {}
@@ -131,8 +133,9 @@ if gadgetHandler:IsSyncedCode() then
 						teamData[tID]['lostHP'] = {}
 						teamData[tID]['isAI'] = isAI
 						teamData[tID]['lostHPmisc'] = {} -- for losses with unreconciled attackers
-						--teamData[tID]['ally'] = aID+1
-						--teamData[tID]['alive'] = not isDead
+						teamData[tID]['dtcount'] = 0
+						teamData[tID]['isT1'] = true
+						teamData[tID]['commlosses'] = 0
 						--teamData[tID]['hasCommander'] = false
 						--teamData[tID]['active'] = active
 						--teamData[tID]['spec'] = spectator
@@ -279,11 +282,18 @@ if gadgetHandler:IsSyncedCode() then
 			end
 			-- commloss award
 			if commanderTable[unitDefID] then
-				if #GetAllyTeamList() > 4 then -- don't award if there are at least 4 players (+ gaia)
+				if #GetAllyTeamList() > 4 then -- don't award unless there are at least 4 players (without gaia)
 					if not badges["commloss"] then
 						local frame = GetGameFrame()
 						badges["commloss"] = {teamID,frame}
 					end
+				end
+				
+				teamData[teamID]['commlosses'] = teamData[teamID]['commlosses'] + 1
+				if teamData[teamID]['commlosses'] >= 2 and not badges["special"]["2comms"] then
+					badges["special"]["2comms"] = teamID
+					badges["special"]["n"] = badges["special"]["n"] + 1
+					Echo("\'Lose commander twice\'-award goes to team:",teamID)
 				end
 			end
 		end
@@ -321,14 +331,28 @@ if gadgetHandler:IsSyncedCode() then
 		Spring.SetUnitRulesParam(unitID,'born',frame)		
 	end
 	
-	
 	function gadget:UnitFinished(unitID, unitDefID, unitTeam)
 		if not badges["firstT2"] and t2Table[unitDefID] then
 			local frame = Spring.GetGameFrame()
 			badges["firstT2"] = {unitTeam, frame,unitDefID}
 		end
+		
+		if not badges["special"]["dtbadge"] then
+			if dtTable[unitDefID] then
+				teamData[unitTeam]["dtcount"] = teamData[unitTeam]["dtcount"] + 1
+				
+				if teamData[unitTeam]["dtcount"] >= DTAWARDLIMIT then
+					badges["special"]["dtbadge"] = unitTeam
+					badges["special"]["n"] = badges["special"]["n"] + 1
+					Echo("DT-award goes to team:", unitTeam)
+				end
+			end
+		end
+		
+		if t2Table[unitDefID] then
+			teamData[unitTeam]['isT1'] = false
+		end
 	end
-	
 	
 	function gadget:GameFrame(frame)
 		if frame%(SAMPLEFREQUENCY*30) == 0 then -- read according to sample frequency
@@ -368,6 +392,7 @@ if gadgetHandler:IsSyncedCode() then
 		local bestKills = Spring.GetGameRulesParam("BestKills") or 0
 		local bestKiller = Spring.GetGameRulesParam("BestTeam")
 		
+		
 		if bestKiller then
 			badges["topKiller"] = {bestKiller,bestKills}
 		end
@@ -392,6 +417,20 @@ if gadgetHandler:IsSyncedCode() then
 						if #heroUnits > 5 then 
 							heroUnits[6] = nil
 						end
+					end
+				end
+			end
+		end
+		
+		for tID, tdata in pairs(teamData) do
+			if tID ~= gaiaID then
+				if tdata.isT1 then
+					if not badges["special"]["t1badge"] then
+						badges["special"]["t1badge"] = tID
+						badges["special"]["n"] = badges["special"]["n"] + 1
+					else
+						badges["special"]["t1badge"] = -1 -- contested
+						badges["special"]["n"] = badges["special"]["n"] - 1
 					end
 				end
 			end
@@ -1519,11 +1558,11 @@ else
 				local textsize = 12
 				local x0 = Panel["awards"]["x0"] + 40
 				local y0 = Panel["awards"]["y1"] - 50
-				local y1 = y0
-				local y2 = y1 - 80
+				local y1 = y0 - 10
+				local y2 = y0 - 80
 				local y3 = y2 - 80
 				local x1 = (Panel["awards"]["x0"] + Panel["awards"]["x1"])/2 - 180
-				local x2 = (Panel["awards"]["x0"] + Panel["awards"]["x1"])/2 + 80
+				local x2 = (Panel["awards"]["x0"] + Panel["awards"]["x1"])/2 + 100
 				local row2 = 32
 				local row3 = row2 + 14
 								
@@ -1540,20 +1579,20 @@ else
 					if teamID == gaiaID then leaderName = "Gaia" end
 					
 					glTexture(imgTopKiller)
-					glTexRect(x0,y1-badgeSize,x0+badgeSize,y1)
+					glTexRect(x0,y0-badgeSize,x0+badgeSize,y0)
 					glTexture(false)
 					
 					myFontBig:Begin()
 					myFont:SetTextColor({0.8, 0.8, 1.0, 1})
-					myFontBig:Print("\'Predator\'",x1, y1, 16, 'ts')
+					myFontBig:Print("\'Predator\'",x1, y0, 16, 'ts')
 					myFontBig:End()
 					
 					myFont:Begin()
 					myFont:SetTextColor({r, g, b, 1})
-					myFont:Print(leaderName,x1, y1-row2, textsize, 'ds')
+					myFont:Print(leaderName,x1, y0-row2, textsize, 'ds')
 					myFont:SetTextColor({0.8, 0.8, 1.0, 1})
-					myFont:Print(table.concat({" , ",kills," kills"}),x1+textsize*gl.GetTextWidth(leaderName), y1-row2, textsize, 'ds')
-					myFont:Print("Most confirmed individual kills",x1, y1-row3, textsize, 'd')
+					myFont:Print(table.concat({" , ",kills," kills"}),x1+textsize*gl.GetTextWidth(leaderName), y0-row2, textsize, 'ds')
+					myFont:Print("Most confirmed individual kills",x1, y0-row3, textsize, 'd')
 					myFont:End()
 				end
 				-- first to make t2
@@ -1623,15 +1662,93 @@ else
 				-- specials
 				myFont:Begin()
 				myFont:Print("Special awards",x2, y0, textsize, 'ts')
-				myFont:Print("(Help us by suggesting awards)",x2, y2, textsize, 'to')
+				myFont:Print("(Help us by suggesting awards)",x2, y3, textsize, 'to')
 				myFont:End()
-				if badges and badges["specials"] then
-					-- to be addded
+				local bsize = 24
+				local bmargin = 10
+				local rheight = 26
+				local imgFortress = "LuaUI/Images/endstats/bologna.png"
+				local imgSwarm = "LuaUI/Images/endstats/swarm.png"
+				local img2comms = "LuaUI/Images/endstats/twicecomm.png"
+				local x3 = x2-bsize-bmargin
+				if badges and badges["special"] and badges["special"]["n"] and badges["special"]["n"] > 0 then
+					local rows = 0
+					-- dt-award
+					if badges["special"]["dtbadge"] then
+						rows = rows + 1
+						
+						local teamID = badges["special"]["dtbadge"]
+						local r,g,b = GetTeamColor(teamID)
+						local _,leaderID,_,isAI = GetTeamInfo(teamID)
+						local leaderName = leaderID and (GetPlayerInfo(leaderID) or (leaderNames[teamID]) or "N/A") or "N/A"	
+						if isAI then leaderName = "AI" end	
+						if teamID == gaiaID then leaderName = "Gaia" end
+						local label = "\'Fortress City\' to  "
+						
+						glTexture(imgFortress)
+						glTexRect(x3,y1-rows*rheight-bsize/2,x3+bsize,y1-rows*rheight+bsize/2)
+						glTexture(false)
+						
+						myFont:Begin()
+						myFont:SetTextColor({0.8, 0.8, 1.0, 1})
+						myFont:Print(label,x2, y1-rows*rheight, textsize, 'vs')
+						myFont:SetTextColor({r, g, b, 1})
+						myFont:Print(leaderName,x2+textsize*gl.GetTextWidth(label), y1-rows*rheight+2, textsize, 'vs')
+						myFont:End()
+					end 
+					--t1 award
+					if badges["special"]["t1badge"] and badges["special"]["t1badge"] >= 0 then
+						rows = rows + 1
+						
+						local teamID = badges["special"]["t1badge"]
+						local r,g,b = GetTeamColor(teamID)
+						local _,leaderID,_,isAI = GetTeamInfo(teamID)
+						local leaderName = leaderID and (GetPlayerInfo(leaderID) or (leaderNames[teamID]) or "N/A") or "N/A"	
+						if isAI then leaderName = "AI" end	
+						if teamID == gaiaID then leaderName = "Zombies" end
+						local label = "\'T1-swarm\' to  "
+						
+						glTexture(imgSwarm)
+						glTexRect(x3,y1-rows*rheight-bsize/2,x3+bsize,y1-rows*rheight+bsize/2)
+						glTexture(false)
+						
+						myFont:Begin()
+						myFont:SetTextColor({0.8, 0.8, 1.0, 1})
+						myFont:Print(label,x2, y1-rows*rheight, textsize, 'vs')
+						myFont:SetTextColor({r, g, b, 1})
+						myFont:Print(leaderName,x2+textsize*gl.GetTextWidth(label), y1-rows*rheight, textsize, 'vs')
+						myFont:End()
+					end
+					-- two-time commloss
+					if badges["special"]["2comms"] then
+						rows = rows + 1
+						
+						local teamID = badges["special"]["2comms"]
+						local r,g,b = GetTeamColor(teamID)
+						local _,leaderID,_,isAI = GetTeamInfo(teamID)
+						local leaderName = leaderID and (GetPlayerInfo(leaderID) or (leaderNames[teamID]) or "N/A") or "N/A"	
+						if isAI then leaderName = "AI" end	
+						if teamID == gaiaID then leaderName = "Zombies" end
+						local label = "\'Lost commander twice\' to  "
+						
+						glTexture(img2comms)
+						glTexRect(x3,y1-rows*rheight-bsize/2,x3+bsize,y1-rows*rheight+bsize/2)
+						glTexture(false)
+						
+						myFont:Begin()
+						myFont:SetTextColor({0.8, 0.8, 1.0, 1})
+						myFont:Print(label,x2, y1-rows*rheight, textsize, 'vs')
+						myFont:SetTextColor({r, g, b, 1})
+						myFont:Print(leaderName,x2+textsize*gl.GetTextWidth(label), y1-rows*rheight, textsize, 'vs')
+						myFont:End()
+					end
 				end
 				
-				if not badges or (not badges["commloss"] and not badges["firstT2"] and not badges["topKiller"] and not badges["specials"]) then
+				
+				
+				if not badges or (not badges["commloss"] and not badges["firstT2"] and not badges["topKiller"] and not badges["special"]["n"] and not badges["special"]["n"] > 0) then
 					myFont:Begin()
-					myFont:Print("(No awards)",(Panel["5"]["x0"]+Panel["5"]["x1"])/2, Panel["5"]["y1"]-90, textsize, 'dcs')
+					myFont:Print("(No awards)",(Panel["5"]["x0"]+Panel["5"]["x1"])/2, Panel["5"]["y0"]-90, textsize, 'dcs')
 					myFont:End()
 				end				
 			end
