@@ -62,8 +62,10 @@ if (gadgetHandler:IsSyncedCode()) then
 			killCounters[at]=killCounters[at]+1
 			if killCounters[at]>bestKills then
 				bestKills=killCounters[at]
+				Spring.SetGameRulesParam("BestKills",bestKills)
 				if at~=bestTeam then
 					bestTeam=at
+					Spring.SetGameRulesParam("BestTeam",bestTeam)
 					if soundsOn then Spring.PlaySoundFile(snd) end
 					Spring.SendMessage(friendlyName(bestTeam) .. " has taken the lead with " .. bestKills .. " kills.")
 				end
