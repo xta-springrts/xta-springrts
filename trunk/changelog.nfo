@@ -21,13 +21,26 @@
     ศอออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออผ
     Logo by ElementalGizmo
 
-------------------- Change Log of XTA 9.741 Svn 723
+------------------- Change Log of XTA 9.741 Svn 728
 ------------------ by Jools
  * Fix zombie units being neutral -> not neutral, so they are automatically targetted
  * Fix lua error in voting screen
  * Fix lua error when abandoned commander is killed
  * Fix Justice and Yeomen movement bug, make them on/offable and have same radar range.
  * Make KOTH mode compatible with zombie mode, display koth box on minimap. Zombies can also win in koth mode.
+ * More commander sounds
+ * Nukes and mini-nukes can no longer target air units
+ * Don't show dynamic lights for intercepted nukes
+ * Add awards tab to endstats, help us by suggesting more awards and/or better badges for them
+	- currently there are 3 awards: 1) most kills 2) first to go t2 and 3) first to get commander killed
+ * Make commander visual warning movable while displayed and also default disabled
+ * Remove blinking units on minimap (their icons sometimes became invisible)
+ * Improved initial queue, now works with keybinds in uikeys.txt and has a nicer menu and less bugs (although
+	it could still sometimes cause the dreaded white build menu bug, or is suspected to do)
+ * Some more fixes and improvements for zombies
+	
+	 means to build a building or unit which is an upgrade of another unit or building
+
  
 ------------------- Change Log of XTA 9.74 Svn 718
 ------------------ by Jools and Noruas
