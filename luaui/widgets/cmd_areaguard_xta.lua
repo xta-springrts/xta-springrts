@@ -26,9 +26,6 @@ local GetUnitHealth							= Spring.GetUnitHealth
 local GiveOrderToUnit						= Spring.GiveOrderToUnit
 local PlaySoundFile							= Spring.PlaySoundFile
 local GetUnitsInCylinder 					= Spring.GetUnitsInCylinder
-local InsertUnitCmdDesc						= Spring.InsertUnitCmdDesc
-local EditUnitCmdDesc						= Spring.EditUnitCmdDesc
-local FindUnitCmdDesc						= Spring.FindUnitCmdDesc
 local GetUnitTeam							= Spring.GetUnitTeam
 local AreTeamsAllied						= Spring.AreTeamsAllied
 local altDown 								= false
@@ -42,17 +39,7 @@ local math_floor							= math.floor
 local sndButton								= 'sounds/button9.wav'
 local sndButton2							= 'sounds/minesel4.wav'
 local hideGuard								= false
-
-local areaGuardCmd = {
-id      = CMD_AREA_GUARD,
-name    = "Area guard",
-action  = "areaguard",
-cursor  = 'Guard',
-type    = CMDTYPE.ICON_UNIT_OR_AREA,
-tooltip = "Guard the unit or units",
-hidden	= false,
-}
-
+ 
 function widget:Initialize()
 	local cmds = widgetHandler.commands
 	local n = #(widgetHandler.commands)
