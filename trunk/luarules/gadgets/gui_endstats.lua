@@ -429,8 +429,10 @@ if gadgetHandler:IsSyncedCode() then
 						badges["special"]["t1badge"] = tID
 						badges["special"]["n"] = badges["special"]["n"] + 1
 					else
+						if badges["special"]["t1badge"] >= 0 then
+							badges["special"]["n"] = badges["special"]["n"] - 1
+						end
 						badges["special"]["t1badge"] = -1 -- contested
-						badges["special"]["n"] = badges["special"]["n"] - 1
 					end
 				end
 			end
@@ -1671,6 +1673,7 @@ else
 				local imgSwarm = "LuaUI/Images/endstats/swarm.png"
 				local img2comms = "LuaUI/Images/endstats/twicecomm.png"
 				local x3 = x2-bsize-bmargin
+				
 				if badges and badges["special"] and badges["special"]["n"] and badges["special"]["n"] > 0 then
 					local rows = 0
 					-- dt-award
@@ -1683,7 +1686,7 @@ else
 						local leaderName = leaderID and (GetPlayerInfo(leaderID) or (leaderNames[teamID]) or "N/A") or "N/A"	
 						if isAI then leaderName = "AI" end	
 						if teamID == gaiaID then leaderName = "Gaia" end
-						local label = "\'Fortress City\' to  "
+						local label = "\'Fortress City\' "
 						
 						glTexture(imgFortress)
 						glTexRect(x3,y1-rows*rheight-bsize/2,x3+bsize,y1-rows*rheight+bsize/2)
@@ -1706,7 +1709,7 @@ else
 						local leaderName = leaderID and (GetPlayerInfo(leaderID) or (leaderNames[teamID]) or "N/A") or "N/A"	
 						if isAI then leaderName = "AI" end	
 						if teamID == gaiaID then leaderName = "Zombies" end
-						local label = "\'T1-swarm\' to  "
+						local label = "\'T1-swarm\' "
 						
 						glTexture(imgSwarm)
 						glTexRect(x3,y1-rows*rheight-bsize/2,x3+bsize,y1-rows*rheight+bsize/2)
@@ -1729,7 +1732,7 @@ else
 						local leaderName = leaderID and (GetPlayerInfo(leaderID) or (leaderNames[teamID]) or "N/A") or "N/A"	
 						if isAI then leaderName = "AI" end	
 						if teamID == gaiaID then leaderName = "Zombies" end
-						local label = "\'Lost commander twice\' to  "
+						local label = "\'Lost commander twice\' "
 						
 						glTexture(img2comms)
 						glTexRect(x3,y1-rows*rheight-bsize/2,x3+bsize,y1-rows*rheight+bsize/2)

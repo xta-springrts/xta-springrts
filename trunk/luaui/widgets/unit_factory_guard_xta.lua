@@ -19,9 +19,15 @@ function widget:GetInfo()
     date      = "Jan 8, 2007",
     license   = "GNU GPL, v2 or later",
     layer     = 0,
-    enabled   = false  --  loaded by default?
+    enabled   = true,  --  loaded by default?
+	handler   = true,  --  access to handler
   }
 end
+
+-- 2014.09: updated to allow a portion of builders to sip through
+
+local CMD_FACTORYGUARD 		= 37460
+local Echo					= Spring.Echo
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
@@ -41,18 +47,11 @@ local function ClearGroup(unitID, factID)
   end
 end
 
-
 local function GuardFactory(unitID, unitDefID, factID, factDefID)
   -- is this a factory?
   local fd = UnitDefs[factDefID]
   if (not (fd and fd.isFactory)) then
     return 
-  end
-
-  -- can this unit assist?
-  local ud = UnitDefs[unitDefID]
-  if (not (ud and ud.isBuilder and ud.canAssist)) then
-    return
   end
 
   local x, y, z = Spring.GetUnitPosition(factID)
@@ -98,25 +97,72 @@ local function GuardFactory(unitID, unitDefID, factID, factDefID)
   OrderUnit(unitID, CMD.MOVE,  { x + rx, y, z + rz }, { "shift" })
   OrderUnit(unitID, CMD.GUARD, { factID },            { "shift" })
 end
+	
+function widget:Initialize()
+		
+	local cmds = widgetHandler.commands
+	local n = #(widgetHandler.commands)
 
+	for i=1,n do
+		if (cmds[i].id == CMD_FACTORYGUARD) then
+			cmds[i].hidden = false
+		end
+	end
+end
+	
+function widget:ShutDown()
+		
+	local cmds = widgetHandler.commands
+	local n = #(widgetHandler.commands)
 
+	for i=1,n do
+		if (cmds[i].id == CMD_FACTORYGUARD) then
+			cmds[i].hidden = true
+		end
+	end
+end
+
+function widget:CommandsChanged()
+    
+	local cmds = widgetHandler.commands
+	local n = #(widgetHandler.commands)
+	
+	for i=1,n do
+		if (cmds[i].id == CMD_FACTORYGUARD) then
+			cmds[i].hidden = false
+		end
+	end
+end
+
+function widget:UnitCreated(unitID, unitDefID, teamID, builderID)
+	
+end
 --------------------------------------------------------------------------------
 
-function widget:UnitFromFactory(unitID, unitDefID, unitTeam,
-                                factID, factDefID, userOrders)
-  if (unitTeam ~= Spring.GetMyTeamID()) then
-    return -- not my unit
-  end
+function widget:UnitFromFactory(unitID, unitDefID, unitTeam, factID, factDefID, userOrders)
   
-  ClearGroup(unitID, factID)
+	if (unitTeam ~= Spring.GetMyTeamID()) then
+		return -- not my unit
+	end
 
-  if (userOrders) then
-    return -- already has user assigned orders
-  end
+	ClearGroup(unitID, factID)
 
-  if (UnitDefs[unitDefID].name ~= "arm_colossus" and UnitDefs[unitDefID].name ~= "core_hive") then
-    GuardFactory(unitID, unitDefID, factID, factDefID)
-  end
+	if (userOrders) then
+		return -- already has user assigned orders
+	end
+	
+	-- can this unit assist?
+	local ud = UnitDefs[unitDefID]
+	if ud and ud.isBuilder and ud.canAssist and ud.canGuard and (not ud.isFactory) then
+		if (UnitDefs[unitDefID].name ~= "arm_colossus" and UnitDefs[unitDefID].name ~= "core_hive") then
+		
+			-- pass through or guard?
+			local nbGuard = Spring.GetUnitRulesParam(factID,"nbGuard")
+			if nbGuard > 0 then
+				GuardFactory(unitID, unitDefID, factID, factDefID)
+			end
+		end
+	end
 end
 
 
