@@ -142,7 +142,7 @@ function gadget:RecvLuaMsg(msg, playerID)
 		if startUnit and validStartUnits[startUnit] then
 			local localName, _, playerIsSpec, playerTeam = spGetPlayerInfo(playerID)
 			if not playerIsSpec then
-				spSetTeamRulesParam(playerTeam, 'startUnit', startUnit)
+				spSetTeamRulesParam(playerTeam, 'startUnit', startUnit,{public=true})
 				return true
 			end
 		end
