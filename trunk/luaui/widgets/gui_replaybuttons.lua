@@ -19,6 +19,11 @@ local speeds = {0.5, 1, 2, 3, 4, 5,10,20}
 wPos = {x=0.00, y=0.15}
 local isPaused = false
 local isActive = true --is the widget shown and reacts to clicks?
+local replayLength
+local gamePortion = 0
+local Echo = Spring.Echo
+local textsize				= 10
+local myFont	 			= gl.LoadFont("FreeSansBold.otf",textsize, 1.9, 40)
 
 function widget:Initialize()	
 	if (not Spring.IsReplay()) then
@@ -35,9 +40,40 @@ function widget:Initialize()
 	end
 	speedbuttons[2].color = {1,0,0,1}
 	dy=dy+h
-	add_button (buttons, wPos.x, wPos.y, 0.05, 0.04, "skip","playpauseskip", {0.5,0.5,1,0.4})	
+	add_button (buttons, wPos.x, wPos.y, 0.05, 0.04, "skip","playpauseskip", {0.5,0.5,1,0.4})
+	replayLength = Spring.GetReplayLength()
+	
 end
 
+local function round(num, idp)
+		return string.format("%." .. (idp or 0) .. "f", num)
+	end
+	
+-- add progressbar that indicates progress of replay like in mediaplayers and other hipster stuff
+local function draw_progressBar()
+	local x0 = 0
+	local x1 = sX(uiX(100))
+	local y0 = sY(uiY(96))
+	local y1 = sY(uiY(102))
+	
+	gl.Color(0.1,0.1,0.4,0.9)
+	gl.Rect(x0,y0,x1,y1)
+	gl.Color(0.66,0.66,0.85,1)
+	gl.Rect(x0,y0+1,x0+gamePortion*(x1-x0),y1-1)
+	
+	local hrs = replayLength/3600
+	local mins = hrs >=1 and (replayLength-3600)/60 or replayLength/60
+	local secs = replayLength%60
+	
+	myFont:Begin()
+	myFont:SetTextColor({1,1,1,1})
+	myFont:Print(table.concat({  	(hrs>=1 and round(hrs,0) or ""),hrs>=1 and ":" or "",
+									round(mins,0),						":",
+									round(secs,0)						}),
+									x1+10,y0,textsize,"bs")
+	myFont:Print(table.concat({round(gamePortion*100,0),"%"}),x0+5,y0-10,textsize,"bs")
+	myFont:End()
+end
 
 function speedButtonColor (i)
 	return{0,0+i/10,1,0.4}
@@ -47,6 +83,8 @@ function widget:DrawScreen()
 	if not isActive or Spring.IsGameOver() then return end
 	draw_buttons(speedbuttons)
 	draw_buttons(buttons)
+	draw_progressBar()
+	
 end
 
 function widget:MousePress(x,y,button)	
@@ -89,7 +127,6 @@ function setReplaySpeed (speed, i)
 	end	
 end
 
-
 function widget:Update()
 	if (wantedSpeed) then
 		if (Spring.GetGameSpeed() > wantedSpeed) then
@@ -105,6 +142,7 @@ function widget:GameFrame (f)
 	if (f==1) then
 		buttons[1].text= "  ||"
 	end
+	gamePortion = replayLength and (f/30)/replayLength or 0
 end
 
 ------------------------------------------------------------------------------------------
@@ -157,7 +195,6 @@ function drawmessagebox (msgbox, msg_n)
 	end
 end
 
-
 function drawmessage_simple (message, x, y, s)
 	offx=0
 	if (message.frame) then		
@@ -190,7 +227,6 @@ function drawmessage (message, x, y, s)
 	end	
 	glText (message.text, sX(x+offx), sY(y), sX(s), 'vo')	
 end
-
 
 function addmessage (msgbox, text, bgcolor)
 	local newmessage = {}
