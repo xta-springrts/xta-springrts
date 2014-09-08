@@ -16,7 +16,7 @@ end
 
 local FIRESTATE_FATW = 2
 local MOVESTATE_ROAM = 2
-
+local CMD_AREA_GUARD 		   = 14001
 local spGetUnitNeutral         = Spring.GetUnitNeutral
 local spSetUnitNeutral         = Spring.SetUnitNeutral
 local spGetGameFrame           = Spring.GetGameFrame
@@ -30,6 +30,14 @@ local spCreateUnit             = Spring.CreateUnit
 local spDestroyFeature         = Spring.DestroyFeature
 local spTestMoveOrder          = Spring.TestMoveOrder
 local spGiveOrderToUnit        = Spring.GiveOrderToUnit
+local GetUnitDefID			   = Spring.GetUnitDefID
+local Echo					   = Spring.Echo
+local zombieCEG				   = 'ZOMBIEFLARE'
+local random 				   = math.random
+local mapX, mapZ
+local FACTORYCHECKFRAMES	   = 1420 -- ~47 s
+local UNITCHECKFRAMES		   = 1820 -- ~1 min
+local ARMYMAKEFRAMES		   = 6100 -- ~3.4 mins
 
 local modOptions    = Spring.GetModOptions()
 local modOptionDefs = VFS.Include("modoptions.lua")
@@ -53,6 +61,210 @@ local dgunTable = {
 	[WeaponDefNames["core_udisintegrator"].id] = true,
 	[WeaponDefNames[ "uber_disintegrator"].id] = true,
 }
+
+local function sortByDist(v1,v2) -- increasing
+	return v1[2] < v2[2]
+end
+
+local function sortByHP(v1,v2) -- increasing
+	return v1[2] < v2[2]
+end
+
+local function sortByRange(v1,v2) -- increasing
+	return v1[3] < v2[3]
+end
+	
+local function ZombieGuard(unitID,x,y,z,radius)
+		
+	local targetArray 	= Spring.GetUnitsInSphere(x,y,z,radius,gaiaTeamID)
+	local targetTable 	= {} -- list of units that should be guarded
+	
+	for _, zID in pairs (targetArray) do
+		local tUD = UnitDefs[GetUnitDefID(zID)]
+		local dist = Spring.GetUnitSeparation(unitID, zID)
+		local isMovingUnit = tUD.canMove and (not tUD.isBuilding)
+		
+		if isMovingUnit and dist > 0 then 
+			targetTable[#targetTable+1] = {zID,dist}
+		end
+		
+		table.sort(targetTable, sortByDist)
+	end
+	
+	if targetTable and #targetTable > 0 then
+		for i=1,math.min(3,#targetTable) do
+			local zID = targetTable[i][1]
+			spGiveOrderToUnit(unitID, CMD.INSERT,{-1,CMD.GUARD,CMD.OPT_SHIFT,zID},{"alt"})
+		end
+	end
+end
+
+local function ZombiePatrol(unitID, unitDefID, x,y,z, radius)
+	local p0 = {x + random(-radius,radius), y, z + random(-radius,radius)}
+	local p1 = {x + random(-radius,radius), y, z + random(-radius,radius)}
+	
+	local b0 = spTestMoveOrder(unitDefID,  p0[1], p0[2], p0[3], 0.0, 0.0, 0.0,  true, true, true)
+	local b1 = spTestMoveOrder(unitDefID,  p1[1], p1[2], p1[3], 0.0, 0.0, 0.0,  true, true, true)
+	
+	if (b0) then spGiveOrderToUnit(unitID, CMD.PATROL, p0, {"shift"}) end
+	if (b1) then spGiveOrderToUnit(unitID, CMD.PATROL, p1, {"shift"}) end
+end
+
+local function MakeZombieArmy(zombieArray,x0,z0,x1,z1)
+	local front = {}
+	local ranged = {}
+	local misc = {}
+	
+	local array = {}
+	local count = #zombieArray
+	local testUdefID
+	
+	for _, zID in pairs(zombieArray) do
+		local udefID = GetUnitDefID(zID)
+		local uD =  UnitDefs[udefID]
+		testUdefID = testUdefID or ((not uD.canFly) and udefID)
+		
+		local hp = uD.health
+		local speed = uD.speed
+		local wID = uD.weapons[1].weaponDef
+		local range = wID and WeaponDefs[wID].range or 0
+		local dmg = wID and WeaponDefs[wID].damages.default or 0
+		local rTime = wID and WeaponDefs[wID].reloadTime or 1000
+		local dps = dmg/rTime
+		local dhp = hp+20*dps
+		array[#array+1] = {zID,dhp,range}
+	end
+	testUdefID = testUdefID or GetUnitDefID(array[1][1])
+	
+	table.sort(array,sortByHP)
+	
+	local rest = count%3
+	
+	for i=#array,#array-(math.floor(count/3)+rest),-1 do
+		front[#front+1] = array[i][1]
+		array[#array] = nil
+	end
+	
+	table.sort(array,sortByRange)
+	
+	for i=#array,#array-(math.floor(count/3)),-1 do
+		ranged[#ranged+1] = array[i][1]
+		array[#array] = nil
+	end
+	
+	for i=1,#array do
+		misc[#misc+1] = array[i][1]
+	end
+
+	-- pick target for army
+	local tx,ty,tz, b0
+	local loops = 0
+	repeat
+		tx = random(0,mapX)
+		tz = random(0,mapZ)
+		ty = Spring.GetGroundHeight(tx,tz)
+		b0 = spTestMoveOrder(testUdefID,  tz, ty, tz, 0.0, 0.0, 0.0,  true, true, true)
+		loops = loops + 1
+	until (((tx < x0 or tx > x1) or (tz < z0 or tz > z1)) and b0) or loops > 50 -- send army to another quadrant and make sure it can move there
+	
+	if not  tx and ty and tz then return end
+	
+	Spring.GiveOrderToUnitArray(front,CMD.STOP, {},{})
+	Spring.GiveOrderToUnitArray(ranged,CMD.STOP, {},{})
+	Spring.GiveOrderToUnitArray(misc,CMD.STOP, {},{})
+	
+	--front
+	Spring.GiveOrderToUnitArray(front,CMD.FIGHT, {tx,ty,tz}, {})
+	--ranged
+	for i, zID in pairs(ranged) do
+		for j = i,i+2 do
+			if j > #front then j = j - #front end
+			spGiveOrderToUnit(zID,CMD.GUARD, {front[j]},{"shift"})
+		end
+	end
+	-- misc
+	Spring.GiveOrderToUnitArray(misc,CMD.FIGHT, {tx+random(-100,100),ty,tz+random(-100,100)}, {})
+	
+end
+
+local function GiveFactoryOrders(unitID,unitDefID)
+	local buildopts = UnitDefs[unitDefID].buildOptions
+	local orders = {}
+			
+	for i=1,random(10,30) do
+		orders[#orders+1] = { -buildopts[random(1,#buildopts)], {}, {} }
+	end
+	if (#orders > 0) then
+		if (Spring.GetUnitIsDead(unitID) == false) then
+			Spring.GiveOrderArrayToUnitArray({unitID},orders)
+		end
+	end
+end
+
+local function GiveUnitOrders(unitID,unitDefID,isBuilder)
+	local x,y,z = Spring.GetUnitPosition(unitID)
+	
+	if isBuilder then
+		ZombieGuard(unitID,x,y,z,500)
+	else
+		ZombiePatrol(unitID, unitDefID, x,y,z, 1000)
+	end
+end
+
+local function CheckFactories()
+	for _, zID in pairs (Spring.GetTeamUnits(gaiaTeamID)) do
+		local unitDefID = Spring.GetUnitDefID(zID)
+		if UnitDefs[unitDefID].isFactory then
+			local orders = Spring.GetFactoryCommands(zID, 1)
+			if not orders or #orders == 0 then
+				GiveFactoryOrders(zID,unitDefID)
+			end
+		end
+	end
+end
+
+local function CheckUnits()
+	for _, zID in pairs (Spring.GetTeamUnits(gaiaTeamID)) do
+		local unitDefID = Spring.GetUnitDefID(zID)
+		local uD = UnitDefs[unitDefID]
+		if uD and uD.canGuard and not uD.isFactory and (not uD.isImmobile) then
+			local orders = Spring.GetUnitCommands(zID, 1)
+			if not orders or #orders == 0 then
+				GiveUnitOrders(zID,unitDefID,uD.isBuilder)
+			end
+		end
+	end
+end
+
+local function CheckZombieCount()
+	
+	local count = Spring.GetTeamUnitCount(gaiaTeamID)
+	if count < 50 then return end
+	
+	for i=1,2 do
+		for j = 1,2 do
+			
+			local x = mapX/2 * (i-1)
+			local z = mapZ/2 * (j-1)
+			
+			local zombieArray = Spring.GetUnitsInRectangle(x,z,x+mapX/2,z+mapZ/2,gaiaTeamID)
+			local armyArray = {}
+			local zombieForce = 0
+			for _, zID in pairs(zombieArray) do
+				local uD =  UnitDefs[GetUnitDefID(zID)]
+				if (not uD.isFactory) and uD.canAttack and (not uD.isImmobile) and uD.weapons and (#uD.weapons > 0) then
+					zombieForce = zombieForce + 1
+					armyArray[#armyArray+1] = zID
+				end
+			end
+			
+			if zombieForce > 20 then
+				MakeZombieArmy(armyArray,x,z,x+mapX/2,z+mapZ/2)
+				return
+			end
+		end
+	end
+end
 
 function gadget:Initialize()
 	assert(modOptionDefs ~= nil)
@@ -92,6 +304,8 @@ function gadget:Initialize()
 		-- sightDist = losRadius * SQUARE_SIZE * (1 << losMipLevel) / losResMult
 		losToElmos = 8 * math.pow(2, losMipLevel) / losResMult
 	end
+	mapX = Game.mapSizeX
+	mapZ = Game.mapSizeZ
 end
 
 -- NOTE:
@@ -99,9 +313,10 @@ end
 --   reclaiming should NOT EVER trigger respawn (ok, does not trigger UnitDamaged)
 --   nanoframe decay should NOT EVER trigger respawn *FIXED*
 --	 morphing should not trigger respawn *FIXED*
-function gadget:UnitDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weaponDefID, projectileID, attackerID, attackerDefID, attackerTeam)
+--   Moved to UnitPreDamaged to allow zombies that die to not leave wrecks
+function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weaponDefID, projectileID, attackerID, attackerDefID, attackerTeam)
 	local health, _,_,_, buildProgress = Spring.GetUnitHealth(unitID)
-	local killed = ((health - damage) <= 0.0)
+	local killed = (health - damage) <= 0.0 	-- in predamaged damage is not applied, but in unitdamaged it already is
 	local dgunned = dgunTable[weaponDefID]
 
 	if (dgunned) then
@@ -117,9 +332,9 @@ function gadget:UnitDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weap
 	if (buildProgress >= 1.0) then
 		local isZombie = (unitTeam == gaiaTeamID)
 		local zombieDef = zombieDefs[unitDefID] or {}
-
-		if ((isZombie and (not zombieDef.allowRepeatSpawn)) or (not zombieDef.allowZombieSpawn)) then
-			return
+		
+		if ((isZombie and (not zombieDef.allowRepeatSpawn)) or (not zombieDef.allowZombieSpawn)) then 
+			return 
 		end
 
 		if ((attackerID == nil or attackerTeam == nil) and (not zombieDef.allowDebrisSpawn)) then
@@ -172,9 +387,43 @@ function gadget:GameFrame(n)
 			SpawnZombie(index, spawn)
 		end
 	end
+	
+	-- check that factories are doing something
+	if n%FACTORYCHECKFRAMES == 0 then
+		CheckFactories()
+	end
+	-- Check units
+	if n%UNITCHECKFRAMES == 0 then
+		CheckUnits()
+	end
+	
+	-- check for army
+	if n%ARMYMAKEFRAMES == 0 then
+		CheckZombieCount()
+	end
+	-- set storages for zombies
+	if (n==1) then
+		Spring.SetTeamResource(gaiaTeamID, "ms", 500)
+		Spring.SetTeamResource(gaiaTeamID, "es", 10500)
+	end
 end
 
-
+function gadget:UnitFromFactory (unitID, unitDefID, unitTeam, factID,factDefID,_)
+	if unitTeam == gaiaTeamID then
+		local uD = UnitDefs[unitDefID]
+		if uD and uD.canGuard and not uD.isFactory and uD.isBuilder and uD.canAssist then
+			local x,y,z = Spring.GetUnitPosition(unitID)
+			local rnd = random()
+			if rnd < 0.33 then
+				ZombieGuard(unitID,x,y,z,500)
+			elseif rnd < 0.66 then
+				spGiveOrderToUnit(unitID, CMD.INSERT,{-1,CMD.GUARD,CMD.OPT_SHIFT,factID},{"alt"})
+			else
+				ZombiePatrol(unitID, unitDefID, x,y,z, 500)
+			end
+		end
+	end
+end
 
 function DestroyWreck(unitDef, spawnPos)
 	local featureIDs = spGetFeaturesInRectangle(spawnPos[1] - 64.0, spawnPos[3] - 64.0,  spawnPos[1] + 64.0, spawnPos[3] + 64.0)
@@ -197,6 +446,12 @@ function DestroyWreck(unitDef, spawnPos)
 	-- note: a corpse might have kept sliding along the ground after
 	-- dying so this loop won't always find a match, but there is no
 	-- general way to link a corpse back to the unit which created it
+	
+	-- Another option would be to move the whole code to featurecreated 
+	-- callin instead, and just spawn zombies from wrecks. But I recall I
+	-- exploded that method and it had some issue (that I can no longer
+	-- remember), and it's also nice to get zombie aircraft, crawling bombs
+	-- and mines. /J
 	local minFeatureID = -1
 	local minFeatureDist = math.huge
 
@@ -234,22 +489,30 @@ function SpawnZombie(index, spawn)
 	if (unitID ~= nil) then
 		spGiveOrderToUnit(unitID, CMD.FIRE_STATE, {[1] = FIRESTATE_FATW}, {})
 		spGiveOrderToUnit(unitID, CMD.MOVE_STATE, {[1] = MOVESTATE_ROAM}, {})
-		-- spSetUnitNeutral(unitID, true)
-
+		
 		local losRadius = unitDef.losRadius
 		local sightDist = losRadius * losToElmos
 		local patrolVec = {spawnDir[1] * sightDist * 0.666, 0.0, spawnDir[3] * sightDist * 0.666}
 
 		if (not unitDef.isImmobile) then
-			local p0 = {spawnPos[1] + patrolVec[1], spawnPos[2], spawnPos[3] + patrolVec[3]}
-			local p1 = {spawnPos[1] - patrolVec[1], spawnPos[2], spawnPos[3] - patrolVec[3]}
+			
+			-- 50 % chance of guarding
+			if random() < 0.5 then
+				local x,y,z = spawnPos[1],spawnPos[2],spawnPos[3]
+				ZombieGuard(unitID,x,y,z,500)
+			else
+				local p0 = {spawnPos[1] + patrolVec[1], spawnPos[2], spawnPos[3] + patrolVec[3]}
+				local p1 = {spawnPos[1] - patrolVec[1], spawnPos[2], spawnPos[3] - patrolVec[3]}
 
-			-- test validity of orders
-			local b0 = spTestMoveOrder(unitDefID,  p0[1], p0[2], p0[3], 0.0, 0.0, 0.0,  true, true, true)
-			local b1 = spTestMoveOrder(unitDefID,  p1[1], p1[2], p1[3], 0.0, 0.0, 0.0,  true, true, true)
+				-- test validity of orders
+				local b0 = spTestMoveOrder(unitDefID,  p0[1], p0[2], p0[3], 0.0, 0.0, 0.0,  true, true, true)
+				local b1 = spTestMoveOrder(unitDefID,  p1[1], p1[2], p1[3], 0.0, 0.0, 0.0,  true, true, true)
 
-			if (b0) then spGiveOrderToUnit(unitID, CMD.PATROL, p0, {"shift"}) end
-			if (b1) then spGiveOrderToUnit(unitID, CMD.PATROL, p1, {"shift"}) end
+				if (b0) then spGiveOrderToUnit(unitID, CMD.PATROL, p0, {"shift"}) end
+				if (b1) then spGiveOrderToUnit(unitID, CMD.PATROL, p1, {"shift"}) end
+			end
+		elseif unitDef.isFactory then
+			GiveFactoryOrders(unitID,unitDefID)
 		end
 	end
 
