@@ -9,7 +9,7 @@
 --------------------------------------------------------------------------------
 
 function widget:GetInfo()
-  return {
+	return {
     name      = "Ally Resource Bars - XTA",
     desc      = "Shows your allies resources and allows quick resource transfer (v1.4)",
     author    = "TheFatController, AF & Jools",
@@ -307,7 +307,6 @@ local function updateStatics()
 					iy1 = topy- height - BAR_HEIGHT,
 					iy2 = topy- height - BAR_HEIGHT - TOTAL_BAR_HEIGHT,
 					}
-				--Echo("Y1:",teamIcons[teamID].iy1,teamIcons[teamID].iy2,betterCodedPosition[teamID])
 				height = (height - TOTAL_BAR_HEIGHT - BAR_GAP)
 			end
 		end
@@ -480,8 +479,8 @@ function widget:TextCommand(command)
 			showAll = false
 		end
 		setUpTeam()
-		updateBars()
 		updateStatics()
+		updateBars()
 		checkScreen()
 	end
 		
@@ -527,10 +526,11 @@ function widget:GameFrame(n)
 end
 
 function widget:Update()
+	
 	local speed,_,paused = Spring.GetGameSpeed()
 	local updateFreq
 	if GetMyTeamID() ~= myID or showAll then
-		updateBars()	-- must be run twice because schmucks
+		--updateBars()	-- must be run twice because schmucks
 		updateBars()
 	end
 	if speed < 0.5 then
@@ -544,7 +544,7 @@ function widget:Update()
 	else
 		updateFreq = 128
 	end
-	if (gameFrame ~= lastFrame and gameFrame%updateFreq == 0) or paused then
+	if (gameFrame ~= lastFrame and gameFrame%updateFreq == 0) or paused or (gameFrame and TOOL_TIPS) then
 
 		if enabled then
 			lastFrame = gameFrame
@@ -554,7 +554,7 @@ function widget:Update()
 				transferResources(gameFrame)
 			end
 			
-			if sentSomething and ((gameFrame % 16) == 0) then
+			if sentSomething and ((gameFrame % 32) == 0) then
 				for teamID,send in pairs(sendEnergy) do
 					ShareResources(teamID,"energy",send)
 				end

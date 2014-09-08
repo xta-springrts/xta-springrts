@@ -4,10 +4,10 @@ for unitDefName, unitDef in pairs(UnitDefs) do
 	zombieDefs[unitDef.id] = {
 		respawnTime = Game.gameSpeed * 15,
 
-		allowZombieSpawn = true,
+		allowZombieSpawn = true, 
 		allowRepeatSpawn = false,
 		allowDebrisSpawn = true,
-
+		
 		allowTeamKillSpawn = true,
 		allowSelfKillSpawn = true,
 	}
