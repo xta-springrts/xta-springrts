@@ -56,7 +56,9 @@ if gadgetHandler:IsSyncedCode() then
 	local AreTeamsAllied		= Spring.AreTeamsAllied
 	local GetUnitHealth			= Spring.GetUnitHealth
 	local gaiaID				= Spring.GetGaiaTeamID()
-
+	local _,_, CommanderTargets = include("LuaRules/Configs/unit_commander_sounds_defs.lua")
+	local holyTargets			= {}
+	local impressiveTargets		= {}
 	local XTA_AWARDMARKER		= '\199'
 	
 	local dtTable = {
@@ -69,7 +71,14 @@ if gadgetHandler:IsSyncedCode() then
 	}
 	
 	local commanderTable = {}
-		
+
+	local dgunTable = {
+	[WeaponDefNames[  "arm_disintegrator"].id] = true,
+	[WeaponDefNames[ "core_disintegrator"].id] = true,
+	[WeaponDefNames["core_udisintegrator"].id] = true,
+	[WeaponDefNames[ "uber_disintegrator"].id] = true,
+}
+	
 	local t2Table = {
 		[UnitDefNames["arm_advanced_radar_tower"].id] 		= true,
 		[UnitDefNames["arm_advanced_sonar_station"].id] 	= true,
@@ -136,7 +145,8 @@ if gadgetHandler:IsSyncedCode() then
 						teamData[tID]['dtcount'] = 0
 						teamData[tID]['isT1'] = true
 						teamData[tID]['commlosses'] = 0
-						--teamData[tID]['hasCommander'] = false
+						teamData[tID]['commkills'] = 0
+						teamData[tID]['impressivekills'] = 0
 						--teamData[tID]['active'] = active
 						--teamData[tID]['spec'] = spectator
 						--teamData[tID]['killcount'] = {}
@@ -171,6 +181,15 @@ if gadgetHandler:IsSyncedCode() then
 				end
 			end
 		end
+		
+		for i = 0, #CommanderTargets.ImpressiveTargetDefs do
+			impressiveTargets[CommanderTargets.ImpressiveTargetDefs[i].id] = true
+		end
+		
+		for i = 0, #CommanderTargets.HolyTargetDefs do
+			holyTargets[CommanderTargets.HolyTargetDefs[i].id] = true
+		end
+		
 	end
 	
 	function isUnitComplete(unitID)
@@ -290,37 +309,71 @@ if gadgetHandler:IsSyncedCode() then
 				end
 				
 				teamData[teamID]['commlosses'] = teamData[teamID]['commlosses'] + 1
+								
 				if teamData[teamID]['commlosses'] >= 2 and not badges["special"]["2comms"] then
 					badges["special"]["2comms"] = teamID
 					badges["special"]["n"] = badges["special"]["n"] + 1
 					Echo("\'Lose commander twice\'-award goes to team:",teamID)
+				end
+				if attackerTeamID then
+					teamData[attackerTeamID]['commkills'] = teamData[attackerTeamID]['commkills'] + 1
+					if teamData[attackerTeamID]['commkills'] >= 3 and not badges["special"]["3comms"] then
+						badges["special"]["3comms"] = attackerTeamID
+						badges["special"]["n"] = badges["special"]["n"] + 1
+						Echo("\'Commander hitman\'-award goes to team:",attackerTeamID)
+					end
 				end
 			end
 		end
 	end
 	
 	function gadget:UnitDamaged(unitID, unitDefID, teamID, damage, paralyzer, weaponDefID, projectileID, attackerID, attackerDefID, attackerTeam)
-		if teamID and isUnitComplete(unitID) and weaponDefID < 0 then --and teamID ~= gaiaID and attackerTeam ~= gaiaID then
-			local health,hp = GetUnitHealth(unitID)
-			if health < 0 then
-				if weaponDefID == -1 then
-					if not teamData[teamID]['lostHPmisc']['debris'] then teamData[teamID]['lostHPmisc']['debris'] = 0 end
-					teamData[teamID]['lostHPmisc']['debris'] = teamData[teamID]['lostHPmisc']['debris'] + hp
-				elseif weaponDefID == -2 then 
-					if not teamData[teamID]['lostHPmisc']['ground'] then teamData[teamID]['lostHPmisc']['ground'] = 0 end
-					teamData[teamID]['lostHPmisc']['ground'] = teamData[teamID]['lostHPmisc']['ground'] + hp
-				elseif weaponDefID == -3 then
-					if not teamData[teamID]['lostHPmisc']['object'] then teamData[teamID]['lostHPmisc']['object'] = 0 end
-					teamData[teamID]['lostHPmisc']['object'] = teamData[teamID]['lostHPmisc']['object'] + hp
-				elseif weaponDefID == -4 then 
-					if not teamData[teamID]['lostHPmisc']['fire'] then teamData[teamID]['lostHPmisc']['fire'] = 0 end
-					teamData[teamID]['lostHPmisc']['fire'] = teamData[teamID]['lostHPmisc']['fire'] + hp
-				elseif weaponDefID == -5 then 
-					if not teamData[teamID]['lostHPmisc']['water'] then teamData[teamID]['lostHPmisc']['water'] = 0 end
-					teamData[teamID]['lostHPmisc']['water'] = teamData[teamID]['lostHPmisc']['water'] + hp
-				elseif weaponDefID == -6 then 
-					if not teamData[teamID]['lostHPmisc']['kill'] then teamData[teamID]['lostHPmisc']['kill'] = 0 end
-					teamData[teamID]['lostHPmisc']['kill'] = teamData[teamID]['lostHPmisc']['kill'] + hp
+		if teamID and isUnitComplete(unitID) then
+			if weaponDefID < 0 then --and teamID ~= gaiaID and attackerTeam ~= gaiaID then
+				local health,hp = GetUnitHealth(unitID)
+				if health < 0 then
+					if weaponDefID == -1 then
+						if not teamData[teamID]['lostHPmisc']['debris'] then teamData[teamID]['lostHPmisc']['debris'] = 0 end
+						teamData[teamID]['lostHPmisc']['debris'] = teamData[teamID]['lostHPmisc']['debris'] + hp
+					elseif weaponDefID == -2 then 
+						if not teamData[teamID]['lostHPmisc']['ground'] then teamData[teamID]['lostHPmisc']['ground'] = 0 end
+						teamData[teamID]['lostHPmisc']['ground'] = teamData[teamID]['lostHPmisc']['ground'] + hp
+					elseif weaponDefID == -3 then
+						if not teamData[teamID]['lostHPmisc']['object'] then teamData[teamID]['lostHPmisc']['object'] = 0 end
+						teamData[teamID]['lostHPmisc']['object'] = teamData[teamID]['lostHPmisc']['object'] + hp
+					elseif weaponDefID == -4 then 
+						if not teamData[teamID]['lostHPmisc']['fire'] then teamData[teamID]['lostHPmisc']['fire'] = 0 end
+						teamData[teamID]['lostHPmisc']['fire'] = teamData[teamID]['lostHPmisc']['fire'] + hp
+					elseif weaponDefID == -5 then 
+						if not teamData[teamID]['lostHPmisc']['water'] then teamData[teamID]['lostHPmisc']['water'] = 0 end
+						teamData[teamID]['lostHPmisc']['water'] = teamData[teamID]['lostHPmisc']['water'] + hp
+					elseif weaponDefID == -6 then 
+						if not teamData[teamID]['lostHPmisc']['kill'] then teamData[teamID]['lostHPmisc']['kill'] = 0 end
+						teamData[teamID]['lostHPmisc']['kill'] = teamData[teamID]['lostHPmisc']['kill'] + hp
+					end
+				end
+			else
+				if dgunTable[weaponDefID] and attackerTeam then
+					local health,hp = GetUnitHealth(unitID)
+					if health < 0 then
+						if holyTargets[unitDefID] then
+							if not badges["special"]["cygnus"] then
+								badges["special"]["cygnus"] = attackerTeam
+								badges["special"]["n"] = badges["special"]["n"] + 1
+								Echo("\'Cygnus Nero\'-award goes to team:",attackerTeam)
+							end							
+						elseif impressiveTargets[unitDefID] then
+							if not badges["special"]["cygnus"] then
+								if teamData[attackerTeam]['impressivekills'] >= 5 then
+									badges["special"]["cygnus"] = attackerTeam
+									badges["special"]["n"] = badges["special"]["n"] + 1
+									Echo("\'Cygnus Nero\'-award goes to team:",attackerTeam)
+								else
+									teamData[attackerTeam]['impressivekills'] = teamData[attackerTeam]['impressivekills'] + 1
+								end
+							end
+						end
+					end
 				end
 			end
 		end
@@ -1586,7 +1639,7 @@ else
 					
 					myFontBig:Begin()
 					myFont:SetTextColor({0.8, 0.8, 1.0, 1})
-					myFontBig:Print("\'Predator\'",x1, y0, 16, 'ts')
+					myFontBig:Print("\'Omnivore\'",x1, y0, 16, 'ts')
 					myFontBig:End()
 					
 					myFont:Begin()
@@ -1668,6 +1721,8 @@ else
 				local imgFortress = "LuaUI/Images/endstats/bologna.png"
 				local imgSwarm = "LuaUI/Images/endstats/swarm.png"
 				local img2comms = "LuaUI/Images/endstats/twicecomm.png"
+				local img3comms = "LuaUI/Images/endstats/hitman.png"
+				local imgCygnus = "LuaUI/Images/endstats/swan.png"
 				local x3 = x2-bsize-bmargin
 				
 				if badges and badges["special"] and badges["special"]["n"] and badges["special"]["n"] > 0 then
@@ -1745,6 +1800,54 @@ else
 						myFont:Print(leaderName,x2+textsize*gl.GetTextWidth(label), y1-rows*rheight, textsize, 'vs')
 						myFont:End()	
 					end
+					-- three commkills
+					if badges["special"]["3comms"] then
+						rows = rows + 1
+						
+						local teamID = badges["special"]["3comms"]
+						local r,g,b = GetTeamColor(teamID)
+						local _,leaderID,_,isAI = GetTeamInfo(teamID)
+						local leaderName = leaderID and (GetPlayerInfo(leaderID) or (leaderNames[teamID]) or "N/A") or "N/A"	
+						if isAI then leaderName = "AI" end	
+						if teamID == gaiaID then leaderName = "Zombies" end
+						local label = "\'Hitman\' "
+						
+						glTexture(img3comms)
+						glTexRect(x3,y1-rows*rheight-bsize/2,x3+bsize,y1-rows*rheight+bsize/2)
+						glTexture(false)
+						
+						myFont:Begin()
+						myFont:SetTextColor({0.8, 0.8, 1.0, 1})
+						myFont:Print(label,x2, y1-rows*rheight, textsize, 'vs')
+						myFont:SetTextColor({r, g, b, 1})
+						myFont:Print(leaderName,x2+textsize*gl.GetTextWidth(label), y1-rows*rheight, textsize, 'vs')
+						myFont:End()	
+					end
+					
+					-- 5 Impressive or 1 holy dgun-targets killed
+					if badges["special"]["cygnus"] then
+						rows = rows + 1
+						
+						local teamID = badges["special"]["cygnus"]
+						local r,g,b = GetTeamColor(teamID)
+						local _,leaderID,_,isAI = GetTeamInfo(teamID)
+						local leaderName = leaderID and (GetPlayerInfo(leaderID) or (leaderNames[teamID]) or "N/A") or "N/A"	
+						if isAI then leaderName = "AI" end	
+						if teamID == gaiaID then leaderName = "Zombies" end
+						local label = "\'Cygnus Nero\' "
+						
+						glTexture(imgCygnus)
+						glTexRect(x3,y1-rows*rheight-bsize/2,x3+bsize,y1-rows*rheight+bsize/2)
+						glTexture(false)
+						
+						myFont:Begin()
+						myFont:SetTextColor({0.8, 0.8, 1.0, 1})
+						myFont:Print(label,x2, y1-rows*rheight, textsize, 'vs')
+						myFont:SetTextColor({r, g, b, 1})
+						myFont:Print(leaderName,x2+textsize*gl.GetTextWidth(label), y1-rows*rheight, textsize, 'vs')
+						myFont:End()	
+					end
+
 				elseif not badges or (not badges["commloss"] and not badges["firstT2"] and not badges["topKiller"]) then
 					myFont:Begin()
 					myFont:Print("(No awards)",(Panel["5"]["x0"]+Panel["5"]["x1"])/2, y2, textsize, 'dcs')

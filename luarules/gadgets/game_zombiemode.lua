@@ -32,7 +32,6 @@ local spTestMoveOrder          = Spring.TestMoveOrder
 local spGiveOrderToUnit        = Spring.GiveOrderToUnit
 local GetUnitDefID			   = Spring.GetUnitDefID
 local Echo					   = Spring.Echo
-local zombieCEG				   = 'ZOMBIEFLARE'
 local random 				   = math.random
 local mapX, mapZ
 local FACTORYCHECKFRAMES	   = 1420 -- ~47 s
