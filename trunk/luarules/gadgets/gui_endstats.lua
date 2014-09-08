@@ -1662,10 +1662,6 @@ else
 				end
 				
 				-- specials
-				myFont:Begin()
-				myFont:Print("Special awards",x2, y0, textsize, 'ts')
-				myFont:Print("(Help us by suggesting awards)",x2, y3, textsize, 'to')
-				myFont:End()
 				local bsize = 24
 				local bmargin = 10
 				local rheight = 26
@@ -1676,6 +1672,10 @@ else
 				
 				if badges and badges["special"] and badges["special"]["n"] and badges["special"]["n"] > 0 then
 					local rows = 0
+					myFont:Begin()
+					myFont:Print("Special awards",x2, y0, textsize, 'ts')
+					myFont:Print("(Help us by suggesting awards)",x2, y3, textsize, 'to')
+					myFont:End()
 					-- dt-award
 					if badges["special"]["dtbadge"] then
 						rows = rows + 1
@@ -1743,17 +1743,13 @@ else
 						myFont:Print(label,x2, y1-rows*rheight, textsize, 'vs')
 						myFont:SetTextColor({r, g, b, 1})
 						myFont:Print(leaderName,x2+textsize*gl.GetTextWidth(label), y1-rows*rheight, textsize, 'vs')
-						myFont:End()
+						myFont:End()	
 					end
-				end
-				
-				
-				
-				if not badges or (not badges["commloss"] and not badges["firstT2"] and not badges["topKiller"] and not badges["special"]["n"] and not badges["special"]["n"] > 0) then
+				elseif not badges or (not badges["commloss"] and not badges["firstT2"] and not badges["topKiller"]) then
 					myFont:Begin()
-					myFont:Print("(No awards)",(Panel["5"]["x0"]+Panel["5"]["x1"])/2, Panel["5"]["y0"]-90, textsize, 'dcs')
+					myFont:Print("(No awards)",(Panel["5"]["x0"]+Panel["5"]["x1"])/2, y2, textsize, 'dcs')
 					myFont:End()
-				end				
+				end
 			end
 		end
 	end
