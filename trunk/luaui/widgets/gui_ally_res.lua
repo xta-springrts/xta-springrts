@@ -42,6 +42,11 @@ end
 -- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 -- THE SOFTWARE.
 
+
+-- Updates: 2014.09: Removed some stupidity (lots still left) and fixed bug with wrong statistics shown 
+-- 					 because of aforementioned stupidity
+--          2014.09: Remove some more stupidity: let user move widget from any place of it with right MB
+-- 					 Make bars wider or thinner depending on player's max storage capacity.
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
@@ -89,6 +94,7 @@ local h                = START_HEIGHT
 local x1               = 600
 local y1               = 400
 local topy			   = y1 + h - HEIGHTADJUST
+local betterCodedPosition = {}
 local mx, my
 local sentSomething = false
 local enabled       = false
@@ -144,6 +150,8 @@ local function formatRes(number)
 	local label
 	if number > 10000 then
 		label = table.concat({math.floor(round(number/1000)),"k"})
+	elseif number > 1000 then
+		label = table.concat({   string.sub(round(number/1000,1),1,2+string.find(round(number,0),"."))    ,"k"})
 	elseif number > 10 then
 		label = string.sub(round(number,0),1,3+string.find(round(number,0),"."))
 	else
@@ -163,12 +171,8 @@ local function setUpTeam()
 	if GetSpectatingState() or IsReplay() then
 		local myAllyID = Spring.GetMyAllyTeamID()
 		
-		if showAll then
-			getTeams = Spring.GetTeamList()
-		else
-			getTeams = Spring.GetTeamList(myAllyID)
-		end
-		
+		getTeams = showAll and Spring.GetTeamList() or Spring.GetTeamList(myAllyID)
+				
 		if getTeams ~= nil then
 			for _,teamID in pairs(getTeams) do				
 				--local eCur = GetTeamResources(teamID, "energy")
@@ -239,6 +243,36 @@ local function transferResources(n)
   end
 end
 
+local function getEBarThickness(maxStorage)
+	
+	if maxStorage < 1500 then
+		return - 2
+	elseif maxStorage < 10000 then
+		return -1
+	elseif maxStorage < 30000 then
+		return 0
+	elseif maxStorage < 60000 then
+		return 1
+	else
+		return 2
+	end
+end
+
+local function getMBarThickness(maxStorage)
+	
+	if maxStorage < 1500 then
+		return - 2
+	elseif maxStorage < 10000 then
+		return -1
+	elseif maxStorage < 20000 then
+		return 0
+	elseif maxStorage < 30000 then
+		return 1
+	else
+		return 2
+	end
+end
+
 local function updateStatics()
 	
 	if (staticList) then gl.DeleteList(staticList) end
@@ -251,6 +285,8 @@ local function updateStatics()
 		local teamNames = getTeamNames()
 		teamIcons = {}
 		for teamID in pairs(teamList) do
+			betterCodedPosition[teamID] = topy- height - BAR_HEIGHT 
+			
 			if (teamID ~= myID or showAll) then
 				local x01 			= x1+BAR_GAP-LOGO_OFFSET
 				local y01 			= topy-TOTAL_BAR_HEIGHT - height - BAR_HEIGHT
@@ -269,8 +305,9 @@ local function updateStatics()
 					{
 					name = (teamNames[teamID] or firstToUpper(side)) or "No player",
 					iy1 = topy- height - BAR_HEIGHT,
-					iy2 = topy-TOTAL_BAR_HEIGHT - height - BAR_HEIGHT,
+					iy2 = topy- height - BAR_HEIGHT - TOTAL_BAR_HEIGHT,
 					}
+				--Echo("Y1:",teamIcons[teamID].iy1,teamIcons[teamID].iy2,betterCodedPosition[teamID])
 				height = (height - TOTAL_BAR_HEIGHT - BAR_GAP)
 			end
 		end
@@ -294,33 +331,43 @@ local function updateBars()
   
 	local eCur, eMax, mCur, mMax, eInc,eRec,mInc,mRec
 	local height = h - TOP_HEIGHT
-  
+	
 	for teamID in pairs(teamList) do
 		if (teamID ~= myID or showAll) then
 			eCur, eMax = GetTeamResources(teamID, "energy")
 			mCur, mMax = GetTeamResources(teamID, "metal")
+			local bwE  = getEBarThickness(eMax)
+			local bwM  = getMBarThickness(mMax)
+			local y10 = betterCodedPosition[teamID]
+			local y11 = y10 - BAR_HEIGHT - bwM
+			local y20 = y10 - BAR_HEIGHT-BAR_SPACER
+			local y21 = y10 - TOTAL_BAR_HEIGHT - bwE
+			
+			
 			eCur = eCur + (sendEnergy[teamID] or 0)
 			mCur = mCur + (sendMetal[teamID] or 0)
 			_, _, _, eInc, _, _, _, eRec = GetTeamResources(teamID, "energy")
 			_, _, _, mInc, _, _, _, mRec = GetTeamResources(teamID, "metal")
 	  
 			local xoffset = (x1+BAR_OFFSET)
+			
 			teamRes[teamID] =
 			{
 				ex1  = xoffset,
-				ey1  = y1+height-BAR_HEIGHT-BAR_SPACER,--
+				ey1  = y20,
 				ex2  = xoffset+BAR_WIDTH,
 				ex2b = xoffset+(BAR_WIDTH * (eCur / eMax)),
-				ey2  = y1+height-TOTAL_BAR_HEIGHT,--
+				ey2  = y21,
 				mx1  = xoffset,
-				my1  = y1+height,
+				my1  = y10,
 				mx2  = xoffset+BAR_WIDTH,
 				mx2b = xoffset+(BAR_WIDTH * (mCur / mMax)),
-				my2  = y1+height-BAR_HEIGHT,
+				my2  = y11,
 				eVal = table.concat({"+", formatRes(eInc+eRec)}),
 				mVal = table.concat({"+", formatRes(mInc+mRec)}),
+				tID  = teamID,
 			}
-	  
+			
 	  
 			if (teamID == transferTeam) then
 				if (transferType == "energy") then
@@ -344,6 +391,7 @@ local function updateBars()
   
 	local function displayFunction ()
 		for _,d in pairs(teamRes) do
+			--Echo("TR:",d.tID,d.my1,d.eVal,d.mVal)
 			if d.eRec then
 				gl.Color(0.8, 0, 0, 0.8)
 			else
@@ -639,53 +687,62 @@ end
 
 function widget:MousePress(x, y, button)
 	local y1 = topy - h
-  if (enabled) and ((x > x1) and (y > y1) and (x < (x1 + w)) and (y < (y1 + h))) then
-    if y > (y1 + h - TOP_HEIGHT) then
-      capture = true
-      moving  = true
-      return capture
-    end
-    if GetSpectatingState() or IsReplay() then
-      if (x > (x1+BAR_OFFSET)) and (x < (x1+BAR_OFFSET+BAR_WIDTH)) then
-        for teamID,defs in pairs(teamRes) do
-          if (y < defs.ey1) and (y >= defs.ey2) then
-          local tid = teamID
-         Spring.SendCommands('specteam '..tid)
-		 checkScreen()
-            --transferTeam = teamID
-            --transferType = "energy"
-            --transferring = true
-            return true
-          elseif (y < defs.my1) and (y >= defs.my2) then
-            local tid = teamID
-         Spring.SendCommands('specteam '..tid)
-		 checkScreen()
-         --transferTeam = teamID
-            --transferType = "metal"
-            --transferring = true
-            return true
-          end
-        end
-      end
-     --return false
-    end
-    if (x > (x1+BAR_OFFSET)) and (x < (x1+BAR_OFFSET+BAR_WIDTH)) then
-      for teamID,defs in pairs(teamRes) do
-        if (y < defs.ey1) and (y >= defs.ey2) then
-          transferTeam = teamID
-          transferType = "energy"
-          transferring = true
-          return true
-        elseif (y < defs.my1) and (y >= defs.my2) then
-          transferTeam = teamID
-          transferType = "metal"
-          transferring = true
-          return true
-        end
-      end
-    end
-  end
-  return false
+	if button == 3 then
+		if enabled and x > x1 and y > y1 and x < x1 + w and y < y1 + h then			
+			moving  = true
+			return true
+		end
+	elseif button == 1 then
+		if (enabled) and ((x > x1) and (y > y1) and (x < (x1 + w)) and (y < (y1 + h))) then
+			if y > (y1 + h - TOP_HEIGHT) then
+				capture = true
+				moving  = true
+				return capture
+			end
+		end
+		
+		if GetSpectatingState() or IsReplay() then
+			if (x > (x1+BAR_OFFSET)) and (x < (x1+BAR_OFFSET+BAR_WIDTH)) then
+				for teamID,defs in pairs(teamRes) do
+					if (y < defs.ey1) and (y >= defs.ey2) then
+						local tid = teamID
+						Spring.SendCommands('specteam '..tid)
+						checkScreen()
+						--transferTeam = teamID
+						--transferType = "energy"
+						--transferring = true
+						return true
+					elseif (y < defs.my1) and (y >= defs.my2) then
+						local tid = teamID
+						Spring.SendCommands('specteam '..tid)
+						checkScreen()
+						--transferTeam = teamID
+						--transferType = "metal"
+						--transferring = true
+						return true
+					end
+				end
+			end
+			--return false
+		end
+		
+		if (x > (x1+BAR_OFFSET)) and (x < (x1+BAR_OFFSET+BAR_WIDTH)) then
+			for teamID,defs in pairs(teamRes) do
+				if (y < defs.ey1) and (y >= defs.ey2) then
+					transferTeam = teamID
+					transferType = "energy"
+					transferring = true
+					return true
+				elseif (y < defs.my1) and (y >= defs.my2) then
+					transferTeam = teamID
+					transferType = "metal"
+					transferring = true
+					return true
+				end
+			end
+		end
+	end
+	return false
 end
 
 function widget:MouseRelease(x, y, button)
