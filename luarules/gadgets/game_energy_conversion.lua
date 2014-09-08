@@ -314,7 +314,9 @@ end
 
 function gadget:UnitFinished(uID, uDefID, uTeam)
     local cDefs = convertCapacities[uDefID]
-    if cDefs and ValidUnitID(uID) then
+	-- added check for presence of uID for that team, otherwise a nil error if a builder that is given to another team finishes
+	-- constructing a metal maker.
+    if cDefs and ValidUnitID(uID and teamMMList[uTeam][cDefs.e][uID]) then
         teamMMList[uTeam][cDefs.e][uID].capacity = cDefs.c
 		teamMMList[uTeam][cDefs.e][uID].built = true
 		if not teamMMList[uTeam][cDefs.e][uID].emped then
