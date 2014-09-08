@@ -311,14 +311,18 @@ function gadget:UnitCreated(uID, uDefID, uTeam, builderID)
     end
 end
 
-
 function gadget:UnitFinished(uID, uDefID, uTeam)
     local cDefs = convertCapacities[uDefID]
 	-- added check for presence of uID for that team, otherwise a nil error if a builder that is given to another team finishes
 	-- constructing a metal maker.
-    if cDefs and ValidUnitID(uID and teamMMList[uTeam][cDefs.e][uID]) then
-        teamMMList[uTeam][cDefs.e][uID].capacity = cDefs.c
+    if cDefs and ValidUnitID(uID) then
+		if not teamMMList[uTeam][cDefs.e][uID] then 
+			teamMMList[uTeam][cDefs.e][uID] = {}
+		end
+			
+		teamMMList[uTeam][cDefs.e][uID].capacity = cDefs.c
 		teamMMList[uTeam][cDefs.e][uID].built = true
+		
 		if not teamMMList[uTeam][cDefs.e][uID].emped then
 			teamMMList[uTeam][cDefs.e][uID].status = 1
 			teamActiveMM[uTeam] = teamActiveMM[uTeam] + 1
