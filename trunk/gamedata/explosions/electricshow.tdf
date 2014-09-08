@@ -122,6 +122,39 @@
 		count=1;
 	}
 }
+[ElectricSequenceSmall]
+{
+
+	[ElectricalWebOuter] 
+	{
+	    class=CExpGenSpawner;
+		[properties]
+		{
+		pos=75 r-150, 15 r-30, 75 r-150;  
+		delay=30 r15;				  
+		explosionGenerator=custom:Sparks;
+		}
+	air=1;
+	water=1;
+	ground=1;
+	count=1;
+	}
+
+	[ElectricalWebINNER] 
+	{
+	    class=CExpGenSpawner;
+		[properties]
+		{
+		pos=25 r-50, 10 r-20, 25 r-50;  
+		delay=15 r15;				  
+		explosionGenerator=custom:Sparks;
+		}
+	air=1;
+	water=1;
+	ground=1;
+	count=1;
+	}
+}
 
 [ElectricSTOMP]//New Zeus Effect
 {//Empty
