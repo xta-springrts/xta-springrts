@@ -251,76 +251,78 @@ if gadgetHandler:IsSyncedCode() then
 	
 	function gadget:UnitDestroyed(unitID, unitDefID, teamID, attackerID, attackerDefID, attackerTeamID)
 				
-		if teamID and isUnitComplete(unitID) then 
-			
-			local _,hp = GetUnitHealth(unitID)
-			if attackerTeamID then			
-				if not teamData[teamID]['lostHP'][attackerTeamID] then
-					teamData[teamID]['lostHP'][attackerTeamID] = 0
+		if teamID and isUnitComplete(unitID) then
+			local health,hp = GetUnitHealth(unitID)
+			if health < 0 then -- killed, and not removed by lua
+				if attackerTeamID then			
+					if not teamData[teamID]['lostHP'][attackerTeamID] then
+						teamData[teamID]['lostHP'][attackerTeamID] = 0
+					end
+					teamData[teamID]['lostHP'][attackerTeamID] = teamData[teamID]['lostHP'][attackerTeamID] + hp
+				elseif not ignoreUnits[unitDefID] then
+					if not teamData[teamID]['lostHPmisc']['total'] then teamData[teamID]['lostHPmisc']['total'] = 0 end
+					
+					teamData[teamID]['lostHPmisc']['total'] = teamData[teamID]['lostHPmisc']['total'] + hp
 				end
-				teamData[teamID]['lostHP'][attackerTeamID] = teamData[teamID]['lostHP'][attackerTeamID] + hp
-			elseif not ignoreUnits[unitDefID] then
-				if not teamData[teamID]['lostHPmisc']['total'] then teamData[teamID]['lostHPmisc']['total'] = 0 end
 				
-				teamData[teamID]['lostHPmisc']['total'] = teamData[teamID]['lostHPmisc']['total'] + hp
-			end
-			
-			-- blue on blue counts as loss but not as kill
-			if attackerTeamID and attackerTeamID ~=  teamID and (not AreTeamsAllied(attackerTeamID,teamID)) then			
-				if not teamData[attackerTeamID]['killedHP'][teamID] then
-					teamData[attackerTeamID]['killedHP'][teamID] = 0
+				-- blue on blue counts as loss but not as kill
+				if attackerTeamID and attackerTeamID ~=  teamID and (not AreTeamsAllied(attackerTeamID,teamID)) then			
+					if not teamData[attackerTeamID]['killedHP'][teamID] then
+						teamData[attackerTeamID]['killedHP'][teamID] = 0
+					end
+					teamData[attackerTeamID]['killedHP'][teamID] = teamData[attackerTeamID]['killedHP'][teamID] + hp
+					
+					local kills = Spring.GetUnitRulesParam(attackerID,'kills') or 0
+					if (not ignoreForAwards[attackerDefID]) and (not ignoreUnits[attackerDefID]) then
+						kills = kills + 1
+					end
+					Spring.SetUnitRulesParam(attackerID,'kills',kills)
 				end
-				teamData[attackerTeamID]['killedHP'][teamID] = teamData[attackerTeamID]['killedHP'][teamID] + hp
 				
-				local kills = Spring.GetUnitRulesParam(attackerID,'kills') or 0
-				if (not ignoreForAwards[attackerDefID]) and (not ignoreUnits[attackerDefID]) then
-					kills = kills + 1
-				end
-				Spring.SetUnitRulesParam(attackerID,'kills',kills)
-			end
-			
-			local kills = Spring.GetUnitRulesParam(unitID,'kills') or 0
-			
-			if kills > MINKILLS then
-				local born = Spring.GetUnitRulesParam(unitID,'born')
-				local frame = Spring.GetGameFrame()
-				local name = UnitDefs[unitDefID].humanName
+				local kills = Spring.GetUnitRulesParam(unitID,'kills') or 0
 				
-				if #lostUnits < 5 then
-					lostUnits[#lostUnits+1] = {name,kills,round(born/1800,0),round(frame/1800,0),teamID}
-					table.sort(lostUnits, function(a,b) return a[2] > b[2] end)
-				else
-					if kills > lostUnits[5][2] then
-						lostUnits[5] = {name,kills,round(born/1800,0),round(frame/1800,0),teamID}
+				if kills > MINKILLS then
+					local born = Spring.GetUnitRulesParam(unitID,'born')
+					local frame = Spring.GetGameFrame()
+					local name = UnitDefs[unitDefID].humanName
+					
+					if #lostUnits < 5 then
+						lostUnits[#lostUnits+1] = {name,kills,round(born/1800,0),round(frame/1800,0),teamID}
 						table.sort(lostUnits, function(a,b) return a[2] > b[2] end)
-						if #lostUnits > 5 then 
-							lostUnits[6] = nil
+					else
+						if kills > lostUnits[5][2] then
+							lostUnits[5] = {name,kills,round(born/1800,0),round(frame/1800,0),teamID}
+							table.sort(lostUnits, function(a,b) return a[2] > b[2] end)
+							if #lostUnits > 5 then 
+								lostUnits[6] = nil
+							end
 						end
 					end
 				end
-			end
-			-- commloss award
-			if commanderTable[unitDefID] then
-				if #GetAllyTeamList() > 4 then -- don't award unless there are at least 4 players (without gaia)
-					if not badges["commloss"] then
-						local frame = GetGameFrame()
-						badges["commloss"] = {teamID,frame}
-					end
-				end
+				-- commloss award
 				
-				teamData[teamID]['commlosses'] = teamData[teamID]['commlosses'] + 1
-								
-				if teamData[teamID]['commlosses'] >= 2 and not badges["special"]["2comms"] then
-					badges["special"]["2comms"] = teamID
-					badges["special"]["n"] = badges["special"]["n"] + 1
-					Echo("\'Lose commander twice\'-award goes to team:",teamID)
-				end
-				if attackerTeamID then
-					teamData[attackerTeamID]['commkills'] = teamData[attackerTeamID]['commkills'] + 1
-					if teamData[attackerTeamID]['commkills'] >= 3 and not badges["special"]["3comms"] then
-						badges["special"]["3comms"] = attackerTeamID
+				if commanderTable[unitDefID] then
+					if #GetAllyTeamList() > 4 then -- don't award unless there are at least 4 players (without gaia)
+						if not badges["commloss"] then
+							local frame = GetGameFrame()
+							badges["commloss"] = {teamID,frame}
+						end
+					end
+					
+					teamData[teamID]['commlosses'] = teamData[teamID]['commlosses'] + 1
+					
+					if teamData[teamID]['commlosses'] >= 2 and not badges["special"]["2comms"] then
+						badges["special"]["2comms"] = teamID
 						badges["special"]["n"] = badges["special"]["n"] + 1
-						Echo("\'Commander hitman\'-award goes to team:",attackerTeamID)
+						Echo("\'Lose commander twice\'-award goes to team:",teamID)
+					end
+					if attackerTeamID then
+						teamData[attackerTeamID]['commkills'] = teamData[attackerTeamID]['commkills'] + 1
+						if teamData[attackerTeamID]['commkills'] >= 3 and not badges["special"]["3comms"] then
+							badges["special"]["3comms"] = attackerTeamID
+							badges["special"]["n"] = badges["special"]["n"] + 1
+							Echo("\'Commander hitman\'-award goes to team:",attackerTeamID)
+						end
 					end
 				end
 			end
@@ -329,9 +331,9 @@ if gadgetHandler:IsSyncedCode() then
 	
 	function gadget:UnitDamaged(unitID, unitDefID, teamID, damage, paralyzer, weaponDefID, projectileID, attackerID, attackerDefID, attackerTeam)
 		if teamID and isUnitComplete(unitID) then
-			if weaponDefID < 0 then --and teamID ~= gaiaID and attackerTeam ~= gaiaID then
-				local health,hp = GetUnitHealth(unitID)
-				if health < 0 then
+			local health,hp = GetUnitHealth(unitID)
+			if health < 0 then -- killed				
+				if weaponDefID < 0 then 				
 					if weaponDefID == -1 then
 						if not teamData[teamID]['lostHPmisc']['debris'] then teamData[teamID]['lostHPmisc']['debris'] = 0 end
 						teamData[teamID]['lostHPmisc']['debris'] = teamData[teamID]['lostHPmisc']['debris'] + hp
@@ -351,11 +353,8 @@ if gadgetHandler:IsSyncedCode() then
 						if not teamData[teamID]['lostHPmisc']['kill'] then teamData[teamID]['lostHPmisc']['kill'] = 0 end
 						teamData[teamID]['lostHPmisc']['kill'] = teamData[teamID]['lostHPmisc']['kill'] + hp
 					end
-				end
-			else
-				if dgunTable[weaponDefID] and attackerTeam then
-					local health,hp = GetUnitHealth(unitID)
-					if health < 0 then
+				else -- weapondef > 0
+					if dgunTable[weaponDefID] and attackerTeam then					
 						if holyTargets[unitDefID] then
 							if not badges["special"]["cygnus"] then
 								badges["special"]["cygnus"] = attackerTeam
@@ -397,7 +396,7 @@ if gadgetHandler:IsSyncedCode() then
 				if teamData[unitTeam]["dtcount"] >= DTAWARDLIMIT then
 					badges["special"]["dtbadge"] = unitTeam
 					badges["special"]["n"] = badges["special"]["n"] + 1
-					Echo("DT-award goes to team:", unitTeam)
+					Echo("\'Fortress City\'-award goes to team:", unitTeam)
 				end
 			end
 		end
@@ -508,7 +507,7 @@ if gadgetHandler:IsSyncedCode() then
 			local isHeroType = 1
 		
 			local awardsMsg = table.concat({XTA_AWARDMARKER,":",isHeroType,":",team,":",name,":",kills,":",age})
-			--Echo("Hero:",i, awardsMsg)
+			
 			Spring.SendLuaRulesMsg(awardsMsg)
 		end
 		
