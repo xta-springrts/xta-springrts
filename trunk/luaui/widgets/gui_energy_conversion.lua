@@ -20,6 +20,7 @@ local X, Y = Spring.GetViewGeometry()
 local px, py = 500, 100
 local sx, sy = 140, 72
 local scaling, fontSize, col1, col2, row1, row2, row3, row4
+local onsidemargin = 2
 
 local hoverLeft, hoverRight, hoverBottom, hoverTop, barBottom, barTop
 --------------------------------------------------------------------------------
@@ -126,8 +127,8 @@ end
 function widget:MouseMove(mx, my, dx, dy, mButton)
     -- Dragging
     if mButton == 2 or mButton == 3 then
-		if px+dx>=0 and px+sx+dx<=X then px = px + dx end
-        if py+dy>=0 and py+sy+dy<=Y then py = py + dy end
+		if px+sx+onsidemargin+dx>=0 and px+onsidemargin+dx<=X then px = px + dx end
+        if py+sy+onsidemargin+dy>=0 and py+onsidemargin+dy<=Y then py = py + dy end
     end
 end
 
@@ -135,6 +136,7 @@ function widget:GetConfigData()
 	local vsx, vsy = gl.GetViewSizes()
 	return {px / vsx, py / vsy}
 end
+
 function widget:SetConfigData(data)
 	local vsx, vsy = gl.GetViewSizes()
 	px = math.floor(math.max(0, vsx * math.min(data[1] or 0, 0.95)))

@@ -290,27 +290,26 @@ function widget:DefaultCommand(type, uID)
 				if type == 'unit' then
 					local unitDef = UnitDefs[GetUnitDefID(uID) ] -- unit pointed at
 					
-					
 					local maxtransportSize = 0
 						for _,unitID in pairs(sU) do
 							local udef = UnitDefs[GetUnitDefID(unitID) ] -- selected unit unitdef
 							maxtransportSize = math.max(udef.transportSize,maxtransportSize)
 						end
 	
-					if unitDef.isBuilding then
+					if unitDef and unitDef.isBuilding then
 						if unitDef.cantBeTransported == true then -- atm no buildings can be transported, but it could be possible in the future
 							SetMouseCursor('LoadBad')
 						end
-					elseif unitDef.xsize > 7 and maxtransportSize < 4 then -- not clue what's the relation between movedef footprintX and lua xsize, this is empirical		
+					elseif unitDef and unitDef.xsize > 7 and maxtransportSize < 4 then -- not clue what's the relation between movedef footprintX and lua xsize, this is empirical		
 						SetMouseCursor('LoadBad')
-					elseif unitDef.cantBeTransported or unitDef.transportCapacity > 0 then -- transporters cant be transported atm
+					elseif unitDef and unitDef.cantBeTransported or unitDef.transportCapacity > 0 then -- transporters cant be transported atm
 						SetMouseCursor('LoadBad')
 					elseif (not IsUnitAllied(uID) ) then
-						if not unitDef.transportByEnemy then
+						if unitDef and not unitDef.transportByEnemy then
 							SetMouseCursor('LoadBad')
 						end
 					elseif (not transportHovers) then
-						if unitDef.moveDef.type == "hover" then
+						if unitDef and unitDef.moveDef.type == "hover" then
 							SetMouseCursor('LoadBad')
 						end
 					end
