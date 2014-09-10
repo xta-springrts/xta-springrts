@@ -125,6 +125,7 @@ local PRESENT,MARKED,OTHER,READY,MISSING 	= 0,1,2,3,-1
 --font
 local myFont	 							= gl.LoadFont("FreeSansBold.otf",th3, 1.9, 40)
 local myFontHuge							= gl.LoadFont("FreeSansBold.otf",60, 1.9, 40)
+local hasSentStartMsg	 					= false
 
 --------------------------------------------------------------------------------
 -- Speedups
@@ -323,6 +324,23 @@ local function IsOnButton(x, y, BLcornerX, BLcornerY,TRcornerX,TRcornerY)
 	return x >= BLcornerX and x <= TRcornerX
 	                      and y >= BLcornerY
 	                      and y <= TRcornerY
+end
+
+function round(num, idp)
+	return string.format("%." .. (idp or 0) .. "f", num)
+end
+
+function GetSkill(customtable)
+	if not customtable then return end
+	local tsMu = customtable.skill
+	
+	if tsMu then
+		tskill = tsMu and tonumber(tsMu:match("%d+%.?%d*")) or 0
+		--tskill = round(tskill,0)
+	else
+		tskill = 0
+	end
+	return tskill
 end
 
 --------------------------------------------------------------------------------
@@ -693,15 +711,13 @@ function widget:DrawScreen()
 		local x0 		= px + 8
 		local y0 		= Button["speclabel"]["y0"] - 20
 		local rh 		= 15 -- row height
-		local th4 		= th2
 		local col_0 	= x0 		-- team #
 		local col_1 	= x0 + 20	-- faction symbol
 		local col_2 	= x0 + 40	-- commander type 
 		local col_3 	= x0 + 80	-- player rank
 		local col_4 	= x0 + 100	-- leader name
 		local col_5 	= x0 + 240	-- status text
-		local col_6 	= x0 + 300	-- remarks
-		local col_7 	= x0 + 310	-- for future use
+		local col_6 	= x0 + 320	-- skill
 		local commside	= "arm"
 		local commtype	= "AT"
 		local prevposy = y0 - 14
@@ -710,10 +726,10 @@ function widget:DrawScreen()
 			--labels
 			myFont:Begin()
 			myFont:SetTextColor({0.6, 0.6, 0.8, 1})
-			myFont:Print("Team", 		col_0, y0 - 10, th4, 'xo')
-			myFont:Print("Player", 	col_4, y0 - 10, th4, 'xo')
-			myFont:Print("Status",	col_5, y0 - 10, th4, 'xo')
-			--myFont:Print("Remarks",	col_6, y0 - 10, th4, 'x')
+			myFont:Print("Team", 	col_0, y0 - 10, th2, 'xo')
+			myFont:Print("Player", 	col_4, y0 - 10, th2, 'xo')
+			myFont:Print("Status",	col_5, y0 - 10, th2, 'xo')
+			myFont:Print("Skill",	col_6, y0 - 10, th2, 'xo')
 			
 			-- Game state info label
 			myFont:SetTextColor({1, 1, 1, 1})
@@ -729,10 +745,12 @@ function widget:DrawScreen()
 				as = 8
 				-- draw line between allies
 				glColor(0.1, 0.1, 0.1, 0.3)
-				glRect(col_0, prevposy - 7, col_6, prevposy - 8)
+				glRect(col_0, prevposy - 7, col_6+th2*gl.GetTextWidth("Skill"), prevposy - 8)
 				glColor(0.4, 0.4, 0.4, 0.3)
-				glRect(col_0, prevposy - 8, col_6, prevposy - 9)
-				local newteam = true
+				glRect(col_0, prevposy - 8, col_6+th2*gl.GetTextWidth("Skill"), prevposy - 9)
+				
+				local teamSkill = 0
+				local y2 = prevposy - as - rh
 				
 				for i, tID in pairs(GetTeamList(aID)) do
 					
@@ -741,12 +759,14 @@ function widget:DrawScreen()
 					as = 0
 					
 					local _,leaderID,_,isAI,_,allyID = GetTeamInfo(tID)
-					local leaderName,active,spec,team,allyteam,_,_,country,rank	= GetPlayerInfo(leaderID)
+					local leaderName,active,spec,team,allyteam,_,_,country,rank,customtable	= GetPlayerInfo(leaderID)
+					local skill = GetSkill(customtable) or 0
+					
 					local aiID, aiName, aiHostID, aiShortName = GetAIInfo(tID)
 					local isComShare = false
 					local pCount = 0
 					for _, pID in pairs (GetPlayerList(tID)) do
-						local lName,_,isSspec = GetPlayerInfo(pID)
+						local _,_,isSspec = GetPlayerInfo(pID)
 						if isSpec == false then 
 							pCount = pCount + 1 
 						end
@@ -756,6 +776,8 @@ function widget:DrawScreen()
 					
 					if isAI then leaderName = "AI: "..aiShortName end
 					if isComShare then leaderName = leaderName .. "+" end
+					
+					teamSkill = skill and teamSkill + skill or teamSkill
 					
 					if tID ~= Spring.GetGaiaTeamID() then
 						local marked = markedStates[i]
@@ -785,10 +807,10 @@ function widget:DrawScreen()
 						if isAI then
 							myFont:SetTextColor({0.8, 0.8, 0.8, 0.8})
 						end
-						if newteam then
-							myFont:Print(allyID,	 		col_0, y1, th4, 'xo')
+						if i == 1 then
+							myFont:Print(allyID,	 		col_0, y1, th2, 'xo')
 						end
-						newteam = false
+						
 						--side
 						if commside == 'arm' then
 							glTexture(imgARM)
@@ -801,7 +823,7 @@ function widget:DrawScreen()
 						glTexRect(					col_1, y1 - 5, col_1 + 15, y1 - 5 + 15)
 						glColor(1, 1, 1, 1)
 						glTexture(false)
-						myFont:Print(commtype, 			col_2, y1, th4, 'xo')
+						myFont:Print(commtype, 			col_2, y1, th2, 'xo')
 						
 						--rank
 						if not spec then
@@ -812,9 +834,9 @@ function widget:DrawScreen()
 							glColor(1, 1, 1, 1)
 						end
 						--name
-						myFont:Print(tostring(leaderName),col_4, y1, th4, 'xo')
-						-- status and remarks
-						local statustext, remarks
+						myFont:Print(tostring(leaderName),col_4, y1, th2, 'xo')
+						-- status and skill
+						local statustext
 						local posx = spGetTeamStartPosition(tID)
 						
 						if isAI then
@@ -831,7 +853,7 @@ function widget:DrawScreen()
 								statustext = "Missing"
 							elseif readyStates[leaderID] == PRESENT then
 								myFont:SetTextColor({0.6, 0.6, 0.2, 1}) -- yellow
-								statustext = "Warming up ..."
+								statustext = "Warming up"
 							elseif readyStates[leaderID] == MARKED then
 								myFont:SetTextColor({0.3, 0.5, 0.7, 1}) -- blue
 								statustext = "Marked"
@@ -843,19 +865,15 @@ function widget:DrawScreen()
 								statustext = firstToUpper(ps)							
 							end
 						end
-						myFont:Print(statustext,			col_5, y1, th4, 'xo')
+						myFont:Print(statustext,			col_5, y1, th2, 'xo')
+						if i == #GetTeamList(aID) then
+							myFont:SetTextColor({0.8,0.8,0.8,1})
+							myFont:Print(round(teamSkill,0),col_6, y2, th2, 'xo')
+						end
 						myFont:SetTextColor({1,1,1,1})
 						myFont:End()
 						glColor(1, 1, 1, 1)
-						if isAI then
-							remarks = "AI"
-						else
-							if leaderName == "[2up]knorke" then
-								remarks = "TP"
-							else
-								remarks = country
-							end
-						end						
+						
 					end
 				end
 			end
@@ -996,7 +1014,10 @@ function widget:GameSetup(state, ready, playerStates)
 		elseif strS == "Starti" then
 			gameState = COUNTDOWN -- gamestate == 2
 			cntDown = strN
-			spSendLuaUIMsg('776-717')
+			if not hasSentStartMsg then
+				spSendLuaUIMsg('776-717')
+				hasSentStartMsg = true
+			end
 		else
 			gameState = ERROR -- gamestate == -1
 		end
