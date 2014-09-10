@@ -14,8 +14,10 @@ if (not gadgetHandler:IsSyncedCode()) then
 	return false
 end
 
-local FIRESTATE_FATW = 2
-local MOVESTATE_ROAM = 2
+local FIRESTATE_FATW 		   = 2
+local MOVESTATE_ROAM 		   = 2
+local MOVESTATE_HP 		   	   = 0
+local FIRESTATE_HF			   = 0
 local CMD_AREA_GUARD 		   = 14001
 local spGetUnitNeutral         = Spring.GetUnitNeutral
 local spSetUnitNeutral         = Spring.SetUnitNeutral
@@ -37,10 +39,11 @@ local mapX, mapZ
 local FACTORYCHECKFRAMES	   = 1420 -- ~47 s
 local UNITCHECKFRAMES		   = 1820 -- ~1 min
 local ARMYMAKEFRAMES		   = 6100 -- ~3.4 mins
+local COMMANDERCHECKFRAMES 	   = 100  -- 3 secs
 
-local modOptions    = Spring.GetModOptions()
-local modOptionDefs = VFS.Include("modoptions.lua")
-local modRules      = VFS.Include("gamedata/modrules.lua")
+local modOptions    		   = Spring.GetModOptions()
+local modOptionDefs 		   = VFS.Include("modoptions.lua")
+local modRules      		   = VFS.Include("gamedata/modrules.lua")
 
 local losToElmos = 1.0
 local gaiaTeamID = Spring.GetGaiaTeamID()
@@ -52,6 +55,7 @@ local zombieDefs  = (VFS.FileExists(zombieConf) and include(zombieConf)) or {}
 local zombieQueue = {}
 local zombieTable = {}
 local zombieCount = 0
+local zombieCommanders = {}
 
 -- better to hardcode these, as many weapons are listed as dgun, for example bogus dgun
 local dgunTable = {
@@ -60,6 +64,9 @@ local dgunTable = {
 	[WeaponDefNames["core_udisintegrator"].id] = true,
 	[WeaponDefNames[ "uber_disintegrator"].id] = true,
 }
+
+local CommanderDefs = include("LuaRules/Configs/unit_commander_sounds_defs.lua")
+local _,CaptureDefs,NapDefs = include(zombieConf)
 
 local function sortByDist(v1,v2) -- increasing
 	return v1[2] < v2[2]
@@ -235,6 +242,16 @@ local function CheckUnits()
 	end
 end
 
+local function zombieReclaim(unitID,x,y,z,radius)
+	for _, fID in pairs (Spring.GetFeaturesInSphere(x,y,z,radius)) do
+		local isBlocking = Spring.GetFeatureBlocking(fID)
+		local name = FeatureDefs[Spring.GetFeatureDefID(fID)].name
+		if isBlocking then
+			spGiveOrderToUnit(unitID, CMD.INSERT,{-1,CMD.RECLAIM,CMD.OPT_SHIFT,Game.maxUnits+fID},{"alt"})	
+		end
+	end
+end
+
 local function CheckZombieCount()
 	
 	local count = Spring.GetTeamUnitCount(gaiaTeamID)
@@ -263,6 +280,70 @@ local function CheckZombieCount()
 			end
 		end
 	end
+end
+
+local function CheckCommander(unitID)
+	local health,_,hitpoints,captureProgress = Spring.GetUnitHealth(unitID)
+	local x,y,z = spGetUnitPosition(unitID)
+	if not (x and y and z and health and health > 0) then return end
+		
+	if captureProgress and captureProgress > 0.50 then
+		for _, eID in pairs (Spring.GetUnitsInSphere(x,y,z,400)) do
+			local udid = Spring.GetUnitDefID(eID)
+			local teamID = Spring.GetUnitTeam(eID)
+			if teamID ~= gaiaTeamID then
+				if CaptureDefs[udid] then
+					if not CommanderDefs[udid] then
+						zombieReclaim(unitID,x,y,z,250)
+					end
+					
+					local dist = Spring.GetUnitSeparation(eID,unitID)
+					if dist < 240 then
+						Spring.GiveOrderToUnit(unitID,CMD.DGUN, {eID},{})
+					else
+						Spring.GiveOrderToUnit(unitID,CMD.GUARD, {eID},{})
+						Spring.GiveOrderToUnit(unitID,CMD.SELFD, {},{})
+					end	
+				end
+			end
+		end
+	else
+		zombieReclaim(unitID,x,y,z,250)
+		
+		for _, eID in pairs (Spring.GetUnitsInSphere(x,y,z,300)) do
+			local teamID = Spring.GetUnitTeam(eID)
+			if teamID ~= gaiaTeamID then
+				local udid = Spring.GetUnitDefID(eID)
+				
+				if NapDefs[udid] then
+					local dist = Spring.GetUnitSeparation(eID,unitID)
+					if dist < 220 then
+						local x1,y1,z1 = spGetUnitPosition(eID)
+						local mx = x-5*(x1-x) + math.random(-200,200)
+						local mz = z-5*(z1-z) + math.random(-200,200)
+						local my = Spring.GetGroundHeight(mx,mz)
+						local unitDefID = Spring.GetUnitDefID(unitID)
+						local b0 = spTestMoveOrder(unitDefID,  mx, my, mz, 0.0, 0.0, 0.0,  true, true, true)
+						if b0 then
+							Spring.GiveOrderToUnit(unitID,CMD.MOVE, {mx,my,mz},{})
+						else
+							Spring.GiveOrderToUnit(unitID,CMD.MOVE, {x+math.random(-200,200),y,z+math.random(-200,200)},{})
+						end
+					end
+				end
+			end
+		end
+	end
+	
+	--[[Echo("Commands:")
+	for u,cmd in pairs(Spring.GetUnitCommands(unitID)) do
+		local id = cmd.id
+		local p1 = cmd.params[1]
+		local p2 = cmd.params[2]
+		local p3 = cmd.params[3]
+		Echo("Command:",u,id,CMD[id],p1,p2,p3,#cmd.params)
+	end
+	--]]
 end
 
 function gadget:Initialize()
@@ -305,6 +386,7 @@ function gadget:Initialize()
 	end
 	mapX = Game.mapSizeX
 	mapZ = Game.mapSizeZ
+	
 end
 
 -- NOTE:
@@ -366,6 +448,27 @@ function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, w
 	end
 end
 
+function gadget:UnitDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weaponDefID, projectileID, attackerID, attackerDefID, attackerTeam)
+	if zombieCommanders[unitID] then
+		local eID = Spring.GetUnitNearestEnemy(unitID,240)
+		if eID then
+			Spring.GiveOrderToUnit(unitID,CMD.DGUN, {eID},{})
+		end
+	end
+end
+
+function gadget:UnitDestroyed(unitID, unitDefID, unitTeam, attackerID, attackerDefID, attackerTeam)
+	if CommanderDefs[unitDefID] and unitTeam == gaiaTeamID then
+		zombieCommanders[unitID] = nil
+	end
+end
+
+function gadget:UnitCreated(unitID, unitDefID, unitTeam, builderID)
+	if CommanderDefs[unitDefID] and unitTeam == gaiaTeamID then
+		zombieCommanders[unitID] = unitID
+	end
+end
+
 --[[
 function gadget:AllowCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdOpts)
 	if (unitTeam ~= gaiaTeamID) then
@@ -400,6 +503,14 @@ function gadget:GameFrame(n)
 	if n%ARMYMAKEFRAMES == 0 then
 		CheckZombieCount()
 	end
+	
+	-- check commander
+	if n%COMMANDERCHECKFRAMES == 0 then
+		for zID,_ in pairs(zombieCommanders) do
+			CheckCommander(zID)
+		end
+	end
+	
 	-- set storages for zombies
 	if (n==1) then
 		Spring.SetTeamResource(gaiaTeamID, "ms", 500)
@@ -486,13 +597,21 @@ function SpawnZombie(index, spawn)
 	DestroyWreck(unitDef, spawnPos)
 
 	if (unitID ~= nil) then
-		spGiveOrderToUnit(unitID, CMD.FIRE_STATE, {[1] = FIRESTATE_FATW}, {})
-		spGiveOrderToUnit(unitID, CMD.MOVE_STATE, {[1] = MOVESTATE_ROAM}, {})
-		
+		if not CommanderDefs[unitDefID] then
+			spGiveOrderToUnit(unitID, CMD.FIRE_STATE, {[1] = FIRESTATE_FATW}, {})
+			spGiveOrderToUnit(unitID, CMD.MOVE_STATE, {[1] = MOVESTATE_ROAM}, {})
+		else
+			spGiveOrderToUnit(unitID, CMD.FIRE_STATE, {[1] = FIRESTATE_FATW}, {})
+			spGiveOrderToUnit(unitID, CMD.MOVE_STATE, {[1] = MOVESTATE_HP}, {})
+		end
 		local losRadius = unitDef.losRadius
 		local sightDist = losRadius * losToElmos
 		local patrolVec = {spawnDir[1] * sightDist * 0.666, 0.0, spawnDir[3] * sightDist * 0.666}
-
+		local hasWeapons = unitDef.weapons and (#unitDef.weapons > 0)
+		
+		if not hasWeapons then
+			Spring.SetUnitNeutral(unitID,true)
+		end
 		if (not unitDef.isImmobile) then
 			
 			-- 50 % chance of guarding
