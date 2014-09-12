@@ -35,6 +35,7 @@ local GetUnitIsDead				= Spring.GetUnitIsDead
 local random					= math.random
 local Echo						= Spring.Echo
 local myTeamID					= Spring.GetMyTeamID()
+local GetUnitHealth				= Spring.GetUnitHealth
 ----------------------------------------------------------------------------
 local noAlertUnits				= {}
 local lastAlarmTime				= nil
@@ -200,7 +201,10 @@ function widget:UnitDamaged (unitID, unitDefID, unitTeam, damage, paralyzer, wea
 	local textBlock = alarmTimes["text"][unitDefID] and DiffTimers(now, alarmTimes["text"][unitDefID]) < textValue
 	local soundBlock = alarmTimes["sound"][unitDefID] and DiffTimers(now, alarmTimes["sound"][unitDefID]) < soundValue
 	local positionBlock = alarmTimes["position"][zone] and (DiffTimers(now, alarmTimes["position"][zone]) < positionAlarmInterval)
-		
+	local health, maxhealth = 	GetUnitHealth(unitID)
+	if health/maxhealth > 0.95 then return end
+	
+	
 	-- return before text notification condition
 	if textBlock then return end
 	
