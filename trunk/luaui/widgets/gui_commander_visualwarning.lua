@@ -112,7 +112,7 @@ function widget:UnitDamaged (unitID, unitDefID, unitTeam, damage, paralyzer, wea
 	
 	if commanderTable[unitDefID] then 
 		local health, maxhealth = Spring.GetUnitHealth(unitID)
-		if health > 0 then
+		if health > 0 and health/maxhealth < 0.98 then
 			local udef = UnitDefs[unitDefID]
 			local now = Spring.GetGameFrame()
 			local aName 
