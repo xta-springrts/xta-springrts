@@ -21,8 +21,31 @@
     ศอออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออผ
     Logo by ElementalGizmo
 
-------------------- Change Log of XTA 9.741 Svn 750
+
+------------------- Change Log of XTA 9.741 Svn 761
 ------------------ by Jools
+- Enhancements:
+---------------
+  * New lights for metal makers when operating
+  * Add back on/off button for metal makers and manual mode button. You can either continue operating metal makers just
+    as before with a central command, or operate part of them manually, or completely switch off energy conversion widget and
+	operate all manually, like before before. The widget will show energy conversion of the managed metal makers.
+  * Zombie commander sometimes tries to d-gun enemies
+   
+- Fixes:
+--------
+  * Fix packet spam at game start
+  * Fix metal makers not starting due to gadget error
+  * Set zombie units without weapons as neutral
+  * Fix wrong award due to morphing commanders
+  * T1 swarmer now only chosen among winning players to not make it trivial
+  * Many other small fixes
+  * Fix initial queue widget listening to other people's side change commands
+  * Fixed bug in mousecursors widget when hovering over unknown unit
+	
+	
+------------------- Change Log of XTA 9.741 Svn 750
+------------------ by Jools, Kloot
 - Enhancements:
 ---------------
  * Make KOTH mode compatible with zombie mode, display koth box on minimap. Zombies can also win in koth mode.

@@ -24,6 +24,10 @@ local messages = {
 	'<tn> could really use a breath mint.',
 	'<tn> has gone missing. The last transmission received was the word STENDEC',
 	'<tn> is waiting for Godot to arrive...',
+	'<tn> has been joolsed down',
+	'Do, or do not. There is no <tn>',
+	'<tn> danced with the devil in the pale moonlight',
+	'<tn> was shaken, not stirred',
 }
 
 local defaultmessages = {
