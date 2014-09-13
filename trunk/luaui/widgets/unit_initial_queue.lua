@@ -583,10 +583,15 @@ function widget:GameFrame(n)
 	local units = Spring.GetTeamUnits(Spring.GetMyTeamID())
 	for u = 1, #units do
 		local uID = units[u]
+		local ud = UnitDefs[Spring.GetUnitDefID(uID)]
+		local name = ud.name
+		Echo(u,uID,name)
 		if GetUnitCanCompleteQueue(uID) then --Spring.GetUnitDefID(uID) == sDefID then
 			
 			for b = 1, #buildQueue do
+				
 				local buildData = buildQueue[b]
+				Echo("BQ:",b,buildData[1])
 				Spring.GiveOrderToUnit(uID, -buildData[1], {buildData[2], buildData[3], buildData[4], buildData[5]}, {"shift"})
 			end
 			
@@ -778,7 +783,7 @@ function widget:RecvLuaMsg(msg, playerID)
 		buildNameToID = {}
 		SetSelDefID(nil)
 		InitializeFaction(sDefID)
-	elseif msg == startingPrefix then	
+	elseif not gameStarting and msg == startingPrefix then	
 		SetSelDefID(nil) -- remove selection, game is starting
 		gameStarting = true
 	end
