@@ -20,9 +20,14 @@
     บÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜบ
     ศอออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออผ
     Logo by ElementalGizmo
+------------------- Change Log of XTA 9.743 Svn 762
+------------------ by Jools
 
+ Changes:
+ 
+  * Initial queue widget was not included after all in XTA 9.742
 
-------------------- Change Log of XTA 9.741 Svn 761
+------------------- Change Log of XTA 9.742 Svn 761
 ------------------ by Jools
 - Enhancements:
 ---------------

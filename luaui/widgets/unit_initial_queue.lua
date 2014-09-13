@@ -183,6 +183,7 @@ local function GetUnitCanCompleteQueue(uID)
 	local uBuilds = UnitDefs[uDefID].buildOptions
 	for i = 1, #uBuilds do
 		uCanBuild[uBuilds[i]] = true
+		Echo("Unit can build:",i,uBuilds[i],uCanBuild[uBuilds[i]])
 	end
 	
 	-- Can it build everything that was queued ?
@@ -574,7 +575,6 @@ function widget:GameFrame(n)
 	
 	if (n < 2) then return end -- Give the unit frames 0 and 1 to spawn
 	if (n > 10) then
-		--Spring.Echo("> Starting unit never spawned !")
 		widgetHandler:RemoveWidget(self)
 		return
 	end
@@ -585,13 +585,11 @@ function widget:GameFrame(n)
 		local uID = units[u]
 		local ud = UnitDefs[Spring.GetUnitDefID(uID)]
 		local name = ud.name
-		Echo(u,uID,name)
 		if GetUnitCanCompleteQueue(uID) then --Spring.GetUnitDefID(uID) == sDefID then
 			
 			for b = 1, #buildQueue do
 				
 				local buildData = buildQueue[b]
-				Echo("BQ:",b,buildData[1])
 				Spring.GiveOrderToUnit(uID, -buildData[1], {buildData[2], buildData[3], buildData[4], buildData[5]}, {"shift"})
 			end
 			
@@ -744,45 +742,57 @@ function widget:Update()
 end
 
 function widget:RecvLuaMsg(msg, playerID)
-	-- we just use this function to trigger side change update.
 	
+	-- todo: just listen to own messages
+		
 	local sidePrefix = '195' -- set by widget gui_commchange.lua
 	local startingPrefix = '776-717' -- set by widget gui_commchange.lua
-		
+	
 	if string.find(msg,sidePrefix) then	
+		local _, _, playerIsSpec, playerTeam = Spring.GetPlayerInfo(playerID)
 		local myTeamID = Spring.GetMyTeamID()
-		local startID = spGetTeamRulesParam(myTeamID, 'startUnit')
-		if startID and startID ~= "" then sDefID = startID end
 		
-		for b = 1, #buildQueue do
-			local buildData = buildQueue[b]
-			local buildDataId = buildData[1]
+		if myTeamID == playerTeam and not playerIsSpec then
+			--Echo("Message:",msg,playerID,string.find(msg,sidePrefix))
+			
+			local startID = spGetTeamRulesParam(myTeamID, 'startUnit')
+			if startID and startID ~= "" then sDefID = startID end
+			local udid = Spring.GetUnitDefID(startID)
+			local newSide = UnitDefs[udid] and UnitDefs[udid].customParams and UnitDefs[udid].customParams.side
 			local oldSide = sDef.customParams and sDef.customParams.side
 			
-			if oldSide then
-				if oldSide == "arm" then
-					local newID = (UnitDefNames[string.gsub(UnitDefs[buildDataId].name,"arm_","core_")] or {}).id
-					if newID then
-						buildData[1] = newID
-						buildQueue[b] = buildData
-					else
-						Echo("Warning: could not convert to core: ",(UnitDefs[buildDataId] or {}).name)
-					end
-				elseif oldSide == "core" then
-					local newID = (UnitDefNames[string.gsub(UnitDefs[buildDataId].name,"core_","arm_")] or {}).id
-					if newID then
-						buildData[1] = newID
-						buildQueue[b] = buildData
-					else
-						Echo("Warning: could not convert to arm: ",(UnitDefs[buildDataId] or {}).name)
+			if newSide ~= oldSide then
+				for b = 1, #buildQueue do
+					local buildData = buildQueue[b]
+					local buildDataId = buildData[1]
+					
+					--Echo("Team: ",myTeamID," - Converting side from: ",oldSide,", after message from player: ",playerID)
+					if oldSide then
+						if oldSide == "arm" then
+							local newID = (UnitDefNames[string.gsub(UnitDefs[buildDataId].name,"arm_","core_")] or {}).id
+							if newID then
+								buildData[1] = newID
+								buildQueue[b] = buildData
+							else
+								Echo("Warning: could not convert to core: ",(UnitDefs[buildDataId] or {}).name)
+							end
+						elseif oldSide == "core" then
+							local newID = (UnitDefNames[string.gsub(UnitDefs[buildDataId].name,"core_","arm_")] or {}).id
+							if newID then
+								buildData[1] = newID
+								buildQueue[b] = buildData
+							else
+								Echo("Warning: could not convert to arm: ",(UnitDefs[buildDataId] or {}).name)
+							end
+						end
 					end
 				end
+				
+				buildNameToID = {}
+				SetSelDefID(nil)
+				InitializeFaction(sDefID)
 			end
-        end
-		
-		buildNameToID = {}
-		SetSelDefID(nil)
-		InitializeFaction(sDefID)
+		end
 	elseif not gameStarting and msg == startingPrefix then	
 		SetSelDefID(nil) -- remove selection, game is starting
 		gameStarting = true
@@ -832,7 +842,6 @@ function widget:TextCommand(cmd)
 			end
 			
 			if cycles == index then			
-				--Spring.Echo(cycles, " -- ",buildName, "i:",index, "key:",keypress,lastpress)
 				SetSelDefID(bDefID)
 				return true
 			end
