@@ -39,7 +39,7 @@ if gadgetHandler:IsSyncedCode() then
 		
 	end	
 	
-	function gadget:ShutDown()
+	function gadget:Shutdown()
 		gadgetHandler:DeregisterGlobal("UnitStoppedMoving", UnitStoppedMoving)
 		gadgetHandler:DeregisterGlobal("UnitStartedMoving", UnitStartedMoving)
 		gadgetHandler:DeregisterGlobal("PelicanTransform", PelicanTransform)
