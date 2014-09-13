@@ -114,6 +114,19 @@ if gadgetHandler:IsSyncedCode() then
 		return string.format("%." .. (idp or 0) .. "f", num)
 	end
 	
+	local function getFriendlyName(tID)
+		if not tID then return "N/A"
+		elseif not teamData[tID] then
+			return "Team " .. tID
+		elseif teamData[tID]['isAI'] then
+			return "Team " .. tID .. " (AI)"
+		elseif teamData[tID]['leader'] then
+			return teamData[tID]['leader']
+		else
+			return "Team " .. tID
+		end
+	end
+	
 	function gadget:Initialize()
 	
 		mapX = Game.mapSizeX
@@ -148,7 +161,7 @@ if gadgetHandler:IsSyncedCode() then
 						teamData[tID]['commkills'] = 0
 						teamData[tID]['impressivekills'] = 0
 						--teamData[tID]['active'] = active
-						--teamData[tID]['spec'] = spectator
+						teamData[tID]['spec'] = spectator
 						--teamData[tID]['killcount'] = {}
 						--teamData[tID]['deathcount'] = {}
 						--teamData[tID]['firepower'] = {}
@@ -314,14 +327,14 @@ if gadgetHandler:IsSyncedCode() then
 					if teamData[teamID]['commlosses'] >= 2 and not badges["special"]["2comms"] then
 						badges["special"]["2comms"] = teamID
 						badges["special"]["n"] = badges["special"]["n"] + 1
-						Echo("\'Lose commander twice\'-award goes to team:",teamID)
+						Echo("\'Lose commander twice\'-award goes to: " .. getFriendlyName(teamID))
 					end
-					if attackerTeamID then
+					if attackerTeamID and (not AreTeamsAllied(attackerTeamID,teamID))then
 						teamData[attackerTeamID]['commkills'] = teamData[attackerTeamID]['commkills'] + 1
 						if teamData[attackerTeamID]['commkills'] >= 3 and not badges["special"]["3comms"] then
 							badges["special"]["3comms"] = attackerTeamID
 							badges["special"]["n"] = badges["special"]["n"] + 1
-							Echo("\'Commander hitman\'-award goes to team:",attackerTeamID)
+							Echo("\'Commander hitman\'-award goes to:" .. getFriendlyName(attackerTeamID))
 						end
 					end
 				end
@@ -354,19 +367,19 @@ if gadgetHandler:IsSyncedCode() then
 						teamData[teamID]['lostHPmisc']['kill'] = teamData[teamID]['lostHPmisc']['kill'] + hp
 					end
 				else -- weapondef > 0
-					if dgunTable[weaponDefID] and attackerTeam then					
+					if dgunTable[weaponDefID] and attackerTeam and (not AreTeamsAllied(attackerTeam,teamID)) then					
 						if holyTargets[unitDefID] then
 							if not badges["special"]["cygnus"] then
 								badges["special"]["cygnus"] = attackerTeam
 								badges["special"]["n"] = badges["special"]["n"] + 1
-								Echo("\'Cygnus Nero\'-award goes to team:",attackerTeam)
+								Echo("\'Cygnus Nero\'-award goes to: " ..getFriendlyName(attackerTeam))
 							end							
 						elseif impressiveTargets[unitDefID] then
 							if not badges["special"]["cygnus"] then
 								if teamData[attackerTeam]['impressivekills'] >= 5 then
 									badges["special"]["cygnus"] = attackerTeam
 									badges["special"]["n"] = badges["special"]["n"] + 1
-									Echo("\'Cygnus Nero\'-award goes to team:",attackerTeam)
+									Echo("\'Cygnus Nero\'-award goes to: " ..getFriendlyName(attackerTeam))
 								else
 									teamData[attackerTeam]['impressivekills'] = teamData[attackerTeam]['impressivekills'] + 1
 								end
@@ -396,7 +409,7 @@ if gadgetHandler:IsSyncedCode() then
 				if teamData[unitTeam]["dtcount"] >= DTAWARDLIMIT then
 					badges["special"]["dtbadge"] = unitTeam
 					badges["special"]["n"] = badges["special"]["n"] + 1
-					Echo("\'Fortress City\'-award goes to team:", unitTeam)
+					Echo("\'Fortress City\'-award goes to: " .. getFriendlyName(unitTeam))
 				end
 			end
 		end
@@ -474,17 +487,22 @@ if gadgetHandler:IsSyncedCode() then
 			end
 		end
 		
-		for tID, tdata in pairs(teamData) do
-			if tID ~= gaiaID then
-				if tdata.isT1 then
-					if not badges["special"]["t1badge"] then
-						badges["special"]["t1badge"] = tID
-						badges["special"]["n"] = badges["special"]["n"] + 1
-					else
-						if badges["special"]["t1badge"] >= 0 then
-							badges["special"]["n"] = badges["special"]["n"] - 1
+		-- only process winning team
+		for _, aID in pairs (GG.gamewinners) do
+			for _,tID in ipairs(GetTeamList(aID)) do
+				local tdata = teamData[tID]
+				
+				if tID ~= gaiaID and not tdata.spec then
+					if tdata.isT1 then
+						if not badges["special"]["t1badge"] then
+							badges["special"]["t1badge"] = tID
+							badges["special"]["n"] = badges["special"]["n"] + 1
+						else
+							if badges["special"]["t1badge"] >= 0 then
+								badges["special"]["n"] = badges["special"]["n"] - 1
+							end
+							badges["special"]["t1badge"] = -1 -- contested
 						end
-						badges["special"]["t1badge"] = -1 -- contested
 					end
 				end
 			end
@@ -521,7 +539,6 @@ if gadgetHandler:IsSyncedCode() then
 			local age = death - birth
 		
 			local awardsMsg = table.concat({XTA_AWARDMARKER,":",isHeroType,":",team,":",name,":",kills,":",age})
-			--Echo("Lost:",i, awardsMsg)
 			Spring.SendLuaRulesMsg(awardsMsg)
 		end
 	end
@@ -1966,7 +1983,7 @@ else
 	end
 	
 	function gadget:Shutdown()
-		Spring.SendCommands('endgraph 1')		
+		drawWindow = false
 		gadgetHandler:RemoveSyncAction("RecieveEndStats")
 		gadgetHandler:RemoveSyncAction("teamData")
 		gadgetHandler:RemoveSyncAction("heroUnits")
