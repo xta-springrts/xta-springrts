@@ -110,7 +110,7 @@ function widget:Initialize()
 	end
 end
 	
-function widget:ShutDown()
+function widget:Shutdown()
 		
 	local cmds = widgetHandler.commands
 	local n = #(widgetHandler.commands)
@@ -134,9 +134,6 @@ function widget:CommandsChanged()
 	end
 end
 
-function widget:UnitCreated(unitID, unitDefID, teamID, builderID)
-	
-end
 --------------------------------------------------------------------------------
 
 function widget:UnitFromFactory(unitID, unitDefID, unitTeam, factID, factDefID, userOrders)

@@ -1965,7 +1965,7 @@ else
 		end
 	end
 	
-	function gadget:ShutDown()
+	function gadget:Shutdown()
 		Spring.SendCommands('endgraph 1')		
 		gadgetHandler:RemoveSyncAction("RecieveEndStats")
 		gadgetHandler:RemoveSyncAction("teamData")

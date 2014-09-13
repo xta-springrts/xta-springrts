@@ -115,7 +115,7 @@ if (gadgetHandler:IsSyncedCode()) then
 		end
 	end
 	
-	function gadget:ShutDown()
+	function gadget:Shutdown()
 		Spring.SetGameRulesParam("WaitForComends",0)
 		if Spring.IsGameOver() then
 			Spring.SetGameRulesParam("ShowEnd",1)

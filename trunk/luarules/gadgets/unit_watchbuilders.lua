@@ -43,7 +43,7 @@ if (gadgetHandler:IsSyncedCode()) then
 		end			
 	end
 
-	function gadget:ShutDown()
+	function gadget:Shutdown()
 		for id, unitDef in ipairs(UnitDefs) do
 			if unitDef.name then
 				Script.SetWatchUnit(unitDef.id,false)

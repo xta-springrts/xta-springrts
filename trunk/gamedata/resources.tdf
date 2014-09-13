@@ -86,6 +86,7 @@
 			light=light.bmp;//also front
 			yellowlight=lighty.bmp;//also front
 			whitelight=lightw.bmp;//also front
+			redlight=lightr.bmp;//also front
 			water=G_warp.tga;//also front
 			Bubble=BubbleAlphafromCA.tga;//also front
 			redwtf=redwtf.jpg;//also front

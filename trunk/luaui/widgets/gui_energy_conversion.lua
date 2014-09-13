@@ -8,13 +8,17 @@ function widget:GetInfo()
 		license   = 'GNU GPL v2',
 		layer     = 0,
 		enabled   = true,
+		handler   = true
 	}
 end
+
+-- Updates: 2014.09: Made it possible to unload widget and handle mmakers manually. Jools.
 
 --------------------------------------------------------------------------------
 -- Var
 --------------------------------------------------------------------------------
 local alterLevelFormat = string.char(137) .. '%i'
+local operationPrefix = 'energyconversion:'
 
 local X, Y = Spring.GetViewGeometry()
 local px, py = 500, 100
@@ -37,15 +41,18 @@ local glTranslate = gl.Translate
 local glBeginText = gl.BeginText
 local glEndText = gl.EndText
 local glText = gl.Text
+local Echo = Spring.Echo
 
 local spGetMyTeamID = Spring.GetMyTeamID
 local spGetTeamRulesParam = Spring.GetTeamRulesParam
 local spSendLuaRulesMsg = Spring.SendLuaRulesMsg
 local spGetSpectatingState = Spring.GetSpectatingState
+local CMD_ENERGYCONVERT	= 39310
 
 --------------------------------------------------------------------------------
 -- Funcs
 --------------------------------------------------------------------------------
+
 function widget:Initialize()
 	local playerID = Spring.GetMyPlayerID()
 	local _, _, spec, _, _, _, _, _ = Spring.GetPlayerInfo(playerID)
@@ -63,6 +70,41 @@ function widget:Initialize()
 	hoverTop = 51*scaling
 	barBottom = 44*scaling
 	barTop = 46*scaling
+	
+	local cmds = widgetHandler.commands
+	local n = #(widgetHandler.commands)
+	
+	for i=1,n do
+		if (cmds[i].id == CMD_ENERGYCONVERT) then
+			cmds[i].hidden = false
+		end
+    end
+	spSendLuaRulesMsg(table.concat({operationPrefix,1}))
+end
+
+function widget:Shutdown()
+		
+	local cmds = widgetHandler.commands
+	local n = #(widgetHandler.commands)
+
+	for i=1,n do
+		if (cmds[i].id == CMD_ENERGYCONVERT) then
+			cmds[i].hidden = true
+		end
+	end
+	spSendLuaRulesMsg(table.concat({operationPrefix,0}))
+end
+
+function widget:CommandsChanged()
+    
+	local cmds = widgetHandler.commands
+	local n = #(widgetHandler.commands)
+	
+	for i=1,n do
+		if (cmds[i].id == CMD_ENERGYCONVERT) then
+			cmds[i].hidden = false
+		end
+	end
 end
 
 function widget:DrawScreen()

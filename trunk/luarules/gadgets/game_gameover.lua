@@ -41,7 +41,7 @@ if gadgetHandler:IsSyncedCode() then
 		Spring.SetGameRulesParam("ShowEnd",0)
 	end
 	
-	function gadget:ShutDown()
+	function gadget:Shutdown()
 		ShowEndGraphs()
 		Spring.SetGameRulesParam("ShowEnd",1)
 	end

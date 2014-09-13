@@ -55,7 +55,7 @@ function widget:Initialize()
     end
 end
 	
-function widget:ShutDown()
+function widget:Shutdown()
 	if not hideGuard then
 	
 		local cmds = widgetHandler.commands
