@@ -18,6 +18,8 @@ local CMD_AREA_GUARD 						= 14001
 local CMD_UPGRADE_MEXX						= 31244
 CMD_FACTORYGUARD 							= 37460 
 CMD_BUILDSPEED 								= 33455
+CMD_ENERGYCONVERT 							= 39310
+
 local SetCustomCommandDrawData				= Spring.SetCustomCommandDrawData
 local FindUnitCmdDesc 						= Spring.FindUnitCmdDesc
 
@@ -123,6 +125,7 @@ function gadget:Initialize()
 	gadgetHandler:RegisterCMDID(CMD_AREA_GUARD)
 	gadgetHandler:RegisterCMDID(CMD_UPGRADE_MEXX)
 	gadgetHandler:RegisterCMDID(CMD_FACTORYGUARD)
+	gadgetHandler:RegisterCMDID(CMD_ENERGYCONVERT)
 	Spring.AssignMouseCursor("Guardprotect", "cursorprotect", true, false)
 	
 	local result = SetCustomCommandDrawData(CMD_AREA_GUARD, CMDTYPE.ICON_UNIT_OR_AREA, {1,0,0,0.8},true)

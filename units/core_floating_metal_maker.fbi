@@ -37,9 +37,9 @@
 	//  Resources
 	//*************
 	metalstorage=0;
-	energyuse=0;
+	energyuse=180;
 	energystorage=0;
-	makesmetal=0;
+	makesmetal=3;
 	windgenerator=0.001;
 
 	//************************************************************
@@ -62,7 +62,7 @@
 	//************************************************************
 	//  Abilities
 	//*************
-	onoffable=0;
+	onoffable=1;
 	canRepeat=0;
 	canMove=0;
 	canAttack=0;
@@ -108,5 +108,10 @@
 	//************************************************************
 	//  To be removed
 	//*****************
-
+	
+	[SFXTypes]
+	{
+	explosiongenerator0=custom:GlowSmall;
+	explosiongenerator1=custom:RedLight;
+	}
 }
