@@ -48,7 +48,7 @@ local spGetTeamRulesParam = Spring.GetTeamRulesParam
 local spSendLuaRulesMsg = Spring.SendLuaRulesMsg
 local spGetSpectatingState = Spring.GetSpectatingState
 local CMD_ENERGYCONVERT	= 39310
-
+local displayWindow = true
 --------------------------------------------------------------------------------
 -- Funcs
 --------------------------------------------------------------------------------
@@ -56,9 +56,10 @@ local CMD_ENERGYCONVERT	= 39310
 function widget:Initialize()
 	local playerID = Spring.GetMyPlayerID()
 	local _, _, spec, _, _, _, _, _ = Spring.GetPlayerInfo(playerID)
-		
+	Spring.Echo("ECI:",spec)
 	if ( spec == true ) then
-		Spring.Log("widget", LOG.INFO, "<Energy Conversion Info> Spectator mode. Widget removed.")
+		Spring.Echo("widget", LOG.INFO, "<Energy Conversion Info> Spectator mode. Widget removed.")
+		displayWindow = false
 		widgetHandler:RemoveWidget()
 	end
 	scaling = Y/1200
@@ -108,7 +109,8 @@ function widget:CommandsChanged()
 end
 
 function widget:DrawScreen()
-    
+    if not displayWindow then return end
+	
     -- Var
     local myTeamID = spGetMyTeamID()
     local curLevel = spGetTeamRulesParam(myTeamID, 'mmLevel') or 0
@@ -151,27 +153,39 @@ function widget:DrawScreen()
     glPopMatrix()
 end
 
+function widget:TeamDied(teamID)
+	
+	if teamID == spGetMyTeamID() then
+		displayWindow = false	
+		widgetHandler:RemoveWidget()
+	end
+end
+
 function widget:MousePress(mx, my, mButton)
-    if mButton == 2 or mButton == 3 then
-        if mx >= px and my >= py and mx < px + sx and my < py + sy then
-            return true
-        end
-    elseif mButton == 1 and not spGetSpectatingState() then
-        local dx, dy = mx - px, my - py
-        if dx >= hoverLeft and dy >= hoverBottom and dx < hoverRight and dy < hoverTop then
-            local newShare = 100 * (dx - hoverLeft) / (hoverRight - hoverLeft) -- [0, 100)
-            spSendLuaRulesMsg(format(alterLevelFormat, newShare))
-            return true
-        end
-    end
+	if displayWindow then
+		if mButton == 2 or mButton == 3 then
+			if mx >= px and my >= py and mx < px + sx and my < py + sy then
+				return true
+			end
+		elseif mButton == 1 and not spGetSpectatingState() then
+			local dx, dy = mx - px, my - py
+			if dx >= hoverLeft and dy >= hoverBottom and dx < hoverRight and dy < hoverTop then
+				local newShare = 100 * (dx - hoverLeft) / (hoverRight - hoverLeft) -- [0, 100)
+				spSendLuaRulesMsg(format(alterLevelFormat, newShare))
+				return true
+			end
+		end
+	end
 end
 
 function widget:MouseMove(mx, my, dx, dy, mButton)
     -- Dragging
-    if mButton == 2 or mButton == 3 then
-		if px+sx+onsidemargin+dx>=0 and px+onsidemargin+dx<=X then px = px + dx end
-        if py+sy+onsidemargin+dy>=0 and py+onsidemargin+dy<=Y then py = py + dy end
-    end
+	if displayWindow then
+		if mButton == 2 or mButton == 3 then
+			if px+sx+onsidemargin+dx>=0 and px+onsidemargin+dx<=X then px = px + dx end
+			if py+sy+onsidemargin+dy>=0 and py+onsidemargin+dy<=Y then py = py + dy end
+		end
+	end
 end
 
 function widget:GetConfigData()
