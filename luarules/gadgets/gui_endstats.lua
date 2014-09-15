@@ -160,6 +160,7 @@ if gadgetHandler:IsSyncedCode() then
 						teamData[tID]['commlosses'] = 0
 						teamData[tID]['commkills'] = 0
 						teamData[tID]['impressivekills'] = 0
+						teamData[tID]['unitcount'] = 0
 						--teamData[tID]['active'] = active
 						teamData[tID]['spec'] = spectator
 						--teamData[tID]['killcount'] = {}
@@ -390,13 +391,12 @@ if gadgetHandler:IsSyncedCode() then
 			end
 		end
 	end
-	
-	function gadget:UnitCreated(unitID, unitDefID, teamID, builderID)
+			
+	function gadget:UnitFinished(unitID, unitDefID, unitTeam)
+		
 		local frame = Spring.GetGameFrame()
 		Spring.SetUnitRulesParam(unitID,'born',frame)		
-	end
-	
-	function gadget:UnitFinished(unitID, unitDefID, unitTeam)
+		
 		if not badges["firstT2"] and t2Table[unitDefID] then
 			local frame = Spring.GetGameFrame()
 			badges["firstT2"] = {unitTeam, frame,unitDefID}
@@ -416,6 +416,10 @@ if gadgetHandler:IsSyncedCode() then
 		
 		if t2Table[unitDefID] then
 			teamData[unitTeam]['isT1'] = false
+		end
+		
+		if not dtTable[unitDefID] then
+			teamData[unitTeam]['unitcount'] = teamData[unitTeam]['unitcount'] + 1
 		end
 	end
 	
@@ -493,7 +497,7 @@ if gadgetHandler:IsSyncedCode() then
 				local tdata = teamData[tID]
 				
 				if tID ~= gaiaID and not tdata.spec then
-					if tdata.isT1 then
+					if tdata.isT1 and tdata.unitcount > 100 then
 						if not badges["special"]["t1badge"] then
 							badges["special"]["t1badge"] = tID
 							badges["special"]["n"] = badges["special"]["n"] + 1
@@ -577,7 +581,6 @@ else
 	local px, py 		 				= vsx/2-sizex/2, vsy/2-sizey/2
 	local max, min 						= math.max, math.min
 	local drawWindow					= false
-	--local drawEnd						= false
 	local allyData						= {}
 	local nData							= {}
 	local teamData						= nil
@@ -607,6 +610,7 @@ else
 	local imgSize						= 24
 	local areHeroes						= false
 	local areLost						= false
+	local areAwards						= false
 	
 	local function getTotals()
 	
@@ -651,6 +655,12 @@ else
 		
 		areHeroes = heroUnits and heroUnits[1] and heroUnits[1][1]
 		areLost = lostUnits and lostUnits[1] and lostUnits[1][1]
+		areAwards = badges and (badges["commloss"] or badges["firstT2"] or badges["topKiller"] or (badges["special"] and badges["special"]["n"] and badges["special"]["n"] > 0) )
+		
+		--button states
+		Button["influence"]["On"] 	= not areAwards
+		Button["awards"]["On"] 		= areAwards
+		
 		--length of buttons
 		local L1 = 205	-- proceed
 		local L2 = 45	-- exit
@@ -717,11 +727,11 @@ else
 		Button["awards"]["x1"]	= Button["awards"]["x0"] + L7
 		Button["awards"]["y1"]	= Panel["back"]["y1"] - 10
 		
-		Button["influence"]["x0"]	= Button["awards"]["x1"] + bs
+		Button["influence"]["x0"]	= areAwards and (Button["awards"]["x1"] + bs) or Panel["back"]["x0"] + bs
 		Button["influence"]["y0"]	= Panel["back"]["y1"] - 40
 		Button["influence"]["x1"]	= Button["influence"]["x0"] + L3
 		Button["influence"]["y1"]	= Panel["back"]["y1"] - 10
-		
+			
 		Button["matrix"]["x0"] 		= Button["influence"]["x1"] + bs
 		Button["matrix"]["y0"] 		= Panel["back"]["y1"] - 40
 		Button["matrix"]["x1"] 		= Button["matrix"]["x0"] + L4
@@ -852,10 +862,8 @@ else
 		Button["heroes"]			= {}
 		Button["lost"]				= {}
 		Button["awards"]			= {}
-		Button["awards"]["On"] 		= true
 		Button["legend"]			= {}
 		Panel["back"] 				= {}
-		Panel["back"]["On"]			= false
 		Panel["1"] 					= {}
 		Panel["2"] 					= {}
 		Panel["3"] 					= {}
@@ -936,11 +944,13 @@ else
 			end
 			
 			--awards tab button
-			glColor(0, 0, 0, 0.4)
-			glRect(Button["awards"]["x0"],Button["awards"]["y0"], Button["awards"]["x1"], Button["awards"]["y1"])
-			glColor(0, 0, 0, 1)
-			drawBorder(Button["awards"]["x0"],Button["awards"]["y0"], Button["awards"]["x1"], Button["awards"]["y1"],1)
-			glColor(1, 1, 1, 1)
+			if areAwards then
+				glColor(0, 0, 0, 0.4)
+				glRect(Button["awards"]["x0"],Button["awards"]["y0"], Button["awards"]["x1"], Button["awards"]["y1"])
+				glColor(0, 0, 0, 1)
+				drawBorder(Button["awards"]["x0"],Button["awards"]["y0"], Button["awards"]["x1"], Button["awards"]["y1"],1)
+				glColor(1, 1, 1, 1)
+			end
 						
 			-- text for buttons
 			myFontMed:Begin()
@@ -955,7 +965,9 @@ else
 			if areLost then
 				myFontMed:Print("Lost in service", Button["lost"]["x0"] + 10 ,Button["lost"]["y0"] + 10, 14, 'xs')
 			end
-			myFontMed:Print("Awards", Button["awards"]["x0"] + 10 ,Button["awards"]["y0"] + 10, 14, 'xs')
+			if areAwards then
+				myFontMed:Print("Awards", Button["awards"]["x0"] + 10 ,Button["awards"]["y0"] + 10, 14, 'xs')
+			end
 			myFontMed:End()
 			
 			-- Highlight
@@ -1910,7 +1922,7 @@ else
 					Button["matrix"]["On"] = false
 					Button["heroes"]["On"] = false
 					Button["awards"]["On"] = false
-				elseif IsOnButton(mx,my,Button["awards"]["x0"],Button["awards"]["y0"],Button["awards"]["x1"],Button["awards"]["y1"]) then
+				elseif areAwards and IsOnButton(mx,my,Button["awards"]["x0"],Button["awards"]["y0"],Button["awards"]["x1"],Button["awards"]["y1"]) then
 					Button["awards"]["On"] = true
 					Button["influence"]["On"] = false
 					Button["matrix"]["On"] = false
@@ -1970,7 +1982,7 @@ else
 				Button["heroes"]["mouse"] = true
 			elseif areLost and IsOnButton(mx,my,Button["lost"]["x0"],Button["lost"]["y0"],Button["lost"]["x1"],Button["lost"]["y1"]) then
 				Button["lost"]["mouse"] = true
-			elseif IsOnButton(mx,my,Button["awards"]["x0"],Button["awards"]["y0"],Button["awards"]["x1"],Button["awards"]["y1"]) then
+			elseif areAwards and IsOnButton(mx,my,Button["awards"]["x0"],Button["awards"]["y0"],Button["awards"]["x1"],Button["awards"]["y1"]) then
 				Button["awards"]["mouse"] = true
 			else
 				for _, lbutton in pairs (Button["legend"]) do
