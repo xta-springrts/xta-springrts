@@ -105,6 +105,20 @@ local function ZombieGuard(unitID,x,y,z,radius)
 	end
 end
 
+local function zombieRemoveGuard(unitID)
+	for _,uID in pairs (Spring.GetTeamUnits(gaiaTeamID) ) do
+		for _, cmd in pairs (Spring.GetUnitCommands (uID)) do
+			if cmd.id == CMD.GUARD then
+				local tID = cmd.params[1]
+				local tag = cmd.tag
+				if tID and tID == unitID then
+					spGiveOrderToUnit(uID, CMD.REMOVE,{tag},{""})
+				end
+			end
+		end
+	end
+end
+
 local function ZombiePatrol(unitID, unitDefID, x,y,z, radius)
 	local p0 = {x + random(-radius,radius), y, z + random(-radius,radius)}
 	local p1 = {x + random(-radius,radius), y, z + random(-radius,radius)}
@@ -466,6 +480,12 @@ end
 function gadget:UnitCreated(unitID, unitDefID, unitTeam, builderID)
 	if CommanderDefs[unitDefID] and unitTeam == gaiaTeamID then
 		zombieCommanders[unitID] = unitID
+	end
+end
+
+function gadget:UnitTaken(unitID, unitDefID, oldTeam, newTeam)
+	if oldTeam == gaiaTeamID then
+		zombieRemoveGuard(unitID)
 	end
 end
 
