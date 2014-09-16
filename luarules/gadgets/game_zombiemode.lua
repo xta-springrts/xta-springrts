@@ -408,7 +408,7 @@ end
 --   reclaiming should NOT EVER trigger respawn (ok, does not trigger UnitDamaged)
 --   nanoframe decay should NOT EVER trigger respawn *FIXED*
 --	 morphing should not trigger respawn *FIXED*
---   Moved to UnitPreDamaged to allow zombies that die to not leave wrecks
+--   Moved to UnitPreDamaged to allow zombies that die to not leave wrecks, although I later removed that option
 function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weaponDefID, projectileID, attackerID, attackerDefID, attackerTeam)
 	local health, _,_,_, buildProgress = Spring.GetUnitHealth(unitID)
 	local killed = (health - damage) <= 0.0 	-- in predamaged damage is not applied, but in unitdamaged it already is
@@ -477,6 +477,32 @@ function gadget:UnitDestroyed(unitID, unitDefID, unitTeam, attackerID, attackerD
 	end
 end
 
+function gadget:FeatureDestroyed(featureID, allyTeamID)
+	local unitName  = Spring.GetFeatureResurrect(featureID)
+	
+	if unitName then
+		local unitDefID = (UnitDefNames[unitName] or {}).id
+		local fx,_,fz = Spring.GetFeaturePosition(featureID)
+		
+		if unitDefID and fx and fz then
+			
+			for index, spawn in pairs(zombieQueue) do
+				if spawn.defID == unitDefID then
+					local spawnPos = spawn.pos
+					local x = spawnPos[1]
+					local z = spawnPos[3]
+					-- remove zombie from queue if wreck was reclaimed
+					if (x - fx < 10 and x - fx > -10) and (z - fz < 10 and z - fz > -10) then
+						zombieQueue[index] = nil
+						zombieTable[spawn.id] = nil
+					end
+				end
+			end
+			
+		end
+	end
+end
+
 function gadget:UnitCreated(unitID, unitDefID, unitTeam, builderID)
 	if CommanderDefs[unitDefID] and unitTeam == gaiaTeamID then
 		zombieCommanders[unitID] = unitID
@@ -488,6 +514,7 @@ function gadget:UnitTaken(unitID, unitDefID, oldTeam, newTeam)
 		zombieRemoveGuard(unitID)
 	end
 end
+
 
 --[[
 function gadget:AllowCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdOpts)
