@@ -398,7 +398,6 @@ if gadgetHandler:IsSyncedCode() then
 		Spring.SetUnitRulesParam(unitID,'born',frame)		
 		
 		if not badges["firstT2"] and t2Table[unitDefID] then
-			local frame = Spring.GetGameFrame()
 			badges["firstT2"] = {unitTeam, frame,unitDefID}
 		end
 		
