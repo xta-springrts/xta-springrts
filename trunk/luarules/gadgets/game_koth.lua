@@ -47,6 +47,7 @@ local gaiaTeamID 						= Spring.GetGaiaTeamID()
 local gaiaAllyTeamID			 		= select(6, Spring.GetTeamInfo(gaiaTeamID))
 local haveZombies 						= (tonumber(Spring.GetModOptions().zombies) or 0) == 1
 local Echo								= Spring.Echo
+local max								= math.max
 
 --UNSYNCED-------------------------------------------------------------------
 if(not gadgetHandler:IsSyncedCode()) then
@@ -249,7 +250,7 @@ end
 					local x,altitude,z = Spring.GetUnitBasePosition(u)
 					local cloaked = Spring.GetUnitIsCloaked(u)
 					local stunned = Spring.GetUnitIsStunned(u)
-					local canControl = cloaked == false and stunned == false and altitude < Spring.GetGroundHeight(x,z) + 10
+					local canControl = cloaked == false and stunned == false and altitude < max(Spring.GetGroundHeight(x,z) + 10,10)
 					
 					if (lastControl == ally) then
 						if canControl then
