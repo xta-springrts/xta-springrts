@@ -64,15 +64,18 @@ else
 	
 	local PlaySoundFile				= Spring.PlaySoundFile
 	local failed					= "sounds/cantdo4.wav"
-	local myTeamID
+	local myTeamID, mySpectatorState
 	local GetUnitDefID				= Spring.GetUnitDefID
 	
 	function gadget:Initialize()
 		gadgetHandler:AddSyncAction("movefailsound", MoveFailSound)
 		myTeamID = Spring.GetMyTeamID()
+		mySpectatorState = Spring.GetSpectatingState()
 	end
 
 	function MoveFailSound(_,teamID, unitID)
+		if mySpectatorState then return end
+		
 		local uDefID = CallAsTeam(myTeamID,GetUnitDefID, unitID)
 		local x,y,z = Spring.GetUnitPosition(unitID)
 		
