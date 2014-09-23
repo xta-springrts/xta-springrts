@@ -24,6 +24,7 @@ local GetUnitPosition			= Spring.GetUnitPosition
 local GetUnitTeam				= Spring.GetUnitTeam
 local CallAsTeam				= CallAsTeam
 local Echo 						= Spring.Echo
+local ValidUnitID				= Spring.ValidUnitID
 
 -- Constants
 local CMD_ATTACKBAD 			= 35577
@@ -75,24 +76,26 @@ local spAssignMouseCursor 	= Spring.AssignMouseCursor
 				end
 			elseif cmdParams and #cmdParams == 1 then
 				local tID = cmdParams[1]
-				local _,_,_,_,midY = GetUnitPosition(tID,true)
-				if midY and midY < 0 then
-					local targetdefID = GetUnitDefID(tID)
-					local tDef = UnitDefs[targetdefID ]
-					if not tDef then return true end
+				if ValidUnitID(tID) then
+					local _,_,_,_,midY = GetUnitPosition(tID,true)
+					if midY and midY < 0 then
+						local targetdefID = GetUnitDefID(tID)
+						local tDef = UnitDefs[targetdefID ]
+						if not tDef then return true end
+						
+						local radius = unitDefRadius[targetdefID]
+						
+						if not radius then
+							unitDefRadius[targetdefID] = GetUnitRadius(tID)
+							radius = unitDefRadius[targetdefID]
+						end
+						local speed = tDef.speed
 					
-					local radius = unitDefRadius[targetdefID]
-					
-					if not radius then
-						unitDefRadius[targetdefID] = GetUnitRadius(tID)
-						radius = unitDefRadius[targetdefID]
-					end
-					local speed = tDef.speed
-				
-					if radius and speed and midY and midY + radius < 0 and speed == 0 then
-						if not waterWeapons[unitDefID] then
-							SendToUnsynced("failsound", unitTeam, tID)
-							return false
+						if radius and speed and midY and midY + radius < 0 and speed == 0 then
+							if not waterWeapons[unitDefID] then
+								SendToUnsynced("failsound", unitTeam, tID)
+								return false
+							end
 						end
 					end
 				end
