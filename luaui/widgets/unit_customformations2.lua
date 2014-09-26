@@ -843,6 +843,10 @@ function widget:SetConfigData(data) -- Loading
 	maxHungarianUnits = data['maxHungarianUnits'] or defaultHungarianUnits
 end
 
+-- remove on game over
+function widget:GameOver()
+	widgetHandler:RemoveWidget()
+end
 ---------------------------------------------------------------------------------------------------------
 -- Matching Algorithms
 ---------------------------------------------------------------------------------------------------------
