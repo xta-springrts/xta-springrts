@@ -3,15 +3,16 @@
 #include "sfxtype.h"
 #include "exptype.h"
 
-piece  base, flap2, flap3, flap4, flap1, topcap, glowingthing;
+piece  base, flap2, flap3, flap4, flap1, topcap, glowingthing, glow;
 
 static-var  mmState;
 
 #define OPERATING 1024
-
+#define SIG_OPEN		16
 
 activatescr()
 {
+	set OPERATING to 1;
 	turn flap3 to z-axis <-69.296703> speed <261.697802>;
 	sleep 265;
 
@@ -37,10 +38,16 @@ activatescr()
 
 	move topcap to y-axis [-1.750000] speed [144.250000];
 	sleep 266;
+	wait-for-move topcap along y-axis;
+	mmState = 1;
+	set ACTIVATION to 1;
 }
 
 deactivatescr()
-{
+{	
+	mmState = 0;
+	set OPERATING to 0;
+	set ACTIVATION to 0;
 	move topcap to y-axis [-40.250000] speed [144.750000];
 	sleep 265;
 
@@ -66,6 +73,40 @@ deactivatescr()
 	turn flap3 to z-axis <0.000000> speed <260.697802>;
 	sleep 266;
 	set ARMORED to 1;
+	
+}
+
+go()
+{
+	call-script activatescr();
+}
+
+stop()
+{
+	call-script deactivatescr();
+}
+
+Activate()
+{
+	call-script go();
+}
+
+Deactivate()
+{
+	call-script stop();
+}
+
+
+Standby()
+{
+	while( TRUE )
+	{
+		if (mmState == 1)
+		{		
+		emit-sfx 1025 from glow;
+		}
+		sleep 450;
+	}
 }
 
 ImAMetalMaker()
@@ -76,15 +117,13 @@ ImAMetalMaker()
 		if ((get OPERATING) == 1)
 		{
 			if (mmState != 1) {
-				call-script activatescr();
-				mmState = 1;
+				call-script go();
 			}
 		}
 		else
 		{
 			if (mmState != 0) {
-				call-script deactivatescr();
-				mmState = 0;
+				call-script stop();
 			}
 		}
 		sleep 1000;
@@ -130,6 +169,7 @@ Create()
 	dont-shade flap4;
 	dont-shade topcap;
 	start-script SmokeUnit();
+	start-script Standby();
 }
 
 SweetSpot(piecenum)
