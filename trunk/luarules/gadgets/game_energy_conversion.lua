@@ -453,9 +453,9 @@ end
 
 function gadget:UnitDestroyed(uID, uDefID, uTeam)
     local cDefs = convertCapacities[uDefID]
-    if cDefs and uID and ValidUnitID(uID) and uTeam then
+    if cDefs and uID and ValidUnitID(uID) and uTeam and teamMMList[uTeam][cDefs.e][uID] then
 		
-        if teamMMList[uTeam][cDefs.e][uID].built then
+		if teamMMList[uTeam][cDefs.e][uID].built then
 			if (teamMMList[uTeam][cDefs.e][uID].status == 1) then
 				teamActiveMM[uTeam] = teamActiveMM[uTeam] - 1
 			end
@@ -464,8 +464,8 @@ function gadget:UnitDestroyed(uID, uDefID, uTeam)
 				AdjustTeamCapacity(uTeam, -cDefs.c, cDefs.e)
 			end
 			
-            teamMMList[uTeam][cDefs.e][uID] = nil
-        end
+			teamMMList[uTeam][cDefs.e][uID] = nil
+		end
     end
 end
 
