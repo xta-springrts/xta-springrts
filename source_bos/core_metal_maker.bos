@@ -3,7 +3,7 @@
 #include "sfxtype.h"
 #include "exptype.h"
 
-piece  base, glow, plug;
+piece  base, glow, plug, glowpoint;
 
 static-var  statechg_DesiredState, statechg_StateChanging, mmState;
 
@@ -11,19 +11,47 @@ static-var  statechg_DesiredState, statechg_StateChanging, mmState;
 
 Go()
 {
+	set OPERATING to 1;
 	dont-cache glow;
 	turn plug to z-axis <0.000000> speed <50.010989>;
 	wait-for-turn plug around z-axis;
+	mmState = 1;
+	set ACTIVATION to 1;
 	cache plug;
 }
 
 Stop()
 {
+	mmState = 0;
+	set ACTIVATION to 0;
+	set OPERATING to 0;
 	cache plug;
 	turn plug to z-axis <180.043956> speed <50.010989>;
 	wait-for-turn plug around z-axis;
 	cache plug;
 	cache glow;
+}
+
+Standby()
+{
+	while( TRUE )
+	{
+		if (mmState == 1)
+		{		
+		emit-sfx 1025 from glowpoint;
+		}
+		sleep 450;
+	}
+}
+
+Activate()
+{
+	call-script Go();
+}
+
+Deactivate()
+{
+	call-script Stop();
 }
 
 ImAMetalMaker()
@@ -35,14 +63,12 @@ ImAMetalMaker()
 		{
 			if (mmState != 1) {
 				call-script Go();
-				mmState = 1;
 			}
 		}
 		else
 		{
 			if (mmState != 0) {
 				call-script Stop();
-				mmState = 0;
 			}
 		}
 		sleep 1000;
@@ -83,6 +109,7 @@ Create()
 	dont-shade glow;
 	dont-cache glow;
 	start-script SmokeUnit();
+	start-script Standby();
 }
 
 SweetSpot(piecenum)

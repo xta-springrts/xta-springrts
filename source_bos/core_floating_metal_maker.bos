@@ -4,7 +4,7 @@
 #include "exptype.h"
 
 piece  base, float1, float2, float3, float4, float5, float6, door1,
-       door2, door3, door4, glow, ground;
+       door2, door3, door4, glow, ground, glow2;
 
 static-var  floating, mmState;
 
@@ -41,6 +41,7 @@ RockOnWaves()
 
 activatescr()
 {
+	set OPERATING to 1;
 	move float1 to y-axis [0.000000] now;
 	move float1 to z-axis [0.000000] now;
 	move float1 to z-axis [-2.150000] speed [2.232605];
@@ -76,6 +77,9 @@ activatescr()
 	sleep 987;
 
 	move base to y-axis [0.000000] speed [5.000000];
+	wait-for-move base along y-axis;
+	mmState = 1;
+	set ACTIVATION to 1;
 	floating = 1;
 	set ARMORED to 0;
 	start-script RockOnWaves();
@@ -84,6 +88,9 @@ activatescr()
 deactivatescr()
 {
 	floating = 0;
+	mmState = 0;
+	set ACTIVATION to 0;
+	set OPERATING to 0;
 	move float1 to y-axis [0.000000] now;
 	move float1 to z-axis [-2.150000] now;
 	move float2 to x-axis [-1.799994] now;
@@ -122,6 +129,16 @@ deactivatescr()
 	set ARMORED to 1;
 }
 
+Activate()
+{
+	call-script activatescr();	
+}
+
+Deactivate()
+{
+	call-script deactivatescr();
+}
+
 ImAMetalMaker()
 {
 	mmState = -1;
@@ -131,17 +148,27 @@ ImAMetalMaker()
 		{
 			if (mmState != 1) {
 				call-script activatescr();
-				mmState = 1;
 			}
 		}
 		else
 		{
 			if (mmState != 0) {
 				call-script deactivatescr();
-				mmState = 0;
 			}
 		}
 		sleep 1000;
+	}
+}
+
+Standby()
+{
+	while( TRUE )
+	{
+		if (mmState == 1)
+		{
+		emit-sfx 1025 from glow2;
+		}
+		sleep 450;
 	}
 }
 
@@ -202,6 +229,7 @@ Create()
 	floating = 1;
 	start-script SmokeUnit();
 	start-script RockOnWaves();
+	start-script Standby();
 }
 
 SweetSpot(piecenum)

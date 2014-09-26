@@ -3,7 +3,7 @@
 #include "sfxtype.h"
 #include "exptype.h"
 
-piece  base2, lid2, lid3, mmakercore, lid1, lid4, glowingthing;
+piece  base2, lid2, lid3, mmakercore, lid1, lid4, glowingthing, glow;
 
 static-var  mmState;
 
@@ -11,6 +11,7 @@ static-var  mmState;
 
 activatescr()
 {
+	set OPERATING to 1;
 	turn lid2 to x-axis <30.395604> speed <38.598901>;
 	turn lid3 to x-axis <-26.796703> speed <35.500000>;
 	turn mmakercore to y-axis <-30.395604> speed <39.395604>;
@@ -28,10 +29,23 @@ activatescr()
 	move mmakercore to y-axis [39.500000] speed [34.750000];
 	turn mmakercore to y-axis <-90.000000> speed <37.697802>;
 	sleep 775;
+	
+	wait-for-turn lid1 around x-axis;
+	wait-for-turn lid2 around x-axis;
+	wait-for-turn lid3 around x-axis;
+	wait-for-turn lid4 around x-axis;
+	wait-for-move mmakercore along y-axis;
+	wait-for-turn mmakercore around y-axis;
+	
+	mmState = 1;
+	set ACTIVATION to 1;
 }
 
 deactivatescr()
 {
+	set ACTIVATION to 0;
+	set OPERATING to 0;
+	mmState = 0;
 	move mmakercore to y-axis [12.500000] speed [39.500000];
 	turn mmakercore to y-axis <-60.796703> speed <42.697802>;
 	sleep 683;
@@ -51,6 +65,17 @@ deactivatescr()
 	sleep 684;
 }
 
+Activate()
+{
+	call-script activatescr();	
+}
+
+Deactivate()
+{
+	call-script deactivatescr();
+}
+
+
 ImAMetalMaker()
 {
 	mmState = -1;
@@ -59,18 +84,28 @@ ImAMetalMaker()
 		if ((get OPERATING) == 1)
 		{
 			if (mmState != 1) {
-				call-script activatescr();
-				mmState = 1;
+				call-script activatescr();				
 			}
 		}
 		else
 		{
 			if (mmState != 0) {
 				call-script deactivatescr();
-				mmState = 0;
 			}
 		}
 		sleep 1000;
+	}
+}
+
+Standby()
+{
+	while( TRUE )
+	{
+		if (mmState == 1)
+		{		
+		emit-sfx 1025 from glow;
+		}
+		sleep 450;
 	}
 }
 
@@ -102,7 +137,6 @@ SmokeUnit(healthpercent, sleeptime, smoketype)
 	}
 }
 
-
 Create()
 {
 	dont-shade glowingthing;
@@ -114,7 +148,10 @@ Create()
 	dont-shade lid4;
 	dont-shade mmakercore;
 	set ARMORED to 0;
+	set ACTIVATION to 0;
+	set OPERATING to 0;
 	start-script SmokeUnit();
+	start-script Standby();
 }
 
 SweetSpot(piecenum)

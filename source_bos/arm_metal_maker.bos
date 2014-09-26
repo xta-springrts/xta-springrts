@@ -3,11 +3,42 @@
 #include "sfxtype.h"
 #include "exptype.h"
 
-piece  base, sphereOn, sphereOff;
+piece  base, sphereOn, sphereOff, glow;
 
 static-var  mmState;
 
 #define OPERATING 1024
+
+Go()
+{
+	set OPERATING to 1;
+	show sphereOn;
+	hide sphereOff;
+	//move sphere to y-axis [1.600000] speed [1.600000];
+	sleep 1000;
+	mmState = 1;
+	set ACTIVATION to 1;
+}
+
+Stop()
+{	
+	set OPERATING to 0;
+	mmState = 0;
+	set ACTIVATION to 0;
+	hide sphereOn;
+	show sphereOff;
+	//move sphere to y-axis [0.000000] speed [1.600000];
+}
+
+Activate()
+{
+	call-script Go();
+}
+
+Deactivate()
+{
+	call-script Stop();
+}
 
 ImAMetalMaker()
 {
@@ -17,22 +48,28 @@ ImAMetalMaker()
 		if ((get OPERATING) == 1)
 		{
 			if (mmState != 1) {
-				show sphereOn;
-				hide sphereOff;
-				//move sphere to y-axis [1.600000] speed [1.600000];
-				mmState = 1;
+				call-script Go();
 			}
 		}
 		else
 		{
 			if (mmState != 0) {
-				hide sphereOn;
-				show sphereOff;
-				//move sphere to y-axis [0.000000] speed [1.600000];
-				mmState = 0;
+				call-script Stop();
 			}
 		}
 		sleep 1000;
+	}
+}
+
+Standby()
+{
+	while( TRUE )
+	{
+		if (mmState == 1)
+		{
+		emit-sfx 1025 from glow;
+		}
+		sleep 450;
 	}
 }
 
@@ -43,6 +80,7 @@ SmokeUnit(healthpercent, sleeptime, smoketype)
 		sleep 500;
 	}
 	start-script ImAMetalMaker();
+	start-script Standby();
 	while( TRUE )
 	{
 		healthpercent = get HEALTH;
