@@ -250,8 +250,9 @@ end
 					local x,altitude,z = Spring.GetUnitBasePosition(u)
 					local cloaked = Spring.GetUnitIsCloaked(u)
 					local stunned = Spring.GetUnitIsStunned(u)
-					local canControl = cloaked == false and stunned == false and altitude < max(Spring.GetGroundHeight(x,z) + 10,10)
-					
+					local neutral = Spring.GetUnitNeutral(u)
+					local canControl = neutral == false and cloaked == false and stunned == false and altitude < max(Spring.GetGroundHeight(x,z) + 10,10)
+															
 					if (lastControl == ally) then
 						if canControl then
 							present = true

@@ -491,20 +491,22 @@ if gadgetHandler:IsSyncedCode() then
 		end
 		
 		-- only process winning team
-		for _, aID in pairs (GG.gamewinners) do
-			for _,tID in ipairs(GetTeamList(aID)) do
-				local tdata = teamData[tID]
-				
-				if tID ~= gaiaID and not tdata.spec then
-					if tdata.isT1 and tdata.unitcount > 100 then
-						if not badges["special"]["t1badge"] then
-							badges["special"]["t1badge"] = tID
-							badges["special"]["n"] = badges["special"]["n"] + 1
-						else
-							if badges["special"]["t1badge"] >= 0 then
-								badges["special"]["n"] = badges["special"]["n"] - 1
+		if GG.gamewinners then
+			for _, aID in pairs (GG.gamewinners) do
+				for _,tID in ipairs(GetTeamList(aID)) do
+					local tdata = teamData[tID]
+					
+					if tID ~= gaiaID and not tdata.spec then
+						if tdata.isT1 and tdata.unitcount > 100 then
+							if not badges["special"]["t1badge"] then
+								badges["special"]["t1badge"] = tID
+								badges["special"]["n"] = badges["special"]["n"] + 1
+							else
+								if badges["special"]["t1badge"] >= 0 then
+									badges["special"]["n"] = badges["special"]["n"] - 1
+								end
+								badges["special"]["t1badge"] = -1 -- contested
 							end
-							badges["special"]["t1badge"] = -1 -- contested
 						end
 					end
 				end
