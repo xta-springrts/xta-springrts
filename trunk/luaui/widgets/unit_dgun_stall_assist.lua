@@ -11,12 +11,14 @@ function widget:GetInfo()
 	}
 end
 
+-- Updates. 2014.09: Also stop mohos and metal makers, and don't stop builders that are not consuming energy
 ----------------------------------------------------------------
 -- Config
 ----------------------------------------------------------------
 local targetEnergy = 600
 local watchForTime = 5
-
+local hoverSetting = 100
+local alterLevelFormat = string.char(137) .. '%i'
 ----------------------------------------------------------------
 -- Globals
 ----------------------------------------------------------------
@@ -24,6 +26,8 @@ local watchTime = 0
 local waitedUnits = nil -- nil / waitedUnits[1..n] = uID
 local shouldWait = {} -- shouldWait[uDefID] = true / nil
 local isFactory = {} -- isFactory[uDefID] = true / nil
+local stoppedMohos = nil
+local stoppedMMakers = nil
 
 ----------------------------------------------------------------
 -- Speedups
@@ -37,6 +41,7 @@ local spGetTeamResources = Spring.GetTeamResources
 local spGetTeamUnits = Spring.GetTeamUnits
 local spGetUnitDefID = Spring.GetUnitDefID
 local spGetSpectatingState = Spring.GetSpectatingState
+local Echo	= Spring.Echo
 
 local CMD_DGUN = CMD.MANUALFIRE
 local CMD_WAIT = CMD.WAIT
@@ -44,6 +49,36 @@ local CMD_WAIT = CMD.WAIT
 ----------------------------------------------------------------
 -- Callins
 ----------------------------------------------------------------
+
+local mohos	= {
+[UnitDefNames["arm_moho_mine"].id] 					= true,
+[UnitDefNames["arm_underwater_moho_mine"].id] 		= true,
+[UnitDefNames["core_moho_mine"].id] 				= true,
+[UnitDefNames["core_underwater_moho_mine"].id] 		= true,
+}
+
+local mmakers = {
+[UnitDefNames["arm_moho_metal_maker"].id] 			= true,
+[UnitDefNames["arm_metal_maker"].id] 				= true,
+[UnitDefNames["arm_floating_metal_maker"].id]		= true,
+[UnitDefNames["core_moho_metal_maker"].id] 			= true,
+[UnitDefNames["core_metal_maker"].id] 				= true,
+[UnitDefNames["core_floating_metal_maker"].id]		= true,
+}
+
+local function IsUnitComplete(unitID)
+	if unitID then
+		local _,_,_,_,buildProgress = Spring.GetUnitHealth(unitID)
+		if buildProgress and buildProgress>=1 then
+			return true
+		else
+			return false
+		end
+	else 
+		return false
+	end
+end
+	
 function widget:Initialize()
 	
 	if spGetSpectatingState() then
@@ -81,9 +116,21 @@ function widget:Update(dt)
 				end
 			end
 			spGiveOrderToUnitArray(toUnwait, CMD_WAIT, {}, {})
-			
+			Spring.SendLuaRulesMsg(string.format(alterLevelFormat,100*hoverSetting))
 			waitedUnits = nil
+			
 		end
+		
+		if stoppedMohos and (watchTime < 0) then
+			spGiveOrderToUnitArray(stoppedMohos, CMD.ONOFF, { 1 }, {})
+			stoppedMohos = nil
+		end
+		
+		if stoppedMMakers and (watchTime < 0) then
+			spGiveOrderToUnitArray(stoppedMMakers, CMD.ONOFF, { 1 }, {})
+			stoppedMMakers = nil
+		end
+		
 	end
 	
 	if (watchTime > 0) and (not waitedUnits) then
@@ -102,14 +149,40 @@ function widget:Update(dt)
 			for i = 1, #myUnits do
 				local uID = myUnits[i]
 				local uDefID = spGetUnitDefID(uID)
+				
 				if shouldWait[uDefID] then
 					local uCmds = isFactory[uDefID] and spGetFactoryCommands(uID, 1) or spGetUnitCommands(uID, 1)
-					if (#uCmds == 0) or (uCmds[1].id ~= CMD_WAIT) then
+					local buildPower = Spring.GetUnitCurrentBuildPower(uID)
+					local projectID = Spring.GetUnitIsBuilding(uID)
+					local projectCost = projectID and UnitDefs[Spring.GetUnitDefID(projectID)].energyCost or 0
+				
+					if ((#uCmds == 0) or (uCmds[1].id ~= CMD_WAIT)) and buildPower and buildPower > 0 and projectCost > 0 and not(IsUnitComplete(projectID)) then
 						waitedUnits[#waitedUnits + 1] = uID
 					end
+				elseif mohos[uDefID] then
+					if not stoppedMohos then stoppedMohos = {} end
+										
+					local state = Spring.GetUnitStates(uID)
+					if state and state.active then
+						stoppedMohos[#stoppedMohos+1] = uID
+					end
+					
+				elseif mmakers[uDefID] then
+					if not stoppedMMakers then stoppedMMakers = {} end
+					
+					local state = Spring.GetUnitStates(uID)
+					if state and state.active then
+						stoppedMMakers[#stoppedMMakers+1] = uID
+					end
+					
 				end
+				
+				spGiveOrderToUnitArray(stoppedMohos or {}, CMD.ONOFF, { 0 }, {} )
+				spGiveOrderToUnitArray(stoppedMMakers or {}, CMD.ONOFF, { 0 }, {} )
+				spGiveOrderToUnitArray(waitedUnits, CMD_WAIT, {}, {})
+				hoverSetting = Spring.GetTeamRulesParam(myTeamID, 'mmLevel') or 0
+				Spring.SendLuaRulesMsg(string.format(alterLevelFormat, 100))
 			end
-			spGiveOrderToUnitArray(waitedUnits, CMD_WAIT, {}, {})
 		end
 	end
 end
