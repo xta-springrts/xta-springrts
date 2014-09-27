@@ -5,7 +5,7 @@
 
 piece  GP, base, wake1, wake2, lwing, rwing, bombs;
 
-static-var  Terraintype, statechg_DesiredState, statechg_StateChanging;
+static-var  Terraintype, statechg_DesiredState, statechg_StateChanging, bMoving;
 
 lua_UnitStoppedMoving()
 { 
@@ -132,6 +132,7 @@ StartMoving()
 	signal 2;
 	set-signal-mask 2;
 	call-script lua_UnitStartedMoving();
+	bMoving = TRUE;
 	while( TRUE )
 	{
 		if( Terraintype == 1 AND (get IN_WATER) )
@@ -143,6 +144,25 @@ StartMoving()
 			emit-sfx 259 from base;
 		}
 		sleep 150;
+		
+		if( bMoving == 1 )
+		{
+			if( (get CURRENT_SPEED) <= 200000 )
+			{
+				bMoving = FALSE;
+				call-script lua_UnitStoppedMoving();
+				sleep 300;
+			}
+		}
+		if( bMoving == 0 )
+		{
+			if( (get CURRENT_SPEED) >= 200000 )
+			{
+				bMoving = TRUE;
+				call-script lua_UnitStartedMoving();
+				sleep 300;
+			}
+		}
 	}
 }
 
