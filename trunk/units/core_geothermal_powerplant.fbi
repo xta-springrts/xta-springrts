@@ -105,5 +105,9 @@
 	//************************************************************
 	//  To be removed
 	//*****************
-
+	
+	[SFXTypes]
+	{
+	explosiongenerator0=custom:GlowSmall;
+	}
 }

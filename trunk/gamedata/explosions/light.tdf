@@ -261,7 +261,7 @@
 	usedefaultexplosions=0;
 	[groundflash]//fake dynamic lighting technique
 	{
-		flashSize = 15;
+		flashSize = 30;
 		flashAlpha = 0.075;
 		circleGrowth = 0.1;
 		circleAlpha = 0.2;

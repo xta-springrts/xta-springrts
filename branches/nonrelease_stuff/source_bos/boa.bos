@@ -6,7 +6,7 @@
 piece  base, turret, lmisspod, lrockbarrel, lrocket, rmisspod, rrockbarrel, rrocket, lgun, lightning, wake1, wake2, wake3, wake4, wake5,
        wake6, wake7, wake8;
 
-static-var  Static_Var_1, restore_delay, gun_1;
+static-var  _Terrain, restore_delay, gun_1;
 
 // Signal definitions
 #define SIG_AIM				2
@@ -67,7 +67,7 @@ StartMoving()
 	set-signal-mask SIG_MOVE;
 	while( TRUE )
 	{
-		if( Static_Var_1 == 2 OR Static_Var_1 == 1 )
+		if( _Terrain == 2 OR _Terrain == 1 )
 		{
 			emit-sfx 3 from wake1;
 			emit-sfx 3 from wake2;
@@ -96,7 +96,7 @@ StopMoving()
 
 setSFXoccupy(Func_Var_1)
 {
-	Static_Var_1 = Func_Var_1;
+	_Terrain = Func_Var_1;
 }
 
 Create()
