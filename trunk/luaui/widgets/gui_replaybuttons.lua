@@ -67,8 +67,8 @@ local function draw_progressBar()
 	
 	myFont:Begin()
 	myFont:SetTextColor({1,1,1,1})
-	myFont:Print(table.concat({  	(hrs>=1 and round(hrs,0) or ""),hrs>=1 and (mins >= 10 and ":" or ":0") or "",
-									round(mins,0),						":",
+	myFont:Print(table.concat({  	(hrs>=1 and round(hrs,0) or ""),		hrs>=1 and (mins >= 10 and ":" or ":0") or "",
+									(mins >= 1 and round(mins,0) or ""), 	mins >= 1 and (secs>=10 and ":" or ":0") or "",
 									round(secs,0)						}),
 									x1+10,y0,textsize,"bs")
 	myFont:Print(table.concat({round(gamePortion*100,0),"%"}),x0+5,y0-10,textsize,"bs")
