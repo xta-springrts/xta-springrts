@@ -174,6 +174,7 @@ local playerReadyState = {}
 local absentName1 = "- no player yet -"
 local absentName2 = "- aband. units -"
 local absentName3 = "- dead team -"
+local absentName4 = "- retired - "
 local nilName = "---"
 
 --Did the game start yet?
@@ -635,8 +636,8 @@ function CreatePlayerFromTeam(teamID) -- for when we don't have a human player o
 
 	local _,_, isDead, isAI, tside, tallyteam = Spring_GetTeamInfo(teamID)
 	local tred, tgreen, tblue                 = Spring_GetTeamColor(teamID)
-	local tname, ttotake, tdead, tskill
-	
+	local tname, ttotake, tdead, tskill, retired
+		
 	if isAI then
 	
 		local version
@@ -659,9 +660,9 @@ function CreatePlayerFromTeam(teamID) -- for when we don't have a human player o
 			ttotake = false
 			tdead = false
 		else
-			ttotake = IsTakeable(teamID)
+			ttotake, retired = IsTakeable(teamID)
 			if ttotake then
-				tname = absentName2
+				tname = retired and absentName4 or absentName2
 				tdead = false
 			else
 				tname = absentName3
@@ -2206,17 +2207,19 @@ function IsTakeable(teamID)
 	local _,leaderID,isDead,isAI = Spring.GetTeamInfo(teamID)
 	local name, active = Spring.GetPlayerInfo(leaderID)
 	active = active or isAI
-	if name ~= nil and (not active) and not isAI or Spring_GetTeamRulesParam(teamID, "numActivePlayers") == 0 then
+		
+	if (not active) and (not isAI) or Spring_GetTeamRulesParam(teamID, "numActivePlayers") == 0 then
 		local units = Spring_GetTeamUnitCount(teamID)
 		local energy = Spring_GetTeamResources(teamID,"energy")
 		local metal = Spring_GetTeamResources(teamID,"metal")
+		local retired = leaderID < 0
 		if units and energy and metal then
 			if (units > 0) or (energy > 1000) or (metal > 100) then			
-				return true
+				return true, retired
 			end
 		end
 	else
-		return false					
+		return false, false					
 	end
 end
 		
