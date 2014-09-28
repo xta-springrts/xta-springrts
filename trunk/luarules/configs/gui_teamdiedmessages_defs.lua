@@ -28,6 +28,7 @@ local messages = {
 	'Do, or do not. There is no <tn>',
 	'<tn> danced with the devil in the pale moonlight',
 	'<tn> was shaken, not stirred',
+	'Brave <tn> was not at all afraid to be killed in nasty ways',
 }
 
 local defaultmessages = {
@@ -36,5 +37,15 @@ local defaultmessages = {
 	'<side> forces have been obliterated.',
 }
 
-return messages, defaultmessages
+local resignedmessages = {
+	'<side> forces have gone to a better place.',
+	'<side> vermin have retreated',
+	'<side> rascals have surrendered.',
+	'<side> forces have laid down their arms.',
+	'<side> rapscallions gave up',
+	'<side> scoundrels have deserted',
+	'<side> thugs ran away',
+}
+
+return messages, defaultmessages, resignedmessages
 
