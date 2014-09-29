@@ -170,6 +170,15 @@ local CMD_SELFD = CMD.SELFD
 local morphPenalty = 1.0
 local MAX_MORPH = 0 --// will increase dynamically
 
+local kamikazeUnits = {
+	[UnitDefNames[  "arm_fart_mine"].id] = true,
+	[UnitDefNames[ "arm_fart_spidey"].id] = true,
+	[UnitDefNames["arm_spidey"].id] = true,
+	[UnitDefNames[ "core_nugget"].id] = true,
+	[UnitDefNames[ "core_nugget_tic"].id] = true,
+	[UnitDefNames[ "core_tic"].id] = true,
+}
+
 --------------------------------------------------------------------------------
 --  COMMON
 --------------------------------------------------------------------------------
@@ -485,25 +494,33 @@ end
 
 
 local function ReAssignAssists(newUnit,oldUnit)
-  local ally = SpGetUnitAllyTeam(newUnit)
-  local alliedTeams = SpGetTeamList(ally)
-  for n=1,#alliedTeams do
-    local teamID = alliedTeams[n]
-    local alliedUnits = SpGetTeamUnits(teamID)
-    for i=1,#alliedUnits do
-      local unitID = alliedUnits[i]
-      local cmds = SpGetCommandQueue(unitID)
-      for j=1,#cmds do
-        local cmd = cmds[j]
-        if (cmd.id == CMD_GUARD)and(cmd.params[1] == oldUnit) then
-          SpGiveOrderToUnit(unitID,CMD_INSERT,{cmd.tag,CMD_GUARD,0,newUnit},{})
-          SpGiveOrderToUnit(unitID,CMD_REMOVE,{cmd.tag},{})
-        end
-      end
-    end
-  end
-end
+	-- needs to process all commands but exclude sweeper mines and mine sweeper units to increase
+	-- performance: knorke usually makes tonnes of mine sweepers, which can be morphed into mines.
+	local unitDefID = SpGetUnitDefID(oldUnit)
+	if unitDefID and kamikazeUnits[unitDefID] then return end
+	
+	local ally = SpGetUnitAllyTeam(newUnit)
+	local alliedTeams = SpGetTeamList(ally)
 
+	for n=1,#alliedTeams do
+		local teamID = alliedTeams[n]
+		local alliedUnits = SpGetTeamUnits(teamID)
+
+		for i=1,#alliedUnits do
+			local unitID = alliedUnits[i]
+			local cmds = SpGetCommandQueue(unitID,-1)
+
+			for j=1,#cmds do
+				local cmd = cmds[j]
+
+				if (cmd.id == CMD_GUARD)and(cmd.params[1] == oldUnit) then
+					SpGiveOrderToUnit(unitID,CMD_INSERT,{cmd.tag,CMD_GUARD,0,newUnit},{})
+					SpGiveOrderToUnit(unitID,CMD_REMOVE,{cmd.tag},{})
+				end
+			end
+		end
+	end
+end
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
@@ -697,8 +714,8 @@ local function FinishMorph(unitID, morphData)
 	Spring.SetUnitRulesParam(newUnit,'kills',Spring.GetUnitRulesParam(unitID,'kills') or 0)
 	Spring.SetUnitRulesParam(unitID,'kills',0)
 
-	--// FIXME: - re-attach to current transport?
-	-- has to probably be done in unit script to work
+	-- Fixed: - re-attach to current transport
+	-- has to be done in unit script to work
 	
 	local transID = SpGetUnitTransporter(unitID)
 	if transID then
