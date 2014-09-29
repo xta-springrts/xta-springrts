@@ -145,7 +145,6 @@ function widget:CommandNotify(id, params, options)
 		local reclaimUnits = {}
 		local selectedUnits = GetSelectedUnits()
 		
-		--Echo("CN:",id,options.shift,options.alt)
 		for i=1,#selectedUnits do
 			local uid = selectedUnits[i]
 			local udid = GetUnitDefID(uid)
@@ -161,7 +160,7 @@ function widget:CommandNotify(id, params, options)
 				
 				local ux, uy, uz = GetUnitPosition(uid)
 				if (options.shift) then
-					local cmds = GetUnitCommands(uid)
+					local cmds = GetUnitCommands(uid,-1)
 					for ci=#cmds, 1, -1 do
 						local cmd = cmds[ci]
 						if (cmd.id == MOVE) then

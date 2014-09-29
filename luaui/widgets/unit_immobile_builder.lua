@@ -120,7 +120,7 @@ if (idleFrames > 0) then
     for unitID, f in pairs(idlers) do
       local idler = idlers[k]
       if ((frame - f) > idleFrames) then
-        local cmds = spGetUnitCommands(unitID)
+        local cmds = spGetUnitCommands(unitID,1)
         if (cmds and (#cmds <= 0)) then
           SetupUnit(unitID)
         else

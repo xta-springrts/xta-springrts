@@ -28,7 +28,6 @@ end
 --Speed-ups
 
 local GetUnitDefID    = Spring.GetUnitDefID
-local GetUnitCommands = Spring.GetUnitCommands
 local FindUnitCmdDesc = Spring.FindUnitCmdDesc
 
 --------------------------------------------------------------------------------

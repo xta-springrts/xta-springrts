@@ -71,9 +71,14 @@ if gadgetHandler:IsSyncedCode() then
 		if Spring.GetGameRulesParam("ShowEnd") == 0 then
 			for _, unitID in ipairs(Spring.GetAllUnits()) do
 				Spring.SetUnitNeutral(unitID, true)
-				--Spring.SetUnitNoSelect(unitID, true)
 				Spring.GiveOrderToUnit(unitID, CMD_FIRE_STATE, {0}, {})
-				Spring.GiveOrderToUnit(unitID, CMD_STOP,{},{})
+				
+				-- exclude units that are morphing, because otherwise allowcommand and giverordertounit will
+				-- create command recursion. Use stunned as a proxy of morphing, because a morphing unit will not anymore 
+				-- have the morph command in command queue
+				if not Spring.GetUnitIsStunned(unitID) then
+					Spring.GiveOrderToUnit(unitID, CMD_STOP,{},{})
+				end
 			end
 			Spring.PlaySoundFile("sounds/beep1.wav",3.0,0,0,0,0,0,0,'userinterface')
 			Spring.SetGameRulesParam("ShowEnd",1)
