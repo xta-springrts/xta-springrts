@@ -126,7 +126,7 @@ if (gadgetHandler:IsSyncedCode()) then
 	end
 	
 	local function countMineQueue(unitID, limit)
-		local queue = GetUnitCommands(unitID)
+		local queue = GetUnitCommands(unitID,-1)
 		local mines = 0
 		for _, cmd in pairs(queue) do
 			if mineDefTable[-cmd["id"]] then 
@@ -134,12 +134,11 @@ if (gadgetHandler:IsSyncedCode()) then
 				if mines > limit then break end
 			end
 		end
-		--Echo("Mines pending: ",mines,"/",limit)
 		return mines
 	end
 	
 	local function isOrderCancellation(unitID, cmdID, cmdParams)
-		local queue = GetUnitCommands(unitID)
+		local queue = GetUnitCommands(unitID,-1)
 		local x = cmdParams[1]
 		local y = cmdParams[2]
 		local z = cmdParams[3]

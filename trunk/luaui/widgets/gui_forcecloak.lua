@@ -35,7 +35,7 @@ function widget:UnitCommand(uID, uDefID, uT, cmdID, cmdOpts, cmdParams)
 	local cp 		= unitDef.customParams or nil
 	
 	if unitDef and cp and cp.iscommander and cmdID == CMD.CLOAK then
-		local cmd0 = Spring.GetUnitCommands(uID)
+		local cmd0 = Spring.GetUnitCommands(uID,1)
 		-- if no orders are given:
 		if cmd0 == nil or cmd0[1] == nil then return true end
 		-- if orders are given:

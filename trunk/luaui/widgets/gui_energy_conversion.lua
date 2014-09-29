@@ -56,11 +56,12 @@ local displayWindow = true
 function widget:Initialize()
 	local playerID = Spring.GetMyPlayerID()
 	local _, _, spec, _, _, _, _, _ = Spring.GetPlayerInfo(playerID)
-	Spring.Echo("ECI:",spec)
+	
 	if ( spec == true ) then
 		Spring.Echo("widget", LOG.INFO, "<Energy Conversion Info> Spectator mode. Widget removed.")
 		displayWindow = false
 		widgetHandler:RemoveWidget()
+		return false
 	end
 	scaling = Y/1200
 	sx, sy, fontSize = sx*scaling, sy*scaling, 12*scaling

@@ -24,7 +24,7 @@ function gadget:GetInfo()
   }
 end
 
-local echo = Spring.Echo
+local Echo = Spring.Echo
 
 -- Changes for TechA 
 -- Fix Rc not being factory to unlock morph
@@ -511,207 +511,214 @@ end
 
 local function StartMorph(unitID, unitDefID, teamID, morphDef, cmdp)
 
-  -- do not allow morph for unfinsihed units
-  if not isFinished(unitID) then return true end
+	-- do not allow morph for unfinsihed units
+	if not isFinished(unitID) then return true end
 
-  SpSetUnitHealth(unitID, { paralyze = 1.0e9 })    --// turns mexes and mm off (paralyze the unit)
-  SpSetUnitResourcing(unitID,"e",0)                --// turns solars off
-  SpGiveOrderToUnit(unitID, CMD_ONOFF, { 0 }, { "alt" }) --// turns radars/jammers off
+	SpSetUnitHealth(unitID, { paralyze = 1.0e9 })    --// turns mexes and mm off (paralyze the unit)
+	SpSetUnitResourcing(unitID,"e",0)                --// turns solars off
+	SpGiveOrderToUnit(unitID, CMD_ONOFF, { 0 }, { "alt" }) --// turns radars/jammers off
+	
+	morphUnits[unitID] = {
+	def = morphDef,
+	progress = 0.0,
+	increment = morphDef.increment,
+	morphID = morphID,
+	teamID = teamID,
+	}
+	SendToUnsynced("mph_str", unitID, unitDefID, 0.0, morphDef.increment, morphID, teamID, cmdp)
 
-  morphUnits[unitID] = {
-    def = morphDef,
-    progress = 0.0,
-    increment = morphDef.increment,
-    morphID = morphID,
-    teamID = teamID,
-  }
-  SendToUnsynced("mph_str", unitID, unitDefID, 0.0, morphDef.increment, morphID, teamID, cmdp)
+	local cmdDescID = SpFindUnitCmdDesc(unitID, morphDef.cmd)
+	if (cmdDescID) then
+		SpEditUnitCmdDesc(unitID, cmdDescID, {id=morphDef.stopCmd, name=RedStr.."Stop"})
+	end
 
-  local cmdDescID = SpFindUnitCmdDesc(unitID, morphDef.cmd)
-  if (cmdDescID) then
-    SpEditUnitCmdDesc(unitID, cmdDescID, {id=morphDef.stopCmd, name=RedStr.."Stop"})
-  end
-
-  SendToUnsynced("unit_morph_start", unitID, unitDefID, morphDef.cmd)
+	SendToUnsynced("unit_morph_start", unitID, unitDefID, morphDef.cmd)
 end
 
 
 local function StopMorph(unitID, morphData)
-  morphUnits[unitID] = nil
-  SendToUnsynced("mph_stp", unitID)
+	morphUnits[unitID] = nil
+	SendToUnsynced("mph_stp", unitID)
+	
+	SpSetUnitHealth(unitID, { paralyze = -1})
+	local scale = morphData.progress * stopPenalty
+	local unitDefID = SpGetUnitDefID(unitID)
 
-  SpSetUnitHealth(unitID, { paralyze = -1})
-  local scale = morphData.progress * stopPenalty
-  local unitDefID = SpGetUnitDefID(unitID)
+	SpSetUnitResourcing(unitID,"e", UnitDefs[unitDefID].energyMake)
+	SpGiveOrderToUnit(unitID, CMD_ONOFF, { 1 }, { "alt" })
+	local usedMetal  = morphData.def.metal  * scale
+	SpAddUnitResource(unitID, 'metal',  usedMetal)
+	--local usedEnergy = morphData.def.energy * scale
+	--Spring.AddUnitResource(unitID, 'energy', usedEnergy)
 
-  SpSetUnitResourcing(unitID,"e", UnitDefs[unitDefID].energyMake)
-  SpGiveOrderToUnit(unitID, CMD_ONOFF, { 1 }, { "alt" })
-  local usedMetal  = morphData.def.metal  * scale
-  SpAddUnitResource(unitID, 'metal',  usedMetal)
-  --local usedEnergy = morphData.def.energy * scale
-  --Spring.AddUnitResource(unitID, 'energy', usedEnergy)
+	SendToUnsynced("unit_morph_stop", unitID)
 
-  SendToUnsynced("unit_morph_stop", unitID)
-
-  local cmdDescID = SpFindUnitCmdDesc(unitID, morphData.def.stopCmd)
-  if (cmdDescID) then
-    SpEditUnitCmdDesc(unitID, cmdDescID, {id=morphData.def.cmd, name=morphData.def.cmdname})
-  end
+	local cmdDescID = SpFindUnitCmdDesc(unitID, morphData.def.stopCmd)
+	if (cmdDescID) then
+		SpEditUnitCmdDesc(unitID, cmdDescID, {id=morphData.def.cmd, name=morphData.def.cmdname})
+	end
 end
 
 
 local function FinishMorph(unitID, morphData)
-  local udDst = UnitDefs[morphData.def.into]
-  local ud = UnitDefs[unitID]
-  local defName = udDst.name
-  local unitTeam = morphData.teamID
-  local px, py, pz = SpGetUnitBasePosition(unitID)
-  local h = SpGetUnitHeading(unitID)
-  SpSetUnitBlocking(unitID, false)
-  morphUnits[unitID] = nil
+	local udDst = UnitDefs[morphData.def.into]
+	local ud = UnitDefs[unitID]
+	local defName = udDst.name
+	local unitTeam = morphData.teamID
+	local px, py, pz = SpGetUnitBasePosition(unitID)
+	local h = SpGetUnitHeading(unitID)
+	SpSetUnitBlocking(unitID, false)
+	morphUnits[unitID] = nil
+	
+	local oldHealth,oldMaxHealth,paralyzeDamage,captureProgress,buildProgress = SpGetUnitHealth(unitID)
+	local isBeingBuilt = false
+	if buildProgress < 1 then
+		isBeingBuilt = true
+	end
 
-  local oldHealth,oldMaxHealth,paralyzeDamage,captureProgress,buildProgress = SpGetUnitHealth(unitID)
-  local isBeingBuilt = false
-  if buildProgress < 1 then
-    isBeingBuilt = true
-  end
+	local newUnit
 
-  local newUnit
+	if udDst.isBuilding or udDst.isFactory then
+		--if udDst.isBuilding then
 
-  if udDst.isBuilding or udDst.isFactory then
-  --if udDst.isBuilding then
+		local x = floor(px/16)*16
+		local y = py
+		local z = floor(pz/16)*16
+		local face = HeadingToFacing(h)
+		local xsize = udDst.xsize
+		local zsize =(udDst.zsize or udDst.ysize)
+		if ((face == 1) or(face == 3)) then
+			xsize, zsize = zsize, xsize
+		end
+		if xsize/4 ~= floor(xsize/4) then
+			x = x+8
+		end
+		if zsize/4 ~= floor(zsize/4) then
+			z = z+8
+		end
+		newUnit = SpCreateUnit(defName, x, y, z, face, unitTeam, isBeingBuilt)
+		if not newUnit then
+			StopMorph(unitID, morphData)
+			return
+		end
+		SpSetUnitPosition(newUnit, x, y, z)
+	else
+		newUnit = SpCreateUnit(defName, px, py, pz, HeadingToFacing(h), unitTeam, isBeingBuilt)
+		if not newUnit then
+			StopMorph(unitID, morphData)
+			return
+		end
+		SpSetUnitRotation(newUnit, 0, -h * pi / 32768, 0)
+		SpSetUnitPosition(newUnit, px, py, pz)
+	end
 
-    local x = floor(px/16)*16
-    local y = py
-    local z = floor(pz/16)*16
-    local face = HeadingToFacing(h)
-    local xsize = udDst.xsize
-    local zsize =(udDst.zsize or udDst.ysize)
-    if ((face == 1) or(face == 3)) then
-      xsize, zsize = zsize, xsize
-    end
-    if xsize/4 ~= floor(xsize/4) then
-      x = x+8
-    end
-    if zsize/4 ~= floor(zsize/4) then
-      z = z+8
-    end
-    newUnit = SpCreateUnit(defName, x, y, z, face, unitTeam, isBeingBuilt)
-  if not newUnit then
-    StopMorph(unitID, morphData)
-    return
-  end
-    SpSetUnitPosition(newUnit, x, y, z)
-  else
-    newUnit = SpCreateUnit(defName, px, py, pz, HeadingToFacing(h), unitTeam, isBeingBuilt)
-  if not newUnit then
-    StopMorph(unitID, morphData)
-    return
-  end
-    SpSetUnitRotation(newUnit, 0, -h * pi / 32768, 0)
-    SpSetUnitPosition(newUnit, px, py, pz)
-  end
-
-  if (extraUnitMorphDefs[unitID] ~= nil) then
-    -- nothing here for now
-  end
-  if (hostName ~= nil) and PWUnits[unitID] then
-    -- send planetwars deployment message
-    PWUnit = PWUnits[unitID]
-    PWUnit.currentDef=udDst
-    local data = PWUnit.owner..","..defName..","..floor(px)..","..floor(pz)..",".."S" -- todo determine and apply smart orientation of the structure
-    Spring.SendCommands("w "..hostName.." pwmorph:"..data)
-    extraUnitMorphDefs[unitID] = nil
-    GG.PlanetWars.units[unitID] = nil
-    GG.PlanetWars.units[newUnit] = PWUnit
-    SendToUnsynced('PWCreate', unitTeam, newUnit)
-  elseif (not morphData.def.facing) then  -- set rotation only if unit is not planetwars and facing is not true
-    --Spring.Echo(morphData.def.facing)
-    SpSetUnitRotation(newUnit, 0, -h * pi / 32768, 0)
-  end
+	if (extraUnitMorphDefs[unitID] ~= nil) then
+		-- nothing here for now
+	end
+	if (hostName ~= nil) and PWUnits[unitID] then
+		-- send planetwars deployment message
+		PWUnit = PWUnits[unitID]
+		PWUnit.currentDef=udDst
+		local data = PWUnit.owner..","..defName..","..floor(px)..","..floor(pz)..",".."S" -- todo determine and apply smart orientation of the structure
+		Spring.SendCommands("w "..hostName.." pwmorph:"..data)
+		extraUnitMorphDefs[unitID] = nil
+		GG.PlanetWars.units[unitID] = nil
+		GG.PlanetWars.units[newUnit] = PWUnit
+		SendToUnsynced('PWCreate', unitTeam, newUnit)
+	elseif (not morphData.def.facing) then  -- set rotation only if unit is not planetwars and facing is not true
+		--Spring.Echo(morphData.def.facing)
+		SpSetUnitRotation(newUnit, 0, -h * pi / 32768, 0)
+	end
 
 
-  --//copy experience
-  local newXp = SpGetUnitExperience(unitID)*XpScale
-  local nextMorph = morphDefs[morphData.def.into]
-  if nextMorph~= nil and nextMorph.into ~= nil then nextMorph = {morphDefs[morphData.def.into]} end
-  if (nextMorph) then --//determine the lowest xp req. of all next possible morphs
-    local maxXp = huge
-    for _, nm in pairs(nextMorph) do
-      local rankXpInto = RankToXp(nm.into,nm.rank)
-      if (rankXpInto>0)and(rankXpInto<maxXp) then
-        maxXp=rankXpInto
-      end
-      local xpInto     = nm.xp
-      if (xpInto>0)and(xpInto<maxXp) then
-        maxXp=xpInto
-      end
-    end
-    newXp = min( newXp, maxXp*0.9)
-  end
-  SpSetUnitExperience(newUnit, newXp)
+	--//copy experience
+	local newXp = SpGetUnitExperience(unitID)*XpScale
+	local nextMorph = morphDefs[morphData.def.into]
+	if nextMorph~= nil and nextMorph.into ~= nil then nextMorph = {morphDefs[morphData.def.into]} end
+	if (nextMorph) then --//determine the lowest xp req. of all next possible morphs
+		local maxXp = huge
+		for _, nm in pairs(nextMorph) do
+			local rankXpInto = RankToXp(nm.into,nm.rank)
+			if (rankXpInto>0)and(rankXpInto<maxXp) then
+				maxXp=rankXpInto
+			end
+			local xpInto     = nm.xp
+			if (xpInto>0)and(xpInto<maxXp) then
+				maxXp=xpInto
+			end
+		end
+		newXp = min( newXp, maxXp*0.9)
+	end
+	SpSetUnitExperience(newUnit, newXp)
 
-  --//copy some state
-  local states = SpGetUnitStates(unitID)
-  SpGiveOrderArrayToUnitArray({ newUnit }, {
-    { CMD_FIRE_STATE, { states.firestate },             { } },
-    { CMD_MOVE_STATE, { states.movestate },             { } },
-    { CMD_REPEAT,     { states["repeat"] and 1 or 0 },  { } },
-    { CMD_CLOAK,      { states.cloak     and 1 or udDst.initCloaked },  { } },
-    { CMD_ONOFF,      { 1 },                            { } },
-    { CMD_TRAJECTORY, { states.trajectory and 1 or 0 }, { } },
-  })
+	--//copy some state
+	local states = SpGetUnitStates(unitID)
+	SpGiveOrderArrayToUnitArray({ newUnit }, {
+	{ CMD_FIRE_STATE, { states.firestate },             { } },
+	{ CMD_MOVE_STATE, { states.movestate },             { } },
+	{ CMD_REPEAT,     { states["repeat"] and 1 or 0 },  { } },
+	{ CMD_CLOAK,      { states.cloak     and 1 or udDst.initCloaked },  { } },
+	{ CMD_ONOFF,      { 1 },                            { } },
+	{ CMD_TRAJECTORY, { states.trajectory and 1 or 0 }, { } },
+	})
 
-  --//copy command queue
-  local cmds = SpGetUnitCommands(unitID)
-  for i = 2, #cmds do  -- skip the first command (CMD_MORPH)
-    local cmd = cmds[i]
-    SpGiveOrderToUnit(newUnit, cmd.id, cmd.params, cmd.options.coded)
-  end
+	--//copy command queue
+	local cmds = SpGetUnitCommands(unitID,-1)
+	for i = 2, #cmds do  -- skip the first command (CMD_MORPH)
+		local cmd = cmds[i]
+		SpGiveOrderToUnit(newUnit, cmd.id, cmd.params, cmd.options.coded)
+	end
 
-  --//reassign assist commands to new unit
-  ReAssignAssists(newUnit,unitID)
+	--//reassign assist commands to new unit
+	ReAssignAssists(newUnit,unitID)
 
-  --// copy health
-  -- old health is declared above
-  local _,newMaxHealth         = SpGetUnitHealth(newUnit)
-  local newHealth = (oldHealth / oldMaxHealth) * newMaxHealth
-  local hpercent = newHealth/newMaxHealth
-  if newHealth<=1 then newHealth = 1 end
+	--// copy health
+	-- old health is declared above
+	local _,newMaxHealth         = SpGetUnitHealth(newUnit)
+	local newHealth = (oldHealth / oldMaxHealth) * newMaxHealth
+	local hpercent = newHealth/newMaxHealth
+	if newHealth<=1 then newHealth = 1 end
 
-  -- prevent conflict with rezz gadget
-  if hpercent > 0.045 and hpercent < 0.055 then
-    newHealth = newMaxHealth * 0.056 + 1
-  end
+	-- prevent conflict with rezz gadget
+	if hpercent > 0.045 and hpercent < 0.055 then
+		newHealth = newMaxHealth * 0.056 + 1
+	end
 
-  SpSetUnitHealth(newUnit, {health = newHealth, build = buildProgress})
+	SpSetUnitHealth(newUnit, {health = newHealth, build = buildProgress})
 
-  --// copy shield power
-  local enabled,oldShieldState = SpGetUnitShieldState(unitID)
-  if oldShieldState and SpGetUnitShieldState(newUnit) then
-    SpSetUnitShieldState(newUnit, enabled,oldShieldState)
-  end
+	--// copy shield power
+	local enabled,oldShieldState = SpGetUnitShieldState(unitID)
+	if oldShieldState and SpGetUnitShieldState(newUnit) then
+		SpSetUnitShieldState(newUnit, enabled,oldShieldState)
+	end
 
---// copy age and kills
+	--// copy age and kills
 	Spring.SetUnitRulesParam(newUnit,'born',Spring.GetUnitRulesParam(unitID,'born') or Spring.GetGameFrame())
 	Spring.SetUnitRulesParam(newUnit,'kills',Spring.GetUnitRulesParam(unitID,'kills') or 0)
 	Spring.SetUnitRulesParam(unitID,'kills',0)
 
- -- local lineage = Spring.GetUnitLineage(unitID)
- -- Spring.SetUnitLineage(newUnit,lineage,true)
+	--// FIXME: - re-attach to current transport?
+	-- has to probably be done in unit script to work
+	
+	local transID = SpGetUnitTransporter(unitID)
+	if transID then
+		-- This works ok for hover and sea transporters, but not for air ones. Air ones probably cannot pickup a falling commander
+		SpGiveOrderToUnit(transID, CMD.INSERT,{0,CMD.LOAD_UNITS,CMD.OPT_INTERNAL,newUnit},{"alt"})
+	end
+	
+	--// update selection
+	SendToUnsynced ("unit_morph_finished", unitID, newUnit)
 
-  --// FIXME: - re-attach to current transport?
-  --// update selection
-  SendToUnsynced ("unit_morph_finished", unitID, newUnit)
-
-  SpSetUnitBlocking(newUnit, true)
-  SpDestroyUnit(unitID, false, true) -- selfd = false, reclaim = true
-end
+	SpSetUnitBlocking(newUnit, true)
+	SpDestroyUnit(unitID, false, true) -- selfd = false, reclaim = true
+	end
 
 
 local function UpdateMorph(unitID, morphData)
   if not isFinished(unitID) then return true end
-  if SpGetUnitTransporter(unitID) then return true end
+  
+  -- let units morph while being transported
+  --if SpGetUnitTransporter(unitID) then return true end
 
   if (SpUseUnitResource(unitID, morphData.def.resTable)) then
     morphData.progress = morphData.progress + morphData.increment
@@ -799,7 +806,6 @@ function gadget:Initialize()
 
 end
 
-
 function gadget:Shutdown()
   for i,f in pairs(GG.UnitRanked or {}) do
     if (f==UnitRanked) then
@@ -812,6 +818,7 @@ function gadget:Shutdown()
   for i=1,#allUnits do
     local unitID    = allUnits[i]
     local morphData = morphUnits[unitID]
+	
     if (morphData) then
       StopMorph(unitID, morphData)
     end
@@ -844,7 +851,6 @@ function gadget:UnitCreated(unitID, unitDefID, teamID)
   end
 end
 
-
 function gadget:UnitFinished(unitID, unitDefID, teamID)
   local bfrTechLevel = teamTechLevel[teamID] or 0
   AddFactory(unitID, unitDefID, teamID)
@@ -861,7 +867,6 @@ function gadget:UnitFinished(unitID, unitDefID, teamID)
     UpdateMorphReqs(teamID)
   end
 end
-
 
 function gadget:UnitDestroyed(unitID, unitDefID, teamID)
   if (morphUnits[unitID]) then
@@ -890,7 +895,6 @@ function gadget:UnitDestroyed(unitID, unitDefID, teamID)
   if (updateButtons) then UpdateMorphReqs(teamID) end
 end
 
-
 function gadget:UnitTaken(unitID, unitDefID, oldTeamID, teamID)
   self:UnitCreated(unitID, unitDefID, teamID)
   if (isFinished(unitID)) then
@@ -898,11 +902,9 @@ function gadget:UnitTaken(unitID, unitDefID, oldTeamID, teamID)
   end
 end
 
-
 function gadget:UnitGiven(unitID, unitDefID, newTeamID, oldTeamID)
   self:UnitDestroyed(unitID, unitDefID, oldTeamID)
 end
-
 
 function UnitRanked(unitID,unitDefID,teamID,newRank,oldRank)
   local morphDefSet = morphDefs[unitDefID]
@@ -925,11 +927,9 @@ function UnitRanked(unitID,unitDefID,teamID,newRank,oldRank)
   end
 end
 
-
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
-
 
 function AddFactory(unitID, unitDefID, teamID)
   if (isFactory(unitDefID)) then
@@ -939,7 +939,6 @@ function AddFactory(unitID, unitDefID, teamID)
     end
   end
 end
-
 
 function RemoveFactory(unitID, unitDefID, teamID)
   if (devolution)and(isFactory(unitDefID))and(isFinished(unitID)) then
@@ -984,7 +983,6 @@ end
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
-
 
 function gadget:GameFrame(n)
 
@@ -1039,48 +1037,52 @@ function gadget:GameFrame(n)
   end
 end
 
-
 function gadget:AllowCommand(unitID, unitDefID, teamID, cmdID, cmdParams, cmdOptions)
-  local morphData = morphUnits[unitID]
-  if (morphData) then
-    if (cmdID==morphData.def.stopCmd)or(cmdID==CMD_STOP)or(cmdID==CMD_MORPH_STOP) then
-      if not SpGetUnitTransporter(unitID) then
-        StopMorph(unitID, morphData)
-        morphUnits[unitID] = nil
-        return false
-      end
-    elseif (cmdID == CMD_ONOFF) then
-      return false
-    elseif cmdID == CMD_SELFD then
-      StopMorph(unitID, morphData)
-      morphUnits[unitID] = nil
-    --else --// disallow ANY command to units in morph
-    --  return false
-    end
-  elseif (cmdID >= CMD_MORPH and cmdID < CMD_MORPH+MAX_MORPH) then
-    local morphDef = (morphDefs[unitDefID] or {})[cmdID] or extraUnitMorphDefs[unitID]
-    if ((morphDef)and
-        (morphDef.tech<=teamTechLevel[teamID])and
-        (morphDef.rank<=GetUnitRank(unitID))and
-        (morphDef.xp<=SpGetUnitExperience(unitID))and
-        (UnitReqCheck(teamID, morphDef.require)) )
-    then
-      if (isFactory(unitDefID)) then
-        --// the factory cai is broken and doesn't call CommandFallback(),
-        --// so we have to start the morph here
-        -- dont start directly to break recursion
-        StartMorph(unitID, unitDefID, teamID, morphDef)
-        return false
-      else
-        return true
-      end
-    end
-    return false
-  end
+	local morphData = morphUnits[unitID]
+	
+	if (morphData) then
+		if (cmdID==morphData.def.stopCmd)or(cmdID==CMD_STOP)or(cmdID==CMD_MORPH_STOP) then
+			
+			local x,y,z = Spring.GetUnitPosition(unitID)
+			local h = x and z and Spring.GetGroundHeight(x,z)
+			-- Using SpGetUnitTransporter doesn't work because there is a stop command issued when unit is unloaded
+			-- and then transporter is already nil, so we're using altitudes instead
+			if y and h and y == h then
+				StopMorph(unitID, morphData)
+				morphUnits[unitID] = nil
+				return false
+			end
+		elseif (cmdID == CMD_ONOFF) then
+			return false
+		elseif cmdID == CMD_SELFD then
+			StopMorph(unitID, morphData)
+			morphUnits[unitID] = nil
+			--else --// disallow ANY command to units in morph
+			--  return false
+		end
+	elseif (cmdID >= CMD_MORPH and cmdID < CMD_MORPH+MAX_MORPH) then
+		local morphDef = (morphDefs[unitDefID] or {})[cmdID] or extraUnitMorphDefs[unitID]
+		if ((morphDef)and
+			(morphDef.tech<=teamTechLevel[teamID])and
+			(morphDef.rank<=GetUnitRank(unitID))and
+			(morphDef.xp<=SpGetUnitExperience(unitID))and
+			(UnitReqCheck(teamID, morphDef.require)) )
+			then
+			if (isFactory(unitDefID)) then
+				--// the factory cai is broken and doesn't call CommandFallback(),
+				--// so we have to start the morph here
+				-- dont start directly to break recursion
+				StartMorph(unitID, unitDefID, teamID, morphDef)
+				return false
+			else
+				return true
+			end
+		end
+		return false
+	end
 
-  return true
+	return true
 end
-
 
 function gadget:CommandFallback(unitID, unitDefID, teamID, cmdID, cmdParams, cmdOptions)
   if (cmdID < CMD_MORPH or cmdID >= CMD_MORPH+MAX_MORPH) then
@@ -1098,8 +1100,6 @@ function gadget:CommandFallback(unitID, unitDefID, teamID, cmdID, cmdParams, cmd
   end
   return true, false  --// command was used, do not remove it
 end
-
-
 
 --------------------------------------------------------------------------------
 --  END SYNCED
@@ -1120,20 +1120,17 @@ end
 
 local gameFrame;
 local CallAsTeam = CallAsTeam
-local spairs = spairs
-local snext = snext
 
 local GetUnitTeam         = Spring.GetUnitTeam
 local GetUnitHeading      = Spring.GetUnitHeading
 local GetUnitBasePosition = Spring.GetUnitBasePosition
 local GetGameFrame        = Spring.GetGameFrame
 local GetSpectatingState  = Spring.GetSpectatingState
-local AddWorldIcon        = Spring.AddWorldIcon
-local AddWorldText        = Spring.AddWorldText
+
+
 local IsUnitVisible       = Spring.IsUnitVisible
 local GetLocalTeamID      = Spring.GetLocalTeamID
 local spAreTeamsAllied    = Spring.AreTeamsAllied
-local spGetGameFrame      = Spring.GetGameFrame
 
 local glBillboard    = gl.Billboard
 local glColor        = gl.Color
@@ -1239,7 +1236,6 @@ local function StopMorph(cmd, unitID)
   return true
 end
 
-
 local function StartMph(cmd, unitID, unitDefID, prog, incr, mID, tID, cmdp)
   local tdef = nil
   if cmdp == nil then
@@ -1274,7 +1270,6 @@ local function ProgMph(cmd, unitID, prog)
   end
 end
 
-
 local function MorphLuaUI(_, _, data)
   if data[2] == Spring.GetLocalPlayerID().."" then
     hasMorphLuaUI = (data[1] == "1")
@@ -1299,7 +1294,6 @@ function gadget:Initialize()
   gadgetHandler:AddChatAction("morphluaui", MorphLuaUI, "requests morph data to be broadcasted")  
 end
 
-
 function gadget:Shutdown()
   gadgetHandler:RemoveSyncAction("unit_morph_finished")
   gadgetHandler:RemoveSyncAction("unit_morph_start")
@@ -1311,7 +1305,7 @@ function gadget:Shutdown()
 end
 
 function gadget:Update()
-  local frame = spGetGameFrame()
+  local frame = GetGameFrame()
   if (frame>oldFrame) then
     oldFrame = frame
     if next(morphUnits) then
@@ -1341,7 +1335,6 @@ function gadget:Update()
   end
 end
 
-
 local teamColors = {}
 local function SetTeamColor(teamID,a)
   local color = teamColors[teamID]
@@ -1359,7 +1352,6 @@ local function SetTeamColor(teamID,a)
   end
 end
 
-
 --//patchs an annoying popup the first time you morph a unittype(+team)
 local alreadyInit = {}
 local function InitializeUnitShape(unitDefID,unitTeam)
@@ -1374,7 +1366,6 @@ local function InitializeUnitShape(unitDefID,unitTeam)
   if (alreadyInit[unitTeam]==nil) then alreadyInit[unitTeam] = {} end
   alreadyInit[unitTeam][unitDefID] = true
 end
-
 
 local function DrawMorphUnit(unitID, morphData, localTeamID)
   local h = SpGetUnitHeading(unitID)
@@ -1419,7 +1410,6 @@ local function DrawMorphUnit(unitID, morphData, localTeamID)
     glPopMatrix()
   end
 end
-
 
 function gadget:DrawWorld()
   if (not morphUnits) then

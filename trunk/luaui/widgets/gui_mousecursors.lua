@@ -333,7 +333,7 @@ function widget:DefaultCommand(type, uID)
 								canUnload = true
 								break
 							else
-								local orders = Spring.GetUnitCommands(unitID)
+								local orders = Spring.GetUnitCommands(unitID,-1)
 								if #orders > 0 then									
 									for u, cmd in pairs (orders) do
 										if cmd.id == CMD_LOAD then

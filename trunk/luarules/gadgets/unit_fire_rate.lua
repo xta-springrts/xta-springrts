@@ -27,7 +27,6 @@ end
 --Speed-ups
 
 local GetUnitDefID    = Spring.GetUnitDefID
-local GetUnitCommands = Spring.GetUnitCommands
 local FindUnitCmdDesc = Spring.FindUnitCmdDesc
 local SetUnitBuildspeed = Spring.SetUnitBuildSpeed
 
@@ -114,7 +113,7 @@ function gadget:Initialize()
 end
 
 function gadget:AllowCommand(unitID, unitDefID, teamID, cmdID, cmdParams, _)
-  local returnvalue
+
   if cmdID ~= CMD_FIRERATE then
     return true
   end

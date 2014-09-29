@@ -39,7 +39,7 @@ if (gadgetHandler:IsSyncedCode()) then
 			
 	function gadget:AllowCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdOptions, cmdTag, synced)
 		if cmdID == CMD_WAIT and kamikazeUnits[unitDefID] then
-			local cmdlist = GetUnitCommands(unitID)
+			local cmdlist = GetUnitCommands(unitID,1)
 			local cmd = cmdlist[1]
 			
 			if cmd and cmd.id == CMD_ATTACK then
