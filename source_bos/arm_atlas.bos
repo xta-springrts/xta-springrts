@@ -135,9 +135,9 @@ SweetSpot(piecenum)
 	piecenum = base;
 }
 
-QueryTransport(Func_Var_1)
+QueryTransport(piecenum)
 {
-	Func_Var_1 = 1;
+	piecenum = 1;
 }
 
 Activate()
