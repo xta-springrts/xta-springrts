@@ -119,6 +119,7 @@
 	[SFXTypes]
 	{
 	explosiongenerator0=custom:TRANSPORTTRAIL;
+	explosiongenerator1=custom:BluePlasmaExtraGlow;
 	}
 
 }

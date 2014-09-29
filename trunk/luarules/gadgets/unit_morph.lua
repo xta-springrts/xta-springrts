@@ -702,8 +702,8 @@ local function FinishMorph(unitID, morphData)
 	
 	local transID = SpGetUnitTransporter(unitID)
 	if transID then
-		-- This works ok for hover and sea transporters, but not for air ones. Air ones probably cannot pickup a falling commander
-		SpGiveOrderToUnit(transID, CMD.INSERT,{0,CMD.LOAD_UNITS,CMD.OPT_INTERNAL,newUnit},{"alt"})
+		-- This works ok; atlas type units need to sleep before they can pickup new passenger
+		Spring.CallCOBScript(transID, "MorphPassenger", 0, unitID,newUnit)
 	end
 	
 	--// update selection
