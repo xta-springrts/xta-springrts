@@ -4,9 +4,3 @@ Existing:
 
 
 * Static turrets can not guard other units, althought they have canguard=1 in unitdef. Maybe redui bug, maybe engine bug, maybe feature?
-
-* if morphing and game ends:
-
-[f=0053439] Error: LuaRules::RunCallIn: error = 2, AllowCommand, [string "LuaRules/Gadgets/unit_morph.lua"]:548: GiveOrderToUnit() recursion is not permitted
-
-Probably because on game ends the stop command is given and that reaches stop morph probably through allow command somehow.
