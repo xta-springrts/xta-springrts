@@ -6,7 +6,7 @@
 piece  base, link, arm1, arm2, arm3, arm4, thrust1, thrust2,
        thrust3, thrust4;
 
-static-var  Static_Var_1, Static_Var_2, Static_Var_3, Static_Var_4;
+static-var  _Moverate, Static_Var_2, statechg_DesiredState, statechg_StateChanging;
 
 lua_UnitStoppedMoving()
 { 
@@ -16,6 +16,15 @@ lua_UnitStoppedMoving()
 lua_UnitStartedMoving() 
 { 
 	return 0; 
+}
+
+MorphPassenger(oldPassenger,newPassenger)
+{
+	drop-unit oldPassenger;
+	emit-sfx UNIT_SFX2 from link;
+	emit-sfx UNIT_SFX2 from link;
+	sleep 10;
+	attach-unit newPassenger to link;
 }
 
 pickupscr()
@@ -64,34 +73,34 @@ HitByWeapon(Func_Var_1, Func_Var_2)
 
 InitState()
 {
-	Static_Var_3 = 1;
-	Static_Var_4 = 0;
+	statechg_DesiredState = 1;
+	statechg_StateChanging = 0;
 }
 
 RequestState(requestedstate, currentstate)
 {
-	if( Static_Var_4 )
+	if( statechg_StateChanging )
 	{
-		Static_Var_3 = requestedstate;
+		statechg_DesiredState = requestedstate;
 		return (0);
 	}
-	Static_Var_4 = 1;
-	currentstate = Static_Var_3;
-	Static_Var_3 = requestedstate;
-	while( Static_Var_3 != currentstate )
+	statechg_StateChanging = 1;
+	currentstate = statechg_DesiredState;
+	statechg_DesiredState = requestedstate;
+	while( statechg_DesiredState != currentstate )
 	{
-		if( Static_Var_3 == 0 )
+		if( statechg_DesiredState == 0 )
 		{
 			call-script pickupscr();
 			currentstate = 0;
 		}
-		if( Static_Var_3 == 1 )
+		if( statechg_DesiredState == 1 )
 		{
 			call-script dropoffscr();
 			currentstate = 1;
 		}
 	}
-	Static_Var_4 = 0;
+	statechg_StateChanging = 0;
 }
 
 SmokeUnit(healthpercent, sleeptime, smoketype)
@@ -124,7 +133,7 @@ SmokeUnit(healthpercent, sleeptime, smoketype)
 Create()
 {
 	Static_Var_2 = 0;
-	Static_Var_1 = 0;
+	_Moverate = 0;
 	call-script InitState();
 	start-script SmokeUnit();
 	hide thrust1;
@@ -179,7 +188,7 @@ ProcessFlames()
 {
 	while( TRUE )
 	{
-		if( Static_Var_1 == 1 OR Static_Var_1 == 2 )
+		if( _Moverate == 1 OR _Moverate == 2 )
 		{
 			emit-sfx 1024 + 0 from thrust1;
 			emit-sfx 1024 + 0 from thrust2;
@@ -193,7 +202,7 @@ ProcessFlames()
 StopMoving()
 {
 	signal 8;
-	Static_Var_1 = 0;
+	_Moverate = 0;
 	call-script lua_UnitStoppedMoving();
 }
 
@@ -202,7 +211,7 @@ MoveRate1()
 	signal 8;
 	set-signal-mask 8;
 	start-script ProcessFlames();
-	Static_Var_1 = 1;
+	_Moverate = 1;
 	call-script lua_UnitStartedMoving();
 }
 
@@ -211,7 +220,7 @@ MoveRate2()
 	signal 8;
 	set-signal-mask 8;
 	start-script ProcessFlames();
-	Static_Var_1 = 2;
+	_Moverate = 2;
 }
 
 MoveRate3()
@@ -219,7 +228,7 @@ MoveRate3()
 	signal 8;
 	set-signal-mask 8;
 	start-script ProcessFlames();
-	Static_Var_1 = 3;
+	_Moverate = 3;
 }
 
 Killed(severity, corpsetype)

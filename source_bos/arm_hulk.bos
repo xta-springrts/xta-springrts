@@ -19,6 +19,12 @@ SetDirection(heading)
 	turn base to y-axis 0-heading speed spd;
 }
 
+MorphPassenger(oldPassenger,newPassenger)
+{
+	drop-unit oldPassenger;
+	attach-unit newPassenger to 0 - 1;
+}
+
 RockOnWaves()
 {
 	while(1)
@@ -37,21 +43,21 @@ RockOnWaves()
 	}
 }
 
-FlameControl(Func_Var_3)
+FlameControl(_health)
 {
 	while( TRUE )
 	{
-		Func_Var_3 = get HEALTH;
-		if( Func_Var_3 <= 80 )
+		_health = get HEALTH;
+		if( _health <= 80 )
 		{
 			emit-sfx UNIT_SFX1 from ignite1;
-			if( Func_Var_3 <= 60 ){
+			if( _health <= 60 ){
 				emit-sfx UNIT_SFX1 from ignite2;
-				if( Func_Var_3 <= 45 ){
+				if( _health <= 45 ){
 					emit-sfx UNIT_SFX1 from ignite3;
-					if( Func_Var_3 <= 25 ){
+					if( _health <= 25 ){
 						emit-sfx UNIT_SFX1 from ignite4;
-						if( Func_Var_3 <= 10 )	emit-sfx UNIT_SFX1 from ignite5;
+						if( _health <= 10 )	emit-sfx UNIT_SFX1 from ignite5;
 					}
 				}
 			}
@@ -143,12 +149,12 @@ BoomCalc(posxz, posy)
 {
 	var Func_Var_3, Func_Var_4, Func_Var_5;
 	Func_Var_3 = get PIECE_XZ(turret) - posxz;
-	Func_Var_4 = posy - get PIECE_Y(turret) - [20.000000];
+	Func_Var_4 = posy - get PIECE_Y(turret) - 3276800;
 	Func_Var_5 = get XZ_HYPOT(Func_Var_3);
-	Static_Var_1 = get HYPOT(Func_Var_5,Func_Var_4) - [20.000000];
+	Static_Var_1 = get HYPOT(Func_Var_5,Func_Var_4) - 3276800;
 	Static_Var_2 = get XZ_ATAN(Func_Var_3);
 	Static_Var_3 = get ATAN(Func_Var_4,Func_Var_5);
-	Static_Var_4 = Static_Var_1 < [126.000000];
+	Static_Var_4 = Static_Var_1 < 20643840;
 }
 
 BoomExtend()
@@ -159,12 +165,12 @@ BoomExtend()
 	turn arm1 to x-axis <0.000000> - Static_Var_3 speed <80.000000>;
 	wait-for-turn arm1 around x-axis;
 	wait-for-turn turret around y-axis;
-	move arm2 to z-axis Static_Var_1 / [0.000037] speed [50.000000];
-	move arm3 to z-axis Static_Var_1 / [0.000037] speed [50.000000];
-	move arm4 to z-axis Static_Var_1 / [0.000037] speed [50.000000];
-	move arm5 to z-axis Static_Var_1 / [0.000037] speed [50.000000];
-	move arm6 to z-axis Static_Var_1 / [0.000037] speed [50.000000];
-	move arm7 to z-axis Static_Var_1 / [0.000037] speed [50.000000];
+	move arm2 to z-axis Static_Var_1 / [0.000092] speed [125.000000];
+	move arm3 to z-axis Static_Var_1 / [0.000092] speed [125.000000];
+	move arm4 to z-axis Static_Var_1 / [0.000092] speed [125.000000];
+	move arm5 to z-axis Static_Var_1 / [0.000092] speed [125.000000];
+	move arm6 to z-axis Static_Var_1 / [0.000092] speed [125.000000];
+	move arm7 to z-axis Static_Var_1 / [0.000092] speed [125.000000];
 	wait-for-move arm2 along z-axis;
 	wait-for-move arm3 along z-axis;
 	wait-for-move arm4 along z-axis;
@@ -178,12 +184,12 @@ BoomReset()
 	turn turret to y-axis <0.000000> speed <80.000000>;
 	turn magnet to x-axis <0.000000> speed <60.000000>;
 	turn arm1 to x-axis <0.000000> speed <60.000000>;
-	move arm2 to z-axis [0.000000] speed [50.000000];
-	move arm3 to z-axis [0.000000] speed [50.000000];
-	move arm4 to z-axis [0.000000] speed [50.000000];
-	move arm5 to z-axis [0.000000] speed [50.000000];
-	move arm6 to z-axis [0.000000] speed [50.000000];
-	move arm7 to z-axis [0.000000] speed [50.000000];
+	move arm2 to z-axis [0.000000] speed [125.000000];
+	move arm3 to z-axis [0.000000] speed [125.000000];
+	move arm4 to z-axis [0.000000] speed [125.000000];
+	move arm5 to z-axis [0.000000] speed [125.000000];
+	move arm6 to z-axis [0.000000] speed [125.000000];
+	move arm7 to z-axis [0.000000] speed [125.000000];
 }
 
 BoomToPad()
@@ -192,12 +198,12 @@ BoomToPad()
 	turn turret to y-axis <0.000000> speed <100.000000>;
 	turn magnet to x-axis <0.000000> speed <60.000000>;
 	turn arm1 to x-axis <0.000000> speed <60.000000>;
-	move arm2 to z-axis [0.000000] speed [60.000000];
-	move arm3 to z-axis [0.000000] speed [60.000000];
-	move arm4 to z-axis [0.000000] speed [60.000000];
-	move arm5 to z-axis [0.000000] speed [60.000000];
-	move arm6 to z-axis [0.000000] speed [60.000000];
-	move arm7 to z-axis [0.000000] speed [60.000000];
+	move arm2 to z-axis [0.000000] speed [150.000000];
+	move arm3 to z-axis [0.000000] speed [150.000000];
+	move arm4 to z-axis [0.000000] speed [150.000000];
+	move arm5 to z-axis [0.000000] speed [150.000000];
+	move arm6 to z-axis [0.000000] speed [150.000000];
+	move arm7 to z-axis [0.000000] speed [150.000000];
 	wait-for-turn turret around y-axis;
 	wait-for-turn arm1 around x-axis;
 	wait-for-move arm2 along z-axis;
