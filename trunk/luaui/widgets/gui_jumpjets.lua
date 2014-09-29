@@ -175,7 +175,7 @@ end
  
 
 local function DrawQueue(unitID)
-  local queue = spGetCommandQueue(unitID)
+  local queue = spGetCommandQueue(unitID,-1)
   if (not queue or not jumpDefs[spGetUnitDefID(unitID)]) then
     return
   end
@@ -205,7 +205,7 @@ local function  DrawMouseArc(unitID, shift, groundPos)
   if (not groundPos or not jumpDefs[unitDefID]) then
     return
   end
-  local queue = spGetCommandQueue(unitID)
+  local queue = spGetCommandQueue(unitID,-1)
   local range = jumpDefs[unitDefID].range
   if (not queue or #queue == 0 or not shift) then
     local unitPos = {spGetUnitPosition(unitID)}
@@ -236,7 +236,7 @@ function widget:CommandNotify(id, params, options)
   end
   for _, unitID in ipairs(spGetSelectedUnits()) do
     local _, _, _, shift   = spGetModKeyState()
-    if (#spGetCommandQueue(unitID) == 0 or not shift) then
+    if (#spGetCommandQueue(unitID,1) == 0 or not shift) then
       lastJump[unitID] = {
         pos   = {spGetUnitPosition(unitID)},
         frame = spGetGameFrame(),
@@ -248,7 +248,7 @@ end
 
 function widget:UnitCmdDone(unitID, unitDefID, unitTeam, cmdID, cmdTag)
   if jumpDefs[unitDefID] then
-    local que = spGetCommandQueue(unitID)
+    local que = spGetCommandQueue(unitID,2)
     local cmd = que and que[2] or nil 
     if (cmd and cmd.id == CMD_JUMP) then
         lastJump[unitID] = {
