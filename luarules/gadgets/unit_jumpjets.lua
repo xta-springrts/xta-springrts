@@ -267,7 +267,7 @@ local function Jump(unitID, finish)
     if (fakeUnitID) then spDestroyUnit(fakeUnitID, false, true) end
     spCallCOBScript(unitID, "EndJump", 0)
     jumping[unitID] = nil
-    ReloadQueue(unitID, spGetCommandQueue(unitID), start)
+    ReloadQueue(unitID, spGetCommandQueue(unitID,-1), start)
 
     lastJump[unitID]    = spGetGameSeconds()
 
