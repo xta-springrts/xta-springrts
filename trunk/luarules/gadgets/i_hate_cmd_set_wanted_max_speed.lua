@@ -11,19 +11,22 @@ function gadget:GetInfo()
   }
 end
 
-local thingsThatCMD_SET_WANTED_MAX_SPEEDBuggers = {}
+if not gadgetHandler:IsSyncedCode() then
 
-for i=1, #UnitDefs do
-        local ud = UnitDefs[i]
-        if ud.canFly and (ud.isFighter or ud.isBomber) then
-                thingsThatCMD_SET_WANTED_MAX_SPEEDBuggers[i] = true
-        end
-end
+	local thingsThatCMD_SET_WANTED_MAX_SPEEDBuggers = {}
 
-function gadget:AllowCommand(unitID, unitDefID, teamID, cmdID, cmdParams, cmdOptions)
-        --GG.UnitEcho(unitID, cmdID)
-        if cmdID == 70 and thingsThatCMD_SET_WANTED_MAX_SPEEDBuggers[unitDefID] then
-                return false
-        end
-        return true
+	for i=1, #UnitDefs do
+			local ud = UnitDefs[i]
+			if ud.canFly and (ud.isFighter or ud.isBomber) then
+					thingsThatCMD_SET_WANTED_MAX_SPEEDBuggers[i] = true
+			end
+	end
+
+	function gadget:AllowCommand(unitID, unitDefID, teamID, cmdID, cmdParams, cmdOptions)
+			--GG.UnitEcho(unitID, cmdID)
+			if cmdID == 70 and thingsThatCMD_SET_WANTED_MAX_SPEEDBuggers[unitDefID] then
+					return false
+			end
+			return true
+	end
 end
