@@ -977,6 +977,7 @@
 	weaponvelocity=800;
 	areaofeffect=8;
 	duration=0.5;
+	beamttl=5;
 	soundtrigger=1;
 	soundstart=lghthvy1;
 	soundhitdry=lashit;
@@ -1379,6 +1380,7 @@
 	turret=1;
 	//minbarrelangle=0;
 	range=320;
+	beamttl=10;
 	reloadtime=2.4;
 	weaponvelocity=600;
 	areaofeffect=8;
@@ -5380,6 +5382,7 @@
 	weaponvelocity=800;
 	areaofeffect=8;
 	duration=0.5;
+	beamttl=5;
 	soundtrigger=1;
 	soundstart=lghthvy1;
 	soundhitdry=lashit;
@@ -6971,6 +6974,7 @@
 	Weapontype=LightningCannon;
 	turret=1;
 	range=1;
+	beamttl=10;
 	reloadtime=1.45;
 	weaponvelocity=800;
 	areaofeffect=256;
@@ -7005,6 +7009,7 @@
 	weaponvelocity=800;
 	areaofeffect=256;
 	duration=0.5;
+	beamttl=10;
 	soundtrigger=1;
 	soundstart=lashit;
 	soundhitdry=lashit;

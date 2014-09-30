@@ -2300,6 +2300,7 @@
 	weaponvelocity=800;
 	areaofeffect=8;
 	duration=0.5;
+	beamttl=10;
 	soundtrigger=1;
 	soundstart=lghthvy1;
 	soundhitdry=lashit;
