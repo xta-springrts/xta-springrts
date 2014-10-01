@@ -108,6 +108,7 @@ function widget:Initialize() -- create lighttable
 	if modOptions and modOptions.lowcpu == "1" then
 		Spring.Log("widget", LOG.INFO, 'Low performance mode is on, removing "Projectile lights" widget')
 		widgetHandler:RemoveWidget()
+		return
 	end
 	-- These projectiles should have lights:
 		-- Cannon - projectile size: tempsize = 2.0f + std::min(wd.damages[0] * 0.0025f, wd.damageAreaOfEffect * 0.1f);)

@@ -57,6 +57,7 @@ function gadget:Initialize()
 	end
 	if not QTPFS and noAIs then
 		gadgetHandler:RemoveGadget()
+		return
 	end
 end
 	

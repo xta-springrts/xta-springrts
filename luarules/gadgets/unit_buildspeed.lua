@@ -153,6 +153,7 @@ function gadget:Initialize()
 	end
 	if modOptions and modOptions.buildspeed and modOptions.buildspeed == '0' then
 		gadgetHandler:RemoveGadget()
+		return
 	end
 end
 

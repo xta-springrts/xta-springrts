@@ -61,6 +61,7 @@ if gadgetHandler:IsSyncedCode() then
 				SendToUnsynced("gameWinnners",nil, 0)
 			end
 		end
+		gadgetHandler:UpdateCallIn("GameFrame")
 	end
 	
 	function gadget:GameStart()
@@ -82,8 +83,10 @@ if gadgetHandler:IsSyncedCode() then
 			end
 			Spring.PlaySoundFile("sounds/beep1.wav",3.0,0,0,0,0,0,0,'userinterface')
 			Spring.SetGameRulesParam("ShowEnd",1)
+			gadgetHandler:RemoveCallIn("GameFrame")
+			gadgetHandler:RemoveGadget(self)
+			return
 		end
-		--gadgetHandler:RemoveGadget()
 	end
 	
 	function gadget:GameFrame(frame)
@@ -202,7 +205,12 @@ else
 	
 	function gadget:Initialize()
 		gadgetHandler:AddSyncAction("gameWinnners", GetGameWinners)
-		SetUpButtons()
+		gadgetHandler:RemoveCallIn("GameFrame")
+		gadgetHandler:RemoveCallIn("DrawScreen")
+		gadgetHandler:RemoveCallIn("KeyPress")
+		gadgetHandler:RemoveCallIn("MousePress")
+		gadgetHandler:RemoveCallIn("MouseMove")
+		gadgetHandler:RemoveCallIn("IsAbove")
 	end
 		
 	function GetGameWinners(_, winner, n)
@@ -214,6 +222,15 @@ else
 		if #winnerList >= n or (not winner) then 
 			transferComplete = true
 			GG.showXTAStats	= tonumber(Spring.GetConfigInt("EngineGraphFirst",0) or 0) == 0
+			
+			gadgetHandler:UpdateCallIn("GameFrame")
+			gadgetHandler:UpdateCallIn("DrawScreen")
+			gadgetHandler:UpdateCallIn("KeyPress")
+			gadgetHandler:UpdateCallIn("MousePress")
+			gadgetHandler:UpdateCallIn("MouseMove")
+			gadgetHandler:UpdateCallIn("IsAbove")
+			gadgetHandler:UpdateCallIn("Update")
+			SetUpButtons()
 			
 			-- hide end graphs while the end text is displayed
 			Spring.SendCommands('endgraph 0')
@@ -242,7 +259,10 @@ else
 	end
 	
 	function gadget:Update()
-		if not gameStarted then gameStarted = Spring.GetGameRulesParam("GameStarted") == 1 end
+		if not gameStarted then 
+			gameStarted = Spring.GetGameRulesParam("GameStarted") == 1
+			if gameStarted then gadgetHandler:RemoveCallIn("Update") end
+		end
 		
 		if Spring.IsGameOver() and gameStarted then
 			showGraph = Spring.GetGameRulesParam("ShowEnd") == 1 and not hideAllStats

@@ -50,6 +50,7 @@ if (gadgetHandler:IsSyncedCode()) then
 		local modOptions = Spring.GetModOptions()
 		if (modOptions ~= nil and (modOptions.lowcpu == "1" or modOptions.dynamiclights == "0")) then
 			gadgetHandler:RemoveGadget(self)
+			return
 		end
 
 		for weaponDefName, weaponLightDef in pairs(weaponLightDefs) do
@@ -233,7 +234,10 @@ else
 
 	function gadget:Initialize()
 		local modOptions = Spring.GetModOptions()
-		if modOptions and (modOptions.lowcpu == "1" or modOptions.dynamiclights == "0") then gadgetHandler:RemoveGadget(self) end
+		if modOptions and (modOptions.lowcpu == "1" or modOptions.dynamiclights == "0") then 
+			gadgetHandler:RemoveGadget(self) 
+			return
+		end
 
 		local maxMapLights = Spring.GetConfigInt("MaxDynamicMapLights") or 0
 		local maxMdlLights = Spring.GetConfigInt("MaxDynamicModelLights") or 0

@@ -10,20 +10,16 @@ function gadget:GetInfo()
 	}
 end
 
-local snd = 'sounds/sneer_mono.ogg'
-
-
+-- 2014.10: Updated to load commandertable and localised some vars
 
 if (gadgetHandler:IsSyncedCode()) then
-	function gadget:Initialize()
-	 -- if Spring.GetSpectatingState() or Spring.IsReplay() then
-		 -- gadgetHandler:RemoveGadget()
-		 -- return true
-	 -- end	
-	end
+	
+	local snd = 'sounds/sneer_mono.ogg'
+	local commanderTable = include("LuaRules/Configs/unit_commander_sounds_defs.lua")
+	local AreTeamsAllied = Spring.AreTeamsAllied
 
 	function gadget:UnitLoaded(unitID, unitDefID, unitTeam, transportID, transportTeam)
-		if not Spring.AreTeamsAllied (unitTeam, transportTeam) and (UnitDefs[unitDefID].customParams.iscommander or UnitDefs[unitDefID].customParams.isdecoycommander) then
+		if not AreTeamsAllied (unitTeam, transportTeam) and commanderTable[unitDefID] then
 			Spring.PlaySoundFile(snd)
 		end
 	end

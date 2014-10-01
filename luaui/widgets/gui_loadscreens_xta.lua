@@ -138,6 +138,7 @@ end
 function widget:KeyPress(key, mods, isRepeat)
   if (key == KEYSYMS.ESCAPE) then
     widgetHandler:RemoveWidget()
+	return
   end
 end
 

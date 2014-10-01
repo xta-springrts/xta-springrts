@@ -45,7 +45,7 @@ if gadgetHandler:IsSyncedCode() then
 	function gadget:Initialize()	
 		local modOptions = Spring.GetModOptions()
 		
-		if modOptions and modOptions.sounds == 'global' then
+		if (not modOptions) or (modOptions and not modOptions.sounds) or modOptions.sounds == 'global' then
 			Echo("Local sounds disabled: global sounds")
 			gadgetHandler:RemoveGadget()
 			return
@@ -262,8 +262,8 @@ else
 	function gadget:Initialize()
 	
 		local modOptions = Spring.GetModOptions()
-		
-		if modOptions and modOptions.sounds == 'global' then
+				
+		if (not modOptions) or (modOptions and not modOptions.sounds) or modOptions.sounds == 'global' then
 			Echo("Local sounds disabled (unsynced): global sounds")
 			gadgetHandler:RemoveGadget()
 			return

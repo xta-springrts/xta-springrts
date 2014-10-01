@@ -15,6 +15,7 @@ local mo = Spring.GetModOptions()
 if mo and tonumber (mo.critters)==0 then
 	Spring.Echo ("gaia_critters.lua: turned off via modoptions")
 	gadgetHandler:RemoveGadget(self)
+	return
 end
 
 local GaiaTeamID  = Spring.GetGaiaTeamID ()

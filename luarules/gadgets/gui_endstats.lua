@@ -127,6 +127,63 @@ if gadgetHandler:IsSyncedCode() then
 		end
 	end
 	
+	local function isUnitComplete(unitID)
+		if unitID then
+			local _,_,_,_,buildProgress = GetUnitHealth(unitID)
+			if buildProgress and buildProgress>=1 then
+				return true
+			else
+				return false
+			end
+		else 
+			return false
+		end
+	end
+	
+	local function readZoneOfControls()
+		
+		local zoc = {}
+		local chunks = 0
+		local allyList = GetAllyTeamList()
+		local frame = GetGameFrame()
+		local gaiaAllyID = select(6, GetTeamInfo(gaiaID))
+		local step = 512 -- distance between map sampling points, adjust for balance in performance/data quality
+		local aliveList = {}
+		
+		for _,aID in ipairs (allyList) do
+			for i, tID in ipairs (GetTeamList(aID)) do
+				if not select(3,GetTeamInfo(tID)) then 
+					aliveList[aID] = true
+					break
+				end
+			end
+		end
+		
+		for x = 1, mapX, step do
+			for z = 1, mapZ, step do
+				chunks = chunks +1
+				local y = GetGroundHeight(x,z)
+				for i,aID in ipairs (allyList) do
+					
+					if aID ~= gaiaAllyID then
+						if not zoc[i] then zoc[i] = 0 end
+						if aliveList[aID] then
+							if IsPosInLos(x,y,z,aID) then zoc[i] = zoc[i] + 1 end
+						end
+					end
+				end
+			end
+		end
+		
+		if chunks > 0 then
+			for i,aID in ipairs (allyList) do
+				if allyData[i] and allyData[i]["values"] then
+					allyData[i]["values"][#allyData[i]["values"]+1] = zoc[i]/chunks
+				end
+			end
+		end
+	end
+	
 	function gadget:Initialize()
 	
 		mapX = Game.mapSizeX
@@ -206,62 +263,7 @@ if gadgetHandler:IsSyncedCode() then
 		
 	end
 	
-	function isUnitComplete(unitID)
-		if unitID then
-			local _,_,_,_,buildProgress = GetUnitHealth(unitID)
-			if buildProgress and buildProgress>=1 then
-				return true
-			else
-				return false
-			end
-		else 
-			return false
-		end
-	end
-	
-	function readZoneOfControls()
-		
-		local zoc = {}
-		local chunks = 0
-		local allyList = GetAllyTeamList()
-		local frame = GetGameFrame()
-		local gaiaAllyID = select(6, GetTeamInfo(gaiaID))
-		local step = 512 -- distance between map sampling points, adjust for balance in performance/data quality
-		local aliveList = {}
-		
-		for _,aID in ipairs (allyList) do
-			for i, tID in ipairs (GetTeamList(aID)) do
-				if not select(3,GetTeamInfo(tID)) then 
-					aliveList[aID] = true
-					break
-				end
-			end
-		end
-		
-		for x = 1, mapX, step do
-			for z = 1, mapZ, step do
-				chunks = chunks +1
-				local y = GetGroundHeight(x,z)
-				for i,aID in ipairs (allyList) do
-					
-					if aID ~= gaiaAllyID then
-						if not zoc[i] then zoc[i] = 0 end
-						if aliveList[aID] then
-							if IsPosInLos(x,y,z,aID) then zoc[i] = zoc[i] + 1 end
-						end
-					end
-				end
-			end
-		end
-		
-		if chunks > 0 then
-			for i,aID in ipairs (allyList) do
-				if allyData[i] and allyData[i]["values"] then
-					allyData[i]["values"][#allyData[i]["values"]+1] = zoc[i]/chunks
-				end
-			end
-		end
-	end
+	-- Callins
 	
 	function gadget:UnitDestroyed(unitID, unitDefID, teamID, attackerID, attackerDefID, attackerTeamID)
 				
@@ -458,8 +460,7 @@ if gadgetHandler:IsSyncedCode() then
 	function gadget:GameOver()
 		readZoneOfControls()
 		local bestKills = Spring.GetGameRulesParam("BestKills") or 0
-		local bestKiller = Spring.GetGameRulesParam("BestTeam")
-		
+		local bestKiller = Spring.GetGameRulesParam("BestTeam")		
 		
 		if bestKiller then
 			badges["topKiller"] = {bestKiller,bestKills}
@@ -546,6 +547,14 @@ if gadgetHandler:IsSyncedCode() then
 			local awardsMsg = table.concat({XTA_AWARDMARKER,":",isHeroType,":",team,":",name,":",kills,":",age})
 			Spring.SendLuaRulesMsg(awardsMsg)
 		end
+		
+		-- synced part not needed anymore
+		gadgetHandler:RemoveCallIn("GameFrame")
+		gadgetHandler:RemoveCallIn("UnitDamaged")
+		gadgetHandler:RemoveCallIn("UnitDestroyed")
+		gadgetHandler:RemoveCallIn("UnitFinished")
+		gadgetHandler:RemoveGadget()
+		return
 	end
 	
 else
@@ -575,6 +584,7 @@ else
 	local glBeginText				 	= gl.BeginText
 	local glEndText 					= gl.EndText
 	local glLineWidth					= gl.LineWidth
+	local IsGameOver					= Spring.IsGameOver
 	local Button 						= {}
 	local Panel 						= {}
 	local vsx, vsy 						= gl.GetViewSizes()
@@ -849,12 +859,18 @@ else
 	end
 	
 	function gadget:Initialize()
-	--register actions to SendToUnsynced messages
+		--register actions to SendToUnsynced messages
 		gadgetHandler:AddSyncAction("teamData", onTeamData)
 		gadgetHandler:AddSyncAction("allyData", onAllyData)
 		gadgetHandler:AddSyncAction("heroUnits", onHeroUnits)
 		gadgetHandler:AddSyncAction("lostUnits", onLostUnits)
 		gadgetHandler:AddSyncAction("badges", onBadges)
+		
+		-- don't update these callins ntil game has finished
+		gadgetHandler:RemoveCallIn("DrawScreen")
+		gadgetHandler:RemoveCallIn("MousePress")
+		gadgetHandler:RemoveCallIn("MouseMove")
+		gadgetHandler:RemoveCallIn("IsAbove")
 		
 		Button["exit"] 				= {}
 		Button["proceed"] 			= {}
@@ -880,15 +896,23 @@ else
 		end
 	end	
 	
+	-- Run this part only after game over
+	
 	function gadget:Update(dt)
-
-		if Spring.IsGameOver() then
+		
+		if IsGameOver() then			
 			if not drawWindow then
 				drawWindow = Spring.GetGameRulesParam("ShowEnd") == 1
+				gadgetHandler:UpdateCallIn("DrawScreen")
+				gadgetHandler:UpdateCallIn("MousePress")
+				gadgetHandler:UpdateCallIn("MouseMove")
+				gadgetHandler:UpdateCallIn("IsAbove")
 			end
-		end
+		end			
 	end
-
+	
+	-- Run this part only after game over and processing ready
+	
 	function gadget:DrawScreen()
 		
 		local function drawBorder(x0, y0, x1, y1, width)
@@ -897,7 +921,7 @@ else
 			glRect(x0, y0, x0 + width, y1)
 			glRect(x1, y0, x1 - width, y1)
 		end
-		
+			
 		if drawWindow and not Spring.IsGUIHidden() and GG.showXTAStats then 
 			--back panel
 			glColor(0.3, 0.3, 0.4, 0.55)
@@ -1885,7 +1909,7 @@ else
 			end
 		end
 	end
-	
+		
 	function gadget:MousePress(mx, my, mButton)
 		if (not Spring.IsGUIHidden()) and drawWindow and GG.showXTAStats and IsOnButton(mx,my, Panel["back"]["x0"], Panel["back"]["y0"], Panel["back"]["x1"], Panel["back"]["y1"]) then
 			if (mButton == 2 or mButton == 3) then
@@ -1895,7 +1919,7 @@ else
 				if IsOnButton(mx,my,Button["exit"]["x0"],Button["exit"]["y0"],Button["exit"]["x1"],Button["exit"]["y1"]) then
 					Spring.SendCommands("quitforce")
 					gadgetHandler:RemoveGadget()
-					--return true
+					return true
 				elseif IsOnButton(mx,my,Button["proceed"]["x0"],Button["proceed"]["y0"],Button["proceed"]["x1"],Button["proceed"]["y1"]) then
 					Spring.SendCommands('endgraph 1')
 					GG.showXTAStats = false
@@ -1956,7 +1980,7 @@ else
 		end
 		return false
 	end
-	
+
 	function gadget:IsAbove(mx,my)
 		if drawWindow and GG.showXTAStats then
 			Button["exit"]["mouse"] = false

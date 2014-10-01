@@ -350,6 +350,7 @@ function widget:Initialize()
 
     if Spring.GetGameFrame() > 0 or (Spring.GetModOptions() or {}).commander ~= "choose" then
         widgetHandler:RemoveWidget(self)
+		return
     end
 
 	vsx, vsy = gl.GetViewSizes()

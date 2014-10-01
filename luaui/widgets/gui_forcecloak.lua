@@ -16,7 +16,7 @@ end
 function widget:Initialize()
 	if Spring.GetSpectatingState() or Spring.IsReplay() then
 		widgetHandler:RemoveWidget()
-		return true
+		return
 	end
 end
 
@@ -24,7 +24,7 @@ function widget:PlayerChanged(playerID)
 if Spring.GetSpectatingState() or Spring.IsReplay() then
 		Spring.Log("widget", LOG.INFO, "Force cloak: widget removed for spectators")
 		widgetHandler:RemoveWidget()
-		return true
+		return
 	end
 end
 

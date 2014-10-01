@@ -97,6 +97,7 @@ local function CheckSpecState()
   if Spring.GetSpectatingState() then
 	Spring.Log("widget", LOG.INFO, "<Cloak Fire State> Spectator mode. Widget removed.")
 	widgetHandler:RemoveWidget()
+	return
   end
 end
 
@@ -109,7 +110,7 @@ end
 function widget:Initialize()
   if Spring.GetSpectatingState() or Spring.IsReplay() then
     widgetHandler:RemoveWidget()
-    return true
+    return
   end
 end
 

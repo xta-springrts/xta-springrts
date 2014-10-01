@@ -114,7 +114,6 @@ else
 	-- UNSYNCED PART --
 	-------------------
 	
-	
 	local PlaySoundFile				= Spring.PlaySoundFile
 	local crushsnd					= "sounds/crush3.wav"
 	local myTeamID
@@ -127,6 +126,10 @@ else
 		gadgetHandler:AddSyncAction("crushSound", CrushSound)
 		myTeamID = Spring.GetMyTeamID()
 		myAllyID = Spring.GetMyAllyTeamID()
+	end
+	
+	function gadget:Shutdown()
+		gadgetHandler:RemoveSyncAction("crushSound")
 	end
 	
 	function CrushSound(_, featureID)

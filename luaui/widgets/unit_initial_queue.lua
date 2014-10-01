@@ -602,6 +602,7 @@ end
 function widget:GameOver()
 	-- this can happen if game is abandoned before it starts
 	widgetHandler:RemoveWidget()
+	return
 end
 ------------------------------------------------------------
 -- Mouse

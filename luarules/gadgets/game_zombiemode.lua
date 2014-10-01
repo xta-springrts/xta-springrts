@@ -107,7 +107,7 @@ end
 
 local function zombieRemoveGuard(unitID)
 	for _,uID in pairs (Spring.GetTeamUnits(gaiaTeamID) ) do
-		for _, cmd in pairs (Spring.GetUnitCommands (uID)) do
+		for _, cmd in pairs (Spring.GetUnitCommands (uID,6)) do
 			if cmd.id == CMD.GUARD then
 				local tID = cmd.params[1]
 				local tag = cmd.tag
@@ -349,15 +349,6 @@ local function CheckCommander(unitID)
 		end
 	end
 	
-	--[[Echo("Commands:")
-	for u,cmd in pairs(Spring.GetUnitCommands(unitID)) do
-		local id = cmd.id
-		local p1 = cmd.params[1]
-		local p2 = cmd.params[2]
-		local p3 = cmd.params[3]
-		Echo("Command:",u,id,CMD[id],p1,p2,p3,#cmd.params)
-	end
-	--]]
 end
 
 function gadget:Initialize()
@@ -515,6 +506,13 @@ function gadget:UnitTaken(unitID, unitDefID, oldTeam, newTeam)
 	end
 end
 
+function gadget:AllowCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdOptions, cmdTag, synced)
+	if unitTeam ~= gaiaTeamID or cmdID ~= CMD.RECLAIM then
+		return true
+	else
+		Echo("Reclaim command:",cmdParams[1],cmdParams[2],cmdParams[3])
+	end
+end
 
 --[[
 function gadget:AllowCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdOpts)
@@ -599,6 +597,8 @@ function DestroyWreck(unitDef, spawnPos)
 	-- zombies should never hurt the chances of their own "team", so
 	-- with such an option feature-reclaim orders should be blocked
 	-- from all patrolling zombie builders)
+	
+	-- Note: patrolling zombies don't trigger the reclaim command when reclaiming.J
 	--
 	-- note: a corpse might have kept sliding along the ground after
 	-- dying so this loop won't always find a match, but there is no
@@ -655,8 +655,8 @@ function SpawnZombie(index, spawn)
 		local sightDist = losRadius * losToElmos
 		local patrolVec = {spawnDir[1] * sightDist * 0.666, 0.0, spawnDir[3] * sightDist * 0.666}
 		local hasWeapons = unitDef.weapons and (#unitDef.weapons > 0)
-		
-		if not hasWeapons then
+				
+		if not hasWeapons and not unitDef.canAttack then
 			Spring.SetUnitNeutral(unitID,true)
 		end
 		if (not unitDef.isImmobile) then
@@ -680,7 +680,7 @@ function SpawnZombie(index, spawn)
 			GiveFactoryOrders(unitID,unitDefID)
 		end
 	end
-
+	-- won't this break index of table? Or maybe that does not matter. Otherwise table.remove would be better.
 	zombieQueue[index] = nil
 	zombieTable[spawn.id] = nil
 end

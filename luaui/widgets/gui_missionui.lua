@@ -98,6 +98,7 @@ function widget:Initialize()
 			if gameData.game == Game.modShortName then
 				if gameData.map ~= Game.mapName then
 					widgetHandler:RemoveWidget()
+					return
 				else
 					if modOptions.mission:lower() == Game.modShortName:lower() .. "_campaign" then
 						intro = true
@@ -117,12 +118,15 @@ function widget:Initialize()
 				end
 			else
 				widgetHandler:RemoveWidget()				
+				return
 			end
 		else
 			widgetHandler:RemoveWidget()
+			return
 		end
 	else
 		widgetHandler:RemoveWidget()
+		return
 	end
 end
 

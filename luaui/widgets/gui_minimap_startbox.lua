@@ -32,6 +32,7 @@ end
 
 if (Spring.GetGameFrame() > 1) then
   widgetHandler:RemoveWidget()
+  return
 end
 
 --------------------------------------------------------------------------------
@@ -391,6 +392,7 @@ function widget:DrawInMiniMap(sx, sz)
   -- only show at the beginning
   if (Spring.GetGameFrame() > 1) then
     widgetHandler:RemoveWidget()
+	return
   end
 
   local gaiaAllyTeamID

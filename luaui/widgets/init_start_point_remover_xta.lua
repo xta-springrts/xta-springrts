@@ -17,7 +17,7 @@ end
 function CheckForSpec()
   if Spring.GetSpectatingState() or Spring.IsReplay() then
     widgetHandler:RemoveWidget()
-    return true
+    return
   end
 end
 
@@ -35,4 +35,5 @@ function widget:Update()
     end
   end
   widgetHandler:RemoveWidget()
+  return
 end

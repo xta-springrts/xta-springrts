@@ -31,6 +31,7 @@ if not gadgetHandler:IsSyncedCode() then
 		local frame = GetGameFrame()
 		if frame > 0 then 
 			gadgetHandler:RemoveGadget(self)
+			return
 		end
 		
 		for i,teamID in ipairs(Spring.GetTeamList()) do
@@ -62,6 +63,7 @@ if not gadgetHandler:IsSyncedCode() then
 	
 	function gadget:GameStart()
 		gadgetHandler:RemoveGadget(self)
+		return
 	end
 	
 else
@@ -79,6 +81,7 @@ else
 		-- Test if gadget is really removed
 		if frame > 0 then
 			gadgetHandler:RemoveGadget(self)
+			return
 		end
 	end
 	

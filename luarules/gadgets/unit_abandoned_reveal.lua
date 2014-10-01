@@ -144,7 +144,6 @@ if (gadgetHandler:IsSyncedCode()) then
 											visible 						= false,
 										}
 									end
-									--Echo("Commanders:",visibleCommanders[commanderID] and visibleCommanders[commanderID].revealFrame-frame)
 								end
 							end
 						end
@@ -215,6 +214,7 @@ else
 	end
 	
 	local function CommanderAbandoned(_, unitID)
+		gadgetHandler:UpdateCallIn("Update")
 		local x,y,z = GetUnitPosition(unitID)
 		abandonedCommanders[unitID] = true
 		if x and y and z then
@@ -251,6 +251,7 @@ else
 	function gadget:Initialize()
 		gadgetHandler:AddSyncAction('AR_CommanderAbandoned', CommanderAbandoned)
 		gadgetHandler:AddSyncAction('AR_CommanderBack', CommanderBack)
+		gadgetHandler:RemoveCallIn("Update")
 	end
 	
 	function gadget:Update()
