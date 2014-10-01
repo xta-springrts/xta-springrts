@@ -131,7 +131,7 @@ function widget:Initialize()
 			},
 					
 			{
-			name	= "Discontinuous reclaim:",
+			name	= "Reclaim method is lump sum:",
 			type	= "bool",
 			value	= modOptions["reclaim_method"] or "N/A",
 			},
