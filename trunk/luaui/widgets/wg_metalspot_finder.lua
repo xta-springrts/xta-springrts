@@ -51,6 +51,7 @@ function widget:Initialize()
 	WG.GetMexPositions = GetMexPositions
 	WG.IsMexPositionValid = IsMexPositionValid
 	widgetHandler:RemoveWidget(self)
+	return
 end
 
 ------------------------------------------------------------

@@ -16,6 +16,7 @@ local modOptions = Spring.GetModOptions()
 function gadget:Initialize()
 	if not modOptions or modOptions.rockettoggle=="0" then
 		gadgetHandler:RemoveGadget(self)
+		return
 	end
 end
 

@@ -452,5 +452,6 @@ function widget:DrawWorld()
 	else
 		Spring.Echo('Removing deferred rendering widget: failed to use GLSL shader')
 		widgetHandler:RemoveWidget()
+		return
 	end
 end

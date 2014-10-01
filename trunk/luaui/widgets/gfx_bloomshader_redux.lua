@@ -342,6 +342,7 @@ local shaderProgs = {
 local function RemoveWidget(msg)
 	Spring.Echo("[gfx_bloomshader]" .. msg)
 	widgetHandler:RemoveWidget(self)
+	return
 end
 
 local function CreateShaders()

@@ -259,6 +259,7 @@ function widget:GameStart()
 		  if version and (version < tonumber("6")) then
 			spEcho("<Ghost Site> Old DefenseRange found! Widget removed.")
 			widgetHandler:RemoveWidget()
+			return
 		  end
 		end
 	  end

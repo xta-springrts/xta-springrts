@@ -146,6 +146,7 @@ end
 
 function widget:GameOver()
 	widgetHandler:RemoveWidget()
+	return false
 end
 
 function widget:UnitCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdOptions, cmdTag, synced)

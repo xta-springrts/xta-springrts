@@ -83,6 +83,7 @@ function widget:Initialize()
 	if not WG.metalSpots then
 		Spring.Echo("<Snap Mex> This widget requires the 'Metalspot Finder' widget to run.")
 		widgetHandler:RemoveWidget(self)
+		return
 	end
 end
 

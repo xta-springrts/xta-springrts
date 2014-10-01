@@ -846,6 +846,7 @@ end
 -- remove on game over
 function widget:GameOver()
 	widgetHandler:RemoveWidget()
+	return
 end
 ---------------------------------------------------------------------------------------------------------
 -- Matching Algorithms

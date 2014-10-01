@@ -193,6 +193,7 @@ function gadget:Initialize()
 			local spawnData = include(mission)
 			if spawnData.map == Game.mapName then
 				gadgetHandler:RemoveGadget()
+				return
 			end
 		end
 	end

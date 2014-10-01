@@ -159,6 +159,7 @@ function widget:TeamDied(teamID)
 	if teamID == spGetMyTeamID() then
 		displayWindow = false	
 		widgetHandler:RemoveWidget()
+		return
 	end
 end
 

@@ -93,6 +93,7 @@ if (gadgetHandler:IsSyncedCode()) then
 		--
 		--remove ourself after successful game over
 		gadgetHandler:RemoveGadget()
+		return
 	end
 
 	local function IsCandidateWinner(allyTeamID)
@@ -466,6 +467,7 @@ if (gadgetHandler:IsSyncedCode()) then
 		gadgetHandler:AddChatAction('votefordraw', CallDrawVote, "Call vote to draw the game")
 		if teamDeathMode == "none" then
 			gadgetHandler:RemoveGadget()
+			return
 		end
 		
 		gaiaAllyTeamID = select(6, GetTeamInfo(gaiaTeamID))

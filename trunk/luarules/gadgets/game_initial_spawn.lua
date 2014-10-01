@@ -67,6 +67,7 @@ function gadget:Initialize()
     local teamList = Spring.GetTeamList()
 	if (Spring.GetModOptions() or {}).commander ~= 'choose' then
 		gadgetHandler:RemoveGadget(self) 
+		return
 	end
 	
     for i = 1, #teamList do

@@ -26,7 +26,6 @@ if gadgetHandler:IsSyncedCode() then
 	
 	local function getMsg (attribute,retired)
 		local msg
-		
 		if attribute == 'Arm' or attribute == 'Core' then
 			msg = retired and resignedmessages[math.random(#resignedmessages)] or defaultmessages[math.random(#defaultmessages)]
 			return string.gsub(msg,'<side>',attribute)
@@ -39,14 +38,13 @@ if gadgetHandler:IsSyncedCode() then
 	end
 
 	function gadget:TeamDied(TeamID)
-		local teamID, leaderID,_,isAi = Spring.GetTeamInfo(TeamID)
+		local teamID, leaderID,_,isAI = Spring.GetTeamInfo(TeamID)
 		local msg
 		
-		if leaderID and leaderID > 0 and (not isAi) then
+		if leaderID and leaderID >= 0 and (not isAI) then
 			local name, active = Spring.GetPlayerInfo(leaderID)
 			local retired = (not isAI) and (not active)
 			msg = getMsg(name,retired)
-			
 		else
 			local _,active = leaderID and Spring.GetPlayerInfo(leaderID)
 			local retired = leaderID and (not isAI) and (not active)			

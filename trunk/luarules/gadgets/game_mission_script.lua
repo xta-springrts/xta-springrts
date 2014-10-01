@@ -158,6 +158,7 @@ function gadget:Initialize()
 					spEcho('Mission "' .. modOptions.mission .. "\" was started on a wrong map or you don't have " .. spawnData.map)
 					spEcho("Swiching to standard skirmish mode")
 					gadgetHandler:RemoveGadget()
+					return
 				else
 					initTriggers()			-- pre-parse trigger strings
 					if spawnData.features then	-- spawn features in initialize phase so players can see them before game start
@@ -169,14 +170,17 @@ function gadget:Initialize()
 				end
 			else
 				spEcho('This mission is intended for "' .. gameData.game .. '"')
-				gadgetHandler:RemoveGadget()				
+				gadgetHandler:RemoveGadget()
+				return
 			end
 		else
 			spEcho("Mission parameter incorrect or wrong mission file")
 			gadgetHandler:RemoveGadget()
+			return
 		end
 	else
 		gadgetHandler:RemoveGadget()
+		return
 	end
 end
 
@@ -246,6 +250,7 @@ function gadget:GameStart()
 	end
 	if #teams == 0 then
 		gadgetHandler:RemoveGadget()	-- this mission has no triggers, we're done
+		return
 	end
 	spawnData = nil		-- kill table once not needed
 	--gadgetHandler:RemoveCallIn("RecvLuaMsg")
@@ -983,6 +988,7 @@ function gadget:Initialize()
 			if gameData.game == Game.modShortName then
 				if gameData.map ~= Game.mapName then
 					gadgetHandler:RemoveGadget()
+					return
 				else
 					local no_loc, no_trig = 0, 0
 					for _, v in pairs(locations) do	-- must manualy count the number of locations and triggers
@@ -993,6 +999,7 @@ function gadget:Initialize()
 					end
 					if no_loc==0 and no_trig==0 then	-- no triggers and locations, nothing to do, unload
 						gadgetHandler:RemoveGadget()
+						return
 					else
 						if no_loc==0 then	-- no locations, no rendering needed
 							gadgetHandler:RemoveCallIn("DrawWorldPreUnit")
@@ -1025,12 +1032,15 @@ function gadget:Initialize()
 				end
 			else
 				gadgetHandler:RemoveGadget()
+				return
 			end
 		else
 			gadgetHandler:RemoveGadget()
+			return
 		end
 	else
 		gadgetHandler:RemoveGadget()
+		return
 	end
 end
 
