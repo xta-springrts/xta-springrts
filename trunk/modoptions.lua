@@ -46,8 +46,14 @@ local options = {
 		type = "section",
 	},
 	{
+		key  = 'zombiesection',
+		name = 'Zombie-mode settings',
+		desc = 'Settings for Zombie-mode.',
+		type = "section",
+	},
+	{
 		key  = 'multipers',
-		name = 'Multiper Settings',
+		name = 'Multiplier settings',
 		desc = 'Settings for multipliers.',
 		type = "section",
 	},
@@ -72,6 +78,7 @@ local options = {
 		name = "Zombie Mode",
 		desc = "All dead units respawn as hostile neutral zombies!",
 		type = "bool",
+		section = 'zombiesection',
 		def  = false,
 	},
 
@@ -156,7 +163,7 @@ local options = {
 		name="LuaThreadingModel",
 		desc="Which luathreading system to use\nkey: luamodel",
 		type="list",
-		section= 'xtagame',
+		section= 'other',
 		def="4",
 		items={
 			{key="1", name="1", desc="1"},
@@ -262,7 +269,7 @@ local options = {
 		desc   = "Enable variable production rate button to be added to build menu (may be expensive)\nkey: buildspeed",
 		type   = "bool",
 		def    = false,
-		section= "xtagame",
+		section= 'other',
 	},
 	{
 		key    = "rockettoggle",
@@ -294,7 +301,7 @@ local options = {
 		desc   = "Reduces effects and makes fast fire weapons slower with more damage in order to reduce simulation requirements\nkey: lowcpu",
 		type   = "bool",
 		def    = false,
-		section= 'xtagame',
+		section= 'other',
 	},
 	{
 		key		= "dynamiclights",
@@ -327,7 +334,7 @@ local options = {
 		name	= "Debug Mode",
 		desc	= "Enable debugging mode. Will allow /cheat by default, and load gadget profiler.\nkey: debugmode",
 		type	= "bool",
-		section	= 'xtagame',
+		section	= 'other',
 		def		= false,
 	},
 	
@@ -355,7 +362,7 @@ local options = {
 		min    = 0.5,
 		max    = 15,
 		step   = 0.5,
-		section= "koth",
+		section= "kothsection",
 	},
 	{
 		key    = "gracetime",
@@ -366,7 +373,7 @@ local options = {
 		min    = 0,
 		max    = 5,
 		step   = 0.1,
-		section= "koth",
+		section= "kothsection",
 	},
 	{
 		key    = "MetalMult",
