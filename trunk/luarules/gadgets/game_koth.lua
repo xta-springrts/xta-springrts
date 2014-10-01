@@ -70,7 +70,7 @@ if(not gadgetHandler:IsSyncedCode()) then
 	local mapX 							= Game.mapX * 512
 	local mapY 							= Game.mapY * 512
 		
-local enabled = tonumber(Spring.GetModOptions().kingofthehill) or 0
+local enabled = tonumber(Spring.GetModOptions().koth) or 0
 
 if (enabled == 0) then 
   return false
@@ -208,7 +208,7 @@ if(gadgetHandler:IsSyncedCode()) then
 	local grace = 0
 	local lG = 0
 
-local enabled = tonumber(Spring.GetModOptions().kingofthehill) or 0
+local enabled = tonumber(Spring.GetModOptions().koth) or 0
 
 if (enabled == 0) then 
   return false
