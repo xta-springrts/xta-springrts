@@ -40,7 +40,7 @@ local options = {
 		type = "section",
 	},
 	{
-		key  = 'koth',
+		key  = 'kothsection',
 		name = 'King of the Hill Settings',
 		desc = 'Settings for King of the Hill mode. Add extra boxes then actual teams to declare capture areas, can be more then one extra box.',
 		type = "section",
@@ -339,12 +339,12 @@ local options = {
 --		def    = true,
 --      },
 	{
-		key    = "kingofthehill",
+		key    = "koth",
 		name   = "King of the Hill Mode",
-		desc   = "Control the hill for a set amount of time to win! See King of the Hill section.\nkey: kingofthehill",
+		desc   = "Control the hill for a set amount of time to win! See King of the Hill section.\nkey: koth",
 		type   = "bool",
 		def    = false,
-		section= "koth",
+		section= "kothsection",
 	},
 	{
 		key    = "hilltime",

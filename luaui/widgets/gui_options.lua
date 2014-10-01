@@ -269,7 +269,7 @@ function widget:Initialize()
 			{
 			name		= "Enable KOTH mode:",
 			type		= "bool",
-			value		= modOptions["kingofthehill"] or "N/A",
+			value		= modOptions["koth"] or "N/A",
 			},
 			
 			{
