@@ -725,7 +725,8 @@ local function FinishMorph(unitID, morphData)
 	
 	--// update selection
 	SendToUnsynced ("unit_morph_finished", unitID, newUnit)
-
+	Spring.SetUnitRulesParam(unitID,'removedByMorph',1)
+	
 	SpSetUnitBlocking(newUnit, true)
 	SpDestroyUnit(unitID, false, true) -- selfd = false, reclaim = true
 	end
