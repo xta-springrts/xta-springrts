@@ -28,7 +28,7 @@ local myFont	 			= gl.LoadFont("FreeSansBold.otf",textsize, 1.9, 40)
 function widget:Initialize()	
 	if (not Spring.IsReplay()) then
 		Spring.Log("widget", LOG.INFO, "replaycontrol: Not a replay, removing myself.")
-		widgetHandler:RemoveWidget(self)
+		widgetHandler:RemoveWidget()
 		return
 	end
 

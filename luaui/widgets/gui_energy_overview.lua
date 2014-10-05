@@ -12,17 +12,11 @@ end
 
 local localTeamID			
 local Echo 							= Spring.Echo
-
-local DISPLAYTIME					= 210
-local FADETIME						= 60
 local myFont	 					= gl.LoadFont("FreeSansBold.otf",14, 1.9, 40)
 local myFontSmall	 				= gl.LoadFont("FreeSansBold.otf",12, 1.9, 40)
 local sizex, sizey					= 400, 270
 local posx, posy					= 600, 400
-local BARWIDTH						= 10
-local MARGIN						= 5
-local BARLENGTH						= 100
-local recsize						= 8
+
 local vsx, vsy 						= gl.GetViewSizes()
 local visible						= false
 local Button						= {}

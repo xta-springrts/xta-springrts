@@ -60,7 +60,7 @@ function widget:Initialize()
 	if ( spec == true ) then
 		Spring.Echo("widget", LOG.INFO, "<Energy Conversion Info> Spectator mode. Widget removed.")
 		displayWindow = false
-		widgetHandler:RemoveWidget()
+		widgetHandler:RemoveWidget(self)
 		return false
 	end
 	scaling = Y/1200
@@ -158,7 +158,7 @@ function widget:TeamDied(teamID)
 	
 	if teamID == spGetMyTeamID() then
 		displayWindow = false	
-		widgetHandler:RemoveWidget()
+		widgetHandler:RemoveWidget(self)
 		return
 	end
 end

@@ -349,7 +349,7 @@ end
 function widget:Initialize()
 
     if Spring.GetGameFrame() > 0 or (Spring.GetModOptions() or {}).commander ~= "choose" then
-        widgetHandler:RemoveWidget(self)
+        widgetHandler:RemoveWidget()
 		return
     end
 
@@ -1046,7 +1046,7 @@ function widget:MousePress(mx, my, mButton)
 		if spectator  then
 			if mButton == 1 then
 				if IsOnButton(mx,my,Button["exit"]["x0"],Button["exit"]["y0"],Button["exit"]["x1"],Button["exit"]["y1"]) then
-					widgetHandler:RemoveWidget(self)
+					widgetHandler:RemoveWidget()
 					Echo("Exit to native dialogue window.")
 					playSound(cancel)
 					return true
@@ -1148,7 +1148,7 @@ function widget:MousePress(mx, my, mButton)
 						end
 					-- exit
 					elseif IsOnButton(mx,my,Button["exit"]["x0"],Button["exit"]["y0"],Button["exit"]["x1"],Button["exit"]["y1"]) then
-						widgetHandler:RemoveWidget(self)
+						widgetHandler:RemoveWidget()
 						Echo("Exit to native dialogue window.")
 						playSound(cancel)
 						return true
