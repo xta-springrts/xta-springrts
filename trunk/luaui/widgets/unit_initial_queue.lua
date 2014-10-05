@@ -40,6 +40,8 @@ local energyColor = '\255\255\255\128' -- Light yellow
 local buildColor = '\255\128\255\128' -- Light green
 local whiteColor = '\255\255\255\255' -- White
 
+
+
 ------------------------------------------------------------
 -- Globals
 ------------------------------------------------------------
@@ -68,10 +70,11 @@ local lastkey = nil
 local indexAdjusted = false
 local tracedDefID = nil
 local sBuilds
+local canMorph = true
 
 -- Maps units that could get disabled because of map conditions
 local disablable = {}
-
+local Button 	= {}
 local modOptions = Spring.GetModOptions()
 local requireCommander = (Spring.GetModOptions() or {}).commander == "choose"
 local Echo = Spring.Echo
@@ -80,6 +83,13 @@ local startChosen = false
 local myFont = gl.LoadFont("FreeSansBold.otf",textsize, 1.9, 40)
 local gameStarting = false
 local updateHacked = false
+
+
+local CMD_MORPH_STOP 		= 32410
+local CMD_MORPHA			= 31418
+local CMD_MORPHC			= 31431
+local CMD_MORPH 			= CMD_MORPHA
+local CMD_SING				= 40123
 
 ------------------------------------------------------------
 -- Local functions
@@ -91,6 +101,8 @@ local function TraceDefID(mx, my)
 end
 local function GetBuildingDimensions(uDefID, facing)
 	local bDef = UnitDefs[uDefID]
+	if not bDef then return end
+	
 	if (facing % 2 == 1) then
 		return 4 * bDef.zsize, 4 * bDef.xsize
 	else
@@ -100,6 +112,7 @@ end
 local function DrawBuilding(buildData, borderColor, buildingAlpha, drawRanges)
 	
 	local bDefID, bx, by, bz, facing = buildData[1], buildData[2], buildData[3], buildData[4], buildData[5]
+	if not bDefID then return end
 	local bw, bh = GetBuildingDimensions(bDefID, facing)
 	
 	gl.DepthTest(false)
@@ -139,6 +152,29 @@ local function DrawBuilding(buildData, borderColor, buildingAlpha, drawRanges)
 	gl.DepthTest(false)
 	gl.DepthMask(false)
 end
+local function DrawMorph(x,y,z)
+	
+	gl.DepthTest(false)
+	
+	gl.DepthTest(GL.LEQUAL)
+	gl.DepthMask(true)
+	
+	gl.Color(1.0, 1.0, 1.0, buildingAlpha)
+	gl.PushMatrix()
+		gl.Translate(x, y, z)
+		gl.UnitShape(sDefID, Spring.GetMyTeamID())
+		
+		myFont:Begin()
+		myFont:SetTextColor({0, 0, 1.0, 1})
+		myFont:Print("Morph",10,10,24,'vs')
+		myFont:End()
+	
+	gl.PopMatrix()
+	
+	gl.Lighting(false)
+	gl.DepthTest(false)
+	gl.DepthMask(false)
+end
 local function DrawUnitDef(uDefID, uTeam, ux, uy, uz)
 	
 	gl.Color(1.0, 1.0, 1.0, 1.0)
@@ -159,9 +195,12 @@ local function DoBuildingsClash(buildData1, buildData2)
 	
 	local w1, h1 = GetBuildingDimensions(buildData1[1], buildData1[5])
 	local w2, h2 = GetBuildingDimensions(buildData2[1], buildData2[5])
-	
-	return math.abs(buildData1[2] - buildData2[2]) < w1 + w2 and
-	       math.abs(buildData1[4] - buildData2[4]) < h1 + h2
+	if not w1 or not h1 or not w2 or not h2 then
+		return false
+	else
+		return math.abs(buildData1[2] - buildData2[2]) < w1 + w2 and
+			   math.abs(buildData1[4] - buildData2[4]) < h1 + h2
+	end
 end
 local function SetSelDefID(defID)
 	
@@ -207,14 +246,62 @@ local function GetQueueCosts()
 	local eCost = 0
 	local bCost = 0
 	for i = 1, #buildQueue do
-		local uDef = UnitDefs[buildQueue[i][1]]
-		mCost = mCost + uDef.metalCost
-		eCost = eCost + uDef.energyCost
-		bCost = bCost + uDef.buildTime
+		
+		if ValidBuild(buildQueue[i][1]) then
+			local uDef = UnitDefs[buildQueue[i][1]]
+			mCost = mCost + uDef.metalCost
+			eCost = eCost + uDef.energyCost
+			bCost = bCost + uDef.buildTime
+		else
+			if buildQueue[i][1] == CMD_MORPHA then
+				return mCost+634,eCost+1249,bCost+9000
+			elseif buildQueue[i][1] == CMD_MORPHC then
+				return mCost+688,eCost+1660,bCost+9000
+			else
+				return mCost,eCost,bCost
+			end
+		end
 	end
 	return mCost, eCost, bCost
 end
+local function IsOnButton(x, y, BLcornerX, BLcornerY,TRcornerX,TRcornerY)
+		if BLcornerX == nil then return false end
+		-- check if the mouse is in a rectangle
 
+		return x >= BLcornerX and x <= TRcornerX
+							  and y >= BLcornerY
+							  and y <= TRcornerY
+	end
+local function drawEdge(x0, y0, x1, y1, width)
+			gl.Rect(x0, y0, x1, y0 + width)
+			gl.Rect(x0, y1, x1, y1 - width)
+			gl.Rect(x0, y0, x0 + width, y1)
+			gl.Rect(x1, y0, x1 - width, y1)
+		end
+		
+local function addMorph()
+
+	buildQueue[#buildQueue + 1] =  {CMD_MORPH, 0, 0, 0, 0}
+	
+end
+
+local function removeMorph()
+	
+	local morphIndex = {}
+	for i,cmd in pairs(buildQueue) do
+		if cmd[1] == CMD_MORPH or cmd[1] == CMD_MORPHA or cmd[1] == CMD_MORPHC then
+			morphIndex[#morphIndex+1] = i
+		end
+	end
+	
+	for _, index in pairs(morphIndex) do
+		table.remove(buildQueue,index)
+	end
+end
+
+local function addSing()
+	buildQueue[#buildQueue + 1] =  {CMD_SING, 0, 0, 0, 0}
+end
 ------------------------------------------------------------
 -- Initialize/shutdown
 ------------------------------------------------------------
@@ -266,6 +353,8 @@ function widget:Initialize()
 	local startID = spGetTeamRulesParam(myTeamID, 'startUnit')
 	if startID and startID ~= "" then sDefID = startID end
 	InitializeFaction(sDefID)
+	Button["morph"] = {}
+	Button["sing"] = {}
 end
 
 function widget:Shutdown()
@@ -296,6 +385,7 @@ local function drawBorder()
 		local w = iconSize + borderSize
 		local x0 = wl - w
 		local y0 = wt + w
+		
 			
 		for r = 1, #cellRows do
 			local y1 = y0 - r * w
@@ -329,8 +419,58 @@ local function drawBorder()
 				end
 				
 				gl.Rect(x1,		y2,		x2,		y2-1)
-				
+			end		
+		end
+		if Button.morph and Button.sing and startChosen then
+		
+			Button.morph.x0 	= x0 + w
+			Button.morph.x1		= x0 + 3.5 * w
+			Button.morph.y0		= y0 - w + borderSize
+			Button.morph.y1		= y0+ borderSize
+			
+			Button.sing.x0		= x0 + 3.5 * w
+			Button.sing.y0		= y0-w+ borderSize
+			Button.sing.x1		= x0 + 6 * w
+			Button.sing.y1		= y0+ borderSize
+					
+			local mx1 = x0 + 3 * w
+			
+			-- buttons:
+			gl.Color(0, 0, 1, 0.5)
+			gl.Rect(Button.morph.x0, Button.morph.y0, Button.morph.x1, Button.morph.y1)
+			gl.Rect(Button.sing.x0, Button.sing.y0, Button.sing.x1,Button.sing.y1)
+			
+			-- border
+			if Button.morph.On then
+				gl.Color(1, 1, 1, 1)
+			elseif Button.morph.mouse then
+				gl.Color(1, 1, 0, 1)
+			else
+				gl.Color(0.4, 0.4, 0.4, 1)
 			end
+			drawEdge(Button.morph.x0, Button.morph.y0, Button.morph.x1, Button.morph.y1,1)
+			
+			if Button.sing.On then
+				gl.Color(1, 1, 1, 1)
+			elseif Button.sing.mouse then
+				gl.Color(1, 1, 0, 1)
+			else
+				gl.Color(0.4, 0.4, 0.4, 1)
+			end
+			drawEdge(Button.sing.x0, Button.sing.y0, Button.sing.x1, Button.sing.y1,1)
+						
+			-- text
+			myFont:Begin()
+			myFont:SetTextColor({1,1,1,1})
+			myFont:Print("Sing",	Button.sing.x0 + 1.25*w, 		Button.sing.y0+w/2,	14,'vcs')
+			if Button.morph.On then
+				myFont:SetTextColor({1,1,0,1})
+				myFont:Print("Cancel morph",	Button.morph.x0 + 1.25*w, 		Button.morph.y0+w/2,	12,'vcs')
+			else
+				myFont:SetTextColor({1,1,1,1})
+				myFont:Print("Morph",	Button.morph.x0 + 1.25*w, 		Button.morph.y0+w/2,	14,'vcs')
+			end
+			myFont:End()
 		end
 	end
 	
@@ -359,7 +499,11 @@ local function drawPanel()
 
 		gl.PushMatrix()
 		gl.Translate(0, borderSize, 0)
-
+		
+		--gl.Color(0.6, 0.6, 1, 0)
+		--gl.Rect(-borderSize, -borderSize, iconSize + borderSize, iconSize + borderSize)
+		--gl.Translate(0, -iconSize - borderSize, 0)
+		
 		for r = 1, #cellRows do
 			local cellRow = cellRows[r]
 
@@ -392,6 +536,10 @@ local function drawPanel()
 	end
 	
 	panelList = gl.CreateList(drawFunc)
+end
+
+function ValidBuild(buildID)
+	return buildID ~= CMD_MORPH and buildID ~= CMD_MORPHA and buildID ~= CMD_MORPHC and buildID ~= CMD_SING
 end
 
 function InitializeFaction(sDefID)
@@ -481,7 +629,7 @@ function widget:DrawScreen()
 	if #buildQueue > 0 then
 		local mCost, eCost, bCost = GetQueueCosts()
 		myFont:Begin()
-		myFont:Print(string.format(queueTimeFormat, mCost, eCost, bCost / sDef.buildSpeed), wl, wt, fontSize, 'ds')
+		myFont:Print(string.format(queueTimeFormat, mCost, eCost, bCost / sDef.buildSpeed), wl, Button.morph.y1, fontSize, 'ds')
 		myFont:End()
 	end
 end
@@ -524,14 +672,33 @@ function widget:DrawWorld()
 		local queueLineVerts = startChosen and {{v={sx, sy, sz}}} or {}
 		for b = 1, #buildQueue do
 			local buildData = buildQueue[b]
-			
-			if selBuildData and DoBuildingsClash(selBuildData, buildData) then
-				DrawBuilding(buildData, borderClashColor, buildingQueuedAlpha)
+				--Echo(b,buildData[1])
+			if ValidBuild(buildData[1]) then 
+				if selBuildData and DoBuildingsClash(selBuildData, buildData) then
+					DrawBuilding(buildData, borderClashColor, buildingQueuedAlpha)
+				else
+					DrawBuilding(buildData, borderNormalColor, buildingQueuedAlpha)
+				end
+				
+				queueLineVerts[#queueLineVerts + 1] = {v={buildData[2], buildData[3], buildData[4]}}
 			else
-				DrawBuilding(buildData, borderNormalColor, buildingQueuedAlpha)
+				if buildData[1] == CMD_MORPH then
+					local x,y,z
+					
+					if b > 1 then
+						local bdata = buildQueue[b-1]
+						if bdata then
+							x,y,z = bdata[2],bdata[3],bdata[4]
+						end
+					end
+					
+					if not x or not y or not z then
+						x,y,z = Spring.GetTeamStartPosition(myTeamID)
+					end
+					
+					DrawMorph(x,y,z)
+				end
 			end
-			
-			queueLineVerts[#queueLineVerts + 1] = {v={buildData[2], buildData[3], buildData[4]}}
 		end
 		
 		-- Draw queue lines
@@ -590,7 +757,14 @@ function widget:GameFrame(n)
 			for b = 1, #buildQueue do
 				
 				local buildData = buildQueue[b]
-				Spring.GiveOrderToUnit(uID, -buildData[1], {buildData[2], buildData[3], buildData[4], buildData[5]}, {"shift"})
+				
+				if buildData[1] == CMD_MORPH then
+					Spring.GiveOrderToUnit(uID,CMD_MORPH,{},{"shift"})
+				elseif buildData[1] == CMD_SING then
+					Spring.GiveOrderToUnit(uID,CMD_SING,{},{"shift"})
+				else
+					Spring.GiveOrderToUnit(uID, -buildData[1], {buildData[2], buildData[3], buildData[4], buildData[5]}, {"shift"})
+				end
 			end
 			
 			widgetHandler:RemoveWidget(self)
@@ -601,7 +775,7 @@ end
 
 function widget:GameOver()
 	-- this can happen if game is abandoned before it starts
-	widgetHandler:RemoveWidget()
+	widgetHandler:RemoveWidget(self)
 	return
 end
 ------------------------------------------------------------
@@ -614,6 +788,14 @@ function widget:IsAbove(mx, my)
 	end
 	tracedDefID = TraceDefID(mx, my)
 	--drawPanel()
+	Button.morph.mouse = false
+	Button.sing.mouse = false
+		
+	if IsOnButton (mx,my,Button.sing.x0,Button.sing.y0,Button.sing.x1,Button.sing.y1) then
+		Button.sing.mouse = true
+	elseif IsOnButton (mx,my,Button.morph.x0,Button.morph.y0,Button.morph.x1,Button.morph.y1) then
+		Button.morph.mouse = true
+	end
 	
 	return tracedDefID
 	
@@ -630,6 +812,19 @@ function widget:MousePress(mx, my, mButton)
 	if requireCommander and not startChosen then return end
 	
 	--tracedDefID = TraceDefID(mx, my)
+	if 	IsOnButton (mx,my,Button.morph.x0,Button.morph.y0,Button.morph.x1,Button.morph.y1) then
+		Button.morph.On = not Button.morph.On
+		if Button.morph.On then
+			addMorph()
+		else
+			removeMorph()
+		end
+		return true
+	elseif IsOnButton (mx,my,Button.sing.x0,Button.sing.y0,Button.sing.x1,Button.sing.y1) then
+		addSing()
+		return true
+	end
+		
 	if tracedDefID then
 		if mButton == 1 then
 			SetSelDefID(tracedDefID)
@@ -736,6 +931,7 @@ end
 -- Misc
 ------------------------------------------------------------
 function widget:Update()
+	--Echo("Morph:",CMD_MORPH)
 	if startChosen and not updateHacked then
 		drawPanel()
 		updateHacked = true
@@ -763,6 +959,14 @@ function widget:RecvLuaMsg(msg, playerID)
 			local oldSide = sDef.customParams and sDef.customParams.side
 			
 			if newSide ~= oldSide then
+				if oldSide then
+					if oldSide == "arm" then
+						CMD_MORPH = CMD_MORPHC
+					else
+						CMD_MORPH = CMD_MORPHA
+					end
+				end
+				
 				for b = 1, #buildQueue do
 					local buildData = buildQueue[b]
 					local buildDataId = buildData[1]
@@ -770,20 +974,36 @@ function widget:RecvLuaMsg(msg, playerID)
 					--Echo("Team: ",myTeamID," - Converting side from: ",oldSide,", after message from player: ",playerID)
 					if oldSide then
 						if oldSide == "arm" then
-							local newID = (UnitDefNames[string.gsub(UnitDefs[buildDataId].name,"arm_","core_")] or {}).id
-							if newID then
-								buildData[1] = newID
-								buildQueue[b] = buildData
+							if ValidBuild(buildDataId) then
+								local newID = UnitDefs[buildDataId] and ((UnitDefNames[string.gsub(UnitDefs[buildDataId].name,"arm_","core_")] or {}).id)
+								if newID then
+									buildData[1] = newID
+									buildQueue[b] = buildData
+								else
+									Echo("Warning: could not convert to core: ",(UnitDefs[buildDataId] or {}).name)
+								end
 							else
-								Echo("Warning: could not convert to core: ",(UnitDefs[buildDataId] or {}).name)
+								if buildDataId == CMD_MORPHA then
+									local newID = CMD_MORPHC
+									buildData[1] = newID
+									buildQueue[b] = buildData
+								end
 							end
 						elseif oldSide == "core" then
-							local newID = (UnitDefNames[string.gsub(UnitDefs[buildDataId].name,"core_","arm_")] or {}).id
-							if newID then
-								buildData[1] = newID
-								buildQueue[b] = buildData
+							if ValidBuild(buildDataId) then
+								local newID = UnitDefs[buildDataId] and ((UnitDefNames[string.gsub(UnitDefs[buildDataId].name,"core_","arm_")] or {}).id)
+								if newID then
+									buildData[1] = newID
+									buildQueue[b] = buildData
+								else
+									Echo("Warning: could not convert to arm: ",(UnitDefs[buildDataId] or {}).name)
+								end
 							else
-								Echo("Warning: could not convert to arm: ",(UnitDefs[buildDataId] or {}).name)
+								if buildDataId == CMD_MORPHC then
+									local newID = CMD_MORPHA
+									buildData[1] = newID
+									buildQueue[b] = buildData
+								end
 							end
 						end
 					end

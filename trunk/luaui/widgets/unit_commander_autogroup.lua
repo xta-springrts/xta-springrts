@@ -31,5 +31,5 @@ function widget:GameStart()
 			end
 		end
 	end
-	widgetHandler.RemoveWidget()
+	widgetHandler:RemoveWidget()
 end

@@ -82,7 +82,7 @@ end
 function widget:Initialize()
 	
 	if spGetSpectatingState() then
-		widgetHandler:RemoveWidget(self)
+		widgetHandler:RemoveWidget()
 		return
 	end
 	
@@ -136,7 +136,7 @@ function widget:Update(dt)
 	if (watchTime > 0) and (not waitedUnits) then
 		
 		if spGetSpectatingState() then
-			widgetHandler:RemoveWidget(self)
+			widgetHandler:RemoveWidget()
 			return
 		end
 		
