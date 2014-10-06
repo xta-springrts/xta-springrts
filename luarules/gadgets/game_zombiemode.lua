@@ -50,12 +50,14 @@ local gaiaTeamID = Spring.GetGaiaTeamID()
 
 -- "modOptions" is a <string, string> map (values are not numbers!)
 local haveZombies = (((modOptions["zombies"] or "0") + 0) ~= 0)
+local isKOTH	= (tonumber(Spring.GetModOptions().koth) or 0) == 1
 local zombieConf  = "LuaRules/Configs/game_zombiemode_defs.lua"
 local zombieDefs  = (VFS.FileExists(zombieConf) and include(zombieConf)) or {}
 local zombieQueue = {}
 local zombieTable = {}
 local zombieCount = 0
 local zombieCommanders = {}
+local kothBoxes = {}
 
 -- better to hardcode these, as many weapons are listed as dgun, for example bogus dgun
 local dgunTable = {
@@ -179,15 +181,22 @@ local function MakeZombieArmy(zombieArray,x0,z0,x1,z1)
 	-- pick target for army
 	local tx,ty,tz, b0
 	local loops = 0
+	local sbox = random(#kothBoxes)
+	
+	local xmin = isKOTH and (kothBoxes[sbox]["xmin"]) or 0
+	local zmin = isKOTH and (kothBoxes[sbox]["zmin"]) or 0
+	local xmax = isKOTH and (kothBoxes[sbox]["xmax"]) or mapX
+	local zmax = isKOTH and (kothBoxes[sbox]["zmax"]) or mapZ
+	
 	repeat
-		tx = random(0,mapX)
-		tz = random(0,mapZ)
+		tx = random(xmin,xmax)
+		tz = random(zmin,zmax)
 		ty = Spring.GetGroundHeight(tx,tz)
 		b0 = spTestMoveOrder(testUdefID,  tz, ty, tz, 0.0, 0.0, 0.0,  true, true, true)
 		loops = loops + 1
 	until (((tx < x0 or tx > x1) or (tz < z0 or tz > z1)) and b0) or loops > 50 -- send army to another quadrant and make sure it can move there
 	
-	if not  tx and ty and tz then return end
+	if not tx and ty and tz then return end
 	
 	Spring.GiveOrderToUnitArray(front,CMD.STOP, {},{})
 	Spring.GiveOrderToUnitArray(ranged,CMD.STOP, {},{})
@@ -392,7 +401,25 @@ function gadget:Initialize()
 	mapX = Game.mapSizeX
 	mapZ = Game.mapSizeZ
 	
-end
+	if isKOTH then
+		for _, allyTeamID in ipairs(Spring.GetAllyTeamList()) do 
+			local teams = Spring.GetTeamList(allyTeamID)
+			if  (teams == nil or #teams == 0) then
+				local xmin,zmin, xmax,zmax = Spring.GetAllyTeamStartBox(allyTeamID)
+				
+				if (xmin ~= nil) then
+					xmin = math.floor(xmin)
+					zmin = math.floor(zmin)
+					xmax = math.floor(xmax)
+					zmax = math.floor(zmax)
+					
+					table.insert(kothBoxes, {["xmin"] = xmin, ["zmin"] = zmin, ["xmax"] = xmax, ["zmax"] = zmax})
+					
+				end 
+			end 
+		end
+	end
+end 
 
 -- NOTE:
 --   dgun should not trigger respawn (config) *FIXED*
@@ -470,7 +497,7 @@ end
 
 function gadget:FeatureDestroyed(featureID, allyTeamID)
 	local unitName  = Spring.GetFeatureResurrect(featureID)
-	
+	--Echo("FR:",unitName)
 	if unitName then
 		local unitDefID = (UnitDefNames[unitName] or {}).id
 		local fx,_,fz = Spring.GetFeaturePosition(featureID)
@@ -507,11 +534,17 @@ function gadget:UnitTaken(unitID, unitDefID, oldTeam, newTeam)
 end
 
 function gadget:AllowCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdOptions, cmdTag, synced)
-	if unitTeam ~= gaiaTeamID or cmdID ~= CMD.RECLAIM then
+	if unitTeam ~= gaiaTeamID or (cmdID ~= CMD.RECLAIM and cmdID ~= CMD.PATROL) then
 		return true
 	else
-		Echo("Reclaim command:",cmdParams[1],cmdParams[2],cmdParams[3])
+		--Echo("AC:",CMD[cmdID])
+		-- TODO: fix to prevent zombies from reclaiming, but reclaim from patrol command is not seen as a reclaim command.
+		return true
 	end
+end
+
+function gadget:GameOver()
+	gadgetHandler:RemoveGadget()
 end
 
 --[[
