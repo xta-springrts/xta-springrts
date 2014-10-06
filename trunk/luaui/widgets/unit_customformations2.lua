@@ -135,6 +135,7 @@ local glPopMatrix = gl.PopMatrix
 local glScale = gl.Scale
 local glTranslate = gl.Translate
 local glLoadIdentity = gl.LoadIdentity
+local Echo = Spring.Echo
 
 local spGetActiveCommand = Spring.GetActiveCommand
 local spSetActiveCommand = Spring.SetActiveCommand
@@ -845,7 +846,7 @@ end
 
 -- remove on game over
 function widget:GameOver()
-	widgetHandler:RemoveWidget()
+	widgetHandler:RemoveWidget(self)
 	return
 end
 ---------------------------------------------------------------------------------------------------------

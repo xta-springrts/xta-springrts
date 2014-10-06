@@ -148,3 +148,9 @@ function widget:CommandNotify(cmdID, cmdParams, cmdOpts)
 		end
 	end
 end
+
+-- remove on game over
+function widget:GameOver()
+	widgetHandler:RemoveWidget(self)
+	return
+end
