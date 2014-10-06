@@ -958,6 +958,7 @@ else
 			if teamData then
 				local statName = Button["teamstats"]["sel"]
 				local maxval = 0
+				local minval = math.huge
 				
 				for tID, data in pairs (teamData) do
 					if tID ~= gaiaID then
@@ -977,10 +978,12 @@ else
 					for k,v in pairs( array ) do
 						if type(v) == 'number' then
 							maxval = max( maxval, v )
+							minval = min( minval, v )
 						end
 					end
 				end
 				Button["teamstats"]["maxvalue"] = maxval
+				Button["teamstats"]["minvalue"] = minval
 								
 				if not inited then
 					Button["legend"][myTeamID]["On"] = true
@@ -1420,13 +1423,19 @@ else
 			glRect(Panel["1"]["x0"]-5,y100,Panel["1"]["x1"],y100+1)
 			glRect(Panel["1"]["x0"]-5,y50,Panel["1"]["x1"],y50+1)
 			
+			local imin = Button.influence.minvalue*100
+			local imax = Button.influence.maxvalue*100
+			imin = imin >= 10 and round(imin,0) or (round(imin,1))
+			imax = imax >= 10 and round(imax,0) or (round(imax,1))
+			local i50 = ((imax - imin)/2 >= 10) and round((imax-imin)/2,0) or (round((imax-imin)/2,1))
+						
 			myFont:Begin()
 			myFont:SetTextColor(cAxesText)
 			--myFont:Print("Influence", Panel["1"]["x0"]-30,Panel["1"]["y1"] + 20, 10, 'xs')
-			myFont:Print("0 %", Panel["1"]["x0"]-10, y0, 10, 'vro')
-			myFont:Print("50 %", Panel["1"]["x0"]-10, y50, 10, 'vro')
-			myFont:Print("100 %", Panel["1"]["x0"]-10, y100, 10, 'vro')
-			myFont:Print("Time: " .. round( (60/SAMPLEFREQUENCY)*(n-1),0) .. " min", Panel["1"]["x1"]+25,Panel["1"]["y0"]-2, 10, 'xo')
+			myFont:Print(tostring(imin) .. " %", Panel["1"]["x0"]-10, y0, 12, 'vrs')
+			myFont:Print(tostring(i50) .. " %", Panel["1"]["x0"]-10, y50, 10, 'vro')
+			myFont:Print(tostring(imax) .. " %", Panel["1"]["x0"]-10, y100, 12, 'vrs')
+			myFont:Print("Time: " .. round( (60/SAMPLEFREQUENCY)*(n-1),0) .. " min", Panel["1"]["x1"]+25,Panel["1"]["y0"]-2, 12, 'xs')
 			myFont:End()
 			
 			glColor(cAxesMinor)
@@ -1441,27 +1450,20 @@ else
 			local yspace	= y100-y0
 			
 			local function DrawLine(array,i)
-				local xscale
-				if n <= 1 then
-					xscale = 1
-				else
-					xscale = 1/(n-1)
-				end
+				local xscale = n <= 1 and 1 or 1/(n-1)
+				local yscale = (imax - imin) > 1 and 100/(imax - imin) or 1
+				
 				for x, y in ipairs (array) do
-					glVertex(x0+(x-1)*xspace*xscale, y0+y*yspace-(i-1))
+					glVertex(x0+(x-1)*xspace*xscale, y0+y*yspace*yscale - (i-1))
 				end
 			end
 			
 			local function DrawLineShadow(array,i)
-				local xscale
-				if n <= 1 then
-					xscale = 1
-				else
-					xscale = 1/(n-1)
-				end
+				local xscale = n <= 1 and 1 or 1/(n-1)
+				local yscale = (imax - imin) > 1 and 100/(imax - imin) or 1
 				
 				for x, y in ipairs (array) do
-					glVertex(x0+(x-1)*xspace*xscale, y0+y*yspace-1-(i-1))
+					glVertex(x0+(x-1)*xspace*xscale, y0+y*yspace*yscale -1-(i-1))
 				end
 			end
 			glLineStipple(false)
@@ -1888,12 +1890,17 @@ else
 			glRect(Panel["1"]["x0"]-5,y100,Panel["1"]["x1"],y100+1)
 			glRect(Panel["1"]["x0"]-5,y50,Panel["1"]["x1"],y50+1)
 			
+			
+			-- get max/min value
+			local largestValue = Button["teamstats"]["maxvalue"] or 1
+			local smallestValue = Button["teamstats"]["minvalue"] or 0
+						
 			myFont:Begin()
 			myFont:SetTextColor(cAxesText)
 			--myFont:Print(statName, Panel["1"]["x0"]-30,Panel["1"]["y1"] + 20, 10, 'xs')
-			myFont:Print("0", Panel["1"]["x0"]-10, y0, 10, 'vro')
+			myFont:Print(formatRes(smallestValue), Panel["1"]["x0"]-10, y0, 10, 'vro')
 			--myFont:Print("50 %", Panel["1"]["x0"]-10, y50, 10, 'vro')
-			myFont:Print(formatRes(Button["teamstats"]["maxvalue"]), Panel["1"]["x0"]-10, y100, 10, 'vrs')
+			myFont:Print(formatRes(largestValue), Panel["1"]["x0"]-10, y100, 10, 'vrs')
 			myFont:Print("Time: " .. round( (STATSFREQUENCY/60)*(n),0) .. " min", Panel["1"]["x1"]+25,Panel["1"]["y0"]-2, 10, 'xo')
 			myFont:End()
 			
@@ -1907,25 +1914,24 @@ else
 			local x0 		= Panel["1"]["x0"]
 			local xspace 	= Panel["1"]["x1"]-Panel["1"]["x0"]
 			local yspace	= y100-y0
-			
-			-- get max value
-			local largestValue = Button["teamstats"]["maxvalue"] or 1
-						
+									
 			local function DrawLine(array,i)
 				local xscale = n <= 1 and 1 or 1/(n-1)
-				local yscale = 1/largestValue
+				local yscale = (largestValue-smallestValue >= 1) and 1/(largestValue-smallestValue) or 1
+				local ymin = smallestValue
 				
 				for x, y in ipairs (array) do
-					glVertex(x0+(x-1)*xspace*xscale, y0+y*yspace*yscale) 
+					glVertex(x0+(x-1)*xspace*xscale, y0+(y-ymin)*yspace*yscale) 
 				end
 			end
 			
 			local function DrawLineShadow(array,i)
 				local xscale = n <= 1 and 1 or 1/(n-1)
-				local yscale = 1/largestValue
+				local yscale = (largestValue-smallestValue >= 1) and 1/(largestValue-smallestValue) or 1
+				local ymin = smallestValue
 								
 				for x, y in ipairs (array) do
-					glVertex(x0+(x-1)*xspace*xscale, y0+y*yspace*yscale-1)
+					glVertex(x0+(x-1)*xspace*xscale, y0+(y-ymin)*yspace*yscale-1)
 				end
 			end
 			
@@ -1935,14 +1941,15 @@ else
 				for tID, data in pairs (teamData) do						
 					r,g,b = GetTeamColor(tID)
 					local ylast = data[statName]["values"][#data[statName]["values"]]
-					local yscale = largestValue and 1/largestValue or 1
+					local yscale = (largestValue-smallestValue >= 1) and 1/(largestValue-smallestValue) or 1
+					local ymin = smallestValue
 					
 					if not ylast then return end
 					
 					-- print last value at right border
 					myFont:Begin()
 					myFont:SetTextColor({r, g, b, 0.8})
-					myFont:Print(formatRes(ylast), Panel["1"]["x1"]+10,y0+ylast*yspace*yscale, 10, 'xs')
+					myFont:Print(formatRes(ylast), Panel["1"]["x1"]+10,y0+(ylast-ymin)*yspace*yscale, 10, 'xs')
 					myFont:End()
 					
 					glColor(r, g, b, 0.85) -- set a bit transparency to allow overlapping values
@@ -2107,6 +2114,27 @@ else
 			end
 		end
 
+		local function transferIsComplete()
+			if allyData and #allyData > 0 then
+				local maxval = 0
+				local minval = math.huge					
+				
+				for i, aData in ipairs (allyData) do
+					local array = aData["values"]
+												
+					for k,v in pairs( array ) do
+						if type(v) == 'number' then
+							maxval = max( maxval, v )
+							minval = min( minval, v )
+						end
+					end
+					
+					Button["influence"]["maxvalue"] = maxval
+					Button["influence"]["minvalue"] = minval
+				end
+			end
+		end
+		
 		function gadget:Initialize()
 			--register actions to SendToUnsynced messages
 			gadgetHandler:AddSyncAction("teamData", onTeamData)
@@ -2172,10 +2200,13 @@ else
 			if IsGameOver() then			
 				if not drawWindow then
 					drawWindow = Spring.GetGameRulesParam("ShowEnd") == 1
-					gadgetHandler:UpdateCallIn("DrawScreen")
-					gadgetHandler:UpdateCallIn("MousePress")
-					gadgetHandler:UpdateCallIn("MouseMove")
-					gadgetHandler:UpdateCallIn("IsAbove")
+					if drawWindow then
+						gadgetHandler:UpdateCallIn("DrawScreen")
+						gadgetHandler:UpdateCallIn("MousePress")
+						gadgetHandler:UpdateCallIn("MouseMove")
+						gadgetHandler:UpdateCallIn("IsAbove")
+						transferIsComplete()
+					end
 				end
 			end			
 		end
