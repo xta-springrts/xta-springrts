@@ -118,6 +118,11 @@ local function stationary(rList)
 	return oList
 end
 
+-- remove on game over
+function widget:GameOver()
+	widgetHandler:RemoveWidget()
+	return
+end
 ---
 
 local function issue(rList, shift)

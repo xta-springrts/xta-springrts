@@ -41,6 +41,11 @@ function widget:UpdateLayout(commandsChanged,page,alt,ctrl,meta, shift)
 return true 
 end 
 
+-- remove on game over
+function widget:GameOver()
+	widgetHandler:RemoveWidget()
+	return
+end
 
 function widget:GameFrame(n)
 	if n > 0 then

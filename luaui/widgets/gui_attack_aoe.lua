@@ -673,3 +673,9 @@ function widget:Update(dt)
   secondPart = secondPart + dt
   secondPart = secondPart - floor(secondPart)
 end
+
+-- remove on game over
+function widget:GameOver()
+	widgetHandler:RemoveWidget()
+	return
+end

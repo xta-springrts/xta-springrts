@@ -551,6 +551,14 @@ function InitializeFaction(sDefID)
 		widgetHandler:RemoveWidget(self)
 		return
 	end
+	
+	-- read faction of start unit and set morph command accordingly
+	if sDef.customParams and sDef.customParams.side == "arm" then
+		CMD_MORPH = CMD_MORPHA
+	else
+		CMD_MORPH = CMD_MORPHC
+	end
+	
 	-- Retain the build list order, but move all sea units to the end
 	local waterBuilds = {}
 	local newBuilds = {}
@@ -672,7 +680,7 @@ function widget:DrawWorld()
 		local queueLineVerts = startChosen and {{v={sx, sy, sz}}} or {}
 		for b = 1, #buildQueue do
 			local buildData = buildQueue[b]
-				--Echo(b,buildData[1])
+				
 			if ValidBuild(buildData[1]) then 
 				if selBuildData and DoBuildingsClash(selBuildData, buildData) then
 					DrawBuilding(buildData, borderClashColor, buildingQueuedAlpha)
@@ -757,7 +765,7 @@ function widget:GameFrame(n)
 			for b = 1, #buildQueue do
 				
 				local buildData = buildQueue[b]
-				
+								
 				if buildData[1] == CMD_MORPH then
 					Spring.GiveOrderToUnit(uID,CMD_MORPH,{},{"shift"})
 				elseif buildData[1] == CMD_SING then
@@ -909,7 +917,7 @@ function widget:KeyPress(key, mods, isRepeat)
 	end
 	
 	if not isRepeat and not mods.alt and not mods.ctrl and not mods.meta and not mods.shift then
-		--Echo("Keypress:",key)
+		
 		cycles = 0
 		keypress = key
 		indexAdjusted = false
@@ -931,7 +939,7 @@ end
 -- Misc
 ------------------------------------------------------------
 function widget:Update()
-	--Echo("Morph:",CMD_MORPH)
+		
 	if startChosen and not updateHacked then
 		drawPanel()
 		updateHacked = true
@@ -950,8 +958,7 @@ function widget:RecvLuaMsg(msg, playerID)
 		local myTeamID = Spring.GetMyTeamID()
 		
 		if myTeamID == playerTeam and not playerIsSpec then
-			--Echo("Message:",msg,playerID,string.find(msg,sidePrefix))
-			
+						
 			local startID = spGetTeamRulesParam(myTeamID, 'startUnit')
 			if startID and startID ~= "" then sDefID = startID end
 			local udid = Spring.GetUnitDefID(startID)
@@ -971,7 +978,6 @@ function widget:RecvLuaMsg(msg, playerID)
 					local buildData = buildQueue[b]
 					local buildDataId = buildData[1]
 					
-					--Echo("Team: ",myTeamID," - Converting side from: ",oldSide,", after message from player: ",playerID)
 					if oldSide then
 						if oldSide == "arm" then
 							if ValidBuild(buildDataId) then

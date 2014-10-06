@@ -88,4 +88,8 @@ function widget:CommandNotify(id, params, options)
   
 end
 
-
+-- remove on game over
+function widget:GameOver()
+	widgetHandler:RemoveWidget()
+	return
+end
