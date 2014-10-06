@@ -21,23 +21,34 @@
     ศอออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออผ
     Logo by ElementalGizmo
 	
-------------------- Change Log of XTA 9.744 Svn 780
+------------------- Change Log of XTA 9.744 Svn 799
+
+ Enhancements:
+--------------
 
  * Make it possible to morph while transported
- * Performance fixes of widgets and gadgets for spring 98
+ * Add widget that lets users see energy overview and management, bound by default to Ctrl-E
+ * Improve D-Gun unstall widget to not stop repairing builders and to also stop mohos and metal makers
+ * Advanced playerslist now shows resigned team instead of dead one when someone gives up and still has units
+ * Add specific resigned team died messages
+ * Add smoke and glow to geos
+ * Add buildpower and firepower graphs so that player's can keep track of these important game variables
+ * Add buttons to initial queue to queue morph and sing commands
+ 
+ Fixes:
+--------
+ * Performance fixes and improvements of widgets and gadgets for spring 98
  * KOTH: let ships also control box
  * Zombies: Remove guard command if zombie that was guarded by another zombie is captured to another team
  * T1-swarmer award now additionally requires 100 units to have been built
  * Fix gadget error when units try to attack a wreck from a killed target
  * Fix unit script spam from ARM Harpoon
- * Add widget that lets users see energy overview and management
- * Improve D-Gun unstall widget to not stop repairing builders and to also stop mohos and metal makers
  * Fix error message from energy conversion gadget
- * Advanced playerslist now shows resigned team instead of dead one when someone gives up and still has units
- * Add specific resigned team died messages
- * Add smoke and glow to geos
  * Fix xtaids Boa error message when killed
- 
+ * Adjust hitboxes of ARM Ranger, CORE Missile frigate and ARM Fibber, which were very low.
+ * modoption rename: kingofthehill => koth
+ * First to lose commander award (Ephemeron) requires 4 players
+  
 	
 ------------------- Change Log of XTA 9.743 Svn 762
 ------------------ by Jools

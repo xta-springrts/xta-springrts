@@ -64,6 +64,7 @@ if gadgetHandler:IsSyncedCode() then
 		local XTA_AWARDMARKER		= '\199'
 		local unitBuildpowerTable 	= {}
 		local unitFirepowerTable	= {}
+		local nbPlayers				= 0
 		
 		
 		local dtTable = {
@@ -398,7 +399,7 @@ if gadgetHandler:IsSyncedCode() then
 					
 					-- commloss award					
 					if commanderTable[unitDefID] then
-						if #GetAllyTeamList() > 4 then -- don't award unless there are at least 4 players (without gaia)
+						if nbPlayers >= 4 then -- don't award unless there are at least 4 players
 							if not badges["commloss"] then
 								local frame = GetGameFrame()
 								badges["commloss"] = {teamID,frame}
@@ -572,6 +573,15 @@ if gadgetHandler:IsSyncedCode() then
 				end
 			end
 			SendToUnsynced(name, nil, nil, nil, nil)
+		end
+		
+		function gadget:GameStart()		
+			for _, pID in pairs(Spring.GetPlayerList()) do
+				local _,active, spec = Spring.GetPlayerInfo(pID)
+				if active and not spec then 
+					nbPlayers = nbPlayers + 1
+				end
+			end
 		end
 		
 		function gadget:GameOver()
@@ -817,23 +827,18 @@ else
 			
 			areHeroes = heroUnits and heroUnits[1] and heroUnits[1][1]
 			areLost = lostUnits and lostUnits[1] and lostUnits[1][1]
-			areAwards = badges and (badges["commloss"] or badges["firstT2"] or badges["topKiller"] or (badges["special"] and badges["special"]["n"] and badges["special"]["n"] > 0) )
 			
-			--button states
-			if not inited then
-				Button["influence"]["On"] 	= not areAwards
-				Button["awards"]["On"] 		= areAwards
-			end
+			
 			
 			--length of buttons
-			local L1 = 205	-- proceed
+			local L1 = 120	-- proceed
 			local L2 = 45	-- exit
-			local L3 = 80	-- influence
-			local L4 = 150	-- player matrix
+			local L3 = 85	-- influence
+			local L4 = 125	-- player matrix
 			local L5 = 130	-- heroes
 			local L6 = 120 	-- lost
 			local L7 = 70  	-- awards
-			local L8 = 150	-- player statistics
+			local L8 = 120	-- team statistics
 			
 			--back panel for whole thing
 			Panel["back"]["x0"] 	= px
@@ -2133,6 +2138,13 @@ else
 					Button["influence"]["minvalue"] = minval
 				end
 			end
+			
+			areAwards = badges and (badges["commloss"] or badges["firstT2"] or badges["topKiller"] or (badges["special"] and badges["special"]["n"] and badges["special"]["n"] > 0) )
+			
+			if areAwards then
+				Button["influence"]["On"] = false
+				Button["awards"]["On"] = true
+			end
 		end
 		
 		function gadget:Initialize()
@@ -2152,10 +2164,12 @@ else
 			Button["exit"] 				= {}
 			Button["proceed"] 			= {}
 			Button["influence"]			= {}
+			Button["influence"]["On"]	= true
 			Button["matrix"]			= {}
 			Button["heroes"]			= {}
 			Button["lost"]				= {}
 			Button["awards"]			= {}
+			Button["awards"]["On"]		= false
 			Button["teamstats"]			= {}
 			Button["teamstats"]["sel"]	= "buildpower"
 			Button["teamstatsel"]		= {}
@@ -2168,13 +2182,13 @@ else
 			Button["teamstatsel"][6] 	= {}
 			
 			Button["exit"]["label"] 		= "Exit"
-			Button["proceed"]["label"] 		= "Proceed to engine statistics"
+			Button["proceed"]["label"] 		= "More statistics"
 			Button["influence"]["label"] 	= "Influence"
-			Button["matrix"]["label"] 		= "Player kills/losses"
+			Button["matrix"]["label"] 		= "Who killed who"
 			Button["heroes"]["label"] 		= "Heroes in victory"
 			Button["lost"]["label"] 		= "Lost in service"
 			Button["awards"]["label"] 		= "Awards"
-			Button["teamstats"]["label"] 	= "Player statistics"
+			Button["teamstats"]["label"] 	= "Team statistics"
 			
 			Button["legend"]			= {}
 			Panel["back"] 				= {}
