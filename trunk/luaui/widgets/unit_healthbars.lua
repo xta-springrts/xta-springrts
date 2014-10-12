@@ -484,7 +484,7 @@ do
         maxShield     = ud.shieldPower,
         canStockpile  = ud.canStockpile,
         reloadTime    = ud.reloadTime,
-        primaryWeapon = ud.primaryWeapon-1,
+        primaryWeapon = ud.primaryWeapon, --was: ud.primaryWeapon-1, but indexing changed in spring 95 or so
       }
     end
 
