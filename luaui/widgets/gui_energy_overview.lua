@@ -491,6 +491,11 @@ function widget:MouseMove(mx, my, dx, dy, mButton)
 	end
 end
 
+function widget:PlayerChanged(playerID)
+	mySpectatorState = Spring.GetSpectatingState()
+	InitButtons()
+end
+
 function widget:IsAbove(mx,my)
 	if (not Spring.IsGUIHidden()) and visible then
 		Button["close"]["mouse"] = false
