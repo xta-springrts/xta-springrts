@@ -16,8 +16,9 @@ local width, height					  	= 360, 540
 local iWidth							= 400
 local iRowHeight						= 14
 local rows								= 0
-local iHeight							= 250 + iRowHeight * rows
-local rowgap						  	= 30
+local height0							= 260
+local iHeight							= height0 + iRowHeight * rows
+local rowgap						  	= 26
 local leftmargin						= 20
 local buttontab							= 310			
 local vsx, vsy 						  	= gl.GetViewSizes()
@@ -80,6 +81,7 @@ function widget:Initialize()
 	Button[14]						= {} -- disable move-failed sounds
 	Button[15]						= {} -- disable move-failed sounds
 	Button[16]						= {} -- full screen
+	Button[17]						= {} -- disable blinking units
 	Panel["main"]					= {}
 	Panel["info"]					= {} -- info screen with mod options
 	InitButtons()
@@ -431,12 +433,16 @@ function InitButtons()
 	Button[16]["command"]		= "fullscreen"
 	Button[16]["label"]			= "Full screen:"
 	
+	Button[17]["click"]			= tonumber(Spring.GetConfigInt("TeamHighlight",1) or 1) == 1
+	Button[17]["command"]		= "blinking"
+	Button[17]["label"]			= "Blinking units:"
+	
 	Panel["main"]["x1"]			= posX
 	Panel["main"]["x2"]			= posX + width
 	Panel["main"]["y1"]			= posY
 	Panel["main"]["y2"]			= posY + height
 	
-	iHeight						= 250  + rows * iRowHeight
+	iHeight						= height0  + rows * iRowHeight
 	
 	Panel["info"]["x1"]			= posX
 	Panel["info"]["x2"]			= posX + iWidth
@@ -559,6 +565,12 @@ function ButtonHandler (cmd)
 			Spring.SendCommands("fullscreen 0")
 		else
 			Spring.SendCommands("fullscreen 1")
+		end
+	elseif cmd == "blinking" then
+		if Button[17]["click"] then
+			Spring.SendCommands("teamhighlight 0")
+		else
+			Spring.SendCommands("teamhighlight 1")
 		end
 	else
 		Echo("Local command:",cmd)
@@ -738,7 +750,7 @@ local function drawInfo()
 	myFont:End()
 	
 	-- update height and position of window
-	iHeight						= 250  + rows * iRowHeight
+	iHeight						= height0  + rows * iRowHeight
 	Panel["info"]["y2"]			= posY + iHeight
 		
 	--reset state
