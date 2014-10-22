@@ -52,9 +52,6 @@ local max								= math.max
 --UNSYNCED-------------------------------------------------------------------
 if(not gadgetHandler:IsSyncedCode()) then
 	
-	local fontHandler					= loadstring(VFS.LoadFile(LUAUI_DIRNAME.."modfonts.lua", VFS.ZIP_FIRST))()
-	local UseFont             		 	= fontHandler.UseFont
-	local TextDraw            		 	= fontHandler.Draw
 	local teams 						= {}
 	local teamTimer 					= nil
 	local nagged 						= false
@@ -134,7 +131,7 @@ end
 					
 					myFont:End()
 					
-					if teamTimer > 25 then	
+					if teamTimer > 25 and teamControl >= 0 then	
 						myFontBig:Begin()
 						myFontBig:SetTextColor({1-0.2*sf,1-0.8*sf, 1-0.8*sf, 0.8})
 						myFontBig:Print("Time is running out!",posx+sf,posy+100+sf,textbig,"cvs")
