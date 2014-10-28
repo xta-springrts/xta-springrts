@@ -18,7 +18,14 @@ local spGetUnitPosition = Spring.GetUnitPosition
 local spGetUnitAllyTeam = Spring.GetUnitAllyTeam
 local spIsPosInRadar = Spring.IsPosInRadar
 local spIsPosInLos = Spring.IsPosInLos
-
+	
+	
+	-- NOTE: disables units keeping target on cloaked units and also units outside of LOS, for example bombers that
+	-- have attack order on a target that disappers. But the non-cloaking part is disabled because it is heavy on
+	-- performance, see http://springrts.com/mantis/view.php?id=4568
+	-- For every unit it checks LOS, and this can be heavy e.g. if there are 100 stumpies fighting each other.
+	-- Maybe second part should only apply for air units?
+	
 	function gadget:AllowWeaponTarget(attackerID, targetID, attackerWeaponNum, attackerWeaponDefID, defaultPriority)
 		if targetID then
 			if spGetUnitIsCloaked(targetID) then
@@ -26,7 +33,7 @@ local spIsPosInLos = Spring.IsPosInLos
 				local allyID = spGetUnitAllyTeam(attackerID)
 				return spIsPosInRadar(x, y, z, allyID), defaultPriority
 				-- TODO: Remove attack order from attackers queue
-			--else
+			--else -- disabled because of bad performance
 				--if spIsPosInLos(x, y, z, allyID) then
 					--return true, defaultPriority
 				--else
