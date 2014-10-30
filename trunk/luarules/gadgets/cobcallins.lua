@@ -84,7 +84,7 @@ if gadgetHandler:IsSyncedCode() then
 	end
 	
 	function PelicanReform(unitID,unitDefID,teamID)
-		local success = Spring.MoveCtrl.SetMoveDef(unitID,"kbotsf2")
+		local success = Spring.MoveCtrl.SetMoveDef(unitID,"KBOTUW3")
 	end	
 else
 	return false
