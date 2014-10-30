@@ -97,7 +97,7 @@ local moveDefs = {
 		speedModClass = 1, -- 0 = tank, 1 = kbot, 2 = hover, 3 = ship 
 	},
 	[8] = {
-		name = "KBOTUW3", -- gimp, spiders
+		name = "KBOTUW3", -- gimp, spiders, moved land pelican to this
 		footprintX = 3,
 		footprintZ = 3,
 		maxWaterDepth = 255.0,
