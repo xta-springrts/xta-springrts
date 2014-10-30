@@ -525,6 +525,12 @@ function widget:IsAbove(mx,my)
 	end
 end	
 
+function widget:TextCommand(command)
+	if command == 'energy-overview' then
+		visible = true
+	end
+end
+
 function widget:KeyPress(key, mods, isRepeat) 
 	if (key == 0x065) and (not isRepeat) and not (mods.shift) and (not mods.alt) and mods.ctrl then -- E key
 		visible = true
