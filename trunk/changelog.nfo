@@ -21,6 +21,19 @@
     ศอออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออผ
     Logo by ElementalGizmo
 	
+------------------- Change Log of XTA 9.745 Svn 808
+ Enhancements:
+--------------
+ * Add simple menu with basic content that can be reached graphically
+
+ Fixes:
+--------
+ * Make land pelican amphibious to fix pathfinding issue (it's still a kbot while on land)
+ * Fix error spam when core construction sub dies
+ * Fix tortoise Chelonian error spam
+ * Fix reload bar on some units with long reload time
+ * Fix stuck hurry-up text in KoTH mode
+ 
 ------------------- Change Log of XTA 9.744 Svn 799
 
  Enhancements:
