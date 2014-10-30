@@ -25,6 +25,7 @@ local vsx, vsy 						  	= gl.GetViewSizes()
 local Echo								= Spring.Echo
 local PlaySoundFile						= Spring.PlaySoundFile
 local showInfo							= false
+local showOptions						= false
 local textSize							= 10
 local myFont							= gl.LoadFont("FreeSansBold.otf",textSize, 1.9, 40)
 local myFontBig							= gl.LoadFont("FreeSansBold.otf",14, 1.9, 40)
@@ -42,6 +43,7 @@ local sndButtonOff 						= 'sounds/button6.wav'
 
 -- other
 local Button				  			= {}
+local ButtonClose		 				= {}
 local Panel					  			= {}
 
 -- variables
@@ -449,6 +451,11 @@ function InitButtons()
 	Panel["info"]["y1"]			= posY
 	Panel["info"]["y2"]			= posY + iHeight
 	
+	ButtonClose["x1"] 			= posX + width/2 - 30
+	ButtonClose["y1"] 			= posY + 20
+	ButtonClose["x2"] 			= ButtonClose["x1"] + 60
+	ButtonClose["y2"] 			= posY + 50
+	
 end
 
 local function IsOnButton(x, y, BLcornerX, BLcornerY,TRcornerX,TRcornerY)
@@ -752,6 +759,18 @@ local function drawInfo()
 	-- update height and position of window
 	iHeight						= height0  + rows * iRowHeight
 	Panel["info"]["y2"]			= posY + iHeight
+	
+	-- exitbutton
+	if ButtonClose.above then
+		gl.Color(0.8,0.8,0,0.5)
+	else
+		gl.Color(0.2,0.2,0.2,0.5)
+	end
+	gl.TexRect(ButtonClose["x1"],ButtonClose["y1"],ButtonClose["x2"],ButtonClose["y2"])
+	myFontBig:Begin()
+	myFontBig:SetTextColor({1,1,1,1})
+	myFontBig:Print("Exit", (ButtonClose["x1"]+ButtonClose["x2"])/2, (ButtonClose["y1"]+ButtonClose["y2"])/2,14,'vcs')
+	myFontBig:End()
 		
 	--reset state
 	gl.Texture(false)
@@ -772,18 +791,38 @@ local function drawOptions()
 	gl.Rect(Panel["main"]["x1"],Panel["main"]["y2"], Panel["main"]["x2"], Panel["main"]["y2"]+1)
 	
 	-- Heading
-	gl.Color(1,1,1,1)
-	gl.Text("XTA game-settings:", Panel["main"]["x1"] + leftmargin, Panel["main"]["y2"] - 20,14,'d')
-	
+	myFontBig:Begin()
+	myFontBig:SetTextColor({1,1,1,1})
+	myFontBig:Print("XTA game-settings:", Panel["main"]["x1"] + leftmargin, Panel["main"]["y2"] - 20,14,'ds')
+	myFontBig:End()
 	-- Buttons
+	
+	-- exit
+	if ButtonClose.above then
+		gl.Color(0.8,0.8,0,0.5)
+	else
+		gl.Color(0.2,0.2,0.2,0.5)
+	end
+	gl.TexRect(ButtonClose["x1"],ButtonClose["y1"],ButtonClose["x2"],ButtonClose["y2"])
+	myFontBig:Begin()
+	myFontBig:SetTextColor({1,1,1,1})
+	myFontBig:Print("Exit", (ButtonClose["x1"]+ButtonClose["x2"])/2, (ButtonClose["y1"]+ButtonClose["y2"])/2,14,'vcs')
+	myFontBig:End()
+	
+	-- other
 	for _,button in ipairs(Button) do
 		
+		myFont:Begin()
 		if button["mouse"] then
-			gl.Color(1,1,1,1)
+			myFont:SetTextColor({1,1,1,1})
 		else
-			gl.Color(0.6,0.6,0.6,1)
+			myFont:SetTextColor({0.8,0.8,0.8,1})
 		end
-		gl.Text(button["label"] or "N/A", posX+leftmargin, button["y1"],12,'d')
+		
+		myFont:Print(button["label"] or "N/A", posX+leftmargin, button["y1"],12,'do')
+		myFont:End()
+		
+		gl.Color(1,1,1,1)
 		
 		if button["divided"] then
 			if button["img"] then
@@ -798,6 +837,7 @@ local function drawOptions()
 				gl.Texture(optCheckBoxOff)
 			end
 		end
+		
 		gl.TexRect(button["x1"],button["y1"],button["x2"],button["y2"])
 		gl.Texture(false)
 	end
@@ -814,6 +854,7 @@ local function drawIsAbove(x,y)
 	for _,button in pairs(Button) do
 		button["mouse"] = false
 	end
+	ButtonClose.above = false
 	
 	for _,button in pairs(Button) do
 		if IsOnButton(x, y, button["x1"],button["y1"],button["x2"],button["y2"]) then
@@ -822,12 +863,20 @@ local function drawIsAbove(x,y)
 		end
 	end
 	
+	if IsOnButton(x, y, ButtonClose["x1"],ButtonClose["y1"],ButtonClose["x2"],ButtonClose["y2"]) then
+		ButtonClose.above = true
+	end
+	
 	return false
 end
 
 function widget:DrawScreen()
-	if showInfo and (not Spring.IsGUIHidden()) then
-		drawInfo()
+	if (not Spring.IsGUIHidden()) then
+		if showInfo then
+			drawInfo()
+		elseif showOptions then
+			drawOptions()
+		end
 	end
 end
 
@@ -836,8 +885,12 @@ function widget:TweakDrawScreen()
 end
 
 function widget:IsAbove(x,y)
-	--drawIsAbove(x,y)
-	--this callin must be present, otherwise function widget:TweakIsAbove(z,y) isn't called. Maybe a bug in widgethandler.
+	if (not Spring.IsGUIHidden()) then
+		if showInfo or showOptions then
+			drawIsAbove(x,y)
+		end
+	end
+	--this callin must be present, otherwise function widget:TweakIsAbove(x,y) isn't called. Maybe a bug in widgethandler.
 end
 
 function widget:TweakIsAbove(x,y)
@@ -850,16 +903,51 @@ function widget:TextCommand(command)
 		Spring.SendCommands("luarules votefordraw")
 	elseif command == 'voting' or command == 'voteforend'then
 		Spring.SendCommands("luarules voteforend")
+	elseif command == 'show-modoptions' then
+		showInfo = true
+	elseif command == 'xta-options' then
+		showOptions = true
 	end
 end
- 
- 
+  
 function widget:MousePress(x, y, button)
 	 if button == 1 then
-		 if IsOnButton(x, y, Panel["info"]["x1"],Panel["info"]["y1"], Panel["info"]["x2"], Panel["info"]["y2"]) then
-			 showInfo = false
-			 return false
-		 end
+		
+		for _,button in ipairs(Button) do
+			if IsOnButton(x, y, button["x1"],button["y1"],button["x2"],button["y2"]) then
+				if not button["click"] then
+					PlaySoundFile(sndButtonOn,1.0,0,0,0,0,0,0,'userinterface')
+				else
+					PlaySoundFile(sndButtonOff,1.0,0,0,0,0,0,0,'userinterface')
+				end
+				if button["divided"] then
+					if button["wide"] then
+						if x < button["x1"] + 3*buttonsize/2 then
+							ButtonHandler(button["less"])
+						else
+							ButtonHandler(button["more"])
+						end
+					else
+						if x < button["x1"] + 1.5*buttonsize/2 then
+							ButtonHandler(button["less"])
+						else
+							ButtonHandler(button["more"])
+						end
+					end
+					InitButtons()
+				else 
+					ButtonHandler(button["command"])
+					button["click"] = not button["click"]
+				end
+				return true
+			end	
+		end
+		if IsOnButton(x, y, ButtonClose["x1"],ButtonClose["y1"],ButtonClose["x2"],ButtonClose["y2"]) then
+			PlaySoundFile(sndButtonOff,1.0,0,0,0,0,0,0,'userinterface')
+			showOptions = false
+			showInfo = false
+		end
+		
 	elseif button == 2 or button == 3 then
 		if IsOnButton(x, y, Panel["info"]["x1"],Panel["info"]["y1"], Panel["info"]["x2"], Panel["info"]["y2"]) then
 			if showInfo then
@@ -877,6 +965,7 @@ function widget:KeyPress(key, mods, isRepeat)
 		return true
 	elseif key == 0x01B then -- ESC
 		showInfo = false
+		showOptions = false
 		return false
 	end
 	return false
