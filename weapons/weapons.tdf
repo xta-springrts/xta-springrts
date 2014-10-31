@@ -453,18 +453,19 @@
 	range=400;
 	reloadtime=5.7;
 	weapontimer=15;
+	propeller=1;
 	weaponvelocity=200;
 	startvelocity=200;
 	weaponacceleration=15;
-	turnrate=10000;
-	areaofeffect=16;
-	soundstart=bombrel;
+	turnrate=20000;
+	areaofeffect=48;
+	soundstart=bombrel2;
 	soundhitdry=xplodep2;
 	tracks=1;
 	waterweapon=1;
 	tolerance=12000;
-	edgeeffectiveness=0.05;
-	explosiongenerator=custom:Torpedo;
+	edgeeffectiveness=0.5;
+	explosiongenerator=custom:popupcannon;
 	WaterBounce=0;
 	NumBounce=1;
 	GroundBounce=1;
@@ -474,6 +475,10 @@
 	{
 		default=1200;
 		group_invincible=1;
+		group_subs=1500;
+		group_stupidsubs=1600;
+		group_ships=1800;
+		group_large_ships=2100;
 
 	}
 }
@@ -1430,7 +1435,7 @@
 	weaponacceleration=15;
 	turnrate=25000;
 	areaofeffect=16;
-	soundstart=bombrel;
+	soundstart=bombrel2;
 	soundhitdry=xplodep2;
 	tracks=1;
 	tolerance=12000;
@@ -1460,7 +1465,7 @@
 	weaponacceleration=15;
 	turnrate=15000;
 	areaofeffect=16;
-	soundstart=bombrel;
+	soundstart=bombrel2;
 	soundhitdry=xplodep2;
 	tracks=1;
 	waterweapon=1;
@@ -2811,15 +2816,15 @@
 	weaponvelocity=200;
 	startvelocity=200;
 	weaponacceleration=15;
-	turnrate=10000;
-	areaofeffect=16;
-	soundstart=bombrel;
+	turnrate=20000;
+	areaofeffect=48;
+	soundstart=bombrel2;
 	soundhitdry=xplodep2;
 	tracks=1;
 	waterweapon=1;
 	tolerance=12000;
-	edgeeffectiveness=0.05;
-	explosiongenerator=custom:Torpedo;
+	edgeeffectiveness=0.5;
+	explosiongenerator=custom:popupcannon;
 	WaterBounce=0;
 	NumBounce=1;
 	GroundBounce=1;
@@ -2828,6 +2833,10 @@
 	[DAMAGE]
 	{
 		default=1250;
+		group_subs=1550;
+		group_stupidsubs=1650;
+		group_ships=1900;
+		group_large_ships=2150;
 		group_invincible=1;
 	}
 }
