@@ -17,11 +17,13 @@ if gadgetHandler:IsSyncedCode() then
 	-- SYNCED PART --
 	-----------------
 	
-	local Echo 			= Spring.Echo
-	local airlos		= {}
-	local los			= {}
-	local max			= math.max
-	local min			= math.min
+	local Echo 				= Spring.Echo
+	local airlos			= {}
+	local los				= {}
+	local max				= math.max
+	local min				= math.min
+	local GiveOrderToUnit 	= Spring.GiveOrderToUnit
+	local CMD_WAIT			= CMD.WAIT
 	
 	local gunships		= {}
 		
@@ -81,6 +83,8 @@ if gadgetHandler:IsSyncedCode() then
 	
 	function PelicanTransform(unitID,unitDefID,teamID)
 		local success = Spring.MoveCtrl.SetMoveDef(unitID,"hover2")
+		GiveOrderToUnit(unitID, CMD_WAIT, {}, {}) -- hack to prevent pelicans from getting stuck bc of pathfinder
+		GiveOrderToUnit(unitID, CMD_WAIT, {}, {})
 	end
 	
 	function PelicanReform(unitID,unitDefID,teamID)
