@@ -75,7 +75,7 @@
 	
 	//    Misc
 	//Upright=1;
-	Corpse=monster_dead;
+	//Corpse=monster_dead; doesn't exist
 	HideDamage=1;
 	Mass=10000;
 	pushResistant=1;
