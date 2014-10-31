@@ -646,7 +646,7 @@ else
 	local VOTEMSG				= '\174'
 	local votersList			= nil
 	local n						= 0
-	local vbx,vby				= vsx - 30,vsy - 30
+	local vbx,vby				= vsx - 60,vsy - 30
 	local imgFlag				= "LuaUI/Images/whiteflag.png"
 	local spectator 			= Spring.GetSpectatingState()
 	local isReplay				= Spring.IsReplay()
