@@ -27,6 +27,17 @@ local BlackList = {
 	["atomic_blast"        ] = true,
 	["nuclear_missile"     ] = true,
 	["armemp_weapon"       ] = true,
+	["ARMVULC_WEAPON"      ] = true,
+	["FLEAGOTH"            ] = true,
+	["Fleagoth_MISSILE"    ] = true,
+	["ORCONE_GUN"    	   ] = true,
+	["ORCONE_HEAD" 	 	   ] = true,
+	["ORCONE_ROCKET"	   ] = true,
+	["ORCONE_SHIELD" 	   ] = true,
+	["PHASER" 	   		   ] = true,
+	["TORPEDO_DISINTEGRATOR"] = true,
+	
 }
+
 
 return BlackList

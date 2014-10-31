@@ -31,7 +31,7 @@
 	Category=ARM KBOT MOBILE WEAPON PHIB RADAR SONAR NOTAIR NOTSEA NOTSUB;
 	TEDClass=KBOT;
 	Copyright=Copyright 1997 Humongous Entertainment. All rights reserved.;
-	Corpse=WARGOD_dead;
+	//Corpse=WARGOD_dead; doesn't exist
 	UnitNumber=1000;
 	firestandorders=1;
 	StandingFireOrder=2;
