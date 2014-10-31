@@ -112,6 +112,7 @@ local explosionsList  = {
 		'bluemishit.wav',
 		'bombdropxx.wav',
 		'bombrel.wav',
+		'bombrel2.wav',
 		'burn02.wav',
 		'burn03.wav',
 		'canlite2.wav',
