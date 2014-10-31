@@ -92,7 +92,7 @@ function widget:Initialize()
 	
 	Button[1] 						= {} -- resume
 	Button[1]["command"]			= "resume"
-	Button[1]["label"]				= "Resume game"
+	Button[1]["label"]				= "Return to game"
 	
 	Button[2] 						= {} -- options
 	Button[2]["command"]			= "opt"
@@ -100,7 +100,7 @@ function widget:Initialize()
 	
 	Button[3] 						= {} -- energyview
 	Button[3]["command"]			= "energy"
-	Button[3]["label"]				= "Energy management"
+	Button[3]["label"]				= "Energy overview"
 	
 	Button[4] 						= {} -- modopt
 	Button[4]["command"]			= "modopt"
@@ -116,12 +116,12 @@ function widget:Initialize()
 	
 	Button[7] 						= {} -- vote for surrender
 	Button[7]["command"]			= "vote-end"
-	Button[7]["label"]				= "Vote on surrender"
+	Button[7]["label"]				= "Accept surrender"
 	Button[7].disabled 				= true
 	
 	Button[8] 						= {} -- quit
 	Button[8]["command"]			= "quit"
-	Button[8]["label"]				= "Quit"
+	Button[8]["label"]				= "Quit game"
 	
 	Button["close"] 				= {}
 	Panel["main"]					= {}

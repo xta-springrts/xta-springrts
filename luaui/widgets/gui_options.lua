@@ -16,7 +16,7 @@ local width, height					  	= 360, 540
 local iWidth							= 400
 local iRowHeight						= 14
 local rows								= 0
-local height0							= 260
+local height0							= 280
 local iHeight							= height0 + iRowHeight * rows
 local rowgap						  	= 26
 local leftmargin						= 20
@@ -57,6 +57,24 @@ Options["multipliers"]					= {}
 Options["koth"]							= {}
 Options["experimental"]					= {}
 
+--colors
+local cLight 							= {1,1,1,1}
+local cWhite 							= {1,1,1,1}
+local cButton							= {0.8,0.8,0.8,1}
+local cBack 							= {0,0,0,0.8}
+local cGreen							= {0.2, 0.8, 0.2, 1}
+local cRed								= {0.8, 0.2, 0.2, 1}
+local cGrey								= {0.8, 0.8, 0.8, 0.2}
+local cYellow							= {0.8, 0.8, 0.2, 1}
+local cRow								= {0.2,0.6,0.9,0.1}
+local cBorder							= {0,0,0,1}
+local cAbove							= {0.8,0.8,0,0.5}
+
+
+--------------------------------------------------------------------------------			 
+-- Local functions
+--------------------------------------------------------------------------------
+
 local function round(num, idp)
   local mult = 10^(idp or 0)
   return math.floor(num * mult + 0.5) / mult
@@ -66,6 +84,53 @@ local function firstToUpper(str)
 		return (str:gsub("^%l", string.upper))
 	end
 
+local function formatLabel(value,type,name)
+	local label 
+
+	if type == "bool" then
+		if value == 1 or value == "1" then
+			label = "Yes"
+			myFont:SetTextColor(cGreen) -- green
+		elseif value == 0 or value == "0" then
+			label = "No"
+			myFont:SetTextColor(cRed) -- red
+		else
+			label = "N/A"
+			myFont:SetTextColor(cGrey) -- grey
+		end
+	else
+		label = firstToUpper(tostring(value))
+		if name == "Game mode:" then
+			if label == "Killall" or label == "None" then
+				myFont:SetTextColor(cRed) -- red
+			elseif label ~= "N/A" then
+				myFont:SetTextColor(cGreen) -- green
+			else
+				myFont:SetTextColor(cGrey) -- grey
+			end
+		else
+			myFont:SetTextColor(cButton)
+		end
+		if label == "N/A" then
+			myFont:SetTextColor(cGrey) -- grey
+		end
+	end
+	return label
+end
+
+local function IsOnButton(x, y, BLcornerX, BLcornerY,TRcornerX,TRcornerY)
+	if BLcornerX == nil then return false end
+	-- check if the mouse is in a rectangle
+
+	return x >= BLcornerX and x <= TRcornerX
+	                      and y >= BLcornerY
+	                      and y <= TRcornerY
+
+end
+      
+-----------	  
+-- INIT  --
+-----------	  
 function widget:Initialize()
 	Button[1] 						= {} -- mapshading
 	Button[2]						= {} -- unitshading
@@ -417,7 +482,7 @@ function InitButtons()
 		waterType = "Bumpmapped"
 	end
 
-	Button[12]["label"]			= table.concat{"Water type: "," (", tonumber(Button[12]["value"])," – ",waterType ,")"}
+	Button[12]["label"]			= table.concat{"Water type: "," (", tonumber(Button[12]["value"])," - ",waterType ,")"}
 	
 	Button[13]["click"]			= tonumber(Spring.GetConfigInt("EngineGraphFirst") or 0) == 1
 	Button[13]["command"]		= "EngineGraphFirst"
@@ -458,16 +523,6 @@ function InitButtons()
 	
 end
 
-local function IsOnButton(x, y, BLcornerX, BLcornerY,TRcornerX,TRcornerY)
-	if BLcornerX == nil then return false end
-	-- check if the mouse is in a rectangle
-
-	return x >= BLcornerX and x <= TRcornerX
-	                      and y >= BLcornerY
-	                      and y <= TRcornerY
-
-end
-      
 function ButtonHandler (cmd)
 	if cmd == "MapShading" then
 		if Button[1]["click"] then
@@ -585,42 +640,8 @@ function ButtonHandler (cmd)
 end
 
 --------------------------------------------------------------------------------			 
--- Tweak-mode
+-- Callins
 --------------------------------------------------------------------------------
-
-local function formatLabel(value,type,name)
-	local label 
-
-	if type == "bool" then
-		if value == 1 or value == "1" then
-			label = "Yes"
-			myFont:SetTextColor({0.2, 0.8, 0.2, 1}) -- green
-		elseif value == 0 or value == "0" then
-			label = "No"
-			myFont:SetTextColor({0.8, 0.2, 0.2, 1}) -- red
-		else
-			label = "N/A"
-			myFont:SetTextColor({0.8, 0.8, 0.8, 0.2}) -- grey
-		end
-	else
-		label = firstToUpper(tostring(value))
-		if name == "Game mode:" then
-			if label == "Killall" or label == "None" then
-				myFont:SetTextColor({0.8, 0.2, 0.2, 1}) -- red
-			elseif label ~= "N/A" then
-				myFont:SetTextColor({0.2, 0.8, 0.2, 1}) -- green
-			else
-				myFont:SetTextColor({0.8, 0.8, 0.8, 0.2}) -- grey
-			end
-		else
-			myFont:SetTextColor({0.8, 0.8, 0.8, 1})
-		end
-		if label == "N/A" then
-			myFont:SetTextColor({0.8, 0.8, 0.8, 0.2}) -- grey
-		end
-	end
-	return label
-end
 
 local function drawRow(optData,i,lastY)
 	local name = optData["name"]
@@ -634,19 +655,19 @@ local function drawRow(optData,i,lastY)
 	
 	if label ~= "N/A" and type then
 		myFont:Print(label, Panel["info"]["x2"] - leftmargin, yi,textSize,'rdo')
-		myFont:SetTextColor({0.8, 0.8, 0.8, 1})
+		myFont:SetTextColor(cButton)
 		myFont:Print(name, Panel["info"]["x1"] + leftmargin, yi,textSize,'do')
 		i = i + 1
 		rows = rows + 1
 	else
 		lastY = lastY + 14
 	end
-	myFont:SetTextColor({0.8, 0.8, 0.8, 1})
+	myFont:SetTextColor(cButton)
 	
 	if i%2 ~= 0 and type and label ~= "N/A" then
-		gl.Color(0.2,0.6,0.9,0.1)
+		gl.Color(cRow)
 		gl.Rect(Panel["info"]["x1"]+ leftmargin, yi, Panel["info"]["x2"]-leftmargin,yi + 14)
-		gl.Color(1,1,1,1)
+		gl.Color(cWhite)
 	end
 	return i,lastY
 end
@@ -654,11 +675,11 @@ end
 local function drawInfo()
 
 	--background panel
-	gl.Color(0,0,0,0.6)
+	gl.Color(cBack)
 	gl.Rect(Panel["info"]["x1"],Panel["info"]["y1"], Panel["info"]["x2"], Panel["info"]["y2"])
 	
 	--border
-	gl.Color(0,0,0,1)
+	gl.Color(cBorder)
 	gl.Rect(Panel["info"]["x1"]-1,Panel["info"]["y1"], Panel["info"]["x1"], Panel["info"]["y2"])
 	gl.Rect(Panel["info"]["x2"],Panel["info"]["y1"], Panel["info"]["x2"]+1, Panel["info"]["y2"])
 	gl.Rect(Panel["info"]["x1"],Panel["info"]["y1"]-1, Panel["info"]["x2"], Panel["info"]["y1"])
@@ -666,7 +687,7 @@ local function drawInfo()
 	
 	-- Heading
 	myFontBigger:Begin()
-	myFontBigger:SetTextColor({1, 1, 1, 1})
+	myFontBigger:SetTextColor(cWhite)
 	myFontBigger:Print("XTA Mod options", (Panel["info"]["x1"] + Panel["info"]["x2"])/2 , Panel["info"]["y2"] - 20,18,'cds')
 	myFontBigger:End()
 	-- content
@@ -675,7 +696,7 @@ local function drawInfo()
 	
 	myFontBig:Begin()
 	if Options["general"] then
-		myFontBig:SetTextColor({0.8, 0.8, 0.2, 1}) -- yellow
+		myFontBig:SetTextColor(cYellow) -- yellow
 		myFontBig:Print("General:", Panel["info"]["x1"] + leftmargin, lastY - 40,14,'do')
 		lastY = lastY - 40
 	end
@@ -692,7 +713,7 @@ local function drawInfo()
 	
 	if Options["other"] then
 		myFontBig:Begin()
-		myFontBig:SetTextColor({0.8, 0.8, 0.2, 1}) -- yellow
+		myFontBig:SetTextColor(cYellow) -- yellow
 		myFontBig:Print("More options:", Panel["info"]["x1"] + leftmargin, lastY - 40,14,'do')
 		lastY = lastY - 40
 		myFontBig:End()
@@ -708,7 +729,7 @@ local function drawInfo()
 	
 	if Options["multiplier"] then
 		myFontBig:Begin()
-		myFontBig:SetTextColor({0.8, 0.8, 0.2, 1}) -- yellow
+		myFontBig:SetTextColor(cYellow) -- yellow
 		myFontBig:Print("Multiplier options:", Panel["info"]["x1"] + leftmargin, lastY - 40,14,'do')
 		lastY = lastY - 40
 		myFontBig:End()
@@ -725,7 +746,7 @@ local function drawInfo()
 	if Options["koth"] and (Options["koth"][1]["value"] == 1 or Options["koth"][1]["value"] == "1") then
 		if Options["koth"] then
 			myFontBig:Begin()
-			myFontBig:SetTextColor({0.8, 0.8, 0.2, 1}) -- yellow
+			myFontBig:SetTextColor(cYellow) -- yellow
 			myFontBig:Print("King of the hill options", Panel["info"]["x1"] + leftmargin, lastY - 40,14,'do')
 			lastY = lastY - 40
 			myFontBig:End()
@@ -742,7 +763,7 @@ local function drawInfo()
 	
 	if Options["experimental"] then
 		myFontBig:Begin()
-		myFontBig:SetTextColor({0.8, 0.8, 0.2, 1}) -- yellow
+		myFontBig:SetTextColor(cYellow) -- yellow
 		myFontBig:Print("Experimental options:", Panel["info"]["x1"] + leftmargin, lastY - 40,14,'do')
 		lastY = lastY - 40
 		myFontBig:End()
@@ -762,29 +783,29 @@ local function drawInfo()
 	
 	-- exitbutton
 	if ButtonClose.above then
-		gl.Color(0.8,0.8,0,0.5)
+		gl.Color(cAbove)
 	else
-		gl.Color(0.2,0.2,0.2,0.5)
+		gl.Color(cGrey)
 	end
 	gl.TexRect(ButtonClose["x1"],ButtonClose["y1"],ButtonClose["x2"],ButtonClose["y2"])
 	myFontBig:Begin()
-	myFontBig:SetTextColor({1,1,1,1})
-	myFontBig:Print("Exit", (ButtonClose["x1"]+ButtonClose["x2"])/2, (ButtonClose["y1"]+ButtonClose["y2"])/2,14,'vcs')
+	myFontBig:SetTextColor(cWhite)
+	myFontBig:Print("Close", (ButtonClose["x1"]+ButtonClose["x2"])/2, (ButtonClose["y1"]+ButtonClose["y2"])/2,14,'vcs')
 	myFontBig:End()
 		
 	--reset state
 	gl.Texture(false)
-	gl.Color(1,1,1,1)
+	gl.Color(cWhite)
 end
 
 local function drawOptions()
 	
 	--background panel
-	gl.Color(0,0,0,0.7)
+	gl.Color(cBack)
 	gl.Rect(Panel["main"]["x1"],Panel["main"]["y1"], Panel["main"]["x2"], Panel["main"]["y2"])
 	
 	--border
-	gl.Color(0,0,0,1)
+	gl.Color(cBorder)
 	gl.Rect(Panel["main"]["x1"]-1,Panel["main"]["y1"], Panel["main"]["x1"], Panel["main"]["y2"])
 	gl.Rect(Panel["main"]["x2"],Panel["main"]["y1"], Panel["main"]["x2"]+1, Panel["main"]["y2"])
 	gl.Rect(Panel["main"]["x1"],Panel["main"]["y1"]-1, Panel["main"]["x2"], Panel["main"]["y1"])
@@ -792,21 +813,21 @@ local function drawOptions()
 	
 	-- Heading
 	myFontBig:Begin()
-	myFontBig:SetTextColor({1,1,1,1})
+	myFontBig:SetTextColor(cWhite)
 	myFontBig:Print("XTA game-settings:", Panel["main"]["x1"] + leftmargin, Panel["main"]["y2"] - 20,14,'ds')
 	myFontBig:End()
 	-- Buttons
 	
 	-- exit
 	if ButtonClose.above then
-		gl.Color(0.8,0.8,0,0.5)
+		gl.Color(cAbove)
 	else
-		gl.Color(0.2,0.2,0.2,0.5)
+		gl.Color(cGrey)
 	end
 	gl.TexRect(ButtonClose["x1"],ButtonClose["y1"],ButtonClose["x2"],ButtonClose["y2"])
 	myFontBig:Begin()
-	myFontBig:SetTextColor({1,1,1,1})
-	myFontBig:Print("Exit", (ButtonClose["x1"]+ButtonClose["x2"])/2, (ButtonClose["y1"]+ButtonClose["y2"])/2,14,'vcs')
+	myFontBig:SetTextColor(cWhite)
+	myFontBig:Print("Close", (ButtonClose["x1"]+ButtonClose["x2"])/2, (ButtonClose["y1"]+ButtonClose["y2"])/2,14,'vcs')
 	myFontBig:End()
 	
 	-- other
@@ -814,15 +835,15 @@ local function drawOptions()
 		
 		myFont:Begin()
 		if button["mouse"] then
-			myFont:SetTextColor({1,1,1,1})
+			myFont:SetTextColor(cLight)
 		else
-			myFont:SetTextColor({0.8,0.8,0.8,1})
+			myFont:SetTextColor(cButton)
 		end
 		
 		myFont:Print(button["label"] or "N/A", posX+leftmargin, button["y1"],12,'do')
 		myFont:End()
 		
-		gl.Color(1,1,1,1)
+		gl.Color(cWhite)
 		
 		if button["divided"] then
 			if button["img"] then
@@ -844,7 +865,7 @@ local function drawOptions()
 		
 	--reset state
 	gl.Texture(false)
-	gl.Color(1,1,1,1)
+	gl.Color(cWhite)
 end
 
 local function drawIsAbove(x,y)
@@ -880,10 +901,6 @@ function widget:DrawScreen()
 	end
 end
 
-function widget:TweakDrawScreen()
-	drawOptions()
-end
-
 function widget:IsAbove(x,y)
 	if (not Spring.IsGUIHidden()) then
 		if showInfo or showOptions then
@@ -892,11 +909,6 @@ function widget:IsAbove(x,y)
 	end
 	--this callin must be present, otherwise function widget:TweakIsAbove(x,y) isn't called. Maybe a bug in widgethandler.
 end
-
-function widget:TweakIsAbove(x,y)
-	--Echo("Tweak Is Above callin:",x,y) -- This callin isn't working in spring 96. It may be fixed in the future.
-	drawIsAbove(x,y)
- end
 
 function widget:TextCommand(command)
 	if command == 'draw' or command == 'votefordraw' then
@@ -909,7 +921,17 @@ function widget:TextCommand(command)
 		showOptions = true
 	end
 end
-  
+
+function widget:MouseMove(mx, my, dx, dy, mButton)
+	
+      --Dragging
+     if mButton == 2 or mButton == 3 then
+		 posX = math.max(0, math.min(posX+dx, vsx-width))	--prevent moving off screen
+		 posY = math.max(0, math.min(posY+dy, vsy-height))
+		 InitButtons()
+     end
+ end 
+ 
 function widget:MousePress(x, y, button)
 	 if button == 1 then
 		
@@ -949,12 +971,13 @@ function widget:MousePress(x, y, button)
 		end
 		
 	elseif button == 2 or button == 3 then
-		if IsOnButton(x, y, Panel["info"]["x1"],Panel["info"]["y1"], Panel["info"]["x2"], Panel["info"]["y2"]) then
-			if showInfo then
-				--Dragging
-				return true
-			end
-		end	
+		if showInfo and IsOnButton(x, y, Panel["info"]["x1"],Panel["info"]["y1"], Panel["info"]["x2"], Panel["info"]["y2"]) then			
+			--Dragging
+			return true			
+		elseif showOptions and IsOnButton(x, y, Panel["main"]["x1"],Panel["main"]["y1"], Panel["main"]["x2"], Panel["main"]["y2"]) then
+			--Dragging
+			return true
+		end
 	end
 	return false
  end
@@ -967,9 +990,27 @@ function widget:KeyPress(key, mods, isRepeat)
 		showInfo = false
 		showOptions = false
 		return false
+	elseif key == 0x124 and mods.ctrl then -- CTRL-F11
+		showOptions = true
+		return false
 	end
 	return false
 end
+
+--------------------------------------------------------------------------------			 
+-- Tweak-mode
+--------------------------------------------------------------------------------
+
+function widget:TweakDrawScreen()
+	if showOptions then
+		drawOptions()
+	end
+end
+
+function widget:TweakIsAbove(x,y)
+	--Echo("Tweak Is Above callin:",x,y) -- This callin isn't working in spring 96. It may be fixed in the future.
+	drawIsAbove(x,y)
+ end
  
 function widget:TweakMousePress(x, y, button)
 	
@@ -1003,6 +1044,13 @@ function widget:TweakMousePress(x, y, button)
 				return true
 			end	
 		end
+		
+		if IsOnButton(x, y, ButtonClose["x1"],ButtonClose["y1"],ButtonClose["x2"],ButtonClose["y2"]) then
+			PlaySoundFile(sndButtonOff,1.0,0,0,0,0,0,0,'userinterface')
+			showOptions = false
+			showInfo = false
+		end
+		
 	 elseif (button == 2 or button == 3) then
 		 if IsOnButton(x, y, Panel["main"]["x1"],Panel["main"]["y1"], Panel["main"]["x2"], Panel["main"]["y2"]) then
 			  --Dragging
@@ -1012,16 +1060,6 @@ function widget:TweakMousePress(x, y, button)
 	 return false
  end
 
-function widget:MouseMove(mx, my, dx, dy, mButton)
-	
-      --Dragging
-     if mButton == 2 or mButton == 3 then
-		 posX = math.max(0, math.min(posX+dx, vsx-width))	--prevent moving off screen
-		 posY = math.max(0, math.min(posY+dy, vsy-height))
-		 InitButtons()
-     end
- end
- 
 function widget:TweakMouseMove(mx, my, dx, dy, mButton)
 	
       --Dragging
