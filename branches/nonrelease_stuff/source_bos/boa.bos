@@ -3,14 +3,15 @@
 #include "sfxtype.h"
 #include "exptype.h"
 
-piece  base, turret, lmisspod, lrockbarrel, lrocket, rmisspod, rrockbarrel, rrocket, lgun, lightning, wake1, wake2, wake3, wake4, wake5,
-       wake6, wake7, wake8;
+piece  base, turret, lmisspod, lrockbarrel, lrocket, rmisspod, rrockbarrel, rrocket,
+       lgun, lightning, wake1, wake2, wake3, wake4, wake5, wake6,
+       wake7, wake8;
 
-static-var  _Terrain, restore_delay, gun_1;
+static-var  _Terraintype, restore_delay, gun_2;
 
 // Signal definitions
 #define SIG_AIM				2
-#define SIG_AIM2			4
+#define SIG_AIM_2			4
 #define SIG_MOVE			6
 
 
@@ -43,8 +44,8 @@ SmokeUnit(healthpercent, sleeptime, smoketype)
 
 RockUnit(anglex, anglez)
 {
-	turn base to x-axis anglex speed <50.010989>;
-	turn base to z-axis anglez speed <50.010989>;
+	turn base to x-axis anglex speed <50.005495>;
+	turn base to z-axis anglez speed <50.005495>;
 	wait-for-turn base around z-axis;
 	wait-for-turn base around x-axis;
 	turn base to z-axis <0.000000> speed <20.000000>;
@@ -53,8 +54,8 @@ RockUnit(anglex, anglez)
 
 HitByWeapon(Func_Var_1, Func_Var_2)
 {
-	turn base to z-axis Func_Var_2 speed <105.021978>;
-	turn base to x-axis Func_Var_1 speed <105.021978>;
+	turn base to z-axis Func_Var_2 speed <105.016484>;
+	turn base to x-axis Func_Var_1 speed <105.016484>;
 	wait-for-turn base around z-axis;
 	wait-for-turn base around x-axis;
 	turn base to z-axis <0.000000> speed <30.005495>;
@@ -67,7 +68,7 @@ StartMoving()
 	set-signal-mask SIG_MOVE;
 	while( TRUE )
 	{
-		if( _Terrain == 2 OR _Terrain == 1 )
+		if( _Terraintype == 2 OR _Terraintype == 1 )
 		{
 			emit-sfx 3 from wake1;
 			emit-sfx 3 from wake2;
@@ -96,14 +97,14 @@ StopMoving()
 
 setSFXoccupy(Func_Var_1)
 {
-	_Terrain = Func_Var_1;
+	_Terraintype = Func_Var_1;
 }
 
 Create()
 {
 	restore_delay = 3000;
 	start-script SmokeUnit();
-	gun_1=0;
+	gun_2 = base;
 }
 
 SetMaxReloadTime(Func_Var_1)
@@ -114,16 +115,16 @@ SetMaxReloadTime(Func_Var_1)
 RestoreAfterDelay()
 {
 	sleep restore_delay;
-	turn turret to y-axis <0> speed <90>;
-	turn lmisspod to x-axis <0> speed <50>;
-	turn rmisspod to x-axis <0> speed <50>;
+	turn turret to y-axis <0.000000> speed <90.000000>;
+	turn lmisspod to x-axis <0.000000> speed <50.000000>;
+	turn rmisspod to x-axis <0.000000> speed <50.000000>;
 }
 
 AimPrimary(heading, pitch)
 {
 	signal SIG_AIM;
 	set-signal-mask SIG_AIM;
-	turn turret to y-axis heading speed <170>;
+	turn turret to y-axis heading speed <170.000000>;
 	wait-for-turn turret around y-axis;
 	wait-for-turn turret around x-axis;
 	start-script RestoreAfterDelay();
@@ -147,13 +148,13 @@ QueryPrimary(piecenum)
 
 QuerySecondary(piecenum)
 {
-	if(gun_1 == 0)
+	if( gun_2 == 0 )
 	{
-	piecenum = lrocket;
+		piecenum = lrocket;
 	}
-	if(gun_1 == 1)
+	if( gun_2 == 1 )
 	{
-	piecenum = rrocket;
+		piecenum = rrocket;
 	}
 }
 
@@ -164,11 +165,11 @@ AimFromSecondary(piecenum)
 
 AimSecondary(heading, pitch)
 {
-	signal SIG_AIM2;
-	set-signal-mask SIG_AIM2;
-	turn turret to y-axis heading speed <170>;
-	turn lmisspod to x-axis <0> - pitch speed <80>;
-	turn rmisspod to x-axis <0> - pitch speed <80>;
+	signal SIG_AIM_2;
+	set-signal-mask SIG_AIM_2;
+	turn turret to y-axis heading speed <170.000000>;
+	turn lmisspod to x-axis <0.000000> - pitch speed <80.000000>;
+	turn rmisspod to x-axis <0.000000> - pitch speed <80.000000>;
 	wait-for-turn turret around y-axis;
 	wait-for-turn lmisspod around x-axis;
 	start-script RestoreAfterDelay();
@@ -177,24 +178,22 @@ AimSecondary(heading, pitch)
 
 FireSecondary()
 {
-if(gun_1 == 0)
+	if( gun_2 == 0 )
 	{
-	move lrockbarrel to z-axis [-1] now;
-	sleep 150;
-	move lrockbarrel to z-axis 0 speed [10];
+		move lrockbarrel to z-axis [-2.500000] now;
+		sleep 150;
+		move lrockbarrel to z-axis [0.000000] speed [25.000000];
 	}
-
-if(gun_1 == 1)
+	if( gun_2 == 1 )
 	{
-	move rrockbarrel to z-axis [-1] now;
-	sleep 150;
-	move rrockbarrel to z-axis 0 speed [10];
+		move rrockbarrel to z-axis [-2.500000] now;
+		sleep 150;
+		move rrockbarrel to z-axis [0.000000] speed [25.000000];
 	}
-	
-gun_1 = gun_1 + 1;
-if(gun_1 == 2)
+	++gun_2;
+	if( gun_2 == 2 )
 	{
-	gun_1 = 0;
+		gun_2 = base;
 	}
 }
 
@@ -263,7 +262,7 @@ Killed(severity, corpsetype)
 		explode wake6 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
 		explode wake7 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
 		explode wake8 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
-		return (0);
+		//return (0); -- gives error "invalid opcode 0"
 	}
 	corpsetype = 3;
 	explode lgun type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
