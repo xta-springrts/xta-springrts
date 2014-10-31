@@ -225,13 +225,16 @@ function GroupGuard(unitArray,cmdParams, cmdOptions)
 			
 			for _,tID in ipairs(targetArray) do
 				local tUD = UnitDefs[GetUnitDefID(tID)]
-				local dist = GetUnitSeparation(baseUnit, tID)
-				local tTeam = GetUnitTeam(tID)
-				local isMovingUnit = tUD.canMove and (not tUD.isBuilding)
-				local areTeamsAllied = AreTeamsAllied(sTeam,tTeam)
 				
-				if not squadron[tID] and areTeamsAllied and isMovingUnit then 
-					targetTable[#targetTable+1] = {tID,dist}
+				if tUD then
+					local dist = GetUnitSeparation(baseUnit, tID)
+					local tTeam = GetUnitTeam(tID)
+					local isMovingUnit = tUD.canMove and (not tUD.isBuilding)
+					local areTeamsAllied = AreTeamsAllied(sTeam,tTeam)
+					
+					if not squadron[tID] and areTeamsAllied and isMovingUnit then 
+						targetTable[#targetTable+1] = {tID,dist}
+					end
 				end
 			end
 			ta_sort(targetTable, sortByDist)
