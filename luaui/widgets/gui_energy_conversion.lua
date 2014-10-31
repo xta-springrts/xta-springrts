@@ -117,6 +117,9 @@ function widget:DrawScreen()
     local curLevel = spGetTeamRulesParam(myTeamID, 'mmLevel') or 0
     local curUsage = spGetTeamRulesParam(myTeamID, 'mmUse') or 0
     local curCapacity = spGetTeamRulesParam(myTeamID, 'mmCapacity') or 0
+	
+	if curCapacity <= 0 then return end
+	
 	local Mprod = curUsage/60
 	local display
 	if Mprod >= 1 then 
