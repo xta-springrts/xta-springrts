@@ -236,9 +236,7 @@ function gadget:UnitCreated(unitID, unitDefID, teamID, builderID)
 	-- add self-d button
 	local cmdDescID = FindUnitCmdDesc(unitID, CMD_SELFD)
 	if (cmdDescID) then --just to be sure
-		EditUnitCmdDesc(unitID, cmdDescID, {hidden = false,name = "Destruct"})
-	else
-		Spring.Echo ("unit ", unitID, " had no FindUnitCmdDesc(unitID, cmdSelfD)")
+		EditUnitCmdDesc(unitID, cmdDescID, {hidden = false,name = "Destruct"})		
 	end
 	--Spring.InsertUnitCmdDesc(unitID, cmd
 end
