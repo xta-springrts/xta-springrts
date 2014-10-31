@@ -70,7 +70,7 @@
 	
 	//    Misc
 	//Upright=1;
-	Corpse=cordev1_dead;
+	//Corpse=cordev1_dead; doesn't exist
 	HideDamage=1;
 	CollisionSphereScale=.9;
 	
