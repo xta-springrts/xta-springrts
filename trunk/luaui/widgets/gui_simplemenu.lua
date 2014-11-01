@@ -253,6 +253,14 @@ function widget:MousePress(mx, my, mButton)
 			if IsOnButton(mx, my, ButtonMenu["x1"],ButtonMenu["y1"],ButtonMenu["x2"],ButtonMenu["y2"]) then
 				ButtonMenu.click = true
 				PlaySoundFile(button6)
+				
+				mySpectatorState = Spring.GetSpectatingState()
+				local canVoteTeam = Spring.GetGameRulesParam("VotingAllyID")
+			
+				if not mySpectatorState and canVoteTeam and canVoteTeam == myAllyTeamID then
+					Button[7].disabled 				= false
+				end			
+				
 				return true
 			end
 		end
@@ -319,14 +327,7 @@ function widget:KeyPress(key, mods, isRepeat)
 	if key == 0x01B then -- esc
 		if ButtonMenu.click then
 			ButtonMenu.click = false
-			PlaySoundFile(button8)
-			mySpectatorState = Spring.GetSpectatingState()
-			local canVoteTeam = Spring.GetGameRulesParam("VotingAllyID")
-			
-			if not mySpectatorState and canVoteTeam and canVoteTeam == myAllyTeamID then
-				Button[7].disabled 				= false
-			end
-			
+			PlaySoundFile(button8)		
 			return true
 		end
 	end

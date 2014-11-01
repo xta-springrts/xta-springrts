@@ -933,7 +933,7 @@ function widget:MouseMove(mx, my, dx, dy, mButton)
  end 
  
 function widget:MousePress(x, y, button)
-	 if button == 1 then
+	 if button == 1 and (showOptions or showInfo) then
 		
 		for _,button in ipairs(Button) do
 			if IsOnButton(x, y, button["x1"],button["y1"],button["x2"],button["y2"]) then
