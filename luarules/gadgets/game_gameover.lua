@@ -91,7 +91,6 @@ if gadgetHandler:IsSyncedCode() then
 	
 	function gadget:GameFrame(frame)
 		
-		Echo("GF:",gameOverFrame and gameOverFrame + ENDTIME,transferStarted,GG.gamewinners and GG.gamewinners[1])
 		if Spring.IsGameOver() then					
 			if gameOverFrame and (frame > gameOverFrame + ENDTIME) then
 				ShowEndGraphs()
@@ -220,8 +219,6 @@ else
 			isWinner[winner] = true
 			winnerList[#winnerList+1] = winner
 		end
-		
-		Echo("GW:",winner,n,transferComplete,#winnerList)
 		
 		if #winnerList >= n or (not winner) then 
 			transferComplete = true
