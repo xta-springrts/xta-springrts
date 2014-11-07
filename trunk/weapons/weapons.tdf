@@ -475,8 +475,6 @@
 	{
 		default=1200;
 		group_invincible=1;
-		group_subs=1500;
-		group_stupidsubs=1600;
 		group_ships=1800;
 		group_large_ships=2100;
 
@@ -2833,10 +2831,8 @@
 	[DAMAGE]
 	{
 		default=1250;
-		group_subs=1550;
-		group_stupidsubs=1650;
 		group_ships=1900;
-		group_large_ships=2150;
+		group_large_ships=2200;
 		group_invincible=1;
 	}
 }

@@ -21,15 +21,27 @@
     ศอออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออผ
     Logo by ElementalGizmo
 	
-------------------- Change Log of XTA 9.745 Svn 808
+------------------- Change Log of XTA 9.745 Svn 823
+Balance changes:
+----------------
+ * Arm Lancet and Core Titan: increased area of effect from 16 => 48, same default damage (1200/1250) but more damage vs ships (1800/1900) and large ships (2100/2200). Visually the torpedo explosions are also larger (same as adv torpedoes). These planes are
+ almost never used because Arm Albatross and Core Typhoon are usually better options and will probably still be so.
+
  Enhancements:
 --------------
  * Add simple menu with basic content that can be reached graphically
+ * Add factory stuck notification widget
+ * Add Ecostats widget
+ * Add option in menu to toggle on/off the blinking of units when a player lags
+ * Add widget that enables old chat keys (alt+return = ally chat, shift+return = spectator chat)
+ * Add widget that (probably) prevents the 'getting stuck in draw mode'-bug 
 
  Fixes:
 --------
  * Make land pelican amphibious to fix pathfinding issue (it's still a kbot while on land)
  * Fix error spam when core construction sub dies
+ * Fix projectile lights widget to use less memory
+ * Fix bomb drop sound of torpedo bombers to be consistent with number of dropped torpedoes ( = 1)
  * Fix tortoise Chelonian error spam
  * Fix reload bar on some units with long reload time
  * Fix stuck hurry-up text in KoTH mode
