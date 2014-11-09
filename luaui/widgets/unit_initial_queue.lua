@@ -953,16 +953,16 @@ function widget:RecvLuaMsg(msg, playerID)
 	local sidePrefix = '195' -- set by widget gui_commchange.lua
 	local startingPrefix = '776-717' -- set by widget gui_commchange.lua
 	
-	if string.find(msg,sidePrefix) then	
+	if msg:find(sidePrefix) then	
 		local _, _, playerIsSpec, playerTeam = Spring.GetPlayerInfo(playerID)
 		local myTeamID = Spring.GetMyTeamID()
 		
 		if myTeamID == playerTeam and not playerIsSpec then
-						
+			
 			local startID = spGetTeamRulesParam(myTeamID, 'startUnit')
 			if startID and startID ~= "" then sDefID = startID end
-			local udid = Spring.GetUnitDefID(startID)
-			local newSide = UnitDefs[udid] and UnitDefs[udid].customParams and UnitDefs[udid].customParams.side
+			
+			local newSide = UnitDefs[startID] and UnitDefs[startID].customParams and UnitDefs[startID].customParams.side
 			local oldSide = sDef.customParams and sDef.customParams.side
 			
 			if newSide ~= oldSide then
