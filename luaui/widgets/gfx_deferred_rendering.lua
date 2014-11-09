@@ -9,7 +9,7 @@ function widget:GetInfo()
     date      = "2013 july",
     license   = "CC-BY-ND",
     layer     = -1000000000,
-    enabled   = false
+    enabled   = true
   }
 end
 
