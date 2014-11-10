@@ -181,12 +181,12 @@ local function MakeZombieArmy(zombieArray,x0,z0,x1,z1)
 	-- pick target for army
 	local tx,ty,tz, b0
 	local loops = 0
-	local sbox = random(#kothBoxes)
+	local sbox = #kothBoxes > 0 and random(#kothBoxes)
 	
-	local xmin = isKOTH and (kothBoxes[sbox]["xmin"]) or 0
-	local zmin = isKOTH and (kothBoxes[sbox]["zmin"]) or 0
-	local xmax = isKOTH and (kothBoxes[sbox]["xmax"]) or mapX
-	local zmax = isKOTH and (kothBoxes[sbox]["zmax"]) or mapZ
+	local xmin = isKOTH and #kothBoxes > 0 and (kothBoxes[sbox]["xmin"]) or 0
+	local zmin = isKOTH and #kothBoxes > 0 and (kothBoxes[sbox]["zmin"]) or 0
+	local xmax = isKOTH and #kothBoxes > 0 and (kothBoxes[sbox]["xmax"]) or mapX
+	local zmax = isKOTH and #kothBoxes > 0 and (kothBoxes[sbox]["zmax"]) or mapZ
 	
 	repeat
 		tx = random(xmin,xmax)
