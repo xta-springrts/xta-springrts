@@ -5734,7 +5734,7 @@
 	collisionVolumeTest = 1;
 	collisionVolumeType=cyly;//#AUTO#
 	collisionVolumeScales=39 77 39;//#AUTO#
-	collisionVolumeOffsets=0 -1 -13;//#AUTO#
+	collisionVolumeOffsets=8 -1 -13;//edited
 }
 [core_gaat_gun_heap]
 {
