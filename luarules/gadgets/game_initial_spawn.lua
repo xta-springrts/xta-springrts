@@ -31,11 +31,13 @@ local armcomDefID = UnitDefNames.arm_commander.id
 local corcomDefID = UnitDefNames.core_commander.id
 
 local validStartUnits = {
-   [UnitDefNames.arm_commander.id] = true,
-   [UnitDefNames.arm_u0commander.id] = true,
-   [UnitDefNames.core_commander.id] = true,
-   [UnitDefNames.core_u0commander.id] = true,
-}
+	[UnitDefNames.arm_commander.id] = true,
+	[UnitDefNames.arm_u0commander.id] = true,
+	[UnitDefNames.core_commander.id] = true,
+	[UnitDefNames.core_u0commander.id] = true,
+	[UnitDefNames.core_easter_egg.id] = true,
+	[UnitDefNames.arm_invader.id] = true,
+   }	
 local spawnTeams = {} -- spawnTeams[teamID] = allyID
 
 local modOptions = Spring.GetModOptions() or {}

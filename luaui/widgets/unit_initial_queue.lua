@@ -40,8 +40,6 @@ local energyColor = '\255\255\255\128' -- Light yellow
 local buildColor = '\255\128\255\128' -- Light green
 local whiteColor = '\255\255\255\255' -- White
 
-
-
 ------------------------------------------------------------
 -- Globals
 ------------------------------------------------------------
@@ -88,6 +86,7 @@ local updateHacked = false
 local CMD_MORPH_STOP 		= 32410
 local CMD_MORPHA			= 31418
 local CMD_MORPHC			= 31431
+local CMD_MORPHT			= CMD_MORPHA
 local CMD_MORPH 			= CMD_MORPHA
 local CMD_SING				= 40123
 
@@ -545,6 +544,9 @@ end
 function InitializeFaction(sDefID)
 	
 	sDef = UnitDefs[sDefID]
+	
+	Echo("IQ: start ID:",sDefID,#sDef.buildOptions,sDef.customParams.side)
+	
 	-- Don't run if theres nothing to show
 	sBuilds = sDef.buildOptions
 	if not sBuilds or (#sBuilds == 0) then
@@ -555,8 +557,10 @@ function InitializeFaction(sDefID)
 	-- read faction of start unit and set morph command accordingly
 	if sDef.customParams and sDef.customParams.side == "arm" then
 		CMD_MORPH = CMD_MORPHA
-	else
+	elseif sDef.customParams and sDef.customParams.side == "core" then
 		CMD_MORPH = CMD_MORPHC
+	elseif sDef.customParams and sDef.customParams.side == "tll" then
+		CMD_MORPH = CMD_MORPHT
 	end
 	
 	-- Retain the build list order, but move all sea units to the end
@@ -961,16 +965,18 @@ function widget:RecvLuaMsg(msg, playerID)
 			
 			local startID = spGetTeamRulesParam(myTeamID, 'startUnit')
 			if startID and startID ~= "" then sDefID = startID end
-			
+						
 			local newSide = UnitDefs[startID] and UnitDefs[startID].customParams and UnitDefs[startID].customParams.side
 			local oldSide = sDef.customParams and sDef.customParams.side
 			
 			if newSide ~= oldSide then
-				if oldSide then
-					if oldSide == "arm" then
-						CMD_MORPH = CMD_MORPHC
-					else
+				if newSide then
+					if newSide == "arm" then
 						CMD_MORPH = CMD_MORPHA
+					elseif newSide == "core" then
+						CMD_MORPH = CMD_MORPHC
+					elseif newSide == "tll" then
+						CMD_MORPH = CMD_MORPHT
 					end
 				end
 				
@@ -979,34 +985,42 @@ function widget:RecvLuaMsg(msg, playerID)
 					local buildDataId = buildData[1]
 					
 					if oldSide then
-						if oldSide == "arm" then
-							if ValidBuild(buildDataId) then
-								local newID = UnitDefs[buildDataId] and ((UnitDefNames[string.gsub(UnitDefs[buildDataId].name,"arm_","core_")] or {}).id)
-								if newID then
-									buildData[1] = newID
-									buildQueue[b] = buildData
-								else
-									Echo("Warning: could not convert to core: ",(UnitDefs[buildDataId] or {}).name)
-								end
+						if ValidBuild(buildDataId) then
+							local newID = UnitDefs[buildDataId] and ((UnitDefNames[string.gsub(UnitDefs[buildDataId].name,oldSide .."_",newSide .. "_")] or {}).id)
+							if newID then
+								buildData[1] = newID
+								buildQueue[b] = buildData
 							else
-								if buildDataId == CMD_MORPHA then
+								Echo("Warning: could not convert to: ", newSide,(UnitDefs[buildDataId] or {}).name)
+							end
+						else
+							if buildDataId == CMD_MORPHA then
+								if newSide == "core" then
 									local newID = CMD_MORPHC
 									buildData[1] = newID
 									buildQueue[b] = buildData
-								end
-							end
-						elseif oldSide == "core" then
-							if ValidBuild(buildDataId) then
-								local newID = UnitDefs[buildDataId] and ((UnitDefNames[string.gsub(UnitDefs[buildDataId].name,"core_","arm_")] or {}).id)
-								if newID then
+								elseif newSide == "tll" then
+									local newID = CMD_MORPHT
 									buildData[1] = newID
 									buildQueue[b] = buildData
-								else
-									Echo("Warning: could not convert to arm: ",(UnitDefs[buildDataId] or {}).name)
 								end
-							else
-								if buildDataId == CMD_MORPHC then
+							elseif buildDataId == CMD_MORPHC then
+								if newSide == "arm" then
 									local newID = CMD_MORPHA
+									buildData[1] = newID
+									buildQueue[b] = buildData
+								elseif newSide == "tll" then
+									local newID = CMD_MORPHT
+									buildData[1] = newID
+									buildQueue[b] = buildData
+								end
+							elseif buildDataId == CMD_MORPHT then
+								if newSide == "arm" then
+									local newID = CMD_MORPHA
+									buildData[1] = newID
+									buildQueue[b] = buildData
+								elseif newSide == "core" then
+									local newID = CMD_MORPHC
 									buildData[1] = newID
 									buildQueue[b] = buildData
 								end
