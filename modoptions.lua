@@ -249,7 +249,7 @@ local options = {
 	},
 	{
 		key    = "tllUnits",
-		name   = "Enable 'The Lost Legacy' Unit Pack?",
+		name   = "Enable 'The Lost Legacy' faction of units?",
 		desc   = "Adds The Lost Legacy unitpack. Ensure that you have selected 'choose in game' for the starting commander  option or this feature won't be possible. Author: Noruas\nkey: tllUnits",
 		type   = "bool",
 		def    = false,
