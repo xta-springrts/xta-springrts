@@ -233,7 +233,7 @@ function widget:Initialize()
 			},
 			
 			{
-			name		= "Projectiles don't collide with friendly units:",
+			name		= "Disable friendly unit projectile collisions:",
 			type		= "bool",
 			value		= modOptions["nocollide"] or "N/A",
 			},
@@ -273,6 +273,22 @@ function widget:Initialize()
 			type		= "bool",
 			value		= modOptions["mo_nowrecks"] or "N/A",
 			},
+						
+			{
+			name	= "Critters:",
+			type	= "bool",
+			value	= modOptions["critters"] or "N/A",
+			},
+					
+			{
+			name	= "Dynamic lights:",
+			type	= "bool",
+			value	= modOptions["dynamiclights"] or "N/A",
+			},
+			
+		}
+		-- unit packs
+		Options["unitpacks"] = {
 			
 			{
 			name		= "XTAIDS unit pack:",
@@ -287,18 +303,18 @@ function widget:Initialize()
 			},
 			
 			{
-			name	= "Critters:",
-			type	= "bool",
-			value	= modOptions["critters"] or "N/A",
+			name		= "The Lost Legacy faction:",
+			type		= "bool",
+			value		= modOptions["tllunits"] or "N/A",
 			},
 			
 			{
-			name	= "Dynamic lights:",
-			type	= "bool",
-			value	= modOptions["dynamiclights"] or "N/A",
-			},
-			
+			name		= "Disable all new units after XTA version 8.1:",
+			type		= "bool",
+			value		= modOptions["newunits"] or "N/A",
+			},	
 		}
+		
 		
 		-- multiplier options
 		Options["multiplier"] = {
@@ -378,6 +394,12 @@ function widget:Initialize()
 			name		= "Enable additional rocket type for some units:",
 			type		= "bool",
 			value		= modOptions["rockettoggle"] or "N/A",
+			},
+			
+			{
+			name		= "Enable variable production rate gadget:",
+			type		= "bool",
+			value		= modOptions["buildspeed"] or "N/A",
 			},
 		}
 	end
@@ -694,89 +716,117 @@ local function drawInfo()
 	local lastY = Panel["info"]["y2"] - 20
 	rows = 0
 	
-	myFontBig:Begin()
-	if Options["general"] then
-		myFontBig:SetTextColor(cYellow) -- yellow
-		myFontBig:Print("General:", Panel["info"]["x1"] + leftmargin, lastY - 40,14,'do')
-		lastY = lastY - 40
-	end
-	myFontBig:End()
-	
-	--General options
-	myFont:Begin()
-	local i = 0
-	
-	for _,opt in pairs(Options["general"]) do
-		i,lastY = drawRow(opt,i,lastY)
-	end
-	myFont:End()
-	
-	if Options["other"] then
+	--General options heading
+	do
 		myFontBig:Begin()
-		myFontBig:SetTextColor(cYellow) -- yellow
-		myFontBig:Print("More options:", Panel["info"]["x1"] + leftmargin, lastY - 40,14,'do')
-		lastY = lastY - 40
-		myFontBig:End()
-	end
-	
-	--Other options
-	myFont:Begin()
-	local i = 0
-	for _,opt in pairs(Options["other"]) do
-		i,lastY = drawRow(opt,i,lastY)
-	end
-	myFont:End()
-	
-	if Options["multiplier"] then
-		myFontBig:Begin()
-		myFontBig:SetTextColor(cYellow) -- yellow
-		myFontBig:Print("Multiplier options:", Panel["info"]["x1"] + leftmargin, lastY - 40,14,'do')
-		lastY = lastY - 40
-		myFontBig:End()
-	end
-	
-	--multiplier options
-	myFont:Begin()
-	local i = 0
-	for _,opt in pairs(Options["multiplier"]) do
-		i,lastY = drawRow(opt,i,lastY)
-	end
-	myFont:End()
-	
-	if Options["koth"] and (Options["koth"][1]["value"] == 1 or Options["koth"][1]["value"] == "1") then
-		if Options["koth"] then
-			myFontBig:Begin()
+		if Options["general"] then
 			myFontBig:SetTextColor(cYellow) -- yellow
-			myFontBig:Print("King of the hill options", Panel["info"]["x1"] + leftmargin, lastY - 40,14,'do')
+			myFontBig:Print("General:", Panel["info"]["x1"] + leftmargin, lastY - 40,14,'do')
 			lastY = lastY - 40
-			myFontBig:End()
 		end
+		myFontBig:End()
 		
-		--KOTH options
+		--General options
 		myFont:Begin()
 		local i = 0
-		for _,opt in pairs(Options["koth"]) do
+		
+		for _,opt in pairs(Options["general"]) do
 			i,lastY = drawRow(opt,i,lastY)
 		end
 		myFont:End()
 	end
-	
-	if Options["experimental"] then
-		myFontBig:Begin()
-		myFontBig:SetTextColor(cYellow) -- yellow
-		myFontBig:Print("Experimental options:", Panel["info"]["x1"] + leftmargin, lastY - 40,14,'do')
-		lastY = lastY - 40
-		myFontBig:End()
+	--Other options heading 
+	do
+		if Options["other"] then
+			myFontBig:Begin()
+			myFontBig:SetTextColor(cYellow) -- yellow
+			myFontBig:Print("More options:", Panel["info"]["x1"] + leftmargin, lastY - 40,14,'do')
+			lastY = lastY - 40
+			myFontBig:End()
+		end
+		
+		--Other options
+		myFont:Begin()
+		local i = 0
+		for _,opt in pairs(Options["other"]) do
+			i,lastY = drawRow(opt,i,lastY)
+		end
+		myFont:End()
 	end
-	
-	--Experimental options
-	myFont:Begin()
-	local i = 0
-	for _,opt in pairs(Options["experimental"]) do
-		i,lastY = drawRow(opt,i,lastY)
+	-- unit packs heading
+	do
+		if Options["unitpacks"] then
+			myFontBig:Begin()
+			myFontBig:SetTextColor(cYellow) -- yellow
+			myFontBig:Print("Unit packs:", Panel["info"]["x1"] + leftmargin, lastY - 40,14,'do')
+			lastY = lastY - 40
+			myFontBig:End()
+		end
+		
+		-- unit packs
+		myFont:Begin()
+		local i = 0
+		for _,opt in pairs(Options["unitpacks"]) do
+			i,lastY = drawRow(opt,i,lastY)
+		end
+		myFont:End()
 	end
-	myFont:End()
-	
+	--multiplier options heading
+	do
+		if Options["multiplier"] then
+			myFontBig:Begin()
+			myFontBig:SetTextColor(cYellow) -- yellow
+			myFontBig:Print("Multiplier settings:", Panel["info"]["x1"] + leftmargin, lastY - 40,14,'do')
+			lastY = lastY - 40
+			myFontBig:End()
+		end
+		
+		--multiplier options
+		myFont:Begin()
+		local i = 0
+		for _,opt in pairs(Options["multiplier"]) do
+			i,lastY = drawRow(opt,i,lastY)
+		end
+		myFont:End()
+	end
+	--KOTH options heading
+	do
+		if Options["koth"] and (Options["koth"][1]["value"] == 1 or Options["koth"][1]["value"] == "1") then
+			if Options["koth"] then
+				myFontBig:Begin()
+				myFontBig:SetTextColor(cYellow) -- yellow
+				myFontBig:Print("King of the hill options", Panel["info"]["x1"] + leftmargin, lastY - 40,14,'do')
+				lastY = lastY - 40
+				myFontBig:End()
+			end
+			
+			--KOTH options
+			myFont:Begin()
+			local i = 0
+			for _,opt in pairs(Options["koth"]) do
+				i,lastY = drawRow(opt,i,lastY)
+			end
+			myFont:End()
+		end
+	end
+	--Experimental options heading
+	do
+		if Options["experimental"] then
+			myFontBig:Begin()
+			myFontBig:SetTextColor(cYellow) -- yellow
+			myFontBig:Print("Experimental options:", Panel["info"]["x1"] + leftmargin, lastY - 40,14,'do')
+			lastY = lastY - 40
+			myFontBig:End()
+		end
+		
+		--Experimental options
+		myFont:Begin()
+		local i = 0
+		for _,opt in pairs(Options["experimental"]) do
+			i,lastY = drawRow(opt,i,lastY)
+		end
+		myFont:End()
+	end
 	-- update height and position of window
 	iHeight						= height0  + rows * iRowHeight
 	Panel["info"]["y2"]			= posY + iHeight
