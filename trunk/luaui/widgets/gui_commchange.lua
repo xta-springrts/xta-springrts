@@ -18,38 +18,47 @@ end
 -- correct state when user has marked but not readied up. Now colour code is grey and not red when correct state is not recognised.
 --
 
---------------------------------------------------------------------------------
---IMAGES
---------------------------------------------------------------------------------
+------------
+-- IMAGES -- 
+------------
 
 --commander selection
-local imgComAA 				= "LuaUI/Images/commchange/ComAA.png" -- arm auto
-local imgComAM 				= "LuaUI/Images/commchange/ComAM.png" -- arm manual
-local imgComAAD 			= "LuaUI/Images/commchange/ComAAD.png" -- arm auto disabled
-local imgComAMD 			= "LuaUI/Images/commchange/ComAMD.png" -- arm manual disabled
-local imgComCA 				= "LuaUI/Images/commchange/ComCA.png" -- core auto
-local imgComCM			 	= "LuaUI/Images/commchange/ComCM.png"
-local imgComCAD 			= "LuaUI/Images/commchange/ComCAD.png" -- core auto disabled
-local imgComCMD 			= "LuaUI/Images/commchange/ComCMD.png"
+local img 						= {}				
+	img["ComAA"] 				= "LuaUI/Images/commchange/ComAA.png" -- arm auto
+	img["ComAM"] 				= "LuaUI/Images/commchange/ComAM.png" -- arm manual
+	img["ComAAD"] 				= "LuaUI/Images/commchange/ComAAD.png" -- arm auto disabled
+	img["ComAMD"] 				= "LuaUI/Images/commchange/ComAMD.png" -- arm manual disabled
+	img["ComCA"]				= "LuaUI/Images/commchange/ComCA.png" -- core auto
+	img["ComCM"]			 	= "LuaUI/Images/commchange/ComCM.png"
+	img["ComCAD"] 				= "LuaUI/Images/commchange/ComCAD.png" -- core auto disabled
+	img["ComCMD"] 				= "LuaUI/Images/commchange/ComCMD.png"
+	img["ComTM"] 				= "LuaUI/Images/commchange/ComTM.png"
+	img["ComTMD"] 				= "LuaUI/Images/commchange/ComTMD.png"
+	img["ComTA"] 				= "LuaUI/Images/commchange/ComTA.png"
+	img["ComTAD"] 				= "LuaUI/Images/commchange/ComTAD.png"
 
---countdown
-local img3 					= "LuaUI/Images/commchange/3-cnt.png"
-local img2 					= "LuaUI/Images/commchange/2-cnt.png"
-local img1 					= "LuaUI/Images/commchange/1-cnt.png"
-local img0 					= "LuaUI/Images/commchange/0-cnt.png"
+	--countdown
+	img["cnt3"] 				= "LuaUI/Images/commchange/3-cnt.png"
+	img["cnt2"] 				= "LuaUI/Images/commchange/2-cnt.png"
+	img["cnt1"] 				= "LuaUI/Images/commchange/1-cnt.png"
+	img["cnt0"] 				= "LuaUI/Images/commchange/0-cnt.png"
 
---faction emblems
-local imgARM 				= "LuaUI/Images/commchange/arm.png"
-local imgCORE 				= "LuaUI/Images/commchange/core.png"
+	--faction emblems
+	img["arm"] 					= "LuaUI/Images/commchange/arm.png"
+	img["core"] 				= "LuaUI/Images/commchange/core.png"
+	img["tll"] 					= "LuaUI/Images/commchange/tll.png"
 
---other
-local imgDuck				= "LuaUI/Images/commchange/duck.png"
+	--other
+	img["duck"]					= "LuaUI/Images/commchange/duck.png"
 
 -- commanders
-local armauto = UnitDefNames["arm_commander"].id
-local armman = UnitDefNames["arm_u0commander"].id
-local coreauto = UnitDefNames["core_commander"].id
-local coreman = UnitDefNames["core_u0commander"].id
+local commanderID				= {}
+commanderID["arm_automatic"] 	= UnitDefNames["arm_commander"].id
+commanderID["arm_manual"] 		= UnitDefNames["arm_u0commander"].id
+commanderID["core_automatic"]	= UnitDefNames["core_commander"].id
+commanderID["core_manual"] 		= UnitDefNames["core_u0commander"].id
+commanderID["tll_automatic"]	= UnitDefNames["core_easter_egg"].id
+commanderID["tll_manual"] 		= UnitDefNames["arm_invader"].id
 
 -- sound
 local bell = 'sounds/bell.ogg'
@@ -76,6 +85,7 @@ local duckSounds =	 {
 local Button = {}
 Button["arm"] = {}
 Button["core"] = {}
+Button["tll"] = {}
 Button["ready"] = {}
 Button["info"] = {}
 Button["infopanel"] = {}
@@ -93,7 +103,7 @@ Button["specinfo"] = {}
 local vsx, vsy 								= gl.GetViewSizes()
 local scale
 local px, py 								= 300, 300
-local SIZEX, SIZEY  						= 320, 180 -- initial value before scaling
+local SIZEX, SIZEY  						= 360, 180 -- initial value before scaling
 local mid 									= px + SIZEX/2
 local sizex, sizey							-- values used after rescaling
 local th 									= 16 -- text height for buttons
@@ -126,6 +136,7 @@ local PRESENT,MARKED,OTHER,READY,MISSING 	= 0,1,2,3,-1
 local myFont	 							= gl.LoadFont("FreeSansBold.otf",th3, 1.9, 40)
 local myFontHuge							= gl.LoadFont("FreeSansBold.otf",60, 1.9, 40)
 local hasSentStartMsg	 					= false
+local isTLL									= false
 
 --------------------------------------------------------------------------------
 -- Speedups
@@ -154,8 +165,20 @@ local GetPlayerInfo					= Spring.GetPlayerInfo
 local GetPlayerList					= Spring.GetPlayerList
 local GetAllyTeamList				= Spring.GetAllyTeamList
 local GetAIInfo						= Spring.GetAIInfo
-local max, min 						= math.max, math.min
 local newSide		  				= {}
+	
+--------------------------------------------------------------------------------
+-- Colors
+--------------------------------------------------------------------------------
+local cWhite				= {1, 1, 1, 1}
+local cGrey					= {0.8, 0.8, 0.8, 1}
+local cRank					= {0.4,0.4,0.4,1}
+local cLight				= {0.8, 0.8, 0.2, 0.5}
+local cUnfocus				= {0.8, 0.8, 0.8, 0.4}
+local cDark					= {0, 0, 0, 0.4}
+local cBlack				= {0, 0, 0, 1}
+local cAlpha				= {1, 1, 1, 0.5}
+local cCount				= {0.8, 0.8, 1, 1}
 
 --------------------------------------------------------------------------------
 -- Local functions
@@ -170,21 +193,22 @@ end
 local function initButtons()
 	mid = px + sizex/2
 	Button["arm"]["x0"] = px
-	Button["arm"]["x1"] = px + sizex/4
+	Button["arm"]["x1"] = isTLL and px + sizex/6 or px + sizex/4
 	Button["arm"]["y0"] = py  + sizey - 24
 	Button["arm"]["y1"] = py  + sizey
 	
-	Button["core"]["x0"] = px + sizex/4
-	Button["core"]["x1"] = px + sizex/2
+	Button["core"]["x0"] = Button["arm"]["x1"]
+	Button["core"]["x1"] = isTLL and px + sizex/3 or px + sizex/2
 	Button["core"]["y0"] = py  + sizey - 24
 	Button["core"]["y1"] = py  + sizey
 	
-	Button["ready"]["x0"] = px + sizex/2
-	if myState ~= READY then
-		Button["ready"]["x1"] = px + 4*sizex/5
-	else
-		Button["ready"]["x1"] = px + sizex
-	end
+	Button["tll"]["x0"] = Button["core"]["x1"]
+	Button["tll"]["x1"] = px + sizex/2
+	Button["tll"]["y0"] = py  + sizey - 24
+	Button["tll"]["y1"] = py  + sizey
+	
+	Button["ready"]["x0"] = Button["tll"]["x1"]
+	Button["ready"]["x1"] = myState ~= READY and (px + 4*sizex/5) or (px + sizex)
 	Button["ready"]["y0"] = py  + sizey - 24
 	Button["ready"]["y1"] = py  + sizey
 	
@@ -198,7 +222,7 @@ local function initButtons()
 	Button["manual"]["y0"] = py  + 24
 	Button["manual"]["y1"] = py  + sizey - 34
 	
-	Button["info"]["x0"] = px + 4*sizex/5
+	Button["info"]["x0"] = Button["ready"]["x1"]
 	Button["info"]["x1"] = px + sizex
 	Button["info"]["y0"] = py  + sizey - 24
 	Button["info"]["y1"] = py  + sizey
@@ -235,17 +259,13 @@ end
 
 local function updateMyStartUnit()
 	local startID = spGetTeamRulesParam(myTeamID, 'startUnit')
-	if startID == armauto or startID == armman then
-		mySide = "arm"
-	else
-		mySide = "core"
-	end
 	
-	if startID == armauto or startID == coreauto then
-		myType = "auto"
-	else
-		myType = "manual"
-	end
+	local startSide = UnitDefs[startID] and UnitDefs[startID].customParams and UnitDefs[startID].customParams.side
+	local startType = UnitDefs[startID] and UnitDefs[startID].customParams and UnitDefs[startID].customParams.type
+	
+	mySide = startSide
+	myType = startType
+	
 end
 
 local function updateSize()
@@ -363,6 +383,7 @@ function widget:Initialize()
 	th = 16 * scale
 	th2 = 11 * scale
 	th3 = 20 * scale
+	isTLL = tonumber( (Spring.GetModOptions() or {}).tllunits) == 1
 	
 	updateMyStartUnit()
 	
@@ -373,29 +394,32 @@ function widget:Initialize()
 	
 	--set default startID
 	if lastStartID then
-		if lastStartID == armauto then
-			spSendLuaRulesMsg('\177' .. armauto)
-			spSendLuaUIMsg('195' .. 1)
-		elseif lastStartID == armman then
-			spSendLuaRulesMsg('\177' .. armman)
-			spSendLuaUIMsg('195' .. 1)
-		elseif lastStartID == coreauto then
-			spSendLuaRulesMsg('\177' .. coreauto)
-			spSendLuaUIMsg('195' .. 2)
-		elseif lastStartID == coreman then
-			spSendLuaRulesMsg('\177' .. coreman)
-			spSendLuaUIMsg('195' .. 2)
+		local lastSide = UnitDefs[lastStartID] and UnitDefs[lastStartID].customParams and UnitDefs[lastStartID].customParams.side
+		local lastType = UnitDefs[lastStartID] and UnitDefs[lastStartID].customParams and UnitDefs[lastStartID].customParams.type
+		
+		if lastSide then
+			if lastSide == "arm" then
+				spSendLuaUIMsg('195' .. 1)
+			elseif lastSide == "core" then
+				spSendLuaUIMsg('195' .. 2)
+			elseif lastSide == "tll" then
+				spSendLuaUIMsg('195' .. 3)
+			end
+			
+			if lastType then
+				spSendLuaRulesMsg('\177' .. commanderID[lastSide .. "_" .. lastType])
+			end
 		end
 	else -- set manual commander as default for newbies
 		mySide = (mySide or select(5,Spring.GetTeamInfo(myTeamID))) or "arm"
 		if mySide == "arm" then
-			spSendLuaRulesMsg('\177' .. armman)
+			spSendLuaRulesMsg('\177' .. commanderID["arm_manual"])
 			spSendLuaUIMsg('195' .. 1)
-			lastStartID = armman
+			lastStartID = commanderID["arm_manual"]
 		elseif mySide == "core" then
-			spSendLuaRulesMsg('\177' .. coreman)
+			spSendLuaRulesMsg('\177' .. commanderID["core_manual"])
 			spSendLuaUIMsg('195' .. 2)
-			lastStartID = coreman
+			lastStartID = commanderID["core_manual"]
 		end	
 	end
 	updateSize()
@@ -432,7 +456,7 @@ end
 function widget:DrawWorld()
 	if IsGUIHidden() or gameStarted then return end
 		
-	glColor(1, 1, 1, 0.5)
+	glColor(cAlpha)
     glDepthTest(false)
     for i = 1, #teamList do
         local teamID = teamList[i]
@@ -446,11 +470,15 @@ function widget:DrawWorld()
 			end
 			
             if teamside == "arm" then
-                glTexture(imgARM)
+                glTexture(img.arm)
                 glBeginEnd(GL_QUADS, QuadVerts, tsx, spGetGroundHeight(tsx, tsz), tsz, 80)
 				glTexture(false)
-            else 
-                glTexture(imgCORE)
+            elseif teamside == "core" then
+                glTexture(img.core)
+                glBeginEnd(GL_QUADS, QuadVerts, tsx, spGetGroundHeight(tsx, tsz), tsz, 64)
+				glTexture(false)
+			else
+				glTexture(img.tll)
                 glBeginEnd(GL_QUADS, QuadVerts, tsx, spGetGroundHeight(tsx, tsz), tsz, 64)
 				glTexture(false)
             end
@@ -472,23 +500,23 @@ function widget:DrawScreenEffects(vsx, vsy)
 		
 		--CountDown
 		if gameState == COUNTDOWN and not Spring.IsReplay() then
-			glColor(0.8, 0.8, 1, 1)
+			glColor(cCount)
 			
 			if cntDown == "3" then
-				glTexture(img3)
+				glTexture(img.cnt3)
 			elseif cntDown == "2" then
-				glTexture(img2)
+				glTexture(img.cnt2)
 			elseif cntDown == "1" then
-				glTexture(img1)
+				glTexture(img.cnt1)
 			elseif cntDown == "0" then
-				glTexture(img0)
+				glTexture(img.cnt0)
 			else
 				Echo(cntDown)
 			end
 			
 			glTexRect(x,y,x1,y1)
 			glTexture(false)
-			glColor(1, 1, 1, 1)
+			glColor(cWhite)
 			
 			if cntDown ~= lastCount then
 				PlaySoundFile(tock)
@@ -500,21 +528,17 @@ function widget:DrawScreenEffects(vsx, vsy)
 			if not spectator then
 				-- Infobutton
 				glTexture(false)
-				glColor(1, 1, 1, 1)
+				glColor(cWhite)
 				drawBorder(Button["info"]["x0"],Button["info"]["y0"],Button["info"]["x1"],Button["info"]["y1"],1)
 				myFont:Begin()
-				if infoOn then
-					myFont:SetTextColor({1, 1, 1, 1})
-				else
-					myFont:SetTextColor({0.8, 0.8, 0.8, 1})
-				end
+				myFont:SetTextColor(infoOn and cWhite or cGrey)
 				myFont:Print("info", 0.5 * (Button["info"]["x0"] + Button["info"]["x1"]) , 0.5 * (Button["info"]["y0"] + Button["info"]["y1"]) , th,'vcs')
 				myFont:End()
 				-- infopanel
 				if infoOn then
-					glColor(0, 0, 0, 0.5)
+					glColor(cDark)
 					glRect(Button["infopanel"]["x0"],Button["infopanel"]["y0"],Button["infopanel"]["x1"],Button["infopanel"]["y1"])
-					glColor(1, 1, 1, 1)
+					glColor(cWhite)
 					drawBorder(Button["infopanel"]["x0"],Button["infopanel"]["y0"],Button["infopanel"]["x1"],Button["infopanel"]["y1"],1)
 					
 					local x0 = Button["infopanel"]["x0"]
@@ -526,7 +550,7 @@ function widget:DrawScreenEffects(vsx, vsy)
 					local uptype
 					if mySide == "arm" then
 						side = "Arm"
-						if myType == "auto" then
+						if myType == "automatic" then
 							uptype = "automatic upgrades"
 							txt = {"* Arm Commander is faster than Core.",
 								"* Increases radar, sonar, laser range, and speed with more XP",
@@ -546,7 +570,7 @@ function widget:DrawScreenEffects(vsx, vsy)
 						end
 					else
 						side = "Core"
-						if myType == "auto" then
+						if myType == "automatic" then
 							uptype = "automatic upgrades"
 							txt = {"* Core is slow in the beginning, but has longer D-Gun range.",
 								"* Increases radar, sonar, laser range, and speed with more XP",
@@ -577,18 +601,20 @@ function widget:DrawScreenEffects(vsx, vsy)
 			
 			if gameState ~= COUNTDOWN or Spring.IsReplay() then -- replay has countdown before everything
 				-- Panel
-				glColor(0, 0, 0, 0.4)
+				glColor(cDark)
 				glRect(px,py, px+sizex, py+sizey)
-				glColor(1,1,1,1)
+				glColor(cWhite)
 			end
 		end
 		
 		-- Highlight
-		glColor(0.8, 0.8, 0.2, 0.5)
+		glColor(cLight)
 		if Button["arm"]["On"] then
 			glRect(Button["arm"]["x0"],Button["arm"]["y0"], Button["arm"]["x1"], Button["arm"]["y1"])
 		elseif Button["core"]["On"] then
 			glRect(Button["core"]["x0"],Button["core"]["y0"], Button["core"]["x1"], Button["core"]["y1"])
+		elseif Button["tll"]["On"] then
+			glRect(Button["tll"]["x0"],Button["tll"]["y0"], Button["tll"]["x1"], Button["tll"]["y1"])
 		elseif Button["ready"]["On"] then
 			glRect(Button["ready"]["x0"],Button["ready"]["y0"], Button["ready"]["x1"], Button["ready"]["y1"])
 		elseif Button["info"]["On"] and myState ~= READY then
@@ -598,7 +624,7 @@ function widget:DrawScreenEffects(vsx, vsy)
 		elseif Button["duck"]["On"] then
 			glRect(Button["duck"]["x0"],Button["duck"]["y0"], Button["duck"]["x1"], Button["duck"]["y1"])
 		end
-		glColor(1,1,1,1)
+		glColor(cWhite)
 	elseif not gameOver then
 		-- game started text
 		if Spring.IsReplay() or spectator then
@@ -634,7 +660,7 @@ function widget:DrawScreen()
 		end
 		local y0 = 40 + 0.5*(vsy + n*th3)
 		
-		myFont:SetTextColor({1,1,1,1})
+		myFont:SetTextColor(cWhite)
 		myFont:Print("Players:", 10, y0 + th3+2, th3, 'xns')
 		myFont:End()
 		
@@ -656,7 +682,7 @@ function widget:DrawScreen()
 						
 			if not spec then
 				myFont:Print(leaderName, 25, y0 - (th3+2) * playerID, th3, 'xno')
-				glColor(0.4,0.4,0.4,1)
+				glColor(cRank)
 				glTexture("LuaUI/Images/commchange/C-Rank" .. rank ..".png")
 				glTexRect(10, y0 - (th3+2)* playerID, 22, y0 - (th3+2) * playerID+12)
 				glTexture (false)
@@ -671,334 +697,340 @@ function widget:DrawScreen()
 			myFont:End()
 		end
 	end
-	glColor(1,1,1,1)
+	glColor(cWhite)
 	
-	-- Draw window with info for spectators
-	if spectator and not gameOver then
-		
-		-- duck button
-		glColor(0, 0, 0, 0.4)
-		glRect(Button["duck"]["x0"],Button["duck"]["y0"], Button["duck"]["x1"], Button["duck"]["y1"])
-		glColor(0, 0, 0, 1)
-		drawBorder(Button["duck"]["x0"],Button["duck"]["y0"], Button["duck"]["x1"], Button["duck"]["y1"],1)
-		
-		myFont:Begin()
-		-- spectator info label
-		glColor(0, 0, 0, 0.4)
-		glRect(Button["speclabel"]["x0"],Button["speclabel"]["y0"], Button["speclabel"]["x1"], Button["speclabel"]["y1"])
-		myFont:SetTextColor({1, 1, 1, 1})
-		
-		myFont:Print("Info for spectators", Button["speclabel"]["x0"] + 78 ,Button["speclabel"]["y0"] + 10, th, 'xs')
-		
-		--exit button
-		glColor(0, 0, 0, 0.4)
-		glRect(Button["exit"]["x0"],Button["exit"]["y0"], Button["exit"]["x1"], Button["exit"]["y1"])
-		glColor(0, 0, 0, 1)
-		drawBorder(Button["exit"]["x0"],Button["exit"]["y0"], Button["exit"]["x1"], Button["exit"]["y1"],1)
-		glColor(1, 1, 1, 1)
-		myFont:SetTextColor({1, 1, 1, 1})
-		myFont:Print("X", Button["exit"]["x0"] + 10 ,Button["exit"]["y0"] + 10, 20, 'xs')
-		myFont:End()
-		
-		-- textures
-		local fr = 3 -- frame
-		glColor(1, 1, 1, 1)
-		glTexture(imgDuck)
-		glTexRect(Button["duck"]["x0"]+fr,Button["duck"]["y0"]+fr, Button["duck"]["x1"]-fr, Button["duck"]["y1"]-fr)
-		glTexture(false)
-		
-		--player states billboard
-		-- x-size = [0,320]
-		local x0 		= px + 8
-		local y0 		= Button["speclabel"]["y0"] - 20
-		local rh 		= 15 -- row height
-		local col_0 	= x0 		-- team #
-		local col_1 	= x0 + 20	-- faction symbol
-		local col_2 	= x0 + 40	-- commander type 
-		local col_3 	= x0 + 80	-- player rank
-		local col_4 	= x0 + 100	-- leader name
-		local col_5 	= x0 + 240	-- status text
-		local col_6 	= x0 + 320	-- skill
-		local commside	= "arm"
-		local commtype	= "AT"
-		local prevposy = y0 - 14
-		
-		if gameState ~= COUNTDOWN or Spring.IsReplay() then
-			--labels
+	if spectator and not gameOver then -- Draw window with info for spectators
+		do
+			-- duck button
+			glColor(cDark)
+			glRect(Button["duck"]["x0"],Button["duck"]["y0"], Button["duck"]["x1"], Button["duck"]["y1"])
+			glColor(cBlack)
+			drawBorder(Button["duck"]["x0"],Button["duck"]["y0"], Button["duck"]["x1"], Button["duck"]["y1"],1)
+			
 			myFont:Begin()
-			myFont:SetTextColor({0.6, 0.6, 0.8, 1})
-			myFont:Print("Team", 	col_0, y0 - 10, th2, 'xo')
-			myFont:Print("Player", 	col_4, y0 - 10, th2, 'xo')
-			myFont:Print("Status",	col_5, y0 - 10, th2, 'xo')
-			myFont:Print("Skill",	col_6, y0 - 10, th2, 'xo')
+			-- spectator info label
+			glColor(cDark)
+			glRect(Button["speclabel"]["x0"],Button["speclabel"]["y0"], Button["speclabel"]["x1"], Button["speclabel"]["y1"])
+			myFont:SetTextColor(cWhite)
 			
-			-- Game state info label
-			myFont:SetTextColor({1, 1, 1, 1})
-			local txt = (Spring.IsReplay() and "Waiting for replay to start...") or (strInfo or "")
+			myFont:Print("Info for spectators", Button["speclabel"]["x0"] + 78 ,Button["speclabel"]["y0"] + 10, th, 'xs')
 			
-			myFont:Print("Status: " .. txt, Button["specinfo"]["x0"] + 10 ,Button["specinfo"]["y0"] + 5, 11, 'xo')
+			--exit button
+			glColor(cDark)
+			glRect(Button["exit"]["x0"],Button["exit"]["y0"], Button["exit"]["x1"], Button["exit"]["y1"])
+			glColor(cBlack)
+			drawBorder(Button["exit"]["x0"],Button["exit"]["y0"], Button["exit"]["x1"], Button["exit"]["y1"],1)
+			glColor(cWhite)
+			myFont:SetTextColor(cWhite)
+			myFont:Print("X", Button["exit"]["x0"] + 10 ,Button["exit"]["y0"] + 10, 20, 'xs')
 			myFont:End()
 			
-			--player data
-			local as = 0 -- ally separation space
+			-- textures
+			local fr = 3 -- frame
+			glColor(cWhite)
+			glTexture(img.duck)
+			glTexRect(Button["duck"]["x0"]+fr,Button["duck"]["y0"]+fr, Button["duck"]["x1"]-fr, Button["duck"]["y1"]-fr)
+			glTexture(false)
 			
-			for _, aID in pairs(GetAllyTeamList()) do
-				as = 8
-				-- draw line between allies
-				glColor(0.1, 0.1, 0.1, 0.3)
-				glRect(col_0, prevposy - 7, col_6+th2*gl.GetTextWidth("Skill"), prevposy - 8)
-				glColor(0.4, 0.4, 0.4, 0.3)
-				glRect(col_0, prevposy - 8, col_6+th2*gl.GetTextWidth("Skill"), prevposy - 9)
+			--player states billboard
+			-- x-size = [0,320]
+			local x0 		= px + 8
+			local y0 		= Button["speclabel"]["y0"] - 20
+			local rh 		= 15 -- row height
+			local col_0 	= x0 		-- team #
+			local col_1 	= x0 + 20	-- faction symbol
+			local col_2 	= x0 + 40	-- commander type 
+			local col_3 	= x0 + 80	-- player rank
+			local col_4 	= x0 + 100	-- leader name
+			local col_5 	= x0 + 240	-- status text
+			local col_6 	= x0 + 320	-- skill
+			local prevposy = y0 - 14
+			
+			if gameState ~= COUNTDOWN or Spring.IsReplay() then
+				--labels
+				myFont:Begin()
+				myFont:SetTextColor({0.6, 0.6, 0.8, 1})
+				myFont:Print("Team", 	col_0, y0 - 10, th2, 'xo')
+				myFont:Print("Player", 	col_4, y0 - 10, th2, 'xo')
+				myFont:Print("Status",	col_5, y0 - 10, th2, 'xo')
+				myFont:Print("Skill",	col_6, y0 - 10, th2, 'xo')
 				
-				local teamSkill = 0
-				local y2 = prevposy - as - rh
+				-- Game state info label
+				myFont:SetTextColor(cWhite)
+				local txt = (Spring.IsReplay() and "Waiting for replay to start...") or (strInfo or "")
 				
-				for i, tID in pairs(GetTeamList(aID)) do
+				myFont:Print("Status: " .. txt, Button["specinfo"]["x0"] + 10 ,Button["specinfo"]["y0"] + 5, 11, 'xo')
+				myFont:End()
+				
+				--player data
+				local as = 0 -- ally separation space
+				
+				for _, aID in pairs(GetAllyTeamList()) do
+					as = 8
+					-- draw line between allies
+					glColor(0.1, 0.1, 0.1, 0.3)
+					glRect(col_0, prevposy - 7, col_6+th2*gl.GetTextWidth("Skill"), prevposy - 8)
+					glColor(0.4, 0.4, 0.4, 0.3)
+					glRect(col_0, prevposy - 8, col_6+th2*gl.GetTextWidth("Skill"), prevposy - 9)
 					
-					local y1 		= prevposy - as - rh
-					prevposy		= y1
-					as = 0
+					local teamSkill = 0
+					local y2 = prevposy - as - rh
 					
-					local _,leaderID,_,isAI,_,allyID = GetTeamInfo(tID)
-					local leaderName,active,spec,team,allyteam,_,_,country,rank,customtable	= GetPlayerInfo(leaderID)
-					local skill = GetSkill(customtable) or 0
-					
-					local aiID, aiName, aiHostID, aiShortName = GetAIInfo(tID)
-					local isComShare = false
-					local pCount = 0
-					for _, pID in pairs (GetPlayerList(tID)) do
-						local _,_,isSspec = GetPlayerInfo(pID)
-						if isSpec == false then 
-							pCount = pCount + 1 
-						end
-					end
-					
-					if pCount > 1 then isComShare = true end
-					
-					if isAI then leaderName = "AI: "..aiShortName end
-					if isComShare then leaderName = leaderName .. "+" end
-					
-					teamSkill = skill and teamSkill + skill or teamSkill
-					
-					if tID ~= Spring.GetGaiaTeamID() then
-						local marked = markedStates[i]
-						local startID = spGetTeamRulesParam(tID, 'startUnit')
-						local ps = tostring(playerStates[leaderID] or "?")
+					for i, tID in pairs(GetTeamList(aID)) do
 						
-						if startID == armauto then
-							commside = 'arm'
-							commtype = 'AT'
-						elseif startID == armman then
-							commside = 'arm'
-							commtype = 'M'
-						elseif startID == coreauto then
-							commside = 'core'
-							commtype = 'AT'
-						elseif startID == coreman then
-							commside = 'core'
-							commtype = 'M'
-						else
-							commside = '?'
-							commtype = '?'
+						local y1 		= prevposy - as - rh
+						prevposy		= y1
+						as = 0
+						
+						local _,leaderID,_,isAI,_,allyID = GetTeamInfo(tID)
+						local leaderName,active,spec,team,allyteam,_,_,country,rank,customtable	= GetPlayerInfo(leaderID)
+						local skill = GetSkill(customtable) or 0
+						
+						local aiID, aiName, aiHostID, aiShortName = GetAIInfo(tID)
+						local isComShare = false
+						local pCount = 0
+						for _, pID in pairs (GetPlayerList(tID)) do
+							local _,_,isSspec = GetPlayerInfo(pID)
+							if isSpec == false then 
+								pCount = pCount + 1 
+							end
 						end
 						
-						myFont:Begin()
-						--data
-						myFont:SetTextColor({1, 1, 1, 1})
-						if isAI then
-							myFont:SetTextColor({0.8, 0.8, 0.8, 0.8})
-						end
-						if i == 1 then
-							myFont:Print(allyID,	 		col_0, y1, th2, 'xo')
-						end
+						if pCount > 1 then isComShare = true end
 						
-						--side
-						if commside == 'arm' then
-							glTexture(imgARM)
-						elseif commside == 'core' then
-							glTexture(imgCORE)
-						else
-							glTexture(img0)
-						end
-						glColor(1, 1, 1, 0.8)
-						glTexRect(					col_1, y1 - 5, col_1 + 15, y1 - 5 + 15)
-						glColor(1, 1, 1, 1)
-						glTexture(false)
-						myFont:Print(commtype, 			col_2, y1, th2, 'xo')
+						if isAI then leaderName = "AI: "..aiShortName end
+						if isComShare then leaderName = leaderName .. "+" end
 						
-						--rank
-						if not spec then
-							glColor(0.7, 0.7, 0.9, 0.8)
-							glTexture("LuaUI/Images/commchange/C-Rank" .. rank ..".png")
-							glTexRect(				col_3, y1 - 2, col_3 + 14, y1 - 2 + 14)
-							glTexture(false)
-							glColor(1, 1, 1, 1)
-						end
-						--name
-						myFont:Print(tostring(leaderName),col_4, y1, th2, 'xo')
-						-- status and skill
-						local statustext
-						local posx = spGetTeamStartPosition(tID)
+						teamSkill = skill and teamSkill + skill or teamSkill
 						
-						if isAI then
-							if readyStates[leaderID] == MISSING then
-								myFont:SetTextColor({0.5, 0.5, 0.5, 0.8}) -- grey
-								statustext = "Computing"
+						if tID ~= Spring.GetGaiaTeamID() then
+							local marked = markedStates[i]
+							local startID = spGetTeamRulesParam(tID, 'startUnit')
+							local ps = tostring(playerStates[leaderID] or "?")
+							
+							local commside = UnitDefs[startID] and UnitDefs[startID].customParams and UnitDefs[startID].customParams.side or '?'
+							local commtype = UnitDefs[startID] and UnitDefs[startID].customParams and UnitDefs[startID].customParams.type or '?'
+							
+							commtype = commtype == "automatic" and "AT" or commtype == "manual" and "MT"
+							
+							myFont:Begin()
+							--data
+							myFont:SetTextColor(cWhite)
+							if isAI then
+								myFont:SetTextColor({0.8, 0.8, 0.8, 0.8})
+							end
+							if i == 1 then
+								myFont:Print(allyID,	 		col_0, y1, th2, 'xo')
+							end
+							
+							--side
+							if commside == 'arm' then
+								glTexture(img.arm)
+							elseif commside == 'core' then
+								glTexture(img.core)
+							elseif commside == 'tll' then
+								glTexture(img.tll)
 							else
-								myFont:SetTextColor({0.3, 0.3, 0.9, 1}) -- blue
-								statustext = "Prepared"
+								glTexture(img.cnt0)
 							end
-						else						
-							if readyStates[leaderID] == MISSING then
-								myFont:SetTextColor({0.6, 0.2, 0.2, 0.8}) -- red
-								statustext = "Missing"
-							elseif readyStates[leaderID] == PRESENT then
-								myFont:SetTextColor({0.6, 0.6, 0.2, 1}) -- yellow
-								statustext = "Warming up"
-							elseif readyStates[leaderID] == MARKED then
-								myFont:SetTextColor({0.3, 0.5, 0.7, 1}) -- blue
-								statustext = "Marked"
-							elseif readyStates[leaderID] == READY then
-								myFont:SetTextColor({0.0, 0.5, 0.0, 1}) -- green
-								statustext = "Ready"
-							elseif readyStates[leaderID] == OTHER then
-								myFont:SetTextColor({0.5, 0.5, 0.5, 0.8}) -- grey
-								statustext = firstToUpper(ps)							
+							glColor(1, 1, 1, 0.8)
+							glTexRect(					col_1, y1 - 5, col_1 + 15, y1 - 5 + 15)
+							glColor(cWhite)
+							glTexture(false)
+							myFont:Print(commtype, 			col_2, y1, th2, 'xo')
+							
+							--rank
+							if not spec then
+								glColor(0.7, 0.7, 0.9, 0.8)
+								glTexture("LuaUI/Images/commchange/C-Rank" .. rank ..".png")
+								glTexRect(				col_3, y1 - 2, col_3 + 14, y1 - 2 + 14)
+								glTexture(false)
+								glColor(cWhite)
 							end
+							--name
+							myFont:Print(tostring(leaderName),col_4, y1, th2, 'xo')
+							-- status and skill
+							local statustext
+							local posx = spGetTeamStartPosition(tID)
+							
+							if isAI then
+								if readyStates[leaderID] == MISSING then
+									myFont:SetTextColor({0.5, 0.5, 0.5, 0.8}) -- grey
+									statustext = "Computing"
+								else
+									myFont:SetTextColor({0.3, 0.3, 0.9, 1}) -- blue
+									statustext = "Prepared"
+								end
+							else						
+								if readyStates[leaderID] == MISSING then
+									myFont:SetTextColor({0.6, 0.2, 0.2, 0.8}) -- red
+									statustext = "Missing"
+								elseif readyStates[leaderID] == PRESENT then
+									myFont:SetTextColor({0.6, 0.6, 0.2, 1}) -- yellow
+									statustext = "Warming up"
+								elseif readyStates[leaderID] == MARKED then
+									myFont:SetTextColor({0.3, 0.5, 0.7, 1}) -- blue
+									statustext = "Marked"
+								elseif readyStates[leaderID] == READY then
+									myFont:SetTextColor({0.0, 0.5, 0.0, 1}) -- green
+									statustext = "Ready"
+								elseif readyStates[leaderID] == OTHER then
+									myFont:SetTextColor({0.5, 0.5, 0.5, 0.8}) -- grey
+									statustext = firstToUpper(ps)							
+								end
+							end
+							myFont:Print(statustext,			col_5, y1, th2, 'xo')
+							if i == #GetTeamList(aID) then
+								myFont:SetTextColor({0.8,0.8,0.8,1})
+								myFont:Print(round(teamSkill,0),col_6, y2, th2, 'xo')
+							end
+							myFont:SetTextColor(cWhite)
+							myFont:End()
+							glColor(cWhite)
+							
 						end
-						myFont:Print(statustext,			col_5, y1, th2, 'xo')
-						if i == #GetTeamList(aID) then
-							myFont:SetTextColor({0.8,0.8,0.8,1})
-							myFont:Print(round(teamSkill,0),col_6, y2, th2, 'xo')
-						end
-						myFont:SetTextColor({1,1,1,1})
-						myFont:End()
-						glColor(1, 1, 1, 1)
-						
 					end
 				end
 			end
+			glColor(cWhite)
 		end
-		glColor(1,1,1,1)
-	elseif not gameOver then
-		-- draw window with options for active players
-		
-		-- border
-		glColor(1, 1, 1, 1)
-		drawBorder(Button["arm"]["x0"],Button["arm"]["y0"], Button["arm"]["x1"], Button["arm"]["y1"],1)
-		drawBorder(Button["core"]["x0"],Button["core"]["y0"], Button["core"]["x1"], Button["core"]["y1"],1)
-		
-		myFont:Begin()
-		-- Ready button
-		local lbl
-		if myState == MARKED then -- green
-			myFont:SetTextColor({0.5, 1, 0.5, 1})
-			lbl = "Ready"
-		elseif myState == OTHER then -- red
-			myFont:SetTextColor({1.0, 0.5, 0.5, 1})
-			lbl = ""
-		elseif myState == READY then -- white
-			myFont:SetTextColor({1, 1, 1, 1})
-			if gameState ~= COUNTDOWN then
-			lbl = "Go back"
-			else
-			lbl = "Ready"
+	elseif not gameOver then -- draw window with options for active players
+		do
+			-- border
+			glColor(cWhite)
+			drawBorder(Button["arm"]["x0"],Button["arm"]["y0"], Button["arm"]["x1"], Button["arm"]["y1"],1)
+			drawBorder(Button["core"]["x0"],Button["core"]["y0"], Button["core"]["x1"], Button["core"]["y1"],1)
+			if isTLL then
+				drawBorder(Button["tll"]["x0"],Button["tll"]["y0"], Button["tll"]["x1"], Button["tll"]["y1"],1)
 			end
-		else -- cannot ready, grey
-			myFont:SetTextColor({0.8, 0.8, 0.8, 0.5})
-			lbl = ""
-		end
-		if lbl == "Ready" then
-			drawBorder(Button["ready"]["x0"],Button["ready"]["y0"], Button["ready"]["x1"], Button["ready"]["y1"],1)
-		end
-		myFont:Print(lbl, 0.5*(Button["ready"]["x0"] + Button["ready"]["x1"]), 0.5 * (Button["ready"]["y0"] + Button["ready"]["y1"])-1, th, 'vcs')
-		
-		-- label/info panel
-		glColor(0, 0, 0, 0.4)
-		glRect(Button["infolabel"]["x0"],Button["infolabel"]["y0"], Button["infolabel"]["x1"], Button["infolabel"]["y1"])
-		drawBorder(Button["infolabel"]["x0"],Button["infolabel"]["y0"], Button["infolabel"]["x1"], Button["infolabel"]["y1"],1)
-		glColor(1, 1, 1, 1)
-		local txt = strInfo or "..."
-		
-		if myState == PRESENT then
-			txt = table.concat({strInfo," (click to change Commander)"})
-		elseif myState == MARKED then
-			txt = "Press ready (or click to change Commander)"
-		elseif myState == OTHER then
-			txt = strInfo
-		elseif myState == READY then
-			if gameState ~= COUNTDOWN then
-				txt = strInfo
-			else
-				txt = strInfo
-			end
-		end
-		myFont:SetTextColor({1,1,1,1})
-		myFont:Print(txt, Button["infolabel"]["x0"] + 10 ,Button["infolabel"]["y0"] + 10 , th2, 'ds')
-		
-		--exit button
-		glColor(0, 0, 0, 0.4)
-		glRect(Button["exit"]["x0"],Button["exit"]["y0"], Button["exit"]["x1"], Button["exit"]["y1"])
-		glColor(0, 0, 0, 1)
-		drawBorder(Button["exit"]["x0"],Button["exit"]["y0"], Button["exit"]["x1"], Button["exit"]["y1"],1)
-		myFont:SetTextColor({1, 1, 1, 1})
-		myFont:Print("X", Button["exit"]["x0"] + 10 ,Button["exit"]["y0"] + 10 , 20, 'xs')
-		
-		-- arm/core buttons
-		if mySide == "arm" then
-			myFont:SetTextColor({1, 1, 1, 1})
-		else
-			myFont:SetTextColor({0.8, 0.8, 0.8, 0.4})
-		end
-		myFont:Print("Arm", 0.5*(Button["arm"]["x0"] + Button["arm"]["x1"]), 0.5 * (Button["arm"]["y0"] + Button["arm"]["y1"]), th, 'vcs')
-		if mySide == "core" then
-			myFont:SetTextColor({1, 1, 1, 1})
-		else
-			myFont:SetTextColor({0.8, 0.8, 0.8, 0.4})
-		end
-		myFont:Print("Core", 0.5* (Button["core"]["x0"] + Button["core"]["x1"]), 0.5 * (Button["core"]["y0"] + Button["core"]["y1"]), th, 'vcs')
-		
-		myFont:SetTextColor({1, 1, 1, 1})
-		
-		if myState ~= READY then
-			-- Commander Icons
-			glColor(1, 1, 1, 1)
-			if mySide == "arm" then
-				if myType == "auto" then
-					glTexture(imgComAA)
-					glTexRect(Button["auto"]["x0"],Button["auto"]["y0"], Button["auto"]["x1"], Button["auto"]["y1"])
-					glTexture(imgComAMD)
-					glTexRect(Button["manual"]["x0"],Button["manual"]["y0"], Button["manual"]["x1"], Button["manual"]["y1"])
+			myFont:Begin()
+			-- Ready button
+			local lbl
+			if myState == MARKED then -- green
+				myFont:SetTextColor({0.5, 1, 0.5, 1})
+				lbl = "Ready"
+			elseif myState == OTHER then -- red
+				myFont:SetTextColor({1.0, 0.5, 0.5, 1})
+				lbl = ""
+			elseif myState == READY then -- white
+				myFont:SetTextColor(cWhite)
+				if gameState ~= COUNTDOWN then
+				lbl = "Go back"
 				else
-					glTexture(imgComAAD)
-					glTexRect(Button["auto"]["x0"],Button["auto"]["y0"], Button["auto"]["x1"], Button["auto"]["y1"])
-					glTexture(imgComAM)
-					glTexRect(Button["manual"]["x0"],Button["manual"]["y0"], Button["manual"]["x1"], Button["manual"]["y1"])
+				lbl = "Ready"
 				end
-				glTexture(false)
-			else
-				if myType == "auto" then
-					glTexture(imgComCA)
-					glTexRect(Button["auto"]["x0"],Button["auto"]["y0"], Button["auto"]["x1"], Button["auto"]["y1"])
-					glTexture(imgComCMD)
-					glTexRect(Button["manual"]["x0"],Button["manual"]["y0"], Button["manual"]["x1"], Button["manual"]["y1"])
-				else
-					glTexture(imgComCAD)
-					glTexRect(Button["auto"]["x0"],Button["auto"]["y0"], Button["auto"]["x1"], Button["auto"]["y1"])
-					glTexture(imgComCM)
-					glTexRect(Button["manual"]["x0"],Button["manual"]["y0"], Button["manual"]["x1"], Button["manual"]["y1"])
-				end
-				glTexture(false)
+			else -- cannot ready, grey
+				myFont:SetTextColor({0.8, 0.8, 0.8, 0.5})
+				lbl = ""
 			end
-			--commander text
-			myFont:SetTextColor({1, 1, 1, 1})
-			myFont:Print("Automatic", px+sizex/4  , py + 10 , (th-2),'cxs')
-			myFont:Print("Manual", px+3*sizex/4  , py + 10 , (th-2),'cxs')
+			if lbl == "Ready" then
+				drawBorder(Button["ready"]["x0"],Button["ready"]["y0"], Button["ready"]["x1"], Button["ready"]["y1"],1)
+			end
+			myFont:Print(lbl, 0.5*(Button["ready"]["x0"] + Button["ready"]["x1"]), 0.5 * (Button["ready"]["y0"] + Button["ready"]["y1"])-1, th, 'vcs')
+			
+			-- label/info panel
+			glColor(cDark)
+			glRect(Button["infolabel"]["x0"],Button["infolabel"]["y0"], Button["infolabel"]["x1"], Button["infolabel"]["y1"])
+			drawBorder(Button["infolabel"]["x0"],Button["infolabel"]["y0"], Button["infolabel"]["x1"], Button["infolabel"]["y1"],1)
+			glColor(cWhite)
+			local txt = strInfo or "..."
+			
+			if myState == PRESENT then
+				txt = table.concat({strInfo," (click to change Commander)"})
+			elseif myState == MARKED then
+				txt = "Press ready (or click to change Commander)"
+			elseif myState == OTHER then
+				txt = strInfo
+			elseif myState == READY then
+				if gameState ~= COUNTDOWN then
+					txt = strInfo
+				else
+					txt = strInfo
+				end
+			end
+			myFont:SetTextColor(cWhite)
+			myFont:Print(txt, Button["infolabel"]["x0"] + 10 ,Button["infolabel"]["y0"] + 10 , th2, 'ds')
+			
+			--exit button
+			glColor(cDark)
+			glRect(Button["exit"]["x0"],Button["exit"]["y0"], Button["exit"]["x1"], Button["exit"]["y1"])
+			glColor(cBlack)
+			drawBorder(Button["exit"]["x0"],Button["exit"]["y0"], Button["exit"]["x1"], Button["exit"]["y1"],1)
+			myFont:SetTextColor(cWhite)
+			myFont:Print("X", Button["exit"]["x0"] + 10 ,Button["exit"]["y0"] + 10 , 20, 'xs')
+			
+			-- arm/core/tll buttons
+			
+			--arm
+			myFont:SetTextColor(mySide == "arm" and cWhite or cUnfocus)
+			myFont:Print("Arm", 0.5*(Button["arm"]["x0"] + Button["arm"]["x1"]), 0.5 * (Button["arm"]["y0"] + Button["arm"]["y1"]), th, 'vcs')
+			
+			--core
+			myFont:SetTextColor(mySide == "core" and cWhite or cUnfocus )
+			myFont:Print("Core", 0.5* (Button["core"]["x0"] + Button["core"]["x1"]), 0.5 * (Button["core"]["y0"] + Button["core"]["y1"]), th, 'vcs')
+			
+			--tll
+			if isTLL then
+				myFont:SetTextColor(mySide == "tll" and cWhite or cUnfocus )
+				myFont:Print("TLL", 0.5* (Button["tll"]["x0"] + Button["tll"]["x1"]), 0.5 * (Button["tll"]["y0"] + Button["tll"]["y1"]), th, 'vcs')
+			end
+			
+			myFont:SetTextColor(cWhite)
+			
+			if myState ~= READY then
+				-- Commander Icons
+				glColor(cWhite)
+				if mySide == "arm" then
+					if myType == "automatic" then
+						glTexture(img.ComAA)
+						glTexRect(Button["auto"]["x0"],Button["auto"]["y0"], Button["auto"]["x1"], Button["auto"]["y1"])
+						glTexture(img.ComAMD)
+						glTexRect(Button["manual"]["x0"],Button["manual"]["y0"], Button["manual"]["x1"], Button["manual"]["y1"])
+					else
+						glTexture(img.ComAAD)
+						glTexRect(Button["auto"]["x0"],Button["auto"]["y0"], Button["auto"]["x1"], Button["auto"]["y1"])
+						glTexture(img.ComAM)
+						glTexRect(Button["manual"]["x0"],Button["manual"]["y0"], Button["manual"]["x1"], Button["manual"]["y1"])
+					end
+					glTexture(false)
+				elseif mySide == "core" then
+					if myType == "automatic" then
+						glTexture(img.ComCA)
+						glTexRect(Button["auto"]["x0"],Button["auto"]["y0"], Button["auto"]["x1"], Button["auto"]["y1"])
+						glTexture(img.ComCMD)
+						glTexRect(Button["manual"]["x0"],Button["manual"]["y0"], Button["manual"]["x1"], Button["manual"]["y1"])
+					else
+						glTexture(img.ComCAD)
+						glTexRect(Button["auto"]["x0"],Button["auto"]["y0"], Button["auto"]["x1"], Button["auto"]["y1"])
+						glTexture(img.ComCM)
+						glTexRect(Button["manual"]["x0"],Button["manual"]["y0"], Button["manual"]["x1"], Button["manual"]["y1"])
+					end
+					glTexture(false)
+				elseif mySide == "tll" then
+					if myType == "automatic" then
+						glTexture(img.ComTA)
+						glTexRect(Button["auto"]["x0"],Button["auto"]["y0"], Button["auto"]["x1"], Button["auto"]["y1"])
+						glTexture(img.ComTMD)
+						glTexRect(Button["manual"]["x0"],Button["manual"]["y0"], Button["manual"]["x1"], Button["manual"]["y1"])
+					else
+						glTexture(img.ComTAD)
+						glTexRect(Button["auto"]["x0"],Button["auto"]["y0"], Button["auto"]["x1"], Button["auto"]["y1"])
+						glTexture(img.ComTM)
+						glTexRect(Button["manual"]["x0"],Button["manual"]["y0"], Button["manual"]["x1"], Button["manual"]["y1"])
+					end
+					glTexture(false)
+				end
+			
+				--commander text
+				myFont:SetTextColor(cWhite)
+				myFont:Print("Automatic", px+sizex/4  , py + 10 , (th-2),'cxs')
+				myFont:Print("Manual", px+3*sizex/4  , py + 10 , (th-2),'cxs')
+			end
+			myFont:End()
+			glColor(cWhite)
 		end
-		myFont:End()
-		glColor(1,1,1,1)
 	end
-	glColor(1,1,1,1)
+	glColor(cWhite)
 end
 
 function widget:GameSetup(state, ready, playerStates)
@@ -1069,62 +1101,43 @@ function widget:MousePress(mx, my, mButton)
 				-- Check buttons
 				if mButton == 1 then
 					local startID = spGetTeamRulesParam(myTeamID, 'startUnit')
-					-- arm
-					if IsOnButton(mx,my,Button["arm"]["x0"],Button["arm"]["y0"],Button["arm"]["x1"],Button["arm"]["y1"]) then	
-						if startID == coreauto or startID == coreman then
-							if startID == coreauto then
-								spSendLuaRulesMsg('\177' .. armauto)
-								spSendLuaUIMsg('195' .. 1)
-								lastStartID = armauto
-							else
-								spSendLuaRulesMsg('\177' .. armman)
-								spSendLuaUIMsg('195' .. 1)
-								lastStartID = armman
-							end
-							playSound(button3)
-						end
-					-- core
-					elseif IsOnButton(mx,my,Button["core"]["x0"],Button["core"]["y0"],Button["core"]["x1"],Button["core"]["y1"]) then
-						if startID == armauto or startID == armman then
-							if startID == armauto then
-								spSendLuaRulesMsg('\177' .. coreauto)
-								spSendLuaUIMsg('195' .. 2)
-								lastStartID = coreauto
-							else
-								spSendLuaRulesMsg('\177' .. coreman)
-								spSendLuaUIMsg('195' .. 2)
-								lastStartID = coreman
-							end
-							playSound(button3)
-						end
+					local startSide = UnitDefs[startID] and UnitDefs[startID].customParams and UnitDefs[startID].customParams.side
+					local startType = UnitDefs[startID] and UnitDefs[startID].customParams and UnitDefs[startID].customParams.type
+					
+					--Echo("Old commander:",startID,startSide,startType)
+					-- arm button
+					if IsOnButton(mx,my,Button["arm"]["x0"],Button["arm"]["y0"],Button["arm"]["x1"],Button["arm"]["y1"]) and startSide ~= "arm" then	
+						spSendLuaRulesMsg('\177' .. commanderID["arm_" .. startType])
+						spSendLuaUIMsg('195' .. 1)
+						lastStartID = commanderID["arm_" .. startType]
+						playSound(button3)
+				
+					-- core button
+					elseif IsOnButton(mx,my,Button["core"]["x0"],Button["core"]["y0"],Button["core"]["x1"],Button["core"]["y1"]) and startSide ~= "core" then
+						spSendLuaRulesMsg('\177' .. commanderID["core_" .. startType])
+						spSendLuaUIMsg('195' .. 2)
+						lastStartID = commanderID["core_" .. startType]
+						playSound(button3)
+					
+					-- tll button
+					elseif IsOnButton(mx,my,Button["tll"]["x0"],Button["tll"]["y0"],Button["tll"]["x1"],Button["tll"]["y1"]) and startSide ~= "tll" then
+						spSendLuaRulesMsg('\177' .. commanderID["tll_" .. startType])
+						spSendLuaUIMsg('195' .. 3)
+						lastStartID = commanderID["tll_" .. startType]
+						playSound(button3)	
+					
 					-- automatic
-					elseif IsOnButton(mx,my,Button["auto"]["x0"],Button["auto"]["y0"],Button["auto"]["x1"],Button["auto"]["y1"]) and myState ~= READY then
-						if startID == armman or startID == coreman then
-							if startID == armman then
-								spSendLuaRulesMsg('\177' .. armauto)
-								spSendLuaUIMsg('195' .. 1)
-								lastStartID = armauto
-							else
-								spSendLuaRulesMsg('\177' .. coreauto)
-								spSendLuaUIMsg('195' .. 2)
-								lastStartID = coreauto
-							end
-							playSound(button2)
-						end
+					elseif IsOnButton(mx,my,Button["auto"]["x0"],Button["auto"]["y0"],Button["auto"]["x1"],Button["auto"]["y1"]) and myState ~= READY and startType ~= "automatic" then
+						spSendLuaRulesMsg('\177' .. commanderID[startSide .. "_automatic"])
+						lastStartID = commanderID[startSide .. "_automatic"]
+						playSound(button2)
+					
 					-- manual
-					elseif IsOnButton(mx,my,Button["manual"]["x0"],Button["manual"]["y0"],Button["manual"]["x1"],Button["manual"]["y1"]) and myState ~= READY then
-						if startID == armauto or startID == coreauto then
-							if startID == armauto then
-								spSendLuaRulesMsg('\177' .. armman)
-								spSendLuaUIMsg('195' .. 1)
-								lastStartID = armman
-							else
-								spSendLuaRulesMsg('\177' .. coreman)
-								spSendLuaUIMsg('195' .. 2)
-								lastStartID = coreman
-							end
-							playSound(button2)
-						end
+					elseif IsOnButton(mx,my,Button["manual"]["x0"],Button["manual"]["y0"],Button["manual"]["x1"],Button["manual"]["y1"]) and myState ~= READY and startType ~= "manual" then
+						spSendLuaRulesMsg('\177' .. commanderID[startSide .. "_manual"])
+						lastStartID = commanderID[startSide .. "_manual"]
+						playSound(button2)			
+					
 					-- ready
 					elseif IsOnButton(mx,my,Button["ready"]["x0"],Button["ready"]["y0"],Button["ready"]["x1"],Button["ready"]["y1"]) and gameState ~= COUNTDOWN then
 						local pos = spGetTeamStartPosition(myTeamID)
@@ -1176,8 +1189,8 @@ end
 function widget:MouseMove(mx, my, dx, dy, mButton)
     -- Dragging
     if mButton == 2 or mButton == 3 and not gameStarted then
-		px = max(0, min(px+dx, vsx-sizex))	--prevent moving off screen
-		py = max(0, min(py+dy, vsy-sizey))
+		px = math.max(0, math.min(px+dx, vsx-sizex))	--prevent moving off screen
+		py = math.max(0, math.min(py+dy, vsy-sizey))
 		initButtons()
     end
 	
@@ -1188,6 +1201,7 @@ function widget:IsAbove(mx,my)
 		if spectator and not gameStarted then
 			Button["arm"]["On"] = false
 			Button["core"]["On"] = false
+			Button["tll"]["On"] = false
 			Button["ready"]["On"] = false
 			Button["info"]["On"] = false
 			
@@ -1203,39 +1217,53 @@ function widget:IsAbove(mx,my)
 			end
 		else
 			
-			if IsOnButton(mx,my,Button["arm"]["x0"],Button["arm"]["y0"],Button["arm"]["x1"],Button["arm"]["y1"]) and mySide == "core" then
+			if IsOnButton(mx,my,Button["arm"]["x0"],Button["arm"]["y0"],Button["arm"]["x1"],Button["arm"]["y1"]) and mySide ~= "arm" then
 				Button["arm"]["On"] = true
 				Button["core"]["On"] = false
+				Button["tll"]["On"] = false
 				Button["ready"]["On"] = false
 				Button["info"]["On"] = false
 				Button["exit"]["On"] = false
-			elseif IsOnButton(mx,my,Button["core"]["x0"],Button["core"]["y0"],Button["core"]["x1"],Button["core"]["y1"]) and mySide == "arm" then
+				
+			elseif IsOnButton(mx,my,Button["core"]["x0"],Button["core"]["y0"],Button["core"]["x1"],Button["core"]["y1"]) and mySide ~= "core" then
 				Button["arm"]["On"] = false
 				Button["core"]["On"] = true
+				Button["tll"]["On"] = false
+				Button["ready"]["On"] = false
+				Button["info"]["On"] = false
+				Button["exit"]["On"] = false
+			elseif IsOnButton(mx,my,Button["tll"]["x0"],Button["tll"]["y0"],Button["tll"]["x1"],Button["tll"]["y1"]) and mySide ~= "tll" then
+				Button["arm"]["On"] = false
+				Button["core"]["On"] = false
+				Button["tll"]["On"] = true
 				Button["ready"]["On"] = false
 				Button["info"]["On"] = false
 				Button["exit"]["On"] = false
 			elseif IsOnButton(mx,my,Button["ready"]["x0"],Button["ready"]["y0"],Button["ready"]["x1"],Button["ready"]["y1"]) and myState > PRESENT and gameState ~= COUNTDOWN then
 				Button["arm"]["On"] = false
 				Button["core"]["On"] = false
+				Button["tll"]["On"] = false
 				Button["ready"]["On"] = true
 				Button["info"]["On"] = false
 				Button["exit"]["On"] = false
 			elseif IsOnButton(mx,my,Button["info"]["x0"],Button["info"]["y0"],Button["info"]["x1"],Button["info"]["y1"]) then
 				Button["arm"]["On"] = false
 				Button["core"]["On"] = false
+				Button["tll"]["On"] = false
 				Button["ready"]["On"] = false
 				Button["info"]["On"] = true
 				Button["exit"]["On"] = false
 			elseif IsOnButton(mx,my,Button["exit"]["x0"],Button["exit"]["y0"],Button["exit"]["x1"],Button["exit"]["y1"]) then
 				Button["arm"]["On"] = false
 				Button["core"]["On"] = false
+				Button["tll"]["On"] = false
 				Button["ready"]["On"] = false
 				Button["info"]["On"] = false
 				Button["exit"]["On"] = true
 			else
 				Button["arm"]["On"] = false
 				Button["core"]["On"] = false
+				Button["tll"]["On"] = false
 				Button["ready"]["On"] = false
 				Button["info"]["On"] = false
 				Button["exit"]["On"] = false
@@ -1275,7 +1303,7 @@ end
 
 function widget:SetConfigData(data) -- Load
 	local vsx, vsy = gl.GetViewSizes()
-	px = math.floor(max(0, vsx * min(data[1] or 0, 0.95)))
-	py = math.floor(max(0, vsy * min(data[2] or 0, 0.95)))
+	px = math.floor(math.max(0, vsx * math.min(data[1] or 0, 0.95)))
+	py = math.floor(math.max(0, vsy * math.min(data[2] or 0, 0.95)))
 	lastStartID = data.lastStartID or lastStartID
 end
