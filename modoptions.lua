@@ -248,6 +248,14 @@ local options = {
 		section= "xtagame",
 	},
 	{
+		key    = "tllUnits",
+		name   = "Enable 'The Lost Legacy' Unit Pack?",
+		desc   = "Adds The Lost Legacy unitpack. Ensure that you have selected 'choose in game' for the starting commander  option or this feature won't be possible. Author: Noruas\nkey: tllUnits",
+		type   = "bool",
+		def    = false,
+		section= "xtagame",
+	},
+	{
 		key    = "spidertortoise",
 		name   = 'Enable "Spiders vs. Tortoise" Unit Pack?',
 		desc   = "** ThirdParty ** Adds Spiders and Tortoise unitpack. Originally by TA: Mayhem and TA SECT! Author: Noruas\nkey: spidertortoise",
