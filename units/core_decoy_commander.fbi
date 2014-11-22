@@ -150,6 +150,7 @@
 	iscommander=1;
 	isdecoycommander=1;
 	side=core;
+	type=manual;
 	}
 	
 	//************************************************************
