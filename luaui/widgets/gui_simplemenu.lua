@@ -65,6 +65,8 @@ local function InitButtons()
 	local L3 = 20   -- buttonheight
 	local L2 = 100  -- button width
 	
+	Button[6].disabled 				= mySpectatorState
+	
 	for i,button in ipairs(Button) do
 		button["x1"] 	= posX + margin
 		button["x2"]	= posX + sizex - margin
@@ -113,6 +115,7 @@ function widget:Initialize()
 	Button[6] 						= {} -- propose draw
 	Button[6]["command"]			= "offer-draw"
 	Button[6]["label"]				= "Offer draw"
+	Button[6].disabled 				= mySpectatorState
 	
 	Button[7] 						= {} -- vote for surrender
 	Button[7]["command"]			= "vote-end"
@@ -337,6 +340,7 @@ end
 
 function widget:PlayerChanged(playerID)
 	mySpectatorState = Spring.GetSpectatingState()
+	InitButtons()
 end
 
 function widget:GameOver()
