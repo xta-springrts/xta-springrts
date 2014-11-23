@@ -811,7 +811,7 @@ function widget:DrawScreen()
 							local commside = UnitDefs[startID] and UnitDefs[startID].customParams and UnitDefs[startID].customParams.side or '?'
 							local commtype = UnitDefs[startID] and UnitDefs[startID].customParams and UnitDefs[startID].customParams.type or '?'
 							
-							commtype = commtype == "automatic" and "AT" or commtype == "manual" and "MT"
+							commtype = (commtype == "automatic" and "AT") or (commtype == "manual" and "MT") or '?'
 							
 							myFont:Begin()
 							--data
