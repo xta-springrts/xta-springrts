@@ -6137,6 +6137,28 @@
 	collisionVolumeScales=41 5 32;//#AUTO#
 	collisionVolumeOffsets=0 -1 0;//#AUTO#
 }
+[core_pillager_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=core_corpses;
+	object=core_pillager_dead;
+	featuredead=core_mobile_artillery_heap;
+	footprintx=2;
+	footprintz=2;
+	height=20;
+	blocking=1;
+	hitdensity=100;
+	metal=1201;
+	damage=1080;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;
+	collisionVolumeScales=32 22 38;
+	collisionVolumeOffsets=0 0 3;
+}
+
 [core_mobile_artillery_dead]
 {
 	world=All Worlds;
