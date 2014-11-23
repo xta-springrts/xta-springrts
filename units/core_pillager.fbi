@@ -20,7 +20,7 @@
 	unitnumber=117;
 	objectname=core_pillager_mrd.s3o;
 	script=core_pillager_mrd.cob;
-	corpse=core_mobile_artillery_dead;
+	corpse=core_pillager_dead;
 	buildpic=core_mobile_artillery.DDS;
 	soundcategory=CORE_TANK;
 
