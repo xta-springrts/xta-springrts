@@ -767,7 +767,7 @@
 	}
 }
 
-[GREENCRAP]//Its read
+[GREENCRAP]
 {
 usedefaultexplosions=0;	
 [groundflash]
@@ -778,12 +778,12 @@ usedefaultexplosions=0;
       	circleAlpha = 0;
       	ttl = 10;
       	color = 0.1, 0.9, 0.1;
-	air=1;
+		air=1;
      	ground=1;
       	water=1;
 	}
 }
-[REDCRAP]//Its read
+[REDCRAP]//Its red
 {
 usedefaultexplosions=0;	
 [groundflash]
@@ -794,7 +794,7 @@ usedefaultexplosions=0;
       	circleAlpha = 0;
       	ttl = 10;
       	color = 0.9, 0.1, 0.1;
-	air=1;
+		air=1;
      	ground=1;
       	water=1;
 	}
@@ -810,7 +810,7 @@ usedefaultexplosions=0;
       	circleAlpha = 0;
       	ttl = 40;
       	color = 0.33, 0, 1.0;
-	air=1;
+		air=1;
      	ground=1;
       	water=1;
 	}
