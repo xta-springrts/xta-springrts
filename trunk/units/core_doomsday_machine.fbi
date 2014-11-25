@@ -83,7 +83,7 @@
 	//***********
 	weapon1=CORE_DOOMSDAY;
 	weapon2=CORFHLT_LASER;
-	weapon3=CORE_LASERH1;
+	weapon3=CORE_LASERHR1;
 	badtargetcategory=VTOL;
 	wpri_badtargetcategory=VTOL;
 	wsec_badtargetcategory=VTOL;
@@ -116,7 +116,8 @@
 
 	[SFXTypes]
 	{
-	explosiongenerator0=custom:greenflare;
+	explosiongenerator0=custom:redflare;
 	explosiongenerator1=custom:UNITFIRE;
+	explosiongenerator2=custom:greenflare;
 	}
 }

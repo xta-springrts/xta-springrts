@@ -3361,6 +3361,35 @@
 		group_invincible=1;
 	}
 }
+
+[CORE_LASERHR1]
+{
+	name=High Energy Laser;
+	Weapontype=LaserCannon;
+	explosiongenerator=custom:RedLaser;
+	cegTag=REDCRAP;
+	duration=0.07;
+	thickness=2.5;
+	intensity=1.0;
+	turret=1;
+	range=890;
+	reloadtime=0.75;
+	energypershot=144;
+	weaponvelocity=1650;
+	areaofeffect=8;
+	soundstart=Lasrmas2;
+	soundhitdry=lasrhit1;
+	firestarter=90;
+	rgbcolor=1.000 0.000 0.350;
+	tolerance=800;
+	[DAMAGE]
+	{
+		default=144;
+		group_landair=72;
+		group_invincible=1;
+	}
+}
+
 [CORE_MEDIUMCANNON]
 {
 	name=Plasma Cannon;
