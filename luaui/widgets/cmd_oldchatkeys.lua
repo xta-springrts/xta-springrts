@@ -18,6 +18,7 @@ local binds={
 	"bind         Ctrl+enter  chatswitchall",
 	"bind        Shift+enter  chatspec",
 	"bind        Shift+enter  chatswitchspec",
+	"bind 				   o  buildfacing inc",
 	--"bind          Any+enter  chat", --default, bound by engine
 	--"bind          Any+enter  edit_return", --default, bound by engine
 }
