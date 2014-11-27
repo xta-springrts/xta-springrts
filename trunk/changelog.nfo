@@ -20,7 +20,26 @@
     บÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜบ
     ศอออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออผ
     Logo by ElementalGizmo
-	
+
+------------------- Change Log of XTA 9.746 Svn 838
+Changes:
+----------------
+ * Doomsday weapon 3 is now red instead of green and shoots 25% more often, but deals 25% less damage, so same dps
+ 
+
+Enhancements:
+--------------
+ * Add 'o' as shortcut to rotate buildings (is in oldchatkeys widget)
+ 
+Fixes:
+------
+ * Decrease volume of Core Mobile artillery (Pillager) wreck to match smaller new model
+ * Disable 'Offer draw' for spectators
+ * Fix error spam in zombie mode when KOTH is not enabled
+ * Fix incorrect position of Core Gaat gun wreck
+ * Fix error in initial queue widget that sometimes changed faction when not requested
+ 
+ 
 ------------------- Change Log of XTA 9.745 Svn 823
 Balance changes:
 ----------------

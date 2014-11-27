@@ -26,7 +26,14 @@ if gadgetHandler:IsSyncedCode() then
 	local CMD_WAIT			= CMD.WAIT
 	
 	local gunships		= {}
-		
+	local amphibUnits 	= {		
+		[UnitDefNames["arm_crab"].id] = true,
+		[UnitDefNames["arm_triton"].id] = true,
+		[UnitDefNames["core_crock"].id] = true,
+		[UnitDefNames["core_garpike"].id] = true,
+	}
+	--[UnitDefNames["arm_beaver"].id] = true,
+	--[UnitDefNames["core_muskrat"].id] = true,
 	function gadget:Initialize()	
 		gadgetHandler:RegisterGlobal("UnitStoppedMoving", UnitStoppedMoving)
 		gadgetHandler:RegisterGlobal("UnitStartedMoving", UnitStartedMoving)
@@ -79,6 +86,22 @@ if gadgetHandler:IsSyncedCode() then
 		if los[unitDefID] then 
 			Spring.SetUnitSensorRadius(unitID,"los",los[unitDefID])
 		end	
+	end
+	
+	function gadget:UnitEnteredWater(unitID,unitDefID,teamID)
+		if amphibUnits[unitDefID] then
+			local success = Spring.MoveCtrl.SetMoveDef(unitID,"tankdh3")
+			GiveOrderToUnit(unitID, CMD_WAIT, {}, {}) -- hack to prevent units from getting stuck bc of pathfinder
+			GiveOrderToUnit(unitID, CMD_WAIT, {}, {})
+		end
+	end
+	
+	function gadget:UnitLeftWater(unitID,unitDefID,teamID)
+		if amphibUnits[unitDefID] then
+			local success = Spring.MoveCtrl.SetMoveDef(unitID,"tankdh4")
+			GiveOrderToUnit(unitID, CMD_WAIT, {}, {}) -- hack to prevent units from getting stuck bc of pathfinder
+			GiveOrderToUnit(unitID, CMD_WAIT, {}, {})
+		end
 	end
 	
 	function PelicanTransform(unitID,unitDefID,teamID)
