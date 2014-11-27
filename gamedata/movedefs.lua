@@ -284,6 +284,17 @@ local moveDefs = {
 							},
 		speedModClass = 1, -- 0 = tank, 1 = kbot, 2 = hover, 3 = ship 
 	},
+	[24] = {
+		name = "TANKDH4", -- beaver, crab, triton, crock, garpike, muskrat, zulu -- land
+		footprintX = 3,
+		footprintZ = 3,
+		maxWaterDepth = 255.0,
+		submarine = true,
+		maxSlope = 18.0,
+		slopeMod = (enableSlopeMods and EngineDefaultSlopeMod(18.0)) or 0.0,
+		crushStrength = 30.0,
+		speedModClass = 0, -- 0 = tank, 1 = kbot, 2 = hover, 3 = ship 
+	},
 }
 
 return moveDefs

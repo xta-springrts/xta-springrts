@@ -73,7 +73,6 @@
 	//  Movement
 	//************
 	movementclass=HOVER4;//TANKDH3
-	//movementclass=TANKDH3;//TANKDH3
 	turnrate=165;
 	acceleration=0.005;
 	brakerate=0.007;
