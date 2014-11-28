@@ -15,33 +15,24 @@ end
 LUAUI_DIRNAME							= 'LuaUI/'
 local random  = math.random
 local abs = math.abs
-local nonexplosiveWeapons = {
-	LaserCannon = true,
-	BeamLaser = true,
-	EmgCannon = true,
-	Flame = true,
-	LightningCannon = true,
-}
 
-if not gadgetHandler:IsSyncedCode() then
-	-------------------
-	-- UNSYNCED PART --
-	-------------------
+
+if gadgetHandler:IsSyncedCode() then
 	
-else
-	-----------------
-	-- SYNCED PART --
-	-----------------
+	----------------------
+	-- ONLY SYNCED PART --
+	----------------------
 	
 	local splashCEG							= "verticalbomb"
 	local splashCEGshallow					= "torpedoold"
 	local smokeCEG							= "torpedosmoke"
-	local subsurfaceCEG						= "torpedoold" 
+	local subsurfaceCEG						= "torpedoold"
+	local torpedoCEG						= "torpedosmokesmall"
 	local lavaCEG1							= "napalam"
 	local lavaCEG2							= "SMOKESHELL_Small"
 	--local duckCEG							= "blplasmaballbloom"
 	local duckSND							= 'sounds/ducks.ogg'
-	
+		
 	local PlaySoundFile						= Spring.PlaySoundFile
 	local shallowLimit						= -25
 	local shallowHitLimit					= -5
@@ -52,7 +43,21 @@ else
 	local volume 							= 3.0
 	local Channel	 						= 'battle'
 	local isLava 							= false
+	local AirProjectiles					= {}
 	
+	local nonexplosiveWeapons = {
+		LaserCannon = true,
+		BeamLaser = true,
+		EmgCannon = true,
+		Flame = true,
+		LightningCannon = true,
+	}
+	
+	local aerialTorpedoes = {
+		[WeaponDefNames["armair_torpedo"].id] = true, -- Arm Lancet
+		[WeaponDefNames["armseap_weapon1"].id] = true, -- Arm Albatross, Core Typhoon
+		[WeaponDefNames["corair_torpedo"].id] = true, -- Core Titan
+	}
 	
 	function gadget:Explosion(weaponID, px, py, pz, ownerID)
 		if py <= 0 then
@@ -93,15 +98,41 @@ else
 		end
 		Spring.Log("", LOG.INFO,"fx_watersplash: lava detected:",isLava)
 		for id,Def in pairs(WeaponDefs) do
-			if Def.damageAreaOfEffect ~= nil and Def.damageAreaOfEffect > 16 and not nonexplosiveWeapons[Def.type] then
+			if aerialTorpedoes[id] or (Def.damageAreaOfEffect ~= nil and Def.damageAreaOfEffect > 16 and not nonexplosiveWeapons[Def.type]) then
 				SetWatchWeapon(Def.id, true)
+				Echo("Watching weapon:",Def.name,Def.type,Def.damageAreaOfEffect)
+			end
+		end
+	end
+	
+	function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID)	
+		if aerialTorpedoes[weaponDefID] then
+			local _,y,_ = Spring.GetProjectilePosition(proID)
+			if y and y > 0 then
+				AirProjectiles[proID] = true
+			end
+		end
+	end
+	
+	function gadget:ProjectileDestroyed(proID)
+		AirProjectiles[proID] = nil
+	end
+	
+	function gadget:GameFrame(frame)
+		if frame%8 == 0 then
+			for proID in pairs (AirProjectiles) do
+				local x,y,z = Spring.GetProjectilePosition(proID)		
+				if y <= 0 then
+					AirProjectiles[proID] = nil
+					SpawnCEG(torpedoCEG, x, y, z ,0,1,0,10,0)
+				end
 			end
 		end
 	end
 	
 	function gadget:Shutdown()
 		for id,Def in pairs(WeaponDefs) do
-			if Def and Def.damageAreaOfEffect ~= nil and Def.damageAreaOfEffect > 16 and not nonexplosiveWeapons[Def.type] then
+			if aerialTorpedoes[id] or (Def and Def.damageAreaOfEffect ~= nil and Def.damageAreaOfEffect > 16 and not nonexplosiveWeapons[Def.type]) then
 				SetWatchWeapon(Def.id, false)
 			end
 		end

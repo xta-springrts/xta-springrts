@@ -25,11 +25,12 @@
 Changes:
 ----------------
  * Doomsday weapon 3 is now red instead of green and shoots 25% more often, but deals 25% less damage, so same dps
- 
+ * Triton, Crock, Garpike and Crabe cannot anymore climb steep cliffs on land, only in water.
 
 Enhancements:
 --------------
  * Add 'o' as shortcut to rotate buildings (is in oldchatkeys widget)
+ * Add small splash when aerial tordedo enters water surface
  
 Fixes:
 ------
@@ -110,6 +111,7 @@ Balance changes:
     as before with a central command, or operate part of them manually, or completely switch off energy conversion widget and
 	operate all manually, like before before. The widget will show energy conversion of the managed metal makers.
   * Zombie commander sometimes tries to d-gun enemies
+  
    
 - Fixes:
 --------
