@@ -236,3 +236,92 @@
 	}
 
 }
+
+[TorpedosmokeSmall]
+{
+	usedefaultexplosions=0;	
+	[spikes]
+	{
+		class=explspike;
+		[properties]
+		{
+			dir=-15 r30,-15 r30,-15 r30;
+			width=12;
+			length=1; //60;
+			alpha=1;
+			alphadecay=0.1;
+			color=0.7, 0.6, 0.5;
+			alwaysVisible=0;
+
+		}
+		air=1;
+		water=1;
+		ground=1;
+		underwater=0;
+  		count=4; 
+	}
+[waterbubble]
+   	{
+   	class=heatcloud;
+      		[properties]
+      		{
+      		heat = 5;
+			Texture=bubble;
+      		maxheat = 5;
+      		heatFalloff = 0.2;
+      		size = 4.00;
+      		sizeGrowth = -0.1;
+      		sizemod = 0;
+      		sizemodmod = 0;
+      		speed = -0.4 r0.8, -0.5 r0.4, -0.4 r0.8;
+      		pos = 0.1 r-0.2, 0.1 r-0.2, 0.1 r-0.2;
+      		}
+		air=0;
+      	water=1;
+      	ground=0;
+		underwater=1;
+      	count=3;
+	}
+
+
+[upstream]
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+		sizeGrowth=0.30;
+		sizeMod=1.0;
+		pos=0, 1, 0; 
+		gravity=0, -0.1, 0;
+		
+
+		Texture=lesslag;
+		airdrag=0.9;
+		colorMap=1.0 1.0 1.0 0.1 0.9 0.9 1.0 0.5 0.4 0.4 0.5 0.25 0.0 0.0 0.0 0.01;
+
+		particleLifeSpread=15; 
+		particleSpeedSpread=7;  
+		particleSizeSpread=1;   
+		
+		particleLife=35;
+		numParticles=4; 
+		particleSpeed=1; 
+		particleSize=5;
+		
+		
+		emitVector=0, 1, 0; 
+		//emitRot=80;
+		emitRot=5;
+		emitRotSpread=1; 
+		directional=0; 
+		alwaysVisible=0;
+
+		}
+	air=0;
+	water=1;
+	underwater=1;
+	ground=0;
+	count=1;
+	}
+
+}
