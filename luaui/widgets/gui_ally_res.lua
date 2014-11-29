@@ -43,7 +43,8 @@ end
 -- THE SOFTWARE.
 
 
--- Updates: 2014.09: Removed some stupidity (lots still left) and fixed bug with wrong statistics shown 
+-- Updates: 2014.11: Added share slider marks
+--			2014.09: Removed some stupidity (lots still left) and fixed bug with wrong statistics shown 
 -- 					 because of aforementioned stupidity
 --          2014.09: Remove some more stupidity: let user move widget from any place of it with right MB
 -- 					 Make bars wider or thinner depending on player's max storage capacity.
@@ -328,21 +329,22 @@ local function updateBars()
 		return false
 	end
   
-	local eCur, eMax, mCur, mMax, eInc,eRec,mInc,mRec
+	local eCur, eMax, mCur, mMax, eInc,eRec,mInc,mRec,eShare,mShare
 	local height = h - TOP_HEIGHT
 	
 	for teamID in pairs(teamList) do
 		if (teamID ~= myID or showAll) then
 			eCur, eMax = GetTeamResources(teamID, "energy")
 			mCur, mMax = GetTeamResources(teamID, "metal")
+			eShare = select(6,GetTeamResources(teamID, "energy"))
+			mShare = select(6,GetTeamResources(teamID, "metal"))
 			local bwE  = getEBarThickness(eMax)
 			local bwM  = getMBarThickness(mMax)
 			local y10 = betterCodedPosition[teamID]
 			local y11 = y10 - BAR_HEIGHT - bwM
 			local y20 = y10 - BAR_HEIGHT-BAR_SPACER
 			local y21 = y10 - TOTAL_BAR_HEIGHT - bwE
-			
-			
+						
 			eCur = eCur + (sendEnergy[teamID] or 0)
 			mCur = mCur + (sendMetal[teamID] or 0)
 			_, _, _, eInc, _, _, _, eRec = GetTeamResources(teamID, "energy")
@@ -365,6 +367,8 @@ local function updateBars()
 				eVal = table.concat({"+", formatRes(eInc+eRec)}),
 				mVal = table.concat({"+", formatRes(mInc+mRec)}),
 				tID  = teamID,
+				es	 = xoffset + eShare*BAR_WIDTH,
+				ms	 = xoffset + mShare*BAR_WIDTH
 			}
 			
 	  
@@ -413,7 +417,11 @@ local function updateBars()
 			gl.Rect(d.mx1,d.my1,d.mx2b,d.my2)
 			gl.Color(0.8, 0.8, 0.8, 1)
 			gl.Rect(d.mx1,d.my2,d.mx2b,d.my2+1)
-
+			-- share slides
+			gl.Color(1.0, 0.2, 0.2, 1)
+			gl.Rect(d.ms,d.my1,d.ms+2,d.my2)
+			gl.Rect(d.es,d.ey1,d.es+2,d.ey2)
+			
 			myFont:Begin()
 			myFont:SetTextColor({1, 1, 0, 1})
 			myFont:Print(d.eVal,d.mx2+RESTEXT,d.my1-4-textsize,textsize,'rs')
@@ -421,6 +429,7 @@ local function updateBars()
 			myFont:Print(d.mVal,d.mx2+RESTEXT,d.my1-4,textsize,'rs')
 			myFont:End()
 		end
+		gl.Color(1, 1, 1, 1)
 	end
   
 	displayList = gl.CreateList(displayFunction)
