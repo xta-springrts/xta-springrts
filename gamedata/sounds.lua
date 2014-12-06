@@ -299,7 +299,7 @@ for i =1,#files do
 			pitchmod  = 0.1;
 			gainmod   = 0;
 			gain  = 1;
-			maxconcurrent  = 8;
+			maxconcurrent  = 4;
 			rolloff  = 0;
 			priority  = -1;
 			in3d = 0;
@@ -395,6 +395,46 @@ for i =1,#uiFiles do
 	priority  = -1;
 	in3d = 0;
 	}
+end
+
+-- add sounds located in /glhf too as gui sounds:
+local uiFiles  = VFS.DirList("sounds/glhf")
+local t  = Sounds.SoundItems
+for i =1,#uiFiles do
+	local fileName  = uiFiles[i]
+	local startChar,endChar = string.find(fileName,"sounds/glhf")
+	local shortName = string.sub(fileName, endChar+1)
+	--Echo("Filename:", fileName, shortName)
+	t[fileName]  = {
+	file      = fileName;
+	pitchmod  = 0.1;
+	gainmod   = 0;
+	gain  = 1;
+	maxconcurrent  = 4;
+	rolloff  = 0;
+	priority  = -1;
+	in3d = 0;
+	}
+end
+	
+-- add sounds located in /commander too as gui sounds:	
+local uiFiles  = VFS.DirList("sounds/commander")
+local t  = Sounds.SoundItems
+for i =1,#uiFiles do
+	local fileName  = uiFiles[i]
+	local startChar,endChar = string.find(fileName,"sounds/commander")
+	local shortName = string.sub(fileName, endChar+1)
+	--Echo("Filename:", fileName, shortName)
+	t[fileName]  = {
+	file      = fileName;
+	pitchmod  = 0.05;
+	gainmod   = 0;
+	gain  = 1;
+	maxconcurrent  = 4;
+	rolloff  = 0;
+	priority  = -1;
+	in3d = 0;
+	}	
 end
 
 --Echo("Sound files:")
