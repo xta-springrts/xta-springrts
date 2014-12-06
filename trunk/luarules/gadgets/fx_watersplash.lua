@@ -81,7 +81,6 @@ if gadgetHandler:IsSyncedCode() then
 						local rnd = random()
 						if rnd > 0.999 then
 							PlaySoundFile(duckSND, volume, px, 100, pz,0,0,0,Channel)
-							--SpawnCEG(duckCEG, px, py, pz,0,0,0,aoe,0)
 							--Echo("Some ducks were hit")
 						end
 					end
@@ -100,7 +99,7 @@ if gadgetHandler:IsSyncedCode() then
 		for id,Def in pairs(WeaponDefs) do
 			if aerialTorpedoes[id] or (Def.damageAreaOfEffect ~= nil and Def.damageAreaOfEffect > 16 and not nonexplosiveWeapons[Def.type]) then
 				SetWatchWeapon(Def.id, true)
-				Echo("Watching weapon:",Def.name,Def.type,Def.damageAreaOfEffect)
+				--Echo("Watching weapon:",Def.name,Def.type,Def.damageAreaOfEffect)
 			end
 		end
 	end

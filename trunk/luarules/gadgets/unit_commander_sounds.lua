@@ -1,22 +1,85 @@
 local CommanderUnitDefs, CommanderSounds, CommanderTargets = include("LuaRules/Configs/unit_commander_sounds_defs.lua")
 local CommanderSingCmdDesc = {id = 40123, name = "Sing", }
 local CommanderTauntCmdDesc = {id = 40234, name = "Taunt", }
+local GLHFCmdDesc = {id = 40531, name = "GL & HF", }
+local TYCmdDesc = {id = 40532, name = "Say thx", }
 
 local spPlaySoundFile = Spring.PlaySoundFile
 local rnd = math.random
 local volume = 4.0
+local Echo = Spring.Echo
+
 
 if (gadgetHandler:IsSyncedCode()) then
+	
+	local FindUnitCmdDesc = Spring.FindUnitCmdDesc
+	local RemoveUnitCmdDesc = Spring.RemoveUnitCmdDesc
+	local CommandersWithGreet = {}
+	local CommandersWithTY = {}
+	local tyEnabled = false
+
 	function gadget:Initialize()
 		for _, unitID in ipairs(Spring.GetAllUnits()) do
 			self:UnitCreated(unitID, Spring.GetUnitDefID(unitID))
 		end
 	end
+	
+	local function RemoveGLHFCmd(unitID)
+		local cmdDescID = FindUnitCmdDesc(unitID, GLHFCmdDesc.id)
+		if (cmdDescID) then
+			RemoveUnitCmdDesc(unitID, cmdDescID)
+			CommandersWithGreet[unitID] = nil
+		end
+	end
+	
+	local function RemoveTYCmd(unitID)
+		local cmdDescID = FindUnitCmdDesc(unitID, TYCmdDesc.id)
+		if (cmdDescID) then
+			RemoveUnitCmdDesc(unitID, cmdDescID)
+			CommandersWithTY[unitID] = nil
+		end
+	end
+	
+	local function addTYCmd()
+		for _, unitID in ipairs(Spring.GetAllUnits()) do
+			local unitDefID = Spring.GetUnitDefID(unitID)
+			if (CommanderUnitDefs[unitDefID] ~= nil) then
+				if not FindUnitCmdDesc(unitID,TYCmdDesc.id) then
+					Spring.InsertUnitCmdDesc(unitID, TYCmdDesc)
+					CommandersWithTY[unitID] = true
+				end
+			end
+		end
+	end
 
-	function gadget:UnitCreated(unitID, unitDefID, _, _)
+	function gadget:UnitCreated(unitID, unitDefID, _, builderID)
 		if (CommanderUnitDefs[unitDefID] ~= nil) then
+			local frame = Spring.GetGameFrame()
+			
 			Spring.InsertUnitCmdDesc(unitID, CommanderSingCmdDesc)
 			Spring.InsertUnitCmdDesc(unitID, CommanderTauntCmdDesc)
+			
+			-- For detecting commanders created by morph: it's not possible to store which unitID was created by morph, because 
+			-- the id is not known before unit is created this callin is executed immedeately after that time.
+			if frame and frame < 900 then -- 30 secs
+				Spring.InsertUnitCmdDesc(unitID, GLHFCmdDesc)
+				CommandersWithGreet[unitID] = true
+			end
+			
+		else
+			if CommandersWithGreet[builderID] then
+				local ud = UnitDefs[unitDefID]
+				if ud.canAttack or ud.isBuilder then
+					RemoveGLHFCmd(builderID)
+				end
+			end
+			
+			if CommandersWithTY[builderID] then
+				local ud = UnitDefs[unitDefID]
+				if ud.canAttack or ud.isBuilder then
+					RemoveTYCmd(builderID)
+				end
+			end
 		end
 	end
 
@@ -26,8 +89,10 @@ if (gadgetHandler:IsSyncedCode()) then
 
 	function gadget:UnitDestroyed(unitID, unitDefID, unitTeamID, attackerID, attackerDefID, attackerTeamID)
 		SendToUnsynced('usUnitDestroyed', unitID, unitDefID, unitTeamID, attackerID, attackerDefID, attackerTeamID)
+		if CommandersWithGreet[unitID] then CommandersWithGreet[unitID] = nil end
+		if CommandersWithTY[unitID] then CommandersWithTY[unitID] = nil end
 	end
-
+	
 	--function gadget:UnitCloaked(unitID, unitDefID, unitTeamID)
 		--SendToUnsynced('usUnitCloaked', unitID, unitDefID, unitTeamID)
 	--end
@@ -68,6 +133,31 @@ if (gadgetHandler:IsSyncedCode()) then
 
 				spPlaySoundFile(snds[sidx], volume)
 				return false
+			end
+			
+			if (CommanderUnitDefs[unitDefID] ~= nil) then
+				if (cmdID == GLHFCmdDesc.id) then
+					local idx = rnd(0, 4)
+					
+					if (rnd(0, 10) >= 8) then 
+						idx = rnd(5, #CommanderSounds.GLHFSongs[unitDefID])
+					end
+					
+					spPlaySoundFile(CommanderSounds.GLHFSongs[unitDefID][idx], volume)
+					RemoveGLHFCmd(unitID, cmdDescID)
+					if not tyEnabled then 
+						tyEnabled = true 
+						addTYCmd()
+					end
+					
+					return false
+				elseif (cmdID == TYCmdDesc.id) then
+					local idx = rnd(0, #CommanderSounds.TYSongs[unitDefID])
+					
+					spPlaySoundFile(CommanderSounds.TYSongs[unitDefID][idx], volume)
+					RemoveTYCmd(unitID)
+					return false
+				end
 			end
 		end
 		

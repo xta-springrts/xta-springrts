@@ -1,3 +1,5 @@
+local Echo = Spring.Echo
+
 local CommanderUnitDefs = {
 	[ UnitDefNames["arm_commander"   ].id ] = UnitDefNames["arm_commander"   ],
 	[ UnitDefNames["arm_nincommander"].id ] = UnitDefNames["arm_nincommander"],
@@ -70,11 +72,91 @@ local CommanderSounds = {
 		[ UnitDefNames["core_u3commander" ].id ] = {},
 		[ UnitDefNames["core_u4commander" ].id ] = {},
 	},
+	
+	GLHFSongs = {
+		[ UnitDefNames["arm_commander"].id ] = {
+			[0] = "sounds/glhf/glhf_1.wav",
+			[1] = "sounds/glhf/glhf_2.wav",
+			[2] = "sounds/glhf/glhf_3.wav",
+			[3] = "sounds/glhf/glhf_4.wav",
+			[4] = "sounds/glhf/glhf_5.wav",
+			[5] = "sounds/glhf/glhf_fi.wav",
+			--[6] = "sounds/glhf/glhf_is.wav",
+			--[6] = "sounds/glhf/glhf_sw.wav",
+			--[7] = "sounds/glhf/glhf_jp.wav",
+			--[8] = "sounds/glhf/glhf_de.wav",	
+		},
+		[ UnitDefNames["arm_nincommander"].id ] = {},
+		[ UnitDefNames["arm_scommander"  ].id ] = {},
+		[ UnitDefNames["arm_u0commander" ].id ] = {},
+		[ UnitDefNames["arm_ucommander"  ].id ] = {},
+		[ UnitDefNames["arm_u2commander" ].id ] = {},
+		[ UnitDefNames["arm_u3commander" ].id ] = {},
+		[ UnitDefNames["arm_u4commander" ].id ] = {},
+		
+		[ UnitDefNames["core_commander"].id ] = {
+			[0] = "sounds/glhf/glhf_6.wav",
+			[1] = "sounds/glhf/glhf_7.wav",
+			[2] = "sounds/glhf/glhf_8.wav",
+			[3] = "sounds/glhf/glhf_9.wav",
+			[4] = "sounds/glhf/glhf_10.wav",
+			[5] = "sounds/glhf/glhf_fr.wav",
+			--[6] = "sounds/glhf/glhf_6.wav",
+			--[7] = "sounds/glhf/glhf_6.wav",
+			--[8] = "sounds/glhf/glhf_6.wav",
+			--[9] = "sounds/glhf/glhf_6.wav",
+		},
+		[ UnitDefNames["core_nincommander"].id ] = {},
+		[ UnitDefNames["core_scommander"  ].id ] = {},
+		[ UnitDefNames["core_u0commander" ].id ] = {},
+		[ UnitDefNames["core_ucommander"  ].id ] = {},
+		[ UnitDefNames["core_u2commander" ].id ] = {},
+		[ UnitDefNames["core_u3commander" ].id ] = {},
+		[ UnitDefNames["core_u4commander" ].id ] = {},
+	},
+	
+	TYSongs = {
+		[ UnitDefNames["arm_commander"].id ] = {
+			[0] = "sounds/glhf/ty_arm_1.wav",
+			[1] = "sounds/glhf/ty_arm_2.wav",
+			[2] = "sounds/glhf/ty_arm_3.wav",
+			[3] = "sounds/glhf/ty_arm_4.wav",
+			[4] = "sounds/glhf/ty_arm_5.wav",
+			[5] = "sounds/glhf/ty_arm_6.wav",
+			
+		},
+		[ UnitDefNames["arm_nincommander"].id ] = {},
+		[ UnitDefNames["arm_scommander"  ].id ] = {},
+		[ UnitDefNames["arm_u0commander" ].id ] = {},
+		[ UnitDefNames["arm_ucommander"  ].id ] = {},
+		[ UnitDefNames["arm_u2commander" ].id ] = {},
+		[ UnitDefNames["arm_u3commander" ].id ] = {},
+		[ UnitDefNames["arm_u4commander" ].id ] = {},
+		
+		[ UnitDefNames["core_commander"].id ] = {
+			[0] = "sounds/glhf/ty_core_1.wav",
+			[1] = "sounds/glhf/ty_core_2.wav",
+			[2] = "sounds/glhf/ty_core_3.wav",
+			[3] = "sounds/glhf/ty_core_4.wav",
+			[4] = "sounds/glhf/ty_core_5.wav",
+			[5] = "sounds/glhf/ty_core_6.wav",
+			
+		},
+		[ UnitDefNames["core_nincommander"].id ] = {},
+		[ UnitDefNames["core_scommander"  ].id ] = {},
+		[ UnitDefNames["core_u0commander" ].id ] = {},
+		[ UnitDefNames["core_ucommander"  ].id ] = {},
+		[ UnitDefNames["core_u2commander" ].id ] = {},
+		[ UnitDefNames["core_u3commander" ].id ] = {},
+		[ UnitDefNames["core_u4commander" ].id ] = {},
+	},
+	
 	CommanderTaunts = {
 		[ UnitDefNames["arm_commander"].id ] = {
 			[0] = "sounds/commander/arm_comm_taunt_3.wav",
 			[1] = "sounds/commander/arm_comm_taunt_2.wav",
 			[2] = "sounds/commander/arm_comm_taunt_1.wav",
+			[3] = "sounds/commander/arm_comm_taunt_4.wav",
 		},
 		[ UnitDefNames["arm_nincommander"].id ] = {},
 		[ UnitDefNames["arm_scommander"  ].id ] = {},
@@ -88,6 +170,7 @@ local CommanderSounds = {
 			[0] = "sounds/commander/core_comm_taunt_3.wav",
 			[1] = "sounds/commander/core_comm_taunt_2.wav",
 			[2] = "sounds/commander/core_comm_taunt_1.wav",
+			[3] = "sounds/commander/core_comm_taunt_4.wav",
 		},
 		[ UnitDefNames["core_nincommander"].id ] = {},
 		[ UnitDefNames["core_scommander"  ].id ] = {},
@@ -139,6 +222,8 @@ local corComDefID = UnitDefNames["core_commander"].id
 
 local comSongs = CommanderSounds.CommanderSongs
 local comTaunts = CommanderSounds.CommanderTaunts
+local comGLHF = CommanderSounds.GLHFSongs
+local comTY = CommanderSounds.TYSongs
 
 for unitDefID, sndTable in pairs(comSongs) do
 	assert(type(sndTable) == type({}))
@@ -146,12 +231,11 @@ for unitDefID, sndTable in pairs(comSongs) do
 	if (unitDefID ~= armComDefID and unitDefID ~= corComDefID) then
 		local songsList = nil
 		local unitDef = UnitDefs[unitDefID]
-
-		-- if fifth character of name is an underscore (ASCII code 95)
-		-- then the side prefix is (probably) "core" instead of "arm"
-		if (unitDef.name:byte(5) == 95) then
+		
+		-- use tag instead, make compatible with tll expansion
+		if (unitDef.customParams and unitDef.customParams.side == "core") then
 			songsList = comSongs[corComDefID]
-		else
+		elseif (unitDef.customParams and unitDef.customParams.side == "arm") then
 			songsList = comSongs[armComDefID]
 		end
 
@@ -169,9 +253,9 @@ for unitDefID, sndTable in pairs(comTaunts) do
 		local tauntsList = nil
 		local unitDef = UnitDefs[unitDefID]
 
-		if (unitDef.name:byte(5) == 95) then
+		if (unitDef.customParams and unitDef.customParams.side == "core") then
 			tauntsList = comTaunts[corComDefID]
-		else
+		elseif (unitDef.customParams and unitDef.customParams.side == "arm") then
 			tauntsList = comTaunts[armComDefID]
 		end
 
@@ -180,6 +264,47 @@ for unitDefID, sndTable in pairs(comTaunts) do
 		end
 	end
 end
+
+for unitDefID, sndTable in pairs(comGLHF) do
+	assert(type(sndTable) == type({}))
+	
+	if (unitDefID ~= armComDefID and unitDefID ~= corComDefID) then
+		
+		local sayList = nil
+		local unitDef = UnitDefs[unitDefID]
+
+		if (unitDef.customParams and unitDef.customParams.side == "core") then
+			sayList = comGLHF[corComDefID]
+		elseif (unitDef.customParams and unitDef.customParams.side == "arm") then
+			sayList = comGLHF[armComDefID]
+		end
+
+		for sndIndex, sndFile in pairs(sayList) do
+			sndTable[sndIndex] = sndFile
+		end
+	end
+end
+
+for unitDefID, sndTable in pairs(comTY) do
+	assert(type(sndTable) == type({}))
+	
+	if (unitDefID ~= armComDefID and unitDefID ~= corComDefID) then
+		
+		local sayList = nil
+		local unitDef = UnitDefs[unitDefID]
+
+		if (unitDef.customParams and unitDef.customParams.side == "core") then
+			sayList = comTY[corComDefID]
+		elseif (unitDef.customParams and unitDef.customParams.side == "arm") then
+			sayList = comTY[armComDefID]
+		end
+
+		for sndIndex, sndFile in pairs(sayList) do
+			sndTable[sndIndex] = sndFile
+		end
+	end
+end
+
 
 return CommanderUnitDefs, CommanderSounds, CommanderTargets
 
