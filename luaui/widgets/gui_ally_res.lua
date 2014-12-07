@@ -51,8 +51,6 @@ end
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
-local TOOL_TIPS = true
-
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
@@ -71,7 +69,7 @@ local mathMin = math.min
 local gl, GL = gl, GL
 local sF = string.format
 local showAll = false
-
+local glBlending = gl.Blending
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
@@ -81,7 +79,7 @@ local viewSizeX, viewSizeY = 0,0
 local BAR_HEIGHT       = 4
 local BAR_SPACER       = 3
 local BAR_WIDTH        = 60
-local BAR_GAP          = 18
+local BAR_GAP          = 15
 local LOGO_OFFSET	   = 6
 local RESTEXT		   = 30
 local HEIGHTADJUST	   = 20
@@ -96,7 +94,6 @@ local x1               = 600
 local y1               = 400
 local topy			   = y1 + h - HEIGHTADJUST
 local betterCodedPosition = {}
-local mx, my
 local sentSomething = false
 local enabled       = false
 local transferring  = false
@@ -111,7 +108,7 @@ local sendEnergy = {}
 local sendMetal  = {}
 local trnsEnergy = {}
 local trnsMetal  = {}
-local labelText  = {}
+local labelText
 local sentEnergy = 0
 local sentMetal  = 0
 local myID
@@ -168,7 +165,7 @@ local function setUpTeam()
 	myID = GetMyTeamID()
 	local getTeams = nil
 	local teamCount = 0
-	mx, my = 0,0
+	
 	if GetSpectatingState() or IsReplay() then
 		local myAllyID = Spring.GetMyAllyTeamID()
 		
@@ -176,8 +173,7 @@ local function setUpTeam()
 				
 		if getTeams ~= nil then
 			for _,teamID in pairs(getTeams) do				
-				--local eCur = GetTeamResources(teamID, "energy")
-				--if eCur and (not deadTeams[teamID]) then
+				
 				if not deadTeams[teamID] and teamID ~= gaiaID then
 					teamList[teamID] = true
 					teamCount = (teamCount + 1)
@@ -204,9 +200,6 @@ local function setUpTeam()
 	if (teamCount > 1) and Spring.GetGameFrame() > 1 then
 		enabled = true
 		return true
-	else
-		enabled = false
-		return false
 	end
 end
 
@@ -274,12 +267,23 @@ local function getMBarThickness(maxStorage)
 	end
 end
 
+local function IsOnButton(x, y, BLcornerX, BLcornerY,TRcornerX,TRcornerY)
+	if BLcornerX == nil then return false end
+	-- check if the mouse is in a rectangle
+
+	return x >= BLcornerX and x <= TRcornerX
+						  and y >= BLcornerY
+						  and y <= TRcornerY
+end
+
 local function updateStatics()
 	
 	if (staticList) then gl.DeleteList(staticList) end
+	
 	local y1 = topy - h
 	
 	local function staticFunction()
+		glBlending(true)
 		gl.Color(0, 0, 0, 0.2)
 		gl.Rect(x1, y1, x1+w,topy-HEIGHTADJUST)
 		local height = h - TOP_HEIGHT
@@ -367,8 +371,8 @@ local function updateBars()
 				eVal = table.concat({"+", formatRes(eInc+eRec)}),
 				mVal = table.concat({"+", formatRes(mInc+mRec)}),
 				tID  = teamID,
-				es	 = xoffset + eShare*BAR_WIDTH,
-				ms	 = xoffset + mShare*BAR_WIDTH
+				es	 = eShare and eShare < 0.95 and xoffset + eShare*BAR_WIDTH or 0,
+				ms	 = mShare and mShare < 0.95 and xoffset + mShare*BAR_WIDTH or 0,
 			}
 			
 	  
@@ -394,7 +398,7 @@ local function updateBars()
   
 	local function displayFunction ()
 		for _,d in pairs(teamRes) do
-			--Echo("TR:",d.tID,d.my1,d.eVal,d.mVal)
+			
 			if d.eRec then
 				gl.Color(0.8, 0, 0, 0.8)
 			else
@@ -418,9 +422,14 @@ local function updateBars()
 			gl.Color(0.8, 0.8, 0.8, 1)
 			gl.Rect(d.mx1,d.my2,d.mx2b,d.my2+1)
 			-- share slides
+			
 			gl.Color(1.0, 0.2, 0.2, 1)
-			gl.Rect(d.ms,d.my1,d.ms+2,d.my2)
-			gl.Rect(d.es,d.ey1,d.es+2,d.ey2)
+			if d.ms and d.ms > 0 then
+				gl.Rect(d.ms,d.my1,d.ms+2,d.my2)
+			end
+			if d.es and d.es > 0 then
+				gl.Rect(d.es,d.ey1,d.es+2,d.ey2)
+			end
 			
 			myFont:Begin()
 			myFont:SetTextColor({1, 1, 0, 1})
@@ -532,46 +541,41 @@ end
 
 function widget:GameFrame(n)
     gameFrame = n
-end
-
-function widget:Update()
 	
-	local speed,_,paused = Spring.GetGameSpeed()
-	local updateFreq
-	if GetMyTeamID() ~= myID or showAll then
-		--updateBars()	-- must be run twice because schmucks
-		updateBars()
-	end
-	if speed < 0.5 then
-		updateFreq = 4
-	elseif speed < 1.0 then
-		updateFreq = 8
-	elseif speed < 2.0 then
-		updateFreq = 16
-	elseif speed < 4.0 then
-		updateFreq = 32
-	else
-		updateFreq = 128
-	end
-	if (gameFrame ~= lastFrame and gameFrame%updateFreq == 0) or paused or (gameFrame and TOOL_TIPS) then
+	if enabled and not IsGUIHidden() then
+		local speed,_,paused = Spring.GetGameSpeed()
+		local updateFreq
 
-		if enabled then
+		if speed < 0.5 then
+			updateFreq = 4
+			elseif speed < 1.0 then
+			updateFreq = 8
+			elseif speed < 2.0 then
+			updateFreq = 16
+			elseif speed < 4.0 then
+			updateFreq = 32
+			else
+			updateFreq = 128
+		end
+	
+		if gameFrame ~= lastFrame and gameFrame%updateFreq == 0 then
+
 			lastFrame = gameFrame
 			updateBars()
 			
 			if transferTeam then
 				transferResources(gameFrame)
 			end
-			
+
 			if sentSomething and ((gameFrame % 32) == 0) then
 				for teamID,send in pairs(sendEnergy) do
 					ShareResources(teamID,"energy",send)
 				end
-				
+
 				for teamID,send in pairs(sendMetal) do
 					ShareResources(teamID,"metal",send)
 				end
-				
+
 				sendEnergy = {}
 				sendMetal = {}
 				trnsEnergy = {}
@@ -580,70 +584,73 @@ function widget:Update()
 				sentMetal = 0
 				sentSomething = false
 			end
-			
-		if TOOL_TIPS then
-			local x, y = GetMouseState()
-			
-			if (mx ~= x) or (my ~= y) or transferring or ((gameFrame % 15) == 0) then
-				mx = x
-				my = y
-				local y1 = topy - h
-				
-				if (x > x1) and (y > y1 + BAR_GAP) and (x < (x1 + FULL_BAR)) and (y < (y1 + h - TOP_HEIGHT)) then
-					
-					for teamID,defs in pairs(teamIcons) do
-						
-						if (y < defs.iy1) and (y >= defs.iy2) then
-							local eCur, eMax = GetTeamResources(teamID, "energy")
-							local mCur, mMax = GetTeamResources(teamID, "metal")
-
-							labelText[1] =
-								{
-								label=defs.name,
-								x=x1-BAR_SPACER,
-								y=defs.iy2-1,
-								size=TOTAL_BAR_HEIGHT*1.5,
-								config="orn",
-								}
-							
-							labelText[2] =
-								{
-								label= table.concat({"(M: ",formatRes(mCur), " / ", formatRes(mMax),")"}),
-								x=x1-BAR_SPACER,
-								y=defs.iy2-TOTAL_BAR_HEIGHT-3,
-								size=TOTAL_BAR_HEIGHT,
-								config="orn",
-								}
-							
-							labelText[3] =
-								{
-								label= table.concat({"(E: ", formatRes(eCur), " / ", formatRes(eMax),")"}),
-								x=x1-BAR_SPACER,
-								y=defs.iy2-2*TOTAL_BAR_HEIGHT-3,
-								size=TOTAL_BAR_HEIGHT,
-								config="orn",
-								}
-							return
-						end
-					end
-					updateStatics()
-					if (labelText) then labelText = {} end
-				elseif (labelText) then labelText = {} end
-			end
 		end
 		
-		elseif (#GetTeamList(GetMyAllyTeamID()) > 1) then
-			setUpTeam()
-			updateStatics()
-			updateBars()
+	end
+end
+
+function widget:Update()
+	if enabled and not IsGUIHidden() then
+	
+		if not gameFrame then
+			if (#GetTeamList(GetMyAllyTeamID()) > 1) then
+				setUpTeam()
+				updateStatics()
+				updateBars()
+			end
 		end
 	end
 end
 
+function widget:IsAbove(mx, my)
+	
+	labelText  = nil
+	
+	for teamID,defs in pairs(teamIcons) do
+		local y1 = defs.iy2
+		local y2 = defs.iy1
+		local x2 = x1 + w
+		
+		if IsOnButton(mx, my, x1, y1, x2, y2) then
+				
+			local eCur, eMax = GetTeamResources(teamID, "energy")
+			local mCur, mMax = GetTeamResources(teamID, "metal")
+			labelText  = {}
+			labelText[1] =
+			{
+			label=defs.name,
+			x=x1-BAR_SPACER,
+			y=defs.iy2-1,
+			size=TOTAL_BAR_HEIGHT*1.5,
+			config="orn",
+			}
+
+			labelText[2] =
+			{
+			label= table.concat({"(M: ",formatRes(mCur), " / ", formatRes(mMax),")"}),
+			x=x1-BAR_SPACER,
+			y=defs.iy2-TOTAL_BAR_HEIGHT-3,
+			size=TOTAL_BAR_HEIGHT,
+			config="orn",
+			}
+
+			labelText[3] =
+			{
+			label= table.concat({"(E: ", formatRes(eCur), " / ", formatRes(eMax),")"}),
+			x=x1-BAR_SPACER,
+			y=defs.iy2-2*TOTAL_BAR_HEIGHT-3,
+			size=TOTAL_BAR_HEIGHT,
+			config="orn",
+			}						
+		end
+	end	
+end
+
 function widget:GameStart()
-  enabled = true
-  setUpTeam()
-  updateStatics()
+	
+	enabled = true
+	setUpTeam()
+	updateStatics()
 end
 
 function widget:DrawScreen()
@@ -652,7 +659,7 @@ function widget:DrawScreen()
     gl.PushMatrix()
       gl.CallList(staticList)
       gl.CallList(displayList)
-      if (labelText[1]) then
+      if labelText and labelText[1] then
         gl.Color(1, 1, 1, 0.8)
         gl.Text(labelText[1].label,labelText[1].x,labelText[1].y,labelText[1].size,labelText[1].config)
         gl.Color(0.8, 0.8, 0.8, 0.8)
