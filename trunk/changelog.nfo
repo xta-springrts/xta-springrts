@@ -21,7 +21,7 @@
     ศอออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออผ
     Logo by ElementalGizmo
 
-------------------- Change Log of XTA 9.746 Svn 838
+------------------- Change Log of XTA 9.746 Svn 842
 Changes:
 ----------------
  * Doomsday weapon 3 is now red instead of green and shoots 25% more often, but deals 25% less damage, so same dps
@@ -31,6 +31,7 @@ Enhancements:
 --------------
  * Add 'o' as shortcut to rotate buildings (is in oldchatkeys widget)
  * Add small splash when aerial tordedo enters water surface
+ * New commander sounds and fixes to old ones.
  
 Fixes:
 ------
