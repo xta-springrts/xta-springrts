@@ -81,6 +81,7 @@ local startChosen = false
 local myFont = gl.LoadFont("FreeSansBold.otf",textsize, 1.9, 40)
 local gameStarting = false
 local updateHacked = false
+local showWhenStarting = false
 
 
 local CMD_MORPH_STOP 		= 32410
@@ -221,7 +222,7 @@ local function GetUnitCanCompleteQueue(uID)
 	local uBuilds = UnitDefs[uDefID].buildOptions
 	for i = 1, #uBuilds do
 		uCanBuild[uBuilds[i]] = true
-		Echo("Unit can build:",i,uBuilds[i],uCanBuild[uBuilds[i]])
+		--Echo("Unit can build:",i,uBuilds[i],uCanBuild[uBuilds[i]])
 	end
 	
 	-- Can it build everything that was queued ?
@@ -545,8 +546,6 @@ function InitializeFaction(sDefID)
 	
 	sDef = UnitDefs[sDefID]
 	
-	Echo("IQ: start ID:",sDefID,#sDef.buildOptions,sDef.customParams.side)
-	
 	-- Don't run if theres nothing to show
 	sBuilds = sDef.buildOptions
 	if not sBuilds or (#sBuilds == 0) then
@@ -559,7 +558,7 @@ function InitializeFaction(sDefID)
 		CMD_MORPH = CMD_MORPHA
 	elseif sDef.customParams and sDef.customParams.side == "core" then
 		CMD_MORPH = CMD_MORPHC
-	elseif sDef.customParams and sDef.customParams.side == "tll" then
+	elseif sDef.customParams and sDef.customParams.side == "lost" then
 		CMD_MORPH = CMD_MORPHT
 	end
 	
@@ -602,12 +601,13 @@ end
 ------------------------------------------------------------
 function widget:GetConfigData()
 	local wWidth, wHeight = Spring.GetWindowGeometry()
-	return {wl / wWidth, wt / wHeight}
+	return {wl / wWidth, wt / wHeight, showWhenStarting}
 end
 function widget:SetConfigData(data)
 	local wWidth, wHeight = Spring.GetWindowGeometry()
 	wl = math.floor(wWidth * (data[1] or 0.25))
 	wt = math.floor(wHeight * (data[2] or 0.50))
+	showWhenStarting = data[3] or showWhenStarting
 end
 
 ------------------------------------------------------------
@@ -625,7 +625,7 @@ local queueTimeFormat = whiteColor .. 'Queued ' .. metalColor .. '%dm ' .. energ
 -- push/pop-matrices.
 
 function widget:DrawScreen()
-	if not Spring.IsGameOver() and not gameStarting then
+	if not Spring.IsGameOver() and (showWhenStarting or (not gameStarting)) then
 		
 		gl.PushMatrix()
 		gl.Translate(wl, wt, 0)
@@ -639,7 +639,9 @@ function widget:DrawScreen()
 	end
 	
 	if #buildQueue > 0 then
+	
 		local mCost, eCost, bCost = GetQueueCosts()
+		
 		myFont:Begin()
 		myFont:Print(string.format(queueTimeFormat, mCost, eCost, bCost / sDef.buildSpeed), wl, Button.morph.y1, fontSize, 'ds')
 		myFont:End()
@@ -975,7 +977,7 @@ function widget:RecvLuaMsg(msg, playerID)
 						CMD_MORPH = CMD_MORPHA
 					elseif newSide == "core" then
 						CMD_MORPH = CMD_MORPHC
-					elseif newSide == "tll" then
+					elseif newSide == "lost" then
 						CMD_MORPH = CMD_MORPHT
 					end
 				end
@@ -999,7 +1001,7 @@ function widget:RecvLuaMsg(msg, playerID)
 									local newID = CMD_MORPHC
 									buildData[1] = newID
 									buildQueue[b] = buildData
-								elseif newSide == "tll" then
+								elseif newSide == "lost" then
 									local newID = CMD_MORPHT
 									buildData[1] = newID
 									buildQueue[b] = buildData
@@ -1009,7 +1011,7 @@ function widget:RecvLuaMsg(msg, playerID)
 									local newID = CMD_MORPHA
 									buildData[1] = newID
 									buildQueue[b] = buildData
-								elseif newSide == "tll" then
+								elseif newSide == "lost" then
 									local newID = CMD_MORPHT
 									buildData[1] = newID
 									buildQueue[b] = buildData
@@ -1034,12 +1036,22 @@ function widget:RecvLuaMsg(msg, playerID)
 				InitializeFaction(sDefID)
 			end
 		end
-	elseif not gameStarting and msg == startingPrefix then	
-		SetSelDefID(nil) -- remove selection, game is starting
+	elseif not gameStarting and msg == startingPrefix then
+		if not showWhenStarting then
+			SetSelDefID(nil) -- remove selection, game is starting
+		end
 		gameStarting = true
 	end
 end
 function widget:TextCommand(cmd)
+	if cmd:match("^hideonstart.0") or cmd:match("^hideonstart.off") then
+		showWhenStarting = true
+		Echo("Initial queue: do not hide menu when game is starting")
+	elseif cmd:match("^hideonstart") then
+		showWhenStarting = false
+		Echo("Initial queue: hide menu when game is starting")
+	end
+	
 	if requireCommander then
 		local posx = GetTeamStartPosition(myTeamID)
 		if not posx or posx <= 0 then return end
