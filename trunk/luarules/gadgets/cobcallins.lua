@@ -26,14 +26,7 @@ if gadgetHandler:IsSyncedCode() then
 	local CMD_WAIT			= CMD.WAIT
 	
 	local gunships		= {}
-	local amphibUnits 	= {		
-		[UnitDefNames["arm_crab"].id] = true,
-		[UnitDefNames["arm_triton"].id] = true,
-		[UnitDefNames["core_crock"].id] = true,
-		[UnitDefNames["core_garpike"].id] = true,
-	}
-	--[UnitDefNames["arm_beaver"].id] = true,
-	--[UnitDefNames["core_muskrat"].id] = true,
+		
 	function gadget:Initialize()	
 		gadgetHandler:RegisterGlobal("UnitStoppedMoving", UnitStoppedMoving)
 		gadgetHandler:RegisterGlobal("UnitStartedMoving", UnitStartedMoving)
@@ -54,11 +47,14 @@ if gadgetHandler:IsSyncedCode() then
 		gadgetHandler:DeregisterGlobal("PelicanTransform", PelicanTransform)
 		gadgetHandler:DeregisterGlobal("PelicanReform", PelicanReform)
 	end
-	
-	function UnitStoppedMoving(unitID,unitDefID,teamID)
 		
+	function UnitStoppedMoving(unitID,unitDefID,teamID)
+				
 		if not airlos[unitDefID] then
-			airlos[unitDefID] = Spring.GetUnitSensorRadius(unitID,"airLos")
+			local this_airlos = Spring.GetUnitSensorRadius(unitID,"airLos")
+			if this_airlos and this_airlos > 0 then
+				airlos[unitDefID] = this_airlos
+			end
 		end
 		
 		if gunships[unitDefID] then
@@ -67,7 +63,10 @@ if gadgetHandler:IsSyncedCode() then
 			Spring.SetUnitSensorRadius(unitID,"airLos",min(airlos[unitDefID],50))
 		end
 		if not los[unitDefID] then
-			los[unitDefID] = Spring.GetUnitSensorRadius(unitID,"los")
+			local this_los = Spring.GetUnitSensorRadius(unitID,"los")
+			if this_los and this_los > 0 then
+				los[unitDefID] = this_los
+			end
 		end
 		
 		if gunships[unitDefID] then
@@ -85,22 +84,6 @@ if gadgetHandler:IsSyncedCode() then
 		
 		if los[unitDefID] then 
 			Spring.SetUnitSensorRadius(unitID,"los",los[unitDefID])
-		end	
-	end
-	
-	function gadget:UnitEnteredWater(unitID,unitDefID,teamID)
-		if amphibUnits[unitDefID] then
-			local success = Spring.MoveCtrl.SetMoveDef(unitID,"tankdh3")
-			GiveOrderToUnit(unitID, CMD_WAIT, {}, {}) -- hack to prevent units from getting stuck bc of pathfinder
-			GiveOrderToUnit(unitID, CMD_WAIT, {}, {})
-		end
-	end
-	
-	function gadget:UnitLeftWater(unitID,unitDefID,teamID)
-		if amphibUnits[unitDefID] then
-			local success = Spring.MoveCtrl.SetMoveDef(unitID,"tankdh4")
-			GiveOrderToUnit(unitID, CMD_WAIT, {}, {}) -- hack to prevent units from getting stuck bc of pathfinder
-			GiveOrderToUnit(unitID, CMD_WAIT, {}, {})
 		end
 	end
 	
