@@ -1,0 +1,130 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Core;
+	name=Burner;
+	description=Armored Assault Kbot;
+
+	//************************************************************
+	//  Categories
+	//**************
+	Category=CORE KBOT WEAPON MOBILE NOTAIR NOTSEA NOTSUB;
+	tedclass=KBOT;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=lost_burner;
+	unitnumber=91;
+	objectname=lost_burner.3do;
+	corpse=lost_burner_dead;
+	buildpic=lost_burner.png;
+	soundcategory=LOST_KBOT;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=2764; //WAS 5010
+	healtime=30;
+	BuildCostEnergy=2842;
+	BuildCostMetal=311;
+	buildtime=4654;
+	footprintx=2;
+	footprintz=2;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=0.8;
+	energyuse=0.8;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canattack=1;
+	canguard=1;
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+	upright=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementclass=KBOTSF2;
+	turnrate=940;
+	acceleration=0.1;
+	brakerate=0.15;
+	maxvelocity=1.1;
+	maxslope=14;
+	maxwaterdepth=21;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=450;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	Weapon1=TLL_FLAME;
+	nochasecategory=VTOL;
+	badtargetcategory=VTOL;
+	wpri_badtargetcategory=VTOL;
+	ExplodeAs=CORPYRO_BLAST;
+	SelfDestructAs=MEDIUM_BUILDING;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	firestandorders=1;
+	mobilestandorders=1;
+	standingfireorder=2;
+	standingmoveorder=1;
+	defaultmissiontype=Standby;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=1;
+	designation=KA-L8;
+	downloadable=1;
+	maneuverleashlength=640;
+	shootme=1;
+	smoothanim=1;
+	steeringmode=2;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	collisionVolumeType = box;
+	collisionVolumeScales =36 31 27;
+	collisionVolumeOffsets = 0 -1 1;
+	collisionVolumeTest = 1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+	[SFXTypes]
+	{
+		explosiongenerator0=custom:redflare;
+	}
+}

@@ -1,0 +1,110 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Lost;
+	name=Moho Mine;
+	description=Advanced Metal Extractor;
+	icontype=metal;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=Lost METAL STATIC NOWEAPON NOTAIR NOTSEA NOTSUB;
+	tedclass=METAL;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=Lost_moho_mine;
+	unitnumber=49;
+	objectname=Lost_moho_mine.3do;
+	corpse=Lost_moho_mine_dead;
+	buildpic=Lost_moho_mine.png;
+	soundcategory=ARM_MOHO;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=1573;
+	buildcostmetal=732;
+	buildcostenergy=4100;
+	buildtime=32750;
+	footprintx=5;
+	footprintz=5;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energyuse=300;
+	energystorage=0;
+	extractsmetal=0.006;
+
+	//************************************************************
+	//  Building
+	//************
+	buildangle=2048;
+	yardmap=yyoyy yoooy ooooo ooooo yyoyy;
+	activatewhenbuilt=1;
+	collisionVolumeType = CylY;
+	collisionVolumeScales = 54 45 54;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	onoffable=1;
+	canRepeat=0;
+	canMove=0;
+	canAttack=0;
+	canGuard=0;
+
+	//************************************************************
+	//  Movement
+	//************
+	maxslope=19;
+	maxwaterdepth=22;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=367.5;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeas=MEDIUM_BUILDINGEX;
+	selfdestructas=MEDIUM_BUILDING;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=0;
+	designation=AM-MME;
+	downloadable=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+}

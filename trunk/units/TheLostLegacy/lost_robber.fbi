@@ -1,0 +1,87 @@
+[UNITINFO]
+{
+	Name=Robber;
+	UnitName=lost_robber;
+	
+	//    Required Tags
+	BuildCostEnergy=23214;
+	BuildCostMetal=876;
+	BuildTime=41143;
+	Category=TLL VTOL CTRL_V TPORT LEVEL2 NOWEAPON NOTSUB ;
+	Description=Heavy Air Transport;
+	FootprintX=4;
+	FootprintZ=4;
+	MaxDamage=2764;
+	ObjectName=lost_robber;
+	Side=TLL;
+	SoundCategory=TLL_HVTOL;
+	TEDClass=VTOL;
+	
+	//    Movement
+	BrakeRate=2.5;
+	Acceleration=0.1;
+	CanMove=1;
+	MaxVelocity=3.5;
+	MaxSlope=10;
+	TurnRate=300;
+	CruiseAlt=80;
+	
+	//    Buildings
+	
+	//    Construction
+	Builder=0;
+	WorkerTime=0;
+	
+	//    Resources
+	EnergyMake=3;
+	EnergyStorage=0;
+	EnergyUse=3;
+	MetalStorage=0;
+	
+	//    Abilities
+	CanFly=1;
+	CanStop=1;
+	transmaxunits=6;
+	transportcapacity=15;
+	transportmass=15000;
+	transportsize=4;
+	ReleaseHeld=1;
+	AirStrafe=0;
+	transportUnloadMethod=2;
+	LoadingRadius=200;
+	
+	//    Sight/Radar
+	RadarDistance=0;
+	SightDistance=675;
+	
+	//    Weapons
+	Weapon1=Robber_taser;
+	WeaponMainDir1= 0 0 1;
+	MaxAngleDif1=150;//140 in 9.725
+	nochasecategory=VTOL;
+	badtargetcategory=VTOL;
+	wpri_badtargetcategory=VTOL;
+	onlytargetcategory1=NOTAIR;
+	Weapon2=Robber_GUN;
+	wpri_badTargetCategory=NOTAIR;
+	wsec_badTargetCategory=NOTAIR;
+	BadTargetCategory=NOTAIR;
+	ExplodeAs=BIG_UNITEX;
+	SelfDestructAs=BIG_UNIT;
+	
+	//    Tracks/Flares
+	
+	//    Watersettings
+	MaxWaterDepth=0;
+	
+	//    Misc
+	SmoothAnim=1;
+	Upright=1;
+	idletime=1200;
+	idleautoheal=5;
+	[SFXTypes]
+	{
+	explosiongenerator0=custom:TRANSPORTTRAIL;
+	explosiongenerator1=custom:FLAKFLARE;
+	}
+}

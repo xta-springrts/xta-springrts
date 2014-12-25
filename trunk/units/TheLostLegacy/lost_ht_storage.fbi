@@ -1,0 +1,108 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=lost;
+	name=High-Tech Storage;
+	description=Huge Storage Increase;
+	icontype=building;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=lost ht  NOWEAPON  NOTAIR NOTSUB STORAGE;
+	tedclass=ht;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=lost_ht_storage;
+	unitnumber=27;
+	objectname=lost_ht_storage.3do;
+	corpse=lost_ht_storage_dead;
+	buildpic=lost_ht_storage.png;
+	soundcategory=arm_ESTOR;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=12436;
+	buildcostmetal=1876;
+	buildcostenergy=4356;
+	buildtime=26710;
+	footprintx=8;
+	footprintz=8;
+	collisionVolumeType=CylY;
+	collisionVolumeScales=87 45 87;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=75000;
+	energystorage=1000000;
+
+	//************************************************************
+	//  Building
+	//************
+	buildangle=65535;
+	yardmap=yooy oooo oooo yooy;
+	activatewhenbuilt=1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canRepeat=0;
+	canMove=0;
+	canGuard=0;
+	canAttack=0;
+	//************************************************************
+	//  Movement
+	//************
+	maxslope=10;
+	maxwaterdepth=22;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=367.5;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeas=ESTOR_BUILDINGEX;
+	selfdestructas=CRAWL_BLASTSML;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=0;
+	designation=AE-ESF;
+	downloadable=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+	[SFXTypes]
+	{
+	explosiongenerator0=custom:Glow;
+	}
+}

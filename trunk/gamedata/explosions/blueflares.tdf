@@ -1,0 +1,112 @@
+[TinyBlue]
+{
+	usedefaultexplosions=0;	
+
+   [LARGEFLASH]
+   {
+	class = CBitmapMuzzleFlame;
+      
+	[properties]
+      	{
+         	dir = dir;
+         	colorMap=0.2 0.7 1.0 0.01 0.1 0.2 0.3 0.01 0 0 0 0.01; 
+          	size=3;
+          	length=17;
+          	sizeGrowth=0.75;
+          	ttl=15;
+          	frontOffset=0;
+          	sideTexture=muzzleside;
+          	frontTexture=muzzlefront;
+      	}
+   water=1;
+   air=1;
+   underwater=1;
+   ground=1;
+   count=1;
+   }
+	[smoke_Back]
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+			sizeGrowth=0.1;
+			sizeMod=1.0;
+			pos=0, 1, 3;
+			emitVector=dir;
+			gravity=0, 0.05, 0;
+         		colorMap=0.2 0.5 1.0 0.01 0.1 0.2 0.3 0.01 0 0 0 0.01; 
+			Texture=smoke;
+			airdrag=0.8;
+			particleLife=20;
+			particleLifeSpread=3;
+			numParticles=10;
+			particleSpeed=2;
+			particleSpeedSpread=12;
+			particleSize=0.3;
+			particleSizeSpread=0.1;
+			emitRot=0;
+			emitRotSpread=10;
+			directional=0;
+		}
+		air=1;
+		water=1;
+		ground=1;
+		count=1;
+	}
+}
+[TinyGreen]
+{
+	usedefaultexplosions=0;	
+
+   [LARGEFLASH]
+   {
+	class = CBitmapMuzzleFlame;
+      
+	[properties]
+      	{
+         	dir = dir;
+         	colorMap=0.2 1.0 0.7 0.01 0.1 0.3 0.2 0.01 0 0 0 0.01; 
+          	size=6;
+          	length=8;
+          	sizeGrowth=2;
+          	ttl=10;
+          	frontOffset=0;
+          	sideTexture=muzzleside;
+          	frontTexture=muzzlefront;
+      	}
+   water=1;
+   air=1;
+   underwater=1;
+   ground=1;
+   count=1;
+   }
+	[smoke_Back]
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+			sizeGrowth=0.1;
+			sizeMod=1.0;
+			pos=0, 1, 3;
+			emitVector=dir;
+			gravity=0, -0.333, 0;
+         		colorMap=0.2 1.0 0.5 0.1 0.1 0.3 0.2 0.1 0 0 0 0.01; 
+			Texture=smoke;
+			airdrag=0.8;
+			particleLife=40;
+			particleLifeSpread=3;
+			numParticles=10;
+			particleSpeed=2;
+			particleSpeedSpread=12;
+			particleSize=4;
+			particleSizeSpread=2;
+			emitRot=0;
+			emitRotSpread=10;
+			directional=0;
+		}
+		air=1;
+		water=1;
+		ground=1;
+		count=1;
+	}
+}

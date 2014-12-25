@@ -1,0 +1,129 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Arm;
+	name=Obscurer;
+	description=Mobile Radar Jammer;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=ARM TANK MOBILE NOWEAPON JAMMER NOTAIR NOTSEA NOTSUB;
+	tedclass=TANK;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=lost_obscurer;
+	unitnumber=40;
+	objectname=lost_obscurer.3do;
+	corpse=lost_obscurer_dead;
+	buildpic=lost_obscurer.png;
+	soundcategory=ARM_JAM;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=1132;
+	healtime=30;
+	buildcostmetal=232;
+	buildcostenergy=3141;
+	buildtime=14349;
+	footprintx=2;
+	footprintz=2;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=16;
+	energyuse=16;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	activatewhenbuilt=1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canguard=1;
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+	onoffable=1;
+	canfight=0;
+	canrepeat=0;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementclass=TANKSH2;
+	turnrate=505;
+	acceleration=0.35;
+	brakerate=0.12;
+	maxvelocity=1.9;
+	maxslope=16;
+	maxwaterdepth=0;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=360;
+	radardistancejam=750;//750
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeas=BIG_UNITEX;
+	selfdestructas=BIG_UNIT;
+	canattack=0; //added
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	mobilestandorders=1;
+	standingmoveorder=1;
+	defaultmissiontype=Standby;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=1;
+	designation=ARM-MRJ;
+	downloadable=1;
+	leavetracks=1;
+	maneuverleashlength=100; //640;
+	ovradjust=1;
+	shootme=1;
+	steeringmode=1;
+	threed=1;
+	trackoffset=3;
+	trackstrength=6;
+	trackstretch=1;
+	tracktype=StdTank;
+	trackwidth=24;
+	version=1.2;
+	zbuffer=1;
+	collisionVolumeType = box;
+	collisionVolumeScales =25 17 25;
+	collisionVolumeOffsets = 0 -1 0;
+	collisionVolumeTest = 1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+}

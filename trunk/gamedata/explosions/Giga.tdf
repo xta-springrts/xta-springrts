@@ -1,0 +1,295 @@
+[Giga]
+{
+	usedefaultexplosions=0;	
+	[spikes]
+	{
+		class=explspike;
+		[properties]
+		{
+			dir=-3 r6,-3 r6,-3 r6;
+			width=22;
+			length=1; //60;
+			alpha=1;
+			alphadecay=0.8;
+			color=0.2, 0.5, 1.0;
+			alwaysVisible=0;
+
+		}
+		air=1;
+		water=1;
+		ground=1;
+  		count=4; 
+	}
+[exhale]
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+		sizeGrowth=0.16;
+		sizeMod=1.0;
+		pos=0, 1, 0; 
+		gravity=0, 0, 0;
+		
+
+		Texture=smoke;
+		airdrag=0.8;
+		colorMap=0.2 0.5 1.0 0.1 0.15 0.15 0.3 0.2 0.0 0.0 0.0 0.01;
+
+		particleLifeSpread=4; 
+		particleSpeedSpread=1;  
+		particleSizeSpread=1;   
+		
+		particleLife=4;
+		numParticles=2; 
+		particleSpeed=2; 
+		particleSize=6;
+		
+		
+		emitVector=0, 1, 0; 
+		emitRot=40;//80
+		emitRotSpread=5; 
+		directional=0; 
+		alwaysVisible=1;
+
+		}
+	air=1;
+	water=1;
+	ground=1;
+	count=1;
+	}
+
+[exhale2]
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+		sizeGrowth=0.16;
+		sizeMod=1.0;
+		pos=0, 1, 0; 
+		gravity=0, 0, 0;
+		
+
+		Texture=smoke;
+		airdrag=0.8;
+		colorMap=0.4 0.5 1.0 0.1 0.1 0.1 0.2 0.2 0.0 0.0 0.0 0.01;
+
+		particleLifeSpread=4; 
+		particleSpeedSpread=1;  
+		particleSizeSpread=1;   
+		
+		particleLife=4;
+		numParticles=2; 
+		particleSpeed=2; 
+		particleSize=6;
+		
+		
+		emitVector=0, 1, 0; 
+		emitRot=40;//80
+		emitRotSpread=5; 
+		directional=0; 
+		alwaysVisible=1;
+
+		}
+	air=1;
+	water=1;
+	ground=1;
+	count=1;
+	}
+}
+[GigaGREEN]
+{
+	usedefaultexplosions=0;	
+	[spikes]
+	{
+		class=explspike;
+		[properties]
+		{
+			dir=-6 r12,-6 r12,-6 r12;
+			width=22;
+			length=1; //60;
+			alpha=1;
+			alphadecay=0.2;
+			color=0.2, 1.0, 0.5;
+			alwaysVisible=0;
+
+		}
+		air=1;
+		water=1;
+		ground=1;
+  		count=4; 
+	}
+[exhale]
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+		sizeGrowth=0.16;
+		sizeMod=1.0;
+		pos=0, 1, 0; 
+		gravity=0, 0, 0;
+		
+
+		Texture=smoke;
+		airdrag=0.5;
+		colorMap=0.2 1.0 0.5 0.1 0.15 0.3 0.15 0.2 0.0 0.0 0.0 0.01;
+
+		particleLifeSpread=4; 
+		particleSpeedSpread=1;  
+		particleSizeSpread=1;   
+		
+		particleLife=24;
+		numParticles=2; 
+		particleSpeed=8; 
+		particleSize=12;
+		
+		
+		emitVector=0, 1, 0; 
+		emitRot=40;//80
+		emitRotSpread=5; 
+		directional=0; 
+		alwaysVisible=1;
+
+		}
+	air=1;
+	water=1;
+	ground=1;
+	count=1;
+	}
+
+[exhale2]
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+		sizeGrowth=0.16;
+		sizeMod=1.0;
+		pos=0, 1, 0; 
+		gravity=0, 0, 0;
+		
+
+		Texture=smoke;
+		airdrag=0.5;
+		colorMap=0.2 1.0 0.5 0.1 0.15 0.3 0.15 0.2 0.0 0.0 0.0 0.01;
+
+		particleLifeSpread=4; 
+		particleSpeedSpread=1;  
+		particleSizeSpread=1;   
+		
+		particleLife=24;
+		numParticles=2; 
+		particleSpeed=8; 
+		particleSize=12;
+		
+		
+		emitVector=0, 1, 0; 
+		emitRot=40;//80
+		emitRotSpread=5; 
+		directional=0; 
+		alwaysVisible=1;
+
+		}
+	air=1;
+	water=1;
+	ground=1;
+	count=1;
+	}
+}
+
+[GigaGREENSMALL]
+{
+	usedefaultexplosions=0;	
+	[spikes]
+	{
+		class=explspike;
+		[properties]
+		{
+			dir=-3 r6,-3 r6,-3 r6;
+			width=22;
+			length=1; //60;
+			alpha=1;
+			alphadecay=0.2;
+			color=0.2, 1.0, 0.5;
+			alwaysVisible=0;
+
+		}
+		air=1;
+		water=1;
+		ground=1;
+  		count=4; 
+	}
+[exhale]
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+		sizeGrowth=0.16;
+		sizeMod=1.0;
+		pos=0, 1, 0; 
+		gravity=0, 0, 0;
+		
+
+		Texture=smoke;
+		airdrag=0.5;
+		colorMap=0.2 1.0 0.5 0.1 0.15 0.3 0.15 0.2 0.0 0.0 0.0 0.01;
+
+		particleLifeSpread=4; 
+		particleSpeedSpread=1;  
+		particleSizeSpread=1;   
+		
+		particleLife=12;
+		numParticles=2; 
+		particleSpeed=6; 
+		particleSize=8;
+		
+		
+		emitVector=0, 1, 0; 
+		emitRot=40;//80
+		emitRotSpread=5; 
+		directional=0; 
+		alwaysVisible=1;
+
+		}
+	air=1;
+	water=1;
+	ground=1;
+	count=1;
+	}
+
+[exhale2]
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+		sizeGrowth=0.16;
+		sizeMod=1.0;
+		pos=0, 1, 0; 
+		gravity=0, 0, 0;
+		
+
+		Texture=smoke;
+		airdrag=0.5;
+		colorMap=0.2 1.0 0.5 0.1 0.15 0.3 0.15 0.2 0.0 0.0 0.0 0.01;
+
+		particleLifeSpread=4; 
+		particleSpeedSpread=1;  
+		particleSizeSpread=1;   
+		
+		particleLife=12;
+		numParticles=2; 
+		particleSpeed=6; 
+		particleSize=8;
+		
+		
+		emitVector=0, 1, 0; 
+		emitRot=40;//80
+		emitRotSpread=5; 
+		directional=0; 
+		alwaysVisible=1;
+
+		}
+	air=1;
+	water=1;
+	ground=1;
+	count=1;
+	}
+}

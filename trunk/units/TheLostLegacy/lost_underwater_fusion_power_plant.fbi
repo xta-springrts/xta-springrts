@@ -1,0 +1,106 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Core;
+	name=Underwater Fusion Power Plant;
+	description=Produces Energy;
+	icontype=sea;
+
+	//************************************************************
+	//  Categories
+	//**************
+	Category=CORE ENERGY NOWEAPON NOTAIR NOTSUB;
+	tedclass=ENERGY;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=lost_underwater_fusion_power_plant;
+	unitnumber=196;
+	objectname=lost_underwater_fusion_power_plant.3do;
+	corpse=lost_underwater_fusion_power_plant_dead;
+	buildpic=lost_underwater_fusion_power_plant.png;
+	soundcategory=CORE_UWFUSION;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=3500;
+	buildcostmetal=3123;
+	buildcostenergy=31349;
+	buildtime=84838;
+	footprintx=6;
+	footprintz=4;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=780;
+	energyuse=0;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	buildangle=8192;
+	YardMap=oooooooooooooooooooooooo;
+	activatewhenbuilt=1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canRepeat=0;
+	canMove=0;
+	canAttack=0;
+	canGuard=0;
+	
+	//************************************************************
+	//  Movement
+	//************
+	maxslope=26;
+	maxwaterdepth=255;
+	minwaterdepth=40;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=192.5;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeas=CRAWL_BLAST; 
+	selfdestructas=armmine5; 
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=0;
+	designation=EF-UW2;
+	downloadable=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+}

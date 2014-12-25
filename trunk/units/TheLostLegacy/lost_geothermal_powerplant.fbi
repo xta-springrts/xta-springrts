@@ -1,0 +1,115 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Lost;
+	name=Geothermal Metal Maker;
+	description=Produces Metal and Energy;
+	icontype=building;
+
+	//************************************************************
+	//  Categories
+	//**************
+	Category=Lost ENERGY NOWEAPON NOTAIR NOTSUB;
+	tedclass=ENERGY;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=Lost_geothermal_powerplant;
+	objectname=Lost_geothermal_powerplant.3do;
+	corpse=Lost_geothermal_powerplant_dead;
+	buildpic=Lost_geothermal_powerplant.png;
+	soundcategory=Lost_GEO;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=1321;
+	buildcostmetal=564;
+	buildcostenergy=10375;
+	buildtime=14875;
+	footprintx=4;
+	footprintz=4;
+
+	//************************************************************
+	//  Resources
+	//*************
+	EnergyMake=250;
+	EnergyStorage=300;
+	EnergyUse=220;
+	MakesMetal=4.5;
+	MetalStorage=100;
+
+	//************************************************************
+	//  Building
+	//************
+	buildangle=32768;
+	yardmap=GGGGGGGGGGGGGGGG;
+	activatewhenbuilt=1;
+	collisionVolumeType=Box;
+	collisionVolumeScales=65 45 60;
+	collisionVolumeOffsets=0 -3 0;
+	collisionVolumeTest = 1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canRepeat=0;
+	canMove=0;
+	canAttack=0;
+	canGuard=0;
+	OnOffable=1;
+	ActivateWhenBuilt=1;
+	
+	//************************************************************
+	//  Movement
+	//************
+	maxslope=30;
+	maxwaterdepth=0;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=367.5;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeas=MEDIUM_BUILDING;
+	selfdestructas=armmine5;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=0;
+	designation=EG-9;
+	downloadable=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+	
+	[SFXTypes]
+	{
+	explosiongenerator0=custom:GlowSmall;
+	}
+}

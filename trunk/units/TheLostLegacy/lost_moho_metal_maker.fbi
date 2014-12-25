@@ -1,0 +1,113 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=lost;
+	name=Moho Metal Maker;
+	description=Converts Energy into Metal;
+	icontype=metal;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=lost METAL STATIC NOWEAPON NOTAIR NOTSEA NOTSUB;
+	tedclass=METAL;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=lost_moho_metal_maker;
+	unitnumber=268;
+	objectname=lost_moho_metal_maker.3do;
+	corpse=lost_moho_metal_maker_dead;
+	buildpic=lost_moho_metal_maker.png;
+	soundcategory=arm_MAKER;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=400;
+	buildcostmetal=0;
+	buildcostenergy=9350;
+	buildtime=11660;
+	footprintx=4;
+	footprintz=4;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energyuse=960;
+	energystorage=0;
+	makesmetal=16;
+
+	//************************************************************
+	//  Building
+	//************
+	buildangle=8192;
+	yardmap=yooy oooo oooo yooy;
+	activatewhenbuilt=1;
+	collisionVolumeType=CylY;
+	collisionVolumeScales=60 70 60;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	onoffable=1;
+	canRepeat=0;
+	canMove=0;
+	canAttack=0;
+	canGuard=0;
+
+	//************************************************************
+	//  Movement
+	//************
+	maxslope=10;
+	maxwaterdepth=28; //was 255, 0// so that water does not overflow the wall
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=367.5;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeas=ATOMIC_BLASTSML;
+	selfdestructas=ATOMIC_BLAST;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=0;
+	designation=AEM-MEM;
+	downloadable=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+	
+	[SFXTypes]
+	{
+	explosiongenerator0=custom:GlowSmall;
+	explosiongenerator1=custom:ReactorSequence;
+	}
+}

@@ -1,0 +1,124 @@
+[LIGHTNING_Commander]
+{
+	usedefaultexplosions=0;	
+	[groundflash]
+	{
+		flashSize = 60.0;
+		flashAlpha = 2;
+		circleGrowth = 0.1;
+		circleAlpha = 0.86;
+		ttl = 7;
+		color = 0.3, 0.9, 0.9;
+	}
+	[spikes]
+	{
+		class=explspike;
+		[properties]
+		{
+			dir=-45 r90,-45 r90,-45 r90;
+			width=8; //9;
+			length=0.95; //1;
+			alpha=0.7;
+			alphadecay=0.1 r0.3;
+		color = 0.3, 0.9, 0.9;
+
+		}
+		air=1;
+		water=1;
+		ground=1;
+  		count=7; 
+	}
+[Spark_sprey]
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+		sizeGrowth=0;
+		sizeMod=1.0;
+		pos=0, 2, 0; 
+		gravity=0, -0.06, 0; 
+		ColorMap=1 1 1 0.01   0.3 0.3 0.9 0.01   0.3 0.3 0.9 0.01; 
+		Texture=electricspark;
+		airdrag=0.95;
+		
+		particleLifeSpread=0.3; //random decay//
+		particleSpeedSpread=3;  //random speed//
+		
+		particleLife=27;
+		numParticles=23; 
+		particleSpeed=7.1;
+		particleSize=3.1;
+		
+		
+		emitVector=dir; //direction of particles//
+		emitRot=20;
+		emitRotSpread=45; 
+		directional=1; 
+		}
+	air=1;
+	water=0;
+	ground=1;
+	count=1;
+	}
+[Spark_sprey_wide]
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+		sizeGrowth=0;
+		sizeMod=1.0;
+		pos=0, 2, 0; 
+		gravity=0, -0.06, 0;  //middle = Y axis//
+		ColorMap=1 1 1 0.01   0.3 0.3 0.9 0.01   0.3 0.3 0.9 0.01; 
+		Texture=electricspark;
+		airdrag=0.95;
+		
+		particleLifeSpread=10; //random decay//
+		
+		particleLife=27; 
+		numParticles=23; 
+		particleSpeed=10.1;
+		particleSize=3.1;
+		
+		
+		emitVector=dir; 
+		emitRot=18; //angle verticly//
+		emitRotSpread=60; //angle spread width horosontaly//
+		directional=1; //forces particles in direction of weapon//
+		}
+	air=1;
+	water=0;
+	ground=1;
+	count=1;
+	}
+[burnstuff]
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+		sizeGrowth=0;
+		sizeMod=1.0;
+		pos=0, 0, 0; 
+		emitVector=0, 1, 0;
+	      gravity=0, -0.4, 0;  
+		ColorMap=1 1 1 0.01   0.3 0.3 0.9 0.01   0.3 0.3 0.9 0.01; 
+		Texture=electricspark;
+		airdrag=0.91;
+		particleLife=8;
+		particleLifeSpread=2;
+		numParticles=12;
+		particleSpeed=10.5;
+		particleSpeedSpread=1.8;
+		particleSize=0.9;
+		particleSizeSpread=2.4;
+		emitRot=30;
+		emitRotSpread=55;
+		directional=1;
+		alwaysVisible=1;
+		}
+	air=1;
+	water=1;
+	ground=1;
+	count=1;
+	}
+}

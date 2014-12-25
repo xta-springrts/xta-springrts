@@ -1,0 +1,83 @@
+[UNITINFO]
+{
+	Name=Dreadnought;
+	UnitName=Lost_Dreadnought;
+	
+	//    Required Tags
+	BuildCostEnergy=43875;
+	BuildCostMetal=3821;
+	BuildTime=63145;
+	Category=TLL KBOT LEVEL3 WEAPON NOTAIR NOTSUB CTRL_W;
+	Description=Heavy Assault Kbot;
+	FootprintX=3;
+	FootprintZ=3;
+	MaxDamage=15800;
+	ObjectName=Lost_Dreadnought;
+	buildpic=lost_Dreadnought.png;
+	Side=TLL;
+	SoundCategory=KROGOTH;
+	TEDClass=KBOT;
+	
+	//    Movement
+	BrakeRate=0.15;
+	MovementClass=TANKSH3;
+	Acceleration=0.06;
+	CanMove=1;
+	MaxVelocity=0.85;
+	MaxSlope=14;
+	TurnRate=950;
+	
+	//    Buildings
+	
+	//    Construction
+	Builder=0;
+	WorkerTime=0;
+	
+	//    Resources
+	EnergyMake=1.8;
+	EnergyStorage=0;
+	EnergyUse=0.8;
+	MetalStorage=0;
+	
+	//    Abilities
+	CanAttack=1;
+	CanStop=1;
+	
+	//    Sight/Radar
+	RadarDistance=0;
+	SightDistance=550;
+	
+	//    Weapons
+	Weapon1=DreadRifle;
+	Weapon2=CORTRUCK_MISSILE;
+	Weapon3=DREAD_BOLT;
+	Weapon4=Dread_Rocket;
+	wpri_badTargetCategory=VTOL;
+	BadTargetCategory=VTOL;
+	explodeas=CRAWL_BLASTSML;
+	selfdestructas=armmine5;
+	NoChaseCategory=VTOL;
+	
+	//    Tracks/Flares
+	//LeaveTracks=1;
+	//TrackOffset=8;
+	//TrackStrength=10;
+	//TrackStretch=1;
+	//TrackType=KbotTrack;
+	//TrackWidth=40;
+	
+	//    Watersettings
+	MaxWaterDepth=21;
+	
+	//    Misc
+	Corpse=Lost_Dreadnought_dead;
+	SmoothAnim=1;
+	Upright=1;
+	idletime=1200;
+	idleautoheal=5;
+	[SFXTypes]
+	{
+	explosiongenerator0=custom:Giga;
+	explosiongenerator1=custom:TinyBlue;
+	}
+}

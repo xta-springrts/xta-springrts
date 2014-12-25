@@ -1,0 +1,114 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Core;
+	name=Cold Fusion Power Plant;
+	description=Produces Energy;
+	icontype=chfusion;
+
+	//************************************************************
+	//  Categories
+	//**************
+	Category=CORE ENERGY NOWEAPON NOTAIR NOTSUB;
+	tedclass=ENERGY;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=lost_cold_fusion_reactor;
+	unitnumber=106;
+	objectname=lost_cold_fusion_reactor.3do;
+	corpse=lost_cold_fusion_reactor_dead;
+	buildpic=lost_cold_fusion_reactor.png;
+	soundcategory=LOST_FUS;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=4765;
+	buildcostmetal=12123;
+	buildcostenergy=174662;
+	buildtime=236275;
+	footprintx=5;
+	footprintz=5;
+	collisionVolumeType = CylY;
+	collisionVolumeScales =54 61 54;
+	collisionVolumeOffsets = 0 10 0;
+	collisionVolumeTest = 1;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=4150;
+	energyuse=0;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	buildangle=16384;
+	yardmap=yyoooyy ooooooo ooooooo ooooooo ooooooo ooooooo yyoooyy;
+	activatewhenbuilt=1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canRepeat=0;
+	canMove=0;
+	canAttack=0;
+	canGuard=0;
+	
+	//************************************************************
+	//  Movement
+	//************
+	maxslope=10;
+	maxwaterdepth=33;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=367.5;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeas=GIANT_BLAST;
+	selfdestructas=armmine5;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=0;
+	designation=EF-5;
+	downloadable=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+	[SFXTypes]
+	{
+		explosiongenerator0=custom:ReactorTINYSequence;
+		explosiongenerator1=custom:ReactorBIgSequence;
+	}
+
+}

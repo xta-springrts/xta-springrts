@@ -1,0 +1,125 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Lost;
+	name=Odin's Mallet;
+	description=Long Range Pulse Cannon;
+	icontype=building;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=Lost STATIC STRATEGIC WEAPON NOTAIR NOTSEA NOTSUB;
+	tedclass=DEFENSIVE;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=lost_odin_mallet;
+	objectname=lost_odin_mallet.3do;
+	corpse=lost_odin_mallet_dead;
+	buildpic=lost_odin_mallet.png;
+	soundcategory=Arm_BRTHA;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=3312;
+	healtime=11;
+	buildcostmetal=2043;
+	buildcostenergy=30326;
+	buildtime=41344;
+	footprintx=4;
+	footprintz=4;
+	//usePieceCollisionVolumes=1;
+	//collisionVolumeScales=38 74 38;
+	//collisionVolumeOffsets=0 0 0;
+	//collisionVolumeTest= 1;
+	//collisionVolumeType=CylY;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=0;
+	energyuse=0;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	buildangle=4096;
+	YardMap=oooo oooo oooo oooo;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canattack=1;
+	canguard=1;
+	canstop=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	maxslope=10;
+	MaxWaterDepth=33;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=467.5;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=ODIN_GUN;
+	//weapon2=odin_mallet_Lightning;
+	//weapon3=odin_mallet_Lightning;
+	wpri_badtargetcategory=VTOL;
+	onlytargetcategory1=NOTAIR;
+	explodeas=CRAWL_BLASTSML;
+	selfdestructas=armmine5;
+
+	//************************************************************
+	//  Orders
+	//**********
+	firestandorders=1;
+	standingfireorder=2;
+	defaultmissiontype=GUARD_NOMOVE;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=0;
+	designation=Lost-LRC;
+	downloadable=1;
+	shootme=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+	[SFXTypes]
+	{
+	explosiongenerator0=custom:crazyFLARE;
+	explosiongenerator1=custom:crazyFLARE;
+	}
+	[customParams] 
+	{
+		canAreaAttack=1;
+	}
+}

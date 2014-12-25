@@ -1,0 +1,130 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=lost;
+	name=Adv. Construction Kbot;
+	description=Tech Level 2;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=lost KBOT CONSTR MOBILE NOWEAPON STORAGE NOTAIR NOTSEA NOTSUB;
+	tedclass=CONSTR;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=lost_adv_construction_kbot;
+	unitnumber=3;
+	objectname=lost_adv_construction_kbot.3do;
+	corpse=lost_adv_construction_kbot_dead;
+	buildpic=lost_adv_construction_kbot.png;
+	soundcategory=core_CKBOT;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=876;
+	healtime=53;
+	buildcostmetal=365;
+	buildcostenergy=6534;
+	buildtime=12074;
+	footprintx=2;
+	footprintz=2;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalmake=0.75;
+	metalstorage=200;
+	energymake=25;
+	energyuse=0.1;
+	energystorage=200;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=1;
+	builddistance=150;//170, edited by Jools
+	workertime=160;
+	RepairSpeed=160;
+	ReclaimSpeed=160;
+	TerraformSpeed=320;//speed up terraforming
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canguard=1;
+	canmove=1;
+	canpatrol=1;
+	canreclamate=1;
+	canFight=1;
+	canstop=1;
+	upright=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementclass=KBOTSS2;
+	turnrate=1010;
+	acceleration=1.8;
+	brakerate=14.0;
+	maxvelocity=1.2;
+	maxslope=20;
+	maxwaterdepth=25;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=373.5;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeas=NANO_UNITEX;
+	selfdestructas=NANO_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	mobilestandorders=1;
+	standingmoveorder=1;
+	defaultmissiontype=Standby;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=1;
+	designation=lost-ACK1;
+	downloadable=1;
+	maneuverleashlength=640;
+	shootme=1;
+	smoothanim=1;
+	steeringmode=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	pieceTrailCEGTag=NanoDebree;//bleh
+	pieceTrailCEGRange = 2;
+	collisionVolumeType = box;
+	collisionVolumeScales =25 22 25;
+	collisionVolumeOffsets = 0 -1 0;
+	collisionVolumeTest = 1;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+	[SFXTypes]
+	{
+	explosiongenerator0=custom:Nano;
+	}
+}

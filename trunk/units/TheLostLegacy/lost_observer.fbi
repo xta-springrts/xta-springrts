@@ -1,0 +1,125 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Arm;
+	name=Observer;
+	description=Mobile Radar Kbot;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=ARM KBOT MOBILE NOWEAPON RADAR NOTAIR NOTSEA NOTSUB;
+	tedclass=KBOT;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=lost_observer;
+	unitnumber=168;
+	objectname=lost_observer.3do;
+	corpse=lost_observer_dead;
+	buildpic=lost_observer.png;
+	soundcategory=ARM_KBOT;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=390;
+	healtime=30;
+	buildcostmetal=135;
+	buildcostenergy=1765;
+	buildtime=3800;
+	footprintx=2;
+	footprintz=2;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=15;
+	energyuse=15;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	activatewhenbuilt=1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canguard=1;
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+	onoffable=1;
+	upright=1;
+	canfight=0;
+	canrepeat=0;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementclass=KBOTSS2;
+	turnrate=1010;
+	acceleration=0.45;
+	brakerate=0.18;
+	maxvelocity=1.222;
+	maxslope=32;
+	maxwaterdepth=0;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=360;
+	radardistance=2500;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	DamageModifier=0.75;
+	explodeas=BIG_UNITEX;
+	selfdestructas=BIG_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	mobilestandorders=1;
+	standingmoveorder=1;
+	defaultmissiontype=Standby;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	ai_limit=limit ARMMARK 2;
+	bmcode=1;
+	designation=ARM-MRB;
+	downloadable=1;
+	maneuverleashlength=640;
+	shootme=1;
+	smoothanim=1;
+	steeringmode=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	collisionVolumeType = box;
+	collisionVolumeScales =25 22 25;
+	collisionVolumeOffsets = 0 -1 0;
+	collisionVolumeTest = 1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+}

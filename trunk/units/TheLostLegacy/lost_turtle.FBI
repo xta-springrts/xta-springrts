@@ -1,0 +1,78 @@
+[UNITINFO]
+{
+	Name=Turtle;
+	UnitName=lost_turtle;
+	
+	//    Required Tags
+	buildcostmetal=2037;
+	buildcostenergy=83265;
+	BuildTime=98025;
+	Category=TLL SPECIAL DEFENSIVE WEAPON LEVEL3 NOTAIR NOTSUB ;
+	Description=Mobile Missile Defense;
+	FootprintX=3;
+	FootprintZ=3;
+	MaxDamage=3595;
+	ObjectName=lost_turtle;
+	Side=TLL;
+	SoundCategory=ARM_KBOT;
+	TEDClass=TANK;
+	
+	//    Movement
+	BrakeRate=0.027;
+	MovementClass=TANKSH3;
+	Acceleration=0.015;
+	CanMove=1;
+	MaxVelocity=0.5;
+	MaxSlope=10;
+	TurnRate=430;
+	
+	//    Buildings
+	
+	//    Construction
+	Builder=0;
+	WorkerTime=0;
+	
+	//    Resources
+	EnergyStorage=0;
+	EnergyUse=0;
+	MetalStorage=0;
+	
+	//    Abilities
+	CanStop=1;
+	
+	//    Sight/Radar
+	RadarDistance=0;
+	SightDistance=453.75;
+	
+	//    Weapons
+	weapon1=ARMSCAB_WEAPON;
+	wpri_badTargetCategory=VTOL;
+	BadTargetCategory=VTOL;
+	DamageModifier=0.5;
+	ExplodeAs=ATOMIC_BLAST;
+	SelfDestructAs=CRAWL_BLASTSML;
+	NoChaseCategory=VTOL;
+	
+	//    Tracks/Flares
+	//LeaveTracks=1;
+	//TrackOffset=0;
+	//TrackStrength=10;
+	//TrackStretch=1;
+	//TrackType=SumoTrack;
+	//TrackWidth=45;
+	
+	//    Watersettings
+	MaxWaterDepth=200;
+	
+	//    Misc
+	Corpse=lost_turtle_dead;
+	SmoothAnim=1;
+	idletime=1200;
+	idleautoheal=5;
+	collisionVolumeType = box;
+	collisionVolumeScales =30 25 40;
+	collisionVolumeOffsets = 0 -1 0;
+	collisionVolumeTest = 1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+}

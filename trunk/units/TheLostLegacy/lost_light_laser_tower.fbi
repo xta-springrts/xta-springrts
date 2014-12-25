@@ -1,0 +1,120 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=lost;
+	name=Light Tesla Tower;
+	description=Light Tesla Tower;
+	icontype=building;
+
+	//************************************************************
+	//  Categories
+	//**************
+	Category=lost DEFENSIVE WEAPON  NOTAIR NOTSUB;
+	tedclass=DEFENSIVE;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=lost_light_laser_tower;
+	objectname=lost_light_laser_tower.3do;
+	corpse=lost_light_laser_tower_dead;
+	buildpic=lost_light_laser_tower.png;
+	soundcategory=LLT;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=1205;
+	healtime=11;
+	buildcostmetal=289;//reduce by 10 percent
+	buildcostenergy=702;
+	buildtime=5127;
+	footprintx=2;
+	footprintz=2;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energyuse=0;
+	energystorage=100;
+	energymake=9;
+
+	//************************************************************
+	//  Building
+	//************
+	buildangle=32768;
+	yardmap=oooo;
+	collisionVolumeType = CylY;
+	collisionVolumeScales =28 62 28;
+	collisionVolumeOffsets = 0 1.5 0;
+	collisionVolumeTest = 1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canattack=1;
+	canguard=1;
+	canstop=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	maxslope=14;
+	maxwaterdepth=22;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=460;
+	radardistance=0;
+	losemitheight=56;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	Weapon1=Tower_Lightning;
+	badtargetcategory=VTOL;
+	wpri_badtargetcategory=VTOL;
+	explodeas=MEDIUM_BUILDINGEX;
+	selfdestructas=MEDIUM_BUILDING;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	firestandorders=1;
+	standingfireorder=2;
+	defaultmissiontype=GUARD_NOMOVE;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=0;
+	designation=F-L44;
+	downloadable=1;
+	shootme=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	pieceTrailCEGTag=NanoDebree;//bleh
+	pieceTrailCEGRange = 1;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+	[SFXTypes]
+	{
+	explosiongenerator0=custom:ReactorTINYSequence;
+	explosiongenerator1=custom:tllDGUNTRAIL;
+	}
+
+}

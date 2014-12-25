@@ -1,0 +1,9 @@
+.cob bugs
+Tic? or aiming issues-
+
+Texture errors.
+Redundant textures grande! and certain models missing shaded ota textures that does not exist.
+EGG SHELL or compressor .cob error.
+Boats certainly will have issues as not entirely touched as well as most land units.
+
+Not all units have been added and certain roles are missing atm.

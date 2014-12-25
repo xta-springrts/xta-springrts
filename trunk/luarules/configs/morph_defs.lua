@@ -73,6 +73,32 @@ local morphDefs = {
 		xp = .25
 		--tech = 2
 	},
+
+	lost_u0commander = {
+		into = 'lost_ucommander',
+		time = 30,
+		--xp = .015
+		--tech = 2
+	}, 
+	lost_ucommander = {
+		into = 'lost_u2commander',
+		time = 120,
+		xp = .15
+		--tech = 2 THIS IS THE PUPOSELY BUGGED PARSER DO NOT FORGET NEVER FORGET!
+	}, 
+	lost_u2commander = {
+		into = 'lost_u3commander',
+		time = 30,
+		xp = .1
+		--tech = 2
+	},
+	lost_u3commander = {
+		into = 'lost_u4commander',
+		time = 120,
+		xp = .25
+		--tech = 2
+	},
+
 	arm_decoy_commander = {
 		into = 'arm_decoy_ucommander',
 		time = 30,

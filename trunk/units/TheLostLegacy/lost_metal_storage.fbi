@@ -1,0 +1,107 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=lost;
+	name=Metal Storage;
+	description=Increases Metal Storage  by 7,500;
+	icontype=metal;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=lost METAL  NOWEAPON  NOTAIR NOTSUB STORAGE;
+	tedclass=METAL;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=lost_metal_storage;
+	objectname=lost_metal_storage.3do;
+	corpse=lost_metal_storage_dead;
+	buildpic=lost_metal_storage.png;
+	soundcategory=arm_MSTOR;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=1329;
+	buildcostmetal=214;
+	buildcostenergy=476;
+	buildtime=2925;
+	footprintx=4;
+	footprintz=5;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=7500;
+	energyuse=0;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	buildangle=4096;
+	yardmap=yooy oooo oooo oooo yooy;
+	activatewhenbuilt=1;
+	collisionVolumeType=CylY;
+	collisionVolumeScales=60 32 62;
+	collisionVolumeOffsets=0 0 0;
+	//collisionVolumeTest = 1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canRepeat=0;
+	canMove=0;
+	canAttack=0;
+	canGuard=0;
+	
+	//************************************************************
+	//  Movement
+	//************
+	maxslope=15;
+	maxwaterdepth=22;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=367.5;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeas=ESTOR_BUILDINGEX;
+	selfdestructas=ESTOR_BUILDINGEX; //was CRAWL_BLASTSML modded by Gizmo//
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=0;
+	designation=AM-MSF;
+	downloadable=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+}

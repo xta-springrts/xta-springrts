@@ -1,0 +1,128 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Core;
+	name=Orc;
+	description=Heavy Battle Sub;
+	icontype=sea;
+
+	//************************************************************
+	//  Categories
+	//**************
+	Category=CORE SUB MOBILE WEAPON SONAR NOTLAND NOTAIR NOTSEA;
+	tedclass=SUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=lost_orc;
+	unitnumber=277;
+	objectname=lost_orc.3do;
+	corpse=lost_orc_dead;
+	buildpic=lost_orc.png;
+	soundcategory=CORE_SUB;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=3325; //was 5400//
+	healtime=10;
+	buildcostmetal=2431; //was 3850//
+	buildcostenergy=16940;
+	buildtime=44567;
+	footprintx=3;
+	footprintz=3;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=0.5;
+	energyuse=15;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	activatewhenbuilt=1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canattack=1;
+	canguard=1;
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+	floater=1;
+	upright=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementclass=BOATSUB;
+	turnrate=270;
+	acceleration=0.07;
+	brakerate=0.08;
+	maxvelocity=1.525; //was 1.425//
+	minwaterdepth=1;// not used, minWaterDepth in movedef used instead (36)
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=200; //was 768//
+	sonardistance=1000; //was 658//
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=LEVI_TORPEDO;
+	nochasecategory=VTOL;
+	badtargetcategory=VTOL;
+	wpri_badtargetcategory=VTOL;
+	explodeas=BIG_UNITEX;
+	selfdestructas=BIG_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	firestandorders=1;
+	mobilestandorders=1;
+	standingfireorder=1;
+	standingmoveorder=1;
+	defaultmissiontype=Standby;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=1;
+	designation=ASD-SK;
+	downloadable=1;
+	maneuverleashlength=640;
+	shootme=1;
+	steeringmode=1;
+	threed=1;
+	version=1.2;
+	waterline=40;
+	zbuffer=1;
+	collisionVolumeType = box;
+	collisionVolumeScales =45 18 45;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+}

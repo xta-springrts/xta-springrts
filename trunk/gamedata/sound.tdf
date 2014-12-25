@@ -1882,3 +1882,149 @@
 	count0=count6;
 	canceldestruct=cancel2;
 }
+
+[LOST_KBOT]		
+	{
+	select1=tllunitok;
+	ok1=tllkbotmove;
+	arrived1=kbarmstp;
+	cant1=wearoff;
+	underattack=tllWarning;
+	count5=tllcount;
+	count4=tllcount;
+	count3=tllcount;
+	count2=tllcount;
+	count1=tllcount;
+	count0=tllcount;
+	canceldestruct=cancel2;
+
+	}
+[LOST_TIDE]		
+	{
+	select1=tlltidal;
+	underattack=tllWarning;
+	count5=tllcount;
+	count4=tllcount;
+	count3=tllcount;
+	count2=tllcount;
+	count1=tllcount;
+	count0=tllcount;
+	canceldestruct=cancel2;
+	}
+[LOST_SUB]		
+	{ 
+	select1=sucorsel;
+	ok1=tllsub;
+	arrived1=tllsub2;
+	cant1=wearoff;
+	underattack=tllWarning;
+	count5=tllcount;
+	count4=tllcount;
+	count3=tllcount;
+	count2=tllcount;
+	count1=tllcount;
+	count0=tllcount;
+	canceldestruct=cancel2;
+	}
+[LOST_LVTOL]		//light vtols
+	{
+	select1=vtolarac;
+	ok1=tllvtolgo;
+	arrived1=tllvtolstop;
+	cant1=wearoff;
+	underattack=tllWarning;
+	count5=tllcount;
+	count4=tllcount;
+	count3=tllcount;
+	count2=tllcount;
+	count1=tllcount;
+	count0=tllcount;
+	canceldestruct=cancel2;
+	}
+[LOST_HVTOL]		//heavy vtols
+	{
+	select1=vtolarac;
+	ok1=tllvtolgo3;
+	arrived1=tllvtolstop3;
+	cant1=wearoff;
+	underattack=tllWarning;
+	count5=tllcount;
+	count4=tllcount;
+	count3=tllcount;
+	count2=tllcount;
+	count1=tllcount;
+	count0=tllcount;
+	canceldestruct=cancel2;
+	}
+[LOST_VVTOL]		//V Vtols
+	{
+	select1=vtolarac;
+	ok1=tllvtolgo2;
+	arrived1=tllvtolstop2;
+	cant1=wearoff;
+	underattack=tllWarning;
+	count5=tllcount;
+	count4=tllcount;
+	count3=tllcount;
+	count2=tllcount;
+	count1=tllcount;
+	count0=tllcount;
+	canceldestruct=cancel2;
+	}
+[LOST_GEO]		
+	{
+	select1=tllgeosel;
+	underattack=tllWarning;
+	activate=tllgeo;
+	deactivate=tllgeooff;
+	count5=tllcount;
+	count4=tllcount;
+	count3=tllcount;
+	count2=tllcount;
+	count1=tllcount;
+	count0=tllcount;
+	canceldestruct=cancel2;
+	}
+[LOST_WIND]		
+	{
+	select1=tllwindsel;
+	underattack=tllWarning;
+	working=tllwind2;
+	deactivate=tllwindstop;
+	count5=tllcount;
+	count4=tllcount;
+	count3=tllcount;
+	count2=tllcount;
+	count1=tllcount;
+	count0=tllcount;
+	canceldestruct=cancel2;
+	}
+
+[lost_FUS]
+{
+	select1=tllfus2;
+	underattack=warning2;
+	count5=count1;
+	count4=count2;
+	count3=count3;
+	count2=count4;
+	count1=count5;
+	count0=count6;
+	canceldestruct=cancel2;
+}
+
+[LOST_HOVER]
+{
+	select1=servo1;
+	ok1=servo2;
+	arrived1=servo3;
+	cant1=cantdo4;
+	underattack=warning1;
+	count5=count1;
+	count4=count2;
+	count3=count3;
+	count2=count4;
+	count1=count5;
+	count0=count6;
+	canceldestruct=cancel2;
+}
