@@ -1,0 +1,133 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Arm;
+	name=Ambassador;
+	description=Transport Ship;
+	icontype=sea;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=ARM SHIP TPORT  NOWEAPON NOTAIR NOTSUB;
+	tedclass=SHIP;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=lost_ambassador;
+	unitnumber=73;
+	objectname=lost_ambassador.3do;
+	corpse=lost_ambassador_dead;
+	buildpic=lost_ambassador.png;
+	soundcategory=ARM_SHIP;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=1887;
+	healtime=30;
+	buildcostmetal=301;
+	buildcostenergy=1446;
+	buildtime=6269;
+	footprintx=6;
+	footprintz=6;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=0.3;
+	energystorage=0;
+	windgenerator=0.001;
+
+	//************************************************************
+	//  Building
+	//************
+	buildangle=16384;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canguard=1;
+	canload=1;
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+	floater=1;
+	waterline=13;
+	canfight=0;
+	
+	//************************************************************
+	//  Movement
+	//************
+	movementclass=smallboat;
+	turnrate=256;
+	acceleration=0.027;
+	brakerate=0.036;
+	maxvelocity=2.85;
+	minwaterdepth=12;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=375;
+	radardistance=0;
+	losemitheight=72;
+	radaremitheight=72;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeas=BIG_UNITEX;
+	selfdestructas=BIG_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	firestandorders=0;
+	mobilestandorders=0;
+	standingmoveorder=1;
+	defaultmissiontype=Standby;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=1;
+	designation=ASD-ST;
+	downloadable=1;
+	maneuverleashlength=640;
+	scale=0.5;
+	shootme=1;
+	steeringmode=1;
+	threed=1;
+	transportcapacity=20;
+	transportsize=4;
+	loadingradius=260;
+	version=1.2;
+	zbuffer=1;
+	collisionVolumeType = box;
+	collisionVolumeScales =55 47 70;
+	collisionVolumeOffsets = 0 -25 0;
+	collisionVolumeTest = 1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+	[SFXTypes]
+	{
+	explosiongenerator0=custom:UNITFIRE;
+	}
+
+}

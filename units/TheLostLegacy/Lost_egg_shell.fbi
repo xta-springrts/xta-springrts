@@ -1,0 +1,77 @@
+[UNITINFO]
+{
+	Name=Compressor;
+	UnitName=Lost_egg_shell;
+	
+	//    Required Tags
+	BuildCostEnergy=9425;
+	BuildCostMetal=687;
+	BuildTime=12351;
+	Category=Lost LEVEL2 WEAPON NOTAIR NOTSTRUCTURE CTRL_G CTRL_W;
+	Description=Pop-Out Shotgun Tank;
+	FootprintX=3;
+	FootprintZ=3;
+	MaxDamage=2757;
+	ObjectName=Lost_egg_shell;
+	buildpic=Lost_egg_shell.png;
+	Side=Lost;
+	SoundCategory=CORE_TANK;
+	TEDClass=TANK;
+	
+	//    Movement
+	BrakeRate=0.085;
+	MovementClass=TANKDH3;
+	Acceleration=0.095;
+	CanMove=1;
+	MaxVelocity=2.7;
+	DamageModifier=0.2;
+	OnOffable=1;
+	MaxSlope=12;
+	TurnRate=380;
+	
+	//    Buildings
+	
+	//    Construction
+	Builder=0;
+	
+	//    Resources
+	
+	//    Abilities
+	CanAttack=1;
+	CanStop=1;
+	
+	//    Sight/Radar
+	SightDistance=420;
+	
+	//    Weapons
+	Weapon1=TLL_SHOTGUN;
+	wpri_badTargetCategory=CTRL_V;
+	BadTargetCategory=NOWEAPON;
+	ExplodeAs=BIG_UNITEX;
+	SelfDestructAs=BIG_UNIT;
+	NoChaseCategory=WEAPON;
+	
+	//    Tracks/Flares
+	//LeaveTracks=1;
+	//TrackOffset=8;
+	//TrackStrength=10;
+	//TrackStretch=1;
+	//TrackType=VehTrack;
+	//TrackWidth=30;
+	
+	//    Watersettings
+	MaxWaterDepth=255;
+	
+	//    Misc
+	Corpse=Lost_egg_shell_dead;
+	SmoothAnim=1;
+	idletime=1200;
+	idleautoheal=5;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+	[SFXTypes]
+	{
+	explosiongenerator0=custom:tllDGUNTRAIL;
+	}
+}

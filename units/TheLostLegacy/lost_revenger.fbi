@@ -1,0 +1,115 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Arm;
+	name=Revenger;
+	description=Powerful Cruise Nuke;
+	icontype=nuke;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=ARM STRATEGIC STATIC WEAPON NOTAIR NOTSEA NOTSUB;
+	tedclass=STRATEGIC;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=lost_revenger;
+	unitnumber=62;
+	objectname=lost_revenger.3do;
+	corpse=lost_revenger_dead;
+	buildpic=lost_revenger.png;
+	soundcategory=NUC;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=3875;
+	buildcostmetal=5132; //5050;
+	buildcostenergy=97636;
+	buildtime=138453;
+	footprintx=5;
+	footprintz=5;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=0;
+	energyuse=0;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	buildangle=8192;
+	YardMap=ooooo ooooo ooooo ooooo ooooo;
+	collisionVolumeType=Box;
+	collisionVolumeScales=80 26 80;
+	collisionVolumeTest = 1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canattack=1;
+	canguard=1;
+	canstop=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	maxslope=10;
+	maxwaterdepth=0;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=500;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=LostCruiseNuclear;
+	weapon2=LaunchNukeExplosion;
+	badtargetcategory=VTOL;
+	wpri_badtargetcategory=VTOL;
+	explodeas=ATOMIC_BLASTSML;
+	selfdestructas=NUCLEAR_MISSILE;
+	onlytargetcategory1=NOTAIR;
+	onlytargetcategory2=NOTAIR;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	firestandorders=1;
+	standingfireorder=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=0;
+	designation=ARM-MIDS;
+	downloadable=1;
+	shootme=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+}

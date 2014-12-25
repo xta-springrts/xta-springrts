@@ -1,0 +1,73 @@
+[UNITINFO]
+{
+	Name=Thumper;
+	UnitName=Lost_thumper;
+	
+	//    Required Tags
+	BuildCostEnergy=12345;
+	BuildCostMetal=1657;
+	BuildTime=31280;
+	Category=TLL TANK LEVEL3 WEAPON NOTAIR NOTSUB CTRL_W;
+	Description=Amphibious Artillery Tank;
+	FootprintX=4;
+	FootprintZ=4;
+	MaxDamage=10654;
+	ObjectName=Lost_thumper;
+	Side=TLL;
+	SoundCategory=CORE_TANK;
+	TEDClass=TANK;
+	
+	//    Movement
+	BrakeRate=0.02;
+	movementclass=TANKDH3;
+	Acceleration=0.01;
+	CanMove=1;
+	MaxVelocity=0.88;
+	MaxSlope=20;
+	TurnRate=200;
+	
+	//    Buildings
+	
+	//    Construction
+	Builder=0;
+	
+	//    Resources
+	
+	//    Abilities
+	CanAttack=1;
+	CanStop=1;
+	
+	//    Sight/Radar
+	SightDistance=512.5;
+	
+	//    Weapons
+	Weapon1=Thumper_GUN;
+	wpri_badTargetCategory=VTOL;
+	BadTargetCategory=VTOL;
+	ExplodeAs=BIG_UNITEX;
+	SelfDestructAs=BIG_UNIT;
+	NoChaseCategory=VTOL;
+	
+	//    Tracks/Flares
+	LeaveTracks=1;
+	TrackOffset=8;
+	TrackStrength=10;
+	TrackStretch=1;
+	tracktype=StdTank;
+	TrackWidth=40;
+	
+	//    Watersettings
+	MaxWaterDepth=25;
+	
+	//    Misc
+	Corpse=Lost_thumper_dead;
+	SmoothAnim=1;
+	idletime=1200;
+	idleautoheal=5;
+	collisionVolumeType = box;
+	collisionVolumeScales =25 17 25;
+	collisionVolumeOffsets = 0 -1 0;
+	collisionVolumeTest = 1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+}

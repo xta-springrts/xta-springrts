@@ -1,0 +1,125 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Lost;
+	name=Thor's Hammer;
+	description=Long Range Bolt Cannon;
+	icontype=building;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=Lost STATIC STRATEGIC WEAPON NOTAIR NOTSEA NOTSUB;
+	tedclass=DEFENSIVE;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=lost_thor_hammer;
+	objectname=lost_thor_hammer.3do;
+	corpse=lost_thor_hammer_dead;
+	buildpic=lost_thor_hammer.png;
+	soundcategory=Arm_BRTHA;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=4546;
+	healtime=11;
+	buildcostmetal=3878;
+	buildcostenergy=125530;
+	buildtime=91344;
+	footprintx=6;
+	footprintz=6;
+	usePieceCollisionVolumes=1;
+	//collisionVolumeScales=68 74 68;
+	//collisionVolumeOffsets=0 0 0;
+	//collisionVolumeTest= 1;
+	//collisionVolumeType=CylY;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=0;
+	energyuse=0;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	buildangle=4096;
+	YardMap=oooooooooooooooo;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canattack=1;
+	canguard=1;
+	canstop=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	maxslope=10;
+	MaxWaterDepth=33;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=467.5;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=LOST_BOLTCANNON;
+	weapon2=Thor_hammer_Lightning;
+	weapon3=Thor_hammer_Lightning;
+	wpri_badtargetcategory=VTOL;
+	onlytargetcategory1=NOTAIR;
+	explodeas=ATOMIC_BLASTSML;
+	selfdestructas=ATOMIC_BLAST;
+
+	//************************************************************
+	//  Orders
+	//**********
+	firestandorders=1;
+	standingfireorder=2;
+	defaultmissiontype=GUARD_NOMOVE;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=0;
+	designation=Lost-LRC;
+	downloadable=1;
+	shootme=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+	[SFXTypes]
+	{
+	explosiongenerator0=custom:crazyFLARE;
+	explosiongenerator1=custom:crazyFLARE;
+	}
+	[customParams] 
+	{
+		canAreaAttack=1;
+	}
+}

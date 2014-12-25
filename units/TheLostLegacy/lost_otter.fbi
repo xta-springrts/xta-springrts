@@ -1,0 +1,133 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Arm;
+	name=Otter;
+	description=Scout Ship;
+	icontype=sea;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=ARM SHIP WEAPON MOBILE NOTAIR NOTLAND NOTSUB;
+	tedclass=SHIP;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=lost_otter;
+	unitnumber=54;
+	objectname=lost_otter.3do;
+	corpse=lost_otter_dead;
+	buildpic=lost_otter.png;
+	soundcategory=ARM_SHIP;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=511; //was 821//
+	healtime=30;
+	buildcostmetal=115;
+	buildcostenergy=602;
+	buildtime=1532;
+	footprintx=2;
+	footprintz=2;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=0.2;
+	energyuse=0.2;
+	energystorage=0;
+	windgenerator=0.001;
+
+	//************************************************************
+	//  Building
+	//************
+	collisionVolumeType = box;
+	collisionVolumeScales =16 24 51;
+	collisionVolumeOffsets = 0 -10 -1;
+	collisionVolumeTest = 1;
+	
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canattack=1;
+	canguard=1;
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+	floater=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementclass=Smallboat;
+	turnrate=511;
+	acceleration=0.2;
+	brakerate=0.23;
+	maxvelocity=3.4;//3.8
+	minwaterdepth=6;
+	waterline=2.6;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=720; //was 420//
+	radardistance=0;
+	sonardistance=0; //was 180//
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=ARMPT_LASER;
+	weapon3=SCOUT_MISSILE;
+	wsec_badtargetcategory=NOTAIR;
+	explodeas=SMALL_UNITEX;
+	selfdestructas=SMALL_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	firestandorders=1;
+	mobilestandorders=1;
+	standingfireorder=2;
+	standingmoveorder=1;
+	defaultmissiontype=Standby;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=1;
+	designation=ASD-SS;
+	downloadable=1;
+	maneuverleashlength=640;
+	ovradjust=1;
+	shootme=1;
+	steeringmode=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+	[SFXTypes]
+	{
+	explosiongenerator0=custom:rocketflare;
+	explosiongenerator1=custom:UNITFIRE;
+	}
+}

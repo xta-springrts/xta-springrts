@@ -1,0 +1,123 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Arm;
+	name=Obliterator;
+	description=Heavy Bolt Weapon;
+	icontype=building;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=ARM DEFENSIVE STATIC WEAPON RADAR NOTAIR NOTSEA NOTSUB;
+	tedclass=DEFENSIVE;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=lost_obliterator;
+	unitnumber=7;
+	objectname=lost_obliterator.3do;
+	corpse=lost_obliterator_dead;
+	buildpic=lost_obliterator.png;
+	soundcategory=ARM_ANNI;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=7646;
+	healtime=11;
+	buildcostmetal=8742;
+	buildcostenergy=77653;
+	buildtime=123425;
+	footprintx=5;
+	footprintz=4;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=0;
+	energyuse=0;
+	energystorage=2500;
+
+	//************************************************************
+	//  Building
+	//************
+	buildangle=40000;
+	YardMap=ooooo ooooo ooooo ooooo;
+	
+	activatewhenbuilt=0;
+	collisionVolumeType = box;
+	collisionVolumeScales =50 35 50;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canattack=1;
+	canguard=1;
+	canstop=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	maxslope=10;
+	maxwaterdepth=33;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=920;
+	radardistance=1850;
+	losemitheight=48;
+	radaremitheight=48;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=OBLIT_PULSE;
+	wpri_badtargetcategory=VTOL;
+	badtargetcategory=VTOL;
+	explodeas=ATOMIC_BLASTSML;
+	selfdestructas=ATOMIC_BLAST;
+
+	//************************************************************
+	//  Orders
+	//**********
+	firestandorders=1;
+	standingfireorder=2;
+	defaultmissiontype=GUARD_NOMOVE;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=0;
+	damagemodifier=0.5;
+	designation=ARM-ANN1;
+	downloadable=1;
+	shootme=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+	[customParams] 
+	{
+		canAreaAttack=1;
+	}
+
+}

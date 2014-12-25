@@ -1,0 +1,77 @@
+[UNITINFO]
+{
+	Name=Titan;
+	UnitName=lost_titan;
+	
+	//    Required Tags
+	BuildCostEnergy=77446;
+	BuildCostMetal=11950;
+	BuildTime=181545;
+	Category=TLL TANK LEVEL3 WEAPON NOTAIR NOTSUB CTRL_W;
+	Description=Long Range Seige Mechbot;
+	FootprintX=4;
+	FootprintZ=4;
+	MaxDamage=31872;
+	ObjectName=lost_titan;
+	Side=TLL;
+	SoundCategory=KROGOTH;
+	TEDClass=TANK;
+	buildpic=lost_titan.png;
+	
+	//    Movement
+	BrakeRate=0.027;
+	MovementClass=KBOTDS2;
+	Acceleration=0.015;
+	CanMove=1;
+	MaxVelocity=1.17;
+	MaxSlope=16;
+	TurnRate=390;
+	
+	//    Buildings
+	
+	//    Construction
+	Builder=0;
+	WorkerTime=0;
+	
+	//    Resources
+	EnergyMake=0.5;
+	EnergyStorage=0;
+	EnergyUse=0.5;
+	MetalStorage=0;
+	
+	//    Abilities
+	CanAttack=1;
+	CanStop=1;
+	
+	//    Sight/Radar
+	RadarDistance=0;
+	SightDistance=879.5;
+	
+	//    Weapons
+	Weapon1=TITAN_GUN;
+	Weapon2=TITAN_HEAVYROCKET;
+	wpri_badTargetCategory=VTOL;
+	BadTargetCategory=VTOL;
+	DamageModifier=0.75;
+	explodeas=CRAWL_BLASTSML;
+	selfdestructas=armmine5;
+	NoChaseCategory=VTOL;
+	
+	//    Tracks/Flares
+	//LeaveTracks=1;
+	//TrackOffset=8;
+	//TrackStrength=10;
+	//TrackStretch=1;
+	//TrackType=TitanTrack;
+	//TrackWidth=75;
+	
+	//    Watersettings
+	MaxWaterDepth=12;
+	
+	//    Misc
+	Corpse=lost_titan_dead;
+	SmoothAnim=1;
+	Upright=1;
+	idletime=1200;
+	idleautoheal=5;
+}

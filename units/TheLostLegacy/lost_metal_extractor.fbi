@@ -1,0 +1,112 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=lost;
+	name=Metal Extractor;
+	description=Extracts Metal;
+	icontype=metal;
+
+	//************************************************************
+	//  Categories
+	//**************
+	Category=lost METAL STATIC NOWEAPON NOTAIR NOTSEA NOTSUB;
+	tedclass=METAL;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=lost_metal_extractor;
+	unitnumber=118;
+	objectname=lost_metal_extractor.3do;
+	corpse=lost_metal_extractor_dead;
+	buildpic=lost_metal_extractor.png;
+	soundcategory=LOST_MEX;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=155;
+	buildcostmetal=46;
+	buildcostenergy=498;
+	buildtime=1565;
+	footprintx=3;
+	footprintz=3;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energyuse=3;
+	energystorage=0;
+	extractsmetal=0.001;
+
+	//************************************************************
+	//  Building
+	//************
+	buildangle=1024;
+	yardmap=ooooooooo;
+	activatewhenbuilt=1;
+	collisionVolumeType=CylY;
+	collisionVolumeScales=54 76 54;
+	collisionVolumeOffsets=0 -18.5 0;
+	collisionVolumeTest = 1;
+	modelCenterOffset=0 5 0;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	onoffable=1;
+	canRepeat=0;
+	canMove=0;
+	canAttack=0;
+	canGuard=0;
+	
+	//************************************************************
+	//  Movement
+	//************
+	maxslope=18;
+	maxwaterdepth=22;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=367.5;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeas=SMALL_BUILDINGEX;
+	selfdestructas=SMALL_BUILDINGEX;
+	selfdestructcountdown=0;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=0;
+	designation=ME-7;
+	downloadable=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+}

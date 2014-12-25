@@ -1,0 +1,113 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=lost;
+	name=Advanced Radar Tower;
+	description=Long Range Radar Tower;
+	icontype=building;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=lost STATIC NOWEAPON RADAR NOTAIR NOTSEA NOTSUB;
+	tedclass=RADAR;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=lost_advanced_radar_tower;
+	unitnumber=9;
+	objectname=lost_advanced_radar_tower.3do;
+	corpse=lost_advanced_radar_tower_dead;
+	buildpic=lost_advanced_radar_tower.png;
+	soundcategory=ARM_ADVRADAR;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=120;
+	buildcostmetal=123;
+	buildcostenergy=1431;
+	buildtime=4186;
+	footprintx=3;
+	footprintz=3;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=18;
+	energyuse=18;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	buildangle=8192;
+	YardMap=ooooooooo;
+	activatewhenbuilt=1;
+	collisionVolumeType=CylY;
+	collisionVolumeScales=45 52 45;
+	collisionVolumeOffsets=0 12 0;
+	collisionVolumeTest = 1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	onoffable=1;
+	canRepeat=0;
+	canMove=0;
+	canGuard=0;
+	canAttack=0;
+
+	//************************************************************
+	//  Movement
+	//************
+	maxslope=15;
+	maxwaterdepth=22;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=680;
+	airsightdistance=1100;
+	radardistance=3080;
+	losemitheight=56;
+	radaremitheight=56;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeas=SMALL_BUILDINGEX;
+	selfdestructas=SMALL_BUILDING;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=0;
+	designation=AS-EWDL2;
+	downloadable=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+}

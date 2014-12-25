@@ -1,0 +1,110 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Core;
+	name=Sonar Station;
+	description=Sonar Station;
+	icontype=sea;
+
+	//************************************************************
+	//  Categories
+	//**************
+	Category=CORE STATIC NOWEAPON SONAR NOTLAND NOTAIR NOTSUB;
+	tedclass=SONAR;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=lost_sonar_station;
+	unitnumber=137;
+	objectname=lost_sonar_station.3do;
+	corpse=lost_sonar_station_dead;
+	buildpic=lost_sonar_station.png;
+	soundcategory=CORE_SONAR;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=53; //was 52//
+	buildcostmetal=51; //was 20//
+	buildcostenergy=718; //was 399//
+	buildtime=900;
+	footprintx=2;
+	footprintz=2;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=2;
+	energyuse=2;
+	energystorage=0;
+	windgenerator=0.001;
+
+	//************************************************************
+	//  Building
+	//************
+	buildangle=8192;
+	yardmap=wwww;
+	activatewhenbuilt=1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	onoffable=1;
+	canRepeat=0;
+	canMove=0;
+	canAttack=0;
+	canGuard=0;
+	
+	//************************************************************
+	//  Movement
+	//************
+	maxslope=10;
+	minwaterdepth=20;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=306.25;
+	radardistance=0;
+	sonardistance=1200; //was 1241//
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeas=SMALL_BUILDINGEX;
+	selfdestructas=SMALL_BUILDING;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=0;
+	designation=FS-4;
+	downloadable=1;
+	noshadow=1;
+	threed=1;
+	version=1.2;
+	waterline=28;
+	zbuffer=1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+}

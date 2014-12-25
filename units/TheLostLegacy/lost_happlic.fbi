@@ -1,0 +1,125 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Lost;
+	Name=Happlic;
+	description=Pop-up Heavy Cannon;
+	icontype=building;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=ARM DEFENSIVE STATIC WEAPON NOTAIR NOTSEA NOTSUB;
+	tedclass=DEFENSIVE;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=lost_happlic;
+	unitnumber=200;
+	objectname=lost_happlic.3do;
+	corpse=lost_happlic_dead;
+	buildpic=lost_happlic.png;
+	soundcategory=GUARD;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=2786;
+	healtime=11;
+	buildcostmetal=1212;//1402
+	buildcostenergy=10775;
+	buildtime=19654;
+	footprintx=3;
+	footprintz=3;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energyuse=0;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	buildangle=8192;
+	yardmap=ooo ooo ooo;
+	collisionVolumeType=CylY;
+	collisionVolumeScales=49 45 49;
+	collisionVolumeOffsets=-0.5 -14 0;
+	collisionVolumeTest = 1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canattack=1;
+	canguard=1;
+	canstop=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	maxslope=20;
+	maxwaterdepth=11;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=630;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=Happlic_GUN;
+	badtargetcategory=VTOL;
+	wpri_badtargetcategory=VTOL;
+	onlytargetcategory1=NOTAIR;
+	explodeas=LARGE_BUILDINGEX;
+	selfdestructas=LARGE_BUILDING;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	firestandorders=1;
+	standingfireorder=2;
+	defaultmissiontype=GUARD_NOMOVE;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=0;
+	damagemodifier=0.45; 
+	designation=ARM-GUARD;
+	digger=1;
+	downloadable=1;
+	shootme=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+	[SFXTypes]
+	{
+	explosiongenerator0=custom:TinyBlue;
+	}
+	[customParams] 
+	{
+		canAreaAttack=1;
+	}
+}

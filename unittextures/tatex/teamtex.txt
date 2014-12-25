@@ -10,6 +10,10 @@ colorsmd
 Core32Dk
 Core32Lt
 CoreLogoGouraud
+raceLogoGouraud
+race32Dk
+race32Lt
+onoff01
 Solgradb
 Solid1a
 Solid2a

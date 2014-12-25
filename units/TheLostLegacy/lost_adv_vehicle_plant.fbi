@@ -1,0 +1,117 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Lost;
+	name=Adv. Vehicle Plant;
+	description=Produces Vehicles;
+	icontype=plant;
+
+	//************************************************************
+	//  Categories
+	//**************
+	Category=CORE PLANT NOWEAPON NOTAIR NOTSUB;
+	tedclass=PLANT;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=lost_adv_vehicle_plant;
+	unitnumber=88;
+	objectname=lost_adv_vehicle_plant.3do;
+	corpse=lost_adv_vehicle_plant_dead;
+	buildpic=lost_adv_vehicle_plant.png;
+	soundcategory=TANKPLANT;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=4314;
+	healtime=30;
+	buildcostmetal=2341;
+	buildcostenergy=4134;
+	buildtime=14410;
+	footprintx=8;
+	footprintz=7;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=200;
+	energyuse=0;
+	energystorage=200;
+
+	//************************************************************
+	//  Building
+	//************
+	buildangle=1024;
+	YardMap=oooooooo oooooooo ooccccoo ooccccoo ooccccoo ooccccoo ooccccoo;
+	collisionVolumeType=Box;
+	collisionVolumeScales=124 30 104;
+	collisionVolumeTest = 1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=1;
+	workertime=200;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+	canguard=1;
+	
+	//************************************************************
+	//  Movement
+	//************
+	maxslope=10;
+	maxwaterdepth=11;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=385;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeas=LARGE_BUILDINGEX;
+	selfdestructas=LARGE_BUILDING;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	firestandorders=1;
+	mobilestandorders=1;
+	standingfireorder=2;
+	standingmoveorder=2;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=0;
+	designation=COR-VCF2;
+	downloadable=1;
+	sortbias=0;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+	[SFXTypes]
+	{
+	explosiongenerator0=custom:Nano;
+	explosiongenerator1=custom:WhiteLight;
+	}
+
+}

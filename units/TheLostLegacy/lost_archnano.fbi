@@ -1,0 +1,73 @@
+[UNITINFO]
+{
+	Name=Archnano;
+	UnitName=Lost_archnano;
+	
+	//    Required Tags
+	BuildCostEnergy=10636;
+	BuildCostMetal=581;
+	BuildTime=13917;
+	Category=TLL TANK LEVEL3 CONSTR NOWEAPON NOTAIR NOTSUB CTRL_B;
+	Description=Fast Stealth All-Terrian Tech 2;
+	FootprintX=3;
+	FootprintZ=3;
+	MaxDamage=1105;
+	ObjectName=Lost_archnano;
+	Side=TLL;
+	SoundCategory=ARM_Spider;
+	TEDClass=KBOT;
+	
+	//    Movement
+	BrakeRate=0.09;
+	movementclass=SPID3;
+	Acceleration=0.59;
+	CanMove=1;
+	MaxVelocity=3;
+	MaxSlope=255;
+	TurnRate=1020;
+	stealth=1;
+	
+	//    Buildings
+	
+	//    Construction
+	builder=1;
+	builddistance=140;//170, edited by Jools
+	workertime=240;
+	RepairSpeed=240;
+	ReclaimSpeed=240;
+	TerraformSpeed=480;//speed up terraforming
+	
+	//    Resources
+	EnergyMake=19;
+	EnergyUse=0;
+	MetalMake=0.5;
+	
+	//    Abilities
+	CanCapture=1;
+	CanStop=1;
+	
+	//    Sight/Radar
+	SightDistance=581.25;
+	
+	//    Weapons
+	ExplodeAs=BIG_UNITEX;
+	SelfDestructAs=BIG_UNIT;
+	
+	//    Tracks/Flares
+	//LeaveTracks=1;
+	//TrackOffset=0;
+	//TrackStrength=3;
+	//TrackStretch=1;
+	//TrackType=SpidTrack;
+	//TrackWidth=45;
+	
+	//    Watersettings
+	MaxWaterDepth=255;
+	
+	//    Misc
+	Corpse=Lost_archnano_dead;
+	SmoothAnim=1;
+	idletime=1200;
+	idleautoheal=5;
+
+}

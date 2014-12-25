@@ -1,0 +1,109 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=lost;
+	name=Solar/Wind Facility;
+	description=Produces Energy;
+	icontype=building;
+
+	//************************************************************
+	//  Categories
+	//**************
+	Category=lost ENERGY  NOWEAPON  NOTAIR NOTSUB;
+	tedclass=ENERGY;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=lost_solar_wind;
+	objectname=lost_solar_wind.3do;
+	corpse=lost_solar_wind_dead;
+	buildpic=lost_solar_wind.png;
+	SoundCategory=ARM_SOLAR;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=986;
+	buildcostmetal=367;
+	buildcostenergy=1135;
+	buildtime=3986;
+	footprintx=6;
+	footprintz=6;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energyuse=-45;
+	WindGenerator=35;
+	energystorage=100;
+
+	//************************************************************
+	//  Building
+	//************
+	buildangle=32768;
+	YardMap=ooooo ooooo ooooo ooooo ooooo;
+	activatewhenbuilt=1;
+	collisionVolumeType=Box;
+	collisionVolumeScales=75 40 75;
+	collisionVolumeOffsets=0 0 0;
+	//collisionVolumeTest = 1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	onoffable=1;
+	canRepeat=0;
+	canMove=0;
+	canAttack=0;
+	canGuard=0;
+	
+	//************************************************************
+	//  Movement
+	//************
+	maxslope=18;
+	maxwaterdepth=11;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=420.5;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeas=SMALL_BUILDINGEX;
+	selfdestructas=SMALL_BUILDING;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=0;
+	damagemodifier=0.5; //was 0.33333=66% bouns now 33%//
+	designation=ES-22;
+	downloadable=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	pieceTrailCEGTag=NanoDebree;//bleh
+	pieceTrailCEGRange = 1;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+}

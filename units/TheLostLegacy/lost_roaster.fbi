@@ -1,0 +1,83 @@
+[UNITINFO]
+{
+	Name=Roaster;
+	UnitName=lost_roaster;
+	
+	//    Required Tags
+	BuildCostEnergy=21797;
+	BuildCostMetal=1965;
+	BuildTime=31208;
+	Category=TLL LEVEL2 WEAPON NOTAIR NOTSUB NOTSTRUCTURE CTRL_G CTRL_W;
+	Description=Lightning Fortress;
+	FootprintX=4;
+	FootprintZ=4;
+	MaxDamage=3388;
+	ObjectName=lost_roaster;
+	Side=TLL;
+	SoundCategory=CORE_TANK;
+	TEDClass=TANK;
+	buildpic=lost_roaster.png;
+	
+	//    Movement
+	BrakeRate=0.07;
+	MovementClass=TANKSH4;
+	Acceleration=0.4;
+	CanMove=1;
+	MaxVelocity=0.95;
+	MaxSlope=12;
+	TurnRate=300;
+	
+	//    Buildings
+	
+	//    Construction
+	Builder=0;
+	
+	//    Resources
+	EnergyUse=7;
+	
+	//    Abilities
+	CanAttack=1;
+	CanStop=1;
+	
+	//    Sight/Radar
+	SightDistance=625;
+	
+	//    Weapons
+	Weapon1=FLANKROAST_WEAPON;
+	Weaponmaindir1=0 0 1;
+	Maxangledif1=360;
+	Weapon2=FLANKROAST_LIGHTNING;//right
+	Weaponmaindir2=1 0 0;//1 0 1;
+	Maxangledif2=260;
+	Weapon3=FLANKROAST_LIGHTNING;//left
+	Weaponmaindir3=-1 0 0;//1 0 1;
+	Maxangledif3=260;
+	wpri_badTargetCategory=CTRL_V;
+	BadTargetCategory=VTOL;
+	explodeas=ATOMIC_BLASTPEN;
+	selfdestructas=ATOMIC_BLASTSML;
+	NoChaseCategory=CTRL_V;
+	
+	//    Tracks/Flares
+	LeaveTracks=1;
+	TrackOffset=8;
+	TrackStrength=10;
+	TrackStretch=1;
+	tracktype=StdTank;
+	TrackWidth=40;
+	
+	//    Watersettings
+	MaxWaterDepth=0;
+	
+	//    Misc
+	Corpse=lost_roaster_dead;
+	SmoothAnim=1;
+	idletime=1200;
+	idleautoheal=5;
+	collisionVolumeType = box;
+	collisionVolumeScales =40 25 40;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+}

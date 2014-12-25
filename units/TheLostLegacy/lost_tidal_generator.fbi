@@ -1,0 +1,115 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Core;
+	name=Tidal Generator;
+	description=Produces Energy;
+	icontype=sea;
+
+	//************************************************************
+	//  Categories
+	//**************
+	Category=CORE ENERGY STATIC NOWEAPON NOTLAND NOTAIR NOTSUB;
+	tedclass=ENERGY;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=lost_tidal_generator;
+	unitnumber=143;
+	objectname=lost_tidal_generator.3do;
+	corpse=lost_tidal_generator_dead;
+	buildpic=lost_tidal_generator.png;
+	soundcategory=LOST_TIDE;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=265;
+	buildcostmetal=85;
+	buildcostenergy=732;
+	buildtime=1965;
+	footprintx=3;
+	footprintz=3;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energyuse=0;
+	energystorage=0;
+	windgenerator=0.001;
+	tidalgenerator=1;
+
+	//************************************************************
+	//  Building
+	//************
+	buildangle=4096;
+	yardmap=www www www;
+	activatewhenbuilt=1;
+	collisionVolumeType=CylY;
+	collisionVolumeScales=40 29 40;
+	collisionVolumeOffsets=-3 -1 -3;
+	collisionVolumeTest = 1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	onoffable=1;
+	canRepeat=0;
+	canMove=0;
+	canAttack=0;
+	canGuard=0;
+	
+	//************************************************************
+	//  Movement
+	//************
+	maxslope=10;
+	minwaterdepth=20;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=175;
+	radardistance=0;
+	sonardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeas=SMALL_BUILDINGEX;
+	selfdestructas=SMALL_BUILDING;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=0;
+	downloadable=1;
+	noshadow=1;
+	scale=0.5;
+	threed=1;
+	version=1.2;
+	//waterline=16;
+	Waterline=2;
+	zbuffer=1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+}
