@@ -45,7 +45,7 @@
 	SightDistance=453.75;
 	
 	//    Weapons
-	weapon1=ARMSCAB_WEAPON;
+	weapon1=PEACEMAKER_ROCKET;
 	wpri_badTargetCategory=VTOL;
 	BadTargetCategory=VTOL;
 	DamageModifier=0.5;

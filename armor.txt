@@ -20,6 +20,16 @@
 	core_nin2commander=99;
 }
 
+[lost_commanders]
+{
+	lost_commander=99;
+	lost_u0commander=99;
+	lost_ucommander=99;
+	lost_u2commander=99;
+	lost_u3commander=99;
+	lost_u4commander=99;
+}
+
 [group_invincible]
 {
 	arm_base=99;
@@ -72,12 +82,29 @@
 	core_zeppelin=99;
 	core_Silhouette=99;
 	//unitpacks
-	//xtaids
+	//losllegacy3rd
 	Corpur=99;
 	Armpur=99;
 	CoreVashp=99;
 	ArmHyren=99;
 	corcrw=99;
+	//xtaids
+	lost_adv_construction_aircraft=99;
+	lost_probe=99;
+	lost_falcon=99;
+	lost_Dark_crow=99;
+	lost_ghost=99;
+	lost_condor=99;
+	lost_robber=99;
+	lost_osprey=99;
+	lost_fisher=99;
+	lost_swallow=99;
+	lost_construction_seaplane=99;
+	lost_sparrow=99;
+	lost_Pterodactyl=99;
+	Lost_Pelican=99;
+	lost_wasp=99;
+	lost_trawler=99;
 }
 
 [group_mines]
@@ -112,6 +139,8 @@
 	arm_fortification_wall=99;
 	core_dragons_teeth=99;
 	core_fortification_wall=99;
+	lost_dragons_teeth=99;
+	lost_fortification_wall=99;
 }
 [group_ships]
 {
@@ -132,6 +161,14 @@
 	core_viking=99;
 	core_phantom=99;
 	core_thunderbolt=99;
+	//lostlegacy
+	lost_construction_ship=99;
+	lost_nosmaeb=99;
+	lost_otter=99;
+	lost_equalizer=99;
+	lost_violator=99;
+	lost_mixer=99;
+	lost_stinger=99;
 }
 [group_large_ships]
 {
@@ -153,6 +190,12 @@
 	arm_infinite=99;
 	yeomen=99;
 	justice=99;
+	//lostlegacy
+	lost_giant=99;
+	lost_visitor=99;
+	lost_equalizer=99;
+	lost_viking=99;
+	lost_ambassador=99;
 }
 [group_subs]
 {
@@ -167,12 +210,18 @@
 	core_limiter=99;
 	core_construction_sub=99;
 	CORE_Tattletale=99;
+	lost_plunger=99;
+	lost_adv_construction_sub=99;
+	lost_construction_sub=99;
+	lost_squid=99;
+	lost_orc=99;
 }
 
 [group_subskillers]
 {
 	arm_piranha=99;
 	core_shark=99;
+	lost_manta=99;
 }
 
 
@@ -180,6 +229,7 @@
 {
 	ARM_HAMMERHEAD=99;
 	CORE_Barracuda=99;
+	lost_shark=99;
 }
 
 
@@ -195,6 +245,8 @@
 	arm_torpedo_launcher=99;
         core_torpedo_launcher=99;
         core_advanced_torpedo_launcher=99;
+        lost_torpedo_launcher=99;
+        lost_advanced_torpedo_launcher=99;
 }
 //Commander Shooter Demo 
 [ARMCOM]

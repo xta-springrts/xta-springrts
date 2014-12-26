@@ -1,4 +1,42 @@
 
+[LOST_OTTERGUN]
+{
+	ID=50;
+	name=Light Cannon;
+	rendertype=4;
+	ballistic=1;
+	turret=1;
+	projectiles=1;
+	range=240; 
+	explosiongenerator=custom:tllDgunTRAIL;
+	sprayangle=128;
+	reloadtime=1.2;
+	weaponvelocity=496;
+	areaofeffect=48;
+	soundstart=tllPLASMA03;
+	//soundhit=lasrhit1;
+	soundhit=xplosml3;
+	tolerance=500;
+	startsmoke=1;
+	minbarrelangle=-40;
+	size=2;
+	rgbcolor=0.35 0.35 1;
+	stages=5;
+  	separation=0.45;
+  	alphadecay=0.75;
+  	sizedecay=-0.5;
+  	nogap=1;
+	GroundBounce=1;
+	BounceSlip=1.01;
+	BounceRebound=0.2;
+	NumBounce=5;
+ 	//dyndamageexp=0.9;
+  	//dyndamageinverted=1;
+	[DAMAGE]
+	{
+		default=32;//190 dps
+	}
+}
 [amphibian_SHOTGUN]
 {
 	ID=50;
@@ -219,6 +257,7 @@
 		group_large_ships=4400;
 		group_invincible=1;
 		group_commanders=1666;
+		lost_commanders=1444;
 	}
 }
 [ODIN_GUN]
@@ -368,6 +407,7 @@
 	{
 		default=1102;
 		group_commanders=675;
+		lost_commanders=605;
 		group_invincible=1;
 	}
 }
@@ -506,6 +546,8 @@
 	[DAMAGE]
 	{
 		default=1078;
+		lost_commanders=600;
+		group_commanders=670;
 	}
 }
 
@@ -662,7 +704,7 @@
 		default=232;
 		group_invincible=1;
 		group_ships=317;
-		group_ships=388;
+		group_large_ships=355;
 	}
 }
 [Thumper_GUN]
@@ -920,6 +962,7 @@
 		default=5000;
 		group_invincible=1;
 		group_commanders=2000;
+		lost_commanders=1666;
 	}
 }
 
@@ -929,7 +972,7 @@
 	vlaunch=1;
 	Weapontype=StarburstLauncher;
 	explosiongenerator=custom:PUFFY;
-	model=antipulse;
+	model=egun;
 	range=32000;
 	coverage=2000;
 	reloadtime=2;
@@ -946,7 +989,7 @@
 	metalpershot=100;
 	stockpile=1;
 	interceptor=2;
-	cegTag=RAVENTRAIL;
+	cegTag=crazyFLARE;
 	Texture1=null;
 	Texture2=null;
 	Texture3=null;
@@ -972,7 +1015,7 @@
 	rendertype=1;
 	lineofsight=1;
 	vlaunch=1;
-	model=weapon_tracer;
+	model=egun;
 	cegTag=GIGAGREEN;
 	Texture1=null;
 	Texture2=null;
@@ -991,7 +1034,7 @@
 	areaofeffect=577;//was 384
 	edgeeffectiveness=0.45;
 	energypershot=10000;
-	targetable=1;
+	targetable=3;
 	soundstart=misicbm1;
 	soundhit=TigerRailgun2;
 	firestarter=100;
@@ -1015,6 +1058,7 @@
 	{
 		default=11974;//dmg increase by 800
 		group_commanders=4000;
+		lost_commanders=4000;
     group_invincible=1;
 	}
 }
@@ -1100,6 +1144,8 @@
 	[DAMAGE]
 	{
 		default=2222;
+		group_commanders=1111;
+		lost_commanders=1000;
 	}
 }
 
@@ -1275,7 +1321,7 @@
 	ballistic=1;
 	turret=1;
 	minbarrelangle=-90;
-	range=820;
+	range=790;
 	reloadtime=3.0;
 	weaponvelocity=480;
 	areaofeffect=48;
@@ -2029,7 +2075,7 @@
 	beamttl=30;
 	hardStop=0;
   	//texture1=testlightning;
-	range=9999999; // downgraded in V9 by El_Barto 1995//
+	range=150000; // downgraded in V9 by El_Barto 1995//
 	reloadtime=30;
 	stockpiletime=60;
 	stockpile=1;
@@ -2050,5 +2096,6 @@
 	{
 		default=60000;
 		group_commanders=6000;
+		lost_commanders=6000;
 	}
 }
