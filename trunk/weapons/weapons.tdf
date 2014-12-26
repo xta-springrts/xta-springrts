@@ -16,6 +16,7 @@
 	{
 		default=1900;
 		group_commanders=1000;
+		lost_commanders=1000;
 		group_stupidsubs=400;
 		group_invincible=1;
 	}
@@ -205,6 +206,7 @@
 		default=107.5;
 		group_invincible=1;
 		group_commanders=76;
+		lost_commanders=67;
 	}
 }
 [AIR2AIRLASERShort]
@@ -407,6 +409,7 @@
 	{
 		default=102;
 		group_commanders=76;
+		group_commanders=63;
 		group_invincible=1;
 	}
 }
@@ -569,6 +572,7 @@
 	[DAMAGE]
 	{
 		default=46;
+		lost_commanders=41;
 		group_landair=107;
 		group_invincible=1;
 	}
@@ -657,6 +661,7 @@
 	{
 		default=56;
 		group_commanders=41;
+		lost_commanders=36;
 		group_invincible=1;
 	}
 }
@@ -756,6 +761,7 @@
 	{
 		default=2974;
 		group_commanders=1000;
+		lost_commanders=900;
 		group_invincible=1;
 	}
 }
@@ -932,6 +938,7 @@
 	[DAMAGE]
 	{
 		default=46;
+		lost_commanders=41;
 		group_landair=107;
 		group_invincible=1;
 	}
@@ -966,6 +973,7 @@
 	[DAMAGE]
 	{
 		default=31;
+		lost_commanders=27;
 		group_landair=101;
 		group_invincible=1;
 	}
@@ -1023,6 +1031,7 @@
 	{
 		default=40;
 		group_commanders=30;
+		lost_commanders=27;
 		group_invincible=1;
 	}
 }
@@ -1330,6 +1339,7 @@
 	[DAMAGE]
 	{
 		default=36;
+		lost_commanders=31;
 		group_landair=122;
 		group_invincible=1;
 	}
@@ -1723,6 +1733,7 @@
 		default=2260;
 		group_invincible=1;
 		group_commanders=1000;
+		lost_commanders=900;
 		group_landair=1212;
 		group_snipertargets=3500;
 	}
@@ -1758,6 +1769,7 @@
 	[DAMAGE]
 	{
 		default=41;
+		lost_commanders=37;
 		group_invincible=1;
 		group_landair=109;
 	}
@@ -1828,6 +1840,7 @@
 	[DAMAGE]
 	{
 		group_commanders=22;
+		lost_commanders=19;
 		default=44;
 		group_invincible=1;
 		group_landair=110;
@@ -2256,6 +2269,7 @@
 	{
 		default=62;
 		group_commanders=50;
+		lost_commanders=45;
 		group_invincible=1;
 	}
 }
@@ -2342,6 +2356,7 @@
 	[DAMAGE]
 	{
 		group_commanders=34;
+		lost_commanders=30;
 		default=75;
 		group_invincible=1;
 		group_spiders=25;
@@ -2445,6 +2460,7 @@
 	{
 		default=8500;
 		group_commanders=2800;
+		lost_commanders=2500;
 		group_ships=7000;
 		group_large_ships=7000;
 		group_invincible=1;
@@ -2652,6 +2668,7 @@
 	{
 		default=10000;
 		group_commanders=9000;
+		lost_commanders=6300;//should only allow for 10 percent room of error
 		group_ships=15000;
 		group_large_ships=15000;
 		group_landair=5000;
@@ -2677,6 +2694,7 @@
 	{
 		default=10000;
 		group_commanders=4900;
+		lost_commanders=4600;
 		group_ships=15000;
 		group_large_ships=15000;
 		group_landair=5000;
@@ -2702,6 +2720,7 @@
 	{
 		default=3000;
 		group_commanders=1500;
+		lost_commanders=1350;
 		group_ships=6000;
 		group_large_ships=6000;
 		group_landair=5000;
@@ -2736,6 +2755,7 @@
 	{
 		default=102;
 		group_commanders=76;
+		lost_commanders=69;
 		group_invincible=1;
 	}
 }
@@ -2915,6 +2935,7 @@
 	{
 		default=56;
 		group_commanders=41;
+		lost_commanders=37;
 		group_invincible=1;
 	}
 }
@@ -3109,6 +3130,7 @@
 		group_large_ships=1400;
 		group_invincible=1;
 		group_commanders=666;
+		lost_commanders=612;
 	}
 }
 [CORE_BATSLASER]
@@ -3287,6 +3309,7 @@
 	{
 		default=40;
 		group_commanders=30;
+		lost_commanders=27;
 		group_invincible=1;
 	}
 }
@@ -3755,6 +3778,7 @@
 	startsmoke=0;
 	[DAMAGE]
 	{
+		lost_commanders=127;
 		default=152;
 		group_invincible=1;
 	}
@@ -4281,6 +4305,7 @@
 	[DAMAGE]
 	{
 		default=35;
+		lost_commanders=31;
 		group_invincible=1;
 		group_landair=120;
 	}
@@ -4620,6 +4645,7 @@
 		default=2623;
 		group_invincible=1;
 		group_commanders=1000;
+		lost_commanders=900;
 	}
 }
 [CORTRUCK_MISSILE]
@@ -4653,6 +4679,7 @@
 	[DAMAGE]
 	{
 		default=40;
+		lost_commanders=35;
 		group_invincible=1;
 		group_landair=110;
 	}
@@ -4722,6 +4749,7 @@
 		group_invincible=1;
 		group_landair=986;
 		group_commanders=950;
+		lost_commanders=860;
 	}
 }
 [CORVTOL_ADVMISSILE]
@@ -4755,6 +4783,7 @@
 	[DAMAGE]
 	{
 		group_commanders=22;
+		lost_commanders=19;
 		default=43;
 		group_invincible=1;
 		group_landair=112;
@@ -4927,6 +4956,7 @@
 		default=6440;
 		group_invincible=1;
 		group_commanders=2700;
+		lost_commanders=2400;
 	}
 }
 [DECOY_COMMANDER_BLAST]
@@ -5363,6 +5393,7 @@
 	[DAMAGE]
 	{
 		default=145;
+		lost_commanders=120;
 		group_invincible=1;
 	}
 }
@@ -5577,6 +5608,7 @@
 		default=7540;
 		group_invincible=1;
 		group_commanders=2700;
+		lost_commanders=2400;
 	}
 }
 [SBMISSILE]
@@ -5920,6 +5952,7 @@
 	[DAMAGE]
 	{
 		default=46;
+		lost_commanders=41;
 		group_invincible=1;
 		group_landair=120;
 	}
@@ -6407,6 +6440,7 @@
 	[DAMAGE]
 	{
 		default=28;
+		lost_commanders=25;
 		group_landair=68;
 		group_invincible=1;
 	}
@@ -6443,6 +6477,7 @@
 	[DAMAGE]
 	{
 		default=33;
+		lost_commanders=27;
 		group_landair=68;
 		group_invincible=1;
 	}
@@ -6477,6 +6512,7 @@
 	[DAMAGE]
 	{
 		default=138;
+		lost_commanders=110;
 		group_invincible=1;
 	}
 }
@@ -6510,6 +6546,7 @@
 	[DAMAGE]
 	{
 		default=138;
+		lost_commanders=120;
 		group_invincible=1;
 	}
 }
@@ -6545,6 +6582,7 @@
 		group_torpedo_launcher=200;
 		group_invincible=1;
 		group_commanders=100;
+		lost_commanders=100;
 	}
 }
 [TANK_TORPEDO]
@@ -6579,6 +6617,7 @@
 		group_torpedo_launcher=120;
 		group_invincible=1;
 		group_commanders=65;
+		lost_commanders=65;
 	}
 }
 [ARM_TINY_ANNIHILATOR]
@@ -6605,6 +6644,7 @@
 	{
 		default=6500;
 		group_commanders=2200;
+		lost_commanders=1900;
 		group_ships=5000;
 		group_large_ships=5000;
 		group_invincible=1;
@@ -6735,6 +6775,7 @@
 	[DAMAGE]
 	{
 		group_commanders=25;
+		lost_commanders=20;
 		default=10220;
 	 	group_invincible=1;
 	}
@@ -6780,6 +6821,7 @@
 	[DAMAGE]
 	{
 		group_commanders=75;
+		lost_commanders=23;
 		default=2333;
 		group_invincible=1;
 	}
@@ -7029,6 +7071,7 @@
 		default=4000;
 		group_spiders=1000;
 		group_commanders=2000;
+		lost_commanders=1700;
 		group_invincible=1;
 		group_landair=50;
 	}
@@ -7090,6 +7133,7 @@
 	{
 		default=256;
 		group_commanders=202;
+		lost_commanders=180;
 		group_invincible=1;
 	}
 }
@@ -7122,6 +7166,7 @@
 	{
 		default=405;
 		group_commanders=303;
+		lost_commanders=273;
 		group_invincible=1;
 	}
 }

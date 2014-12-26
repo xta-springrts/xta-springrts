@@ -82,7 +82,7 @@
 	//************************************************************
 	//  Weapons
 	//***********
-	Weapon1=TLL_VPULSE2;
+	weapon1=EQUAL_PULSE;
 	nochasecategory=VTOL;
 	badtargetcategory=VTOL;
 	wpri_badtargetcategory=VTOL;

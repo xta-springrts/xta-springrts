@@ -2566,7 +2566,7 @@
 		canbuild5=lost_underwater_energy_storage;
 		canbuild6=lost_underwater_metal_storage;
 		canbuild7=lost_underwater_fusion_power_plant;
-		//canbuild8=arm_floating_radar;
+		canbuild8=lost_floating_radar;
 		canbuild9=lost_advanced_radar_tower;
 		canbuild10=lost_advanced_sonar_station;
 		canbuild11=lost_radar_jamming_tower;
@@ -2576,7 +2576,7 @@
 		canbuild15=lost_Nosmaeb;
 		canbuild16=lost_mebos;
 		canbuild17=lost_torpedo_launcher;
-		//canbuild18=arm_naval_flakker;
+		canbuild18=lost_naval_candlestick;
 		canbuild19=lost_sub_pen;
 		canbuild20=lost_shipyard;
 		canbuild21=lost_adv_shipyard;
@@ -2713,7 +2713,7 @@
 		canbuild11=Lost_sub_pen;
 		canbuild12=Lost_light_Laser_tower;
 		canbuild13=lost_radar_tower;
-		//canbuild14=lost_floating_radar;
+		canbuild14=lost_floating_radar;
 		canbuild15=lost_sonar_station;
 		canbuild16=lost_tidal_generator;
 		canbuild17=lost_underwater_energy_storage;
@@ -2747,7 +2747,7 @@
 		canbuild11=Lost_sub_pen;
 		canbuild12=Lost_light_Laser_tower;
 		canbuild13=lost_radar_tower;
-		//canbuild14=lost_floating_radar;
+		canbuild14=lost_floating_radar;
 		canbuild15=lost_sonar_station;
 		canbuild16=lost_tidal_generator;
 		canbuild17=lost_underwater_energy_storage;
@@ -2781,7 +2781,7 @@
 		canbuild11=Lost_sub_pen;
 		canbuild12=Lost_light_Laser_tower;
 		canbuild13=lost_radar_tower;
-		//canbuild14=lost_floating_radar;
+		canbuild14=lost_floating_radar;
 		canbuild15=lost_sonar_station;
 		canbuild16=lost_tidal_generator;
 		canbuild17=lost_underwater_energy_storage;
@@ -2815,7 +2815,7 @@
 		canbuild11=Lost_sub_pen;
 		canbuild12=Lost_light_Laser_tower;
 		canbuild13=lost_radar_tower;
-		//canbuild14=lost_floating_radar;
+		canbuild14=lost_floating_radar;
 		canbuild15=lost_sonar_station;
 		canbuild16=lost_tidal_generator;
 		canbuild17=lost_underwater_energy_storage;
@@ -2849,7 +2849,7 @@
 		canbuild11=Lost_sub_pen;
 		canbuild12=Lost_light_Laser_tower;
 		canbuild13=lost_radar_tower;
-		//canbuild14=lost_floating_radar;
+		canbuild14=lost_floating_radar;
 		canbuild15=lost_sonar_station;
 		canbuild16=lost_tidal_generator;
 		canbuild17=lost_underwater_energy_storage;
@@ -2883,7 +2883,7 @@
 		canbuild11=Lost_sub_pen;
 		canbuild12=Lost_light_Laser_tower;
 		canbuild13=lost_radar_tower;
-		//canbuild14=lost_floating_radar;
+		canbuild14=lost_floating_radar;
 		canbuild15=lost_sonar_station;
 		canbuild16=lost_tidal_generator;
 		canbuild17=lost_underwater_energy_storage;
@@ -2949,7 +2949,7 @@
 		canbuild11=Lost_sub_pen;
 		canbuild12=Lost_light_Laser_tower;
 		canbuild13=lost_radar_tower;
-		//canbuild14=lost_floating_radar;
+		canbuild14=lost_floating_radar;
 		canbuild15=lost_sonar_station;
 		canbuild16=lost_tidal_generator;
 		canbuild17=lost_underwater_energy_storage;
@@ -3050,9 +3050,9 @@
 		canbuild24=lost_underwater_metal_storage;
 		canbuild25=lost_underwater_metal_extractor;
 		canbuild26=lost_floating_metal_maker;
-		//canbuild27=arm_sentry;
+		canbuild27=lost_mebos;
 		canbuild28=lost_floating_dragons_teeth;
-		//canbuild29=arm_stingray;
+		canbuild29=lost_nosmeab;
 		canbuild30=lost_torpedo_launcher;
 		//canbuild31=arm_floating_light_laser_tower;
 		canbuild32=lost_odin_mallet;//Spiderpack vs. Tortoise
@@ -3076,7 +3076,7 @@
 		canbuild2=lost_torpedo_launcher;
 		canbuild3=lost_tidal_generator;
 		canbuild4=lost_sonar_station;
-		//canbuild5=lost_floating_radar;
+		canbuild5=lost_floating_radar;
 		canbuild6=lost_light_laser_tower;
 		//canbuild7=lost_floating_light_laser_tower;
 		canbuild8=lost_shipyard;
@@ -3108,7 +3108,7 @@
 		canbuild3=lost_tidal_generator;
 		canbuild5=lost_underwater_tidal_generator;
 		canbuild6=lost_sonar_station;
-		//canbuild7=lost_floating_radar;
+		canbuild7=lost_floating_radar;
 		//canbuild8=lost_floating_light_laser_tower;
 		canbuild9=lost_shipyard;
 		canbuild10=lost_sub_pen;
@@ -3152,9 +3152,9 @@
 		canbuild24=lost_underwater_metal_storage;
 		canbuild25=lost_underwater_metal_extractor;
 		canbuild26=lost_floating_metal_maker;
-		//canbuild27=arm_sentry;
+		canbuild27=lost_mebos;
 		canbuild28=lost_floating_dragons_teeth;
-		//canbuild29=arm_stingray;
+		canbuild29=lost_nosmeab;
 		canbuild30=lost_torpedo_launcher;
 		//canbuild31=arm_floating_light_laser_tower;
 		canbuild32=lost_odin_mallet;//Spiderpack vs. Tortoise
@@ -3295,9 +3295,9 @@
 		canbuild24=lost_underwater_metal_storage;
 		canbuild25=lost_underwater_metal_extractor;
 		canbuild26=lost_floating_metal_maker;
-		//canbuild27=arm_sentry;
+		canbuild27=lost_mebos;
 		canbuild28=lost_floating_dragons_teeth;
-		//canbuild29=arm_stingray;
+		canbuild29=arm_nosmeab;
 		canbuild30=lost_torpedo_launcher;
 		//canbuild31=arm_floating_light_laser_tower;
 		canbuild32=lost_odin_mallet;//Spiderpack vs. Tortoise

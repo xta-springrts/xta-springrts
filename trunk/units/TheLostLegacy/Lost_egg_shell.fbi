@@ -24,7 +24,7 @@
 	Acceleration=0.095;
 	CanMove=1;
 	MaxVelocity=2.7;
-	DamageModifier=0.2;
+	DamageModifier=0.45;
 	OnOffable=1;
 	MaxSlope=12;
 	TurnRate=380;

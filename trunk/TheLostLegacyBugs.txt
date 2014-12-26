@@ -1,5 +1,4 @@
 .cob bugs
-Tic? or aiming issues-
 
 Texture errors.
 Redundant textures grande! and certain models missing shaded ota textures that does not exist.
@@ -7,3 +6,34 @@ EGG SHELL or compressor .cob error.
 Boats certainly will have issues as not entirely touched as well as most land units.
 
 Not all units have been added and certain roles are missing atm.
+
+
+Unavailabe team logo color textures
+raceLogoGouraud
+race32Dk
+race32Lt
+
+
+
+Balancing Issues:
+
+Early Game:
+I want to try to keep the original theme of the race by M3g. The idea was that the race was lost in space and reawoken or has returned to the galaxy in which arm and core has destroyed millions of worlds. However I did not simply want to have a boring copy-cat to precise values of arm core tech 1 early game. Instead of vtol rockets they rely on energy pulse technology and with heavy orientation with lightning its only fair to theme things in blue and yellow energy if possible like the original.
+
+The commander was larger and more armoured vs the regular commander, and was able to shoot planes in ota with its default lightning weapon, however it was the same speed and had no tradeoffs.
+So here is the advantages of the commander and disadvantages.
+Advantages = EcoBoost, WeaponRange, DgunRange, Can parry combomb with Dgun.
+Disadvantages = Slow Movespeed, Weak Expansion, Expensive Dgun, Most Expensive Com Upgrades
+
+Lost Tech 1 with kbots and tanks have one of their roles stats scrambled. They do however maintain their Anti air, Kiting Rocket Kbot, and scout roles. Mineclearer is replaced with sabatodging bugger that can play both roles of zipper and mineclearer. While Mine Builder is replaced with a tank that can stock rockets that primarily clear mines or cause area of effect damage over time. Due to more range and in general hitpoints non-aa units such as rainman and ariaman are more effective against t2 rather than t1. While core and arm has awesome t2 defense availabe to them, Lost legacy gets a early game bertha so to speak, which is useful on a small map but is extremly fragile and expensive. This could be used to punish players who rush t2 labs near the front of the line.
+
+Mid Game:
+Lost Tech 2 labs cost the same as their other race siblings, however it was originally segmented. Heavy Fusion cannot be reached, and the medium fusion can not cloak but is slightly more cost effective. There are however Solar Wind Plants that can be built which may be great or lame depending on the map, but assuming average Lost mega fusion most be reached through late tier t2 which could hurt their eco abillity midrush to late game due to required resources to reach such late game. Thus they must play longer before they reach late game. Their t2 kbots are generally very fragile and lack powerful range like arm's raven sniper, or raw strength like core cans and sumos. Their t2 tanks lack a strong mobile arty as well and their heavy tank is not cost efficent.
+
+When a few reactors are working, they may gain better access to one of the stronger cloaking kbots that can remained cloaked while firing, however they lack espinoge units like arm/core. If a few thumper sea arty tanks group they could take enough punishment before taking out a few tough structures on the frontline while Gladius heavy raids can take place. Lost tech 2 bombers are defenseless against air units but are heavily armored and designed to drop 1 powerful bomb, dealing less damage overall, but dealing far more area of effect, great against units. While heavy robber, strongest transport in the game can land heavy raids.
+
+Late game:
+Assuming you can make the high tech plant, you have far more options than any race late game. However, Your long range cannon is the weakest, nukes are weaker, and even the rapid canon is weaker. You do however get an additional toy which is far more expensive than either, a satelight beam laser that can fire unblockable damage in a 10x10 block dealing somewhere around 15,000 to 55,000 max damage. You can also build Titans which are excellent ranged units meant to destroy heavy bases with no opposition, but is quite fragile vs. other units. While Dreadnoughts are great all-purpose units that lack speed and range. Your reactors are the strongest and it is at this point, the lost legacy finds themself returned to their former glory.
+
+
+
