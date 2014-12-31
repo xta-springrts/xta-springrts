@@ -265,11 +265,11 @@
 	name=Pop-up Cannon;
 	explosiongenerator=custom:GREEN_EMP_SHOT;
 	energypershot=216;
-	accuracy=575;
+	accuracy=975;
 	rgbcolor=0.5 1.0 0.5;
 	weaponType=Cannon;
 	turret=1;
-	range=2805; // 1330; in 9.725
+	range=2450; // 1330; in 9.725
 	reloadtime=4.0;
 	weaponvelocity=770;
 	areaofeffect=105;
@@ -277,12 +277,12 @@
 	soundhitdry=PSaHit00;
 	//minbarrelangle=-35;
 	startsmoke=1;
-	size=5.45;
+	size=6.45;
 	stages=7;
-	separation=0.96;
+	separation=1.16;
 	alphadecay=0.8;
 	sizedecay=-0.11;
-	cegTag=GIGAGREEN;
+	//cegTag=GIGAGREEN;
 	//cegTag=TinyGreen;
 	[DAMAGE]
 	{
@@ -673,40 +673,40 @@
 		group_invincible=1;
 	}
 }
-[Lost_loki]
+
+[Lost_Loki]
 {
-	name=Plasma Cannon;
+	name=Loki Cannon;
+	explosiongenerator=custom:BluePlasmaExtraBANG;
+	energypershot=216;
+	accuracy=375;
+	rgbcolor=1 0.60 0.0;
 	weaponType=Cannon;
 	turret=1;
-	range=1300;
-	size=3;
-	rgbcolor=0.9 0.4 0.2;
-	stages=8;
-	separation=0.5;
-	alphadecay=0.3;
-	sizedecay=-0.08;
-	energypershot=143;
-	reloadtime=3;
-	weaponvelocity=600;
-	//mygravity=0.24;
-	areaofeffect=64;
-	explosiongenerator=custom:WindkbotRocket;
-	soundstart=cannhvy2;
-	soundhitdry=xplomed4;
-	accuracy=800;
-	movingaccuracy=1300;
-	tolerance=500;
-	//minbarrelangle=-40;
+	range=1275; // 1330; in 9.725
+	reloadtime=3.0;
+	weaponvelocity=440;
+	areaofeffect=82;
+	soundstart=lostartyplasma1;
+	soundhitdry=xplomed2;
+	//minbarrelangle=-35;
 	startsmoke=1;
-	startsmoke=1;
+	size=3.45;
+	rgbcolor=0.4 0.6 1.0;
+	stages=7;
+	separation=0.66;
+	alphadecay=0.8;
+	sizedecay=-0.11;
+	cegTag=BluePlasmaExtraGlow;
 	[DAMAGE]
 	{
-		default=232;
+		default=257;
 		group_invincible=1;
-		group_ships=317;
-		group_large_ships=355;
+		group_ships=432;
+		group_large_ships=487;
 	}
 }
+
 [Thumper_GUN]
 {
 	name=Plasma Cannon;
@@ -792,7 +792,7 @@
 	impulsefactor=0.6;
 	turret=1;
 	model=weapon_exphvyrock;
-	range=1550;
+	range=1300;
 	reloadtime=9;
 	weapontimer=0.33; //6
 	weaponvelocity=300;
@@ -829,7 +829,7 @@
 	rgbcolor=1 0.60 0.0;
 	weaponType=Cannon;
 	turret=1;
-	range=1400; // 1330; in 9.725
+	range=1300; // 1330; in 9.725
 	reloadtime=0.8;
 	weaponvelocity=480;
 	areaofeffect=82;
@@ -952,7 +952,7 @@
 	craterboost=0.25;
 	cratermult=0.25;
 	explosiongenerator=custom:NUKE_EXPLOSION_FX_COM;
-	cegTag=NUCKLEARMINI;
+	cegTag=dgunflare;
 	Texture1=null;
 	Texture2=null;
 	Texture3=null;
@@ -1143,7 +1143,7 @@
 	energypershot=1000;
 	[DAMAGE]
 	{
-		default=2222;
+		default=1666;
 		group_commanders=1111;
 		lost_commanders=1000;
 	}
@@ -1558,7 +1558,7 @@
 	model=missile.s3o;
 	explosiongenerator=custom:SMALL_NUKE_EXPLOSION_INIATE;
 	//explosiongenerator=custom:KBOTROCKETHIT;
-	cegTag=REDLIGHTBOMB;
+	cegTag=DGUNREADYFLARE;
 	//cegTag=KBOTROCKETTRAIL;
 	Texture1=null;
 	Texture2=null;

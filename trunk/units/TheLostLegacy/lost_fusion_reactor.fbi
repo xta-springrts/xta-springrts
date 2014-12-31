@@ -42,7 +42,7 @@
 	//  Resources
 	//*************
 	metalstorage=0;
-	energymake=800;
+	energymake=720;
 	energyuse=0;
 	energystorage=0;
 

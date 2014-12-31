@@ -1,0 +1,88 @@
+[lost_dragons_teeth_dead]
+{
+	world=allworld;
+	description=Dragon's Teeth;
+	category=dragonteeth;
+	object=lost_dragons_teeth;
+	footprintx=2;
+	footprintz=2;
+	height=40;
+	blocking=1;
+	hitdensity=100;
+	metal=8;
+	damage=2200; //1200; //2400
+	crushResistance=250;
+	reclaimable=1;
+	autoreclaimable=0;
+	featuredead=rock_teeth;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType = Box;
+	collisionVolumeScales =26 34 26;
+	collisionVolumeOffsets = 0 -2 0;   //0 0 0
+	collisionVolumeTest = 1;
+	
+	[customparams] 	
+	{
+	noalert=1;
+	dontCount=1;
+	}
+	
+}
+[lost_floating_dragons_teeth_dead]
+{
+	world=allworld;
+	description=Floating Dragon's Teeth;
+	category=dragonteeth;
+	object=lost_floating_dragons_teeth;
+	footprintx=2;
+	footprintz=2;
+	height=80;
+	blocking=1;
+	hitdensity=100;
+	metal=20;
+	damage=1750; //3500
+	crushResistance=350;
+	reclaimable=1;
+	autoreclaimable=0;
+	floating=1;
+	collisionVolumeType = box;
+	collisionVolumeScales =32 30 32;
+	collisionVolumeOffsets = 0 -4 0;
+	collisionVolumeTest = 1;
+	
+	[customparams] 	
+	{
+	noalert=1;
+	dontCount=1;
+	}
+}
+[lost_fortification_wall_dead]
+{
+	world=allworld;
+	description=Fortification Wall;
+	category=dragonteeth;
+	object=lost_fortification_wall;
+	footprintx=2;
+	footprintz=2;
+	height=65;
+	blocking=1;
+	hitdensity=100;
+	metal=27;
+	damage=4500;
+	crushResistance=450;
+	reclaimable=1;
+	autoreclaimable=0;
+	featuredead=rock_fort;
+	seqnamereclamate=tree1reclamate;
+	reclaimTime=500;
+	collisionVolumeType = box;
+	collisionVolumeScales =32 42 32;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	
+	[customparams] 	
+	{
+	noalert=1;
+	dontCount=1;
+	}
+}
