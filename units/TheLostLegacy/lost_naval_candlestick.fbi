@@ -21,7 +21,7 @@
 	unitnumber=1161;
 	objectname=lost_naval_candlestick.3do;
 	corpse=lost_naval_candlestick_dead;
-	buildpic=lost_naval_candlestick.DDS;
+	buildpic=lost_naval_candlestick.png;
 	soundcategory=GUARD;
 
 	//************************************************************

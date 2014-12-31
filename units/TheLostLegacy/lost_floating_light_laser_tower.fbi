@@ -4,55 +4,52 @@
 	//  Unit Description
 	//********************
 	side=lost;
-	name=Floating Radar Tower;
-	description=Radar Tower;
+	name=Floating Light Tesla Tower;
+	description=Floating Light Tesla Tower;
 	icontype=building;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=lost STATIC NOWEAPON RADAR NOTAIR NOTLAND NOTSUB;
-	tedclass=RADAR;
+	Category=lost DEFENSIVE WEAPON  NOTAIR NOTSUB;
+	tedclass=DEFENSIVE;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=lost_floating_radar;
-	unitnumber=546;
-	objectname=lost_floating_radar.3do;
-	corpse=lost_radar_tower_dead;
-	buildpic=lost_floating_radar.png;
-	script=lost_floating_radar.lua;
-	soundcategory=arm_RADAR;
+	unitname=lost_floating_light_laser_tower;
+	objectname=lost_floating_light_laser_tower.3do;
+	corpse=lost_light_laser_tower_dead;
+	buildpic=lost_floating_light_laser_tower.png;
+	soundcategory=LLT;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=122;
-	buildcostmetal=83;
-	buildcostenergy=1143;
-	buildtime=1537;
-	footprintx=3;
-	footprintz=3;
+	maxdamage=1235;
+	healtime=11;
+	buildcostmetal=304;//reduce by 10 percent
+	buildcostenergy=752;
+	buildtime=5427;
+	footprintx=2;
+	footprintz=2;
 
 	//************************************************************
 	//  Resources
 	//*************
 	metalstorage=0;
-	energymake=5;
-	energyuse=5;
-	energystorage=0;
-	windgenerator=0.001;
+	energyuse=0;
+	energystorage=100;
+	energymake=9;
 
 	//************************************************************
 	//  Building
 	//************
-	buildangle=8192;
-	yardmap=ooooooooo;
-	activatewhenbuilt=1;
+	buildangle=32768;
+	yardmap=oooo;
 	collisionVolumeType = CylY;
-	collisionVolumeScales =37 60 37;
-	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeScales =28 62 28;
+	collisionVolumeOffsets = 0 1.5 0;
 	collisionVolumeTest = 1;
 
 	//************************************************************
@@ -64,53 +61,61 @@
 	//************************************************************
 	//  Abilities
 	//*************
-	onoffable=1;
-	canRepeat=0;
-	canMove=0;
-	canAttack=0;
-	canGuard=0;
+	canattack=1;
+	canguard=1;
+	canstop=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	maxslope=10;
-	minwaterdepth=3;
+	maxslope=14;
+	minwaterdepth=11;
+	waterline=0.5;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	airsightdistance=920;
-	radardistance=2100;
-	losemitheight=48;
-	radaremitheight=48;
+	sightdistance=490;
+	radardistance=0;
+	losemitheight=56;
 
 	//************************************************************
 	//  Weapons
 	//***********
-	explodeas=SMALL_BUILDINGEX;
-	selfdestructas=SMALL_BUILDING;
+	Weapon1=Tower_Lightning;
+	badtargetcategory=VTOL;
+	wpri_badtargetcategory=VTOL;
+	explodeas=MEDIUM_BUILDINGEX;
+	selfdestructas=MEDIUM_BUILDING;
 
 	//************************************************************
 	//  Orders
 	//**********
 	noautofire=0;
+	firestandorders=1;
+	standingfireorder=2;
+	defaultmissiontype=GUARD_NOMOVE;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
 	bmcode=0;
-	designation=AS-EWDL;
+	designation=F-L44;
 	downloadable=1;
+	shootme=1;
 	threed=1;
 	version=1.2;
 	zbuffer=1;
-  	waterline=4.99;
-	pieceTrailCEGTag=Debree;//bleh
-	pieceTrailCEGRange = 4;
+	pieceTrailCEGTag=NanoDebree;//bleh
+	pieceTrailCEGRange = 1;
 
 	//************************************************************
 	//  To be removed
 	//*****************
+	[SFXTypes]
+	{
+	explosiongenerator0=custom:ReactorTINYSequence;
+	explosiongenerator1=custom:tllDGUNTRAIL;
+	}
 
 }
