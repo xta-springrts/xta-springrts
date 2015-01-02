@@ -29,14 +29,14 @@ local changeStartUnitRegex = '^\177(%d+)$'
 ----------------------------------------------------------------
 local armcomDefID = UnitDefNames.arm_commander.id
 local corcomDefID = UnitDefNames.core_commander.id
+local lostcomDefID = UnitDefNames.lost_commander.id
+local isTLL	= false
 
 local validStartUnits = {
 	[UnitDefNames.arm_commander.id] = true,
 	[UnitDefNames.arm_u0commander.id] = true,
 	[UnitDefNames.core_commander.id] = true,
 	[UnitDefNames.core_u0commander.id] = true,
-	[UnitDefNames.core_easter_egg.id] = true,
-	[UnitDefNames.arm_invader.id] = true,
    }	
 local spawnTeams = {} -- spawnTeams[teamID] = allyID
 
@@ -78,8 +78,10 @@ function gadget:Initialize()
             local _, _, _, _, teamSide, teamAllyID = spGetTeamInfo(teamID)
             if teamSide == 'core' then
                 spSetTeamRulesParam(teamID, 'startUnit', corcomDefID)
-            else
+            elseif teamSide == 'arm' then
                 spSetTeamRulesParam(teamID, 'startUnit', armcomDefID)
+			elseif teamSide == 'lost' then
+				spSetTeamRulesParam(teamID, 'startUnit', lostcomDefID)
             end
             spawnTeams[teamID] = teamAllyID
         end
@@ -90,6 +92,12 @@ function gadget:Initialize()
 	local playerList = Spring.GetPlayerList()
 	for _,playerID in pairs(playerList) do
 		Spring.SetGameRulesParam("player_" .. playerID .. "_readyState" , initState)
+	end
+	isTLL = tonumber( (Spring.GetModOptions() or {}).tllunits) == 1
+	
+	if isTLL then
+		validStartUnits[UnitDefNames.lost_commander.id] = true
+		validStartUnits[UnitDefNames.lost_u0commander.id] = true
 	end
 	
 end
@@ -142,7 +150,8 @@ function gadget:RecvLuaMsg(msg, playerID)
 		end
 	elseif msg:sub(1,#COMMMSG) == COMMMSG then
 		local startUnit = tonumber(msg:match(changeStartUnitRegex))
-		if startUnit and validStartUnits[startUnit] then
+				
+		if startUnit and validStartUnits[startUnit] then	
 			local localName, _, playerIsSpec, playerTeam = spGetPlayerInfo(playerID)
 			if not playerIsSpec then
 				spSetTeamRulesParam(playerTeam, 'startUnit', startUnit,{public=true})

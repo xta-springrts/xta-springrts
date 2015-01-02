@@ -197,9 +197,12 @@ local function setUpTeam()
 		teamColors[teamID] = {r=r,g=g,b=b}
 	end
 	
-	if (teamCount > 1) and Spring.GetGameFrame() > 1 then
+	if Spring.GetGameFrame() > 0 and (teamCount > 1) then		
 		enabled = true
 		return true
+	else
+		enabled = false
+		return false
 	end
 end
 
@@ -585,7 +588,12 @@ function widget:GameFrame(n)
 				sentSomething = false
 			end
 		end
-		
+	else
+		if gameFrame == 90 then
+			enabled = true
+			setUpTeam()
+			updateStatics()
+		end
 	end
 end
 
@@ -644,13 +652,6 @@ function widget:IsAbove(mx, my)
 			}						
 		end
 	end	
-end
-
-function widget:GameStart()
-	
-	enabled = true
-	setUpTeam()
-	updateStatics()
 end
 
 function widget:DrawScreen()
