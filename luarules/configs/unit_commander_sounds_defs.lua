@@ -18,6 +18,13 @@ local CommanderUnitDefs = {
 	[ UnitDefNames["core_u2commander" ].id ] = UnitDefNames["core_u2commander" ],
 	[ UnitDefNames["core_u3commander" ].id ] = UnitDefNames["core_u3commander" ],
 	[ UnitDefNames["core_u4commander" ].id ] = UnitDefNames["core_u4commander" ],
+	
+	[ UnitDefNames["lost_commander"   ].id ] = UnitDefNames["lost_commander"   ],
+	[ UnitDefNames["lost_u0commander" ].id ] = UnitDefNames["lost_u0commander" ],
+	[ UnitDefNames["lost_ucommander"  ].id ] = UnitDefNames["lost_ucommander"  ], -- NOTE: not "lost_u1commander"
+	[ UnitDefNames["lost_u2commander" ].id ] = UnitDefNames["lost_u2commander" ],
+	[ UnitDefNames["lost_u3commander" ].id ] = UnitDefNames["lost_u3commander" ],
+	[ UnitDefNames["lost_u4commander" ].id ] = UnitDefNames["lost_u4commander" ],
 }
 
 -- TODO: add a denied-sound when reclaiming or capturing fails, DukeNukem3D F-key taunts
@@ -71,6 +78,17 @@ local CommanderSounds = {
 		[ UnitDefNames["core_u2commander" ].id ] = {},
 		[ UnitDefNames["core_u3commander" ].id ] = {},
 		[ UnitDefNames["core_u4commander" ].id ] = {},
+		
+		[ UnitDefNames["lost_commander"].id ] = {
+			[0] = "sounds/sing2.wav",
+			[1] = "sounds/honk2.wav",
+		},
+
+		[ UnitDefNames["lost_u0commander" ].id ] = {},
+		[ UnitDefNames["lost_ucommander"  ].id ] = {},
+		[ UnitDefNames["lost_u2commander" ].id ] = {},
+		[ UnitDefNames["lost_u3commander" ].id ] = {},
+		[ UnitDefNames["lost_u4commander" ].id ] = {},
 	},
 	
 	GLHFSongs = {
@@ -113,6 +131,23 @@ local CommanderSounds = {
 		[ UnitDefNames["core_u2commander" ].id ] = {},
 		[ UnitDefNames["core_u3commander" ].id ] = {},
 		[ UnitDefNames["core_u4commander" ].id ] = {},
+		
+		[ UnitDefNames["lost_commander"].id ] = {
+			[0] = "sounds/glhf/glhf_6.wav",
+			[1] = "sounds/glhf/glhf_7.wav",
+			[2] = "sounds/glhf/glhf_8.wav",
+			[3] = "sounds/glhf/glhf_9.wav",
+			[4] = "sounds/glhf/glhf_10.wav",
+			[5] = "sounds/glhf/glhf_fr.wav",
+			
+		},
+		[ UnitDefNames["lost_u0commander" ].id ] = {},
+		[ UnitDefNames["lost_ucommander"  ].id ] = {},
+		[ UnitDefNames["lost_u2commander" ].id ] = {},
+		[ UnitDefNames["lost_u3commander" ].id ] = {},
+		[ UnitDefNames["lost_u4commander" ].id ] = {},
+		
+		
 	},
 	
 	TYSongs = {
@@ -149,6 +184,22 @@ local CommanderSounds = {
 		[ UnitDefNames["core_u2commander" ].id ] = {},
 		[ UnitDefNames["core_u3commander" ].id ] = {},
 		[ UnitDefNames["core_u4commander" ].id ] = {},
+		
+		[ UnitDefNames["lost_commander"].id ] = {
+			[0] = "sounds/glhf/ty_lost_1.wav",
+			[1] = "sounds/glhf/ty_lost_2.wav",
+			[2] = "sounds/glhf/ty_lost_3.wav",
+			[3] = "sounds/glhf/ty_lost_4.wav",
+			[4] = "sounds/glhf/ty_lost_5.wav",
+			[5] = "sounds/glhf/ty_lost_6.wav",
+			
+		},
+		[ UnitDefNames["lost_u0commander" ].id ] = {},
+		[ UnitDefNames["lost_ucommander"  ].id ] = {},
+		[ UnitDefNames["lost_u2commander" ].id ] = {},
+		[ UnitDefNames["lost_u3commander" ].id ] = {},
+		[ UnitDefNames["lost_u4commander" ].id ] = {},	
+		
 	},
 	
 	CommanderTaunts = {
@@ -179,6 +230,20 @@ local CommanderSounds = {
 		[ UnitDefNames["core_u2commander" ].id ] = {},
 		[ UnitDefNames["core_u3commander" ].id ] = {},
 		[ UnitDefNames["core_u4commander" ].id ] = {},
+		
+		[ UnitDefNames["lost_commander"].id ] = {
+			[0] = "sounds/commander/lost_comm_taunt_3.wav",
+			[1] = "sounds/commander/lost_comm_taunt_2.wav",
+			[2] = "sounds/commander/lost_comm_taunt_1.wav",
+			[3] = "sounds/commander/lost_comm_taunt_4.wav",
+		},
+
+		[ UnitDefNames["lost_u0commander" ].id ] = {},
+		[ UnitDefNames["lost_ucommander"  ].id ] = {},
+		[ UnitDefNames["lost_u2commander" ].id ] = {},
+		[ UnitDefNames["lost_u3commander" ].id ] = {},
+		[ UnitDefNames["lost_u4commander" ].id ] = {},
+		
 	},
 	CommanderDamaged = {
 		[0] = "sounds/commander/arm_comm_damage_25.wav",
@@ -219,6 +284,7 @@ local CommanderTargets = {
 
 local armComDefID = UnitDefNames["arm_commander" ].id
 local corComDefID = UnitDefNames["core_commander"].id
+local lostComDefID = UnitDefNames["lost_commander"].id
 
 local comSongs = CommanderSounds.CommanderSongs
 local comTaunts = CommanderSounds.CommanderTaunts
@@ -237,6 +303,8 @@ for unitDefID, sndTable in pairs(comSongs) do
 			songsList = comSongs[corComDefID]
 		elseif (unitDef.customParams and unitDef.customParams.side == "arm") then
 			songsList = comSongs[armComDefID]
+		elseif (unitDef.customParams and unitDef.customParams.side == "lost") then
+			songsList = comSongs[lostComDefID]
 		end
 
 		-- note: pairs because ipairs will never visit [0]
@@ -257,6 +325,8 @@ for unitDefID, sndTable in pairs(comTaunts) do
 			tauntsList = comTaunts[corComDefID]
 		elseif (unitDef.customParams and unitDef.customParams.side == "arm") then
 			tauntsList = comTaunts[armComDefID]
+		elseif (unitDef.customParams and unitDef.customParams.side == "lost") then
+			tauntsList = comTaunts[lostComDefID]
 		end
 
 		for sndIndex, sndFile in pairs(tauntsList) do
@@ -277,6 +347,8 @@ for unitDefID, sndTable in pairs(comGLHF) do
 			sayList = comGLHF[corComDefID]
 		elseif (unitDef.customParams and unitDef.customParams.side == "arm") then
 			sayList = comGLHF[armComDefID]
+		elseif (unitDef.customParams and unitDef.customParams.side == "lost") then
+			sayList = comGLHF[lostComDefID]
 		end
 
 		for sndIndex, sndFile in pairs(sayList) do
@@ -297,6 +369,8 @@ for unitDefID, sndTable in pairs(comTY) do
 			sayList = comTY[corComDefID]
 		elseif (unitDef.customParams and unitDef.customParams.side == "arm") then
 			sayList = comTY[armComDefID]
+		elseif (unitDef.customParams and unitDef.customParams.side == "lost") then
+			sayList = comTY[lostComDefID]
 		end
 
 		for sndIndex, sndFile in pairs(sayList) do
