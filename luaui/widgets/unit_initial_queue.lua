@@ -87,7 +87,7 @@ local showWhenStarting = false
 local CMD_MORPH_STOP 		= 32410
 local CMD_MORPHA			= 31418
 local CMD_MORPHC			= 31431
-local CMD_MORPHT			= CMD_MORPHA
+local CMD_MORPHT			= 31420
 local CMD_MORPH 			= CMD_MORPHA
 local CMD_SING				= 40123
 
@@ -279,6 +279,72 @@ local function drawEdge(x0, y0, x1, y1, width)
 			gl.Rect(x1, y0, x1 - width, y1)
 		end
 		
+local function changeFaction(startID,newSide,oldSide)
+	
+	if newSide then
+		if newSide == "arm" then
+			CMD_MORPH = CMD_MORPHA
+		elseif newSide == "core" then
+			CMD_MORPH = CMD_MORPHC
+		elseif newSide == "lost" then
+			CMD_MORPH = CMD_MORPHT
+		end
+	end
+	
+	for b = 1, #buildQueue do
+		local buildData = buildQueue[b]
+		local buildDataId = buildData[1]
+		
+		if oldSide then
+			if ValidBuild(buildDataId) then
+				local newID = UnitDefs[buildDataId] and ((UnitDefNames[string.gsub(UnitDefs[buildDataId].name,oldSide .."_",newSide .. "_")] or {}).id)
+				if newID then
+					buildData[1] = newID
+					buildQueue[b] = buildData
+				else
+					Echo("Warning: could not convert to: ", newSide,(UnitDefs[buildDataId] or {}).name)
+				end
+			else
+				if buildDataId == CMD_MORPHA then
+					if newSide == "core" then
+						local newID = CMD_MORPHC
+						buildData[1] = newID
+						buildQueue[b] = buildData
+					elseif newSide == "lost" then
+						local newID = CMD_MORPHT
+						buildData[1] = newID
+						buildQueue[b] = buildData
+					end
+				elseif buildDataId == CMD_MORPHC then
+					if newSide == "arm" then
+						local newID = CMD_MORPHA
+						buildData[1] = newID
+						buildQueue[b] = buildData
+					elseif newSide == "lost" then
+						local newID = CMD_MORPHT
+						buildData[1] = newID
+						buildQueue[b] = buildData
+					end
+				elseif buildDataId == CMD_MORPHT then
+					if newSide == "arm" then
+						local newID = CMD_MORPHA
+						buildData[1] = newID
+						buildQueue[b] = buildData
+					elseif newSide == "core" then
+						local newID = CMD_MORPHC
+						buildData[1] = newID
+						buildQueue[b] = buildData
+					end
+				end
+			end
+		end
+	end
+	
+	buildNameToID = {}
+	SetSelDefID(nil)
+	InitializeFaction(sDefID)
+end
+		
 local function addMorph()
 
 	buildQueue[#buildQueue + 1] =  {CMD_MORPH, 0, 0, 0, 0}
@@ -350,8 +416,15 @@ function widget:Initialize()
 	local _, _, _, _, mySide = Spring.GetTeamInfo(myTeamID)
 	local startUnitName = Spring.GetSideData(mySide)
 	sDefID = UnitDefNames[startUnitName].id
+	
+	-- look for changed commander
 	local startID = spGetTeamRulesParam(myTeamID, 'startUnit')
-	if startID and startID ~= "" then sDefID = startID end
+	if sDefID and startID ~= "" then 
+		sDefID = startID 
+		mySide = UnitDefs[sDefID].customParams.side
+		startUnitName = UnitDefs[sDefID].name
+	end
+	
 	InitializeFaction(sDefID)
 	Button["morph"] = {}
 	Button["sing"] = {}
@@ -667,6 +740,20 @@ function widget:DrawWorld()
 		
 		local sx, sy, sz = Spring.GetTeamStartPosition(myTeamID) -- Returns -100, -100, -100 when none chosen
 		-- not anymore, now default pos is (0,0) for some reason
+		if not startChosen then
+			if (sx > 0 and sz > 0) then
+				local startID = spGetTeamRulesParam(myTeamID, 'startUnit')
+				if startID and startID ~= "" then sDefID = startID end
+					
+				local newSide = UnitDefs[startID] and UnitDefs[startID].customParams and UnitDefs[startID].customParams.side
+				local oldSide = sDef.customParams and sDef.customParams.side
+			
+				if newSide ~= oldSide then
+					changeFaction(startID,newSide,oldSide)
+				end
+			end
+		end
+		
 		startChosen = (sx > 0 and sz > 0)
 		
 		if startChosen then
@@ -967,73 +1054,12 @@ function widget:RecvLuaMsg(msg, playerID)
 			
 			local startID = spGetTeamRulesParam(myTeamID, 'startUnit')
 			if startID and startID ~= "" then sDefID = startID end
-						
+					
 			local newSide = UnitDefs[startID] and UnitDefs[startID].customParams and UnitDefs[startID].customParams.side
 			local oldSide = sDef.customParams and sDef.customParams.side
 			
 			if newSide ~= oldSide then
-				if newSide then
-					if newSide == "arm" then
-						CMD_MORPH = CMD_MORPHA
-					elseif newSide == "core" then
-						CMD_MORPH = CMD_MORPHC
-					elseif newSide == "lost" then
-						CMD_MORPH = CMD_MORPHT
-					end
-				end
-				
-				for b = 1, #buildQueue do
-					local buildData = buildQueue[b]
-					local buildDataId = buildData[1]
-					
-					if oldSide then
-						if ValidBuild(buildDataId) then
-							local newID = UnitDefs[buildDataId] and ((UnitDefNames[string.gsub(UnitDefs[buildDataId].name,oldSide .."_",newSide .. "_")] or {}).id)
-							if newID then
-								buildData[1] = newID
-								buildQueue[b] = buildData
-							else
-								Echo("Warning: could not convert to: ", newSide,(UnitDefs[buildDataId] or {}).name)
-							end
-						else
-							if buildDataId == CMD_MORPHA then
-								if newSide == "core" then
-									local newID = CMD_MORPHC
-									buildData[1] = newID
-									buildQueue[b] = buildData
-								elseif newSide == "lost" then
-									local newID = CMD_MORPHT
-									buildData[1] = newID
-									buildQueue[b] = buildData
-								end
-							elseif buildDataId == CMD_MORPHC then
-								if newSide == "arm" then
-									local newID = CMD_MORPHA
-									buildData[1] = newID
-									buildQueue[b] = buildData
-								elseif newSide == "lost" then
-									local newID = CMD_MORPHT
-									buildData[1] = newID
-									buildQueue[b] = buildData
-								end
-							elseif buildDataId == CMD_MORPHT then
-								if newSide == "arm" then
-									local newID = CMD_MORPHA
-									buildData[1] = newID
-									buildQueue[b] = buildData
-								elseif newSide == "core" then
-									local newID = CMD_MORPHC
-									buildData[1] = newID
-									buildQueue[b] = buildData
-								end
-							end
-						end
-					end
-				end
-				
-				buildNameToID = {}
-				SetSelDefID(nil)
-				InitializeFaction(sDefID)
+				changeFaction(startID,newSide,oldSide)
 			end
 		end
 	elseif not gameStarting and msg == startingPrefix then

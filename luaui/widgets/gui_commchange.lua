@@ -46,7 +46,7 @@ local img 						= {}
 	--faction emblems
 	img["arm"] 					= "LuaUI/Images/commchange/arm.png"
 	img["core"] 				= "LuaUI/Images/commchange/core.png"
-	img["tll"] 					= "LuaUI/Images/commchange/tll.png"
+	img["lost"] 					= "LuaUI/Images/commchange/lost.png"
 
 	--other
 	img["duck"]					= "LuaUI/Images/commchange/duck.png"
@@ -57,8 +57,8 @@ commanderID["arm_automatic"] 	= UnitDefNames["arm_commander"].id
 commanderID["arm_manual"] 		= UnitDefNames["arm_u0commander"].id
 commanderID["core_automatic"]	= UnitDefNames["core_commander"].id
 commanderID["core_manual"] 		= UnitDefNames["core_u0commander"].id
-commanderID["tll_automatic"]	= UnitDefNames["core_easter_egg"].id
-commanderID["tll_manual"] 		= UnitDefNames["arm_invader"].id
+commanderID["lost_automatic"]	= UnitDefNames["lost_commander"].id
+commanderID["lost_manual"] 		= UnitDefNames["lost_u0commander"].id
 
 -- sound
 local bell = 'sounds/bell.ogg'
@@ -85,7 +85,7 @@ local duckSounds =	 {
 local Button = {}
 Button["arm"] = {}
 Button["core"] = {}
-Button["tll"] = {}
+Button["lost"] = {}
 Button["ready"] = {}
 Button["info"] = {}
 Button["infopanel"] = {}
@@ -202,12 +202,12 @@ local function initButtons()
 	Button["core"]["y0"] = py  + sizey - 24
 	Button["core"]["y1"] = py  + sizey
 	
-	Button["tll"]["x0"] = Button["core"]["x1"]
-	Button["tll"]["x1"] = px + sizex/2
-	Button["tll"]["y0"] = py  + sizey - 24
-	Button["tll"]["y1"] = py  + sizey
+	Button["lost"]["x0"] = Button["core"]["x1"]
+	Button["lost"]["x1"] = px + sizex/2
+	Button["lost"]["y0"] = py  + sizey - 24
+	Button["lost"]["y1"] = py  + sizey
 	
-	Button["ready"]["x0"] = Button["tll"]["x1"]
+	Button["ready"]["x0"] = Button["lost"]["x1"]
 	Button["ready"]["x1"] = myState ~= READY and (px + 4*sizex/5) or (px + sizex)
 	Button["ready"]["y0"] = py  + sizey - 24
 	Button["ready"]["y1"] = py  + sizey
@@ -391,19 +391,23 @@ function widget:Initialize()
 	for i,player in ipairs(teamList) do
 		markedStates[i] = false
 	end
-	
+		
 	--set default startID
 	if lastStartID then
 		local lastSide = UnitDefs[lastStartID] and UnitDefs[lastStartID].customParams and UnitDefs[lastStartID].customParams.side
 		local lastType = UnitDefs[lastStartID] and UnitDefs[lastStartID].customParams and UnitDefs[lastStartID].customParams.type
-		
+		--Echo("Commchange:",lastSide,lastType)
 		if lastSide then
 			if lastSide == "arm" then
 				spSendLuaUIMsg('195' .. 1)
 			elseif lastSide == "core" then
 				spSendLuaUIMsg('195' .. 2)
-			elseif lastSide == "tll" then
-				spSendLuaUIMsg('195' .. 3)
+			elseif lastSide == "lost" then
+				if isTLL then
+					spSendLuaUIMsg('195' .. 3)
+				else
+					spSendLuaUIMsg('195' .. 1)
+				end
 			end
 			
 			if lastType then
@@ -420,6 +424,16 @@ function widget:Initialize()
 			spSendLuaRulesMsg('\177' .. commanderID["core_manual"])
 			spSendLuaUIMsg('195' .. 2)
 			lastStartID = commanderID["core_manual"]
+		elseif mySide == "lost" then
+			if isTLL then
+				spSendLuaRulesMsg('\177' .. commanderID["lost_manual"])
+				spSendLuaUIMsg('195' .. 3)
+				lastStartID = commanderID["core_manual"]
+			else
+				spSendLuaRulesMsg('\177' .. commanderID["arm_manual"])
+				spSendLuaUIMsg('195' .. 1)
+				lastStartID = commanderID["arm_manual"]
+			end
 		end	
 	end
 	updateSize()
@@ -478,7 +492,7 @@ function widget:DrawWorld()
                 glBeginEnd(GL_QUADS, QuadVerts, tsx, spGetGroundHeight(tsx, tsz), tsz, 64)
 				glTexture(false)
 			else
-				glTexture(img.tll)
+				glTexture(img.lost)
                 glBeginEnd(GL_QUADS, QuadVerts, tsx, spGetGroundHeight(tsx, tsz), tsz, 64)
 				glTexture(false)
             end
@@ -568,7 +582,7 @@ function widget:DrawScreenEffects(vsx, vsy)
 								"* Commander will be stunned during manual upgrade",
 								"* A manually morphed commander will increase his D-Gun range"}
 						end
-					else
+					elseif mySide == "core" then
 						side = "Core"
 						if myType == "automatic" then
 							uptype = "automatic upgrades"
@@ -588,12 +602,25 @@ function widget:DrawScreenEffects(vsx, vsy)
 								"* Commander will be stunned during manual upgrade",
 								"* A manually morphed commander will increase his D-Gun range"}
 						end
+					elseif mySide == "lost" then
+						side = "Lost"
+						if myType == "automatic" then
+							uptype = "automatic upgrades"
+							txt = {"* Automatic upgrades depend on kills and are applied automatically"}
+						elseif myType == "manual" then
+							uptype = "regular upgrades"
+							txt = {"* TLL Commander is even slower than Core, but can D-Gun and live."}
+						end
 					end
 					local xofs, thofs = x0+10, th2+6
 					myFont:Begin()
-						myFont:Print(side .. " commander with " .. uptype .. ":", xofs, y1 - thofs, th, 'xn')
-						for i=1, #txt do
-							myFont:Print(txt[i], xofs, y1 - (i+2)*thofs, th2, 'xn')
+						if side and uptype and txt then
+							myFont:Print(side .. " commander with " .. uptype .. ":", xofs, y1 - thofs, th, 'xn')
+							for i=1, #txt do
+								myFont:Print(txt[i], xofs, y1 - (i+2)*thofs, th2, 'xn')
+							end
+						else
+							myFont:Print("(No commander type selected)", xofs, y1 - thofs, th, 'xn')
 						end
 					myFont:End()
 				end
@@ -613,8 +640,8 @@ function widget:DrawScreenEffects(vsx, vsy)
 			glRect(Button["arm"]["x0"],Button["arm"]["y0"], Button["arm"]["x1"], Button["arm"]["y1"])
 		elseif Button["core"]["On"] then
 			glRect(Button["core"]["x0"],Button["core"]["y0"], Button["core"]["x1"], Button["core"]["y1"])
-		elseif Button["tll"]["On"] then
-			glRect(Button["tll"]["x0"],Button["tll"]["y0"], Button["tll"]["x1"], Button["tll"]["y1"])
+		elseif Button["lost"]["On"] then
+			glRect(Button["lost"]["x0"],Button["lost"]["y0"], Button["lost"]["x1"], Button["lost"]["y1"])
 		elseif Button["ready"]["On"] then
 			glRect(Button["ready"]["x0"],Button["ready"]["y0"], Button["ready"]["x1"], Button["ready"]["y1"])
 		elseif Button["info"]["On"] and myState ~= READY then
@@ -828,8 +855,8 @@ function widget:DrawScreen()
 								glTexture(img.arm)
 							elseif commside == 'core' then
 								glTexture(img.core)
-							elseif commside == 'tll' then
-								glTexture(img.tll)
+							elseif commside == 'lost' then
+								glTexture(img.lost)
 							else
 								glTexture(img.cnt0)
 							end
@@ -901,7 +928,7 @@ function widget:DrawScreen()
 			drawBorder(Button["arm"]["x0"],Button["arm"]["y0"], Button["arm"]["x1"], Button["arm"]["y1"],1)
 			drawBorder(Button["core"]["x0"],Button["core"]["y0"], Button["core"]["x1"], Button["core"]["y1"],1)
 			if isTLL then
-				drawBorder(Button["tll"]["x0"],Button["tll"]["y0"], Button["tll"]["x1"], Button["tll"]["y1"],1)
+				drawBorder(Button["lost"]["x0"],Button["lost"]["y0"], Button["lost"]["x1"], Button["lost"]["y1"],1)
 			end
 			myFont:Begin()
 			-- Ready button
@@ -959,7 +986,7 @@ function widget:DrawScreen()
 			myFont:SetTextColor(cWhite)
 			myFont:Print("X", Button["exit"]["x0"] + 10 ,Button["exit"]["y0"] + 10 , 20, 'xs')
 			
-			-- arm/core/tll buttons
+			-- arm/core/lost buttons
 			
 			--arm
 			myFont:SetTextColor(mySide == "arm" and cWhite or cUnfocus)
@@ -969,10 +996,10 @@ function widget:DrawScreen()
 			myFont:SetTextColor(mySide == "core" and cWhite or cUnfocus )
 			myFont:Print("Core", 0.5* (Button["core"]["x0"] + Button["core"]["x1"]), 0.5 * (Button["core"]["y0"] + Button["core"]["y1"]), th, 'vcs')
 			
-			--tll
+			--lost
 			if isTLL then
-				myFont:SetTextColor(mySide == "tll" and cWhite or cUnfocus )
-				myFont:Print("TLL", 0.5* (Button["tll"]["x0"] + Button["tll"]["x1"]), 0.5 * (Button["tll"]["y0"] + Button["tll"]["y1"]), th, 'vcs')
+				myFont:SetTextColor(mySide == "lost" and cWhite or cUnfocus )
+				myFont:Print("TLL", 0.5* (Button["lost"]["x0"] + Button["lost"]["x1"]), 0.5 * (Button["lost"]["y0"] + Button["lost"]["y1"]), th, 'vcs')
 			end
 			
 			myFont:SetTextColor(cWhite)
@@ -1006,7 +1033,7 @@ function widget:DrawScreen()
 						glTexRect(Button["manual"]["x0"],Button["manual"]["y0"], Button["manual"]["x1"], Button["manual"]["y1"])
 					end
 					glTexture(false)
-				elseif mySide == "tll" then
+				elseif mySide == "lost" then
 					if myType == "automatic" then
 						glTexture(img.ComTA)
 						glTexRect(Button["auto"]["x0"],Button["auto"]["y0"], Button["auto"]["x1"], Button["auto"]["y1"])
@@ -1119,11 +1146,11 @@ function widget:MousePress(mx, my, mButton)
 						lastStartID = commanderID["core_" .. startType]
 						playSound(button3)
 					
-					-- tll button
-					elseif IsOnButton(mx,my,Button["tll"]["x0"],Button["tll"]["y0"],Button["tll"]["x1"],Button["tll"]["y1"]) and startSide ~= "tll" then
-						spSendLuaRulesMsg('\177' .. commanderID["tll_" .. startType])
+					-- lost button
+					elseif IsOnButton(mx,my,Button["lost"]["x0"],Button["lost"]["y0"],Button["lost"]["x1"],Button["lost"]["y1"]) and startSide ~= "lost" then
+						spSendLuaRulesMsg('\177' .. commanderID["lost_" .. startType])
 						spSendLuaUIMsg('195' .. 3)
-						lastStartID = commanderID["tll_" .. startType]
+						lastStartID = commanderID["lost_" .. startType]
 						playSound(button3)	
 					
 					-- automatic
@@ -1201,7 +1228,7 @@ function widget:IsAbove(mx,my)
 		if spectator and not gameStarted then
 			Button["arm"]["On"] = false
 			Button["core"]["On"] = false
-			Button["tll"]["On"] = false
+			Button["lost"]["On"] = false
 			Button["ready"]["On"] = false
 			Button["info"]["On"] = false
 			
@@ -1220,7 +1247,7 @@ function widget:IsAbove(mx,my)
 			if IsOnButton(mx,my,Button["arm"]["x0"],Button["arm"]["y0"],Button["arm"]["x1"],Button["arm"]["y1"]) and mySide ~= "arm" then
 				Button["arm"]["On"] = true
 				Button["core"]["On"] = false
-				Button["tll"]["On"] = false
+				Button["lost"]["On"] = false
 				Button["ready"]["On"] = false
 				Button["info"]["On"] = false
 				Button["exit"]["On"] = false
@@ -1228,42 +1255,42 @@ function widget:IsAbove(mx,my)
 			elseif IsOnButton(mx,my,Button["core"]["x0"],Button["core"]["y0"],Button["core"]["x1"],Button["core"]["y1"]) and mySide ~= "core" then
 				Button["arm"]["On"] = false
 				Button["core"]["On"] = true
-				Button["tll"]["On"] = false
+				Button["lost"]["On"] = false
 				Button["ready"]["On"] = false
 				Button["info"]["On"] = false
 				Button["exit"]["On"] = false
-			elseif IsOnButton(mx,my,Button["tll"]["x0"],Button["tll"]["y0"],Button["tll"]["x1"],Button["tll"]["y1"]) and mySide ~= "tll" then
+			elseif IsOnButton(mx,my,Button["lost"]["x0"],Button["lost"]["y0"],Button["lost"]["x1"],Button["lost"]["y1"]) and mySide ~= "lost" then
 				Button["arm"]["On"] = false
 				Button["core"]["On"] = false
-				Button["tll"]["On"] = true
+				Button["lost"]["On"] = true
 				Button["ready"]["On"] = false
 				Button["info"]["On"] = false
 				Button["exit"]["On"] = false
 			elseif IsOnButton(mx,my,Button["ready"]["x0"],Button["ready"]["y0"],Button["ready"]["x1"],Button["ready"]["y1"]) and myState > PRESENT and gameState ~= COUNTDOWN then
 				Button["arm"]["On"] = false
 				Button["core"]["On"] = false
-				Button["tll"]["On"] = false
+				Button["lost"]["On"] = false
 				Button["ready"]["On"] = true
 				Button["info"]["On"] = false
 				Button["exit"]["On"] = false
 			elseif IsOnButton(mx,my,Button["info"]["x0"],Button["info"]["y0"],Button["info"]["x1"],Button["info"]["y1"]) then
 				Button["arm"]["On"] = false
 				Button["core"]["On"] = false
-				Button["tll"]["On"] = false
+				Button["lost"]["On"] = false
 				Button["ready"]["On"] = false
 				Button["info"]["On"] = true
 				Button["exit"]["On"] = false
 			elseif IsOnButton(mx,my,Button["exit"]["x0"],Button["exit"]["y0"],Button["exit"]["x1"],Button["exit"]["y1"]) then
 				Button["arm"]["On"] = false
 				Button["core"]["On"] = false
-				Button["tll"]["On"] = false
+				Button["lost"]["On"] = false
 				Button["ready"]["On"] = false
 				Button["info"]["On"] = false
 				Button["exit"]["On"] = true
 			else
 				Button["arm"]["On"] = false
 				Button["core"]["On"] = false
-				Button["tll"]["On"] = false
+				Button["lost"]["On"] = false
 				Button["ready"]["On"] = false
 				Button["info"]["On"] = false
 				Button["exit"]["On"] = false

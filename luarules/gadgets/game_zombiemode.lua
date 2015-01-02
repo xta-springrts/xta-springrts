@@ -309,6 +309,13 @@ local function CheckCommander(unitID)
 	local health,_,hitpoints,captureProgress = Spring.GetUnitHealth(unitID)
 	local x,y,z = spGetUnitPosition(unitID)
 	if not (x and y and z and health and health > 0) then return end
+	
+	local eLevel,_,ePull,eInc = Spring.GetTeamResources(gaiaTeamID,"energy")
+	if eLevel < 1000 then
+		Spring.GiveOrderToUnit(unitID,CMD.CLOAK, {0},{})
+	elseif eLevel > 2000 and eInc-ePull > 400 then
+		Spring.GiveOrderToUnit(unitID,CMD.CLOAK, {1},{})
+	end
 		
 	if captureProgress and captureProgress > 0.50 then
 		for _, eID in pairs (Spring.GetUnitsInSphere(x,y,z,400)) do
