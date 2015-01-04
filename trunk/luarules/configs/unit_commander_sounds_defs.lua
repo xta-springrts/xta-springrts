@@ -80,8 +80,8 @@ local CommanderSounds = {
 		[ UnitDefNames["core_u4commander" ].id ] = {},
 		
 		[ UnitDefNames["lost_commander"].id ] = {
-			[0] = "sounds/sing2.wav",
-			[1] = "sounds/honk2.wav",
+			[0] = "sounds/commander/lost_sing1.wav",
+			[1] = "sounds/commander/lost_sing2.wav",
 		},
 
 		[ UnitDefNames["lost_u0commander" ].id ] = {},
