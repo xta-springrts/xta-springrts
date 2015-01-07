@@ -16,3 +16,12 @@ Solid1a
 Solid2a
 Solid3a
 Solid3b
+
+
+GoKColor1_100
+GoKColor2_100
+GoKColor3_100
+GoKColor4_100
+GoKGradient1_100
+GoKGradient2_100
+GoKGradient3_100

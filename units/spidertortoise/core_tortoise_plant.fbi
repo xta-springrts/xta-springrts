@@ -10,8 +10,8 @@
 	Description=Produces Tortoises;
 	FootprintX=10;
 	FootprintZ=9;
-	BuildCostEnergy=7965;
-	BuildCostMetal=1504;
+	BuildCostEnergy=4965;//7965
+	BuildCostMetal=1404;//1504
 	BuildTime=15431;
 	MaxDamage=4290;
 	MaxWaterDepth=10000;
