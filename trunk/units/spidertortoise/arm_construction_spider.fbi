@@ -28,8 +28,8 @@
 	//********************
 	maxdamage=667;
 	healtime=27;
-	buildcostmetal=342;
-	buildcostenergy=3542;
+	buildcostmetal=312;//342
+	buildcostenergy=3054;//3542
 	buildtime=4478;
 	footprintx=2;
 	footprintz=2;
@@ -38,10 +38,10 @@
 	//  Resources
 	//*************
 	metalmake=0.17;
-	metalstorage=50;
+	metalstorage=100;
 	energymake=9;
 	energyuse=0.1;
-	energystorage=50;
+	energystorage=100;
 
 	//************************************************************
 	//  Building

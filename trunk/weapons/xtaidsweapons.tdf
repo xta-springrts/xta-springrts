@@ -1052,7 +1052,7 @@
 	lineofsight=1;
 	turret=1;
 	model=missilejumbo;
-	range=980;
+	range=1100;
 	reloadtime=3.0;
 	weapontimer=10;
 	weaponvelocity=1600;
@@ -1095,7 +1095,7 @@
 	lineofsight=1;
 	turret=1;
 	model=missilejumbo;
-	range=1220;
+	range=1290;
 	reloadtime=3.0;
 	weapontimer=10;
 	weaponvelocity=1600;
@@ -1115,12 +1115,6 @@
 	selfprop=1;
 	smoketrail=1;
 	tolerance=9000;
-	explosiongaf=fx;
-	explosionart=explode3;
-	waterexplosiongaf=fx;
-	waterexplosionart=h2o;
-	lavaexplosiongaf=fx;
-	lavaexplosionart=lavasplash;
 	startsmoke=1;
 	[DAMAGE]
 	{

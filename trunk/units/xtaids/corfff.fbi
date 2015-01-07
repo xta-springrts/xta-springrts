@@ -13,13 +13,13 @@
 	GermanDescription=Baut schwere Flugzeugen;
 	FootprintX=12;
 	FootprintZ=12;
-	BuildCostEnergy=21520;
+	BuildCostEnergy=26520;
 	BuildCostMetal=5345;
 	MaxDamage=5642;
 	MaxWaterDepth=0;
 	MaxSlope=10;
 	EnergyUse=0;
-	BuildTime=80210;
+	BuildTime=85210;
 	WorkerTime=400;
 	BMcode=0;
 	Builder=1;

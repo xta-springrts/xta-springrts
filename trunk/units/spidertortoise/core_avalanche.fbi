@@ -10,7 +10,7 @@
 	Description=Rocket Tortoise;
 	FootprintX=4;
 	FootprintZ=4;
-	BuildCostEnergy=5354;
+	BuildCostEnergy=3354;
 	BuildCostMetal=475;
 	MaxDamage=3054;
 	MaxSlope=12;

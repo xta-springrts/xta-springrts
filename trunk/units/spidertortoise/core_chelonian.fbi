@@ -10,8 +10,8 @@
 	Description=FlameThrower Tortoise;
 	FootprintX=4;
 	FootprintZ=4;
-	BuildCostEnergy=3463;
-	BuildCostMetal=456;
+	BuildCostEnergy=3063;
+	BuildCostMetal=426;
 	MaxDamage=3532;
 	MaxSlope=12;
 	MaxWaterDepth=100;

@@ -66,5 +66,5 @@
 	airhoverfactor=0;
 	Upright=1;
 	AirStrafe=0;
-	mass=1=100;
+	mass=100;
 	}

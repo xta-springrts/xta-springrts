@@ -9,13 +9,13 @@
 	Description=Builds sky cruisers;
 	FootprintX=10;
 	FootprintZ=10;
-	BuildCostEnergy=21941;
+	BuildCostEnergy=27941;
 	BuildCostMetal=5284;
 	MaxDamage=4802;
 	MaxWaterDepth=0;
 	MaxSlope=10;
 	EnergyUse=0;
-	BuildTime=80132;
+	BuildTime=84132;
 	WorkerTime=400;
 	BMcode=0;
 	Builder=1;

@@ -10,9 +10,9 @@
 	Description=Line of Sight/ Aircraft repair Pad;
 	FootprintX=3;
 	FootprintZ=3;
-	BuildCostEnergy=4121;
+	BuildCostEnergy=3521;
 	BuildCostMetal=387;
-	MaxDamage=1764;
+	MaxDamage=2164;
 	MaxWaterDepth=100;
 	MaxSlope=12;
 	EnergyUse=2;

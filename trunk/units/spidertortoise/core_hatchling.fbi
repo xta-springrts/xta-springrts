@@ -10,7 +10,7 @@
 	buildpic=core_hatchling.png;
 	FootprintX=3;
 	FootprintZ=3;
-	BuildCostEnergy=4242;
+	BuildCostEnergy=2742;//4242
 	BuildCostMetal=243;
 	MaxDamage=1832;
 	MaxSlope=13;
