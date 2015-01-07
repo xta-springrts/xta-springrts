@@ -2015,9 +2015,9 @@
 
 [LOST_HOVER]
 {
-	select1=servo1;
-	ok1=servo2;
-	arrived1=servo3;
+	select1=servo1.wav;
+	ok1=servo2.wav;
+	arrived1=servo3.wav;
 	cant1=cantdo4;
 	underattack=warning1;
 	count5=count1;
