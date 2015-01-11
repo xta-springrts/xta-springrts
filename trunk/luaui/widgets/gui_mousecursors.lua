@@ -268,12 +268,14 @@ function widget:DefaultCommand(type, uID)
 				
 				if commanderID then
 					local unitDef = UnitDefs[GetUnitDefID(commanderID) ]
-					local weaponDefID = unitDef.weapons[FIRSTWEAPON+2].weaponDef
-					local dgunEnergy = WeaponDefs[weaponDefID].energyCost
-					local energy = Spring.GetTeamResources(myTeamID,'energy')
-					
-					if energy < dgunEnergy then
-						SetMouseCursor('AttackBad')
+					if unitDef.weapons[FIRSTWEAPON+2] then
+						local weaponDefID = unitDef.weapons[FIRSTWEAPON+2].weaponDef
+						local dgunEnergy = WeaponDefs[weaponDefID].energyCost
+						local energy = Spring.GetTeamResources(myTeamID,'energy')
+						
+						if energy < dgunEnergy then
+							SetMouseCursor('AttackBad')
+						end
 					end
 				end
 			elseif activeCmdID == CMD.RESURRECT then
