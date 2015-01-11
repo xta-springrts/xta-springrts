@@ -3052,7 +3052,7 @@
 		canbuild26=lost_floating_metal_maker;
 		canbuild27=lost_mebos;
 		canbuild28=lost_floating_dragons_teeth;
-		canbuild29=lost_nosmeab;
+		canbuild29=lost_nosmaeb;
 		canbuild30=lost_torpedo_launcher;
 		//canbuild31=arm_floating_light_laser_tower;
 		canbuild32=lost_odin_mallet;//Spiderpack vs. Tortoise
@@ -3154,7 +3154,7 @@
 		canbuild26=lost_floating_metal_maker;
 		canbuild27=lost_mebos;
 		canbuild28=lost_floating_dragons_teeth;
-		canbuild29=lost_nosmeab;
+		canbuild29=lost_nosmaeb;
 		canbuild30=lost_torpedo_launcher;
 		//canbuild31=arm_floating_light_laser_tower;
 		canbuild32=lost_odin_mallet;//Spiderpack vs. Tortoise
@@ -3297,7 +3297,7 @@
 		canbuild26=lost_floating_metal_maker;
 		canbuild27=lost_mebos;
 		canbuild28=lost_floating_dragons_teeth;
-		canbuild29=arm_nosmeab;
+		canbuild29=lost_nosmaeb;
 		canbuild30=lost_torpedo_launcher;
 		//canbuild31=arm_floating_light_laser_tower;
 		canbuild32=lost_odin_mallet;//Spiderpack vs. Tortoise

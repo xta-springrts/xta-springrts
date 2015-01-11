@@ -1,33 +1,25 @@
-[blueballboom]
+
+[GREENVERTICALPULSE]
 {
-	[groundflash]
-	{
-		flashSize = 50;
-		flashAlpha = 0.16;
-		circleGrowth = 1;
-		circleAlpha = 0.2;
-		ttl = 40;
-		color = 0.1,0.3,0.9;
-	}
 	usedefaultexplosions=0;	
 	[spikes]
 	{
 		class=explspike;
 		[properties]
 		{
-			dir=-10 r20,-10 r20,-10 r20;
+			dir=-6 r12,-6 r12,-6 r12;
 			width=22;
 			length=1; //60;
 			alpha=1;
-			alphadecay=0.3;
-			color=0.1, 0.3, 1.0;
-			alwaysVisible=1;
+			alphadecay=0.2;
+			color=0.2, 1.0, 0.5;
+			alwaysVisible=0;
 
 		}
 		air=1;
 		water=1;
 		ground=1;
-  		count=8; 
+  		count=4; 
 	}
 [exhale]
 	{
@@ -41,59 +33,21 @@
 		
 
 		Texture=smoke;
-		airdrag=0.9;
-		colorMap=0.1 0.3 1.0 0.4 0.1 0.2 0.4 0.2 0.0 0.0 0.0 0.01;
+		airdrag=0.5;
+		colorMap=0.2 1.0 0.5 0.1 0.15 0.3 0.15 0.2 0.0 0.0 0.0 0.01;
 
-		particleLifeSpread=5; 
-		particleSpeedSpread=5;  
+		particleLifeSpread=4; 
+		particleSpeedSpread=1;  
 		particleSizeSpread=1;   
 		
-		particleLife=55;
-		numParticles=40; 
-		particleSpeed=1; 
-		particleSize=6;
+		particleLife=18;
+		numParticles=1; 
+		particleSpeed=8; 
+		particleSize=9;
 		
 		
 		emitVector=0, 1, 0; 
-		emitRot=80;
-		emitRotSpread=5; 
-		directional=0; 
-		alwaysVisible=1;
-
-		}
-	air=1;
-	water=1;
-	ground=1;
-	count=1;
-	}
-
-[exhale2]
-	{
-		class=CSimpleParticleSystem;
-		[properties]
-		{
-		sizeGrowth=0.16;
-		sizeMod=1.0;
-		pos=0, 1, 0; 
-		gravity=0, 0, 0;
-		
-
-		Texture=smoke;
-		airdrag=0.9;
-		colorMap=0.2 0.4 1.0 0.4 0.1 0.2 0.3 0.2 0.0 0.0 0.0 0.01;
-
-		particleLifeSpread=5; 
-		particleSpeedSpread=5;  
-		particleSizeSpread=1;   
-		
-		particleLife=55;
-		numParticles=45; 
-		particleSpeed=1; 
-		particleSize=6;
-		
-		
-		emitVector=0, 1, 0; 
-		emitRot=80;
+		emitRot=40;//80
 		emitRotSpread=5; 
 		directional=0; 
 		alwaysVisible=1;
@@ -106,38 +60,36 @@
 	}
 }
 
-[blueBALLTRAIL]
+[BLUEVERTICALPULSE]
 {
 	usedefaultexplosions=0;	
-
 	[groundflash]
 	{
-		flashSize = 70;
+		flashSize = 100;
 		flashAlpha = 0.16;
 		circleGrowth = 1;
 		circleAlpha = 0.1;
 		ttl = 35;
 		color = 0.1,0.3,0.9;
 	}
-
 	[spikes]
 	{
 		class=explspike;
 		[properties]
 		{
-			dir=-2 r4,-2 r4,-2 r4;
+			dir=-3 r6,-3 r6,-3 r6;
 			width=22;
 			length=1; //60;
 			alpha=1;
-			alphadecay=0.3;
-			color=0.1, 0.3, 1.0;
-			alwaysVisible=1;
+			alphadecay=0.2;
+			color=0.2, 0.5, 1.0;
+			alwaysVisible=0;
 
 		}
 		air=1;
 		water=1;
 		ground=1;
-  		count=16; 
+  		count=4; 
 	}
 [exhale]
 	{
@@ -152,23 +104,23 @@
 
 		Texture=smoke;
 		airdrag=0.67;
-		colorMap=0.1 0.3 1.0 0.4 0.1 0.2 0.4 0.2 0.0 0.0 0.0 0.01;
+		colorMap=0.2 0.5 1.0 0.1 0.15 0.15 0.3 0.2 0.0 0.0 0.0 0.01;
 
-		particleLifeSpread=5; 
+		particleLifeSpread=10; 
 		particleSpeedSpread=1;  
 		particleSizeSpread=1;   
 		
-		particleLife=15;
-		numParticles=2; 
+		particleLife=20;
+		numParticles=1; 
 		particleSpeed=2; 
-		particleSize=6;
+		particleSize=4;
 		
 		
 		emitVector=0, 1, 0; 
 		emitRot=80;
 		emitRotSpread=5; 
 		directional=0; 
-		alwaysVisible=1;
+		alwaysVisible=0;
 
 		}
 	air=1;
@@ -190,23 +142,23 @@
 
 		Texture=smoke;
 		airdrag=0.67;
-		colorMap=0.2 0.4 1.0 0.4 0.1 0.2 0.3 0.2 0.0 0.0 0.0 0.01;
+		colorMap=0.4 0.5 1.0 0.1 0.1 0.1 0.2 0.2 0.0 0.0 0.0 0.01;
 
-		particleLifeSpread=5; 
+		particleLifeSpread=10; 
 		particleSpeedSpread=1;  
 		particleSizeSpread=1;   
 		
-		particleLife=15;
-		numParticles=2; 
+		particleLife=20;
+		numParticles=1; 
 		particleSpeed=2; 
-		particleSize=6;
+		particleSize=4;
 		
 		
 		emitVector=0, 1, 0; 
 		emitRot=80;
 		emitRotSpread=5; 
 		directional=0; 
-		alwaysVisible=1;
+		alwaysVisible=0;
 
 		}
 	air=1;

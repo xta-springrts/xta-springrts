@@ -80,7 +80,7 @@
 	name=Rocket;
 	vlaunch=1;
 	Weapontype=StarburstLauncher;
-	cegTag=gigagreen;
+	cegTag=GREENVERTICALPULSE;
 	explosiongenerator=custom:GREEN_EMP_SHOT;
 	model=egun;
 	range=1200;
@@ -478,7 +478,7 @@
 	name=Rocket;
 	vlaunch=1;
 	Weapontype=StarburstLauncher;
-	cegTag=tllDgunTRAIL;
+	cegTag=BLUEVERTICALPULSE;
 	explosiongenerator=custom:TLLTRAIL;
 	model=egun;
 	range=1300;
@@ -783,7 +783,7 @@
 	name=Heavy Multi-Launch Rockets;
 	Weapontype=MissileLauncher;
 	explosiongenerator=custom:blueballboom;
-	cegTag=Giga;
+	cegTag=BLUEVERTICALPULSE;
 	Texture1=null;
 	Texture2=null;
 	Texture3=null;
@@ -867,7 +867,7 @@
 	turret=1;
 	//color=3;
 	explosiongenerator=custom:CrazyPuffy;
-	cegTag=tllDgunTRAIL;
+	cegTag=BLUEVERTICALPULSE;
 	GroundBounce=0;
 	WaterBounce=0;
 	NumBounce=1;
@@ -1420,7 +1420,7 @@
 	model=weapon_exphvyrock;
 	range=1150;
 	//cegTag=tllDgunTRAIL;
-	cegTag=Giga;
+	cegTag=BLUEVERTICALPULSE;
 	explosiongenerator=custom:BluePlasmaExtraBANG;
 	Texture1=null; //flare//
 	Texture2=null;//first segment of missiletrail//
