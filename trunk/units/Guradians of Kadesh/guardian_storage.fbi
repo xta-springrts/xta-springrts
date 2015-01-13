@@ -1,0 +1,109 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Arm;
+	name=Guardian Storage;
+	description=Energy Storage 36,000 Metal Storage 10,000;
+	icontype=building;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=ARM ENERGY  NOWEAPON  NOTAIR NOTSUB STORAGE;
+	tedclass=ENERGY;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=guardian_storage;
+	unitnumber=27;
+	objectname=guardian_storage.3do;
+	corpse=guardian_storage_dead;
+	buildpic=guardian_storage.png;
+	soundcategory=ARM_ESTOR;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=2140;
+	buildcostmetal=276;
+	buildcostenergy=2874;
+	buildtime=6710;
+	footprintx=5;
+	footprintz=5;
+	collisionVolumeType=CylY;
+	collisionVolumeScales=57 45 57;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=10000;
+	energyuse=0;
+	energystorage=36000;
+
+	//************************************************************
+	//  Building
+	//************
+	buildangle=65535;
+	yardmap=ooooo ooooo ooooo ooooo ooooo;
+	activatewhenbuilt=1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canRepeat=0;
+	canMove=0;
+	canGuard=0;
+	canAttack=0;
+	//************************************************************
+	//  Movement
+	//************
+	maxslope=10;
+	maxwaterdepth=22;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=367.5;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeas=ESTOR_BUILDINGEX;
+	selfdestructas=CRAWL_BLASTSML;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=0;
+	designation=AE-ESF;
+	downloadable=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+	[SFXTypes]
+	{
+	explosiongenerator0=custom:Glow;
+	}
+}

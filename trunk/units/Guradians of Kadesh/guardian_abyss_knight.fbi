@@ -1,0 +1,129 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Arm;
+	name=Abyss Knight;
+	description=Long-Ranged Sniper Sub;
+	icontype=sea;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=ARM SUB MOBILE WEAPON SONAR NOTLAND NOTAIR NOTSEA;
+	tedclass=SUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=guardian_abyss_knight;
+	unitnumber=67;
+	objectname=guardian_abyss_knight.3do;
+	corpse=guardian_abyss_knight_dead;
+	buildpic=guardian_abyss_knight.png;
+	soundcategory=ARM_SUB;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=798; //was 1525//
+	healtime=10;
+	buildcostmetal=486; //was 1151//
+	buildcostenergy=3687;
+	buildtime=8894;
+	footprintx=3;
+	footprintz=3;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=0.4;
+	energyuse=0.4;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	activatewhenbuilt=1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canattack=1;
+	canguard=1;
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+	floater=1;
+	upright=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementclass=BOATSUB;
+	turnrate=512;
+	acceleration=0.06;
+	brakerate=0.08;
+	maxvelocity=1.62;
+	minwaterdepth=20;// not used, minWaterDepth in movedef used instead (36)
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=190;
+	radardistance=0;
+	sonardistance=700;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=ARM_TORPEDO;
+	nochasecategory=VTOL;
+	badtargetcategory=VTOL;
+	wpri_badtargetcategory=VTOL;
+	explodeas=SMALL_UNITEX;
+	selfdestructas=SMALL_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	firestandorders=0;
+	mobilestandorders=1;
+	standingfireorder=1;
+	standingmoveorder=1;
+	defaultmissiontype=Standby;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=1;
+	designation=ASD-SM;
+	downloadable=1;
+	maneuverleashlength=640;
+	shootme=1;
+	steeringmode=1;
+	threed=1;
+	version=1.2;
+	waterline=36;// set to equal minWaterDepth, was 30
+	zbuffer=1;
+	collisionVolumeType = box;
+	collisionVolumeScales =35 18 38;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+}

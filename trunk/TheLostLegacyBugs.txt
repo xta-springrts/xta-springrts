@@ -1,7 +1,4 @@
-.cob bugs
 
-Texture errors.
-Redundant textures grande! and certain models missing shaded ota textures that does not exist.
 Boats certainly will have issues as not entirely touched as well as most land units. Some Models and roles from sea are currently missing as i have not implemented them yet, simply just the barebones.
 
 Not all units have been added and certain roles are missing atm.

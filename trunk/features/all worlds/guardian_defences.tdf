@@ -1,0 +1,30 @@
+[guardian_dragons_teeth_dead]
+{
+	world=allworld;
+	description=Dragon's Teeth;
+	category=dragonteeth;
+	object=guardian_dragons_teeth;
+	footprintx=2;
+	footprintz=2;
+	height=40;
+	blocking=1;
+	hitdensity=100;
+	metal=8;
+	damage=2200; //1200; //2400
+	crushResistance=250;
+	reclaimable=1;
+	autoreclaimable=0;
+	featuredead=rock_teeth;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType = Box;
+	collisionVolumeScales =26 34 26;
+	collisionVolumeOffsets = 0 -2 0;   //0 0 0
+	collisionVolumeTest = 1;
+	
+	[customparams] 	
+	{
+	noalert=1;
+	dontCount=1;
+	}
+	
+}

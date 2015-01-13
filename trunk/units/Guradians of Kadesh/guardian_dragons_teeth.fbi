@@ -1,0 +1,114 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=guardian;
+	name=Dragon's Teeth;
+	description=Perimeter Defense;
+
+	//************************************************************
+	//  Categories
+	//**************
+	Category=guardian METAL NOWEAPON NOTAIR NOTSUB;
+	tedclass=DEFENSIVE;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=guardian_dragons_teeth;
+	unitnumber=100;
+	objectname=guardian_dragons_teeth.3do;
+	corpse=guardian_dragons_teeth_dead;
+	buildpic=guardian_dragons_teeth.png;
+	soundcategory=;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=2550; //WAS 3600;
+	buildcostmetal=10;
+	buildcostenergy=15;
+	buildtime=100;
+	footprintx=2;
+	footprintz=2;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=0;
+	energyuse=0;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	buildangle=0;
+	yardmap=oo oo;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	isfeature=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	maxslope=32;
+	maxwaterdepth=35;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=175;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeas=;
+	selfdestructas=;
+	
+	//************************************************************
+	//  Collision sphere mod to allow missiles to pass sometimes
+	//***********
+	CollisionSphereScale=0.5;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=0;
+	designation=A-102-C;
+	downloadable=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	buildangle=1;
+	levelground=0;
+	
+	//************************************************************
+	//  Custom params
+	//*****************
+	[customparams] 	
+	{
+	noalert=1;
+	dontCount=1;
+	}
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+}
