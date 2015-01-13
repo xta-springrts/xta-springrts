@@ -1,0 +1,135 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Arm;
+	name=NightFall;
+	description=Artillery Lev-tank;
+	icontype=hover;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=ARM HOVER WEAPON NOTAIR NOTSUB;
+	tedclass=TANK;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=guardian_nightfall;
+	unitnumber=285;
+	objectname=guardian_nightfall.3do;
+	corpse=guardian_nightfall_dead;
+	buildpic=guardian_nightfall.png;
+	soundcategory=ARM_HOVER_MID;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=810;
+	healtime=30;
+	buildcostmetal=412;
+	buildcostenergy=5262;
+	buildtime=10933;
+	footprintx=3;
+	footprintz=3;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=2.6;
+	energyuse=2.6;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canattack=1;
+	canguard=1;
+	canhover=1;
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+	//onoffable=1;
+	activatewhenbuilt=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementclass=HOVER3;
+	turnrate=600;
+	acceleration=0.3;
+	brakerate=0.9;
+	maxvelocity=2.2;
+	maxslope=16;
+	maxwaterdepth=0;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=420;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=Moonstrike_MISSILE;
+	hightrajectory=2;
+	//weapon2=ARMMH_WEAPON2;
+	nochasecategory=VTOL;
+	badtargetcategory=VTOL;
+	wpri_badtargetcategory=VTOL;
+	explodeas=BIG_UNITEX;
+	selfdestructas=BIG_UNIT;
+	onlytargetcategory1=NOTAIR; //Added 24.11 By Jools
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	firestandorders=1;
+	mobilestandorders=1;
+	standingfireorder=2;
+	standingmoveorder=1;
+	defaultmissiontype=Standby;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=1;
+	designation=ARM-HRL;
+	downloadable=1;
+	maneuverleashlength=640;
+	shootme=1;
+	steeringmode=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	collisionVolumeType = box;
+	collisionVolumeScales =42 22 42;
+	collisionVolumeOffsets = 0 5 0;
+	collisionVolumeTest = 1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+	[customParams] 
+	{
+	canAreaAttack=1;
+	}
+
+}

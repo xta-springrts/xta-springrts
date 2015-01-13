@@ -1,0 +1,127 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Arm;
+	name=Construction Aircraft;
+	description=Tech Level 1;
+	icontype=air;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=ARM VTOL  CONSTR NOWEAPON NOTSUB;
+	tedclass=VTOL;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=guardian_construction_aircraft;
+	unitnumber=18;
+	objectname=guardian_construction_aircraft.3do;
+	buildpic=guardian_construction_aircraft.png;
+	soundcategory=ARM_CVTOL;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=554;
+	healtime=17;
+	buildcostmetal=211;
+	buildcostenergy=3160;
+	buildtime=6633;
+	footprintx=2;
+	footprintz=2;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalmake=0.1;//0.2
+	metalstorage=50;
+	energymake=5.5;//11
+	energyuse=0.1;
+	energystorage=50;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=1;
+	builddistance=120;
+	workertime=90;
+	RepairSpeed=90;
+	ReclaimSpeed=90;
+	TerraformSpeed=180;//speed up terraforming
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canfly=1;
+	canguard=1;
+	canmove=1;
+	canpatrol=1;
+	canreclamate=1;
+	canstop=1;
+	canFight=1;
+	
+	//************************************************************
+	//  Movement
+	//************
+	turnrate=450;
+	acceleration=0.18;
+	brakerate=1.5;
+	maxvelocity=3.9;
+	maxslope=10;
+	maxwaterdepth=0;
+	cruisealt=70;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=420;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeas=NANO_UNITEX;
+	selfdestructas=NANO_UNIT;
+	//Has a weapon scripted ready to go
+	weapon1=AIRWEAK_BEAM;
+	AirStrafe=0;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	mobilestandorders=1;
+	standingmoveorder=1;
+	defaultmissiontype=VTOL_standby;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bankscale=1.5;
+	bmcode=1;
+	designation=ARM-CA1;
+	downloadable=1;
+	maneuverleashlength=1280;
+	scale=0.8;
+	shootme=1;
+	steeringmode=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	collide=0;
+	pieceTrailCEGTag=NanoDebree;//bleh
+	pieceTrailCEGRange = 2;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+}

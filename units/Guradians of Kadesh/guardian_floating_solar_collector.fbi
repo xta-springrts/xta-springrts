@@ -1,0 +1,112 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=guardian;
+	name=Floating Solar Collector;
+	description=Produces Energy;
+	icontype=building;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=guardian ENERGY STATIC NOWEAPON NOTAIR NOTSEA NOTSUB;
+	tedclass=ENERGY;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=guardian_floating_solar_collector;
+	unitnumber=63;
+	objectname=guardian_floating_solar_collector.3do;
+	corpse=guardian_floating_solar_collector_dead;
+	buildpic=guardian_floating_solar_collector.png;
+	soundcategory=guardian_SOLAR;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=592;
+	buildcostmetal=155;
+	buildcostenergy=0;
+	buildtime=2695;
+	footprintx=5;
+	footprintz=5;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energyuse=-22;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	buildangle=16384;
+	yardmap=yycyy yoooy coooc yoooy yycyy;
+	activatewhenbuilt=1;
+	collisionVolumeType=CylY;
+	collisionVolumeScales=83 78 83;
+	collisionVolumeOffsets=0 -18 1;
+	//collisionVolumeTest = 1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	onoffable=1;
+	canRepeat=0;
+	canMove=0;
+	canAttack=0;
+	canGuard=0;
+
+	//************************************************************
+	//  Movement
+	//************
+	maxslope=15;
+	//maxwaterdepth=11;
+	minwaterdepth=11;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=367.5;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeas=SMALL_BUILDINGEX;
+	selfdestructas=SMALL_BUILDING;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=0;
+	damagemodifier=0.66; //was 0.33333=66%bouns now 33%//
+	designation=AE-SC;
+	downloadable=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	pieceTrailCEGTag=NanoDebree;//bleh
+	pieceTrailCEGRange = 1;
+	WaterLine=1;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+}

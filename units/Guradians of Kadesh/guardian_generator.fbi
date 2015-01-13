@@ -1,0 +1,112 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=guardian;
+	name=Generator;
+	description=Produces Pure Energy;
+	icontype=lfusion;
+
+	//************************************************************
+	//  Categories
+	//**************
+	Category=guardian ENERGY NOWEAPON NOTAIR NOTSUB;
+	tedclass=ENERGY;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=guardian_generator;
+	unitnumber=106;
+	objectname=guardian_generator.3do;
+	corpse=guardian_generator_dead;
+	buildpic=guardian_generator.png;
+	soundcategory=guardian_FUS;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=1123;
+	buildcostmetal=701;
+	buildcostenergy=5433;
+	buildtime=15234;
+	footprintx=3;
+	footprintz=3;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=100;
+	energyuse=0;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	buildangle=65535;
+	yardmap=ooo ooo ooo;
+	activatewhenbuilt=1;
+	collisionVolumeType=CylY;
+	collisionVolumeScales=43 56 43;
+	collisionVolumeOffsets=9 -3 0;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canRepeat=0;
+	canMove=0;
+	canAttack=0;
+	canGuard=0;
+	
+	//************************************************************
+	//  Movement
+	//************
+	maxslope=10;
+	maxwaterdepth=1;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=367.5;
+	radardistance=11;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeas=CRAWL_BLASTSML;
+	selfdestructas=armmine5;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=0;
+	designation=Brzapp-66;
+	downloadable=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+	[SFXTypes]
+	{
+		explosiongenerator0=custom:ReactorSequence;
+	}
+
+}

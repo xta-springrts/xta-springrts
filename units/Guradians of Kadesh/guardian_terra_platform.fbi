@@ -1,0 +1,118 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Core;
+	name=Terra Platform;
+	description=Produces Efficient Units;
+	icontype=plant;
+
+	//************************************************************
+	//  Categories
+	//**************
+	Category=CORE PLANT  NOWEAPON NOTAIR NOTSUB;
+	tedclass=PLANT;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=guardian_terra_platform;
+	unitnumber=114;
+	objectname=guardian_terra_platform.3do;
+	corpse=guardian_terra_platform_dead;
+	buildpic=guardian_terra_platform.png;
+	soundcategory=KBOTPLANT;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=3325;
+	healtime=30;
+	buildcostmetal=832;
+	buildcostenergy=1543;
+	buildtime=9000;
+	footprintx=9;
+	footprintz=8;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=200;
+	energyuse=0;
+	energystorage=200;
+	metalmake=1.0;
+	energymake=25;
+
+	//************************************************************
+	//  Building
+	//************
+	buildangle=1024;
+	YardMap=yyoooooyy coooooooc coocccooc coocccooc yoocccooy yoocccooy oooyyyooo oooyyyooo;
+	collisionVolumeType=Box;
+	collisionVolumeScales=111 30 111;
+	collisionVolumeTest = 1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=1;
+	workertime=110;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+	canguard=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	maxslope=13;
+	maxwaterdepth=11;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=386.75;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeas=LARGE_BUILDINGEX;
+	selfdestructas=LARGE_BUILDING;
+	DamageModifier=0.75;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	firestandorders=1;
+	mobilestandorders=1;
+	standingfireorder=2;
+	standingmoveorder=2;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=0;
+	designation=PAK;
+	downloadable=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+	//************************************************************
+	//  To be removed
+	//*****************
+	[SFXTypes]
+	{
+	explosiongenerator0=custom:Nano;
+	explosiongenerator1=custom:WhiteLight;
+	}
+
+}

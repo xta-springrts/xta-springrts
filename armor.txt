@@ -14,6 +14,12 @@
 	core_u2commander=99;
 	core_u3commander=99;
 	core_u4commander=99;
+	guardian_commander=99;
+	guardian_u0commander=99;
+	guardian_ucommander=99;
+	guardian_u2commander=99;
+	guardian_u3commander=99;
+	guardian_u4commander=99;
 	arm_nincommander=99;
 	core_nincommander=99;
 	arm_nin2commander=99;
@@ -105,6 +111,14 @@
 	Lost_Pelican=99;
 	lost_wasp=99;
 	lost_trawler=99;
+	//guardian
+	guardian_construction_aircraft=99;
+	guardian_vision=99;
+	guardian_angel=99;
+	guardian_dirgesinger=99;
+	guardian_scrouge=99;
+	guardian_chariot=99;
+
 }
 
 [group_mines]
@@ -141,6 +155,7 @@
 	core_fortification_wall=99;
 	lost_dragons_teeth=99;
 	lost_fortification_wall=99;
+	guardian_dragons_teeth=99;
 }
 [group_ships]
 {
@@ -169,6 +184,9 @@
 	lost_violator=99;
 	lost_mixer=99;
 	lost_stinger=99;
+	//guardians
+	guardian_ravager=99;
+	guardian_paladin=99;
 }
 [group_large_ships]
 {
@@ -215,6 +233,9 @@
 	lost_construction_sub=99;
 	lost_squid=99;
 	lost_orc=99;
+	//guardians
+	guardian_construction_sub=99;
+	guardian_abyss_knight=99;
 }
 
 [group_subskillers]

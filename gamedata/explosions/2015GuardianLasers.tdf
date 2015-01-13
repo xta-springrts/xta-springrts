@@ -1,0 +1,693 @@
+
+[guardianMICROBlueLaser]
+{
+   [LARGEFLASH]
+   {
+	class = CBitmapMuzzleFlame;
+      
+	[properties]
+      	{
+         	dir = dir;
+         	colorMap=0.6 0.6 1.0 0.01 0.2 0.2 0.9 0.01 0 0 0 0.01; 
+          	size=-2;
+          	length=-0.5;
+          	sizeGrowth=-0.75;
+          	ttl=1;
+          	frontOffset=0;
+          	sideTexture=muzzleside;
+          	frontTexture=muzzlefront;
+      	}
+   water=1;
+   air=1;
+   underwater=1;
+   ground=1;
+   count=1;
+   }
+   [LARGE2FLASH]
+   {
+	class = CBitmapMuzzleFlame;
+      
+	[properties]
+      	{
+         	dir = dir;
+         	colorMap=0.6 0.6 1.0 0.01 0.2 0.2 0.9 0.01 0 0 0 0.01; 
+          	size=2;
+          	length=0.125;
+          	sizeGrowth=0.75;
+          	ttl=1;
+          	frontOffset=0;
+          	sideTexture=muzzleside;
+          	frontTexture=muzzlefront;
+      	}
+   water=1;
+   air=1;
+   underwater=1;
+   ground=1;
+   count=1;
+   }
+	[groundflash]
+	{
+		flashSize = 60;
+		flashAlpha = 0.66;
+		circleGrowth = 2;
+		circleAlpha = 0.5;
+		ttl = 3;
+		color = 0.0,0.3,0.9;
+	}
+	usedefaultexplosions=0;	
+	[spikes]
+	{
+		class=explspike;
+		[properties]
+		{
+			dir=-1 r2,-1 r2,-1 r2;
+			width=4;
+			length=1; //60;
+			alpha=1;
+			alphadecay=0.4;
+			color=0.3, 0.1, 1.0;
+			alwaysVisible=1;
+
+		}
+		air=1;
+		water=1;
+		ground=1;
+  		count=8; 
+	}
+[heatcloud]// Fire burst
+   		{
+      		[properties]
+      		{
+      		heat = 3;
+		Texture=WhiteLight;
+      		maxheat = 3;
+      		heatFalloff = 0.999999;
+      		size = 6 r1;
+      		sizeGrowth = 0.08 r.16;
+      		sizemod = 0;
+      		sizemodmod = 0;
+      		speed = 0.05 r-0.1, 0.05 r-0.1, 0.05 r-0.1;
+      		pos = 0, 1.0, 0;
+		useAirLos=0;
+      		}
+	air=1;
+      	water=0;
+      	ground=1;
+      	count=1;
+	useAirLos=0;
+   	}
+}
+
+[guardianTinyBlueLaser]
+{
+   [LARGEFLASH]
+   {
+	class = CBitmapMuzzleFlame;
+      
+	[properties]
+      	{
+         	dir = dir;
+         	colorMap=0.6 0.6 1.0 0.01 0.2 0.2 0.9 0.01 0 0 0 0.01; 
+          	size=-4;
+          	length=-1;
+          	sizeGrowth=-0.75;
+          	ttl=2;
+          	frontOffset=0;
+          	sideTexture=muzzleside;
+          	frontTexture=muzzlefront;
+      	}
+   water=1;
+   air=1;
+   underwater=1;
+   ground=1;
+   count=1;
+   }
+   [LARGE2FLASH]
+   {
+	class = CBitmapMuzzleFlame;
+      
+	[properties]
+      	{
+         	dir = dir;
+         	colorMap=0.6 0.6 1.0 0.01 0.2 0.2 0.9 0.01 0 0 0 0.01; 
+          	size=4;
+          	length=0.25;
+          	sizeGrowth=0.75;
+          	ttl=2;
+          	frontOffset=0;
+          	sideTexture=muzzleside;
+          	frontTexture=muzzlefront;
+      	}
+   water=1;
+   air=1;
+   underwater=1;
+   ground=1;
+   count=1;
+   }
+	[groundflash]
+	{
+		flashSize = 60;
+		flashAlpha = 0.66;
+		circleGrowth = 2;
+		circleAlpha = 0.5;
+		ttl = 2;
+		color = 0.0,0.3,0.9;
+	}
+	usedefaultexplosions=0;	
+	[spikes]
+	{
+		class=explspike;
+		[properties]
+		{
+			dir=-1 r2,-1 r2,-1 r2;
+			width=4;
+			length=1; //60;
+			alpha=1;
+			alphadecay=0.3;
+			color=0.3, 0.1, 1.0;
+			alwaysVisible=1;
+
+		}
+		air=1;
+		water=1;
+		ground=1;
+  		count=8; 
+	}
+[heatcloud]// Fire burst
+   		{
+      		[properties]
+      		{
+      		heat = 3;
+		Texture=WhiteLight;
+      		maxheat = 3;
+      		heatFalloff = 0.999999;
+      		size = 6 r1;
+      		sizeGrowth = 0.08 r.16;
+      		sizemod = 0;
+      		sizemodmod = 0;
+      		speed = 0.05 r-0.1, 0.05 r-0.1, 0.05 r-0.1;
+      		pos = 0, 1.0, 0;
+		useAirLos=0;
+      		}
+	air=1;
+      	water=0;
+      	ground=1;
+      	count=1;
+	useAirLos=0;
+   	}
+}
+
+[guardianBlueLaser]
+{
+   [LARGEFLASH]
+   {
+	class = CBitmapMuzzleFlame;
+      
+	[properties]
+      	{
+         	dir = dir;
+         	colorMap=0.6 0.6 1.0 0.01 0.2 0.2 0.9 0.01 0 0 0 0.01; 
+          	size=6;
+          	length=3;
+          	sizeGrowth=0.75;
+          	ttl=2;
+          	frontOffset=0;
+          	sideTexture=muzzleside;
+          	frontTexture=muzzlefront;
+      	}
+   water=1;
+   air=1;
+   underwater=1;
+   ground=1;
+   count=1;
+   }
+   [LARGE2FLASH]
+   {
+	class = CBitmapMuzzleFlame;
+      
+	[properties]
+      	{
+         	dir = dir;
+         	colorMap=0.6 0.6 1.0 0.01 0.2 0.2 0.9 0.01 0 0 0 0.01; 
+          	size=6;
+          	length=-1;
+          	sizeGrowth=0.75;
+          	ttl=2;
+          	frontOffset=0;
+          	sideTexture=muzzleside;
+          	frontTexture=muzzlefront;
+      	}
+   water=1;
+   air=1;
+   underwater=1;
+   ground=1;
+   count=1;
+   }
+	[groundflash]
+	{
+		flashSize = 60;
+		flashAlpha = 0.66;
+		circleGrowth = 2;
+		circleAlpha = 0.5;
+		ttl = 2;
+		color = 0.0,0.3,0.9;
+	}
+	usedefaultexplosions=0;	
+	[spikes]
+	{
+		class=explspike;
+		[properties]
+		{
+			dir=-1 r2,-1 r2,-1 r2;
+			width=4;
+			length=1; //60;
+			alpha=1;
+			alphadecay=0.3;
+			color=0.3, 0.1, 1.0;
+			alwaysVisible=1;
+
+		}
+		air=1;
+		water=1;
+		ground=1;
+  		count=8; 
+	}
+[heatcloud]// Fire burst
+   		{
+      		[properties]
+      		{
+      		heat = 3;
+		Texture=WhiteLight;
+      		maxheat = 3;
+      		heatFalloff = 0.999999;
+      		size = 14 r1;
+      		sizeGrowth = 0.08 r.16;
+      		sizemod = 0;
+      		sizemodmod = 0;
+      		speed = 0.05 r-0.1, 0.05 r-0.1, 0.05 r-0.1;
+      		pos = 0, 1.0, 0;
+		useAirLos=0;
+      		}
+	air=1;
+      	water=0;
+      	ground=1;
+      	count=1;
+	useAirLos=0;
+   	}
+}
+
+[guardianGreenLaser]
+{
+   [LARGEFLASH]
+   {
+	class = CBitmapMuzzleFlame;
+      
+	[properties]
+      	{
+         	dir = dir;
+         	colorMap=0.6 1.0 0.6 0.01 0.2 0.9 0.2 0.01 0 0 0 0.01; 
+          	size=-12;
+          	length=-5.0;
+          	sizeGrowth=-0.75;
+          	ttl=2;
+          	frontOffset=0;
+          	sideTexture=muzzleside;
+          	frontTexture=muzzlefront;
+      	}
+   water=1;
+   air=1;
+   underwater=1;
+   ground=1;
+   count=1;
+   }
+   [LARGE2FLASH]
+   {
+	class = CBitmapMuzzleFlame;
+      
+	[properties]
+      	{
+         	dir = dir;
+         	colorMap=0.6 1.0 0.6 0.01 0.2 0.9 0.2 0.01 0 0 0 0.01; 
+          	size=3;
+          	length=0.5;
+          	sizeGrowth=-0.75;
+          	ttl=2;
+          	frontOffset=0;
+          	sideTexture=muzzleside;
+          	frontTexture=muzzlefront;
+      	}
+   water=1;
+   air=1;
+   underwater=1;
+   ground=1;
+   count=1;
+   }
+	[groundflash]
+	{
+		flashSize = 60;
+		flashAlpha = 0.66;
+		circleGrowth = 2;
+		circleAlpha = 0.5;
+		ttl = 2;
+		color = 0.0,0.9,0.3;
+	}
+	usedefaultexplosions=0;	
+	[spikes]
+	{
+		class=explspike;
+		[properties]
+		{
+			dir=-1 r2,-1 r2,-1 r2;
+			width=7;
+			length=1; //60;
+			alpha=1;
+			alphadecay=0.3;
+			color=0.3, 1.0, 0.1;
+			alwaysVisible=1;
+
+		}
+		air=1;
+		water=1;
+		ground=1;
+  		count=8; 
+	}
+[heatcloud]// Fire burst
+   		{
+      		[properties]
+      		{
+      		heat = 3;
+		Texture=WhiteLight;
+      		maxheat = 3;
+      		heatFalloff = 0.999999;
+      		size = 0.1 r14;
+      		sizeGrowth = 0.08 r.16;
+      		sizemod = 0;
+      		sizemodmod = 0;
+      		speed = 0.05 r-0.1, 0.05 r-0.1, 0.05 r-0.1;
+      		pos = 0, 1.0, 0;
+		useAirLos=0;
+      		}
+	air=1;
+      	water=0;
+      	ground=1;
+      	count=1;
+	useAirLos=0;
+   	}
+}
+
+[guardianTinyGreenLaser]
+{
+   [LARGEFLASH]
+   {
+	class = CBitmapMuzzleFlame;
+      
+	[properties]
+      	{
+         	dir = dir;
+         	colorMap=0.6 1.0 0.6 0.01 0.2 0.9 0.2 0.01 0 0 0 0.01; 
+          	size=1.5;
+          	length=0.5;
+          	sizeGrowth=0.75;
+          	ttl=3;
+          	frontOffset=0;
+          	sideTexture=muzzleside;
+          	frontTexture=muzzlefront;
+      	}
+   water=1;
+   air=1;
+   underwater=1;
+   ground=1;
+   count=1;
+   }
+   [LARGE2FLASH]
+   {
+	class = CBitmapMuzzleFlame;
+      
+	[properties]
+      	{
+         	dir = dir;
+         	colorMap=0.6 1.0 0.6 0.01 0.2 0.9 0.2 0.01 0 0 0 0.01; 
+          	size=1.5;
+          	length=-0.125;
+          	sizeGrowth=0.75;
+          	ttl=3;
+          	frontOffset=0;
+          	sideTexture=muzzleside;
+          	frontTexture=muzzlefront;
+      	}
+   water=1;
+   air=1;
+   underwater=1;
+   ground=1;
+   count=1;
+   }
+	[groundflash]
+	{
+		flashSize = 60;
+		flashAlpha = 0.66;
+		circleGrowth = 2;
+		circleAlpha = 0.5;
+		ttl = 3;
+		color = 0.0,0.9,0.3;
+	}
+	usedefaultexplosions=0;	
+	[spikes]
+	{
+		class=explspike;
+		[properties]
+		{
+			dir=-1 r2,-1 r2,-1 r2;
+			width=4;
+			length=1; //60;
+			alpha=1;
+			alphadecay=0.4;
+			color=0.3, 1.0, 0.1;
+			alwaysVisible=1;
+
+		}
+		air=1;
+		water=1;
+		ground=1;
+  		count=8; 
+	}
+[heatcloud]// Fire burst
+   		{
+      		[properties]
+      		{
+      		heat = 3;
+		Texture=WhiteLight;
+      		maxheat = 3;
+      		heatFalloff = 0.999999;
+      		size = 0.1 r14;
+      		sizeGrowth = 0.08 r.16;
+      		sizemod = 0;
+      		sizemodmod = 0;
+      		speed = 0.05 r-0.1, 0.05 r-0.1, 0.05 r-0.1;
+      		pos = 0, 1.0, 0;
+		useAirLos=0;
+      		}
+	air=1;
+      	water=0;
+      	ground=1;
+      	count=1;
+	useAirLos=0;
+   	}
+}
+
+[guardianTinyPurpleLaser]
+{
+   [LARGEFLASH]
+   {
+	class = CBitmapMuzzleFlame;
+      
+	[properties]
+      	{
+         	dir = dir;
+         	colorMap=0.9 0.6 0.8 0.01 0 0 0 0.01; 
+          	size=-4;
+          	length=-1;
+          	sizeGrowth=-0.75;
+          	ttl=2;
+          	frontOffset=0;
+          	sideTexture=muzzleside;
+          	frontTexture=muzzlefront;
+      	}
+   water=1;
+   air=1;
+   underwater=1;
+   ground=1;
+   count=1;
+   }
+   [LARGE2FLASH]
+   {
+	class = CBitmapMuzzleFlame;
+      
+	[properties]
+      	{
+         	dir = dir;
+         	colorMap=0.9 0.6 0.8 0.01 0 0 0 0.01; 
+          	size=4;
+          	length=0.25;
+          	sizeGrowth=0.75;
+          	ttl=2;
+          	frontOffset=0;
+          	sideTexture=muzzleside;
+          	frontTexture=muzzlefront;
+      	}
+   water=1;
+   air=1;
+   underwater=1;
+   ground=1;
+   count=1;
+   }
+	[groundflash]
+	{
+		flashSize = 60;
+		flashAlpha = 0.66;
+		circleGrowth = 2;
+		circleAlpha = 0.5;
+		ttl = 2;
+		color = 0.9,0.6,0.8;
+	}
+	usedefaultexplosions=0;	
+	[spikes]
+	{
+		class=explspike;
+		[properties]
+		{
+			dir=-1 r2,-1 r2,-1 r2;
+			width=4;
+			length=1; //60;
+			alpha=1;
+			alphadecay=0.3;
+			color=0.9, 0.6, 0.8;
+			alwaysVisible=1;
+
+		}
+		air=1;
+		water=1;
+		ground=1;
+  		count=8; 
+	}
+[heatcloud]// Fire burst
+   		{
+      		[properties]
+      		{
+      		heat = 3;
+		Texture=WhiteLight;
+      		maxheat = 3;
+      		heatFalloff = 0.999999;
+      		size = 6 r1;
+      		sizeGrowth = 0.08 r.16;
+      		sizemod = 0;
+      		sizemodmod = 0;
+      		speed = 0.05 r-0.1, 0.05 r-0.1, 0.05 r-0.1;
+      		pos = 0, 1.0, 0;
+		useAirLos=0;
+      		}
+	air=1;
+      	water=0;
+      	ground=1;
+      	count=1;
+	useAirLos=0;
+   	}
+}
+
+[guardianTinyPinkLaser]
+{
+   [LARGEFLASH]
+   {
+	class = CBitmapMuzzleFlame;
+      
+	[properties]
+      	{
+         	dir = dir;
+         	colorMap=1.0 0.6 1.0 0.01 0 0 0 0.01; 
+          	size=-5;
+          	length=-2;
+          	sizeGrowth=-0.75;
+          	ttl=2;
+          	frontOffset=0;
+          	sideTexture=muzzleside;
+          	frontTexture=muzzlefront;
+      	}
+   water=1;
+   air=1;
+   underwater=1;
+   ground=1;
+   count=1;
+   }
+   [LARGE2FLASH]
+   {
+	class = CBitmapMuzzleFlame;
+      
+	[properties]
+      	{
+         	dir = dir;
+         	colorMap=1.0 0.6 1.0 0.01 0 0 0 0.01; 
+          	size=4;
+          	length=0.45;
+          	sizeGrowth=0.95;
+          	ttl=2;
+          	frontOffset=0;
+          	sideTexture=muzzleside;
+          	frontTexture=muzzlefront;
+      	}
+   water=1;
+   air=1;
+   underwater=1;
+   ground=1;
+   count=1;
+   }
+	[groundflash]
+	{
+		flashSize = 60;
+		flashAlpha = 0.66;
+		circleGrowth = 2;
+		circleAlpha = 0.5;
+		ttl = 2;
+		color = 0.9,0.6,0.8;
+	}
+	usedefaultexplosions=0;	
+	[spikes]
+	{
+		class=explspike;
+		[properties]
+		{
+			dir=-1 r2,-1 r2,-1 r2;
+			width=4;
+			length=1; //60;
+			alpha=1;
+			alphadecay=0.3;
+			color=0.9, 0.6, 0.8;
+			alwaysVisible=1;
+
+		}
+		air=1;
+		water=1;
+		ground=1;
+  		count=8; 
+	}
+[heatcloud]// Fire burst
+   		{
+      		[properties]
+      		{
+      		heat = 3;
+		Texture=WhiteLight;
+      		maxheat = 3;
+      		heatFalloff = 0.999999;
+      		size = 6 r1;
+      		sizeGrowth = 0.08 r.16;
+      		sizemod = 0;
+      		sizemodmod = 0;
+      		speed = 0.05 r-0.1, 0.05 r-0.1, 0.05 r-0.1;
+      		pos = 0, 1.0, 0;
+		useAirLos=0;
+      		}
+	air=1;
+      	water=0;
+      	ground=1;
+      	count=1;
+	useAirLos=0;
+   	}
+}

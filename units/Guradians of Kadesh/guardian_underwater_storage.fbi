@@ -1,0 +1,107 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Arm;
+	name=Underwater Storage;
+	description=Metal 12,000 and Energy 36,000 Storage;
+	icontype=sea;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=ARM ENERGY STATIC NOWEAPON NOTLAND NOTAIR NOTSEA;
+	tedclass=ENERGY;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=guardian_underwater_storage;
+	unitnumber=298;
+	objectname=guardian_underwater_storage.3do;
+	corpse=guardian_underwater_storage_dead;
+	buildpic=guardian_underwater_storage.png;
+	soundcategory=ARM_ESTOR;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=1575;
+	buildcostmetal=296;
+	buildcostenergy=3050;
+	buildtime=15741;
+	footprintx=5;
+	footprintz=5;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=12000;
+	energyuse=0;
+	energystorage=36000;
+
+	//************************************************************
+	//  Building
+	//************
+	buildangle=8192;
+	yardmap=oooo oooo oooo oooo;
+	collisionVolumeType=CylZ;
+	collisionVolumeScales=60 70 62;
+	collisionVolumeOffsets=0 -18 0;
+	//collisionVolumeTest = 1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canRepeat=0;
+	canMove=0;
+	canAttack=0;
+	canGuard=0;
+	
+	//************************************************************
+	//  Movement
+	//************
+	maxslope=20;
+	minwaterdepth=30;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=245;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeas=ESTOR_BUILDINGEX;
+	selfdestructas=ESTOR_BUILDING;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=0;
+	designation=AM-WMSF;
+	downloadable=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+}

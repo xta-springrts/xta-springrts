@@ -1733,7 +1733,7 @@
 	Texture2=null;//first segment of missiletrail//
 	Texture3=null;//flame//
 	Texture4=null;//unknown//
-	range=414;
+	range=400;
 	reloadtime=4.0;
 	burst=1;
 	Trajectoryheight=0.2;

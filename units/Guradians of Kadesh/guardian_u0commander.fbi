@@ -1,0 +1,175 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=guardian;
+	name=Commander;
+	description=Commander;
+	icontype=guardian_commander;
+
+	//************************************************************
+	//  Categories
+	//**************
+	Category=guardian COMMANDER WEAPON NOTAIR NOTSUB;
+	tedclass=COMMANDER;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=guardian_u0commander;
+	unitnumber=94;
+	objectname=guardian_commander.3do;
+	buildpic=guardian_commander.png;
+	soundcategory=Core_COM;
+	script=guardian_commander.cob;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=3000;
+	healtime=100;
+	buildcostmetal=2565;
+	buildcostenergy=48765;
+	buildtime=41413;
+	footprintx=2;
+	footprintz=2;
+	mass=4000;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalmake=2.0;
+	//metaluse=-2;
+	metalstorage=1000;
+	energymake=50;
+	//energyuse=-50;
+	energystorage=1000;
+
+	//************************************************************
+	//  Building
+	//************
+	activatewhenbuilt=1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=1;
+	builddistance=230;//cause its slower
+	workertime=300;
+	RepairSpeed=300;
+	ReclaimSpeed=300;
+	TerraformSpeed=600;//speed up terraforming
+	capturespeed=900;//150 percent faster
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canattack=1;
+	cancapture=1;
+	canManualFire=1;
+	canguard=1;
+	canmove=1;
+	canpatrol=1;
+	canreclamate=1;
+	canstop=1;
+	upright=1;
+	autoheal=4;//just like ota
+	idletime=900;
+	idleautoheal=5;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementclass=KBOTDS2;
+	turnrate=1030;
+	acceleration=0.16;
+	brakerate=0.32;
+	maxvelocity=1.17;
+	maxslope=20;
+	maxwaterdepth=35;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=720;
+	radardistance=800;
+	sonardistance=800;
+	losemitheight=48;
+	radaremitheight=48;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	Weapon1=GuardianComPulse;
+	Weapon3=GUARDIAN_DISINTEGRATOR;
+	nochasecategory=WEAPON;
+	badtargetcategory=VTOL;
+	wpri_badtargetcategory=VTOL;
+	wspe_badtargetcategory=VTOL;
+	explodeas=COMMANDER_BLAST;
+	selfdestructas=COMMANDER_BLAST;
+
+	//************************************************************
+	//  Orders
+	//**********
+	firestandorders=1;
+	mobilestandorders=1;
+	standingfireorder=2;
+	standingmoveorder=0;
+	defaultmissiontype=Standby;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=1;
+	cancloak=1;
+	cloakcost=200;
+	cloakcostmoving=1000;
+	cloakTimeout=90;
+	commander=1;
+	designation=CX-D3;
+	downloadable=1;
+	hidedamage=1;
+	immunetoparalyzer=1;
+	leavetracks=1;
+	maneuverleashlength=640;
+	mincloakdistance=80;
+	norestrict=1;
+	shootme=1;
+	showplayername=1;
+	smoothanim=1;
+	steeringmode=2;
+	threed=1;
+	trackoffset=0;
+	trackstrength=8;
+	trackstretch=1;
+	tracktype=ComTrack;
+	trackwidth=22;
+	version=1.2;
+	zbuffer=1;
+	MinCollisionSpeed=2.5;//weight
+	collisionVolumeType = box;
+	collisionVolumeScales =28 45 20;
+	collisionVolumeOffsets = 0 -2 0;
+	collisionVolumeTest = 1;
+
+	//************************************************************
+	//  Custom params
+	//*****************
+	[customparams] 	
+	{
+	iscommander=1;
+	side=guardian;
+	type=manual;
+	}
+	
+	//************************************************************
+	//  To be removed
+	//*****************
+	[SFXTypes]
+	{
+	explosiongenerator0=custom:tllDgunTRAIL;
+	explosiongenerator1=custom:tllDgunTRAIL;
+	}
+}
