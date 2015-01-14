@@ -88,6 +88,7 @@ local CMD_MORPH_STOP 		= 32410
 local CMD_MORPHA			= 31418
 local CMD_MORPHC			= 31431
 local CMD_MORPHT			= 31420
+local CMD_MORPHG			= 31415
 local CMD_MORPH 			= CMD_MORPHA
 local CMD_SING				= 40123
 
@@ -257,6 +258,10 @@ local function GetQueueCosts()
 				return mCost+634,eCost+1249,bCost+9000
 			elseif buildQueue[i][1] == CMD_MORPHC then
 				return mCost+688,eCost+1660,bCost+9000
+			elseif buildQueue[i][1] == CMD_MORPHT then
+				return mCost+800,eCost+1000,bCost+9000
+			elseif buildQueue[i][1] == CMD_MORPHG then
+				return mCost+745,eCost+1012,bCost+9000
 			else
 				return mCost,eCost,bCost
 			end
@@ -288,6 +293,8 @@ local function changeFaction(startID,newSide,oldSide)
 			CMD_MORPH = CMD_MORPHC
 		elseif newSide == "lost" then
 			CMD_MORPH = CMD_MORPHT
+		elseif newSide == "guardian" then
+			CMD_MORPH = CMD_MORPHG
 		end
 	end
 	
@@ -314,6 +321,10 @@ local function changeFaction(startID,newSide,oldSide)
 						local newID = CMD_MORPHT
 						buildData[1] = newID
 						buildQueue[b] = buildData
+					elseif newSide == "guardian" then
+						local newID = CMD_MORPHG
+						buildData[1] = newID
+						buildQueue[b] = buildData
 					end
 				elseif buildDataId == CMD_MORPHC then
 					if newSide == "arm" then
@@ -324,6 +335,10 @@ local function changeFaction(startID,newSide,oldSide)
 						local newID = CMD_MORPHT
 						buildData[1] = newID
 						buildQueue[b] = buildData
+					elseif newSide == "guardian" then
+						local newID = CMD_MORPHG
+						buildData[1] = newID
+						buildQueue[b] = buildData
 					end
 				elseif buildDataId == CMD_MORPHT then
 					if newSide == "arm" then
@@ -332,6 +347,10 @@ local function changeFaction(startID,newSide,oldSide)
 						buildQueue[b] = buildData
 					elseif newSide == "core" then
 						local newID = CMD_MORPHC
+						buildData[1] = newID
+						buildQueue[b] = buildData
+					elseif newSide == "guardian" then
+						local newID = CMD_MORPHG
 						buildData[1] = newID
 						buildQueue[b] = buildData
 					end
@@ -633,6 +652,8 @@ function InitializeFaction(sDefID)
 		CMD_MORPH = CMD_MORPHC
 	elseif sDef.customParams and sDef.customParams.side == "lost" then
 		CMD_MORPH = CMD_MORPHT
+	elseif sDef.customParams and sDef.customParams.side == "guardian" then
+		CMD_MORPH = CMD_MORPHG
 	end
 	
 	-- Retain the build list order, but move all sea units to the end
