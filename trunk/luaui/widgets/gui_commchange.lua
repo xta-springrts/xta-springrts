@@ -36,6 +36,10 @@ local img 						= {}
 	img["ComTMD"] 				= "LuaUI/Images/commchange/ComTMD.png"
 	img["ComTA"] 				= "LuaUI/Images/commchange/ComTA.png"
 	img["ComTAD"] 				= "LuaUI/Images/commchange/ComTAD.png"
+	img["ComGM"] 				= "LuaUI/Images/commchange/ComGM.png"
+	img["ComGMD"] 				= "LuaUI/Images/commchange/ComGMD.png"
+	img["ComGA"] 				= "LuaUI/Images/commchange/ComGA.png"
+	img["ComGAD"] 				= "LuaUI/Images/commchange/ComGAD.png"
 
 	--countdown
 	img["cnt3"] 				= "LuaUI/Images/commchange/3-cnt.png"
@@ -46,7 +50,8 @@ local img 						= {}
 	--faction emblems
 	img["arm"] 					= "LuaUI/Images/commchange/arm.png"
 	img["core"] 				= "LuaUI/Images/commchange/core.png"
-	img["lost"] 					= "LuaUI/Images/commchange/lost.png"
+	img["lost"] 				= "LuaUI/Images/commchange/lost.png"
+	img["guardian"]				= "LuaUI/Images/commchange/arm.png"
 
 	--other
 	img["duck"]					= "LuaUI/Images/commchange/duck.png"
@@ -59,6 +64,8 @@ commanderID["core_automatic"]	= UnitDefNames["core_commander"].id
 commanderID["core_manual"] 		= UnitDefNames["core_u0commander"].id
 commanderID["lost_automatic"]	= UnitDefNames["lost_commander"].id
 commanderID["lost_manual"] 		= UnitDefNames["lost_u0commander"].id
+commanderID["guardian_automatic"]	= UnitDefNames["guardian_commander"].id
+commanderID["guardian_manual"] 		= UnitDefNames["guardian_u0commander"].id
 
 -- sound
 local bell = 'sounds/bell.ogg'
@@ -86,6 +93,7 @@ local Button = {}
 Button["arm"] = {}
 Button["core"] = {}
 Button["lost"] = {}
+Button["guardian"] = {}
 Button["ready"] = {}
 Button["info"] = {}
 Button["infopanel"] = {}
@@ -137,6 +145,8 @@ local myFont	 							= gl.LoadFont("FreeSansBold.otf",th3, 1.9, 40)
 local myFontHuge							= gl.LoadFont("FreeSansBold.otf",60, 1.9, 40)
 local hasSentStartMsg	 					= false
 local isTLL									= false
+local isGOK									= false
+
 
 --------------------------------------------------------------------------------
 -- Speedups
@@ -193,21 +203,26 @@ end
 local function initButtons()
 	mid = px + sizex/2
 	Button["arm"]["x0"] = px
-	Button["arm"]["x1"] = isTLL and px + sizex/6 or px + sizex/4
+	Button["arm"]["x1"] = isTLL and (isGOK and px + sizex/8 or px + sizex/6) or (isGOK and px + sizex/6) or px + sizex/4
 	Button["arm"]["y0"] = py  + sizey - 24
 	Button["arm"]["y1"] = py  + sizey
 	
 	Button["core"]["x0"] = Button["arm"]["x1"]
-	Button["core"]["x1"] = isTLL and px + sizex/3 or px + sizex/2
+	Button["core"]["x1"] = isTLL and (isGOK and px + sizex/4 or px + sizex/3) or (isGOK and px + sizex/3) or px + sizex/2
 	Button["core"]["y0"] = py  + sizey - 24
 	Button["core"]["y1"] = py  + sizey
 	
 	Button["lost"]["x0"] = Button["core"]["x1"]
-	Button["lost"]["x1"] = px + sizex/2
+	Button["lost"]["x1"] = isGOK and px + 0.375*sizex or px + sizex/2
 	Button["lost"]["y0"] = py  + sizey - 24
 	Button["lost"]["y1"] = py  + sizey
 	
-	Button["ready"]["x0"] = Button["lost"]["x1"]
+	Button["guardian"]["x0"] = isTLL and Button["lost"]["x1"] or Button["core"]["x1"]
+	Button["guardian"]["x1"] = px + sizex/2
+	Button["guardian"]["y0"] = py  + sizey - 24
+	Button["guardian"]["y1"] = py  + sizey
+	
+	Button["ready"]["x0"] = (isGOK and Button["guardian"]["x1"]) or (isTLL and Button["lost"]["x1"]) or Button["core"]["x1"]
 	Button["ready"]["x1"] = myState ~= READY and (px + 4*sizex/5) or (px + sizex)
 	Button["ready"]["y0"] = py  + sizey - 24
 	Button["ready"]["y1"] = py  + sizey
@@ -384,6 +399,7 @@ function widget:Initialize()
 	th2 = 11 * scale
 	th3 = 20 * scale
 	isTLL = tonumber( (Spring.GetModOptions() or {}).tllunits) == 1
+	isGOK = tonumber( (Spring.GetModOptions() or {}).gokunits) == 1
 	
 	updateMyStartUnit()
 	
@@ -408,6 +424,12 @@ function widget:Initialize()
 				else
 					spSendLuaUIMsg('195' .. 1)
 				end
+			elseif lastSide == "guardian" then
+				if isGOK then
+					spSendLuaUIMsg('195' .. 4)
+				else
+					spSendLuaUIMsg('195' .. 1)
+				end
 			end
 			
 			if lastType then
@@ -428,7 +450,17 @@ function widget:Initialize()
 			if isTLL then
 				spSendLuaRulesMsg('\177' .. commanderID["lost_manual"])
 				spSendLuaUIMsg('195' .. 3)
-				lastStartID = commanderID["core_manual"]
+				lastStartID = commanderID["lost_manual"]
+			else
+				spSendLuaRulesMsg('\177' .. commanderID["arm_manual"])
+				spSendLuaUIMsg('195' .. 1)
+				lastStartID = commanderID["arm_manual"]
+			end
+		elseif mySide == "guardian" then
+			if isGOK then
+				spSendLuaRulesMsg('\177' .. commanderID["guardian_manual"])
+				spSendLuaUIMsg('195' .. 4)
+				lastStartID = commanderID["guardian_manual"]
 			else
 				spSendLuaRulesMsg('\177' .. commanderID["arm_manual"])
 				spSendLuaUIMsg('195' .. 1)
@@ -611,6 +643,15 @@ function widget:DrawScreenEffects(vsx, vsy)
 							uptype = "regular upgrades"
 							txt = {"* TLL Commander is even slower than Core, but can D-Gun and live."}
 						end
+					elseif mySide == "guardian" then
+						side = "Guardian"
+						if myType == "automatic" then
+							uptype = "automatic upgrades"
+							txt = {"* Automatic upgrades depend on kills and are applied automatically"}
+						elseif myType == "manual" then
+							uptype = "regular upgrades"
+							txt = {"* GoK Commander is even slower than Core, but can D-Gun and live."}
+						end
 					end
 					local xofs, thofs = x0+10, th2+6
 					myFont:Begin()
@@ -642,6 +683,8 @@ function widget:DrawScreenEffects(vsx, vsy)
 			glRect(Button["core"]["x0"],Button["core"]["y0"], Button["core"]["x1"], Button["core"]["y1"])
 		elseif Button["lost"]["On"] then
 			glRect(Button["lost"]["x0"],Button["lost"]["y0"], Button["lost"]["x1"], Button["lost"]["y1"])
+		elseif Button["guardian"]["On"] then
+			glRect(Button["guardian"]["x0"],Button["guardian"]["y0"], Button["guardian"]["x1"], Button["guardian"]["y1"])
 		elseif Button["ready"]["On"] then
 			glRect(Button["ready"]["x0"],Button["ready"]["y0"], Button["ready"]["x1"], Button["ready"]["y1"])
 		elseif Button["info"]["On"] and myState ~= READY then
@@ -930,6 +973,9 @@ function widget:DrawScreen()
 			if isTLL then
 				drawBorder(Button["lost"]["x0"],Button["lost"]["y0"], Button["lost"]["x1"], Button["lost"]["y1"],1)
 			end
+			if isGOK then
+				drawBorder(Button["guardian"]["x0"],Button["guardian"]["y0"], Button["guardian"]["x1"], Button["guardian"]["y1"],1)
+			end
 			myFont:Begin()
 			-- Ready button
 			local lbl
@@ -1001,12 +1047,18 @@ function widget:DrawScreen()
 				myFont:SetTextColor(mySide == "lost" and cWhite or cUnfocus )
 				myFont:Print("TLL", 0.5* (Button["lost"]["x0"] + Button["lost"]["x1"]), 0.5 * (Button["lost"]["y0"] + Button["lost"]["y1"]), th, 'vcs')
 			end
+			-- GOK
+			if isGOK then
+				myFont:SetTextColor(mySide == "guardian" and cWhite or cUnfocus )
+				myFont:Print("GoK", 0.5* (Button["guardian"]["x0"] + Button["guardian"]["x1"]), 0.5 * (Button["guardian"]["y0"] + Button["guardian"]["y1"]), th, 'vcs')
+			end
 			
 			myFont:SetTextColor(cWhite)
 			
 			if myState ~= READY then
 				-- Commander Icons
 				glColor(cWhite)
+				
 				if mySide == "arm" then
 					if myType == "automatic" then
 						glTexture(img.ComAA)
@@ -1043,6 +1095,18 @@ function widget:DrawScreen()
 						glTexture(img.ComTAD)
 						glTexRect(Button["auto"]["x0"],Button["auto"]["y0"], Button["auto"]["x1"], Button["auto"]["y1"])
 						glTexture(img.ComTM)
+						glTexRect(Button["manual"]["x0"],Button["manual"]["y0"], Button["manual"]["x1"], Button["manual"]["y1"])
+					end
+				elseif mySide == "guardian" then
+					if myType == "automatic" then
+						glTexture(img.ComGA)
+						glTexRect(Button["auto"]["x0"],Button["auto"]["y0"], Button["auto"]["x1"], Button["auto"]["y1"])
+						glTexture(img.ComGMD)
+						glTexRect(Button["manual"]["x0"],Button["manual"]["y0"], Button["manual"]["x1"], Button["manual"]["y1"])
+					else
+						glTexture(img.ComGAD)
+						glTexRect(Button["auto"]["x0"],Button["auto"]["y0"], Button["auto"]["x1"], Button["auto"]["y1"])
+						glTexture(img.ComGM)
 						glTexRect(Button["manual"]["x0"],Button["manual"]["y0"], Button["manual"]["x1"], Button["manual"]["y1"])
 					end
 					glTexture(false)
@@ -1152,6 +1216,14 @@ function widget:MousePress(mx, my, mButton)
 						spSendLuaUIMsg('195' .. 3)
 						lastStartID = commanderID["lost_" .. startType]
 						playSound(button3)	
+						
+					-- guardian button
+					elseif IsOnButton(mx,my,Button["guardian"]["x0"],Button["guardian"]["y0"],Button["guardian"]["x1"],Button["guardian"]["y1"]) and startSide ~= "guardian" then
+						spSendLuaRulesMsg('\177' .. commanderID["guardian_" .. startType])
+						spSendLuaUIMsg('195' .. 4)
+						lastStartID = commanderID["guardian_" .. startType]
+						playSound(button3)	
+					
 					
 					-- automatic
 					elseif IsOnButton(mx,my,Button["auto"]["x0"],Button["auto"]["y0"],Button["auto"]["x1"],Button["auto"]["y1"]) and myState ~= READY and startType ~= "automatic" then
@@ -1229,6 +1301,7 @@ function widget:IsAbove(mx,my)
 			Button["arm"]["On"] = false
 			Button["core"]["On"] = false
 			Button["lost"]["On"] = false
+			Button["guardian"]["On"] = false
 			Button["ready"]["On"] = false
 			Button["info"]["On"] = false
 			
@@ -1248,6 +1321,7 @@ function widget:IsAbove(mx,my)
 				Button["arm"]["On"] = true
 				Button["core"]["On"] = false
 				Button["lost"]["On"] = false
+				Button["guardian"]["On"] = false
 				Button["ready"]["On"] = false
 				Button["info"]["On"] = false
 				Button["exit"]["On"] = false
@@ -1256,6 +1330,7 @@ function widget:IsAbove(mx,my)
 				Button["arm"]["On"] = false
 				Button["core"]["On"] = true
 				Button["lost"]["On"] = false
+				Button["guardian"]["On"] = false
 				Button["ready"]["On"] = false
 				Button["info"]["On"] = false
 				Button["exit"]["On"] = false
@@ -1263,6 +1338,15 @@ function widget:IsAbove(mx,my)
 				Button["arm"]["On"] = false
 				Button["core"]["On"] = false
 				Button["lost"]["On"] = true
+				Button["guardian"]["On"] = false
+				Button["ready"]["On"] = false
+				Button["info"]["On"] = false
+				Button["exit"]["On"] = false
+			elseif IsOnButton(mx,my,Button["guardian"]["x0"],Button["guardian"]["y0"],Button["guardian"]["x1"],Button["guardian"]["y1"]) and mySide ~= "guardian" then
+				Button["arm"]["On"] = false
+				Button["core"]["On"] = false
+				Button["lost"]["On"] = false
+				Button["guardian"]["On"] = true
 				Button["ready"]["On"] = false
 				Button["info"]["On"] = false
 				Button["exit"]["On"] = false
@@ -1270,6 +1354,7 @@ function widget:IsAbove(mx,my)
 				Button["arm"]["On"] = false
 				Button["core"]["On"] = false
 				Button["lost"]["On"] = false
+				Button["guardian"]["On"] = false
 				Button["ready"]["On"] = true
 				Button["info"]["On"] = false
 				Button["exit"]["On"] = false
@@ -1277,6 +1362,7 @@ function widget:IsAbove(mx,my)
 				Button["arm"]["On"] = false
 				Button["core"]["On"] = false
 				Button["lost"]["On"] = false
+				Button["guardian"]["On"] = false
 				Button["ready"]["On"] = false
 				Button["info"]["On"] = true
 				Button["exit"]["On"] = false
@@ -1284,6 +1370,7 @@ function widget:IsAbove(mx,my)
 				Button["arm"]["On"] = false
 				Button["core"]["On"] = false
 				Button["lost"]["On"] = false
+				Button["guardian"]["On"] = false
 				Button["ready"]["On"] = false
 				Button["info"]["On"] = false
 				Button["exit"]["On"] = true
@@ -1291,6 +1378,7 @@ function widget:IsAbove(mx,my)
 				Button["arm"]["On"] = false
 				Button["core"]["On"] = false
 				Button["lost"]["On"] = false
+				Button["guardian"]["On"] = false
 				Button["ready"]["On"] = false
 				Button["info"]["On"] = false
 				Button["exit"]["On"] = false

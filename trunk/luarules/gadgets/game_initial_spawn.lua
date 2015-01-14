@@ -31,6 +31,7 @@ local armcomDefID = UnitDefNames.arm_commander.id
 local corcomDefID = UnitDefNames.core_commander.id
 local lostcomDefID = UnitDefNames.lost_commander.id
 local isTLL	= false
+local isGOK	= false
 
 local validStartUnits = {
 	[UnitDefNames.arm_commander.id] = true,
@@ -94,10 +95,16 @@ function gadget:Initialize()
 		Spring.SetGameRulesParam("player_" .. playerID .. "_readyState" , initState)
 	end
 	isTLL = tonumber( (Spring.GetModOptions() or {}).tllunits) == 1
+	isGOK = tonumber( (Spring.GetModOptions() or {}).gokunits) == 1
 	
 	if isTLL then
 		validStartUnits[UnitDefNames.lost_commander.id] = true
 		validStartUnits[UnitDefNames.lost_u0commander.id] = true
+	end
+	
+	if isGOK then
+		validStartUnits[UnitDefNames.guardian_commander.id] = true
+		validStartUnits[UnitDefNames.guardian_u0commander.id] = true
 	end
 	
 end
