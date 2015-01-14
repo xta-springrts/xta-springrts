@@ -2463,7 +2463,7 @@
 		//canbuild31=lost_seaplane_platform;
 		}
 
-	[Guardian_u1Commander]
+	[Guardian_uCommander]
 		{
 		canbuild1=Guardian_solar_collector;
 		canbuild2=Guardian_generator;
