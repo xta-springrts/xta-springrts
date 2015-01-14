@@ -255,6 +255,15 @@ local options = {
 		def    = false,
 		section= "xtagame",
 	},
+	
+	{
+		key    = "gokUnits",
+		name   = "Enable 'The Guardian of Kadesh' faction of units?",
+		desc   = "Adds The Guardian of Kadesh unitpack. Ensure that you have selected 'choose in game' for the starting commander  option or this feature won't be possible. Author: Noruas\nkey: gokUnits",
+		type   = "bool",
+		def    = false,
+		section= "xtagame",
+	},
 	{
 		key    = "spidertortoise",
 		name   = 'Enable "Spiders vs. Tortoise" Unit Pack?',
