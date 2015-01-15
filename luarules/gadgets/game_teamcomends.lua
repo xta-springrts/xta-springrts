@@ -59,15 +59,8 @@ if (gadgetHandler:IsSyncedCode()) then
 	local gameOverFrame			= nil
 	local gaiaTeamID			= Spring.GetGaiaTeamID()
 	local gaiaAllyID 			= select(6, Spring.GetTeamInfo(gaiaTeamID))
-	
-	local dgunWeapons = {		-- better to hardcode these, as many weapons are listed as dgun, for example bogus dgun
-	arm_disintegrator = true,
-	core_disintegrator = true,
-	core_udisintegrator = true,
-	uber_disintegrator = true,
-	}
-	
-	local dgunTable = {} -- Populated from dgunWeapons; a little better to store weapons in table by id instead of name
+		
+	local _,dgunTable = include("LuaRules/Configs/xta_common_defs.lua")
 	
 	function gadget:Initialize()
 		if not endmodes[modOptions.mode] then
@@ -85,13 +78,6 @@ if (gadgetHandler:IsSyncedCode()) then
 		
 		for _,teamID in ipairs(GetTeamList()) do
 			teamCommanders[teamID] = 0
-		end
-		
-		for id,weaponDef in pairs(WeaponDefs) do
-			local wName = weaponDef.name
-			if dgunWeapons[wName] then
-				dgunTable[weaponDef.id] = true
-			end
 		end
 		
 		if modOptions and modOptions.commander == DECOYSTART then

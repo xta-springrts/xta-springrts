@@ -19,6 +19,8 @@ if gadgetHandler:IsSyncedCode() then
 	local crushNames = {
 		arm_dragons_teeth_dead = true,
 		core_dragons_teeth_dead = true,
+		lost_dragons_teeth_dead = true,
+		guardian_dragons_teeth_dead = true,
 	}
 	
 	local metalCloudNames = {
@@ -30,6 +32,14 @@ if gadgetHandler:IsSyncedCode() then
 		arm_underwater_moho_mine = true,
 		core_moho_mine = true,
 		core_underwater_moho_mine = true,
+		lost_metal_extractor = true,
+		lost_underwater_metal_extractor = true,
+		lost_moho_mine = true,
+		lost_underwater_moho_mine = true,
+		guardian_metal_extractor = true,
+		guardian_underwater_metal_extractor = true,
+		guardian_moho_mine = true,
+		guardian_underwater_moho_mine = true,
 	}
 	
 	

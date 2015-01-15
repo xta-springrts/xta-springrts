@@ -26,7 +26,7 @@ if gadgetHandler:IsSyncedCode() then
 	
 	local function getMsg (attribute,retired)
 		local msg
-		if attribute == 'Arm' or attribute == 'Core' then
+		if attribute == 'Arm' or attribute == 'Core' or attribute == 'Lost Legacy' or attribute == 'Guardians of Kadesh' then
 			msg = retired and resignedmessages[math.random(#resignedmessages)] or defaultmessages[math.random(#defaultmessages)]
 			return string.gsub(msg,'<side>',attribute)
 		elseif attribute and #attribute > 0 then		
@@ -55,6 +55,10 @@ if gadgetHandler:IsSyncedCode() then
 				msg = getMsg('Arm',retired)
 			elseif string.sub(suName,1,1) == 'c' then
 				msg = getMsg('Core',retired)
+			elseif string.sub(suName,1,1) == 'l' then
+				msg = getMsg('Lost Legacy',retired)
+			elseif string.sub(suName,1,1) == 'g' then
+				msg = getMsg('Guardians of Kadesh',retired)
 			else
 				msg = getMsg('Enemy',retired)
 			end

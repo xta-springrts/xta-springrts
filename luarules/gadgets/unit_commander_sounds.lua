@@ -204,8 +204,21 @@ else
 		-- if fifth character of name is an underscore (ASCII code 95)
 		-- then the side prefix is (probably) "core" instead of "arm"
 		-- add four to the index since we have four damage levels
-		if (unitDef.name:byte(5) == 95) then
-			dmgSoundIdx = dmgSoundIdx + 4
+		
+		-- use "side" tag instead
+		local cp = unitDef.customParams
+		if cp and cp.side == 'core' then
+			if CommanderSounds.CommanderDamaged[dmgSoundIdx+4] then
+				dmgSoundIdx = dmgSoundIdx + 4
+			end
+		elseif cp and cp.side == 'lost' then
+			if CommanderSounds.CommanderDamaged[dmgSoundIdx+8] then
+				dmgSoundIdx = dmgSoundIdx + 8 
+			end
+		elseif cp and cp.side == 'guardian' then
+			if CommanderSounds.CommanderDamaged[dmgSoundIdx+12] then
+				dmgSoundIdx = dmgSoundIdx + 12 
+			end
 		end
 
 		spPlaySoundFile(CommanderSounds.CommanderDamaged[dmgSoundIdx], 1.0, spGetUnitPosition(unitID))

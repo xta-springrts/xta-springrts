@@ -59,15 +59,9 @@ local zombieCount = 0
 local zombieCommanders = {}
 local kothBoxes = {}
 
--- better to hardcode these, as many weapons are listed as dgun, for example bogus dgun
-local dgunTable = {
-	[WeaponDefNames[  "arm_disintegrator"].id] = true,
-	[WeaponDefNames[ "core_disintegrator"].id] = true,
-	[WeaponDefNames["core_udisintegrator"].id] = true,
-	[WeaponDefNames[ "uber_disintegrator"].id] = true,
-}
+-- Get from common defs config
 
-local CommanderDefs = include("LuaRules/Configs/unit_commander_sounds_defs.lua")
+local CommanderDefs,dgunTable = include("LuaRules/Configs/xta_common_defs.lua")
 local _,CaptureDefs,NapDefs = include(zombieConf)
 
 local function sortByDist(v1,v2) -- increasing

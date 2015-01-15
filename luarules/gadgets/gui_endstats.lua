@@ -35,12 +35,8 @@ if gadgetHandler:IsSyncedCode() then
 		local mapX, mapZ
 		local ignoreUnits = {}
 		local ignoreForAwards = {}
-		local ignoreAwardsNames = { -- these units can't receive any awards (nuke units, not fair)
-				arm_retaliator = true,
-				core_silencer  = true,
-				core_neutron  = true,
-				arm_stunner  = true,
-			}	
+		local ignoreAwardsNames = include("LuaRules/Configs/gui_endstats_defs.lua")
+		
 		local heroUnits = {}
 		local lostUnits = {}
 		local MINKILLS				= 25 -- minimum kills for unit awards
@@ -65,53 +61,9 @@ if gadgetHandler:IsSyncedCode() then
 		local unitBuildpowerTable 	= {}
 		local unitFirepowerTable	= {}
 		local nbPlayers				= 0
-		
-		
-		local dtTable = {
-			[UnitDefNames["arm_dragons_teeth"].id] 				= true,
-			[UnitDefNames["arm_floating_dragons_teeth"].id] 	= true,
-			[UnitDefNames["core_dragons_teeth"].id] 			= true,
-			[UnitDefNames["core_floating_dragons_teeth"].id] 	= true,
-			[UnitDefNames["arm_fortification_wall"].id] 		= true,
-			[UnitDefNames["core_fortification_wall"].id] 		= true,
-		}	
-		local commanderTable = {}
-		local dgunTable = {
-		[WeaponDefNames[  "arm_disintegrator"].id] = true,
-		[WeaponDefNames[ "core_disintegrator"].id] = true,
-		[WeaponDefNames["core_udisintegrator"].id] = true,
-		[WeaponDefNames[ "uber_disintegrator"].id] = true,
-	}
-		local t2Table = {
-			[UnitDefNames["arm_advanced_radar_tower"].id] 		= true,
-			[UnitDefNames["arm_advanced_sonar_station"].id] 	= true,
-			[UnitDefNames["arm_advanced_torpedo_launcher"].id] 	= true,
-			[UnitDefNames["core_advanced_radar_tower"].id] 		= true,
-			[UnitDefNames["core_advanced_sonar_station"].id] 	= true,
-			[UnitDefNames["core_advanced_torpedo_launcher"].id] = true,
-			[UnitDefNames["arm_adv_aircraft_plant"].id] 		= true,
-			[UnitDefNames["arm_adv_construction_aircraft"].id]	= true,
-			[UnitDefNames["arm_adv_construction_kbot"].id] 		= true,
-			[UnitDefNames["arm_adv_construction_sub"].id] 		= true,
-			[UnitDefNames["arm_adv_construction_vehicle"].id] 	= true,
-			[UnitDefNames["arm_adv_kbot_lab"].id] 				= true,
-			[UnitDefNames["arm_adv_shipyard"].id] 				= true,
-			[UnitDefNames["arm_adv_vehicle_plant"].id] 			= true,
-			[UnitDefNames["core_adv_aircraft_plant"].id] 		= true,
-			[UnitDefNames["core_adv_construction_aircraft"].id] = true,
-			[UnitDefNames["core_adv_construction_kbot"].id] 	= true,
-			[UnitDefNames["core_adv_construction_sub"].id] 		= true,
-			[UnitDefNames["core_adv_construction_vehicle"].id] 	= true,
-			[UnitDefNames["core_adv_kbot_lab"].id] 				= true,
-			[UnitDefNames["core_adv_shipyard"].id] 				= true,
-			[UnitDefNames["core_adv_vehicle_plant"].id] 		= true,
-			[UnitDefNames["arm_moho_metal_maker"].id] 			= true,
-			[UnitDefNames["arm_moho_mine"].id] 					= true,
-			[UnitDefNames["arm_underwater_moho_mine"].id] 		= true,
-			[UnitDefNames["core_moho_metal_maker"].id] 			= true,
-			[UnitDefNames["core_moho_mine"].id] 				= true,
-			[UnitDefNames["core_underwater_moho_mine"].id] 		= true,
-		}
+						
+		local commanderTable = {} -- populated in initialize, since in case of decoy start a decoy counts as commander
+		local _,dgunTable, dtTable, t2Table = include("LuaRules/Configs/xta_common_defs.lua") -- arg1 is commandertable
 		
 		local function round(num, idp)
 			return string.format("%." .. (idp or 0) .. "f", num)
