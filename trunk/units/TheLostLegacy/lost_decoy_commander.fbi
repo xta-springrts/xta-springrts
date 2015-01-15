@@ -160,6 +160,7 @@
 	[customparams] 	
 	{
 	iscommander=1;
+	isdecoycommander=1;
 	side=lost;
 	type=manual;
 	}

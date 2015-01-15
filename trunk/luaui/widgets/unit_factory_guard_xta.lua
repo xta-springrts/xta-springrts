@@ -151,7 +151,7 @@ function widget:UnitFromFactory(unitID, unitDefID, unitTeam, factID, factDefID, 
 	-- can this unit assist?
 	local ud = UnitDefs[unitDefID]
 	if ud and ud.isBuilder and ud.canAssist and ud.canGuard and (not ud.isFactory) then
-		if (UnitDefs[unitDefID].name ~= "arm_colossus" and UnitDefs[unitDefID].name ~= "core_hive") then
+		if (UnitDefs[unitDefID].name ~= "arm_colossus" and UnitDefs[unitDefID].name ~= "core_hive" and UnitDefs[unitDefID].name ~= "lost_giant") then
 		
 			-- pass through or guard?
 			local nbGuard = Spring.GetUnitRulesParam(factID,"nbGuard")

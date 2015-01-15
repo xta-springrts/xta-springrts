@@ -55,6 +55,8 @@ local mohos	= {
 [UnitDefNames["arm_underwater_moho_mine"].id] 		= true,
 [UnitDefNames["core_moho_mine"].id] 				= true,
 [UnitDefNames["core_underwater_moho_mine"].id] 		= true,
+[UnitDefNames["lost_moho_mine"].id] 				= true,
+[UnitDefNames["lost_underwater_moho_mine"].id] 		= true,
 }
 
 local mmakers = {
@@ -64,6 +66,9 @@ local mmakers = {
 [UnitDefNames["core_moho_metal_maker"].id] 			= true,
 [UnitDefNames["core_metal_maker"].id] 				= true,
 [UnitDefNames["core_floating_metal_maker"].id]		= true,
+[UnitDefNames["lost_moho_metal_maker"].id] 			= true,
+[UnitDefNames["lost_metal_maker"].id] 				= true,
+[UnitDefNames["lost_floating_metal_maker"].id]		= true,
 }
 
 local function IsUnitComplete(unitID)
