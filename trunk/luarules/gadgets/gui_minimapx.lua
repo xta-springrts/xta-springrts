@@ -29,6 +29,9 @@ if gadgetHandler:IsSyncedCode() then
 		[WeaponDefNames["armemp_weapon"].id] = true,	-- arm_stunner
 		[WeaponDefNames["cortron_weapon"].id] = true,	-- core_neutron 
 		[WeaponDefNames["cormabm_weapon"].id] = true,	-- core_hedgehog
+		[WeaponDefNames["freezermp"].id] = true,		-- lost_freezer: Tracking Emp Energy Cannon
+		[WeaponDefNames["lostcruisenuclear"].id] = true,-- lost_revenger: Powerful Cruise Nuke
+		[WeaponDefNames["peacemaker_rocket"].id] = true,-- lost_peacemaker and lost_turtle: anti and mobile anti
 	}
 
 	function gadget:Initialize()	

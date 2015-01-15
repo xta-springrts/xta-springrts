@@ -19,6 +19,7 @@ if (gadgetHandler:IsSyncedCode()) then
 
 	--SYNCED
 	
+	-- for some reason T2 are missing
 	local watchUnits = {
 	arm_construction_kbot = true,
 	arm_construction_hovercraft = true,
@@ -32,6 +33,12 @@ if (gadgetHandler:IsSyncedCode()) then
 	core_construction_sub = true,
 	core_construction_vehicle = true,
 	core_necro = true,
+	lost_construction_kbot = true,
+	lost_construction_hovercraft = true,
+	lost_construction_ship = true,
+	lost_construction_sub = true,
+	lost_construction_vehicle = true,
+	lost_shaman = true,
 	}
 	
 	function gadget:Initialize()

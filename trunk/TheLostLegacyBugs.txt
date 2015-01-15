@@ -9,7 +9,153 @@ raceLogoGouraud
 race32Dk
 race32Lt
 
+Things that need to be added to lost faction (functions as my personal todo-list (Jools) but is also for information):
 
+\luarules\configs\unit_commander_sounds_defs.lua
+
+* CommanderDamaged sounds: lost-specific files exist but are copies of core sounds. Path: \sounds\commander
+* CommanderTargets: These need to be extended with lost equivalents. Used for sound effects and some awards
+	HolyTargetDefs = {
+		[0] = UnitDefNames["arm_retaliator"],
+		[1] = UnitDefNames["arm_vulcan"],
+		[2] = UnitDefNames["core_krogoth"],
+		[3] = UnitDefNames["core_silencer"],
+		[4] = UnitDefNames["core_buzzsaw"],
+	},
+	ImpressiveTargetDefs = {
+		[ 0] = UnitDefNames["arm_annihilator"],
+		[ 1] = UnitDefNames["arm_big_bertha"],
+		[ 2] = UnitDefNames["arm_millenium"],
+		[ 3] = UnitDefNames["arm_penetrator"],
+		[ 4] = UnitDefNames["core_doomsday_machine"],
+		[ 5] = UnitDefNames["core_goliath"],
+		[ 6] = UnitDefNames["core_immolator"],
+		[ 7] = UnitDefNames["core_intimidator"],
+		[ 8] = UnitDefNames["core_pillager"],
+		[ 9] = UnitDefNames["core_sumo"],
+		[10] = UnitDefNames["core_viper"],
+		[11] = UnitDefNames["core_warlord"],
+		
+\luarules\gadgets\unit_noselfpwn.lua
+
+The gadget prevents damage to self but has a long exception list:
+
+local exceptionList = {
+  "arm_ambusher",
+  "arm_big_bertha",
+  "arm_conqueror",
+  "arm_defender",
+  "arm_guardian",
+  "arm_jethro",
+  "arm_luger",
+  "arm_merl",
+  "arm_millenium",
+  "arm_podger",
+  "arm_ranger",
+  "arm_raven",
+  "arm_retaliator",
+  "arm_rocko",
+  "arm_samson",
+  "arm_spider",
+  "arm_stunner",
+  "arm_vulcan",
+  "arm_wombat",
+  "core_buzzsaw",
+  "core_crasher",
+  "core_diplomat",
+  "core_dominator",
+  "core_executioner",
+  "core_goliath",
+  "core_immolator",
+  "core_intimidator",
+  "core_krogoth",
+  "core_pillager",
+  "core_missile_frigate",
+  "core_morty",
+  "core_punisher",
+  "core_pulverizer",
+  "core_silencer",
+  "core_slasher",
+  "core_spoiler",
+  "core_storm",
+  "core_neutron",
+  "core_nixer",
+  "core_toaster",
+  "core_warlord",
+  
+  \luarules\gadgets\unit_fire_rate.lua
+  
+  Changes firerate of vulcan and buzzsaw. Adopt for freezer/revengr or scrap gadget alltogether?
+  
+  local fireRateDefs = {
+  arm_vulcan = 0.25,
+  core_buzzsaw = 0.5,
+
+  \luarules\gadgets\unit_minelayer_limit.lua
+  
+  TLL has aparently no minelayers or did I miss something?
+  
+  \luarules\gadgets\unit_disable_buildoptions.lua
+  
+  Disables air/hover/water units on some maps. many people dont like this but it exists. Adopt for TLL?
+  
+  if (disableWind) then
+		table.insert(alwaysDisableTable, {UnitDefNames["arm_wind_generator"].id, windLowMess,})
+		table.insert(alwaysDisableTable, {UnitDefNames["core_wind_generator"].id, windLowMess,})
+	end
+	if (disableHovers) then
+		table.insert(alwaysDisableTable, {UnitDefNames["arm_hovercraft_platform"].id, hovAtmLowMess,})
+		table.insert(alwaysDisableTable, {UnitDefNames["core_hovercraft_platform"].id, hovAtmLowMess,})
+	end
+	if (disableAir==1) then
+		table.insert(alwaysDisableTable, {UnitDefNames["arm_aircraft_plant"].id, airAtmLowMess,})
+		table.insert(alwaysDisableTable, {UnitDefNames["arm_adv_aircraft_plant"].id, airAtmLowMess,})
+		table.insert(alwaysDisableTable, {UnitDefNames["arm_seaplane_platform"].id, airAtmLowMess,})
+		table.insert(alwaysDisableTable, {UnitDefNames["core_aircraft_plant"].id, airAtmLowMess,})
+		table.insert(alwaysDisableTable, {UnitDefNames["core_adv_aircraft_plant"].id, airAtmLowMess,})
+		table.insert(alwaysDisableTable, {UnitDefNames["core_seaplane_platform"].id, airAtmLowMess,})
+	elseif (disableAir==2) then
+		table.insert(alwaysDisableTable, {UnitDefNames["arm_aircraft_plant"].id, windExtrMess,})
+		table.insert(alwaysDisableTable, {UnitDefNames["arm_adv_aircraft_plant"].id, windExtrMess,})	
+		table.insert(alwaysDisableTable, {UnitDefNames["arm_seaplane_platform"].id, windExtrMess,})
+		table.insert(alwaysDisableTable, {UnitDefNames["core_aircraft_plant"].id, windExtrMess,})
+		table.insert(alwaysDisableTable, {UnitDefNames["core_adv_aircraft_plant"].id, windExtrMess,})
+		table.insert(alwaysDisableTable, {UnitDefNames["core_seaplane_platform"].id, windExtrMess,})
+		
+	\luarules\gadgets\unit_no_land_damage.lua
+	
+	Disables land damage from some sea units. I think these are probably already ok, since tll use same weapons probably
+	
+	local NO_LAND_DAMAGE = {
+  [WeaponDefNames['armair_torpedo'].id] = true,
+  [WeaponDefNames['armatl_torpedo'].id] = true,
+  [WeaponDefNames['armdepthcharge'].id] = true,
+  [WeaponDefNames['armseap_weapon1'].id] = true,
+  [WeaponDefNames['armseap_weapon2'].id] = true,
+  [WeaponDefNames['armsmart_torpedo'].id] = true,
+  [WeaponDefNames['arm_torpedo'].id] = true,
+  [WeaponDefNames['coax_torpedo'].id] = true,
+  [WeaponDefNames['corair_torpedo'].id] = true,
+  [WeaponDefNames['coratl_torpedo'].id] = true,
+  [WeaponDefNames['coredepthcharge'].id] = true,
+  [WeaponDefNames['core_torpedo'].id] = true,
+  --[WeaponDefNames['corseap_weapon1'].id] = true,
+  --[WeaponDefNames['corseap_weapon2'].id] = true,
+  [WeaponDefNames['corsmart_torpedo'].id] = true,
+  [WeaponDefNames['corssub_weapon'].id] = true,
+  [WeaponDefNames['levi_torpedo'].id] = true,
+  [WeaponDefNames['boat_torpedo'].id] = true,
+  [WeaponDefNames['tank_torpedo'].id] = true,
+  [WeaponDefNames['fibby_torpedo'].id] = true,
+  [WeaponDefNames['stupidsubs'].id] = true,
+  --[WeaponDefNames['tawf009_weapon'].id] = true,
+  --[WeaponDefNames['coramph_weapon1'].id] = true
+
+  Some other things:
+  
+  lost_condor.fbi has name "Vulture"
+  lost_probe.fbi has name "Lost"
+  
 
 Balancing Issues:
 

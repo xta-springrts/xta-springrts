@@ -58,9 +58,9 @@ if gadgetHandler:IsSyncedCode() then
 		end
 		
 		if gunships[unitDefID] then
-			Spring.SetUnitSensorRadius(unitID,"airLos",min(airlos[unitDefID],400))
+			Spring.SetUnitSensorRadius(unitID,"airLos",min(airlos[unitDefID] or 400,400))
 		else
-			Spring.SetUnitSensorRadius(unitID,"airLos",min(airlos[unitDefID],50))
+			Spring.SetUnitSensorRadius(unitID,"airLos",min(airlos[unitDefID] or 50,50))
 		end
 		if not los[unitDefID] then
 			local this_los = Spring.GetUnitSensorRadius(unitID,"los")
@@ -70,9 +70,9 @@ if gadgetHandler:IsSyncedCode() then
 		end
 		
 		if gunships[unitDefID] then
-			Spring.SetUnitSensorRadius(unitID,"los",min(los[unitDefID],300))
+			Spring.SetUnitSensorRadius(unitID,"los",min(los[unitDefID] or 300,300))
 		else
-			Spring.SetUnitSensorRadius(unitID,"los",min(los[unitDefID],100))
+			Spring.SetUnitSensorRadius(unitID,"los",min(los[unitDefID] or 100,100))
 		end
 	end
 	

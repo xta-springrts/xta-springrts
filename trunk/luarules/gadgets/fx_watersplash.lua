@@ -54,8 +54,8 @@ if gadgetHandler:IsSyncedCode() then
 	}
 	
 	local aerialTorpedoes = {
-		[WeaponDefNames["armair_torpedo"].id] = true, -- Arm Lancet
-		[WeaponDefNames["armseap_weapon1"].id] = true, -- Arm Albatross, Core Typhoon
+		[WeaponDefNames["armair_torpedo"].id] = true, -- Arm Lancet, lost_osprey
+		[WeaponDefNames["armseap_weapon1"].id] = true, -- Arm Albatross, Core Typhoon, lost_fisher, 
 		[WeaponDefNames["corair_torpedo"].id] = true, -- Core Titan
 	}
 	

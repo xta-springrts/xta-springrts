@@ -16,6 +16,8 @@ function friendlyName(teamID)
 	if isAIteam then
 		if side == "arm" then return "Arm"
 		elseif side == "core" then return "Core"
+		elseif side == "lost" then return "Lost Legacy"
+		elseif side == "guardian" then return "Guardians of Kadesh"
 		elseif not (side == nil or #side < 1) then return side
 		else return ("Team " .. teamID)
 		end

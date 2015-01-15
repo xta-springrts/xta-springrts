@@ -1,33 +1,10 @@
 local Echo = Spring.Echo
 
-local CommanderUnitDefs = {
-	[ UnitDefNames["arm_commander"   ].id ] = UnitDefNames["arm_commander"   ],
-	[ UnitDefNames["arm_nincommander"].id ] = UnitDefNames["arm_nincommander"],
-	[ UnitDefNames["arm_scommander"  ].id ] = UnitDefNames["arm_scommander"  ],
-	[ UnitDefNames["arm_u0commander" ].id ] = UnitDefNames["arm_u0commander" ],
-	[ UnitDefNames["arm_ucommander"  ].id ] = UnitDefNames["arm_ucommander"  ], -- NOTE: not "arm_u1commander"
-	[ UnitDefNames["arm_u2commander" ].id ] = UnitDefNames["arm_u2commander" ],
-	[ UnitDefNames["arm_u3commander" ].id ] = UnitDefNames["arm_u3commander" ],
-	[ UnitDefNames["arm_u4commander" ].id ] = UnitDefNames["arm_u4commander" ],
-
-	[ UnitDefNames["core_commander"   ].id ] = UnitDefNames["core_commander"   ],
-	[ UnitDefNames["core_nincommander"].id ] = UnitDefNames["core_nincommander"],
-	[ UnitDefNames["core_scommander"  ].id ] = UnitDefNames["core_scommander"  ],
-	[ UnitDefNames["core_u0commander" ].id ] = UnitDefNames["core_u0commander" ],
-	[ UnitDefNames["core_ucommander"  ].id ] = UnitDefNames["core_ucommander"  ], -- NOTE: not "core_u1commander"
-	[ UnitDefNames["core_u2commander" ].id ] = UnitDefNames["core_u2commander" ],
-	[ UnitDefNames["core_u3commander" ].id ] = UnitDefNames["core_u3commander" ],
-	[ UnitDefNames["core_u4commander" ].id ] = UnitDefNames["core_u4commander" ],
-	
-	[ UnitDefNames["lost_commander"   ].id ] = UnitDefNames["lost_commander"   ],
-	[ UnitDefNames["lost_u0commander" ].id ] = UnitDefNames["lost_u0commander" ],
-	[ UnitDefNames["lost_ucommander"  ].id ] = UnitDefNames["lost_ucommander"  ], -- NOTE: not "lost_u1commander"
-	[ UnitDefNames["lost_u2commander" ].id ] = UnitDefNames["lost_u2commander" ],
-	[ UnitDefNames["lost_u3commander" ].id ] = UnitDefNames["lost_u3commander" ],
-	[ UnitDefNames["lost_u4commander" ].id ] = UnitDefNames["lost_u4commander" ],
-}
+-- Move to common config file
+local CommanderUnitDefs = include("LuaRules/Configs/xta_common_defs.lua")
 
 -- TODO: add a denied-sound when reclaiming or capturing fails, DukeNukem3D F-key taunts
+
 local CommanderSounds = {
 	CommanderUpgraded                  = "sounds/commander/comm_upgraded.wav",
 	CommanderHumiliated                = "sounds/commander/comm_humiliated.wav",
@@ -37,7 +14,9 @@ local CommanderSounds = {
 	CommanderPerfectTargetsKilled      = "sounds/commander/comm_perfect_targets_killed.wav",
 	CommanderExcellentTargetsKilled    = "sounds/commander/comm_excellent_targets_killed.wav",
 	CommanderCloaked                   = "sounds/commander/comm_cloaked.wav",
-
+	
+	
+	
 	CommanderSongs = {
 		[ UnitDefNames["arm_commander"].id ] = {
 			[0] = "sounds/sing.wav",
@@ -255,6 +234,11 @@ local CommanderSounds = {
 		[5] = "sounds/commander/core_comm_damage_50.wav",
 		[6] = "sounds/commander/core_comm_damage_75.wav",
 		[7] = "sounds/commander/core_comm_damage_100.wav",
+		
+		[8] = "sounds/commander/lost_comm_damage_25.wav",
+		[9] = "sounds/commander/lost_comm_damage_50.wav",
+		[10] = "sounds/commander/lost_comm_damage_75.wav",
+		[11] = "sounds/commander/lost_comm_damage_100.wav",
 	},
 }
 
@@ -294,7 +278,7 @@ local comTY = CommanderSounds.TYSongs
 for unitDefID, sndTable in pairs(comSongs) do
 	assert(type(sndTable) == type({}))
 
-	if (unitDefID ~= armComDefID and unitDefID ~= corComDefID) then
+	if (unitDefID ~= armComDefID and unitDefID ~= corComDefID and unitDefID ~= lostComDefID) then
 		local songsList = nil
 		local unitDef = UnitDefs[unitDefID]
 		
