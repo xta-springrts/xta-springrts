@@ -156,6 +156,12 @@ local exceptionList = {
   lost_condor.fbi has name "Vulture"
   lost_probe.fbi has name "Lost"
   
+  TLL air planes need to include "call-script lua_UnitStoppedMoving();" in .cob to allow for adjusting LOS dynamically (when landed) to prevent 'landed fighter shooting all over base' bug.
+  
+  Also would be nice to include .bos files in _branches\nonrelease_stuff\source_bos
+  
+  Or maybe move all bos files back to scripts dir, maybe as underdir
+  
 
 Balancing Issues:
 
