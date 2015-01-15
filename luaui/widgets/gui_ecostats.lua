@@ -1,18 +1,19 @@
-local versionNumber = "1.6"
+local versionNumber = "1.61"
 ---------------------------------------------------------------------------------------------------
 
 ----------------------------------------------------------------------------------------------------------------------------
 -- Changelog
 
 ------------------------
+-- Version 1.61
+------------------------
+-- * Add TLL images also for XTA
+
+------------------------
 -- Version 1.6
 ------------------------
 -- * Remove announcing of kills: most games have this already built in
 -- * Remove sounds
-
-------------------------
--- Version 1.59
-------------------------
 -- * Some bugfixes and compatibility for EvoRTS
 -- * Bug fixes and performance improvements
 -- * Added TS values and better handling of screen position
@@ -125,7 +126,8 @@ local myFontBig	 		= gl.LoadFont(font2Path,textlarge,5,40)
 local images			= {
 						["arm"]					= "LuaUI/Images/ecostats/arm_default.png",
 						["core"]     			= "LuaUI/Images/ecostats/core_default.png",
-						["tll"]				= "LuaUI/Images/ecostats/tll_default.png",
+						["tll"]					= "LuaUI/Images/ecostats/tll_default.png", -- name in Techa
+						["lost"]				= "LuaUI/Images/ecostats/tll_default.png", -- name in XTA
 						["contrast"]			= "LuaUI/Images/ecostats/contrast.png",
 						["borderson"]			= "LuaUI/Images/ecostats/borders.png",
 						["bordersoff"]			= "LuaUI/Images/ecostats/bordersOff.png",
@@ -140,7 +142,7 @@ local images			= {
 						["info"]				= "LuaUI/Images/ecostats/info.png",
 						["dead"]     			= "LuaUI/Images/ecostats/cross.png",
 						["zombie"]     			= "LuaUI/Images/ecostats/cross_inv.png",
-						["outer_colonies"]		= LUAUI_DIRNAME .. "Images/ecostats/ecommander.png",
+						["outer_colonies"]		= LUAUI_DIRNAME .. "Images/ecostats/ecommander.png", -- commander in evorts
 						}
 			
 local AttackUnits			= {}
@@ -456,6 +458,7 @@ local function friendlyName(teamID)
 	if isAIteam then
 		if side == "arm" then return "Arm"
 		elseif side == "core" then return "Core"
+		elseif side == "lost" then return "Lost"
 		elseif not (side == nil or #side < 1) then return side
 		else return ("Team " .. teamID)
 		end
