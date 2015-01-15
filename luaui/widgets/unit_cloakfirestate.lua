@@ -17,29 +17,8 @@ end
 --------------------------------------------------------------------------------
 local team = Spring.GetMyTeamID()
 
-local commanderList = {
-	arm_commander = true,
-	arm_decoy_commander = true,
-	arm_u0commander = true,
-	arm_ucommander = true,
-	arm_u2commander = true,
-	arm_u3commander = true,
-	arm_u4commander = true,
-	armcom = true,
-	arm_base = true,
-	arm_nincommander = true,
-	core_commander = true,
-	core_decoy_commander = true,
-	core_u0commander = true,
-	core_ucommander = true,
-	core_u2commander = true,
-	core_u3commander = true,
-	core_u4commander = true,
-	corcom = true,
-	core_base = true,
-	core_nincommander = true,
-}
-
+local commanderList = {} -- populate in initialize instead
+	
 -- Speedups
 local GiveOrderToUnit  = Spring.GiveOrderToUnit
 local GetUnitStates    = Spring.GetUnitStates
@@ -78,7 +57,7 @@ function widget:CommandNotify(commandID, params, options)
     local selUnits = GetSelectedUnits()
     for i,unitID in pairs(selUnits) do
       local unitDef = GetUnitDefID(unitID)
-      if (unitDef ~= nil) and commanderList[UnitDefs[unitDef].name] then
+      if (unitDef ~= nil) and commanderList[unitDef] then
         local states = GetUnitStates(unitID)
         if (not states) then
           return
@@ -108,10 +87,17 @@ function widget:GameFrame(n)
 end
 
 function widget:Initialize()
-  if Spring.GetSpectatingState() or Spring.IsReplay() then
-    widgetHandler:RemoveWidget()
-    return
-  end
+	if Spring.GetSpectatingState() or Spring.IsReplay() then
+		widgetHandler:RemoveWidget()
+		return
+	end
+
+	for i=1, #UnitDefs do
+		local cp = UnitDefs[i].customParams
+		if cp and cp.iscommander then
+			commanderList[i] = true
+		end
+	end
 end
 
 function widget:UnitCreated(unitID, unitDefID, unitTeam)

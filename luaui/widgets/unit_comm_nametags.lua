@@ -1,4 +1,4 @@
-local versionNumber = "1.3"
+local versionNumber = "1.4"
 
 function widget:GetInfo()
   return {
@@ -12,6 +12,7 @@ function widget:GetInfo()
   }
 end
 
+-- Changelog: 1.4: Add Lost and Guardian commanders and show for decoys if decoy start
 -- Changelog: 1.3: Greatly improved performance.
 -- Changelog: 1.2: Modified commander detection due to change in spring 85.0. Decoys also get the tag to avoid detection.
 
@@ -40,6 +41,7 @@ local glBillboard         = gl.Billboard
 local glPopMatrix         = gl.PopMatrix
 local GetGaiaTeamID		  = Spring.GetGaiaTeamID
 local haveZombies 		  = (tonumber((Spring.GetModOptions() or {}).zombies) or 0) == 1
+local isDecoyStart		  = false
 
 --------------------------------------------------------------------------------
 -- vars
@@ -63,9 +65,16 @@ function widget:Initialize()
 		local player,isAI,side,name
 		local isGaia = teamID == GetGaiaTeamID()
 		_,player,_,isAI,side,_,_,_ = GetTeamInfo(teamID)
+		
+		if modOptions and modOptions.commander == "decoystart" then
+			isDecoyStart = true
+		end
+		
 		if isAI then
 			if side == "arm" then name = "Arm"
 				elseif side == "core" then name = "Core"
+				elseif side == "lost" then name = "Lost"
+				elseif side == "guardian" then name = "Guardian"
 				else name = side
 			end
 		elseif isGaia then
@@ -81,7 +90,7 @@ function widget:Initialize()
 	end
 	for i=1, #UnitDefs do
 		local cp = UnitDefs[i].customParams
-		if cp and cp.iscommander and not cp.isdecoycommander then
+		if cp and cp.iscommander and (not cp.isdecoycommander or isDecoyStart) then
 			commanderIDs[i] = true
 		end
 	end

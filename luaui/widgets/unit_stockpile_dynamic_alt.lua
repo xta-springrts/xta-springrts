@@ -44,7 +44,8 @@ MaxStockpile["arm_repulsor"] = 12
 MaxStockpile["core_fortitude_missile_defense"] = 12
 MaxStockpile["core_resistor"] = 12
 MaxStockpile["core_hedgehog"] = 12
-
+MaxStockpile["lost_peacemaker"] = 12
+MaxStockpile["lost_turle"] = 12
 
 function widget:Initialize()
 	if GetSpectatingState() then

@@ -47,7 +47,8 @@ if gadgetHandler:IsSyncedCode() then
 		gadgetHandler:DeregisterGlobal("PelicanTransform", PelicanTransform)
 		gadgetHandler:DeregisterGlobal("PelicanReform", PelicanReform)
 	end
-		
+	
+	-- only applies for units that call lua_UnitStoppedMoving() in cob
 	function UnitStoppedMoving(unitID,unitDefID,teamID)
 				
 		if not airlos[unitDefID] then
