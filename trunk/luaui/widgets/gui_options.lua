@@ -273,13 +273,11 @@ function widget:Initialize()
 			type		= "bool",
 			value		= modOptions["mo_nowrecks"] or "N/A",
 			},
-						
 			{
 			name	= "Critters:",
 			type	= "bool",
 			value	= modOptions["critters"] or "N/A",
-			},
-					
+			},					
 			{
 			name	= "Dynamic lights:",
 			type	= "bool",
@@ -306,6 +304,12 @@ function widget:Initialize()
 			name		= "The Lost Legacy faction:",
 			type		= "bool",
 			value		= modOptions["tllunits"] or "N/A",
+			},
+			
+			{
+			name		= "The Guardians of Kadesh faction:",
+			type		= "bool",
+			value		= modOptions["gokunits"] or "N/A",
 			},
 			
 			{
