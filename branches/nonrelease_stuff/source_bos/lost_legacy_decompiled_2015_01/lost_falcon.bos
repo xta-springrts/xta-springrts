@@ -3,7 +3,7 @@
 #include "sfxtype.h"
 #include "exptype.h"
 
-piece  base, body, rwing, lwing, flare1, flare2;
+piece  base, body, rwing, lwing, flare1, flare2, thrust1, thrust2;
 
 static-var  statechg_DesiredState, statechg_StateChanging;
 
