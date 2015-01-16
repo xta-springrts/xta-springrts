@@ -77,6 +77,9 @@ local UnitEffects = {
   [UnitDefNames["core_energy_storage"].id] = {
     {class='GroundFlash',options=groundFlashCorestor},
   },
+  [UnitDefNames["lost_energy_storage"].id] = {
+    {class='GroundFlash',options=groundFlashCorestor},
+  },
   [UnitDefNames["arm_energy_storage"].id] = {
     {class='GroundFlash',options=groundFlashArmestor},
   },
@@ -154,6 +157,10 @@ local UnitEffects = {
   },
   [UnitDefNames["arm_harpoon"].id] = {
     {class='AirJet',options={color={0.3,0.1,0}, width=4.5, length=70, piece="thrust", onActive=true}},
+  },
+  [UnitDefNames["lost_falcon"].id] = {
+    {class='AirJet',options={color={0.3,0.1,0}, width=2.4, length=42, piece="thrust1", onActive=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=2.4, length=42, piece="thrust2", onActive=true}},
   },
 }
 
