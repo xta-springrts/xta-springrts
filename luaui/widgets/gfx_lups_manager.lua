@@ -162,6 +162,40 @@ local UnitEffects = {
     {class='AirJet',options={color={0.3,0.1,0}, width=2.4, length=42, piece="thrust1", onActive=true}},
     {class='AirJet',options={color={0.3,0.1,0}, width=2.4, length=42, piece="thrust2", onActive=true}},
   },
+  [UnitDefNames["lost_condor"].id] = {
+    {class='AirJet',options={color={0.3,0.1,0}, width=2.4, length=42, piece="thrust1", onActive=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=2.4, length=42, piece="thrust2", onActive=true}},
+  },
+  [UnitDefNames["lost_ghost"].id] = {
+    {class='AirJet',options={color={0.3,0.1,0}, width=2.4, length=42, piece="thrust1", onActive=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=2.4, length=42, piece="thrust2", onActive=true}},
+	{class='AirJet',options={color={0.3,0.1,0}, width=2.4, length=42, piece="thrust3", onActive=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=2.4, length=42, piece="thrust4", onActive=true}},
+  },
+  [UnitDefNames["lost_osprey"].id] = {
+    {class='AirJet',options={color={0.3,0.1,0}, width=2.4, length=42, piece="thrust1", onActive=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=2.4, length=42, piece="thrust2", onActive=true}},
+	{class='AirJet',options={color={0.3,0.1,0}, width=2.4, length=42, piece="thrust3", onActive=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=2.4, length=42, piece="thrust4", onActive=true}},
+  },
+  [UnitDefNames["lost_probe"].id] = {
+    {class='AirJet',options={color={0.3,0.1,0}, width=2.4, length=42, piece="thrust", onActive=true}},
+  },
+  [UnitDefNames["lost_pterodactyl"].id] = {
+    {class='AirJet',options={color={0.3,0.1,0}, width=2.4, length=42, piece="thrust1", onActive=true}},
+	{class='AirJet',options={color={0.3,0.1,0}, width=2.4, length=42, piece="thrust2", onActive=true}},
+  },
+  [UnitDefNames["lost_sparrow"].id] = {
+    {class='AirJet',options={color={0.3,0.1,0}, width=2.4, length=42, piece="thrust", onActive=true}},
+  },
+  [UnitDefNames["lost_swallow"].id] = {
+    {class='AirJet',options={color={0.3,0.1,0}, width=2.4, length=42, piece="thrust1", onActive=true}},
+	{class='AirJet',options={color={0.3,0.1,0}, width=2.4, length=42, piece="thrust2", onActive=true}},
+  },
+  [UnitDefNames["lost_trawler"].id] = {
+    {class='AirJet',options={color={0.3,0.1,0}, width=2.4, length=42, piece="thrust1", onActive=true}},
+	{class='AirJet',options={color={0.3,0.1,0}, width=2.4, length=42, piece="thrust2", onActive=true}},
+  },
 }
 
 local t = os.date('*t')
