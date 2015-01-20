@@ -294,7 +294,7 @@
 	turret=1;
 	model=missile.s3o;
 	Texture1=null;
-	range=685;
+	range=695;
 	reloadtime=3;
 	weapontimer=5;
 	weaponvelocity=750;
@@ -314,8 +314,8 @@
 	startsmoke=1;
 	[DAMAGE]
 	{
-		default=65;
-		group_landair=143;
+		default=75;
+		group_landair=173;
 		group_invincible=1;
 	}
 }
@@ -395,7 +395,7 @@
 	Texture3=null;
 	Texture4=null;
 	range=560;
-	reloadtime=7.2;
+	reloadtime=6.2;
 	weapontimer=5;
 	flighttime=2;
 	Trajectoryheight=0.2;
@@ -535,7 +535,7 @@
 	range=200;
 	reloadtime=3.6;
 	weaponvelocity=250;
-	areaofeffect=275;
+	areaofeffect=285;
 	soundstart=largegun;
 	soundhitdry=exmine3;
 	edgeeffectiveness=0.5;
