@@ -3,34 +3,34 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	side=Arm;
-	name=Spider;
-	description=Spider Assault Paralyzer;
+	side=Core;
+	name=Pestilance;
+	description=No Wreckage Raider;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=ARM TANK MOBILE WEAPON NOTAIR NOTSEA NOTSUB;
-	tedclass=TANK;
+	Category=CORE KBOT WEAPON MOBILE NOTAIR NOTSEA NOTSUB;
+	tedclass=KBOT;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=arm_spider;
-	unitnumber=65;
-	objectname=arm_spider.3do;
-	corpse=arm_spider_dead;
-	buildpic=arm_spider.DDS;
-	soundcategory=Spider;
+	unitname=core_pestilence;
+	unitnumber=82;
+	objectname=core_pestilence.3do;
+	//corpse=core_pestilence_dead;
+	buildpic=core_pestilence.png;
+	soundcategory=CORAK;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=1350;
+	maxdamage=522; // was 645
 	healtime=30;
-	buildcostmetal=345;
-	buildcostenergy=2640;
-	buildtime=5575;
+	buildcostmetal=72; //was 99(5%)//was 88
+	buildcostenergy=636;
+	buildtime=1523;
 	footprintx=2;
 	footprintz=2;
 
@@ -38,8 +38,8 @@
 	//  Resources
 	//*************
 	metalstorage=0;
-	energymake=0.7;
-	energyuse=0.7;
+	energymake=0.3;
+	energyuse=0.3;
 	energystorage=0;
 
 	//************************************************************
@@ -60,35 +60,31 @@
 	canmove=1;
 	canpatrol=1;
 	canstop=1;
+	upright=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	movementclass=SPID3;
-	turnrate=1020;
-	acceleration=1.52588;
-	brakerate=1.52588;
-	maxvelocity=2.2;
-	maxwaterdepth=12;
+	movementclass=KBOTSS2;
+	turnrate=1210; // was 1100
+	acceleration=0.915527;
+	brakerate=1.83105;
+	maxvelocity=1.76; // was 1.72
+	maxslope=17;
+	maxwaterdepth=25;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=315;
+	sightdistance=412.5;
 	radardistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
-	weapon1=ARM_PARALYZER;
-	weapon2=SpiderEMPLIGHTNING;
-	weapon3=SpiderDMGLIGHTNING;
-	nochasecategory=VTOL;
-	badtargetcategory=VTOL;
-	wpri_badtargetcategory=VTOL;
-	onlytargetcategory1=NOTAIR;
-	explodeas=BIG_UNITEX;
-	selfdestructas=BIG_UNIT;
+	weapon1=ARM_LASER;
+	explodeas=SMALL_UNITEX;
+	selfdestructas=SMALL_UNIT;
 
 	//************************************************************
 	//  Orders
@@ -104,33 +100,28 @@
 	//  Miscellaneous
 	//*****************
 	bmcode=1;
-	designation=ATAS;
+	designation=KA-L4;
 	downloadable=1;
 	maneuverleashlength=640;
-	noselfdamage=1;
-	paralyzetime=5;   
 	shootme=1;
-	steeringmode=1;
 	smoothanim=1;
+	steeringmode=2;
 	threed=1;
 	version=1.2;
 	zbuffer=1;
-	pieceTrailCEGTag=NanoDebree;//bleh
-	pieceTrailCEGRange = 1;
 	collisionVolumeType = box;
-	collisionVolumeScales =24 20 32;
+	collisionVolumeScales =20 24 19;
 	collisionVolumeOffsets = 0 -1 0;
 	collisionVolumeTest = 1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+	[SFXTypes]
+	{
+		explosiongenerator0=custom:redflare;
+	}
 
 	//************************************************************
 	//  To be removed
 	//*****************
-
-	[SFXTypes]
-	{
-	explosiongenerator0=custom:ssecond1;
-	explosiongenerator1=custom:ssecond2;
-	explosiongenerator2=custom:ssecond3;
-	}
 
 }
