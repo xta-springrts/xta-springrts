@@ -1,4 +1,45 @@
 
+[core_gizmo_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=core_corpses;
+	object=core_gizmo_dead;
+	featuredead=core_gizmo_heap;
+	footprintx=2;
+	footprintz=2;
+	height=20;
+	blocking=1;
+	hitdensity=100;
+	metal=140;
+	damage=504;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=cyly;//#AUTO#
+	collisionVolumeScales=19 31 17;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+[core_gizmo_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=2x2d;
+	footprintx=2;
+	footprintz=2;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	metal=70;
+	damage=252;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=cyly;//#AUTO#
+	collisionVolumeScales=19 8 17;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
 [arm_possum_dead]
 {
 	world=All Worlds;

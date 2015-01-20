@@ -1399,7 +1399,7 @@
 		canbuild12=core_sumo;
 		canbuild13=core_gimp;
 		canbuild14=core_parasite;
-		canbuild15=commando;//xtaids
+		canbuild15=core_gizmo;//xtaids commando disabled
 		canbuild16=core_decoy_commander;
 		canbuild17=core_resurrection_kbot;
 	}
@@ -1554,6 +1554,25 @@
 		canbuild26=core_adv_aircraft_plant;
 		canbuild27=core_adv_shipyard;
 	}
+
+	[core_gizmo]
+	{
+		canbuild1=core_dragons_teeth;
+		canbuild2=neutral_eyes;//xtaids
+		canbuild3=core_pestilence;
+		canbuild4=core_light_laser_tower;
+		canbuild5=core_gaat_gun;
+		canbuild6=core_pulverizer;
+		canbuild7=core_toaster;
+		canbuild8=core_radar_tower;
+		canbuild9=core_solar_collector;
+		canbuild10=core_wind_generator;
+		canbuild11=core_metal_extractor;
+		canbuild12=core_metal_maker;
+		canbuild13=core_kbot_lab;
+		canbuild14=core_geothermal_powerplant;
+	}
+
 	[core_construction_tortoise]
 	{
 		canbuild1=core_solar_collector;
@@ -2241,9 +2260,10 @@
 		canbuild6=core_crasher;
 		canbuild7=core_crasher_rt; //mod option
 		canbuild8=core_freaker;
-		canbuild9=corjar;//xtaids
-		canbuild10=core_tic;
-		canbuild11=corscrew;//xtaids
+		canbuild9=core_gizmo;//xtaids commando disabled
+		canbuild10=corjar;//xtaids
+		canbuild11=core_tic;
+		canbuild12=corscrew;//xtaids
 	}
 	[core_limiter]
 	{

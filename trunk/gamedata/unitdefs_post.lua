@@ -361,7 +361,7 @@ if (modOptions and not tobool(modOptions.xtaidunits)) then
 	"corbyp", "justice", "corpur", "astank", "corjar", "core_egg_shell",
 	"corscrew", "corcrw", "corfff", "screamer", "corebfortns", "corhback",
 	"commando", "corevashp", "core_emperor", "cor_jumbo", "scorp3g",
-	"nsaclash", "tadg06"
+	"nsaclash", "tadg06", "core_gizmo"
   })
 end
 --------------------------------------------------------------------------------
