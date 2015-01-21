@@ -3,7 +3,7 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	side=Arm;
+	side=Lost;
 	name=Light Laser Tower;
 	description=Light Laser Tower;
 	icontype=building;
@@ -11,23 +11,23 @@
 	//************************************************************
 	//  Categories
 	//**************
-	category=ARM DEFENSIVE WEAPON  NOTAIR NOTSUB;
+	category=LOST DEFENSIVE WEAPON  NOTAIR NOTSUB;
 	tedclass=DEFENSIVE;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=arm_light_laser_tower;
+	unitname=egg;
 	unitnumber=44;
-	objectname=arm_light_laser_tower.3do;
-	corpse=arm_light_laser_tower_dead;
-	buildpic=arm_light_laser_tower.DDS;
+	objectname=egg;
+	corpse=;
+	buildpic=lost_light_laser_tower.png;
 	soundcategory=LLT;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=1120;
+	maxdamage=5120;
 	healtime=11;
 	buildcostmetal=264;//reduce cost by 10 percent
 	buildcostenergy=637;
@@ -49,8 +49,9 @@
 	yardmap=oooo;
 	collisionVolumeType = CylY;
 	collisionVolumeScales =28 60 28;
-	collisionVolumeOffsets = 0 3 0;
+	collisionVolumeOffsets = 0 30 0;
 	collisionVolumeTest = 1;
+	script = lost_easter_egg.lua; 
 
 	//************************************************************
 	//  Constructor
@@ -81,11 +82,11 @@
 	//************************************************************
 	//  Weapons
 	//***********
-	weapon1=ARM_LIGHTLASER;
+	weapon1=LOST_LIGHTLASER;
 	badtargetcategory=VTOL;
 	wpri_badtargetcategory=VTOL;
-	explodeas=MEDIUM_BUILDINGEX;
-	selfdestructas=MEDIUM_BUILDING;
+	explodeas=;
+	selfdestructas=;
 
 	//************************************************************
 	//  Orders
@@ -99,7 +100,7 @@
 	//  Miscellaneous
 	//*****************
 	bmcode=0;
-	designation=ARM-LDT;
+	designation=LOST-LDT;
 	downloadable=1;
 	shootme=1;
 	threed=1;
@@ -107,13 +108,6 @@
 	zbuffer=1;
 	pieceTrailCEGTag=Debree;//bleh
 	pieceTrailCEGRange = 4;
-	//************************************************************
-	//  Custom params
-	//*****************
-	[customparams] 	
-	{
-		side=arm;
-	}
 
 	//************************************************************
 	//  To be removed
@@ -122,5 +116,4 @@
 	{
 		explosiongenerator0=custom:redflare;
 	}
-
 }

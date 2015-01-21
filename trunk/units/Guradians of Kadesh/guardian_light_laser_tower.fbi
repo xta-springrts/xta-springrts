@@ -107,6 +107,15 @@
 	zbuffer=1;
 	pieceTrailCEGTag=Debree;//bleh
 	pieceTrailCEGRange = 4;
+	
+	//************************************************************
+	//  Custom params
+	//*****************
+	[customparams] 	
+	{
+		side=guardian;
+	}
+
 
 	//************************************************************
 	//  To be removed

@@ -21,6 +21,7 @@ local function tobool(val)
 end
 
 local tabremove = table.remove
+local Echo = Spring.Echo
 
 --------------------------------------------------------------------------------
 -- General postprocessing
@@ -328,6 +329,89 @@ local function disableunits(unitlist)
       end
     end
   end
+end
+
+-------------------------------
+-- Check Easter and add eggs --
+-------------------------------
+do
+	local function math_mod(a,b)
+		return a - math.floor(a/b)*b
+	end
+	
+	local dayofyear = modOptions and tonumber(modOptions.dayofyear) or 1
+	local year = modOptions and tonumber(modOptions.year) or 2015
+	local leap_year
+	local math = _G.math
+	local mod = math_mod
+	Echo("Now is year:" .. year .. " and day:" .. dayofyear)
+		
+	if (mod(year,4) == 0) then 
+	   if (mod(year,100) == 0) then 
+		  if (mod(year,400) == 0) then 
+		 leap_year = true
+		 else leap_year = false end
+		  else leap_year = true end
+	   else leap_year = false
+	end
+
+
+	local a = mod(year,19)
+	local b = math.floor(year / 100)
+	local c = mod(year,100)
+	local d = math.floor(b / 4)
+	local e = mod(b,4)
+	local f = math.floor((b + 8) / 25) 
+	local g = math.floor((b - f + 1) / 3)
+	local h = mod((19 * a + b - d - g + 15),30)
+	local i = math.floor(c / 4)
+	local k = mod(c,4)
+	local L = mod((32 + 2 * e + 2 * i - h - k),7)
+	local m = math.floor((a + 11 * h + 22 * L) / 451)
+	local eastersundaymonth = math.floor((h + L - 7 * m + 114) / 31)
+	local eastersunday = mod((h + L - 7 * m + 114),31) + 1
+	local ESdayofyear = (eastersundaymonth == 3 and eastersunday + 59) or (eastersundaymonth == 4 and eastersunday + 90) or (eastersundaymonth == 5 and eastersunday + 120) or 0
+	Echo("Easter Sunday is on:" .. eastersunday .. "/" .. eastersundaymonth .. "/" .. year .. " or day number:" .. ESdayofyear)
+
+	if dayofyear > ESdayofyear - 5 and dayofyear < ESdayofyear + 5 then
+		Echo("It is now Easter: have fun!")
+		local LLTUnits 								= {
+			["arm_light_laser_tower"] = true,
+			["core_light_laser_tower"] = true,
+			["lost_light_laser_tower"] = true,
+			["guardian_light_laser_tower"] = true,
+		}
+
+		local EasterEggUnits 						= {
+			['arm']									= "arm_easter_egg",
+			['core']								= "core_easter_egg",
+			['lost']								= "lost_easter_egg",
+			['guardian']							= "guardian_easter_egg",
+		}
+
+		local sides = {
+			['arm']	= "arm",
+			['cor']	= "core",
+			['los']	= "lost",
+			['gua']	= "guardian",
+		}
+
+		for name, ud in pairs(UnitDefs) do
+			local hasLLT = false
+			
+			if (ud.buildoptions) then
+				for i,buildname in pairs(ud.buildoptions) do
+					if LLTUnits[buildname] then
+						hasLLT = true
+						local side = buildname:sub(1,3)
+						ud.buildoptions[i] = sides[side] .. '_easter_egg'
+					end		
+				end
+			end
+		end
+	else
+		Echo("It is not easter yet.")
+	end
 end
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------

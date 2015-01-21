@@ -3,7 +3,7 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	side=Arm;
+	side=Core;
 	name=Light Laser Tower;
 	description=Light Laser Tower;
 	icontype=building;
@@ -11,7 +11,7 @@
 	//************************************************************
 	//  Categories
 	//**************
-	category=ARM DEFENSIVE WEAPON  NOTAIR NOTSUB;
+	category=CORE DEFENSIVE WEAPON  NOTAIR NOTSUB;
 	tedclass=DEFENSIVE;
 
 	//************************************************************
@@ -82,7 +82,7 @@
 	//************************************************************
 	//  Weapons
 	//***********
-	weapon1=ARM_LIGHTLASER;
+	weapon1=CORE_LIGHTLASER;
 	badtargetcategory=VTOL;
 	wpri_badtargetcategory=VTOL;
 	explodeas=;
@@ -100,7 +100,7 @@
 	//  Miscellaneous
 	//*****************
 	bmcode=0;
-	designation=ARM-LDT;
+	designation=CORE-LDT;
 	downloadable=1;
 	shootme=1;
 	threed=1;
