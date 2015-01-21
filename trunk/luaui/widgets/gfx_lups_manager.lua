@@ -199,6 +199,7 @@ local UnitEffects = {
 }
 
 local t = os.date('*t')
+
 if (t.yday>350 or t.yday<7) then
   UnitEffects[UnitDefNames["arm_commander"].id] = {
     {class='SantaHat',options={color={1,0.1,0,1}, pos={0,3.8,0.7}, emitVector={0.3,0.7,0.3}, width=3.4, height=9, ballSize=1.3, piecenum=8, piece="head"}},
@@ -247,6 +248,28 @@ if (t.yday>350 or t.yday<7) then
   }
   UnitEffects[UnitDefNames["core_decoy_commander"].id] = {
     {class='SantaHat',options={color={1,0.1,0,1}, pos={0,5.2,2.1}, emitVector={0.3,0.7,0.3}, width=3.4, height=8, ballSize=1.1, piecenum=16, piece="head"}},
+  }
+  -- lost commanders
+  UnitEffects[UnitDefNames["lost_commander"].id] = {
+    {class='SantaHat',options={color={1,0.1,0,1}, pos={0,9.2,3.1}, emitVector={0.3,0.7,0.3}, width=3.4, height=8, ballSize=1.1, piecenum=18, piece="head"}},
+  }
+  UnitEffects[UnitDefNames["lost_u0commander"].id] = {
+    {class='SantaHat',options={color={1,0.1,0,1}, pos={0,9.2,3.1}, emitVector={0.3,0.7,0.3}, width=3.4, height=8, ballSize=1.1, piecenum=18, piece="head"}},
+  }
+  UnitEffects[UnitDefNames["lost_ucommander"].id] = {
+    {class='SantaHat',options={color={1,0.1,0,1}, pos={0,9.2,3.1}, emitVector={0.3,0.7,0.3}, width=3.4, height=8, ballSize=1.1, piecenum=18, piece="head"}},
+  }
+  UnitEffects[UnitDefNames["lost_u2commander"].id] = {
+    {class='SantaHat',options={color={1,0.1,0,1}, pos={0,9.2,3.1}, emitVector={0.3,0.7,0.3}, width=3.4, height=8, ballSize=1.1, piecenum=18, piece="head"}},
+  }
+  UnitEffects[UnitDefNames["lost_u3commander"].id] = {
+    {class='SantaHat',options={color={1,0.1,0,1}, pos={0,9.2,3.1}, emitVector={0.3,0.7,0.3}, width=3.4, height=8, ballSize=1.1, piecenum=18, piece="head"}},
+  }
+  UnitEffects[UnitDefNames["lost_u4commander"].id] = {
+    {class='SantaHat',options={color={1,0.1,0,1}, pos={0,9.2,3.1}, emitVector={0.3,0.7,0.3}, width=3.4, height=8, ballSize=1.1, piecenum=18, piece="head"}},
+  }
+  UnitEffects[UnitDefNames["lost_decoy_commander"].id] = {
+    {class='SantaHat',options={color={1,0.1,0,1}, pos={0,9.2,3.1}, emitVector={0.3,0.7,0.3}, width=3.4, height=8, ballSize=1.1, piecenum=18, piece="head"}},
   }
 end
 
