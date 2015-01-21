@@ -107,6 +107,15 @@
 	zbuffer=1;
 	pieceTrailCEGTag=NanoDebree;//bleh
 	pieceTrailCEGRange = 1;
+	
+	//************************************************************
+	//  Custom params
+	//*****************
+	[customparams] 	
+	{
+		side=lost;
+	}
+
 
 	//************************************************************
 	//  To be removed
