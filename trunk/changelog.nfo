@@ -21,7 +21,92 @@
     ศอออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออผ
     Logo by ElementalGizmo
 
-------------------- Change Log of XTA 9.746 Svn 842
+------------------- Change Log of XTA 9.75 Svn 877
+
+New:
+------------
+ * New Faction: The Lost Legacy by Noruas. Available as modoption with choose commander widget.
+ * Preview of new faction: The Guardians of Kadesh, also by Noruas. Only T1 curently available.
+ 
+ Story of the Lost Legacy (from http://www.tauniverse.com/forum/showthread.php?t=12015):
+ 
+ACT I: The crash. 
+
+After hundreds of years spent in cryogenic hibernation, the imperial colonization 
+fleet of humatran had finally arrived at destination: The first system of the edge 
+of the closest galaxy. The life systems were reactivated in each starship and vessel 
+and all the crews began with being awoken when the external warning systems are activated.
+The star of the system that they had chosen as destination was in its final phase of life, 
+and well before what they had provided before their departure. 
+At once the emergency plan of launched repatriation. But too late, the bad luck was 
+still on them, the star began its explosion... 
+
+A ray of a sharp red put to shine in all space around them. Panic seized each one and 
+each spaceship started to operate in order to be the first to set out again. The small vessels, 
+lighter and more handy, were already in the axis of return and had begun to accelerate, 
+while largest like, the flagships hardly came to start his turn. When the first wave of 
+the explosion reached the fleet, the lightest vessels were at once to sweep like simple sheets 
+with the wind, while the majority of largest started with disintagrate slowly. Luckiest 
+of these had begun the phase of acceleration by choosing other axes of folds, 
+when the second and last blast reached the fleet... 
+
+The fleet was almost destroyed by this second deadly blast, the vessels which survived there 
+were only one handle and the state of each one of them be pitiful. Only one could still 
+make fully function its engines and immediately undertook operations of accostings to 
+rescue the crew of the other mostly destroyed ships. But the return in their galaxy was 
+impossible, all auto-navigation systems were out of oder like all the communication systems. 
+Their only hope, quite mean, was to find a planet to be able to settle there as they would 
+have to do it but under other conditions. 
+
+They spent the whole months in space in the search of a planet to enable them to live, 
+when finally they approached the first whose characteristics was not completely hostile. 
+In any event they did not have the choice because the food were insufficient to continue 
+and the life on board man-of-war was uncomfortable and became insuportable. When the vessel 
+entering the atmosphere began its landing operation, the undergone damages were much more 
+serious than envisaged. The control sytems in atmosphere burnt the ones after the others 
+and the crash of the vessel was sure... The crew did run in all rescue pods. The vessel 
+released plenty thus small pods which moved towards the surface of planet with softness 
+while it continued its infernal descent. 
+
+ACT II: Birth of a giant. 
+
+The first members of crew whose landed pods had already begun their new life on this planet 
+of the hundreds of survivors gathered for origaniser the localization and the search for 
+their vessel. When they arrived on the place of the crash, there remained only burning sheets 
+on the ground. It remain to them nothing!!! No more space transports, neither 
+communication systems, nor tools. They were all to rebuild, all to rediscover, all relearn... 
+But life taken again well quickly... 
+
+A few hundred years later, the following generations which had colonized the planet, 
+rebuilt all the technology of which old theirs had transmitted the knowledge and the plans 
+to through the few holodisk ones. They relearned to travel trough space and leave to conquer 
+the galaxy. They meet other civilizations, of which some had common ancestors, "travellers 
+of stars" as called them by still primitive tribes which were descandant of other vessels 
+which had not been able to join their galaxy of origin... 
+
+The hostile meetings also multiplied and the wars were not rare. The pacts of peace, 
+the treaties of alliance or civilizations extraterrestrial which were integrated into 
+their, contributed to reinforce their force, their capacity, their knowledge and their 
+technology. Their power and them influance on the galaxy, made only grow. When the moment 
+had come they think to find their lost Legacy, their civilization of origin of which 
+they had been cut for a long time... 
+
+Not having any report/ratio coming from the probes which they had sent 
+they envoy a large fleet of reconquer. This new fleet of return to their galaxy of origin 
+began to start through space and travelled during years... But what they found while 
+arriving in this galaxy was very far from being as what reported the old men holidisks... 
+The planets were devastated by wars whose forces could be only of galactic size. 
+The surface of each planet which they visited were completely destroyed. 
+no more resources, nor trace of life, only of the traces of violent wars and dead civilizations. 
+no more sign of their civilization mother. The first meeting with the forces armed with 
+the two camps in war was far from being peaceful because each one saw in them a potential danger, 
+a trick of the enemy, and thus was to thus treat them as enemies. 
+
+These quarrelsome forces bore the name of the CORE and the ARM... 
+
+ACT III: The lost Legacy. 
+
+
 Changes:
 ----------------
  * Doomsday weapon 3 is now red instead of green and shoots 25% more often, but deals 25% less damage, so same dps
@@ -45,8 +130,7 @@ Fixes:
 ------------------- Change Log of XTA 9.745 Svn 823
 Balance changes:
 ----------------
- * Arm Lancet and Core Titan: increased area of effect from 16 => 48, same default damage (1200/1250) but more damage vs ships (1800/1900) and large ships (2100/2200). Visually the torpedo explosions are also larger (same as adv torpedoes). These planes are
- almost never used because Arm Albatross and Core Typhoon are usually better options and will probably still be so.
+ * Arm Lancet and Core Titan: increased area of effect from 16 => 48, same default damage (1200/1250) but more damage vs ships (1800/1900) and large ships (2100/2200). Visually the torpedo explosions are also larger (same as adv torpedoes). These planes are almost never used because Arm Albatross and Core Typhoon are usually better options and will probably still be so.
 
  Enhancements:
 --------------
