@@ -1,0 +1,24 @@
+From raaar:
+-----------
+
+arm_birdcatcher			(wolfspider)	underpowered, reduce cost by 25%
+arm_construction_spider		-	underpowered, reduce cost by 25%
+arm_hobo			ok
+arm_huntsman			underpowered, compare to t1 missile units, reduce cost by 25%
+arm_netcaster			-
+arm_orbweaver			-
+arm_shellshocker		overpowered, raise cost by 40%
+arm_spidernest			-
+arm_tarantula			a bit overpowered, raise cost by 25%	(model too flat)
+arm_widow			ok		, maybe a bit overpowered (model too flat)
+
+core_avalanche			underpowered, reduce cost by 33%
+core_caliber			underpowered, reduce cost by 50%	weird line damage with no aoe and fast projectile, deals low dmg
+core_chelonian			underpowered, reduce cost by 33% 	flamethrower very ineffective here
+core_construction_tortoise	ok
+core_hatchling			ok, maybe reduce build time and/or energy cost slightly
+core_outback			overpowered, raise cost by 33%	(model too flat)
+core_replenisher		overpowered, raise cost by 50%	
+core_slingshot			a bit underpowered, reduce cost by 15%
+core_tnt			ok
+core_wrecker			overpowered, raise cost by 33%, maybe build time  (no energy per shot, while shellshocker needs 150 per shot)
