@@ -9,6 +9,34 @@ raceLogoGouraud
 race32Dk
 race32Lt
 
+Texture errors: 23 lines of which many are occur many times, perhaps count ís indicative of number of units where error occurs...
+
+[f=0002369] Warning: [GetPrimitives] unknown 3DO texture "black1vlight00" for piece "angleb"
+[f=0002369] Warning: [GetPrimitives] unknown 3DO texture "onoff01" for piece "base"
+[f=0002369] Warning: [GetPrimitives] unknown 3DO texture "onoff01" for piece "base"
+[f=0002369] Warning: [GetPrimitives] unknown 3DO texture "onoff01" for piece "base"
+[f=0002369] Warning: [GetPrimitives] unknown 3DO texture "onoff01" for piece "base"
+[f=0002369] Warning: [GetPrimitives] unknown 3DO texture "onoff01" for piece "base"
+[f=0002369] Warning: [GetPrimitives] unknown 3DO texture "onoff01" for piece "body"
+[f=0002369] Warning: [GetPrimitives] unknown 3DO texture "onoff01" for piece "body"
+[f=0002369] Warning: [GetPrimitives] unknown 3DO texture "onoff01" for piece "body"
+[f=0002369] Warning: [GetPrimitives] unknown 3DO texture "onoff01" for piece "body"
+[f=0002369] Warning: [GetPrimitives] unknown 3DO texture "onoff01" for piece "head"
+[f=0002369] Warning: [GetPrimitives] unknown 3DO texture "onoff01" for piece "head"
+[f=0002369] Warning: [GetPrimitives] unknown 3DO texture "onoff01" for piece "head"
+[f=0002369] Warning: [GetPrimitives] unknown 3DO texture "onoff01" for piece "head"
+[f=0002369] Warning: [GetPrimitives] unknown 3DO texture "onoff01" for piece "rweapon"
+[f=0002369] Warning: [GetPrimitives] unknown 3DO texture "onoff01" for piece "rweapon"
+[f=0002369] Warning: [GetPrimitives] unknown 3DO texture "onoff01" for piece "rweapon"
+[f=0002369] Warning: [GetPrimitives] unknown 3DO texture "onoff01" for piece "scope"
+[f=0002369] Warning: [GetPrimitives] unknown 3DO texture "onoff01" for piece "scope"
+[f=0002369] Warning: [GetPrimitives] unknown 3DO texture "platinga1a00" for piece "hubs"
+[f=0002369] Warning: [GetPrimitives] unknown 3DO texture "platinga1a00" for piece "hubs"
+[f=0002369] Warning: [GetPrimitives] unknown 3DO texture "platinga1a00" for piece "hubs"
+[f=0002369] Warning: [GetPrimitives] unknown 3DO texture "platinga1a00" for piece "hubs
+
+
+
 Things that need to be added to lost faction (functions as my personal todo-list (Jools) but is also for information):
 
 \luarules\configs\unit_commander_sounds_defs.lua
