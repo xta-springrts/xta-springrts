@@ -7,7 +7,7 @@
 	BuildCostEnergy=23214;
 	BuildCostMetal=876;
 	BuildTime=41143;
-	Category=TLL VTOL CTRL_V TPORT LEVEL2 NOWEAPON NOTSUB ;
+	Category=LOST VTOL CTRL_V TPORT LEVEL2 NOWEAPON NOTSUB ;
 	Description=Heavy Air Transport;
 	FootprintX=4;
 	FootprintZ=4;

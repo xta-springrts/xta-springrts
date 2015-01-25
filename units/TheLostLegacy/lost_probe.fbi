@@ -11,7 +11,7 @@
 	//************************************************************
 	//  Categories
 	//**************
-	Category=lost VTOL MOBILE NOWEAPON RADAR NOTLAND NOTSEA NOTSUB;
+	Category=LOST VTOL MOBILE NOWEAPON RADAR NOTLAND NOTSEA NOTSUB;
 	tedclass=VTOL;
 
 	//************************************************************

@@ -45,7 +45,7 @@
 	//  Building
 	//************
 	buildangle=32768;
-	YardMap=ooooo ooooo ooooo ooooo ooooo;
+	YardMap=oooooo oooooo oooooo oooooo oooooo oooooo;
 	activatewhenbuilt=1;
 	collisionVolumeType=Box;
 	collisionVolumeScales=75 40 75;

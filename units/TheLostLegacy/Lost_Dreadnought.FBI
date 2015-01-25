@@ -7,7 +7,7 @@
 	BuildCostEnergy=43875;
 	BuildCostMetal=3821;
 	BuildTime=63145;
-	Category=TLL KBOT LEVEL3 WEAPON NOTAIR NOTSUB CTRL_W;
+	Category=LOST KBOT LEVEL3 WEAPON NOTAIR NOTSUB CTRL_W;
 	Description=Heavy Assault Kbot;
 	FootprintX=3;
 	FootprintZ=3;
