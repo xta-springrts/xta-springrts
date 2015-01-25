@@ -10,7 +10,7 @@
 	//************************************************************
 	//  Categories
 	//**************
-	category=ARM TANK WEAPON NOTAIR NOTSUB;
+	category=LOST TANK WEAPON NOTAIR NOTSUB;
 	tedclass=TANK;
 
 	//************************************************************

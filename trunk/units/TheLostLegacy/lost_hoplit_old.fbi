@@ -10,7 +10,7 @@
 	//************************************************************
 	//  Categories
 	//**************
-	category=ARM TANK WEAPON NOTAIR NOTSUB;
+	category=LOST TANK WEAPON NOTAIR NOTSUB;
 	tedclass=TANK;
 
 	//************************************************************
@@ -19,6 +19,7 @@
 	unitname=Lost_Hoplit;
 	unitnumber=66;
 	objectname=Lost_Hoplit.3do;
+	script=lost_hoplit.cob;
 	corpse=Lost_Hoplit_dead;
 	buildpic=Lost_Hoplit.png;
 	soundcategory=ARM_TANK;
