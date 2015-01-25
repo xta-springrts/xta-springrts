@@ -7,7 +7,7 @@
 	BuildCostEnergy=12345;
 	BuildCostMetal=1657;
 	BuildTime=31280;
-	Category=TLL TANK LEVEL3 WEAPON NOTAIR NOTSUB CTRL_W;
+	Category=LOST TANK LEVEL3 WEAPON NOTAIR NOTSUB CTRL_W;
 	Description=Amphibious Artillery Tank;
 	FootprintX=4;
 	FootprintZ=4;

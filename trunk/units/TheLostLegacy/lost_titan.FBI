@@ -7,7 +7,7 @@
 	BuildCostEnergy=77446;
 	BuildCostMetal=11950;
 	BuildTime=181545;
-	Category=TLL TANK LEVEL3 WEAPON NOTAIR NOTSUB CTRL_W;
+	Category=LOST TANK LEVEL3 WEAPON NOTAIR NOTSUB CTRL_W;
 	Description=Long Range Seige Mechbot;
 	FootprintX=4;
 	FootprintZ=4;

@@ -7,7 +7,7 @@
 	BuildCostEnergy=10636;
 	BuildCostMetal=581;
 	BuildTime=13917;
-	Category=TLL TANK LEVEL3 CONSTR NOWEAPON NOTAIR NOTSUB CTRL_B;
+	Category=LOST TANK LEVEL3 CONSTR NOWEAPON NOTAIR NOTSUB CTRL_B;
 	Description=Fast Stealth All-Terrian Tech 2;
 	FootprintX=3;
 	FootprintZ=3;

@@ -7,7 +7,7 @@
 	BuildCostEnergy=21797;
 	BuildCostMetal=1965;
 	BuildTime=31208;
-	Category=TLL LEVEL2 WEAPON NOTAIR NOTSUB NOTSTRUCTURE CTRL_G CTRL_W;
+	Category=LOST LEVEL2 WEAPON NOTAIR NOTSUB NOTSTRUCTURE CTRL_G CTRL_W;
 	Description=Lightning Fortress;
 	FootprintX=4;
 	FootprintZ=4;
