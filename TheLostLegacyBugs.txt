@@ -42,27 +42,6 @@ Things that need to be added to lost faction (functions as my personal todo-list
 \luarules\configs\unit_commander_sounds_defs.lua
 
 * CommanderDamaged sounds: lost-specific files exist but are copies of core sounds. Path: \sounds\commander
-* CommanderTargets: These need to be extended with lost equivalents. Used for sound effects and some awards
-	HolyTargetDefs = {
-		[0] = UnitDefNames["arm_retaliator"],
-		[1] = UnitDefNames["arm_vulcan"],
-		[2] = UnitDefNames["core_krogoth"],
-		[3] = UnitDefNames["core_silencer"],
-		[4] = UnitDefNames["core_buzzsaw"],
-	},
-	ImpressiveTargetDefs = {
-		[ 0] = UnitDefNames["arm_annihilator"],
-		[ 1] = UnitDefNames["arm_big_bertha"],
-		[ 2] = UnitDefNames["arm_millenium"],
-		[ 3] = UnitDefNames["arm_penetrator"],
-		[ 4] = UnitDefNames["core_doomsday_machine"],
-		[ 5] = UnitDefNames["core_goliath"],
-		[ 6] = UnitDefNames["core_immolator"],
-		[ 7] = UnitDefNames["core_intimidator"],
-		[ 8] = UnitDefNames["core_pillager"],
-		[ 9] = UnitDefNames["core_sumo"],
-		[10] = UnitDefNames["core_viper"],
-		[11] = UnitDefNames["core_warlord"],
 		
 \luarules\gadgets\unit_noselfpwn.lua
 

@@ -249,6 +249,10 @@ local CommanderTargets = {
 		[2] = UnitDefNames["core_krogoth"],
 		[3] = UnitDefNames["core_silencer"],
 		[4] = UnitDefNames["core_buzzsaw"],
+		[5] = UnitDefNames["lost_ht_satelight"],
+		[6] = UnitDefNames["lost_devastator"],
+		[7] = UnitDefNames["lost_thor_hammer"],
+		[8] = UnitDefNames["lost_titan"],
 	},
 	ImpressiveTargetDefs = {
 		[ 0] = UnitDefNames["arm_annihilator"],
@@ -263,6 +267,17 @@ local CommanderTargets = {
 		[ 9] = UnitDefNames["core_sumo"],
 		[10] = UnitDefNames["core_viper"],
 		[11] = UnitDefNames["core_warlord"],
+		[12] = UnitDefNames["lost_dreadnought"],
+		[13] = UnitDefNames["lost_ht_storage"],
+		[14] = UnitDefNames["lost_revenger"],
+		[15] = UnitDefNames["lost_sling"],
+		[16] = UnitDefNames["lost_obliterator"],
+		[17] = UnitDefNames["lost_odin_mallet"],
+		[18] = UnitDefNames["lost_convincer"],
+		[19] = UnitDefNames["lost_loki"],
+		[20] = UnitDefNames["lost_roaster"],
+		[21] = UnitDefNames["lost_equalizer"],
+		[22] = UnitDefNames["lost_viking"],
 	},
 }
 
