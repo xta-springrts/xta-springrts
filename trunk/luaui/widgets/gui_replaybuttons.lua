@@ -23,7 +23,12 @@ local replayLength
 local gamePortion = 0
 local Echo = Spring.Echo
 local textsize				= 10
+local textsizeMedium		= 14
+local textsizeBig			= 20
 local myFont	 			= gl.LoadFont("FreeSansBold.otf",textsize, 1.9, 40)
+local myFontMedium 			= gl.LoadFont("FreeSansBold.otf",textsizeMedium, 1.9, 40)
+local myFontBig	 			= gl.LoadFont("FreeSansBold.otf",textsizeBig, 1.9, 40)
+local modOptions  
 
 function widget:Initialize()	
 	if (not Spring.IsReplay()) then
@@ -42,7 +47,7 @@ function widget:Initialize()
 	dy=dy+h
 	add_button (buttons, wPos.x, wPos.y, 0.05, 0.04, "skip","playpauseskip", {0.5,0.5,1,0.4})
 	replayLength = Spring.GetReplayLength()
-	
+	modOptions = Spring.GetModOptions()
 end
 
 local function round(num, idp)
@@ -75,6 +80,28 @@ local function draw_progressBar()
 	myFont:End()
 end
 
+local function drawOriginallyAired()
+	
+	local vsx, vsy = gl.GetViewSizes()
+	local x0 = vsx/2
+	local y0 = sY(uiY(200))
+	
+	local hrs = replayLength/3600
+	local mins = hrs >=1 and (replayLength-3600)/60 or replayLength/60
+	local onlymins = round(replayLength/60,0)
+	local titlestring = table.concat({"Originally aired on: ",tostring(modOptions.originallyaired)})
+		
+	myFontBig:Begin()
+	myFontBig:SetTextColor({0.6,0.7,1,1})
+	myFontBig:Print(titlestring,x0,y0,textsizeBig,"cbs")
+	myFontBig:End()
+	
+	myFontMedium:Begin()
+	myFontMedium:SetTextColor({0.6,0.7,1,1})
+	myFontMedium:Print("Duration: " .. onlymins .. " min.",x0,y0-30,textsizeMedium,"cbs")
+	myFontMedium:End()
+end
+
 function speedButtonColor (i)
 	return{0,0+i/10,1,0.4}
 end
@@ -85,6 +112,9 @@ function widget:DrawScreen()
 	draw_buttons(buttons)
 	draw_progressBar()
 	
+	if modOptions and modOptions.originallyaired and gamePortion == 0 then
+		drawOriginallyAired()
+	end
 end
 
 function widget:MousePress(x,y,button)	
