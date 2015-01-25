@@ -117,6 +117,7 @@ Enhancements:
  * Add 'o' as shortcut to rotate buildings (is in oldchatkeys widget)
  * Add small splash when aerial tordedo enters water surface
  * New commander sounds and fixes to old ones.
+ * Add originally aired date to show when starting to view replay.
  
 Fixes:
 ------
@@ -125,6 +126,7 @@ Fixes:
  * Fix error spam in zombie mode when KOTH is not enabled
  * Fix incorrect position of Core Gaat gun wreck
  * Fix error in initial queue widget that sometimes changed faction when not requested
+ * Button to offer draw in menu is disabled for spectators
  
  
 ------------------- Change Log of XTA 9.745 Svn 823
