@@ -57,6 +57,18 @@ local stealthDefs = {
     energy = 200,
     delay  = 30,
   },
+  lost_assassin = {
+    draw   = true,
+    init   = false,
+    energy = 500,
+    delay  = 30,
+  },
+   lost_fusion_reactor = {
+    draw   = true,
+    init   = false,
+    energy = 450,
+    delay  = 30,
+  },
 }
 
 

@@ -38,6 +38,7 @@ CMD_FIRERATE = 33454
 local fireRateDefs = {
   arm_vulcan = 0.25,
   core_buzzsaw = 0.5,
+  lost_devastator = 1.0,
 }
 
 local FireRateCmdDesc = {
