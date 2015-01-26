@@ -47,6 +47,7 @@ local spSetUnitMaxHealth  = Spring.SetUnitMaxHealth
 local healthDefs = {  --  unitName, healthBonus
   ['arm_targeting_facility'] = 0.5,
   ['core_targeting_facility'] = 0.5,
+  ['lost_targeting_facility'] = 0.5,
 }
 
 local commDefs = {
@@ -68,6 +69,15 @@ local commDefs = {
   'core_informer',
   'core_sonar_station',
   'core_voyeur',
+  'lost_advanced_radar_tower',
+  'lost_advanced_sonar_station',
+  'lost_giant',
+  'lost_assassin',
+  'lost_radar_tower',
+  'lost_targeting_facility',
+  'lost_observer',
+  'lost_sonar_station',
+  'lost_divine',
 }
 
 

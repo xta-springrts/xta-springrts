@@ -43,8 +43,16 @@ local captureUnitDefs = {
 	[ UnitDefNames["core_u4commander"].id ] 				= UnitDefNames["core_u4commander"   ],
 	[ UnitDefNames["core_ucommander"].id ] 					= UnitDefNames["core_ucommander"   ],
 	[ UnitDefNames["noruas"].id ] 							= UnitDefNames["noruas"],
+	[ UnitDefNames["lost_archnano"].id ] 					= UnitDefNames["lost_archnano"   ],
+	[ UnitDefNames["lost_commander"].id ] 					= UnitDefNames["lost_commander"  ],
+	[ UnitDefNames["lost_decoy_commander"].id ] 			= UnitDefNames["lost_decoy_commander"  ],
+	[ UnitDefNames["lost_u0commander"].id ] 				= UnitDefNames["lost_u0commander"  ],
+	[ UnitDefNames["lost_u2commander"].id ] 				= UnitDefNames["lost_u2commander"  ],
+	[ UnitDefNames["lost_u3commander"].id ] 				= UnitDefNames["lost_u3commander"  ],
+	[ UnitDefNames["lost_u4commander"].id ] 				= UnitDefNames["lost_u4commander"  ],
+	[ UnitDefNames["lost_ucommander"].id ] 					= UnitDefNames["lost_ucommander"  ],
 	}
-
+	
 local napUnitDefs = {
 	[ UnitDefNames["arm_atlas"].id ] 						= UnitDefNames["arm_atlas"],
 	[ UnitDefNames["arm_bear"].id ] 						= UnitDefNames["arm_bear"],
@@ -54,6 +62,9 @@ local napUnitDefs = {
 	[ UnitDefNames["core_turtle"].id ] 						= UnitDefNames["core_turtle"],
 	[ UnitDefNames["core_valkyrie"].id ] 					= UnitDefNames["core_valkyrie"],
 	[ UnitDefNames["core_zeppelin"].id ] 					= UnitDefNames["core_zeppelin"],
+	[ UnitDefNames["lost_ambassador"].id ] 					= UnitDefNames["lost_ambassador"  ],
+	[ UnitDefNames["lost_pelican"].id ] 					= UnitDefNames["lost_pelican"  ],
+	[ UnitDefNames["lost_robber"].id ] 						= UnitDefNames["lost_robber"  ],
 	}
 
 return zombieDefs,captureUnitDefs,napUnitDefs
