@@ -105,7 +105,7 @@
 	name=Plasma Cannon;
 	weaponType=Cannon;
 	turret=1;
-	range=1070;
+	range=1000;
 	size=3;
 	rgbcolor=0.9 0.4 0.2;
 	stages=8;
@@ -360,6 +360,7 @@
 	reloadtime=4;
 	weaponvelocity=700;
 	areaofeffect=96;
+	energypershot=226;
 	explosiongenerator=custom:popupcannon;
 	soundstart=cannhvy1;
 	soundhitdry=xplomed2;
