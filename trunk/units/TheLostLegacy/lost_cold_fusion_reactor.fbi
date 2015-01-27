@@ -109,6 +109,7 @@
 	{
 		explosiongenerator0=custom:ReactorTINYSequence;
 		explosiongenerator1=custom:ReactorBIgSequence;
+		explosiongenerator2=custom:GlowBlue;
 	}
 
 }

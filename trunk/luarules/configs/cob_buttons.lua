@@ -138,6 +138,24 @@ return {
 	type = CMDTYPE.ICON_MODE,
 	params = {'0', 'Closed', 'Open'},
 	},
+},
+  lost_happlic = {
+    {
+	name     = "OpenState",
+	tooltip  = "Select Happlic's state when idle",
+	cob      = "OpenClose",  -- only this is required
+	type = CMDTYPE.ICON_MODE,
+	params = {'0', 'Closed', 'Open'},
+	},
+  },
+  lost_obliterator = {
+    {
+	name     = "OpenState",
+	tooltip  = "Select Obliterator's state when idle",
+	cob      = "OpenClose",  -- only this is required
+	type = CMDTYPE.ICON_MODE,
+	params = {'0', 'Closed', 'Open'},
+	},
   },
   core_nin2commander = {
     {

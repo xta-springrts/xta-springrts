@@ -270,3 +270,34 @@
 	alwaysVisible=0;
 	}
 }
+
+[GlowWhite]
+{
+	useAirLos=0;
+	usedefaultexplosions=0;
+	[groundflash]//fake dynamic lighting technique
+	{
+		flashSize = 100;
+		flashAlpha = 0.075;
+		circleGrowth = 0.1;
+		circleAlpha = 0.15;
+		ttl = 50;
+		color = 0.40,0.70,1.0;
+	alwaysVisible=0;
+	}
+}
+[GlowBlue]
+{
+	useAirLos=0;
+	usedefaultexplosions=0;
+	[groundflash]//fake dynamic lighting technique
+	{
+		flashSize = 100;
+		flashAlpha = 0.075;
+		circleGrowth = 0.1;
+		circleAlpha = 0.15;
+		ttl = 50;
+		color = 0.25,0.85,0.55;
+	alwaysVisible=0;
+	}
+}
