@@ -61,6 +61,8 @@ local CommanderSounds = {
 		[ UnitDefNames["lost_commander"].id ] = {
 			[0] = "sounds/commander/lost_sing1.wav",
 			[1] = "sounds/commander/lost_sing2.wav",
+			[1] = "sounds/commander/lost_sing3.wav",
+			[1] = "sounds/commander/lost_sing4.wav",
 		},
 
 		[ UnitDefNames["lost_u0commander" ].id ] = {},
@@ -72,12 +74,12 @@ local CommanderSounds = {
 	
 	GLHFSongs = {
 		[ UnitDefNames["arm_commander"].id ] = {
-			[0] = "sounds/glhf/glhf_1.wav",
-			[1] = "sounds/glhf/glhf_2.wav",
-			[2] = "sounds/glhf/glhf_3.wav",
-			[3] = "sounds/glhf/glhf_4.wav",
-			[4] = "sounds/glhf/glhf_5.wav",
-			[5] = "sounds/glhf/glhf_fi.wav",
+			[0] = "sounds/glhf/glhf_A1.wav",
+			[1] = "sounds/glhf/glhf_A2.wav",
+			[2] = "sounds/glhf/glhf_A3.wav",
+			[3] = "sounds/glhf/glhf_A4.wav",
+			[4] = "sounds/glhf/glhf_A5.wav",
+			[5] = "sounds/glhf/glhf_Afi.wav",
 			--[6] = "sounds/glhf/glhf_is.wav",
 			--[6] = "sounds/glhf/glhf_sw.wav",
 			--[7] = "sounds/glhf/glhf_jp.wav",
@@ -92,12 +94,12 @@ local CommanderSounds = {
 		[ UnitDefNames["arm_u4commander" ].id ] = {},
 		
 		[ UnitDefNames["core_commander"].id ] = {
-			[0] = "sounds/glhf/glhf_6.wav",
-			[1] = "sounds/glhf/glhf_7.wav",
-			[2] = "sounds/glhf/glhf_8.wav",
-			[3] = "sounds/glhf/glhf_9.wav",
-			[4] = "sounds/glhf/glhf_10.wav",
-			[5] = "sounds/glhf/glhf_fr.wav",
+			[0] = "sounds/glhf/glhf_C1.wav",
+			[1] = "sounds/glhf/glhf_C2.wav",
+			[2] = "sounds/glhf/glhf_C3.wav",
+			[3] = "sounds/glhf/glhf_C4.wav",
+			[4] = "sounds/glhf/glhf_C5.wav",
+			[5] = "sounds/glhf/glhf_Cfr.wav",
 			--[6] = "sounds/glhf/glhf_6.wav",
 			--[7] = "sounds/glhf/glhf_6.wav",
 			--[8] = "sounds/glhf/glhf_6.wav",
@@ -112,13 +114,10 @@ local CommanderSounds = {
 		[ UnitDefNames["core_u4commander" ].id ] = {},
 		
 		[ UnitDefNames["lost_commander"].id ] = {
-			[0] = "sounds/glhf/glhf_6.wav",
-			[1] = "sounds/glhf/glhf_7.wav",
-			[2] = "sounds/glhf/glhf_8.wav",
-			[3] = "sounds/glhf/glhf_9.wav",
-			[4] = "sounds/glhf/glhf_10.wav",
-			[5] = "sounds/glhf/glhf_fr.wav",
-			
+			[0] = "sounds/glhf/glhf_L1.wav",
+			[1] = "sounds/glhf/glhf_L2.wav",
+			[2] = "sounds/glhf/glhf_L3.wav",
+			[3] = "sounds/glhf/glhf_Lpt.wav",	
 		},
 		[ UnitDefNames["lost_u0commander" ].id ] = {},
 		[ UnitDefNames["lost_ucommander"  ].id ] = {},
