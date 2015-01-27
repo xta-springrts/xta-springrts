@@ -39,56 +39,6 @@ Texture errors: 23 lines of which many are occur many times, perhaps count ís in
 
 Things that need to be added to lost faction (functions as my personal todo-list (Jools) but is also for information):
 
-\luarules\configs\unit_commander_sounds_defs.lua
-
-* CommanderDamaged sounds: lost-specific files exist but are copies of core sounds. Path: \sounds\commander
-		
-\luarules\gadgets\unit_noselfpwn.lua
-
-The gadget prevents damage to self but has a long exception list:
-
-local exceptionList = {
-  "arm_ambusher",
-  "arm_big_bertha",
-  "arm_conqueror",
-  "arm_defender",
-  "arm_guardian",
-  "arm_jethro",
-  "arm_luger",
-  "arm_merl",
-  "arm_millenium",
-  "arm_podger",
-  "arm_ranger",
-  "arm_raven",
-  "arm_retaliator",
-  "arm_rocko",
-  "arm_samson",
-  "arm_spider",
-  "arm_stunner",
-  "arm_vulcan",
-  "arm_wombat",
-  "core_buzzsaw",
-  "core_crasher",
-  "core_diplomat",
-  "core_dominator",
-  "core_executioner",
-  "core_goliath",
-  "core_immolator",
-  "core_intimidator",
-  "core_krogoth",
-  "core_pillager",
-  "core_missile_frigate",
-  "core_morty",
-  "core_punisher",
-  "core_pulverizer",
-  "core_silencer",
-  "core_slasher",
-  "core_spoiler",
-  "core_storm",
-  "core_neutron",
-  "core_nixer",
-  "core_toaster",
-  "core_warlord",
   
   \luarules\gadgets\unit_minelayer_limit.lua
   
