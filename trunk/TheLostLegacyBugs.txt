@@ -90,14 +90,6 @@ local exceptionList = {
   "core_toaster",
   "core_warlord",
   
-  \luarules\gadgets\unit_fire_rate.lua
-  
-  Changes firerate of vulcan and buzzsaw. Adopt for freezer/revengr or scrap gadget alltogether?
-  
-  local fireRateDefs = {
-  arm_vulcan = 0.25,
-  core_buzzsaw = 0.5,
-
   \luarules\gadgets\unit_minelayer_limit.lua
   
   TLL has aparently no minelayers or did I miss something?

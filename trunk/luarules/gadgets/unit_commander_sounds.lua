@@ -137,11 +137,7 @@ if (gadgetHandler:IsSyncedCode()) then
 			
 			if (CommanderUnitDefs[unitDefID] ~= nil) then
 				if (cmdID == GLHFCmdDesc.id) then
-					local idx = rnd(0, 4)
-					
-					if (rnd(0, 10) >= 8) then 
-						idx = rnd(5, #CommanderSounds.GLHFSongs[unitDefID])
-					end
+					local idx = rnd(0, #CommanderSounds.GLHFSongs[unitDefID])
 					
 					spPlaySoundFile(CommanderSounds.GLHFSongs[unitDefID][idx], volume)
 					RemoveGLHFCmd(unitID, cmdDescID)

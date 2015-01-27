@@ -61,8 +61,8 @@ local CommanderSounds = {
 		[ UnitDefNames["lost_commander"].id ] = {
 			[0] = "sounds/commander/lost_sing1.wav",
 			[1] = "sounds/commander/lost_sing2.wav",
-			[1] = "sounds/commander/lost_sing3.wav",
-			[1] = "sounds/commander/lost_sing4.wav",
+			[2] = "sounds/commander/lost_sing3.wav",
+			[3] = "sounds/commander/lost_sing4.wav",
 		},
 
 		[ UnitDefNames["lost_u0commander" ].id ] = {},
@@ -377,6 +377,24 @@ for unitDefID, sndTable in pairs(comTY) do
 	end
 end
 
+-- for i,v in pairs(CommanderSounds) do
+	-- Echo("sounds:",i,v)
+	-- if type (v) == type({}) then
+		-- for u,w in pairs (v) do
+			-- Echo("Details:",u,w)
+			-- if type (w) == type({}) then
+				-- for x,y in pairs (w) do
+					
+					-- Echo("More details:",x,y)
+					-- if i == 'GLHFSongs' then
+						-- Echo("Now playing:",i,v,u,w,x,y)
+						-- Spring.PlaySoundFile(y)
+					-- end
+				-- end
+			-- end
+		-- end
+	-- end
+-- end
 
 return CommanderUnitDefs, CommanderSounds, CommanderTargets
 
