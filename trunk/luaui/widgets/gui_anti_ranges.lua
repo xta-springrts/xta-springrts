@@ -33,7 +33,9 @@ end
 local opacityMultiplier			= 0.85
 local multiStockpileColor		= {1,1,0}
 local filledStockpileColor		= {1,0.73,0}
+local plentyStockpileColor		= {0.2,0.85,0.66}
 local emptyStockpileColor		= {1,0.28,0}
+local enemyStockpileColor		= {0.7,0.7,0.7}
 local showLineGlow				= true
 local fadeOnCloseup        		= true
 local fadeStartDistance			= 3300
@@ -135,25 +137,28 @@ function drawCircle(uID, coverageRange, x, y, z, camX, camY, camZ)
 	
 	if lineOpacityMultiplier > 0 then
 		local numStockpiled,numStockpileQued,stockpileBuild = spGetUnitStockpile(uID)
+		local circleColor = enemyStockpileColor
 		
-		if numStockpiled then
-			local circleColor = emptyStockpileColor
-			if numStockpiled == 1 then
-				circleColor = filledStockpileColor
-			elseif numStockpiled > 1 then
-				circleColor = multiStockpileColor
-			end
-			
-			glDepthTest(true)
-			if showLineGlow then
-				glLineWidth(10)
-				glColor(circleColor[1],circleColor[2],circleColor[3], .016*lineOpacityMultiplier)
-				glDrawGroundCircle(x, y, z, coverageRange, 256)
-			end
-			glColor(circleColor[1],circleColor[2],circleColor[3], .5*lineOpacityMultiplier)
-			glLineWidth(3-lineWidthMinus)
+		if numStockpiled and numStockpiled == 0 then
+			circleColor = emptyStockpileColor
+		elseif numStockpiled and numStockpiled == 1 then
+			circleColor = filledStockpileColor 
+		elseif numStockpiled and numStockpiled > 1 and numStockpiled < 6 then
+			circleColor = multiStockpileColor
+		elseif numStockpiled and numStockpiled > 5 then
+			circleColor = plentyStockpileColor
+		end
+		
+		glDepthTest(true)
+		if showLineGlow then
+			glLineWidth(10)
+			glColor(circleColor[1],circleColor[2],circleColor[3], .016*lineOpacityMultiplier)
 			glDrawGroundCircle(x, y, z, coverageRange, 256)
 		end
+		glColor(circleColor[1],circleColor[2],circleColor[3], .5*lineOpacityMultiplier)
+		glLineWidth(3-lineWidthMinus)
+		glDrawGroundCircle(x, y, z, coverageRange, 256)
+		
 	end
 end
 
