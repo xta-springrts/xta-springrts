@@ -16,16 +16,17 @@ local width, height					  	= 360, 540
 local iWidth							= 400
 local iRowHeight						= 14
 local rows								= 0
-local height0							= 280
-local iHeight							= height0 + iRowHeight * rows
+local height0							= 160
+local iHeight
 local rowgap						  	= 26
 local leftmargin						= 20
 local buttontab							= 310			
 local vsx, vsy 						  	= gl.GetViewSizes()
 local Echo								= Spring.Echo
 local PlaySoundFile						= Spring.PlaySoundFile
-local showInfo							= false
-local showOptions						= false
+local showModOptions					= false
+local showMapOptions					= false
+local showSettings						= false
 local textSize							= 10
 local myFont							= gl.LoadFont("FreeSansBold.otf",textSize, 1.9, 40)
 local myFontBig							= gl.LoadFont("FreeSansBold.otf",14, 1.9, 40)
@@ -56,6 +57,12 @@ Options["other"]						= {}
 Options["multipliers"]					= {}
 Options["koth"]							= {}
 Options["experimental"]					= {}
+Options["map"]							= {}
+
+local mapOptions 						= Spring.GetMapOptions()
+
+local OptionCount						= {}
+local MapOptionCount					= 0
 
 --colors
 local cLight 							= {1,1,1,1}
@@ -407,6 +414,30 @@ function widget:Initialize()
 			},
 		}
 	end
+
+	for optionName, data in pairs(Options) do
+		OptionCount[optionName] = 0
+		for _, value in pairs(data) do
+			if value.value and value.value ~= "N/A" then
+				OptionCount[optionName] = OptionCount[optionName] + 1
+			end
+		end
+	end
+	
+	for optionName, value in pairs(mapOptions) do
+		
+		MapOptionCount = MapOptionCount + 1
+		Options["map"][optionName] = {
+			name	= optionName,
+			type	= "value",
+			value	= value or "N/A",
+		}
+	end
+end
+
+function updateHeights()
+	iHeight	 					= height0  + rows * (iRowHeight+4)
+	Panel["info"]["y2"]			= posY + iHeight
 end
 
 function InitButtons()
@@ -535,7 +566,7 @@ function InitButtons()
 	Panel["main"]["y1"]			= posY
 	Panel["main"]["y2"]			= posY + height
 	
-	iHeight						= height0  + rows * iRowHeight
+	iHeight						= height0  + rows * (iRowHeight+4)
 	
 	Panel["info"]["x1"]			= posX
 	Panel["info"]["x2"]			= posX + iWidth
@@ -698,7 +729,7 @@ local function drawRow(optData,i,lastY)
 	return i,lastY
 end
 
-local function drawInfo()
+local function drawModOptions()
 
 	--background panel
 	gl.Color(cBack)
@@ -723,7 +754,7 @@ local function drawInfo()
 	--General options heading
 	do
 		myFontBig:Begin()
-		if Options["general"] then
+		if Options["general"] and OptionCount["general"] > 0 then
 			myFontBig:SetTextColor(cYellow) -- yellow
 			myFontBig:Print("General:", Panel["info"]["x1"] + leftmargin, lastY - 40,14,'do')
 			lastY = lastY - 40
@@ -741,7 +772,7 @@ local function drawInfo()
 	end
 	--Other options heading 
 	do
-		if Options["other"] then
+		if Options["other"] and OptionCount["other"] > 0 then
 			myFontBig:Begin()
 			myFontBig:SetTextColor(cYellow) -- yellow
 			myFontBig:Print("More options:", Panel["info"]["x1"] + leftmargin, lastY - 40,14,'do')
@@ -759,7 +790,7 @@ local function drawInfo()
 	end
 	-- unit packs heading
 	do
-		if Options["unitpacks"] then
+		if Options["unitpacks"] and OptionCount["unitpacks"] > 0 then
 			myFontBig:Begin()
 			myFontBig:SetTextColor(cYellow) -- yellow
 			myFontBig:Print("Unit packs:", Panel["info"]["x1"] + leftmargin, lastY - 40,14,'do')
@@ -777,7 +808,7 @@ local function drawInfo()
 	end
 	--multiplier options heading
 	do
-		if Options["multiplier"] then
+		if Options["multiplier"] and OptionCount["multiplier"] > 0 then
 			myFontBig:Begin()
 			myFontBig:SetTextColor(cYellow) -- yellow
 			myFontBig:Print("Multiplier settings:", Panel["info"]["x1"] + leftmargin, lastY - 40,14,'do')
@@ -815,7 +846,7 @@ local function drawInfo()
 	end
 	--Experimental options heading
 	do
-		if Options["experimental"] then
+		if Options["experimental"] and OptionCount["experimental"] > 0 then
 			myFontBig:Begin()
 			myFontBig:SetTextColor(cYellow) -- yellow
 			myFontBig:Print("Experimental options:", Panel["info"]["x1"] + leftmargin, lastY - 40,14,'do')
@@ -832,8 +863,7 @@ local function drawInfo()
 		myFont:End()
 	end
 	-- update height and position of window
-	iHeight						= height0  + rows * iRowHeight
-	Panel["info"]["y2"]			= posY + iHeight
+	updateHeights()
 	
 	-- exitbutton
 	if ButtonClose.above then
@@ -852,7 +882,69 @@ local function drawInfo()
 	gl.Color(cWhite)
 end
 
-local function drawOptions()
+local function drawMapOptions()
+	
+	--background panel
+	gl.Color(cBack)
+	gl.Rect(Panel["info"]["x1"],Panel["info"]["y1"], Panel["info"]["x2"], Panel["info"]["y2"])
+	
+	--border
+	gl.Color(cBorder)
+	gl.Rect(Panel["info"]["x1"]-1,Panel["info"]["y1"], Panel["info"]["x1"], Panel["info"]["y2"])
+	gl.Rect(Panel["info"]["x2"],Panel["info"]["y1"], Panel["info"]["x2"]+1, Panel["info"]["y2"])
+	gl.Rect(Panel["info"]["x1"],Panel["info"]["y1"]-1, Panel["info"]["x2"], Panel["info"]["y1"])
+	gl.Rect(Panel["info"]["x1"],Panel["info"]["y2"], Panel["info"]["x2"], Panel["info"]["y2"]+1)
+	
+	-- Heading
+	myFontBigger:Begin()
+	myFontBigger:SetTextColor(cWhite)
+	myFontBigger:Print(Game.mapName, (Panel["info"]["x1"] + Panel["info"]["x2"])/2 , Panel["info"]["y2"] - 20,18,'cds')
+	myFontBigger:End()
+	-- content
+	local lastY = Panel["info"]["y2"] - 20
+	rows = 0
+	
+	--Map options
+	do
+		myFontBig:Begin()
+		if Options["general"] and OptionCount["general"] > 0 then
+			myFontBig:SetTextColor(cYellow) -- yellow
+			myFontBig:Print("Map options:", Panel["info"]["x1"] + leftmargin, lastY - 40,14,'do')
+			lastY = lastY - 40
+		end
+		myFontBig:End()
+		
+		--General options
+		myFont:Begin()
+		local i = 0
+		
+		for _,opt in pairs(Options["map"]) do
+			i,lastY = drawRow(opt,i,lastY)
+		end
+		myFont:End()
+	end
+	
+	-- update height and position of window
+	updateHeights()
+	
+	-- exitbutton
+	if ButtonClose.above then
+		gl.Color(cAbove)
+	else
+		gl.Color(cGrey)
+	end
+	gl.TexRect(ButtonClose["x1"],ButtonClose["y1"],ButtonClose["x2"],ButtonClose["y2"])
+	myFontBig:Begin()
+	myFontBig:SetTextColor(cWhite)
+	myFontBig:Print("Close", (ButtonClose["x1"]+ButtonClose["x2"])/2, (ButtonClose["y1"]+ButtonClose["y2"])/2,14,'vcs')
+	myFontBig:End()
+		
+	--reset state
+	gl.Texture(false)
+	gl.Color(cWhite)
+end
+
+local function drawSettings()
 	
 	--background panel
 	gl.Color(cBack)
@@ -947,17 +1039,19 @@ end
 
 function widget:DrawScreen()
 	if (not Spring.IsGUIHidden()) then
-		if showInfo then
-			drawInfo()
-		elseif showOptions then
-			drawOptions()
+		if showModOptions then
+			drawModOptions()
+		elseif showSettings then
+			drawSettings()
+		elseif showMapOptions then
+			drawMapOptions()
 		end
 	end
 end
 
 function widget:IsAbove(x,y)
 	if (not Spring.IsGUIHidden()) then
-		if showInfo or showOptions then
+		if showModOptions or showSettings or showMapOptions then
 			drawIsAbove(x,y)
 		end
 	end
@@ -965,14 +1059,17 @@ function widget:IsAbove(x,y)
 end
 
 function widget:TextCommand(command)
+	
 	if command == 'draw' or command == 'votefordraw' then
 		Spring.SendCommands("luarules votefordraw")
 	elseif command == 'voting' or command == 'voteforend'then
 		Spring.SendCommands("luarules voteforend")
 	elseif command == 'show-modoptions' then
-		showInfo = true
+		showModOptions = true
+	elseif command == 'show-mapoptions' then
+		showMapOptions = true
 	elseif command == 'xta-options' then
-		showOptions = true
+		showSettings = true
 	end
 end
 
@@ -987,7 +1084,7 @@ function widget:MouseMove(mx, my, dx, dy, mButton)
  end 
  
 function widget:MousePress(x, y, button)
-	 if button == 1 and (showOptions or showInfo) then
+	 if button == 1 and (showSettings or showModOptions or showMapOptions) then
 		
 		for _,button in ipairs(Button) do
 			if IsOnButton(x, y, button["x1"],button["y1"],button["x2"],button["y2"]) then
@@ -1020,15 +1117,16 @@ function widget:MousePress(x, y, button)
 		end
 		if IsOnButton(x, y, ButtonClose["x1"],ButtonClose["y1"],ButtonClose["x2"],ButtonClose["y2"]) then
 			PlaySoundFile(sndButtonOff,1.0,0,0,0,0,0,0,'userinterface')
-			showOptions = false
-			showInfo = false
+			showSettings = false
+			showModOptions = false
+			showMapOptions = false
 		end
 		
 	elseif button == 2 or button == 3 then
-		if showInfo and IsOnButton(x, y, Panel["info"]["x1"],Panel["info"]["y1"], Panel["info"]["x2"], Panel["info"]["y2"]) then			
+		if (showModOptions or showMapOptions) and IsOnButton(x, y, Panel["info"]["x1"],Panel["info"]["y1"], Panel["info"]["x2"], Panel["info"]["y2"]) then			
 			--Dragging
 			return true			
-		elseif showOptions and IsOnButton(x, y, Panel["main"]["x1"],Panel["main"]["y1"], Panel["main"]["x2"], Panel["main"]["y2"]) then
+		elseif showSettings and IsOnButton(x, y, Panel["main"]["x1"],Panel["main"]["y1"], Panel["main"]["x2"], Panel["main"]["y2"]) then
 			--Dragging
 			return true
 		end
@@ -1038,14 +1136,15 @@ function widget:MousePress(x, y, button)
  
 function widget:KeyPress(key, mods, isRepeat) 
 	if (key == 0x069) and mods["ctrl"] and (not isRepeat) then 				-- i-key
-		showInfo = not showInfo
+		showModOptions = not showModOptions
 		return true
 	elseif key == 0x01B then -- ESC
-		showInfo = false
-		showOptions = false
+		showModOptions = false
+		showMapOptions = false
+		showSettings = false
 		return false
 	elseif key == 0x124 and mods.ctrl then -- CTRL-F11
-		showOptions = true
+		showSettings = true
 		return false
 	end
 	return false
@@ -1056,8 +1155,8 @@ end
 --------------------------------------------------------------------------------
 
 function widget:TweakDrawScreen()
-	if showOptions then
-		drawOptions()
+	if showSettings then
+		drawSettings()
 	end
 end
 
@@ -1101,8 +1200,9 @@ function widget:TweakMousePress(x, y, button)
 		
 		if IsOnButton(x, y, ButtonClose["x1"],ButtonClose["y1"],ButtonClose["x2"],ButtonClose["y2"]) then
 			PlaySoundFile(sndButtonOff,1.0,0,0,0,0,0,0,'userinterface')
-			showOptions = false
-			showInfo = false
+			showSettings = false
+			showModOptions = false
+			showMapOptions = false
 		end
 		
 	 elseif (button == 2 or button == 3) then
