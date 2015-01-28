@@ -4,109 +4,103 @@
 	//  Unit Description
 	//********************
 	side=Arm;
-	name=Blaster;
-	description=Heavy Laser Tower;
-	icontype=building;
+	Name=Heavy Assembly Plant;
+	Description=Produces Heavy Ground Units;
+	icontype=plant;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=ARM DEFENSIVE WEAPON NOTAIR NOTSUB;
-	tedclass=DEFENSIVE;
+	category=ARM PLANT STATIC NOWEAPON STORAGE NOTAIR NOTSEA NOTSUB;
+	tedclass=PLANT;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=guardian_blaster;
-	unitnumber=39;
-	objectname=guardian_blaster.3do;
-	corpse=guardian_blaster_dead;
-	buildpic=guardian_blaster.png;
-	soundcategory=HLT;
+	unitname=guardian_assembly_plant;
+	unitnumber=5;
+	objectname=guardian_assembly_plant.3do;
+	corpse=guardian_assembly_plant_dead;
+	buildpic=guardian_assembly_plant.png;
+	soundcategory=KBOTPLANT;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=2132;
-	digger=1;
-	//DamageModifier=0.25;
-	ActivateWhenBuilt=0;
-	onoffable=1;
-	healtime=11;
-	buildcostmetal=803;
-	buildcostenergy=7157;
-	buildtime=11176;
-	footprintx=3;
-	footprintz=3;
+	maxdamage=4831;
+	healtime=30;
+	buildcostmetal=3265;
+	buildcostenergy=6077;
+	buildtime=13520;
+	FootprintX=12;
+	FootprintZ=10;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
+	metalstorage=400;
 	energyuse=0;
-	energystorage=200;
+	energystorage=400;
+	metalmake=2.1;
+	energymake=63;
 
 	//************************************************************
 	//  Building
 	//************
-	buildangle=8192;
-	yardmap=yoy ooo oyo;
-	collisionVolumeType=CylY;
-	collisionVolumeScales=43 66 43;
-	collisionVolumeOffsets=0 0 -6;
-	collisionVolumeTest = 1;
+	buildangle=2048;
+	YardMap=oooooooooooo oooooooooooo oooooooooooo yooccccccooy cooccccccooc cooccccccooc cooccccccooc ooyyccccyyoo ooyyyyyyyyoo ooyyyyyyyyoo;
+	//collisionVolumeType = Box;
+	//collisionVolumeScales =96 63 96;
+	//collisionVolumeOffsets = 0 0 0;
+	//collisionVolumeTest = 1;
 
 	//************************************************************
 	//  Constructor
 	//***************
-	builder=0;
-	workertime=0;
+	builder=1;
+	workertime=200;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
-	canguard=1;
+	canmove=1;
+	canpatrol=1;
 	canstop=1;
-
+	canguard=1;
+	
 	//************************************************************
 	//  Movement
 	//************
-	maxslope=10;
-	maxwaterdepth=22;
+	maxslope=13;
+	maxwaterdepth=11;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=600; // 920 in 9.725
-	airsightdistance=900;
+	sightdistance=385;
 	radardistance=0;
-	losemitheight=60;
 
 	//************************************************************
 	//  Weapons
 	//***********
-	weapon1=HEABYBEAM_BEAM;
-	badtargetcategory=VTOL;
-	wpri_badtargetcategory=VTOL;
-	explodeas=MEDIUM_BUILDINGEX;
-	selfdestructas=MEDIUM_BUILDING;
+	explodeas=LARGE_BUILDINGEX;
+	selfdestructas=LARGE_BUILDING;
 
 	//************************************************************
 	//  Orders
 	//**********
 	noautofire=0;
 	firestandorders=1;
+	mobilestandorders=1;
 	standingfireorder=2;
-	defaultmissiontype=GUARD_NOMOVE;
+	standingmoveorder=2;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
 	bmcode=0;
-	designation=ARM-HLT;
+	designation=ARM-KL2;
 	downloadable=1;
-	shootme=1;
 	threed=1;
 	version=1.2;
 	zbuffer=1;
@@ -119,6 +113,6 @@
 
 	[SFXTypes]
 	{
-	explosiongenerator0=custom:greenflare;
+	explosiongenerator0=custom:Nano;
 	}
 }

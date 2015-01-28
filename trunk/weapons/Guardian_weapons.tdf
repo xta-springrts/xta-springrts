@@ -73,6 +73,44 @@
 		group_invincible=1;
 	}
 }
+
+[HEABYFBEAM_BEAM]
+{
+	areaofeffect=8;
+	beamdecay=0.3;
+	beamtime=0.5;
+	beamttl=2;
+	corethickness=1.0;
+	energypershot=0;
+	explosiongenerator=custom:PINKFLASH;
+	hardstop=false;
+	intensity=0.001;
+	largebeamlaser=1;
+	laserflaresize=8;
+	name=PewPew;
+	noselfdamage=1;
+	pulsespeed=7.0;
+	range=950;
+	reloadtime=1;
+	rgbcolor=0.5 0.3 0.9;
+	//soundhitdry=xplolrg;
+	soundstart=LASRHVY1;
+	targetmoveerror=0.30000001192093;
+	thickness=3;
+	tolerance=10000;
+	turret=1;
+	weapontype=BeamLaser;
+	weaponvelocity=1500;
+	energypershot=150;
+	accuracy=100;
+	sprayangle=100;
+	[DAMAGE]
+	{
+		default=215;
+		group_landair=91;
+		group_invincible=1;
+	}
+}
 [GUARDIAN_POPUP]
 	{
 	ID=116;
@@ -1106,5 +1144,95 @@
 		{
 		Default=52;//Penetration 2, Rapid Fire
 
+		}
+	}
+
+[GuardianDemPulse]
+	{
+	ID=116;
+	Name=Guardian- Pulse Gun;
+	RenderType=1;
+	//Model=CorePulse1;
+	LineOfSight=1;
+	Turret=1;
+
+	Range=425;
+	energypershot=200;
+	//NoAutoRange=1;
+	AreaOfEffect=16;
+	ReloadTime=1.25;//5 because of no depthcharge
+	WeaponTimer=1;
+	BurnBlow=0;
+	WeaponVelocity=900;
+	StartVelocity=900;
+	WeaponAcceleration=900;
+	myGravity=0.01;
+	rgbcolor=0.6 0.4 0.8;
+	
+	FireStarter=25;
+	accuracy=800;
+	movingaccuracy=1600;
+	
+	SoundStart=goktdisr1.wav;
+	SoundHit=goktdisr1hit.wav;
+	//SoundWater=CanLite2;
+	explosiongenerator=custom:SNIPELASER;
+	cegTag=guardianPurpleLaser;	
+
+	//CollideFriendly=0;
+	//AvoidFriendly=0;
+   	//AvoidFeature=0;
+
+	[DAMAGE]
+		{
+		default=346;
+		group_ships=533;
+		group_large_ships=583;
+		group_invincible=1;
+		}
+	}
+
+[GUARDIAN_ABOMINATION]
+	{
+	ID=116;
+	Name=Guardian- Pulse Gun;
+	RenderType=1;
+	//Model=CorePulse1;
+	LineOfSight=1;
+	Turret=1;
+
+	Range=1200;
+	energypershot=200;
+	NoAutoRange=1;
+	AreaOfEffect=96;
+	ReloadTime=4.5;//5 because of no depthcharge
+	WeaponTimer=1;
+	BurnBlow=0;
+	WeaponVelocity=500;
+	StartVelocity=500;
+	WeaponAcceleration=500;
+	//myGravity=0.9;
+	rgbcolor=0.6 0.6 1.0;
+	
+	FireStarter=25;
+	accuracy=600;
+	movingaccuracy=1000;
+	
+	SoundStart=gokdef1.wav;
+	SoundHit=gokdef1hit.wav;
+	//SoundWater=CanLite2;
+	explosiongenerator=custom:GreenLaserHit;
+	cegTag=guardianGreenLaser;	
+
+	//CollideFriendly=0;
+	//AvoidFriendly=0;
+   	//AvoidFeature=0;
+
+	[DAMAGE]
+		{
+		default=382;
+		group_invincible=1;
+		group_ships=587;
+		group_large_ships=627;
 		}
 	}

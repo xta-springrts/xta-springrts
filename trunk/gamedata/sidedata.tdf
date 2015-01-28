@@ -1399,7 +1399,7 @@
 		canbuild12=core_sumo;
 		canbuild13=core_gimp;
 		canbuild14=core_parasite;
-		canbuild15=core_gizmo;//xtaids commando disabled
+		canbuild15=commando;//xtaids
 		canbuild16=core_decoy_commander;
 		canbuild17=core_resurrection_kbot;
 	}
@@ -1554,25 +1554,6 @@
 		canbuild26=core_adv_aircraft_plant;
 		canbuild27=core_adv_shipyard;
 	}
-
-	[core_gizmo]
-	{
-		canbuild1=core_dragons_teeth;
-		canbuild2=neutral_eyes;//xtaids
-		canbuild3=core_pestilence;
-		canbuild4=core_light_laser_tower;
-		canbuild5=core_gaat_gun;
-		canbuild6=core_pulverizer;
-		canbuild7=core_toaster;
-		canbuild8=core_radar_tower;
-		canbuild9=core_solar_collector;
-		canbuild10=core_wind_generator;
-		canbuild11=core_metal_extractor;
-		canbuild12=core_metal_maker;
-		canbuild13=core_kbot_lab;
-		canbuild14=core_geothermal_powerplant;
-	}
-
 	[core_construction_tortoise]
 	{
 		canbuild1=core_solar_collector;
@@ -2260,10 +2241,9 @@
 		canbuild6=core_crasher;
 		canbuild7=core_crasher_rt; //mod option
 		canbuild8=core_freaker;
-		canbuild9=core_gizmo;//xtaids commando disabled
-		canbuild10=corjar;//xtaids
-		canbuild11=core_tic;
-		canbuild12=corscrew;//xtaids
+		canbuild9=corjar;//xtaids
+		canbuild10=core_tic;
+		canbuild11=corscrew;//xtaids
 	}
 	[core_limiter]
 	{
@@ -2437,8 +2417,8 @@
 		//canbuild18=lost_underwater_metal_storage;
 		canbuild19=guardian_underwater_metal_extractor;
 		//canbuild20=lost_floating_metal_maker;
-		//canbuild21=lost_torpedo_launcher;
-		//canbuild22=lost_floating_light_laser_tower;
+		canbuild21=guardian_piscator;
+		canbuild22=guardian_floating_light_laser_tower;
 		canbuild23=guardian_dragons_teeth;
 		//canbuild24=arm_spidernest;//Spiderpack vs. Tortoise
 		//canbuild25=lost_hovercraft_platform;
@@ -2467,11 +2447,10 @@
 		canbuild15=guardian_floating_solar_collector;
 		canbuild16=guardian_underwater_generator;
 		canbuild17=guardian_underwater_storage;
-		//canbuild18=lost_underwater_metal_storage;
 		canbuild19=guardian_underwater_metal_extractor;
 		//canbuild20=lost_floating_metal_maker;
-		//canbuild21=lost_torpedo_launcher;
-		//canbuild22=lost_floating_light_laser_tower;
+		canbuild21=guardian_piscator;
+		canbuild22=guardian_floating_light_laser_tower;
 		canbuild23=guardian_dragons_teeth;
 		//canbuild24=arm_spidernest;//Spiderpack vs. Tortoise
 		//canbuild25=lost_hovercraft_platform;
@@ -2483,7 +2462,7 @@
 		//canbuild31=lost_seaplane_platform;
 		}
 
-	[Guardian_uCommander]
+	[Guardian_u1Commander]
 		{
 		canbuild1=Guardian_solar_collector;
 		canbuild2=Guardian_generator;
@@ -2503,8 +2482,8 @@
 		//canbuild18=lost_underwater_metal_storage;
 		canbuild19=guardian_underwater_metal_extractor;
 		//canbuild20=lost_floating_metal_maker;
-		//canbuild21=lost_torpedo_launcher;
-		//canbuild22=lost_floating_light_laser_tower;
+		canbuild21=guardian_piscator;
+		canbuild22=guardian_floating_light_laser_tower;
 		canbuild23=guardian_dragons_teeth;
 		//canbuild24=arm_spidernest;//Spiderpack vs. Tortoise
 		//canbuild25=lost_hovercraft_platform;
@@ -2536,8 +2515,8 @@
 		//canbuild18=lost_underwater_metal_storage;
 		canbuild19=guardian_underwater_metal_extractor;
 		//canbuild20=lost_floating_metal_maker;
-		//canbuild21=lost_torpedo_launcher;
-		//canbuild22=lost_floating_light_laser_tower;
+		canbuild21=guardian_piscator;
+		canbuild22=guardian_floating_light_laser_tower;
 		canbuild23=guardian_dragons_teeth;
 		//canbuild24=arm_spidernest;//Spiderpack vs. Tortoise
 		//canbuild25=lost_hovercraft_platform;
@@ -2569,8 +2548,8 @@
 		//canbuild18=lost_underwater_metal_storage;
 		canbuild19=guardian_underwater_metal_extractor;
 		//canbuild20=lost_floating_metal_maker;
-		//canbuild21=lost_torpedo_launcher;
-		//canbuild22=lost_floating_light_laser_tower;
+		canbuild21=guardian_piscator;
+		canbuild22=guardian_floating_light_laser_tower;
 		canbuild23=guardian_dragons_teeth;
 		//canbuild24=arm_spidernest;//Spiderpack vs. Tortoise
 		//canbuild25=lost_hovercraft_platform;
@@ -2602,8 +2581,8 @@
 		//canbuild18=lost_underwater_metal_storage;
 		canbuild19=guardian_underwater_metal_extractor;
 		//canbuild20=lost_floating_metal_maker;
-		//canbuild21=lost_torpedo_launcher;
-		//canbuild22=lost_floating_light_laser_tower;
+		canbuild21=guardian_piscator;
+		canbuild22=guardian_floating_light_laser_tower;
 		canbuild23=guardian_dragons_teeth;
 		//canbuild24=arm_spidernest;//Spiderpack vs. Tortoise
 		//canbuild25=lost_hovercraft_platform;
@@ -2628,7 +2607,17 @@
 		canbuild9=guardian_moonstrike;
 	}
 
-
+	[guardian_assembly_plant]
+	{
+		canbuild1=guardian_adv_construction_vehicle;
+		canbuild2=guardian_demon;
+		canbuild3=guardian_hellspawn;
+		canbuild4=guardian_daemonknight;
+		canbuild5=guardian_farseer;
+		canbuild6=guardian_immortal;
+		canbuild7=guardian_zealot;
+		canbuild8=guardian_Abomination;
+	}
 	[guardian_Hydro_Scaffold]
 	{
 		canbuild1=guardian_construction_sub;
@@ -2671,7 +2660,7 @@
 		//canbuild12=arm_nano_tower;
 		canbuild13=guardian_light_laser_tower;
 		canbuild14=guardian_radar_tower;
-		//canbuild15=arm_torpedo_launcher; //added v9 beta
+		canbuild15=guardian_piscator; //added v9 beta
 		//canbuild16=arm_adv_vehicle_plant;
 		canbuild17=guardian_geothermal_powerplant;
 		canbuild18=guardian_blaster;
@@ -2689,7 +2678,7 @@
 		//canbuild30=arm_sonar_station;
 		//canbuild31=arm_floating_radar;
 		//canbuild32=arm_floating_light_laser_tower;
-		//canbuild33=arm_sentry;
+		//canbuild33=guardian_spatter;
 		//canbuild34=arm_underwater_energy_storage;
 		//canbuild35=arm_floating_metal_maker;
 		//canbuild36=arm_underwater_metal_storage;
@@ -2701,18 +2690,16 @@
 	[guardian_construction_sub]
 	{
 		//canbuild1=core_adv_shipyard;
-		//canbuild2=core_torpedo_launcher;
+		canbuild2=guardian_piscator;
 		canbuild3=guardian_floating_solar_collector;
 		canbuild4=guardian_underwater_generator;
-		//canbuild5=core_floating_radar;
 		canbuild6=guardian_sonar_radar;
-		//canbuild7=core_floating_light_laser_tower;
+		canbuild7=guardian_floating_light_laser_tower;
 		canbuild8=guardian_hydro_scaffold;
 		canbuild9=guardian_areo_platform;
-		//canbuild10=core_stinger;
-		//canbuild11=core_thunderbolt;
+		canbuild10=guardian_spatter;
+		canbuild11=guardian_splasher;
 		canbuild12=guardian_underwater_storage;
-		//canbuild13=core_underwater_metal_storage;
 		canbuild14=guardian_underwater_metal_extractor;
 		canbuild15=guardian_metal_maker;
 		//canbuild16=core_floating_dragons_teeth;
@@ -2738,7 +2725,7 @@
 		//canbuild12=arm_nano_tower;
 		canbuild13=guardian_light_laser_tower;
 		canbuild14=guardian_radar_tower;
-		//canbuild15=arm_torpedo_launcher; //added v9 beta
+		canbuild15=guardian_piscator;
 		//canbuild16=arm_adv_vehicle_plant;
 		canbuild17=guardian_geothermal_powerplant;
 		canbuild18=guardian_blaster;
@@ -2753,16 +2740,42 @@
 		//canbuild27=arm_adv_shipyard;
 		canbuild28=guardian_floating_solar_collector;
 		canbuild29=guardian_underwater_generator;
-		canbuild30=arm_sonar_radar;
-		//canbuild31=arm_floating_radar;
-		//canbuild32=arm_floating_light_laser_tower;
-		//canbuild33=arm_sentry;
+		canbuild30=guardian_sonar_radar;
+		canbuild31=guardian_floating_light_laser_tower;
+		canbuild33=guardian_spatter;
 		canbuild34=guardian_underwater_storage;
-		//canbuild35=arm_floating_metal_maker;
-		//canbuild36=arm_underwater_metal_storage;
-		//canbuild37=arm_stingray;
+		canbuild37=guardian_splasher;
 		canbuild38=guardian_underwater_metal_extractor;
 		//canbuild39=arm_floating_dragons_teeth;
+	}
+
+	[guardian_demon]
+	{
+		canbuild1=guardian_solar_collector;
+		canbuild2=guardian_generator;
+		canbuild3=guardian_cell;
+		canbuild4=guardian_storage;
+		canbuild5=guardian_metal_extractor;
+		canbuild6=guardian_metal_maker;
+		canbuild7=guardian_terra_platform;
+		canbuild8=guardian_areo_platform;
+		canbuild9=guardian_hydro_scaffold;
+		canbuild13=guardian_light_laser_tower;
+		canbuild14=guardian_radar_tower;
+		canbuild15=guardian_piscator;
+		canbuild17=guardian_geothermal_powerplant;
+		canbuild18=guardian_blaster;
+		canbuild19=guardian_smasher;
+		canbuild20=guardian_dragons_teeth;
+		canbuild21=guardian_black_dawn;
+		canbuild28=guardian_floating_solar_collector;
+		canbuild29=guardian_underwater_generator;
+		canbuild30=guardian_sonar_radar;
+		canbuild31=guardian_floating_light_laser_tower;
+		canbuild33=guardian_spatter;
+		canbuild34=guardian_underwater_storage;
+		canbuild37=guardian_splasher;
+		canbuild38=guardian_underwater_metal_extractor;
 	}
 //------------------Lost Legacy
 	[lost_adv_construction_aircraft]
@@ -2947,7 +2960,7 @@
 		canbuild10=lost_advanced_sonar_station;
 		canbuild11=lost_radar_jamming_tower;
 		canbuild12=lost_air_repair_pad;
-		canbuild13=lost_peacewaker;
+		//canbuild13=lost_repulsor;
 		canbuild14=lost_advanced_torpedo_launcher;
 		canbuild15=lost_Nosmaeb;
 		canbuild16=lost_mebos;
@@ -3430,7 +3443,7 @@
 		canbuild28=lost_floating_dragons_teeth;
 		canbuild29=lost_nosmaeb;
 		canbuild30=lost_torpedo_launcher;
-		canbuild31=lost_floating_light_laser_tower;
+		//canbuild31=arm_floating_light_laser_tower;
 		canbuild32=lost_odin_mallet;//Spiderpack vs. Tortoise
 		canbuild33=lost_hovercraft_platform;
 		canbuild34=lost_seaplane_platform;
@@ -3441,7 +3454,7 @@
 		canbuild39=lost_moho_mine;
 		canbuild40=lost_air_repair_pad;
 		canbuild41=lost_peacemaker;
-		canbuild42=lost_peacewaker;
+		//canbuild42=lost_repulsor;
 		canbuild43=lost_nano_tower;
 
 	}
@@ -3532,7 +3545,7 @@
 		canbuild28=lost_floating_dragons_teeth;
 		canbuild29=lost_nosmaeb;
 		canbuild30=lost_torpedo_launcher;
-		canbuild31=lost_floating_light_laser_tower;
+		//canbuild31=arm_floating_light_laser_tower;
 		canbuild32=lost_odin_mallet;//Spiderpack vs. Tortoise
 		canbuild33=lost_hovercraft_platform;
 		canbuild34=lost_seaplane_platform;
@@ -3675,7 +3688,7 @@
 		canbuild28=lost_floating_dragons_teeth;
 		canbuild29=lost_nosmaeb;
 		canbuild30=lost_torpedo_launcher;
-		canbuild31=lost_floating_light_laser_tower;
+		//canbuild31=arm_floating_light_laser_tower;
 		canbuild32=lost_odin_mallet;//Spiderpack vs. Tortoise
 		canbuild33=lost_hovercraft_platform;
 		canbuild34=lost_seaplane_platform;
@@ -3686,7 +3699,7 @@
 		canbuild39=lost_moho_mine;
 		canbuild40=lost_air_repair_pad;
 		canbuild41=lost_peacemaker;
-		canbuild42=lost_peacewaker;
+		//canbuild42=lost_repulsor;
 		canbuild43=lost_nano_tower;
 
 	}

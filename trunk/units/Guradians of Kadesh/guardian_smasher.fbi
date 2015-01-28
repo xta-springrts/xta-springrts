@@ -109,7 +109,7 @@
 	pieceTrailCEGTag=Debree;//bleh
 	pieceTrailCEGRange = 4;
 	digger=1;
-	damagemodifier=0.33; //was 0.28 (72% increase in health when closed)now 66%//
+	//damagemodifier=0.33; //was 0.28 (72% increase in health when closed)now 66%//
 
 	//************************************************************
 	//  To be removed

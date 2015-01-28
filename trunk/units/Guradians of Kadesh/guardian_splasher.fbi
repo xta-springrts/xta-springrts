@@ -3,57 +3,55 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	side=Arm;
-	name=Blaster;
-	description=Heavy Laser Tower;
-	icontype=building;
+	side=Core;
+	name=Splasher;
+	description=Floating Heavy Laser Tower;
+	icontype=sea;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=ARM DEFENSIVE WEAPON NOTAIR NOTSUB;
+	Category=CORE DEFENSIVE STATIC WEAPON NOTLAND NOTAIR NOTSUB;
 	tedclass=DEFENSIVE;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=guardian_blaster;
-	unitnumber=39;
-	objectname=guardian_blaster.3do;
+	unitname=guardian_splasher;
+	unitnumber=188;
+	objectname=guardian_splasher.3do;
 	corpse=guardian_blaster_dead;
-	buildpic=guardian_blaster.png;
-	soundcategory=HLT;
+	buildpic=guardian_splasher.png;
+	soundcategory=;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=2132;
-	digger=1;
-	//DamageModifier=0.25;
-	ActivateWhenBuilt=0;
-	onoffable=1;
+	maxdamage=3023;
 	healtime=11;
-	buildcostmetal=803;
-	buildcostenergy=7157;
-	buildtime=11176;
-	footprintx=3;
-	footprintz=3;
+	buildcostmetal=954;
+	buildcostenergy=12624;
+	buildtime=16502;
+	footprintx=4;
+	footprintz=4;
 
 	//************************************************************
 	//  Resources
 	//*************
 	metalstorage=0;
-	energyuse=0;
+	energyuse=0.1;
 	energystorage=200;
+	windgenerator=0.001;
 
 	//************************************************************
 	//  Building
 	//************
-	buildangle=8192;
-	yardmap=yoy ooo oyo;
+	buildangle=16384;
+	yardmap=wwww wwww wwww wwww;
+	activatewhenbuilt=1;
 	collisionVolumeType=CylY;
-	collisionVolumeScales=43 66 43;
-	collisionVolumeOffsets=0 0 -6;
+	collisionVolumeScales=44 48 44;
+	//collisionVolumeOffsets=0 0 0;
 	collisionVolumeTest = 1;
 
 	//************************************************************
@@ -72,25 +70,24 @@
 	//************************************************************
 	//  Movement
 	//************
-	maxslope=10;
-	maxwaterdepth=22;
+	minwaterdepth=2;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=600; // 920 in 9.725
+	sightdistance=600;
 	airsightdistance=900;
 	radardistance=0;
-	losemitheight=60;
+	losemitheight=34;
 
 	//************************************************************
 	//  Weapons
 	//***********
-	weapon1=HEABYBEAM_BEAM;
-	badtargetcategory=VTOL;
-	wpri_badtargetcategory=VTOL;
-	explodeas=MEDIUM_BUILDINGEX;
-	selfdestructas=MEDIUM_BUILDING;
+	weapon1=HEABYFBEAM_BEAM;
+	badtargetcategory=NOTAIR;
+	wpri_badtargetcategory=NOTAIR;
+	explodeas=BIG_UNITEX;
+	selfdestructas=BIG_UNIT;
 
 	//************************************************************
 	//  Orders
@@ -103,12 +100,15 @@
 	//************************************************************
 	//  Miscellaneous
 	//*****************
+	ai_limit=limit CORFHLT 4;
 	bmcode=0;
-	designation=ARM-HLT;
+	designation=FF-ML4;
 	downloadable=1;
+	noshadow=1;
 	shootme=1;
 	threed=1;
 	version=1.2;
+	waterline=4.99;
 	zbuffer=1;
 	pieceTrailCEGTag=Debree;//bleh
 	pieceTrailCEGRange = 4;
