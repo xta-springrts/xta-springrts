@@ -107,24 +107,28 @@ function widget:Initialize()
 	Button[4] 						= {} -- modopt
 	Button[4]["command"]			= "modopt"
 	Button[4]["label"]				= "View mod-options"
+	
+	Button[5] 						= {} -- modopt
+	Button[5]["command"]			= "mapopt"
+	Button[5]["label"]				= "View map-options"
 		
-	Button[5] 						= {} -- widget
-	Button[5]["command"]			= "widget"
-	Button[5]["label"]				= "Widget selector"
+	Button[6] 						= {} -- widget
+	Button[6]["command"]			= "widget"
+	Button[6]["label"]				= "Widget selector"
 	
-	Button[6] 						= {} -- propose draw
-	Button[6]["command"]			= "offer-draw"
-	Button[6]["label"]				= "Offer draw"
-	Button[6].disabled 				= mySpectatorState
+	Button[7] 						= {} -- propose draw
+	Button[7]["command"]			= "offer-draw"
+	Button[7]["label"]				= "Offer draw"
+	Button[7].disabled 				= mySpectatorState
 	
-	Button[7] 						= {} -- vote for surrender
-	Button[7]["command"]			= "vote-end"
-	Button[7]["label"]				= "Accept surrender"
-	Button[7].disabled 				= true
+	Button[8] 						= {} -- vote for surrender
+	Button[8]["command"]			= "vote-end"
+	Button[8]["label"]				= "Accept surrender"
+	Button[8].disabled 				= true
 	
-	Button[8] 						= {} -- quit
-	Button[8]["command"]			= "quit"
-	Button[8]["label"]				= "Quit game"
+	Button[9] 						= {} -- quit
+	Button[9]["command"]			= "quit"
+	Button[9]["label"]				= "Quit game"
 	
 	Button["close"] 				= {}
 	Panel["main"]					= {}
@@ -190,6 +194,10 @@ local function ButtonHandler (cmd)
 	elseif cmd == "modopt" then
 		ButtonMenu.click = false
 		Spring.SendCommands("show-modoptions")
+		PlaySoundFile(button8)
+	elseif cmd == "mapopt" then
+		ButtonMenu.click = false
+		Spring.SendCommands("show-mapoptions")
 		PlaySoundFile(button8)
 	elseif cmd == "widget" then
 		ButtonMenu.click = false
