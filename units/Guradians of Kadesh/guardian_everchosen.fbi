@@ -3,54 +3,49 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	side=guardian;
-	name=Light Laser Tower;
-	description=Light Laser Tower;
-	icontype=building;
+	side=Core;
+	name=EverChosen;
+	description=Super Patrol Kbot;
+	icontype=guardian_everchosen;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=guardian DEFENSIVE WEAPON  NOTAIR NOTSUB;
-	tedclass=DEFENSIVE;
+	Category=CORE KBOT WEAPON NOTAIR NOTSUB;
+	tedclass=KBOT;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=guardian_light_laser_tower;
-	unitnumber=44;
-	objectname=guardian_light_laser_tower.3do;
-	corpse=guardian_light_laser_tower_dead;
-	buildpic=guardian_light_laser_tower.png;
-	soundcategory=LLT;
+	unitname=guardian_everchosen;
+	unitnumber=231;
+	objectname=guardian_everchosen.3do;
+	corpse=guardian_everchosen_dead;
+	buildpic=guardian_everchosen.png;
+	soundcategory=KROGOTH;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=875;
-	healtime=11;
-	buildcostmetal=203;//reduce cost by 10 percent
-	buildcostenergy=512;
-	buildtime=4037;
-	footprintx=2;
-	footprintz=2;
+	maxdamage=43432;
+	healtime=30;
+	buildcostmetal=10653;
+	buildcostenergy=82300;
+	buildtime=262150;
+	footprintx=3;
+	footprintz=3;
 
 	//************************************************************
 	//  Resources
 	//*************
 	metalstorage=0;
-	energyuse=0;
-	energystorage=100;
+	energymake=1.1;
+	energyuse=1.1;
+	energystorage=2000;
 
 	//************************************************************
 	//  Building
 	//************
-	buildangle=32768;
-	yardmap=oooo;
-	collisionVolumeType = CylY;
-	collisionVolumeScales =28 60 28;
-	collisionVolumeOffsets = 0 3 0;
-	collisionVolumeTest = 1;
 
 	//************************************************************
 	//  Constructor
@@ -63,57 +58,88 @@
 	//*************
 	canattack=1;
 	canguard=1;
+	canmove=1;
+	canpatrol=1;
 	canstop=1;
+	upright=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	maxslope=14;
-	maxwaterdepth=22;
+	movementclass=Krogoth;
+	turnrate=960;
+	acceleration=0.09;
+	brakerate=0.19;
+	maxvelocity=1.0;//1.2
+	maxslope=17;
+	maxwaterdepth=12;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=420;
+	sightdistance=868;
 	radardistance=0;
-	losemitheight=52;
 
 	//************************************************************
 	//  Weapons
 	//***********
-	weapon1=GuardianTOWERPulse;
-	badtargetcategory=VTOL;
-	wpri_badtargetcategory=VTOL;
-	explodeas=MEDIUM_BUILDINGEX;
-	selfdestructas=MEDIUM_BUILDING;
+	weapon1=GuardianChosen_MISSILE;
+	weapon2=EVERCHOSEN_ANNIHILATOR;
+	nochasecategory=VTOL;
+	explodeas=CRAWL_BLAST;
+	selfdestructas=GIANT_BLAST;
+	SelfDestructCountdown=5;
 
 	//************************************************************
 	//  Orders
 	//**********
 	noautofire=0;
 	firestandorders=1;
+	mobilestandorders=1;
 	standingfireorder=2;
-	defaultmissiontype=GUARD_NOMOVE;
+	standingmoveorder=1;
+	defaultmissiontype=Standby;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=0;
-	designation=guardian-LDT;
+	bmcode=1;
+	damagemodifier=1;
+	designation=ARM-KL;
 	downloadable=1;
+	maneuverleashlength=640;
 	shootme=1;
+	smoothanim=1;
+	steeringmode=2;
 	threed=1;
 	version=1.2;
 	zbuffer=1;
-	pieceTrailCEGTag=Debree;//bleh
-	pieceTrailCEGRange = 4;
+	mass=175000;
 
+	leaveTracks=1;
+	trackWidth=50;
+	trackOffset=0;
+	trackStrength=10;
+	trackStretch=0.5;
+	trackType=BigFoot;
 	//************************************************************
 	//  To be removed
 	//*****************
+	badtargetcategory1=VTOL;
+	badtargetcategory2=VTOL;
+
+	pieceTrailCEGTag=NanoDebree;//bleh
+	pieceTrailCEGRange = 1;
+	collisionVolumeType=box;
+	collisionVolumeScales=74 122 58;
+	collisionVolumeOffsets=0 -8 -8;
+	collisionVolumeTest=0;
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:redflare;
+	explosiongenerator0=custom:berthaflare;
+	explosiongenerator1=custom:snipeflare;
+	explosiongenerator2=custom:POPUPFLARE;
+	explosiongenerator3=custom:krogstomp;
+	explosiongenerator4=custom:unitfire;
 	}
-
 }

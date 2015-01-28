@@ -1,4 +1,81 @@
 
+[EVERCHOSEN_ANNIHILATOR]
+{
+	name=Annihilator Weapon;
+	Weapontype=BeamLaser;
+	turret=1;
+	//minbarrelangle=-40;
+	pulseSpeed=7.0;
+	SoundTrigger=1;
+	LargeBeamLaser=1;
+	Intensity=0.001;
+	thickness=7.5;
+	beamtime=1;
+	beamdecay=0.9;
+	beamttl=10;
+	hardStop=0;
+	range=666;
+	reloadtime=4;
+	targetMoveError=0.5;
+	energypershot=500;
+	weaponvelocity=1000;
+	areaofeffect=16;
+	//soundhitdry=gokion1hit;
+	soundstart=gokion1hit;
+	firestarter=90;
+	waterweapon=1; //allow piercing of water surface
+	rgbcolor=0.2 0.175 0.25;
+	explosiongenerator=custom:ElectricFlare;
+	accuracy=300;
+	sprayangle=700;
+	[DAMAGE]
+	{
+		default=1400;
+		group_commanders=900;
+		lost_commanders=900;
+		group_ships=1200;
+		group_large_ships=1300;
+		group_invincible=1;
+	}
+}
+
+[GuardianChosen_MISSILE]
+{
+	name=Missiles;
+	turret=1;
+	explosiongenerator=custom:ElectricFlare;
+	model=missile.s3o;
+	Texture1=null;
+	range=800;
+	reloadtime=1.333;
+	weapontimer=5;
+	flighttime=2;
+	weaponvelocity=1650;
+	startvelocity=960;
+	weaponacceleration=152;
+	turnrate=41660;
+	areaofeffect=96;
+	cylindertargeting = 1;
+	soundstart=gokneedle2.wav;
+	soundhitdry=gokneedle2hit.wav;
+	firestarter=70;
+	smokedelay=0.1;
+	tracks=1;
+	smoketrail=0;
+	cegTag=GUARDIANBLACKTRAIL;
+	Weapontype=MissileLauncher;
+	tolerance=10000;
+	startsmoke=1;
+	trajectoryHeight=0.08;
+	dance=30;
+	[DAMAGE]
+	{
+		default=276;
+		lost_commanders=205;
+		group_invincible=1;
+		group_landair=426;
+	}
+}
 [RAVAGER_BEAM]
 {
 	areaofeffect=8;

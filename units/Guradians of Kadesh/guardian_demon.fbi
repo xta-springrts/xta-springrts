@@ -72,7 +72,7 @@
 	canreclamate=1;
 	canstop=1;
 	upright=1;
-	canManualFire=1;
+	//canManualFire=1;
 	cancapture=1;
 
 	//************************************************************
