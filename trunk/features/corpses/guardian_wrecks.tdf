@@ -1,4 +1,45 @@
 
+[guardian_everchosen_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=cor_corpses;
+	object=guardian_everchosen_dead;
+	featuredead=guardian_everchosen_heap;
+	footprintx=3;
+	footprintz=3;
+	height=20;
+	blocking=1;
+	hitdensity=100;
+	metal=6591;
+	damage=23934;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=120 70 110;//#AUTO#
+	collisionVolumeOffsets=0 -7 -7;//#AUTO#
+}
+[guardian_everchosen_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=3x3a;
+	footprintx=3;
+	footprintz=3;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	metal=3795;
+	damage=11967;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=67 27 52;//#AUTO#
+	collisionVolumeOffsets=0 -7 -7;//#AUTO#
+}
 [guardian_assembly_plant_dead]
 {
 	world=All Worlds;
