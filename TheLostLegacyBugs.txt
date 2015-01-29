@@ -9,9 +9,8 @@ raceLogoGouraud
 race32Dk
 race32Lt
 
-Texture errors: 23 lines of which many are occur many times, perhaps count ís indicative of number of units where error occurs...
+Texture errors: 23 lines of which many are occur many times, perhaps count ís indicative of number of units where error occur.
 
-[f=0002369] Warning: [GetPrimitives] unknown 3DO texture "black1vlight00" for piece "angleb"
 [f=0002369] Warning: [GetPrimitives] unknown 3DO texture "onoff01" for piece "base"
 [f=0002369] Warning: [GetPrimitives] unknown 3DO texture "onoff01" for piece "base"
 [f=0002369] Warning: [GetPrimitives] unknown 3DO texture "onoff01" for piece "base"
