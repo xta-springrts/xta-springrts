@@ -150,7 +150,7 @@
 	MinCollisionSpeed=2.5;//weight
 	collisionVolumeType = box;
 	collisionVolumeScales =28 45 20;
-	collisionVolumeOffsets = 0 -2 0;
+	//collisionVolumeOffsets = 0 -2 0;
 	collisionVolumeTest = 1;
 
 	//************************************************************
