@@ -47,7 +47,7 @@
 	model=missile.s3o;
 	Texture1=null;
 	range=800;
-	reloadtime=1.333;
+	reloadtime=1.5;
 	weapontimer=5;
 	flighttime=2;
 	weaponvelocity=1650;
@@ -1237,7 +1237,7 @@
 	energypershot=200;
 	//NoAutoRange=1;
 	AreaOfEffect=16;
-	ReloadTime=1.25;//5 because of no depthcharge
+	ReloadTime=1.75;//5 because of no depthcharge
 	WeaponTimer=1;
 	BurnBlow=0;
 	WeaponVelocity=900;
