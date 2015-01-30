@@ -473,9 +473,9 @@ if gadgetHandler:IsSyncedCode() then
 		function gadget:UnitLoaded(unitID, unitDefID, unitTeam, transportID, transportTeam)
 			if not AreTeamsAllied (unitTeam, transportTeam) and commanderTable[unitDefID] then
 				if  not badges["special"]["napaward"] then
-					badges["special"]["napaward"] = teamID
+					badges["special"]["napaward"] = transportTeam
 					badges["special"]["n"] = badges["special"]["n"] + 1
-					Echo("\'Napper\'-award goes to: " .. getFriendlyName(teamID))
+					Echo("\'Napper\'-award goes to: " .. getFriendlyName(transportTeam))
 				end			
 			end
 		end
