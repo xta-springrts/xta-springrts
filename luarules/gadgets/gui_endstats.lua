@@ -470,6 +470,16 @@ if gadgetHandler:IsSyncedCode() then
 			end
 		end
 		
+		function gadget:UnitLoaded(unitID, unitDefID, unitTeam, transportID, transportTeam)
+			if not AreTeamsAllied (unitTeam, transportTeam) and commanderTable[unitDefID] then
+				if  not badges["special"]["napaward"] then
+					badges["special"]["napaward"] = teamID
+					badges["special"]["n"] = badges["special"]["n"] + 1
+					Echo("\'Napper\'-award goes to: " .. getFriendlyName(teamID))
+				end			
+			end
+		end
+		
 		function gadget:UnitGiven(unitID, unitDefID, unitTeam, oldTeam)
 						
 			if teamData[oldTeam] and teamData[unitTeam] then
@@ -704,6 +714,7 @@ else
 		local imgTopKiller					= "LuaUI/Images/endstats/soldier.png"
 		local imgFirstT2					= "LuaUI/Images/endstats/catpeak.png"
 		local imgCommLost					= "LuaUI/Images/endstats/redfly.png"
+		local imgNapper						= "LuaUI/Images/endstats/raven.png"
 		local imgSize						= 24
 		local areHeroes						= false
 		local areLost						= false
@@ -1310,6 +1321,30 @@ else
 					local label = "\'Cygnus Nero\' "
 					
 					glTexture(imgCygnus)
+					glTexRect(x3,y1-rows*rheight-bsize/2,x3+bsize,y1-rows*rheight+bsize/2)
+					glTexture(false)
+					
+					myFont:Begin()
+					myFont:SetTextColor(cTitle)
+					myFont:Print(label,x2, y1-rows*rheight, textsize, 'vs')
+					myFont:SetTextColor({r, g, b, 1})
+					myFont:Print(leaderName,x2+textsize*gl.GetTextWidth(label), y1-rows*rheight, textsize, 'vs')
+					myFont:End()	
+				end
+				
+				-- three commkills
+				if badges["special"]["napaward"] then
+					rows = rows + 1
+					
+					local teamID = badges["special"]["napaward"]
+					local r,g,b = GetTeamColor(teamID)
+					local _,leaderID,_,isAI = GetTeamInfo(teamID)
+					local leaderName = leaderID and (GetPlayerInfo(leaderID) or (leaderNames[teamID]) or "N/A") or "N/A"	
+					if isAI then leaderName = "AI" end	
+					if teamID == gaiaID then leaderName = "Zombies" end
+					local label = "\'Napper\' "
+					
+					glTexture(imgNapper)
 					glTexRect(x3,y1-rows*rheight-bsize/2,x3+bsize,y1-rows*rheight+bsize/2)
 					glTexture(false)
 					
