@@ -270,6 +270,8 @@ function widget:MousePress(mx, my, mButton)
 			
 				if not mySpectatorState and canVoteTeam and canVoteTeam == myAllyTeamID then
 					Button[7].disabled 				= false
+				else
+					Button[7].disabled 				= true
 				end			
 				
 				return true
