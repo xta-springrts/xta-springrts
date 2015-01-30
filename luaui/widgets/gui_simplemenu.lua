@@ -65,7 +65,7 @@ local function InitButtons()
 	local L3 = 20   -- buttonheight
 	local L2 = 100  -- button width
 	
-	Button[6].disabled 				= mySpectatorState
+	Button[7].disabled 				= mySpectatorState
 	
 	for i,button in ipairs(Button) do
 		button["x1"] 	= posX + margin
