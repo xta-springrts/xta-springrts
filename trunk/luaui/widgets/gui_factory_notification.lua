@@ -26,6 +26,7 @@ local GetUnitTeam				= Spring.GetUnitTeam
 local GetUnitIsDead				= Spring.GetUnitIsDead
 local random					= math.random
 local Echo						= Spring.Echo
+local SendMessageToTeam			= Spring.SendMessageToTeam
 local myTeamID					= Spring.GetMyTeamID()
 local GetUnitHealth				= Spring.GetUnitHealth
 local maxUnits					= tonumber(Spring.GetModOptions().maxunits or Game.maxUnits) 
@@ -95,7 +96,7 @@ function widget:GameFrame(gameFrame)
 					if hasQueue then
 						if gameFrame - frame > 900 and (gameFrame - frame)%900 == 0 then
 							local fdID = Spring.GetUnitDefID(fID)
-							Echo(UnitDefs[fdID].humanName .. ": foreign object blocking construction platform!")
+							SendMessageToTeam(myTeamID, UnitDefs[fdID].humanName .. ": foreign object blocking construction platform!")
 							--local x,y,z = Spring.GetUnitPosition(fID) -- markers are annoying
 							--Spring.MarkerAddPoint (x,y,z,"Factory stuck",true)
 						end
