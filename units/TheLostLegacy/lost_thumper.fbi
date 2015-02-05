@@ -4,8 +4,8 @@
 	UnitName=Lost_thumper;
 	
 	//    Required Tags
-	BuildCostEnergy=12345;
-	BuildCostMetal=1657;
+	BuildCostEnergy=15345;
+	BuildCostMetal=1857;
 	BuildTime=31280;
 	Category=LOST TANK LEVEL3 WEAPON NOTAIR NOTSUB CTRL_W;
 	Description=Amphibious Artillery Tank;

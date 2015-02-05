@@ -264,12 +264,12 @@
 {
 	name=Pop-up Cannon;
 	explosiongenerator=custom:GREEN_EMP_SHOT;
-	energypershot=216;
+	energypershot=556;
 	accuracy=975;
 	rgbcolor=0.5 1.0 0.5;
 	weaponType=Cannon;
 	turret=1;
-	range=2450; // 1330; in 9.725
+	range=2250; // 1330; in 9.725
 	reloadtime=4.0;
 	weaponvelocity=770;
 	areaofeffect=105;
@@ -1346,7 +1346,7 @@
 	reloadtime=2.5;
 	energypershot=200;
 	weaponvelocity=1000;
-	areaofeffect=64;
+	areaofeffect=16;
 	
 
 	soundstart=PhoFir00;
@@ -1772,7 +1772,7 @@
 	LineOfSight=1;
 	Turret=1;
 	Range=260;
-	ReloadTime=1.25;
+	ReloadTime=1.50;
 	WeaponTimer=1;
 	WeaponVelocity=860;
 	Duration=1;
@@ -1788,7 +1788,7 @@
 	Tolerance=600;
 	[DAMAGE]
 		{
-		Default=60;
+		Default=50;
 		}
 	}
 
@@ -1808,7 +1808,7 @@
 	beamttl=10;
 	accuracy=50;
 	sprayangle=50;
-	range=600; 
+	range=575; 
 	reloadtime=0.9;
 	energypershot=30;
 	weaponvelocity=400;
@@ -1828,7 +1828,7 @@
 	guidance=1;
 	[DAMAGE]
 	{
-		default=116;//122
+		default=105;//116
 		group_landair=61;
 	}
 }
