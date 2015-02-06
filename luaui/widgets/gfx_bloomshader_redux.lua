@@ -535,7 +535,7 @@ function widget:GetInfo()
 		date      = "24-10-2013",
 		license   = "GPL, v2",
 		layer     = 0,
-		enabled   = false and CheckEngineVersion(Game.version),
+		enabled   = false,
 	}
 end
 
