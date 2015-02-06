@@ -1,0 +1,111 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Arm;
+	name=Armoured Fusion Reactor;
+	description=Produces Energy;
+	icontype=fusion;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=ARM ENERGY NOWEAPON NOTAIR NOTSUB;
+	tedclass=ENERGY;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=guardian_fusion_reactor;
+	unitnumber=233;
+	objectname=guardian_fusion_reactor.3do;
+	corpse=guardian_fusion_reactor_dead;
+	buildpic=guardian_fusion_reactor.png;
+	soundcategory=ARM_FUS;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=5432;
+	buildcostmetal=4011;
+	buildcostenergy=25058;
+	buildtime=82487;
+	footprintx=6;
+	footprintz=6;
+	collisionVolumeScales=77 51 77;
+	collisionVolumeOffsets=0 0 0;
+	collisionVolumeTest= 1;
+	collisionVolumeType=box;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=825;
+	energyuse=0;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	buildangle=32768;
+	YardMap=oooooo oooooo oooooo oooooo oooooo oooooo;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	activatewhenbuilt=1;
+	canRepeat=0;
+	canMove=0;
+	canAttack=0;
+	canGuard=0;
+	//************************************************************
+	//  Movement
+	//************
+	maxslope=12;
+	maxwaterdepth=22;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=367.5;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeas=CRAWL_BLAST; 
+	selfdestructas=armmine5; 
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=0;
+	//cancloak=1;
+	//cloakcost=125;
+	designation=AE-CKF;
+	downloadable=1;
+	//mincloakdistance=10;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+}

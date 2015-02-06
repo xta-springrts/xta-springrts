@@ -145,6 +145,7 @@
 	core_mazarin=99;
 	core_donut=99;
 	core_shock_mine=99;
+	guardian_zealot=99;
 }
 
 [group_walls]

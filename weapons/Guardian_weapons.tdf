@@ -1,4 +1,94 @@
 
+[GOKZEALOT_BLADE_DAMG]
+	{
+	ID=217; 
+	Name=Zealot Strike;
+	explosiongenerator=custom:ElectricFlare;
+	RenderType=7;
+  	texture1=testlightning;
+	LineOfSight=1;
+	Turret=1;
+	Range=60;
+	targetBorder=1;
+	ReloadTime=1.5;
+	WeaponTimer=1;
+	WeaponVelocity=860;
+	Duration=1;
+	AreaOfEffect=12;
+	soundstart=gokzeal1hit;
+	//soundstart=gokzeal1;
+	//soundhit=gokzeal1hit;//!!!
+	FireStarter=85;
+	BeamWeapon=1;
+	thickness=1;
+	rgbcolor=0.0 0.0 0.0;
+	beamdecay=0.9;
+	beamttl=10;
+	Tolerance=600;
+	[DAMAGE]
+		{
+		Default=200;
+		}
+	}
+
+
+[GOKZEALOT_BLADE_DAMGOLD]
+	{
+	ID=166;
+	name=Zealot - Power Blade;
+	rendertype=1;
+	//model=gokbladeshot;
+	lineofsight=1;
+	turret=1;
+	areaofeffect=16;
+	unitsonly=1;//!!!
+
+	range=120;
+	reloadtime=1;//0.5;
+	weaponvelocity=300;
+	startvelocity=25;
+	weaponacceleration=300;
+	edgeeffectiveness=1;
+	weapontimer=0;
+	burnblow=1;
+	explosiongenerator=custom:ElectricFlare;
+
+	soundstart=gokzeal1;
+	soundhit=gokzeal1hit;//!!!
+
+	tolerance=8000;
+
+	impulsefactor=0;
+
+	//damage and reloadtime doubled
+	[DAMAGE]
+		{
+		default=200;
+		}
+	}
+
+[GOKZEALOT_BLADE_TARG]
+	{
+	ID=131;
+	name=Zealot - Aggro Targeter;
+	rendertype=1;
+	//model=gokbladeshot;
+	lineofsight=1;
+	turret=1;
+
+	range=1;
+	reloadtime=1;
+	weaponvelocity=1000;
+	areaofeffect=8;
+
+	tolerance=32000;
+
+	[DAMAGE]
+		{
+		default=0;
+		}
+	}
+
 [EVERCHOSEN_ANNIHILATOR]
 {
 	name=Annihilator Weapon;
@@ -44,10 +134,10 @@
 	name=Missiles;
 	turret=1;
 	explosiongenerator=custom:ElectricFlare;
-	model=missile.s3o;
+	model=guardian_missile.3do;
 	Texture1=null;
 	range=800;
-	reloadtime=1.5;
+	reloadtime=1.333;
 	weapontimer=5;
 	flighttime=2;
 	weaponvelocity=1650;
@@ -238,7 +328,7 @@
 	name=Missiles;
 	turret=1;
 	explosiongenerator=custom:KBOTMISSILEHIT;
-	model=missile.s3o;
+	model=guardian_missile.3do;
 	Texture1=null;
 	range=720;
 	reloadtime=2;
@@ -356,7 +446,7 @@
 	explosiongenerator=custom:KBOTMISSILEHIT;
 	cegTag=GUARDIANMISSILETRAIL;
 	turret=0;
-	model=missile.s3o;
+	model=guardian_missile.3do;
 	Texture1=null;
 	range=510;
 	reloadtime=1.15;
@@ -433,7 +523,7 @@
 	name=Rockets;
 	Weapontype=MissileLauncher;
 	turret=0;
-	model=missile.s3o;
+	model=guardian_missile.3do;
 	explosiongenerator=custom:KBOTROCKETHIT;
 	cegTag=GUARDIANRocketTRAIL;
 	Texture1=null;
@@ -470,7 +560,7 @@
 	name=Rockets;
 	Weapontype=MissileLauncher;
 	turret=1;
-	model=missile.s3o;
+	model=guardian_missile.3do;
 	explosiongenerator=custom:KBOTROCKETHIT;
 	cegTag=GUARDIANRocketTRAIL;
 	Texture1=null;
@@ -502,7 +592,7 @@
 	name=Rockets;
 	Weapontype=MissileLauncher;
 	turret=1;
-	model=missile.s3o;
+	model=guardian_missile.3do;
 	explosiongenerator=custom:KBOTMISSILEHIT;
 	cegTag=GUARDIANMISSILETRAIL;
 	Texture1=null;
@@ -535,7 +625,7 @@
 	name=Rockets;
 	Weapontype=MissileLauncher;
 	turret=1;
-	model=missile.s3o;
+	model=guardian_missile.3do;
 	explosiongenerator=custom:KBOTMISSILEHIT;
 	cegTag=GUARDIANMISSILETRAIL;
 	Texture1=null;
@@ -568,7 +658,7 @@
 	name=Missiles;
 	turret=1;
 	explosiongenerator=custom:KBOTMISSILEHIT;
-	model=missile.s3o;
+	model=guardian_missile.3do;
 	Texture1=null;
 	range=700;
 	reloadtime=2;
@@ -1237,7 +1327,7 @@
 	energypershot=200;
 	//NoAutoRange=1;
 	AreaOfEffect=16;
-	ReloadTime=1.75;//5 because of no depthcharge
+	ReloadTime=1.25;//5 because of no depthcharge
 	WeaponTimer=1;
 	BurnBlow=0;
 	WeaponVelocity=900;
