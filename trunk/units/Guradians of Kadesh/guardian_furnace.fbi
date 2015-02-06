@@ -1,0 +1,118 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Arm;
+	name=Heavy Fusion Reactor;
+	description=Armoured Produces Energy;
+	icontype=ahfusion;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=ARM ENERGY NOWEAPON NOTAIR NOTSUB;
+	tedclass=ENERGY;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=guardian_furnace;
+	unitnumber=33;
+	objectname=guardian_furnace.3do;
+	corpse=guardian_furnace_dead;
+	buildpic=guardian_furnace.png;
+	soundcategory=ARM_FUS;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=7032;
+	buildcostmetal=10212;
+	buildcostenergy=67478;
+	buildtime=135043;
+	footprintx=11;
+	footprintz=11;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=3000;
+	energyuse=0;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	buildangle=16384;
+	YardMap=yyoooooooyy yoooooooooy ooooooooooo ooooooooooo ooooooooooo ooooooooooo ooooooooooo ooooooooooo ooooooooooo yoooooooooy yyoooooooyy;
+	activatewhenbuilt=1;
+	collisionVolumeType=box;
+	collisionVolumeScales=124 144 124;
+	collisionVolumeOffsets=0 0 0;
+	collisionVolumeTest = 1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canRepeat=0;
+	canMove=0;
+	canAttack=0;
+	canGuard=0;
+	
+	//************************************************************
+	//  Movement
+	//************
+	maxslope=13;
+	maxwaterdepth=33;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=367.5;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeas=CRAWL_BLAST; 
+	selfdestructas=armmine5; 
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=0;
+	designation=AE-FPF;
+	downloadable=1;
+	leavetracks=1;
+	threed=1;
+	trackoffset=9;
+	trackstrength=12;
+	trackstretch=1;
+	tracktype=StdTank;
+	trackwidth=50;
+	version=1.2;
+	zbuffer=1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+	[SFXTypes]
+	{
+	explosiongenerator0=custom:GlowWhite;
+	}
+}
