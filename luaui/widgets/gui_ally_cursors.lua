@@ -85,7 +85,7 @@ local font
 local fontSize = 28
 
 function widget:Initialize()
-	font = gl.LoadFont( "/fonts/FreeSansBold.otf", fontSize )
+	font = gl.LoadFont( "FreeSansBold.otf", fontSize )
 
 	local players = Spring.GetPlayerRoster()
 	--build player name list
