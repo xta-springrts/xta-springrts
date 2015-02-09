@@ -12,7 +12,7 @@ end
 
 local posX, posY					  	= 600, 400
 local buttonsize					  	= 16
-local width, height					  	= 360, 540
+local width, height					  	= 360, 580
 local iWidth							= 400
 local iRowHeight						= 14
 local rows								= 0
@@ -156,6 +156,7 @@ function widget:Initialize()
 	Button[15]						= {} -- disable move-failed sounds
 	Button[16]						= {} -- full screen
 	Button[17]						= {} -- disable blinking units
+	Button[18]						= {} -- show/don't show grass
 	Panel["main"]					= {}
 	Panel["info"]					= {} -- info screen with mod options
 	InitButtons()
@@ -561,6 +562,10 @@ function InitButtons()
 	Button[17]["command"]		= "blinking"
 	Button[17]["label"]			= "Blinking units:"
 	
+	Button[18]["click"]			= tonumber(Spring.GetConfigInt("GrassDetail",1) or 1) == 1
+	Button[18]["command"]		= "grass"
+	Button[18]["label"]			= "Show grass on maps:"
+	
 	Panel["main"]["x1"]			= posX
 	Panel["main"]["x2"]			= posX + width
 	Panel["main"]["y1"]			= posY
@@ -690,6 +695,12 @@ function ButtonHandler (cmd)
 			Spring.SendCommands("teamhighlight 0")
 		else
 			Spring.SendCommands("teamhighlight 1")
+		end
+	elseif cmd == "grass" then
+		if Button[18]["click"] then
+			Spring.SetConfigInt("GrassDetail",0)
+		else
+			Spring.SetConfigInt("GrassDetail",1)
 		end
 	else
 		Echo("Local command:",cmd)
