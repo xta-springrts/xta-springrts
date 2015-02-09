@@ -69,9 +69,43 @@ if(not gadgetHandler:IsSyncedCode()) then
 		
 local enabled = tonumber(Spring.GetModOptions().koth) or 0
 
+
 if (enabled == 0) then 
   return false
 end
+
+		local function ListPlayerNames (allyTeamID)
+		if not allyTeamID or allyTeamID < 0 then return "No-one" end
+		
+		local playerNames = "?"
+		local names = {}
+						
+		for _, teamID in pairs(Spring.GetTeamList(allyTeamID) ) do
+			for _, playerID in pairs (Spring.GetPlayerList(teamID) ) do
+				local name,active,spec = Spring.GetPlayerInfo(playerID)
+				
+				if active and not spec then
+					if #names == 0 then
+						playerNames = name
+						names[#names+1] = name
+					else
+						local prevNames = playerNames
+						if #names == 1 then
+							playerNames = names[1] .. " and " .. name 
+							names[#names+1] = name
+						elseif #names == 2 then
+							playerNames = names[1] .. ", " .. names[2] .. " and " .. name
+							names[#names+1] = name
+						else
+							playerNames = names[1] .. " et al."
+							return playerNames, #names
+						end
+					end
+				end
+			end
+		end
+		return playerNames, #names
+	end
 		
 	function gadget:Initialize()
 		gadgetHandler:AddSyncAction("changeColor", setBoxColor)
@@ -99,7 +133,8 @@ end
 			local posy = vsy * 0.25
 			myFont:SetTextColor({255, 255, 255, 1})
 			if teamTimer > 0 then
-				local teamName 
+				local teamName
+				local TeamPlayerNames
 				if gaiaAllyTeamID == teamControl then
 					if haveZombies then
 						teamName = "Zombies"
@@ -107,7 +142,7 @@ end
 						teamName = "Team gaia"
 					end
 				else
-					teamName = table.concat({"Team ", teamControl})
+					teamName = ListPlayerNames(teamControl)
 				end
 				
 				if teamTimer > 30 then
@@ -197,7 +232,7 @@ end
 if(gadgetHandler:IsSyncedCode()) then
 
 	local actualTeam = -1
-	local control = -1
+	local controlAllyTeam = -1
 	local goalTime = 0 -- in seconds
 	local timer = -1
 	local lastControl = nil
@@ -210,6 +245,39 @@ local enabled = tonumber(Spring.GetModOptions().koth) or 0
 if (enabled == 0) then 
   return false
 end
+	
+	local function ListPlayerNames (allyTeamID)
+		if not allyTeamID or allyTeamID < 0 then return "No-one" end
+		
+		local playerNames = "?"
+		local names = {}
+						
+		for _, teamID in pairs(Spring.GetTeamList(allyTeamID) ) do
+			for _, playerID in pairs (Spring.GetPlayerList(teamID) ) do
+				local name,active,spec = Spring.GetPlayerInfo(playerID)
+				
+				if active and not spec then
+					if #names == 0 then
+						playerNames = name
+						names[#names+1] = name
+					else
+						local prevNames = playerNames
+						if #names == 1 then
+							playerNames = names[1] .. " and " .. name 
+							names[#names+1] = name
+						elseif #names == 2 then
+							playerNames = names[1] .. ", " .. names[2] .. " and " .. name
+							names[#names+1] = name
+						else
+							playerNames = names[1] .. " et al."
+							return playerNames, #names
+						end
+					end
+				end
+			end
+		end
+		return playerNames, #names
+	end
 	
 	function gadget:Initialize()
 		goalTime = (Spring.GetModOptions().hilltime or 0) * 60
@@ -237,7 +305,7 @@ end
 			Echo("Grace period is over. GET THE HILL!")
 		end
 		if(f % 32 == 15 and f > grace*30 + lG*30*60) then
-			local control = -2 
+			local controlAllyTeam = -2 
 			local team = nil 
 			local present = false 
 			
@@ -256,17 +324,17 @@ end
 						end
 					end
 				
-					if (control == -2)  then 
+					if (controlAllyTeam == -2)  then 
 						if (not blockedDefs[Spring.GetUnitDefID(u)]) then
 							if canControl then
-								control = ally
+								controlAllyTeam = ally
 								team = Spring.GetUnitTeam(u)
 							end
 						end 
 					else 
-						if (control ~= ally) then 
+						if (controlAllyTeam ~= ally) then 
 							if canControl then
-								control = -1
+								controlAllyTeam = -1
 								break
 							end
 						end 
@@ -274,8 +342,8 @@ end
 				end 
 			end 
 			
-			if(control ~= lastControl) then
-				if (control == -1) then
+			if(controlAllyTeam ~= lastControl) then
+				if (controlAllyTeam == -1) then
 					Echo("Control contested.")
 					SendToUnsynced("changeColor", -1)
 				else
@@ -287,57 +355,62 @@ end
 							lastTeamName = "Team gaia"
 						end
 					else
-						lastTeamName = table.concat({"Team ", (lastHolder or " X")})
+						lastTeamName = ListPlayerNames(lastHolder)
 					end
 					
-					if (control == -2) then
+					if (controlAllyTeam == -2) then
 					
 						if not lastHolder or lastHolder < 0 then
 							Echo("Hill is up for grabs!")
 						else
-							Echo(lastTeamName .. " lost control.")
+							if not Spring.IsGameOver() then
+								Echo(lastTeamName .. " lost control.")
+							end
 						end
 						SendToUnsynced("changeColor", -1)
 						timer = goalTime
-						SendToUnsynced("changeTime", control, timer)
+						SendToUnsynced("changeTime", controlAllyTeam, timer)
 					else 
 						actualTeam = team
-						if (lastHolder ~= control) then 
+						if (lastHolder ~= controlAllyTeam) then 
 							timer = goalTime
-							lastHolder = control
+							lastHolder = controlAllyTeam
 						end 
 						
 						local teamName
-						if gaiaAllyTeamID == control then
+						if gaiaAllyTeamID == controlAllyTeam then
 							if haveZombies then
 								teamName = "Zombies are"
 							else
 								teamName = "Team gaia is"
 							end
 						else
-							teamName = table.concat({"Team ", (control or " X"), " is"})
+							local nameStr, count  = ListPlayerNames(controlAllyTeam)
+							teamName = nameStr .. (count > 1 and " are" or " is")
 						end
 						
 						Echo(teamName .. " now in control.")
 						Spring.PlaySoundFile(sndnotify)
 						SendToUnsynced("changeColor", actualTeam)
-						lastHolder = control
+						lastHolder = controlAllyTeam
 					end
 				end 
 			end
 			
-			if (control >= 0) then 
+			if (controlAllyTeam >= 0) then 
 				timer = timer - 1  
-				SendToUnsynced("changeTime", control, timer)				
+				SendToUnsynced("changeTime", controlAllyTeam, timer)				
 			end
 
-			if(control >= 0 and timer == 0) then
-				Echo("Team " .. control .. " has won!")
-				GG.gamewinners = {actualTeam}
-				gameOver(actualTeam)
+			if(controlAllyTeam >= 0 and timer == 0) then
+				local names, count = ListPlayerNames(controlAllyTeam)
+				Echo(names .. (count > 1 and " have" or " has") .. " won!")
+				
+				GG.gamewinners = {controlAllyTeam} -- <==  this is allyTeamID
+				gameOver(actualTeam) -- <== this is teamID
 			end 
 
-			lastControl = control						
+			lastControl = controlAllyTeam						
 
 		end
 	end

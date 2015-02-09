@@ -2255,11 +2255,17 @@ else
 				
 				-- chart window
 				if Button["influence"]["On"] then
-					drawInfluence()
+					if allyData and allyData[1] then
+						drawInfluence()
+					end
 				elseif Button["teamstats"]["On"] then
-					drawTeamstats()
+					if teamData and teamData[1] then
+						drawTeamstats()
+					end
 				elseif Button["matrix"]["On"] then
-					drawMatrix()
+					if teamData then
+						drawMatrix()
+					end
 				elseif Button["heroes"]["On"] then	
 					drawHeroes()
 				elseif Button["lost"]["On"] then
