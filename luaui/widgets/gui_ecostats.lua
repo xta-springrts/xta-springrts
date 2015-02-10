@@ -1,11 +1,16 @@
-local versionNumber = "1.7"
+local versionNumber = "1.71"
 
 do
 ---------------------------------------------------------------------------------------------------
 
 ----------------------------------------------------------------------------------------------------------------------------
 -- Changelog
+-- Version 1.71
+-- Small bugfix with amount of players bug
+
+------------------------
 -- Version 1.7
+------------------------
 -- * Rewritten for better performance, for some reason display lists make performance worse.
 --   Now about half the performance cost compared to before and even less if gamespeed > 1.
 -- * Add Guardians of Kadesh faction images
@@ -2864,7 +2869,7 @@ function drawStandard()
 		for _, data in ipairs(allyData) do
 			local aID = data.aID
 			
-			if data.exists and isTeamReal(aID) and (aID == Spring.GetMyAllyTeamID() or inSpecMode) and (aID ~= gaiaAllyID or haveZombies) then
+			if data.exists and isTeamReal(aID) and (aID == myAllyID or inSpecMode) and (aID ~= gaiaAllyID or haveZombies) then
 					
 				-- Expanded table
 				if Button["info"][aID]["click"] then		
@@ -2971,7 +2976,7 @@ function widget:DrawScreen()
 			local aID = data.aID
 			local drawpos = data.drawpos
 			
-			if data.exists and drawpos then
+			if data.exists and drawpos and (aID == myAllyID or inSpecMode) and (aID ~= gaiaAllyID or haveZombies)then
 				
 				local posy = tH*(drawpos)
 				local label, isAlive, hasCom
