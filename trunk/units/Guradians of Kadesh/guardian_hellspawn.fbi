@@ -65,7 +65,7 @@
 	//************************************************************
 	//  Movement
 	//************
-	movementclass=KBOTSf3;
+	movementclass=KBOTSS2;
 	turnrate=600;
 	acceleration=1.2;
 	brakerate=1.0;
