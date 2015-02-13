@@ -6,9 +6,13 @@
 	explosiongenerator=custom:ElectricFlare;
 	RenderType=7;
   	texture1=testlightning;
-	LineOfSight=1;
+	LineOfSight=0;
 	Turret=1;
 	Range=60;
+	collidefriendly=0;
+	avoidfriendly=0;
+	avoidGround=0;
+	avoidNeutral=0;
 	targetBorder=1;
 	ReloadTime=1.5;
 	WeaponTimer=1;
@@ -25,6 +29,7 @@
 	beamdecay=0.9;
 	beamttl=10;
 	Tolerance=600;
+	cylindertargeting = 1;
 	[DAMAGE]
 		{
 		Default=200;
