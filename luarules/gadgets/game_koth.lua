@@ -74,7 +74,7 @@ if (enabled == 0) then
   return false
 end
 
-		local function ListPlayerNames (allyTeamID)
+	local function ListPlayerNames (allyTeamID)
 		if not allyTeamID or allyTeamID < 0 then return "No-one" end
 		
 		local playerNames = "?"

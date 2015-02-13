@@ -31,6 +31,7 @@ local EditUnitCmdDesc = Spring.EditUnitCmdDesc
 local SendMessageToTeam = Spring.SendMessageToTeam
 local ValidUnitID = Spring.ValidUnitID
 local GetUnitIsDead = Spring.GetUnitIsDead
+local Echo = Spring.Echo
 
 local builderDefs = {} 
 local mexDefs = {} 
@@ -517,52 +518,63 @@ function gadget:AllowCommand(unitID, unitDefID, teamID, cmdID, cmdParams, _)
 end 
 
 function gadget:CommandFallback(unitID, unitDefID, teamID, cmdID, cmdParams, cmdOptions) 
-  --Echo("CF " .. cmdID)  
+	--Echo("CF " .. cmdID)  
+	
+	if cmdID ~= CMD_UPGRADEMEX then 
+		return false 
+	end 
 
-  if cmdID ~= CMD_UPGRADEMEX then 
-    return false 
-  end 
-  
-  local builder = builders[teamID][unitID] 
-  if not cmdParams[2] then 
-    -- Unit 
-    if not builder.orderTaken then 
-      local mexID = cmdParams[1] 
-      
-      upgradeMex(unitID, mexID, teamID) 
-      return true, false 
-    else 
-      builder.orderTaken = false 
-      return true, true 
-    end 
-  
-  else 
-    --Circle 
-    local x, y, z, radius = cmdParams[1], cmdParams[2], cmdParams[3], cmdParams[4] 
-    
-    local mexesInRange = {} 
-    local canUpgrade = false 
-    for mexID, mex in pairs(mexes[teamID]) do 
-    
-      if not mex.assignedBuilder and getDistanceFromPosition(x, z, mexID, teamID) < radius then 
-        mexesInRange[mexID] = mexes[teamID][mexID] 
-        canUpgrade = true 
-      end 
-    end 
-    if canUpgrade and builder and builder.unitDefID then        
-      local upgradePairs = builderDefs[builder.unitDefID]  
-      local mexID = getClosestMex(unitID, upgradePairs, teamID, mexesInRange) 
-      
-      if mexID then 
-        addCommands[unitID] = {cmd = CMD_INSERT, params = {0, CMD_UPGRADEMEX, CMD_OPT_INTERNAL, mexID}, options = {"alt"}}      
-        gadgetHandler:UpdateCallIn("GameFrame") 
+	local builder = builders[teamID][unitID] 
+	if not cmdParams[2] then 
+		-- Unit 
+		if not builder.orderTaken then 
+			local mexID = cmdParams[1] 
 
-        return true, false 
-      end    
-    end 
-    return true, true 
-    
-  end 
+			upgradeMex(unitID, mexID, teamID)
+
+			return true, false 
+		else 
+			builder.orderTaken = false 
+			return true, true 
+		end 
+
+	else 
+		--Circle 
+		local x, y, z, radius = cmdParams[1], cmdParams[2], cmdParams[3], cmdParams[4] 
+
+		local mexesInRange = {} 
+		local canUpgrade = false 
+		local upgradePairs = builderDefs[builder.unitDefID] 
+		
+		for mexID, mex in pairs(mexes[teamID]) do 
+
+			if not mex.assignedBuilder and getDistanceFromPosition(x, z, mexID, teamID) < radius then 
+			mexesInRange[mexID] = mexes[teamID][mexID] 
+			canUpgrade = true 
+			
+			local upgradeTo = upgradePairs[mex.unitDefID] 
+			if upgradeTo then
+				Spring.SetUnitRulesParam(mexID,"UpgradingTo",upgradeTo)
+			end
+		end 
+	end 
+	
+	if canUpgrade and builder and builder.unitDefID then        
+		local upgradePairs = builderDefs[builder.unitDefID]  
+		local mexID = getClosestMex(unitID, upgradePairs, teamID, mexesInRange) 
+	
+		if mexID then 
+			addCommands[unitID] = {cmd = CMD_INSERT, params = {0, CMD_UPGRADEMEX, CMD_OPT_INTERNAL, mexID}, options = {"alt"}}
+			
+			gadgetHandler:UpdateCallIn("GameFrame") 
+
+			return true, false 
+		end    
+	end 
+	
+	return true, true 
+
+	end 
 end 
 
 else 

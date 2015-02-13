@@ -62,6 +62,7 @@ local unitDefMidY							= {}
 
 function widget:Initialize()
 	AssignMouseCursor('Airstrike', "cursorairstrike", true, false)
+	Spring.SetCustomCommandDrawData(CMD_AIRSTRIKE,'Airstrike',{1.0,0,0,0.8},false)
 	AssignMouseCursor('Normal', 'cursornormal', true, false)
 	AssignMouseCursor('Select', 'cursorselect', true, false)
 	AssignMouseCursor('UnloadBad', 'cursorunloadbad', true, false)
@@ -72,12 +73,8 @@ function widget:Initialize()
 	
 	if Game.version <= "94.1" then 
 		FIRSTWEAPON	= 0
-	end
-			
-	if Game.version <= "94.1" then 
-		FIRSTWEAPON	= 0
-	end
-		
+	end			
+	
 	for id,unitDef in pairs(UnitDefs) do
 		local weapons = unitDef.weapons
 		local canKamikaze = unitDef.canKamikaze and unitDef.speed > 0
