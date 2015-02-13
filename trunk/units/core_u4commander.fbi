@@ -104,6 +104,7 @@
 	nochasecategory=WEAPON;
 	badtargetcategory=VTOL;
 	wpri_badtargetcategory=VTOL;
+	wsec_badtargetcategory=AIR;
 	wspe_badtargetcategory=VTOL;
 	explodeas=COMMANDER_BLAST;
 	selfdestructas=COMMANDER_SELF_D;
