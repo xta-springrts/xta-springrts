@@ -134,34 +134,34 @@ local function drawSquares()
 
 end
 
+local function drawFunction()
+	
+	glDepthTest(false)	
+	glLineWidth(0.49)
+	glColor(0, 0.75, 1 , 0.50 )
+	
+	for unitID, mohoDefID in pairs(upgradingMexes) do
+		local x, y, z = GetUnitPosition(unitID)
+		if x and ( IsUnitInView(unitID) ) then
+											
+			local x1 = x + (minx[mohoDefID] or -40)
+			local x2 = x + (maxx[mohoDefID] or 40)
+			local z1 = z + (minz[mohoDefID] or -40)
+			local z2 = z + (maxz[mohoDefID] or 40)
+			
+			glBeginEnd(GL.LINE_STRIP, DoSquare, x1,x2, z1,z2, y)
+			
+		end
+	end
+	
+	glLineWidth(1.0)
+	glColor(1, 1, 1, 1)
+
+end
+
 local function makeDrawList()
 	
 	if (drawList) then gl.DeleteList(drawList) end
-	
-	local function drawFunction()
-	
-		glDepthTest(false)	
-		glLineWidth(0.49)
-		glColor(0, 0.75, 1 , 0.50 )
-		
-		for unitID, mohoDefID in pairs(upgradingMexes) do
-			local x, y, z = GetUnitPosition(unitID)
-			if x and ( IsUnitInView(unitID) ) then
-												
-				local x1 = x + (minx[mohoDefID] or -40)
-				local x2 = x + (maxx[mohoDefID] or 40)
-				local z1 = z + (minz[mohoDefID] or -40)
-				local z2 = z + (maxz[mohoDefID] or 40)
-				
-				glBeginEnd(GL.LINE_STRIP, DoSquare, x1,x2, z1,z2, y)
-				
-			end
-		end
-		glLineWidth(1.0)
-		glColor(1, 1, 1, 1)
-	
-	end
-	
 	drawList = gl.CreateList(drawFunction)	
 end
 
