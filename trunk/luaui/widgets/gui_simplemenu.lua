@@ -65,7 +65,7 @@ local function InitButtons()
 	local L3 = 20   -- buttonheight
 	local L2 = 100  -- button width
 	
-	Button[7].disabled 				= mySpectatorState
+	Button[8].disabled 				= mySpectatorState
 	
 	for i,button in ipairs(Button) do
 		button["x1"] 	= posX + margin
@@ -100,35 +100,39 @@ function widget:Initialize()
 	Button[2]["command"]			= "opt"
 	Button[2]["label"]				= "Game settings"
 	
-	Button[3] 						= {} -- energyview
-	Button[3]["command"]			= "energy"
-	Button[3]["label"]				= "Energy overview"
+	Button[3] 						= {} -- set keys
+	Button[3]["command"]				= "setkeys"
+	Button[3]["label"]				= "Set custom keys"
 	
-	Button[4] 						= {} -- modopt
-	Button[4]["command"]			= "modopt"
-	Button[4]["label"]				= "View mod-options"
+	Button[4] 						= {} -- energyview
+	Button[4]["command"]			= "energy"
+	Button[4]["label"]				= "Energy overview"
 	
 	Button[5] 						= {} -- modopt
-	Button[5]["command"]			= "mapopt"
-	Button[5]["label"]				= "View map-options"
+	Button[5]["command"]			= "modopt"
+	Button[5]["label"]				= "View mod-options"
+	
+	Button[6] 						= {} -- modopt
+	Button[6]["command"]			= "mapopt"
+	Button[6]["label"]				= "View map-options"
 		
-	Button[6] 						= {} -- widget
-	Button[6]["command"]			= "widget"
-	Button[6]["label"]				= "Widget selector"
+	Button[7] 						= {} -- widget
+	Button[7]["command"]			= "widget"
+	Button[7]["label"]				= "Widget selector"
 	
-	Button[7] 						= {} -- propose draw
-	Button[7]["command"]			= "offer-draw"
-	Button[7]["label"]				= "Offer draw"
-	Button[7].disabled 				= mySpectatorState
+	Button[8] 						= {} -- propose draw
+	Button[8]["command"]			= "offer-draw"
+	Button[8]["label"]				= "Offer draw"
+	Button[8].disabled 				= mySpectatorState
 	
-	Button[8] 						= {} -- vote for surrender
-	Button[8]["command"]			= "vote-end"
-	Button[8]["label"]				= "Accept surrender"
-	Button[8].disabled 				= true
+	Button[9] 						= {} -- vote for surrender
+	Button[9]["command"]			= "vote-end"
+	Button[9]["label"]				= "Accept surrender"
+	Button[9].disabled 				= true
 	
-	Button[9] 						= {} -- quit
-	Button[9]["command"]			= "quit"
-	Button[9]["label"]				= "Quit game"
+	Button[10] 						= {} -- quit
+	Button[10]["command"]			= "quit"
+	Button[10]["label"]				= "Quit game"
 	
 	Button["close"] 				= {}
 	Panel["main"]					= {}
@@ -186,6 +190,10 @@ local function ButtonHandler (cmd)
 	elseif cmd == "opt" then
 		ButtonMenu.click = false
 		Spring.SendCommands("xta-options")
+		PlaySoundFile(button8)
+	elseif cmd == "setkeys" then
+		ButtonMenu.click = false
+		Spring.SendCommands("setkeys")
 		PlaySoundFile(button8)
 	elseif cmd == "energy" then
 		ButtonMenu.click = false
@@ -269,9 +277,9 @@ function widget:MousePress(mx, my, mButton)
 				local canVoteTeam = Spring.GetGameRulesParam("VotingAllyID")
 			
 				if not mySpectatorState and canVoteTeam and canVoteTeam == myAllyTeamID then
-					Button[7].disabled 				= false
+					Button[8].disabled 				= false
 				else
-					Button[7].disabled 				= true
+					Button[8].disabled 				= true
 				end			
 				
 				return true
