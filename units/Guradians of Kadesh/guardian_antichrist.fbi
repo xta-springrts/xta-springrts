@@ -1,0 +1,151 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Arm;
+	name=AntiChrist;
+	description=Melee Frontline General;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=ARM KBOT WEAPON MOBILE NOTAIR NOTSEA NOTSUB;
+	tedclass=KBOT;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=guardian_AntiChrist;
+	unitnumber=37;
+	objectname=guardian_AntiChrist.3do;
+	corpse=guardian_AntiChrist_dead;
+	buildpic=guardian_AntiChrist.png;
+	soundcategory=ARM_KBOT;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=13562; //was 1165 -- OTA: 
+	healtime=30;
+	buildcostmetal=2654; //-- OTA: 151
+	buildcostenergy=25432; //-- OTA: 1187
+	buildtime=36540; // -- OTA: 2340
+	footprintx=2;
+	footprintz=2;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalmake=1;
+	//metalstorage=20;
+	metalstorage=500;
+	energymake=25;
+	energyuse=0;
+	//energystorage=20;
+	//energystorage=20;
+	energystorage=500;
+
+	//************************************************************
+	//  Building
+	//************
+	activatewhenbuilt=1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=1;
+	builddistance=200;
+	workertime=200;
+	RepairSpeed=200;
+	ReclaimSpeed=200;
+	ResurrectSpeed=800;
+	TerraformSpeed=400;//speed up terraforming
+	capturespeed=400;//50 percent faster
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canattack=1;
+	canguard=1;
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+	upright=1;
+	autoheal=4;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementclass=KBOTDS2;
+	turnrate=1275; //475 in p1.7, 700 in 9.725; // was 995//was 446 OTA: 164 deg/s
+	acceleration=1.0;
+	brakerate=1.83105;
+	maxvelocity=1.6;//1.20 in p1.7; // 1.5 in 9.725; //1.32; OTA: 13.2 m/s
+	maxslope=14;
+	maxwaterdepth=12;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=720;
+	radardistance=1400;
+	sonardistance=600;
+	losemitheight=44;
+	radaremitheight=44;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	Weapon1=ANTICHIRST_BLADE_DAMG;
+	Weapon2=ANTICHRISTBEAM;
+	Weapon3=GOKzealot_BLADE_TARG;
+	nochasecategory=VTOL;
+	badtargetcategory=VTOL;
+	wpri_badtargetcategory=VTOL;
+	explodeas=ATOMIC_SMALLNANO;
+	selfdestructas=CRAWL_BLAST;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	firestandorders=1;
+	mobilestandorders=1;
+	standingfireorder=2;
+	standingmoveorder=1;
+	defaultmissiontype=Standby;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=1;
+	designation=ARM-KA;
+	cloakcost=400;
+	cloakcostmoving=700;
+	downloadable=1;
+	//hightrajectory=2;
+	maneuverleashlength=640;
+	shootme=1;
+	smoothanim=1;
+	steeringmode=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	collisionVolumeType = box;
+	collisionVolumeScales =25 27 23;
+	collisionVolumeOffsets = 0 -1 -1.5;
+	collisionVolumeTest = 1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+	//mass=800;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+	[SFXTypes]
+	{
+	explosiongenerator0=custom:rocketflare;
+	}
+
+}

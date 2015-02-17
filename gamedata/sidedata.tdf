@@ -2644,8 +2644,8 @@
 		canbuild3=guardian_hellspawn;
 		canbuild4=guardian_daemonknight;
 		canbuild5=guardian_farseer;
-		canbuild6=guardian_immortal;
-		canbuild7=guardian_zealot;
+		canbuild6=guardian_antichrist;
+		canbuild7=guardian_disciple;
 		canbuild8=guardian_Abomination;
 		canbuild9=guardian_everchosen;
 		canbuild10=guardian_leviathan;
@@ -2742,6 +2742,46 @@
 	}
 
 	[guardian_construction_aircraft]
+	{
+		canbuild1=guardian_solar_collector;
+		canbuild2=guardian_generator;
+		canbuild3=guardian_cell;
+		canbuild4=guardian_storage;
+		canbuild5=guardian_metal_extractor;
+		canbuild6=guardian_metal_maker;
+		canbuild7=guardian_terra_platform;
+		canbuild8=guardian_areo_platform;
+		canbuild9=guardian_hydro_scaffold;
+		//canbuild10=arm_shipyard;
+		//canbuild11=arm_sub_pen;
+		//canbuild12=arm_nano_tower;
+		canbuild13=guardian_light_laser_tower;
+		canbuild14=guardian_radar_tower;
+		canbuild15=guardian_piscator;
+		//canbuild16=arm_adv_vehicle_plant;
+		canbuild17=guardian_geothermal_powerplant;
+		canbuild18=guardian_blaster;
+		canbuild19=guardian_smasher;
+		canbuild20=guardian_dragons_teeth;
+		canbuild21=guardian_black_dawn;
+		//canbuild22=arm_spidernest;//Spiderpack vs. Tortoise
+		//canbuild23=arm_hovercraft_platform;
+		//canbuild24=arm_seaplane_platform;
+		canbuild25=guardian_assembly_plant;
+		//canbuild26=arm_adv_aircraft_plant;
+		//canbuild27=arm_adv_shipyard;
+		canbuild28=guardian_floating_solar_collector;
+		canbuild29=guardian_underwater_generator;
+		canbuild30=guardian_sonar_radar;
+		canbuild31=guardian_floating_light_laser_tower;
+		canbuild33=guardian_spatter;
+		canbuild34=guardian_underwater_storage;
+		canbuild37=guardian_splasher;
+		canbuild38=guardian_underwater_metal_extractor;
+		//canbuild39=arm_floating_dragons_teeth;
+	}
+
+	[guardian_antichrist]
 	{
 		canbuild1=guardian_solar_collector;
 		canbuild2=guardian_generator;

@@ -1,9 +1,117 @@
 
+[ANTICHRISTBEAM]
+{
+	areaofeffect=8;
+	beamdecay=1.5;
+	beamtime=0.1;
+	beamttl=5;
+	corethickness=1.0;
+	energypershot=0;
+	explosiongenerator=custom:KBOTMISSILEHIT;
+	hardstop=false;
+	intensity=0.001;
+	largebeamlaser=1;
+	laserflaresize=5;
+	name=PewPew;
+	noselfdamage=1;
+	pulsespeed=7.0;
+	range=290;
+	reloadtime=0.5;
+	rgbcolor=0.9 0.7 1.0;
+	//soundhitdry=xplolrg;
+	soundstart=gokimmlaser;
+	targetmoveerror=0.30000001192093;
+	thickness=3;
+	tolerance=10000;
+	turret=1;
+	weapontype=BeamLaser;
+	weaponvelocity=1500;
+	[DAMAGE]
+	{
+		default=100;//50
+	}
+}
+
+[ANTICHIRST_BLADE_DAMG]
+	{
+	ID=217; 
+	Name=Zealot Strike;
+	explosiongenerator=custom:LIGHTNING_ORANGE;
+	RenderType=7;
+  	texture1=testlightning;
+	LineOfSight=0;
+	Turret=1;
+	Range=86;
+	collidefriendly=0;
+	avoidfriendly=0;
+	avoidGround=0;
+	avoidNeutral=0;
+	targetBorder=1;
+	ReloadTime=2;
+	WeaponTimer=1;
+	WeaponVelocity=860;
+	Duration=1;
+	AreaOfEffect=12;
+	soundstart=gokzeal1hit;
+	//soundstart=gokzeal1;
+	//soundhit=gokzeal1hit;//!!!
+	FireStarter=85;
+	BeamWeapon=1;
+	thickness=1;
+	rgbcolor=0.0 0.0 0.0;
+	beamdecay=0.9;
+	beamttl=10;
+	Tolerance=600;
+	cylindertargeting = 1;
+	[DAMAGE]
+		{
+		Default=500;
+		}
+	}
+
+[DISCIPLINE_BLADE_DAMG]
+	{
+	ID=217; 
+	Name=Zealot Strike;
+	explosiongenerator=custom:PARALYZER_Orange;
+	RenderType=7;
+  	texture1=testlightning;
+	LineOfSight=0;
+	Turret=1;
+	Range=66;
+	collidefriendly=0;
+	avoidfriendly=0;
+	avoidGround=0;
+	avoidNeutral=0;
+	targetBorder=1;
+	ReloadTime=1.25;
+	WeaponTimer=1;
+	WeaponVelocity=860;
+	Duration=1;
+	AreaOfEffect=12;
+	soundstart=gokzeal1hit;
+	//soundstart=gokzeal1;
+	//soundhit=gokzeal1hit;//!!!
+	FireStarter=85;
+	BeamWeapon=1;
+	thickness=1;
+	rgbcolor=0.0 0.0 0.0;
+	beamdecay=0.9;
+	beamttl=10;
+	Tolerance=600;
+	cylindertargeting = 1;
+	[DAMAGE]
+		{
+		Default=225;
+		}
+	}
+
+
 [GOKZEALOT_BLADE_DAMG]
 	{
 	ID=217; 
 	Name=Zealot Strike;
-	explosiongenerator=custom:ElectricFlare;
+	explosiongenerator=custom:PARALYZER_BLUE;
 	RenderType=7;
   	texture1=testlightning;
 	LineOfSight=0;
@@ -142,7 +250,7 @@
 	model=guardian_missile.3do;
 	Texture1=null;
 	range=800;
-	reloadtime=1.333;
+	reloadtime=2.25;
 	weapontimer=5;
 	flighttime=2;
 	weaponvelocity=1650;
