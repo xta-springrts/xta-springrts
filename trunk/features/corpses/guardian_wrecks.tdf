@@ -1,4 +1,87 @@
 
+[guardian_antichrist_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=arm_corpses;
+	object=guardian_antichrist_dead;
+	featuredead=guardian_antichrist_heap;
+	footprintx=3;
+	footprintz=3;
+	height=20;
+	blocking=1;
+	hitdensity=100;
+	metal=1474;
+	damage=1682;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=36 23 36;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+[guardian_antichrist_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=3x3f;
+	footprintx=3;
+	footprintz=3;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	metal=787;
+	damage=1682;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=36 6 36;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+
+[guardian_disciple_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=guardian_corpses;
+	object=guardian_disciple_dead;
+	featuredead=guardian_disciple_heap;
+	footprintx=2;
+	footprintz=2;
+	height=40;
+	blocking=1;
+	hitdensity=100;
+	metal=321;
+	damage=640;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=23 24 21;//#AUTO#
+	collisionVolumeOffsets=0 -1 0;//#AUTO#
+}
+[guardian_disciple_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=2x2e;
+	footprintx=2;
+	footprintz=2;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	metal=160;
+	damage=640;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=23 6 21;//#AUTO#
+	collisionVolumeOffsets=0 -1 0;//#AUTO#
+}
 [guardian_leviathan_dead]
 {
 	world=All Worlds;

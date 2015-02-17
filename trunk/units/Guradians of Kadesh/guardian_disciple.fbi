@@ -1,0 +1,134 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Arm;
+	name=Disciple;
+	description=Fast Melee Kbot;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=ARM KBOT WEAPON MOBILE NOTAIR NOTSEA NOTSUB;
+	tedclass=KBOT;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=guardian_disciple;
+	unitnumber=37;
+	objectname=guardian_disciple.3do;
+	corpse=guardian_disciple_dead;
+	buildpic=guardian_disciple.png;
+	soundcategory=ARM_KBOT;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=3242; //was 1165 -- OTA: 
+	healtime=30;
+	buildcostmetal=435; //-- OTA: 151
+	buildcostenergy=5432; //-- OTA: 1187
+	buildtime=6540; // -- OTA: 2340
+	footprintx=2;
+	footprintz=2;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=0.6;
+	energyuse=0.6;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canattack=1;
+	canguard=1;
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+	upright=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementclass=KBOTSS2;
+	turnrate=1275; //475 in p1.7, 700 in 9.725; // was 995//was 446 OTA: 164 deg/s
+	acceleration=1.0;
+	brakerate=1.83105;
+	maxvelocity=2.0;//1.20 in p1.7; // 1.5 in 9.725; //1.32; OTA: 13.2 m/s
+	maxslope=14;
+	maxwaterdepth=12;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=454; //395.5;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	Weapon1=GOKzealot_BLADE_TARG;
+	Weapon2=DISCIPLINE_BLADE_DAMG;
+	Weapon3=Tantrum_BEAM;
+	nochasecategory=VTOL;
+	badtargetcategory=VTOL;
+	wpri_badtargetcategory=VTOL;
+	explodeas=BIG_UNITEX;
+	selfdestructas=BIG_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	firestandorders=1;
+	mobilestandorders=1;
+	standingfireorder=2;
+	standingmoveorder=1;
+	defaultmissiontype=Standby;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=1;
+	designation=ARM-KA;
+	downloadable=1;
+	//hightrajectory=2;
+	maneuverleashlength=640;
+	shootme=1;
+	smoothanim=1;
+	steeringmode=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	collisionVolumeType = box;
+	collisionVolumeScales =25 27 23;
+	collisionVolumeOffsets = 0 -1 -1.5;
+	collisionVolumeTest = 1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+	mass=800;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+	[SFXTypes]
+	{
+	explosiongenerator0=custom:rocketflare;
+	}
+
+}
