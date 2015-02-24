@@ -51,6 +51,13 @@ local captureUnitDefs = {
 	[ UnitDefNames["lost_u3commander"].id ] 				= UnitDefNames["lost_u3commander"  ],
 	[ UnitDefNames["lost_u4commander"].id ] 				= UnitDefNames["lost_u4commander"  ],
 	[ UnitDefNames["lost_ucommander"].id ] 					= UnitDefNames["lost_ucommander"  ],
+	[ UnitDefNames["guardian_commander"].id ] 					= UnitDefNames["guardian_commander"  ],
+	[ UnitDefNames["guardian_decoy_commander"].id ] 			= UnitDefNames["guardian_decoy_commander"  ],
+	[ UnitDefNames["guardian_u0commander"].id ] 				= UnitDefNames["guardian_u0commander"  ],
+	[ UnitDefNames["guardian_u2commander"].id ] 				= UnitDefNames["guardian_u2commander"  ],
+	[ UnitDefNames["guardian_u3commander"].id ] 				= UnitDefNames["guardian_u3commander"  ],
+	[ UnitDefNames["guardian_u4commander"].id ] 				= UnitDefNames["guardian_u4commander"  ],
+	[ UnitDefNames["guardian_ucommander"].id ] 					= UnitDefNames["guardian_ucommander"  ],
 	}
 	
 local napUnitDefs = {

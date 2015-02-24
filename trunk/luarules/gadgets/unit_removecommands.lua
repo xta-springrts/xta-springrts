@@ -101,6 +101,31 @@ local RemoveWait = {
 	[UnitDefNames.lost_underwater_moho_mine.id] = true,
 	[UnitDefNames.lost_underwater_tidal_generator.id] = true,
 	[UnitDefNames.lost_wind_generator.id] = true,
+	
+	[UnitDefNames.guardian_advanced_radar_tower.id] = true,
+	--[UnitDefNames.guardian_advanced_sonar_station.id] = true,
+	--[UnitDefNames.guardian_air_repair_pad.id] = true,
+	[UnitDefNames.guardian_storage.id] = true,
+	[UnitDefNames.guardian_guardian.id] = true,
+	[UnitDefNames.guardian_fusion_reactor.id] = true,
+	[UnitDefNames.guardian_geothermal_powerplant.id] = true,
+	[UnitDefNames.guardian_metal_extractor.id] = true,
+	[UnitDefNames.guardian_metal_maker.id] = true,
+	--[UnitDefNames.guardian_moho_metal_maker.id] = true,
+	[UnitDefNames.guardian_moho_mine.id] = true,
+	[UnitDefNames.guardian_radar_jamming_tower.id] = true,
+	[UnitDefNames.guardian_radar_tower.id] = true,
+	[UnitDefNames.guardian_solar_collector.id] = true,
+	[UnitDefNames.guardian_sonar_radar.id] = true,
+	[UnitDefNames.guardian_targeting_facility.id] = true,
+	[UnitDefNames.guardian_generator.id] = true,
+	[UnitDefNames.guardian_underwater_storage.id] = true,
+	--[UnitDefNames.guardian_underwater_fusion_power_plant.id] = true,
+	--[UnitDefNames.guardian_underwater_moho_mine.id] = true,
+	[UnitDefNames.guardian_underwater_generator.id] = true,
+	[UnitDefNames.guardian_cell.id] = true,
+	[UnitDefNames.guardian_floating_solar_collector.id] = true,
+	
 }
 
 local RemoveStop = {
@@ -188,6 +213,26 @@ local RemoveStop = {
 	[UnitDefNames.lost_underwater_moho_mine.id] = true,
 	[UnitDefNames.lost_underwater_tidal_generator.id] = true,
 	[UnitDefNames.lost_wind_generator.id] = true,
+	
+	[UnitDefNames.guardian_advanced_radar_tower.id] = true,
+	--[UnitDefNames.guardian_advanced_sonar_station.id] = true,
+	[UnitDefNames.guardian_storage.id] = true,
+	[UnitDefNames.guardian_guardian.id] = true,
+	[UnitDefNames.guardian_fusion_reactor.id] = true,
+	[UnitDefNames.guardian_geothermal_powerplant.id] = true,
+	[UnitDefNames.guardian_metal_extractor.id] = true,
+	[UnitDefNames.guardian_metal_maker.id] = true,
+	[UnitDefNames.guardian_moho_mine.id] = true,
+	[UnitDefNames.guardian_radar_jamming_tower.id] = true,
+	[UnitDefNames.guardian_radar_tower.id] = true,
+	[UnitDefNames.guardian_solar_collector.id] = true,
+	[UnitDefNames.guardian_sonar_radar.id] = true,
+	[UnitDefNames.guardian_targeting_facility.id] = true,
+	[UnitDefNames.guardian_underwater_storage.id] = true,
+	[UnitDefNames.guardian_cell.id] = true,
+	[UnitDefNames.guardian_generator.id] = true,
+	[UnitDefNames.guardian_underwater_generator.id] = true,
+	[UnitDefNames.guardian_floating_solar_collector.id] = true,
 }
 
 local RemoveMove = {
