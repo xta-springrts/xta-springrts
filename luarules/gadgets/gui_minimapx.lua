@@ -25,7 +25,7 @@ if gadgetHandler:IsSyncedCode() then
 		[WeaponDefNames["crblmssl"].id] = true,			-- core_silencer
 		[WeaponDefNames["armscab_weapon"].id] = true,	-- arm_scarab
 		[WeaponDefNames["nuclear_missile"].id] = true,	-- arm_retaliator
-		[WeaponDefNames["amd_rocket"].id] = true,		-- arm_protector, arm_repulsor
+		[WeaponDefNames["amd_rocket"].id] = true,		-- arm_protector, arm_repulsor,guardian_guardian
 		[WeaponDefNames["armemp_weapon"].id] = true,	-- arm_stunner
 		[WeaponDefNames["cortron_weapon"].id] = true,	-- core_neutron 
 		[WeaponDefNames["cormabm_weapon"].id] = true,	-- core_hedgehog

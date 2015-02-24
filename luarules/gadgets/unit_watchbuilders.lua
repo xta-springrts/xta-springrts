@@ -39,6 +39,11 @@ if (gadgetHandler:IsSyncedCode()) then
 	lost_construction_sub = true,
 	lost_construction_vehicle = true,
 	lost_shaman = true,
+	guardian_construction_kbot = true,
+	guardian_construction_hovercraft = true,
+	guardian_construction_ship = true,
+	guardian_construction_sub = true,
+	guardian_construction_vehicle = true,
 	}
 	
 	function gadget:Initialize()

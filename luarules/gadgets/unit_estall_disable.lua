@@ -72,7 +72,10 @@ local estallDefs = {
   [ UnitDefNames['lost_giant'].id ] = true,
   [ UnitDefNames['lost_moho_mine'].id ] = true,
   [ UnitDefNames['lost_targeting_facility'].id ] = true,
-
+  [ UnitDefNames['guardian_moho_mine'].id ] = true,
+  [ UnitDefNames['guardian_targeting_facility'].id ] = true,
+  [ UnitDefNames['guardian_areo_platform'].id ] = true,
+  
 }
 
 
