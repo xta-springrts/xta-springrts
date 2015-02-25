@@ -112,7 +112,7 @@
 	[SFXTypes]
 	{
 	explosiongenerator0=custom:GlowSmall;
-	explosiongenerator1=custom:RedLight;
+	explosiongenerator1=custom:WhiteLight;
 	}
 	
 }

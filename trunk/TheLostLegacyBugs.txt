@@ -39,10 +39,6 @@ Texture errors: 23 lines of which many are occur many times, perhaps count ís in
 Things that need to be added to lost faction (functions as my personal todo-list (Jools) but is also for information):
 
   
-  \luarules\gadgets\unit_minelayer_limit.lua
-  
-  TLL has aparently no minelayers or did I miss something?
-  
   \luarules\gadgets\unit_disable_buildoptions.lua
   
   Disables air/hover/water units on some maps. many people dont like this but it exists. Adopt for TLL?
