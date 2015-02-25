@@ -486,6 +486,14 @@ function gadget:UnitDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weap
 		local eID = Spring.GetUnitNearestEnemy(unitID,240)
 		if eID then
 			Spring.GiveOrderToUnit(unitID,CMD.DGUN, {eID},{})
+		elseif attackerID then
+			local ex,ey,ez =  Spring.GetUnitPosition(attackerID)
+			
+			--test validity
+			local b0 = spTestMoveOrder(unitDefID,  ez, ey, ez, 0.0, 0.0, 0.0,  true, true, true)
+			if bo then
+				Spring.GiveOrderToUnit(unitID,CMD.ATTACK, {attackerID},{})
+			end
 		end
 	end
 end

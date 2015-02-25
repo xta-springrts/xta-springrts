@@ -111,6 +111,7 @@
 	weapon7=BOGUS_DISINTEGRATOR;
 	nochasecategory=WEAPON;
 	badtargetcategory=VTOL;
+	onlytargetcategory5=NOTAIR;
 	wpri_badtargetcategory=VTOL;
 	wspe_badtargetcategory=VTOL;
 	explodeas=COMMANDER_BLAST;
