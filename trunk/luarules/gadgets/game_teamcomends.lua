@@ -240,6 +240,7 @@ if (gadgetHandler:IsSyncedCode()) then
 	
 	function gadget:GameFrame(t)
 		if t % frequency == 0 then
+		
 			for ateam,_ in pairs(destroyQueue) do
 				if not commanderEnds then
 					if allyCommanders[ateam] <= 0 then --safety check, triggers on transferring the last com otherwise
@@ -282,6 +283,7 @@ if (gadgetHandler:IsSyncedCode()) then
 		-- only proceed if teamID that died had a commander
 		if teamComms > 0 then
 			allyCommanders[allyTeam] = allyCommanders[allyTeam] - 1
+			Echo(teamComms .. " commander" .. (teamComms > 1 and "s have " or " has ") .. "deserted and no longer count" .. (teamComms > 1 and "" or "s") .. "!")
 			
 			local allyComms = allyCommanders[allyTeam]
 			if allyComms <= 0 then
@@ -354,9 +356,13 @@ if (gadgetHandler:IsSyncedCode()) then
 		isAlive[unitID] = nil
 		
 		if commanderTable[unitDefID] then
-						
+			local isTeamDead = select(3,Spring.GetTeamInfo(teamID))
 			local allyTeam = GetUnitAllyTeam(unitID)
-			allyCommanders[allyTeam] = allyCommanders[allyTeam] - 1
+			
+			if not isTeamDead then
+				allyCommanders[allyTeam] = allyCommanders[allyTeam] - 1
+			end
+			
 			teamCommanders[teamID] = teamCommanders[teamID] - 1
 			-- End game and declare winners if last commander dies
 			if commanderEnds then -- implement classic commander ends option
