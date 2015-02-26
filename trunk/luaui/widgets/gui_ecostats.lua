@@ -1,4 +1,4 @@
-local versionNumber = "1.72"
+local versionNumber = "1.73"
 
 do
 ---------------------------------------------------------------------------------------------------
@@ -212,7 +212,23 @@ function widget:Initialize()
 	Init()
 end
 
+function removeGuiShaderRects()
+	if (WG['guishader_api'] ~= nil) then
+		for _, data in pairs(allyData) do
+			local aID = data.aID
+			local drawpos = data.drawpos
+			
+			if isTeamReal(aID) and (aID == Spring.GetMyAllyTeamID() or inSpecMode) and (aID ~= gaiaAllyID or haveZombies) then
+				
+				local posy = tH*(drawpos)
+				WG['guishader_api'].RemoveRect('ecostats_'..posy)
+			end
+		end
+	end
+end
+
 function widget:Shutdown()
+	removeGuiShaderRects()
 	 gl.DeleteList(drawList)
 	 gl.DeleteList(drawListDynamic)
 end
@@ -602,100 +618,6 @@ local function FindPrevAlly(allyID)
 	return false
 end
 
-local function drawListStandard()
-	
-	local maxMetal 					= 0
-	local maxEnergy 				= 0
-	local maxFP 					= 0
-	local maxBP 					= 0
-	local maxHP 					= 0
-	local splits
-	
-	
-	if not gamestarted then updateButtons() end
-	
-	for _, data in ipairs(allyData) do
-		local aID = data.aID
-		
-		if data.exists and isTeamReal(aID) and (aID == myAllyID or inSpecMode) and (aID ~= gaiaAllyID or haveZombies) then
-				
-			-- Expanded table
-			if Button["info"][aID]["click"] then		
-				DrawExpandTable(aID)
-			end
-				
-			maxMetal 	= (data["tM"] and data["tM"] > maxMetal and data["tM"]) or maxMetal
-			maxEnergy 	= (data["tE"] and data["tE"] > maxEnergy and data["tE"]) or maxEnergy
-			maxFP 		= (data["tFP"] and data["tFP"] > maxFP and data["tFP"])  or maxFP
-			maxBP 		= (data["tBP"] and data["tBP"] > maxBP and data["tBP"]) or maxBP
-			maxHP 		= (data["killedhp"] and data["killedhp"] > maxHP and data["killedhp"]) or maxHP
-			maxHP 		= (data["losthp"] and data["losthp"] > maxHP and data["losthp"]) or maxHP
-		end
-	end
-	
-	splits = floor(0.001*maxHP/widgetWidth)
-
-	for _, data in ipairs(allyData) do
-		local aID = data.aID
-		
-		local drawpos = data.drawpos
-		
-		if data.exists and drawpos and #(data.teams) > 0 and (aID == Spring.GetMyAllyTeamID() or inSpecMode) and (aID ~= gaiaAllyID or haveZombies) then
-			
-			if not data["isAlive"] then
-				data["isAlive"] = isTeamAlive(aID)
-			end
-			
-			local posy = tH*(drawpos)
-			if data["isAlive"] then DrawBackground(posy) end
-			
-			local t = GetGameSeconds()
-			if data["isAlive"] and t > 5 and gamestarted and not gameover then
-				DrawEBar(data["tE"]/maxEnergy,posy)
-				DrawEText(data["tE"],posy)
-				DrawKillDeathText(data["kills"],data["losses"],posy)
-				DrawKillBar(data["killedhp"],posy,splits)
-				DrawLossesBar(data["losthp"],posy,splits)
-			else
-				if gamestarted and t < 5 then
-					DrawLabelCT("(Go!)", posy,t)
-				elseif not gamestarted then
-					setPlayerActivestate()
-					local nbPlayers = #(data.teams)
-					local nbActive = getNbActivePlayers(aID)
-					local nbPlaced = getNbPlacedPositions(aID)
-					if nbActive > 0 then
-						if nbPlayers > 1 and nbPlaced > 0 then
-							DrawLabelCM("(On their marks)", posy)
-							DrawLabelCM2(tconcat({"   ",nbPlaced,"/",nbPlayers}), posy)
-						elseif nbPlayers > 1 then
-							DrawLabelC("(Warming up)", posy)
-						elseif nbPlayers == 1 then
-							if nbPlaced == 1 then
-								DrawLabelCM("(On his marks)", posy)
-							else
-								DrawLabelC("(Warming up)", posy)
-							end
-						end
-					else
-						DrawLabelC("(No one here)", posy)
-					end
-				end
-			end
-			if data["isAlive"] and t > 5 and not gameover then
-			DrawMBar(data["tM"]/maxMetal,posy)
-			DrawMText(data["tM"],posy)
-			end
-			if data["tFP"] and data["tFP"] > 0 and not gameover then
-				DrawFPBar(data["tFP"]/maxFP,posy,data["tFPM"]/data["tFP"])
-			end
-			if data["tBP"] and data["tBP"] > 0 and not gameover then
-				DrawBPBar(data["tBP"]/maxBP,posy,data["tBPA"]/data["tBP"])
-			end			
-		end
-	end
-end
-
 -- Draw
 
 local function DrawEText(numberE, vOffset)
@@ -987,7 +909,9 @@ local function DrawBackground(posY)
 		glRect(widgetPosX , y1-1, widgetPosX + 1, y2  - 1) --left
 		glRect(widgetPosX + widgetWidth - 1, y1-1, widgetPosX + widgetWidth, y2  - 1)--right
 	end
-	
+	if (WG['guishader_api'] ~= nil) then
+		WG['guishader_api'].InsertRect(widgetPosX,y1, widgetPosX + widgetWidth, y2, 'ecostats_'..posY)
+	end
 	glColor(1,1,1,1)
 end
 
@@ -1755,6 +1679,100 @@ local function DrawSideImage(sideImage, hOffset, vOffset, r, g, b, a, small, mou
 	glColor(1,1,1,1)
 end
 
+local function drawListStandard()
+	
+	local maxMetal 					= 0
+	local maxEnergy 				= 0
+	local maxFP 					= 0
+	local maxBP 					= 0
+	local maxHP 					= 0
+	local splits
+	
+	
+	if not gamestarted then updateButtons() end
+	
+	for _, data in ipairs(allyData) do
+		local aID = data.aID
+		
+		if data.exists and isTeamReal(aID) and (aID == myAllyID or inSpecMode) and (aID ~= gaiaAllyID or haveZombies) then
+				
+			-- Expanded table
+			if Button["info"][aID]["click"] then		
+				DrawExpandTable(aID)
+			end
+				
+			maxMetal 	= (data["tM"] and data["tM"] > maxMetal and data["tM"]) or maxMetal
+			maxEnergy 	= (data["tE"] and data["tE"] > maxEnergy and data["tE"]) or maxEnergy
+			maxFP 		= (data["tFP"] and data["tFP"] > maxFP and data["tFP"])  or maxFP
+			maxBP 		= (data["tBP"] and data["tBP"] > maxBP and data["tBP"]) or maxBP
+			maxHP 		= (data["killedhp"] and data["killedhp"] > maxHP and data["killedhp"]) or maxHP
+			maxHP 		= (data["losthp"] and data["losthp"] > maxHP and data["losthp"]) or maxHP
+		end
+	end
+	
+	splits = floor(0.001*maxHP/widgetWidth)
+
+	for _, data in ipairs(allyData) do
+		local aID = data.aID
+		
+		local drawpos = data.drawpos
+		
+		if data.exists and drawpos and #(data.teams) > 0 and (aID == Spring.GetMyAllyTeamID() or inSpecMode) and (aID ~= gaiaAllyID or haveZombies) then
+			
+			if not data["isAlive"] then
+				data["isAlive"] = isTeamAlive(aID)
+			end
+			
+			local posy = tH*(drawpos)
+			if data["isAlive"] then DrawBackground(posy) end
+			
+			local t = GetGameSeconds()
+			if data["isAlive"] and t > 5 and gamestarted and not gameover then
+				DrawEBar(data["tE"]/maxEnergy,posy)
+				DrawEText(data["tE"],posy)
+				DrawKillDeathText(data["kills"],data["losses"],posy)
+				DrawKillBar(data["killedhp"],posy,splits)
+				DrawLossesBar(data["losthp"],posy,splits)
+			else
+				if gamestarted and t < 5 then
+					DrawLabelCT("(Go!)", posy,t)
+				elseif not gamestarted then
+					setPlayerActivestate()
+					local nbPlayers = #(data.teams)
+					local nbActive = getNbActivePlayers(aID)
+					local nbPlaced = getNbPlacedPositions(aID)
+					if nbActive > 0 then
+						if nbPlayers > 1 and nbPlaced > 0 then
+							DrawLabelCM("(On their marks)", posy)
+							DrawLabelCM2(tconcat({"   ",nbPlaced,"/",nbPlayers}), posy)
+						elseif nbPlayers > 1 then
+							DrawLabelC("(Warming up)", posy)
+						elseif nbPlayers == 1 then
+							if nbPlaced == 1 then
+								DrawLabelCM("(On his marks)", posy)
+							else
+								DrawLabelC("(Warming up)", posy)
+							end
+						end
+					else
+						DrawLabelC("(No one here)", posy)
+					end
+				end
+			end
+			if data["isAlive"] and t > 5 and not gameover then
+			DrawMBar(data["tM"]/maxMetal,posy)
+			DrawMText(data["tM"],posy)
+			end
+			if data["tFP"] and data["tFP"] > 0 and not gameover then
+				DrawFPBar(data["tFP"]/maxFP,posy,data["tFPM"]/data["tFP"])
+			end
+			if data["tBP"] and data["tBP"] > 0 and not gameover then
+				DrawBPBar(data["tBP"]/maxBP,posy,data["tBPA"]/data["tBP"])
+			end			
+		end
+	end
+end
+
 
 ---------------------------------------------------------------------------------------------------
 --  General
@@ -2484,6 +2502,8 @@ function widget:TeamDied(teamID)
 	end
 	
 	lastPlayerChange = frame
+	
+	removeGuiShaderRects()
 	
 	if not (Spring.GetSpectatingState() or isReplay) then
 		if inSpecMode then Spring.Log("widget", LOG.INFO,"Ecostats: widget now in active player mode.") end
