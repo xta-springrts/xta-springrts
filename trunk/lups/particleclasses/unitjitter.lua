@@ -25,7 +25,6 @@ function UnitJitter.GetInfo()
     fbo       = true,
     shader    = true,
     distortion= true,
-    atiseries = 2,
     intel     = 0,
   }
 end
@@ -262,7 +261,7 @@ function UnitJitter:CreateParticle()
 end
 
 function UnitJitter:Visible()
-  if Spring.AreTeamsAllied(self.team,LocalAllyTeamID) then
+  if self.allyTeam == LocalAllyTeamID then
     return Spring.IsUnitVisible(self.unit)
   end
 
