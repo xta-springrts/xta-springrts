@@ -71,14 +71,14 @@ local options = {
 		type = "section",
 	},
 	
-	--[[ Removed till spawner is fixed
+	--Removed till spawner is fixed
 	{
 		key  = 'Fleabowl',
 		name = 'Fleabowl Stuff',
 		desc = 'Use Ai Bots to set Flea difficulty.',
 		type = "section",
 	},
-	]]--
+	
 	{
 		key  = "zombies",
 		name = "Zombie Mode",
@@ -491,19 +491,19 @@ local options = {
 		desc = "Determines if ground-units slow down on slopes\nkey: enableSlopeMods",
 		section= 'other',
 	},
-	--[[ Removed till spawner is fixed
+	--Removed till spawner is fixed
 	{
-		key    = "BOSSES",
+		key    = "bosses",
 		name   = "Spawn Bosses",
-		desc   = "Deadly Powerful Units will come from the depths of space! \nkey: BOSSES",
+		desc   = "Deadly Powerful Units will come from the depths of space! \nkey: bosses",
 		type   = "bool",
 		def    = false,
 		section= "Fleabowl",
 	},
 	{
-		key    = 'mo_queentime',
-		name   = 'Queen Arrival Time',
-		desc   = 'In minutes. Queen will spawn after given time.',
+		key    = 'mo_gothtime',
+		name   = 'Fleagoth Arrival Time',
+		desc   = 'In minutes. Fleagoth will spawn after given time.',
 		type   = 'number',
 		def    = 60,
 		min    = 1,
@@ -513,9 +513,9 @@ local options = {
 		section= "Fleabowl",
 	},
 	{
-		key    = "mo_maxchicken",
-		name   = "Max. Chickens",
-		desc   = "Maximum number of chickens on map.",
+		key    = "mo_maxfleas",
+		name   = "Max. Fleas",
+		desc   = "Maximum number of fleas on map.",
 		type   = "number",
 		def    = 1000,
 		min    = 50,
@@ -536,7 +536,6 @@ local options = {
 						-- (step <= 0) means that there is no quantization
 		section= "Fleabowl",
 	},
-	]]--
 }
 
 return options

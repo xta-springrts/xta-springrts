@@ -83,9 +83,11 @@ if (gadgetHandler:IsSyncedCode()) then
 		end
 	end
 
-	function gadget:UnitDamaged(unitID, unitDefID, unitTeamID, damage, paralyzer, weaponID, projectileID, attackerID, attackerDefID, attackerTeamID)
-		SendToUnsynced('usUnitDamaged', unitID, unitDefID, unitTeamID, damage, paralyzer, weaponID, projectileID, attackerID, attackerDefID, attackerTeamID)
-	end
+	-- I think this is annoying to I disabled this callin. Jools.
+	--function gadget:UnitDamaged(unitID, unitDefID, unitTeamID, damage, paralyzer, weaponID, projectileID, attackerID, attackerDefID, attackerTeamID)
+		
+		--SendToUnsynced('usUnitDamaged', unitID, unitDefID, unitTeamID, damage, paralyzer, weaponID, projectileID, attackerID, attackerDefID, attackerTeamID)
+	--end
 
 	function gadget:UnitDestroyed(unitID, unitDefID, unitTeamID, attackerID, attackerDefID, attackerTeamID)
 		SendToUnsynced('usUnitDestroyed', unitID, unitDefID, unitTeamID, attackerID, attackerDefID, attackerTeamID)

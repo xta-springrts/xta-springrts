@@ -277,9 +277,20 @@ local explosionsList  = {
 		'tllwindstop.wav',
 		'vpulsefire.wav',
 		'vpulsehit.wav',
+		'watnano1.wav',
+		'watnano2.wav',
+		'xplobld1.wav',
+		'xplobld2.wav',
+		'xplobld3.wav',
+		'xplocom1.wav',
+		'xplomas1.wav',
+		'xplomas3.wav',
+		'xplomas4.wav',
+		'xplonuk2.wav',
+		'xplosml5.wav',
 		}
 
-	local guiList = {
+local guiList = {
 			'armcom1.wav',
 			'armcom2.wav',
 			'beep1.wav',
@@ -308,9 +319,18 @@ local explosionsList  = {
 			'victory1.wav',
 			'victory2.wav',
 			'victory3.wav',
+			'victory4.wav',
 			'warning1.wav',
-			'warning2.wav'
+			'warning2.wav',
+			'beep2.wav',
+			'beep3.wav',
+			'beep5.wav',
 		}
+		
+
+	
+
+
 		
 local explosionSounds = {}
 local guiSounds = {}
