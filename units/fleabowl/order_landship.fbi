@@ -1,0 +1,52 @@
+[UNITINFO]
+{
+	unitname	  = Order_LandShip;
+	name	      = Unidentified Unit;
+	description       = Gates God-Like Forces;
+	acceleration      = 0;
+	activateWhenBuilt = 1;
+	bmcode	    = 0;
+	brakeRate	 = 0;
+	buildAngle	= 4096;
+	buildCostEnergy   = 1337.0;
+	buildCostMetal    = 500;
+	builder	   = false;
+	buildPic	  = Order_LandShip.DDS;
+	buildTime	 = 3315;
+	category	  = NOTAIR NOTSUB;
+	explodeas	  = ATOMIC_SMALLNANO;
+	selfdestructas	  = ATOMIC_SMALLNANO;
+	footprintX	= 5;
+	footprintZ	= 5;
+	iconType	  = building;
+	idleAutoHeal      = 4;
+	idleTime	  = 1800;
+	levelGround       = 0;
+	mass	      = 165.75;
+	maxDamage	 = 1800;
+	maxVelocity       = 0;
+	noAutoFire	= 0;
+	objectName	= Order_LandShip;
+	seismicSignature  = 0;
+	Stealth	= 1;
+	istargetingupgrade= 1;
+	Weapon1 	  = ASTEROID;
+	side	      = ARM;
+	sightDistance     = 273;
+	smoothAnim	= 0;
+	TEDClass	  = ENERGY;
+	turnRate	  = 0;
+	upright	   = 0;
+	waterline	 = 0;
+	workerTime	= 0;
+	yardMap	   = ooooo ooooo ooooo ooooo ooooo;
+	mincloakdistance=0;
+	[SFXTypes]
+	{
+		explosiongenerator0=custom:NUCKLEARMINI;
+		explosiongenerator1=custom:ReactorBIgSequence;
+		explosiongenerator2=custom:LongNano;
+		explosiongenerator3=custom:Firelanding;
+		explosiongenerator4=custom:SMALL_NUKE_EXPLOSION_INIATE;
+	}
+}

@@ -58,6 +58,7 @@ Options["multipliers"]					= {}
 Options["koth"]							= {}
 Options["experimental"]					= {}
 Options["map"]							= {}
+Options["fleabowl"]						= {}
 
 local mapOptions 						= Spring.GetMapOptions()
 
@@ -379,6 +380,33 @@ function widget:Initialize()
 			name		= "Grace time (min):",
 			type		= "value",
 			value		= modOptions["gracetime"] or "N/A",
+			},
+		}
+		-- Fleabowl options
+		Options["fleabowl"] = {
+			
+			{
+			name		= "Spawn bosses",
+			type		= "bool",
+			value		= modOptions["bosses"] or "N/A",
+			},
+			
+			{
+			name		= "Fleagoth time (min):",
+			type		= "value",
+			value		= modOptions["mo_gothtime"] or "N/A",
+			},
+			
+			{
+			name		= "Max fleas:",
+			type		= "value",
+			value		= modOptions["mo_maxfleas"] or "N/A",
+			},
+			
+			{
+			name		= "Max flea dens:",
+			type		= "value",
+			value		= modOptions["mo_maxburrows"] or "N/A",
 			},
 		}
 			
@@ -855,6 +883,30 @@ local function drawModOptions()
 			myFont:End()
 		end
 	end
+	
+	--Fleabowl options heading
+	do
+		
+		if (Spring.GetGameRulesParam('Fleabowl') == 1 or Spring.GetGameRulesParam('Fleabowl') == '1') then
+			if Options["fleabowl"] then
+				myFontBig:Begin()
+				myFontBig:SetTextColor(cYellow) -- yellow
+				myFontBig:Print("Fleabowl options", Panel["info"]["x1"] + leftmargin, lastY - 40,14,'do')
+				lastY = lastY - 40
+				myFontBig:End()
+			end
+			
+			--FB options
+			myFont:Begin()
+			local i = 0
+			for _,opt in pairs(Options["fleabowl"]) do
+				i,lastY = drawRow(opt,i,lastY)
+			end
+			myFont:End()
+		end
+	end
+	
+	
 	--Experimental options heading
 	do
 		if Options["experimental"] and OptionCount["experimental"] > 0 then
