@@ -26,7 +26,7 @@ local SAFEWRAP = 0
 local HANDLER_DIR = 'LuaGadgets/'
 local GADGETS_DIR = Script.GetName():gsub('US$', '') .. '/Gadgets/'
 local LOG_SECTION = "" -- FIXME: "LuaRules" section is not registered anywhere
-
+local SCRIPT_DIR = Script.GetName() .. '/'
 
 local VFSMODE = VFS.ZIP_ONLY -- FIXME: ZIP_FIRST ?
 if (Spring.IsDevLuaEnabled()) then
@@ -34,9 +34,12 @@ if (Spring.IsDevLuaEnabled()) then
 end
 
 
+
+
 VFS.Include(HANDLER_DIR .. 'setupdefs.lua', nil, VFSMODE)
 VFS.Include(HANDLER_DIR .. 'system.lua',    nil, VFSMODE)
 VFS.Include(HANDLER_DIR .. 'callins.lua',   nil, VFSMODE)
+VFS.Include(SCRIPT_DIR .. 'utilities.lua', nil, VFSMODE)
 
 local actionHandler = VFS.Include(HANDLER_DIR .. 'actions.lua', nil, VFSMODE)
 
