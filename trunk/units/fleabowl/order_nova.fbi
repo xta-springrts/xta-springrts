@@ -75,4 +75,12 @@
 		explosiongenerator1=custom:FIREBALLLTRAIL;
 		explosiongenerator2=custom:FIREballbLoom;
 	}
+	//************************************************************
+	//  Custom params
+	//*****************
+	[customparams] 	
+	{
+	isflea=1;
+	score=1;
+	}
 }

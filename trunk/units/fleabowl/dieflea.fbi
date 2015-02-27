@@ -62,4 +62,14 @@
 	BadTargetCategory=VTOL;
 	NoChaseCategory=VTOL;
 	Ovradjust=1;
+	
+	//************************************************************
+	//  Custom params
+	//*****************
+	[customparams] 	
+	{
+	isflea=1;
+	score=1;
 	}
+	
+}

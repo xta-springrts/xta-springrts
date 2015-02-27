@@ -65,4 +65,14 @@
 	Ovradjust=1;
 	autoheal=10;
 	sonardistance=800;
+	
+	//************************************************************
+	//  Custom params
+	//*****************
+	[customparams] 	
+	{
+	isflea=1;
+	score=1;
 	}
+	
+}

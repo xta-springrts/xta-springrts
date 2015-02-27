@@ -76,4 +76,12 @@
 		explosiongenerator3=custom:FORKFLARE;
 		explosiongenerator4=custom:FORKFLARE;
 	}
+	//************************************************************
+	//  Custom params
+	//*****************
+	[customparams] 	
+	{
+	isflea=1;
+	score=1;
+	}
 }

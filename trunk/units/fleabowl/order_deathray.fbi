@@ -75,4 +75,12 @@
 	//	explosiongenerator1=custom:DeathrayBALLTRAIL;
 	//	explosiongenerator2=custom:Deathrayballboom;
 	//}
+	//************************************************************
+	//  Custom params
+	//*****************
+	[customparams] 	
+	{
+	isflea=1;
+	score=1;
+	}
 }
