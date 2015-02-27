@@ -51,7 +51,7 @@ local lagging             = false
 local gameOver            = false
 local cpuUsages           = {}
 local chickenBirths       = {}
-local kills               = {}
+local totalKills          = 0
 local idleQueue           = {}
 local turrets             = {}
 local timeOfLastSpawn     = 0
@@ -182,7 +182,6 @@ do -- load config file
   chunk()
 end
 
-
 local function SetGlobals(difficulty)
   for key, value in pairs(gadget.difficulties[difficulty]) do
     gadget[key] = value
@@ -190,14 +189,11 @@ local function SetGlobals(difficulty)
   gadget.difficulties = nil
 end
 
-
 SetGlobals(luaAI or defaultDifficulty) -- set difficulty
-
 
 -- adjust for player and chicken bot count
 local malus     = SetCount(humanTeams)^playerMalus
 burrowSpawnRate = burrowSpawnRate/malus/SetCount(computerTeams)
-
 
 local function DisableBuildButtons(unitID, ...)
   for _, unitName in ipairs({...}) do
@@ -208,7 +204,6 @@ local function DisableBuildButtons(unitID, ...)
     end
   end
 end
-
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
@@ -221,7 +216,6 @@ local function SetupUnit(unitName)
   Spring.SetGameRulesParam(unitName.."Count", 0)
   Spring.SetGameRulesParam(unitName.."Kills", 0)
 end
-
 
 Spring.SetGameRulesParam("lagging",           0)
 Spring.SetGameRulesParam("queenTime",        queenTime)
@@ -237,13 +231,8 @@ end
 SetupUnit(burrowName)
 SetupUnit(queenName)
 
-
-
-
 local difficulty = modes[luaAI or defaultDifficulty]
 Spring.SetGameRulesParam("difficulty", difficulty)
-
-
 
 local function UpdateUnitCount()
   local teamUnitCounts = Spring.GetTeamUnitsCounts(chickenTeamID)
@@ -253,7 +242,6 @@ local function UpdateUnitCount()
     end
   end
 end
-
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
@@ -307,7 +295,6 @@ local function DetectCpuLag()
   end
 end
 
-
 local function KillOldChicken()
   for unitID, birthDate in pairs(chickenBirths) do
     local age = Spring.GetGameSeconds() - birthDate
@@ -326,8 +313,6 @@ local function UpgradeBurrows()
   end
 end
 
-
-
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 --
@@ -341,7 +326,6 @@ local function KillAllChicken()
   end
 end
 
-
 local function KillAllComputerUnits()
   for teamID in pairs(computerTeams) do
     local teamUnits = Spring.GetTeamUnits(teamID)
@@ -351,13 +335,11 @@ local function KillAllComputerUnits()
   end
 end
 
-
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 --
 -- Spawn Dynamics
 --
-
 
 local function IsPlayerUnitNear(x, z, r)
   for teamID in pairs(humanTeams) do   
@@ -367,7 +349,6 @@ local function IsPlayerUnitNear(x, z, r)
   end
 end
 
-
 local function AttackNearestEnemy(unitID)
   local targetID = Spring.GetUnitNearestEnemy(unitID)
   if (targetID) then
@@ -375,7 +356,6 @@ local function AttackNearestEnemy(unitID)
     Spring.GiveOrderToUnit(unitID, CMD.FIGHT, {tx, ty, tz}, {})
   end
 end
-
 
 --local function SpawnEggs(x, y, z)
 --  local choices = {}
@@ -396,7 +376,6 @@ end
 --  end
 --end
 
-
 local function ChooseTarget()
   local humanTeamList = SetToList(humanTeams)
   if (#humanTeamList == 0) or gameOver then
@@ -404,10 +383,14 @@ local function ChooseTarget()
   end
   local teamID = humanTeamList[math.random(#humanTeamList)]
   local units  = Spring.GetTeamUnits(teamID)
-  local unitID = units[math.random(#units)]
-  return {Spring.GetUnitPosition(unitID)}
+  local unitID = #units > 0 and units[math.random(#units)]
+  
+	if unitID then
+		return {Spring.GetUnitPosition(unitID)}
+	else
+		return false
+	end
 end
-
 
 local function ChooseChicken(units)
   local s = Spring.GetGameSeconds()
@@ -428,7 +411,6 @@ local function ChooseChicken(units)
     return choices[math.random(#choices)], choices[math.random(#choices)]
   end
 end
-
 
 local function SpawnChicken(burrowID, spawnNumber, chickenName)
   local x, y, z
@@ -587,7 +569,6 @@ specialBugCount = specialBugCount + 1
   
 end
 
-
 local function SpawnTurret(burrowID, turret)
   
   if (math.random() > defenderChance and defenderChance < 1 or not turret) then
@@ -617,7 +598,6 @@ local function SpawnTurret(burrowID, turret)
   end
   
 end
-
 
 local function SpawnBurrow(number)
   
@@ -675,7 +655,6 @@ local function SpawnBurrow(number)
   
 end
 
-
 local function SpawnQueen()
   
   local x, y, z
@@ -715,7 +694,6 @@ local function SpawnQueen()
   return Spring.CreateUnit(queenName, x, y, z, "n", chickenTeamID)
  
 end
-
 
 local function Wave()
   
@@ -894,8 +872,10 @@ function gadget:UnitDestroyed(unitID, unitDefID, unitTeam)
   local name = UnitDefs[unitDefID].name
   if (unitTeam == chickenTeamID) then
     if (chickenTypes[name] or defenders[name]) then
+	  totalKills = totalKills + 1
       local kills = Spring.GetGameRulesParam(name.."Kills")
       Spring.SetGameRulesParam(name.."Kills", kills + 1)
+	  Spring.SetGameRulesParam("killedFleas", totalKills)
     end
     if (name == queenName) then
       KillAllComputerUnits()
