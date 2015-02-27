@@ -75,4 +75,13 @@
 		explosiongenerator1=custom:PlasmaBALLLTRAIL;
 		explosiongenerator2=custom:PlasmaballbLoom;
 	}
+	
+	//************************************************************
+	//  Custom params
+	//*****************
+	[customparams] 	
+	{
+	isflea=1;
+	score=1;
+	}
 }

@@ -70,4 +70,14 @@
 	collisionVolumeScales =8 10 8;
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
+	
+	//************************************************************
+	//  Custom params
+	//*****************
+	[customparams] 	
+	{
+	isflea=1;
+	score=1;
+	}
+	
 	}

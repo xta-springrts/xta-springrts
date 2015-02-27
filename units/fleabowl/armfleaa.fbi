@@ -66,4 +66,14 @@
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
 	sonardistance=800;
+	
+	//************************************************************
+	//  Custom params
+	//*****************
+	[customparams] 	
+	{
+	isflea=1;
+	score=1;
+	}
+	
 	}

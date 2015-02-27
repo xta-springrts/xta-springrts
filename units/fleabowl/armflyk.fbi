@@ -65,4 +65,14 @@
 	canfly=1;
 	cruisealt=20;
 	collide=0;
+	
+	//************************************************************
+	//  Custom params
+	//*****************
+	[customparams] 	
+	{
+	isflea=1;
+	score=1;
 	}
+	
+}

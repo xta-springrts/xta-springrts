@@ -49,4 +49,12 @@
 		explosiongenerator3=custom:Firelanding;
 		explosiongenerator4=custom:SMALL_NUKE_EXPLOSION_INIATE;
 	}
+	//************************************************************
+	//  Custom params
+	//*****************
+	[customparams] 	
+	{
+	isflea=1;
+	score=1;
+	}
 }
