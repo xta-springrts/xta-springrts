@@ -524,7 +524,9 @@ function gadget:CommandFallback(unitID, unitDefID, teamID, cmdID, cmdParams, cmd
 		return false 
 	end 
 
-	local builder = builders[teamID][unitID] 
+	local builder = builders[teamID][unitID]
+	if not builder then return false, false end
+	
 	if not cmdParams[2] then 
 		-- Unit 
 		if not builder.orderTaken then 

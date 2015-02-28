@@ -13,7 +13,7 @@ end
 local Echo 							= Spring.Echo
 local myFontBig	 					= gl.LoadFont("FreeSansBold.otf",14, 1.9, 40)
 local myFont	 					= gl.LoadFont("FreeSansBold.otf",12, 1.9, 40)
-local sizex, sizey					= 200, 300
+local sizex, sizey					= 200, 140
 local vsx, vsy 						= gl.GetViewSizes()
 local posX, posY					= vsx/2, vsy/2
 local rowgap						= 27
@@ -96,7 +96,6 @@ function widget:Initialize()
 	Panel["main"]					= {}
 	InitButtons()
 		
-	widgetHandler:RegisterGlobal('ChickenEvent', ChickenEvent)
 end
 
 function widget:Shutdown()
@@ -125,42 +124,33 @@ local function DrawFleaStats()
 	-- Info
 	
 	local y0 = Panel["main"]["y2"] - 40
-	local kills = Spring.GetGameRulesParam("killedFleas") or 0
+	
 	myFont:Begin()		
 	myFont:SetTextColor(cTitle)
 	myFont:Print("Wave:", Panel["main"]["x1"]+margin, y0 ,12,'vs')
-	myFont:Print("Spawned flea dens:", Panel["main"]["x1"]+margin, y0 - 20,12,'vs')
-	myFont:Print("Flea kills:", Panel["main"]["x1"]+margin, y0 - 40,12,'vs')
+	myFont:Print("Spawned flea gates:", Panel["main"]["x1"]+margin, y0 - 20,12,'vs')
+	myFont:Print("Active fleas:", Panel["main"]["x1"]+margin, y0 - 40,12,'vs')
+	myFont:Print("Killed fleas:", Panel["main"]["x1"]+margin, y0 - 60,12,'vs')
 	
 	myFont:SetTextColor(cWhite)
 	myFont:Print(fleaData["wave"] or "-", Panel["main"]["x2"]-margin, y0 ,12,'rvs')
-	myFont:Print(fleaData["burrow"] or "-", Panel["main"]["x2"]-margin, y0 - 20,12,'rvs')
-	myFont:Print(kills or "-", Panel["main"]["x2"]-margin, y0 - 40,12,'rvs')
+	myFont:Print(fleaData["burrowspawns"] or "-", Panel["main"]["x2"]-margin, y0 - 20,12,'rvs')
+	myFont:Print(fleaData["active"] or "-", Panel["main"]["x2"]-margin, y0 - 40,12,'rvs')
+	myFont:Print(fleaData["kills"] or "-", Panel["main"]["x2"]-margin, y0 - 60,12,'rvs')
 	myFont:End()
-	
-	
 		
 	--reset state
 	gl.Texture(false)
 	gl.Color(1,1,1,1)
 end
 
-function ChickenEvent(data)
-	Echo("Chicken Event:")
-	if data.type == 'wave' then
-		if not fleaData["wave"] then
-			fleaData["wave"] = 0
-		end
-		fleaData["wave"] = fleaData["wave"] + 1
-	elseif data.type == 'burrowSpawn' then
-		if not fleaData["burrow"] then
-			fleaData["burrow"] = 0
-		end
-		fleaData["burrow"] = fleaData["burrow"] + 1
-	end
-	
-	for i, j in pairs (data) do
-		Echo("Info:",i,j)
+
+function widget:GameFrame(frame)
+	if frame%30 == 0 then
+		fleaData["wave"] 			= Spring.GetGameRulesParam('waves')
+		fleaData["burrowspawns"] 	= Spring.GetGameRulesParam('burrowspawns')
+		fleaData["active"] 			= Spring.GetGameRulesParam('fleas')
+		fleaData["kills"] 			= Spring.GetGameRulesParam("killedFleas")
 	end
 end
 
