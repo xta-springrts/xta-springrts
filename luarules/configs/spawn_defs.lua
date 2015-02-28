@@ -18,7 +18,7 @@ maxBurrows           = Spring.GetModOptions().mo_maxburrows*1
 queenSpawnMult       = 3         -- how many times bigger is a queen hatch than a normal burrow hatch
 alwaysVisible        = true     -- chicken are always visible
 burrowSpawnRate      = 50       -- higher in games with many players, seconds
-upgradeTime		   = 10*60
+upgradeTime		   	 = 10*60
 chickenSpawnRate     = 100
 minBaseDistance      = 1000      
 maxBaseDistance      = 5000
@@ -77,7 +77,6 @@ local chickenTypes = {
   order_fork	=  {time = 45,  squadSize = 0.1,  obsolete = 61},
   minigoth	=  {time = 50,  squadSize = 0.05},
 }
-
 
 local chickenCruelTypes = {
   armflea      =  {time =  0,  squadSize = 3,  obsolete = 10},
