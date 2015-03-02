@@ -85,6 +85,10 @@ local function InitButtons()
 end
 
 function widget:Initialize()
+	if not(Spring.GetGameRulesParam('Fleabowl') == 1 or Spring.GetGameRulesParam('Fleabowl') == '1') then
+		widgetHandler:RemoveWidget()
+	end
+
 	myTeamID = Spring.GetLocalTeamID()
 	myAllyTeamID = select(6,Spring.GetTeamInfo(myTeamID))
 	FleaMenu.x1					= vsx - 70
