@@ -341,12 +341,14 @@ function gadget:AllowCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdO
 				end
 			
 			elseif newValue == 0 then -- set to manual
-				if (teamMMList[unitTeam][cDefs.e][unitID].status == 1) then
-					teamActiveMM[unitTeam] = teamActiveMM[unitTeam] - 1
-				end
-				
-				if not teamMMList[unitTeam][cDefs.e][unitID].emped then
-					AdjustTeamCapacity(unitTeam, -cDefs.c, cDefs.e)
+				if teamMMList[unitTeam][cDefs.e][unitID] then				
+					if (teamMMList[unitTeam][cDefs.e][unitID].status == 1) then
+						teamActiveMM[unitTeam] = teamActiveMM[unitTeam] - 1
+					end
+					
+					if not teamMMList[unitTeam][cDefs.e][unitID].emped then
+						AdjustTeamCapacity(unitTeam, -cDefs.c, cDefs.e)
+					end
 				end
 				
 				teamMMList[unitTeam][cDefs.e][unitID] = nil
@@ -360,6 +362,7 @@ end
 function gadget:GameFrame(n)
 
 	if (n % resourceRefreshRate == 0) then
+		
 		currentFrameStamp = currentFrameStamp + 1
 		
 		EmpedVector:process(currentFrameStamp)	
