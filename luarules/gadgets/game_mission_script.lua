@@ -253,7 +253,7 @@ function gadget:GameStart()
 		return
 	end
 	spawnData = nil		-- kill table once not needed
-	--gadgetHandler:RemoveCallIn("RecvLuaMsg")
+	gadgetHandler:RemoveCallIn("RecvLuaMsg")
 end
 
 local function testCondition(cond, teamID)
@@ -286,7 +286,7 @@ local function testCondition(cond, teamID)
 			if qty >= 0 then
 				return count >= qty
 			else
-				return count < qty
+				return count < -qty
 			end	
 		elseif loc.shape == "C" then
 			unitsInArea = spGetUnitsInCylinder(loc.X,loc.Z,loc.r,teamID)
@@ -304,7 +304,7 @@ local function testCondition(cond, teamID)
 			if qty >= 0 then
 				return count >= qty
 			else
-				return count < qty
+				return count < -qty
 			end
 		else
 			local count, uDefID = 0, UnitDefNames[utype].id
@@ -319,7 +319,7 @@ local function testCondition(cond, teamID)
 			if qty >= 0 then
 				return count >= qty
 			else
-				return count < qty
+				return count < -qty
 			end
 		end
 		
@@ -330,13 +330,13 @@ local function testCondition(cond, teamID)
 			if qty >= 0 then	--total deaths
 				return deathCounter[team]["total"] >= qty
 			else
-				return deathCounter[team]["total"] < qty
+				return deathCounter[team]["total"] < -qty
 			end
 		else
 			if qty >= 0 then	--deaths by unitname
 				return (deathCounter[team][UnitDefNames[utype].id] or 0)>= qty
 			else
-				return (deathCounter[team][UnitDefNames[utype].id] or 0) < qty
+				return (deathCounter[team][UnitDefNames[utype].id] or 0) < -qty
 			end
 		end			
 
@@ -347,13 +347,13 @@ local function testCondition(cond, teamID)
 				if qty >= 0 then	-- total kills by enemy team
 					return killCounter[teamID][idx]["total"] >= qty
 				else
-					return killCounter[teamID][idx]["total"] < qty
+					return killCounter[teamID][idx]["total"] < -qty
 				end
 			else
 				if qty >= 0 then	-- kills by enemy team by unitname
 					return (killCounter[teamID][idx][UnitDefNames[utype].id] or 0) >= qty
 				else
-					return (killCounter[teamID][idx][UnitDefNames[utype].id] or 0) < qty
+					return (killCounter[teamID][idx][UnitDefNames[utype].id] or 0) < -qty
 				end
 			end			
 		else
@@ -361,13 +361,13 @@ local function testCondition(cond, teamID)
 				if qty >= 0 then	-- total number of kills
 					return killCounter[teamID]["total"] >= qty
 				else
-					return killCounter[teamID]["total"] < qty
+					return killCounter[teamID]["total"] < -qty
 				end
 			else
 				if qty >= 0 then	-- total number of unitname kills
 					return (killCounterType[teamID][UnitDefNames[utype].id] or 0) >= qty
 				else
-					return (killCounterType[teamID][UnitDefNames[utype].id] or 0) < qty
+					return (killCounterType[teamID][UnitDefNames[utype].id] or 0) < -qty
 				end
 			end
 		end
@@ -381,19 +381,19 @@ local function testCondition(cond, teamID)
 			if qty>= 0 then
 				return currentM >= qty
 			else
-				return currentM < qty
+				return currentM < -qty
 			end
 		elseif utype=="E" then
 			if qty>= 0 then
 				return currentE >= qty
 			else
-				return currentE < qty
+				return currentE < -qty
 			end
 		elseif utype=="ME" then
 			if qty>= 0 then
 				return currentM >= qty and currentE >= qty
 			else
-				return currentM < qty and currentE < qty
+				return currentM < -qty and currentE < -qty
 			end
 		else
 			return false
@@ -414,7 +414,7 @@ local function testCondition(cond, teamID)
 		if qty>= 0 then
 			return spGetGameSeconds() >= qty
 		else
-			return spGetGameSeconds() < qty
+			return spGetGameSeconds() < -qty
 		end	
 		
 	-- Timer (number|name)
@@ -975,7 +975,7 @@ end
 function gadget:ViewResize(viewSizeX, viewSizeY)
 	X, Y = Spring.GetViewGeometry()
 	msgX, msgY = X/4, Y*0.0625
-	fs = 20*Y/1200
+	fs = 22*Y/1200
 end
 
 local locCircles = {}
