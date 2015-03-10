@@ -10,83 +10,93 @@ function gadget:GetInfo()
 	}
 end
 
-local mo = Spring.GetModOptions()
---Spring.Echo ("mo.critters:", mo.critters)
-if mo and tonumber (mo.critters)==0 then
-	Spring.Echo ("gaia_critters.lua: turned off via modoptions")
-	gadgetHandler:RemoveGadget(self)
-	return
-end
-
-local GaiaTeamID  = Spring.GetGaiaTeamID ()
-
 -- synced only
 if (not gadgetHandler:IsSyncedCode()) then
 	return false
 end
 
-local critterConfig = include("LuaRules/Configs/gaia_critters_config.lua")
+local GaiaTeamID  = Spring.GetGaiaTeamID()
 
+local critterConfig = include("LuaRules/Configs/gaia_critters_config.lua")
 local critterUnits = {}	--critter units that are currently alive
 
+local spGetGroundHeight = Spring.GetGroundHeight
+local random = math.random
+local sin, cos = math.sin, math.cos
+local rad = math.rad
+
+local function randomPatrolInBox(unitID, box)
+	for i=1,5 do
+		local x = random(box.x1, box.x2)
+		local z = random(box.z1, box.z2)
+		Spring.GiveOrderToUnit(unitID, CMD.PATROL , {x, spGetGroundHeight(x, z), z}, {"shift"})
+	end
+end
+
+local function randomPatrolInCircle(unitID, circle)
+	for i=1,5 do
+		local a = rad(random(0, 360))
+		local r = random(0, circle.r)
+		local x = circle.x + r*sin(a)
+		local z = circle.z + r*cos(a)
+		Spring.GiveOrderToUnit(unitID, CMD.PATROL , {x, spGetGroundHeight(x, z), z}, {"shift"})
+	end
+end
+
+local function makeUnitCritter(unitID)
+	Spring.SetUnitNeutral(unitID, true)
+	Spring.SetUnitNoSelect(unitID, true)
+	Spring.SetUnitStealth(unitID, true)
+	critterUnits[unitID] = true
+end
+
 function gadget:Initialize()
-	Spring.Echo ("gaia_critters.lua: gadget:Initialize() Game.mapName=" .. Game.mapName)
-	if not critterConfig[Game.mapName] then Spring.Echo ("no critter config for this map") return end	
-	for key, cC in pairs (critterConfig[Game.mapName]) do
-		for unitName, unitAmount in pairs (cC.unitNames) do
-			--Spring.Echo ("***"..unitName .. " " .. unitAmount)			
-			for i=1, unitAmount do
-				local unitID = nil
-				if cC.spawnBox then
-					local x = math.random (cC.spawnBox.x1, cC.spawnBox.x2)
-					local z = math.random (cC.spawnBox.z1, cC.spawnBox.z2)
-					unitID = Spring.CreateUnit (unitName,x,100,z, 0, GaiaTeamID)
+	local mo = Spring.GetModOptions()
+	if mo and tonumber(mo.critters)==0 then
+		Spring.Echo("gaia_critters.lua: turned off via modoptions")
+		gadgetHandler:RemoveGadget(self)
+	end
+	
+	Spring.Echo("gaia_critters.lua: gadget:Initialize() Game.mapName=" .. Game.mapName)
+	if not critterConfig[Game.mapName] then
+		Spring.Echo("no critter config for this map")
+		gadgetHandler:RemoveGadget(self)
+	end	
+end
+
+-- spawning critters in game start prevents them from being spawned every time you do /luarules reload
+function gadget:GameStart()
+	for key, cC in pairs(critterConfig[Game.mapName]) do
+		if cC.spawnBox then	
+			for unitName, unitAmount in pairs(cC.unitNames) do
+				for i=1, unitAmount do
+					local unitID = nil
+					local x = random(cC.spawnBox.x1, cC.spawnBox.x2)
+					local z = random(cC.spawnBox.z1, cC.spawnBox.z2)
+					unitID = Spring.CreateUnit(unitName, x, spGetGroundHeight(x, z), z, 0, GaiaTeamID)
 					if unitID then
-						randomPatrolInBox (unitID, cC.spawnBox)
+						randomPatrolInBox(unitID, cC.spawnBox)
+						makeUnitCritter(unitID)
 					else
 						Spring.Echo("Failed to create " .. unitName)
 					end
 				end
-				if cC.spawnCircle then
-					local a = math.rad (math.random (0,360))
-					local r = math.random (0, cC.spawnCircle.r)
-					local x = cC.spawnCircle.x + (math.sin (a)*r)
-					local z = cC.spawnCircle.z + (math.cos (a)*r)
-					unitID = Spring.CreateUnit (unitName,x,100,z, 0, GaiaTeamID)
-					if unitID then
-						randomPatrolInCircle (unitID, cC.spawnCircle)
-					else
-						Spring.Echo("Failed to create " .. unitName)
-					end
-				end
-				--Spring.Echo ("i:"..i)
+			end
+		elseif cC.spawnCircle then			
+			for unitName, unitAmount in pairs(cC.unitNames) do
+				local a = rad(random(0, 360))
+				local r = random(0, cC.spawnCircle.r)
+				local x = cC.spawnCircle.x + r*sin(a)
+				local z = cC.spawnCircle.z + r*cos(a)
+				unitID = Spring.CreateUnit(unitName, x, spGetGroundHeight(x, z), z, 0, GaiaTeamID)
 				if unitID then
-					Spring.SetUnitNeutral(unitID, true)
-					Spring.SetUnitNoSelect(unitID, true)
-					Spring.SetUnitStealth(unitID, true)
-					critterUnits[unitID] = true
+					randomPatrolInCircle(unitID, cC.spawnCircle)
+					makeUnitCritter(unitID)
+				else
+					Spring.Echo("Failed to create " .. unitName)
 				end
-			end			
-		end		
-	end
-end
-
-
-function randomPatrolInBox (unitID, box)
-	for i=1,5 do
-		local x = math.random (box.x1, box.x2)
-		local z = math.random (box.z1, box.z2)
-		Spring.GiveOrderToUnit(unitID, CMD.PATROL , {x, 100, z}, {"shift"})
-	end
-end
-
-function randomPatrolInCircle (unitID, circle)
-	for i=1,5 do
-		local a = math.rad (math.random (0,360))
-		local r = math.random (0, circle.r)
-		local x = circle.x + (math.sin (a)*r)
-		local z = circle.z + (math.cos (a)*r)	
-		Spring.GiveOrderToUnit(unitID, CMD.PATROL , {x, 100, z}, {"shift"})
+			end
+		end
 	end
 end
 
@@ -106,5 +116,5 @@ function gadget:AllowCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdO
 			end
 		end
 	end		
-return true
+	return true
 end

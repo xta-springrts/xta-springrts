@@ -45,6 +45,7 @@ local ipairs      = ipairs
 
 local pi2    = math.pi*2
 local random = math.random
+local diag   = math.diag
 
 local CMD_STOP = CMD.STOP
 
@@ -120,8 +121,7 @@ local accept = {
 --------------------------------------------------------------------------------
 
 local function GetDist3(a, b)
-  local x, y, z = (a[1] - b[1]), (a[2] - b[2]), (a[3] - b[3])
-  return (x*x + y*y + z*z)^0.5
+  return diag(a[1] - b[1], a[2] - b[2], a[3] - b[3])
 end
 
 
@@ -234,8 +234,7 @@ local function Jump(unitID, finish)
   mcSetRotationVelocity(unitID, 0, turn/rotUnit*step, 0)
   
   if (jumpDef.aaShootMe) then
-    fakeUnitID = spCreateUnit(
-      "arm_construction_aircraft", start[1], start[2], start[3], "n", teamID)
+    fakeUnitID = spCreateUnit("arm_construction_aircraft", start[1], start[2], start[3], "n", teamID)
     mcEnable(fakeUnitID)
     spSetUnitNoSelect(fakeUnitID, true)
     spSetUnitBlocking(fakeUnitID, false)
@@ -322,26 +321,22 @@ end
 
 
 function gadget:UnitDestroyed(unitID, unitDefID)
-  lastJump[unitID]  = nil
+  lastJump[unitID] = nil
 end
 
 
-function gadget:AllowCommand(unitID, unitDefID, teamID,
-                             cmdID, cmdParams, cmdOptions)
-                             
-  if (cmdID == CMD_JUMP and 
-      spTestBuildOrder(
-          unitDefID, cmdParams[1], cmdParams[2], cmdParams[3], 1) == 0) then
+function gadget:AllowCommand(unitID, unitDefID, teamID, cmdID, cmdParams, cmdOptions)
+  if (cmdID == CMD_JUMP and spTestBuildOrder(unitDefID, cmdParams[1], cmdParams[2], cmdParams[3], 1) == 0) then
       return false
   end
   return true -- allowed
 end
 
 
-function gadget:CommandFallback(unitID, unitDefID, teamID,    -- keeps getting 
-                                cmdID, cmdParams, cmdOptions) -- called until
-  if (cmdID ~= CMD_JUMP)or(not jumpDefs[unitDefID]) then      -- you remove the
-    return false  -- command was not used                     -- order
+function gadget:CommandFallback(unitID, unitDefID, teamID, cmdID, cmdParams, cmdOptions)
+  -- keeps getting called until you remove the order
+  if (cmdID ~= CMD_JUMP) or (not jumpDefs[unitDefID]) or (lastJump[unitID]==nil) then
+    return false  -- command was not used
   end
   local x, y, z = spGetUnitPosition(unitID)
   local distSqr = GetDist2Sqr({x, y, z}, cmdParams)
