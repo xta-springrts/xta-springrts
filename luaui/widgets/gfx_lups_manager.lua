@@ -23,7 +23,7 @@ function widget:GetInfo()
   }
 end
 
-
+local Echo = Spring.Echo
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
@@ -96,10 +96,16 @@ for i,f in pairs(effectUnitDefs) do
 end
 
 local currentTime = os.date('*t')
+
 if (currentTime.month==12) then
-  for i,f in pairs(effectUnitDefsXmas) do
-    AddFX(i,f)
-  end
+	for i,f in pairs(effectUnitDefsXmas) do
+		AddFX(i,f)
+	end	
+elseif (currentTime.yday == 76) then
+	Echo("Today is St:Patrick's day!")
+	for i,f in pairs(effectUnitDefsStPatrick) do
+		AddFX(i,f)
+	end
 end
 
 --------------------------------------------------------------------------------
