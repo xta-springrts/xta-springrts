@@ -52,293 +52,225 @@ local presets = {
 }
 
 effectUnitDefs = {
-  --// FUSIONS //--------------------------
-  cafus = {
-    {class='Bursts', options=cafusBursts},
-    {class='StaticParticles', options=cafusCorona},
-    --{class='ShieldSphere', options=cafusShieldSphere},
-    --{class='ShieldJitter', options={layer=-16, life=math.huge, pos={0,58.9,0}, size=100, precision=22, strength = 0.001, repeatEffect=true}},
-    {class='GroundFlash', options=groundFlashOrange},
-  },
-  corfus = {
-    {class='StaticParticles', options=corfusNova},
-    {class='StaticParticles', options=corfusNova2},
-    {class='StaticParticles', options=corfusNova3},
-    {class='StaticParticles', options=corfusNova4},
 
-    {class='Bursts', options=corfusBursts},
-    {class='ShieldJitter', options={delay=0,life=math.huge, pos={0,40.5,0.0}, size=10, precision=22, repeatEffect=true}},
+	--// ENERGY STORAGE //--------------------
+  core_energy_storage = {
+    {class='GroundFlash',options=groundFlashCorestor},
   },
-  aafus = {
-    {class='SimpleParticles2', options=MergeTable({piece="rod2", delay=30, lifeSpread=math.random()*20},sparks)},
-    {class='SimpleParticles2', options=MergeTable({piece="rod4", delay=60, lifeSpread=math.random()*20},sparks)},
-    {class='SimpleParticles2', options=MergeTable({piece="rod5", delay=90, lifeSpread=math.random()*20},sparks)},
-    {class='SimpleParticles2', options=MergeTable({piece="rod7", delay=120, lifeSpread=math.random()*20},sparks)},
-
-    {class='Sound', options={repeatEffect=true, file="Sparks", blockfor=4.8*30, length=5.1*30}},
+  lost_energy_storage = {
+    {class='GroundFlash',options=groundFlashCorestor},
+  },
+  arm_energy_storage = {
+    {class='GroundFlash',options=groundFlashArmestor},
   },
 
-  --// SHIELDS //---------------------------
-  -- Don't raise strength of ShieldJitter recklessly, it can really distort things (including unit icons) under it!
-  corjamt = {
-   {class='Bursts', options=corjamtBursts},
-    {class='ShieldSphere', options={life=math.huge, piece="glow", size=11, colormap1 = {{0.8, 0.1, 0.8, 0.5}}, repeatEffect=true}},
-	{class='ShieldJitter', options={delay=0, life=math.huge, pos={0,15,0}, size=350, strength = .001, precision=50, repeatEffect=true, quality = 4}},
---	{class='ShieldSphere', options={piece="base", life=math.huge, size=350, pos={0,-15,0}, colormap1 = {{0.95, 0.1, 0.95, 0.2}}, repeatEffect=true}},
---	{class='GroundFlash', options=groundFlashShield},
---	{class='UnitPieceLight', options={piece="glow", colormap = {{0,0,1,0.2}},},},
+  --// PLANES still need to do work here //----------------------------
+  arm_freedom_fighter = {
+    {class='AirJet',options={color={0.3,0.1,0}, width=6, length=45, piece="rearthrust", onActive=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=6, length=45, piece="rearthrust2", onActive=true}},
   },
-  core_spectre = {
-    {class='Bursts', options=corjamtBursts},
-    {class='ShieldSphere', options={piece="glow", life=math.huge, size=11, colormap1 = {{0.95, 0.1, 0.95, 0.9}}, repeatEffect=true}},
-	{class='ShieldJitter', options={delay=0, life=math.huge, pos={0,15,0}, size=350, strength = .001, precision=50, repeatEffect=true, quality = 4}},
---	{class='ShieldSphere', options={piece="base", life=math.huge, size=360, pos={0,-15,0}, colormap1 = {{0.95, 0.1, 0.95, 0.2}}, repeatEffect=true}},
+  arm_tornado = {
+    {class='AirJet',options={color={0.3,0.1,0}, width=6, length=45, piece="thrust", onActive=true}},
   },
-  shieldfelon = {
-	{class='Bursts', options=MergeTable({piece="lpilot"},corjamtBursts)},
-	{class='Bursts', options=MergeTable({piece="rpilot"},corjamtBursts)},
-	--{class='ShieldJitter', options={delay=0, life=math.huge, pos={0,15,0}, size=100, strength = .001, precision=50, repeatEffect=true, quality = 5}},
+  arm_albatross = {
+    {class='AirJet',options={color={0.3,0.1,0}, width=6, length=45, piece="thrust", onActive=true}},
   },
-  
-  funnelweb = {
-	{class='ShieldJitter', options={delay=0, life=math.huge, pos={0,25,-10}, size=400, strength = .002, precision=50, repeatEffect=true, quality = 4}},
-	{class='Bursts', options=MergeTable(corjamtBursts, {piece="emitl"})},
-		{class='Bursts', options=MergeTable(corjamtBursts, {piece="emitr"})},
-    {class='ShieldSphere', options={piece="emitl", life=math.huge, size=11, colormap1 = {{0.95, 0.1, 0.95, 0.9}}, repeatEffect=true}},
-    {class='ShieldSphere', options={piece="emitr", life=math.huge, size=11, colormap1 = {{0.95, 0.1, 0.95, 0.9}}, repeatEffect=true}},
+  arm_hawk = {
+    {class='AirJet',options={color={0.3,0.1,0}, width=6, length=75, piece="rearthrust", onActive=true}},
   },
-
-  --// ENERGY STORAGE //--------------------
-  corestor = {
-    {class='GroundFlash', options=groundFlashCorestor},
+  core_fink = {
+    {class='AirJet',options={color={0.3,0.1,0}, width=3, length=35, piece="thrustb", onActive=true}},
   },
-  armestor = {
-    {class='GroundFlash', options=groundFlashArmestor},
+  core_titan = {
+    {class='AirJet',options={color={0.3,0.1,0}, width=5, length=65, piece="thrustb", onActive=true}},
   },
-
-  --// FACTORIES //----------------------------
-  factoryship = {
-  	{class='StaticParticles', options=MergeTable(blinkyLightRed, {piece="flash01"}) },
-	{class='StaticParticles', options=MergeTable(blinkyLightGreen, {piece="flash03", delay = 20,}) },
-	{class='StaticParticles', options=MergeTable(blinkyLightBlue, {piece="flash05", delay = 40,}) },	
+  arm_lancet = {
+   {class='AirJet',options={color={0.3,0.1,0}, width=5, length=65, piece="thrust", onActive=true}},
   },
-
-  --// PYLONS // ----------------------------------
-  mexpylon = {
-    {class='GroundFlash', options=groundFlashCorestor},
+  core_avenger = {
+    {class='AirJet',options={color={0.3,0.1,0}, width=2.4, length=42, piece="thrust1", onActive=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=2.4, length=42, piece="thrust2", onActive=true}},
+  },
+  core_typhoon = {
+    {class='AirJet',options={color={0.3,0.1,0}, width=1.1, length=31, piece="thrustl1", onActive=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=1.8, length=47, piece="thrustl2", onActive=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=1.8, length=47, piece="thrustl3", onActive=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=1.1, length=31, piece="thrustr1", onActive=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=1.8, length=47, piece="thrustr2", onActive=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=1.8, length=47, piece="thrustr3", onActive=true}},
+  },
+  core_shadow = {
+    {class='AirJet',options={color={0.6,0.1,0}, width=3.5, length=52, piece="thrust1", onActive=true}},
+    {class='AirJet',options={color={0.6,0.1,0}, width=3.5, length=52, piece="thrust2", onActive=true}},
+  },
+  arm_thunder = {
+    {class='ThundAirJet',options={color={0.3,0.1,0}, width=2.9, length=52, piece="thrust1", onActive=true}},
+    {class='ThundAirJet',options={color={0.3,0.1,0}, width=2.9, length=52, piece="thrust2", onActive=true}},
+    {class='ThundAirJet',options={color={0.3,0.1,0}, width=2.9, length=52, piece="thrust3", onActive=true}},
+    {class='ThundAirJet',options={color={0.3,0.1,0}, width=2.9, length=52, piece="thrust4", onActive=true}},
+  },
+  core_hurricane = {
+    {class='AirJet',options={color={0.9,0.3,0}, width=10, length=80, piece="thrust", onActive=true}},
+  },
+  arm_phoenix = {
+    {class='AirJet',options={color={0.3,0.1,0}, width=8, length=75, piece="thrust", onActive=true}},
+  },
+  core_vamp = {
+    {class='AirJet',options={color={0.6,0.1,0}, width=3.5, length=65, piece="thrustb", onActive=true}},
+  },
+  core_vulture = {
+    {class='AirJet',options={color={0.8,0.2,0}, width=4, length=50, piece="thrust", onActive=true}},
+  },
+  core_hunter = {
+    {class='AirJet',options={color={0.8,0.2,0}, width=4, length=50, piece="thrust", onActive=true}},
+  },
+  arm_eagle = {
+    {class='AirJet',options={color={0.3,0.1,0}, width=3.5, length=50, piece="thrust", onActive=true}},
+  },
+  arm_seahawk = {
+    {class='AirJet',options={color={0.3,0.1,0}, width=4, length=50, piece="thrust", onActive=true}},
+  },
+  core_silhouette = {
+    {class='AirJet',options={color={0.4,0.1,0}, width=1.8, length=52, piece="thrust1a", onActive=true}},
+    {class='AirJet',options={color={0.4,0.1,0}, width=1.8, length=52, piece="thrust1b", onActive=true}},
+    {class='AirJet',options={color={0.6,0.1,0}, width=3.7, length=76, piece="thrust2", onActive=true}},
+  },
+  arm_harpoon = {
+    {class='AirJet',options={color={0.3,0.1,0}, width=4.5, length=70, piece="thrust", onActive=true}},
+  },
+  lost_falcon = {
+    {class='AirJet',options={color={0.3,0.1,0}, width=2.4, length=42, piece="thrust1", onActive=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=2.4, length=42, piece="thrust2", onActive=true}},
+  },
+  lost_condor = {
+    {class='AirJet',options={color={0.3,0.1,0}, width=2.4, length=42, piece="thrust1", onActive=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=2.4, length=42, piece="thrust2", onActive=true}},
+  },
+  lost_ghost = {
+    {class='AirJet',options={color={0.3,0.1,0}, width=2.4, length=42, piece="thrust1", onActive=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=2.4, length=42, piece="thrust2", onActive=true}},
+	{class='AirJet',options={color={0.3,0.1,0}, width=2.4, length=42, piece="thrust3", onActive=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=2.4, length=42, piece="thrust4", onActive=true}},
+  },
+  lost_osprey = {
+    {class='AirJet',options={color={0.3,0.1,0}, width=2.4, length=42, piece="thrust1", onActive=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=2.4, length=42, piece="thrust2", onActive=true}},
+	{class='AirJet',options={color={0.3,0.1,0}, width=2.4, length=42, piece="thrust3", onActive=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=2.4, length=42, piece="thrust4", onActive=true}},
+  },
+  lost_probe = {
+    {class='AirJet',options={color={0.3,0.1,0}, width=2.4, length=42, piece="thrust", onActive=true}},
+  },
+  lost_pterodactyl = {
+    {class='AirJet',options={color={0.3,0.1,0}, width=2.4, length=42, piece="thrust1", onActive=true}},
+	{class='AirJet',options={color={0.3,0.1,0}, width=2.4, length=42, piece="thrust2", onActive=true}},
+  },
+  lost_sparrow = {
+    {class='AirJet',options={color={0.3,0.1,0}, width=2.4, length=42, piece="thrust", onActive=true}},
+  },
+  lost_swallow = {
+    {class='AirJet',options={color={0.3,0.1,0}, width=2.4, length=42, piece="thrust1", onActive=true}},
+	{class='AirJet',options={color={0.3,0.1,0}, width=2.4, length=42, piece="thrust2", onActive=true}},
+  },
+  lost_trawler = {
+    {class='AirJet',options={color={0.3,0.1,0}, width=2.4, length=42, piece="thrust1", onActive=true}},
+	{class='AirJet',options={color={0.3,0.1,0}, width=2.4, length=42, piece="thrust2", onActive=true}},
   },
 
   --// OTHER
   roost = {
-    {class='SimpleParticles', options=roostDirt},
-    {class='SimpleParticles', options=MergeTable({delay=60},roostDirt)},
-    {class='SimpleParticles', options=MergeTable({delay=120},roostDirt)},
+		{class='SimpleParticles', options=roostDirt},
+		{class='SimpleParticles', options=MergeTable({delay=60},roostDirt)},
+		{class='SimpleParticles', options=MergeTable({delay=120},roostDirt)},
   },
-  
-  armasp= {
-  	{class='StaticParticles', options=MergeTable(blinkyLightRed, {piece="light1"}) },
-	{class='StaticParticles', options=MergeTable(blinkyLightGreen, {piece="light2"}) },
-  },
-  
-  armarad = {
-    {class='StaticParticles', options=MergeTable(blinkyLightWhite,{piece="point"})},
-    --{class='StaticParticles', options=MergeTable(blinkyLightBlue,{piece="point", delay=15})},
-  },  
-  corarad = {
-    {class='StaticParticles', options=radarBlink},
-    {class='StaticParticles', options=MergeTable(radarBlink,{pos={-1.6,25,0.0},delay=15})},
-    {class='StaticParticles', options=MergeTable(radarBlink,{pos={0,21,-1.0},delay=30})},
-  },
-  corrad = {
-    {class='StaticParticles', options=MergeTable(radarBlink,{piece="head"})},
-    {class='StaticParticles', options=MergeTable(radarBlink,{piece="head", delay=15})},
-  },
+   
+}
+ 
+effectUnitDefsXmas = {
 
-  armcrabe = {
-	{class='StaticParticles', options=MergeTable(blinkyLightWhite, {piece="blight"}) },
-  },   
-  corcan = {
-	--{class='StaticParticles', options=MergeTable(jackGlow, {piece="point"}) },
-  },  
-  
-  spherepole = {
-    {class='Ribbon', options={color={.3,.3,01,1}, width=5.5, piece="blade", onActive=false}},
+  arm_commander = {
+    {class='SantaHat',options={color={1,0.1,0,1}, pos={0,3.8,0.7}, emitVector={0.3,0.7,0.3}, width=3.4, height=9, ballSize=1.3, piecenum=8, piece="head"}},
   },
-  
-  pw_warpgate = {
-    {class='StaticParticles', options=warpgateCorona},
---    {class='GroundFlash', options=groundFlashOrange},
+  arm_scommander = {
+    {class='SantaHat',options={color={1,0.1,0,1}, pos={0,3.8,0.7}, emitVector={0.3,0.7,0.3}, width=3.4, height=9, ballSize=1.3, piecenum=8, piece="head"}},
   },
+  arm_u0commander = {
+    {class='SantaHat',options={color={1,0.1,0,1}, pos={0,3.8,0.7}, emitVector={0.3,0.7,0.3}, width=3.4, height=9, ballSize=1.3, piecenum=8, piece="head"}},
+  },
+  arm_ucommander = {
+    {class='SantaHat',options={color={1,0.1,0,1}, pos={0,3.8,0.7}, emitVector={0.3,0.7,0.3}, width=3.4, height=9, ballSize=1.3, piecenum=8, piece="head"}},
+  },
+  arm_u2commander = {
+    {class='SantaHat',options={color={1,0.1,0,1}, pos={0,3.8,0.7}, emitVector={0.3,0.7,0.3}, width=3.4, height=9, ballSize=1.3, piecenum=8, piece="head"}},
+  },
+  arm_u3commander = {
+    {class='SantaHat',options={color={1,0.1,0,1}, pos={0,3.8,0.7}, emitVector={0.3,0.7,0.3}, width=3.4, height=9, ballSize=1.3, piecenum=8, piece="head"}},
+  },
+  arm_u4commander = {
+    {class='SantaHat',options={color={1,0.1,0,1}, pos={0,3.8,0.7}, emitVector={0.3,0.7,0.3}, width=3.4, height=9, ballSize=1.3, piecenum=8, piece="head"}},
+  },
+  arm_decoy_commander = {
+    {class='SantaHat',options={color={1,0.1,0,1}, pos={0,3.8,0.7}, emitVector={0.3,0.7,0.3}, width=3.4, height=9, ballSize=1.3, piecenum=8, piece="head"}},
+  },
+  core_commander = {
+    {class='SantaHat',options={color={1,0.1,0,1}, pos={0,5.2,2.1}, emitVector={0.3,0.7,0.3}, width=3.4, height=8, ballSize=1.1, piecenum=16, piece="head"}},
+  },
+  core_scommander = {
+    {class='SantaHat',options={color={1,0.1,0,1}, pos={0,5.2,2.1}, emitVector={0.3,0.7,0.3}, width=3.4, height=8, ballSize=1.1, piecenum=16, piece="head"}},
+  },
+  core_u0commander = {
+    {class='SantaHat',options={color={1,0.1,0,1}, pos={0,5.2,2.1}, emitVector={0.3,0.7,0.3}, width=3.4, height=8, ballSize=1.1, piecenum=16, piece="head"}},
+  },
+  core_ucommander = {
+    {class='SantaHat',options={color={1,0.1,0,1}, pos={0,5.2,2.1}, emitVector={0.3,0.7,0.3}, width=3.4, height=8, ballSize=1.1, piecenum=16, piece="head"}},
+  },
+  core_u2commander = {
+    {class='SantaHat',options={color={1,0.1,0,1}, pos={0,5.2,2.1}, emitVector={0.3,0.7,0.3}, width=3.4, height=8, ballSize=1.1, piecenum=16, piece="head"}},
+  },
+  core_u3commander = {
+    {class='SantaHat',options={color={1,0.1,0,1}, pos={0,5.2,2.1}, emitVector={0.3,0.7,0.3}, width=3.4, height=8, ballSize=1.1, piecenum=16, piece="head"}},
+  },
+  core_u4commander = {
+    {class='SantaHat',options={color={1,0.1,0,1}, pos={0,5.2,2.1}, emitVector={0.3,0.7,0.3}, width=3.4, height=8, ballSize=1.1, piecenum=16, piece="head"}},
+  },
+  core_decoy_commander = {
+    {class='SantaHat',options={color={1,0.1,0,1}, pos={0,5.2,2.1}, emitVector={0.3,0.7,0.3}, width=3.4, height=8, ballSize=1.1, piecenum=16, piece="head"}},
+  },
+  -- lost commanders
+  lost_commander = {
+    {class='SantaHat',options={color={1,0.1,0,1}, pos={0,9.2,3.1}, emitVector={0.3,0.7,0.3}, width=3.4, height=8, ballSize=1.1, piecenum=18, piece="head"}},
+  },
+  lost_u0commander = {
+    {class='SantaHat',options={color={1,0.1,0,1}, pos={0,9.2,3.1}, emitVector={0.3,0.7,0.3}, width=3.4, height=8, ballSize=1.1, piecenum=18, piece="head"}},
+  },
+  lost_ucommander = {
+    {class='SantaHat',options={color={1,0.1,0,1}, pos={0,9.2,3.1}, emitVector={0.3,0.7,0.3}, width=3.4, height=8, ballSize=1.1, piecenum=18, piece="head"}},
+  },
+  lost_u2commander = {
+    {class='SantaHat',options={color={1,0.1,0,1}, pos={0,9.2,3.1}, emitVector={0.3,0.7,0.3}, width=3.4, height=8, ballSize=1.1, piecenum=18, piece="head"}},
+  },
+  lost_u3commander = {
+    {class='SantaHat',options={color={1,0.1,0,1}, pos={0,9.2,3.1}, emitVector={0.3,0.7,0.3}, width=3.4, height=8, ballSize=1.1, piecenum=18, piece="head"}},
+  },
+  lost_u4commander = {
+    {class='SantaHat',options={color={1,0.1,0,1}, pos={0,9.2,3.1}, emitVector={0.3,0.7,0.3}, width=3.4, height=8, ballSize=1.1, piecenum=18, piece="head"}},
+  },
+  lost_decoy_commander = {
+    {class='SantaHat',options={color={1,0.1,0,1}, pos={0,9.2,3.1}, emitVector={0.3,0.7,0.3}, width=3.4, height=8, ballSize=1.1, piecenum=18, piece="head"}},
+  },
+}
 
-  zenith = {
-    {class='StaticParticles', options=zenithCorona},
-  },    
-
-  amphtele = {
-	{class='ShieldSphere', options=MergeTable(teleShieldSphere, {piece="sphere"})},
-	{class='StaticParticles', options=MergeTable(teleCorona, {piece="sphere"})},
-	--{class='ShieldSphere', options=MergeTable(teleShieldSphere, {piece="sphere", onActive = true, size=18})},
-	{class='StaticParticles', options=MergeTable(teleCorona, {piece="sphere", onActive = true, size=100})},
-	{class='ShieldJitter', options={delay=0, life=math.huge, piece="sphere", size=50, strength = .005, precision=50, repeatEffect=true, onActive=true}},
-  },
+effectUnitDefsStPatrick = {}
+ 
+for i,f in pairs(effectUnitDefsXmas) do
 	
-  tele_beacon = {
-	{class='ShieldSphere', options=MergeTable(teleShieldSphere, {piece="sphere"})},
-	{class='StaticParticles', options=MergeTable(teleCorona, {piece="sphere"})},
-	{class='StaticParticles', options=MergeTable(teleCorona, {piece="sphere", onActive = true, size=50})},
-	{class='ShieldJitter', options={delay=0, life=math.huge, piece="sphere", size=30, strength = .005, precision=50, repeatEffect=true, onActive=true}},	
-  },
-  
-  armbanth = {
-	{class='StaticParticles', options=MergeTable(blinkyLightBlue, {piece="light", delay = 20, size = 25}) },
-  },
-  
-  armorco = {
-	{class='StaticParticles', options=MergeTable(blinkyLightGreen, {piece="light", delay = 20, size = 30}) },
-  },
-
-  -- length tag does nothing
-  --// PLANES //----------------------------
-  armcybr = {
-    {class='AirJet', options={color={0.4,0.1,0.8}, width=3.5, length=30, piece="nozzle1", onActive=true}},
-    {class='AirJet', options={color={0.4,0.1,0.8}, width=3.5, length=30, piece="nozzle2", onActive=true}},
-   },
-  armhawk2 = {
-    {class='AirJet', options={color={0.2,0.2,1.0}, width=2.8, length=25, piece="enginel", onActive=true}},
-    {class='AirJet', options={color={0.2,0.2,1.0}, width=2.8, length=25, piece="enginer", onActive=true}},
-    {class='Ribbon', options={width=1, size=12, piece="wingtip1"}},
-    {class='Ribbon', options={width=1, size=12, piece="wingtip2"}},
-  },
-  armbrawl = {
-    {class='AirJet', options={color={0.0,0.5,1.0}, width=5, length=15, piece="lfjet", onActive=true}},
-    {class='AirJet', options={color={0.0,0.5,1.0}, width=5, length=15, piece="rfjet", onActive=true}},
-    {class='AirJet', options={color={0.0,0.5,1.0}, width=2.5, length=10, piece="lrjet", onActive=true}},
-    {class='AirJet', options={color={0.0,0.5,1.0}, width=2.5, length=10, piece="rrjet", onActive=true}},
-  },
-  armawac = {
-    {class='Ribbon', options={color={.3,.3,01,1}, width=5.5, piece="rjet"}},
-    {class='Ribbon', options={color={.3,.3,01,1}, width=5.5, piece="ljet"}},
-  },
-  armstiletto_laser = {
-    {class='AirJet', options={color={0.1,0.4,0.6}, width=3.5, length=20, piece="Jet1", onActive=true}},
-    {class='AirJet', options={color={0.1,0.4,0.6}, width=3.5, length=20, piece="Jet2", onActive=true}},
-    {class='Ribbon', options={width=1, size=6, piece="LWingTip"}},
-    {class='Ribbon', options={width=1, size=6, piece="RWingTip"}},
-	--{class='StaticParticles', options=MergeTable(blinkyLightRed, {piece="LWingTip"}) },
-	--{class='StaticParticles', options=MergeTable(blinkyLightGreen, {piece="RWingTip"}) },	
-  },
-  armcsa = {
-    {class='AirJet', options={color={0.45,0.45,0.9}, width=2.8, length=15, piece="enginel", onActive=true}},
-    {class='AirJet', options={color={0.45,0.45,0.9}, width=2.8, length=15, piece="enginer", onActive=true}},
-    {class='Ribbon', options={width=1, size=12, piece="wingtipl"}},
-    {class='Ribbon', options={width=1, size=12, piece="wingtipr"}},
-  },
-
-  bladew = {
-    {class='Ribbon', options={width=1, size=5, piece="ljet"}},
-    {class='Ribbon', options={width=1, size=5, piece="rjet"}},  
-    {class='AirJet', options={color={0.1,0.4,0.6}, width=3, length=14, piece="ljet", onActive=true, emitVector = {0, 1, 0}}},
-    {class='AirJet', options={color={0.1,0.4,0.6}, width=3, length=14, piece="rjet", onActive=true, emitVector = {0, 1, 0}}},
-  },
-
-  armkam = {
-    {class='Ribbon', options={width=1, size=10, piece="lfx"}},
-    {class='Ribbon', options={width=1, size=10, piece="rfx"}},  
-    {class='AirJet', options={color={0.1,0.4,0.6}, width=4, length=25, piece="lfx", onActive=true, emitVector = {0, 0, 1}}},
-    {class='AirJet', options={color={0.1,0.4,0.6}, width=4, length=25, piece="rfx", onActive=true, emitVector = {0, 0, 1}}},
-  },
-  gunshipaa = { 
-    {class='AirJet', options={color={0.1,0.4,0.6}, width=4, length=32, piece="ljet", onActive=true}},
-    {class='AirJet', options={color={0.1,0.4,0.6}, width=4, length=32, piece="rjet", onActive=true}},
-    {class='AirJet', options={color={0.1,0.4,0.6}, width=4, length=32, piece="mjet", onActive=true}},
-  },
-  bomberstrike = {
-    {class='AirJet', options={color={0.1,0.4,0.6}, width=3.5, length=25, piece="exhaustl", onActive=true}},
-    {class='AirJet', options={color={0.1,0.4,0.6}, width=3.5, length=25, piece="exhaustr", onActive=true}},
-    {class='Ribbon', options={width=1, size=10, piece="wingtipl"}},
-    {class='Ribbon', options={width=1, size=10, piece="wingtipr"}},  
-  },
-  bomberassault = {
-    {class='AirJet', options={color={0.1,0.4,0.6}, width=5, length=40, piece="exhaustLeft", onActive=true}},
-    {class='AirJet', options={color={0.1,0.4,0.6}, width=5, length=40, piece="exhaustRight", onActive=true}},
-    {class='AirJet', options={color={0.1,0.4,0.6}, width=6, length=60, piece="exhaustTop", onActive=true}},
-  },
-  corshad = {
-    {class='AirJet', options={color={0.2,0.4,0.8}, width=4, length=30, piece="thrustr", texture2=":c:bitmaps/gpl/lups/jet2.bmp", onActive=true}},
-    {class='AirJet', options={color={0.2,0.4,0.8}, width=4, length=30, piece="thrustl", texture2=":c:bitmaps/gpl/lups/jet2.bmp", onActive=true}},
-    {class='Ribbon', options={width=1, piece="wingtipl"}},
-    {class='Ribbon', options={width=1, piece="wingtipr"}},
-	{class='StaticParticles', options=MergeTable(blinkyLightRed, {piece="wingtipl"}) },
-	{class='StaticParticles', options=MergeTable(blinkyLightGreen, {piece="wingtipr"}) },
-  },
-  fighter = {
-    {class='AirJet', options={color={0.6,0.1,0.0}, width=3.5, length=55, piece="nozzle1", texture2=":c:bitmaps/gpl/lups/jet2.bmp", onActive=true}},
-    {class='AirJet', options={color={0.6,0.1,0.0}, width=3.5, length=55, piece="nozzle2", texture2=":c:bitmaps/gpl/lups/jet2.bmp", onActive=true}},
-    {class='Ribbon', options={width=1, piece="wingtip1"}},
-    {class='Ribbon', options={width=1, piece="wingtip2"}},
-  },
-  corape = {
-    {class='AirJet', options={color={0.6,0.1,0.0}, width=3.5, length=22, piece="thrust1", onActive=true}},
-    {class='AirJet', options={color={0.6,0.1,0.0}, width=3.5, length=22, piece="thrust2", onActive=true}},
-  },
-  corhurc2 = {
-    {class='AirJet', options={color={0.7,0.3,0.1}, width=5, length=40, piece="exhaust", onActive=true}},
-    {class='Ribbon', options={width=1, piece="wingtipl"}},
-    {class='Ribbon', options={width=1, piece="wingtipr"}},
-	{class='StaticParticles', options=MergeTable(blinkyLightRed, {piece="wingtipr"}) },
-	{class='StaticParticles', options=MergeTable(blinkyLightGreen, {piece="wingtipl"}) },	
-  },
-  corvamp = {
-    {class='AirJet', options={color={0.6,0.1,0.0}, width=3.5, length=55, piece="thrust1", onActive=true}},
-    {class='AirJet', options={color={0.6,0.1,0.0}, width=3.5, length=55, piece="thrust2", onActive=true}},
-    {class='AirJet', options={color={0.6,0.1,0.0}, width=3.5, length=55, piece="thrust3", onActive=true}},
-    {class='Ribbon', options={width=1, size=8, piece="wingtip1"}},
-    {class='Ribbon', options={width=1, size=8, piece="wingtip2"}},
-  },
-  corbtrans = {
-    {class='AirJet', options={color={0.2,0.4,0.8}, width=8, length=35, piece="engineEmit", onActive=true}},
-    {class='ShieldSphere', options=MergeTable(teleShieldSphere, {piece="agrav1", onActive=true})},
-    {class='StaticParticles', options=MergeTable(teleCorona, {piece="agrav1", onActive=true})},
-    {class='ShieldSphere', options=MergeTable(teleShieldSphere, {piece="agrav2", onActive=true})},
-    {class='StaticParticles', options=MergeTable(teleCorona, {piece="agrav2", onActive=true})},
-    {class='ShieldSphere', options=MergeTable(teleShieldSphere, {piece="agrav3", onActive=true})},
-    {class='StaticParticles', options=MergeTable(teleCorona, {piece="agrav3", onActive=true})},
-    {class='ShieldSphere', options=MergeTable(teleShieldSphere, {piece="agrav4", onActive=true})},
-    {class='StaticParticles', options=MergeTable(teleCorona, {piece="agrav4", onActive=true})},
-  }, 
-  corvalk = {
-    {class='AirJet', options={color={0.2,0.4,0.8}, width=3.5, length=22, piece="engineEmit", onActive=true}},
-    {class='ShieldSphere', options=MergeTable(valkShieldSphere, {piece="agrav1", onActive=true})},
-    {class='StaticParticles', options=MergeTable(valkCorona, {piece="agrav1", onActive=true})},
-    {class='ShieldSphere', options=MergeTable(valkShieldSphere, {piece="agrav2", onActive=true})},
-    {class='StaticParticles', options=MergeTable(valkCorona, {piece="agrav2", onActive=true})},
-    {class='ShieldSphere', options=MergeTable(valkShieldSphere, {piece="agrav3", onActive=true})},
-    {class='StaticParticles', options=MergeTable(valkCorona, {piece="agrav3", onActive=true})},
-    {class='ShieldSphere', options=MergeTable(valkShieldSphere, {piece="agrav4", onActive=true})},
-    {class='StaticParticles', options=MergeTable(valkCorona, {piece="agrav4", onActive=true})},
-  },  
-  corawac = {
-    {class='AirJet', options={color={0.1,0.4,0.6}, width=3.5, length=25, piece="thrust", onActive=true}},
-    {class='Ribbon', options={width=1, size=8, piece="wingtipl"}},
-    {class='Ribbon', options={width=1, size=8, piece="wingtipr"}},
-	{class='StaticParticles', options=MergeTable(blinkyLightRed, {piece="wingtipr"}) },
-	{class='StaticParticles', options=MergeTable(blinkyLightGreen, {piece="wingtipl"}) },		
-  },
-  blackdawn = {
-    {class='AirJet', options={color={0.8,0.1,0.0}, width=7, length=30, jitterWidthScale=2, distortion=0.01, piece="Lengine", texture2=":c:bitmaps/gpl/lups/jet2.bmp", onActive=true}},
-    {class='AirJet', options={color={0.8,0.1,0.0}, width=7, length=30, jitterWidthScale=2, distortion=0.01, piece="Rengine", texture2=":c:bitmaps/gpl/lups/jet2.bmp", onActive=true}},
-    {class='AirJet', options={color={0.8,0.1,0.0}, width=7, length=30, jitterWidthScale=2, distortion=0.01, piece="Lwingengine", texture2=":c:bitmaps/gpl/lups/jet2.bmp", onActive=true}},
-    {class='AirJet', options={color={0.8,0.1,0.0}, width=7, length=30, jitterWidthScale=2, distortion=0.01, piece="Rwingengine", texture2=":c:bitmaps/gpl/lups/jet2.bmp", onActive=true}},
-  },
-  corcrw = {
-    {class='AirJet', options={color={0.0,0.5,1.0}, width=10, length=20, piece="jetrear", onActive=true, emitVector = {0, 0, 1}}},
-    {class='AirJet', options={color={0.0,0.5,1.0}, width=10, length=20, piece="jetleft", onActive=true, emitVector = {0, 0, 1}}},
-    {class='AirJet', options={color={0.0,0.5,1.0}, width=10, length=20, piece="jetright", onActive=true, emitVector = {0, 0, 1}}},
-  },
- }
-
-effectUnitDefsXmas = {}
-
+	if f and (f[1]) and (f[1].options) and (f[1].options.color) then
+		f[1].options.color = {0.1,0.7,0,1}
+		effectUnitDefsStPatrick[i] = f
+	end
+end
+ 
+ 
 local levelScale = {
     1,
     1.1,
