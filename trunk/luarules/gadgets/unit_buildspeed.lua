@@ -32,6 +32,7 @@ local spGetTeamResources = Spring.GetTeamResources
 local spInsertUnitCmdDesc = Spring.InsertUnitCmdDesc
 local spEditUnitCmdDesc = Spring.EditUnitCmdDesc
 local spRemoveUnitCmdDesc = Spring.RemoveUnitCmdDesc
+local Echo = Spring.Echo
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
@@ -44,6 +45,18 @@ local teamMetalStalling 		= {} -- teamStalling[teamID] = nil / bool
 local teamEnergyStalling 		= {} -- teamStalling[teamID] = nil / bool
 local modOptions    			= Spring.GetModOptions()
 local buildspeedlist 			= {}
+local builderSpeeds				= {}
+local nanoTurretDefs			= {}
+local excludeUnits				= {
+	[UnitDefNames["arm_colossus"].id] = true,
+	[UnitDefNames["core_hive"].id] = true,
+	[UnitDefNames["lost_giant"].id] = true,
+	[UnitDefNames["arm_air_repair_pad"].id] = true,
+	[UnitDefNames["core_air_repair_pad"].id] = true,
+	[UnitDefNames["lost_air_repair_pad"].id] = true,
+}
+
+
 
 local buildspeedCmdDesc = {
   id      = CMD_BUILDSPEED,
@@ -74,7 +87,6 @@ local function AddBuildspeedCmdDesc(unitID)
   spInsertUnitCmdDesc(unitID, insertID + 1, buildspeedCmdDesc)
 end
 
-
 local function UpdateButton(unitID, statusStr)
   local cmdDescID = FindUnitCmdDesc(unitID, CMD_BUILDSPEED)
   if (cmdDescID == nil) then
@@ -102,7 +114,6 @@ local function UpdateButton(unitID, statusStr)
   })
 end
 
-
 local function BuildspeedCommand(unitID, unitDefID, cmdParams, teamID)
 	if cmdParams[1] == 1 then
 		Spring.SetUnitBuildSpeed(unitID, buildspeedlist[unitID].speed *.25)
@@ -120,29 +131,25 @@ end
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
-function gadget:UnitCreated(unitID, unitDefID, teamID, builderID)
-	local ud = UnitDefs[unitDefID]
-	if (ud.isBuilder==true and #ud.buildOptions>0 or ud.name:find("_nano_tower",1,true)) then
-		local stMode
-		if ud.name:find("_nano_tower",1,true) then
-			stMode=0
-		else
-			stMode=4
-		end
-		buildspeedlist[unitID]={speed=ud.buildSpeed, mode=stMode}
-		AddBuildspeedCmdDesc(unitID)
-		UpdateButton(unitID, stMode)
-	end
-end
-
-function gadget:UnitDestroyed(unitID, _, teamID)
-	buildspeedlist[unitID] = nil
-end
-
 function gadget:Initialize()
+	if modOptions and modOptions.buildspeed and modOptions.buildspeed == '0' then
+		gadgetHandler:RemoveGadget()
+		return
+	end
+	
 	for uDefID, uDef in pairs(UnitDefs) do
 		requiresMetal[uDefID] = (uDef.metalCost > 1) -- T1 metal makers cost 1 metal.
 		requiresEnergy[uDefID] = (uDef.energyCost > 0) -- T1 solars cost 0 energy.
+		
+		if (uDef.isBuilder==true and #uDef.buildOptions>0 or uDef.name:find("_nano_tower",1,true)) then
+			if not excludeUnits[uDefID] then
+				builderSpeeds[uDefID] = uDef.buildSpeed
+				
+				if uDef.name:find("_nano_tower",1,true) then
+					nanoTurretDefs[uDefID] = true
+				end
+			end
+		end	
 	end
 	teamList = Spring.GetTeamList()
 	gadgetHandler:RegisterCMDID(CMD_BUILDSPEED)
@@ -151,10 +158,21 @@ function gadget:Initialize()
 		local unitDefID = GetUnitDefID(unitID)
 		gadget:UnitCreated(unitID, unitDefID, teamID)
 	end
-	if modOptions and modOptions.buildspeed and modOptions.buildspeed == '0' then
-		gadgetHandler:RemoveGadget()
-		return
+	
+end
+
+function gadget:UnitCreated(unitID, unitDefID, teamID, builderID)
+	
+	if builderSpeeds[unitDefID] then
+		local stMode = (nanoTurretDefs[unitDefID] and 0) or 4
+		buildspeedlist[unitID]={speed=builderSpeeds[unitDefID], mode=stMode}
+		AddBuildspeedCmdDesc(unitID)
+		UpdateButton(unitID, stMode)
 	end
+end
+
+function gadget:UnitDestroyed(unitID, _, teamID)
+	buildspeedlist[unitID] = nil
 end
 
 function gadget:GameFrame(n)
@@ -185,9 +203,10 @@ end
 
 function gadget:AllowUnitBuildStep(builderID, builderTeamID, uID, uDefID, step)
 	if buildspeedlist[builderID] then
+				
 		return (step <= 0) or buildspeedlist[builderID].mode~=0 or not ((teamMetalStalling[builderTeamID] and requiresMetal[uDefID]) or (teamEnergyStalling[builderTeamID] and requiresEnergy[uDefID]))
 	else
-		return false
+		return true
 	end
 end
 
