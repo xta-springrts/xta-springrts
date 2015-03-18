@@ -69,7 +69,7 @@
 	//************
 	turnrate=365;
 	acceleration=0.12;
-	brakerate=4;
+	brakerate=0.05;
 	maxvelocity=9.5; // OTA: 114.0 m/s
 	maxslope=10;
 	maxwaterdepth=255;

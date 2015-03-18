@@ -45,7 +45,10 @@
 	//************************************************************
 	//  Building
 	//************
-
+	collisionVolumeType=CylY;
+	collisionVolumeScales=35 12 35;
+	collisionVolumeOffsets=0 0 0;
+	collisionVolumeTest = 1;
 	//************************************************************
 	//  Constructor
 	//***************
@@ -67,7 +70,7 @@
 	//************
 	turnrate=1000;
 	acceleration=0.32;
-	brakerate=4;
+	brakerate=0.4;
 	maxvelocity=5.1; // OTA: 79.2 m/s
 	maxslope=10;
 	maxwaterdepth=255;

@@ -68,7 +68,7 @@
 	//************
 	turnrate=838;
 	acceleration=0.21;
-	brakerate=5;
+	brakerate=0.05;
 	maxvelocity=11.6; //was 9.5//
 	maxslope=10;
 	maxwaterdepth=255;

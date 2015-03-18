@@ -18,7 +18,7 @@
 	TEDClass=VTOL;
 	
 	//    Movement
-	BrakeRate=2.5;
+	BrakeRate=0.25;
 	Acceleration=0.1;
 	CanMove=1;
 	MaxVelocity=3.5;

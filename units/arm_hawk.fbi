@@ -65,7 +65,7 @@
 	//  Movement
 	//************
 	acceleration=0.6;
-	brakerate=9;
+	brakerate=0.9;
 	maxvelocity=16;// OTA: 144.0 m/s
 	maxwaterdepth=255;
 	cruisealt=200;

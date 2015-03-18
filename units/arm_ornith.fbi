@@ -42,7 +42,7 @@
 	hoverattack=0;
 	canguard=1;
 	MaxVelocity=5;
-	BrakeRate=1;
+	BrakeRate=0.1;
 	Acceleration=0.06; //was 0.03//
 	TurnRate=356; //was 156//
 	SteeringMode=1;

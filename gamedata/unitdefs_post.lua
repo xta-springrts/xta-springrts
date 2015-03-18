@@ -63,16 +63,7 @@ for name, ud in pairs(UnitDefs) do
 	--enable restore ability
 	if ud.terraformSpeed and  ud.terraformSpeed > 0 then
 		ud.canRestore = 1
-	end
-	
-	-- scale brakerates for air
-	 if (ud.brakerate) then  
-		if ud.canfly then 
-			if not ud.hoverattack and (ud.transportCapacity and not ud.transportCapacity > 0) then -- exclude gunships and transports
-				ud.brakerate = ud.brakerate * 0.1 
-			end
-		end
-	end
+	end	
 end 
 
 -------------------------------------------------------------------------------
