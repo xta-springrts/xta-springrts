@@ -16,7 +16,16 @@ end
 -- Globals
 ----------------------------------------------------------------
 local geoDisplayList
-
+local Echo = Spring.Echo
+local DTid = UnitDefNames["arm_dragons_teeth"].id
+local geoUnits = {
+	[UnitDefNames["arm_geothermal_powerplant"].id] = true,
+	[UnitDefNames["core_geothermal_powerplant"].id] = true,
+	[UnitDefNames["lost_geothermal_powerplant"].id] = true,
+	[UnitDefNames["guardian_geothermal_powerplant"].id] = true,
+}
+local updateFrame = nil
+	
 ----------------------------------------------------------------
 -- Speedups
 ----------------------------------------------------------------
@@ -42,14 +51,37 @@ local function HighlightGeos()
 		local fID = features[i]
 		if FeatureDefs[Spring.GetFeatureDefID(fID)].geoThermal then
 			local fx, fy, fz = Spring.GetFeaturePosition(fID)
-			gl.BeginEnd(GL.LINE_STRIP, PillarVerts, fx, fy, fz)
+			local blocking = Spring.TestBuildOrder(DTid,fx,fy,fz,0)
+			
+			if (blocking == 1 or blocking == 2) then
+				gl.BeginEnd(GL.LINE_STRIP, PillarVerts, fx, fy, fz)
+			end
 		end
+	end
+end
+
+function widget:GameFrame(frame)
+	if updateFrame and frame > updateFrame + 8 then
+		updateFrame = nil
+		geoDisplayList = nil
 	end
 end
 
 ----------------------------------------------------------------
 -- Callins
 ----------------------------------------------------------------
+function widget:UnitCreated(unitID, unitDefID, unitTeam, builderID)
+	if geoUnits[unitDefID] then
+		updateFrame = Spring.GetGameFrame()
+	end
+end
+
+function widget:UnitDestroyed(unitID, unitDefID, unitTeam, attackerID, attackerDefID, attackerTeam)
+	if geoUnits[unitDefID] then
+		updateFrame = Spring.GetGameFrame()
+	end
+end
+
 function widget:Shutdown()
 	if geoDisplayList then
 		gl.DeleteList(geoDisplayList)
