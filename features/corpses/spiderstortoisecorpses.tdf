@@ -352,6 +352,43 @@ featurereclamate=smudge01;
 seqnamereclamate=tree1reclamate;
 }
 
+[core_riptide_dead]
+{
+world=All Worlds;
+description=Wreckage;
+category=core_corpses;
+object=core_riptide_dead;
+featuredead=core_riptide_heap;
+footprintx=4;
+footprintz=4;
+height=20;
+blocking=1;
+hitdensity=100;
+metal=311;
+damage=2000;
+reclaimable=1;
+featurereclamate=smudge01;
+seqnamereclamate=tree1reclamate;
+}
+
+[core_riptide_heap]
+{
+World=All Worlds;
+Description=Wreckage;
+Category=core_heaps;
+Object=4x4d;
+Footprintx=4;
+Footprintz=4;
+Height=4;
+Blocking=0;
+HitDensity=100;
+Metal=199;
+Damage=2000;
+Reclaimable=1;
+Featurereclamate=smudge01;
+Seqnamereclamate=tree1reclamate;
+}
+
 [core_wrecker_dead]
 {
 world=All Worlds;

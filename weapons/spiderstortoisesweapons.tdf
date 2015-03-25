@@ -454,6 +454,46 @@
 	}
 }
 
+[CHELCHELSTEAMTHROWER]
+{
+	name=Flame Thrower;
+	weaponType=Flame;
+	explosiongenerator=custom:FLAMETHROWER;
+	NoSelfDamage=1;	
+	SoundTrigger=1;
+	Texture1=flamer;
+	Texture2=null;
+	Texture3=null;
+	Texture4=null;
+	turret=1;
+	range=290;
+	waterweapon=1;
+	fireSubmersed=1;
+	reloadtime=1.2;
+	weapontimer=4.5;
+	weaponvelocity=320;
+	areaofeffect=20;
+	flamegfxtime=1.3;
+	sizegrowth=0.2;
+	burst=15;
+	burstrate=0.01;
+	sprayangle=1124;
+	randomdecay=0;
+	soundstart=steamturtle;
+	soundhitdry=;
+	firestarter=100;
+	groundbounce=1;
+	smokedelay=1;
+	startsmoke=0;
+	endsmoke=1;
+	tolerance=8000;
+	//minbarrelangle=-90;
+	[DAMAGE]
+	{
+		default=10;
+		group_invincible=1;
+	}
+}
 [CHELCHELFLAMETHROWER]
 {
 	name=Flame Thrower;
