@@ -11,8 +11,8 @@
 	FootprintX=4;
 	FootprintZ=4;
 	BuildCostEnergy=3063;
-	BuildCostMetal=426;
-	MaxDamage=3832;
+	BuildCostMetal=344;
+	MaxDamage=3332;
 	MaxSlope=12;
 	MaxWaterDepth=100;
 	EnergyUse=2;
@@ -38,7 +38,7 @@
 	canpatrol=1;
 	canstop=1;
 	canguard=1;
-	MaxVelocity=0.93;
+	MaxVelocity=0.9;
 	BrakeRate=0.152;
 	Acceleration=0.152;
 	TurnRate=400;
