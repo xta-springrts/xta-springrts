@@ -1,0 +1,83 @@
+
+[WhiteSteam]
+{
+	usedefaultexplosions=0;	
+
+[exhale]
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+		sizeGrowth=4.0;
+		sizeMod=1.0;
+		pos=0, 0, 0; 
+		gravity=0, 0.01, 0;
+		
+
+		Texture=smoke;
+		airdrag=0.5;
+		colorMap=1.0 1.0 1.0 0.1 0.8 0.8 0.8 0.2 0.0 0.0 0.0 0.01;
+
+		particleLifeSpread=2; 
+		particleSpeedSpread=1;  
+		particleSizeSpread=1;   
+		
+		particleLife=2;
+		numParticles=1; 
+		particleSpeed=1; 
+		particleSize=4;
+		
+		
+		emitVector=0, 1, 0; 
+		emitRot=0;//80
+		emitRotSpread=0; 
+		directional=0; 
+		alwaysVisible=0;
+
+		}
+	air=1;
+	water=1;
+	ground=1;
+	count=1;
+	}
+
+[exhalebubble]
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+		sizeGrowth=0.16;
+		sizeMod=1.0;
+		pos=0, 0, 0; 
+		gravity=0, 0.01, 0;
+		
+
+		Texture=Bubble;
+		airdrag=0.5;
+		colorMap=1.0 1.0 1.0 0.1 0.8 0.8 1.0 0.2 0.0 0.0 0.0 0.01;
+
+		particleLifeSpread=2; 
+		particleSpeedSpread=1;  
+		particleSizeSpread=1;   
+		
+		particleLife=2;
+		numParticles=1; 
+		particleSpeed=6; 
+		particleSize=3;
+		
+		
+		emitVector=0, 1, 0; 
+		emitRot=40;//80
+		emitRotSpread=5; 
+		directional=0; 
+		alwaysVisible=0;
+
+		}
+	air=0;
+	water=1;
+	underwater=1;
+	ground=0;
+	count=1;
+	}
+
+}

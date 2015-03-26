@@ -22,6 +22,7 @@
 	ThreeD=1;
 	ZBuffer=1;
 	NoAutoFire=0;
+	activatewhenbuilt=1;
 	SightDistance=450;
 	sonardistance=400; 
 	SoundCategory=COR_TOR;
