@@ -7,12 +7,12 @@
 	Designation=CORE-DR5;
 	Name=Chelonian;
 	buildpic=core_chelonian.png;
-	Description=Underwater Steam Tortoise;
+	Description=Steamer/Bubbler Tortoise;
 	FootprintX=4;
 	FootprintZ=4;
 	BuildCostEnergy=3063;
 	BuildCostMetal=344;
-	MaxDamage=3332;
+	MaxDamage=3432;
 	MaxSlope=12;
 	MaxWaterDepth=100;
 	EnergyUse=2;
