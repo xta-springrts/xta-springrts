@@ -3711,7 +3711,7 @@
 	{
 		canbuild1=lost_construction_ship;
 		canbuild2=lost_otter;
-		//canbuild3=arm_vanguard;
+		canbuild3=lost_shrinker;
 		canbuild4=lost_violator;
 		canbuild5=lost_ambassador;
 		canbuild6=lost_plunger;

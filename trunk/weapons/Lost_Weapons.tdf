@@ -2099,3 +2099,32 @@
 		lost_commanders=6000;
 	}
 }
+
+[Shrink_LIGHTNING]
+	{
+	ID=217; 
+	Name=Commander Lightning Beam;
+	explosiongenerator=custom:LIGHTNING_Commander;  
+	RenderType=7;
+  	texture1=testlightning;
+	LineOfSight=1;
+	Turret=1;
+	Range=400;
+	ReloadTime=2.0;
+	WeaponTimer=1;
+	WeaponVelocity=860;
+	Duration=3;
+	AreaOfEffect=12;
+	SoundStart=lashit;
+	//soundhit=lashit2;
+	FireStarter=85;
+	BeamWeapon=1;
+	rgbcolor=0.3 0.9 0.9;
+	beamdecay=0.9;
+	beamttl=10;
+	Tolerance=600;
+	[DAMAGE]
+		{
+		Default=64;
+		}
+	}

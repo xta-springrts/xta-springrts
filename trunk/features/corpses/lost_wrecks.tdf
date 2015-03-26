@@ -1,4 +1,44 @@
 
+[lost_shrinker_dead]
+	{
+	world=All Worlds;
+	description=Wreckage;
+	category=arm_corpses;
+	object=lost_shrinker_dead;
+	footprintx=3;
+	footprintz=3;
+	height=20;
+	blocking=0;
+	hitdensity=100;
+	metal=186;
+	damage=1888;
+	reclaimable=1;
+	featurereclamate=smudge01;
+      seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=19 23 68;//#AUTO#
+	collisionVolumeOffsets=0 -4 -1;//#AUTO#
+	}
+[core_construction_sub_dead]
+	{
+	world=All Worlds;
+	description=Wreckage;
+	category=corpses;
+	object=core_construction_sub_dead;
+	footprintx=3;
+	footprintz=3;
+	height=3;
+	blocking=0;
+	hitdensity=100;
+	metal=104;
+	damage=10000;
+	reclaimable=1;
+	featurereclamate=smudge02;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=24 16 34;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+	}
 [lost_diver_dead]
 {
 	world=All Worlds;
