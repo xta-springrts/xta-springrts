@@ -20,7 +20,7 @@ function script.Create()
 	local teamID = Spring.GetUnitTeam(unitID)
 	local llt = Spring.CreateUnit("arm_light_laser_tower",x,y,z,"s",teamID)
 	-- copy orders
-	local cmds = Spring.GetUnitCommands(unitID)
+	local cmds = Spring.GetUnitCommands(unitID,10)
 	for i = 1, #cmds do  
 		local cmd = cmds[i]
 		Spring.GiveOrderToUnit(llt, cmd.id, cmd.params, cmd.options.coded)
