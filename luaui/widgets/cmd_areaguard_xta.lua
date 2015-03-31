@@ -7,7 +7,7 @@ function widget:GetInfo()
 	author = "Jools",
 	date = "Jun, 2013",
 	license = "tango",
-	layer = 1,
+	layer = 10,
 	enabled = true,
 	handler = true, --access to handler
 	}
