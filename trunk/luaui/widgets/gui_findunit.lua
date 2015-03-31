@@ -468,13 +468,13 @@ function widget:TextCommand(cmd)
 	
 	if cmd:match("^findunit") then
 		
-		myPlayerID = Spring.GetMyPlayerID()
-		myTeamID   = select(4,Spring.GetPlayerInfo(myPlayerID))
+		myPlayerID = Spring.GetLocalPlayerID()
+		myTeamID   = Spring.GetLocalTeamID()
 		
-		local allyID = select(5,Spring.GetPlayerInfo(myPlayerID))
+		local allyID = Spring.GetLocalAllyTeamID()
 		local unitCount
+		
 		UnitTable,unitCount = GetAlliedUnits(allyID)
-		--Echo("Allied unit count:",unitCount)
 		if UnitTable and unitCount > 0 then
 			showWindow = true
 			CheckMatches()
