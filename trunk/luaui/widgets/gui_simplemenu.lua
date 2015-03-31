@@ -13,7 +13,7 @@ end
 local Echo 							= Spring.Echo
 local myFontBig	 					= gl.LoadFont("FreeSansBold.otf",14, 1.9, 40)
 local myFont	 					= gl.LoadFont("FreeSansBold.otf",12, 1.9, 40)
-local sizex, sizey					= 200, 300
+local sizex, sizey					= 200, 360
 local vsx, vsy 						= gl.GetViewSizes()
 local posX, posY					= vsx/2, vsy/2
 local rowgap						= 27
@@ -65,7 +65,7 @@ local function InitButtons()
 	local L3 = 20   -- buttonheight
 	local L2 = 100  -- button width
 	
-	Button[8].disabled 				= mySpectatorState
+	Button[9].disabled 				= mySpectatorState
 	
 	for i,button in ipairs(Button) do
 		button["x1"] 	= posX + margin
@@ -108,31 +108,35 @@ function widget:Initialize()
 	Button[4]["command"]			= "energy"
 	Button[4]["label"]				= "Energy overview"
 	
-	Button[5] 						= {} -- modopt
-	Button[5]["command"]			= "modopt"
-	Button[5]["label"]				= "View mod-options"
+	Button[5] 						= {} -- find unit
+	Button[5]["command"]			= "find-unit"
+	Button[5]["label"]				= "Find unit"
 	
 	Button[6] 						= {} -- modopt
-	Button[6]["command"]			= "mapopt"
-	Button[6]["label"]				= "View map-options"
+	Button[6]["command"]			= "modopt"
+	Button[6]["label"]				= "View mod-options"
+	
+	Button[7] 						= {} -- modopt
+	Button[7]["command"]			= "mapopt"
+	Button[7]["label"]				= "View map-options"
 		
-	Button[7] 						= {} -- widget
-	Button[7]["command"]			= "widget"
-	Button[7]["label"]				= "Widget selector"
+	Button[8] 						= {} -- widget
+	Button[8]["command"]			= "widget"
+	Button[8]["label"]				= "Widget selector"
 	
-	Button[8] 						= {} -- propose draw
-	Button[8]["command"]			= "offer-draw"
-	Button[8]["label"]				= "Offer draw"
-	Button[8].disabled 				= mySpectatorState
+	Button[9] 						= {} -- propose draw
+	Button[9]["command"]			= "offer-draw"
+	Button[9]["label"]				= "Offer draw"
+	Button[9].disabled 				= mySpectatorState
 	
-	Button[9] 						= {} -- vote for surrender
-	Button[9]["command"]			= "vote-end"
-	Button[9]["label"]				= "Accept surrender"
-	Button[9].disabled 				= true
+	Button[10] 						= {} -- vote for surrender
+	Button[10]["command"]			= "vote-end"
+	Button[10]["label"]				= "Accept surrender"
+	Button[10].disabled 			= true
 	
-	Button[10] 						= {} -- quit
-	Button[10]["command"]			= "quit"
-	Button[10]["label"]				= "Quit game"
+	Button[11] 						= {} -- quit
+	Button[11]["command"]			= "quit"
+	Button[11]["label"]				= "Quit game"
 	
 	Button["close"] 				= {}
 	Panel["main"]					= {}
@@ -223,6 +227,10 @@ local function ButtonHandler (cmd)
 		ButtonMenu.click = false
 		Spring.SendCommands("luarules voteforend")
 		PlaySoundFile(button8)
+	elseif cmd == "find-unit" then
+		ButtonMenu.click = false
+		Spring.SendCommands("findunit")
+		PlaySoundFile(button8)
 	else
 		Echo("Local command:",cmd)
 		ButtonMenu.click = false
@@ -277,9 +285,9 @@ function widget:MousePress(mx, my, mButton)
 				local canVoteTeam = Spring.GetGameRulesParam("VotingAllyID")
 			
 				if not mySpectatorState and canVoteTeam and canVoteTeam == myAllyTeamID then
-					Button[8].disabled 				= false
+					Button[10].disabled 				= false
 				else
-					Button[8].disabled 				= true
+					Button[10].disabled 				= true
 				end			
 				
 				return true
