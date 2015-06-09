@@ -3032,7 +3032,7 @@
 		canbuild10=lost_advanced_sonar_station;
 		canbuild11=lost_radar_jamming_tower;
 		canbuild12=lost_air_repair_pad;
-		//canbuild13=lost_repulsor;
+		canbuild13=lost_peacewaker;
 		canbuild14=lost_advanced_torpedo_launcher;
 		canbuild15=lost_Nosmaeb;
 		canbuild16=lost_mebos;
@@ -3526,7 +3526,7 @@
 		canbuild39=lost_moho_mine;
 		canbuild40=lost_air_repair_pad;
 		canbuild41=lost_peacemaker;
-		//canbuild42=lost_repulsor;
+		canbuild42=lost_peacewaker;
 		canbuild43=lost_nano_tower;
 
 	}
@@ -3771,7 +3771,7 @@
 		canbuild39=lost_moho_mine;
 		canbuild40=lost_air_repair_pad;
 		canbuild41=lost_peacemaker;
-		//canbuild42=lost_repulsor;
+		canbuild42=lost_peacewaker;
 		canbuild43=lost_nano_tower;
 
 	}
