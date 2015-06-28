@@ -96,6 +96,7 @@
 	weapon2=CORSENT_GUN;
 	nochasecategory=vtol;
 	wpri_badtargetcategory=NOTAIR;
+	wsec_badtargetcategory=NOTAIR;
 	explodeas=BIG_UNITEX;
 	selfdestructas=BIG_UNIT;
 
