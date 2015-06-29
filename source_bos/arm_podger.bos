@@ -257,6 +257,38 @@ SweetSpot(piecenum)
 	piecenum = base;
 }
 
+
+AimFromPrimary(piecenum)
+{
+	piecenum = gun;
+}
+
+QueryPrimary(piecenum)
+{
+	piecenum = gun;
+}
+
+AimPrimary(heading, pitch)
+{
+	return (0);
+}
+
+AimFromSecondary(piecenum)
+{
+	piecenum = gun;
+}
+
+QuerySecondary(piecenum)
+{
+	piecenum = gun;
+}
+
+AimSecondary(heading, pitch)
+{
+	return (0);
+}
+
+
 Killed(Func_Var_1, Func_Var_2)
 {
 	if( Func_Var_1 <= 25 )

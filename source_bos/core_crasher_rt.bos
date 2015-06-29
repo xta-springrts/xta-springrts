@@ -219,6 +219,21 @@ RestoreAfterDelay()
 	turn turret to y-axis <0.000000> speed <90.000000>;
 }
 
+AimFromPrimary(piecenum)
+{
+	piecenum = turret;
+}
+
+QueryPrimary(piecenum)
+{
+	piecenum = gun_3;
+}
+
+AimPrimary(heading, pitch)
+{
+	return (0);
+}
+
 AimFromTertiary(piecenum)
 {
 	piecenum = turret;

@@ -199,6 +199,36 @@ SweetSpot(piecenum)
 	piecenum = pelvis;
 }
 
+AimFromPrimary(piecenum)
+{
+	piecenum = turret;
+}
+
+QueryPrimary(piecenum)
+{
+	piecenum = gun1;
+}
+
+AimPrimary(heading, pitch)
+{
+	return (0);
+}
+
+AimFromSecondary(piecenum)
+{
+	piecenum = turret;
+}
+
+QuerySecondary(piecenum)
+{
+	piecenum = gun2;
+}
+
+AimSecondary(heading, pitch)
+{
+	return (0);
+}
+
 AimFromTertiary(piecenum)
 {
 	piecenum = turret;

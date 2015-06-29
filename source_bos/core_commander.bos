@@ -835,14 +835,14 @@ AimWeapon5(heading, pitch)
 	return (1);
 }
 
-AimFromWeapon6(Func_Var_1)
+AimFromWeapon6(piecenum)
 {
-	Func_Var_1 = torso;
+	piecenum = torso;
 }
 
-QueryWeapon6(Func_Var_1)
+QueryWeapon6(piecenum)
 {
-	Func_Var_1 = rbigflash;
+	piecenum = rbigflash;
 }
 
 AimWeapon6(heading, pitch)
@@ -863,6 +863,21 @@ AimWeapon6(heading, pitch)
 	wait-for-turn ruparm around x-axis;
 	wait-for-turn biggun around x-axis;
 	return (1);
+}
+
+AimFromWeapon7(piecenum)
+{
+	piecenum = torso;
+}
+
+QueryWeapon7(piecenum)
+{
+	piecenum = rbigflash;
+}
+
+AimWeapon7(heading, pitch)
+{
+	return (0);
 }
 
 FireWeapon6()

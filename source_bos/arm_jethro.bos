@@ -436,6 +436,28 @@ RestoreAfterDelay()
 	turn ruparm to z-axis <0.000000> speed <60.0>;
 }
 
+AimPrimary(heading, pitch)
+{
+	return (0);
+}
+
+AimFromPrimary(piecenum)
+{
+	piecenum = torso;
+}
+
+QueryPrimary(piecenum)
+{
+	if( gun_1 )
+	{
+		piecenum = rfirept;
+	}
+	else
+	{
+		piecenum = lfirept;
+	}
+}
+
 AimTertiary(heading, pitch)
 {
 	signal SIG_AIM;

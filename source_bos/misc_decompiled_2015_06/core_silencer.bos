@@ -1,0 +1,261 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+piece  Base, Tube, Tower, Nuke, Hoses, DoorL, DoorR, point;
+
+static-var  gun_1, restore_delay, statechg_DesiredState, statechg_StateChanging;
+
+// Signal definitions
+#define SIG_AIM				2
+
+
+activatescr()
+{
+	move DoorL to x-axis [0.000000] now;
+	move DoorL to x-axis [20.000000] speed [17.500000];
+	move DoorR to x-axis [0.000000] now;
+	move DoorR to x-axis [-20.000000] speed [17.500000];
+	move Tube to y-axis [0.000000] now;
+	move Nuke to x-axis [-0.250000] now;
+	move Nuke to y-axis [0.000000] now;
+	move Nuke to z-axis [0.250000] now;
+	sleep 941;
+	if( TRUE )
+	{
+		move Tube to y-axis [16.250000] speed [25.000000];
+		sleep 802;
+	}
+	if( TRUE )
+	{
+		move Tower to y-axis [68.000000] speed [45.500000];
+		sleep 1591;
+	}
+	sleep 28;
+}
+
+deactivatescr()
+{
+	if( TRUE )
+	{
+		move DoorL to x-axis [20.000000] now;
+		move DoorR to x-axis [-20.000000] now;
+		move Tube to y-axis [16.250000] now;
+		move Tower to y-axis [68.000000] now;
+		move Tower to y-axis [0.000000] speed [41.000000];
+		move Nuke to x-axis [-0.250000] now;
+		move Nuke to y-axis [0.000000] now;
+		move Nuke to z-axis [0.250000] now;
+		sleep 1746;
+	}
+	if( TRUE )
+	{
+		move Tube to y-axis [0.000000] speed [16.000000];
+		sleep 836;
+	}
+	if( TRUE )
+	{
+		move DoorL to x-axis [0.000000] speed [19.500000];
+		move DoorR to x-axis [0.000000] speed [19.500000];
+		sleep 576;
+	}
+	sleep 49;
+}
+
+SmokeUnit(healthpercent, sleeptime, smoketype)
+{
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 400;
+	}
+	while( TRUE )
+	{
+		healthpercent = get HEALTH;
+		if( healthpercent < 66 )
+		{
+			smoketype = 256 | 2;
+			if( Rand( 1, 66 ) < healthpercent )
+			{
+				smoketype = 256 | 1;
+			}
+			emit-sfx smoketype from Base;
+		}
+		sleeptime = healthpercent * 50;
+		if( sleeptime < 200 )
+		{
+			sleeptime = 200;
+		}
+		sleep sleeptime;
+	}
+}
+
+Go()
+{
+	show Nuke;
+	call-script activatescr();
+	gun_1 = Nuke;
+}
+
+Stop()
+{
+	gun_1 = Base;
+	sleep 4000;
+	call-script deactivatescr();
+}
+
+InitState()
+{
+	statechg_DesiredState = TRUE;
+	statechg_StateChanging = FALSE;
+}
+
+RequestState(requestedstate, currentstate)
+{
+	if( statechg_StateChanging )
+	{
+		statechg_DesiredState = requestedstate;
+		return (0);
+	}
+	statechg_StateChanging = TRUE;
+	currentstate = statechg_DesiredState;
+	statechg_DesiredState = requestedstate;
+	while( statechg_DesiredState != currentstate )
+	{
+		if( statechg_DesiredState == 0 )
+		{
+			call-script Go();
+			currentstate = 0;
+		}
+		if( statechg_DesiredState == 1 )
+		{
+			call-script Stop();
+			currentstate = 1;
+		}
+	}
+	statechg_StateChanging = FALSE;
+}
+
+Create()
+{
+	call-script InitState();
+	restore_delay = 3000;
+	start-script SmokeUnit();
+}
+
+Activate()
+{
+	dont-cache Tube;
+	dont-cache DoorL;
+	dont-cache DoorR;
+	dont-cache Tower;
+	dont-cache Nuke;
+	start-script RequestState(0);
+}
+
+Deactivate()
+{
+	start-script RequestState(1);
+	cache Tube;
+	cache DoorL;
+	cache DoorR;
+	cache Tower;
+	cache Nuke;
+}
+
+SetMaxReloadTime(Func_Var_1)
+{
+	restore_delay = Func_Var_1 * 2;
+}
+
+RestoreAfterDelay()
+{
+	sleep restore_delay;
+	set-signal-mask 0;
+	start-script RequestState(1);
+}
+
+AimPrimary(heading, pitch)
+{
+	start-script RequestState(0);
+	signal SIG_AIM;
+	set-signal-mask SIG_AIM;
+	while( !gun_1 )
+	{
+		sleep 250;
+	}
+	start-script RestoreAfterDelay();
+	return (1);
+}
+
+FirePrimary()
+{
+	emit-sfx 4096 + 1 from Nuke;
+	hide Nuke;
+	gun_1 = Base;
+	start-script RequestState(1);
+}
+
+QueryPrimary(piecenum)
+{
+	piecenum = point;
+}
+
+AimSecondary(heading, pitch)
+{
+	return (0);
+}
+
+QuerySecondary(piecenum)
+{
+	piecenum = point;
+}
+
+SweetSpot(piecenum)
+{
+	piecenum = Base;
+}
+
+Killed(severity, corpsetype)
+{
+	if( severity <= 25 )
+	{
+		corpsetype = 1;
+		explode Base type BITMAPONLY | BITMAP1;
+		explode Tube type BITMAPONLY | BITMAP2;
+		explode DoorL type BITMAPONLY | BITMAP3;
+		explode DoorR type BITMAPONLY | BITMAP4;
+		explode Tower type BITMAPONLY | BITMAP1;
+		explode Nuke type BITMAPONLY | BITMAP2;
+		return (0);
+	}
+	if( severity <= 50 )
+	{
+		corpsetype = 2;
+		explode Base type BITMAPONLY | BITMAP1;
+		explode Tube type SHATTER | BITMAP2;
+		explode DoorL type FALL | BITMAP3;
+		explode DoorR type FALL | BITMAP4;
+		explode Tower type BITMAPONLY | BITMAP1;
+		explode Nuke type BITMAPONLY | BITMAP2;
+		return (0);
+	}
+	if( severity <= 99 )
+	{
+		corpsetype = 3;
+		explode Base type BITMAPONLY | BITMAP1;
+		explode Tube type SHATTER | BITMAP2;
+		explode DoorL type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+		explode DoorR type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+		explode Tower type BITMAPONLY | BITMAP1;
+		explode Nuke type BITMAPONLY | BITMAP2;
+		return (0);
+	}
+	corpsetype = 3;
+	explode Base type BITMAPONLY | BITMAP1;
+	explode Tube type SHATTER | EXPLODE_ON_HIT | BITMAP2;
+	explode DoorL type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+	explode DoorR type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+	explode Tower type BITMAPONLY | BITMAP1;
+	explode Nuke type BITMAPONLY | BITMAP2;
+}

@@ -1,0 +1,222 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+piece  ground, body, deflector, fire2, fire1, fire3, phaserarray, lpylon, rpylon, fire4, torpedobay1, torpedobay2, lnacelle, rnacelle, primaryhull;
+
+static-var  restore_delay, Static_Var_2;
+
+
+SmokeUnit(healthpercent, sleeptime, smoketype)
+{
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 400;
+	}
+	while( TRUE )
+	{
+		healthpercent = get HEALTH;
+		if( healthpercent < 66 )
+		{
+			smoketype = 256 | 2;
+			if( Rand( 1, 66 ) < healthpercent )
+			{
+				smoketype = 256 | 1;
+			}
+			emit-sfx smoketype from body;
+		}
+		sleeptime = healthpercent * 50;
+		if( sleeptime < 200 )
+		{
+			sleeptime = 200;
+		}
+		sleep sleeptime;
+	}
+}
+
+HitByWeapon(Func_Var_1, Func_Var_2)
+{
+}
+
+Activate()
+{
+	move lpylon to x-axis [0.000000] speed [2.500000];
+	move rpylon to x-axis [0.000000] speed [2.500000];
+	move lpylon to y-axis [0.000000] speed [2.500000];
+	move rpylon to y-axis [0.000000] speed [2.500000];
+	wait-for-move rpylon along y-axis;
+	turn lpylon to z-axis <0.000000> speed <25.005495>;
+	turn rpylon to z-axis <0.000000> speed <25.005495>;
+	wait-for-turn rpylon around x-axis;
+}
+
+Deactivate()
+{
+	turn lpylon to z-axis <-45.005495> speed <25.005495>;
+	turn rpylon to z-axis <45.005495> speed <25.005495>;
+	wait-for-turn rpylon around x-axis;
+	move lpylon to x-axis [-2.500000] speed [2.500000];
+	move rpylon to x-axis [2.500000] speed [2.500000];
+	move lpylon to y-axis [-1.875000] speed [2.500000];
+	move rpylon to y-axis [-1.875000] speed [2.500000];
+}
+
+Create()
+{
+	hide ground;
+	Static_Var_2 = 0;
+	start-script Deactivate();
+	restore_delay = 3000;
+	start-script SmokeUnit();
+}
+
+SetMaxReloadTime(Func_Var_1)
+{
+	restore_delay = Func_Var_1 * 2;
+}
+
+RestoreAfterDelay()
+{
+	sleep restore_delay;
+}
+
+AimWeapon1(heading, pitch)
+{
+	signal 2;
+	set-signal-mask 2;
+	start-script RestoreAfterDelay();
+	return (1);
+}
+
+FireWeapon1()
+{
+}
+
+QueryWeapon1(piecenum)
+{
+	piecenum = fire3;
+}
+
+AimFromWeapon1(piecenum)
+{
+	piecenum = fire3;
+}
+
+AimWeapon2(heading, pitch)
+{
+	signal 4;
+	set-signal-mask 4;
+	start-script RestoreAfterDelay();
+	return (1);
+}
+
+FireWeapon2()
+{
+}
+
+QueryWeapon2(piecenum)
+{
+	piecenum = fire2;
+}
+
+AimFromWeapon2(piecenum)
+{
+	piecenum = fire2;
+}
+
+AimWeapon3(heading, pitch)
+{
+	signal 8;
+	set-signal-mask 8;
+	start-script RestoreAfterDelay();
+	return (1);
+}
+
+FireWeapon3()
+{
+}
+
+QueryWeapon3(piecenum)
+{
+	piecenum = fire4;
+}
+
+AimFromWeapon3(piecenum)
+{
+	piecenum = fire4;
+}
+
+AimWeapon4(heading, pitch)
+{
+	signal 32;
+	set-signal-mask 32;
+	return (1);
+}
+
+FireWeapon4()
+{
+}
+
+QueryWeapon4(piecenum)
+{
+	piecenum = 5;
+}
+
+AimFromWeapon4(piecenum)
+{
+	piecenum = 5;
+}
+
+AimWeapon5(heading, pitch)
+{
+	signal 16;
+	set-signal-mask 16;
+	start-script RestoreAfterDelay();
+	return (1);
+}
+
+FireWeapon5()
+{
+}
+
+QueryWeapon5(piecenum)
+{
+	piecenum = torpedobay1;
+}
+
+AimFromWeapon5(piecenum)
+{
+	piecenum = torpedobay1;
+}
+
+AimWeapon6(heading, pitch)
+{
+	signal 64;
+	set-signal-mask 64;
+	start-script RestoreAfterDelay();
+	return (1);
+}
+
+FireWeapon6()
+{
+}
+
+QueryWeapon6(piecenum)
+{
+	piecenum = torpedobay2;
+}
+
+AimFromWeapon6(piecenum)
+{
+	piecenum = torpedobay2;
+}
+
+SweetSpot(piecenum)
+{
+	piecenum = ground;
+}
+
+Killed(severity, corpsetype)
+{
+}

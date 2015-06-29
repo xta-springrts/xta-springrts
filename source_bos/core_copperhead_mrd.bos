@@ -118,6 +118,21 @@ RestoreAfterDelay()
 	return (1);
 }
 
+AimFromPrimary(piecenum)
+{
+	piecenum = turret;
+}
+
+QueryPrimary(piecenum)
+{
+	piecenum = flare1;
+}
+
+AimPrimary(heading, pitch)
+{
+	return (0);
+}
+
 AimTertiary(heading, pitch)
 {
 	signal SIG_AIM_3;

@@ -622,6 +622,36 @@ AimTertiary(Func_Var_1, Func_Var_2)
 	return (1);
 }
 
+AimFromWeapon4(piecenum)
+{
+	piecenum = 0;
+}
+
+QueryWeapon4(piecenum)
+{
+	piecenum = 3;
+}
+
+AimWeapon4(heading, pitch)
+{
+	return (0);
+}
+
+AimFromWeapon5(piecenum)
+{
+	piecenum = 0;
+}
+
+QueryWeapon5(piecenum)
+{
+	piecenum = 3;
+}
+
+AimWeapon5(heading, pitch)
+{
+	return (0);
+}
+
 FireTertiary()
 {
 	emit-sfx UNIT_SFX1 from rbigflash;
