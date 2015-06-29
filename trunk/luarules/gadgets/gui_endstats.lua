@@ -53,6 +53,7 @@ if gadgetHandler:IsSyncedCode() then
 		local AreTeamsAllied		= Spring.AreTeamsAllied
 		local GetUnitHealth			= Spring.GetUnitHealth
 		local gaiaID				= Spring.GetGaiaTeamID()
+		local modOptions			= Spring.GetModOptions()
 		local _,_, CommanderTargets = include("LuaRules/Configs/unit_commander_sounds_defs.lua")
 		local haveZombies 		 	= (tonumber(Spring.GetModOptions().zombies) or 0) == 1
 		local holyTargets			= {}
