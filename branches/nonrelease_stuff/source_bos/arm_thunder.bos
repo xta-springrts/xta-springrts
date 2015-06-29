@@ -155,6 +155,16 @@ QueryPrimary(piecenum)
 	piecenum = base;
 }
 
+QueryTertiary(piecenum)
+{
+	piecenum = base;
+}
+
+AimTertiary(heading, pitch)
+{
+	return (0);
+}
+
 SweetSpot(piecenum)
 {
 	piecenum = base;

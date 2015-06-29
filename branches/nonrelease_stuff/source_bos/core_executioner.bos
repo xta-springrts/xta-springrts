@@ -239,6 +239,29 @@ QueryPrimary(piecenum)
 	}
 }
 
+
+AimSecondary(heading, pitch)
+{
+	return (0);
+}
+
+AimFromSecondary(piecenum)
+{
+	piecenum = turret;
+}
+
+QuerySecondary(piecenum)
+{
+	if( gun_1 )
+	{
+		piecenum = flare2;
+	}
+	else
+	{
+		piecenum = flare1;
+	}
+}
+
 AimTertiary(heading, pitch)
 {
 	signal SIG_AIM_3;

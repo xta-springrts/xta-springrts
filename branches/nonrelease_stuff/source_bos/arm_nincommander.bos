@@ -596,17 +596,17 @@ FirePrimary()
 	emit-sfx UNIT_SFX3 from lfirept;
 }
 
-AimFromTertiary(Func_Var_1)
+AimFromTertiary(piecenum)
 {
-	Func_Var_1 = 0;
+	piecenum = 0;
 }
 
-QueryTertiary(Func_Var_1)
+QueryTertiary(piecenum)
 {
-	Func_Var_1 = 3;
+	piecenum = 3;
 }
 
-AimTertiary(Func_Var_1, Func_Var_2)
+AimTertiary(heading, pitch)
 {
 	signal 2;
 	set-signal-mask 2;
@@ -616,11 +616,41 @@ AimTertiary(Func_Var_1, Func_Var_2)
 	{
 		sleep 100;
 	}
-	turn torso to y-axis Func_Var_1 speed <300.098901>;
-	turn ruparm to x-axis <0.000000> - Func_Var_2 speed <115.000000>;
+	turn torso to y-axis heading speed <300.098901>;
+	turn ruparm to x-axis <0.000000> - pitch speed <115.000000>;
 	wait-for-turn torso around y-axis;
 	wait-for-turn ruparm around x-axis;
 	return (1);
+}
+
+AimFromWeapon4(piecenum)
+{
+	piecenum = 0;
+}
+
+QueryWeapon4(piecenum)
+{
+	piecenum = 3;
+}
+
+AimWeapon4(heading, pitch)
+{
+	return (0);
+}
+
+AimFromWeapon5(piecenum)
+{
+	piecenum = 0;
+}
+
+QueryWeapon5(piecenum)
+{
+	piecenum = 3;
+}
+
+AimWeapon5(heading, pitch)
+{
+	return (0);
 }
 
 FireTertiary()

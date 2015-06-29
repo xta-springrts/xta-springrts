@@ -183,6 +183,16 @@ StopMoving()
 	call-script lua_UnitStoppedMoving();
 }
 
+AimPrimary(heading, pitch)
+{
+	return (0);
+}
+
+QueryPrimary(piecenum)
+{
+	piecenum = Static_Var_1;
+}
+
 QueryTertiary(piecenum)
 {
 	piecenum = Static_Var_1;

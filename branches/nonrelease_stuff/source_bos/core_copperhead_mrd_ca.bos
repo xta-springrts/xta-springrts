@@ -140,6 +140,21 @@ RestoreAfterDelay()
 	return (1);
 }
 
+AimFromPrimary(piecenum)
+{
+	piecenum = aim;
+}
+
+QueryPrimary(piecenum)
+{
+	piecenum = flare1;
+}
+
+AimWeapon1(heading, pitch)
+{
+	return (0);
+}
+
 AimWeapon2(heading, pitch)
 {
 	signal SIG_AIM;

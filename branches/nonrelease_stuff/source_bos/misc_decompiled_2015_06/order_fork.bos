@@ -1,0 +1,141 @@
+#define TAK			// This is a TAK script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+piece  base, forkshot, engine1, engine2, engine3, engine4, flare1, flare2,
+       flare3, flare4;
+
+static-var  Static_Var_1, Static_Var_2;
+
+
+SpecialEffects()
+{
+	if( Static_Var_2 == 1 )
+	{
+		emit-sfx 1024 + 2 from engine1;
+		emit-sfx 1024 + 2 from engine2;
+		emit-sfx 1024 + 2 from engine3;
+		emit-sfx 1024 + 2 from engine4;
+		sleep 80;
+	}
+	sleep 10;
+	start-script SpecialEffects();
+}
+
+SpinningThrust()
+{
+	if( Static_Var_2 == 1 )
+	{
+		spin base around z-axis speed <11.000000> accelerate <2.000000>;
+		sleep 1000;
+	}
+	start-script SpinningThrust();
+}
+
+Create()
+{
+	turn flare1 to z-axis <-20.000000> speed <400.000000>;
+	turn flare2 to z-axis <-20.000000> speed <400.000000>;
+	turn flare3 to z-axis <-20.000000> speed <400.000000>;
+	turn flare4 to z-axis <-20.000000> speed <400.000000>;
+	hide flare1;
+	hide flare2;
+	hide flare3;
+	hide flare4;
+	set ARMORED to 0;
+	Static_Var_2 = 1;
+	start-script SpinningThrust();
+	start-script SpecialEffects();
+}
+
+AimPrimary(heading, pitch)
+{
+	signal 2;
+	set-signal-mask 2;
+	turn base to y-axis heading speed <175.005495>;
+	turn base to x-axis <0.000000> - pitch speed <100.000000>;
+	wait-for-turn base around y-axis;
+	wait-for-turn base around x-axis;
+	return (1);
+}
+
+FirePrimary()
+{
+	emit-sfx 1024 + 4 from flare1;
+	emit-sfx 1024 + 4 from flare2;
+	emit-sfx 1024 + 4 from flare3;
+	emit-sfx 1024 + 4 from flare4;
+	sleep 200;
+}
+
+AimFromPrimary(piecenum)
+{
+	piecenum = 1;
+}
+
+QueryPrimary(piecenum)
+{
+	piecenum = 1;
+}
+
+AimSecondary(heading, pitch)
+{
+	signal 4;
+	set-signal-mask 4;
+	turn base to y-axis heading speed <175.005495>;
+	turn base to x-axis <0.000000> - pitch speed <100.000000>;
+	wait-for-turn base around y-axis;
+	wait-for-turn base around x-axis;
+	return (1);
+}
+
+FireSecondary()
+{
+	emit-sfx 1024 + 4 from flare1;
+	emit-sfx 1024 + 4 from flare2;
+	emit-sfx 1024 + 4 from flare3;
+	emit-sfx 1024 + 4 from flare4;
+}
+
+AimFromSecondary(piecenum)
+{
+	piecenum = 1;
+}
+
+QuerySecondary(piecenum)
+{
+	piecenum = 1;
+}
+
+AimFromTertiary(piecenum)
+{
+	piecenum = 14;
+}
+
+QueryTertiary(piecenum)
+{
+	piecenum = 3;
+}
+
+AimTertiary(heading, pitch)
+{
+	return (0);
+}
+
+SweetSpot(piecenum)
+{
+	piecenum = base;
+}
+
+Killed(Func_Var_1, Func_Var_2)
+{
+	Static_Var_2 = 0;
+	emit-sfx 1024 + 1 from forkshot;
+	play-sound( "BUTMAIN4", 6 );
+	sleep 500;
+	move base to y-axis [-500.000000] speed [500.000000];
+	sleep 400;
+	explode base type 1;
+	emit-sfx 2048 + 2 from forkshot;
+}

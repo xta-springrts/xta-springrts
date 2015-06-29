@@ -263,7 +263,7 @@ RestoreAfterDelay()
 	wait-for-turn turret around x-axis;
 }
 
-AimPrimary(Func_Var_1, Func_Var_2)
+AimPrimary(heading, pitch)
 {
 	signal 2;
 	set-signal-mask 2;
@@ -271,8 +271,8 @@ AimPrimary(Func_Var_1, Func_Var_2)
 	{
 		sleep 100;
 	}
-	turn turret to y-axis Func_Var_1 speed <225.000000>;
-	turn turret to x-axis <0.000000> - Func_Var_2 speed <90.000000>;
+	turn turret to y-axis heading speed <225.000000>;
+	turn turret to x-axis <0.000000> - pitch speed <90.000000>;
 	wait-for-turn turret around y-axis;
 	wait-for-turn turret around x-axis;
 	start-script RestoreAfterDelay();
@@ -305,6 +305,40 @@ QueryPrimary(piecenum)
 {
 	piecenum = 4 + gun_1;
 }
+
+AimSecondary(heading, pitch)
+{
+	return (0);
+}
+
+
+AimFromSecondary(piecenum)
+{
+	piecenum = 1;
+}
+
+QuerySecondary(piecenum)
+{
+	piecenum = 4 + gun_1;
+}
+
+AimTertiary(heading, pitch)
+{
+	return (0);
+}
+
+
+AimFromTertiary(piecenum)
+{
+	piecenum = 1;
+}
+
+QueryTertiary(piecenum)
+{
+	piecenum = 4 + gun_1;
+}
+
+
 
 Killed(Func_Var_1, Func_Var_2)
 {

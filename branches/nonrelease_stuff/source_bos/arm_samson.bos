@@ -54,6 +54,21 @@ RestoreAfterDelay()
 	turn launcher to x-axis <0.000000> speed <50.000000>;
 }
 
+AimFromPrimary(piecenum)
+{
+	piecenum = launcher;
+}
+
+QueryPrimary(piecenum)
+{
+	piecenum = gun_1;
+}
+
+AimPrimary(heading, pitch)
+{
+	return (0);
+}
+
 AimFromTertiary(piecenum)
 {
 	piecenum = launcher;

@@ -108,6 +108,21 @@ StopMoving()
 	stop-spin wheels8 around x-axis decelerate <120.000000>;
 }
 
+AimFromWeapon1(piecenum)
+{
+	piecenum = gun;
+}
+
+QueryWeapon1(piecenum)
+{
+	piecenum = firepoint1 + Static_Var_4;
+}
+
+AimWeapon1(heading, pitch)
+{
+	return (0);
+}
+
 AimFromWeapon3(piecenum)
 {
 	piecenum = gun;

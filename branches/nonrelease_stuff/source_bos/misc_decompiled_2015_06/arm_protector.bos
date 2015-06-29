@@ -3,64 +3,47 @@
 #include "sfxtype.h"
 #include "exptype.h"
 
-piece  base, rocket1, rocket2, rocket3, turret, door1, door2, door3, ground,
+piece  base, rocket1, rocket2, rocket3, turret, door1, door2, door3,
        door4;
 
-static-var  Static_Var_1, restore_delay, gun_1, statechg_DesiredState, statechg_StateChanging;
+static-var  Static_Var_1, Static_Var_2, gun_1, statechg_DesiredState, statechg_StateChanging;
 
 // Signal definitions
 #define SIG_AIM				2
 
-SetDirection(heading)
-{
-	var spd;
-	spd = get ABS(heading);
-	turn ground to y-axis heading speed spd;
-	turn base to y-axis 0-heading speed spd;
-}
-
-RockOnWaves()
-{
-	while(1)
-	{
-		turn ground to x-axis <1.0> speed <1.5>;
-		move ground to y-axis [0.0] speed [0.3];
-		wait-for-turn ground around x-axis;
-		turn ground to x-axis <-1.0> speed <1.5>;
-		move ground to y-axis [-0.2] speed [0.3];
-		wait-for-move ground along y-axis;
-		move ground to y-axis [0.0] speed [0.3];
-		wait-for-turn ground around x-axis;
-		turn ground to x-axis <1.0> speed <1.5>;
-		move ground to y-axis [-0.2] speed [0.3];
-		wait-for-move ground along y-axis;
-	}
-}
 
 activatescr()
 {
-	turn door1 to z-axis <0.000000> now;
-	turn door1 to z-axis <-129.626374> speed <73.318681>;
-	turn door2 to z-axis <0.000000> now;
-	turn door2 to z-axis <131.428571> speed <74.335165>;
-	turn door3 to x-axis <0.000000> now;
-	turn door3 to x-axis <-128.730769> speed <72.807692>;
-	turn door4 to x-axis <0.000000> now;
-	turn door4 to x-axis <129.626374> speed <73.318681>;
-	sleep 1771;
+	if( TRUE )
+	{
+		turn door1 to z-axis <0.000000> now;
+		turn door1 to z-axis <-129.000000> speed <73.000000>;
+		turn door2 to z-axis <0.000000> now;
+		turn door2 to z-axis <131.000000> speed <74.000000>;
+		turn door3 to x-axis <0.000000> now;
+		turn door3 to x-axis <-128.000000> speed <72.000000>;
+		turn door4 to x-axis <0.000000> now;
+		turn door4 to x-axis <129.000000> speed <73.000000>;
+		sleep 1768;
+	}
+	sleep 3;
 }
 
 deactivatescr()
 {
-	turn door1 to z-axis <-129.626374> now;
-	turn door1 to z-axis <0.000000> speed <73.565934>;
-	turn door2 to z-axis <131.428571> now;
-	turn door2 to z-axis <0.000000> speed <74.587912>;
-	turn door3 to x-axis <-128.730769> now;
-	turn door3 to x-axis <0.000000> speed <73.054945>;
-	turn door4 to x-axis <129.626374> now;
-	turn door4 to x-axis <0.000000> speed <73.565934>;
-	sleep 1776;
+	if( TRUE )
+	{
+		turn door1 to z-axis <-129.000000> now;
+		turn door1 to z-axis <0.000000> speed <73.000000>;
+		turn door2 to z-axis <131.000000> now;
+		turn door2 to z-axis <0.000000> speed <74.000000>;
+		turn door3 to x-axis <-128.000000> now;
+		turn door3 to x-axis <0.000000> speed <73.000000>;
+		turn door4 to x-axis <129.000000> now;
+		turn door4 to x-axis <0.000000> speed <73.000000>;
+		sleep 1762;
+	}
+	sleep 14;
 }
 
 SmokeUnit(healthpercent, sleeptime, smoketype)
@@ -68,32 +51,32 @@ SmokeUnit(healthpercent, sleeptime, smoketype)
 	var Func_Var_4;
 	while( get BUILD_PERCENT_LEFT )
 	{
-		sleep 500;
+		sleep 400;
 	}
 	while( TRUE )
 	{
 		healthpercent = get HEALTH;
 		if( healthpercent < 66 )
 		{
-			smoketype = SFXTYPE_BLACKSMOKE;
+			smoketype = 256 | 2;
 			if( Rand( 1, 66 ) < healthpercent )
 			{
-				smoketype = SFXTYPE_WHITESMOKE;
+				smoketype = 256 | 1;
 			}
 			Func_Var_4 = Rand( 1, 4 );
 			if( Func_Var_4 == 1 )
 			{
 				emit-sfx smoketype from door1;
 			}
-			else if( Func_Var_4 == 2 )
+			if( Func_Var_4 == 2 )
 			{
 				emit-sfx smoketype from door2;
 			}
-			else if( Func_Var_4 == 3 )
+			if( Func_Var_4 == 3 )
 			{
 				emit-sfx smoketype from door3;
 			}
-			else if( Func_Var_4 == 4 )
+			if( Func_Var_4 == 4 )
 			{
 				emit-sfx smoketype from door4;
 			}
@@ -107,7 +90,7 @@ SmokeUnit(healthpercent, sleeptime, smoketype)
 	}
 }
 
-Go()
+go()
 {
 	dont-cache door1;
 	dont-cache door2;
@@ -121,7 +104,7 @@ Go()
 	Static_Var_1 = 1;
 }
 
-Stop()
+stop()
 {
 	Static_Var_1 = 0;
 	call-script deactivatescr();
@@ -153,14 +136,14 @@ RequestState(requestedstate, currentstate)
 	statechg_DesiredState = requestedstate;
 	while( statechg_DesiredState != currentstate )
 	{
-		if( !statechg_DesiredState )
+		if( statechg_DesiredState == 0 )
 		{
-			call-script Go();
+			call-script go();
 			currentstate = 0;
 		}
-		if( statechg_DesiredState )
+		if( statechg_DesiredState == 1 )
 		{
-			call-script Stop();
+			call-script stop();
 			currentstate = 1;
 		}
 	}
@@ -179,10 +162,9 @@ Create()
 	dont-shade turret;
 	Static_Var_1 = 0;
 	gun_1 = rocket1;
-	restore_delay = 3000;
+	Static_Var_2 = 25000;
 	call-script InitState();
 	start-script SmokeUnit();
-	start-script RockOnWaves();
 }
 
 Activate()
@@ -195,14 +177,9 @@ Deactivate()
 	start-script RequestState(1);
 }
 
-SetMaxReloadTime(Func_Var_1)
-{
-	restore_delay = Func_Var_1 * 2;
-}
-
 RestoreAfterDelay()
 {
-	sleep restore_delay;
+	sleep Static_Var_2;
 	set-signal-mask 0;
 	start-script RequestState(1);
 }
@@ -210,9 +187,12 @@ RestoreAfterDelay()
 AimPrimary(heading, pitch)
 {
 	start-script RequestState(0);
-	sleep 1500;
 	signal SIG_AIM;
 	set-signal-mask SIG_AIM;
+	if( !Static_Var_1 )
+	{
+		sleep 500;
+	}
 	start-script RestoreAfterDelay();
 	return (1);
 }
@@ -223,26 +203,26 @@ FirePrimary()
 	{
 		hide rocket1;
 		show rocket2;
-		turn turret to y-axis <120.027473> speed <30.005495>;
+		turn turret to y-axis <119.000000> speed <30.000000>;
 		wait-for-turn turret around y-axis;
 		show rocket3;
 	}
-	else if( gun_1 == 2 )
+	if( gun_1 == 2 )
 	{
 		hide rocket2;
 		show rocket3;
-		turn turret to y-axis <240.054945> speed <30.005495>;
+		turn turret to y-axis <239.000000> speed <30.000000>;
 		wait-for-turn turret around y-axis;
 	}
-	else if( gun_1 == 3 )
+	if( gun_1 == 3 )
 	{
 		hide rocket3;
 		show rocket1;
-		turn turret to y-axis <360.087912> speed <30.005495>;
+		turn turret to y-axis <-295.000000> speed <30.000000>;
 		wait-for-turn turret around y-axis;
 	}
 	++gun_1;
-	if( gun_1 >= 4 )
+	if( gun_1 == 4 )
 	{
 		gun_1 = rocket1;
 	}
@@ -254,16 +234,13 @@ QueryPrimary(piecenum)
 	{
 		piecenum = rocket1;
 	}
-	else if( gun_1 == 2 )
+	if( gun_1 == 2 )
 	{
 		piecenum = rocket2;
 	}
-	else if( gun_1 == 3 )
+	else
 	{
 		piecenum = rocket3;
-	}
-	else{
-		piecenum = rocket1;
 	}
 }
 
@@ -273,16 +250,13 @@ AimFromPrimary(piecenum)
 	{
 		piecenum = rocket1;
 	}
-	else if( gun_1 == 2 )
+	if( gun_1 == 2 )
 	{
 		piecenum = rocket2;
 	}
-	else if( gun_1 == 3 )
+	else
 	{
 		piecenum = rocket3;
-	}
-	else{
-		piecenum = rocket1;
 	}
 }
 

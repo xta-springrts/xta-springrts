@@ -250,6 +250,20 @@ QueryPrimary(piecenum)
 	piecenum = flare1 + gun_1;
 }
 
+AimFromSecondary(piecenum)
+{
+	piecenum = turret;
+}
+AimSecondary(heading, pitch)
+{
+	return (0);
+}
+
+QuerySecondary(piecenum)
+{
+	piecenum = flare1 + gun_1;
+}
+
 QueryTertiary(piecenum)
 {
 	piecenum = flare3;

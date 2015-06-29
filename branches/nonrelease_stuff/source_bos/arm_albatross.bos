@@ -184,6 +184,17 @@ QueryTertiary(piecenum)
 	piecenum = Static_Var_1;
 }
 
+QueryPrimary(piecenum)
+{
+	piecenum = Static_Var_1;
+}
+
+AimPrimary(heading, pitch)
+{
+	return (0);
+}
+
+
 FireTertiary()
 {
 	Static_Var_1 = !Static_Var_1;
