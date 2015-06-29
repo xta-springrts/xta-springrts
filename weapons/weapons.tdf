@@ -1329,12 +1329,13 @@
 	soundstart=rockhvy2;
 	soundhitdry=xplomed2;
 	firestarter=70;
+	flighttime=2.5;
 	smokedelay=0.1;
 	tracks=1;
 	smoketrail=0;
 	tolerance=10000;
 	startsmoke=1;
-	trajectoryHeight=0.08;
+	trajectoryHeight=0.85;
 	dance=30;
 	[DAMAGE]
 	{
@@ -1759,6 +1760,7 @@
 	soundstart=rockhvy2;
 	soundhitdry=xplomed2;
 	firestarter=70;
+	flighttime=2.5;
 	smokedelay=0.1;
 	tracks=1;
 	smoketrail=0;
@@ -4293,6 +4295,7 @@
 	soundstart=rockhvy2;
 	soundhitdry=xplomed2;
 	firestarter=70;
+	flighttime=2.5;
 	smokedelay=0.1;
 	tracks=1;
 	smoketrail=0;
@@ -4664,6 +4667,7 @@
 	turnrate=41660;
 	trajectoryHeight=0.08;
 	dance=30;
+	flighttime=2.5;
 	areaofeffect=48;
 	cylindertargeting = 1;
 	soundstart=rockhvy2;
