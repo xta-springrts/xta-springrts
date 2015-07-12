@@ -5,7 +5,7 @@
 	//********************
 	side=Core;
 	name=Leviathan;
-	description=Role Not Set;
+	description=Heavily Armoured Heavy Cannon;
 	icontype=guardian_leviathan;
 
 	//************************************************************
@@ -22,16 +22,16 @@
 	objectname=guardian_leviathan.3do;
 	corpse=guardian_leviathan_dead;
 	buildpic=guardian_leviathan.png;
-	soundcategory=KROGOTH;
+	soundcategory=CORE_TANK;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=11321;
+	maxdamage=10321;
 	healtime=30;
-	buildcostmetal=5421;
-	buildcostenergy=143532;
-	buildtime=202150;
+	buildcostmetal=3621;
+	buildcostenergy=45532;
+	buildtime=62150;
 	footprintx=3;
 	footprintz=3;
 
@@ -66,11 +66,11 @@
 	//************************************************************
 	//  Movement
 	//************
-	movementclass=Krogoth;
-	turnrate=960;
+	movementclass=TANKDH4;
+	turnrate=360;
 	acceleration=0.09;
 	brakerate=0.19;
-	maxvelocity=0.8;//1.2
+	maxvelocity=1.1;//1.2
 	maxslope=17;
 	maxwaterdepth=12;
 
@@ -83,11 +83,11 @@
 	//************************************************************
 	//  Weapons
 	//***********
-	weapon1=everchosen_ANNIHILATOR;
-	weapon2=GuardianChosen_MISSILE;
+	weapon1=ARMLANDBOAT_GUN;
+	weapon2=LANDBOAT_MISSILE;
 	nochasecategory=VTOL;
-	explodeas=CRAWL_BLAST;
-	selfdestructas=GIANT_BLAST;
+	explodeas=ATOMIC_BLASTPEN;
+	selfdestructas=CRAWL_BLASTSML;
 	SelfDestructCountdown=5;
 
 	//************************************************************

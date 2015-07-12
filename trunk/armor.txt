@@ -113,11 +113,19 @@
 	lost_trawler=99;
 	//guardian
 	guardian_construction_aircraft=99;
+	guardian_adv_construction_aircraft=99;
 	guardian_vision=99;
 	guardian_angel=99;
 	guardian_dirgesinger=99;
-	guardian_scrouge=99;
+	guardian_scourge=99;
 	guardian_chariot=99;
+	guardian_shade=99;
+	guardian_wraith=99;
+	guardian_word_bearer=99;
+	Guardian_Spectre=99;
+	guardian_shade=99;
+	guardian_ghost=99;
+	Guardian_Revenant=99;
 
 }
 

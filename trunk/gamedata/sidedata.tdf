@@ -2397,6 +2397,47 @@
 
 //------------------Guardians of Kadesh
 
+	[guardian_adv_construction_aircraft]
+	{
+	 	//canbuild1=arm_fortification_wall;
+	 	//canbuild2=ARMBFORTEW;//xtaids
+		canbuild3=guardian_moho_mine;
+	 	//canbuild4=arm_moho_metal_maker;
+		canbuild5=guardian_geothermal_powerplant;
+		canbuild6=guardian_furnace;
+		canbuild7=guardian_fusion_reactor;
+		canbuild8=guardian_advanced_radar_tower;
+		canbuild9=guardian_radar_jamming_tower;
+		canbuild10=guardian_light_laser_tower;
+		canbuild11=guardian_blaster;
+		canbuild12=guardian_pulsar;
+		//canbuild13=arm_guardian;
+		canbuild14=guardian_cell;
+		canbuild15=guardian_storage;
+		canbuild16=guardian_targeting_facility;
+		canbuild17=guardian_air_repair_pad;
+		//canbuild18=arm_annihilator;
+		canbuild20=guardian_Searing_Amaryllis;
+		canbuild21=guardian_guardian;
+		canbuild22=guardian_terra_platform;
+		canbuild23=guardian_assembly_plant;
+		//canbuild24=arm_vehicle_plant;
+		//canbuild25=arm_adv_vehicle_plant;
+		canbuild26=guardian_areo_platform;
+		canbuild27=guardian_starport;
+		canbuild28=guardian_Hydro_Scaffold;
+		//canbuild29=arm_sub_pen;
+		//canbuild30=arm_adv_shipyard;
+		//canbuild31=arm_spidernest;//Spiderpack vs. Tortoise
+		//canbuild32=arm_hovercraft_platform; 
+		//canbuild33=arm_stunner;
+		//canbuild34=arm_retaliator;
+	 	//canbuild35=ARMFFF;//xtaids
+	 	//canbuild36=MERCURY;//xtaids
+		//canbuild37=arm_vulcan;
+		//canbuild38=arm_nano_tower;
+	}
+
 	[guardian_adv_construction_vehicle]
 	{
 	 	//canbuild1=arm_fortification_wall;
@@ -2415,9 +2456,9 @@
 		canbuild14=guardian_cell;
 		canbuild15=guardian_storage;
 		canbuild16=guardian_targeting_facility;
-		//canbuild17=guardian_air_repair_pad;
+		canbuild17=guardian_air_repair_pad;
 		//canbuild18=arm_annihilator;
-		//canbuild20=arm_big_bertha;
+		canbuild20=guardian_Searing_Amaryllis;
 		canbuild21=guardian_guardian;
 		canbuild22=guardian_terra_platform;
 		canbuild23=guardian_assembly_plant;
@@ -2463,7 +2504,7 @@
 		//canbuild26=lost_floating_dragons_teeth;
 		canbuild27=guardian_assembly_plant;
 		//canbuild28=lost_adv_kbot_lab;
-		//canbuild29=lost_adv_aircraft_plant;
+		canbuild29=guardian_starport;
 		//canbuild30=lost_adv_shipyard;
 		//canbuild31=lost_seaplane_platform;
 		}
@@ -2494,7 +2535,7 @@
 		//canbuild26=lost_floating_dragons_teeth;
 		canbuild27=guardian_assembly_plant;
 		//canbuild28=lost_adv_kbot_lab;
-		//canbuild29=lost_adv_aircraft_plant;
+		canbuild29=guardian_starport;
 		//canbuild30=lost_adv_shipyard;
 		//canbuild31=lost_seaplane_platform;
 		}
@@ -2525,7 +2566,7 @@
 		//canbuild26=lost_floating_dragons_teeth;
 		canbuild27=guardian_assembly_plant;
 		//canbuild28=lost_adv_kbot_lab;
-		//canbuild29=lost_adv_aircraft_plant;
+		canbuild29=guardian_starport;
 		//canbuild30=lost_adv_shipyard;
 		//canbuild31=lost_seaplane_platform;
 		}
@@ -2556,7 +2597,7 @@
 		//canbuild26=lost_floating_dragons_teeth;
 		canbuild27=guardian_assembly_plant;
 		//canbuild28=lost_adv_kbot_lab;
-		//canbuild29=lost_adv_aircraft_plant;
+		canbuild29=guardian_starport;
 		//canbuild30=lost_adv_shipyard;
 		//canbuild31=lost_seaplane_platform;
 		}
@@ -2587,7 +2628,7 @@
 		//canbuild26=lost_floating_dragons_teeth;
 		canbuild27=guardian_assembly_plant;
 		//canbuild28=lost_adv_kbot_lab;
-		//canbuild29=lost_adv_aircraft_plant;
+		canbuild29=guardian_starport;
 		//canbuild30=lost_adv_shipyard;
 		//canbuild31=lost_seaplane_platform;
 		}
@@ -2618,7 +2659,7 @@
 		//canbuild26=lost_floating_dragons_teeth;
 		canbuild27=guardian_assembly_plant;
 		//canbuild28=lost_adv_kbot_lab;
-		//canbuild29=lost_adv_aircraft_plant;
+		canbuild29=guardian_starport;
 		//canbuild30=lost_adv_shipyard;
 		//canbuild31=lost_seaplane_platform;
 		}
@@ -2676,6 +2717,19 @@
 		canbuild10=guardian_chariot;
 	}
 
+	[guardian_starport]
+	{
+		canbuild1=guardian_adv_construction_aircraft;
+		canbuild2=guardian_vision;
+		canbuild3=guardian_wraith;
+		canbuild4=Guardian_Ghost;
+		canbuild5=guardian_spectre;
+		canbuild6=guardian_shade;
+		canbuild7=Guardian_Revenant;
+		canbuild8=guardian_exorcist;//
+		canbuild9=guardian_silversword;//
+		canbuild10=guardian_word_bearer;
+	}
 	[guardian_construction_vehicle]
 	{
 		canbuild1=guardian_solar_collector;
@@ -2703,7 +2757,7 @@
 		//canbuild23=arm_hovercraft_platform;
 		//canbuild24=arm_seaplane_platform;
 		//canbuild25=arm_adv_kbot_lab;
-		//canbuild26=arm_adv_aircraft_plant;
+		canbuild26=guardian_starport;
 		//canbuild27=arm_adv_shipyard;
 		//canbuild28=arm_tidal_generator;
 		//canbuild29=arm_underwater_tidal_generator;
@@ -2768,7 +2822,7 @@
 		//canbuild23=arm_hovercraft_platform;
 		//canbuild24=arm_seaplane_platform;
 		canbuild25=guardian_assembly_plant;
-		//canbuild26=arm_adv_aircraft_plant;
+		canbuild26=guardian_starport;
 		//canbuild27=arm_adv_shipyard;
 		canbuild28=guardian_floating_solar_collector;
 		canbuild29=guardian_underwater_generator;
@@ -2808,7 +2862,7 @@
 		//canbuild23=arm_hovercraft_platform;
 		//canbuild24=arm_seaplane_platform;
 		canbuild25=guardian_assembly_plant;
-		//canbuild26=arm_adv_aircraft_plant;
+		canbuild26=guardian_starport;
 		//canbuild27=arm_adv_shipyard;
 		canbuild28=guardian_floating_solar_collector;
 		canbuild29=guardian_underwater_generator;

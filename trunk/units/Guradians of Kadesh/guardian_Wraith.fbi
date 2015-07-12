@@ -1,0 +1,152 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Core;
+	name=Wraith;
+	description=Stealth Fighter;
+	icontype=air;
+
+	//************************************************************
+	//  Categories
+	//**************
+	Category=CORE VTOL MOBILE WEAPON STEALTH NOTLAND NOTSEA NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=guardian_Wraith;
+	unitnumber=148;
+	objectname=guardian_Wraith.3do;
+	buildpic=guardian_Wraith.png;
+	soundcategory=CORE_VTOL;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=785;
+	healtime=30;
+	buildcostmetal=262;// OTA: 257
+	buildcostenergy=7122;// OTA: 6973
+	buildtime=13439;// OTA: 15924
+	footprintx=2;
+	footprintz=2;
+	ModelCenterOffset=0 -5 0;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=15;
+	energyuse=15;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canattack=1;
+	candropflare=1;
+	canfly=1;
+	canguard=1;
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+	stealth=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	acceleration=1.1;
+	brakerate=1.2;
+	maxvelocity=11;// OTA: 144.0 m/s
+	maxwaterdepth=255;
+	cruisealt=200;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=525;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=WRAITH_ADVMISSILE;
+	//weapon2=CORVTOL_ADVMISSILE;
+	WeaponMainDir1= 0 0 1;
+	//WeaponMainDir2= 0 0 1;
+	MaxAngleDif1=90;
+	//MaxAngleDif2=90;
+	badtargetcategory=NOTAIR;
+	wpri_badtargetcategory=NOTAIR;
+	wsec_badtargetcategory=NOTAIR;
+	explodeas=BIG_UNITEX;
+	selfdestructas=BIG_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	firestandorders=1;
+	mobilestandorders=1;
+	standingfireorder=2;
+	standingmoveorder=1;
+	defaultmissiontype=VTOL_standby;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bankscale=1;
+	bmcode=1;
+	designation=AFD-J9;
+	downloadable=1;
+	flaredelay=0.3;
+	flaredropvector=0 0 -1;
+	FlareEfficiency=0.2;
+	flarereload=5;
+	hoverattack=0;
+	maneuverleashlength=1280;
+	moverate1=8;
+	shootme=1;
+	steeringmode=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	CanLoopbackAttack=1;
+	collide=0;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+	//************************************************************
+	//  Out of Category
+	//*******************
+	//maxslope=10;
+	//turnrate=820;
+	drag=0.005;
+	maxaileron=0.005;
+	maxbank=0.8;
+	maxelevator=0.01;
+	maxpitch=0.45;
+	maxrudder=0.003;
+	turnradius=720;
+	wingangle=0.125;
+	wingdrag=0.125;
+	collide=0;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+
+	//[SFXTypes]
+	//{
+	//explosiongenerator0=custom:ElectricSTOMP;
+	//}
+}
