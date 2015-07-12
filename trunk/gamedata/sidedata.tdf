@@ -2411,7 +2411,7 @@
 		canbuild10=guardian_light_laser_tower;
 		canbuild11=guardian_blaster;
 		canbuild12=guardian_pulsar;
-		//canbuild13=arm_guardian;
+		canbuild13=guardian_Blazing_Orchid;
 		canbuild14=guardian_cell;
 		canbuild15=guardian_storage;
 		canbuild16=guardian_targeting_facility;
@@ -2452,7 +2452,7 @@
 		canbuild10=guardian_light_laser_tower;
 		canbuild11=guardian_blaster;
 		canbuild12=guardian_pulsar;
-		//canbuild13=arm_guardian;
+		canbuild13=guardian_Blazing_Orchid;
 		canbuild14=guardian_cell;
 		canbuild15=guardian_storage;
 		canbuild16=guardian_targeting_facility;

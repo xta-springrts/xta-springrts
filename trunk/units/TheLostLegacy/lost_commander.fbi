@@ -6,7 +6,7 @@
 	side=lost;
 	name=Commander;
 	description=Commander;
-	icontype=lost_commander;
+	icontype=core_commander;
 
 	//************************************************************
 	//  Categories

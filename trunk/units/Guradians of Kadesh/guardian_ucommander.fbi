@@ -6,7 +6,7 @@
 	side=guardian;
 	name=Commander;
 	description=Commander;
-	icontype=guardian_commander;
+	icontype=arm_commander;
 
 	//************************************************************
 	//  Categories
