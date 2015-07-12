@@ -1,4 +1,129 @@
 
+[guardian_Searing_Amaryllis_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=arm_corpses;
+	object=guardian_Searing_Amaryllis_dead;
+	featuredead=guardian_Searing_Amaryllis_heap;
+	footprintx=3;
+	footprintz=3;
+	height=40;
+	blocking=1;
+	hitdensity=100;
+	metal=3291;
+	damage=1440;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionvolumeoffsets=0 0 -10;
+	collisionvolumescales=32 67 32;
+	collisionvolumetest=1;
+	collisionvolumetype=CylY;
+}
+[guardian_Searing_Amaryllis_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=3x3e;
+	footprintx=3;
+	footprintz=3;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	metal=2074;
+	damage=1440;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=68 7 82;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+
+[guardian_air_repair_pad_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=core_corpses;
+	object=guardian_air_repair_pad_dead;
+	featuredead=core_air_repair_pad_heap;
+	footprintx=4;
+	footprintz=4;
+	height=20;
+	blocking=1;
+	hitdensity=100;
+	metal=86;
+	damage=552;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=54 25 54;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+[core_air_repair_pad_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=4x4c;
+	footprintx=4;
+	footprintz=4;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	metal=43;
+	damage=552;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=54 6 54;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+[guardian_silversword_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=arm_corpses;
+	object=guardian_silversword_dead;
+	featuredead=guardian_silversword_heap;
+	footprintx=3;
+	footprintz=3;
+	height=20;
+	blocking=1;
+	hitdensity=100;
+	metal=574;
+	damage=1182;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=36 23 36;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+[guardian_silversword_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=3x3f;
+	footprintx=3;
+	footprintz=3;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	metal=287;
+	damage=682;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=36 6 36;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
 [guardian_antichrist_dead]
 {
 	world=All Worlds;

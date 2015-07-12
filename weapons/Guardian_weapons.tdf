@@ -1,4 +1,121 @@
 
+[Guardian_SearingCANNON]
+{
+	name=Bertha Cannon;
+	rgbcolor=0.2 0.2 0.2;
+	stages=15;
+	separation=0.45;
+	alphadecay=0.1;
+	sizedecay=-0.15;
+	nogap=1;
+	size=3;
+	weaponType=Cannon;
+	turret=1;
+	//color=3;
+	explosiongenerator=custom:BERTHASHOT;
+	cegTag=GUARDIANREVERSE;
+	GroundBounce=0;
+	WaterBounce=0;
+	NumBounce=1;
+	BounceSlip=1.01;
+	BounceRebound=0.8;
+	bounceExplosionGenerator=custom:BERTHASHOT;
+	range=4875;
+	reloadtime=5.5; //4.67
+	weaponvelocity=1000; //800
+	energypershot=1300;
+	areaofeffect=96; //114
+	accuracy=620; //800
+	aimrate=500;
+	soundstart=gokamaryllis1;
+	soundhitdry=gokamaryllis1hit;
+	firestarter=50;
+	tolerance=300;
+	holdtime=1;
+	startsmoke=1;
+	edgeeffectiveness=0.09;
+	[DAMAGE]
+	{
+		default=950;//742
+		group_invincible=1;
+		group_ships=1430; //1120
+		group_large_ships=1430; //1120
+	}
+}
+
+[GUARDIAN_SILVER]
+{
+	name=Plasma Cannon;
+	weaponType=Cannon;
+	turret=1;
+	range=440;
+	explosiongenerator=custom:BluePlasmaExtraBANG;
+	reloadtime=2.1;
+	weaponvelocity=405;
+	//mygravity=0.24;
+	areaofeffect=64;
+	soundstart=cannon3;
+	soundhitdry=COMFIRE1;
+	tolerance=500;
+	startsmoke=1;
+	size=3.45;
+	rgbcolor=1 0.70 1.0;
+	stages=6;
+	separation=0.25;
+	alphadecay=0.4;
+	sizedecay=-0.1;
+	nogap=1;
+	[DAMAGE]
+	{
+		default=190;
+		group_invincible=1;
+	}
+}
+[VTOL_Pulse]
+	{
+	ID=116;
+	Name=Guardian- Pulse Gun;
+	RenderType=1;
+	//Model=CorePulse1;
+	LineOfSight=1;
+	Turret=0;
+
+	Range=515;
+	NoAutoRange=1;
+	AreaOfEffect=8;
+	ReloadTime=0.666;
+	WeaponTimer=1;
+	BurnBlow=1;
+	WeaponVelocity=950;
+	StartVelocity=950;
+	WeaponAcceleration=950;
+	myGravity=0.1;
+	rgbcolor=0.6 0.6 1.0;
+	energypershot=11;
+	
+	FireStarter=25;
+	
+	SoundStart=goklaser1;
+	SoundHit=goklaser1hit.wav;
+	//SoundWater=CanLite2;
+	explosiongenerator=custom:BlueLaserPulseHit;
+	cegTag=guardianTinyPurpleLaser;	
+
+	//CollideFriendly=0;
+	//AvoidFriendly=0;
+   	//AvoidFeature=0;
+
+	[DAMAGE]
+		{
+		default=52;
+		group_ships=65;
+		group_large_ships=65;
+		group_landair=35;
+		group_invincible=1;
+
+		}
+	}
+
 [ANTICHRISTBEAM]
 {
 	areaofeffect=8;
@@ -16,7 +133,7 @@
 	noselfdamage=1;
 	pulsespeed=7.0;
 	range=290;
-	reloadtime=0.5;
+	reloadtime=0.666;
 	rgbcolor=0.9 0.7 1.0;
 	//soundhitdry=xplolrg;
 	soundstart=gokimmlaser;
@@ -65,7 +182,7 @@
 	cylindertargeting = 1;
 	[DAMAGE]
 		{
-		Default=500;
+		Default=666;
 		}
 	}
 
@@ -116,7 +233,7 @@
   	texture1=testlightning;
 	LineOfSight=0;
 	Turret=1;
-	Range=60;
+	Range=70;
 	collidefriendly=0;
 	avoidfriendly=0;
 	avoidGround=0;
@@ -564,6 +681,7 @@
 	range=510;
 	reloadtime=1.15;
 	weapontimer=10;
+	flighttime=2.5;
 	weaponvelocity=559;
 	startvelocity=450;
 	weaponacceleration=130;
@@ -588,6 +706,47 @@
 		default=44;
 		group_invincible=1;
 		group_landair=110;
+	}
+}
+
+[WRAITH_ADVMISSILE]
+{
+	explosiongenerator=custom:KBOTMISSILEHIT;
+	cegTag=GUARDIANMISSILETRAIL;
+	name=Guided Missiles;
+	turret=0;
+	model=guardian_missile.3do;
+	Texture1=null;
+	range=510;
+	reloadtime=1.15;
+	Burst=2;
+	Burstrate=0.1;
+	weapontimer=10;
+	flighttime=2.5;
+	weaponvelocity=550;
+	startvelocity=450;
+	weaponacceleration=131;
+	turnrate=24384;
+	areaofeffect=48;
+	soundstart=gokpulse3.wav;
+	soundhitdry=gokpulse1hit.wav;
+	firestarter=70;
+	smokedelay=0.1;
+	tracks=1;
+	smoketrail=0;
+	Weapontype=MissileLauncher;
+	tolerance=8000;
+	startsmoke=1;
+	collidefriendly=0;
+	avoidfriendly=0;
+	WaterBounce=0;
+	[DAMAGE]
+	{
+		group_commanders=22;
+		lost_commanders=19;
+		default=43;
+		group_invincible=1;
+		group_landair=112;
 	}
 }
 [Moonstrike_MISSILE]
@@ -643,7 +802,7 @@
 	Texture2=null;
 	Texture3=null;
 	Texture4=null;
-	range=420;
+	range=490;
 	cylindertargeting = 1;
 	reloadtime=4.8;
 	weapontimer=2;
@@ -680,7 +839,7 @@
 	Texture2=null;
 	Texture3=null;
 	Texture4=null;
-	range=410;
+	range=425;
 	reloadtime=3.6;
 	weapontimer=2;
 	weaponvelocity=300;
@@ -712,9 +871,10 @@
 	Texture2=null;
 	Texture3=null;
 	Texture4=null;
-	range=440;
+	range=470;
 	reloadtime=2.4;
 	weapontimer=2;
+	flighttime=2.5;
 	weaponvelocity=460;
 	startvelocity=300;
 	weaponacceleration=320;
@@ -776,6 +936,7 @@
 	range=700;
 	reloadtime=2;
 	weapontimer=5;
+	flighttime=2.5;
 	weaponvelocity=850;
 	startvelocity=460;
 	weaponacceleration=152;
@@ -810,7 +971,7 @@
 	beamttl=5;
 	corethickness=1.3;
 	energypershot=0;
-	explosiongenerator=custom:PINKFLASH;
+	explosiongenerator=custom:ONESPARK; //added v9
 	hardstop=false;
 	intensity=0.001;
 	largebeamlaser=1;
@@ -851,7 +1012,7 @@
 	noselfdamage=1;
 	pulsespeed=7.0;
 	range=320;
-	reloadtime=1.75;
+	reloadtime=1.5;
 	rgbcolor=0.9 0.7 1.0;
 	//soundhitdry=xplolrg;
 	soundstart=gokimmlaser;
@@ -875,7 +1036,7 @@
 	beamttl=1;
 	corethickness=1.3;
 	energypershot=0;
-	explosiongenerator=custom:PINKFLASH;
+	explosiongenerator=custom:ONESPARK; //added v9
 	hardstop=false;
 	intensity=0.001;
 	largebeamlaser=1;
@@ -911,7 +1072,7 @@
 	beamttl=1;
 	corethickness=1.3;
 	energypershot=0;
-	explosiongenerator=custom:PINKFLASH;
+	explosiongenerator=custom:ONESPARK; //added v9
 	hardstop=false;
 	intensity=0.001;
 	largebeamlaser=1;
@@ -1271,7 +1432,7 @@
 	LineOfSight=1;
 	Turret=1;
 
-	Range=545;
+	Range=525;
 	NoAutoRange=1;
 	AreaOfEffect=8;
 	ReloadTime=0.5;
@@ -1440,7 +1601,7 @@
 	energypershot=200;
 	//NoAutoRange=1;
 	AreaOfEffect=16;
-	ReloadTime=1.25;//5 because of no depthcharge
+	ReloadTime=1.5;//5 because of no depthcharge
 	WeaponTimer=1;
 	BurnBlow=0;
 	WeaponVelocity=900;
@@ -1516,3 +1677,114 @@
 		group_large_ships=627;
 		}
 	}
+
+[REV_AIRROCKET]
+{
+	name=Rockets;
+	Weapontype=MissileLauncher;
+	turret=0;
+	model=guardian_missile.3do;
+	explosiongenerator=custom:raven;
+	cegTag=GUARDIANRocketTRAIL;
+	Texture1=null;
+	Texture2=null;
+	Texture3=null;
+	Texture4=null;
+	range=600;
+	cylindertargeting = 1;
+	reloadtime=1.2;
+	weapontimer=2;
+	weaponvelocity=600;
+	startvelocity=100;
+	weaponacceleration=600;
+	turnrate=3384;
+	tracks=1;
+	areaofeffect=65;
+	soundstart=gokneedle1.wav;
+	soundhitdry=gokneedle1hit.wav;
+	firestarter=70;
+	smoketrail=0;
+	startsmoke=0;
+	collidefriendly=0;
+	avoidfriendly=0;
+	waterweapon=1;
+	fireSubmersed=1;
+	Wobble=12000;
+	dance=90;
+	[DAMAGE]
+	{
+		lost_commanders=176;
+		default=211;
+		group_invincible=1;
+	}
+}
+
+[AIRLongWEAK_BEAM]
+{
+	areaofeffect=8;
+	beamdecay=0.1;
+	beamtime=0.1;
+	beamttl=1;
+	corethickness=1.3;
+	energypershot=0;
+	explosiongenerator=custom:ONESPARK; //added v9
+	hardstop=false;
+	intensity=0.001;
+	largebeamlaser=1;
+	laserflaresize=5;
+	name=PewPew;
+	noselfdamage=1;
+	pulsespeed=7.0;
+	range=600;
+	reloadtime=0.75;
+	rgbcolor=0.7 0.2 1;
+	//soundhitdry=xplolrg;
+	soundstart=gokbeam1;
+	targetmoveerror=0.30000001192093;
+	thickness=1;
+	tolerance=10000;
+	turret=0;
+	weapontype=BeamLaser;
+	weaponvelocity=1500;
+	collidefriendly=0;
+	avoidfriendly=0;
+	[DAMAGE]
+	{
+		default=40;//50
+	}
+}
+
+[ADVAIRWEAK_BEAM]
+{
+	areaofeffect=8;
+	beamdecay=0.1;
+	beamtime=0.1;
+	beamttl=1;
+	corethickness=1.3;
+	energypershot=0;
+	explosiongenerator=custom:ONESPARK; //added v9
+	hardstop=false;
+	intensity=0.001;
+	largebeamlaser=1;
+	laserflaresize=5;
+	name=PewPew;
+	noselfdamage=1;
+	pulsespeed=7.0;
+	range=500;
+	reloadtime=1.5;
+	rgbcolor=0.3 0.3 1;
+	//soundhitdry=xplolrg;
+	soundstart=LASRLIT2;
+	targetmoveerror=0.30000001192093;
+	thickness=1.5;
+	tolerance=10000;
+	turret=1;
+	weapontype=BeamLaser;
+	weaponvelocity=1500;
+	collidefriendly=0;
+	avoidfriendly=0;
+	[DAMAGE]
+	{
+		default=80;//50
+	}
+}

@@ -5,7 +5,7 @@
 	//********************
 	side=Arm;
 	name=Hydro Scaffold;
-	description=Produces Ships and Hovercrafts (WEAK ON LAND);
+	description=Produces Sea and Hovercrafts);
 	icontype=plant;
 
 	//************************************************************
@@ -70,7 +70,7 @@
 	//  Movement
 	//************
 	maxslope=11;
-	//minwaterdepth=30;
+	minwaterdepth=30;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
