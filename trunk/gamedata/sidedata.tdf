@@ -2435,7 +2435,7 @@
 	 	//canbuild35=ARMFFF;//xtaids
 	 	//canbuild36=MERCURY;//xtaids
 		//canbuild37=arm_vulcan;
-		//canbuild38=arm_nano_tower;
+		canbuild38=guardian_nano_tower;
 	}
 
 	[guardian_adv_construction_vehicle]
@@ -2476,7 +2476,7 @@
 	 	//canbuild35=ARMFFF;//xtaids
 	 	//canbuild36=MERCURY;//xtaids
 		//canbuild37=arm_vulcan;
-		//canbuild38=arm_nano_tower;
+		canbuild38=guardian_nano_tower;
 	}
 	[Guardian_Commander]
 		{
@@ -2694,13 +2694,14 @@
 	[guardian_Hydro_Scaffold]
 	{
 		canbuild1=guardian_construction_sub;
-		canbuild2=guardian_ravager;
-		canbuild3=guardian_abyss_knight;
-		canbuild4=guardian_paladin;
-		canbuild5=guardian_Faerie;
-		canbuild6=guardian_avatar;
-		canbuild7=guardian_exorcist;
-		canbuild8=guardian_nightfall;
+		canbuild2=guardian_construction_vehicle;
+		canbuild3=guardian_ravager;
+		canbuild4=guardian_abyss_knight;
+		canbuild5=guardian_paladin;
+		canbuild6=guardian_Faerie;
+		canbuild7=guardian_avatar;
+		canbuild8=guardian_exorcist;
+		canbuild9=guardian_nightfall;
 	}
 
 	[guardian_areo_platform]
@@ -2743,7 +2744,7 @@
 		canbuild9=guardian_hydro_scaffold;
 		//canbuild10=arm_shipyard;
 		//canbuild11=arm_sub_pen;
-		//canbuild12=arm_nano_tower;
+		canbuild12=guardian_nano_tower;
 		canbuild13=guardian_light_laser_tower;
 		canbuild14=guardian_radar_tower;
 		canbuild15=guardian_piscator; //added v9 beta
@@ -2759,17 +2760,14 @@
 		//canbuild25=arm_adv_kbot_lab;
 		canbuild26=guardian_starport;
 		//canbuild27=arm_adv_shipyard;
-		//canbuild28=arm_tidal_generator;
-		//canbuild29=arm_underwater_tidal_generator;
-		//canbuild30=arm_sonar_station;
-		//canbuild31=arm_floating_radar;
-		//canbuild32=arm_floating_light_laser_tower;
-		//canbuild33=guardian_spatter;
-		//canbuild34=arm_underwater_energy_storage;
-		//canbuild35=arm_floating_metal_maker;
-		//canbuild36=arm_underwater_metal_storage;
-		//canbuild37=arm_stingray;
-		//canbuild38=arm_underwater_metal_extractor;
+		canbuild28=guardian_floating_solar_collector;
+		canbuild29=guardian_underwater_generator;
+		canbuild30=guardian_sonar_radar;
+		canbuild31=guardian_floating_light_laser_tower;
+		canbuild33=guardian_spatter;
+		canbuild34=guardian_underwater_storage;
+		canbuild37=guardian_splasher;
+		canbuild38=guardian_underwater_metal_extractor;
 		//canbuild39=arm_floating_dragons_teeth;
 	}
 
@@ -2792,7 +2790,7 @@
 		//canbuild17=core_tortoise_plant;//spiders vs. tortoise
 		//canbuild18=core_hovercraft_platform; 
 		//canbuild18=core_seaplane_platform;
-		//canbuild19=core_nano_tower;
+		canbuild19=guardian_nano_tower;
 	}
 
 	[guardian_construction_aircraft]
@@ -2808,7 +2806,7 @@
 		canbuild9=guardian_hydro_scaffold;
 		//canbuild10=arm_shipyard;
 		//canbuild11=arm_sub_pen;
-		//canbuild12=arm_nano_tower;
+		canbuild12=guardian_nano_tower;
 		canbuild13=guardian_light_laser_tower;
 		canbuild14=guardian_radar_tower;
 		canbuild15=guardian_piscator;
@@ -2848,7 +2846,7 @@
 		canbuild9=guardian_hydro_scaffold;
 		//canbuild10=arm_shipyard;
 		//canbuild11=arm_sub_pen;
-		//canbuild12=arm_nano_tower;
+		canbuild12=guardian_nano_tower;
 		canbuild13=guardian_light_laser_tower;
 		canbuild14=guardian_radar_tower;
 		canbuild15=guardian_piscator;
@@ -2886,6 +2884,7 @@
 		canbuild7=guardian_terra_platform;
 		canbuild8=guardian_areo_platform;
 		canbuild9=guardian_hydro_scaffold;
+		canbuild12=guardian_nano_tower;
 		canbuild13=guardian_light_laser_tower;
 		canbuild14=guardian_radar_tower;
 		canbuild15=guardian_piscator;

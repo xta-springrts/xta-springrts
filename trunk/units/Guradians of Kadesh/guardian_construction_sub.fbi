@@ -2,7 +2,7 @@
 {
 	name=Construction Sub;
 	unitname=guardian_construction_sub;
-	buildcostenergy=2321;
+	buildcostenergy=1821;
 	buildcostmetal=165;
 	buildtime=3847;
 	category=guardian SUB CONSTR MOBILE NOWEAPON NOTLAND NOTAIR NOTSEA;

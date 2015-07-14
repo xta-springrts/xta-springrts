@@ -4,7 +4,7 @@
 	//  Unit Description
 	//********************
 	side=Lost;
-	name=Samson;
+	name=Announcer;
 	description=Missile Launcher;
 
 	//************************************************************

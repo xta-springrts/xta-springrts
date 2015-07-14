@@ -50,7 +50,7 @@
 	YardMap=yyyooooyyy yyyooooyyy yooccccooy yooccccooy yooccccooy cooccccooc oooyccyooo oooyyyyooo;
 	activatewhenbuilt=1;
 	collisionVolumeType=Box;
-	collisionVolumeScales=152 40 133;
+	collisionVolumeScales=152 55 133;
 	collisionVolumeOffsets=0 -17 0;
 	collisionVolumeTest = 1;
 
@@ -73,7 +73,8 @@
 	//  Movement
 	//************
 	maxslope=10;
-	maxwaterdepth=0;
+	//maxwaterdepth=0;
+	waterline=0.1;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
