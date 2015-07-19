@@ -394,7 +394,7 @@
 	model=guardian_missile.3do;
 	Texture1=null;
 	range=800;
-	reloadtime=2.25;
+	reloadtime=2.85;
 	weapontimer=5;
 	flighttime=2;
 	weaponvelocity=1650;
@@ -785,7 +785,7 @@
 	LineOfSight=1;
 	Turret=1;
 
-	Range=1075;
+	Range=1025;
 	NoAutoRange=1;
 	AreaOfEffect=48;
 	ReloadTime=7.5;
@@ -795,16 +795,21 @@
 	StartVelocity=1000;
 	WeaponAcceleration=1000;
 	myGravity=0.9;
-	rgbcolor=0.6 0.6 1.0;
+	size=5.5;
+	rgbcolor=0.6 0.5 1.0;
+	stages=4;
+	separation=-0.4;
+	alphadecay=-0.1;
+	sizedecay=0.575;
 	
 	FireStarter=25;
-	accuracy=400; //600
+	accuracy=440; //600
 	
-	SoundStart=goklaser1;
-	SoundHit=goklaser1hit.wav;
+	SoundStart=goklightarty1;
+	SoundHit=goklightarty1hit;
 	//SoundWater=CanLite2;
 	explosiongenerator=custom:KBOTROCKETHIT;
-	cegTag=guardianTinyPinkLaser;	
+	//cegTag=guardianTinyPinkLaser;	
 
 	//CollideFriendly=0;
 	//AvoidFriendly=0;
