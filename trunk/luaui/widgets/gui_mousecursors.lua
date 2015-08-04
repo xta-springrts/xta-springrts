@@ -51,7 +51,7 @@ local GetUnitDefDimensions					= Spring.GetUnitDefDimensions
 local GetTeamResources						= Spring.GetTeamResources
 local GetUnitIsTransporting					= Spring.GetUnitIsTransporting
 local myTeamID
-local FIRSTWEAPON							= 1
+local FIRSTWEAPON							= (Script.IsEngineMinVersion(95) and 1) or 0
 local GetSelectedUnitsCounts				= Spring.GetSelectedUnitsCounts
 local AreTeamsAllied						= Spring.AreTeamsAllied
 local transportHovers						= (Spring.GetModOptions() and (Spring.GetModOptions().mo_transporthover == "1") and 1) or 0 == 1
@@ -70,10 +70,6 @@ function widget:Initialize()
 	AssignMouseCursor('BuildSurfaced', 'cursorsurfaced', true, false)
 	AssignMouseCursor('BuildSubmerged', 'cursorsubmerged', true, false)
 	myTeamID = Spring.GetMyTeamID()
-	
-	if Game.version <= "94.1" then 
-		FIRSTWEAPON	= 0
-	end			
 	
 	for id,unitDef in pairs(UnitDefs) do
 		local weapons = unitDef.weapons
