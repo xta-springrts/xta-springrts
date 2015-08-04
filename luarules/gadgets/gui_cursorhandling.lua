@@ -29,7 +29,7 @@ local ValidUnitID				= Spring.ValidUnitID
 -- Constants
 local CMD_ATTACKBAD 			= 35577
 local CMD_ATTACK 				= CMD.ATTACK
-local FIRSTWEAPON				= 1
+local FIRSTWEAPON				= (Script.IsEngineMinVersion(95) and 1) or 0
 
 local waterWeapons 				= {}
 local unitDefRadius				= {}
@@ -45,10 +45,7 @@ local spAssignMouseCursor 	= Spring.AssignMouseCursor
 	function gadget:Initialize()
 		gadgetHandler:RegisterCMDID(CMD_ATTACKBAD)
 		spAssignMouseCursor("AttackBad", "cursorattackbad", true, false)
-		if Game.version <= "94.1" then 
-			FIRSTWEAPON	= 0
-		end
-		
+				
 		for id,unitDef in pairs(UnitDefs) do
 			local weapons = unitDef.weapons
 			local canKamikaze = unitDef.canKamikaze and unitDef.speed > 0
