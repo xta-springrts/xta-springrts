@@ -1,46 +1,52 @@
 function widget:GetInfo()
 	return {
-	name      = "Red Resource Bars", --version 7
+	name      = "Red Resource Bars",
 	desc      = "Requires Red UI Framework",
 	author    = "Regret",
-	date      = "August 6, 2009", --last change September 10,2009
+	date      = "29 may 2015",
 	license   = "GNU GPL, v2 or later",
 	layer     = 0,
-	enabled   = false, --enabled by default
+	enabled   = true, --enabled by default
 	handler   = true, --can use widgetHandler:x()
 	}
 end
+
+local barTexture = LUAUI_DIRNAME.."Images/resbar.dds"
+
 local NeededFrameworkVersion = 8
-local CanvasX,CanvasY = 1280,960 --resolution in which the widget was made (for 1:1 size)
+local CanvasX,CanvasY = 1280,734 --resolution in which the widget was made (for 1:1 size)
 --1272,734 == 1280,768 windowed
 
 local Config = {
 	metal = {
-		px = 300,py = 0, --default start position
-		sx = 300,sy = 34, --background size
+		px = 370,py = -0.5, --default start position
+		sx = 260,sy = 29, --background size
 		
-		barsy = 5, --width of the actual bar
-		fontsize = 12,
+		barsy = 4, --width of the actual bar
+		fontsize = 11,
 		
 		margin = 5, --distance from background border
 		
+		padding = 4, -- for border effect
+		color2 = {1,1,1,0.022}, -- for border effect
+		
 		expensefadetime = 0.25, --fade effect time, in seconds
 		
-		cbackground = {0,0,0,0.3}, --color {r,g,b,alpha}
-		cborder = {0,0,0,0.2},
+		cbackground = {0,0,0,0.6}, --color {r,g,b,alpha}
+		cborder = {0,0,0,0.88},
 		cbarbackground = {0,0,0,1},
-		cbar = {0.9,0.9,0.95,1},
+		cbar = {1,1,1,1},
 		cindicator = {1,0,0,0.8},
 		
-		cincome = {0,0.85,0,1},
-		cpull = {0.85,0,0,1},
+		cincome = {0,1,0,1},
+		cpull = {1,0,0,1},
 		cexpense = {1,0,0,1},
 		ccurrent = {1,1,1,1},
 		cstorage = {1,1,1,1},
 		
 		dragbutton = {2}, --middle mouse button
 		tooltip = {
-			background ="Hold \255\255\255\1middle mouse button\255\255\255\255 to drag the resource display around.\n\n"..
+			background ="In CTRL+F11 mode: Hold \255\255\255\1middle mouse button\255\255\255\255 to drag the resource bar.\n\n"..
 			"\255\255\255\1Leftclick\255\255\255\255 on the bar to set team share.",
 			income = "Your metal income.",
 			pull = "Your metal pull.",
@@ -51,31 +57,34 @@ local Config = {
 	},
 	
 	energy = {
-		px = 605,py = 0,
-		sx = 300,sy = 34,
+		px = 636,py = -0.5,
+		sx = 260,sy = 29, --background size
 		
-		barsy = 5,
-		fontsize = 12,
+		barsy = 4, --width of the actual bar
+		fontsize = 11,
 		
 		margin = 5,
 		
+		padding = 4, -- for border effect
+		color2 = {1,1,1,0.022}, -- for border effect
+		
 		expensefadetime = 0.25,
 		
-		cbackground = {0,0,0,0.3},
-		cborder = {0,0,0,0.2},
+		cbackground = {0,0,0,0.6},
+		cborder = {0,0,0,0.88},
 		cbarbackground = {0,0,0,1},
 		cbar = {1,1,0,1},
 		cindicator = {1,0,0,0.8},
 		
-		cincome = {0,0.85,0,1},
-		cpull = {0.85,0,0,1},
+		cincome = {0,1,0,1},
+		cpull = {1,0,0,1},
 		cexpense = {1,0,0,1},
 		ccurrent = {1,1,1,1},
 		cstorage = {1,1,1,1},
 		
 		dragbutton = {2}, --middle mouse button
 		tooltip = {
-			background ="Hold \255\255\255\1middle mouse button\255\255\255\255 to drag the resource display around.\n\n"..
+			background ="In CTRL+F11 mode: Hold \255\255\255\1middle mouse button\255\255\255\255 to drag the resource bar.\n\n"..
 			"\255\255\255\1Leftclick\255\255\255\255 on the bar to set team share.",
 			income = "Your energy income.",
 			pull = "Your energy pull.",
@@ -180,17 +189,32 @@ local function short(n,f)
 end
 
 local function createbar(r)
-	local background = {"rectangle",
+	local background2 = {"rectanglerounded",
+		px=r.px+r.padding,py=r.py+r.padding,
+		sx=r.sx-r.padding-r.padding,sy=r.sy-r.padding-r.padding,
+		color=r.color2,
+	}
+	local background = {"rectanglerounded",
 		px=r.px,py=r.py,
 		sx=r.sx,sy=r.sy,
 		color=r.cbackground,
 		border=r.cborder,
 		movable=r.dragbutton,
 		obeyscreenedge = true,
+		
+		padding=r.padding,
+		
 		--overridecursor = true,
-		overrideclick = {1,2},
+		overrideclick = {1},
+		onupdate=function(self)
+			background2.px = self.px + self.padding
+			background2.py = self.py + self.padding
+			background2.sx = self.sx - self.padding - self.padding
+			background2.sy = self.sy - self.padding - self.padding
+		end,
 	}
 	New(background)
+	New(background2)
 	
 	local number = {"text",
 		px=0,py=background.py+r.margin,fontsize=r.fontsize,
@@ -202,17 +226,23 @@ local function createbar(r)
 	income.color = r.cincome
 	
 	local barbackground = {"rectangle",
-		px=background.px+income.getwidth()+r.margin,py=income.py,
-		sx=background.sx-income.getwidth()-r.margin*2,sy=r.barsy,
+		px=background.px+income.getwidth()-r.margin,py=income.py,
+		sx=background.sx-income.getwidth(),sy=r.barsy,
 		color=r.cbarbackground,
+		texture = barTexture,
+		texturecolor = {0.15,0.15,0.15,1},
 	}
 
 	local barborder = Copy(barbackground)
 	barborder.color = nil
 	barborder.border = r.cborder
+	barborder.texture = nil
+	barborder.texturecolor = nil
 	
 	local bar = Copy(barbackground)
 	bar.color = r.cbar
+	bar.texture = barTexture
+	bar.texturecolor = r.cbar
 	
 	local shareindicator = Copy(barbackground)
 	shareindicator.color = r.cindicator
@@ -220,6 +250,8 @@ local function createbar(r)
 	shareindicator.sx = barbackground.sy
 	shareindicator.sy = shareindicator.sy +4
 	shareindicator.border = r.cborder
+	shareindicator.texture = barTexture
+	shareindicator.texturecolor = r.cindicator
 
 	New(barbackground)
 	New(bar)
@@ -256,6 +288,11 @@ local function createbar(r)
 		income,pull,expense,current,storage,
 	}
 	
+	-- smaller fontsize for fontsize of income and pull
+	income.fontsize = r.fontsize*0.93
+	pull.fontsize = r.fontsize*0.93
+	storage.fontsize = r.fontsize*0.88
+	
 	--tooltip
 	background.mouseover = function(mx,my,self) SetTooltip(r.tooltip.background) end
 	income.mouseover = function(mx,my,self) SetTooltip(r.tooltip.income) end
@@ -266,6 +303,7 @@ local function createbar(r)
 	
 	return {
 		["background"] = background,
+		["background2"] = background2,
 		["barbackground"] = barbackground,
 		["bar"] = bar,
 		["barborder"] = barborder,
@@ -290,20 +328,20 @@ local function updatebar(b,res)
 		b.bar.sx = barbacksx
 	end
 	
-	b.income.caption = "+"..short(r[4],1)
-	b.pull.caption = "-"..short(r[3],1)
+	b.income.caption = "+ "..short(r[4],(r[4] < 10 and 1 or 0))
+	b.pull.caption = "- "..short(r[3],(r[3] < 10 and 1 or 0))
 	b.current.caption = short(r[1])
 	b.storage.caption = short(r[2])
 	
 	--align numbers
-	b.income.px = barbackpx - b.income.getwidth() -b.margin
-	b.pull.px = barbackpx - b.pull.getwidth() -b.margin
+	b.income.px = barbackpx - b.income.getwidth() -b.margin*2.2
+	b.pull.px = barbackpx - b.pull.getwidth() -b.margin*2.2
 	b.current.px = barbackpx + barbacksx/2 - b.current.getwidth()/2
 	b.storage.px = barbackpx + barbacksx - b.storage.getwidth()
 	
 	if (r[3]~=r[5]) then
 		b.expense.active = nil --activate
-		b.expense.caption = "-"..short(r[5],1)
+		b.expense.caption = "  - "..short(r[5],(r[5] < 10 and 1 or 0))
 	else
 		b.expense.active = false
 	end

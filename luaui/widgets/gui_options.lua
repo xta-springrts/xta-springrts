@@ -12,7 +12,7 @@ end
 
 local posX, posY					  	= 600, 400
 local buttonsize					  	= 16
-local width, height					  	= 360, 580
+local width, height					  	= 360, 600
 local iWidth							= 400
 local iRowHeight						= 14
 local rows								= 0
@@ -158,6 +158,7 @@ function widget:Initialize()
 	Button[16]						= {} -- full screen
 	Button[17]						= {} -- disable blinking units
 	Button[18]						= {} -- show/don't show grass
+	Button[19]						= {} -- show/don't show help text
 	Panel["main"]					= {}
 	Panel["info"]					= {} -- info screen with mod options
 	InitButtons()
@@ -594,6 +595,10 @@ function InitButtons()
 	Button[18]["command"]		= "grass"
 	Button[18]["label"]			= "Show grass on maps:"
 	
+	Button[19]["click"]			= tonumber(Spring.GetConfigInt("CommandHelpText",1) or 1) == 1
+	Button[19]["command"]		= "help"
+	Button[19]["label"]			= "Show interface help text:"
+	
 	Panel["main"]["x1"]			= posX
 	Panel["main"]["x2"]			= posX + width
 	Panel["main"]["y1"]			= posY
@@ -729,6 +734,12 @@ function ButtonHandler (cmd)
 			Spring.SetConfigInt("GrassDetail",0)
 		else
 			Spring.SetConfigInt("GrassDetail",1)
+		end
+	elseif cmd == "help" then
+		if Button[19]["click"] then
+			Spring.SetConfigInt("CommandHelpText",0)
+		else
+			Spring.SetConfigInt("CommandHelpText",1)
 		end
 	else
 		Echo("Local command:",cmd)

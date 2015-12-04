@@ -54,8 +54,6 @@ end
 local bgcornerSize = 8
 local bgcorner = ":n:"..LUAUI_DIRNAME.."images/bgcorner.png"
 
-Spring.Echo("Texture file:",bgcorner)
-
 local TN = "Red_Drawing" --WG name for function list
 local version = 9
 
