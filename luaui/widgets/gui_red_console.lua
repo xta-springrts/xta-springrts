@@ -46,7 +46,7 @@ local Config = {
 		px = 275,py = 35, --default start position
 		sx = 516, --background size
 		
-		fontsize = 11.33,
+		fontsize = 10.33,
 		
 		minlines = 1, --minimal number of lines to display
 		maxlines = 6,

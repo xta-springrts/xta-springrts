@@ -22,14 +22,14 @@ local Config = {
 		px = -0.5,py = CanvasY-82, --default start position
 		sx = 270,sy = 82, --background size
 		
-		fontsize = 10.5,
+		fontsize = 9.5,
 		
-		padding = 4,
+		padding = 3,
 		color2 = {1,1,1,0.022},
 		
 		margin = 11, --distance from background border
 		
-		cbackground = {0,0,0,0.6}, --color {r,g,b,alpha}
+		cbackground = {0,0,0,0.4}, --color {r,g,b,alpha}
 		cborder = {0,0,0,0.2},
 		
 		dragbutton = {2}, --middle mouse button
