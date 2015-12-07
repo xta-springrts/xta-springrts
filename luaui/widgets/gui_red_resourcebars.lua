@@ -22,18 +22,18 @@ local Config = {
 		px = 370,py = -0.5, --default start position
 		sx = 260,sy = 29, --background size
 		
-		barsy = 4, --width of the actual bar
+		barsy = 5, --width of the actual bar
 		fontsize = 11,
 		
 		margin = 5, --distance from background border
 		
-		padding = 4, -- for border effect
+		padding = 2, -- for border effect
 		color2 = {1,1,1,0.022}, -- for border effect
 		
 		expensefadetime = 0.25, --fade effect time, in seconds
 		
-		cbackground = {0,0,0,0.6}, --color {r,g,b,alpha}
-		cborder = {0,0,0,0.88},
+		cbackground = {0.25,0.25,0.3,0.6}, --color {r,g,b,alpha}
+		cborder = {0,0,0,0.66},
 		cbarbackground = {0,0,0,1},
 		cbar = {1,1,1,1},
 		cindicator = {1,0,0,0.8},
@@ -60,18 +60,18 @@ local Config = {
 		px = 636,py = -0.5,
 		sx = 260,sy = 29, --background size
 		
-		barsy = 4, --width of the actual bar
+		barsy = 5, --width of the actual bar
 		fontsize = 11,
 		
 		margin = 5,
 		
-		padding = 4, -- for border effect
+		padding = 2, -- for border effect
 		color2 = {1,1,1,0.022}, -- for border effect
 		
 		expensefadetime = 0.25,
 		
-		cbackground = {0,0,0,0.6},
-		cborder = {0,0,0,0.88},
+		cbackground = {0.3,0.25,0.25,0.6},
+		cborder = {0,0,0,0.66},
 		cbarbackground = {0,0,0,1},
 		cbar = {1,1,0,1},
 		cindicator = {1,0,0,0.8},
