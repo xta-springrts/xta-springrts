@@ -12,7 +12,7 @@ end
 
 local posX, posY					  	= 600, 400
 local buttonsize					  	= 16
-local width, height					  	= 360, 600
+local width, height					  	= 360, 620
 local iWidth							= 400
 local iRowHeight						= 14
 local rows								= 0
@@ -159,6 +159,8 @@ function widget:Initialize()
 	Button[17]						= {} -- disable blinking units
 	Button[18]						= {} -- show/don't show grass
 	Button[19]						= {} -- show/don't show help text
+	Button[20]						= {} -- show/don't show noob-buttons
+	
 	Panel["main"]					= {}
 	Panel["info"]					= {} -- info screen with mod options
 	InitButtons()
@@ -599,6 +601,10 @@ function InitButtons()
 	Button[19]["command"]		= "help"
 	Button[19]["label"]			= "Show interface help text:"
 	
+	Button[20]["click"]			= tonumber(Spring.GetConfigInt("ShowNoobButtons",1) or 1) == 1
+	Button[20]["command"]		= "help"
+	Button[20]["label"]			= "Show noob-buttons in order menu:"
+	
 	Panel["main"]["x1"]			= posX
 	Panel["main"]["x2"]			= posX + width
 	Panel["main"]["y1"]			= posY
@@ -740,6 +746,12 @@ function ButtonHandler (cmd)
 			Spring.SetConfigInt("CommandHelpText",0)
 		else
 			Spring.SetConfigInt("CommandHelpText",1)
+		end
+	elseif cmd == "noob-buttons" then
+		if Button[19]["click"] then
+			Spring.SetConfigInt("ShowNoobButtons",0)
+		else
+			Spring.SetConfigInt("ShowNoobButtons",1)
 		end
 	else
 		Echo("Local command:",cmd)

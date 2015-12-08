@@ -14,6 +14,8 @@ end
 
 local stateTexture		= LUAUI_DIRNAME.."images/resbar.dds"
 local buttonTexture		= LUAUI_DIRNAME.."images/button.dds"
+local showNoobButtons   = tonumber(Spring.GetConfigInt("ShowNoobButtons",1) or 1) == 1
+Spring.Echo("Noob:",showNoobButtons)
 
 local NeededFrameworkVersion = 9
 local CanvasX,CanvasY = 1272,734 --resolution in which the widget was made (for 1:1 size)
@@ -629,7 +631,19 @@ end
 
 --lots of hacks under this line ------------- overrides/disables default spring menu layout and gets current orders + filters out some commands
 
-local CMD_GUARD 							= CMD.GUARD
+local CMD_GUARD 					= CMD.GUARD
+local CMD_ATTACK					= CMD.ATTACK
+local CMD_GUARD						= CMD.GUARD
+local CMD_AREA_GUARD				= 14001
+local CMD_PATROL					= CMD.PATROL
+local CMD_FIGHT						= CMD.FIGHT
+local CMD_DGUN						= CMD.DGUN
+local CMD_REPAIR					= CMD.REPAIR
+local CMD_WAIT						= CMD.WAIT -- "Wait" ID = "5"
+local CMD_STOP						= CMD.STOP -- "Stop" ID = "0"
+local CMD_MOVE						= CMD.MOVE -- "Move" ID = "10"
+local CMD_MOVESTATE					= CMD.MOVE_STATE -- "Move state" ID = "50"
+local CMD_FIRESTATE					= CMD.FIRE_STATE -- "Fire state" ID = "45"
 
 local hijackedlayout = false
 function widget:Shutdown()
@@ -641,12 +655,18 @@ end
 local function GetCommands()
 	local hiddencmds = {
 		[76] = true, --load units clone
-		[65] = false, --selfd
+		[65] = not showNoobButtons, --selfd
 		[9] = true, --gatherwait
 		[8] = true, --squadwait
 		[7] = true, --deathwait
 		[6] = true, --timewait
 		[CMD_GUARD] = true,
+		[CMD_MOVE]	= not showNoobButtons,
+		[CMD_FIGHT]	= not showNoobButtons,
+		[CMD_PATROL]= not showNoobButtons,
+		[CMD_ATTACK]= not showNoobButtons,
+		
+		
 	}
 	local buildcmds = {}
 	local statecmds = {}

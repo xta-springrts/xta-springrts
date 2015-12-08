@@ -1,4 +1,4 @@
-local versionNumber = "1.4"
+local versionNumber = "1.5"
 
 function widget:GetInfo()
   return {
@@ -19,8 +19,8 @@ end
 --------------------------------------------------------------------------------
 -- constants
 --------------------------------------------------------------------------------
-local heightOffset = 24
-local fontSize = 6
+local heightOffset = 48
+local fontSize = 12
 --------------------------------------------------------------------------------
 -- speed-ups
 --------------------------------------------------------------------------------
@@ -33,6 +33,7 @@ local GetUnitViewPosition = Spring.GetUnitViewPosition
 local GetVisibleUnits     = Spring.GetVisibleUnits
 local IsUnitVisible	      = Spring.IsUnitVisible
 local GetUnitDefID        = Spring.GetUnitDefID
+local GetUnitHeight		  = Spring.GetUnitHeight
 local glColor             = gl.Color
 local glText              = gl.Text
 local glPushMatrix        = gl.PushMatrix
@@ -42,6 +43,7 @@ local glPopMatrix         = gl.PopMatrix
 local GetGaiaTeamID		  = Spring.GetGaiaTeamID
 local haveZombies 		  = (tonumber((Spring.GetModOptions() or {}).zombies) or 0) == 1
 local isDecoyStart		  = false
+local myFont	 		  = gl.LoadFont("FreeSansBold.otf",fontSize, 3.8, 60)
 
 --------------------------------------------------------------------------------
 -- vars
@@ -126,12 +128,18 @@ function widget:DrawWorld()
 		if GetUnitDefID(unitID) == unitDefID then
 			if IsUnitVisible(unitID, 16, false) then --skip if zoomed out or not on screen
 				local ux, uy, uz = GetUnitViewPosition(unitID)
+				local h = GetUnitHeight(unitID)
 				local teamData = teams[GetUnitTeam(unitID)]
 				glPushMatrix()
-				glTranslate(ux, uy + UnitDefs[unitDefID].height + heightOffset, uz )
+				glTranslate(ux, uy + h + heightOffset, uz )
 				glBillboard()
-				glColor(teamData.colour)
-				glText(teamData.name, 0, 0, fontSize, "cn")
+				
+				myFont:Begin()
+				myFont:SetTextColor(teamData.colour)
+				myFont:SetOutlineColor({0,0,0,1})
+				myFont:Print(teamData.name, 0, 0, fontSize, "con")
+				myFont:End()
+				
 				glPopMatrix()
 			end
 		else -- unitID no longer contains a commander
