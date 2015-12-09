@@ -602,7 +602,7 @@ function InitButtons()
 	Button[19]["label"]			= "Show interface help text:"
 	
 	Button[20]["click"]			= tonumber(Spring.GetConfigInt("ShowNoobButtons",1) or 1) == 1
-	Button[20]["command"]		= "help"
+	Button[20]["command"]		= "noob-buttons"
 	Button[20]["label"]			= "Show noob-buttons in order menu:"
 	
 	Panel["main"]["x1"]			= posX
@@ -748,7 +748,7 @@ function ButtonHandler (cmd)
 			Spring.SetConfigInt("CommandHelpText",1)
 		end
 	elseif cmd == "noob-buttons" then
-		if Button[19]["click"] then
+		if Button[20]["click"] then
 			Spring.SetConfigInt("ShowNoobButtons",0)
 		else
 			Spring.SetConfigInt("ShowNoobButtons",1)

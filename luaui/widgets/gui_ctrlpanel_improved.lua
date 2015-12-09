@@ -206,8 +206,10 @@ local config = {
 --------------------------------------------------------------------------------
 
 function widget:Initialize()
+	
+	widgetHandler:DisableWidget("Red Build/Order Menu")
 	local X, Y = Spring.GetViewGeometry()
-
+	
 	if (X == 800 and Y == 600) then
 		config = {"xIcons 5", "yIcons 9", "xIconSize 0.044", "yIconSize 0.0586", "yPos 0.14" }
 	elseif (X == 1024 and Y == 768) then

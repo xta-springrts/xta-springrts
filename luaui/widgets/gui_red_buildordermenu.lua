@@ -15,7 +15,6 @@ end
 local stateTexture		= LUAUI_DIRNAME.."images/resbar.dds"
 local buttonTexture		= LUAUI_DIRNAME.."images/button.dds"
 local showNoobButtons   = tonumber(Spring.GetConfigInt("ShowNoobButtons",1) or 1) == 1
-Spring.Echo("Noob:",showNoobButtons)
 
 local NeededFrameworkVersion = 9
 local CanvasX,CanvasY = 1272,734 --resolution in which the widget was made (for 1:1 size)
@@ -44,8 +43,8 @@ local Config = {
 		padding = 3, -- for border effect
 		color2 = {1,1,1,0.022}, -- for border effect
 		
-		fadetime = 0.0010, --fade effect time, in seconds
-		fadetimeOut = 0.005, --fade effect time, in seconds
+		fadetime = 0.005, --fade effect time, in seconds
+		fadetimeOut = 0.008, --fade effect time, in seconds
 		
 		ctext = {1,1,1,1}, --color {r,g,b,alpha}
 		cbackground = {0.3,0.3,0.3,0.6},
@@ -75,13 +74,13 @@ local Config = {
 		padding = 4, -- for border effect
 		color2 = {1,1,1,0.022}, -- for border effect
 		
-		fadetime = 0.14,
-		fadetimeOut = 0.022, --fade effect time, in seconds
+		fadetime = 0.005,
+		fadetimeOut = 0.008, --fade effect time, in seconds
 		
 		ctext = {1,1,1,1},
 		cbackground = {0,0,0,0.5},
 		cborder = {0.2,0.2,0.2,1},
-		cbuttonbackground={0.1,0.1,0.1,1},
+		cbuttonbackground={0.1,0.1,0.1,0.2},
 		
 		dragbutton = {2}, --middle mouse button
 		tooltip = {
@@ -431,7 +430,7 @@ local function UpdateGrid(g,cmds,ordertype)
 			end
 		end
 		if (cmd.disabled) then
-			icon.texturecolor = {0.5,0.5,0.5,1}	
+			icon.texturecolor = {0.5,0.5,0.5,0.2}	
 		else
 			icon.texturecolor = {1,1,1,1}
 		end
@@ -567,6 +566,7 @@ function widget:TextCommand(command)
 end
 
 function widget:Initialize()
+	widgetHandler:DisableWidget("CtrlPanel Improved")
 	PassedStartupCheck = RedUIchecks()
 	if (not PassedStartupCheck) then return end
 	
@@ -665,7 +665,12 @@ local function GetCommands()
 		[CMD_FIGHT]	= not showNoobButtons,
 		[CMD_PATROL]= not showNoobButtons,
 		[CMD_ATTACK]= not showNoobButtons,
-		
+		[CMD_WAIT]= not showNoobButtons,
+		[CMD_DGUN]= not showNoobButtons,
+		[CMD_STOP]= not showNoobButtons,
+		[CMD_GUARD]= not showNoobButtons,
+		[CMD_AREA_GUARD]= not showNoobButtons,
+		[CMD_REPAIR]= not showNoobButtons,
 		
 	}
 	local buildcmds = {}
