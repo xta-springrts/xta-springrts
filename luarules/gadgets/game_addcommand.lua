@@ -157,10 +157,11 @@ end
 function gadget:UnitCreated(unitID, unitDefID, teamID)
 	local uD = UnitDefs[unitDefID]
 	
-	--insert after GUARD command in the build menu
+	--insert after GUARD command in the build menu, if it exists
 	local cmdDescID = FindUnitCmdDesc(unitID, CMD_GUARD)
-	
-	if uD.canGuard then
+		
+	if uD.canGuard and cmdDescID then
+		
 		InsertUnitCmdDesc(unitID, cmdDescID, areaGuardCmd)
 	end
 	
