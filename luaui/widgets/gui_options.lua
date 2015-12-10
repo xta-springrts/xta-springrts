@@ -160,6 +160,7 @@ function widget:Initialize()
 	Button[18]						= {} -- show/don't show grass
 	Button[19]						= {} -- show/don't show help text
 	Button[20]						= {} -- show/don't show noob-buttons
+	Button[21]						= {} -- scale commander names to res.
 	
 	Panel["main"]					= {}
 	Panel["info"]					= {} -- info screen with mod options
@@ -605,6 +606,10 @@ function InitButtons()
 	Button[20]["command"]		= "noob-buttons"
 	Button[20]["label"]			= "Show noob-buttons in order menu:"
 	
+	Button[21]["click"]			= WG.nameScaling or false
+	Button[21]["command"]		= "scale-names"
+	Button[21]["label"]			= "Scale commander names to zoom-level:"
+	
 	Panel["main"]["x1"]			= posX
 	Panel["main"]["x2"]			= posX + width
 	Panel["main"]["y1"]			= posY
@@ -753,6 +758,8 @@ function ButtonHandler (cmd)
 		else
 			Spring.SetConfigInt("ShowNoobButtons",1)
 		end
+	elseif cmd == "scale-names" then
+		Spring.SendCommands("comnamescale")
 	else
 		Echo("Local command:",cmd)
 	end
