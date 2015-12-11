@@ -24,7 +24,7 @@
 --- Do not remove
 --- Changelog processing starts here
 
-XTA 9.75 (Svn 877)
+XTA 9.75 (Git 952)
 |jls,nor
 
 New:
@@ -68,6 +68,25 @@ Enhancements:
  * New commander sounds and fixes to old ones.
  * Add originally aired date to show when starting to view replay.
  * Add Map options to simple menu
+ * Initial queue widget: add UI command: "/hideonstart" or "/hideonstart 1" for hiding build menu when game begins (default), or "hideonstart 0" or "/hideonstart off" to not do that.
+* Make zombie commanders cloak if enough energy stored and produced.
+ * New LUPS effects
+ * Detect easter and provide easter eggs automatically
+ * Add originally aired date to replays
+ * Add widget that draws different anti range colour depending on stockpile
+ * 'Raven'-award for successful comnap
+ * Show mexes that will be upgraded with a light blue box around when holding shift
+ * Add a command to interactively update draw and rotate keys with the command /setkeys. Also as option in menu. Renamed cmd_oldchatkeys => cmd_customkeys
+ * Update lups from anno 2008 to anno 2014
+ * Add back fleabowl stuff, since it's now working. Some desyncs were reported but they have not been reproduced for a while.
+ * Add desync warning widget.
+ * Add unit search tool widget and bind it to ctrl-F
+ * Add red console. Update red framework and drawing
+ * Add a better gui to the distributed guard commands (area guard with alt/ctrl pressed). Now shows a little guard symbol above unit when it is selected, and also shows who guards who (when pressing shift).
+ * Add the night widget and ctrlpanel improved gui widgets.
+ * Add red minimap widget.
+ * Add new widget selector and red buildorder menu (default disabled)
+ * Add changelog info widget. Shows this log in-game.
 
 Fixes:
  * Decrease volume of Core Mobile artillery (Pillager) wreck to match smaller new model
@@ -76,11 +95,17 @@ Fixes:
  * Fix incorrect position of Core Gaat gun wreck
  * Fix error in initial queue widget that sometimes changed faction when not requested
  * Button to offer draw in menu is disabled for spectators
+ * Fix bug where arm Thunder  loses LOS and Air-LOS when one of them is killed by flakker.
+ * Fix air repair pads not repairing and make land repair pads repair 50% faster to promote them.
+ * Fix bug where some aircraft couldn't move to air repair pads. It was due to brakerate being too high. Reduce bombers' brakerates further by 90% to make them not stop directly. 
+ * Don't show geo marker for already built geos.
+ * Set flight time = 2.5 for some missiles (4 of them, samson, jethro etc)
+ * Fix gadget error (and one similar in a widget) from bad game version check. This is the only problem when running older version of xta with spring 100 or newer.
 
 
 XTA 9.746 (Git 948, Svn 971)
 |jls
-7/12/2014
+7/12/2015
 
  * Fast (non-advertised) release to make rapid work with git
  * Git release 948 corresponds to subversion release 971

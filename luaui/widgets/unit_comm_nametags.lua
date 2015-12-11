@@ -80,6 +80,7 @@ local commanderDefs = {}
 
 --gets the name, color, and height of the commander
 local function GetCommAttributes(unitID, unitDefID)
+	
 	local team = GetUnitTeam(unitID)
 	if not team then return end
 	
@@ -96,9 +97,9 @@ local function GetCommAttributes(unitID, unitDefID)
 	elseif isGaia then
 		name = haveZombies and 'Zombie' or 'Gaia'
 	else
-		name = GetPlayerInfo(player)
+		name = GetPlayerInfo(player) or side:gsub("^%l", string.upper)
 	end
-
+	
 	local r, g, b, a = GetTeamColor(team)
 	local bgColor = {0,0,0,1}
 	if (r + g*1.35 + b*0.5) < 0.75 then  -- not acurate (enough) with playerlist   but...   font:SetAutoOutlineColor(true)   doesnt seem to work
@@ -106,10 +107,12 @@ local function GetCommAttributes(unitID, unitDefID)
 	end
 
 	local height = GetUnitHeight(unitID) + heightOffset
+	
 	return {name, {r, g, b, a}, height, bgColor}
 end
 
 local function createComnameList(attributes)
+	
 	comnameList[attributes[1]] = gl.CreateList( function()
 		local outlineColor = {0,0,0,1}
 		if (attributes[2][1] + attributes[2][2]*1.35 + attributes[2][3]*0.5) < 0.8 then
