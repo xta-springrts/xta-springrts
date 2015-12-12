@@ -257,6 +257,8 @@ local function createtooltip(r)
 end
 
 function widget:Initialize()
+	widgetHandler:EnableWidget("Red_UI_Framework")
+	widgetHandler:EnableWidget("Red_Drawing")
 	PassedStartupCheck = RedUIchecks()
 	if (not PassedStartupCheck) then return end
 	

@@ -567,6 +567,9 @@ end
 
 function widget:Initialize()
 	widgetHandler:DisableWidget("CtrlPanel Improved")
+	widgetHandler:DisableWidget("XTA Layout")
+	widgetHandler:EnableWidget("Red_UI_Framework")
+	widgetHandler:EnableWidget("Red_Drawing")
 	PassedStartupCheck = RedUIchecks()
 	if (not PassedStartupCheck) then return end
 	

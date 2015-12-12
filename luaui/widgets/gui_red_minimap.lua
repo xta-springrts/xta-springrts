@@ -278,6 +278,9 @@ local function createminimap(r)
 end
 
 function widget:Initialize()
+	widgetHandler:EnableWidget("Red_UI_Framework")
+	widgetHandler:EnableWidget("Red_Drawing")
+	widgetHandler:EnableWidget("RelativeMinimap")
 	--oldMinimapGeometry = Spring.GetConfigString("MiniMapGeometry","2 2 200 200") -- store original geometry
 	oldMinimapGeometry = sGetMiniMapGeometry()
 	

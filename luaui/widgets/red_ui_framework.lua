@@ -721,7 +721,7 @@ function widget:Update()
 			local CurClock = clock()
 			
 			--for debugging
-			WG[DrawingTN].LastWidget = "<failed to get widget name>"
+			if WG[DrawingTN] then WG[DrawingTN].LastWidget = "<failed to get widget name>" end
 			local w = WidgetList[j]
 			if (w) then
 				local winfo = WidgetList[j]:GetInfo()

@@ -229,6 +229,7 @@ local config = {}
 --------------------------------------------------------------------------------
 
 function widget:Initialize()
+	widgetHandler:DisableWidget("Red Build/Order Menu")
 	if not btns.x or not btns.y then
 		btns = {x = 4, y = 9}
 	end
