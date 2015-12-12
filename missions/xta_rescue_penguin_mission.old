@@ -1,0 +1,190 @@
+gameData = {
+	map = "Anteer-Strait-2-rc",
+	game = "XTA",
+	minVersion = "$VERSION",
+}
+
+spawnData = {
+	teams = {
+		[0] = {
+			{"arm_skeeter", 3216, 8080, 0},
+			{"arm_floating_radar", 2744, 6984, 0},
+			{"arm_hulk", 2560, 7152, 0},
+			{"arm_shipyard", 2992, 7968, 1},
+			{"arm_fido", 2208, 7152, 0},
+			{"arm_escort", 2688, 7184, 0},
+			{"arm_advanced_sonar_station", 3024, 7520, 0},
+			{"arm_metal_extractor", 1880, 7208, 0},
+			{"arm_metal_extractor", 1560, 7352, 0},
+			{"arm_skeeter", 3232, 7696, 0},
+			{"arm_torpedo_launcher", 3032, 7784, 0},
+			{"arm_fido", 2224, 7552, 0},
+			{"arm_skeeter", 3248, 7952, 0},
+			{"arm_energy_storage", 1664, 7280, 0},
+			{"arm_fibber", 2976, 7712, 0},
+			{"arm_skeeter", 3216, 8192, 0},
+			{"arm_fido", 2256, 7312, 0},
+			{"arm_skeeter", 3248, 7840, 0},
+			{"arm_metal_extractor", 1736, 7416, 0},
+		},
+		[1] = {
+			{"core_gaat_gun", 5288, 4456, 1},
+			{"core_sub_pen", 5760, 5344, 0},
+			{"core_gaat_gun", 4360, 4008, 1},
+			{"core_shredder", 3384, 5288, 0},
+			{"core_cobra", 4552, 5432, 0},
+			{"core_metal_extractor", 4248, 5352, 1},
+			{"core_gaat_gun", 4632, 5480, 1},
+			{"core_underwater_fusion_power_plant", 4376, 4392, 1},
+			{"core_metal_extractor", 4488, 4824, 1},
+			{"core_viper", 5168, 4400, 0},
+			{"core_shark", 3832, 5592, 1},
+			{"core_light_fusion_power_plant", 5048, 4200, 1},
+			{"core_the_can", 4368, 4656, 0},
+			{"core_underwater_fusion_power_plant", 5016, 4632, 0},
+			{"core_gaat_gun", 4792, 4920, 1},
+			{"core_shredder", 3560, 5448, 0},
+			{"core_metal_extractor", 5176, 4280, 1},
+			{"core_metal_extractor", 4136, 4152, 1},
+			{"core_viper", 4464, 4928, 0},
+			{"core_searcher", 3760, 5808, 1},
+			{"core_advanced_radar_tower", 4080, 4256, 0},
+			{"core_the_can", 4368, 4848, 0},
+			{"core_viper", 3984, 4352, 0},
+			{"core_radar_jamming_tower", 5016, 4296, 1},
+			{"core_cobra", 4008, 4264, 0},
+			{"core_searcher", 4048, 5952, 1},
+			{"core_shipyard", 5440, 5376, 0},
+			{"core_searcher", 3872, 5872, 1},
+			{"core_underwater_energy_storage", 5632, 4576, 0},
+			{"core_shark", 4168, 5784, 1},
+			{"core_advanced_radar_tower", 4528, 5328, 0},
+			{"core_underwater_fusion_power_plant", 5544, 4344, 0},
+			{"core_shark", 4408, 5880, 1},
+			{"core_light_fusion_power_plant", 4232, 4136, 1},
+			{"core_cobra", 4168, 5352, 0},
+			{"core_immolator", 4352, 4736, 1},
+			{"core_immolator", 4592, 4960, 1},
+			{"core_shark", 3976, 5688, 1},
+			{"core_gaat_gun", 4088, 5304, 1},
+			{"core_shredder", 5288, 5560, 0},
+			{"core_shredder", 5528, 5624, 0},
+			{"core_searcher", 4176, 6048, 1},
+			{"core_metal_extractor", 4664, 4776, 1},
+			{"core_cobra", 5272, 4296, 0},
+			{"core_advanced_radar_tower", 5232, 4208, 0},
+			{"core_underwater_energy_storage", 5568, 4768, 0},
+			{"core_energy_storage", 4752, 4688, 1},
+			{"core_hovercraft_platform", 3472, 4376, 0},
+			{"core_gaat_gun", 3880, 4472, 1},
+		},
+		[2] = {
+			{"critter_pinguin", 4648, 4712, 0},
+		}
+	},
+	features = {
+		{"core_fortification_wall_dead", 4800, 4832, 16384, 0},
+		{"core_fortification_wall_dead", 4640, 4864, 16384, 0},
+		{"core_fortification_wall_dead", 4800, 4864, 16384, 0},
+		{"core_fortification_wall_dead", 4704, 4640, 16384, 0},
+		{"core_fortification_wall_dead", 4544, 4832, 16384, 0},
+		{"core_fortification_wall_dead", 4544, 4768, 16384, 0},
+		{"core_fortification_wall_dead", 4800, 4768, 16384, 0},
+		{"core_fortification_wall_dead", 4800, 4672, 16384, 0},
+		{"core_fortification_wall_dead", 4544, 4672, 16384, 0},
+		{"core_fortification_wall_dead", 4672, 4864, 16384, 0},
+		{"core_fortification_wall_dead", 4544, 4800, 16384, 0},
+		{"core_fortification_wall_dead", 4800, 4736, 16384, 0},
+		{"core_fortification_wall_dead", 4608, 4864, 16384, 0},
+		{"core_fortification_wall_dead", 4672, 4640, 16384, 0},
+		{"core_fortification_wall_dead", 4544, 4736, 16384, 0},
+		{"core_fortification_wall_dead", 4768, 4864, 16384, 0},
+		{"core_fortification_wall_dead", 4608, 4640, 16384, 0},
+		{"core_fortification_wall_dead", 4704, 4864, 16384, 0},
+		{"core_fortification_wall_dead", 4800, 4800, 16384, 0},
+		{"core_fortification_wall_dead", 4800, 4640, 16384, 0},
+		{"core_fortification_wall_dead", 4768, 4640, 16384, 0},
+		{"core_fortification_wall_dead", 4544, 4704, 16384, 0},
+		{"core_fortification_wall_dead", 4544, 4864, 16384, 0},
+		{"core_fortification_wall_dead", 4576, 4864, 16384, 0},
+		{"core_fortification_wall_dead", 4640, 4640, 16384, 0},
+		{"core_fortification_wall_dead", 4736, 4864, 16384, 0},
+		{"core_fortification_wall_dead", 4800, 4704, 16384, 0},
+		{"core_fortification_wall_dead", 4576, 4640, 16384, 0},
+		{"core_fortification_wall_dead", 4544, 4640, 16384, 0},
+		{"core_fortification_wall_dead", 4736, 4640, 16384, 0},
+	}
+}
+
+missionTriggers = {
+	[0] = {
+		{
+			conditions = {
+				"Ctrl 1 critter_pinguin 1",
+			},
+			actions = {
+				"Victory",
+			},
+			once = true,
+		},
+		{
+			conditions = {
+				"Death 1 critter_pinguin",
+			},
+			actions = {
+				"Defeat",
+			},
+			once = true,
+		},
+		{
+			conditions = {	-- if all conditions are true, actions will happen
+				"Always",
+			},
+			actions = {
+				"Echo Rescue the captured penguin and bring him to the green square in home base",
+				"Wait 11",	-- this will disable the trigger for 11 seconds after triggering
+			},
+			once = true,
+		},
+	},
+	[2] = {
+		{
+			conditions = {
+				"Death 1 critter_pinguin",
+			},
+			actions = {
+				"Defeat 0",
+			},
+			once = true,
+		},
+	},
+}
+
+locations = {
+	[1] = {
+		shape = "R",	-- rectangle
+		X1 = 1800,		-- top left corner of rectangle
+		Z1 = 7400,
+		X2 = 1900,		-- bottom right corner of rectangle
+		Z2 = 7500,
+		visible = true,
+		RGB = {0.2, 0.7, 0.2},
+	},
+
+}
+
+briefing = {
+	"$cRescue Civilian",
+	"",
+	"",
+	"The enemy has captured a civilian unit and is holding it hostage. We have reports that the enemy camp is",
+	"located in a heavily fortified area in the middle of nan ice-berg filled ocean. Find the enemy camp and",
+	"escort the civilian unit back to your base.",
+	"",
+	"The civilian is an advanced breed of penguin that, if in core hands, can allow core to replicate central",
+	"consciousness into animals. This can not be allowed to happen!",
+	"",
+	"Protect the penguin at all costs!",
+}
+
+return gameData, spawnData, missionTriggers, locations, briefing
