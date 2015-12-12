@@ -42,9 +42,12 @@ local Config = {
 
 local totalUnits = 0
 
-local spGetTeamUnitCount = Spring.GetTeamUnitCount
-local sGetCurrentTooltip = Spring.GetCurrentTooltip
-local sGetSelectedUnitsCount = Spring.GetSelectedUnitsCount
+local spGetTeamUnitCount		= Spring.GetTeamUnitCount
+local sGetCurrentTooltip 		= Spring.GetCurrentTooltip
+local sGetSelectedUnitsCount 	= Spring.GetSelectedUnitsCount
+local OrangeStr  				= "\255\255\190\128"
+local GreyStr    				= "\255\210\210\210"
+local WhiteStr   				= "\255\255\255\255"
 
 local function IncludeRedUIFrameworkFunctions()
 	New = WG.Red.New(widget)
@@ -126,7 +129,7 @@ local function getEditedCurrentTooltip()
 	local expPattern = "Experience (%d+%.%d%d)" 
 	local currentExp = tonumber(text:match(expPattern)) 
 	--replace with limexp: exp/(1+exp) since all spring exp effects are linear in limexp, multiply by 10 because people like big numbers instead of [0,1] 
-	return currentExp and text:gsub(expPattern,string.format("Experience %.2f", 10*currentExp/(1+currentExp)) ) or text 
+	return currentExp and text:gsub(expPattern,string.format("XP ".. OrangeStr .. "%.2f" .. WhiteStr, currentExp)  ) or text 
 end 
 
 local function createtooltip(r)

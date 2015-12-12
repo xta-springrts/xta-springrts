@@ -1043,9 +1043,9 @@ function widget:MouseRelease(x, y, mb)
 		viewWidgetState = not viewWidgetState
 
 		if viewWidgetState then
-			buttons[5] = "Turn on these widgets (in view/selection)"
+			buttons[5] = "Turn on these widgets"
 		else
-			buttons[5] = "Turn off these widgets (in view/selection)"
+			buttons[5] = "Turn off these widgets"
 		end
 
 		widgetHandler:SaveConfigData()    
