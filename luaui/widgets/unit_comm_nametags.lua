@@ -1,7 +1,7 @@
 function widget:GetInfo()
   return {
-    name      = "Commander name-tags",
-    desc      = "Displays a name tags above commanders.",
+    name      = "Commander Name Tags",
+    desc      = "Displays a name tag above commanders.",
     author    = "Evil4Zerggin, Jools, DeadnightWarrior",
     date      = "12.2015",
     license   = "GNU GPL, v2 or later",
@@ -164,8 +164,8 @@ function widget:ViewResize()
 end
 
 function widget:DrawWorld()
-  --if Spring.IsGUIHidden() then return end
-  -- untested fix: when you resign, to also show enemy com playernames  (because widget:PlayerChanged() isnt called anymore)
+  if Spring.IsGUIHidden() then return end
+  
   if not CheckedForSpec and Spring.GetGameFrame() > 1 then
 	  if GetSpectatingState() then
 		CheckedForSpec = true
@@ -274,5 +274,6 @@ function widget:SetConfigData(data) --load config
 	widgetHandler:AddAction("comnamescale", toggleNameScaling)
 	if data.nameScaling ~= nil then
 		nameScaling = data.nameScaling
+		WG.nameScaling = nameScaling
 	end
 end
