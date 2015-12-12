@@ -1,3 +1,16 @@
+function gadget:GetInfo()
+  return {
+    name      = "Commander Sounds",
+    desc      = "Make the commanders sing and have noise",
+	version   = "1.0",
+    author    = "Kloot",
+    date      = "Jan, 2013",
+    license   = "GNU GPL, v2 or later",
+    layer     = 0,
+    enabled   = true,  --  loaded by default?
+  }
+end
+
 local CommanderUnitDefs, CommanderSounds, CommanderTargets = include("LuaRules/Configs/unit_commander_sounds_defs.lua")
 local CommanderSingCmdDesc = {id = 40123, name = "Sing", }
 local CommanderTauntCmdDesc = {id = 40234, name = "Taunt", }
