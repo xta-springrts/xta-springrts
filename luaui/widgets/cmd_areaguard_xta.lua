@@ -55,7 +55,7 @@ local glTexture	= gl.Texture
 local glTranslate = gl.Translate
 local glVertex = gl.Vertex
 local guardianTable 						= {} -- reverse list
-local helpOn 								= tonumber(Spring.GetConfigInt("CommandHelpText",1) or 1) == 1
+local helpOn 								= tonumber(Spring.GetConfigInt("XTA_CommandHelpText",1) or 1) == 1
 local hideGuard								= false
 local math_floor							= math.floor
 local myFont	 							= gl.LoadFont("FreeSansBold.otf",textsize, 1.9, 40) 
@@ -424,7 +424,7 @@ function widget:KeyPress(key, mods, isRepeat)
 			getDrawData(sU)
 		end
 	elseif (key == 0x134) then -- alt
-		helpOn = tonumber(Spring.GetConfigInt("CommandHelpText",1) or 1) == 1
+		helpOn = tonumber(Spring.GetConfigInt("XTA_CommandHelpText",1) or 1) == 1
 		altDown = true
 	elseif (key == 0x132) then -- ctrl
 		ctrlDown = true

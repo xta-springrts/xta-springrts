@@ -25,7 +25,7 @@ local CMD_STOP 				= CMD.STOP
 --
 -- When this time has elapsed this gadget shows the end statistics window. Which one is displayed depends on user setting (gui_tweakmode_settings) 
 -- and set by widget.
--- Spring.GetConfigInt("EngineGraphFirst"). 0 = XTA statistics window, 1 = Default Statistics window. These can be changed by pressing buttons in -- top right corner.
+-- Spring.GetConfigInt("XTA_EngineGraphFirst"). 0 = XTA statistics window, 1 = Default Statistics window. These can be changed by pressing buttons in -- top right corner.
 
 
 if gadgetHandler:IsSyncedCode() then
@@ -222,7 +222,7 @@ else
 		
 		if #winnerList >= n or (not winner) then 
 			transferComplete = true
-			GG.showXTAStats	= tonumber(Spring.GetConfigInt("EngineGraphFirst",0) or 0) == 0
+			GG.showXTAStats	= tonumber(Spring.GetConfigInt("XTA_EngineGraphFirst",0) or 0) == 0
 			
 			gadgetHandler:UpdateCallIn("GameFrame")
 			gadgetHandler:UpdateCallIn("DrawScreen")

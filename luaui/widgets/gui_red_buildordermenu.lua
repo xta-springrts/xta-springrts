@@ -14,7 +14,7 @@ end
 
 local stateTexture		= LUAUI_DIRNAME.."images/resbar.dds"
 local buttonTexture		= LUAUI_DIRNAME.."images/button.dds"
-local showNoobButtons   = tonumber(Spring.GetConfigInt("ShowNoobButtons",1) or 1) == 1
+local showNoobButtons   = tonumber(Spring.GetConfigInt("XTA_ShowNoobButtons",1) or 1) == 1
 
 local NeededFrameworkVersion = 9
 local CanvasX,CanvasY = 1272,734 --resolution in which the widget was made (for 1:1 size)

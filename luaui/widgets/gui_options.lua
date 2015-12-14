@@ -574,15 +574,15 @@ function InitButtons()
 
 	Button[12]["label"]			= table.concat{"Water type: "," (", tonumber(Button[12]["value"])," - ",waterType ,")"}
 	
-	Button[13]["click"]			= tonumber(Spring.GetConfigInt("EngineGraphFirst") or 0) == 1
-	Button[13]["command"]		= "EngineGraphFirst"
+	Button[13]["click"]			= tonumber(Spring.GetConfigInt("XTA_EngineGraphFirst") or 0) == 1
+	Button[13]["command"]		= "XTA_EngineGraphFirst"
 	Button[13]["label"]			= "Show engine graph first:"
 	
-	Button[14]["click"]			= tonumber(Spring.GetConfigInt("DisableMoveFailedSound",0) or 0) == 1
+	Button[14]["click"]			= tonumber(Spring.GetConfigInt("XTA_DisableMoveFailedSound",0) or 0) == 1
 	Button[14]["command"]		= "disableMoveFailed"
 	Button[14]["label"]			= "Disable move-failed unit reply sound:"
 	
-	Button[15]["click"]			= tonumber(Spring.GetConfigInt("DisableMoveFailedText",0) or 0) == 1
+	Button[15]["click"]			= tonumber(Spring.GetConfigInt("XTA_DisableMoveFailedText",0) or 0) == 1
 	Button[15]["command"]		= "disableMoveFailedText"
 	Button[15]["label"]			= "Disable move-failed unit reply text:"
 	
@@ -598,11 +598,11 @@ function InitButtons()
 	Button[18]["command"]		= "grass"
 	Button[18]["label"]			= "Show grass on maps:"
 	
-	Button[19]["click"]			= tonumber(Spring.GetConfigInt("CommandHelpText",1) or 1) == 1
+	Button[19]["click"]			= tonumber(Spring.GetConfigInt("XTA_CommandHelpText",1) or 1) == 1
 	Button[19]["command"]		= "help"
 	Button[19]["label"]			= "Show interface help text:"
 	
-	Button[20]["click"]			= tonumber(Spring.GetConfigInt("ShowNoobButtons",1) or 1) == 1
+	Button[20]["click"]			= tonumber(Spring.GetConfigInt("XTA_ShowNoobButtons",1) or 1) == 1
 	Button[20]["command"]		= "noob-buttons"
 	Button[20]["label"]			= "Show noob-buttons in order menu:"
 	
@@ -709,24 +709,24 @@ function ButtonHandler (cmd)
 			Spring.SendCommands("water " .. tonumber(Button[12]["value"]))
 		end
 		InitButtons()
-	elseif cmd == "EngineGraphFirst" then
+	elseif cmd == "XTA_EngineGraphFirst" then
 		if Button[13]["click"] then
-			Spring.SetConfigInt("EngineGraphFirst",0)
+			Spring.SetConfigInt("XTA_EngineGraphFirst",0)
 		else
-			Spring.SetConfigInt("EngineGraphFirst",1)
+			Spring.SetConfigInt("XTA_EngineGraphFirst",1)
 		end
 	elseif cmd == "disableMoveFailed" then
 		if Button[14]["click"] then
-			Spring.SetConfigInt("DisableMoveFailedSound",0)
+			Spring.SetConfigInt("XTA_DisableMoveFailedSound",0)
 		else
-			Spring.SetConfigInt("DisableMoveFailedSound",1)
+			Spring.SetConfigInt("XTA_DisableMoveFailedSound",1)
 		end
 		
 	elseif cmd == "disableMoveFailedText" then
 		if Button[15]["click"] then
-			Spring.SetConfigInt("DisableMoveFailedText",0)
+			Spring.SetConfigInt("XTA_DisableMoveFailedText",0)
 		else
-			Spring.SetConfigInt("DisableMoveFailedText",1)
+			Spring.SetConfigInt("XTA_DisableMoveFailedText",1)
 		end	
 	elseif cmd == "fullscreen" then
 		if Button[16]["click"] then
@@ -748,15 +748,15 @@ function ButtonHandler (cmd)
 		end
 	elseif cmd == "help" then
 		if Button[19]["click"] then
-			Spring.SetConfigInt("CommandHelpText",0)
+			Spring.SetConfigInt("XTA_CommandHelpText",0)
 		else
-			Spring.SetConfigInt("CommandHelpText",1)
+			Spring.SetConfigInt("XTA_CommandHelpText",1)
 		end
 	elseif cmd == "noob-buttons" then
 		if Button[20]["click"] then
-			Spring.SetConfigInt("ShowNoobButtons",0)
+			Spring.SetConfigInt("XTA_ShowNoobButtons",0)
 		else
-			Spring.SetConfigInt("ShowNoobButtons",1)
+			Spring.SetConfigInt("XTA_ShowNoobButtons",1)
 		end
 	elseif cmd == "scale-names" then
 		Spring.SendCommands("comnamescale")
