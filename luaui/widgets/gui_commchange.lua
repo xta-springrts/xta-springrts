@@ -62,10 +62,10 @@ commanderID["arm_automatic"] 	= UnitDefNames["arm_commander"].id
 commanderID["arm_manual"] 		= UnitDefNames["arm_u0commander"].id
 commanderID["core_automatic"]	= UnitDefNames["core_commander"].id
 commanderID["core_manual"] 		= UnitDefNames["core_u0commander"].id
-commanderID["lost_automatic"]	= UnitDefNames["lost_commander"].id
-commanderID["lost_manual"] 		= UnitDefNames["lost_u0commander"].id
-commanderID["guardian_automatic"]	= UnitDefNames["guardian_commander"].id
-commanderID["guardian_manual"] 		= UnitDefNames["guardian_u0commander"].id
+commanderID["lost_automatic"]	= (UnitDefNames["lost_commander"] or {}).id
+commanderID["lost_manual"] 		= (UnitDefNames["lost_u0commander"] or {}).id
+commanderID["guardian_automatic"]	= (UnitDefNames["guardian_commander"] or {}).id
+commanderID["guardian_manual"] 		= (UnitDefNames["guardian_u0commander"] or {}).id
 
 -- sound
 local bell = 'sounds/bell.ogg'
@@ -292,22 +292,24 @@ local function updateSize()
 	end
 	
 	if Spring.IsReplay() then
-		n = 0
+		
 		for i, pID in pairs(Spring.GetPlayerList()) do
 			local _,_,isSpec = Spring.GetPlayerInfo(pID)
 			if not isSpec then
 				if not playerStates[pID] then
 					playerStates[pID] = "missing"
 				end
-				n = n + 1
 			end
 		end
 		
+		n = #(teamList)-1
+		
 		sizex = 380
-		sizey = 80 + 20 * (n+2) -- add extra free row
+		sizey = 50 + 20 * (n+2) -- add extra free row
 	end
 	--buttons:
 	initButtons()
+	
 end
 
 local function updateStates()
@@ -865,10 +867,18 @@ function widget:DrawScreen()
 								pCount = pCount + 1 
 							end
 						end
-						
+												
 						if pCount > 1 then isComShare = true end
 						
-						if isAI then leaderName = "AI: "..aiShortName end
+						if isAI then 
+							local remoteName = Spring.GetGameRulesParam("AI-Name"..tID) or "(remote)"
+							if (not shortName) or (shortName == "") or shortName:find("KNOWN") then
+								leaderName = "AI: " .. remoteName 
+							else
+								leaderName = "AI: " .. (shortName or "?")
+							end				
+						end
+						
 						if isComShare then leaderName = leaderName .. "+" end
 						
 						teamSkill = skill and teamSkill + skill or teamSkill

@@ -1648,9 +1648,9 @@ end
 --  Draw call-ins
 --
 
-function gadgetHandler:Update()
+function gadgetHandler:Update(deltaTime)
   for _,g in ipairs(self.UpdateList) do
-    g:Update()
+    g:Update(deltaTime)
   end
   return
 end
