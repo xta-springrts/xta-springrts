@@ -715,7 +715,7 @@ function widget:DrawScreenEffects(vsx, vsy)
 end
 
 function widget:DrawScreen()
-	if IsGUIHidden() or gameStarted then return end
+	if IsGUIHidden() or gameStarted or gameOver then return end
 	
 	local function firstToUpper(str)
 		return (str:gsub("^%l", string.upper))

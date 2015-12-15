@@ -33,7 +33,7 @@ if gadgetHandler:IsSyncedCode() then
 	-------------------
 	-- SYNCED PART --
 	-------------------
-	local ENDTIME			= 16 -- frames
+	local ENDTIME			= 64 -- frames
 	local gameOverFrame
 	local transferStarted	= false
 	
@@ -350,8 +350,8 @@ end
 			local frame = Spring.GetGameFrame()
 			counter = counter + 1
 			gameOverFrame = gameOverFrame or frame
-			Echo("End:",frame,gameOverFrame,counter)
-			showGraph = Spring.GetGameRulesParam("ShowEnd") == 1 and not hideAllStats
+			
+			showGraph = (counter > 1000 or counter > 150-(frame-gameOverFrame) or Spring.GetGameRulesParam("ShowEnd") == 1) and not hideAllStats
 		end
 		
 		if debugMode and Spring.IsGameOver() then
