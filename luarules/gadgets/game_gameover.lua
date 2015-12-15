@@ -487,7 +487,7 @@ end
 				end
 			elseif not showGraph and Spring.IsGameOver() and #winnerList == 0 then
 			-- exit window and button
-				Script.LuaUi.Gameover()
+				Script.LuaUI.Gameover()
 				-- window
 				gl.Color(cBack) -- grey
 				RectRound(Window["exit"]["x0"],Window["exit"]["y0"],Window["exit"]["x1"],Window["exit"]["y1"],6)
