@@ -12,7 +12,7 @@ end
 
 local posX, posY					  	= 600, 400
 local buttonsize					  	= 16
-local width, height					  	= 360, 620
+local width, height					  	= 360, 660
 local iWidth							= 400
 local iRowHeight						= 14
 local rows								= 0
@@ -146,21 +146,22 @@ function widget:Initialize()
 	Button[4]						= {} -- hardwarecursor
 	Button[5]						= {} -- pausemusic
 	Button[6]						= {} -- intromusic
-	Button[7]						= {} -- showfps
-	Button[8]						= {} -- show time
-	Button[9]						= {} -- show speed
-	Button[10]						= {} -- qui opacity
-	Button[11]						= {} -- info table
-	Button[12]						= {} -- water
-	Button[13]						= {} -- stats window order
-	Button[14]						= {} -- disable move-failed sounds
+	Button[7]						= {} -- intromusic
+	Button[8]						= {} -- showfps
+	Button[9]						= {} -- show time
+	Button[10]						= {} -- show speed
+	Button[11]						= {} -- qui opacity
+	Button[12]						= {} -- info table
+	Button[13]						= {} -- water
+	Button[14]						= {} -- stats window order
 	Button[15]						= {} -- disable move-failed sounds
-	Button[16]						= {} -- full screen
-	Button[17]						= {} -- disable blinking units
-	Button[18]						= {} -- show/don't show grass
-	Button[19]						= {} -- show/don't show help text
-	Button[20]						= {} -- show/don't show noob-buttons
-	Button[21]						= {} -- scale commander names to res.
+	Button[16]						= {} -- disable move-failed sounds
+	Button[17]						= {} -- full screen
+	Button[18]						= {} -- disable blinking units
+	Button[19]						= {} -- show/don't show grass
+	Button[20]						= {} -- show/don't show help text
+	Button[21]						= {} -- show/don't show noob-buttons
+	Button[22]						= {} -- scale commander names to res.
 	
 	Panel["main"]					= {}
 	Panel["info"]					= {} -- info screen with mod options
@@ -476,9 +477,9 @@ end
 function InitButtons()
 
 	-- special buttons
-	Button[10]["divided"] 		= true -- action depens on which side of button is clicked
-	Button[12]["wide"]			= true -- double width as normal
-	Button[12]["divided"] 		= true
+	Button[11]["divided"] 		= true -- action depens on which side of button is clicked
+	Button[13]["wide"]			= true -- double width as normal
+	Button[13]["divided"] 		= true
 	
 	-- automate positions
 	for i,button in ipairs(Button) do
@@ -527,88 +528,92 @@ function InitButtons()
 	Button[6]["command"]		= "introMusic"
 	Button[6]["label"]			= "Intro music:"
 	
-	Button[7]["click"]			= tonumber(Spring.GetConfigInt("ShowFPS",1) or 1) == 1
-	Button[7]["command"]		= "showFPS"
-	Button[7]["label"]			= "Show fps indicator:"
+	Button[7]["click"]			= tonumber(Spring.GetConfigInt('snd_endmusic',0) or 0) == 1
+	Button[7]["command"]		= "endMusic"
+	Button[7]["label"]			= "End music:"
+	
+	Button[8]["click"]			= tonumber(Spring.GetConfigInt("ShowFPS",1) or 1) == 1
+	Button[8]["command"]		= "showFPS"
+	Button[8]["label"]			= "Show fps indicator:"
 
-	Button[8]["click"]			= tonumber(Spring.GetConfigInt("ShowClock",1) or 1) == 1
-	Button[8]["command"]		= "showTime"
-	Button[8]["label"]			= "Show game time:"
+	Button[9]["click"]			= tonumber(Spring.GetConfigInt("ShowClock",1) or 1) == 1
+	Button[9]["command"]		= "showTime"
+	Button[9]["label"]			= "Show game time:"
 	
-	Button[9]["click"]			= tonumber(Spring.GetConfigInt("ShowSpeed",0) or 0) == 1
-	Button[9]["command"]		= "showSpeed"
-	Button[9]["label"]			= "Show game speed:"
+	Button[10]["click"]			= tonumber(Spring.GetConfigInt("ShowSpeed",0) or 0) == 1
+	Button[10]["command"]		= "showSpeed"
+	Button[10]["label"]			= "Show game speed:"
 	
-	Button[10]["click"]			= false
-	Button[10]["less"]			= "GuiOpacityLess"
-	Button[10]["more"]			= "GuiOpacityMore"
+	Button[11]["click"]			= false
+	Button[11]["less"]			= "GuiOpacityLess"
+	Button[11]["more"]			= "GuiOpacityMore"
 	
-	if not Button[10]["value"] then
-		Button[10]["value"]   		= tonumber(Spring.GetConfigString('GuiOpacity')) or 0.4 
+	if not Button[11]["value"] then
+		Button[11]["value"]   		= tonumber(Spring.GetConfigString('GuiOpacity')) or 0.4 
 	end
-	Button[10]["label"]			= table.concat{"Adjust menu opacity: "," (",  string.format("%.1f", (Button[10]["value"])) ,")"}
+	Button[11]["label"]			= table.concat{"Adjust menu opacity: "," (",  string.format("%.1f", (Button[11]["value"])) ,")"}
 	
-	Button[11]["click"]			= tonumber(Spring.GetConfigInt("ShowPlayerInfo",0) or 0) == 1
-	Button[11]["command"]		= "showInfo"
-	Button[11]["label"]			= "Show simple player infotable:"
+	Button[12]["click"]			= tonumber(Spring.GetConfigInt("ShowPlayerInfo",0) or 0) == 1
+	Button[12]["command"]		= "showInfo"
+	Button[12]["label"]			= "Show simple player infotable:"
 	
-	Button[12]["click"]			= false
-	Button[12]["img"]			= imgArrows
-	Button[12]["less"]			= "waterPrev"
-	Button[12]["more"]			= "waterNext"
-	if not Button[12]["value"] then
-		Button[12]["value"]   		= tonumber(Spring.GetConfigInt("ReflectiveWater",1)) or 0
+	Button[13]["click"]			= false
+	Button[13]["img"]			= imgArrows
+	Button[13]["less"]			= "waterPrev"
+	Button[13]["more"]			= "waterNext"
+	if not Button[13]["value"] then
+		Button[13]["value"]   		= tonumber(Spring.GetConfigInt("ReflectiveWater",1)) or 0
 	end
 	
-	if Button[12]["value"] == 0 then
+	if Button[13]["value"] == 0 then
 		waterType = "Basic"
-	elseif Button[12]["value"] == 1 then
+	elseif Button[13]["value"] == 1 then
 		waterType = "Reflective"
-	elseif Button[12]["value"] == 2 then
+	elseif Button[13]["value"] == 2 then
 		waterType = "Dynamic"
-	elseif Button[12]["value"] == 3 then
+	elseif Button[13]["value"] == 3 then
 		waterType = "Reflective & refractive"
-	elseif Button[12]["value"] == 4 then
+	elseif Button[13]["value"] == 4 then
 		waterType = "Bumpmapped"
 	end
 
-	Button[12]["label"]			= table.concat{"Water type: "," (", tonumber(Button[12]["value"])," - ",waterType ,")"}
+	Button[13]["label"]			= table.concat{"Water type: "," (", tonumber(Button[13]["value"])," - ",waterType ,")"}
 	
-	Button[13]["click"]			= tonumber(Spring.GetConfigInt("XTA_EngineGraphFirst") or 0) == 1
-	Button[13]["command"]		= "XTA_EngineGraphFirst"
-	Button[13]["label"]			= "Show engine graph first:"
+	Button[14]["click"]			= tonumber(Spring.GetConfigInt("XTA_EngineGraphFirst") or 0) == 1
+	Button[14]["command"]		= "XTA_EngineGraphFirst"
+	Button[14]["label"]			= "Show engine graph first:"
 	
-	Button[14]["click"]			= tonumber(Spring.GetConfigInt("XTA_DisableMoveFailedSound",0) or 0) == 1
-	Button[14]["command"]		= "disableMoveFailed"
-	Button[14]["label"]			= "Disable move-failed unit reply sound:"
+	Button[15]["click"]			= tonumber(Spring.GetConfigInt("XTA_DisableMoveFailedSound",0) or 0) == 1
+	Button[15]["command"]		= "disableMoveFailed"
+	Button[15]["label"]			= "Disable move-failed unit reply sound:"
 	
-	Button[15]["click"]			= tonumber(Spring.GetConfigInt("XTA_DisableMoveFailedText",0) or 0) == 1
-	Button[15]["command"]		= "disableMoveFailedText"
-	Button[15]["label"]			= "Disable move-failed unit reply text:"
+	Button[16]["click"]			= tonumber(Spring.GetConfigInt("XTA_DisableMoveFailedText",0) or 0) == 1
+	Button[16]["command"]		= "disableMoveFailedText"
+	Button[16]["label"]			= "Disable move-failed unit reply text:"
 	
-	Button[16]["click"]			= tonumber(Spring.GetConfigInt("Fullscreen",1) or 1) == 1
-	Button[16]["command"]		= "fullscreen"
-	Button[16]["label"]			= "Full screen:"
+	Button[17]["click"]			= tonumber(Spring.GetConfigInt("Fullscreen",1) or 1) == 1
+	Button[17]["command"]		= "fullscreen"
+	Button[17]["label"]			= "Full screen:"
 	
-	Button[17]["click"]			= tonumber(Spring.GetConfigInt("TeamHighlight",1) or 1) == 1
-	Button[17]["command"]		= "blinking"
-	Button[17]["label"]			= "Blinking units:"
+	Button[18]["click"]			= tonumber(Spring.GetConfigInt("TeamHighlight",1) or 1) == 1
+	Button[18]["command"]		= "blinking"
+	Button[18]["label"]			= "Blinking units:"
 	
-	Button[18]["click"]			= tonumber(Spring.GetConfigInt("GrassDetail",1) or 1) == 1
-	Button[18]["command"]		= "grass"
-	Button[18]["label"]			= "Show grass on maps:"
+	Button[19]["click"]			= tonumber(Spring.GetConfigInt("GrassDetail",1) or 1) == 1
+	Button[19]["command"]		= "grass"
+	Button[19]["label"]			= "Show grass on maps:"
 	
-	Button[19]["click"]			= tonumber(Spring.GetConfigInt("XTA_CommandHelpText",1) or 1) == 1
-	Button[19]["command"]		= "help"
-	Button[19]["label"]			= "Show interface help text:"
+	Button[20]["click"]			= tonumber(Spring.GetConfigInt("XTA_CommandHelpText",1) or 1) == 1
+	Button[20]["command"]		= "help"
+	Button[20]["label"]			= "Show interface help text:"
 	
-	Button[20]["click"]			= tonumber(Spring.GetConfigInt("XTA_ShowNoobButtons",1) or 1) == 1
-	Button[20]["command"]		= "noob-buttons"
-	Button[20]["label"]			= "Show noob-buttons in order menu:"
+	Button[21]["click"]			= tonumber(Spring.GetConfigInt("XTA_ShowNoobButtons",1) or 1) == 1
+	Button[21]["command"]		= "noob-buttons"
+	Button[21]["label"]			= "Show noob-buttons in order menu:"
 	
-	Button[21]["click"]			= WG.nameScaling or false
-	Button[21]["command"]		= "scale-names"
-	Button[21]["label"]			= "Scale commander names to zoom-level:"
+	Button[22]["click"]			= WG.nameScaling or false
+	Button[22]["command"]		= "scale-names"
+	Button[22]["label"]			= "Scale commander names to zoom-level:"
 	
 	Panel["main"]["x1"]			= posX
 	Panel["main"]["x2"]			= posX + width
@@ -667,93 +672,99 @@ function ButtonHandler (cmd)
 		else
 			Spring.SetConfigInt('snd_intromusic', 1)
 		end
-	elseif cmd == "showFPS" then
+	elseif cmd == "endMusic" then
 		if Button[7]["click"] then
+			Spring.SetConfigInt('snd_endmusic', 0)
+		else
+			Spring.SetConfigInt('snd_endmusic', 1)
+		end
+	elseif cmd == "showFPS" then
+		if Button[8]["click"] then
 			Spring.SendCommands("fps 0")
 		else
 			Spring.SendCommands("fps 1")
 		end
 	elseif cmd == "showTime" then
-		if Button[8]["click"] then
+		if Button[9]["click"] then
 			Spring.SendCommands("clock 0")
 		else
 			Spring.SendCommands("clock 1")
 		end	
 	elseif cmd == "showSpeed" then
-		if Button[9]["click"] then
+		if Button[10]["click"] then
 			Spring.SendCommands("speed 0")
 		else
 			Spring.SendCommands("speed 1")
 		end	
 	elseif cmd == "GuiOpacityLess" then
 		Spring.SendCommands("DecGUIOpacity")
-		Button[10]["value"] = math.max(Button[10]["value"] - 0.1,0)
+		Button[11]["value"] = math.max(Button[11]["value"] - 0.1,0)
 	elseif cmd == "GuiOpacityMore" then
 		Spring.SendCommands("IncGUIOpacity")
-		Button[10]["value"] = math.min(Button[10]["value"] + 0.1,1)
+		Button[11]["value"] = math.min(Button[11]["value"] + 0.1,1)
 	elseif cmd == "showInfo" then
-		if Button[11]["click"] then
+		if Button[12]["click"] then
 			Spring.SendCommands("info 0")
 		else
 			Spring.SendCommands("info 1")
 		end
 	elseif cmd == "waterPrev" then
-		if Button[12]["value"] ~= math.max(Button[12]["value"] - 1,0) then
-			Button[12]["value"] = math.max(Button[12]["value"] - 1,0)
-			Spring.SendCommands("water " .. tonumber(Button[12]["value"]))
+		if Button[13]["value"] ~= math.max(Button[13]["value"] - 1,0) then
+			Button[13]["value"] = math.max(Button[13]["value"] - 1,0)
+			Spring.SendCommands("water " .. tonumber(Button[13]["value"]))
 		end
 		InitButtons()
 	elseif cmd == "waterNext" then	
-		if Button[12]["value"] ~= math.min(Button[12]["value"] + 1,4) then
-			Button[12]["value"] = math.min(Button[12]["value"] + 1,4)
-			Spring.SendCommands("water " .. tonumber(Button[12]["value"]))
+		if Button[13]["value"] ~= math.min(Button[13]["value"] + 1,4) then
+			Button[13]["value"] = math.min(Button[13]["value"] + 1,4)
+			Spring.SendCommands("water " .. tonumber(Button[13]["value"]))
 		end
 		InitButtons()
 	elseif cmd == "XTA_EngineGraphFirst" then
-		if Button[13]["click"] then
+		if Button[14]["click"] then
 			Spring.SetConfigInt("XTA_EngineGraphFirst",0)
 		else
 			Spring.SetConfigInt("XTA_EngineGraphFirst",1)
 		end
 	elseif cmd == "disableMoveFailed" then
-		if Button[14]["click"] then
+		if Button[15]["click"] then
 			Spring.SetConfigInt("XTA_DisableMoveFailedSound",0)
 		else
 			Spring.SetConfigInt("XTA_DisableMoveFailedSound",1)
 		end
 		
 	elseif cmd == "disableMoveFailedText" then
-		if Button[15]["click"] then
+		if Button[16]["click"] then
 			Spring.SetConfigInt("XTA_DisableMoveFailedText",0)
 		else
 			Spring.SetConfigInt("XTA_DisableMoveFailedText",1)
 		end	
 	elseif cmd == "fullscreen" then
-		if Button[16]["click"] then
+		if Button[17]["click"] then
 			Spring.SendCommands("fullscreen 0")
 		else
 			Spring.SendCommands("fullscreen 1")
 		end
 	elseif cmd == "blinking" then
-		if Button[17]["click"] then
+		if Button[18]["click"] then
 			Spring.SendCommands("teamhighlight 0")
 		else
 			Spring.SendCommands("teamhighlight 1")
 		end
 	elseif cmd == "grass" then
-		if Button[18]["click"] then
+		if Button[19]["click"] then
 			Spring.SetConfigInt("GrassDetail",0)
 		else
 			Spring.SetConfigInt("GrassDetail",1)
 		end
 	elseif cmd == "help" then
-		if Button[19]["click"] then
+		if Button[20]["click"] then
 			Spring.SetConfigInt("XTA_CommandHelpText",0)
 		else
 			Spring.SetConfigInt("XTA_CommandHelpText",1)
 		end
 	elseif cmd == "noob-buttons" then
-		if Button[20]["click"] then
+		if Button[21]["click"] then
 			Spring.SetConfigInt("XTA_ShowNoobButtons",0)
 		else
 			Spring.SetConfigInt("XTA_ShowNoobButtons",1)

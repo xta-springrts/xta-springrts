@@ -33,9 +33,11 @@ if gadgetHandler:IsSyncedCode() then
 	-------------------
 	-- SYNCED PART --
 	-------------------
-	local ENDTIME			= 8 -- frames
+	local ENDTIME			= 16 -- frames
 	local gameOverFrame
 	local transferStarted	= false
+	
+	local beep = "sounds/butmain4.wav"
 	
 	function gadget:Initialize()
 		Spring.SetGameRulesParam("ShowEnd",0)
@@ -81,7 +83,7 @@ if gadgetHandler:IsSyncedCode() then
 					Spring.GiveOrderToUnit(unitID, CMD_STOP,{},{})
 				end
 			end
-			Spring.PlaySoundFile("sounds/beep1.wav",3.0,0,0,0,0,0,0,'userinterface')
+			Spring.PlaySoundFile(beep,3.0)
 			Spring.SetGameRulesParam("ShowEnd",1)
 			gadgetHandler:RemoveCallIn("GameFrame")
 			gadgetHandler:RemoveGadget(self)
@@ -101,6 +103,8 @@ if gadgetHandler:IsSyncedCode() then
 		
 		if not transferStarted and frame%16 == 0 and GG.gamewinners then
 			transferStarted = true
+			
+			
 			for _, winner in pairs (GG.gamewinners) do
 				SendToUnsynced("gameWinnners",winner, #GG.gamewinners)
 			end
@@ -118,6 +122,7 @@ else
 	local myFontHuge 	 				= gl.LoadFont("FreeSansBold.otf",72, 1.9, 40)
 	local myFont						= gl.LoadFont("FreeSansBold.otf",12, 1.9, 40)
 	local myFontBig						= gl.LoadFont("FreeSansBold.otf",14, 1.9, 40)
+	local bgcorner						= "luaui/images/bgcorner.png"
 	local vsx, vsy 						= gl.GetViewSizes()
 	local myTeamID 						= Spring.GetMyTeamID()
 	local myAllyID 						= select(6, Spring.GetTeamInfo(myTeamID))
@@ -143,7 +148,13 @@ else
 	local showGraph 					= false
 	local hideAllStats					= false
 	local lastSelection					= nil
-		
+	local musicfile 					= "sounds/music/desolation.ogg"
+	local musicEnabled 					= tonumber(Spring.GetConfigInt("snd_endmusic",0) or 0) == 1
+	local musicStarted 					= false
+	local gameOverFrame 				
+	local cBack							= {0, 0, 0, 0.3}
+	local counter 						= 0
+	
 	local function SetUpButtons()
 		Button["xta"]		= {}
 		Button["engine"]	= {}
@@ -203,6 +214,76 @@ else
 							  and y <= TRcornerY
 	end
 	
+	local function DrawRectRound(px,py,sx,sy,cs)
+	gl.TexCoord(0.8,0.8)
+	gl.Vertex(px+cs, py, 0)
+	gl.Vertex(sx-cs, py, 0)
+	gl.Vertex(sx-cs, sy, 0)
+	gl.Vertex(px+cs, sy, 0)
+	
+	gl.Vertex(px, py+cs, 0)
+	gl.Vertex(px+cs, py+cs, 0)
+	gl.Vertex(px+cs, sy-cs, 0)
+	gl.Vertex(px, sy-cs, 0)
+	
+	gl.Vertex(sx, py+cs, 0)
+	gl.Vertex(sx-cs, py+cs, 0)
+	gl.Vertex(sx-cs, sy-cs, 0)
+	gl.Vertex(sx, sy-cs, 0)
+	
+	local offset = 0.07		-- texture offset, because else gaps could show
+	local o = offset
+	-- top left
+	if py <= 0 or px <= 0 then o = 0.5 else o = offset end
+	gl.TexCoord(o,o)
+	gl.Vertex(px, py, 0)
+	gl.TexCoord(o,1-o)
+	gl.Vertex(px+cs, py, 0)
+	gl.TexCoord(1-o,1-o)
+	gl.Vertex(px+cs, py+cs, 0)
+	gl.TexCoord(1-o,o)
+	gl.Vertex(px, py+cs, 0)
+	-- top right
+	if py <= 0 or sx >= vsx then o = 0.5 else o = offset end
+	gl.TexCoord(o,o)
+	gl.Vertex(sx, py, 0)
+	gl.TexCoord(o,1-o)
+	gl.Vertex(sx-cs, py, 0)
+	gl.TexCoord(1-o,1-o)
+	gl.Vertex(sx-cs, py+cs, 0)
+	gl.TexCoord(1-o,o)
+	gl.Vertex(sx, py+cs, 0)
+	-- bottom left
+	if sy >= vsy or px <= 0 then o = 0.5 else o = offset end
+	gl.TexCoord(o,o)
+	gl.Vertex(px, sy, 0)
+	gl.TexCoord(o,1-o)
+	gl.Vertex(px+cs, sy, 0)
+	gl.TexCoord(1-o,1-o)
+	gl.Vertex(px+cs, sy-cs, 0)
+	gl.TexCoord(1-o,o)
+	gl.Vertex(px, sy-cs, 0)
+	-- bottom right
+	if sy >= vsy or sx >= vsx then o = 0.5 else o = offset end
+	gl.TexCoord(o,o)
+	gl.Vertex(sx, sy, 0)
+	gl.TexCoord(o,1-o)
+	gl.Vertex(sx-cs, sy, 0)
+	gl.TexCoord(1-o,1-o)
+	gl.Vertex(sx-cs, sy-cs, 0)
+	gl.TexCoord(1-o,o)
+	gl.Vertex(sx, sy-cs, 0)
+end
+	
+	function RectRound(px,py,sx,sy,cs)
+		local px,py,sx,sy,cs = math.floor(px),math.floor(py),math.ceil(sx),math.ceil(sy),math.floor(cs)
+		
+		gl.Texture(bgcorner)
+		gl.BeginEnd(GL.QUADS, DrawRectRound, px,py,sx,sy,cs)
+		gl.Texture(false)
+	end
+
+	
 	function gadget:Initialize()
 		gadgetHandler:AddSyncAction("gameWinnners", GetGameWinners)
 		gadgetHandler:RemoveCallIn("GameFrame")
@@ -259,13 +340,17 @@ else
 		end
 	end
 	
-	function gadget:Update()
+	function gadget:Update(dt)
 		if not gameStarted then 
 			gameStarted = Spring.GetGameRulesParam("GameStarted") == 1
 			if gameStarted then gadgetHandler:RemoveCallIn("Update") end
 		end
 		
 		if Spring.IsGameOver() and gameStarted then
+			local frame = Spring.GetGameFrame()
+			counter = counter + 1
+			gameOverFrame = gameOverFrame or frame
+			Echo("End:",frame,gameOverFrame,counter)
 			showGraph = Spring.GetGameRulesParam("ShowEnd") == 1 and not hideAllStats
 		end
 		
@@ -282,6 +367,14 @@ else
 			if Spring.IsGameOver() and gameStarted then
 				-- show stats buttons
 				-- unhide end graphs
+				-- play music
+				if musicEnabled then
+					if not musicStarted then
+						Spring.PlaySoundFile(musicfile,1.0)
+						musicStarted = true
+					end
+				end
+				
 				if showGraph and (not GG.showXTAStats) and hideEndGraphs then
 					hideEndGraphs = false
 					Spring.SendCommands('endgraph 1')
@@ -396,15 +489,15 @@ else
 			elseif not showGraph and Spring.IsGameOver() and #winnerList == 0 then
 			-- exit window and button
 				-- window
-				gl.Color(0.3, 0.3, 0.4, 0.4) -- grey
-				gl.Rect(Window["exit"]["x0"],Window["exit"]["y0"],Window["exit"]["x1"],Window["exit"]["y1"])
+				gl.Color(CBack) -- grey
+				RectRound(Window["exit"]["x0"],Window["exit"]["y0"],Window["exit"]["x1"],Window["exit"]["y1"],6)
 				--exit button 
 				if Button["exit"]["mouse"] then
 					gl.Color(0.8, 0.8, 0.2, 0.5) -- yellow on mouseover
 				else
 					gl.Color(0.3, 0.3, 0.4, 0.55) -- grey
 				end
-				gl.Rect(Button["exit"]["x0"],Button["exit"]["y0"],Button["exit"]["x1"],Button["exit"]["y1"])
+				RectRound(Button["exit"]["x0"],Button["exit"]["y0"],Button["exit"]["x1"],Button["exit"]["y1"],6)
 				
 				--force button 
 				if Button["force"]["mouse"] then
@@ -412,7 +505,7 @@ else
 				else
 					gl.Color(0.3, 0.3, 0.4, 0.55) -- grey
 				end
-				gl.Rect(Button["force"]["x0"],Button["force"]["y0"],Button["force"]["x1"],Button["force"]["y1"])
+				RectRound(Button["force"]["x0"],Button["force"]["y0"],Button["force"]["x1"],Button["force"]["y1"],6)
 				
 				--text
 				myFontBig:Begin()

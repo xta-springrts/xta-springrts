@@ -16,6 +16,7 @@ end
 
 local loadscreens = VFS.DirList("bitmaps/loadpictures/")
 local backgroundTexture = loadscreens[ math.random(#loadscreens) ]
+local xtalogo = ""
 local aspectRatio
 
 
