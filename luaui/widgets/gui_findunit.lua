@@ -24,6 +24,7 @@ local mapX 							= Game.mapX * 512
 local mapY 							= Game.mapY * 512
 local optCheckBoxOn			        = "luaui/images/findunit/chkboxon.png"
 local optCheckBoxOff			    = "luaui/images/findunit/chkboxoff.png"
+local bgcorner								= "luaui/images/bgcorner.png"
 
 local myPlayerID					= Spring.GetMyPlayerID()
 local myTeamID						= select(4,Spring.GetPlayerInfo(myPlayerID))
@@ -46,6 +47,26 @@ local TeamNames						= {}
 local GL_LINE 						= GL.LINE
 local GL_FRONT_AND_BACK 			= GL.FRONT_AND_BACK
 local GL_FILL 						= GL.FILL
+
+--------------------------------------------------------------------------------
+-- Colors
+--------------------------------------------------------------------------------
+local cWhite				= {1, 1, 1, 1}
+local cGrey					= {0.6, 0.6, 0.6, 0.4}
+local cRank					= {0.4,0.4,0.4,1}
+local cLight				= {0.8, 0.8, 0.2, 0.6}
+local cUnfocus				= {0.8, 0.8, 0.8, 0.2}
+local cDark					= {0, 0, 0, 0.4}
+local cBlack				= {0, 0, 0, 1}
+local cBack					= {0.6, 0.6, 0.6, 0.3}
+local cAlpha				= {1, 1, 1, 0.5}
+local cCount				= {0.8, 0.8, 1, 1}
+local cBorder				= {0.1, 0.1, 0.1, 0.5}
+local cButton				= {0.2,0.2,0.2,0.4}
+local cTitle				= {0.8, 0.8, 1.0, 1}
+local cText					= {0.2, 0.2, 0.2, 1}
+local cTextBox				= {0.2,0.2,0.2,0.5}
+local cCaret				= {1,1,0.6,0.9}
 
 local ASCIIvalues = {
 	[0] = {0x00,'NUL'},
@@ -220,11 +241,83 @@ local function firstToUpper(str)
 	return ( str:gsub("%a", string.upper, 1))
 end
 
+local function DrawRectRound(px,py,sx,sy,cs)
+	gl.TexCoord(0.8,0.8)
+	gl.Vertex(px+cs, py, 0)
+	gl.Vertex(sx-cs, py, 0)
+	gl.Vertex(sx-cs, sy, 0)
+	gl.Vertex(px+cs, sy, 0)
+	
+	gl.Vertex(px, py+cs, 0)
+	gl.Vertex(px+cs, py+cs, 0)
+	gl.Vertex(px+cs, sy-cs, 0)
+	gl.Vertex(px, sy-cs, 0)
+	
+	gl.Vertex(sx, py+cs, 0)
+	gl.Vertex(sx-cs, py+cs, 0)
+	gl.Vertex(sx-cs, sy-cs, 0)
+	gl.Vertex(sx, sy-cs, 0)
+	
+	local offset = 0.07		-- texture offset, because else gaps could show
+	local o = offset
+	-- top left
+	if py <= 0 or px <= 0 then o = 0.5 else o = offset end
+	gl.TexCoord(o,o)
+	gl.Vertex(px, py, 0)
+	gl.TexCoord(o,1-o)
+	gl.Vertex(px+cs, py, 0)
+	gl.TexCoord(1-o,1-o)
+	gl.Vertex(px+cs, py+cs, 0)
+	gl.TexCoord(1-o,o)
+	gl.Vertex(px, py+cs, 0)
+	-- top right
+	if py <= 0 or sx >= vsx then o = 0.5 else o = offset end
+	gl.TexCoord(o,o)
+	gl.Vertex(sx, py, 0)
+	gl.TexCoord(o,1-o)
+	gl.Vertex(sx-cs, py, 0)
+	gl.TexCoord(1-o,1-o)
+	gl.Vertex(sx-cs, py+cs, 0)
+	gl.TexCoord(1-o,o)
+	gl.Vertex(sx, py+cs, 0)
+	-- bottom left
+	if sy >= vsy or px <= 0 then o = 0.5 else o = offset end
+	gl.TexCoord(o,o)
+	gl.Vertex(px, sy, 0)
+	gl.TexCoord(o,1-o)
+	gl.Vertex(px+cs, sy, 0)
+	gl.TexCoord(1-o,1-o)
+	gl.Vertex(px+cs, sy-cs, 0)
+	gl.TexCoord(1-o,o)
+	gl.Vertex(px, sy-cs, 0)
+	-- bottom right
+	if sy >= vsy or sx >= vsx then o = 0.5 else o = offset end
+	gl.TexCoord(o,o)
+	gl.Vertex(sx, sy, 0)
+	gl.TexCoord(o,1-o)
+	gl.Vertex(sx-cs, sy, 0)
+	gl.TexCoord(1-o,1-o)
+	gl.Vertex(sx-cs, sy-cs, 0)
+	gl.TexCoord(1-o,o)
+	gl.Vertex(sx, sy-cs, 0)
+end
+
+function RectRound(px,py,sx,sy,cs)
+	cs = cs or 6
+	local px,py,sx,sy,cs = math.floor(px),math.floor(py),math.ceil(sx),math.ceil(sy),math.floor(cs)
+	
+	gl.Texture(bgcorner)
+	gl.BeginEnd(GL.QUADS, DrawRectRound, px,py,sx,sy,cs)
+	gl.Texture(false)
+end
+
+
 local function drawBorder(x0, y0, x1, y1, width)
-	glRect(x0, y0, x1, y0 + width)
-	glRect(x0, y1, x1, y1 - width)
-	glRect(x0, y0, x0 + width, y1)
-	glRect(x1, y0, x1 - width, y1)
+	return RectRound(x0-1, y0-1, x1+1, y1+1, 6)
+	--glRect(x0, y0, x1, y0 + width)
+	--glRect(x0, y1, x1, y1 - width)
+	--glRect(x0, y0, x0 + width, y1)
+	--glRect(x1, y0, x1 - width, y1)
 end
 
 local function round(num, idp)
@@ -303,18 +396,30 @@ end
 local function DrawWindow()
 	
 	--back panel
-	gl.Color(0, 0, 0, 0.2)
-	gl.Rect(posx,posy,posx+sizeX,posy+sizeY)
-		
+	gl.Color(cDark)
+	drawBorder(posx,posy,posx+sizeX,posy+sizeY)
+	gl.Color(cBack)
+	RectRound(posx,posy,posx+sizeX,posy+sizeY)
+			
 	local x0 = posx + MARGIN
 	local y0 = posy + sizeY - 20
 	local x1 = posx + sizeX - MARGIN
 	local y1 = posy
 	
 	-- Buttons
+		--borders
+	glColor(cBorder)
+	drawBorder(Button["close"]["x0"],Button["close"]["y0"], Button["close"]["x1"], Button["close"]["y1"],1)
+	drawBorder(Button["clear"]["x0"],Button["clear"]["y0"], Button["clear"]["x1"], Button["clear"]["y1"],1)
+	drawBorder(Button["textbox"]["x0"],Button["textbox"]["y0"], Button["textbox"]["x1"], Button["textbox"]["y1"],1)
+	drawBorder(Button["check"]["x0"],Button["check"]["y0"],Button["check"]["x1"],Button["check"]["y1"])
+	
+	glColor(Button.select.enabled and cBorder or cUnfocus)
+	drawBorder(Button["select"]["x0"],Button["select"]["y0"], Button["select"]["x1"], Button["select"]["y1"],1)
+	
 	
 	--checkbox
-	gl.Color(1, 1, 1, 1)
+	gl.Color(cTitle)
 	if Button["check"]["checked"] then
 		gl.Texture(optCheckBoxOn)
 	else
@@ -323,40 +428,31 @@ local function DrawWindow()
 	gl.TexRect(Button["check"]["x0"],Button["check"]["y0"],Button["check"]["x1"],Button["check"]["y1"])
 	gl.Texture(false)
 	
-	-- Close
-	glColor(0, 0, 0, 0.4)
-	glRect(Button["close"]["x0"],Button["close"]["y0"], Button["close"]["x1"], Button["close"]["y1"])
-	glRect(Button["clear"]["x0"],Button["clear"]["y0"], Button["clear"]["x1"], Button["clear"]["y1"])
+	-- Close, clear and select
+	glColor(cButton)
+	RectRound(Button["close"]["x0"],Button["close"]["y0"], Button["close"]["x1"], Button["close"]["y1"])
+	RectRound(Button["clear"]["x0"],Button["clear"]["y0"], Button["clear"]["x1"], Button["clear"]["y1"])
 	if Button.select.enabled then
-		glColor(0, 0, 0, 0.4)
+		glColor(cButton)
 	else
-		glColor(0.5, 0.5, 0.5, 0.4)
+		glColor(cGrey)
 	end
-	glRect(Button["select"]["x0"],Button["select"]["y0"], Button["select"]["x1"], Button["select"]["y1"])
-	glColor(0.8, 0.8, 0.8, 0.5)
-	glRect(Button["textbox"]["x0"],Button["textbox"]["y0"], Button["textbox"]["x1"], Button["textbox"]["y1"])
-	glColor(0, 0, 0, 1)
-	drawBorder(Button["close"]["x0"],Button["close"]["y0"], Button["close"]["x1"], Button["close"]["y1"],1)
-	drawBorder(Button["clear"]["x0"],Button["clear"]["y0"], Button["clear"]["x1"], Button["clear"]["y1"],1)
-	if Button.select.enabled then
-		drawBorder(Button["select"]["x0"],Button["select"]["y0"], Button["select"]["x1"], Button["select"]["y1"],1)
-	end
-	glColor(0.3, 0.3, 0.3, 0.8)
-	drawBorder(Button["textbox"]["x0"],Button["textbox"]["y0"], Button["textbox"]["x1"], Button["textbox"]["y1"],1)
-	if not Button.select.enabled then
-		drawBorder(Button["select"]["x0"],Button["select"]["y0"], Button["select"]["x1"], Button["select"]["y1"],1)
-	end
-	glColor(0.8, 0.8, 0.2, 0.5)
+	RectRound(Button["select"]["x0"],Button["select"]["y0"], Button["select"]["x1"], Button["select"]["y1"])
+	
+	glColor(cTextBox)
+	RectRound(Button["textbox"]["x0"],Button["textbox"]["y0"], Button["textbox"]["x1"], Button["textbox"]["y1"])
+		
+	glColor(cLight)
 	if Button["close"]["mouse"] then
-		glRect(Button["close"]["x0"],Button["close"]["y0"], Button["close"]["x1"], Button["close"]["y1"])
+		RectRound(Button["close"]["x0"],Button["close"]["y0"], Button["close"]["x1"], Button["close"]["y1"])
 	elseif Button["clear"]["mouse"] then
-		glRect(Button["clear"]["x0"],Button["clear"]["y0"], Button["clear"]["x1"], Button["clear"]["y1"])
+		RectRound(Button["clear"]["x0"],Button["clear"]["y0"], Button["clear"]["x1"], Button["clear"]["y1"])
 	elseif Button["select"]["mouse"] and Button["select"]["enabled"] then
-		glRect(Button["select"]["x0"],Button["select"]["y0"], Button["select"]["x1"], Button["select"]["y1"])
+		RectRound(Button["select"]["x0"],Button["select"]["y0"], Button["select"]["x1"], Button["select"]["y1"])
 	elseif Button["check"]["mouse"] then
-		glRect(Button["check"]["x0"],Button["check"]["y0"], Button["check"]["x1"], Button["check"]["y1"])
+		RectRound(Button["check"]["x0"],Button["check"]["y0"], Button["check"]["x1"], Button["check"]["y1"])
 	elseif Button["textbox"]["mouse"] then
-		--glRect(Button["textbox"]["x0"],Button["textbox"]["y0"], Button["textbox"]["x1"], Button["textbox"]["y1"])
+		--RectRound(Button["textbox"]["x0"],Button["textbox"]["y0"], Button["textbox"]["x1"], Button["textbox"]["y1"])
 	end
 	
 	--caret
@@ -372,11 +468,11 @@ local function DrawWindow()
 	myFont:Print("Select all",(Button["select"]["x0"]+Button["select"]["x1"])/2,Button["select"]["y0"]+6,14,'bcs')
 	myFont:Print(DarkGreenStr .. firstToUpper(Button["textbox"]["text"]),Button["textbox"]["x0"]+MARGIN,Button["textbox"]["y0"]+5,textSize,'bs')
 	
-	myFont:SetTextColor({0.1, 0.1, 0.1, 1})
+	myFont:SetTextColor(cCaret)
 	if t%1 < 0.66 then
 		myFont:Print("|",textpos,Button["textbox"]["y0"]+4,textSize,'b')
 	end
-	myFont:SetTextColor({0.8, 0.8, 0.8, 1})
+	myFont:SetTextColor(cText)
 	if Button.textbox.matchcount and Button.textbox.matchcount > 0 then
 		local count = 0
 		local displayed = 0
@@ -513,7 +609,7 @@ function widget:DrawInMiniMap(sx, sy)
 					else
 						gl.Color(0.5, 0.5, 1, 1)
 					end
-					gl.Rect(x0-2,y0-2,x0+2,y0+2)
+					RectRound(x0-2,y0-2,x0+2,y0+2)
 					gl.Color(1, 1, 1, 1)
 				end
 			end
