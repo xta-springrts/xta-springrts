@@ -24,8 +24,10 @@
 --- Do not remove
 --- Changelog processing starts here
 
-XTA 9.75 (Git 952)
+XTA 9.75 (Git 971)
 |jls,nor
+18/12/2015
+
 
 New:
  * New Faction: The Lost Legacy by Noruas. Available as modoption with choose commander widget.
@@ -87,6 +89,10 @@ Enhancements:
  * Add red minimap widget.
  * Add new widget selector and red buildorder menu (default disabled)
  * Add changelog info widget. Shows this log in-game.
+ * Replace widget selector with an impwroved one
+ * Replaced sharp edges on many widget windows with rounded ones.
+ * New commander name tags widget that has option to scale names with zoom-level.
+ 
 
 Fixes:
  * Decrease volume of Core Mobile artillery (Pillager) wreck to match smaller new model
@@ -101,6 +107,8 @@ Fixes:
  * Don't show geo marker for already built geos.
  * Set flight time = 2.5 for some missiles (4 of them, samson, jethro etc)
  * Fix gadget error (and one similar in a widget) from bad game version check. This is the only problem when running older version of xta with spring 100 or newer.
+ * Fix stuck on 'DRAW'-screen if server shuts down too soon
+
 
 
 XTA 9.746 (Git 948, Svn 971)
