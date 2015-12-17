@@ -117,7 +117,7 @@ local buttons = { --see MouseRelease for which functions are called by which but
     [2] = "Reload previously active widgets",
 	[3] = "Unload ALL Widgets",
 	[4] = "Unload ALL user widgets",
-	[5] = "Turn off these widgets (in view/selection)"
+	[5] = "Turn off these widgets"
 }
 local titleFontSize = 16
 local buttonFontSize = 14
@@ -547,20 +547,21 @@ function widget:KeyPress(key, mods, isRepeat)
 	if key < 127 then
 		local str = ASCIIvalues[key][2]
 		
-		if key == 8 then --backspace
+		if key == KEYSYMS.BACKSPACE then
 			local text = Button["textbox"]["text"]
 			local len = text:len()
+			
 			if len > 0 then
 				Button["textbox"]["text"] = text:sub(1,len-1)
 				CheckMatches()
 				return true	
 			end
 		elseif not isRepeat then
-			if key == 32 then --space
+			if key == KEYSYMS.SPACE then --space
 				Button["textbox"]["text"] = Button["textbox"]["text"] .. " "
 				CheckMatches()
 				return true
-			elseif key == 45 and mods.shift then
+			elseif key == KEYSYMS.MINUS and mods.shift then
 				Button["textbox"]["text"] = Button["textbox"]["text"] .. "_"
 				CheckMatches()
 				return true
@@ -579,6 +580,12 @@ end
 
 local activeGuishader = false
 local scrollbarOffset = -15
+
+function widget:KeyRelease(key)
+	if key == KEYSYMS.BACKSPACE then
+		return show
+	end
+end
 
 
 function widget:DrawScreen()
