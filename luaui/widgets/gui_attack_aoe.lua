@@ -86,6 +86,9 @@ local floor                  = math.floor
 local max                    = math.max
 local min                    = math.min
 local sqrt                   = math.sqrt
+local enableBallistic		 = false
+local Echo					 = Spring.Echo
+
 
 --------------------------------------------------------------------------------
 --utility functions
@@ -450,15 +453,17 @@ local function DrawBallisticScatter(scatter, v, fx, fy, fz, tx, ty, tz, trajecto
   local vertices = {}
   
   --trace impact points
-  for i = -numScatterPoints, numScatterPoints do
-    local currScatter = i * scatterDiv
-    local currScatterCos = sqrt(1 - currScatter * currScatter)
-    local rMult = currScatterCos - by * currScatter / br
-    local bx_c = bx * rMult
-    local by_c = by * currScatterCos + br * currScatter
-    local bz_c = bz * rMult
-    
-    vertices[i+numScatterPoints+1] = GetBallisticImpactPoint(v, fx, fy, fz, bx_c, by_c, bz_c)
+  if enableBallistic then
+	  for i = -numScatterPoints, numScatterPoints do
+		local currScatter = i * scatterDiv
+		local currScatterCos = sqrt(1 - currScatter * currScatter)
+		local rMult = currScatterCos - by * currScatter / br
+		local bx_c = bx * rMult
+		local by_c = by * currScatterCos + br * currScatter
+		local bz_c = bz * rMult
+		
+		vertices[i+numScatterPoints+1] = GetBallisticImpactPoint(v, fx, fy, fz, bx_c, by_c, bz_c)
+	  end
   end
   
   glLineWidth(scatterLineWidthMult / mouseDistance)
@@ -672,6 +677,23 @@ end
 function widget:Update(dt)
   secondPart = secondPart + dt
   secondPart = secondPart - floor(secondPart)
+end
+
+
+function widget:TextCommand(command)
+	if command:find("aoe", 1) == nil then
+		return
+	end
+	
+	if command:find("-ballistic", 4) then
+		if command:find("1", 13) or command:find("on", 13) or command:find("enable", 13) then
+			enableBallistic = true
+			Echo("Attack AoE: trace ballistic impact points")
+		else
+			enableBallistic = false
+			Echo("Attack AoE: disable ballistic impact points tracing")
+		end
+	end
 end
 
 -- remove on game over
