@@ -24,7 +24,17 @@
 --- Do not remove
 --- Changelog processing starts here
 
-XTA 9.75 (Git 971)
+XTA 9.751 (Git 974)
+|jls
+
+Fixes
+
+* Add command reference to ingame-ui and standardise some widget commands
+* Make Attack-AoE widget ballistic tracing optional and default off (fps costly)
+
+
+
+XTA 9.75 (Git 970)
 |jls,nor
 18/12/2015
 
@@ -65,7 +75,7 @@ Changes:
  * Triton, Crock, Garpike and Crabe cannot anymore climb steep cliffs on land, only in water.
 
 Enhancements:
- * Add 'o' as shortcut to rotate buildings (is in oldchatkeys widget)
+ * Add 'o' as shortcut to rotate buildings (is in cmd_customkeys widget)
  * Add small splash when aerial torpedo enters water surface
  * New commander sounds and fixes to old ones.
  * Add originally aired date to show when starting to view replay.
@@ -78,16 +88,15 @@ Enhancements:
  * Add widget that draws different anti range colour depending on stockpile
  * 'Raven'-award for successful comnap
  * Show mexes that will be upgraded with a light blue box around when holding shift
- * Add a command to interactively update draw and rotate keys with the command /setkeys. Also as option in menu. Renamed cmd_oldchatkeys => cmd_customkeys
+ * Add a command to interactively update draw and rotate keys with the command /setkeys. Also as option in menu.
  * Update lups from anno 2008 to anno 2014
  * Add back fleabowl stuff, since it's now working. Some desyncs were reported but they have not been reproduced for a while.
  * Add desync warning widget.
  * Add unit search tool widget and bind it to ctrl-F
  * Add red console. Update red framework and drawing
- * Add a better gui to the distributed guard commands (area guard with alt/ctrl pressed). Now shows a little guard symbol above unit when it is selected, and also shows who guards who (when pressing shift).
+ * Add a better gui to the distributed guard commands (area guard with alt/ctrl pressed)
  * Add the night widget and ctrlpanel improved gui widgets.
- * Add red minimap widget.
- * Add new widget selector and red buildorder menu (default disabled)
+ * Add red minimap widget and red build/order menu widget
  * Add changelog info widget. Shows this log in-game.
  * Replace widget selector with an impwroved one
  * Replaced sharp edges on many widget windows with rounded ones.
@@ -96,7 +105,6 @@ Enhancements:
 
 Fixes:
  * Decrease volume of Core Mobile artillery (Pillager) wreck to match smaller new model
- * Disable 'Offer draw' for spectators
  * Fix error spam in zombie mode when KOTH is not enabled
  * Fix incorrect position of Core Gaat gun wreck
  * Fix error in initial queue widget that sometimes changed faction when not requested
