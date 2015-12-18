@@ -9,6 +9,7 @@ local glUseShader          = gl.UseShader
 local glUniform            = gl.Uniform
 local glUniformArray       = gl.UniformArray
 local glGetUniformLocation = gl.GetUniformLocation
+local Echo				   = Spring.Echo
 
 
 
@@ -579,14 +580,24 @@ function widget:Shutdown()
 end
 
 function widget:TextCommand(command)
-	if (string.find(command, "bloom", 1) == nil) then
+	if command:find("bloom", 1) == nil then
 		return
 	end
 
-	if (string.find(command, "+blurpasses", 6) == 1) then configParams.blurShaderPasses = math.min(10, configParams.blurShaderPasses + 1) end
-	if (string.find(command, "-blurpasses", 6) == 1) then configParams.blurShaderPasses = math.max( 0, configParams.blurShaderPasses - 1) end
+	if command:find("blurpasses", 7) then 
+		if command:find("+", 17) then
+			Echo("Bloomshader: increase passes to " .. (math.min(10, configParams.blurShaderPasses + 1) or "?"))
+			configParams.blurShaderPasses = math.min(10, configParams.blurShaderPasses + 1)
+		elseif command:find("-", 17) then
+			Echo("Bloomshader: decrease passes to " .. (math.max( 0, configParams.blurShaderPasses - 1) or "?"))
+			configParams.blurShaderPasses = math.max( 0, configParams.blurShaderPasses - 1)
+		end
+	end
 
-	if (string.find(command, "+drawdebug", 6) == 1) then configParams.debugDrawBloomMask =  true end
-	if (string.find(command, "-drawdebug", 6) == 1) then configParams.debugDrawBloomMask = false end
+	if command:find("drawdebug", 6)  then 
+		configParams.debugDrawBloomMask =  not configParams.debugDrawBloomMask
+		Echo("Bloomshader: debug mask is " .. (configParams.debugDrawBloomMask and "enabled" or "disabled"))
+	end
+	
 end
 

@@ -254,7 +254,7 @@ function widget:SetConfigData(data)
 end
 
 function widget:TextCommand(command)
-    if (string.find(command, "antiranges_glow") == 1  and  string.len(command) == 15) then 
+    if (string.find(command, "antiranges-glow") == 1  and  string.len(command) == 15) then 
 		showLineGlow = not showLineGlow
 		if showLineGlow then
 			Spring.Echo("Anti Ranges:  Glow on")
@@ -262,7 +262,7 @@ function widget:TextCommand(command)
 			Spring.Echo("Anti Ranges:  Glow off")
 		end
 	end
-    if (string.find(command, "antiranges_fade") == 1  and  string.len(command) == 15) then 
+    if (string.find(command, "antiranges-fade") == 1  and  string.len(command) == 15) then 
 		fadeOnCloseup = not fadeOnCloseup
 		if fadeOnCloseup then
 			Spring.Echo("Anti Ranges:  Fade-out on closeup enabled")

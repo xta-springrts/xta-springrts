@@ -686,11 +686,10 @@ function widget:TextCommand(command)
 	end
 	
 	if command:find("-ballistic", 4) then
-		if command:find("1", 13) or command:find("on", 13) or command:find("enable", 13) then
-			enableBallistic = true
+		enableBallistic = not enableBallistic
+		if enableBallistic then
 			Echo("Attack AoE: trace ballistic impact points")
 		else
-			enableBallistic = false
 			Echo("Attack AoE: disable ballistic impact points tracing")
 		end
 	end

@@ -259,10 +259,13 @@ function widget:Shutdown()
 end
 
  function widget:TextCommand(command)
-	if command == 'musicoff' or command == 'disablemusic' then
-		disableMusic = true
-	elseif command == 'musicon' or command == 'enablemusic'then
-		disableMusic = false
+	if command == 'pausemusic' then
+		disableMusic = not disableMusic
+		if disableMusic then
+			Echo("Pause screen: music off")
+		else
+			Echo("Pause screen: music on")
+		end
 	end
 	WG.disablePauseMusic = disableMusic
  end

@@ -1091,12 +1091,16 @@ function widget:RecvLuaMsg(msg, playerID)
 	end
 end
 function widget:TextCommand(cmd)
-	if cmd:match("^hideonstart.0") or cmd:match("^hideonstart.off") then
-		showWhenStarting = true
-		Echo("Initial queue: do not hide menu when game is starting")
-	elseif cmd:match("^hideonstart") then
-		showWhenStarting = false
-		Echo("Initial queue: hide menu when game is starting")
+	
+	if cmd:find("iq-") then
+		if cmd:find("hide",4) then
+			showWhenStarting = not showWhenStarting
+			if showWhenStarting then
+				Echo("Initial queue: do not hide menu when game is starting")
+			else
+				Echo("Initial queue: hide menu when game is starting")
+			end
+		end
 	end
 	
 	if requireCommander then

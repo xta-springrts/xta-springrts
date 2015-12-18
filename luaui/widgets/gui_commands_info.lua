@@ -1,7 +1,7 @@
 
 function widget:GetInfo()
 return {
-	name    = "Changelog Info",
+	name    = "Commands info",
 	desc    = "Leftmouse: scroll down,  Rightmouse: scroll up,  ctrl/shift/alt combi: speedup)",
 	author  = "Floris",
 	date    = "August 2015",
@@ -11,16 +11,17 @@ return {
 }
 end
 
---local show = true
 include("keysym.h.lua")
 
-local loadedFontSize = 16
-local myFont = gl.LoadFont(LUAUI_DIRNAME .. "fonts/ebrima.ttf",loadedFontSize, 16,2)
+--local show = true
 
-local bgcorner = ":n:"..LUAUI_DIRNAME.."images/bgcorner.png"
-local closeButtonTex = ":n:"..LUAUI_DIRNAME.."images/close.dds"
-local Echo	= Spring.Echo
-local changelogFile = VFS.LoadFile("changelog.nfo")
+local loadedFontSize = 32
+local font = gl.LoadFont("luaui/fonts/ebrima.ttf", loadedFontSize, 16,2)
+
+local bgcorner = "luaui/images/bgcorner.png"
+local closeButtonTex = "luaui/images/close.dds"
+
+local changelogFile = VFS.LoadFile("commandlist.txt")
 
 local bgMargin = 6
 
@@ -68,7 +69,6 @@ local GL_LINE_STRIP = GL.LINE_STRIP
 local widgetScale = 1
 local vsx, vsy = Spring.GetViewGeometry()
 
-local versions = {}
 local changelogLines = {}
 local totalChangelogLines = 0
 
@@ -93,7 +93,7 @@ local textSize		= 0.75
 local textMargin	= 0.25
 local lineWidth		= 0.0625
 
-local posX = 0.1
+local posX = 0.05
 local posY = 0
 local showOnceMore = false		-- used because of GUI shader delay
 local buttonGL
@@ -174,7 +174,7 @@ function DrawButton()
 		{v = {1, 0, 0}},
 	}
 	glShape(GL_LINE_STRIP, vertices)
-    glText("Changelog", textMargin, textMargin, textSize, "no")
+    glText("Commands", textMargin, textMargin, textSize, "no")
 end
 
 
@@ -183,51 +183,6 @@ local versionOffsetY = 14
 local versionFontSize = 16
 
 local versionQuickLinks = {}
-function DrawSidebar(x,y,width,height)
-	local fontSize		= versionFontSize
-	local fontOffsetY	= versionOffsetY
-	local fontOffsetX	= versionOffsetX
-	
-	-- background
-	gl.Color(0.72,0.5,0.12,0.3)
-	RectRound(x,y-height,x+width,y,6)
-	
-	-- version links
-	versionQuickLinks = {}
-	if changelogFile then
-		myFont:Begin()
-		myFont:SetOutlineColor(0.25,0.2,0,0.3)
-		myFont:SetTextColor(1,0.8,0.1,1)
-		local lineKey = 1
-		local yOffset = 24
-		local j = 0
-		while j < 22 do	
-			if ((fontSize+fontOffsetY)*j)+4 > height-yOffset then
-				break;
-			end
-			if versions[lineKey] == nil then
-				break;
-			end
-			local line = changelogLines[versions[lineKey]] or "N/A"
-			
-			-- version button title
-			line = " " .. (string.match(line, '( %d*%d.?%d+)') or " ")
-			local textY = y-((fontSize+fontOffsetY)*j)-20
-			myFont:Print(line, x+9+fontOffsetX, textY, fontSize, "on")
-			
-			versionQuickLinks[j] = {
-				x,
-				textY-(versionFontSize*0.66),
-				x+70,
-				textY+(versionFontSize*1.21)
-			}
-			
-			j = j + 1
-			lineKey = lineKey + 1
-		end
-		myFont:End()
-	end
-end
 
 
 function DrawTextarea(x,y,width,height,scrollbar)
@@ -235,24 +190,19 @@ function DrawTextarea(x,y,width,height,scrollbar)
 	local scrollbarOffsetBottom 	= 12	-- note: wont add the offset to the top, only to bottom
 	local scrollbarMargin    		= 10
 	local scrollbarWidth     		= 8
-	local scrollbarPosWidth  		= 6
+	local scrollbarPosWidth  		= 4
 	local scrollbarPosMinHeight 	= 8
 	local scrollbarBackgroundColor	= {0,0,0,0.24	}
 	local scrollbarBarColor			= {1,1,1,0.08}
 	
-	local fontSizeTitle				= 20		-- is version number
-	local fontSizeHeading			= 16		
-	local fontSizeAuthors			= 14	
-	local fontSizeDate				= 14
-	local fontSizeLine				= 14
-	local ls						= 5
+	local fontSizeTitle				= 17		-- is version number
+	local fontSizeDate				= 13
+	local fontSizeLine				= 15
 	
 	local fontColorTitle			= {1,1,1,1}
-	local fontColorHeading			= {0.8,0.8,0.4,1}
-	local fontColorAuthors			= {0.8,0.4,0.4,1}
 	local fontColorDate				= {0.66,0.88,0.66,1}
 	local fontColorLine				= {0.8,0.77,0.74,1}
-	local fontColorLineBullet		= {0.9,0.6,0.2,1}
+	local fontColorCommand			= {0.9,0.6,0.2,1}
 	
 	local textRightOffset = scrollbar and scrollbarMargin+scrollbarWidth+scrollbarWidth or 0
 	local maxLines = math.floor((height-5)/fontSizeLine)
@@ -289,7 +239,7 @@ function DrawTextarea(x,y,width,height,scrollbar)
 	
 	-- draw textarea
 	if changelogFile then
-		myFont:Begin()
+		font:Begin()
 		local lineKey = startLine
 		local j = 1
 		while j < maxLines do	-- maxlines is not exact, just a failsafe
@@ -301,102 +251,36 @@ function DrawTextarea(x,y,width,height,scrollbar)
 			end
 			
 			local line = changelogLines[lineKey]
-			
-			if string.find(line, '^([0-3][0-9][/%.][0-1][0-9][/%.][0-9][0-9])') or string.find(line, '^([1-9][/%.][0-1][0-9][/%.][0-9][0-9])') or string.find(line, '^([0-3][0-9][/%.][0-1][0-9][/%.][0-9][0-9][0-9][0-9])') or string.find(line, '^([1-9][/%.][0-1][0-9][/%.][0-9][0-9][0-9][0-9])') then
-				-- date line
-				line = "  " .. line
-				myFont:SetTextColor(fontColorDate)
-				myFont:Print(line, x, y-fontSizeTitle*j, fontSizeDate, "n")
-			elseif string.find(line, '^(XTA[^(]+)') then
-				-- version line
-				local versionStrip = string.match(line, '^(XTA[^(]+)')
-				if versionStrip ~= nil then
-					line = " " .. versionStrip
- 				else
-					line = " " .. line
+			if string.find(line, '^/([a-zA-Z0-9]*)') then
+				local cmd = string.match(line, '^/([\+a-zA-Z0-9_-]*)')
+				local descr = string.sub(line, string.len(string.match(line, '^/[a-zA-Z0-9_-]*[ \t]*')))
+				descr, numLines = font:WrapText(descr, (width - 250 - textRightOffset)*(loadedFontSize/fontSizeLine))
+				if (fontSizeTitle)*(j+numLines-1) > height then 
+					break;
 				end
-				myFont:SetTextColor(fontColorTitle)
-				myFont:Print(line, x-9, y-fontSizeTitle*j, fontSizeTitle, "n")
-			elseif (string.find(line, ':%s$') or string.find(line, ':$')) and #line <36 then
-				-- heading line
-				myFont:SetTextColor(fontColorHeading)
-				y = y-9
-				myFont:Print(line, x, y-fontSizeTitle*j, fontSizeHeading, "n")
-			elseif string.find(line, '^|') then
-				-- authors line
 				
-				myFont:SetTextColor(fontColorAuthors)
-				line = "  " .. string.gsub(line,"|","by ")
-				line = string.gsub(line,'jls','Jools')
-				line = string.gsub(line,'klt','Kloot')
-				line = string.gsub(line,'dnw','DeadNightWarrior')
-				line = string.gsub(line,'rar','Raaar')
-				line = string.gsub(line,'nor','Noruas')
-				line = string.gsub(line,'kno','Knorke')
+				font:SetTextColor(fontColorCommand)
+				font:Print(cmd, x+20, y-fontSizeTitle*j, fontSizeLine, "n")
 				
-				
-				myFont:Print(line, x+screenWidth-150, y+fontSizeTitle-fontSizeTitle*j, fontSizeAuthors, "rn")
+				font:SetTextColor(fontColorLine)
+				font:Print(descr, x+230, y-fontSizeTitle*j, fontSizeLine, "n")
+				j = j + (numLines - 1)
 			else
-				myFont:SetTextColor(fontColorLine)
-				
-				if string.find(line, '^(%s+[%*%-%+%d]%)?%s+%w)') and #line > 5 then
-					-- bullet
-					--Echo("Bullet:",line)
-					if string.find(line, '^%s%*') then
-						-- bulletpointed line
-						local firstLetterPos = 3
-						y = y-6
-						
-						if string.find(line, '^( - )') or string.find(line, '^( + )') or string.find(line, '^( * )')then
-							firstLetterPos = 4
-						end
-						line = string.upper(string.sub(line, firstLetterPos, firstLetterPos))..string.sub(line, firstLetterPos+1)
-						
-						line, numLines = myFont:WrapText(line, (width - 40 - textRightOffset)*(loadedFontSize/fontSizeLine))
-						if (fontSizeTitle)*(j+numLines-1) > height then 
-							break;
-						end
-						myFont:Print("·", x+8, y-fontSizeTitle*j, fontSizeLine, "n")
-						myFont:Print(line, x+22, y-fontSizeTitle*j, fontSizeLine, "n")
-						
-					else
-						-- bullet level 2
-						
-						local firstLetterPos = 3
-						y = y-6
-						
-						if string.find(line, '^( - )') or string.find(line, '^( + )') or string.find(line, '^( * )')then
-							firstLetterPos = 4
-						elseif string.find(line, '^(%s%d[%)%.])') then
-							firstLetterPos = 5
-						end
-						--Echo("Bullet2:",line,firstLetterPos)
-						line = string.upper(string.sub(line, firstLetterPos, firstLetterPos))..string.sub(line, firstLetterPos+1)
-						line, numLines = myFont:WrapText(line, (width - 40 - textRightOffset)*(loadedFontSize/fontSizeLine))
-						if (fontSizeTitle)*(j+numLines-1) > height then 
-							break;
-						end
-						myFont:Print("-", x+22, y-fontSizeTitle*j, fontSizeLine, "n")
-						myFont:Print(line, x+32, y-fontSizeTitle*j, fontSizeLine, "n")
-										
-					end
-				else
-					-- line
-					y = y - 4
-					line = "  " .. line
-					line, numLines = myFont:WrapText(line, (width-200)*(loadedFontSize/fontSizeLine))
-					if (fontSizeTitle)*(j+numLines-1) > height then 
-						break;
-					end
-					myFont:Print(line, x, y-(fontSizeTitle)*j, fontSizeLine, "n")
+				-- line
+				font:SetTextColor(fontColorLine)
+				line = "  " .. line
+				line, numLines = font:WrapText(line, (width)*(loadedFontSize/fontSizeLine))
+				if (fontSizeTitle)*(j+numLines-1) > height then 
+					break;
 				end
+				font:Print(line, x, y-(fontSizeTitle)*j, fontSizeLine, "n")
 				j = j + (numLines - 1)
 			end
 
 			j = j + 1
 			lineKey = lineKey + 1
 		end
-		myFont:End()
+		font:End()
 	end
 end
 
@@ -420,22 +304,19 @@ function DrawWindow()
 	gl.Texture(false)
 	
 	-- title
-    local title = "Changelog"
+    local title = "Commmands"
 	local titleFontSize = 18
     gl.Color(0,0,0,0.8)
     titleRect = {x-bgMargin, y+bgMargin, x+(glGetTextWidth(title)*titleFontSize)+27-bgMargin, y+37}
 	RectRound(titleRect[1], titleRect[2], titleRect[3], titleRect[4], 8, 1,1,0,0)
-	myFont:Begin()
-	myFont:SetTextColor(1,1,1,1)
-	myFont:SetOutlineColor(0,0,0,0.4)
-	myFont:Print(title, x-bgMargin+(titleFontSize*0.75), y+bgMargin+8, titleFontSize, "on")
-	myFont:End()
-	
-	-- version links
-	DrawSidebar(x, y, 70, screenHeight)
+	font:Begin()
+	font:SetTextColor(1,1,1,1)
+	font:SetOutlineColor(0,0,0,0.4)
+	font:Print(title, x-bgMargin+(titleFontSize*0.75), y+bgMargin+8, titleFontSize, "on")
+	font:End()
 	
 	-- textarea
-	DrawTextarea(x+90, y-10, screenWidth-90, screenHeight-24, 1)
+	DrawTextarea(x, y-10, screenWidth, screenHeight-24, 1)
 end
 
 
@@ -449,7 +330,7 @@ function widget:DrawScreen()
     end
     
     glLineWidth(lineWidth)
-
+	
     glPushMatrix()
         glTranslate(posX*vsx, posY*vsy, 0)
         glScale(17*widgetScale, 17*widgetScale, 1)
@@ -478,54 +359,13 @@ function widget:DrawScreen()
 			local rectY1 = ((screenY+bgMargin) * widgetScale) - ((vsy * (widgetScale-1))/2)
 			local rectX2 = ((screenX+screenWidth+bgMargin) * widgetScale) - ((vsx * (widgetScale-1))/2)
 			local rectY2 = ((screenY-screenHeight-bgMargin) * widgetScale) - ((vsy * (widgetScale-1))/2)
-			WG['guishader_api'].InsertRect(rectX1, rectY2, rectX2, rectY1, 'changelog')
+			WG['guishader_api'].InsertRect(rectX1, rectY2, rectX2, rectY1, 'commandslist')
 		end
 		showOnceMore = false
 		
-		-- draw button hover
-		local usedScreenX = (vsx*0.5) - ((screenWidth/2)*widgetScale)
-		local usedScreenY = (vsy*0.5) + ((screenHeight/2)*widgetScale)
-
-		local x,y = Spring.GetMouseState()
-		if changelogFile then
-			local lineKey = 1
-			local j = 0
-			local yOffset = 24
-			local yOffsetUp = (((versionFontSize*0.66)+yOffset)*widgetScale)
-			local yOffsetDown = (((versionFontSize*1.21)-yOffset)*widgetScale)
-			while j < 22 do	
-				if ((versionFontSize+versionOffsetY)*j)+4 > (screenHeight-yOffset) then
-					break;
-				end
-				if versions[lineKey] == nil then
-					break;
-				end
-				if versionQuickLinks[j] == nil then
-					break;
-				end
-				
-				--local cc = (versionQuickLinks[j][1]/vsx) * vsx/widgetScale
-				--Spring.Echo(usedScreenX..'  '..versionQuickLinks[j][1]..'  '..cc)
-				
-				-- version title
-				local textX = usedScreenX-((10+versionOffsetX)*widgetScale)
-				local textY = usedScreenY-((((versionFontSize+versionOffsetY)*j)-5)*widgetScale)
-				local x1 = usedScreenX
-				local y1 = textY-yOffsetUp
-				local x2 = usedScreenX+(70*widgetScale)
-				local y2 = textY+yOffsetDown
-				if IsOnRect(x, y, x1, y1, x2, y2) then
-					gl.Color(1,0.93,0.75,0.22)
-					RectRound(x1, y1, x2, y2, 5*widgetScale)
-					break;
-				end
-				j = j + 1
-				lineKey = lineKey + 1
-			end
-		end
     else
 		if (WG['guishader_api'] ~= nil) then
-			WG['guishader_api'].RemoveRect('changelog')
+			WG['guishader_api'].RemoveRect('commandslist')
 		end
 	end
 end
@@ -601,60 +441,16 @@ function widget:MousePress(x, y, button)
 				return true
 			end
 			
-			-- version buttons
-			if button == 1 then
-			local yOffset = 24
-				local usedScreenX = (vsx*0.5) - ((screenWidth/2)*widgetScale)
-				local usedScreenY = (vsy*0.5) + ((screenHeight/2)*widgetScale)
-				
-				local x,y = Spring.GetMouseState()
-				if changelogFile then
-					local lineKey = 1
-					local j = 0
-					while j < 25 do	
-						if (versionFontSize+versionOffsetY)*j > (screenHeight-yOffset) then
-							break;
-						end
-						if versions[lineKey] == nil then
-							break;
-						end
-						
-						-- version title
-						local textX = usedScreenX-((10+versionOffsetX)*widgetScale)
-						local textY = usedScreenY-((((versionFontSize+versionOffsetY)*j)-5)*widgetScale)
-						
-						local x1 = usedScreenX
-						local y1 = textY-(((versionFontSize*0.66)+yOffset)*widgetScale)
-						local x2 = usedScreenX+((70*widgetScale))
-						local y2 = textY+(((versionFontSize*1.21)-yOffset)*widgetScale)
-						if IsOnRect(x, y, x1, y1, x2, y2) then
-							startLine = versions[lineKey]
-							if changelogList then
-								glDeleteList(changelogList)
-							end
-							changelogList = gl.CreateList(DrawWindow)
-							break;
-						end
-						
-						j = j + 1
-						lineKey = lineKey + 1
-					end
-				end
-			end
-			
-			-- close on RMB
 			if button == 1 or button == 3 then
 				if button == 3 then
 					show = not show
 				end
 				return true
 			end
-			
 		elseif titleRect == nil or not IsOnRect(x, y, (titleRect[1] * widgetScale) - ((vsx * (widgetScale-1))/2), (titleRect[2] * widgetScale) - ((vsy * (widgetScale-1))/2), (titleRect[3] * widgetScale) - ((vsx * (widgetScale-1))/2), (titleRect[4] * widgetScale) - ((vsy * (widgetScale-1))/2)) then
 			showOnceMore = true		-- show once more because the guishader lags behind, though this will not fully fix it
 			show = not show
 		end
-		return true
     else
 		tx = (x - posX*vsx)/(17*widgetScale)
 		ty = (y - posY*vsy)/(17*widgetScale)
@@ -663,7 +459,6 @@ function widget:MousePress(x, y, button)
 		showOnceMore = show		-- show once more because the guishader lags behind, though this will not fully fix it
 		show = not show
     end
-	return false
 end
 
 function widget:KeyPress(key, mods, isRepeat)
@@ -683,26 +478,18 @@ end
 function widget:Initialize()
 	if changelogFile then
 		-- somehow there are a few characters added at the start that we need to remove
-		-- for xta we need to remove the ascii art in the beginning
-		
-		changelogFile = string.sub(changelogFile, 1+select(2,string.find(changelogFile,"here")))
+		--changelogFile = string.sub(changelogFile, 4)
 		
 		-- store changelog into array
 		changelogLines = lines(changelogFile)
-		--Echo("CLI lines:",#changelogLines,changelogFile)
+		
 		local versionKey = 0
 		for i, line in ipairs(changelogLines) do
-			--Echo("Line:",i,line,string.find(line, '^(XTA[^(]+)'))
-			--%d*%d.?%d+ /-)'
-			if string.find(line, '^(XTA[^(]+)') then
-				versionKey = versionKey + 1
-				versions[versionKey] = i
-			end
 			totalChangelogLines = i
 		end
 		
 	else
-		Spring.Echo("Changelog: couldn't load the changelog file")
+		Spring.Echo("Commands info: couldn't load the commandslist file")
 		widgetHandler:RemoveWidget()
 	end
 end

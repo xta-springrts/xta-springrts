@@ -1172,7 +1172,7 @@ function widget:TextCommand(command)
 		showModOptions = true
 	elseif command == 'show-mapoptions' then
 		showMapOptions = true
-	elseif command == 'xta-options' then
+	elseif command == 'xta-options' or command == 'settings' then
 		showSettings = true
 	end
 end
