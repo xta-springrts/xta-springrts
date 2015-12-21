@@ -12,17 +12,39 @@ end
 
 local posX, posY					  	= 600, 400
 local buttonsize					  	= 16
-local width, height					  	= 480, 320
-local iWidth							= 400
+local tabWidth							= 90
+local tabHeight							= 20
+local Echo								= Spring.Echo
+local Button, Section		  			= include("configs/settings_defs.lua")
+local maxbuttons						= 4
+
+
+for i,section in pairs(Section) do
+	local n = 0
+	for j,button in pairs(Button) do
+		if button.section == section.name then
+			n = button.type == "scale" and n + 1.75 or n + 1
+			maxbuttons = math.max(maxbuttons,n)
+		end
+	end
+end		
+
+local rowgap						  	= 26
 local iRowHeight						= 14
+local width, height					  	= 570, 120 + maxbuttons*(rowgap+iRowHeight)
+local iWidth							= 400
+
 local rows								= 0
 local height0							= 160
 local iHeight
-local rowgap						  	= 26
-local leftmargin						= 20
-local buttontab							= 310			
+
+local scaleWidth						= width/3
+local scaleOffset						= 50
+local margin							= 10
+local rmargin 							= 60
+local lmargin 							= 60
+local buttontab							= width - buttonsize - rmargin
 local vsx, vsy 						  	= gl.GetViewSizes()
-local Echo								= Spring.Echo
 local PlaySoundFile						= Spring.PlaySoundFile
 local showModOptions					= false
 local showMapOptions					= false
@@ -38,21 +60,17 @@ local optContrast						= "LuaUI/Images/tweaksettings/contrast.png"
 local optCheckBoxOn						= "LuaUI/Images/tweaksettings/chkBoxOn.png"
 local optCheckBoxOff					= "LuaUI/Images/tweaksettings/chkBoxOff.png"
 local imgArrows							= "LuaUI/Images/tweaksettings/arrows.png"
+local imgMarker							= "luaui/images/commchange/duck.png"
 
 --sounds
 local sndButtonOn 						= 'sounds/button8.wav'
 local sndButtonOff 						= 'sounds/button6.wav'
+local sndButtonTab 						= 'sounds/button5.wav'
+local sndButtonSlide					= 'sounds/button3.wav'
 
 -- other
-local Button				  			= include("configs/settings_defs.lua")
 local ButtonClose		 				= {}
 local Panel					  			= {}
-
-Echo("Loaded Button from config")
-for i,button in pairs(Button) do
-	Echo(i,button, button and #button or 0,button and button.key or "?")
-end
-Echo("Finished echoing")
 
 -- variables
 
@@ -78,13 +96,18 @@ local currentSection					= "graphics"
 local cLight 							= {1,1,1,1}
 local cWhite 							= {1,1,1,1}
 local cButton							= {0.8,0.8,0.8,1}
-local cBack 							= {0,0,0,0.8}
+local cSelect							= {0.4, 0.4, 0.8, 1}
+local cSection							= {0.33,0.33,0.33,0.2}
+local cBack								= {0, 0, 0, 0.3}
 local cGreen							= {0.2, 0.8, 0.2, 1}
 local cRed								= {0.8, 0.2, 0.2, 1}
+local cBlue								= {0.6, 0.6, 0.8, 1}
 local cGrey								= {0.8, 0.8, 0.8, 0.2}
-local cYellow							= {0.8, 0.8, 0.2, 1}
+local cDark								= {0.4, 0.4, 0.4, 0.2}
+local cYellow							= {0.8, 0.8, 0.2, 0.4}
+local cYellow2							= {0.8, 0.8, 0.2, 0.3}
 local cRow								= {0.2,0.6,0.9,0.1}
-local cBorder							= {0,0,0,1}
+local cBorder							= {0, 0, 0, 0.6}
 local cAbove							= {0.8,0.8,0,0.5}
 
 
@@ -462,19 +485,34 @@ function updateHeights()
 end
 
 function InitButtons()
-
-	-- automate positions
+	
+	-- positions
+	for i, button in ipairs(Section) do
+		button.chosen 			= button.name == currentSection
+		button.x1				= posX + (i-1) * tabWidth + lmargin
+		button.x2				= button.x1 + tabWidth
+		button.y1				= posY	+ height - tabHeight - 60
+		button.y2				= button.y1 + tabHeight
+	end
+	
 	local n = 1
-	for _,button in pairs(Button) do
+	for name,button in pairs(Button) do
 		if currentSection == button["section"] then
 			button["x1"] 	= posX + buttontab
 			button["x2"]	= button["x1"] + buttonsize
-			button["y1"]	= posY + height - 20 - n*rowgap - buttonsize
+			button["y1"]	= posY + height - 100 - n*rowgap - buttonsize
 			button["y2"]	= button["y1"] + buttonsize
-			button["above"] = false
-			n = n + 1
+			n 				= n+1
+			if button.type then
+				if button.type == "scale" then
+					button.x0	= button.x2 - scaleWidth
+					n = n+1
+				end
+			end
 		end
 	end	
+	
+	
 	
 	Panel["main"]["x1"]			= posX
 	Panel["main"]["x2"]			= posX + width
@@ -561,6 +599,7 @@ local function DrawRectRound(px,py,sx,sy,cs)
 end
 
 local function RectRound(px,py,sx,sy,cs)
+	cs = cs or 6
 	local px,py,sx,sy,cs = math.floor(px),math.floor(py),math.ceil(sx),math.ceil(sy),math.floor(cs)
 	
 	gl.Texture(bgcorner)
@@ -583,9 +622,9 @@ local function drawRow(optData,i,lastY)
 	local label = formatLabel(value,type,name)
 	
 	if label ~= "N/A" and type then
-		myFont:Print(label, Panel["info"]["x2"] - leftmargin, yi,textSize,'rdo')
+		myFont:Print(label, Panel["info"]["x2"] - margin, yi,textSize,'rdo')
 		myFont:SetTextColor(cButton)
-		myFont:Print(name, Panel["info"]["x1"] + leftmargin, yi,textSize,'do')
+		myFont:Print(name, Panel["info"]["x1"] + margin, yi,textSize,'do')
 		i = i + 1
 		rows = rows + 1
 	else
@@ -595,7 +634,7 @@ local function drawRow(optData,i,lastY)
 	
 	if i%2 ~= 0 and type and label ~= "N/A" then
 		gl.Color(cRow)
-		gl.Rect(Panel["info"]["x1"]+ leftmargin, yi, Panel["info"]["x2"]-leftmargin,yi + 14)
+		gl.Rect(Panel["info"]["x1"]+ margin, yi, Panel["info"]["x2"]-margin,yi + 14)
 		gl.Color(cWhite)
 	end
 	return i,lastY
@@ -628,7 +667,7 @@ local function drawModOptions()
 		myFontBig:Begin()
 		if Options["general"] and OptionCount["general"] > 0 then
 			myFontBig:SetTextColor(cYellow) -- yellow
-			myFontBig:Print("General:", Panel["info"]["x1"] + leftmargin, lastY - 40,14,'do')
+			myFontBig:Print("General:", Panel["info"]["x1"] + margin, lastY - 40,14,'do')
 			lastY = lastY - 40
 		end
 		myFontBig:End()
@@ -647,7 +686,7 @@ local function drawModOptions()
 		if Options["other"] and OptionCount["other"] > 0 then
 			myFontBig:Begin()
 			myFontBig:SetTextColor(cYellow) -- yellow
-			myFontBig:Print("More options:", Panel["info"]["x1"] + leftmargin, lastY - 40,14,'do')
+			myFontBig:Print("More options:", Panel["info"]["x1"] + margin, lastY - 40,14,'do')
 			lastY = lastY - 40
 			myFontBig:End()
 		end
@@ -665,7 +704,7 @@ local function drawModOptions()
 		if Options["unitpacks"] and OptionCount["unitpacks"] > 0 then
 			myFontBig:Begin()
 			myFontBig:SetTextColor(cYellow) -- yellow
-			myFontBig:Print("Unit packs:", Panel["info"]["x1"] + leftmargin, lastY - 40,14,'do')
+			myFontBig:Print("Unit packs:", Panel["info"]["x1"] + margin, lastY - 40,14,'do')
 			lastY = lastY - 40
 			myFontBig:End()
 		end
@@ -683,7 +722,7 @@ local function drawModOptions()
 		if Options["multiplier"] and OptionCount["multiplier"] > 0 then
 			myFontBig:Begin()
 			myFontBig:SetTextColor(cYellow) -- yellow
-			myFontBig:Print("Multiplier settings:", Panel["info"]["x1"] + leftmargin, lastY - 40,14,'do')
+			myFontBig:Print("Multiplier settings:", Panel["info"]["x1"] + margin, lastY - 40,14,'do')
 			lastY = lastY - 40
 			myFontBig:End()
 		end
@@ -702,7 +741,7 @@ local function drawModOptions()
 			if Options["koth"] then
 				myFontBig:Begin()
 				myFontBig:SetTextColor(cYellow) -- yellow
-				myFontBig:Print("King of the hill options", Panel["info"]["x1"] + leftmargin, lastY - 40,14,'do')
+				myFontBig:Print("King of the hill options", Panel["info"]["x1"] + margin, lastY - 40,14,'do')
 				lastY = lastY - 40
 				myFontBig:End()
 			end
@@ -724,7 +763,7 @@ local function drawModOptions()
 			if Options["fleabowl"] then
 				myFontBig:Begin()
 				myFontBig:SetTextColor(cYellow) -- yellow
-				myFontBig:Print("Fleabowl options", Panel["info"]["x1"] + leftmargin, lastY - 40,14,'do')
+				myFontBig:Print("Fleabowl options", Panel["info"]["x1"] + margin, lastY - 40,14,'do')
 				lastY = lastY - 40
 				myFontBig:End()
 			end
@@ -745,7 +784,7 @@ local function drawModOptions()
 		if Options["experimental"] and OptionCount["experimental"] > 0 then
 			myFontBig:Begin()
 			myFontBig:SetTextColor(cYellow) -- yellow
-			myFontBig:Print("Experimental options:", Panel["info"]["x1"] + leftmargin, lastY - 40,14,'do')
+			myFontBig:Print("Experimental options:", Panel["info"]["x1"] + margin, lastY - 40,14,'do')
 			lastY = lastY - 40
 			myFontBig:End()
 		end
@@ -805,7 +844,7 @@ local function drawMapOptions()
 		myFontBig:Begin()
 		if Options["general"] and OptionCount["general"] > 0 then
 			myFontBig:SetTextColor(cYellow) -- yellow
-			myFontBig:Print("Map options:", Panel["info"]["x1"] + leftmargin, lastY - 40,14,'do')
+			myFontBig:Print("Map options:", Panel["info"]["x1"] + margin, lastY - 40,14,'do')
 			lastY = lastY - 40
 		end
 		myFontBig:End()
@@ -842,7 +881,10 @@ end
 
 local function drawSettings()
 	
-	
+	local function DrawLine(x0, y0, x1, y1)
+		gl.Vertex(x0, y0)
+		gl.Vertex(x1, y1)
+	end
 	
 	--border
 	gl.Color(cBorder)
@@ -853,10 +895,36 @@ local function drawSettings()
 	RectRound(Panel["main"]["x1"],Panel["main"]["y1"], Panel["main"]["x2"], Panel["main"]["y2"])
 	
 	-- Heading
-	myFontBig:Begin()
-	myFontBig:SetTextColor(cWhite)
-	myFontBig:Print("XTA game-settings:", Panel["main"]["x1"] + leftmargin, Panel["main"]["y2"] - 20,14,'ds')
-	myFontBig:End()
+	myFontBigger:Begin()
+	myFontBigger:SetTextColor(cWhite)
+	myFontBigger:Print("XTA game-settings", Panel["main"]["x1"]+width/2, Panel["main"]["y2"] - 30,18,'dcs')
+	myFontBigger:End()
+	
+	-- Sections
+	for i, button in pairs(Section) do
+		--border
+		
+		gl.Color(cBorder)
+		DrawBorder(button["x1"],button["y1"], button["x2"], button["y2"])
+		
+		--background panel
+		if button.chosen then
+			gl.Color(cSelect)
+		elseif button.mouse then
+			gl.Color(cAbove)
+		else
+			gl.Color(cSection)
+		end
+		RectRound(button["x1"],button["y1"], button["x2"], button["y2"])
+	
+		myFontBig:Begin()
+		myFontBig:SetTextColor(cWhite)
+		myFontBig:Print(button.label, (button.x1+button.x2)/2 , button.y1,14,'dco')
+		myFontBig:End()
+	
+	end
+	
+	
 	-- Buttons
 	
 	-- exit
@@ -874,7 +942,7 @@ local function drawSettings()
 	-- other
 	for _,button in pairs(Button) do
 		if currentSection == button["section"] then
-		
+			
 			myFont:Begin()
 			if button["mouse"] then
 				myFont:SetTextColor(cLight)
@@ -882,29 +950,85 @@ local function drawSettings()
 				myFont:SetTextColor(cButton)
 			end
 			
-			Echo("Printing:",button,button and button.key)
-			
-			myFont:Print(button["label"] or "N/A", posX+leftmargin, button["y1"],12,'do')
+			myFont:Print(button["label"] or "N/A", posX+lmargin, button["y1"],12,'do')
 			myFont:End()
 			
 			gl.Color(cWhite)
 			
-			if button["divided"] then
-				if button["img"] then
-					gl.Texture(button["img"])
-				else
-					gl.Texture(optContrast)
-				end
-			else
-				if button["click"] then
+			if not button.type then
+				if button["value"] then
 					gl.Texture(optCheckBoxOn)
 				else
 					gl.Texture(optCheckBoxOff)
 				end
+				gl.TexRect(button["x1"],button["y1"],button["x2"],button["y2"])
+				gl.Texture(false)
+			elseif button.type == "scale" then
+				local size = 20
+				local ymid = button.y1 + (button.y2-button.y1)/2
+				local offset = scaleOffset
+				local desc = button.items[button.newValue] or button.items[button.value]
+				
+				local y1	= button.y1 + buttonsize/4
+				local y2	= button.y2 - buttonsize/4
+								
+				local w = button.x2 - button.x0
+				
+				local dx = w/(button.max-button.min)
+				
+				gl.Color(cDark)
+				RectRound(button.x0-offset,button.y1,button.x2-offset,button.y2,2)
+				gl.Color(cYellow)
+				
+				if (button.max - button.min) / button.step > 50 then
+					for x =button.min,button.max,button.step do
+						if (x/button.step)%10 == 0 or x == button.min or x == button.max then
+							gl.Color(cYellow)
+							RectRound(button.x0+x*dx-offset,button.y1+buttonsize/4,button.x0+x*dx+1-offset,button.y2-buttonsize/4,1)
+						end
+					end
+				elseif  (button.max - button.min) / button.step > 20 then
+					for x =button.min,button.max,button.step do
+						if (x/button.step)%5 == 0 or x == button.min or x == button.max then
+							gl.Color(cYellow)
+							RectRound(button.x0+x*dx-offset,button.y1+buttonsize/4,button.x0+x*dx+1-offset,button.y2-buttonsize/4,1)
+						end
+					end
+				else				
+					for x =button.min,button.max,button.step do
+						RectRound(button.x0+x*dx-offset,button.y1+buttonsize/4,button.x0+x*dx+1-offset,button.y2-buttonsize/4,1)
+					end
+				end
+				
+				gl.LineWidth (1)
+				gl.LineStipple(1,4369)
+				gl.BeginEnd(GL.LINE_STRIP, DrawLine,button.x0-offset , ymid,button.x2-offset,ymid)
+				gl.LineStipple(false)
+				gl.Texture(imgMarker)
+				if (not button.newValue) or button.value == button.newValue then
+					gl.Color(cWhite)
+					gl.TexRect(button.x0+button.value*dx-size/2-offset,ymid-size/2,button.x0+button.value*dx+size/2-offset,ymid+size/2)
+				else
+					gl.Color(cBlue)
+					gl.TexRect(button.x0+button.newValue*dx-size/2-offset,ymid-size/2,button.x0+button.newValue*dx+size/2-offset,ymid+size/2)
+				end
+				gl.Texture(false)
+				
+				gl.Color(cDark)
+				RectRound(button.x1-buttonsize,button.y1,button.x2,button.y2,2)
+				
+				local str = button.newValue and tostring(button.newValue) or tostring(button.value)
+				if str:find("%.") then -- FIXME: only supports integers or 1 decimal values
+					str = string.format("%.1f",str)
+				end
+				
+				myFont:Begin()
+				myFont:SetTextColor(cButton)
+				myFont:Print(str or "?", button.x2-buttonsize/4, button.y1,10,'drs')
+				myFont:Print(desc or "", button.x2-buttonsize/4, button.y1-size,10,'drs')
+				myFont:End()
+				
 			end
-			
-			gl.TexRect(button["x1"],button["y1"],button["x2"],button["y2"])
-			gl.Texture(false)
 		end
 	end
 		
@@ -920,7 +1044,19 @@ local function drawIsAbove(x,y)
 	for _,button in pairs(Button) do
 		button["mouse"] = false
 	end
+	for _,button in pairs(Section) do
+		button["mouse"] = false
+	end
+	
 	ButtonClose.above = false
+	
+	for _,button in pairs(Section) do
+		if IsOnButton(x, y, button["x1"],button["y1"],button["x2"],button["y2"]) then
+			button["mouse"] = true
+			return true
+		end
+	end
+	
 	
 	for _,button in pairs(Button) do
 		if IsOnButton(x, y, button["x1"],button["y1"],button["x2"],button["y2"]) then
@@ -957,6 +1093,27 @@ function widget:IsAbove(x,y)
 	--this callin must be present, otherwise function widget:TweakIsAbove(x,y) isn't called. Maybe a bug in widgethandler.
 end
 
+local function SetGuiOpacity(value)
+	Echo("Setting opacity to:" .. value)
+	local oldvalue = tonumber(Spring.GetConfigString("GuiOpacity"))
+	local deciold = round(10*oldvalue,0)
+	local decinew = round(10*tonumber(value),0)
+		
+	if deciold == decinew then
+		return
+	elseif deciold < decinew then
+		repeat
+			deciold = deciold + 1
+			Spring.SendCommands("IncGUIOpacity")
+		until deciold >= decinew or deciold >= 10
+	elseif deciold > decinew then
+		repeat
+			deciold = deciold - 1
+			Spring.SendCommands("DecGUIOpacity")	
+		until deciold <= decinew or deciold <= 0
+	end
+end
+
 function widget:TextCommand(command)
 	
 	if command == 'draw' or command == 'votefordraw' then
@@ -969,10 +1126,80 @@ function widget:TextCommand(command)
 		showMapOptions = true
 	elseif command == 'xta-options' or command == 'settings' then
 		showSettings = true
+	elseif string.lower(command):find("^setguiopacity") then
+		local value = command:sub(14)
+		if value then
+			SetGuiOpacity(value)
+		end
 	end
 end
 
+local function GetNearestvalue(x,xmin,xmax,vmin,vmax,vstep)
+		
+	local xscale = xmax-xmin
+	local vscale = vmax-vmin
+	
+	local val = (x-xmin)/xscale
+	if val <= 0 then 
+		return vmin
+	elseif val >= 1 then
+		return vmax
+	end
+		
+	local smaller, larger
+	
+	local e = vmin
+	
+	while e < vmax and e < val * vscale do
+		smaller = e
+		e = e + vstep
+		larger = e
+	end
+	
+	local distUp = larger - val * vscale
+	local distDown	= val * vscale - smaller
+	local target = distDown > distUp and larger or smaller
+	if not target then return end
+	
+	return target
+
+end
+
 function widget:MouseMove(mx, my, dx, dy, mButton)
+	
+	if mButton == 1 then
+		for _,button in pairs(Button) do
+			if button.section == currentSection then
+				if button.type == "scale" then
+					if IsOnButton(mx, my, button.x0-scaleOffset,button.y1,button.x2-scaleOffset,button.y2) and 
+						mx+dx < button.x2-scaleOffset and mx+dx > button.x0-scaleOffset then
+						 
+						local newValue = GetNearestvalue(mx+dx,button.x0-scaleOffset,button.x2-scaleOffset,button.min,button.max,button.step)
+						if newValue and tostring(newValue):find("%.") then
+							local str = tostring(newValue)
+							local dec = str:find("%.")
+							local dstr = dec and str:sub(1,dec+1) or str
+							newValue = dstr
+						else
+							newValue = tostring(newValue)
+						end
+						button.newValue = newValue
+						return true
+						
+					elseif my < button.y2 and my > button.y1 then
+						if mx+dx < button.x0-scaleOffset then
+							button.newValue = tostring(button.min)
+							return true
+						elseif mx+dx > button.x2-scaleOffset then
+							button.newValue = tostring(button.max)
+							return true
+						end
+					end
+				end
+			end
+		end
+	end
+	
 	
       --Dragging
      if mButton == 2 or mButton == 3 then
@@ -986,38 +1213,59 @@ function widget:MousePress(x, y, button)
 	 if button == 1 and (showSettings or showModOptions or showMapOptions) then
 		
 		for _,button in pairs(Button) do
+			if button.section == currentSection then
+				if not button.type then --checkbox
+					if IsOnButton(x, y, button["x1"],button["y1"],button["x2"],button["y2"]) then
+						if not button["value"] then
+							PlaySoundFile(sndButtonOn,1.0,0,0,0,0,0,0,'userinterface')
+						else
+							PlaySoundFile(sndButtonOff,1.0,0,0,0,0,0,0,'userinterface')
+						end		
+						if button.value then
+							button.deaction[1](button.deaction[2],button.deaction[3])
+						else
+							button.action[1](button.action[2],button.action[3])
+						end
+						button["value"] = not button["value"]
+						return true
+					end
+				else
+					if button.type == "scale" then
+						if IsOnButton(x, y, button.x0-scaleOffset,button.y1,button.x2-scaleOffset,button.y2) then
+							local newValue = GetNearestvalue(x,button.x0-scaleOffset,button.x2-scaleOffset,button.min,button.max,button.step)
+							if newValue and tostring(newValue):find("%.") then
+								newValue = 0.1*math.floor(10 * newValue+0.5)
+								local str = tostring(newValue)
+								local dec = str:find("%.")
+								local dstr = dec and str:sub(1,dec+1) or str
+								newValue = dstr
+							else
+								newValue = tostring(newValue)
+							end
+							
+							if newValue and newValue ~= button.newValue then
+								button.newValue = newValue
+							end
+							
+							return true
+						end
+					end
+				end	
+			end
+		end
+		
+		for _,button in pairs(Section) do
 			if IsOnButton(x, y, button["x1"],button["y1"],button["x2"],button["y2"]) then
-				if not button["click"] then
-					PlaySoundFile(sndButtonOn,1.0,0,0,0,0,0,0,'userinterface')
-				else
-					PlaySoundFile(sndButtonOff,1.0,0,0,0,0,0,0,'userinterface')
-				end
-				if button["divided"] then
-					if button["wide"] then
-						if x < button["x1"] + 3*buttonsize/2 then
-							ButtonHandler(button["less"])
-						else
-							ButtonHandler(button["more"])
-						end
-					else
-						if x < button["x1"] + 1.5*buttonsize/2 then
-							ButtonHandler(button["less"])
-						else
-							ButtonHandler(button["more"])
-						end
-					end
+				if not button.chosen then				
+					currentSection = button.name
+					PlaySoundFile(sndButtonTab,4.0,0,0,0,0,0,0,'userinterface')
 					InitButtons()
-				else
-					if button.check then
-						button.deaction[1](button.deaction[2])
-					else
-						button.action[1](button.action[2])
-					end
-					button["click"] = not button["click"]
+					return true
 				end
-				return true
 			end	
 		end
+		
+		
 		if IsOnButton(x, y, ButtonClose["x1"],ButtonClose["y1"],ButtonClose["x2"],ButtonClose["y2"]) then
 			PlaySoundFile(sndButtonOff,1.0,0,0,0,0,0,0,'userinterface')
 			showSettings = false
@@ -1037,6 +1285,46 @@ function widget:MousePress(x, y, button)
 	return false
  end
  
+function widget:MouseRelease(x, y, button)
+	if button == 1 and (showSettings or showModOptions or showMapOptions) then
+		for _,button in pairs(Button) do
+			if button.section == currentSection and button.type and button.type == "scale" then				
+				if button.x0 and IsOnButton(x, y, button.x0-scaleOffset,button.y1,button.x2-scaleOffset,button.y2) then
+					if button.x0 and button.newValue then
+						x = math.max(x,button.x0-scaleOffset)
+						x = math.min(x,button.x2-scaleOffset)
+						
+						button.value = button.newValue
+						
+						if button.action and #button.action == 3 then
+							if button.action[3] == -1 then
+								button.action[1](table.concat({button.action[2]," ",button.value}))
+							else
+								button.action[1](button.action[2],button.action[3])
+							end
+							PlaySoundFile(sndButtonSlide,1.0,0,0,0,0,0,0,'userinterface')
+						elseif button.action and #button.action == 2 then
+							
+							button.action[1](button.action[2],button.value)
+							PlaySoundFile(sndButtonSlide,1.0,0,0,0,0,0,0,'userinterface')
+						end
+					end
+					return true
+				elseif button.newValue and button.value ~= button.newValue then
+					if y < button.y2 and y > button.y1 then 
+						button.value = button.newValue
+						button.action[1](button.action[2],button.value)
+						PlaySoundFile(sndButtonSlide,1.0,0,0,0,0,0,0,'userinterface')							
+					else
+						button.newValue = button.value
+					end						
+				end
+			end
+		end
+	end
+end 
+ 
+ 
 function widget:KeyPress(key, mods, isRepeat) 
 	if (key == 0x069) and mods["ctrl"] and (not isRepeat) then 				-- i-key
 		showModOptions = not showModOptions
@@ -1052,80 +1340,6 @@ function widget:KeyPress(key, mods, isRepeat)
 	end
 	return false
 end
-
---------------------------------------------------------------------------------			 
--- Tweak-mode
---------------------------------------------------------------------------------
-
-function widget:TweakDrawScreen()
-	if showSettings then
-		drawSettings()
-	end
-end
-
-function widget:TweakIsAbove(x,y)
-	--Echo("Tweak Is Above callin:",x,y) -- This callin isn't working in spring 96. It may be fixed in the future.
-	drawIsAbove(x,y)
- end
- 
-function widget:TweakMousePress(x, y, button)
-	
-	if button == 1 then
-		for _,button in pairs(Button) do
-			if IsOnButton(x, y, button["x1"],button["y1"],button["x2"],button["y2"]) then
-				if not button["click"] then
-					PlaySoundFile(sndButtonOn,1.0,0,0,0,0,0,0,'userinterface')
-				else
-					PlaySoundFile(sndButtonOff,1.0,0,0,0,0,0,0,'userinterface')
-				end
-				if button["divided"] then
-					if button["wide"] then
-						if x < button["x1"] + 3*buttonsize/2 then
-							ButtonHandler(button["less"])
-						else
-							ButtonHandler(button["more"])
-						end
-					else
-						if x < button["x1"] + 1.5*buttonsize/2 then
-							ButtonHandler(button["less"])
-						else
-							ButtonHandler(button["more"])
-						end
-					end
-					InitButtons()
-				else 
-					ButtonHandler(button["command"])
-					button["click"] = not button["click"]
-				end
-				return true
-			end	
-		end
-		
-		if IsOnButton(x, y, ButtonClose["x1"],ButtonClose["y1"],ButtonClose["x2"],ButtonClose["y2"]) then
-			PlaySoundFile(sndButtonOff,1.0,0,0,0,0,0,0,'userinterface')
-			showSettings = false
-			showModOptions = false
-			showMapOptions = false
-		end
-		
-	 elseif (button == 2 or button == 3) then
-		 if IsOnButton(x, y, Panel["main"]["x1"],Panel["main"]["y1"], Panel["main"]["x2"], Panel["main"]["y2"]) then
-			  --Dragging
-			 return true
-		 end		
-	 end
-	 return false
- end
-
-function widget:TweakMouseMove(mx, my, dx, dy, mButton)
-	
-      --Dragging
-     if mButton == 2 or mButton == 3 then
-		 posX = math.max(0, math.min(posX+dx, vsx-width))	--prevent moving off screen
-		 posY = math.max(0, math.min(posY+dy, vsy-height))
-		 InitButtons()
-     end
- end
 
 function widget:GetConfigData(data)      -- save
 	local vsx, vsy = gl.GetViewSizes()
