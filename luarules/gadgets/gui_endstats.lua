@@ -59,6 +59,7 @@ if gadgetHandler:IsSyncedCode() then
 		local holyTargets			= {}
 		local impressiveTargets		= {}
 		local XTA_AWARDMARKER		= '\199'
+		local XTA_BADGESMARKER		= '§§§888§§§'
 		local unitBuildpowerTable 	= {}
 		local unitFirepowerTable	= {}
 		local nbPlayers				= 0

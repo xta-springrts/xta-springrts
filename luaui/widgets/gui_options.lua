@@ -12,7 +12,7 @@ end
 
 local posX, posY					  	= 600, 400
 local buttonsize					  	= 16
-local width, height					  	= 360, 660
+local width, height					  	= 480, 320
 local iWidth							= 400
 local iRowHeight						= 14
 local rows								= 0
@@ -31,21 +31,28 @@ local textSize							= 10
 local myFont							= gl.LoadFont("FreeSansBold.otf",textSize, 1.9, 40)
 local myFontBig							= gl.LoadFont("FreeSansBold.otf",14, 1.9, 40)
 local myFontBigger						= gl.LoadFont("FreeSansBold.otf",18, 1.9, 40)
+local bgcorner							= "luaui/images/bgcorner.png"
+
 -- images
 local optContrast						= "LuaUI/Images/tweaksettings/contrast.png"
 local optCheckBoxOn						= "LuaUI/Images/tweaksettings/chkBoxOn.png"
 local optCheckBoxOff					= "LuaUI/Images/tweaksettings/chkBoxOff.png"
 local imgArrows							= "LuaUI/Images/tweaksettings/arrows.png"
 
-
 --sounds
 local sndButtonOn 						= 'sounds/button8.wav'
 local sndButtonOff 						= 'sounds/button6.wav'
 
 -- other
-local Button				  			= {}
+local Button				  			= include("configs/settings_defs.lua")
 local ButtonClose		 				= {}
 local Panel					  			= {}
+
+Echo("Loaded Button from config")
+for i,button in pairs(Button) do
+	Echo(i,button, button and #button or 0,button and button.key or "?")
+end
+Echo("Finished echoing")
 
 -- variables
 
@@ -64,6 +71,8 @@ local mapOptions 						= Spring.GetMapOptions()
 
 local OptionCount						= {}
 local MapOptionCount					= 0
+local currentSection					= "graphics"
+
 
 --colors
 local cLight 							= {1,1,1,1}
@@ -140,28 +149,6 @@ end
 -- INIT  --
 -----------	  
 function widget:Initialize()
-	Button[1] 						= {} -- mapshading
-	Button[2]						= {} -- unitshading
-	Button[3]						= {} -- shadows
-	Button[4]						= {} -- hardwarecursor
-	Button[5]						= {} -- pausemusic
-	Button[6]						= {} -- intromusic
-	Button[7]						= {} -- intromusic
-	Button[8]						= {} -- showfps
-	Button[9]						= {} -- show time
-	Button[10]						= {} -- show speed
-	Button[11]						= {} -- qui opacity
-	Button[12]						= {} -- info table
-	Button[13]						= {} -- water
-	Button[14]						= {} -- stats window order
-	Button[15]						= {} -- disable move-failed sounds
-	Button[16]						= {} -- disable move-failed sounds
-	Button[17]						= {} -- full screen
-	Button[18]						= {} -- disable blinking units
-	Button[19]						= {} -- show/don't show grass
-	Button[20]						= {} -- show/don't show help text
-	Button[21]						= {} -- show/don't show noob-buttons
-	Button[22]						= {} -- scale commander names to res.
 	
 	Panel["main"]					= {}
 	Panel["info"]					= {} -- info screen with mod options
@@ -476,144 +463,18 @@ end
 
 function InitButtons()
 
-	-- special buttons
-	Button[11]["divided"] 		= true -- action depens on which side of button is clicked
-	Button[13]["wide"]			= true -- double width as normal
-	Button[13]["divided"] 		= true
-	
 	-- automate positions
-	for i,button in ipairs(Button) do
-		if button["wide"] then
-			button["x1"] 	= posX + buttontab - 1 * buttonsize
-			button["x2"]	= button["x1"] + 3 * buttonsize
-			button["y1"]	= posY + height - 20 - i*rowgap - buttonsize
-			button["y2"]	= button["y1"] + 1.5 * buttonsize
-			button["above"] = false
-		elseif button["divided"] then
-			button["x1"] 	= posX + buttontab - 0.25 * buttonsize
-			button["x2"]	= button["x1"] + 1.5 * buttonsize
-			button["y1"]	= posY + height - 20 - i*rowgap - buttonsize
-			button["y2"]	= button["y1"] + 1.5 * buttonsize
-			button["above"] = false
-		else
+	local n = 1
+	for _,button in pairs(Button) do
+		if currentSection == button["section"] then
 			button["x1"] 	= posX + buttontab
 			button["x2"]	= button["x1"] + buttonsize
-			button["y1"]	= posY + height - 20 - i*rowgap - buttonsize
+			button["y1"]	= posY + height - 20 - n*rowgap - buttonsize
 			button["y2"]	= button["y1"] + buttonsize
 			button["above"] = false
+			n = n + 1
 		end
 	end	
-	
-	Button[1]["click"]			= tonumber(Spring.GetConfigInt("AdvMapShading",1) or 1) == 1
-	Button[1]["command"]		= "MapShading"
-	Button[1]["label"]			= "Advanced map shading:"
-	
-	Button[2]["click"]			= tonumber(Spring.GetConfigInt("AdvModelShading",1) or 1) == 1
-	Button[2]["command"]		= "UnitShading"
-	Button[2]["label"]			= "Advanced unit shading:"
-		
-	Button[3]["click"]			= tonumber(Spring.GetConfigInt("Shadows",1) or 1) == 1
-	Button[3]["command"]		= "Shadows"
-	Button[3]["label"]			= "Shadows:"
-	
-	Button[4]["click"]			= tonumber(Spring.GetConfigInt("hardwareCursor",1) or 1) == 1
-	Button[4]["command"]		= "hardwareCursor"
-	Button[4]["label"]			= "Hardware-cursor:"
-	
-	Button[5]["click"]			= (not WG.disablePauseMusic) or false
-	Button[5]["command"]		= "PauseMusic"
-	Button[5]["label"]			= "Pause music:"
-	
-	Button[6]["click"]			= tonumber(Spring.GetConfigInt('snd_intromusic',0) or 0) == 1
-	Button[6]["command"]		= "introMusic"
-	Button[6]["label"]			= "Intro music:"
-	
-	Button[7]["click"]			= tonumber(Spring.GetConfigInt('snd_endmusic',0) or 0) == 1
-	Button[7]["command"]		= "endMusic"
-	Button[7]["label"]			= "End music:"
-	
-	Button[8]["click"]			= tonumber(Spring.GetConfigInt("ShowFPS",1) or 1) == 1
-	Button[8]["command"]		= "showFPS"
-	Button[8]["label"]			= "Show fps indicator:"
-
-	Button[9]["click"]			= tonumber(Spring.GetConfigInt("ShowClock",1) or 1) == 1
-	Button[9]["command"]		= "showTime"
-	Button[9]["label"]			= "Show game time:"
-	
-	Button[10]["click"]			= tonumber(Spring.GetConfigInt("ShowSpeed",0) or 0) == 1
-	Button[10]["command"]		= "showSpeed"
-	Button[10]["label"]			= "Show game speed:"
-	
-	Button[11]["click"]			= false
-	Button[11]["less"]			= "GuiOpacityLess"
-	Button[11]["more"]			= "GuiOpacityMore"
-	
-	if not Button[11]["value"] then
-		Button[11]["value"]   		= tonumber(Spring.GetConfigString('GuiOpacity')) or 0.4 
-	end
-	Button[11]["label"]			= table.concat{"Adjust menu opacity: "," (",  string.format("%.1f", (Button[11]["value"])) ,")"}
-	
-	Button[12]["click"]			= tonumber(Spring.GetConfigInt("ShowPlayerInfo",0) or 0) == 1
-	Button[12]["command"]		= "showInfo"
-	Button[12]["label"]			= "Show simple player infotable:"
-	
-	Button[13]["click"]			= false
-	Button[13]["img"]			= imgArrows
-	Button[13]["less"]			= "waterPrev"
-	Button[13]["more"]			= "waterNext"
-	if not Button[13]["value"] then
-		Button[13]["value"]   		= tonumber(Spring.GetConfigInt("ReflectiveWater",1)) or 0
-	end
-	
-	if Button[13]["value"] == 0 then
-		waterType = "Basic"
-	elseif Button[13]["value"] == 1 then
-		waterType = "Reflective"
-	elseif Button[13]["value"] == 2 then
-		waterType = "Dynamic"
-	elseif Button[13]["value"] == 3 then
-		waterType = "Reflective & refractive"
-	elseif Button[13]["value"] == 4 then
-		waterType = "Bumpmapped"
-	end
-
-	Button[13]["label"]			= table.concat{"Water type: "," (", tonumber(Button[13]["value"])," - ",waterType ,")"}
-	
-	Button[14]["click"]			= tonumber(Spring.GetConfigInt("XTA_EngineGraphFirst") or 0) == 1
-	Button[14]["command"]		= "XTA_EngineGraphFirst"
-	Button[14]["label"]			= "Show engine graph first:"
-	
-	Button[15]["click"]			= tonumber(Spring.GetConfigInt("XTA_DisableMoveFailedSound",0) or 0) == 1
-	Button[15]["command"]		= "disableMoveFailed"
-	Button[15]["label"]			= "Disable move-failed unit reply sound:"
-	
-	Button[16]["click"]			= tonumber(Spring.GetConfigInt("XTA_DisableMoveFailedText",0) or 0) == 1
-	Button[16]["command"]		= "disableMoveFailedText"
-	Button[16]["label"]			= "Disable move-failed unit reply text:"
-	
-	Button[17]["click"]			= tonumber(Spring.GetConfigInt("Fullscreen",1) or 1) == 1
-	Button[17]["command"]		= "fullscreen"
-	Button[17]["label"]			= "Full screen:"
-	
-	Button[18]["click"]			= tonumber(Spring.GetConfigInt("TeamHighlight",1) or 1) == 1
-	Button[18]["command"]		= "blinking"
-	Button[18]["label"]			= "Blinking units:"
-	
-	Button[19]["click"]			= tonumber(Spring.GetConfigInt("GrassDetail",1) or 1) == 1
-	Button[19]["command"]		= "grass"
-	Button[19]["label"]			= "Show grass on maps:"
-	
-	Button[20]["click"]			= tonumber(Spring.GetConfigInt("XTA_CommandHelpText",1) or 1) == 1
-	Button[20]["command"]		= "help"
-	Button[20]["label"]			= "Show interface help text:"
-	
-	Button[21]["click"]			= tonumber(Spring.GetConfigInt("XTA_ShowNoobButtons",1) or 1) == 1
-	Button[21]["command"]		= "noob-buttons"
-	Button[21]["label"]			= "Show noob-buttons in order menu:"
-	
-	Button[22]["click"]			= WG.nameScaling or false
-	Button[22]["command"]		= "scale-names"
-	Button[22]["label"]			= "Scale commander names to zoom-level:"
 	
 	Panel["main"]["x1"]			= posX
 	Panel["main"]["x2"]			= posX + width
@@ -634,151 +495,82 @@ function InitButtons()
 	
 end
 
-function ButtonHandler (cmd)
-	if cmd == "MapShading" then
-		if Button[1]["click"] then
-			Spring.SendCommands("AdvMapShading 0")
-		else
-			Spring.SendCommands("AdvMapShading 1")
-		end
-	elseif cmd == "UnitShading" then
-		if Button[2]["click"] then
-			Spring.SendCommands("AdvModelShading 0")
-		else
-			Spring.SendCommands("AdvModelShading 1")
-		end
-	
-	elseif cmd == "Shadows" then
-		if Button[3]["click"] then
-			Spring.SendCommands("Shadows 0")
-		else
-			Spring.SendCommands("Shadows 1")
-		end
-	elseif cmd == "hardwareCursor" then
-		if Button[4]["click"] then
-			Spring.SendCommands("hardwarecursor 0")
-		else
-			Spring.SendCommands("hardwarecursor 1")
-		end
-	elseif cmd == "PauseMusic" then
-		if Button[5]["click"] then
-			Spring.SendCommands("musicoff")
-		else
-			Spring.SendCommands("musicon")
-		end
-	elseif cmd == "introMusic" then
-		if Button[6]["click"] then
-			Spring.SetConfigInt('snd_intromusic', 0)
-		else
-			Spring.SetConfigInt('snd_intromusic', 1)
-		end
-	elseif cmd == "endMusic" then
-		if Button[7]["click"] then
-			Spring.SetConfigInt('snd_endmusic', 0)
-		else
-			Spring.SetConfigInt('snd_endmusic', 1)
-		end
-	elseif cmd == "showFPS" then
-		if Button[8]["click"] then
-			Spring.SendCommands("fps 0")
-		else
-			Spring.SendCommands("fps 1")
-		end
-	elseif cmd == "showTime" then
-		if Button[9]["click"] then
-			Spring.SendCommands("clock 0")
-		else
-			Spring.SendCommands("clock 1")
-		end	
-	elseif cmd == "showSpeed" then
-		if Button[10]["click"] then
-			Spring.SendCommands("speed 0")
-		else
-			Spring.SendCommands("speed 1")
-		end	
-	elseif cmd == "GuiOpacityLess" then
-		Spring.SendCommands("DecGUIOpacity")
-		Button[11]["value"] = math.max(Button[11]["value"] - 0.1,0)
-	elseif cmd == "GuiOpacityMore" then
-		Spring.SendCommands("IncGUIOpacity")
-		Button[11]["value"] = math.min(Button[11]["value"] + 0.1,1)
-	elseif cmd == "showInfo" then
-		if Button[12]["click"] then
-			Spring.SendCommands("info 0")
-		else
-			Spring.SendCommands("info 1")
-		end
-	elseif cmd == "waterPrev" then
-		if Button[13]["value"] ~= math.max(Button[13]["value"] - 1,0) then
-			Button[13]["value"] = math.max(Button[13]["value"] - 1,0)
-			Spring.SendCommands("water " .. tonumber(Button[13]["value"]))
-		end
-		InitButtons()
-	elseif cmd == "waterNext" then	
-		if Button[13]["value"] ~= math.min(Button[13]["value"] + 1,4) then
-			Button[13]["value"] = math.min(Button[13]["value"] + 1,4)
-			Spring.SendCommands("water " .. tonumber(Button[13]["value"]))
-		end
-		InitButtons()
-	elseif cmd == "XTA_EngineGraphFirst" then
-		if Button[14]["click"] then
-			Spring.SetConfigInt("XTA_EngineGraphFirst",0)
-		else
-			Spring.SetConfigInt("XTA_EngineGraphFirst",1)
-		end
-	elseif cmd == "disableMoveFailed" then
-		if Button[15]["click"] then
-			Spring.SetConfigInt("XTA_DisableMoveFailedSound",0)
-		else
-			Spring.SetConfigInt("XTA_DisableMoveFailedSound",1)
-		end
-		
-	elseif cmd == "disableMoveFailedText" then
-		if Button[16]["click"] then
-			Spring.SetConfigInt("XTA_DisableMoveFailedText",0)
-		else
-			Spring.SetConfigInt("XTA_DisableMoveFailedText",1)
-		end	
-	elseif cmd == "fullscreen" then
-		if Button[17]["click"] then
-			Spring.SendCommands("fullscreen 0")
-		else
-			Spring.SendCommands("fullscreen 1")
-		end
-	elseif cmd == "blinking" then
-		if Button[18]["click"] then
-			Spring.SendCommands("teamhighlight 0")
-		else
-			Spring.SendCommands("teamhighlight 1")
-		end
-	elseif cmd == "grass" then
-		if Button[19]["click"] then
-			Spring.SetConfigInt("GrassDetail",0)
-		else
-			Spring.SetConfigInt("GrassDetail",1)
-		end
-	elseif cmd == "help" then
-		if Button[20]["click"] then
-			Spring.SetConfigInt("XTA_CommandHelpText",0)
-		else
-			Spring.SetConfigInt("XTA_CommandHelpText",1)
-		end
-	elseif cmd == "noob-buttons" then
-		if Button[21]["click"] then
-			Spring.SetConfigInt("XTA_ShowNoobButtons",0)
-		else
-			Spring.SetConfigInt("XTA_ShowNoobButtons",1)
-		end
-	elseif cmd == "scale-names" then
-		Spring.SendCommands("comnamescale")
-	else
-		Echo("Local command:",cmd)
-	end
-end
-
 --------------------------------------------------------------------------------			 
 -- Callins
 --------------------------------------------------------------------------------
+
+local function DrawRectRound(px,py,sx,sy,cs)
+	gl.TexCoord(0.8,0.8)
+	gl.Vertex(px+cs, py, 0)
+	gl.Vertex(sx-cs, py, 0)
+	gl.Vertex(sx-cs, sy, 0)
+	gl.Vertex(px+cs, sy, 0)
+	
+	gl.Vertex(px, py+cs, 0)
+	gl.Vertex(px+cs, py+cs, 0)
+	gl.Vertex(px+cs, sy-cs, 0)
+	gl.Vertex(px, sy-cs, 0)
+	
+	gl.Vertex(sx, py+cs, 0)
+	gl.Vertex(sx-cs, py+cs, 0)
+	gl.Vertex(sx-cs, sy-cs, 0)
+	gl.Vertex(sx, sy-cs, 0)
+	
+	local offset = 0.07		-- texture offset, because else gaps could show
+	local o = offset
+	-- top left
+	if py <= 0 or px <= 0 then o = 0.5 else o = offset end
+	gl.TexCoord(o,o)
+	gl.Vertex(px, py, 0)
+	gl.TexCoord(o,1-o)
+	gl.Vertex(px+cs, py, 0)
+	gl.TexCoord(1-o,1-o)
+	gl.Vertex(px+cs, py+cs, 0)
+	gl.TexCoord(1-o,o)
+	gl.Vertex(px, py+cs, 0)
+	-- top right
+	if py <= 0 or sx >= vsx then o = 0.5 else o = offset end
+	gl.TexCoord(o,o)
+	gl.Vertex(sx, py, 0)
+	gl.TexCoord(o,1-o)
+	gl.Vertex(sx-cs, py, 0)
+	gl.TexCoord(1-o,1-o)
+	gl.Vertex(sx-cs, py+cs, 0)
+	gl.TexCoord(1-o,o)
+	gl.Vertex(sx, py+cs, 0)
+	-- bottom left
+	if sy >= vsy or px <= 0 then o = 0.5 else o = offset end
+	gl.TexCoord(o,o)
+	gl.Vertex(px, sy, 0)
+	gl.TexCoord(o,1-o)
+	gl.Vertex(px+cs, sy, 0)
+	gl.TexCoord(1-o,1-o)
+	gl.Vertex(px+cs, sy-cs, 0)
+	gl.TexCoord(1-o,o)
+	gl.Vertex(px, sy-cs, 0)
+	-- bottom right
+	if sy >= vsy or sx >= vsx then o = 0.5 else o = offset end
+	gl.TexCoord(o,o)
+	gl.Vertex(sx, sy, 0)
+	gl.TexCoord(o,1-o)
+	gl.Vertex(sx-cs, sy, 0)
+	gl.TexCoord(1-o,1-o)
+	gl.Vertex(sx-cs, sy-cs, 0)
+	gl.TexCoord(1-o,o)
+	gl.Vertex(sx, sy-cs, 0)
+end
+
+local function RectRound(px,py,sx,sy,cs)
+	local px,py,sx,sy,cs = math.floor(px),math.floor(py),math.ceil(sx),math.ceil(sy),math.floor(cs)
+	
+	gl.Texture(bgcorner)
+	gl.BeginEnd(GL.QUADS, DrawRectRound, px,py,sx,sy,cs)
+	gl.Texture(false)
+end
+
+local function DrawBorder(x0, y0, x1, y1, width)
+	return RectRound(x0-1, y0-1, x1+1, y1+1,6) 
+end
 
 local function drawRow(optData,i,lastY)
 	local name = optData["name"]
@@ -1050,16 +842,15 @@ end
 
 local function drawSettings()
 	
-	--background panel
-	gl.Color(cBack)
-	gl.Rect(Panel["main"]["x1"],Panel["main"]["y1"], Panel["main"]["x2"], Panel["main"]["y2"])
+	
 	
 	--border
 	gl.Color(cBorder)
-	gl.Rect(Panel["main"]["x1"]-1,Panel["main"]["y1"], Panel["main"]["x1"], Panel["main"]["y2"])
-	gl.Rect(Panel["main"]["x2"],Panel["main"]["y1"], Panel["main"]["x2"]+1, Panel["main"]["y2"])
-	gl.Rect(Panel["main"]["x1"],Panel["main"]["y1"]-1, Panel["main"]["x2"], Panel["main"]["y1"])
-	gl.Rect(Panel["main"]["x1"],Panel["main"]["y2"], Panel["main"]["x2"], Panel["main"]["y2"]+1)
+	DrawBorder(Panel["main"]["x1"],Panel["main"]["y1"], Panel["main"]["x2"], Panel["main"]["y2"])
+	
+	--background panel
+	gl.Color(cBack)
+	RectRound(Panel["main"]["x1"],Panel["main"]["y1"], Panel["main"]["x2"], Panel["main"]["y2"])
 	
 	-- Heading
 	myFontBig:Begin()
@@ -1081,36 +872,40 @@ local function drawSettings()
 	myFontBig:End()
 	
 	-- other
-	for _,button in ipairs(Button) do
+	for _,button in pairs(Button) do
+		if currentSection == button["section"] then
 		
-		myFont:Begin()
-		if button["mouse"] then
-			myFont:SetTextColor(cLight)
-		else
-			myFont:SetTextColor(cButton)
-		end
-		
-		myFont:Print(button["label"] or "N/A", posX+leftmargin, button["y1"],12,'do')
-		myFont:End()
-		
-		gl.Color(cWhite)
-		
-		if button["divided"] then
-			if button["img"] then
-				gl.Texture(button["img"])
+			myFont:Begin()
+			if button["mouse"] then
+				myFont:SetTextColor(cLight)
 			else
-				gl.Texture(optContrast)
+				myFont:SetTextColor(cButton)
 			end
-		else
-			if button["click"] then
-				gl.Texture(optCheckBoxOn)
+			
+			Echo("Printing:",button,button and button.key)
+			
+			myFont:Print(button["label"] or "N/A", posX+leftmargin, button["y1"],12,'do')
+			myFont:End()
+			
+			gl.Color(cWhite)
+			
+			if button["divided"] then
+				if button["img"] then
+					gl.Texture(button["img"])
+				else
+					gl.Texture(optContrast)
+				end
 			else
-				gl.Texture(optCheckBoxOff)
+				if button["click"] then
+					gl.Texture(optCheckBoxOn)
+				else
+					gl.Texture(optCheckBoxOff)
+				end
 			end
+			
+			gl.TexRect(button["x1"],button["y1"],button["x2"],button["y2"])
+			gl.Texture(false)
 		end
-		
-		gl.TexRect(button["x1"],button["y1"],button["x2"],button["y2"])
-		gl.Texture(false)
 	end
 		
 	--reset state
@@ -1190,7 +985,7 @@ function widget:MouseMove(mx, my, dx, dy, mButton)
 function widget:MousePress(x, y, button)
 	 if button == 1 and (showSettings or showModOptions or showMapOptions) then
 		
-		for _,button in ipairs(Button) do
+		for _,button in pairs(Button) do
 			if IsOnButton(x, y, button["x1"],button["y1"],button["x2"],button["y2"]) then
 				if not button["click"] then
 					PlaySoundFile(sndButtonOn,1.0,0,0,0,0,0,0,'userinterface')
@@ -1212,8 +1007,12 @@ function widget:MousePress(x, y, button)
 						end
 					end
 					InitButtons()
-				else 
-					ButtonHandler(button["command"])
+				else
+					if button.check then
+						button.deaction[1](button.deaction[2])
+					else
+						button.action[1](button.action[2])
+					end
 					button["click"] = not button["click"]
 				end
 				return true
@@ -1272,7 +1071,7 @@ function widget:TweakIsAbove(x,y)
 function widget:TweakMousePress(x, y, button)
 	
 	if button == 1 then
-		for _,button in ipairs(Button) do
+		for _,button in pairs(Button) do
 			if IsOnButton(x, y, button["x1"],button["y1"],button["x2"],button["y2"]) then
 				if not button["click"] then
 					PlaySoundFile(sndButtonOn,1.0,0,0,0,0,0,0,'userinterface')

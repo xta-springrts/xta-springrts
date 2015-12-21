@@ -21,7 +21,7 @@ end
 local spGetGameSeconds      = Spring.GetGameSeconds
 local spGetGameFrame		= Spring.GetGameFrame
 local spGetMouseState       = Spring.GetMouseState
-local spEcho                = Spring.Echo
+local Echo                	= Spring.Echo
 
 local spPlaySoundFile		= Spring.PlaySoundFile
 
@@ -374,15 +374,15 @@ end
 function printDebug( value )
 	if ( debug ) then
 		if ( type( value ) == "boolean" ) then
-			if ( value == true ) then spEcho( "true" )
-				else spEcho("false") end
+			if ( value == true ) then Echo( "true" )
+				else Echo("false") end
 		elseif ( type(value ) == "table" ) then
-			spEcho("Dumping table:")
+			Echo("Dumping table:")
 			for key,val in pairs(value) do 
-				spEcho(key,val) 
+				Echo(key,val) 
 			end
 		else
-			spEcho( value )
+			Echo( value )
 		end
 	end
 end

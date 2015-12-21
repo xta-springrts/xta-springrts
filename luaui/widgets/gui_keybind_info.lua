@@ -343,7 +343,7 @@ function widget:MousePress(x, y, button)
 			showOnceMore = show		-- show once more because the guishader lags behind, though this will not fully fix it
 			show = not show
 		end
-	elseif button == 3 then
+	elseif button == 3 and show then
 		show = not show
 		return true
 	end

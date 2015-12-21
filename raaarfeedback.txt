@@ -1,0 +1,33 @@
+ lightning effects on commander, infantry kbots and some other units are too intense, making the weapons look more powerful than they are
+ 
+- TLL RainMan has a typo in the description, it also has its arm branches made too thin horizontally, looks weird. Should also be classified as "medium" instead of heavy
+ 
+- TLL Ariman should be classified as medium tank instead of heavy tank
+ 
+- TLL Burner script is bugged, tries to restore aim after every shot. Has bug where projectiles disappear mid-air sometimes
+ 
+- TLL Spreader is broken, it consistently shoots past its target and sometimes can't hit it at all
+ 
+- TLL Binder should have cannons consistent with the burner cannon as it shoots similar projectiles. Also it isn't pitching its arms vertically when aiming, and projectile origins are out of position. Has bug where projectiles disappear mid-air sometimes
+ 
+- TLL Troll has a typo in the description
+ 
+- TLL Tic has a typo in the description
+ 
+- TLL Seagull has a typo in the description
+ 
+- TLL Titan has a typo in the description. It's also overpowered
+ 
+- TLL Compressor can overshoot way past its 300 range, although with terrible accuracy, it's broken
+ 
+- TLL Thumper has weird stats and description. It's actually a low dps artillery with very heavy armor.
+ 
+- TLL Roaster has weird stats and description. Its supposed to be a "fortress", but it's not actually heavily armored. It's also looks slightly overpowered. It has energy weapons but doesn't require energy to fire at all
+ 
+- TLL Devastator looks too much like the much weaker Thor's Hammer, or vice versa. Also, the spinning arch intersects the line of fire, which looks weird.
+ 
+- TLL Obliterator is disproportionately powerful for its size, compare to ARM Guardian. The turret should not turn to aim until the
+ 
+- TLL has many flavors of static plasma-like cannons : Happlic, Odin's Mallet, Obliterator, Thor's hammer, and no advanced beam or missile weapons. Maybe one of them can be changed into something else
+ 
+- although it's nice to have blue lasers and plasma effects, some of the missiles being blue and having weird sounds and explosions is excessive and inconsistent
