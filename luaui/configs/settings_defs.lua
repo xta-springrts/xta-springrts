@@ -282,6 +282,15 @@ local Buttons = {
 	},
 	
 	{
+	value			= tonumber(Spring.GetConfigInt("XTA_ShowBallisticTraces") or 0) == 1,
+	key 			= "ballistic",
+	label			= "Attack-AoE: show ballistic traces (can be expensive)",
+	section			= "interface",
+	action			= {Spring.SendCommands,"aoe-ballistic"},
+	deaction		= {Spring.SendCommands,"aoe-ballistic"},
+	},
+	
+	{
 	value			= WG.nameScaling or false,
 	key 			= "scale-names",
 	label			= "Scale commander names to zoom-level:",
@@ -289,6 +298,16 @@ local Buttons = {
 	action			= {Spring.SendCommands,"comnamescale"},
 	deaction		= {Spring.SendCommands,"comnamescale"}, 
 	},
+	
+	{
+	value			= not (WG.fontShadow or false),
+	key 			= "nameshadow",
+	label			= "Draw shadow around commander names:",
+	section			= "interface",
+	action			= {Spring.SendCommands,"comnameshadow"},
+	deaction		= {Spring.SendCommands,"comnameshadow"}, 
+	},
+	
 	
 	{
 	key				= "water",				

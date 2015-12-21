@@ -23,8 +23,10 @@ local scaleFontAmount		= 120
 local fontShadow			= true		-- only shows if font has a white outline
 local shadowOpacity			= 0.35
 
-local font = gl.LoadFont("FreeSansBold.otf", 55, 10, 10)
-local shadowFont = gl.LoadFont("FreeSansBold.otf", 55, 38, 1.6)
+local font					= gl.LoadFont("FreeSansBold.otf", 55, 10, 10)
+local shadowFont 			= gl.LoadFont("FreeSansBold.otf", 55, 38, 1.6)
+local noShadowFont			= gl.LoadFont("FreeSansBold.otf", 55, 0, 0)
+local myFont				= font
 
 local haveZombies 		  	= (tonumber((Spring.GetModOptions() or {}).zombies) or 0) == 1
 local isDecoyStart		  	= false
@@ -128,17 +130,20 @@ local function createComnameList(attributes)
 			  shadowFont:End()
 			  glTranslate(0, (fontSize/44), 0)
 			end
-			font:SetTextColor(outlineColor)
-			font:SetOutlineColor(outlineColor)
 			
-			font:Print(attributes[1], -(fontSize/38), -(fontSize/33), fontSize, "con")
-			font:Print(attributes[1], (fontSize/38), -(fontSize/33), fontSize, "con")
+			myFont:SetTextColor(outlineColor)
+			myFont:SetOutlineColor(outlineColor)
+			local attrib = fontShadow and "con" or "csn"
+			
+			myFont:Print(attributes[1], -(fontSize/38), -(fontSize/33), fontSize, attrib)
+			myFont:Print(attributes[1], (fontSize/38), -(fontSize/33), fontSize, attrib)
+			
 		end
-		font:Begin()
-		font:SetTextColor(attributes[2])
-		font:SetOutlineColor(outlineColor)
-		font:Print(attributes[1], 0, 0, fontSize, "con")
-		font:End()
+		myFont:Begin()
+		myFont:SetTextColor(attributes[2])
+		myFont:SetOutlineColor(outlineColor)
+		myFont:Print(attributes[1], 0, 0, fontSize, "con")
+		myFont:End()
 	end)
 end
 
@@ -216,7 +221,8 @@ function CheckAllComs()
 end
 
 function widget:Initialize()
-	
+	widgetHandler:AddAction("comnamescale", toggleNameScaling)
+	widgetHandler:AddAction("comnameshadow", toggleNameShadow)
 	isDecoyStart = modOptions and modOptions.commander == "decoystart"
 	
 	for i=1, #UnitDefs do
@@ -228,6 +234,11 @@ function widget:Initialize()
 	end
 	
 	CheckAllComs()
+end
+
+function widget:Shutdown()
+	widgetHandler:RemoveAction("comnamescale")
+	widgetHandler:RemoveAction("comnameshadow")
 end
 
 -- doesnt get triggered anymore!?
@@ -258,22 +269,48 @@ function widget:UnitEnteredLos(unitID, unitTeam, allyTeam, unitDefID)
 	CheckCom(unitID, unitDefID, unitTeam)
 end
 
+function UpdateDrawList()
+	comnameList = {}
+end
 
 function toggleNameScaling()
 	nameScaling = not nameScaling
 	WG.nameScaling = nameScaling
 end
 
-function widget:GetConfigData()
-    return {
-        nameScaling = nameScaling
-    }
+function toggleNameShadow()
+	fontShadow = not fontShadow
+	WG.fontShadow = fontShadow
+	if fontShadow then
+		myFont = font
+		fontSize = 15
+	else
+		myFont = noShadowFont
+		myFont:SetAutoOutlineColor(true)
+		fontSize = 6
+		
+	end
+	UpdateDrawList()
+	CheckAllComs()
+end
+
+function widget:GetConfigData() --save
+    return 
+		{
+        nameScaling = nameScaling,
+		fontShadow = fontShadow,
+		}
 end
 
 function widget:SetConfigData(data) --load config
-	widgetHandler:AddAction("comnamescale", toggleNameScaling)
+	
 	if data.nameScaling ~= nil then
 		nameScaling = data.nameScaling
 		WG.nameScaling = nameScaling
+	end
+	
+	if data.fontShadow ~= nil then
+		fontShadow = data.fontShadow
+		WG.fontShadow = fontShadow
 	end
 end

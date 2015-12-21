@@ -24,13 +24,19 @@
 --- Do not remove
 --- Changelog processing starts here
 
-XTA 9.751 (Git 974)
+XTA 9.751 (Git 977)
 |jls
+21/12/2015
 
-Fixes
+Enhancements:
+* Add keybinds reference to in-game ui
+* Add command reference to in-game ui and standardise some widget commands
+* Rewritten xta settings menu
 
-* Add command reference to ingame-ui and standardise some widget commands
+Fixes:
+
 * Make Attack-AoE widget ballistic tracing optional and default off (fps costly)
+* Make commander nametags widget also have an option to turn off shadows (in menu)
 
 
 

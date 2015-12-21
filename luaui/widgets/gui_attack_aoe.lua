@@ -585,10 +585,11 @@ function widget:KeyPress()
 end
 
 function widget:Initialize()
-  for unitDefID, unitDef in pairs(UnitDefs) do
-    SetupUnitDef(unitDefID, unitDef)
-  end
-  SetupDisplayLists()
+	enableBallistic = tonumber(Spring.GetConfigInt("XTA_ShowBallisticTraces") or 0) == 1
+	for unitDefID, unitDef in pairs(UnitDefs) do
+		SetupUnitDef(unitDefID, unitDef)
+	end
+	SetupDisplayLists()
 end
 
 function widget:Shutdown()
@@ -689,8 +690,10 @@ function widget:TextCommand(command)
 		enableBallistic = not enableBallistic
 		if enableBallistic then
 			Echo("Attack AoE: trace ballistic impact points")
+			Spring.SetConfigInt("XTA_ShowBallisticTraces",1)
 		else
 			Echo("Attack AoE: disable ballistic impact points tracing")
+			Spring.SetConfigInt("XTA_ShowBallisticTraces",0)
 		end
 	end
 end
@@ -700,3 +703,13 @@ function widget:GameOver()
 	widgetHandler:RemoveWidget()
 	return
 end
+
+
+------------------------------------------------------------
+-- Config
+------------------------------------------------------------
+
+function widget:SetConfigData(data)      -- load
+	
+end
+------------------------------------------------------------------------
