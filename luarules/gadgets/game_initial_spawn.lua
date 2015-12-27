@@ -138,7 +138,8 @@ end
 function gadget:RecvLuaMsg(msg, playerID)
 	local STATEMSG = "181072"
 	local COMMMSG = "\177"
-	
+	local AIMSG = "231689123"
+		
 	if msg:sub(1,#STATEMSG) == STATEMSG then
 		local sms = string.sub(msg, string.len(STATEMSG)+1) 
 		local state = tonumber(string.sub(sms,1,1))			
@@ -165,6 +166,16 @@ function gadget:RecvLuaMsg(msg, playerID)
 				return true
 			end
 		end
+	elseif msg:sub(1,#AIMSG) == AIMSG then
+		local sms = msg:sub(#(AIMSG)+1)
+		local separationInd = sms:find(":")
+				
+		if not separationInd then return end
+		
+		local teamID = tonumber(sms:sub(1,separationInd-1))
+		local shortName = tostring(sms:sub(separationInd+1))
+				
+		Spring.SetGameRulesParam("AI-Name"..teamID,shortName) 
 	end
 end
 

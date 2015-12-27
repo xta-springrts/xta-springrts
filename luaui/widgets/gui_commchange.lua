@@ -62,10 +62,10 @@ commanderID["arm_automatic"] 	= UnitDefNames["arm_commander"].id
 commanderID["arm_manual"] 		= UnitDefNames["arm_u0commander"].id
 commanderID["core_automatic"]	= UnitDefNames["core_commander"].id
 commanderID["core_manual"] 		= UnitDefNames["core_u0commander"].id
-commanderID["lost_automatic"]	= UnitDefNames["lost_commander"].id
-commanderID["lost_manual"] 		= UnitDefNames["lost_u0commander"].id
-commanderID["guardian_automatic"]	= UnitDefNames["guardian_commander"].id
-commanderID["guardian_manual"] 		= UnitDefNames["guardian_u0commander"].id
+commanderID["lost_automatic"]	= (UnitDefNames["lost_commander"] or {}).id
+commanderID["lost_manual"] 		= (UnitDefNames["lost_u0commander"] or {}).id
+commanderID["guardian_automatic"]	= (UnitDefNames["guardian_commander"] or {}).id
+commanderID["guardian_manual"] 		= (UnitDefNames["guardian_u0commander"] or {}).id
 
 -- sound
 local bell = 'sounds/bell.ogg'
@@ -143,6 +143,7 @@ local PRESENT,MARKED,OTHER,READY,MISSING 	= 0,1,2,3,-1
 --font
 local myFont	 							= gl.LoadFont("FreeSansBold.otf",th3, 1.9, 40)
 local myFontHuge							= gl.LoadFont("FreeSansBold.otf",60, 1.9, 40)
+local bgcorner								= "luaui/images/bgcorner.png"
 local hasSentStartMsg	 					= false
 local isTLL									= false
 local isGOK									= false
@@ -292,22 +293,24 @@ local function updateSize()
 	end
 	
 	if Spring.IsReplay() then
-		n = 0
+		
 		for i, pID in pairs(Spring.GetPlayerList()) do
 			local _,_,isSpec = Spring.GetPlayerInfo(pID)
 			if not isSpec then
 				if not playerStates[pID] then
 					playerStates[pID] = "missing"
 				end
-				n = n + 1
 			end
 		end
 		
+		n = #(teamList)-1
+		
 		sizex = 380
-		sizey = 80 + 20 * (n+2) -- add extra free row
+		sizey = 50 + 20 * (n+2) -- add extra free row
 	end
 	--buttons:
 	initButtons()
+	
 end
 
 local function updateStates()
@@ -343,6 +346,76 @@ end
 
 local function playSound(snd)
 	PlaySoundFile(snd)
+end
+
+local function DrawRectRound(px,py,sx,sy,cs)
+	gl.TexCoord(0.8,0.8)
+	gl.Vertex(px+cs, py, 0)
+	gl.Vertex(sx-cs, py, 0)
+	gl.Vertex(sx-cs, sy, 0)
+	gl.Vertex(px+cs, sy, 0)
+	
+	gl.Vertex(px, py+cs, 0)
+	gl.Vertex(px+cs, py+cs, 0)
+	gl.Vertex(px+cs, sy-cs, 0)
+	gl.Vertex(px, sy-cs, 0)
+	
+	gl.Vertex(sx, py+cs, 0)
+	gl.Vertex(sx-cs, py+cs, 0)
+	gl.Vertex(sx-cs, sy-cs, 0)
+	gl.Vertex(sx, sy-cs, 0)
+	
+	local offset = 0.07		-- texture offset, because else gaps could show
+	local o = offset
+	-- top left
+	if py <= 0 or px <= 0 then o = 0.5 else o = offset end
+	gl.TexCoord(o,o)
+	gl.Vertex(px, py, 0)
+	gl.TexCoord(o,1-o)
+	gl.Vertex(px+cs, py, 0)
+	gl.TexCoord(1-o,1-o)
+	gl.Vertex(px+cs, py+cs, 0)
+	gl.TexCoord(1-o,o)
+	gl.Vertex(px, py+cs, 0)
+	-- top right
+	if py <= 0 or sx >= vsx then o = 0.5 else o = offset end
+	gl.TexCoord(o,o)
+	gl.Vertex(sx, py, 0)
+	gl.TexCoord(o,1-o)
+	gl.Vertex(sx-cs, py, 0)
+	gl.TexCoord(1-o,1-o)
+	gl.Vertex(sx-cs, py+cs, 0)
+	gl.TexCoord(1-o,o)
+	gl.Vertex(sx, py+cs, 0)
+	-- bottom left
+	if sy >= vsy or px <= 0 then o = 0.5 else o = offset end
+	gl.TexCoord(o,o)
+	gl.Vertex(px, sy, 0)
+	gl.TexCoord(o,1-o)
+	gl.Vertex(px+cs, sy, 0)
+	gl.TexCoord(1-o,1-o)
+	gl.Vertex(px+cs, sy-cs, 0)
+	gl.TexCoord(1-o,o)
+	gl.Vertex(px, sy-cs, 0)
+	-- bottom right
+	if sy >= vsy or sx >= vsx then o = 0.5 else o = offset end
+	gl.TexCoord(o,o)
+	gl.Vertex(sx, sy, 0)
+	gl.TexCoord(o,1-o)
+	gl.Vertex(sx-cs, sy, 0)
+	gl.TexCoord(1-o,1-o)
+	gl.Vertex(sx-cs, sy-cs, 0)
+	gl.TexCoord(1-o,o)
+	gl.Vertex(sx, sy-cs, 0)
+end
+		
+function RectRound(px,py,sx,sy,cs)
+	cs = cs or 6
+	local px,py,sx,sy,cs = math.floor(px),math.floor(py),math.ceil(sx),math.ceil(sy),math.floor(cs)
+	
+	gl.Texture(bgcorner)
+	gl.BeginEnd(GL.QUADS, DrawRectRound, px,py,sx,sy,cs)
+	gl.Texture(false)
 end
 
 local function drawBorder(x0, y0, x1, y1, width)
@@ -678,21 +751,21 @@ function widget:DrawScreenEffects(vsx, vsy)
 		-- Highlight
 		glColor(cLight)
 		if Button["arm"]["On"] then
-			glRect(Button["arm"]["x0"],Button["arm"]["y0"], Button["arm"]["x1"], Button["arm"]["y1"])
+			RectRound(Button["arm"]["x0"],Button["arm"]["y0"], Button["arm"]["x1"], Button["arm"]["y1"])
 		elseif Button["core"]["On"] then
-			glRect(Button["core"]["x0"],Button["core"]["y0"], Button["core"]["x1"], Button["core"]["y1"])
+			RectRound(Button["core"]["x0"],Button["core"]["y0"], Button["core"]["x1"], Button["core"]["y1"])
 		elseif Button["lost"]["On"] then
-			glRect(Button["lost"]["x0"],Button["lost"]["y0"], Button["lost"]["x1"], Button["lost"]["y1"])
+			RectRound(Button["lost"]["x0"],Button["lost"]["y0"], Button["lost"]["x1"], Button["lost"]["y1"])
 		elseif Button["guardian"]["On"] then
-			glRect(Button["guardian"]["x0"],Button["guardian"]["y0"], Button["guardian"]["x1"], Button["guardian"]["y1"])
+			RectRound(Button["guardian"]["x0"],Button["guardian"]["y0"], Button["guardian"]["x1"], Button["guardian"]["y1"])
 		elseif Button["ready"]["On"] then
-			glRect(Button["ready"]["x0"],Button["ready"]["y0"], Button["ready"]["x1"], Button["ready"]["y1"])
+			RectRound(Button["ready"]["x0"],Button["ready"]["y0"], Button["ready"]["x1"], Button["ready"]["y1"])
 		elseif Button["info"]["On"] and myState ~= READY then
-			glRect(Button["info"]["x0"],Button["info"]["y0"], Button["info"]["x1"], Button["info"]["y1"])
+			RectRound(Button["info"]["x0"],Button["info"]["y0"], Button["info"]["x1"], Button["info"]["y1"])
 		elseif Button["exit"]["On"] then
-			glRect(Button["exit"]["x0"],Button["exit"]["y0"], Button["exit"]["x1"], Button["exit"]["y1"])
+			RectRound(Button["exit"]["x0"],Button["exit"]["y0"], Button["exit"]["x1"], Button["exit"]["y1"])
 		elseif Button["duck"]["On"] then
-			glRect(Button["duck"]["x0"],Button["duck"]["y0"], Button["duck"]["x1"], Button["duck"]["y1"])
+			RectRound(Button["duck"]["x0"],Button["duck"]["y0"], Button["duck"]["x1"], Button["duck"]["y1"])
 		end
 		glColor(cWhite)
 	elseif not gameOver then
@@ -713,7 +786,7 @@ function widget:DrawScreenEffects(vsx, vsy)
 end
 
 function widget:DrawScreen()
-	if IsGUIHidden() or gameStarted then return end
+	if IsGUIHidden() or gameStarted or gameOver then return end
 	
 	local function firstToUpper(str)
 		return (str:gsub("^%l", string.upper))
@@ -865,10 +938,18 @@ function widget:DrawScreen()
 								pCount = pCount + 1 
 							end
 						end
-						
+												
 						if pCount > 1 then isComShare = true end
 						
-						if isAI then leaderName = "AI: "..aiShortName end
+						if isAI then 
+							local remoteName = Spring.GetGameRulesParam("AI-Name"..tID) or "(remote)"
+							if (not shortName) or (shortName == "") or shortName:find("KNOWN") then
+								leaderName = "AI: " .. remoteName 
+							else
+								leaderName = "AI: " .. (shortName or "?")
+							end				
+						end
+						
 						if isComShare then leaderName = leaderName .. "+" end
 						
 						teamSkill = skill and teamSkill + skill or teamSkill

@@ -21,122 +21,126 @@
     ÈÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ¼
     Logo by ElementalGizmo
 
-------------------- Change Log of XTA 9.75 Svn 877
+--- Do not remove
+--- Changelog processing starts here
+
+XTA 9.751 (Git 977)
+|jls
+21/12/2015
+
+Enhancements:
+* Add keybinds reference to in-game ui
+* Add command reference to in-game ui and standardise some widget commands
+* Rewritten xta settings menu
+
+Fixes:
+
+* Make Attack-AoE widget ballistic tracing optional and default off (fps costly)
+* Make commander nametags widget also have an option to turn off shadows (in menu)
+
+
+
+XTA 9.75 (Git 970)
+|jls,nor
+18/12/2015
+
 
 New:
-------------
  * New Faction: The Lost Legacy by Noruas. Available as modoption with choose commander widget.
  * Preview of new faction: The Guardians of Kadesh, also by Noruas. Only T1 curently available.
  
- Story of the Lost Legacy (from http://www.tauniverse.com/forum/showthread.php?t=12015):
+Story of the Lost Legacy:
  
-ACT I: The crash. 
+ACT I: The crash.
 
-After hundreds of years spent in cryogenic hibernation, the imperial colonization 
-fleet of humatran had finally arrived at destination: The first system of the edge 
-of the closest galaxy. The life systems were reactivated in each starship and vessel 
-and all the crews began with being awoken when the external warning systems are activated.
-The star of the system that they had chosen as destination was in its final phase of life, 
-and well before what they had provided before their departure. 
-At once the emergency plan of launched repatriation. But too late, the bad luck was 
-still on them, the star began its explosion... 
+After hundreds of years spent in cryogenic hibernation, the imperial colonization fleet of humatran had finally arrived at destination: The first system of the edge of the closest galaxy. The life systems were reactivated in each starship and vessel and all the crews began with being awoken when the external warning systems are activated. The star of the system that they had chosen as destination was in its final phase of life, and well before what they had provided before their departure. 
+At once the emergency plan of launched repatriation. But too late, the bad luck was still on them, the star began its explosion... 
 
-A ray of a sharp red put to shine in all space around them. Panic seized each one and 
-each spaceship started to operate in order to be the first to set out again. The small vessels, 
-lighter and more handy, were already in the axis of return and had begun to accelerate, 
-while largest like, the flagships hardly came to start his turn. When the first wave of 
-the explosion reached the fleet, the lightest vessels were at once to sweep like simple sheets 
-with the wind, while the majority of largest started with disintagrate slowly. Luckiest 
-of these had begun the phase of acceleration by choosing other axes of folds, 
-when the second and last blast reached the fleet... 
+A ray of a sharp red put to shine in all space around them. Panic seized each one and each spaceship started to operate in order to be the first to set out again. The small vessels, lighter and more handy, were already in the axis of return and had begun to accelerate, while largest like, the flagships hardly came to start his turn. When the first wave of the explosion reached the fleet, the lightest vessels were at once to sweep like simple sheets with the wind, while the majority of largest started with disintagrate slowly. Luckiest of these had begun the phase of acceleration by choosing other axes of folds, when the second and last blast reached the fleet... 
 
-The fleet was almost destroyed by this second deadly blast, the vessels which survived there 
-were only one handle and the state of each one of them be pitiful. Only one could still 
-make fully function its engines and immediately undertook operations of accostings to 
-rescue the crew of the other mostly destroyed ships. But the return in their galaxy was 
-impossible, all auto-navigation systems were out of oder like all the communication systems. 
-Their only hope, quite mean, was to find a planet to be able to settle there as they would 
-have to do it but under other conditions. 
+The fleet was almost destroyed by this second deadly blast, the vessels which survived there were only one handle and the state of each one of them be pitiful. Only one could still make fully function its engines and immediately undertook operations of accostings to rescue the crew of the other mostly destroyed ships. But the return in their galaxy was impossible, all auto-navigation systems were out of oder like all the communication systems. Their only hope, quite mean, was to find a planet to be able to settle there as they would have to do it but under other conditions. 
 
-They spent the whole months in space in the search of a planet to enable them to live, 
-when finally they approached the first whose characteristics was not completely hostile. 
-In any event they did not have the choice because the food were insufficient to continue 
-and the life on board man-of-war was uncomfortable and became insuportable. When the vessel 
-entering the atmosphere began its landing operation, the undergone damages were much more 
-serious than envisaged. The control sytems in atmosphere burnt the ones after the others 
-and the crash of the vessel was sure... The crew did run in all rescue pods. The vessel 
-released plenty thus small pods which moved towards the surface of planet with softness 
-while it continued its infernal descent. 
+They spent the whole months in space in the search of a planet to enable them to live, when finally they approached the first whose characteristics was not completely hostile. In any event they did not have the choice because the food were insufficient to continue and the life on board man-of-war was uncomfortable and became insuportable. When the vessel entering the atmosphere began its landing operation, the undergone damages were much more serious than envisaged. The control sytems in atmosphere burnt the ones after the others and the crash of the vessel was sure... The crew did run in all rescue pods. The vessel released plenty thus small pods which moved towards the surface of planet with softness while it continued its infernal descent. 
 
 ACT II: Birth of a giant. 
 
-The first members of crew whose landed pods had already begun their new life on this planet 
-of the hundreds of survivors gathered for origaniser the localization and the search for 
-their vessel. When they arrived on the place of the crash, there remained only burning sheets 
-on the ground. It remain to them nothing!!! No more space transports, neither 
-communication systems, nor tools. They were all to rebuild, all to rediscover, all relearn... 
-But life taken again well quickly... 
+The first members of crew whose landed pods had already begun their new life on this planet of the hundreds of survivors gathered for origaniser the localization and the search for their vessel. When they arrived on the place of the crash, there remained only burning sheets on the ground. It remain to them nothing!!! No more space transports, neither communication systems, nor tools. They were all to rebuild, all to rediscover, all relearn... But life taken again well quickly... 
 
-A few hundred years later, the following generations which had colonized the planet, 
-rebuilt all the technology of which old theirs had transmitted the knowledge and the plans 
-to through the few holodisk ones. They relearned to travel trough space and leave to conquer 
-the galaxy. They meet other civilizations, of which some had common ancestors, "travellers 
-of stars" as called them by still primitive tribes which were descandant of other vessels 
-which had not been able to join their galaxy of origin... 
+A few hundred years later, the following generations which had colonized the planet, rebuilt all the technology of which old theirs had transmitted the knowledge and the plans to through the few holodisk ones. They relearned to travel trough space and leave to conquer the galaxy. They meet other civilizations, of which some had common ancestors, "travellers of stars" as called them by still primitive tribes which were descandant of other vessels which had not been able to join their galaxy of origin... 
 
-The hostile meetings also multiplied and the wars were not rare. The pacts of peace, 
-the treaties of alliance or civilizations extraterrestrial which were integrated into 
-their, contributed to reinforce their force, their capacity, their knowledge and their 
-technology. Their power and them influance on the galaxy, made only grow. When the moment 
-had come they think to find their lost Legacy, their civilization of origin of which 
-they had been cut for a long time... 
+The hostile meetings also multiplied and the wars were not rare. The pacts of peace, the treaties of alliance or civilizations extraterrestrial which were integrated into their, contributed to reinforce their force, their capacity, their knowledge and their technology. Their power and them influance on the galaxy, made only grow. When the moment had come they think to find their lost Legacy, their civilization of origin of which they had been cut for a long time... 
 
-Not having any report/ratio coming from the probes which they had sent 
-they envoy a large fleet of reconquer. This new fleet of return to their galaxy of origin 
-began to start through space and travelled during years... But what they found while 
-arriving in this galaxy was very far from being as what reported the old men holidisks... 
-The planets were devastated by wars whose forces could be only of galactic size. 
-The surface of each planet which they visited were completely destroyed. 
-no more resources, nor trace of life, only of the traces of violent wars and dead civilizations. 
-no more sign of their civilization mother. The first meeting with the forces armed with 
-the two camps in war was far from being peaceful because each one saw in them a potential danger, 
-a trick of the enemy, and thus was to thus treat them as enemies. 
+Not having any report/ratio coming from the probes which they had sent they envoy a large fleet of reconquer. This new fleet of return to their galaxy of origin began to start through space and travelled during years... But what they found while arriving in this galaxy was very far from being as what reported the old men holidisks... The planets were devastated by wars whose forces could be only of galactic size. The surface of each planet which they visited were completely destroyed. no more resources, nor trace of life, only of the traces of violent wars and dead civilizations. no more sign of their civilization mother. The first meeting with the forces armed with the two camps in war was far from being peaceful because each one saw in them a potential danger, a trick of the enemy, and thus was to thus treat them as enemies. 
 
 These quarrelsome forces bore the name of the CORE and the ARM... 
 
 ACT III: The lost Legacy. 
 
-
 Changes:
-----------------
  * Doomsday weapon 3 is now red instead of green and shoots 25% more often, but deals 25% less damage, so same dps
  * Triton, Crock, Garpike and Crabe cannot anymore climb steep cliffs on land, only in water.
 
 Enhancements:
---------------
- * Add 'o' as shortcut to rotate buildings (is in oldchatkeys widget)
- * Add small splash when aerial tordedo enters water surface
+ * Add 'o' as shortcut to rotate buildings (is in cmd_customkeys widget)
+ * Add small splash when aerial torpedo enters water surface
  * New commander sounds and fixes to old ones.
  * Add originally aired date to show when starting to view replay.
  * Add Map options to simple menu
+ * Initial queue widget: add UI command: "/hideonstart" or "/hideonstart 1" for hiding build menu when game begins (default), or "hideonstart 0" or "/hideonstart off" to not do that.
+* Make zombie commanders cloak if enough energy stored and produced.
+ * New LUPS effects
+ * Detect easter and provide easter eggs automatically
+ * Add originally aired date to replays
+ * Add widget that draws different anti range colour depending on stockpile
+ * 'Raven'-award for successful comnap
+ * Show mexes that will be upgraded with a light blue box around when holding shift
+ * Add a command to interactively update draw and rotate keys with the command /setkeys. Also as option in menu.
+ * Update lups from anno 2008 to anno 2014
+ * Add back fleabowl stuff, since it's now working. Some desyncs were reported but they have not been reproduced for a while.
+ * Add desync warning widget.
+ * Add unit search tool widget and bind it to ctrl-F
+ * Add red console. Update red framework and drawing
+ * Add a better gui to the distributed guard commands (area guard with alt/ctrl pressed)
+ * Add the night widget and ctrlpanel improved gui widgets.
+ * Add red minimap widget and red build/order menu widget
+ * Add changelog info widget. Shows this log in-game.
+ * Replace widget selector with an impwroved one
+ * Replaced sharp edges on many widget windows with rounded ones.
+ * New commander name tags widget that has option to scale names with zoom-level.
  
+
 Fixes:
-------
  * Decrease volume of Core Mobile artillery (Pillager) wreck to match smaller new model
- * Disable 'Offer draw' for spectators
  * Fix error spam in zombie mode when KOTH is not enabled
  * Fix incorrect position of Core Gaat gun wreck
  * Fix error in initial queue widget that sometimes changed faction when not requested
  * Button to offer draw in menu is disabled for spectators
- 
- 
-------------------- Change Log of XTA 9.745 Svn 823
+ * Fix bug where arm Thunder  loses LOS and Air-LOS when one of them is killed by flakker.
+ * Fix air repair pads not repairing and make land repair pads repair 50% faster to promote them.
+ * Fix bug where some aircraft couldn't move to air repair pads. It was due to brakerate being too high. Reduce bombers' brakerates further by 90% to make them not stop directly. 
+ * Don't show geo marker for already built geos.
+ * Set flight time = 2.5 for some missiles (4 of them, samson, jethro etc)
+ * Fix gadget error (and one similar in a widget) from bad game version check. This is the only problem when running older version of xta with spring 100 or newer.
+ * Fix stuck on 'DRAW'-screen if server shuts down too soon
+
+
+
+XTA 9.746 (Git 948, Svn 971)
+|jls
+7/12/2015
+
+ * Fast (non-advertised) release to make rapid work with git
+ * Git release 948 corresponds to subversion release 971
+
+
+XTA 9.745 (Svn 823)
+|jls
+7/11/2014
+
 Balance changes:
-----------------
  * Arm Lancet and Core Titan: increased area of effect from 16 => 48, same default damage (1200/1250) but more damage vs ships (1800/1900) and large ships (2100/2200). Visually the torpedo explosions are also larger (same as adv torpedoes). These planes are almost never used because Arm Albatross and Core Typhoon are usually better options and will probably still be so.
 
- Enhancements:
---------------
+Enhancements:
  * Add simple menu with basic content that can be reached graphically
  * Add factory stuck notification widget
  * Add Ecostats widget
@@ -144,8 +148,7 @@ Balance changes:
  * Add widget that enables old chat keys (alt+return = ally chat, shift+return = spectator chat)
  * Add widget that (probably) prevents the 'getting stuck in draw mode'-bug 
 
- Fixes:
---------
+Fixes:
  * Make land pelican amphibious to fix pathfinding issue (it's still a kbot while on land)
  * Fix error spam when core construction sub dies
  * Fix projectile lights widget to use less memory
@@ -154,11 +157,12 @@ Balance changes:
  * Fix reload bar on some units with long reload time
  * Fix stuck hurry-up text in KoTH mode
  
-------------------- Change Log of XTA 9.744 Svn 799
 
- Enhancements:
---------------
+XTA 9.744 (Svn 799)
+|jls
+6/10/2014
 
+Enhancements:
  * Make it possible to morph while transported
  * Add widget that lets users see energy overview and management, bound by default to Ctrl-E
  * Improve D-Gun unstall widget to not stop repairing builders and to also stop mohos and metal makers
@@ -168,8 +172,7 @@ Balance changes:
  * Add buildpower and firepower graphs so that player's can keep track of these important game variables
  * Add buttons to initial queue to queue morph and sing commands
  
- Fixes:
---------
+Fixes:
  * Performance fixes and improvements of widgets and gadgets for spring 98
  * KOTH: let ships also control box
  * Zombies: Remove guard command if zombie that was guarded by another zombie is captured to another team
@@ -182,27 +185,25 @@ Balance changes:
  * modoption rename: kingofthehill => koth
  * First to lose commander award (Ephemeron) requires 4 players
   
-	
-------------------- Change Log of XTA 9.743 Svn 762
------------------- by Jools
 
- Changes:
- 
+XTA 9.743 (Svn 762)
+|jls
+13/09/2014
+
+Changes: 
   * Initial queue widget was not included after all in XTA 9.742
 
-------------------- Change Log of XTA 9.742 Svn 761
------------------- by Jools
-- Enhancements:
----------------
+
+XTA 9.742 (Svn 761)
+|jls
+13/09/2014
+
+Enhancements:
   * New lights for metal makers when operating
-  * Add back on/off button for metal makers and manual mode button. You can either continue operating metal makers just
-    as before with a central command, or operate part of them manually, or completely switch off energy conversion widget and
-	operate all manually, like before before. The widget will show energy conversion of the managed metal makers.
-  * Zombie commander sometimes tries to d-gun enemies
-  
+  * Add back on/off button for metal makers and manual mode button. You can either continue operating metal makers just as before with a central command, or operate part of them manually, or completely switch off energy conversion widget and operate all manually, like before before. The widget will show energy conversion of the managed metal makers.
+  * Zombie commander sometimes tries to d-gun enemies  
    
-- Fixes:
---------
+Fixes:
   * Fix packet spam at game start
   * Fix metal makers not starting due to gadget error
   * Set zombie units without weapons as neutral
@@ -211,22 +212,21 @@ Balance changes:
   * Many other small fixes
   * Fix initial queue widget listening to other people's side change commands
   * Fixed bug in mousecursors widget when hovering over unknown unit
-	
-	
-------------------- Change Log of XTA 9.741 Svn 750
------------------- by Jools, Kloot
-- Enhancements:
----------------
+
+
+XTA 9.741 (Svn 750)
+|jls,klt
+08/09/2014
+
+Enhancements:
  * Make KOTH mode compatible with zombie mode, display koth box on minimap. Zombies can also win in koth mode.
  * More commander sounds
  * Don't show dynamic lights for intercepted nukes
- * Add awards tab to endstats, help us by suggesting more awards and/or better badges for them
-	- currently there are 3 awards: 1) most kills 2) first to go t2 and 3) first to get commander killed
-* Some more fixes and improvements for zombies, for example now their factories make random stuff and the can form a
+ * Add awards tab to endstats, help us by suggesting more awards and/or better badges for them currently there are 3 awards: 1) most kills 2) first to go t2 and 3) first to get commander killed
+ * Some more fixes and improvements for zombies, for example now their factories make random stuff and the can form a
    squad and attack a random position if they are many
    
-- Fixes:
---------
+Fixes:
  * Fix zombie units being neutral -> not neutral, so they are automatically targetted
  * Fix lua error in voting screen
  * Fix lua error when abandoned commander is killed
@@ -235,124 +235,137 @@ Balance changes:
  * Remove blinking units on minimap (their icons sometimes became invisible)
  * Fix bug in energy conversion gadget
  
- -Widgets: 
- ---------
+ Widgets:
  * Make commander visual warning movable while displayed and also default disabled
- * Improved initial queue, now works with keybinds in uikeys.txt and has a nicer menu and less bugs (although
-	it could still sometimes cause the dreaded white build menu bug, or is suspected to do)
+ * Improved initial queue, now works with keybinds in uikeys.txt and has a nicer menu and less bugs (although it could still sometimes cause the dreaded white build menu bug, or is suspected to do)
  * Fix wrong statistic display ally resource bars widget and make it movable like other ones with right mb, make bars 
    thicker or thinner depending on player's storage capacity.
  * Add new mode to factory guard widget: now a portion of builders can be allowed to pass through the factory guard 
    orders. Portion can be adjusted between 0, 25, 50, 75 and 100 % in factory buildmenu.
  * Add progress bar indicator to replaybuttons widget   
 
- 
-------------------- Change Log of XTA 9.74 Svn 718
------------------- by Jools and Noruas
-- No balance changes
-- Enhancements:
+
+XTA 9.74 (Svn 718)
+|jls,nor
+29/05/2014
+
+Balance changes: 
+  * None
+
+Enhancements:
   * Tortoises: Remove Caliber (broken), add mobile Air repair pad tortoise and walking bomb variant. 
   * Make units that are attacked blink for 3 seconds on minimap
   * Add location based spam filter to units under attack widget
   * Add ready state indicator to advanced playlist. Colours used are same as in other xta widgets but differ from ba ones.
   * Add commander under attack visual warning for Cirakon
   * Performance improvement by making buildspeed gadget optional
-- Fixes:
+
+Fixes:
   * Set old unit's kill score to 0 after it has morphed to new unit
   * Fix error that Intimidator was missing from buildmenu of adv. construction vehicle
   * Fix rapier and brawler targetting issues
   * Fix some xtaids buildpictures that were missing
   * Decrease critter squawk volumes
   * Fixes zombie mode to not spawn zombies when unfinished units die, when units are dgunned, reclaimed or when morphing
--Widgets: 
+
+Widgets: 
   * Fix bug in adv.playerslist showing dropped players as dead
   * Enhance xta defenceranges and add textcommand: <hide/show> ui with /defrange <hide/show>. Toggle <on/off> <ground/air/nuke> ranges with command /defrange <ground/air/nuke> <on/off> (or <+/-> or <show/hide>).
   * Improve smart area reclaim widget: now it excludes dt:s and fortwalls unless you press alt while giving command or point specifically at that type of unit
   * Modernise font handling in volume OSD widget
-  * Allyresourcebars widget: show all players when spectating with command "/allyres showall", show only team allies with command 
-	"/allyres team"
-- Remove easter eggs (buhuuuu)		
-	
-------------------- Change Log of XTA 9.739 Svn 674
------------------- by Jools		
-- Fix slow brakerate of transports
-- Increased tolerance and max fire angle (52 -> 64 degrees, or 26 -> 32 per side) of core rapier to help it overcome targetting issues
-  on steep slopes, which arm brawler didn't have in spite of similar values of those parameters.
-- Reduce arm zeus hp 4200 -> 3800
-- arm/core torpedo launcher: double damage and increase reloadtime from 3.0 to 5.0.
-- Increase t2 sub's damage against other subs by 20 %, because otherwise t1 sub would deal more dps per build cost
-- Increase slope tolerance of metal makers, solars, windgens, storages 10 -> 15 degrees, and t1 metal extractors 14 -> 18 degrees.
-- Fix team commander ends fault in games with more than 2 teams
-- Remove countdown text before replay starts
-- Add commands /draw (alias votefordraw)  and /voting (alias voteforend). The first allows you to agree to mutually draw, the second 
-  allows you vote to declare game over if all enemies are abandoned
-- Carry over commander kills when morphing
-- Various small fixes: unload some widgets on gameover etc...
-- Some easter eggs :)
+  * Allyresourcebars widget: show all players when spectating with command "/allyres showall", show only team allies with command "/allyres team"
+Remove easter eggs (buhuuuu)
 
-------------------- Change Log of XTA 9.738 Svn 661
------------------- by Jools	
-	
-- Core Pillager is now transportable by air
-- Added mod option to allow transportation of hovercrafts (key: mo_transporthover 0|1).
-- Fixed (again, hopefully) the bug that prevents end window to show up. Now the whole end procedure happens before gameover is called.
-- Fixed cannon velocity parameter messing with Arm Tornado
-- Changed mines and critters to not show on sonar
-- Added option to show modoptions in-game by pressing ctrl-i (needs <<XTA Settings GUI>> widget enabled)
-- Added player start positions to show on <<MiniMap Start Boxes>> widget
-- Added dampened sound modes to local sounds gadget
-- Relay awards to replays.springrts.com
-	
-------------------- Change Log of XTA 9.737 Svn 652
------------------- by Jools	
-- Fixed (again, hopefully) the bug that prevents end window to show up. It's however a difficult bug to reproduce, so it's hard to 
+
+XTA 9.739 (Svn 674)
+|jls
+18/04/2014
+
+  * Fix slow brakerate of transports
+  * Increased tolerance and max fire angle (52 -> 64 degrees, or 26 -> 32 per side) of core rapier to help it overcome targetting issues on steep slopes, which arm brawler didn't have in spite of similar values of those parameters.
+  * Reduce arm zeus hp 4200 -> 3800 arm/core torpedo launcher: double damage and increase reloadtime from 3.0 to 5.0.
+  * Increase t2 sub's damage against other subs by 20 %, because otherwise t1 sub would deal more dps per build cost
+  * Increase slope tolerance of metal makers, solars, windgens, storages 10 -> 15 degrees, and t1 metal extractors 14 -> 18 degrees.
+  * Fix team commander ends fault in games with more than 2 teams
+  * Remove countdown text before replay starts
+  * Add commands /draw (alias votefordraw)  and /voting (alias voteforend). The first allows you to agree to mutually draw, the second allows you vote to declare game over if all enemies are abandoned
+  * Carry over commander kills when morphing
+  * Various small fixes: unload some widgets on gameover etc...
+  * Some easter eggs :)
+
+
+XTA 9.738 (Svn 661)
+|jls
+03/04/2014
+
+  * Core Pillager is now transportable by air
+  * Added mod option to allow transportation of hovercrafts (key: mo_transporthover 0|1).
+  * Fixed (again, hopefully) the bug that prevents end window to show up. Now the whole end procedure happens before gameover is called.
+  * Fixed cannon velocity parameter messing with Arm Tornado
+  * Changed mines and critters to not show on sonar
+  * Added option to show modoptions in-game by pressing ctrl-i (needs <<XTA Settings GUI>> widget enabled)
+  * Added player start positions to show on <<MiniMap Start Boxes>> widget
+  * Added dampened sound modes to local sounds gadget
+  * Relay awards to replays.springrts.com
+
+
+XTA 9.737 (Svn 652)
+|jls
+22/03/2014
+
+  * Fixed (again, hopefully) the bug that prevents end window to show up. It's however a difficult bug to reproduce, so it's hard to 
   know exactly what to fix. Reduced the time the victory/defeat text is shown from 4 to 2 secs.
-- Fixed bug with Pelican not changing movement type when transforming to hover/reforming to kbot
-- Made area guard widget only select mobile units when using advanced modes (adv. modes are: alt: distribute squads, ctrl: persistent squads)
-- Added Enemy spotter widget by floris (is another teamplatter widget)
-- Fixed cob-error about missing functions for some aircraft.
-- Fixed mex-upgrader to again work with area command. It reverses one lua-error fix, but it's a rare one and it's better than area command works
-- Now there are no more bugs in xta: please report more bugs to http://code.google.com/p/xta-springrts/issues/list
-- Reduce non-gunship aircraft brakerate to 10% like it was before engine removed the scale factor. However, it doesn't seem to fix stopping bombers
-	
-------------------- Change Log of XTA 9.736 Svn 642
------------------- by Jools	
-- Fixed (hopefully) all bugs relating to end statistics and the internal procedure relating to it. Added two small buttons in 
-  top right corner that let's you toggle between both graphs
-- Airplanes now have less LOS and less AirLOS when they are landed. Now you can't land a peeper in a remote corner and gain LOS of
-  it until enemy discovers it.
-- Fixed bug where landed fighters keep shooting at enemy stuff
-- Increased turnrate of torpedoes from seaplanes so that they won't miss ships if dropped too close to them (15000 -> 25000)
-- Added visual effects that help you see when a seaplane has submerged under water and risen above it again
-- Fixed some ships shooting at aircraft (missile frigates, warlord, etc)
-- Fixed bug where only arm construction seaplane could submerge and not core: now they both can
-- Enable depthmod for some kbots and tanks, means that units move slower the deeper the water is: 
-  Fido, maverick, can: max.slowdown in water = 33% 
-  gimp, spiders: 50% 
-  commanders: 45%
-  beaver, crab, triton, crock, garpike, muskrat: 50%
-  crawling bombs: 33%
-- Widgets: mex upgrader error fixed, added options to tweak-gui widget: fullscreen option (requires spring 97), option to turn off
-  move-failed notifications when builder can't reach target), made select and center widget faster to zoom.
+  * Fixed bug with Pelican not changing movement type when transforming to hover/reforming to kbot
+  * Made area guard widget only select mobile units when using advanced modes (adv. modes are: alt: distribute squads, ctrl: persistent squads)
+  * Added Enemy spotter widget by floris (is another teamplatter widget)
+  * Fixed cob-error about missing functions for some aircraft.
+  * Fixed mex-upgrader to again work with area command. It reverses one lua-error fix, but it's a rare one and it's better than area command works
+  * Now there are no more bugs in xta: please report more bugs to http://code.google.com/p/xta-springrts/issues/list
+  * Reduce non-gunship aircraft brakerate to 10% like it was before engine removed the scale factor. However, it doesn't seem to fix stopping bombers
 
-	
-------------------- Change Log of XTA 9.735 Svn 628
------------------- by Jools, Raaar
-- Fixed collisionvolumes of all wrecks of standard units, thanks to raaar
-- Decreased LOS of some turrets, such as LLT, MT and Radars. Instead they have increased air-LOS. LOS: Flakkers: 600, HLT: 600,
+
+XTA 9.736 (Svn 642)
+|jls
+15/03/2014
+
+  * Fixed (hopefully) all bugs relating to end statistics and the internal procedure relating to it. Added two small buttons in 
+  top right corner that let's you toggle between both graphs
+  * Airplanes now have less LOS and less AirLOS when they are landed. Now you can't land a peeper in a remote corner and gain LOS of it until enemy discovers it.
+  * Fixed bug where landed fighters keep shooting at enemy stuff
+  * Increased turnrate of torpedoes from seaplanes so that they won't miss ships if dropped too close to them (15000 -> 25000)
+  * Added visual effects that help you see when a seaplane has submerged under water and risen above it again
+  * Fixed some ships shooting at aircraft (missile frigates, warlord, etc)
+  * Fixed bug where only arm construction seaplane could submerge and not core: now they both can
+  * Enable depthmod for some kbots and tanks, means that units move slower the deeper the water is: 
+	-  Fido, maverick, can: max.slowdown in water = 33% 
+	-  gimp, spiders: 50% 
+	-  commanders: 45%
+	-  beaver, crab, triton, crock, garpike, muskrat: 50%
+	-  crawling bombs: 33%
+
+Widgets: 
+  * mex upgrader error fixed, added options to tweak-gui widget: fullscreen option (requires spring 97), option to turn off move-failed notifications when builder can't reach target), made select and center widget faster to zoom.
+
+  
+XTA 9.735 (Svn 628)
+|jls and rar
+19/02/2014
+
+  * Fixed collisionvolumes of all wrecks of standard units, thanks to raaar
+  * Decreased LOS of some turrets, such as LLT, MT and Radars. Instead they have increased air-LOS. LOS: Flakkers: 600, HLT: 600,
   LLT: 420, floating LLT: 480, MT: 450, radar jammer tower: 450, radar tower: 500, adv. radar tower: 550, nuke/mininuke: 500
-- Decreased LOS of commanders: 768-> 720.
-- Decreased sonars: u4commander: 6000->4000, u3commander:2500->2250, u2commander: 2400->1800, ninja/u-commander, 1600->1200
-- Increased sonars: adv.sonar stations: arm: 1550->2050, core: 1500->2010 (t1 sonar stations unchanged at 1210/1200)
-- Decreased cloaktimeout for automatic commanders: arm: 4.2 s -> 2.8, core: 4.2 s -> 3.0. The commander is visible somewhat longer 
-  than this time due to the silhouette effect. Also decreased for level 2 manual commanders: 4.2-> 3.4/3.6; L3 and L4 have 
+  * Decreased LOS of commanders: 768-> 720.
+  * Decreased sonars: u4commander: 6000->4000, u3commander:2500->2250, u2commander: 2400->1800, ninja/u-commander, 1600->1200
+  * Increased sonars: adv.sonar stations: arm: 1550->2050, core: 1500->2010 (t1 sonar stations unchanged at 1210/1200)
+  * Decreased cloaktimeout for automatic commanders: arm: 4.2 s -> 2.8, core: 4.2 s -> 3.0. The commander is visible somewhat longer than this time due to the silhouette effect. Also decreased for level 2 manual commanders: 4.2-> 3.4/3.6; L3 and L4 have 
   same values as automatic commanders.
-- Increased area of effect of rocko/storm: 48 -> 65. This will deal a little damage to walled mexxes/llt:s
-- Increased annihilator/doomsday machine explodeas-radius: 180->360 and damage 800->1400.
-- All builders can now restore again
-- Increased missile velocities a little
-- Increased phalanx/copperhead *air*-los
-- Bugfixes: 
+  * Increased area of effect of rocko/storm: 48 -> 65. This will deal a little damage to walled mexxes/llt:s
+  * Increased annihilator/doomsday machine explodeas-radius: 180->360 and damage 800->1400.
+  * All builders can now restore again
+  * Increased missile velocities a little
+  * Increased phalanx/copperhead *air*-los
+
+Bugfixes: 
   * fixed bug where automatic commander is invisible when idle
   * fixed radars not spinning/spinning bugs for airlabs
   * fixed bug where core t1 airlab's pad isn't rotating when building
@@ -360,678 +373,913 @@ Balance changes:
   * fixed mexx-upgrader bug
   * removed lups.lua debug echo
   * unload unit warning sounds widget after game ends to prevent it from warning at gameover
-- other: better fonts for some widgets/gadgets
-  
+
+Other: 
+  * better fonts for some widgets/gadgets
+
+
+XTA 9.734 (Svn 609)
+|jls
+28/01/2014
+
+  * Sniper special damage down to 3500 vs Can and Sumo
+  * New menu in tweak mode to set basic run-time settings
+  * Commander change widget has better font
+  * Fixed metalcloud and dt crush effect
+  * Bugfix in volume OSD with extra pop sound
+  * More critters, on: Desert Triad, Barracuda Bay, Centre-Command, Duck, Tabula V4.
+  * Fixed transporterwrecks error
+  * Added missing TS-image to APL.
+
+
+XTA 9.733 (Svn 592)
+|jls
+15/01/2014
+
+  * Fixed many issues with ally resource bars widget
+  * Fixed bug in commander change widget
+  * Fixed crash in endgame stats widget when team numbers have gaps
+
+
+XTA 9.732 (Svn 588)
+|jls
+10/01/2014
+
+Lua: 
+  * Fixed adv. playerslist widget, buildspeed gadget. Improved unit under attack sounds widget to be less annoying. Added new version of ally resource bars widget. New endgame statistics gadget.
+
+  * Added some new widgets: specific unit reclaimer, smart area reclaim, mouse cursors, underwater blue, deferred lighting
+Unit: reinstate sniper's special damages versus core the Can and core Sumo, and as counterweight reduce it's hp from 1190 to 900. Scout	planes are slower so that they can be intercepted more easily.
+
+Game: 
+  * make dynamic lights a mod option. New: DT crush effect, Mexx cloud explosion, Loaded non-air transporters can leave wrecks of destroyed units when they die.
+
+Other:
+  * Bug fixes and performance improvements as usual.
 	
-------------------- Change Log of XTA 9.734 Svn 609
------------------- by Jools
 
-- Sniper special damage down to 3500 vs Can and Sumo
-- New menu in tweak mode to set basic run-time settings
-- Commander change widget has better font
-- Fixed metalcloud and dt crush effect
-- Bugfix in volume OSD with extra pop sound
-- More critters, on: Desert Triad, Barracuda Bay, Centre-Command, Duck, Tabula V4.
-- Fixed transporterwrecks error
-- Added missing TS-image to APL.
+XTA 9.731 (Svn 547)
+|klt
+09/11/2013
 
-------------------- Change Log of XTA 9.733 Svn 592 ------------------ by Jools
-- Fixed many issues with ally resource bars widget
-- Fixed bug in commander change widget
-- Fixed crash in endgame stats widget when team numbers have gaps
-	
-------------------- Change Log of XTA 9.732 Svn 588 ------------------ by Jools
+ * cure for zombie virus
 
-- Lua: 	Fixed adv. playerslist widget, buildspeed gadget. Improved unit under attack sounds widget to be less annoying. Added new version 
-		of ally resource bars widget. New endgame statistics gadget.
-- Lua: 	Added some new widgets: specific unit reclaimer, smart area reclaim, mouse cursors, underwater blue, deferred lighting
-- Unit: reinstate sniper's special damages versus core the Can and core Sumo, and as counterweight reduce it's hp from 1190 to 900. Scout
-		planes are slower so that they can be intercepted more easily.
-- Game: make dynamic lights a mod option. New: DT crush effect, Mexx cloud explosion, Loaded non-air transporters can leave wrecks of 
-		destroyed units when they die.
-- Other:Bug fixes and performance improvements as usual.
-	
-------------------- Change Log of XTA 9.731 Svn 547 ------------------ by Kloot
 
--cure for zombie virus
-
-------------------- Change Log of XTA 9.73 Svn 545 ------------------ by Deadnight Warrior, Jools, Kloot and Noruas and knorke
+XTA 9.73 (Svn 545)
+|dnw, jls, klt, nor and kno
+08/11/2013
 
 * New things:
-  - Updated Xtaids, added new unitpack that functions, called spiders vs. tortoise. Both work need more balance tests. - Noruas
-  - Added area guard gadget and widget combo. Works like area attack but for guard command. Enable/disable by toggling the Area 
+  Updated Xtaids, added new unitpack that functions, called spiders vs. tortoise. Both work need more balance tests. Noruas
+  Added area guard gadget and widget combo. Works like area attack but for guard command. Enable/disable by toggling the Area 
 	Guard widget in F11 menu. Widget listens to keyboard shortcut "g". The widget has three modes:
+	
 	1) Basic mode: drag over units to guard, all selected units will guard all units.
 	2) Distributive mode (hold alt and drag): distribute the guard task into squadrons based on how many units you have selected
 	  to guard.
 	3) Persistent mode (hold alt+ctrl and drag): makes the squadrons permanent. When one unit in the squadron gets damaged, the 
 	  unit guarding the squadron will shift the guard task to prioritise the unit wth least health. Selecting a unit that is 
 	  guarding a squadron and pressing "stop" will also clear the guard task.
-  - New spectator mode in commander change widget
-  - Added buttons for selecting game speed when watching replays
-  - Zombie mode
-  - New mouse cursors: select, airstrike, bad load, bad unload, upgrade metal extractor
-  - New bloomshader widget
-  - Updated pause screen. It has music that can be disabled/enabled with commands /musicoff and /musicon or /disablemusic and /enablemusic
-  - New loading screen. Loading music can be enabled/disabled by setting "snd_intromusic" to 1/0 in springsettings.cfg
-  - New commander songs
-  - Team-died messages make their comeback: suggest new ones in forum
-  - Smarter logic for unit under attack warning sounds
+	  
+  New spectator mode in commander change widget
+  Added buttons for selecting game speed when watching replays
+  Zombie mode
+  New mouse cursors: select, airstrike, bad load, bad unload, upgrade metal extractor
+  New bloomshader widget
+  Updated pause screen. It has music that can be disabled/enabled with commands /musicoff and /musicon or /disablemusic and /enablemusic
+  New loading screen. Loading music can be enabled/disabled by setting "snd_intromusic" to 1/0 in springsettings.cfg
+  New commander songs
+  Team-died messages make their comeback: suggest new ones in forum
+  Smarter logic for unit under attack warning sounds
   
 * Changes:
-  - Increased cost of Guardian and Punisher shots to double, from 250 to 500 per shot, roughly twice as much and a bit more than 
+  Increased cost of Guardian and Punisher shots to double, from 250 to 500 per shot, roughly twice as much and a bit more than 
 	a pop up cannon at 230 Energy.
-  - Reduced cost of stealthing for Cloakable fusion reactors and spy kbots by 50E
-  - Aircraft plants include runways for hit detection and selection
-  - Increase metal costs of Freedom Fighter, Avenger, Thunder and Shadow by about 10 %, increase energy cost and build time too.
+  Reduced cost of stealthing for Cloakable fusion reactors and spy kbots by 50E
+  Aircraft plants include runways for hit detection and selection
+  Increase metal costs of Freedom Fighter, Avenger, Thunder and Shadow by about 10 %, increase energy cost and build time too.
     Decrease HP of same units by 10 % and more for scout planes. Decrease fire angle of T1 fighters 100 => 70 and T2 fighters 110 => 90
-  - In game with commander ends: winner will not be last commander alive if he dguns enemy commander
+  In game with commander ends: winner will not be last commander alive if he dguns enemy commander
 
 * Bugfixes: 
-  - Added missing minelayer-limit icons, fixed bug for xtaids hovercraft minelayers. - Jools
-  - Mine layer gadget fixed for XTAids units and other bugs - Noruas
-  - Fixed a bug with moho metal maker's missing explosions: they were set to "", now they use same explosions as in BA
-  - Fixed minelayer mine-limit exploit. Now it won't finish the mine if it's not in stock.
-  - Fixed double projectile for CORE Garpike and ARM Crab, making them quite OP for their price
-  - Fixed Dynamic Collision Volume gadget not scaling 3DO model radius and height if used for a unit with a dynamic CV
-  - Fixed many oversized collision volumes, happened due to changes in 94.1 engine
-  - Fix same faction image always being drawn onto ground for all players
-  - Kamikaze units can also attack with the attack command in addition to self-destruct one.
-  - Fix Z-selector widget to work again.
-  - Add arrival sound for arm small hovercraft
-  - Fix sub pens not having move command
+  Added missing minelayer-limit icons, fixed bug for xtaids hovercraft minelayers. jls
+  Mine layer gadget fixed for XTAids units and other bugs Noruas
+  Fixed a bug with moho metal maker's missing explosions: they were set to "", now they use same explosions as in BA
+  Fixed minelayer mine-limit exploit. Now it won't finish the mine if it's not in stock.
+  Fixed double projectile for CORE Garpike and ARM Crab, making them quite OP for their price
+  Fixed Dynamic Collision Volume gadget not scaling 3DO model radius and height if used for a unit with a dynamic CV
+  Fixed many oversized collision volumes, happened due to changes in 94.1 engine
+  Fix same faction image always being drawn onto ground for all players
+  Kamikaze units can also attack with the attack command in addition to self-destruct one.
+  Fix Z-selector widget to work again.
+  Add arrival sound for arm small hovercraft
+  Fix sub pens not having move command
   
 * Performance improvements:
-  - Add flood protection to local sounds gadget
-  - Optimizations in following widgets:
-    - Major: Adv. Players List, Commander Selection, Commander Nametags
-    - Minor: Ghost Radar, Mission UI, BuildETA, UnitGroups
-    - Symbolical: BuildBar, Waypoint Dragger, Selection Buttons
-  - Improve performance of Dynamic Lighting when used together with Local Sounds, otherwise no performance change
-  - Updated CustomFormations to show end points for unit destinations, some other small fixes
-  - Halved the number of flame projectiles per second for Pyros and Levelers, damage and visuals adjusted to look and feel as before
+  Add flood protection to local sounds gadget
+  Optimizations in following widgets:
+  
+	- Major: Adv. Players List, Commander Selection, Commander Nametags
+	- Minor: Ghost Radar, Mission UI, BuildETA, UnitGroups
+	- Symbolical: BuildBar, Waypoint Dragger, Selection Buttons
+
+  Improve performance of Dynamic Lighting when used together with Local Sounds, otherwise no performance change
+  Updated CustomFormations to show end points for unit destinations, some other small fixes
+  Halved the number of flame projectiles per second for Pyros and Levelers, damage and visuals adjusted to look and feel as before
 
 * SVN:
-  - Rename all files that had upper-case letters to lower-case (fixes possible linux vs windows issues)
+  Rename all files that had upper-case letters to lower-case (fixes possible linux vs windows issues)
 
 
-------------------- Change Log of XTA v9.729 ------------------ by Deadnight Warrior, Jools and Noruas and Knorke
+XTA v9.729
+|dnw, jls,nor and kno
+25/05/2013
+
 * Added animals that wander around the map:
-  - critters are invisible on minimap+radar and have a blank icon, as not to be confused with player units
-  - enjoy the amazing duck and friends!
-  - i tried to not make them interfere with gameplay as much as possible:
-  - for now, mostly only on ffa maps where it often has less serious games anyway
-  - attacking them is not possible, to avoid units accidently following them around the map
-  - critters are placed in ways where they will not get in the way
-  - they can be reclaimed instantly (should they block construction)
-  - they are killed easily (near explosions etc)
-  - but still they CAN decloak cloaked units..not sure how to fix that and how much it matters. if in doubt, reclaim them.
-  - they spawn on the maps defined in gaia_critters_config.lua
-  - modoptions "critters" = false to turn them off.
-* Some bugfixes: missing sound on volume control and bug in commander change widget.
-! The downloads of 9.728 got corrupted, which caused desyncs. So this release is mostly an attempt to fix this.
-	
-------------------- Change Log of XTA v9.728 ------------------ by Deadnight Warrior, Jools and Noruas
-* Fix landboat transition from land to water
-* Improve commander selection widget (remembers selection from last game, better countdown text)
-* Bugfixes for minelayer and buildspeed gadgets (probable cause for error: builder died)
-* New sounds for D-Gun, Arm Penetrator and Core Doomsday machine. Sounds by Noruas. Should be less disturbing.
-* Update cursor out of range gadget. It now gets range from engine. Cursor will still show bad attack cursor if 
-  attack is blocked, but attack order is only dropped if it is outside of range (only for turrets).
-* New splash sound for lava maps.
-* Builders can now again fight.
-* Fix hitsoundwet sound for Arm Bulldog
-* Optimise MinimapX gadget to use less fps
-* Force some gadgets that wouldn't unload to really do so (gadgets that have synced and unsynced parts).
 
-	
-------------------- Change Log of XTA v9.727 ------------------ by Deadnight Warrior, Jools 
-* Widget to set commander as member of group number 1 on gamestart (default disabled).
-* Add avoidGround=0; and avoidNeutral=0; to disintegrator weapons.
-* Update mission stuff
-* Add debug mode (allows gadget profiler to run, use it to troubleshoot which gadget is the problem)
-* Remove stop and wait commands from units that cannot do that,
+	- critters are invisible on minimap+radar and have a blank icon, as not to be confused with player units
+   enjoy the amazing duck and friends! I tried to not make them interfere with gameplay as much as possible  
+	- for now, mostly only on ffa maps where it often has less serious games anyway
+	- attacking them is not possible, to avoid units accidently following them around the map
+	- critters are placed in ways where they will not get in the way
+	- they can be reclaimed instantly (should they block construction)
+	- they are killed easily (near explosions etc), but still they CAN decloak cloaked units ... not sure how to fix that and how  much it matters. If in doubt, reclaim them.
+	- they spawn on the maps defined in gaia_critters_config.lua
+	- modoptions "critters" = false to turn them off.
+
+* Some bugfixes: missing sound on volume control and bug in commander change widget.
+
+! The downloads of 9.728 got corrupted, which caused desyncs. So this release is mostly an attempt to fix this.
+
+
+XTA v9.728
+|dnw, jls and nor
+24/05/2013
+
+  * Fix landboat transition from land to water
+  * Improve commander selection widget (remembers selection from last game, better countdown text)
+  * Bugfixes for minelayer and buildspeed gadgets (probable cause for error: builder died)
+  * New sounds for D-Gun, Arm Penetrator and Core Doomsday machine. Sounds by Noruas. Should be less disturbing.
+  * Update cursor out of range gadget. It now gets range from engine. Cursor will still show bad attack cursor if 
+  attack is blocked, but attack order is only dropped if it is outside of range (only for turrets).
+  * New splash sound for lava maps.
+  * Builders can now again fight.
+  * Fix hitsoundwet sound for Arm Bulldog
+  * Optimise MinimapX gadget to use less fps
+  * Force some gadgets that wouldn't unload to really do so (gadgets that have synced and unsynced parts).
+
+
+XTA v9.727
+|dnw and jls 
+20/05/2013
+
+  * Widget to set commander as member of group number 1 on gamestart (default disabled).
+  * Add avoidGround=0; and avoidNeutral=0; to disintegrator weapons.
+  * Update mission stuff
+  * Add debug mode (allows gadget profiler to run, use it to troubleshoot which gadget is the problem)
+  * Remove stop and wait commands from units that cannot do that,
   remove fight from units that cannot attack (like mine layers, construction
   units, air scouts, spies), remove attack from anti-nukes (they still do their
   thing), remove move, attack and patrol from air repair pad. Add a self-destruct
   button to all units (can be hidden with hidecommands.lua widget, that widget
   added to xta but isn't enabled by default).
-* Nerf ambusher and toaster range from 1330 to 1250 as it was in kloot's patches. Increase flak-weapon's
+  * Nerf ambusher and toaster range from 1330 to 1250 as it was in kloot's patches. Increase flak-weapon's
   projectile speed and areaofeffect (they differ, but for example arm flakker has
   speed 1950 -> 2450 and aoe 150 -> 176), and decrease their damage vs ground
   units by about 30%. Decreased flakker projectile's amount of particles from 20
   to 10 and their separation from 0.35 to 0.15.
-* Changed dragon's teeth's collision volume scales: arm: 28 34 28 -> 26 34 26,
+  * Changed dragon's teeth's collision volume scales: arm: 28 34 28 -> 26 34 26,
   core: 26 36 26 -> 26 36 26, so that they let more shots pass.
-* Fix for anti-nuke interception fail
-* Set cannon velocity default to 0.25 instead of 0.5
-* Add reclaim method as mod option: continuous = instant reclaim, discreet = lump sum reclaim after completion
-* Fix hammer and jeffy
-* Add snd_volume_osd widget. Decrease/Increase sound with - and +. Engine changed the shortcut for speed change to alt - +/-
-* Prevent crashing aircraft from continuing to fire on enemies.	
-	
-	
-------------------- Change Log of XTA v9.726 (94.0 and next version) ------------------ by Deadnight Warrior, Kloot, Jools, NTG and Scifi
+  * Fix for anti-nuke interception fail
+  * Set cannon velocity default to 0.25 instead of 0.5
+  * Add reclaim method as mod option: continuous = instant reclaim, discreet = lump sum reclaim after completion
+  * Fix hammer and jeffy
+  * Add snd_volume_osd widget. Decrease/Increase sound with and +. Engine changed the shortcut for speed change to alt +/-
+  * Prevent crashing aircraft from continuing to fire on enemies.	
+
+
+XTA v9.726 (94.0 and next version)
+|dnw, klt, jls, NTG and Scifi
+05/04/2013
 
 New features or technical changes:
-----------------------------------
-* Minelayers have a limited stock of mines (arm: 5, core: 6, naval: 8). Restocking costs same as building new minelayer (this is due to the fact that it's not as easy to build sensitive equipment such as mines in the field as inside factory conditions).
-* Changed the collision volume of dragon's teeth so that scouts can fire through. Will still require micro. Increased dt hit points back to previous value, because otherwise they get destroyed too quickly due to changes in engine i n v. 93 ->
-* Decreased duck odds from 1:100 to 1:1000
-* Changed some effects in water explosions, they are now different depending on water depth and explosion impact altitude
-* removed beeps from people placing their commander at start window (everybody hates it)
-* Units do not target crashing aircraft (no change from latest patch)
-* New sounds when units cloak or self-d (all combined in widget: xta unit sounds). 
-* Removed global sounds when commander cloaks or is repaired.
+  * Minelayers have a limited stock of mines (arm: 5, core: 6, naval: 8). Restocking costs same as building new minelayer (this is due to the fact that it's not as easy to build sensitive equipment such as mines in the field as inside factory conditions).
+  * Changed the collision volume of dragon's teeth so that scouts can fire through. Will still require micro. Increased dt hit points back to previous value, because otherwise they get destroyed too quickly due to changes in engine i n v. 93 ->
+  * Decreased duck odds from 1:100 to 1:1000
+  * Changed some effects in water explosions, they are now different depending on water depth and explosion impact altitude
+  * removed beeps from people placing their commander at start window (everybody hates it)
+  * Units do not target crashing aircraft (no change from latest patch)
+  * New sounds when units cloak or self-d (all combined in widget: xta unit sounds). 
+  * Removed global sounds when commander cloaks or is repaired.
 
 Balancing changes:
---------------------
-* Brawler:  Maxangle: 140 -> 56 (no change from latest patch)
-* Rapier: Maxangle: 130 -> 52 (no change from latest patch)
-* Crusader: metalcost: 765 -> 898 (981 in patch 1.7, 765 in 9.725, 898 in OTA), energycost: 4425 -> 4537 (return to OTA value), buildtime: 8453 -> 13391 (return to OTA-value)
-* Enforcer: same thing (new values: metalcost: 887, energycost: 4505, buildtime: 13368, return to ota-values)
-* Guardian: metalcost: 2169 -> 3253.5, energycost: 45441 -> 22720
-* Punisher: metalcost: 2081 -> 3121.5, energycost: 45099 -> 22549
-* Hammer: Turnrate: 700 -> 475, Speed: 1.32 (1.20 in p1.7, 1.5 in 9.725)
-* Thud: Turnrate: 750 -> 495, Speed: 1.24 (1.15 in p1.7, 1.45 in 9.725). Slope tolerance 14 -> 18. This is an old ability the thud used to have, arm has the spider instead.
-* Jeffy: HP: 410 -> 273.33 (no change from latest patch)
-* Weasel: HP: 440 -> 293.33, Speed: 3.724 -> 3.74 
-* Raven: Speed 1.9 -> 1.1, slopetolerance 20 -> 14.
-* Sentinel: LOS 920 -> 839 (no change from latest patch)
-* Gaat Gun: LOS 920 -> 839 (no change from latest patch)
-* Skimmer: HP 876 -> 675 (no change from latest patch), metalcost: 216->206, energycost: 3946 -> 3476
-* Scrubber: HP 907 -> 680 (no change from latest patch), metalcost: 227 -> 217, energycost: 3787 -> 3208
-* Stunner: ennergycost: 264522 -> 132261, buildtime: 202869 -> 111453
-* Neutron: ennergycost: 258882 -> 129441, buildtime: 196784 -> 124423
-* Zeus: HP: 3100 -> 4200 (no change from latest patch)
-* Doomsday machine: HP: 9925 -> 7444 (no change from latest patch)
+  * Brawler:  Maxangle: 140 -> 56 (no change from latest patch)
+  * Rapier: Maxangle: 130 -> 52 (no change from latest patch)
+  * Crusader: metalcost: 765 -> 898 (981 in patch 1.7, 765 in 9.725, 898 in OTA), energycost: 4425 -> 4537 (return to OTA value), buildtime: 8453 -> 13391 (return to OTA-value)
+  * Enforcer: same thing (new values: metalcost: 887, energycost: 4505, buildtime: 13368, return to ota-values)
+  * Guardian: metalcost: 2169 -> 3253.5, energycost: 45441 -> 22720
+  * Punisher: metalcost: 2081 -> 3121.5, energycost: 45099 -> 22549
+  * Hammer: Turnrate: 700 -> 475, Speed: 1.32 (1.20 in p1.7, 1.5 in 9.725)
+  * Thud: Turnrate: 750 -> 495, Speed: 1.24 (1.15 in p1.7, 1.45 in 9.725). Slope tolerance 14 -> 18. This is an old ability the thud used to have, arm has the spider instead.
+  * Jeffy: HP: 410 -> 273.33 (no change from latest patch)
+  * Weasel: HP: 440 -> 293.33, Speed: 3.724 -> 3.74 
+  * Raven: Speed 1.9 -> 1.1, slopetolerance 20 -> 14.
+  * Sentinel: LOS 920 -> 839 (no change from latest patch)
+  * Gaat Gun: LOS 920 -> 839 (no change from latest patch)
+  * Skimmer: HP 876 -> 675 (no change from latest patch), metalcost: 216->206, energycost: 3946 -> 3476
+  * Scrubber: HP 907 -> 680 (no change from latest patch), metalcost: 227 -> 217, energycost: 3787 -> 3208
+  * Stunner: ennergycost: 264522 -> 132261, buildtime: 202869 -> 111453
+  * Neutron: ennergycost: 258882 -> 129441, buildtime: 196784 -> 124423
+  * Zeus: HP: 3100 -> 4200 (no change from latest patch)
+  * Doomsday machine: HP: 9925 -> 7444 (no change from latest patch)
 
 Bugfixes:
----------
-* Fixed that both T1 radars do not leave wreck when they self destruct
-* Fixed that Core Eraser and Arm Spector (Kbot jammers), once turned off no longer spin even when turned on.
-* Fixed that Seer's radar spins no matter if you turn it off or on.
-* Fixed that core T2 sub cannot make sub pens
-* T2 construction sub now has water radar next to standard radar in build menu
-* Removed "Reclaim", "Restore" and "Repair" from Colossus and Hive
-* Increase T1 kbot and veh build radiuses so that they can build the sub pen (now same as T2)
-* Set Airlabs to by default be turned on when built, so that their radar works
-* Fix the fact that the following naval series units weren't buildable due to bad value of maxwaterdepth: Dragon's Teeth NS, LLT NS, Floating metal maker, Flakker NS, Seaplane Platform, Cobra NS, All NS mines.
-* Change TEDClass of Arm Water wrinkle from DEFENSIVE to MINE
-* Fix for lose target on cloak
-* Fix for issues arising from targetting with D-Gun ground and friendly units (avoidfriendly and avoidground set to false for D-Gun weapons)
-* Fix for issue in local sounds mode (should work now)
-	
-------------------- Change Log of XTA v9.726 beta (89.0 and next version) ------------------ by Deadnight Warrior and Jools
-* Decoy commanders now have same cloak radius as their respective normal commanders. Their weapons ranges now show as that of normal commanders to enemies, but show still are actual ones to allies.Decoys can be upgrades to level 2 decoys, which can disguise as opposite faction commanders. Level 2 decoys appear to enemies as level 2 commanders (D-Gun still reveals though).
-* Added original commander ends option
-* Renamed modoptions: renamed "teamdeathmode" to "mode" and "comm" to "commander" to make it easier to use autohost  commands. mode options are: "killall" (kill all units and remove dead players), "comends" (team commander ends), "commander" (original commander ends), "team" (kill all units and retain dead players) and "none" (game never ends). Spads command "!bset mode killall" replaces old "!bset teamdeathmode allyzerounits" which was a bit complicated.
-* Fixed "Team death on zero commanders"
-* Added a gadget to draw an X on minimap for nukes and antinukes (within radar coverage)
-* Fixed arm_wombat issue where it was targetting aircraft
-* On rare occasions explosions near the coast can hit ducks
-* Fixed the logic in the sea splashes and underwater explosions, new sound for small splashes.
-* Added mod option to make sounds local (not audible for events outside line of sight). Loop-style sounds are not yet perfect (but working) with this option.
-* Changed visiblity outside LOS for some unit weapons (such as core pyro, core fusion and D-Gun)
-* Updated missions gadget with new trigger conditions and actions, implemented all missing features, some performance optimizations
-* Modified some gadgets and widgets for better interaction with mission scripting gadget
-* Updated Dynamic Collision Volume gadget to support radius and height scaling of buildings and aim point adjustment of popup style units
-* Fixed offset defense tower collision volumes caused by engine change (removal of modelCenterOffset tag), fixed failed aiming against pop-up cannons
-* Fixed freezing of pop-up defenses when pressing Open/Close button while changing state
-* Added Particle Light widget for faked light effects on cannon shells and laser cannons
-* Some small unit script fixes and optimizations
-
-* adjusted torpedo and adv. torpedo launchers min water depth and water line so that they don't sink into sea floor and can't shoot
-* adjusted rocket and missile flightTime to avoid excessive overshooting of max range when firing at aircraft
-
-	
-------------------- Change Log of XTA v9.725 (89.0 and next version) ------------------ by Deadnight Warrior, Jools and Kloot
-* Added support for changing Commanders in-game. New modoption: let users choose in game. Renamed Commander options to Automatic and Manual Commanders.
-* Rewrote commander selection widget from scratch. Now it interacts with initial queue and advanced playerslist, and also has some more functionality than the normal interface during pre-game phase (such as a gong-gong sound when game starts). Commanders are set to hold position on startup rather than maneuver.
-* Added "Team death on zero commanders", game mode that got removed with Spring 84 engine change
-* Adjusted the default on/off for many widgets
-* Updated several gadgets and widgets to newer versions
-* Fixed the following widgets to work with current version of spring (version 85 and above): dontshoot (puts commander on hold fire during cloak), forcecloak(gives a wait order to the commander if user wants to cloak while the commander is in the process of building something)
-* Added following widgets: Red_resourcebars and red_tooltip (they need red_ui_framework and red_ui_drawing to work), gui_point_tracker (displays labels added by other players on minimap), Ghosted Buildings and Ghosted radar
-* Improved Default XTA GUI Layout widget with the ability to select different icon grid sizes: 3x8, 4x9 and 5x11 icons in Ctrl+F11 mode
-* Added an explosion effect to all gunships (they currently lacked one). Added a splash effect to explosions on water.
-* Fixed "King of The Hill" mode, no cloaked or stunned units, or units not on ground can maintain control. Added reminder and countdown sound when 30 secs left in KoTH mode.
-* Fixed many unwanted reverts that happened when releasing 9.71 (Raven, and Hammer/Thud are affected mostly)
-* Added RadarEmitHeight and LOSEmitHeight values to all towers, commanders and big ships, makes them see better on bumpy terrain or when climbing hills
-* Added option to adjust custom gravity of cannon weapons (effectivly it changes their projectile speed, smaller number -> slower cannon, default 0.5)
-* Added Plain Commander, without any upgrades
-* Added mod option do enable or disable aircraft vs aircraft collision, default no collision
-* All defense towers' aimspot now back in center, Spring 89.0 no longer supports modelCenterOffset tag, and it's an annoyance to adjust those via LUA, result, towers are less protected by dragon teeth walls
-* Expanded unit description for rocket toggle units so players can see which units can toggle rockets (and what type of rockets) before building them
-* Togglable rocket units now show attack range properly
-* Radar jammers, mine layers and mobile anti-nukes set to hold position by default
-* Fixed many yardmaps that caused warnings in the develop build, improves compatibility with upcoming Spring release
-* Fixed CORE Construction sub description having excess delimiters
-* Fixed Auto-upg. commanders wandering off into battle when set on maneuver, and always having max velocity regardless of XP (requires Spring 89)
-* Fixed starting resources always set to 1000/1000
-* Added dynamic lighting gadget, used for some (mostly large) explosions
-* Some updates in LUPS modules
-* Fixed lag when Flebowl boss is killed (not that it matters as the fleabowl gadget is still broken)
-* Added gadget for QTPFS units-stuck-in-factory bug workaround
-* Several gadgets updated for better MT compatibility
-* Combined Passive Builders and Build Speed gadgets into one, now uses just one command button instead of two
-
-* Added a rudimentary mission scripting gadget and 2 demo missions, look for details in XTA.sd7/Missions/Readme.txt
-
---- Requites 89.0 to work ---
-* Updated Dynamic Collision Volume gadget for better map feature and unit CV and radius scaling
-* Renamed all soundHit tags in weaponDefs to soundHitDry, to be up to date with 89.0
-* Added weapon water hit sounds
-* Renamed cylinderTargetting to cylinderTargeting for engine compatibility
-* Added Sounds.lua for small randomization of general sound effects
+  * Fixed that both T1 radars do not leave wreck when they self destruct
+  * Fixed that Core Eraser and Arm Spector (Kbot jammers), once turned off no longer spin even when turned on.
+  * Fixed that Seer's radar spins no matter if you turn it off or on.
+  * Fixed that core T2 sub cannot make sub pens
+  * T2 construction sub now has water radar next to standard radar in build menu
+  * Removed "Reclaim", "Restore" and "Repair" from Colossus and Hive
+  * Increase T1 kbot and veh build radiuses so that they can build the sub pen (now same as T2)
+  * Set Airlabs to by default be turned on when built, so that their radar works
+  * Fix the fact that the following naval series units weren't buildable due to bad value of maxwaterdepth: Dragon's Teeth NS, LLT NS, Floating metal maker, Flakker NS, Seaplane Platform, Cobra NS, All NS mines.
+  * Change TEDClass of Arm Water wrinkle from DEFENSIVE to MINE
+  * Fix for lose target on cloak
+  * Fix for issues arising from targetting with D-Gun ground and friendly units (avoidfriendly and avoidground set to false for D-Gun weapons)
+  * Fix for issue in local sounds mode (should work now)
 
 
-------------------- Change Log of XTA v9.71 (85.0 and next version) ------------------ by Deadnight Warrior
-* When cleaning the game archive from useless files some unit build icons got cleaned in the process, now back
-* Hammers can now shoot while moving, bug in previous release
-* Brawler spray angle reduced from 5° to 3°
-* Given custom collision volumes to 13 wrecks that had interfered with proper aiming
-* Slightly lowered the collision volumes (vertical offset -1) of Dragon Teeth
+XTA v9.726 beta (89.0 and next version)
+|dnw and jls
 
+  * Decoy commanders now have same cloak radius as their respective normal commanders. Their weapons ranges now show as that of normal commanders to enemies, but show still are actual ones to allies.Decoys can be upgrades to level 2 decoys, which can disguise as opposite faction commanders. Level 2 decoys appear to enemies as level 2 commanders (D-Gun still reveals though).
+  * Added original commander ends option
+  * Renamed modoptions: renamed "teamdeathmode" to "mode" and "comm" to "commander" to make it easier to use autohost  commands. mode options are: "killall" (kill all units and remove dead players), "comends" (team commander ends), "commander" (original commander ends), "team" (kill all units and retain dead players) and "none" (game never ends). Spads command "!bset mode killall" replaces old "!bset teamdeathmode allyzerounits" which was a bit complicated.
+  * Fixed "Team death on zero commanders"
+  * Added a gadget to draw an X on minimap for nukes and antinukes (within radar coverage)
+  * Fixed arm_wombat issue where it was targetting aircraft
+  * On rare occasions explosions near the coast can hit ducks
+  * Fixed the logic in the sea splashes and underwater explosions, new sound for small splashes.
+  * Added mod option to make sounds local (not audible for events outside line of sight). Loop-style sounds are not yet perfect (but working) with this option.
+  * Changed visiblity outside LOS for some unit weapons (such as core pyro, core fusion and D-Gun)
+  * Updated missions gadget with new trigger conditions and actions, implemented all missing features, some performance optimizations
+  * Modified some gadgets and widgets for better interaction with mission scripting gadget
+  * Updated Dynamic Collision Volume gadget to support radius and height scaling of buildings and aim point adjustment of popup style units
+  * Fixed offset defense tower collision volumes caused by engine change (removal of modelCenterOffset tag), fixed failed aiming against pop-up cannons
+  * Fixed freezing of pop-up defenses when pressing Open/Close button while changing state
+  * Added Particle Light widget for faked light effects on cannon shells and laser cannons
+  * Some small unit script fixes and optimizations
 
-------------------- Change Log of XTA v9.70 (85.0 and next version) ------------------ by Deadnight Warrior
-* Cleaned up all excess unit categories, needs finetunning for each individual unit now
-* Added missing  WeaponType=TorpedoLauncher;  to all torpedo weapons and fixed some other weapon defs missing WeaponType tag
-* Fixed amphibious units crawling through water and giving up on moving eventualy
-* Fixed a nasty bug in Autoupgradable Commanders that increasingly ate CPU when commanders where not moving
-* Fixed a border case that can crash unit_cobbutton.lua gadget
-* Fixed various widgets and gadgets to reflect changes in 84.0 engine (mostly .n removal and CMD.DGUN renamed to CMD.MANUALFIRE)
-* Many other small fixes and tweakes in gadgets/widgets for better stability and compatibility for Spring 85.0
-* Added engine default widgets that where removed from engine default list
-* Added "Low Performance" game mode that removes all CEG trails and increases reload time and damage of fast fire weapons (this mode is for slow CPUs or playing against many AIs)
-* Buildbar widget no longer treats repair pads as factories
-* Engine Pathfinding system can be chosen in mod options
-* Added custom collision volumes for wrecks that cause aiming problems (towers and factories mostly)
-* Finetuned Dynamic Collision Volume gadget for 3DO wreck scaling (for smaller units it's almost spot on), works only on Spring 84.0 and up, added support for dynamic PerPieceCollisionVolumes
-* Replaced metal maker control widget with gadget, gives better control over metal makers and reduces net traffic, makers themselves no longer produce M, it's all controled via gadget rules, keep the "Energy Conversion" info panel on for conversion details
-* Separated /Units/ folder into categories, easier to see which unit belongs to which game option / unit pack
-* Removed unused widgets (bloom and chili) from release, they are still available on XTA on-line repository
-* Massive cleanup of release archive from all files not needed to play the game, they are still available on XTA on-line repository
-* Temporarly disabled Fleabowl mode till the spawner gadget gets fixed
+  * adjusted torpedo and adv. torpedo launchers min water depth and water line so that they don't sink into sea floor and can't shoot
+  * adjusted rocket and missile flightTime to avoid excessive overshooting of max range when firing at aircraft
 
-* Swaped costs of mobile and stationary T2 radars as stationary where more expensive and more fragile than mobile ones
-* Swaped radar jamming distance of kbot and vehicle jammers as vehicle jammers are more expensive and vehicles are generaly larger than kbots
-* Some unit script fixes and optimizations and collision volume adjustments
-* "Sweetspot" of all land defence towers is now line with DT height which covers them from straight line fire from ground level
-* ARM & CORE Destroyer ship's range increased to match FHLT and reload time reduced by 16.7%
-* Increased speed of T1 fighters by ~15%, makes them better against bombers and less good against ground
-* CORE Doomsday Machine increased buildtime to match ARM Annihilator, increased cost by same factor (5.74%)
-* CORE Rapier reload time increased so that it's DPS matches that of ARM Brawler
-* Commanders are now almost as fast in water as they are on land
-* Adv. construction subs can now build Adv. shipyards
-* Crawling bombs now have their own moveDef (amphibious 1x1) are have better slope tolerance
-* Heavy tanks use 3x3 and not 4x4 moveDef footprint, less traffic jams and those units are 3x3 and not 4x4 in size to begin with
-* T2 transport aircraft can now load T2 crawling bombs (max 4)
-* Slightly increased metal extractor and moho mine slope tolerance
-* Increased ARM Infiltrator cost to match CORE Parasite, cloak, moving cloak & stealth costs now 150/300/600 for Infiltrator, 125/275/550 for Parasite, Infiltrator LoS set to 375, Parasite 320
-* Cannon weapons have a nice arc trajectory (relative to target range, at max range it's always 45° elevation)
-* All weapons that cause an explosion when impacting on target, now have increased AoE and edgeEffectiveness=0 if their edgeEffectiveness was > 0 and AoE<145, AoE increase is to 160 max
-* Some floating and underwater buildings have their min water depth increased to prevent them from sinking into sea bottom
-* Added Open/Close mode selection for all pop-up style units (Ambusher, Annihilator, Doomsday Machine, Toaster, Viper)
-* Added fire rate control for ARM Vulcan and CORE Buzzsaw
-* Added "Active/Passive" control to all construction units, "Passive" wont build when stalling
-* Added production speed control to all factories, can adjust build speed from 25% to 100% in 25% steps
+XTA 9.725p1.7 (Kloot's patches)
+|klt and jls
+27/01/2013
 
-These are still under probation, might not hang around for long:
- - Disabled Aircraft and hovercraft on maps with no atmosphere, disabled Aircraft on maps with extreme wind (min>30 or max>35)
- - ARM Ravens fire twice as many rockets per salvo that do half the damage each, AoE +50%, edgeEffectiveness=0, accuracy slightly increased, this gives Ravens a better area coverage with more evently distributed damage and less random strayed rockets
+* Fix bug in crashing aircraft. Small fix to selfdcount widget. Crashing aircraft crash after having lost all hp. Chance still 33%. Lose radar and LOS when crashing.
 
+XTA 9.725p1.6 (Kloot's patches)
+|klt and jls
+26/01/2013
 
-------------------- Change Log of XTA v9.666 (0.82.7 and next version) ------------------ by Deadnight Warrior
-* Wombats and Nixers range reduced from 1300 to 1150
-* Merls and Diplomats reload time reduced by 1 sec, increased mobility by 20%
-* Fighter missile damage to ground reduced to 2/3, firing arc slightly reduced
-* Separated large ships into it's own armour category, they recieve more damage from all torpedos that do less than 800 damage (max +50%)
-* Guardian and Punisher E cost reduced by 20%, AoE doubled, edge effectiveness set to 0 from 0.5, so same damage as before only some small amount to units outside previous AoE
-* Doomsday Machine cost and buildtime increased by 15%
-* All AA units and buildings now have AirSightDistance equal to their weapon range, and use cylinder targeting.
-* T2 gunship weapon DPS increased ~25% as equal M value of T1 gunships do much more DPS (also behave more OTA style)
-* ARM Plesiosaur and CORE Zulu land speed increased from 1/2 to 2/3 of sail speed
-* Removed sonars from scout boats
-* T2 gunships can target all units, not only non-air
-* T1 gunships can throw AA missile flares (3 flares every 3 seconds, 40% efficency per flare)
+* Fixed wrong player faction update in adv. playerslist
+* Added widget with sound when cloaking, decloaking
+* Added widget with sound when ordering self-d
+* Added cursor out of range when ordering attack. Drop attack order when static defense orders an attack on ground, which is of range.
+* Split sounds into following categories: explosions, gui and unitreply. Each has different parameters. This should also fix local sounds modoption, although that's hard to test without many players in a battle.
+* Changed limit for shallow water from 50 to 25. Updated sound and splash gadgets. Changed CEG for splash and deep undersurface hit. Edit: there are two limits: 25 depth is when water is shallow. If explosion occurs above 5 then the explosion is termed shallow.
+* Crashing aircraft can occur when hp is below 50%, and odds reduced from 100% to 33% Those are just some fast numbers and they can be tweaked. I don't think 100% should crash though.
+* Remove Recvluarulesmsg callin after game start
+* Improved performance of minimapX gadget. Fixed no self pwn one.
+* Missions were added, but they are not part of this patch.
 
-* Realistic scaling mode added, adjusts all sight, weapon, radar, sonar and other ranges to realistical scale compared to unit sizes
-* No weapon collision with allied units mode added, units can shoot through friendly units like in TA (default off)
-* Immunity against kidnaping can be selected - default for each unit, immune commandes + defaults, all units immune
+XTA v9.725
+|dnw
+16/07/2012
 
-* All aircraft are stackable (collide=0), improves game performance at the expense of aircraft vs AA
-* Pimped sea visuals (wake particles and ocean texture aka "/water 0")
-* Optimized ship models (removed excess pieces) and modified scripts accordingly, +70% performance in case of scout boats and AA ships
-* Optimized aircraft models, marginal performance increase
-* Cleaned some other models as well, negligible performance increase
-* Improved ARM Plesiosaur, ARM Podger and CORE Spoiler wheel animation, CORE Zulu leg animation
-* Snipers "broken rifle" finaly fixed
-* Some more optimizations in Kbot animations
-* Improved the way construction units open/close their nanolathe rig, makes building walls, wind farms, minefields and other cheap buildings slightly faster
-* Added weapon types in many weapon definitions (overrides autodetect, better)
-* Cleaned lots of useless unit categories, and lots of useless weapondef tags (still more to go)
-* Updated start unit spawner and a few widgets for next Spring release
-* Updated several widgets and gadgets to support Spring 0.83, DynCollVol is also backwards compatible (as some new functions where added to 0.83)
-* Tweaked "Ally Resource Bars" widget to work with MT build, at least until first team dies
-* Updated CustomFormations2 to v3.3
-* Added Jools' gadget for comnapp sneer music
-* Fixed some typos and grammar in changelog
-* Converted modrules.tdf to lua
-* Updated Dynamic Collision Volume gadget to support per piece collision volumes, used for Bertha and Vulcan (2 volumes for those units instead of 1)
+  * quick update of XTA 9.72
+  
+XTA v9.72 (89.0 and next version)
+|dnw, jls and klt
+15/07/2012 
 
+  * Added support for changing Commanders in-game. New modoption: let users choose in game. Renamed Commander options to Automatic and Manual Commanders.
+  * Rewrote commander selection widget from scratch. Now it interacts with initial queue and advanced playerslist, and also has some more functionality than the normal interface during pre-game phase (such as a gong-gong sound when game starts). Commanders are set to hold position on startup rather than maneuver.
+  * Added "Team death on zero commanders", game mode that got removed with Spring 84 engine change
+  * Adjusted the default on/off for many widgets
+  * Updated several gadgets and widgets to newer versions
+  * Fixed the following widgets to work with current version of spring (version 85 and above): dontshoot (puts commander on hold fire during cloak), forcecloak(gives a wait order to the commander if user wants to cloak while the commander is in the process of building something)
+  * Added following widgets: Red_resourcebars and red_tooltip (they need red_ui_framework and red_ui_drawing to work), gui_point_tracker (displays labels added by other players on minimap), Ghosted Buildings and Ghosted radar
+  * Improved Default XTA GUI Layout widget with the ability to select different icon grid sizes: 3x8, 4x9 and 5x11 icons in Ctrl+F11 mode
+  * Added an explosion effect to all gunships (they currently lacked one). Added a splash effect to explosions on water.
+  * Fixed "King of The Hill" mode, no cloaked or stunned units, or units not on ground can maintain control. Added reminder and countdown sound when 30 secs left in KoTH mode.
+  * Fixed many unwanted reverts that happened when releasing 9.71 (Raven, and Hammer/Thud are affected mostly)
+  * Added RadarEmitHeight and LOSEmitHeight values to all towers, commanders and big ships, makes them see better on bumpy terrain or when climbing hills
+  * Added option to adjust custom gravity of cannon weapons (effectivly it changes their projectile speed, smaller number -> slower cannon, default 0.5)
+  * Added Plain Commander, without any upgrades
+  * Added mod option do enable or disable aircraft vs aircraft collision, default no collision
+  * All defense towers' aimspot now back in center, Spring 89.0 no longer supports modelCenterOffset tag, and it's an annoyance to adjust those via LUA, result, towers are less protected by dragon teeth walls
+  * Expanded unit description for rocket toggle units so players can see which units can toggle rockets (and what type of rockets) before building them
+  * Togglable rocket units now show attack range properly
+  * Radar jammers, mine layers and mobile anti-nukes set to hold position by default
+  * Fixed many yardmaps that caused warnings in the develop build, improves compatibility with upcoming Spring release
+  * Fixed CORE Construction sub description having excess delimiters
+  * Fixed Auto-upg. commanders wandering off into battle when set on maneuver, and always having max velocity regardless of XP (requires Spring 89)
+  * Fixed starting resources always set to 1000/1000
+  * Added dynamic lighting gadget, used for some (mostly large) explosions
+  * Some updates in LUPS modules
+  * Fixed lag when Flebowl boss is killed (not that it matters as the fleabowl gadget is still broken)
+  * Added gadget for QTPFS units-stuck-in-factory bug workaround
+  * Several gadgets updated for better MT compatibility
+  * Combined Passive Builders and Build Speed gadgets into one, now uses just one command button instead of two
+  * Added a rudimentary mission scripting gadget and 2 demo missions, look for details in XTA.sd7/Missions/Readme.txt
 
-------------------- Change Log of XTA v9.66 (0.82.7 and next version) ------------------ 
-  -------------- by Noruas
-* Level 1 Arm Lurker and Core Snake area of effect increased radius from 16 to 128, making them more effective against scouts and bunched tidal generators.
-* Nerfed Kamikaze Subs from 2500 damage to 1900, and from 2500 to 1000 against commanders, now requiring 4 to guarantee a kill.
-* Amphibious Boats can now also be built from the advanced vehicle plant. I would recommend against it on land maps since every land unit does what it does better and faster.
-* Arm Core Decoy Commanders can now capture, to add more combat utillity requested by Pintle.
-* Fixed some of the Invisible Particles that were still rendered.
-* Doubled Accuracy of Crusader and Enforcer
-* Reduced Scout boat speeds from an average of 3.7 to 3.2 so kiting will be more difficult.  This is still a minor nerf. 
-* Increased buildtime of arm skeeter boat scout by 50 percent to match core searcher. (balance issue)
-* Because of the cost and health of spiders, they have been shrunk from 3x3 to 2x2 footprint size, should be easier to use now.
-* Added New Lua that prevents nuke particles from spawning if blocked by an antinuke.
-* Added two new nuke effects that are appropiate sizes for the arm nuke and core nuke.
-* Made some old effects less particle spammy. You will be able to see the difference.
-
-  -------------- by Deadnight Warrior
-* Fixed some minor glitches in animation here and there (Snipers broken rifle, Krogoth walk speed)
-* Adjusted CORE Light Fusion Power Plant model to better match footprint and yardmap
-* Turned off heatmapped pathfinding, produces better results than with heatmapping
-* Added T1 mexes & M makers, solars, wind generators, E & M storages to FARK's and Necro's buildmenu
-* Added support for various screen aspect ratios to XTA Layout widget
-* Improved CORE Weasel animation
-
-
-------------------- Change Log of XTA v9.65 (0.82.7 and next version) ------------------ by Deadnight Warrior
-* Starting resources can be adjusted (this option was part of Game options but was removed in Spring 0.82 and had to be added to Mod options)
-* Non-upgradeable commanders are now on "Hold Position" by default, prevents them from wandering off into the battle, they also move in water equally fast as they do on land and masturbate when idle for longer than 25 sec
-* Commanders wear Santa hats during Advent season (needs LUPS)
-* Reduced dancing for all guided missiles, they now shoot in a marginal parabolic (arc) trajectory towards target, prevents missiles from hitting ground
-* Removed missiles bouncing off ground
-* Removed toggle rocket options for Wombat/Nixer, and stockpilabe rockets for Raven, togglable rockets are now a special mod option (off by default)
-* Heavily optimized animation scripts of all fighter planes and bombers (no longer have infinite loops that spew empty CEGs)
-* Fixed Diplomat's reloading animation
-* Added "State Reverse Toggle" widget, it allows right to left toggling of multi-state buttons like fire/move orders by right clicking
-* Added "XTA Layout" widget that arranges the default hardcoded UI in a better layout, avoid using more that one UI at the time
-* Optimized and improved all Kbot animations (only regular XTA units, not unitpacks)
-* Added custom collision volumes and better footprints and yardmaps for remaining land buildings (only regular XTA buildings, not unitpacks)
-* Fixed waterline tags for all units that had waterline>=5, an undocumented engine change, added some more custom collision volumes
-* Improved performance of "Don't Move" widget which sets pre-defined units on hold position
-* ARM Metal Maker now turns it's light on/off depending on it's production state
-* Increased agility of ARM Atlas and CORE Valkyrie
-* Increased turret/torso turn speed for all T1 land units and all T2 Kbots that have weapons
-* Increased Stumpy/Raider damage to non-commanders by 25%  so far Flash/Gator are still better than Stumpy/Raider if combat groups are of equal total M cost
-* Increased weapon speed of almost all lasers (except for very short range ones), they now hit their target more often and sooner
-* Jeffy/Weasel HP, M & E cost reduced to 2/3, build time reduced to 5/6, sight range increased by 54%  as proposed by several community members
-* Adjusted Jeffy/Weasel wreckage M value (39M/40M)
-* Increased LLT DPS by 23% (damage +10%, reload time -11%)
-* Reduced LLTs sight range to 580 (weapon range + 30)
-* Increased HLTs sight range to 920 (weapon range + 30)
-
-
-------------------- Change Log of XTA v9.642 (0.82.0.0 and next version) ------------------ by Deadnight Warrior
-* Some further BOS/COB optimizations and small fixes
-* Default starting commanders changed to non-upgradeable, reverted the XP need for first upgrade on upgradeable commanders
-* Non-upgradeable commanders gain various abilities with combat experience (movement speed, laser range, additional weapons, etc.)
-* Custom collision volumes for all factories (no longer a sphere)
-* Footprints of many buildings adjusted to match actual building size and shape, customized collision volume as well
-* Added a hitsphere scaledown gadget to reduce exaggerated default (not manually defined) 3DO collision volume
-* Added Dynamic Collision Volume gadget for adjusting collision volume of pop-up style units (solars, annihilator, DDM, toaster, ambusher, etc.)
-* Reduced damage by 38% and edge effectiveness to 0.1, increased AoE to 90 of Raven rockets (still stockpilable but require 250E/s instead of 150E/s, 12 r/min)
-* Fixed COB error spam when using ARM Decoy Commander's fake D-Gun (bug brought to life in 9.641b)
-* Fixed radars turning off right after being constructed (partly or not at all, as it's related to your E production/consumption rate)
-* Mines now have very low profile, making most projectiles fly over them instead of crashing into
-* Aircraft plants added option to set default commands to aircraft, Land/Fly and Land at XX%
-* Unit experience is slightly more pronounced than in previous versions
-* Hovercraft transporters don't draw their crane faster than Lucky Luke, but at a reasonable tempo
-
-
-------------------- Change Log of XTA v9.641 beta (0.82.0.0 and next version) ------------------ by Deadnight Warrior and raaar
-* Fixed failed collision detection (projectiles shooting through units) caused by Spring engine default values change
-* Fixed the LUA error when making units that can go stealth
-* Ceasefire widget is now disabled by default
-* Fixed the negative resource storage when losing your commander
-* Lots of Kbots got their walking animation tweaked to be in sync with walking speed, loads of other performance optimizations as well
-* Optimized the animation scripts of all construction units, and several land units that can burn when damaged
-* Removed unused TAtextures
-* Fixed ARM Jethro BOS/COB script, now it doesn't fail to shoot while moving, and fixed the same bug for ARM Samson
-* Wind generators collision volume adjusted to unit size
-* Updated current and added some new radar icon types
-* Fixed mixed-up unit pictures for CORE mines
-* Found a more or less viable solution to D-Gun and live exploit, and a way to discourage commbombing (commander self-d)
-* Commanders require 0.015xp to enable first upgrade level
-* Added all the funny new "team died" messages XTA community made up since last year
-* Some other LUA scripts fixed/optimized/updated
-* Since some players find the Raven stockpiling a cool change, it now stockpiles 12 rockets/min for 150 E/s
-* Added an alternative version of dynamic stockpiler widget
-
-
-------------------- Change Log of XTA v9.64 beta (0.82.0.0 and next version) ------------------ by Deadnight Warrior
-* CommOption gadget updated to make game compatible with Spring 0.82
-* Fixed that "onoff01" missing texture bug
-* All DDS textures that didn't use compression now changed to DXT3/5 compression, some TGAs converted to DDS, PNG textures optimized using optiPNG to reduce file size
-* Models that used TGA textures converted to DDS, edited to use converted textures, this affects only some S3O models
-* All thumbs.db deleted
-* Fixed area_attack, unit_morph & mex_upgrader gadgets, updated customformations2 widget
-* Fixed CORE Neutron missile dropping before max range
-* Archive uses SD7 (LZMA) non-solid compression mode to further reduce archive size, final archive size is 27.95MB instead of 37MB when using SDZ (deflate32, XTA9.6)
-* All sea stuff got visually tweaked by adding or adjusting the 'waterline=X;' tag
-* All floating units and buildings rock on waves and ships start burning when damaged, many models fixed/tweaked in the process
-* Added BA/CA LUPS for better looking aircraft and some other small effects, this version of LUPS has multi-threaded support
-* Several seaplanes couldn't land in water, now they can.
-* Fixed some sounds that cause warnings in infolog.txt and added some missing sounds
-* Added some missing unit textures
-* Due to an accident (experimental change sneaked its way in here) ARM Raven now stockpiles 10 rockets/min for 100 E/s
-* Added some useful widgets:
-  -  D-Gun stall assist: pauses all units that use energy if you E-stall and press D. Reverts to previous settings after you fire that disintegrator.
-  -  Loop Select: Press space and drag a loop with left mouse to select units of your choice
-  -  Z-Selector: Select a unit, hold Z while you drag your select box and you'll select only units of the type of the selected unit
-  -  Ally Resource Bars: see how much resources your allies have and produce, has multi-threaded support
-  -  Cloakfirestate: Automatically set your unit to "Hold Fire" when you cloak it, reverts to previous setting when you decloak it. Obligatory for Cloak & Run (TM)
-  -  Stockpile Dynamic: Automatically stockpiles ammo for units to a set number and restockpiles after each shoot
-  -  Adv. Playerlist: A much better player/spec info than the Spring default
-  -  Defense Range: Shows weapon ranges of statical defenses (LLTs, HLTs, etc.)
-  -  Message Separator: Adds various features such as scrollable history, font size selection, and splits chat from system messages
-  -  Waypoint Dragging: lets you drag unit waypoints SupCom-style, which might be useful if you've assigned really long queues of move- or patrol-orders and don't want to rebuild all of them from scratch:
+Requires 89.0 to work:
+  * Updated Dynamic Collision Volume gadget for better map feature and unit CV and radius scaling
+  * Renamed all soundHit tags in weaponDefs to soundHitDry, to be up to date with 89.0
+  * Added weapon water hit sounds
+  * Renamed cylinderTargetting to cylinderTargeting for engine compatibility
+  * Added Sounds.lua for small randomization of general sound effects
 
   
-------------------- Change Log of XTA v9.601 - v9.6.3 (0.80 and next version) ------------------ by various
-Various test versions and some quick sloppy fixes for Spring 0.82 support
+XTA 9.715b
+|dnw
+13/06/2012
+
+	(No information of changes)
+
+XTA 9.714 beta
+|dnw and jls
+06/06/2012
+
+* Rewrote commander selection widget from scratch. Now it interacts with initial queue and advanced playerslist, and also has some more functionality than the normal interface during pre-game phase (such as a gong-gong sound when game starts). Commanders are set to dont move on startup rather than maneuver.
+
+* Fixed the following widgets to work with current version of spring (version 85 and above): dontshoot (puts commander on hold fire during cloak), forcecloak(gives a wait order to the commander if user wants to cloak while the commander is in the process of building something)
+
+* Added following widgets: Red_resourcebars and red_tooltip (they need re_ui_framework and red_ui_drawing to work), gui_point_tracker (displays labels added by other players on minimap)
+
+* Added an explosion effect to all gunships (they currently lacked one). Added a splash effect and sound to explosions on water.
+
+* Fixed "King of The Hill" mode, no cloaked or stunned units, or units not on ground can maintain control. Added reminder and countdown sound when 30 secs left in KoTH mode.
+
+* Added support for changing Commanders in-game. New modoption: let users choose in game. Renamed Commander options to Automatic and Manual Commanders.
+
+* Fixed many unwanted reverts that happened when releasing 9.71 (Raven, and Hammer/Thud are affected mostly)
+
+* Added RadarEmitHeight and LOSEmitHeight values to all towers, commanders and big ships, makes them see better on bumpy terrain or when climbing hills
+
+* Added option to adjust custom gravity of cannon weapons (effectivly it changes their projectile speed, smaller number -> slower cannon, default 0.5)
+
+* Added Plain Commander, without any upgrades
+
+* Added option do enable or disable aircraft vs aircraft collision, default no collision
+
+* Expanded unit description for rocket toggle units so players can see which units can toggle
+rockets (and what type of rockets) before building them
+
+* Togglable rocket units now show attack range properly
+
+* Radar jammers, mine layers and mobile anti-nukes set to hold position by default
+
+* Fixed many yardmaps that caused warnings in the develop build, improves compatibility with upcoming Spring release
+
+* Fixed CORE Construction sub description having excess delimiters
+
+* Fixed Auto-upg. commanders wandering off into battle when set on maneuver
+
+* Fixed starting resources always set to 1000/1000
+
+* Some updates in LUPS modules
+
+* Fixed lag when Flebowl boss is killed (not that it matters as the fleabowl gadget is still broken)
 
 
-------------------- Change Log of XTA v9.6 (0.77b43 and next version) ------------------ by
-* Flash and Peewee weapon accuracy increased.
-* Added some lua, fixed some lua...
-* Added two new units that walk upon the land.
-* Nerfed Hitpoints of Instigator back to 810 from 844.
-* Added two new bombers that tech 1.5 for the seaplane platform. These Bombers are slower but can take more damage and deal damage for its cost, best used on the frontline, these bombers are not good for passing defense.
-* Fixed some Line of Sight issues 
+	
+XTA 9.713 beta
+|dnw
+05/05/2012
+
+	(No information of changes)
+	
+XTA 9.712 beta
+|dnw
+14/03/2012
+
+	(No information of changes)
+	
+	
+XTA v9.71 (85.0 and next version)
+|dnw
+26/01/2012
+
+  * When cleaning the game archive from useless files some unit build icons got cleaned in the process, now back
+  * Hammers can now shoot while moving, bug in previous release
+  * Brawler spray angle reduced from 5° to 3°
+  * Given custom collision volumes to 13 wrecks that had interfered with proper aiming
+  * Slightly lowered the collision volumes (vertical offset -1) of Dragon Teeth
 
 
-------------------- Change Log of XTA v9.585 (0.77b43 and next version) ------------------ by noruas
-* Evil Krogoth Lag Bug fixed, it also lagged the CPU elsewhere before being finished built.
-* Arm and Core Torpedo Launchers in tech 1 are now Long Range Depth Chargers, they also have names now, Arm is Fisherman, while Core is Shrimper. 
-* Boat DepthChargers have 6 times the turnrate for accuracy improvements.
-* Increased range of Raven from 1200 to 1400, making it the only arty to outrange the popup cannons, but, it's very inaccurate at that range.
-* Added 50 Percent HP to Vehicle Mine Layers
-* Doubled Hp of Amphibious vehicle builders.
-* Spider laser has 20 particles vs 200 particles per beam, because I hear that Pentium 3s cry at night.
-* Hitsphers of mobile units are more accurate to the shape of the unit.
-* Jethros no longer hit each other when lined up firing from its broadside in close packs.
-* Spider has the ability to EMP overload itself, causing itself 33.4 percent damage and temporary paralyzing itself for 10-50 seconds. The small area surrounding the Spider takes mediocre damage and heavy paralyze damage of 5000, two Spiders can disarm a Bulldog or a Reaper. Takes one second to overload, and during that second, it will not fire.
-* Hovercraft transports now cost an additional 300 metal and 2000 E, with 1000 hp added to its health, much more inefficient and cost something awful to lose in midgame, or use as a stealer.
-* Reduced damage rate of peewee from 60 to 50 per second.
-* Increased hitpoints of A.K. and Instigator, the Peewee and Flash counter. Reduced metal of A.K. by 1 metal point. A.K. and Instigator will lose in close combat vs its counter part, and has less speed, but it has higher range which makes it able to have an initiative blow or the ability to kite for short time.
-* Tech 2 aircraft plants now have take 18 energy a second and has tech 2 radar range, just as tech 1 air labs do with tech 1 radars.
-* Farks and Necros now self-repair at 2 hitpoints per second, still remain fragile.
-* Tech 1 bombers behave better, bomb more likely. Downside, they fly through each other.
-* Reduced scout missile from 730 to 630 range, but has better flight time to follow air units outside its range. Added new sound and trail effect for its small missile, as well as some arc fire.
+XTA v9.70 (85.0 and next version)
+|dnw
+20/01/2012 
+
+  * Cleaned up all excess unit categories, needs finetunning for each individual unit now
+  * Added missing  WeaponType=TorpedoLauncher;  to all torpedo weapons and fixed some other weapon defs missing WeaponType tag
+  * Fixed amphibious units crawling through water and giving up on moving eventualy
+  * Fixed a nasty bug in Autoupgradable Commanders that increasingly ate CPU when commanders where not moving
+  * Fixed a border case that can crash unit_cobbutton.lua gadget
+  * Fixed various widgets and gadgets to reflect changes in 84.0 engine (mostly .n removal and CMD.DGUN renamed to CMD.MANUALFIRE)
+  * Many other small fixes and tweakes in gadgets/widgets for better stability and compatibility for Spring 85.0
+  * Added engine default widgets that where removed from engine default list
+  * Added "Low Performance" game mode that removes all CEG trails and increases reload time and damage of fast fire weapons (this mode is for slow CPUs or playing against many AIs)
+  * Buildbar widget no longer treats repair pads as factories
+  * Engine Pathfinding system can be chosen in mod options
+  * Added custom collision volumes for wrecks that cause aiming problems (towers and factories mostly)
+  * Finetuned Dynamic Collision Volume gadget for 3DO wreck scaling (for smaller units it's almost spot on), works only on Spring 84.0 and up, added support for dynamic PerPieceCollisionVolumes
+  * Replaced metal maker control widget with gadget, gives better control over metal makers and reduces net traffic, makers themselves no longer produce M, it's all controled via gadget rules, keep the "Energy Conversion" info panel on for conversion details
+  * Separated /Units/ folder into categories, easier to see which unit belongs to which game option / unit pack
+  * Removed unused widgets (bloom and chili) from release, they are still available on XTA online repository
+  * Massive cleanup of release archive from all files not needed to play the game, they are still available on XTA online repository
+  * Temporarly disabled Fleabowl mode till the spawner gadget gets fixed
+
+  * Swaped costs of mobile and stationary T2 radars as stationary where more expensive and more fragile than mobile ones
+  * Swaped radar jamming distance of kbot and vehicle jammers as vehicle jammers are more expensive and vehicles are generaly larger than kbots
+  * Some unit script fixes and optimizations and collision volume adjustments
+  * "Sweetspot" of all land defence towers is now line with DT height which covers them from straight line fire from ground level
+  * ARM & CORE Destroyer ship's range increased to match FHLT and reload time reduced by 16.7%
+  * Increased speed of T1 fighters by ~15%, makes them better against bombers and less good against ground
+  * CORE Doomsday Machine increased buildtime to match ARM Annihilator, increased cost by same factor (5.74%)
+  * CORE Rapier reload time increased so that it's DPS matches that of ARM Brawler
+  * Commanders are now almost as fast in water as they are on land
+  * Adv. construction subs can now build Adv. shipyards
+  * Crawling bombs now have their own moveDef (amphibious 1x1) are have better slope tolerance
+  * Heavy tanks use 3x3 and not 4x4 moveDef footprint, less traffic jams and those units are 3x3 and not 4x4 in size to begin with
+  * T2 transport aircraft can now load T2 crawling bombs (max 4)
+  * Slightly increased metal extractor and moho mine slope tolerance
+  * Increased ARM Infiltrator cost to match CORE Parasite, cloak, moving cloak & stealth costs now 150/300/600 for Infiltrator, 125/275/550 for Parasite, Infiltrator LoS set to 375, Parasite 320
+  * Cannon weapons have a nice arc trajectory (relative to target range, at max range it's always 45° elevation)
+  * All weapons that cause an explosion when impacting on target, now have increased AoE and edgeEffectiveness=0 if their edgeEffectiveness was > 0 and AoE<145, AoE increase is to 160 max
+  * Some floating and underwater buildings have their min water depth increased to prevent them from sinking into sea bottom
+  * Added Open/Close mode selection for all pop-up style units (Ambusher, Annihilator, Doomsday Machine, Toaster, Viper)
+  * Added fire rate control for ARM Vulcan and CORE Buzzsaw
+  * Added "Active/Passive" control to all construction units, "Passive" wont build when stalling
+  * Added production speed control to all factories, can adjust build speed from 25% to 100% in 25% steps
+
+These are still under probation, might not hang around for long:
+ Disabled Aircraft and hovercraft on maps with no atmosphere, disabled Aircraft on maps with extreme wind (min>30 or max>35)
+ ARM Ravens fire twice as many rockets per salvo that do half the damage each, AoE +50%, edgeEffectiveness=0, accuracy slightly increased, this gives Ravens a better area coverage with more evently distributed damage and less random strayed rockets
+
+XTA 9.679 beta
+|dnw
+18/01/2012
+
+	(No information of changes)
+	
+XTA 9.678 beta
+|dnw
+07/01/2012
+
+	(No information of changes)
 
 
-------------------- Change Log of XTA v9.58 (0.77b43 and next version) ------------------ by noruas
+	
+
+XTA v9.666 (0.82.7 and next version)
+|dnw
+09/10/2011
+
+  * Wombats and Nixers range reduced from 1300 to 1150
+  * Merls and Diplomats reload time reduced by 1 sec, increased mobility by 20%
+  * Fighter missile damage to ground reduced to 2/3, firing arc slightly reduced
+  * Separated large ships into it's own armour category, they recieve more damage from all torpedos that do less than 800 damage (max +50%)
+  * Guardian and Punisher E cost reduced by 20%, AoE doubled, edge effectiveness set to 0 from 0.5, so same damage as before only some small amount to units outside previous AoE
+  * Doomsday Machine cost and buildtime increased by 15%
+  * All AA units and buildings now have AirSightDistance equal to their weapon range, and use cylinder targeting.
+  * T2 gunship weapon DPS increased ~25% as equal M value of T1 gunships do much more DPS (also behave more OTA style)
+  * ARM Plesiosaur and CORE Zulu land speed increased from 1/2 to 2/3 of sail speed
+  * Removed sonars from scout boats
+  * T2 gunships can target all units, not only non-air
+  * T1 gunships can throw AA missile flares (3 flares every 3 seconds, 40% efficency per flare)
+
+  * Realistic scaling mode added, adjusts all sight, weapon, radar, sonar and other ranges to realistical scale compared to unit sizes
+  * No weapon collision with allied units mode added, units can shoot through friendly units like in TA (default off)
+  * Immunity against kidnaping can be selected default for each unit, immune commandes + defaults, all units immune
+
+  * All aircraft are stackable (collide=0), improves game performance at the expense of aircraft vs AA
+  * Pimped sea visuals (wake particles and ocean texture aka "/water 0")
+  * Optimized ship models (removed excess pieces) and modified scripts accordingly, +70% performance in case of scout boats and AA ships
+  * Optimized aircraft models, marginal performance increase
+  * Cleaned some other models as well, negligible performance increase
+  * Improved ARM Plesiosaur, ARM Podger and CORE Spoiler wheel animation, CORE Zulu leg animation
+  * Snipers "broken rifle" finaly fixed
+  * Some more optimizations in Kbot animations
+  * Improved the way construction units open/close their nanolathe rig, makes building walls, wind farms, minefields and other cheap buildings slightly faster
+  * Added weapon types in many weapon definitions (overrides autodetect, better)
+  * Cleaned lots of useless unit categories, and lots of useless weapondef tags (still more to go)
+  * Updated start unit spawner and a few widgets for next Spring release
+  * Updated several widgets and gadgets to support Spring 0.83, DynCollVol is also backwards compatible (as some new functions where added to 0.83)
+  * Tweaked "Ally Resource Bars" widget to work with MT build, at least until first team dies
+  * Updated CustomFormations2 to v3.3
+  * Added jls' gadget for comnapp sneer music
+  * Fixed some typos and grammar in changelog
+  * Converted modrules.tdf to lua
+  * Updated Dynamic Collision Volume gadget to support per piece collision volumes, used for Bertha and Vulcan (2 volumes for those units instead of 1)
+
+
+XTA v9.66 (0.82.7 and next version)
+|nor and dnw
+
+  * Level 1 Arm Lurker and Core Snake area of effect increased radius from 16 to 128, making them more effective against scouts and bunched tidal generators.
+  * Nerfed Kamikaze Subs from 2500 damage to 1900, and from 2500 to 1000 against commanders, now requiring 4 to guarantee a kill.
+  * Amphibious Boats can now also be built from the advanced vehicle plant. I would recommend against it on land maps since every land unit does what it does better and faster.
+  * Arm Core Decoy Commanders can now capture, to add more combat utillity requested by Pintle.
+  * Fixed some of the Invisible Particles that were still rendered.
+  * Doubled Accuracy of Crusader and Enforcer
+  * Reduced Scout boat speeds from an average of 3.7 to 3.2 so kiting will be more difficult.  This is still a minor nerf. 
+  * Increased buildtime of arm skeeter boat scout by 50 percent to match core searcher. (balance issue)
+  * Because of the cost and health of spiders, they have been shrunk from 3x3 to 2x2 footprint size, should be easier to use now.
+  * Added New Lua that prevents nuke particles from spawning if blocked by an antinuke.
+  * Added two new nuke effects that are appropiate sizes for the arm nuke and core nuke.
+  * Made some old effects less particle spammy. You will be able to see the difference.
+
+  * Fixed some minor glitches in animation here and there (Snipers broken rifle, Krogoth walk speed)
+  * Adjusted CORE Light Fusion Power Plant model to better match footprint and yardmap
+  * Turned off heatmapped pathfinding, produces better results than with heatmapping
+  * Added T1 mexes & M makers, solars, wind generators, E & M storages to FARK's and Necro's buildmenu
+  * Added support for various screen aspect ratios to XTA-Layout widget
+  * Improved CORE Weasel animation
+
+
+XTA v9.65 (0.82.7 and next version)
+|dnw
+22/01/2011
+
+  * Starting resources can be adjusted (this option was part of Game options but was removed in Spring 0.82 and had to be added to Mod options)
+  * Non-upgradeable commanders are now on "Hold Position" by default, prevents them from wandering off into the battle, they also move in water equally fast as they do on land and masturbate when idle for longer than 25 sec
+  * Commanders wear Santa hats during Advent season (needs LUPS)
+  * Reduced dancing for all guided missiles, they now shoot in a marginal parabolic (arc) trajectory towards target, prevents missiles from hitting ground
+  * Removed missiles bouncing off ground
+  * Removed toggle rocket options for Wombat/Nixer, and stockpilabe rockets for Raven, togglable rockets are now a special mod option (off by default)
+  * Heavily optimized animation scripts of all fighter planes and bombers (no longer have infinite loops that spew empty CEGs)
+  * Fixed Diplomat's reloading animation
+  * Added "State Reverse Toggle" widget, it allows right to left toggling of multi-state buttons like fire/move orders by right clicking
+  * Added "XTA Layout" widget that arranges the default hardcoded UI in a better layout, avoid using more that one UI at the time
+  * Optimized and improved all Kbot animations (only regular XTA-units, not unitpacks)
+  * Added custom collision volumes and better footprints and yardmaps for remaining land buildings (only regular-XTA buildings, not unitpacks)
+  * Fixed waterline tags for all units that had waterline>=5, an undocumented engine change, added some more custom collision volumes
+  * Improved performance of "Don't Move" widget which sets pre-defined units on hold position
+  * ARM Metal Maker now turns it's light on/off depending on it's production state
+  * Increased agility of ARM Atlas and CORE Valkyrie
+  * Increased turret/torso turn speed for all T1 land units and all T2 Kbots that have weapons
+  * Increased Stumpy/Raider damage to non-commanders by 25%  so far Flash/Gator are still better than Stumpy/Raider if combat groups are of equal total M cost
+  * Increased weapon speed of almost all lasers (except for very short range ones), they now hit their target more often and sooner
+  * Jeffy/Weasel HP, M & E cost reduced to 2/3, build time reduced to 5/6, sight range increased by 54%  as proposed by several community members
+  * Adjusted Jeffy/Weasel wreckage M value (39M/40M)
+  * Increased LLT DPS by 23% (damage +10%, reload time -11%)
+  * Reduced LLTs sight range to 580 (weapon range + 30)
+  * Increased HLTs sight range to 920 (weapon range + 30)
+
+
+
+XTA v9.642 (0.82.0.0 and next version)
+|dnw
+
+  * Some further BOS/COB optimizations and small fixes
+  * Default starting commanders changed to non-upgradeable, reverted the XP need for first upgrade on upgradeable commanders
+  * Non-upgradeable commanders gain various abilities with combat experience (movement speed, laser range, additional weapons, etc.)
+  * Custom collision volumes for all factories (no longer a sphere)
+  * Footprints of many buildings adjusted to match actual building size and shape, customized collision volume as well
+  * Added a hitsphere scaledown gadget to reduce exaggerated default (not manually defined) 3DO collision volume
+  * Added Dynamic Collision Volume gadget for adjusting collision volume of pop-up style units (solars, annihilator, DDM, toaster, ambusher, etc.)
+  * Reduced damage by 38% and edge effectiveness to 0.1, increased AoE to 90 of Raven rockets (still stockpilable but require 250E/s instead of 150E/s, 12 r/min)
+  * Fixed COB error spam when using ARM Decoy Commander's fake D-Gun (bug brought to life in 9.641b)
+  * Fixed radars turning off right after being constructed (partly or not at all, as it's related to your E production/consumption rate)
+  * Mines now have very low profile, making most projectiles fly over them instead of crashing into
+  * Aircraft plants added option to set default commands to aircraft, Land/Fly and Land at XX%
+  * Unit experience is slightly more pronounced than in previous versions
+  * Hovercraft transporters don't draw their crane faster than Lucky Luke, but at a reasonable tempo
+
+XTA 9.641 beta Simple (Mutator)
+|hoijui
+18/09/2010
+
+Mutator: this is xta with only these units:
+* Commander
+* Wind
+* Solar
+* Geo
+* Mex
+* Bot-Lab
+* Con
+* Hammer / Thud
+* Ak / Peewee
+* Light-Laser-Tower (LLT)
+
+XTA v9.641 beta (0.82.0.0 and next version)
+|dnw and rar
+21/08/2010
+
+  * Fixed failed collision detection (projectiles shooting through units) caused by Spring engine default values change
+  * Fixed the LUA error when making units that can go stealth
+  * Ceasefire widget is now disabled by default
+  * Fixed the negative resource storage when losing your commander
+  * Lots of Kbots got their walking animation tweaked to be in sync with walking speed, loads of other performance optimizations as well
+  * Optimized the animation scripts of all construction units, and several land units that can burn when damaged
+  * Removed unused TAtextures
+  * Fixed ARM Jethro BOS/COB script, now it doesn't fail to shoot while moving, and fixed the same bug for ARM Samson
+  * Wind generators collision volume adjusted to unit size
+  * Updated current and added some new radar icon types
+  * Fixed mixed-up unit pictures for CORE mines
+  * Found a more or less viable solution to D-Gun and live exploit, and a way to discourage commbombing (commander self-d)
+  * Commanders require 0.015xp to enable first upgrade level
+  * Added all the funny new "team died" messages that the xta community made up since last year
+  * Some other LUA scripts fixed/optimized/updated
+  * Since some players find the Raven stockpiling a cool change, it now stockpiles 12 rockets/min for 150 E/s
+  * Added an alternative version of dynamic stockpiler widget
+
+
+XTA v9.64 beta (0.82.0.0 and next version)
+|dnw
+
+  * CommOption gadget updated to make game compatible with Spring 0.82
+  * Fixed that "onoff01" missing texture bug
+  * All DDS textures that didn't use compression now changed to DXT3/5 compression, some TGAs converted to DDS, PNG textures optimized using optiPNG to reduce file size
+  * Models that used TGA textures converted to DDS, edited to use converted textures, this affects only some S3O models
+  * All thumbs.db deleted
+  * Fixed area_attack, unit_morph & mex_upgrader gadgets, updated customformations2 widget
+  * Fixed CORE Neutron missile dropping before max range
+  * Archive uses SD7 (LZMA) non-solid compression mode to further reduce archive size, final archive size is 27.95MB instead of 37MB when using SDZ (deflate32, XTA9.6)
+  * All sea stuff got visually tweaked by adding or adjusting the 'waterline=X;' tag
+  * All floating units and buildings rock on waves and ships start burning when damaged, many models fixed/tweaked in the process
+  * Added BA/CA LUPS for better looking aircraft and some other small effects, this version of LUPS has multi-threaded support
+  * Several seaplanes couldn't land in water, now they can.
+  * Fixed some sounds that cause warnings in infolog.txt and added some missing sounds
+  * Added some missing unit textures
+  * Due to an accident (experimental change sneaked its way in here) ARM Raven now stockpiles 10 rockets/min for 100 E/s
+  * Added some useful widgets:
+	   - D-Gun stall assist: pauses all units that use energy if you E-stall and press D. Reverts to previous settings after you fire that disintegrator.
+	   - Loop Select: Press space and drag a loop with left mouse to select units of your choice
+	   Z-Selector: Select a unit, hold Z while you drag your select box and you'll select only units of the type of the selected unit
+	   - Ally Resource Bars: see how much resources your allies have and produce, has multi-threaded support
+	   Cloakfirestate: Automatically set your unit to "Hold Fire" when you cloak it, reverts to previous setting when you decloak it. Obligatory for Cloak & Run (TM)
+	   - Stockpile Dynamic: Automatically stockpiles ammo for units to a set number and restockpiles after each shoot
+	   Adv. Playerlist: A much better player/spec info than the Spring default
+	   - Defense Range: Shows weapon ranges of statical defenses (LLTs, HLTs, etc.)
+	   - Message Separator: Adds various features such as scrollable history, font size selection, and splits chat from system messages
+	   - Waypoint Dragging: lets you drag unit waypoints SupCom-style, which might be useful if you've assigned really long queues of moveor patrol-orders and don't want to rebuild all of them from scratch.
+
+
+XTA v9.601 v9.6.3 (0.80 and next version)
+|dnw
+06/08/2010
+
+Various test versions and some quick sloppy fixes for Spring 0.82 support.
+This is unofficial branch of 9.6 with tweaks from Deadnight Warrior and my tweaks for REAL compatibility with Spring 0.82.x.
+
+XTA v9.6 (0.77b43 and next version)
+|nor
+09/12/2009
+
+  * Flash and Peewee weapon accuracy increased.
+  * Added some lua, fixed some lua...
+  * Added two new units that walk upon the land.
+  * Nerfed Hitpoints of Instigator back to 810 from 844.
+  * Added two new bombers that tech 1.5 for the seaplane platform. These Bombers are slower but can take more damage and deal damage for its cost, best used on the frontline, these bombers are not good for passing defense.
+  * Fixed some Line of Sight issues 
+
+XTA 9.59 derived rebalance test mod
+|Floris
+25/11/2009
+
+This is a temporary XTA modfile to fix the \\'bugged\\' flash and gator tank.
+Those two properties have been reverted to their \\'old\\' value
+gator maxdamage: 843 -> 800
+EMG sprayangle: 2448->1850
+
+Note that this is not an official XTA release!!!
+
+XTA v9.585 (0.77b43 and next version)
+|nor
+
+  * Evil Krogoth Lag Bug fixed, it also lagged the CPU elsewhere before being finished built.
+  * Arm and Core Torpedo Launchers in tech 1 are now Long Range Depth Chargers, they also have names now, Arm is Fisherman, while Core is Shrimper. 
+  * Boat DepthChargers have 6 times the turnrate for accuracy improvements.
+  * Increased range of Raven from 1200 to 1400, making it the only arty to outrange the popup cannons, but, it's very inaccurate at that range.
+  * Added 50 Percent HP to Vehicle Mine Layers
+  * Doubled Hp of Amphibious vehicle builders.
+  * Spider laser has 20 particles vs 200 particles per beam, because I hear that Pentium 3s cry at night.
+  * Hitsphers of mobile units are more accurate to the shape of the unit.
+  * Jethros no longer hit each other when lined up firing from its broadside in close packs.
+  * Spider has the ability to EMP overload itself, causing itself 33.4 percent damage and temporary paralyzing itself for 10-50 seconds. The small area surrounding the Spider takes mediocre damage and heavy paralyze damage of 5000, two Spiders can disarm a Bulldog or a Reaper. Takes one second to overload, and during that second, it will not fire.
+  * Hovercraft transports now cost an additional 300 metal and 2000 E, with 1000 hp added to its health, much more inefficient and cost something awful to lose in midgame, or use as a stealer.
+  * Reduced damage rate of peewee from 60 to 50 per second.
+  * Increased hitpoints of A.K. and Instigator, the Peewee and Flash counter. Reduced metal of A.K. by 1 metal point. A.K. and Instigator will lose in close combat vs its counter part, and has less speed, but it has higher range which makes it able to have an initiative blow or the ability to kite for short time.
+  * Tech 2 aircraft plants now have take 18 energy a second and has tech 2 radar range, just as tech 1 air labs do with tech 1 radars.
+  * Farks and Necros now self-repair at 2 hitpoints per second, still remain fragile.
+  * Tech 1 bombers behave better, bomb more likely. Downside, they fly through each other.
+  * Reduced scout missile from 730 to 630 range, but has better flight time to follow air units outside its range. Added new sound and trail effect for its small missile, as well as some arc fire.
+
+
+XTA v9.58 (0.77b43 and next version)
+|nor
+
 Quick BugFix
 
 
-------------------- Change Log of XTA v9.57 (0.77b43 and next version) ------------------ by noruas
-* MOAR BUG FIXES!!!
-* Tech 2 air con spam economy reduced by 50 percent, and flightspeed reduced from about 8,
-* to a speed of 5, a zeppelin. 
-* Tech 1 air transports hp reduced by negative 100 percent. 
-* Fixed Long Range Flak Fire bug
-* Added On/Off to hovers, On, being perfectly accurate, Off, firing raven inaccurate missiles that do large damage per shot but low possibility of strike, better on the retreat.
-* Amphib Level 1 Tanks now have their unique weapons.
-* Mine Layers now have a 5 second timer, called self-charge, which broadcast sounds and bright colors to all players as warning, side effect type thing before exploding, after 3 seconds, in the fourth second before discharge, self D will release a minesweeping effect if cancelled. After the 5th second, it explodes like a light mine.
-* Tics and Spidey mine sweeper spider kbots can now burrow through upgrade atm and cloak like a normal mine, can chain explode, take full damage from other mines, but has increased hitpoints.
+XTA v9.57 (0.77b43 and next version)
+|nor
+
+  * MOAR BUG FIXES!!!
+  * Tech 2 air con spam economy reduced by 50 percent, and flightspeed reduced from about 8,
+  * to a speed of 5, a zeppelin. 
+  * Tech 1 air transports hp reduced by negative 100 percent. 
+  * Fixed Long Range Flak Fire bug
+  * Added On/Off to hovers, On, being perfectly accurate, Off, firing raven inaccurate missiles that do large damage per shot but low possibility of strike, better on the retreat.
+  * Amphib Level 1 Tanks now have their unique weapons.
+  * Mine Layers now have a 5 second timer, called self-charge, which broadcast sounds and bright colors to all players as warning, side effect type thing before exploding, after 3 seconds, in the fourth second before discharge, self D will release a minesweeping effect if cancelled. After the 5th second, it explodes like a light mine.
+  * Tics and Spidey mine sweeper spider kbots can now burrow through upgrade atm and cloak like a normal mine, can chain explode, take full damage from other mines, but has increased hitpoints.
 
 
-------------------- Change Log of XTA v9.55 (0.77b43 and next version) ------------------ by noruas
-* MOAR BUG FIXES!!!
-* Depthcharges on Crusader, Enforcer, Executioner, and Conqueror, now fires every 4 seconds instead of 2, and overall has a slight dps nerf.
+XTA v9.55 (0.77b43 and next version)
+|nor
+
+  * MOAR BUG FIXES!!!
+  * Depthcharges on Crusader, Enforcer, Executioner, and Conqueror, now fires every 4 seconds instead of 2, and overall has a slight dps nerf.
 
 
-------------------- Change Log of XTA v9.54 (0.77b43 and next version) ------------------ by noruas
-* More bug fixes.
-* Kamikaze subs price lowered by 50 metal, 1000 E.
-* Amphibious vehicles can now build sea buildings.
-* Added Modoptions to enable disable new xta units past version 8.1.
-* Tech 1 shipyards hp reduced by 1000, tech 2 by 2000 hp.
-* Missiles bounce off the ground due to wobble making it hit ground before reaching target.
-* UnitPacks or modifications can be easily implemented into future versions of XTA from the community or modders.
+XTA v9.54 (0.77b43 and next version)
+|nor
+
+  * More bug fixes.
+  * Kamikaze subs price lowered by 50 metal, 1000 E.
+  * Amphibious vehicles can now build sea buildings.
+  * Added Modoptions to enable disable new xta units past version 8.1.
+  * Tech 1 shipyards hp reduced by 1000, tech 2 by 2000 hp.
+  * Missiles bounce off the ground due to wobble making it hit ground before reaching target.
+  * UnitPacks or modifications can be easily implemented into future versions of xta from the community or modders.
 
 
-------------------- Change Log of XTA v9.53 (0.77b3 and next version) ------------------ by noruas
-* Unit Description changes and more bug fixes.
-* Rocket Frigates speed reduced from 2.9 to 2.6. Hp reduced by 10 percent
-* Strange Flight behaviors spanked hard.
-* Bombers do 50 percent damage vs. commanders.
-* Arm Shooter now decloaks when you bump into it.
-* Tech 1 bombers fly 10-20 percent slower.
-* Increased Tech 1 Submarine's torpedos by about 33 percent or from 90 to 120.
+XTA v9.53 (0.77b3 and next version) 
+|nor
+18/03/2008
+
+  * Unit Description changes and more bug fixes.
+  * Rocket Frigates speed reduced from 2.9 to 2.6. Hp reduced by 10 percent
+  * Strange Flight behaviors spanked hard.
+  * Bombers do 50 percent damage vs. commanders.
+  * Arm Shooter now decloaks when you bump into it.
+  * Tech 1 bombers fly 10-20 percent slower.
+  * Increased Tech 1 Submarine's torpedos by about 33 percent or from 90 to 120.
 
 
-------------------- Change Log of XTA v9.52 (0.77b3 and next version) ------------------ by noruas
-* Stealth Lua is fixed.
-* Re-added the Arm Fibber tech 2 boat as Sub Hunter/ Exterminator. Sonar Stealthy, but not radar-stealthy by default.
-* Lowered Metal Production on Sub Pens back to 0.5 metal.
-* Changed weapons on amphibious level 1 tanks, imbetween stumpy flash cannon, as well as raider instigator cannon.
-* Tech 1 Bombers rebalanced, costed. 
-* Bomber Weapon behavior altered greatly, but still equals the same, it can now hit slow moving or large targets.
-* Tech 2 Fighters now behave like American F-22 Fighters. 
-* Boat Brakes work now.
-* Hovercraft Labs can be built on water now as well as land.
-* Tech 2 aircrafts now make 0.5 metal instead of 0.4.
-* Increased metal cost of vulcan/buzzsaw and buildtime by 20 percent.
-* Viper given special damage tag vs. commanders as it is very similar to sniper. 950 per shot vs. 1200.
-* Damage rate on torpedo launchers are the same, however reload time was increased from 2 to 3 seconds.
+XTA v9.52 (0.77b3 and next version) 
+|nor
+
+  * Stealth Lua is fixed.
+  * Re-added the Arm Fibber tech 2 boat as Sub Hunter/ Exterminator. Sonar Stealthy, but not radar-stealthy by default.
+  * Lowered Metal Production on Sub Pens back to 0.5 metal.
+  * Changed weapons on amphibious level 1 tanks, imbetween stumpy flash cannon, as well as raider instigator cannon.
+  * Tech 1 Bombers rebalanced, costed. 
+  * Bomber Weapon behavior altered greatly, but still equals the same, it can now hit slow moving or large targets.
+  * Tech 2 Fighters now behave like American F-22 Fighters. 
+  * Boat Brakes work now.
+  * Hovercraft Labs can be built on water now as well as land.
+  * Tech 2 aircrafts now make 0.5 metal instead of 0.4.
+  * Increased metal cost of vulcan/buzzsaw and buildtime by 20 percent.
+  * Viper given special damage tag vs. commanders as it is very similar to sniper. 950 per shot vs. 1200.
+  * Damage rate on torpedo launchers are the same, however reload time was increased from 2 to 3 seconds.
 
 
-------------------- Change Log of XTA v9.51 (0.76b1 and next version) ------------------ by noruas
-* Peewee and Flash weapon accuracy decreased by 100 percent.
-* Underwater Tidal Generators hp reduced by 20 percent.
-* Level 2 transports now fire again.
-* Added Ninja Commander Start Option "for fun and experimentation, off by default"
-* Added new options for commander ends, such as team commander ends. Is a big iffy if it works or not.
-* Viper reload time increased from 3.5 to 4.25 seconds.
-* Core Mobile Bertha Arty reload time increased from 6 to 6.66 a shot
-* Underwater Fusions fixed to new energy system. 850 E, for 4000 metal.
-* This only a small update working up xta 9.51
-* Added In area of Effect Widget.
+XTA v9.51 (0.76b1 and next version) 
+|nor
 
-* "Mines auto-explode if they are the only things remaining." disabled due to unknown bug.
+  * Peewee and Flash weapon accuracy decreased by 100 percent.
+  * Underwater Tidal Generators hp reduced by 20 percent.
+  * Level 2 transports now fire again.
+  * Added Ninja Commander Start Option "for fun and experimentation, off by default"
+  * Added new options for commander ends, such as team commander ends. Is a big iffy if it works or not.
+  * Viper reload time increased from 3.5 to 4.25 seconds.
+  * Core Mobile Bertha Arty reload time increased from 6 to 6.66 a shot
+  * Underwater Fusions fixed to new energy system. 850 E, for 4000 metal.
+  * This only a small update working up xta 9.51
+  * Added In area of Effect Widget.
 
-------------------- Change Log of XTA v9.5 (0.76b1 and next version) ------------------ by noruas
-* If you can't upgrade all the way do to some unfortunate event, you get 50 percent back of what you spent, including E.
-* Fixed some major particle lag, you may notice it or not, vulcan does not kick your graphic cards ass as much anymore.
-* Construction land based units resource production sliced in half.
-* Peewee and Flash weapon travels twice as fast. Redid Peewee and Flash weapon, but it does the same job 60 DPS a second.
-* Added 7 metal to AK and reduced laser damage by 3 points from 44 to 41. DPS is 41.
-* Balanced Fusion power sources to reality of costs. Solars are still same, Mini Fusion about 10 solars, produce 15 solars in output, mobile fusion about 10 solars, produce 13 solars in output. Cloakable about 25 solars, produce 40 solars in output. Large Fusion reactor cost about 75 solars, and outputs 175 solars in output. Large fusions explode slightly round about 3000 damage to nearby buildings however within a small radius.
-* New fx for peewees.
-* Hovercrafts now behave like hovercrafts in animation style, rocking tilting, and floating, banking turns and great stuff.
-* Fluffly Puff Nano explosion added to construction units.
-* Completly Changed the scout hovercraft, due to it being more combat effective then the hovertank, and having stealth, speed advantages on top of that, although most players did not see this issue, it was in fact a unresolved issue. Gave it a unique weapon.
-* Hovertanks cost reduced by 50 metal, keep in mind they are very inefficent if used like tanks as the description asks for.
-* NanoTowers take twice as long to build
-* Zippers and Freakers now can stealth for an energy drain of 50E. *will probably remove, but its a tech 1.5 robot*
-* Cappies move faster now and are built faster.
-* Commanders can now sing from the original TA.
-* Doubled Turnrate of hovercrafts except the transport for scary reasons.
-* Boats now move more effectively, classified into 3 movements. Battleships and Carriers amongst the most restricted in shallow water, followed by subs, then meduim sized boats.
-* Krogoth now walks over 4 times as much metal as goliath and such, climbs abit better, and
-* can walk into deep water as long as its head can peep out.
-* Made pathfinding from 21 to 20, for faster loading.
+  * "Mines auto-explode if they are the only things remaining." disabled due to unknown bug.
 
+XTA v9.5 (0.76b1 and next version)
+|nor
 
-------------------- Change Log of XTA v9.45 (0.76b1 and next version) ------------------ by noruas
-* Fighter Planes fly through and fire through each other so no friendly fire, and max potential bombers is unreleased in swarms. Flak is naturally more effective due to this so do not attack ANTI AIR.
-* Capture the Base is tinkered, Cappys are cheaper, and has special dgun that paralyzes.
-* Fido, now fires at large arc regardless of gravity, as requested.
-* Fixed Mine Cleareres to be less effective against mines.
-* Instigator and Flash turnrate increased, and speed increased by 0.05.
-* Paratime of spiders and commanders are increased by 50 percent.
-* Removed raven metal cost, and increased cost of energy to 900.
-* Fixed version of healthbars.
-* Certain buildings can be built in shallow water. Beware of torpedos.
-* Increased Line of sight of zippers and freakers, so they can act like line of sight spotters as well, for kbots.
-* Gimp Moves same speed underwater.
-* Shrunk scout ships by 33 percent in physical size, hp decreased 30 percent, anti air missile reload increased 50 percent, range increased to 730. Metal decreased by 40 percent. Energy Cost and Buildtime reduced by 50 percent!
-* Crusader and Enforcer roles changed to be more of Arty, hp drastically decreased, range increased for cheating in land. Cost reduced by over 50 percent for the crusader and enforcer.
-* Added NEW LEVEL 1 Boat, Arm Vanguard and Core Viking, rocket frigates.
-* Construction ships metal cost reduced by 40 percent, buildspeed from 150 to 125 a second. Size decreased by 25 percent. Buildspeed increased by 40 percent.
-* Increased cost of Warlord And Millenium by 40 percent in metal.!
-* Turnrate of level 1 subs increased by 100 percent or double due to extremly low turnrates.
-* Added New Sea Sub Pen, with units inside
-* Added Pocketbattleships
-* Increased Core Arty tech 2 vehicle reload time from 5 to 6.
+  * If you can't upgrade all the way do to some unfortunate event, you get 50 percent back of what you spent, including E.
+  * Fixed some major particle lag, you may notice it or not, vulcan does not kick your graphic cards ass as much anymore.
+  * Construction land based units resource production sliced in half.
+  * Peewee and Flash weapon travels twice as fast. Redid Peewee and Flash weapon, but it does the same job 60 DPS a second.
+  * Added 7 metal to AK and reduced laser damage by 3 points from 44 to 41. DPS is 41.
+  * Balanced Fusion power sources to reality of costs. Solars are still same, Mini Fusion about 10 solars, produce 15 solars in output, mobile fusion about 10 solars, produce 13 solars in output. Cloakable about 25 solars, produce 40 solars in output. Large Fusion reactor cost about 75 solars, and outputs 175 solars in output. Large fusions explode slightly round about 3000 damage to nearby buildings however within a small radius.
+  * New fx for peewees.
+  * Hovercrafts now behave like hovercrafts in animation style, rocking tilting, and floating, banking turns and great stuff.
+  * Fluffly Puff Nano explosion added to construction units.
+  * Completly Changed the scout hovercraft, due to it being more combat effective then the hovertank, and having stealth, speed advantages on top of that, although most players did not see this issue, it was in fact a unresolved issue. Gave it a unique weapon.
+  * Hovertanks cost reduced by 50 metal, keep in mind they are very inefficent if used like tanks as the description asks for.
+  * NanoTowers take twice as long to build
+  * Zippers and Freakers now can stealth for an energy drain of 50E. *will probably remove, but its a tech 1.5 robot*
+  * Cappies move faster now and are built faster.
+  * Commanders can now sing from the original TA.
+  * Doubled Turnrate of hovercrafts except the transport for scary reasons.
+  * Boats now move more effectively, classified into 3 movements. Battleships and Carriers amongst the most restricted in shallow water, followed by subs, then meduim sized boats.
+  * Krogoth now walks over 4 times as much metal as goliath and such, climbs abit better, and
+  * can walk into deep water as long as its head can peep out.
+  * Made pathfinding from 21 to 20, for faster loading.
 
-------------------- Change Log of XTA v9.44 (0.76b1) ------------------
-18/03/08
-* Redone Nano Towers, they are now only base assisters. They still cost the same.
-* Fixed the missing Guardian unit.
-* Reduced air to air laser by flying bombers by 50 percent. From 66 damage per second to 33 damage per second.
-* Spies decloak if bumped or be the bumper.
-* Doubled Firerate of Vamp and Hawk to counter bombers faster, because right now they are pathetic.
-* Added Capture the Base option, where you capture the enemies starting base unit to win the game
+XTA 9.45 fleabowl
+|nor
+26/05/2008
 
-------------------- Change Log of XTA v9.43 (0.76b1) ------------------
-24/02/08
-* It's much harder to morph your commander to the max.
-* Fixed Bouncing bertha, so they do not explode in midair when bouncing on water.
-* ADDED A NO-SELF DAMAGE GADGET, MAY AND WILL ALTER GAMEPLAY. MUST BE TESTED IN THIS VERSION. IF ITS DISASTER, I ADD MORE TO THE LIST OF UNITS THAT DO SELF DAMAGE. YOU MUST EXPECT GETTING ANGRY
-* Added Handy Retreat Lua to retreat to nano towers if it is not disabled.
-* Decreased Large Battleships' Hp by 6000 each. They pwn land very easily and is currently very hard to take out by air.
-* Metalcost pershot from raven is 18 metal!
-* Increased Metal cost of Peewee by 6 metal, and cost of Ak reduced by 6 metal
-* Added Experimental Nano-Towers, they can be disabled, but this is good to stop swarm construction units.
-* Added much needed Mod Options, Fixed commander Dgunning Survival thing.
-* Construction Aircrafts now fly through each other, but cause much less cpu lag. They are now built 50 percent slower!
-* Construction Aircrafts now produce half of the resources then they used too, due to them being supieorly cheap to other construction units.
-* Core Artillery Weapon Alterations
-  - reload=5;//4
-  - weaponvelocity=400;//600
-  - areaofeffect=144;//192
-  - accuracy=1300;//1000
-  - movingaccuracy=1900;//1500
-  - Less Accurate, Area of Effect or Blast Shrank, Accuracy Decreased, and Reload time increased
-* T1 VtoL Fighters -20% cost -40% build time
-* T2 VtoL Radar -50M//Experiment by the Gizmo
-* New build menue order for tech 2, reconstructed by Gizmo :)
+FAILFAILFAIL
 
- * Things to do *
+XTA v9.45 (0.76b1 and next version)
+|nor
 
- - Revamp Hovercrafts, because god dammit, it was balanced toward old sea, and hovercrafts can be much cooler.
- - Add God
- - Make People stop Complaining
- - Make a detailed Description of Com Morphing
- - Fix Torpedo Gunships and Torpedo Bombers
- - Fix Jammer and Radar Attack, aka search what BA did.
+  * Fighter Planes fly through and fire through each other so no friendly fire, and max potential bombers is unreleased in swarms. Flak is naturally more effective due to this so do not attack ANTI AIR.
+  * Capture the Base is tinkered, Cappys are cheaper, and has special dgun that paralyzes.
+  * Fido, now fires at large arc regardless of gravity, as requested.
+  * Fixed Mine Cleareres to be less effective against mines.
+  * Instigator and Flash turnrate increased, and speed increased by 0.05.
+  * Paratime of spiders and commanders are increased by 50 percent.
+  * Removed raven metal cost, and increased cost of energy to 900.
+  * Fixed version of healthbars.
+  * Certain buildings can be built in shallow water. Beware of torpedos.
+  * Increased Line of sight of zippers and freakers, so they can act like line of sight spotters as well, for kbots.
+  * Gimp Moves same speed underwater.
+  * Shrunk scout ships by 33 percent in physical size, hp decreased 30 percent, anti air missile reload increased 50 percent, range increased to 730. Metal decreased by 40 percent. Energy Cost and Buildtime reduced by 50 percent!
+  * Crusader and Enforcer roles changed to be more of Arty, hp drastically decreased, range increased for cheating in land. Cost reduced by over 50 percent for the crusader and enforcer.
+  * Added NEW LEVEL 1 Boat, Arm Vanguard and Core Viking, rocket frigates.
+  * Construction ships metal cost reduced by 40 percent, buildspeed from 150 to 125 a second. Size decreased by 25 percent. Buildspeed increased by 40 percent.
+  * Increased cost of Warlord And Millenium by 40 percent in metal.!
+  * Turnrate of level 1 subs increased by 100 percent or double due to extremly low turnrates.
+  * Added New Sea Sub Pen, with units inside
+  * Added Pocketbattleships
+  * Increased Core Arty tech 2 vehicle reload time from 5 to 6.
+
+XTA 9.44 PEV seatest
+|1v0ry K1ng
+05/05/2008
+
+	seatest for xta, unzip into mods for bug win
+	
 
 
-------------------- Change Log of XTA v9.42 (0.76b1) ------------------
-15/01/08 by Dihi
+XTA v9.44 (0.76b1)
+|nor
+18/03/2008
+
+  * Redone Nano Towers, they are now only base assisters. They still cost the same.
+  * Fixed the missing Guardian unit.
+  * Reduced air to air laser by flying bombers by 50 percent. From 66 damage per second to 33 damage per second.
+  * Spies decloak if bumped or be the bumper.
+  * Doubled Firerate of Vamp and Hawk to counter bombers faster, because right now they are pathetic.
+  * Added Capture the Base option, where you capture the enemies starting base unit to win the game
+
+
+XTA v9.43 (0.76b1) 
+|nor
+24/02/2008
+
+  * It's much harder to morph your commander to the max.
+  * Fixed Bouncing bertha, so they do not explode in midair when bouncing on water.
+  * ADDED A NO-SELF DAMAGE GADGET, MAY AND WILL ALTER GAMEPLAY. MUST BE TESTED IN THIS VERSION. IF ITS DISASTER, I ADD MORE TO THE LIST OF UNITS THAT DO SELF DAMAGE. YOU MUST EXPECT GETTING ANGRY
+  * Added Handy Retreat Lua to retreat to nano towers if it is not disabled.
+  * Decreased Large Battleships' Hp by 6000 each. They pwn land very easily and is currently very hard to take out by air.
+  * Metalcost pershot from raven is 18 metal!
+  * Increased Metal cost of Peewee by 6 metal, and cost of Ak reduced by 6 metal
+  * Added Experimental Nano-Towers, they can be disabled, but this is good to stop swarm construction units.
+  * Added much needed Mod Options, Fixed commander Dgunning Survival thing.
+  * Construction Aircrafts now fly through each other, but cause much less cpu lag. They are now built 50 percent slower!
+  * Construction Aircrafts now produce half of the resources then they used too, due to them being supieorly cheap to other construction units.
+  * Core Artillery Weapon Alterations
+  reload=5;//4
+  weaponvelocity=400;//600
+  areaofeffect=144;//192
+  accuracy=1300;//1000
+  movingaccuracy=1900;//1500
+  Less Accurate, Area of Effect or Blast Shrank, Accuracy Decreased, and Reload time increased:
+  * T1 VtoL Fighters -20% cost -40% build time
+  * T2 VtoL Radar -50M//Experiment by the Gizmo
+  * New build menue order for tech 2, reconstructed by Gizmo :)
+
+   * Things to do *
+
+ Revamp Hovercrafts, because god dammit, it was balanced toward old sea, and hovercrafts can be much cooler.
+ Add God
+ Make People stop Complaining
+ Make a detailed Description of Com Morphing
+ Fix Torpedo Gunships and Torpedo Bombers
+ Fix Jammer and Radar Attack, aka search what BA did.
+
+
+XTA v9.42 (0.76b1)
+|Dihi and TMO
+15/01/2008
 
 BUG FIXES since 9.41:
 + core_slasher cob error fixed and restoreafterdelay animation speed fixed
@@ -1041,16 +1289,17 @@ BUG FIXES since 9.41:
   since they cause players lobby clients other than latest TASClient to desync.
 + Removed redundant *.bos files from scripts directory
 + Removed redundant hidden files from various directories (grr... Windows)
-    
-	
-------------------- Change Log of XTA v9.41 (0.76b1) ------------------
-BUG FIXES OF 9.4 that was introduced:
+
+
+XTA v9.41 (0.76b1)
+BUG FIXES OF 9.4 that were introduced:
 
 + core and arm radars now leave wreckage
 + modoptions LUA script fixed to remove error when launching spring outside TASclient
 
 
-------------------- Change Log of XTA v9.4 (0.76b1) ------------------
+XTA v9.4 (0.76b1)
+
 BUG FIXES OF 9.3 that was introduced
 + Completely different commander upgrade setup.
 + New mod Options.
@@ -1058,13 +1307,14 @@ BUG FIXES OF 9.3 that was introduced
 + Made Core Arty less accurate like it was before.        
 
 
-------------------- Change Log of XTA v9.3 (0.75b2) ------------------
-* Added Geo to T2Cons 
-* Slasher & Instigator wreck bug fix by the grate and wonderful Dihi 
-* Arm & core moho mex and Mine bug fixes by _[PoCS]Overkill_  [BIGUPS Ya'll!!] 
-* 3 Bug fixes for core fusions [big thanks to Dihi!] 
-* Arm_shooter name change to 'Sniper'
-* Core_Viper Dmg 1231 WAS 1431 (not mentioned on previouse log vertion) 
+XTA v9.3 (0.75b2) 
+
+  * Added Geo to T2Cons 
+  * Slasher & Instigator wreck bug fix by the grate and wonderful Dihi 
+  * Arm & core moho mex and Mine bug fixes by _[PoCS]Overkill_  [BIGUPS Ya'll!!] 
+  * 3 Bug fixes for core fusions [big thanks to Dihi!] 
+  * Arm_shooter name change to 'Sniper'
+  * Core_Viper Dmg 1231 WAS 1431 (not mentioned on previouse log vertion) 
 
 Arm_Big_Bertha: 
  1) areaofeffect=114  [Note: 192 in v9.2; 96 in v9.1.  Core_Intimidator aoe=144, bb -20% aoe but 20% more accurate!]  
@@ -1078,7 +1328,7 @@ Core_Intimidator:
 Fusions:
 Light/Medium/Heavy name catogorised
 
-D_Gun
+D-Gun
  1) Tolerance=300; //added v9.3 Hope this will stop that funky pause we get some times when trying to save our boi! 
  2) new cob files so the gun points perfectly inline with the shot [bigups to Peet :P ] 
  3) Shrunk that fugly 'star' object 
@@ -1094,137 +1344,114 @@ Core_Intimidator model now replaced with carmagedon model from below link carmag
 
 Arm_Big_Birtha model now replaced with Armagedon from this link http://www.unituniverse.com/?p=u&v=5656 original ufo within objects3D\armagedon.ufo by TA Arsenal Network 
 
-    
-    
-------------------- Change Log of XTA v9.2 (0.75b2) ------------------
-* Added New Advanced Goliath model, Added Weak turret that does 30 dmg per second in a range of 250
-* Panthers Lightning range increased from 240 to 280
-* Targeting Facility -200M both Arm & Core
-* Subtracted 1000 hp from the core viper.
-* Reduced metal cost by 700 metal and reduced by 30,000 energy in the Core Immolator
-* Arm and Core Construction Aircraft Labs (advanced and regular) build speed increased by 50 percent.
-* Arm and Core Construction Aircraft labs (advanced and regular) costs reduced by 15 percent.
-* Whenever a targetting facility is built, the hp of radar units are also upgraded by 50 percent.
-* Core_Mobile_Arty accuracy=750; //was 1000   [Note: BB = 800!] 
-* Increased range of Intimidator and Bertha by 25 percent!
-* Increased Range of Cruise Missile Launchers by 25 percent.
-* Increased Bertha Explosion size by 100 percent, or double!
-* Added Floating Radar Towers
-* Core Mobile Artiellery hp increased by 33% from 1800 to 2400, to survive one sniper shot.
-* Decreased Penetrator hp by 500 and made it more explosive when killed.
-* Dragon Teeth now block missiles.
+
+XTA v9.2 (0.75b2)
+
+  * Added New Advanced Goliath model, Added Weak turret that does 30 dmg per second in a range of 250
+  * Panthers Lightning range increased from 240 to 280
+  * Targeting Facility -200M both Arm & Core
+  * Subtracted 1000 hp from the core viper.
+  * Reduced metal cost by 700 metal and reduced by 30,000 energy in the Core Immolator
+  * Arm and Core Construction Aircraft Labs (advanced and regular) build speed increased by 50 percent.
+  * Arm and Core Construction Aircraft labs (advanced and regular) costs reduced by 15 percent.
+  * Whenever a targetting facility is built, the hp of radar units are also upgraded by 50 percent.
+  * Core_Mobile_Arty accuracy=750; //was 1000   [Note: BB = 800!] 
+  * Increased range of Intimidator and Bertha by 25 percent!
+  * Increased Range of Cruise Missile Launchers by 25 percent.
+  * Increased Bertha Explosion size by 100 percent, or double!
+  * Added Floating Radar Towers
+  * Core Mobile Artiellery hp increased by 33% from 1800 to 2400, to survive one sniper shot.
+  * Decreased Penetrator hp by 500 and made it more explosive when killed.
+  * Dragon Teeth now block missiles.
 
 
-------------------- Change Log of XTA v9 (0.75b2) ------------------
-* Changed name from "XTA v9 GOLD 0."1 to "XTA v9"
-* Added SweepFire=1; to Doomsday Machine
-* Added SweepFire=1; to Penetrator
-* Added SweepFire=1; to Vulcan
-* Added SweepFire=1; to Buzzsaw
-* Changed all newnuke.tdf "water=0;" values to water=1;
-* Changed all crawlexplode.tdf "water=0;" values to water=1;
-* Added Unit Modder to the units folder for easy modding (Unit Modder.exe).
+XTA v9 (0.75b2) 
+
+  * Changed name from "XTA v9 GOLD 0.1" to "XTA v9"
+  * Added SweepFire=1; to Doomsday Machine
+  * Added SweepFire=1; to Penetrator
+  * Added SweepFire=1; to Vulcan
+  * Added SweepFire=1; to Buzzsaw
+  * Changed all newnuke.tdf "water=0;" values to water=1;
+  * Changed all crawlexplode.tdf "water=0;" values to water=1;
+  * Added Unit Modder to the units folder for easy modding (Unit Modder.exe).
 
 
-------------------- Change Log of XTA v9 GOLD 0.1 ------------------
-* New button graphics for Lua. (appears much like ota)
-* COMMANDER, +4 HP every second weather under attack or not!
-* EVERY unit except vtol is +10% brake & + 10%acceleration rate.
-* Rez bots, build slower to cut down on spam but rez faster: rezzes 25 percent faster; heals 50 percent slower, builds 25 percent slower.
-* Decoy com, further LOS .
-* Goliath is 10 percent more accurate at firing.
-* Pyro, Faster than reaper now.
-* Leveler, also faster.
-* Raven turns slower & move slower max speed.
-* wreckage values rewritten, wreckage give 65 percent. [Special thanks to myg!]
-* Bulldogs and Reapers no longer run over fort walls.
-* Vulcan and Buzzsaw are end game units.
-* Level 2 air transports will drop units when death occurs (only in .75)
-* Loads of new FX especialy for roach and nuke [now smaller n less lagg but looks nicer]
-* Core d gun rang 300 now 249 [Arm d gun=240 rang]
+XTA v9 GOLD 0.1 
 
-* Arm Invader
-  - explodeas=CRAWL_BLASTSML; //was CRAWL_BLAST now smaller damage and smaller area of effect //fixed v9 gold//
-* Core Roach
-  - explodeas=CRAWL_BLASTSML; //WAS CRAWL_BLAST now smaller damage and smaller area of effect //fixed v9 gold//
+  * New button graphics for Lua. (appears much like ota)
+  * COMMANDER, +4 HP every second weather under attack or not!
+  * EVERY unit except vtol is +10% brake & + 10%acceleration rate.
+  * Rez bots, build slower to cut down on spam but rez faster: rezzes 25 percent faster; heals 50 percent slower, builds 25 percent slower.
+  * Decoy com, further LOS .
+  * Goliath is 10 percent more accurate at firing.
+  * Pyro, Faster than reaper now.
+  * Leveler, also faster.
+  * Raven turns slower & move slower max speed.
+  * wreckage values rewritten, wreckage give 65 percent. [Special thanks to myg!]
+  * Bulldogs and Reapers no longer run over fort walls.
+  * Vulcan and Buzzsaw are end game units.
+  * Level 2 air transports will drop units when death occurs (only in .75)
+  * Loads of new FX especialy for roach and nuke [now smaller n less lagg but looks nicer]
+  * Core d gun rang 300 now 249 [Arm d gun=240 rang]
 
-* Arm com paralize time edit fix
-* Arm flash edit fix
-* Arm Spidar paralyzetime colon fix
-* Core Commander paralyzetime edit
-* Core thud high tragectory colon fix "movingaccuracy"
-* Arm hammer high tragectory colon fix "movingaccuracy"
+  * Arm Invader
+  explodeas=CRAWL_BLASTSML; //was CRAWL_BLAST now smaller damage and smaller area of effect //fixed v9 gold//
+  * Core Roach
+  explodeas=CRAWL_BLASTSML; //WAS CRAWL_BLAST now smaller damage and smaller area of effect //fixed v9 gold//
 
-* line 177 error fix in dgunflare.tdf 
-* line 117 error fix in mediumflare.tdf
-* line 103 error fix in rocketflare.tdf
-* line 64  error fix in snipeflare.tdf
+  * Arm com paralize time edit fix
+  * Arm flash edit fix
+  * Arm Spidar paralyzetime colon fix
+  * Core Commander paralyzetime edit
+  * Core thud high tragectory colon fix "movingaccuracy"
+  * Arm hammer high tragectory colon fix "movingaccuracy"
 
-------------------- Change log of XTA v9 ------------------
-* New button graphics for Lua. (appears much like ota)
-* COMMANDER, +4 HP every second weather under attack or not!
-* EVERY unit except vtol is +10% brake & + 10%acceleration rate.
-* Rez bots, build slower to cut down on spam but rez faster: rezzes 25 percent faster; heals 50 percent slower, builds 25 percent slower.
-* Decoy com, further LOS .
-* Goliath is 10 percent more accurate at firing.
-* Pyro, Faster than reaper now.
-* Leveler, also faster.
-* Raven turns slower & move slower max speed.
-* wreckage values rewritten, wreckage give 65 percent. [Special thanks to myg!]
-* Bulldogs and Reapers no longer run over fort walls.
-* Vulcan and Buzzsaw are end game units.
-* Level 2 air transports will drop units when death occurs (only in .75)
-* Loads of new FX especialy for roach and nuke [now smaller n less lagg but looks nicer]
+  * line 177 error fix in dgunflare.tdf 
+  * line 117 error fix in mediumflare.tdf
+  * line 103 error fix in rocketflare.tdf
+  * line 64  error fix in snipeflare.tdf
 
 
-    ÉÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ»
-    ºßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßº
-    º°°°°°°°°°°°°°°°°°°°°°±²²²²²²²²²²²²²²²²²²±°°°°°°°°°°°°°°°°°°°°°°°°º
-    º°°±²²ÛÛ°°°°°°°°°°°°°²ÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛ²°°°°±²²²²±°°°°°°°ÚÄÄÄÄ¿°º
-    º°°°±²²ÛÛ°°°°°°±²²ÛÛ²ÛÛ²°°°±²ÛÛÛÛ²±°°°°°°³°°°°³°º
-    º°°°°±²²ÛÛ°°°°±²²ÛÛ°²ÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛ²°°±²ÛÛÛÛ²±°°°°°³°°°°³°º
-    º°°°°°±²²ÛÛ°°±²²ÛÛ°°²²²²²²²²ÛÛ²²²²²²²²²°±²ÛÛ²²ÛÛ²±°°°°ÀÄÄÄÄ´°º
-    º°°°°°°±²²ÛÛ±²²ÛÛ°°°±±±±±±±²ÛÛ²±±±±±±±±°±²ÛÛ²²ÛÛ²±°°°°°°°°°³°º
-    º°°°°°°°±²²ÛÛ²ÛÛ°°°°°°°°°°±²ÛÛ²±°°°°°°°±²ÛÛ²±±²ÛÛ²±°°°°°°°°³°º
-    º°°°°°°°°±²²ÛÛÛ°°°°°°°°°°°±²ÛÛ²±°°°°°°±²ÛÛ²±±±±²ÛÛ²±°°°°°°°³°º
-    º°°°°°°°°°±²²ÛÛ°°°°°°°°°°°°±²ÛÛ²±°°°°°±²ÛÛ²²²²²²²²ÛÛ²±°°°°°°°°º
-    º°°°°°°°°±²²ÛÛÛ°°°°°°°°°°°±²ÛÛ²±°°°°±²ÛÛÛÛÛÛÛÛÛÛÛÛÛÛ²±°°°°°°°º
-    º°°°°°°°±²²ÛÛ²ÛÛ°°°°°°°°°°±²ÛÛ²±°°°°±²ÛÛ²±°°°°°°°º
-    º°°°°°°±²²ÛÛ±²²ÛÛ°°°°°°°°°±²ÛÛ²±°°°±²ÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛ²±°°°°°°º
-    º°°°°°±²²ÛÛ°°±²²ÛÛ°°°°°°°°±²ÛÛ²±°°±²ÛÛ²²²²²²²²²²²²²²ÛÛ²±°°°°°º
-    º°°°°±²²ÛÛ°°°°±²²ÛÛ°°°°°°°±²ÛÛ²±°±²ÛÛ²±±±±±±±±±±±±±±²ÛÛ²±°°°°º
-    º°°°±²²ÛÛ°°°°°°±²²ÛÛ°°°°°°±²ÛÛ²±°±²ÛÛ²±°°°°°°°°°°°°±²ÛÛ²±°°°°º
-    º°°±²²ÛÛÛ°°°°°°°±²²ÛÛ°°°°°°±²ÛÛÛ²±±²ÛÛ²±°°°°°°°°°°°°°°±²ÛÛ²±°°°º
-    º°°°°°°°°°°°°°°°°±²²ÛÛ°°°°°°±²ÛÛÛ²±²ÛÛÛ²±°°°°°°°°°°°°°°°°±²ÛÛ²±°°°º
-    ºÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜº
-    ÈÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ¼
+XTA v9
 
-------------------- Change Log of XTA v9 Public Beta2 ------------------
+  * New button graphics for Lua. (appears much like ota)
+  * COMMANDER, +4 HP every second weather under attack or not!
+  * EVERY unit except vtol is +10% brake & + 10%acceleration rate.
+  * Rez bots, build slower to cut down on spam but rez faster: rezzes 25 percent faster; heals 50 percent slower, builds 25 percent slower.
+  * Decoy com, further LOS .
+  * Goliath is 10 percent more accurate at firing.
+  * Pyro, Faster than reaper now.
+  * Leveler, also faster.
+  * Raven turns slower & move slower max speed.
+  * wreckage values rewritten, wreckage give 65 percent. [Special thanks to myg!]
+  * Bulldogs and Reapers no longer run over fort walls.
+  * Vulcan and Buzzsaw are end game units.
+  * Level 2 air transports will drop units when death occurs (only in .75)
+  * Loads of new FX especialy for roach and nuke [now smaller n less lagg but looks nicer]
 
+
+XTA v9 Public Beta2
+|giz
 
 MODIFIED EFFECTS:
 
-
-Emg 
-Gator
-Greenlaser
-Dgun sparks
-zeus lightning
-rocket
-missle 
-thud weapon 
-light flashes 
-sniper effect
-lasers.
-Penetrator muzzle flare
-Gunslinger projectiles
-Aircraft trail length
-
-
+ *Emg 
+ *Gator
+ *Greenlaser
+ *Dgun sparks
+ *zeus lightning
+ *rocket
+ *missle 
+ *thud weapon 
+ *light flashes 
+ *sniper effect
+ *lasers.
+ *Penetrator muzzle flare
+ *Gunslinger projectiles
+ *Aircraft trail length
 
 BALANCE CHANGES:
-
-
 
 Arm and Core ComLaser 
 200 more velocity, on par with AK
@@ -1262,20 +1489,20 @@ AK metal cost 94 (was 89) (5% decrease instead of 10%)
 
 Spider dps 820 (was 620)
 
-llt
+LLT
 LLT fire rate increased 5% (increases dps)
 weapon velocity increase 150
 
 Arm tornado projectile given the EMG texture and effect
 
-Oranith  transport
+Ornith  transport
 turnrate doubled 0.03-->0.06, 
 canattack=0; //was 1//
 hoverattack=0; //was 1//
 stealth=0; //was 1//
 isairbase=0;//stopped it being an air repair pad//
 
-Zepplin transport
+Zeppelin transport
 turnrate doubled 0.03-->0.06, 
 canattack=0; //was 1//
 hoverattack=0; //was 1//
@@ -1283,44 +1510,28 @@ stealth=0; //was 1//
 isairbase=0; //stopped it being an air repair pad//
 
 fixed shredder acceleration
-
 fixed adv construction subs armour group
-
 fixed pelican lasers
-
 fixed problems with missing files for underwater moho extractors
-
 fixed incorrect file for L2 bombers
-
 fixed core seaplane + hover cons missing the underwater fusion from buildmenus.
-
 given all flak units a visible projectile (revert if you dont like but it think it looks pro)
-
 hovercraft + seaplane can both build land and underwater mohos, but can no longer make underwater fusion 
 
-ADDED UNITS
+ADDED:
 arm_LUAcommander
 core_LUAcommander // units with negative storage for LUA SP missions, useful in future. //
-
 sniper
-                                                                              
+                  
 
-
-------------------- Change Log of XTA v9 Public Beta ------------------
-
-
+XTA v9 Public Beta
+|giz and she
 
 Arm Tornado [ARMSFIG_WEAPON]
 default=39; //50; (-19.5%)
-By Gizmo
-
-
 
 Core Voodoo [CORSFIG_WEAPON]
 default=42; //53;  (-22%)
-By Gizmo
-
-
 
 Arm Targeting Facility
 maxdamage=1895; //4504; //was 1900 Modded by Giz// (0.8 Gizmomiter)
@@ -1328,9 +1539,6 @@ buildcostmetal=772; //5630; //was 15130 Modded by Gizmo//
 buildcostenergy=7484; //36058; //was 36058//
 buildtime=19542; //154785;
 energyuse=195; //1000//
-By Gizmo
-
-
 
 Core Targeting Facility
 maxdamage=2085; //4785; //was 1800 
@@ -1338,39 +1546,21 @@ buildcostmetal=825; //5982
 buildcostenergy=7048; //41148
 buildtime=20942; //161287
 energyuse=190; //1050//
-By Gizmo
-
-
 
 Immolator
 buildcostenergy=75165; //13920//Note: Intimidator costs 140670E
-By Gizmo
-
-
 
 Zeus [lightning] 
 group_landair=0.001; //added v9 beta
-By Gizmo
-
-
 
 Panther [armlatnk_weapon]
 group_landair=0.001; //added v9 beta
-By Gizmo
-
-
 
 Arm Luger [ARM_ARTILLERY]
 energypershot=143; //added v9beta
-By Gizmo
-
-
 
 Arm Stumpy & Core Raider [ARM_LIGHTCANNON]
 range=370; //385; //WAS 360
-By Gizmo
-
-
 
 Core Thud [CORE_THUD]
 accuracy=920; //1840//
@@ -1382,9 +1572,6 @@ weaponvelocity=265; //285;
 maxvelocity=1.6; //1.24//
 range=444; //441; // was 360// 
 maxvelocity=1.6; //1.24//
-By Gizmo
-
-
 
 Hammer [ARM_HAM]
 accuracy=920; //1840;
@@ -1397,9 +1584,6 @@ reloadtime=2.0; //1.95;
 default=86; //85//
 Range=452; //450; //was 360//  
 maxvelocity=1.68; //1.32;
-By Gizmo
-
-
 
 Core Gaat [CORE_LASERH1]
 [DAMAGE]
@@ -1407,9 +1591,6 @@ default=190; //220//
 group_landair=63; //added v9beta
 ground flash lastes longer
 better sparks & now green
-By Gizmo
-
-
 
 Arm HLT [ARM_LASERH1]
 [DAMAGE]
@@ -1417,42 +1598,24 @@ default=185; //215;
 group_landair=61; //added v9 beta
 ground flash lastes longer
 better sparks & now green
-By Gizmo
-
-
 
 Sumo  [CORSUMO_WEAPON]
 group_landair=60; //added v9beta
-By Gizmo
-
-
 
 Core AK
 buildcostmetal=89; //99;
 Range decreased by 25
-By Gizmo
-
-
 
 Arm Peewee
 buildcostmetal=86; //96//
 Range increased by 10
-By Gizmo
-
-
 
 Core Instigator:
 buildcostmetal=125; //132//
 Range decreased by 15
-By Gizmo
-
-
 
 Arm Flash
 buildcostmetal=120; //127//
-By Gizmo
-
-
 
 Arm & Core Construction KBot & Construction Vehicle:
 arm_torpedo_launcher built by:
@@ -1463,13 +1626,9 @@ core_construction_kbot
 core_construction_vehicle
 added to section 13
 Now build teck 1 torpedo launchers!
-By Gizmo
-
 
 Arm Skeeter [ARMPT_LASER]
-Uses new EMG texture by Gizmo 
-By Gizmo
-
+Uses new EMG texture  
 
 Fixed All hlts to fire green, including sumo by gizmo.
 Made the mini mushroom cloud more impressive WIP!By Noruas.
@@ -1481,86 +1640,80 @@ Added New Plasma Popup Effect, works for sitting cannons like guardian, and ambu
 Added Moving Accuracy to fido gun and 50 percent impulse power to push light units. By Noruas.
 Re-worked the sparks and texture file considerably, so now more units will emit spikes for each unit respectivly. By Gizmo.
 
-By Sheekel
 325 cob files for units so that there explosion looks much better 
 Core commander and build pictures re set for unit reflections (still waiting for the battle kilt to come bck though!)
+
 Note:
 Huge thanks for Sheekel for this must of taken AGES!
 
+Sea changes:
+|ivo
 
+underwater mex: 50% more extraction, 30 E running cost                                                                
 
-
-
-_____________________________________________________________________________________________________________________________________________
-The following are changes to sea by [RoX]IvoryKing
-
-
-
-underwater mex: 50% more extraction, 30 E running cost                                                                DONE! 
-
-arm scout ship: 10% health reduction, 220 sonar range, 720 LOS (was 420)                                        DONE!
+arm scout ship: 10% health reduction, 220 sonar range, 720 LOS (was 420)                                        
 weapon:
 range 280 (was 180)
 Dps 36 (was 30)
 
-core scout ship: 10% health reduction, 220 sonar range, 720 LOS (was 420)                                        DONE!
+core scout ship: 10% health reduction, 220 sonar range, 720 LOS (was 420)                                        
 weapon:
 range 300 (was 180)
 
-sonar station: range 1000 (1241), metal cost 350%, energy cost 300%, max damage 152 (52)                         DONE!
+sonar station: range 1000 (1241), metal cost 350%, energy cost 300%, max damage 152 (52)                         
 
-topedo launcher: LOS 335 (was 525), sonar range 600 (was 700), healtime 30 (11)                                        DONE!
+topedo launcher: LOS 335 (was 525), sonar range 600 (was 700), healtime 30 (11)                                        
 arm weapon: damage 141 [282 vs subs] reload time 3 range 880
 coreweapon: damage 111 [222 vs subs] reload time 2.5 range 850
 
-construction ship: workertime 150 (125)                                                                                DONE!
+construction ship: workertime 150 (125)                                                                                
 
-core snake: HP 649 (1475), turnrate 176 (was 256), metal cost 799 (1199), Los 180, sonar range 600                    DONE!
+core snake: HP 649 (1475), turnrate 176 (was 256), metal cost 799 (1199), Los 180, sonar range 600                    
 weapon:
 damage 490 [198 vs subs] reload time 8, weapon velocity 100 (150), range 800
 
-arm lurker: HP 545 (1525), turnrate 256, metal cost 751, LOS 190, sonar range 610                                 DONE!
+arm lurker: HP 545 (1525), turnrate 256, metal cost 751, LOS 190, sonar range 610                                 
 weapon:
 damage 563 [220 vs subs], reload time 9, weapon velcity 95 (150)
 
-Core shark: Hp 770 (2070), turnrate 353 (303), metal cost 878 (2500), LOS 200, sonar range 700 (650)                DONE! 
+Core shark: Hp 770 (2070), turnrate 353 (303), metal cost 878 (2500), LOS 200, sonar range 700 (650)                
 weapon: damage 111 [222 vs subs] reload time 6 range 850 velocity 150
 
-arm piranha: HP 685 (2010),  turnrate 389 (311), metal cost 826 (2896), LOS 220, sonar range 720  (689)         DONE!
+arm piranha: HP 685 (2010),  turnrate 389 (311), metal cost 826 (2896), LOS 220, sonar range 720  (689)         
 weapon: damage 141 [282 vs subs] reload time 7 range 880 velocty 160
 
-Core Hive: metal cost 2068 (1379), max damage 6480 (3240), workertime 600 (200), radar range 2400 (1780)        DONE!
+Core Hive: metal cost 2068 (1379), max damage 6480 (3240), workertime 600 (200), radar range 2400 (1780)        
 
-Arm colussus: metal cost 2058 (1372), max damage 6200 (3100), workertime 600 (200), radar range 2500 (1800)        DONE!
+Arm colussus: metal cost 2058 (1372), max damage 6200 (3100), workertime 600 (200), radar range 2500 (1800)        
 
-Core adv sub: HP 500 (925), workertime 400 (240), LoS 180, Sonar 600                                                 DONE!
+Core adv sub: HP 500 (925), workertime 400 (240), LoS 180, Sonar 600                                                 
 
-arm adv con sub: HP 450 (900), worker time 400 (240), LOS 180, sonar 610                                        DONE!
+arm adv con sub: HP 450 (900), worker time 400 (240), LOS 180, sonar 610                                        
 
-Core phantom: metal cost 804 (304), energy cost 10144 (5072),jammer range 650 (1095)                                  DONE!
+Core phantom: metal cost 804 (304), energy cost 10144 (5072),jammer range 650 (1095)                                  
 
-Arm escort: metal cost   795 (295), energy cost 7672(4338), jammer range 680 (1050)                                DONE!
+Arm escort: metal cost   795 (295), energy cost 7672(4338), jammer range 680 (1050)                                
 
-Arm fibber: metal cost 795, energy cost 9897 (2897), sonar jamming range 320                                        DONE!
+Arm fibber: metal cost 795, energy cost 9897 (2897), sonar jamming range 320                                        
 
-Core leviathen: metal cost 5775 (3850), HP 1950,  LoS 400, sonar 800 max speed 1.925 (1.425)                        DONE!
+Core leviathen: metal cost 5775 (3850), HP 1950,  LoS 400, sonar 800 max speed 1.925 (1.425)                        
 weapon: 
 damage 490 [198 vs subs] reload time 2, weapon velocity 100 (150), range 800
 
-core enforcer: metal cost: 1478 (1183), LoS 395 (495) sonar 600                                                        DONE!
+core enforcer: metal cost: 1478 (1183), LoS 395 (495) sonar 600                                                        
 weapons:
 depth charge range 330 reload 1.9 damage 96 [196]
 cannon damage 220 weapon velocity 450 range 700 
 
-arm crusader: metal cost 1496 (1197), LoS 400        sonar 610                                                        DONE!
+arm crusader: metal cost 1496 (1197), LoS 400        sonar 610                                                        
 weapons:
 depth charge range 340 reload 2.0 damage 91 [191] 
 cannon damage 195 weapon velocity 470 range 700 
 
-arm ranger: LoS 450 (735), max velocity 1.5 (3), radar 1100 (0)                                                        DONE!
+arm ranger: LoS 450 (735), max velocity 1.5 (3), radar 1100 (0)                                                        
 weapon: replace AA missle with anti air ship burst launcher
 
-core missle frigate: LoS 400, max velocty 1.3 (radar already 1300)                                                DONE!
+core missle frigate: LoS 400, max velocty 1.3 (radar already 1300)                                                
 weapon: replace AA missle with anti air ship burst launcher
 
 anti air ships:
@@ -1600,600 +1753,36 @@ weapons:
 moho metal maker: now buildable underwater, by L2 conship, seaplanes, hovers (will be set i the Gold version!)
 
 
-
-
-
-
-
-
-
-    ÉÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ»
-    ºßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßº
-    º°°°°°°°°°°°°°°°°°°°°°±²²²²²²²²²²²²²²²²²²±°°°°°°°°°°°°°°°°°°°°°°°°º
-    º°°±²²ÛÛ°°°°°°°°°°°°°²ÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛ²°°°°±²²²²±°°°°°°°ÚÄÄÄÄ¿°º
-    º°°°±²²ÛÛ°°°°°°±²²ÛÛ²ÛÛ²°°°±²ÛÛÛÛ²±°°°°°°³°°°°³°º
-    º°°°°±²²ÛÛ°°°°±²²ÛÛ°²ÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛ²°°±²ÛÛÛÛ²±°°°°°³°°°°³°º
-    º°°°°°±²²ÛÛ°°±²²ÛÛ°°²²²²²²²²ÛÛ²²²²²²²²²°±²ÛÛ²²ÛÛ²±°°°°ÀÄÄÄÄ´°º
-    º°°°°°°±²²ÛÛ±²²ÛÛ°°°±±±±±±±²ÛÛ²±±±±±±±±°±²ÛÛ²²ÛÛ²±°°°°°°°°°³°º
-    º°°°°°°°±²²ÛÛ²ÛÛ°°°°°°°°°°±²ÛÛ²±°°°°°°°±²ÛÛ²±±²ÛÛ²±°°°°°°°°³°º
-    º°°°°°°°°±²²ÛÛÛ°°°°°°°°°°°±²ÛÛ²±°°°°°°±²ÛÛ²±±±±²ÛÛ²±°°°°°°°³°º
-    º°°°°°°°°°±²²ÛÛ°°°°°°°°°°°°±²ÛÛ²±°°°°°±²ÛÛ²²²²²²²²ÛÛ²±°°°°°°°°º
-    º°°°°°°°°±²²ÛÛÛ°°°°°°°°°°°±²ÛÛ²±°°°°±²ÛÛÛÛÛÛÛÛÛÛÛÛÛÛ²±°°°°°°°º
-    º°°°°°°°±²²ÛÛ²ÛÛ°°°°°°°°°°±²ÛÛ²±°°°°±²ÛÛ²±°°°°°°°º
-    º°°°°°°±²²ÛÛ±²²ÛÛ°°°°°°°°°±²ÛÛ²±°°°±²ÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛ²±°°°°°°º
-    º°°°°°±²²ÛÛ°°±²²ÛÛ°°°°°°°°±²ÛÛ²±°°±²ÛÛ²²²²²²²²²²²²²²ÛÛ²±°°°°°º
-    º°°°°±²²ÛÛ°°°°±²²ÛÛ°°°°°°°±²ÛÛ²±°±²ÛÛ²±±±±±±±±±±±±±±²ÛÛ²±°°°°º
-    º°°°±²²ÛÛ°°°°°°±²²ÛÛ°°°°°°±²ÛÛ²±°±²ÛÛ²±°°°°°°°°°°°°±²ÛÛ²±°°°°º
-    º°°±²²ÛÛÛ°°°°°°°±²²ÛÛ°°°°°°±²ÛÛÛ²±±²ÛÛ²±°°°°°°°°°°°°°°±²ÛÛ²±°°°º
-    º°°°°°°°°°°°°°°°°±²²ÛÛ°°°°°°±²ÛÛÛ²±²ÛÛÛ²±°°°°°°°°°°°°°°°°±²ÛÛ²±°°°º
-    ºÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜº
-    ÈÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ¼
-
-
-
-
-
-
-
-
-------------------------- Change Log of XTA v9 Public Alpha ------------------------------
-
-* Added New Nuke effect by Quantum (yet to implement!). --------> //Increase dmg with a low edge of effictivness so they can take out vehicle factories?//
-* Added New Core Commander model by Mr.D.
-* Added New Mortie model, By Sean Herron textured by Noruas.
-* Added New weasel/Jeffy Effect, by Noruas.
-* Added New Zipper Effect, by Noruas.
-* Added New Annihilator effect By Noruas; with sparks uses Snipe2 texture By ElementalGizmo.
-* Added New Bertha effect, Fire pillar by Noruas using texture by ElementalGizmo.
-* Added New Maverick Plasma glow.
-* Added New Core Pyro ground glow effect and muzzle flair By Noruas and flame thrower texture  modded  by ElementalGizmo cob further modded Peet
-* Added New Arm_Penetrator FX By Noruas. Uses Snipe2 texture By ElementalGizmo.
-* Added New Commander explotion By Noruas.
-* Added New Roach and Crawling bomb explotion By Noruas
-* Added New AK and Instigator lasers have new effect with sparks texture By ElementalGizmo & Noruas.
-* Added New EMG texture by ELementalGizmo, and ground glow script inspired from BalancedAnnihilation.
-* Added New sparks to many weapons made from skratch and scripted by ElementalGizmo, inspired by Quantum (C.A mod)
-* Added New laser textures to most weapons, by ElementalGizmo.
-* Added New Raven FX by ElementalGizmo.
-* Edited DGun, has new FX,lasts shorter glow time & sparks By Noruas & ElementalGizmo.
-* Edited Move Info to make hovercrafts more mobile by 2 points in moveinfo.tdf, and certain vehicles by 1 point to make them still more mobile than hovercrafts by Noruas & Peet
-* Edited all the explosions to be recolored!
-* Edited Vehicles & Kbot Level one stats and movement; See credits below.....
-* Edited the construction bot unfold speed so they build faster. Edited .cob files by Peetah :)
-* Edited all ground units acceleration and brake speed by a factor of TEN to make micro more rewarding, by ElementalGizmo thanks to peets concept.
-
-
-__________________ For more statistics please read the following _______________
-
-
-
-***************** Core_Reaper ***********************
-(for cost)
-	buildcostmetal=1224; //1324// By IvoryKing
-(for weapon)
-	CORE_REAP:
-	areaofeffect=92; //64// By ElementalGizmo
-
-***************** arm_zeus *****************************
-damagemodifier=0.88;//3472 hitpoints with gun closed, 3100 hp with guns opened. requires the arm_zeus.cob aswell to work!
-
-***************** core_morty *****************************
-(for unit)
-	buildtime=9018;//was 5018   // Modded by Noruas
-	maxdamage=1254;//was 980
-(for weapon1)
-		default=84;//was 77
-(for weapon2)
-		default=115;//was 103
-		areaofeffect=82;//was 56
-		reloadtime=2.2;//was 2.15
-		weaponvelocity=412;//was 512
-
-*************************** Cob Files **********************************
-Modded by Noruas
-
-arm_hammer.cob
-arm_rocko.cob
-core_thud.cob
-arm_rocko.3do
-
-Units weapon opening till fire time updated.
-
-***************** Arm Pewee ***************       
-
-max health + 5% was 600 now 630     // Modded by El_Barto
-max speed + 5% was 1.8 now 1.9     
-Turn rate + 10% was 1120 now 1232 
-
-***************** Arm Hammer ***************
-ARM_HAM
-
-Turn rate - 25% was 995 now 746 // Modded by El_Barto
-Range=450; //was 360// Modded by NORUAS   
-weaponvelocity=280;  //was 310 modded by Gizmo//
-  
-
-******************* Core AK ****************  
-
-max health + 5% was 615 now 645  // Modded by El_Barto
-max speed + 5% was 1.72 now 1.8   // Modded by El_Barto
-Turn rate + 10% was 1100 now 1210  // Modded by El_Barto
-
-***************** Core Thud ****************    
-CORE_THUD
-
-Turn rate - 25% was 999 now 750 // Modded by El_Barto
-Range=441; //was 360// Modded by NORUAS    
-weaponvelocity=285; //315 modded by Gizmo//
-metalcost=199; //was 191 //Modded by El_Gizmo
-health=1312; //was 1302 //Modded by El_Gizmo
- 
-***************** Arm Flash ********************
-
-+ 5% speed was 2.2 now 2.3 // Modded by El_Barto
-- 20% acceleration was 0.05 now 0.04 // Modded by El_Barto
-+ 5% health was 820 now 861 // Modded by El_Barto
-- 5% turn rate was 475 now 452 // Modded by El_Barto
-
-****************** Arm Stumpy *******************
-ARM_LIGHTCANNON
-
-health was 992 now 1093 // //Modded by NORUAS
-- 5% turn rate was 450 now 428 // Modded by El_Barto
-Energy cost=1346; //was 1246 //Modded by El_Gizmo
-Metal cost=169; //was 165 //Modded by El_Gizmo
-range=385; //was 370 //Modded by NORUAS
-
-
-****************** Arm Samson *******************
-
-+ 5% health was 750 now 787 // Modded by El_Barto
-
-**************** Core Instigator ****************
-
-+ 5% speed was 1.9 now 2 // Modded by El_Barto
-- 25% acceleration was 0.04 now 0.03
-+ 5% health was 843 now 885
-
-**************** Core Raider ********************
-ARM_LIGHTCANNON
-
-health=1166; //was 1058 //Modded by NORUAS
-- 5% turn rate was 430 now 409 //Modded by El_Barto
-metal cost=179; //was 169 //Modded by El_Gizmo
-energycost=1395; //was 1241 //Modded by El_Gizmo
-range=385; //was 370 //Modded by NORUAS
-
-
-*****************Core Slasher*******************
-
-+ 5% health was 755 now 792 // Modded by El_Barto
-CORTRUCK_MISSILE
-range=700; //690 modded by Gizmo//
-
-***************** Arm Decoy & Core Decoy Commander ***************
-
-Energystorage=300; //was 1000 modded by Gizmo//
-MetalStorage=300; //was 1000 modded by Gizmo//
-
-******************** Arm & COre MetalStoradge ****************
-
-selfdestructas=ESTOR_BUILDINGEX; //was CRAWL_BLASTSML modded by Gizmo//
-
-(Less damadge when self destructed)
-
-***************** arm_spider *****************************
-
-(for weapon)
-	range=310;//was 280 // Modded by Noruas
-
-***************** arm_fido *****************************
-(for unit)
-	buildtime=6312;// was 10827  // Modded by Noruas
-	maxdamage=1440;//was 1310
-	maxvelocity=2.00;
-	acceleration=0.3;
-
-(for weapon)
-		default=135;//was 120
-
-*************************** Mine_Layers *******************************
-
-arm_podger.3do, arm_podger_dead.3do, core_spoiler.3do, core_spoiler_dead.3do scaled 
-down by a factor of 0.8 Modded by Peet
-
-***************** core_spoiler *****************************
-
-	maxdamage=450;//was 300
-	buildcostmetal=167;//was 187 modded by Noruas
-
-***************** arm_podger*****************************
-
-	maxdamage=475;//was 350
-	buildcostmetal=153;//was 173  modded by Noruas
-
-***************** core_goliath *****************************
-(for unit)
-	leaves proper metal for corpse  // Modded by Noruas
-
-***************** core_envoy *****************************
-(for unit)
-	maxdamage=1886;//was 0.3 lol // Modded by Noruas
-
-***************** arm_hulk *****************************
-(for unit)
-	maxdamage=1987;//was 0.3 lol  // Modded by Noruas
-
-***************** arm_zipper core_freaker *****************************
-
-bothe reload time of 1 second now
-
-Damdge per second 34.....ARM_FAST was 37.5) // Modded by ElementalGizmo
-
-**************************Can walk through DT*************************
-
-Sumo, Reaper, Golly,
-
-Bulldog, 
-
-(Not through fortifyed walls! except krogoth) // Modded by ElementalGizmo
-
-
-
-**************** Arm_invader & Core_Roach *****************
-
-Now can destroy DT and do massive damage to fortifyed walls
-
-CRAWL_BLAST: 
-[DAMAGE]
-	{
-		default=2500;
-		group_walls=2650;
-
-(fixed arm desruction expoltion to same as self d, thanks I.K)
-
-******************** Arm_ANNIHILATOR ********************
-
-[ARM_TOTAL_ANNIHILATOR]
-range=1850; //was 1995 edited by El_Barto & Giz//
-(within arty rang)
-                               
-
-******************** Arm_Raven ****************
-EXP_HEAVYROCKET
-	       impulsefactor=0.6 //ballance by Peet to stop goliaths being thrown in the air//
-
-******************* Arm_Brawler & Core_Rapier**************
-VTOL_EMG Brawler
-	CollideFriendly=0; //added by Gizmo to stop self damage in swarms//
-	maxdamage=1450; //was 1250// modded by Noruas
-
-VTOL_ROCKET
-	CollideFriendly=0; //added by Gizmo to stop self damage in swarms//
-	maxdamage=1500; //was 1300// modded by Noruas
-
-******************* Core_Leveler ******************
-
-maxvelocity=1.65; //was 1.5// testing for [RoX]janidwornik
-
-****************** Arm_Targeting_Facility ******************************
-
-maxdamage=4504; //was 1900 Modded by Giz// 
-buildcostmetal=5630;    //was 15130 Modded by Gizmo//
-buildcostenergy=36058; //was 136058//
-
-****************** Core_Targeting_Facility *****************************
-
-maxdamage=4785; //was 1800 Modded by Gizmo//
-buildcostmetal=5982;    //was 14982 Modded by Gizmo//
-buildcostenergy=41148; //was 141148 //
-
-******************** Arm_Air_Repair_Pad ********************************
-
-workertime=600; 
-		//was 200 inspired by IvoryKing// 3x faster at healing aircraft
-
-******************** Core__Air_Repair_Pad ******************************
-
-workertime=600; 
-		//was 200 inspired by IvoryKing// 3x faster at healing
-
-
-*********************************Arm_Panther*************************************
-armlatnk_weapon
-
-Rang Was 315 NOW 240!  (-23%)
-
-Now same rang as Zeus lighning cannon 240 (lightning). Thanks to IK.
-
-************************** Vtol Scouts *********************************
-
-Arm_Peeper
-
-maxdamage=120; //88//
-
-maxvelocity=16; //was 12//
-
-Core_Fink
-
-
-maxdamage=139; //99
-
-maxvelocity=15; //11//
-
-Scouts can now live after getting hit once my a missle tower shot and can dodge the second (witch would result in death)
-due to the speed increase. Modded by [Nemesis]EL_Gizmo consept by [RoX]IvorKing (should also cut down on lagg! as less scouts needed)
-
-**************************|v|2 AA ships*****************************
-
-Core_shredder buildcostmetal=2168; //was 1314+65%//
-maxvelocity=2.6; //2.8// Big ups to Peetah
-turnrate=392; //435// Big ups to Peetah
-
-Arm_Archer buildcostmetal=2240; //was 1358+65%//
-turnrate=423; //480 Big ups to Peetah
-maxvelocity=2.7; //3; Big ups to Peetah
-
-**************************Arm&Core Constuction Sea Planes*************
-
-Bothe can now submerge under water, modded by Peetah
-
-******************************Arm_Pelican*******************************
-
-footprintx=2; //3//
-footprintz=2; //was 3//
-
-Concept By the Noruas :)
-
-_____________________________________________________________________________________________________________________________
-				**|||||||||||||||Self destruct as nuke missle||||||||||||**
-
-
-
-selfdestructas decreased to armmine5 ! 
-Minus 16.6% damadge with minus 33.6% area of effect
-
-core_geothermal_powerplant, 
-arm_geothermal_powerplant,
-arm_mobile_fusion, 
-core_light_fusion_power_plant:
-
-The obove units will self destruct as "Armmine5." Armmine5 explotion now uses 
-explosiongenerator=custom:SMALL_NUKE_EXPLOSION_FX; Exploded as a Nuke in V8.1 (visuals are now that of a Roach/Crawling 
-bomb when self destructed. Damage infliceted by this will now be 2250 with an area of effect of 950. Previously this was 
-damage of 2700 with a range of 1500. Modded by Peet, Fx switch by [Nemesis]El_Gizmo
-
-
-_____________________________________________________________________________________________________________________________
-					  **|||||||||||Energy|||||||||||**
-Modded by ElementalGizmo
-Anti "porce" settings that should cut down on defence dependant players and give level 1 units more of a chance vs the 
-following......
-
-*********************Core_Gaat****************     
-
-CORE_LASERH1 
-energypershot=192; //+20% was 160//
-
-
-*************Sentinel Heavy lazer tower*******
-
-ARM_LASERH1
-energypershot=180; //+20% was 150//
-
-********************Core_Sumo*****************
-
-CORSUMO_WEAPON
-energypershot=192; //now same as gaat was 126//
-
-
-*******************Core_Toaster***************       
-
-CORTOAST_GUN  (range 1330)
-
-		energypershot=230; //20% more than gaat (192)//          CHANGED ACCURACY
-		accuracy=365; //250; //added v9//
-
-*******************Core_Punisher**************
-
-CORFIXED_GUN  (range 1900)
-
-		energypershot=276; //20% more than toaster (230)//  
-
-*****************Arm_ambusher*****************
-
-ARMAMB_GUN (1330)
-
-		energypershot=216; //20% more than sentinal (180)//          CHANGED ACCURACY
-		accuracy=350; //235; //added v9//
-
-*****************Arm_Guardian*****************
-
-ARMFIXED_GUN  (range 1950)
-
-		energypershot=259; //20% more than ambusher (216)//
-
-_____________________________________________________________________________________________________________________________
-				         **|||||||||DamageModifier's|||||||||||**
-
-Modded by ElementalGizmo
-(Referance note 0.20 =  gives 80% bonus health when in mode)
-
-
-********Arm_SOlar*************************************
-
-damagemodifier=0.66; //was 66% increase in health when closed now 33%//
-
-*******Core_Solar*************************************
-
-damagemodifier=0.66; //was 66% increase in health when closed now 33%//
-
-*******Arm_ambusher***********************************
-
-damagemodifier=0.33; //was 0.28 (72% increase in health when closed)now 67%//
-
-*******Core_Toaster**********************************
-
-damagemodifier=0.25; //was 0.15 (85% increase in health when closed) now 76%//
-		
-*******Arm_Annihilator*******************************
-
-damagemodifier=0.25; //was 0.5 (95% increase in health when closed) now 75%//
-
-
-(referance)
-maxdamage=6000;
-buildcostmetal=6500;
-buildcostenergy=40000;  
-
-
-1/3rdE =13333 E + 6500 M = 19833 / 6000 H = 3.30
-
-DPS = 1215 / 3.30 = 368
-
-
-***************Core_Dooms_Day_Machine****************
-
-damagemodifier=0.45; //was 0.25 (75% increase in health when closed) now 55%//
-
-
-->(referance)<-
-maxdamage=9925;
-buildcostmetal=4815;
-buildcostenergy=32051; 
-
-
-1/3rdE = 10683 E + 4815 M = 15498 / health = 1.56
-
-DPS = (238+220+400) 858  / 1.56 = 550
-
-
-_____________________________________________________________________________________________________________________________				  **|||||||||||||||Units_that_now_cannot_attack_Vtol|||||||||||||||**
-
-Modded by ElementalGizmo
-units that would open fire at air units and projectiles may of landed on the players own units.
-
-Core_Goliath, Core_Mobile_artillery, Core_morty, Core_Nixer, Arm_Luger, Arm_Merl, Core_Diplomat, Dominator.
-
-
-_____________________________________________________________________________________________________________________________
-                            **||||||||||||||||| Hovers_slope_climb |||||||||||||||||||**
-
-moveinfo.tdf: TANKHOVER2, TANKHOVER3, and TANKHOVER4 maxslope and badslope increased to 21 (from 15) 
-
-HoverCraft may now climb the beach heads on maps such as SmallSupCom thanks to peet and Noruas
-
-
-
-_____________________________________________________________________________________________________________________________
-                          **||||||||||||||||||||| torpedo bombers |||||||||||||||||||**
-
-
-Stoped torpedo bomber firing at ground targets meaning it will only fire when specified, unless
-the aircraft is on patrol)
-
-commandfire=1 //added v9//
-Modded by ElementalGizmo Kudos to Fang & Trepan :P
-
-_____________________________________________________________________________________________________________________________
- **|||||||||||||||||||||||||| Sea construction boats build distance increased for off shor building|||||||||||||||||||||||**
-
-Modded by ElementalGizmo inspired by IK
-
-arm_construction_ship 
-		builddistance=275; //was 200//
-
-arm_Construction_Sub
-		builddistance=275; //200//
-
-core_construction_ship
-		builddistance=275; //was 200//
-
-core_advConstruction_sub
-		builddistance=275; //was 200//
-
-Is this enough?¿
-_____________________________________________________________________________________________________________________________
-
-
-
-_____________________________
-_____________________________
-To-Do-List & Long term goals
-_____________________________
-_____________________________
-
-Sub devitioned and with requested peoples to do each task.
-
-
-
-Graphics:
----------
-
-Muzzle puff for d gun/arty/nuke launch/emp launch (Noruas)
-
-Vtol engine vapour trail (Noruas)
-
-Muzzle flashes and new laser visuals to be finished (Giz&Noruas (no muzzle flashes yet))
-
-New A.K model (Noruas might find 1)
-
-New Arm DT model (Gizmo)
-
-Update Icon system (Elemental_Gizmo)
-
-Create Sea Anti_Nuke (Peet & Elemental_Gizmo)
-
-Add Pete's screen flash to com explotion
-
-Re-do crasher flash
-
-
-Cob files:
-----------
-
-
-Amphib path finding (Noruas or Peet)
-
-Visable mine aoe (Peet)
-
-vtol sonar/radar on/off when landing
-
-
-Balance:
---------
-
-
-|v|2 bomber carpted bombing (Elemental_Gizmo) http://cs.selu.edu/~ssmith/BB/viewtopic.php?t=873
-
-Include underwater moho to adv construct sub (Elemental_Gizmo)
-
-Buzzsaw & Vulcan (Elemental_Gizmo)
-
-beef up the L2 gunships (Giz)
-
-make fighters more resistant to ground fire (flares?) (IK)
-
-Increase the turret speed of flash, cob issue for IK
-
-torp gunship stop targeting air/ non ships/subs (IK)
-
-torp bomber targeting on patrol but only ships/subs (IK)
-
-
-Sound:
-------
-Metal makers/ JAMMERS
-
-
-Check Chojin bug reports:
-Arm second level subs aimed at defender towers on beach during patrol.
-Core Flamethrower aiming at Brawlers. (lower vtol attack dps?)
-_____________________________________________________________________________________________
-*********************************************END*********************************************
-
-Dated: May 14th 2007 Gizmo
-
-
-
-
+XTA v9 Public Alpha
+|N.N.
+25/02/2008
+
+  * Added New Nuke effect by Quantum (yet to implement!). --------> //Increase dmg with a low edge of effictivness so they can take out vehicle factories?//
+  * Added New Core Commander model by Mr.D.
+  * Added New Mortie model, By Sean Herron textured by Noruas.
+  * Added New weasel/Jeffy Effect, by Noruas.
+  * Added New Zipper Effect, by Noruas.
+  * Added New Annihilator effect By Noruas; with sparks uses Snipe2 texture By ElementalGizmo.
+  * Added New Bertha effect, Fire pillar by Noruas using texture by ElementalGizmo.
+  * Added New Maverick Plasma glow.
+  * Added New Core Pyro ground glow effect and muzzle flair By Noruas and flame thrower texture  modded  by ElementalGizmo cob further modded Peet
+  * Added New Arm_Penetrator FX By Noruas. Uses Snipe2 texture By ElementalGizmo.
+  * Added New Commander explotion By Noruas.
+  * Added New Roach and Crawling bomb explotion By Noruas
+  * Added New AK and Instigator lasers have new effect with sparks texture By ElementalGizmo & Noruas.
+  * Added New EMG texture by ELementalGizmo, and ground glow script inspired from BalancedAnnihilation.
+  * Added New sparks to many weapons made from skratch and scripted by ElementalGizmo, inspired by Quantum (C.A mod)
+  * Added New laser textures to most weapons, by ElementalGizmo.
+  * Added New Raven FX by ElementalGizmo.
+  * Edited DGun, has new FX,lasts shorter glow time & sparks By Noruas & ElementalGizmo.
+  * Edited Move Info to make hovercrafts more mobile by 2 points in moveinfo.tdf, and certain vehicles by 1 point to make them still more mobile than hovercrafts by Noruas & Peet
+  * Edited all the explosions to be recolored!
+  * Edited Vehicles & Kbot Level one stats and movement; See credits below.....
+  * Edited the construction bot unfold speed so they build faster. Edited .cob files by Peetah :)
+  * Edited all ground units acceleration and brake speed by a factor of TEN to make micro more rewarding, by ElementalGizmo thanks to peets concept.
+
+XTA 066 SE
+|Sheekel
+14/08/2008
+
+	OLD XTA

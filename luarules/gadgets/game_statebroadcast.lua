@@ -22,6 +22,7 @@ if not gadgetHandler:IsSyncedCode() then
 	-------------------
 	
 	local STATEMSG 					= "181072"
+	local AIMSG 					= "231689123"
 	local GetTeamStartPosition 		= Spring.GetTeamStartPosition
 	local GetGameFrame 				= Spring.GetGameFrame
 	local gaiaTeamID 				= Spring.GetGaiaTeamID()
@@ -66,10 +67,31 @@ if not gadgetHandler:IsSyncedCode() then
 		return
 	end
 	
+	function gadget:Initialize()
+		for _,teamID in ipairs(Spring.GetTeamList()) do
+			
+			local _,_,_, isAI = GetTeamInfo(teamID)
+			if isAI then
+				local remoteName = Spring.GetGameRulesParam("AI-Name"..teamID)
+				local skirmishAIID,name,host,shortName, tname = Spring.GetAIInfo(teamID)
+				
+				if (shortName) and (shortName ~= "") and (not shortName:find("KNOWN")) and not shortName:find("NOSHORTNAME") then
+					if not remoteName then 
+						Spring.SendLuaRulesMsg(AIMSG .. teamID .. ":" .. shortName)
+						--Spring.Echo("Sent message: ",AIMSG .. teamID .. ":" .. shortName)
+					end
+				end
+			end
+		end
+	end
+	
+	
 else
 	-----------------
 	-- SYNCED PART --
 	-----------------
+	
+	
 	
 	function gadget:Initialize()
 		for i,_ in ipairs(Spring.GetTeamList()) do

@@ -83,7 +83,7 @@ end
 
 function widget:GameFrame(frame)
 	if frame%30 == 0 then
-		local buffer = Spring.GetConsoleBuffer(4)
+		local buffer = Spring.GetConsoleBuffer(2)
 		for _, line in pairs (buffer) do
 			if line.priority == 35 and line.text:find("Sync error for") then
 				if not desyncs.err then desyncs.err = 0 end

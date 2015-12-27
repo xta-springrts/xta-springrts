@@ -1,3 +1,16 @@
+function gadget:GetInfo()
+  return {
+    name      = "Commander Sounds",
+    desc      = "Make the commanders sing and have noise",
+	version   = "1.0",
+    author    = "Kloot",
+    date      = "Jan, 2013",
+    license   = "GNU GPL, v2 or later",
+    layer     = 0,
+    enabled   = true,  --  loaded by default?
+  }
+end
+
 local CommanderUnitDefs, CommanderSounds, CommanderTargets = include("LuaRules/Configs/unit_commander_sounds_defs.lua")
 local CommanderSingCmdDesc = {id = 40123, name = "Sing", }
 local CommanderTauntCmdDesc = {id = 40234, name = "Taunt", }
@@ -14,9 +27,8 @@ if (gadgetHandler:IsSyncedCode()) then
 	
 	local FindUnitCmdDesc = Spring.FindUnitCmdDesc
 	local RemoveUnitCmdDesc = Spring.RemoveUnitCmdDesc
-	local CommandersWithGreet = {}
-	local CommandersWithTY = {}
-	local tyEnabled = false
+	local teamsThatHaveSaidThanks = {}
+	local firstGreetDone = false
 
 	function gadget:Initialize()
 		for _, unitID in ipairs(Spring.GetAllUnits()) do
@@ -24,66 +36,47 @@ if (gadgetHandler:IsSyncedCode()) then
 		end
 	end
 	
-	local function RemoveGLHFCmd(unitID)
-		local cmdDescID = FindUnitCmdDesc(unitID, GLHFCmdDesc.id)
-		if (cmdDescID) then
-			RemoveUnitCmdDesc(unitID, cmdDescID)
-			CommandersWithGreet[unitID] = nil
-		end
-	end
-	
-	local function RemoveTYCmd(unitID)
-		local cmdDescID = FindUnitCmdDesc(unitID, TYCmdDesc.id)
-		if (cmdDescID) then
-			RemoveUnitCmdDesc(unitID, cmdDescID)
-			CommandersWithTY[unitID] = nil
-		end
-	end
-	
-	local function addTYCmd()
+	local function switchGreetButtons() -- switches glhf button to thx, for all units
 		for _, unitID in ipairs(Spring.GetAllUnits()) do
-			local unitDefID = Spring.GetUnitDefID(unitID)
-			if (CommanderUnitDefs[unitDefID] ~= nil) then
-				if not FindUnitCmdDesc(unitID,TYCmdDesc.id) then
-					Spring.InsertUnitCmdDesc(unitID, TYCmdDesc)
-					CommandersWithTY[unitID] = true
-				end
+			local cmdDescID = FindUnitCmdDesc(unitID, GLHFCmdDesc.id)
+			if (cmdDescID) then
+				RemoveUnitCmdDesc(unitID, cmdDescID)
+				Spring.InsertUnitCmdDesc(unitID, cmdDescID, TYCmdDesc)		
 			end
 		end
 	end
-
-	function gadget:UnitCreated(unitID, unitDefID, _, builderID)
+	
+	local function switchThxButton(teamID) -- switches thx-button to sing button for this team
+		for _, unitID in ipairs(Spring.GetTeamUnits(teamID)) do
+			local cmdDescID = FindUnitCmdDesc(unitID, TYCmdDesc.id)
+			if (cmdDescID) then
+				RemoveUnitCmdDesc(unitID, cmdDescID)		
+				Spring.InsertUnitCmdDesc(unitID, cmdDescID, CommanderSingCmdDesc)
+			end
+		end
+	end
+	
+	function gadget:UnitCreated(unitID, unitDefID, unitTeamID, builderID)
 		if (CommanderUnitDefs[unitDefID] ~= nil) then
-			local frame = Spring.GetGameFrame()
 			
-			Spring.InsertUnitCmdDesc(unitID, CommanderSingCmdDesc)
-			Spring.InsertUnitCmdDesc(unitID, CommanderTauntCmdDesc)
+			local cmdDescID = FindUnitCmdDesc(unitID, GLHFCmdDesc.id)
 			
-			-- For detecting commanders created by morph: it's not possible to store which unitID was created by morph, because 
-			-- the id is not known before unit is created this callin is executed immedeately after that time.
-			if frame and frame < 900 then -- 30 secs
+			
+			-- sing command is only available after you have said thank you :)
+			if not firstGreetDone then
 				Spring.InsertUnitCmdDesc(unitID, GLHFCmdDesc)
-				CommandersWithGreet[unitID] = true
+			elseif not teamsThatHaveSaidThanks[unitTeamID] then
+				Spring.InsertUnitCmdDesc(unitID, TYCmdDesc)
+			else
+				Spring.InsertUnitCmdDesc(unitID, CommanderSingCmdDesc)
 			end
 			
-		else
-			if CommandersWithGreet[builderID] then
-				local ud = UnitDefs[unitDefID]
-				if ud.canAttack or ud.isBuilder then
-					RemoveGLHFCmd(builderID)
-				end
-			end
-			
-			if CommandersWithTY[builderID] then
-				local ud = UnitDefs[unitDefID]
-				if ud.canAttack or ud.isBuilder then
-					RemoveTYCmd(builderID)
-				end
-			end
+			--taunt button on the other hand goes to all commanders
+			Spring.InsertUnitCmdDesc(unitID, CommanderTauntCmdDesc)
 		end
 	end
 
-	-- I think this is annoying to I disabled this callin. Jools.
+	-- I think this is annoying so I disabled this callin. Jools.
 	--function gadget:UnitDamaged(unitID, unitDefID, unitTeamID, damage, paralyzer, weaponID, projectileID, attackerID, attackerDefID, attackerTeamID)
 		
 		--SendToUnsynced('usUnitDamaged', unitID, unitDefID, unitTeamID, damage, paralyzer, weaponID, projectileID, attackerID, attackerDefID, attackerTeamID)
@@ -91,8 +84,6 @@ if (gadgetHandler:IsSyncedCode()) then
 
 	function gadget:UnitDestroyed(unitID, unitDefID, unitTeamID, attackerID, attackerDefID, attackerTeamID)
 		SendToUnsynced('usUnitDestroyed', unitID, unitDefID, unitTeamID, attackerID, attackerDefID, attackerTeamID)
-		if CommandersWithGreet[unitID] then CommandersWithGreet[unitID] = nil end
-		if CommandersWithTY[unitID] then CommandersWithTY[unitID] = nil end
 	end
 	
 	--function gadget:UnitCloaked(unitID, unitDefID, unitTeamID)
@@ -119,6 +110,8 @@ if (gadgetHandler:IsSyncedCode()) then
 			--   return false for Sing/Taunt so they do not cancel normal orders
 			--   Original cob-gadget had these probabilities, that's why they are retained.
 			--   The first sing sound is the original one, that's why it's more probable.
+			
+			-- sing command
 			if (cmdID == CommanderSingCmdDesc.id) then
 				local idx = 0
 
@@ -129,6 +122,8 @@ if (gadgetHandler:IsSyncedCode()) then
 				spPlaySoundFile(CommanderSounds.CommanderSongs[unitDefID][idx], volume)
 				return false
 			end
+			
+			--taunt command
 			if (cmdID == CommanderTauntCmdDesc.id) then
 				local snds = CommanderSounds.CommanderTaunts[unitDefID]
 				local sidx = rnd(0, #snds)
@@ -137,23 +132,21 @@ if (gadgetHandler:IsSyncedCode()) then
 				return false
 			end
 			
+			--greet command
 			if (CommanderUnitDefs[unitDefID] ~= nil) then
 				if (cmdID == GLHFCmdDesc.id) then
 					local idx = rnd(0, #CommanderSounds.GLHFSongs[unitDefID])
 					
 					spPlaySoundFile(CommanderSounds.GLHFSongs[unitDefID][idx], volume)
-					RemoveGLHFCmd(unitID, cmdDescID)
-					if not tyEnabled then 
-						tyEnabled = true 
-						addTYCmd()
-					end
-					
+					switchGreetButtons()
+					firstGreetDone = true
 					return false
+				--ty command
 				elseif (cmdID == TYCmdDesc.id) then
 					local idx = rnd(0, #CommanderSounds.TYSongs[unitDefID])
-					
 					spPlaySoundFile(CommanderSounds.TYSongs[unitDefID][idx], volume)
-					RemoveTYCmd(unitID)
+					switchThxButton(unitTeamID)
+					teamsThatHaveSaidThanks[unitTeamID] = true
 					return false
 				end
 			end

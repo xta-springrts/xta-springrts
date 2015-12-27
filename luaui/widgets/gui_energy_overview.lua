@@ -30,7 +30,30 @@ local mySpectatorState
 local leaderID, leaderName, r,g,b
 local maxUnits						= Game.maxUnits
 local rezzCF						= Game.resurrectEnergyCostFactor
+local bgcorner						= "luaui/images/bgcorner.png"
 
+
+-- colours
+local cWhite						= {1, 1, 1, 1}
+local cBlack						= {0, 0, 0, 1}
+local cBorder						= {0, 0, 0, 0.6}
+
+local cBack							= {0, 0, 0, 0.3}
+local cTitle						= {0.8, 0.8, 1.0, 1}
+local cPanel						= {0.5, 0.5, 0.5, 0.3}
+local cMatrix						= {0.2, 0.2, 0.3, 0.6}
+
+local cAxes							= {0.2, 0.2, 0.2, 0.75}
+local cAxesMinor					= {0.3, 0.3, 0.3, 0.66}
+local cAxesText						= {0.8, 0.8, 0.8, 1}
+local cChartBorder 					= {0.8, 0.8, 0.8, 1}
+
+local cLight						= {0.8, 0.8, 0.2, 0.3}
+local cSelect						= {0.8, 0.8, 0.8, 0.5}
+
+local cStatButton					= {0, 0, 0, 0.5}
+local cButton						= {0.33,0.33,0.33,0.2}
+local cText							= {1, 1, 1, 1}
 
 local mohos	= {
 [UnitDefNames["arm_moho_mine"].id] 					= true,
@@ -86,10 +109,82 @@ local function IsOnButton(x, y, BLcornerX, BLcornerY,TRcornerX,TRcornerY)
 end
 
 local function drawBorder(x0, y0, x1, y1, width)
-	glRect(x0, y0, x1, y0 + width)
-	glRect(x0, y1, x1, y1 - width)
-	glRect(x0, y0, x0 + width, y1)
-	glRect(x1, y0, x1 - width, y1)
+	return RectRound(x0-1, y0-1, x1+1, y1+1,6) 
+	
+	--glRect(x0, y0, x1, y0 + width)
+	--glRect(x0, y1, x1, y1 - width)
+	--glRect(x0, y0, x0 + width, y1)
+	--glRect(x1, y0, x1 - width, y1)
+end
+
+local function DrawRectRound(px,py,sx,sy,cs)
+	gl.TexCoord(0.8,0.8)
+	gl.Vertex(px+cs, py, 0)
+	gl.Vertex(sx-cs, py, 0)
+	gl.Vertex(sx-cs, sy, 0)
+	gl.Vertex(px+cs, sy, 0)
+	
+	gl.Vertex(px, py+cs, 0)
+	gl.Vertex(px+cs, py+cs, 0)
+	gl.Vertex(px+cs, sy-cs, 0)
+	gl.Vertex(px, sy-cs, 0)
+	
+	gl.Vertex(sx, py+cs, 0)
+	gl.Vertex(sx-cs, py+cs, 0)
+	gl.Vertex(sx-cs, sy-cs, 0)
+	gl.Vertex(sx, sy-cs, 0)
+	
+	local offset = 0.07		-- texture offset, because else gaps could show
+	local o = offset
+	-- top left
+	if py <= 0 or px <= 0 then o = 0.5 else o = offset end
+	gl.TexCoord(o,o)
+	gl.Vertex(px, py, 0)
+	gl.TexCoord(o,1-o)
+	gl.Vertex(px+cs, py, 0)
+	gl.TexCoord(1-o,1-o)
+	gl.Vertex(px+cs, py+cs, 0)
+	gl.TexCoord(1-o,o)
+	gl.Vertex(px, py+cs, 0)
+	-- top right
+	if py <= 0 or sx >= vsx then o = 0.5 else o = offset end
+	gl.TexCoord(o,o)
+	gl.Vertex(sx, py, 0)
+	gl.TexCoord(o,1-o)
+	gl.Vertex(sx-cs, py, 0)
+	gl.TexCoord(1-o,1-o)
+	gl.Vertex(sx-cs, py+cs, 0)
+	gl.TexCoord(1-o,o)
+	gl.Vertex(sx, py+cs, 0)
+	-- bottom left
+	if sy >= vsy or px <= 0 then o = 0.5 else o = offset end
+	gl.TexCoord(o,o)
+	gl.Vertex(px, sy, 0)
+	gl.TexCoord(o,1-o)
+	gl.Vertex(px+cs, sy, 0)
+	gl.TexCoord(1-o,1-o)
+	gl.Vertex(px+cs, sy-cs, 0)
+	gl.TexCoord(1-o,o)
+	gl.Vertex(px, sy-cs, 0)
+	-- bottom right
+	if sy >= vsy or sx >= vsx then o = 0.5 else o = offset end
+	gl.TexCoord(o,o)
+	gl.Vertex(sx, sy, 0)
+	gl.TexCoord(o,1-o)
+	gl.Vertex(sx-cs, sy, 0)
+	gl.TexCoord(1-o,1-o)
+	gl.Vertex(sx-cs, sy-cs, 0)
+	gl.TexCoord(1-o,o)
+	gl.Vertex(sx, sy-cs, 0)
+end
+		
+function RectRound(px,py,sx,sy,cs)
+	cs = cs or 6
+	local px,py,sx,sy,cs = math.floor(px),math.floor(py),math.ceil(sx),math.ceil(sy),math.floor(cs)
+	
+	gl.Texture(bgcorner)
+	gl.BeginEnd(GL.QUADS, DrawRectRound, px,py,sx,sy,cs)
+	gl.Texture(false)
 end
 
 local function StopMohos()
@@ -161,72 +256,74 @@ local function WaitFarks()
 	end
 end
 
+
+
 local function DrawWindow()
 	local y0 = posy + sizey
 	local x0 = posx + 20
 	local x1 = posx + sizex/2
 		
 	--back panel
-	glColor(0.3, 0.3, 0.4, 0.55)
-	glRect(posx,posy,posx+sizex,posy+sizey)
+	glColor(cBack)
+	RectRound(posx,posy,posx+sizex,posy+sizey,6)
 		
 	-- Buttons
 	-- Close
-	glColor(0, 0, 0, 0.4)
-	glRect(Button["close"]["x0"],Button["close"]["y0"], Button["close"]["x1"], Button["close"]["y1"])
-	glColor(0, 0, 0, 1)
+	glColor(cBorder)
 	drawBorder(Button["close"]["x0"],Button["close"]["y0"], Button["close"]["x1"], Button["close"]["y1"],1)
+	glColor(cButton)
+	RectRound(Button["close"]["x0"],Button["close"]["y0"], Button["close"]["x1"], Button["close"]["y1"],6)
 	
 	if not mySpectatorState then
 		-- Construction
-		glColor(0, 0, 0, 0.4)
-		glRect(Button["builderwait"]["x0"],Button["builderwait"]["y0"], Button["builderwait"]["x1"], Button["builderwait"]["y1"])
-		glColor(0, 0, 0, 1)
+		glColor(cBorder)
 		drawBorder(Button["builderwait"]["x0"],Button["builderwait"]["y0"], Button["builderwait"]["x1"], Button["builderwait"]["y1"],1)
+		glColor(cButton)
+		RectRound(Button["builderwait"]["x0"],Button["builderwait"]["y0"], Button["builderwait"]["x1"], Button["builderwait"]["y1"],6)
 		
 		-- Resurrection
-		glColor(0, 0, 0, 0.4)
-		glRect(Button["resurrect"]["x0"],Button["resurrect"]["y0"], Button["resurrect"]["x1"], Button["resurrect"]["y1"])
-		glColor(0, 0, 0, 1)
+		glColor(cBorder)
 		drawBorder(Button["resurrect"]["x0"],Button["resurrect"]["y0"], Button["resurrect"]["x1"], Button["resurrect"]["y1"],1)
+		glColor(cButton)
+		RectRound(Button["resurrect"]["x0"],Button["resurrect"]["y0"], Button["resurrect"]["x1"], Button["resurrect"]["y1"],6)
 		
 		-- cloakshow
-		glColor(0, 0, 0, 0.4)
-		glRect(Button["cloakshow"]["x0"],Button["cloakshow"]["y0"], Button["cloakshow"]["x1"], Button["cloakshow"]["y1"])
-		glColor(0, 0, 0, 1)
+		glColor(cBorder)
 		drawBorder(Button["cloakshow"]["x0"],Button["cloakshow"]["y0"], Button["cloakshow"]["x1"], Button["cloakshow"]["y1"],1)
+		glColor(cButton)
+		RectRound(Button["cloakshow"]["x0"],Button["cloakshow"]["y0"], Button["cloakshow"]["x1"], Button["cloakshow"]["y1"])
 		
 		-- mohostop
-		glColor(0, 0, 0, 0.4)
-		glRect(Button["mohostop"]["x0"],Button["mohostop"]["y0"], Button["mohostop"]["x1"], Button["mohostop"]["y1"])
-		glColor(0, 0, 0, 1)
+		glColor(cBorder)
 		drawBorder(Button["mohostop"]["x0"],Button["mohostop"]["y0"], Button["mohostop"]["x1"], Button["mohostop"]["y1"],1)
+		glColor(cButton)
+		RectRound(Button["mohostop"]["x0"],Button["mohostop"]["y0"], Button["mohostop"]["x1"], Button["mohostop"]["y1"])
 		
 		-- noconvert
-		glColor(0, 0, 0, 0.4)
-		glRect(Button["noconvert"]["x0"],Button["noconvert"]["y0"], Button["noconvert"]["x1"], Button["noconvert"]["y1"])
-		glColor(0, 0, 0, 1)
-		drawBorder(Button["noconvert"]["x0"],Button["noconvert"]["y0"], Button["noconvert"]["x1"], Button["noconvert"]["y1"],1)		
+		glColor(cBorder)
+		drawBorder(Button["noconvert"]["x0"],Button["noconvert"]["y0"], Button["noconvert"]["x1"], Button["noconvert"]["y1"],1)	glColor(cButton)
+		RectRound(Button["noconvert"]["x0"],Button["noconvert"]["y0"], Button["noconvert"]["x1"], Button["noconvert"]["y1"])
+		
 	end
 	-- Highlight
-	glColor(0.8, 0.8, 0.2, 0.5)
+	glColor(cLight)
 	if Button["close"]["mouse"] then
-		glRect(Button["close"]["x0"],Button["close"]["y0"], Button["close"]["x1"], Button["close"]["y1"])
+		RectRound(Button["close"]["x0"],Button["close"]["y0"], Button["close"]["x1"], Button["close"]["y1"])
 	elseif Button["builderwait"]["mouse"] then
-		glRect(Button["builderwait"]["x0"],Button["builderwait"]["y0"], Button["builderwait"]["x1"], Button["builderwait"]["y1"])
+		RectRound(Button["builderwait"]["x0"],Button["builderwait"]["y0"], Button["builderwait"]["x1"], Button["builderwait"]["y1"])
 	elseif Button["resurrect"]["mouse"] then
-		glRect(Button["resurrect"]["x0"],Button["resurrect"]["y0"], Button["resurrect"]["x1"], Button["resurrect"]["y1"])
+		RectRound(Button["resurrect"]["x0"],Button["resurrect"]["y0"], Button["resurrect"]["x1"], Button["resurrect"]["y1"])
 	elseif Button["cloakshow"]["mouse"] then
-		glRect(Button["cloakshow"]["x0"],Button["cloakshow"]["y0"], Button["cloakshow"]["x1"], Button["cloakshow"]["y1"])
+		RectRound(Button["cloakshow"]["x0"],Button["cloakshow"]["y0"], Button["cloakshow"]["x1"], Button["cloakshow"]["y1"])
 	elseif Button["mohostop"]["mouse"] then
-		glRect(Button["mohostop"]["x0"],Button["mohostop"]["y0"], Button["mohostop"]["x1"], Button["mohostop"]["y1"])
+		RectRound(Button["mohostop"]["x0"],Button["mohostop"]["y0"], Button["mohostop"]["x1"], Button["mohostop"]["y1"])
 	elseif Button["noconvert"]["mouse"] then
-		glRect(Button["noconvert"]["x0"],Button["noconvert"]["y0"], Button["noconvert"]["x1"], Button["noconvert"]["y1"])
+		RectRound(Button["noconvert"]["x0"],Button["noconvert"]["y0"], Button["noconvert"]["x1"], Button["noconvert"]["y1"])
 	end
 	
 	-- Text
 	myFont:Begin()
-	myFont:SetTextColor({1, 1, 1, 1})
+	myFont:SetTextColor(cText)
 	myFont:Print("Energy overview:",x1,y0 - 20,14,'vcs')
 	myFont:Print("Close",(Button["close"]["x0"]+Button["close"]["x1"])/2,Button["close"]["y0"]+10,14,'vcs')
 	myFont:End()

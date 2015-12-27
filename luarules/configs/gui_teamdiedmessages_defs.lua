@@ -31,12 +31,14 @@ local messages = {
 	'Brave <tn> was not at all afraid to be killed in nasty ways',
 }
 
+-- <side> is replaced by the the actual side.
 local defaultmessages = {
 	'<side> forces have gone to a better place.',
 	'<side> vermin have been exterminated.',
 	'<side> forces have been obliterated.',
 }
 
+-- <side> is replaced by the the actual side. In case a player resigns, the system has no information about the name
 local resignedmessages = {
 	'<side> forces have gone to a better place.',
 	'<side> vermin have retreated',

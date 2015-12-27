@@ -492,13 +492,9 @@ end
 
 function widget:TextCommand(command)
 		
-	if (string.find(command, "allyres")) then 
-			
-		if (string.find(command, "showall")) then 
-			showAll = true
-		else
-			showAll = false
-		end
+	if (string.find(command, "allyres")) then 	
+		showAll = not showAll
+		
 		setUpTeam()
 		updateStatics()
 		updateBars()

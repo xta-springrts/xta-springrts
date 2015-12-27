@@ -59,6 +59,7 @@ if gadgetHandler:IsSyncedCode() then
 		local holyTargets			= {}
 		local impressiveTargets		= {}
 		local XTA_AWARDMARKER		= '\199'
+		local XTA_BADGESMARKER		= '§§§888§§§'
 		local unitBuildpowerTable 	= {}
 		local unitFirepowerTable	= {}
 		local nbPlayers				= 0
@@ -720,6 +721,7 @@ else
 		local areHeroes						= false
 		local areLost						= false
 		local areAwards						= false
+		local bgcorner						= "luaui/images/bgcorner.png"
 		
 		-- colours
 		local cWhite						= {1, 1, 1, 1}
@@ -965,6 +967,75 @@ else
 
 		local function round(num, idp)
 			return string.format("%." .. (idp or 0) .. "f", num or -1)
+		end
+
+		local function DrawRectRound(px,py,sx,sy,cs)
+	gl.TexCoord(0.8,0.8)
+	gl.Vertex(px+cs, py, 0)
+	gl.Vertex(sx-cs, py, 0)
+	gl.Vertex(sx-cs, sy, 0)
+	gl.Vertex(px+cs, sy, 0)
+	
+	gl.Vertex(px, py+cs, 0)
+	gl.Vertex(px+cs, py+cs, 0)
+	gl.Vertex(px+cs, sy-cs, 0)
+	gl.Vertex(px, sy-cs, 0)
+	
+	gl.Vertex(sx, py+cs, 0)
+	gl.Vertex(sx-cs, py+cs, 0)
+	gl.Vertex(sx-cs, sy-cs, 0)
+	gl.Vertex(sx, sy-cs, 0)
+	
+	local offset = 0.07		-- texture offset, because else gaps could show
+	local o = offset
+	-- top left
+	if py <= 0 or px <= 0 then o = 0.5 else o = offset end
+	gl.TexCoord(o,o)
+	gl.Vertex(px, py, 0)
+	gl.TexCoord(o,1-o)
+	gl.Vertex(px+cs, py, 0)
+	gl.TexCoord(1-o,1-o)
+	gl.Vertex(px+cs, py+cs, 0)
+	gl.TexCoord(1-o,o)
+	gl.Vertex(px, py+cs, 0)
+	-- top right
+	if py <= 0 or sx >= vsx then o = 0.5 else o = offset end
+	gl.TexCoord(o,o)
+	gl.Vertex(sx, py, 0)
+	gl.TexCoord(o,1-o)
+	gl.Vertex(sx-cs, py, 0)
+	gl.TexCoord(1-o,1-o)
+	gl.Vertex(sx-cs, py+cs, 0)
+	gl.TexCoord(1-o,o)
+	gl.Vertex(sx, py+cs, 0)
+	-- bottom left
+	if sy >= vsy or px <= 0 then o = 0.5 else o = offset end
+	gl.TexCoord(o,o)
+	gl.Vertex(px, sy, 0)
+	gl.TexCoord(o,1-o)
+	gl.Vertex(px+cs, sy, 0)
+	gl.TexCoord(1-o,1-o)
+	gl.Vertex(px+cs, sy-cs, 0)
+	gl.TexCoord(1-o,o)
+	gl.Vertex(px, sy-cs, 0)
+	-- bottom right
+	if sy >= vsy or sx >= vsx then o = 0.5 else o = offset end
+	gl.TexCoord(o,o)
+	gl.Vertex(sx, sy, 0)
+	gl.TexCoord(o,1-o)
+	gl.Vertex(sx-cs, sy, 0)
+	gl.TexCoord(1-o,1-o)
+	gl.Vertex(sx-cs, sy-cs, 0)
+	gl.TexCoord(1-o,o)
+	gl.Vertex(sx, sy-cs, 0)
+end
+		
+		function RectRound(px,py,sx,sy,cs)
+			local px,py,sx,sy,cs = math.floor(px),math.floor(py),math.ceil(sx),math.ceil(sy),math.floor(cs)
+			
+			gl.Texture(bgcorner)
+			gl.BeginEnd(GL.QUADS, DrawRectRound, px,py,sx,sy,cs)
+			gl.Texture(false)
 		end
 
 		local function formatRes(number)
@@ -1854,9 +1925,9 @@ else
 					-- normal
 					glColor(cStatButton)
 				end
-				glRect(sbutton.x0,sbutton.y0,sbutton.x1,sbutton.y1)
-				glColor(cBorder)
-				drawBorder(sbutton.x0,sbutton.y0,sbutton.x1,sbutton.y1,1)
+				RectRound(sbutton.x0,sbutton.y0,sbutton.x1,sbutton.y1,4)
+				--glColor(cBorder)
+				--drawBorder(sbutton.x0,sbutton.y0,sbutton.x1,sbutton.y1,1)
 				
 				myFont:Begin()
 				myFont:SetTextColor(cWhite)
@@ -2219,7 +2290,7 @@ else
 			if drawWindow and not Spring.IsGUIHidden() and GG.showXTAStats then 
 				--back panel
 				glColor(cBack)
-				glRect(Panel["back"]["x0"],Panel["back"]["y0"],Panel["back"]["x1"], Panel["back"]["y1"])
+				RectRound(Panel["back"]["x0"],Panel["back"]["y0"],Panel["back"]["x1"], Panel["back"]["y1"],6)
 				
 				-- Buttons
 				for name, button in pairs(Button) do
@@ -2242,9 +2313,9 @@ else
 						else
 							glColor(cButton)
 						end
-						glRect(button.x0,button.y0,button.x1,button.y1)
-						glColor(cBorder)
-						drawBorder(button.x0,button.y0,button.x1,button.y1,1)
+						RectRound(button.x0,button.y0,button.x1,button.y1,6)
+						--glColor(cBorder)
+						--drawBorder(button.x0,button.y0,button.x1,button.y1,1)
 						
 						-- text
 						myFontMed:Begin()

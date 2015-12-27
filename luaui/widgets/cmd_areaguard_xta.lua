@@ -1,44 +1,80 @@
-local versionNumber = "2.0"
+local versionNumber = "2.1"
 
 function widget:GetInfo()
 	return {
 	name = "Area guard XTA",
 	desc = "Guard units in selected area",
 	author = "Jools",
-	date = "Jun, 2013",
+	date = "Dec, 2015",
 	license = "tango",
 	layer = 10,
 	enabled = true,
 	handler = true, --access to handler
 	}
 end
+
+local AreTeamsAllied						= Spring.AreTeamsAllied
 local CMD_AREA_GUARD 						= 14001
-local Echo 									= Spring.Echo
-local GetSelectedUnits						= Spring.GetSelectedUnits
 local CMD_GUARD 							= CMD.GUARD
-local CMD_REPAIR 							= CMD.REPAIR
 local CMD_INSERT							= CMD.INSERT
 local CMD_OPT_SHIFT							= CMD.OPT_SHIFT
+local CMD_REPAIR 							= CMD.REPAIR
 local CMD_STOP								= CMD.STOP
-local GetUnitSeparation						= Spring.GetUnitSeparation
+local Echo 									= Spring.Echo
+local GL_LINE_STRIP = GL.LINE_STRIP
+local GetActiveCommand						= Spring.GetActiveCommand
+local GetSelectedUnits						= Spring.GetSelectedUnits
+local GetSelectedUnitsCounts				= Spring.GetSelectedUnitsCounts
 local GetUnitDefID							= Spring.GetUnitDefID
 local GetUnitHealth							= Spring.GetUnitHealth
-local GiveOrderToUnit						= Spring.GiveOrderToUnit
-local PlaySoundFile							= Spring.PlaySoundFile
-local GetUnitsInCylinder 					= Spring.GetUnitsInCylinder
+local GetUnitHeight							= Spring.GetUnitHeight
+local GetUnitPosition						= Spring.GetUnitPosition
+local GetUnitSeparation						= Spring.GetUnitSeparation
 local GetUnitTeam							= Spring.GetUnitTeam
-local AreTeamsAllied						= Spring.AreTeamsAllied
+local GetUnitViewPosition					= Spring.GetUnitViewPosition
+local GetUnitsInCylinder 					= Spring.GetUnitsInCylinder
+local GiveOrderToUnit						= Spring.GiveOrderToUnit
+local IsUnitSelected						= Spring.IsUnitSelected
+local IsUnitVisible							= Spring.IsUnitVisible
+local PlaySoundFile							= Spring.PlaySoundFile
+local SetMouseCursor						= Spring.SetMouseCursor
 local altDown 								= false
 local ctrlDown 								= false
-local squadron 								= {} -- squadron[unitID] = array. Table by source units containing a list of guarded units
+local drawTable 							= {}
+local glBeginEnd = gl.BeginEnd
+local glBillboard = gl.Billboard
+local glColor = gl.Color
+local glLineStipple = gl.LineStipple
+local glLineWidth = gl.LineWidth
+local glLoadIdentity = gl.LoadIdentity
+local glPopMatrix = gl.PopMatrix
+local glPushMatrix = gl.PushMatrix
+local glScale = gl.Scale
+local glTexRect	= gl.TexRect
+local glTexture	= gl.Texture
+local glTranslate = gl.Translate
+local glVertex = gl.Vertex
 local guardianTable 						= {} -- reverse list
-local ta_insert								= table.insert
-local ta_sort								= table.sort
-local ta_remove								= table.remove
+local helpOn 								= tonumber(Spring.GetConfigInt("XTA_CommandHelpText",1) or 1) == 1
+local hideGuard								= false
 local math_floor							= math.floor
+local myFont	 							= gl.LoadFont("FreeSansBold.otf",textsize, 1.9, 40) 
+local myFontBig	 							= gl.LoadFont("FreeSansBold.otf",12, 1.9, 40)
+local shiftDown 							= false
 local sndButton								= 'sounds/button9.wav'
 local sndButton2							= 'sounds/minesel4.wav'
-local hideGuard								= false
+local squadron 								= {} -- squadron[unitID] = array. Table by source units containing a list of guarded units
+local ta_insert								= table.insert
+local ta_remove								= table.remove
+local ta_sort								= table.sort
+local textsize								= 6
+local textoffsetx							= 16
+local textoffsety							= 21
+
+
+local imgGuard								= 'luaui/images/areaguard/cursordefendsquad.png'
+local myTeamID
+ 
  
 function widget:Initialize()
 	local cmds = widgetHandler.commands
@@ -53,6 +89,9 @@ function widget:Initialize()
 			cmds[i].hidden = false
 		end
     end
+	Spring.AssignMouseCursor('SquadronGuard', 'cursordefendb', true, false)
+	Spring.AssignMouseCursor('SplitGuard', 'cursordefendc', true, false)
+	myTeamID = Spring.GetMyTeamID()
 end
 	
 function widget:Shutdown()
@@ -339,10 +378,173 @@ function countItems(tbl)
 	return count
 end
 
+local function getDrawData(unitArray)
+	for _, sourceID in pairs (unitArray) do
+		if squadron[sourceID] then
+			if not drawTable[sourceID] then
+				drawTable[sourceID] = {}
+			end
+			
+			local _,_,_,xm0,ym0,zm0 = GetUnitPosition(sourceID,true)
+			drawTable[sourceID][1] = {sourceID,xm0,ym0,zm0}
+			
+			for j, targetID in pairs (squadron[sourceID]) do
+				local _,_,_,xm,ym,zm = GetUnitPosition(targetID,true)
+				drawTable[sourceID][j+1] = {targetID,xm,ym,zm}
+				--Echo("GDD:",sourceID,j+1,#drawTable[sourceID][j+1])
+			end
+		end
+	end
+end
+
+local function updateDrawData()
+	
+	for sourceID, sourceData in pairs (drawTable) do
+		if IsUnitSelected(sourceID) then
+			for i, targetData in pairs (sourceData) do
+				
+				local tID = targetData[1]
+				local _,_,_,xm,ym,zm = GetUnitPosition(tID,true)
+				targetData = {tID,xm,ym,zm}
+			end
+		else
+			drawTable[sourceID] = nil
+		end
+	end
+end
+
 function widget:KeyPress(key, mods, isRepeat) 
 	if (key == 0x067) and (not isRepeat) and (not mods.ctrl) and not (mods.shift) and (not mods.alt) then --g
 		Spring.SetActiveCommand("areaguard")
 		return true
+	elseif (key == 0x130) then -- shift
+		shiftDown = true
+		local sU = GetSelectedUnits()
+		if sU then			
+			getDrawData(sU)
+		end
+	elseif (key == 0x134) then -- alt
+		helpOn = tonumber(Spring.GetConfigInt("XTA_CommandHelpText",1) or 1) == 1
+		altDown = true
+	elseif (key == 0x132) then -- ctrl
+		ctrlDown = true
 	end
 	return false
+end
+
+function widget:KeyRelease(key)
+	if (key == 0x130) then -- shift
+		shiftDown = false
+		drawTable = {}
+	elseif (key == 0x134) then -- alt
+		altDown = false
+	elseif (key == 0x132) then -- ctrl
+		ctrlDown = false
+	end
+	return false
+end
+
+function widget:GameFrame(frame)
+	if next(drawTable) ~= nil and (frame%16 == 0) then
+		updateDrawData()
+	end	
+end
+
+function widget:DefaultCommand(type, uID)
+
+	local sUC = GetSelectedUnitsCounts()
+	
+	if sUC and sUC['n'] > 0 then
+		-- user has selected one or more units
+		local _, activeCmdID = GetActiveCommand()
+		if activeCmdID == CMD_AREA_GUARD then
+			if altDown then
+				if ctrlDown then
+					SetMouseCursor('SquadronGuard')
+				else
+					SetMouseCursor('SplitGuard')
+				end
+			else
+				SetMouseCursor('Guard')
+			end
+		end
+	end
+end
+	
+--------------------------------------------------------------------------------
+-- Drawing
+--------------------------------------------------------------------------------
+local function drawVerts(drawData)
+	
+	for i, v in pairs (drawData) do
+		glVertex(v[2], v[3], v[4])
+		--Echo("Drawing:",i,v[1],v[2], v[3], v[4])
+	end
+end
+
+function widget:DrawWorld()
+	
+	if next(drawTable) ~= nil then
+		glColor(0, 0.6, 0.85, 0.75) 
+		glLineStipple("springdefault")
+		glLineWidth (0.5)
+		for id,drawData in pairs (drawTable) do
+			glBeginEnd(GL_LINE_STRIP,drawVerts,drawData)		
+		end
+		glLineStipple(false)
+		glColor(1,1,1,1)		
+	end
+	
+			
+	for unitID, data in pairs(squadron) do
+		if IsUnitVisible(unitID, 16, false) then --skip if zoomed out or not on screen
+			if IsUnitSelected(unitID) then
+				local n = #data
+				if n > 0 then
+					local ux, uy, uz = GetUnitViewPosition(unitID)
+					local h = GetUnitHeight(unitID)
+					glPushMatrix()
+					glTranslate(ux, uy + h + 24, uz )
+					glBillboard()
+					
+					glTexture(imgGuard)
+					glColor(1,1,1,0.75)
+					glTexRect(textoffsetx-5,textoffsety-6,textoffsetx+5,textoffsety+4)
+					glColor(1,1,1,1)
+					glTexture(false)
+					glPopMatrix()
+					-- including a number that prints how many units are guarded somehow makes this widget too costly
+					-- even if we are just printing this number and not doing anything more with it
+					--myFont:Begin() 
+					--myFont:SetTextColor(1, 1, 1, 0.85)
+					--myFont:Print(n, textoffsetx, textoffsety, textsize, "vcs")
+					--myFont:End()
+		
+				end
+			end
+		end
+		
+	end
+end
+
+function widget:DrawScreen()
+	if helpOn then
+		local _, activeCmdID = GetActiveCommand()	
+		if activeCmdID == CMD_AREA_GUARD then
+			if altDown then
+				local x,y = Spring.GetMouseState()
+				if ctrlDown then
+					myFont:Begin()
+					myFont:SetTextColor(0, 0.6, 0.85, 0.85)
+					myFont:Print("Distributed guard with persistent squadrons. Use the STOP command to end task.", x, y-100, 12, "vcs")
+					myFont:End()
+				else
+					myFont:Begin()
+					myFont:SetTextColor(0.6, 0.2, 0.85, 0.85)
+					myFont:Print("Distributed guard: selected units share the guarding task", x, y-100, 12, "vcs")
+					myFont:End()
+				end		
+			end
+		end
+	end
 end

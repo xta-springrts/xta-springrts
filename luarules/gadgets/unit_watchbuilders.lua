@@ -92,8 +92,8 @@ else
 		local x,y,z = Spring.GetUnitPosition(unitID)
 		
 		if teamID == myTeamID and uDefID then
-			local disableText = (Spring.GetConfigInt("DisableMoveFailedText",0) or 0) == 1 
-			local disablesounds = (Spring.GetConfigInt("DisableMoveFailedSound",0) or 0) == 1
+			local disableText = (Spring.GetConfigInt("XTA_DisableMoveFailedText",0) or 0) == 1 
+			local disablesounds = (Spring.GetConfigInt("XTA_DisableMoveFailedSound",0) or 0) == 1
 		
 			if uDefID and (x and y and z) then
 				

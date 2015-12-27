@@ -19,6 +19,7 @@ local CMD_UPGRADE_MEXX						= 31244
 CMD_FACTORYGUARD 							= 37460 
 CMD_BUILDSPEED 								= 33455
 CMD_ENERGYCONVERT 							= 39310
+CMD_CAPTURE									= CMD.CAPTURE
 
 local SetCustomCommandDrawData				= Spring.SetCustomCommandDrawData
 local FindUnitCmdDesc 						= Spring.FindUnitCmdDesc
@@ -156,8 +157,12 @@ end
 function gadget:UnitCreated(unitID, unitDefID, teamID)
 	local uD = UnitDefs[unitDefID]
 	
-	if uD.canGuard then
-		InsertUnitCmdDesc(unitID, 75, areaGuardCmd)
+	--insert after GUARD command in the build menu, if it exists
+	local cmdDescID = FindUnitCmdDesc(unitID, CMD_GUARD)
+		
+	if uD.canGuard and cmdDescID then
+		
+		InsertUnitCmdDesc(unitID, cmdDescID, areaGuardCmd)
 	end
 	
 	if uD and uD.isFactory then

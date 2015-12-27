@@ -1,18 +1,62 @@
 function widget:GetInfo()
 	return {
-	version   = "8",
+	version   = "9",
 	name      = "Red_Drawing",
 	desc      = "Drawing widget for Red UI Framework",
 	author    = "Regret",
-	date      = "July 29, 2009", --last change August 29,2009
+	date      = "29 may 2015",
 	license   = "GNU GPL, v2 or later",
 	layer     = 0,
-	enabled   = false,
+	enabled   = true,
 	}
 end
 
+local consoleBlur = false
+local blurShaderStartColor = 0.31		-- will apply guishader if alpha >= ...
+
+function widget:TextCommand(command)
+	if (string.find(command, "consoleblur") == 1  and  string.len(command) == 11) then 
+		if (WG['guishader_api'] ~= nil) then
+			consoleBlur = not consoleBlur
+			processConsoleBlur()
+			if consoleBlur then
+				Spring.Echo("Console blur:  enabled")
+			else
+				Spring.Echo("Console blur:  disabled")
+			end
+		else
+			Spring.Echo("Console blur: enable 'GUI-Shader' widget first!")
+		end
+	end
+end
+
+function processConsoleBlur()
+	if not consoleBlur then
+		blurShaderStartColor = 0.34		-- will add guishader if alpha >= ...
+	else
+		blurShaderStartColor = 0
+	end
+end
+
+function widget:GetConfigData(data)
+    savedTable = {}
+    savedTable.consoleBlur = consoleBlur
+    return savedTable
+end
+
+function widget:SetConfigData(data)
+    if data.consoleBlur ~= nil 	then
+		consoleBlur = data.consoleBlur 
+		processConsoleBlur()
+	end
+end
+
+local bgcornerSize = 8
+local bgcorner = ":n:"..LUAUI_DIRNAME.."images/bgcorner.png"
+
 local TN = "Red_Drawing" --WG name for function list
-local version = 8
+local version = 9
+
 
 local vsx,vsy = widgetHandler:GetViewSizes()
 if (vsx == 1) then --hax for windowed mode
@@ -23,6 +67,7 @@ local sIsGUIHidden = Spring.IsGUIHidden
 
 local F = {} --function table
 local Todo = {} --function queue
+local dList = {}
 local StartList
 
 local glText = gl.Text
@@ -46,10 +91,19 @@ local glPushMatrix = gl.PushMatrix
 local glPopMatrix = gl.PopMatrix
 local glScale = gl.Scale
 
+local GL_ONE                   = GL.ONE
+local GL_ONE_MINUS_SRC_ALPHA   = GL.ONE_MINUS_SRC_ALPHA
+local GL_SRC_ALPHA             = GL.SRC_ALPHA
+local glBlending               = gl.Blending
+
 local GL_LINE_LOOP = GL.LINE_LOOP
 local GL_COLOR_BUFFER_BIT = GL.COLOR_BUFFER_BIT
 local GL_PROJECTION = GL.PROJECTION
 local GL_MODELVIEW = GL.MODELVIEW
+
+local blurRect = {}
+local newBlurRect = {}
+
 
 local function Color(c)
 	glColor(c[1],c[2],c[3],c[4])
@@ -79,6 +133,7 @@ local function Border(px,py,sx,sy,width,c)
 	elseif (width == 0) then
 		return
 	end
+	px,py,sx,sy = px,py,sx,sy
 	
 	glPushMatrix()
 	if (c) then
@@ -94,28 +149,158 @@ local function Border(px,py,sx,sy,width,c)
 	glPopMatrix()
 end
 
-local function Rect(px,py,sx,sy,c)
+local function Rect(px,py,sx,sy,c,scale)
 	if (c) then
 		glColor(c[1],c[2],c[3],c[4])
 	else
 		glColor(1,1,1,1)
 	end
+	if scale ~= nil and scale ~= 1 then
+		px = px + ((sx * (1-scale))/2)
+		py = py + ((sy * (1-scale))/2)
+		sx = sx * scale
+		sy = sy * scale
+	end
+	px,py,sx,sy = px,py,sx,sy
 	glRect(px,py,px+sx,py+sy)
 end
 
-local function TexRect(px,py,sx,sy,texture,c)
+local function DrawRectRound(px,py,sx,sy,cs)
+	gl.TexCoord(0.8,0.8)
+	gl.Vertex(px+cs, py, 0)
+	gl.Vertex(sx-cs, py, 0)
+	gl.Vertex(sx-cs, sy, 0)
+	gl.Vertex(px+cs, sy, 0)
+	
+	gl.Vertex(px, py+cs, 0)
+	gl.Vertex(px+cs, py+cs, 0)
+	gl.Vertex(px+cs, sy-cs, 0)
+	gl.Vertex(px, sy-cs, 0)
+	
+	gl.Vertex(sx, py+cs, 0)
+	gl.Vertex(sx-cs, py+cs, 0)
+	gl.Vertex(sx-cs, sy-cs, 0)
+	gl.Vertex(sx, sy-cs, 0)
+	
+	local offset = 0.07		-- texture offset, because else gaps could show
+	
+	-- top left
+	if py <= 0 or px <= 0 then o = 0.5 else o = offset end
+	gl.TexCoord(o,o)
+	gl.Vertex(px, py, 0)
+	gl.TexCoord(o,1-o)
+	gl.Vertex(px+cs, py, 0)
+	gl.TexCoord(1-o,1-o)
+	gl.Vertex(px+cs, py+cs, 0)
+	gl.TexCoord(1-o,o)
+	gl.Vertex(px, py+cs, 0)
+	-- top right
+	if py <= 0 or sx >= vsx then o = 0.5 else o = offset end
+	gl.TexCoord(o,o)
+	gl.Vertex(sx, py, 0)
+	gl.TexCoord(o,1-o)
+	gl.Vertex(sx-cs, py, 0)
+	gl.TexCoord(1-o,1-o)
+	gl.Vertex(sx-cs, py+cs, 0)
+	gl.TexCoord(1-o,o)
+	gl.Vertex(sx, py+cs, 0)
+	-- bottom left
+	if sy >= vsy or px <= 0 then o = 0.5 else o = offset end
+	gl.TexCoord(o,o)
+	gl.Vertex(px, sy, 0)
+	gl.TexCoord(o,1-o)
+	gl.Vertex(px+cs, sy, 0)
+	gl.TexCoord(1-o,1-o)
+	gl.Vertex(px+cs, sy-cs, 0)
+	gl.TexCoord(1-o,o)
+	gl.Vertex(px, sy-cs, 0)
+	-- bottom right
+	if sy >= vsy or sx >= vsx then o = 0.5 else o = offset end
+	gl.TexCoord(o,o)
+	gl.Vertex(sx, sy, 0)
+	gl.TexCoord(o,1-o)
+	gl.Vertex(sx-cs, sy, 0)
+	gl.TexCoord(1-o,1-o)
+	gl.Vertex(sx-cs, sy-cs, 0)
+	gl.TexCoord(1-o,o)
+	gl.Vertex(sx, sy-cs, 0)
+end
+
+local function RectRound(px,py,sx,sy,c,cs,scale,glone)
+
+	if (c) then
+		glColor(c[1],c[2],c[3],c[4])
+	else
+		glColor(1,1,1,1)
+	end
+	
+	if cs == nil then
+		cs = 4
+	end
+	
+	if glone then
+		glBlending(GL_SRC_ALPHA, GL_ONE)
+	end
+	-- add blur shader
+	if c and c[4] >= blurShaderStartColor then
+		newBlurRect[px..' '..py..' '..sx..' '..sy] = {px=px,py=py,sx=sx,sy=sy}
+	end
+	
+	if scale ~= nil and scale ~= 1 then
+		px = px + ((sx * (1-scale))/2)
+		py = py + ((sy * (1-scale))/2)
+		sx = sx * scale
+		sy = sy * scale
+	end
+	
+	sx = px+sx
+	sy = py+sy
+	
+	gl.Texture(bgcorner)
+	glBeginEnd(GL.QUADS, DrawRectRound, px,py,sx,sy,cs)
+	gl.Texture(false)
+	
+	if glone then
+		glBlending(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
+	end
+end
+
+local function TexRect(px,py,sx,sy,texture,c,scale)
 	glPushMatrix()
 	if (c) then
 		glColor(c[1],c[2],c[3],c[4])
 	else
 		glColor(1,1,1,1)
 	end
+	if scale ~= nil and scale ~= 1 then
+		px = px + ((sx * (1-scale))/2)
+		py = py + ((sy * (1-scale))/2)
+		sx = sx * scale
+		sy = sy * scale
+	end
+	px,py,sx,sy = px,py,sx,sy
 	glTranslate(px,py+sy,0)
 	glScale(1,-1,1) --flip
 	glTexture(texture)
-	glTexRect(0,0,sx,sy)
+	DrawRect(0,0,sx,sy)
 	glTexture(false)
 	glPopMatrix()
+end
+
+local function RectQuad(px,py,sx,sy)
+	local o = 0.008		-- texture offset, because else grey line might show at the edges
+	gl.TexCoord(o,1-o)
+	gl.Vertex(px, py, 0)
+	gl.TexCoord(1-o,1-o)
+	gl.Vertex(sx, py, 0)
+	gl.TexCoord(1-o,o)
+	gl.Vertex(sx, sy, 0)
+	gl.TexCoord(o,o)
+	gl.Vertex(px, sy, 0)
+end
+
+function DrawRect(px,py,sx,sy)
+	gl.BeginEnd(GL.QUADS, RectQuad, px,py,sx,sy)
 end
 
 local function CreateStartList()
@@ -147,11 +332,11 @@ function widget:Initialize()
 	T.Color = function(a,b,c,d) --using (...) seems slower
 		Todo[#Todo+1] = {1,a,b,c,d}
 	end
-	T.Rect = function(a,b,c,d,e)
-		Todo[#Todo+1] = {2,a,b,c,d,e}
+	T.Rect = function(a,b,c,d,e,f)
+		Todo[#Todo+1] = {2,a,b,c,d,e,f}
 	end
-	T.TexRect = function(a,b,c,d,e,f)
-		Todo[#Todo+1] = {3,a,b,c,d,e,f}
+	T.TexRect = function(a,b,c,d,e,f,g)
+		Todo[#Todo+1] = {3,a,b,c,d,e,f,g}
 	end
 	T.Border = function(a,b,c,d,e,f)
 		Todo[#Todo+1] = {4,a,b,c,d,e,f}
@@ -159,46 +344,176 @@ function widget:Initialize()
 	T.Text = function(a,b,c,d,e,f)
 		Todo[#Todo+1] = {5,a,b,c,d,e,f}
 	end
+	T.RectRound = function(a,b,c,d,e,f,g,h)
+		Todo[#Todo+1] = {6,a,b,c,d,e,f,g,h}
+	end
 	
 	F[1] = Color
 	F[2] = Rect
 	F[3] = TexRect
 	F[4] = Border
 	F[5] = Text
+	F[6] = RectRound
+	dList[1] = {}
+	dList[2] = {}
+	dList[3] = {}
+	dList[4] = {}
+	dList[5] = {}
+	dList[6] = {}
 end
 
+local dlistCount = 0
 function widget:DrawScreen()
+	
+	newBlurRect = {}
+	
 	glResetState()
 	glResetMatrices()
 	
 	glCallList(StartList)
+	
 	for i=1,#Todo do
 		local t = Todo[i]
-		F[t[1]](t[2],t[3],t[4],t[5],t[6],t[7])
+		
+		local id = ''
+		
+		-- using dlists worked only for text :S
+		--[[if t[1] == 1 then	-- color
+			id = t[2][1]..'_'..t[2][2]..'_'..t[2][3]..'_'..t[2][4]
+			
+		elseif t[1] == 2 then	-- rect
+			id = t[2]..'_'..t[3]..'_'..t[4]..'_'..t[5]
+			if type(t[6]) == 'table' then
+				id = id .. t[6][1]..'_'..t[6][2]..'_'..t[6][3]..'_'..t[6][4]
+			end
+			id = id .. '_' ..(t[7] or '')
+			
+		elseif t[1] == 3 then	-- texrect
+			id = t[2]..'_'..t[3]..'_'..t[4]..'_'..t[5]..'_'..t[6]
+			if type(t[7]) == 'table' then
+				id = id .. t[7][1]..'_'..t[7][2]..'_'..t[7][3]..'_'..t[7][4]
+			end
+			id = id .. '_' ..(t[8] or '')
+			
+		elseif t[1] == 4 then	-- border
+			id = t[2]..'_'..t[3]..'_'..t[4]..'_'..t[5]..'_'..(t[6] or '')
+			if type(t[7]) == 'table' then
+				id = id .. t[7][1]..'_'..t[7][2]..'_'..t[7][3]..'_'..t[7][4]
+			end
+			
+		elseif t[1] == 6 then	-- rectround
+			id = t[2]..'_'..t[3]..'_'..t[4]..'_'..t[5]
+			if type(t[6]) == 'table' then
+				id = id .. t[6][1]..'_'..t[6][2]..'_'..t[6][3]..'_'..t[6][4]
+				if t[6][4] >= blurShaderStartColor then	-- add blur shader
+					newBlurRect[t[2]..' '..t[3]..' '..t[4]..' '..t[5] ] = {px=t[2],py=t[3],sx=t[4],sy=t[5]}
+				end
+			end
+			id = id .. '_' ..(t[7] or '')..id .. '_' ..(t[8] or '')..id .. '_' ..(t[9] and '1' or '')	
+		end]]--
+		
+		if t[1] == 5 then	-- text
+			id = t[2]..'_'..t[3]..'_'..t[4]..'_'..t[5]..'_'..t[6]
+			if type(t[7]) == 'table' then
+				id = id .. t[7][1]..'_'..t[7][2]..'_'..t[7][3]..'_'..t[7][4]
+			end
+			if dList[t[1]][id] == nil then
+				dlistCount = dlistCount + 1
+				dList[t[1]][id] = glCreateList(function()
+					F[t[1]](t[2],t[3],t[4],t[5],t[6],t[7],t[8],t[9])
+				end)
+			end
+			glCallList(dList[t[1]][id])
+		else
+			F[t[1]](t[2],t[3],t[4],t[5],t[6],t[7],t[8],t[9])
+		end
+			
 		Todo[i] = nil
 	end
+	
 	
 	glResetState()
 	glResetMatrices()
 	
 	CleanedTodo = true
+	
+	if (WG['guishader_api'] ~= nil) then
+	
+		-- remove changed blur areas
+		for id, rect in pairs(blurRect) do
+			if newBlurRect[id] == nil and rect.id ~= nil then
+				WG['guishader_api'].RemoveRect('red_ui_'..rect.id)
+				blurRect[id] = nil
+			else
+				newBlurRect[id] = rect
+			end
+		end
+		-- add new blur areas
+		local count = 0
+		for id, rect in pairs(newBlurRect) do
+			if blurRect[id] == nil then
+				local x = rect.px
+				local y = vsy-rect.py
+				local x2 = (rect.px+rect.sx)
+				local y2 = vsy-(rect.py+rect.sy)
+				
+				local rectid = rect.px..' '..rect.py..' '..rect.sx..' '..rect.sy
+				WG['guishader_api'].InsertRect(x,y,x2,y2,'red_ui_'..rectid)
+				newBlurRect[rectid].id = rectid
+			end
+			count = count + 1
+		end
+		--Spring.Echo(count)
+		blurRect = newBlurRect
+	else
+		blurRect = {}
+	end
 end
 
-function widget:Update()
+local sec = 0
+local flushDistsTime = 20
+function widget:Update(dt)
+		
 	if (sIsGUIHidden()) then
 		for i=1,#Todo do
 			Todo[i] = nil
 		end
 	end
+	
+	sec=sec+dt
+	if (sec>flushDistsTime) then
+		sec = 0
+		removeDLists()
+	end
+end
+
+function removeDLists()
+	for t, idlist in pairs(dList) do
+		for id in pairs(idlist) do
+			glDeleteList(dList[t][id])
+		end
+		dList[t] = {}
+	end
 end
 
 function widget:Shutdown()
 	glDeleteList(StartList)
+	removeDLists()
 	
-	if (WG[TN].LastWidget) then
-		Spring.Log("widget", LOG.INFO, widget:GetInfo().name..">> last processed widget was \""..WG[TN].LastWidget.."\"") --for debugging
+	if (WG['guishader_api'] ~= nil) then
+	
+		-- remove blur areas
+		for id, rect in pairs(blurRect) do
+			if rect.id ~= nil then
+				WG['guishader_api'].RemoveRect('red_ui_'..rect.id)
+				blurRect[id] = nil
+			end
+		end
 	end
 	
+	if (WG[TN].LastWidget) then
+		Spring.Echo(widget:GetInfo().name..">> last processed widget was \""..WG[TN].LastWidget.."\"") --for debugging
+	end
 	
 	WG[TN]=nil
 end
