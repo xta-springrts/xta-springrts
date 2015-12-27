@@ -81,6 +81,10 @@
 	//  Weapons
 	//***********
 	weapon1=RAPID_BOLTCANNON;
+	weapon2=Positive_Lightning;
+	weapon3=Negative_Lightning;
+	weapon4=Neutral_Center;
+	weapon5=Flare_Lightning;
 	wpri_badtargetcategory=VTOL;
 	onlytargetcategory1=NOTAIR;
 	explodeas=ATOMIC_BLAST;

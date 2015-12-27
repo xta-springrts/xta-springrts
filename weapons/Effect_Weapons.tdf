@@ -27,9 +27,290 @@
 	beamweapon=1;
 	rgbcolor=0.3 0.5 1.0;
 	tolerance=5000;
+	explosiongenerator=custom:PARALYZER_BLUE;  //Noruas's FX added v8//
+	guidance=1;
+	[DAMAGE]
+	{
+		default=1;
+	}
+}
+
+[Positive_Lightning]
+{
+	Name=Lightning Beam;
+	rendertype=0;
+	lineofsight=1;
+	turret=1;
+	beamlaser=1;
+	LargeBeamLaser=1;
+	pulseSpeed=4.0;
+	thickness=8;
+	beamtime=0.0001;
+	range=50; 
+	reloadtime=0.1;
+	energypershot=0;
+	weaponvelocity=400;
+  	texture1=testlightning;
+  	laserflaresize=3;
+	minbarrelangle=-55;
+  //texture2=flare;
+  //texture3=flare;
+  //texture4=smallflare;
+	areaofeffect=16;
+	//SoundStart=tllelechit;
+	soundhit=lashit2;
+	firestarter=90;
+	beamweapon=1;
+	rgbcolor=1.0 0.5 0.3;
+	tolerance=5000;
 	explosiongaf=fx;
 	explosionart=explode5;
-	explosiongenerator=custom:PARALYZER_BLUE;  //Noruas's FX added v8//
+	explosiongenerator=custom:ONESPARK;  
+	guidance=1;
+	[DAMAGE]
+	{
+		default=1;
+	}
+}
+
+[Negative_Lightning]
+{
+	Name=Lightning Beam;
+	rendertype=0;
+	lineofsight=1;
+	turret=1;
+	beamlaser=1;
+	LargeBeamLaser=1;
+	pulseSpeed=4.0;
+	thickness=8;
+	beamtime=0.0001;
+	range=50; 
+	reloadtime=0.1;
+	energypershot=0;
+	weaponvelocity=400;
+  	texture1=testlightning;
+  	laserflaresize=3;
+	minbarrelangle=-55;
+  //texture2=flare;
+  //texture3=flare;
+  //texture4=smallflare;
+	areaofeffect=16;
+	//SoundStart=tllelechit;
+	soundhit=lashit2;
+	firestarter=90;
+	beamweapon=1;
+	rgbcolor=0.3 0.5 1.0;
+	tolerance=5000;
+	explosiongaf=fx;
+	explosionart=explode5;
+	explosiongenerator=custom:ONESPARK;  
+	guidance=1;
+	[DAMAGE]
+	{
+		default=1;
+	}
+}
+
+[Neutral_Center]
+{
+	Name=Lightning Beam;
+	rendertype=0;
+	lineofsight=1;
+	turret=1;
+	beamlaser=1;
+	LargeBeamLaser=1;
+	pulseSpeed=4.0;
+	thickness=8;
+	laserflaresize=8;
+	Intensity=0.001;
+	beamtime=0.0001;
+	range=1; 
+	reloadtime=0.1;
+	beamdecay=0.9;
+	beamttl=1;
+	hardStop=0;
+	energypershot=0;
+	weaponvelocity=400;
+  	texture1=testlightning;
+  	laserflaresize=3;
+	minbarrelangle=-55;
+  //texture2=flare;
+  //texture3=flare;
+  //texture4=smallflare;
+	areaofeffect=16;
+	//SoundStart=tllelechit;
+	soundhit=lashit2;
+	firestarter=90;
+	beamweapon=1;
+	rgbcolor=0.000 0.012 1.000;
+	tolerance=5000;
+	explosiongenerator=custom:ONESPARK;  
+	guidance=1;
+	[DAMAGE]
+	{
+		default=1;
+	}
+}
+
+[Flare_Lightning]
+{
+	Name=Lightning Beam;
+	rendertype=0;
+	lineofsight=1;
+	turret=1;
+	beamlaser=1;
+	LargeBeamLaser=1;
+	beamdecay=0.9;
+	beamttl=10;
+	pulseSpeed=4.0;
+	thickness=12;
+	beamtime=0.0001;
+	range=150;
+	projectiles=5;
+	burst=3;
+	burstrate=0;
+	//accuracy=1500;
+	sprayangle=66666; 
+	reloadtime=0.1;
+	energypershot=0;
+	weaponvelocity=400;
+  	texture1=testlightning;
+  	laserflaresize=3;
+	minbarrelangle=-55;
+  texture2=null;
+  texture3=null;
+  //texture4=null;
+	areaofeffect=16;
+	//SoundStart=tllelechit;
+	soundhit=lashit2;
+	firestarter=90;
+	beamweapon=1;
+	rgbcolor=1.0 1.0 1.4;
+	tolerance=5000;
+	explosiongenerator=custom:ONESPARK;  //Noruas's FX added v8//
+	guidance=1;
+	[DAMAGE]
+	{
+		default=1;
+	}
+}
+
+[Positive_Lightning_Reactor]
+{
+	Name=Lightning Beam;
+	rendertype=0;
+	lineofsight=1;
+	turret=1;
+	beamlaser=1;
+	LargeBeamLaser=1;
+	pulseSpeed=4.0;
+	thickness=3;
+	beamtime=0.0001;
+	range=33; 
+	reloadtime=0.1;
+	sprayangle=66666;
+	beamdecay=0.9;
+	beamttl=10;
+	energypershot=0;
+	weaponvelocity=400;
+  	texture1=testlightning;
+  	laserflaresize=3;
+	minbarrelangle=-55;
+  texture2=null;
+  texture3=null;
+  //texture4=null;
+	areaofeffect=16;
+	//SoundStart=tllelechit;
+	soundhit=lashit2;
+	firestarter=90;
+	beamweapon=1;
+	rgbcolor=1.0 0.5 0.3;
+	tolerance=5000;
+	explosiongaf=fx;
+	explosionart=explode5;
+	explosiongenerator=custom:ONESPARK;  
+	guidance=1;
+	[DAMAGE]
+	{
+		default=1;
+	}
+}
+
+[Negative_Lightning_Reactor]
+{
+	Name=Lightning Beam;
+	rendertype=0;
+	lineofsight=1;
+	turret=1;
+	beamlaser=1;
+	LargeBeamLaser=1;
+	pulseSpeed=4.0;
+	thickness=3;
+	beamtime=0.0001;
+	range=33; 
+	reloadtime=0.1;
+	sprayangle=66666;
+	beamdecay=0.9;
+	beamttl=10;
+	energypershot=0;
+	weaponvelocity=400;
+  	texture1=testlightning;
+  	laserflaresize=3;
+	minbarrelangle=-55;
+  texture2=null;
+  texture3=null;
+  //texture4=null;
+	areaofeffect=16;
+	//SoundStart=tllelechit;
+	soundhit=lashit2;
+	firestarter=90;
+	beamweapon=1;
+	rgbcolor=0.3 0.5 1.0;
+	tolerance=5000;
+	explosiongaf=fx;
+	explosionart=explode5;
+	explosiongenerator=custom:ONESPARK;  
+	guidance=1;
+	[DAMAGE]
+	{
+		default=1;
+	}
+}
+
+[Neutral_Center_Reactor]
+{
+	Name=Lightning Beam;
+	rendertype=0;
+	lineofsight=1;
+	turret=1;
+	beamlaser=1;
+	LargeBeamLaser=1;
+	pulseSpeed=4.0;
+	thickness=4;
+	laserflaresize=8;
+	Intensity=0.001;
+	beamtime=0.0001;
+	range=1; 
+	reloadtime=0.1;
+	//beamdecay=0.9;
+	//beamttl=1;
+	hardStop=0;
+	energypershot=0;
+	weaponvelocity=400;
+  	texture1=testlightning;
+  	//laserflaresize=3;
+	minbarrelangle=-55;
+  texture2=null;
+  texture3=null;
+  //texture4=null;
+	areaofeffect=16;
+	//SoundStart=tllelechit;
+	soundhit=lashit2;
+	firestarter=90;
+	beamweapon=1;
+	rgbcolor=0.000 0.012 1.000;
+	tolerance=5000;
+	explosiongenerator=custom:ONESPARK;  
 	guidance=1;
 	[DAMAGE]
 	{

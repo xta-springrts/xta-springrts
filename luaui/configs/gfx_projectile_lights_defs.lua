@@ -36,6 +36,27 @@ local BlackList = {
 	["ORCONE_SHIELD" 	   ] = true,
 	["PHASER" 	   		   ] = true,
 	["TORPEDO_DISINTEGRATOR"] = true,
+	--TLL UNITS
+	["LostMaggot_Lightning"] = true,
+	["Private_LIGHTNING"] = true,
+	["Tower_Lightning"] = true,
+	["TLL_DISINTEGRATOR"] = true,
+	["TLL_DISINTEGRATOR2"] = true,
+	["TLL_DISINTEGRATOR3"] = true,
+	["TLLCOM_LIGHTNING"] = true,
+	["TLLCOM_LIGHTNING2"] = true,
+	["Shrink_LIGHTNING"] = true,
+	
+	--Special Effects from Xta ambient
+	["Thor_hammer_Lightning"] = true,
+	["Positive_Lightning"] = true,
+	["Negative_Lightning"] = true,
+	["Neutral_Center"] = true,
+	["Flare_Lightning"] = true,
+	["Positive_Lightning_Reactor"] = true,
+	["Negative_Lightning_Reactor"] = true,
+	["Neutral_Center_Reactor"] = true,
+
 	
 }
 

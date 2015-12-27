@@ -80,6 +80,10 @@
 	//************************************************************
 	//  Weapons
 	//***********
+	weapon1=Neutral_Center_REACTOR;
+	weapon2=Positive_Lightning_REACTOR;
+	weapon3=Negative_Lightning_REACTOR;
+	weapon4=Neutral_Center_REACTOR;
 	explodeas=CRAWL_BLAST; 
 	selfdestructas=armmine5; 
 

@@ -8,10 +8,10 @@
 	BuildCostMetal=1965;
 	BuildTime=31208;
 	Category=LOST LEVEL2 WEAPON NOTAIR NOTSUB NOTSTRUCTURE CTRL_G CTRL_W;
-	Description=Lightning Fortress;
+	Description=Lightning Energy Fortress;
 	FootprintX=4;
 	FootprintZ=4;
-	MaxDamage=3388;
+	MaxDamage=10654;
 	ObjectName=lost_roaster;
 	Side=TLL;
 	SoundCategory=CORE_TANK;
@@ -25,7 +25,7 @@
 	CanMove=1;
 	MaxVelocity=0.95;
 	MaxSlope=12;
-	TurnRate=300;
+	TurnRate=400;
 	
 	//    Buildings
 	
@@ -40,7 +40,7 @@
 	CanStop=1;
 	
 	//    Sight/Radar
-	SightDistance=625;
+	SightDistance=485;
 	
 	//    Weapons
 	Weapon1=FLANKROAST_WEAPON;
