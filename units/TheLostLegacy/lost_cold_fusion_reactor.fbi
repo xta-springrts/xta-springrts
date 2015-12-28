@@ -82,6 +82,8 @@
 	//************************************************************
 	//  Weapons
 	//***********
+	Weapon1=REACTOR_Flare_Lightning;
+	Weapon2=Neutral_Center_Reactor;
 	explodeas=GIANT_BLAST;
 	selfdestructas=armmine5;
 
@@ -107,9 +109,9 @@
 	//*****************
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:ReactorTINYSequence;
-		explosiongenerator1=custom:ReactorBIgSequence;
-		explosiongenerator2=custom:GlowBlue;
+		explosiongenerator0=custom:WhiteSteamREACTOR;//coolant
+		explosiongenerator1=custom:ReactorBIgSequence;//notactuallyused
+		explosiongenerator2=custom:GlowBlue;//normal reactor glow
 	}
 
 }

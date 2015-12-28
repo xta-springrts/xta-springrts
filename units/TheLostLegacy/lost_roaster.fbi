@@ -11,7 +11,7 @@
 	Description=Lightning Energy Fortress;
 	FootprintX=4;
 	FootprintZ=4;
-	MaxDamage=10654;
+	MaxDamage=8321;
 	ObjectName=lost_roaster;
 	Side=TLL;
 	SoundCategory=CORE_TANK;

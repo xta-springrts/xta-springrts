@@ -564,7 +564,7 @@
 	beamtime=0.1;
 	range=450; 
 	reloadtime=0.1;
-	energypershot=10;
+	energypershot=5;
 	weaponvelocity=400;
   	texture1=testlightning;
   	laserflaresize=3;
@@ -1157,6 +1157,7 @@
 	turret=1;
 	minbarrelangle=-45;
 	range=550;
+	sprayangle=1024;
 	reloadtime=0.1;
 	explosiongenerator=custom:tllDgunTRAIL;
 	weaponvelocity=1200;
@@ -1164,7 +1165,7 @@
 	areaofeffect=16;
 	soundstart=tllplasma_01.wav;
 	soundhit=xplomed2;
-	tolerance=500;
+	tolerance=2500;
 	weapontimer=1.5;
 	startsmoke=1;
 	guidance=1;

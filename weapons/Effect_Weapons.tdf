@@ -8,7 +8,7 @@
 	beamlaser=1;
 	LargeBeamLaser=1;
 	pulseSpeed=4.0;
-	thickness=8;
+	thickness=6;
 	beamtime=0.0001;
 	range=38; 
 	reloadtime=0.1;
@@ -27,7 +27,7 @@
 	beamweapon=1;
 	rgbcolor=0.3 0.5 1.0;
 	tolerance=5000;
-	explosiongenerator=custom:PARALYZER_BLUE;  //Noruas's FX added v8//
+	explosiongenerator=custom:null;  //Noruas's FX added v8//
 	guidance=1;
 	[DAMAGE]
 	{
@@ -63,9 +63,7 @@
 	beamweapon=1;
 	rgbcolor=1.0 0.5 0.3;
 	tolerance=5000;
-	explosiongaf=fx;
-	explosionart=explode5;
-	explosiongenerator=custom:ONESPARK;  
+	explosiongenerator=custom:null;  
 	guidance=1;
 	[DAMAGE]
 	{
@@ -101,9 +99,7 @@
 	beamweapon=1;
 	rgbcolor=0.3 0.5 1.0;
 	tolerance=5000;
-	explosiongaf=fx;
-	explosionart=explode5;
-	explosiongenerator=custom:ONESPARK;  
+	explosiongenerator=custom:null;  
 	guidance=1;
 	[DAMAGE]
 	{
@@ -126,9 +122,6 @@
 	beamtime=0.0001;
 	range=1; 
 	reloadtime=0.1;
-	beamdecay=0.9;
-	beamttl=1;
-	hardStop=0;
 	energypershot=0;
 	weaponvelocity=400;
   	texture1=testlightning;
@@ -144,7 +137,7 @@
 	beamweapon=1;
 	rgbcolor=0.000 0.012 1.000;
 	tolerance=5000;
-	explosiongenerator=custom:ONESPARK;  
+	explosiongenerator=custom:null;  
 	guidance=1;
 	[DAMAGE]
 	{
@@ -210,7 +203,7 @@
 	reloadtime=0.1;
 	sprayangle=66666;
 	beamdecay=0.9;
-	beamttl=10;
+	beamttl=2;
 	energypershot=0;
 	weaponvelocity=400;
   	texture1=testlightning;
@@ -228,7 +221,7 @@
 	tolerance=5000;
 	explosiongaf=fx;
 	explosionart=explode5;
-	explosiongenerator=custom:ONESPARK;  
+	explosiongenerator=custom:null;  
 	guidance=1;
 	[DAMAGE]
 	{
@@ -251,7 +244,7 @@
 	reloadtime=0.1;
 	sprayangle=66666;
 	beamdecay=0.9;
-	beamttl=10;
+	beamttl=2;
 	energypershot=0;
 	weaponvelocity=400;
   	texture1=testlightning;
@@ -269,7 +262,7 @@
 	tolerance=5000;
 	explosiongaf=fx;
 	explosionart=explode5;
-	explosiongenerator=custom:ONESPARK;  
+	explosiongenerator=custom:null;  
 	guidance=1;
 	[DAMAGE]
 	{
@@ -310,7 +303,50 @@
 	beamweapon=1;
 	rgbcolor=0.000 0.012 1.000;
 	tolerance=5000;
-	explosiongenerator=custom:ONESPARK;  
+	explosiongenerator=custom:null;  
+	guidance=1;
+	[DAMAGE]
+	{
+		default=1;
+	}
+}
+
+[REACTOR_Flare_Lightning]
+{
+	Name=Lightning Beam;
+	rendertype=0;
+	lineofsight=1;
+	turret=1;
+	beamlaser=1;
+	LargeBeamLaser=1;
+	//beamdecay=0.9;
+	//beamttl=5;
+	pulseSpeed=4.0;
+	thickness=10;
+	beamtime=0.0001;
+	range=44;
+	projectiles=5;
+	burst=3;
+	burstrate=0;
+	//accuracy=1500;
+	sprayangle=666666; 
+	reloadtime=0.1;
+	energypershot=0;
+	weaponvelocity=400;
+  	texture1=testlightning;
+  	laserflaresize=2.5;
+	minbarrelangle=-55;
+  texture2=null;
+  texture3=null;
+  //texture4=null;
+	areaofeffect=16;
+	//SoundStart=tllelechit;
+	soundhit=lashit2;
+	firestarter=90;
+	beamweapon=1;
+	rgbcolor=1.0 1.0 1.4;
+	tolerance=5000;
+	explosiongenerator=custom:null;  //Noruas's FX added v8//
 	guidance=1;
 	[DAMAGE]
 	{
