@@ -748,12 +748,14 @@
 	ballistic=1;
 	turret=1;
 	projectiles=10;
-	range=300; 
+	range=400; 
 	explosiongenerator=custom:tllDgunTRAIL;
 	sprayangle=4096;
 	reloadtime=2;
 	weaponvelocity=496;
 	areaofeffect=48;
+	burnblow=1;
+	SoundTrigger=1;
 	soundstart=tllPLASMA03;
 	//soundhit=lasrhit1;
 	soundhit=xplosml3;
@@ -782,8 +784,8 @@
 {
 	name=Heavy Multi-Launch Rockets;
 	Weapontype=MissileLauncher;
-	explosiongenerator=custom:blueballboom;
-	cegTag=BLUEVERTICALPULSE;
+	explosiongenerator=custom:raven;
+	cegTag=RAVENTRAIL;
 	Texture1=null;
 	Texture2=null;
 	Texture3=null;
@@ -792,24 +794,24 @@
 	impulsefactor=0.6;
 	turret=1;
 	model=weapon_exphvyrock;
-	range=1300;
-	reloadtime=9;
+	range=1100;
+	reloadtime=19;
 	weapontimer=0.33; //6
 	weaponvelocity=300;
 	startvelocity=100;
 	weaponacceleration=120;
-	areaofeffect=160;  //80
+	areaofeffect=140;  //80
 	energypershot=1200;
 	Burst=8;
 	Burstrate=0.25;
 	Trajectoryheight=1;
-	Wobble=2900; //14000
+	Wobble=3300; //14000
 	Dance=40;
 	flighttime=5;
 	//turnrate=5000;	//4000
 	//edgeeffectiveness=0.75;
-	soundstart=vpulsefire;
-	soundhit=PSaHit00;
+	soundstart=RavenHvyRock;
+	soundhitdry=rockhit;
 	firestarter=70;
 	smokedelay=0.1;
 	smoketrail=0;
@@ -853,6 +855,49 @@
 	}
 }
 
+[TITAN_SHOTGUN]
+{
+	ID=50;
+	name=Light Cannon;
+	rendertype=4;
+	ballistic=1;
+	turret=1;
+	projectiles=5;
+	range=630; 
+	energypershot=600;
+	explosiongenerator=custom:BluePlasmaExtraBANG;
+	cegTag=BluePlasmaExtraGlow;
+	sprayangle=4096;
+	reloadtime=1.5;
+	weaponvelocity=1000;
+	myGravity=0.01;
+	areaofeffect=72;
+	SoundTrigger=1;
+	soundstart=tllPLASMA03;
+	//soundhit=lasrhit1;
+	soundhitdry=xplomed2;
+	tolerance=500;
+	startsmoke=1;
+	minbarrelangle=-40;
+	size=2;
+	rgbcolor=0.35 0.35 1;
+	stages=5;
+  	separation=0.45;
+  	alphadecay=0.75;
+  	sizedecay=-0.5;
+  	nogap=1;
+	GroundBounce=1;
+	BounceSlip=1.01;
+	BounceRebound=0.2;
+	NumBounce=5;
+ 	//dyndamageexp=0.9;
+  	//dyndamageinverted=1;
+	burnblow=1;
+	[DAMAGE]
+	{
+		default=200;//500 dps
+	}
+}
 [LOST_BOLTCANNON]
 {
 	name=Bertha Cannon;
@@ -1212,6 +1257,103 @@
 		default=35;//x 4 140 damage
 	}
 }
+
+[BURNERBEAM]
+{
+	Name=Heat Ray;
+	rendertype=0;
+	lineofsight=1;
+	turret=1;
+	beamlaser=1;
+	LargeBeamLaser=1;
+	pulseSpeed=0.5;
+	thickness=6;
+	corethickness=0.1;
+  	laserflaresize=4;
+	rgbcolor=0.5 0.3 0.1;
+	beamtime=1.0;
+	beamdecay=0.5;
+	beamttl=3;
+	sprayangle=999;
+	accuracy=15;
+	range=250; 
+	//noexplode=1;
+	dynDamageMin=0.75;
+	dyndamageexp=1;
+	dyndamageinverted=0;
+	cylindertargeting = 1;
+	reloadtime=1.5;
+	energypershot=25;
+	weaponvelocity=400;
+  	//texture1=testlightning;
+	minbarrelangle=-35;
+  //texture2=flare;
+  //texture3=flare;
+  //texture4=smallflare;
+	areaofeffect=32;
+	soundtrigger=1;
+	soundstart=FLAMLIT1;
+	//soundhit=lashit2;
+	firestarter=90;
+	beamweapon=1;
+	tolerance=500;
+	explosiongenerator=custom:KBOTMISSILETRAIL;
+	guidance=1;
+	[DAMAGE]
+	{
+		default=300.6;//122
+		group_landair=300;
+	}
+}
+
+[BINDERBEAM]
+{
+	Name=Heat Ray;
+	rendertype=0;
+	lineofsight=1;
+	turret=1;
+	beamlaser=1;
+	LargeBeamLaser=1;
+	pulseSpeed=0.5;
+	thickness=6;
+	corethickness=0.1;
+  	laserflaresize=4;
+	rgbcolor=0.5 0.3 0.1;
+	beamtime=1.0;
+	beamdecay=0.5;
+	beamttl=3;
+	sprayangle=666;
+	accuracy=15;
+	range=375; 
+	//noexplode=1;
+	dynDamageMin=0.75;
+	dyndamageexp=1;
+	dyndamageinverted=0;
+	cylindertargeting = 1;
+	reloadtime=1.5;
+	energypershot=150;
+	weaponvelocity=400;
+  	//texture1=testlightning;
+	minbarrelangle=-35;
+  //texture2=flare;
+  //texture3=flare;
+  //texture4=smallflare;
+	areaofeffect=32;
+	soundtrigger=1;
+	soundstart=FLAMLIT1;
+	//soundhit=lashit2;
+	firestarter=90;
+	beamweapon=1;
+	tolerance=500;
+	explosiongenerator=custom:KBOTMISSILETRAIL;
+	guidance=1;
+	[DAMAGE]
+	{
+		default=600.6;//122
+		group_landair=600;
+	}
+}
+
 [TLL_ADVFLAME]
 {
 	name=Flame Thrower;
@@ -1228,12 +1370,6 @@
 	cegTag=FIREBALLTRAIL;
 	soundstart=FLAMLIT1;
 	soundhit=XPLOLRG2;
-	explosiongaf=fx;
-	explosionart=explode2;
-	waterexplosiongaf=fx;
-	waterexplosionart=h2o;
-	lavaexplosiongaf=fx;
-	lavaexplosionart=lavasplash;
 	startsmoke=1;
 	tolerance=500;
 	startsmoke=1;

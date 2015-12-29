@@ -5,7 +5,7 @@
 	//********************
 	side=Core;
 	name=Burner;
-	description=Armored Assault Kbot;
+	description=Armored HeatRay Kbot;
 
 	//************************************************************
 	//  Categories
@@ -26,7 +26,7 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=2764; //WAS 5010
+	maxdamage=2964; //WAS 5010
 	healtime=30;
 	BuildCostEnergy=2842;
 	BuildCostMetal=311;
@@ -82,7 +82,7 @@
 	//************************************************************
 	//  Weapons
 	//***********
-	Weapon1=TLL_FLAME;
+	Weapon1=BURNERBEAM;
 	nochasecategory=VTOL;
 	badtargetcategory=VTOL;
 	wpri_badtargetcategory=VTOL;
@@ -125,6 +125,6 @@
 
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:redflare;
+	explosiongenerator0=custom:KBOTMISSILEHIT;
 	}
 }

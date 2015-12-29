@@ -11,7 +11,7 @@
 	Description=Pop-Out Shotgun Tank;
 	FootprintX=3;
 	FootprintZ=3;
-	MaxDamage=2757;
+	MaxDamage=3957;
 	ObjectName=Lost_egg_shell;
 	buildpic=Lost_egg_shell.png;
 	Side=Lost;

@@ -8,7 +8,7 @@
 	BuildCostMetal=11950;
 	BuildTime=181545;
 	Category=LOST TANK LEVEL3 WEAPON NOTAIR NOTSUB CTRL_W;
-	Description=Long Range Seige Mechbot;
+	Description=Heavy Rocket/Shotgun Mechbot;
 	FootprintX=4;
 	FootprintZ=4;
 	MaxDamage=31872;
@@ -23,7 +23,7 @@
 	MovementClass=KBOTDS2;
 	Acceleration=0.015;
 	CanMove=1;
-	MaxVelocity=1.17;
+	MaxVelocity=1.12;
 	MaxSlope=16;
 	TurnRate=390;
 	
@@ -45,10 +45,10 @@
 	
 	//    Sight/Radar
 	RadarDistance=0;
-	SightDistance=879.5;
+	SightDistance=579.5;
 	
 	//    Weapons
-	Weapon1=TITAN_GUN;
+	Weapon1=TITAN_SHOTGUN;
 	Weapon2=TITAN_HEAVYROCKET;
 	wpri_badTargetCategory=VTOL;
 	BadTargetCategory=VTOL;
@@ -74,4 +74,9 @@
 	Upright=1;
 	idletime=1200;
 	idleautoheal=5;
+
+	[SFXTypes]
+	{
+	explosiongenerator0=custom:bluedgunflare;
+	}
 }
