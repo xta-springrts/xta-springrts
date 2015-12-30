@@ -5,7 +5,7 @@
 	//********************
 	side=Arm;
 	name=Iguana;
-	description=Plasma-Packed Kbot;
+	description=Fast Attack Kbot;
 
 	//************************************************************
 	//  Categories
@@ -26,7 +26,7 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=2433;
+	maxdamage=2464;
 	healtime=30;
 	buildcostmetal=621;
 	buildcostenergy=9864;
@@ -125,7 +125,7 @@
 	//*****************
 	[SFXTypes]
 	{
-	explosiongenerator0=custom:rocketflare;
+	explosiongenerator0=custom:TinyBlue;
 	}
 
 }

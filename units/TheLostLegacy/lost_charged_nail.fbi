@@ -1,0 +1,123 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Arm;
+	name=Charged Nail;
+	description=Discharges 1500 damage;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=ARM MINE DEFENSIVE STATIC WEAPON NOTAIR NOTSEA NOTSUB;
+	tedclass=MINE;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=lost_charged_nail;
+	unitnumber=225;
+	objectname=lost_charged_nail.3do;
+	buildpic=lost_charged_nail.png;
+	soundcategory=MINE3;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=15;
+	healtime=11;
+	buildcostmetal=12;
+	buildcostenergy=182;
+	buildtime=300;
+	footprintx=1;
+	footprintz=1;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energyuse=0;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	YardMap=y;
+	levelground=0;
+	upright=0;
+	collisionVolumeType=CylY;
+	collisionVolumeScales=15 8 15;
+	collisionVolumeOffsets=0 -2 0;
+	collisionVolumeTest = 1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canattack=0;
+	canguard=0;
+	canmove=0;
+	canpatrol=0;
+	canstop=0;
+	kamikaze=1;
+	stealth=1;
+	sonarStealth=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	maxslope=30;
+	maxwaterdepth=100;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=60;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeas=lostmine2;
+	selfdestructas=lostmine2;
+	selfdestructcountdown=0;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	firestandorders=1;
+	standingfireorder=2;
+	defaultmissiontype=Standby_Mine;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=0;
+	cancloak=1;
+	cloakcost=10;
+	designation=EG-2;
+	downloadable=1;
+	init_cloaked=1;
+	kamikazedistance=32;
+	mincloakdistance=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+	[customParams]
+	{
+	dontCount=1;
+	noalert=1;
+	}
+
+}

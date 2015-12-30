@@ -63,6 +63,12 @@ local stealthDefs = {
     energy = 500,
     delay  = 30,
   },
+  lost_commando = {
+    draw   = true,
+    init   = false,
+    energy = 425,
+    delay  = 30,
+  },
    -- lost_fusion_reactor = {
     -- draw   = true,
     -- init   = false,

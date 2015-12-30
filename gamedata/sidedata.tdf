@@ -2995,11 +2995,11 @@
 	[lost_adv_kbot_lab]
 	{
 		canbuild1=lost_adv_construction_kbot;
-		canbuild2=Lost_spreader;
+		canbuild2=Lost_commando;
 		canbuild3=Lost_burner;
 		canbuild4=Lost_armadillo;
 		canbuild5=Lost_observer;
-		canbuild6=Lost_bugger;
+		canbuild6=Lost_spreader;
 		canbuild7=Lost_seagull;
 		canbuild8=Lost_iguana;
 		canbuild9=Lost_confuser;
@@ -3416,6 +3416,12 @@
 		canbuild30=lost_adv_shipyard;
 		canbuild31=lost_seaplane_platform;
 		}
+	[lost_commando]
+	{
+		canbuild1=lost_charged_nail;
+		canbuild2=lost_dragons_teeth;
+		canbuild3=neutral_eyes;//xtaids
+	}
 
 	[lost_construction_kbot]
 	{

@@ -154,6 +154,7 @@
 	core_donut=99;
 	core_shock_mine=99;
 	guardian_zealot=99;
+	lost_charged_nail=99;
 }
 
 [group_walls]

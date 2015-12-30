@@ -1,4 +1,74 @@
 
+[lostmine2]
+{
+	name=Electric Mine;
+	weaponType=Cannon;
+	range=480;
+	reloadtime=3.6;
+	weaponvelocity=250;
+	areaofeffect=160;
+	soundstart=berthaboltfire;
+	soundhit=berthabolthit;
+	edgeeffectiveness=0.5;
+	shakemagnitude=10;
+	shakeduration=1;
+	explosiongenerator=custom:CrazyPUFFY;
+	[DAMAGE]
+	{
+		default=1500;
+		group_mines=0.5;
+		group_invincible=1;
+	}
+}
+
+[Green_Lightning]
+{
+	Name=Lightning Beam;
+	rendertype=0;
+	lineofsight=1;
+	turret=1;
+	beamlaser=1;
+	LargeBeamLaser=1;
+	pulseSpeed=0.1;
+	thickness=6;
+	rgbcolor=0.0 1.0 0.7;
+	beamtime=0.1;
+	beamdecay=0.333;
+	beamttl=1;
+	accuracy=30;
+	sprayangle=30;
+	range=375; 
+	cylindertargeting = 1;
+	reloadtime=2;
+	energypershot=30;
+	weaponvelocity=400;
+  	texture1=testlightning;
+  	laserflaresize=1;
+	minbarrelangle=-35;
+  //texture2=flare;
+  //texture3=flare;
+  //texture4=smallflare;
+	areaofeffect=16;
+	SoundStart=LASERHITB;
+	//soundhit=lashit2;
+	firestarter=90;
+	beamweapon=1;
+	tolerance=5000;
+	explosiongenerator=custom:NULL;
+	guidance=1;
+	impulsefactor=0.00;
+	impulseboost=0.00;
+	cratermult=0;
+	paralyzer=1;
+	paralyzetime=10;
+	craterboost=0;
+	[DAMAGE]
+	{
+		default=470.6;//122
+		group_landair=361;
+	}
+}
+
 [LOST_OTTERGUN]
 {
 	ID=50;
@@ -1098,7 +1168,7 @@
 	paralyzer=1;
 	paralyzetime=50;
 	craterboost=0;
-	tracks=1;
+	tracks=0;
 	[DAMAGE]
 	{
 		default=11974;//dmg increase by 800
@@ -1234,7 +1304,7 @@
 	lineofsight=1;
 	turret=1;
 	minbarrelangle=-45;
-	range=415;
+	range=365;
 	reloadtime=0.25;
 	explosiongenerator=custom:tllDgunTRAIL;
 	weaponvelocity=1000;
@@ -1252,6 +1322,7 @@
   	separation=0.8;
   	alphadecay=0.06;
   	sizedecay=-0.3;
+	myGravity=0.05;
 	[DAMAGE]
 	{
 		default=35;//x 4 140 damage
@@ -1437,14 +1508,19 @@
 	rendertype=4;
 	ballistic=1;
 	turret=1;
-	range=600;
-	reloadtime=3.5;
-	weaponvelocity=399;
+	range=400;
+	reloadtime=3.25;
+	weaponvelocity=499;
 	areaofeffect=64;
    explosiongenerator=custom:WindkbotRocket;
-	soundstart=cannon3;
-	soundhit=xplomed2;
-	startsmoke=1;
+	size=3;
+	rgbcolor=0.9 0.4 0.2;
+	stages=8;
+	separation=0.5;
+	alphadecay=0.3;
+	sizedecay=-0.08;
+	soundstart=cannhvy2;
+	soundhitdry=xplomed4;
 	tolerance=500;
 	startsmoke=1;
 	[DAMAGE]
@@ -1468,9 +1544,15 @@
 	soundhit=xplomed2;
 	tolerance=500;
 	startsmoke=1;
+	size=3;
+	rgbcolor=0.9 0.4 0.2;
+	stages=5;
+	separation=0.5;
+	alphadecay=0.4;
+	sizedecay=-0.1;
 	[DAMAGE]
 	{
-		default=120;
+		default=125;
 	}
 }
 [TLLSNIPE_WEAPON]
