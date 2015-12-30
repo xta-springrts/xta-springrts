@@ -27,9 +27,9 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=876;
+	maxdamage=1406;
 	healtime=30;
-	buildcostmetal=214;
+	buildcostmetal=254;
 	buildcostenergy=2764;
 	buildtime=4982;
 	footprintx=2; //3//
@@ -83,7 +83,7 @@
 	//************************************************************
 	//  Weapons
 	//***********
-	Weapon1=armamph_weapon2;
+	Weapon1=seagull_missile;
 	nochasecategory=VTOL;
 	wpri_badtargetcategory=VTOL;
 	wsec_badtargetcategory=NOTAIR;

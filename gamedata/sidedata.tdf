@@ -2999,14 +2999,14 @@
 		canbuild3=Lost_burner;
 		canbuild4=Lost_armadillo;
 		canbuild5=Lost_observer;
-		canbuild6=Lost_spreader;
+		canbuild6=Lost_assassin;//Lost_spreader
 		canbuild7=Lost_seagull;
 		canbuild8=Lost_iguana;
 		canbuild9=Lost_confuser;
 		canbuild10=Lost_tic;
 		canbuild11=Lost_troll;
 		canbuild12=Lost_binder;
-		canbuild13=Lost_assassin;
+		//canbuild13=Lost_assassin;
 		canbuild14=Lost_decoy_commander;
 		canbuild15=Lost_shaman;
 	}

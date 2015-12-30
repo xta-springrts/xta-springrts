@@ -1,4 +1,39 @@
 
+[SEAGULL_MISSILE]
+{
+	name=Missiles;
+	explosiongenerator=custom:KBOTROCKETHIT;
+	cegTag=KBOTROCKETTRAIL;
+	Weapontype=MissileLauncher;
+	turret=1;
+	model=missile.s3o;
+	Texture1=null;
+	range=705;
+	reloadtime=3;
+	weapontimer=5;
+	weaponvelocity=750;
+	startvelocity=550;
+	weaponacceleration=101;
+	turnrate=50000;
+	trajectoryHeight=0.08;
+	dance=30;
+	areaofeffect=32;
+	soundstart=CORSLING_fire;
+	soundhitdry=xplosml2;
+	firestarter=70;
+	smokedelay=0.1;
+	tracks=1;
+	smoketrail=0;
+	tolerance=9000;
+	startsmoke=1;
+	[DAMAGE]
+	{
+		default=88;
+		group_landair=143;
+		group_invincible=1;
+	}
+}
+
 [lostmine2]
 {
 	name=Electric Mine;
@@ -32,7 +67,7 @@
 	pulseSpeed=0.1;
 	thickness=6;
 	rgbcolor=0.0 1.0 0.7;
-	beamtime=0.1;
+	beamtime=0.2;
 	beamdecay=0.333;
 	beamttl=1;
 	accuracy=30;
@@ -64,7 +99,7 @@
 	craterboost=0;
 	[DAMAGE]
 	{
-		default=470.6;//122
+		default=380.6;//122
 		group_landair=361;
 	}
 }
@@ -1562,25 +1597,25 @@
 	LineOfSight=1;
 	Turret=1;
 
-	range=450;
-	reloadtime=2.5;
-	energypershot=200;
+	range=340;
+	reloadtime=1.75;
+	energypershot=50;
 	weaponvelocity=1000;
 	areaofeffect=16;
 	
 
-	soundstart=PhoFir00;
-	soundhit=LASERHITB;
+	soundstart=lghthvy1;
+	soundhitdry=lashit;
 
 	firestarter=90;
 	beamweapon=1;
 	rgbcolor=0.01 0.01 0.02;
-	explosiongenerator=custom:ElectricSequence;
+	explosiongenerator=custom:LIGHTNING_NEW;
 
 
 	[DAMAGE]
 		{
-		default=500;
+		default=222;
 		}
 	}
 
