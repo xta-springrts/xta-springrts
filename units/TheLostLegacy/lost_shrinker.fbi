@@ -30,7 +30,6 @@
 	SelfDestructAs=SMALL_UNIT;
 	Category=ARM SHIP WEAPON NOTAIR NOTSUB;
 	TEDClass=SHIP;
-	buildpic=lost_shrinker.jpg;
 	Copyright=Copyright 1997 Humongous Entertainment. All rights reserved.;
 	UnitNumber=65564453;
 	firestandorders=1;
