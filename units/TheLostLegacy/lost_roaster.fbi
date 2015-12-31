@@ -46,7 +46,7 @@
 	Weapon1=FLANKROAST_WEAPON;
 	Weaponmaindir1=0 0 1;
 	Maxangledif1=360;
-	Weapon2=FLANKROAST_LIGHTNING;//right
+	Weapon2=FLANKROAST_LIGHTNING_positive;//right
 	Weaponmaindir2=1 0 0;//1 0 1;
 	Maxangledif2=260;
 	Weapon3=FLANKROAST_LIGHTNING;//left

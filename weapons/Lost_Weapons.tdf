@@ -694,6 +694,44 @@
 	}
 }
 
+[FLANKROAST_LIGHTNING_Positive]
+{
+	Name=Lightning Beam;
+	rendertype=0;
+	lineofsight=1;
+	turret=1;
+	beamlaser=1;
+	LargeBeamLaser=1;
+	pulseSpeed=4.0;
+	thickness=8;
+	beamtime=0.1;
+	range=450; 
+	reloadtime=0.1;
+	energypershot=5;
+	weaponvelocity=400;
+  	texture1=testlightning;
+  	laserflaresize=3;
+	minbarrelangle=-55;
+  //texture2=flare;
+  //texture3=flare;
+  //texture4=smallflare;
+	areaofeffect=16;
+	SoundStart=tllelechit;
+	soundhit=lashit2;
+	firestarter=90;
+	beamweapon=1;
+	rgbcolor=1.0 0.5 0.3;
+	tolerance=5000;
+	explosiongenerator=custom:ONESPARK;  //Noruas's FX added v8//
+	guidance=1;
+	beamdecay=0.5;
+	beamttl=1;
+	[DAMAGE]
+	{
+		default=20;
+	}
+}
+
 [GLADIUS_MISSILE]
 {
 	name=Missiles;
@@ -788,7 +826,7 @@
 	rgbcolor=1 0.60 0.0;
 	weaponType=Cannon;
 	turret=1;
-	range=1275; // 1330; in 9.725
+	range=1245; // 1330; in 9.725
 	reloadtime=3.3;
 	weaponvelocity=440;
 	areaofeffect=82;
