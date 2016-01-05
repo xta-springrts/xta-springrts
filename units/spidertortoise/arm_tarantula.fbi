@@ -53,4 +53,10 @@ wspe_badTargetCategory=VTOL;
 BadTargetCategory=NOWEAPON;
 NoChaseCategory=MOBILE;
 DefaultMissionType=Standby;
+	collisionVolumeType = box;
+	collisionVolumeScales =40 25 40;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
 }

@@ -3060,15 +3060,15 @@
 		canbuild3=lost_manta;
 		canbuild4=lost_visitor;
 		//canbuild5=arm_ranger_rt;
-		//canbuild6=arm_daybreak;
+		canbuild6=lost_petrel;
 		canbuild7=lost_equalizer;
 		//canbuild8=arm_evaperator;//xtaids
 		canbuild9=lost_viking;
 		canbuild10=lost_mixer;
 		canbuild11=lost_stinger;
-		//canbuild12=yeomen;//xtaids
+		canbuild12=lost_whale;//xtaids
 		canbuild13=lost_orc;
-		//canbuild14=arm_Plesiosaur;
+		canbuild14=lost_interceptor;
 		//canbuild15=arm_infinite;//xtaids
 	}
 	[lost_adv_construction_sub]

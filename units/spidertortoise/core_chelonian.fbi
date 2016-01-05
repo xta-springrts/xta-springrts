@@ -53,4 +53,10 @@
 	BadTargetCategory=VTOL;
 	canattack=1;
 	NoChaseCategory=VTOL;
+	collisionVolumeType = box;
+	collisionVolumeScales =40 25 40;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
 	}
