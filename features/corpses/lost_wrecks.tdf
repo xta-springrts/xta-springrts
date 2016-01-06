@@ -2032,6 +2032,28 @@
 	collisionVolumeOffsets=0 0 0;//#AUTO#
 }
 
+[lost_spatha_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=lost_corpses;
+	object=lost_spatha_dead;
+	featuredead=lost_spatha_heap;
+	footprintx=4;
+	footprintz=4;
+	height=20;
+	blocking=1;
+	hitdensity=100;
+	metal=2113;
+	damage=3682;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=36 23 36;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+
 [lost_hoplit_dead]
 {
 	world=All Worlds;
@@ -2094,6 +2116,26 @@
 	collisionVolumeOffsets=0 0 0;//#AUTO#
 }
 
+[lost_spatha_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=3x3f;
+	footprintx=3;
+	footprintz=3;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	metal=875;
+	damage=782;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=36 6 36;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
 [lost_turtle_dead]
 {
 	world=All Worlds;

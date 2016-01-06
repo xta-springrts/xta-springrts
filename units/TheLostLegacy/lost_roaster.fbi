@@ -4,14 +4,14 @@
 	UnitName=lost_roaster;
 	
 	//    Required Tags
-	BuildCostEnergy=21797;
-	BuildCostMetal=1965;
+	BuildCostEnergy=20653;
+	BuildCostMetal=2464;
 	BuildTime=31208;
 	Category=LOST LEVEL2 WEAPON NOTAIR NOTSUB NOTSTRUCTURE CTRL_G CTRL_W;
 	Description=Lightning Energy Fortress;
 	FootprintX=4;
 	FootprintZ=4;
-	MaxDamage=8321;
+	MaxDamage=9001;
 	ObjectName=lost_roaster;
 	Side=TLL;
 	SoundCategory=CORE_TANK;
@@ -23,9 +23,9 @@
 	MovementClass=TANKSH4;
 	Acceleration=0.4;
 	CanMove=1;
-	MaxVelocity=0.95;
+	MaxVelocity=0.9;
 	MaxSlope=12;
-	TurnRate=400;
+	TurnRate=350;
 	
 	//    Buildings
 	
@@ -48,12 +48,12 @@
 	Maxangledif1=360;
 	Weapon2=FLANKROAST_LIGHTNING_positive;//right
 	Weaponmaindir2=1 0 0;//1 0 1;
-	Maxangledif2=260;
+	Maxangledif2=280;
 	Weapon3=FLANKROAST_LIGHTNING;//left
 	Weaponmaindir3=-1 0 0;//1 0 1;
-	Maxangledif3=260;
-	wpri_badTargetCategory=CTRL_V;
-	BadTargetCategory=VTOL;
+	Maxangledif3=280;
+	//wpri_badTargetCategory=CTRL_V;
+	//BadTargetCategory=VTOL;
 	explodeas=ATOMIC_BLASTPEN;
 	selfdestructas=ATOMIC_BLASTSML;
 	NoChaseCategory=CTRL_V;
@@ -64,7 +64,7 @@
 	TrackStrength=10;
 	TrackStretch=1;
 	tracktype=StdTank;
-	TrackWidth=40;
+	TrackWidth=48;
 	
 	//    Watersettings
 	MaxWaterDepth=0;
@@ -75,8 +75,8 @@
 	idletime=1200;
 	idleautoheal=5;
 	collisionVolumeType = box;
-	collisionVolumeScales =40 25 40;
-	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeScales =66 55 66;
+	collisionVolumeOffsets = -12 -5 0;
 	collisionVolumeTest = 1;
 	pieceTrailCEGTag=Debree;//bleh
 	pieceTrailCEGRange = 4;

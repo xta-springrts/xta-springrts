@@ -5,7 +5,7 @@
 	//********************
 	side=Core;
 	name=Binder;
-	description=Adv. Armored HeatRay Kbot;
+	description=Armored Fireball Kbot;
 
 	//************************************************************
 	//  Categories
@@ -26,10 +26,10 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=8975;
+	maxdamage=9654;
 	healtime=30;
-	buildcostmetal=1452;
-	buildcostenergy=18744;
+	buildcostmetal=1556;
+	buildcostenergy=20543;
 	buildtime=25190;
 	footprintx=3;
 	footprintz=3;
@@ -69,20 +69,20 @@
 	turnrate=600;
 	acceleration=1.2;
 	brakerate=1.0;
-	maxvelocity=0.75;
+	maxvelocity=0.825;
 	maxslope=14;
 	maxwaterdepth=12;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=480;
+	sightdistance=430;
 	radardistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
-	Weapon1=binderbeam;//binderbeamTLL_ADVFLAME
+	Weapon1=OtherFireball;//binderbeamTLL_ADVFLAME
 	nochasecategory=VTOL;
 	wpri_badtargetcategory=VTOL;
 	explodeas=BIG_UNITEX;
@@ -113,7 +113,7 @@
 	version=1.2;
 	zbuffer=1;
 	collisionVolumeType = box;
-	collisionVolumeScales =40 20 40;
+	collisionVolumeScales =50 37 50;
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
 	pieceTrailCEGTag=Debree;//bleh
@@ -125,7 +125,7 @@
 
 	[SFXTypes]
 	{
-	explosiongenerator0=custom:greenflare;
+	explosiongenerator0=custom:Napalam;
 	explosiongenerator1=custom:unitfire;
 	}
 }

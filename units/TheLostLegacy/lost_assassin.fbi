@@ -26,7 +26,7 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=2000;//4200 // 3100; // same as latest patch
+	maxdamage=2400;//4200 // 3100; // same as latest patch
 	damagemodifier=0.88;//3472 with gun closed
 	healtime=30;
 	buildcostmetal=675; //OTA: 267
@@ -63,7 +63,7 @@
 	canstop=1;
 	upright=1;
 	CloakCost=50;
-	CloakCostMoving=200;
+	CloakCostMoving=150;
 	MinCloakDistance=175;
 	DecloakOnFire=0;
 

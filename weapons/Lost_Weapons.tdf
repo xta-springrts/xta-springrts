@@ -1,4 +1,69 @@
 
+[SPATHA_CANNON]
+{
+	name=Plasma Cannon;
+	weaponType=Cannon;
+	turret=1;
+	range=450;
+	explosiongenerator=custom:raven;
+	reloadtime=3.0;
+	weaponvelocity=475;
+	//mygravity=0.24;
+	areaofeffect=111;
+	soundstart=cannhvy2;
+	soundhitdry=exmine3;
+	tolerance=500;
+	CoreThickness=0.9;
+	energypershot=200;
+	rgbcolor=1 0.75 0.2;
+	stages=8;
+	separation=0.45;
+	alphadecay=0.3;
+	sizedecay=-0.1;
+	nogap=1;
+	size=3.5;
+	cegTag=UnitFire;
+	[DAMAGE]
+	{
+		default=450;
+		group_invincible=1;
+	}
+}
+[Spatha_MISSILE]
+{
+	name=Missiles;
+	explosiongenerator=custom:KBOTROCKETHIT;
+	cegTag=KBOTROCKETTRAIL;
+	Weapontype=MissileLauncher;
+	turret=1;
+	model=missile.s3o;
+	Texture1=null;
+	range=700;
+	reloadtime=2;
+	weapontimer=5;
+	weaponvelocity=750;
+	startvelocity=550;
+	weaponacceleration=101;
+	turnrate=50000;
+	trajectoryHeight=0.08;
+	dance=15;
+	areaofeffect=64;
+	soundstart=rocklit1;
+	soundhitdry=xplosml2;
+	firestarter=70;
+	smokedelay=0.1;
+	tracks=1;
+	smoketrail=0;
+	tolerance=9000;
+	startsmoke=1;
+	[DAMAGE]
+	{
+		default=93;
+		lost_commanders=78;
+		group_landair=201;
+		group_invincible=1;
+	}
+}
 [SEAGULL_MISSILE]
 {
 	name=Missiles;
@@ -67,14 +132,14 @@
 	pulseSpeed=0.1;
 	thickness=6;
 	rgbcolor=0.0 1.0 0.7;
-	beamtime=0.2;
+	beamtime=0.25;
 	beamdecay=0.333;
 	beamttl=1;
 	accuracy=30;
 	sprayangle=30;
 	range=375; 
 	cylindertargeting = 1;
-	reloadtime=2;
+	reloadtime=1.5;
 	energypershot=30;
 	weaponvelocity=400;
   	texture1=testlightning;
@@ -1382,6 +1447,7 @@
 	explosiongenerator=custom:tllDgunTRAIL;
 	weaponvelocity=1000;
 	areaofeffect=16;
+	sprayangle=1024;
 	soundstart=tllplasma_01.wav;
 	soundhit=xplomed2;
 	tolerance=500;
@@ -1422,7 +1488,7 @@
 	accuracy=15;
 	range=250; 
 	//noexplode=1;
-	dynDamageMin=0.75;
+	dynDamageMin=150;
 	dyndamageexp=1;
 	dyndamageinverted=0;
 	cylindertargeting = 1;
@@ -1635,25 +1701,25 @@
 	LineOfSight=1;
 	Turret=1;
 
-	range=340;
-	reloadtime=1.75;
+	range=390;
+	reloadtime=3.0;
 	energypershot=50;
 	weaponvelocity=1000;
 	areaofeffect=16;
 	
 
-	soundstart=lghthvy1;
+	soundstart=xplolrg1;
 	soundhitdry=lashit;
 
 	firestarter=90;
 	beamweapon=1;
 	rgbcolor=0.01 0.01 0.02;
-	explosiongenerator=custom:LIGHTNING_NEW;
+	explosiongenerator=custom:DGUNTRACE;
 
 
 	[DAMAGE]
 		{
-		default=222;
+		default=375;
 		}
 	}
 
@@ -2421,3 +2487,88 @@
 		Default=64;
 		}
 	}
+
+
+[TLL_REVAMPEDFIREBALL]
+{
+	name=Flame Thrower;
+	rendertype=4;
+	ballistic=0;
+	turret=1;
+	range=550;
+	reloadtime=4.0;
+	weaponvelocity=175;
+	areaofeffect=32;
+	rgbcolor=1 0.33 0.0;
+	explosiongenerator=custom:fireballboom;
+	bounceExplosionGenerator=custom:FIREBALLBOUNCE;
+	cegTag=Giga;
+	soundstart=flamhvy2;
+	soundhit=fastburn;
+	startsmoke=1;
+	tolerance=500;
+	startsmoke=1;
+	burnblow=1;
+	WaterBounce=0;
+	GroundBounce=1;
+	BounceSlip=0.95;
+	BounceRebound=0.95;
+	NumBounce=8;
+	gravityAffected=0;
+	myGravity=0.001;
+	accuracy=750; //1840//
+	movingaccuracy=1500; //3220//
+	//impulsefactor=2;
+	impulseboost=2;
+	cratermult=0.01;
+	//craterboost=0.01;
+	noselfdamage=1;
+	noexplode=1;
+	[DAMAGE]
+	{
+		default=111;
+	}
+}
+
+[OtherFireball]
+{
+	ID=116;
+	name=Flame Cannon;
+	rendertype=1;
+	lineofsight=1;
+	turret=1;
+	range=550;
+	noexplode=1;
+	gravityAffected=0;
+	myGravity=0.001;
+	cylindertargeting = 1;
+	reloadtime=2;
+	weaponvelocity=420;
+	areaofeffect=36;
+	soundstart=flamhvy2;
+	//soundhit=fastburn;
+	minbarrelangle=-40;
+	tolerance=1560;
+	burnblow=1;
+	cegTag=UnitFire;
+	explosiongenerator=custom:Napalam;
+	startsmoke=1;
+	guidance=1;
+	tracks=1;
+	selfprop=1;
+	turnrate=327680;
+	flighttime=3;
+	rgbcolor=1 0.5 0.2;
+	stages=10;
+	separation=0.3;
+	alphadecay=0.2;
+	sizedecay=-0.10;
+	nogap=1;
+	size=2;
+	[DAMAGE]
+	{
+	default=77;
+    	group_invincible=1;
+	group_landair=22;
+	}
+}

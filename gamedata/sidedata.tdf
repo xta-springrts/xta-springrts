@@ -3104,13 +3104,13 @@
 		canbuild1=Lost_Adv_construction_vehicle;
 		canbuild2=Lost_salamander;
 		canbuild3=Lost_coyote;
-		canbuild4=Lost_obscurer;
+		canbuild4=Lost_spatha;//thumper
 		canbuild5=Lost_loki;
-		canbuild6=Lost_THUMPER;
+		canbuild6=Lost_roaster;
 		canbuild7=Lost_archnano;
-		canbuild8=Lost_roaster;
+		canbuild8=Lost_obscurer;
 		canbuild9=Lost_divine;
-		canbuild10=Lost_egg_shell;
+		canbuild10=Lost_spade;//eggshell
 		canbuild11=Lost_convincer;
 		canbuild12=Lost_puncher;
 		canbuild13=Lost_turtle;
@@ -3689,12 +3689,13 @@
 	[lost_ht_plant]
 	{
 		canbuild1=lost_ht_construction_builder;
-		canbuild2=Lost_private;
-		canbuild3=Lost_shaman;
-		canbuild4=Lost_troll;
-		canbuild5=Lost_binder;
-		canbuild6=Lost_dreadnought;
-		canbuild7=Lost_titan;
+		canbuild2=Lost_shaman;
+		canbuild3=Lost_troll;
+		canbuild4=Lost_binder;
+		canbuild5=Lost_roaster;
+		canbuild6=Lost_spatha;
+		canbuild7=Lost_dreadnought;
+		canbuild8=Lost_titan;
 	}
 
 	[lost_ht_construction_builder]

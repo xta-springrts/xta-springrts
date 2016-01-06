@@ -20,6 +20,9 @@
     บÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜบ
     ศอออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออผ
     Logo by ElementalGizmo
+XTA 9.7???
+Arm Stumpy and Core Raider Cannon damage reduced from 62 to 56. (10 percent)
+Reverted Penetrator Explosion, Risk over reward was not worth.
 
 XTA 9.75 Svn 877
 |jls,nor

@@ -85,8 +85,8 @@
 	nochasecategory=VTOL;
 	badtargetcategory=VTOL;
 	wpri_badtargetcategory=VTOL;
-	explodeas=ATOMIC_BLASTSML;
-	selfdestructas=ATOMIC_BLAST;
+	explodeas=ATOMIC_BLASTPEN;
+	selfdestructas=ATOMIC_BLASTSML;
 
 	//************************************************************
 	//  Orders

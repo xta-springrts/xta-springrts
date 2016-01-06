@@ -2269,7 +2269,7 @@
 	nogap=1;
 	[DAMAGE]
 	{
-		default=62;
+		default=56;//
 		group_commanders=50;
 		lost_commanders=45;
 		group_invincible=1;

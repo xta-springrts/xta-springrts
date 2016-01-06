@@ -1,0 +1,84 @@
+[UNITINFO]
+{
+	Name=Spatha;
+	UnitName=Lost_Spatha;
+	
+	//    Required Tags
+	BuildCostEnergy=21345;
+	BuildCostMetal=3065;
+	BuildTime=28280;
+	Category=LOST TANK LEVEL3 WEAPON NOTAIR NOTSUB CTRL_W;
+	Description=Very Heavy Support Tank;
+	FootprintX=4;
+	FootprintZ=4;
+	MaxDamage=17654;
+	ObjectName=Lost_Spatha;
+	Side=TLL;
+	SoundCategory=CORE_TANK;
+	TEDClass=TANK;
+	
+	//    Movement
+	BrakeRate=0.33;
+	movementclass=TANKDTCRUSH;
+	Acceleration=0.33;
+	CanMove=1;
+	MaxVelocity=1.15;
+	MaxSlope=20;
+	TurnRate=376;
+	
+	//    Buildings
+	
+	//    Construction
+	Builder=0;
+	
+	//    Resources
+	energystorage=400;
+	
+	//    Abilities
+	CanAttack=1;
+	CanStop=1;
+	
+	//    Sight/Radar
+	SightDistance=472.5;
+	
+	//    Weapons
+	Weapon1=SPATHA_CANNON;
+	wpri_badTargetCategory=VTOL;
+	BadTargetCategory=VTOL;
+
+	weapon2=Spatha_MISSILE;
+	explodeas=ATOMIC_BLASTPEN;
+	selfdestructas=ATOMIC_BLASTSML;
+	NoChaseCategory=VTOL;
+	onlytargetcategory1=NOTAIR;
+	
+	//    Tracks/Flares
+	LeaveTracks=1;
+	trackoffset=8;
+	trackstrength=10;
+	trackstretch=1;
+	tracktype=StdTank;
+	trackwidth=44;
+	
+	//    Watersettings
+	MaxWaterDepth=25;
+	
+	//    Misc
+	Corpse=Lost_spatha_dead;
+	SmoothAnim=1;
+	idletime=1200;
+	idleautoheal=5;
+	collisionVolumeType = box;
+	collisionVolumeScales =55 33 55;
+	collisionVolumeOffsets = 0 -1 0;
+	collisionVolumeTest = 1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+
+	[SFXTypes]
+	{
+	explosiongenerator0=custom:POPUPFLARE;
+	explosiongenerator1=custom:POPUPFLAREFAST;
+	}
+
+}
