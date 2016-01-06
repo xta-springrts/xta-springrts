@@ -8,8 +8,8 @@
 	Name=Terraplant;
 	buildpic=core_tortoise_plant.png;
 	Description=Produces Tortoises;
-	FootprintX=10;
-	FootprintZ=9;
+	FootprintX=8;
+	FootprintZ=8;
 	BuildCostEnergy=4965;//7965
 	BuildCostMetal=1404;//1504
 	BuildTime=15431;
@@ -30,7 +30,7 @@
 	SelfDestructAs=LARGE_BUILDING;
 	Category=CORE PLANT NOWEAPON NOTAIR NOTSUB;
 	TEDClass=PLANT;
-	YardMap=ooyyyyyyoo oooooooooo oooooooooo oooccccooo oooccccooo oooccccooo oooccccooo ooccccccoo occcccccco;
+	YardMap=oyyyyyyo oooooooo oooooooo ooccccoo ooccccoo ooccccoo ooccccoo occcccco;
 	Corpse=core_tortoise_plant_dead;
 	firestandorders=1;
 	StandingFireOrder=2;

@@ -11,12 +11,12 @@
 	FootprintX=3;
 	FootprintZ=3;
 	BuildCostEnergy=2876;//4121
-	BuildCostMetal=374;//434
+	BuildCostMetal=236;//434
 	MaxDamage=1950;
 	MaxWaterDepth=100;
 	MaxSlope=12;
 	EnergyUse=2;
-	BuildTime=8732;
+	BuildTime=5732;
 	workertime=250;
 	RepairSpeed=250;
 	ReclaimSpeed=250;

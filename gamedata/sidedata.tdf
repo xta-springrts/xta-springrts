@@ -2999,14 +2999,14 @@
 		canbuild3=Lost_burner;
 		canbuild4=Lost_armadillo;
 		canbuild5=Lost_observer;
-		canbuild6=Lost_spreader;
+		canbuild6=Lost_assassin;//Lost_spreader
 		canbuild7=Lost_seagull;
 		canbuild8=Lost_iguana;
 		canbuild9=Lost_confuser;
 		canbuild10=Lost_tic;
 		canbuild11=Lost_troll;
 		canbuild12=Lost_binder;
-		canbuild13=Lost_assassin;
+		//canbuild13=Lost_assassin;
 		canbuild14=Lost_decoy_commander;
 		canbuild15=Lost_shaman;
 	}
@@ -3060,15 +3060,15 @@
 		canbuild3=lost_manta;
 		canbuild4=lost_visitor;
 		//canbuild5=arm_ranger_rt;
-		//canbuild6=arm_daybreak;
+		canbuild6=lost_petrel;
 		canbuild7=lost_equalizer;
 		//canbuild8=arm_evaperator;//xtaids
 		canbuild9=lost_viking;
 		canbuild10=lost_mixer;
 		canbuild11=lost_stinger;
-		//canbuild12=yeomen;//xtaids
+		canbuild12=lost_whale;//xtaids
 		canbuild13=lost_orc;
-		//canbuild14=arm_Plesiosaur;
+		canbuild14=lost_interceptor;
 		//canbuild15=arm_infinite;//xtaids
 	}
 	[lost_adv_construction_sub]

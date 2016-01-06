@@ -57,4 +57,10 @@ stealth=1;
 	cloakcostmoving=200;
 	mincloakdistance=250;
 	DecloakOnFire=0;
+	collisionVolumeType = box;
+	collisionVolumeScales =26 19 26;
+	collisionVolumeOffsets = 0 -1 0;
+	collisionVolumeTest = 1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
 }

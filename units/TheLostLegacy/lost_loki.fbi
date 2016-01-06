@@ -132,7 +132,7 @@
 
 	[SFXTypes]
 	{
-	explosiongenerator0=custom:POPUPFLARE;
+	explosiongenerator0=custom:BluePOPUPFLARE;
 	}
 	[customParams] 
 	{

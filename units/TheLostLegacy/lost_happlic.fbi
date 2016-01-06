@@ -116,7 +116,7 @@
 
 	[SFXTypes]
 	{
-	explosiongenerator0=custom:TinyBlue;
+	explosiongenerator0=custom:BLUEPOPUPFLARE;
 	}
 	[customParams] 
 	{

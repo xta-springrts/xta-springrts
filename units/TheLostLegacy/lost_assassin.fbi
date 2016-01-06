@@ -5,7 +5,7 @@
 	//********************
 	side=Arm;
 	name=Assassin;
-	Description=Cloakable Lightning Kbot;
+	Description=Invisible Assault Kbot;
 
 	//************************************************************
 	//  Categories
@@ -26,7 +26,7 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=1900;//4200 // 3100; // same as latest patch
+	maxdamage=2000;//4200 // 3100; // same as latest patch
 	damagemodifier=0.88;//3472 with gun closed
 	healtime=30;
 	buildcostmetal=675; //OTA: 267
@@ -64,7 +64,7 @@
 	upright=1;
 	CloakCost=50;
 	CloakCostMoving=200;
-	MinCloakDistance=250;
+	MinCloakDistance=175;
 	DecloakOnFire=0;
 
 	//************************************************************

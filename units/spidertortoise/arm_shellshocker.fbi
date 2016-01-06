@@ -53,4 +53,10 @@ Weapon1=ARM_Shellsucker;
 wpri_BadTargetCategory=VTOL;
 BadTargetCategory=NOWEAPON;
 NoChaseCategory=MOBILE VTOL;
+	collisionVolumeType = box;
+	collisionVolumeScales =40 25 40;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
 }

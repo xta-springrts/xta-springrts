@@ -387,6 +387,48 @@
 
 [CORE_AVAROCKET]
 {
+	name=Heavy Multi-Launch Rockets;
+	Weapontype=MissileLauncher;
+	explosiongenerator=custom:PUFFY;
+	cegTag=RAVENTRAIL;
+	Texture1=null;
+	Texture2=null;
+	Texture3=null;
+	Texture4=null;
+	CollideFriendly=0;
+	impulsefactor=0.6;
+	turret=1;
+	model=weapon_exphvyrock;
+	range=560;
+	reloadtime=6;
+	weapontimer=0.33; //6
+	weaponvelocity=300;
+	startvelocity=100;
+	weaponacceleration=100;
+	areaofeffect=48;  //80
+	energypershot=50;
+	Burst=1;
+	Burstrate=0.1666;
+	Trajectoryheight=0.75;
+	Wobble=1900; //14000
+	Dance=30;
+	flighttime=5;
+	//turnrate=5000;	//4000
+	//edgeeffectiveness=0.75;
+	soundstart=Rockhvy1;
+	soundhitdry=xplomed4;
+	firestarter=70;
+	smokedelay=0.1;
+	smoketrail=0;
+	startsmoke=0;
+	[DAMAGE]
+	{
+		default=450;	//800
+		group_invincible=1;
+	}
+}
+[CORE_AVAROCKETOLD]
+{
 	name=Rockets;
 	Weapontype=MissileLauncher;
 	turret=1;

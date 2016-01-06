@@ -54,4 +54,10 @@ wpri_badTargetCategory=NOTAIR;
 BadTargetCategory=NOWEAPON;
 Ovradjust=1;
 Downloadable=1;
+	collisionVolumeType = box;
+	collisionVolumeScales =26 19 26;
+	collisionVolumeOffsets = 0 -1 0;
+	collisionVolumeTest = 1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
 }
