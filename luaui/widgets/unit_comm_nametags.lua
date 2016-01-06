@@ -94,7 +94,7 @@ local function GetCommAttributes(unitID, unitDefID)
 	
 	if isAI then
 		local id,botName,host,aiName = Spring.GetAIInfo(team)
-		name = (aiName ~= 'UNKNOWN' and aiName) or (not botName:find('bot') and botName) or side or 'Robert Paulson'
+		name = (aiName ~= 'UNKNOWN' and aiName ~= 'UKNOWN' and aiName) or (not botName:find('bot') and botName) or side or 'Robert Paulson'
 		name = name:gsub("^%l", string.upper)	
 	elseif isGaia then
 		name = haveZombies and 'Zombie' or 'Gaia'
