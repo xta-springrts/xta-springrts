@@ -308,6 +308,15 @@ local Buttons = {
 	deaction		= {Spring.SendCommands,"comnameshadow"}, 
 	},
 	
+	{
+	value			= WG.cpuText or false,
+	key 			= "cputext",
+	label			= "Adv. playerslist: show CPU-usage as text",
+	section			= "interface",
+	action			= {Spring.SendCommands,"cputext"},
+	deaction		= {Spring.SendCommands,"cputext"}, 
+	},
+	
 	
 	{
 	key				= "water",				

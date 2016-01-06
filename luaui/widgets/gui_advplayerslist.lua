@@ -48,6 +48,7 @@ local customScaleStep		= 0.025
 local pointDuration    		= 40
 local showTeamsizeVersus	= true		-- not implemented yet
 local cpuText				= false
+local pingText				= false
 
 --------------------------------------------------------------------------------
 -- SPEED UPS
@@ -2778,6 +2779,10 @@ end
 function widget:TextCommand(command)
 	if (string.find(command, "cputext") == 1  and  string.len(command) == 7) then 
 		cpuText = not cpuText
+		WG.cpuText = cpuText
+	elseif (string.find(command, "pingtext") == 1  and  string.len(command) == 8) then 
+		pingText = not pingText
+		WG.pingText = pingText
 	end
 end
 
