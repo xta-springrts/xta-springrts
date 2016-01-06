@@ -11,7 +11,7 @@
 
 function widget:GetInfo()
 	return {
-		name      = "AdvPlayersList - ba",
+		name      = "AdvPlayersList - XTA",
 		desc      = "Players list with useful information / shortcuts. Use tweakmode (ctrl+F11) to customize. '/cputext' displays cpu %",
 		author    = "Marmoth. (spiced up by Floris)",
 		date      = "25 april 2015",
@@ -195,6 +195,7 @@ local totalTime = 0
 local playerScores = {}
 
 local myLastCameraState
+local checkTeamsFrame = nil
 
 --------------------------------------------------------------------------------
 -- Tooltip
@@ -869,7 +870,6 @@ function CreatePlayer(playerID)
 end
 
 function CreatePlayerFromTeam(teamID) -- for when we don't have a human player occupying the slot, also when a player changes team (dies)
-	
 	local _,_, isDead, isAI, tside, tallyteam = Spring_GetTeamInfo(teamID)
 	local tred, tgreen, tblue                 = Spring_GetTeamColor(teamID)
 	local tname, ttotake, tdead, tskill, retired
@@ -1221,7 +1221,7 @@ function widget:DrawScreen()
 	if NeedUpdate then
 		--Spring.Echo("DS APL update")
 		CreateLists()
-		PrevGameFrame = GameFrame
+		PrevGameFrame = Spring_GetGameFrame()
 	end
 	
 	-- draws the background
@@ -2911,9 +2911,26 @@ function Take(teamID,name, i)
 	return
 end
 
+local function CheckForDeadTeams(teamID)
+	for _, teamID in pairs(Spring.GetTeamList()) do
+		if IsAIDead(teamID) then
+			player[teamID+64]        = CreatePlayerFromTeam(teamID)
+			SortList()
+		end
+	end
+	
+	checkTeamsFrame = nil
+end
+
+function widget:GameFrame(frame)
+		
+	if checkTeamsFrame and frame > checkTeamsFrame then
+		CheckForDeadTeams()
+	end
+end
+
 function widget:TeamDied(teamID)
-	player[teamID+64]        = CreatePlayerFromTeam(teamID)
-	SortList()
+	checkTeamsFrame = Spring_GetGameFrame() + 48
 end
 
 ---------------------------------------------------------------------------------------------------
@@ -2943,7 +2960,7 @@ function IsTakeable(teamID)
 end
 
 function IsAIDead(teamID)
-
+	--local allyID = 
 	local _,leaderID,isDead,isAI = Spring.GetTeamInfo(teamID)
 	
 	return isDead
