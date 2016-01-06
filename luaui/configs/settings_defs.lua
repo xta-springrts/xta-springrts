@@ -18,6 +18,11 @@ local Sections = {
 		label		= "Reports",
 		name 		= "reports",
 	},
+	
+	{
+		label		= "Widgets",
+		name 		= "widgets",
+	},
 
 	{
 		label		= "Presets",
@@ -285,7 +290,7 @@ local Buttons = {
 	value			= tonumber(Spring.GetConfigInt("XTA_ShowBallisticTraces") or 0) == 1,
 	key 			= "ballistic",
 	label			= "Attack-AoE: show ballistic traces (can be expensive)",
-	section			= "interface",
+	section			= "widgets",
 	action			= {Spring.SendCommands,"aoe-ballistic"},
 	deaction		= {Spring.SendCommands,"aoe-ballistic"},
 	},
@@ -293,8 +298,8 @@ local Buttons = {
 	{
 	value			= WG.nameScaling or false,
 	key 			= "scale-names",
-	label			= "Scale commander names to zoom-level:",
-	section			= "interface",
+	label			= "Commander nametags: scale names to zoom-level:",
+	section			= "widgets",
 	action			= {Spring.SendCommands,"comnamescale"},
 	deaction		= {Spring.SendCommands,"comnamescale"}, 
 	},
@@ -302,8 +307,8 @@ local Buttons = {
 	{
 	value			= not (WG.fontShadow or false),
 	key 			= "nameshadow",
-	label			= "Draw shadow around commander names:",
-	section			= "interface",
+	label			= "Commander nametags: draw shadow around commander names:",
+	section			= "widgets",
 	action			= {Spring.SendCommands,"comnameshadow"},
 	deaction		= {Spring.SendCommands,"comnameshadow"}, 
 	},
@@ -312,7 +317,7 @@ local Buttons = {
 	value			= WG.cpuText or false,
 	key 			= "cputext",
 	label			= "Adv. playerslist: show CPU-usage as text",
-	section			= "interface",
+	section			= "widgets",
 	action			= {Spring.SendCommands,"cputext"},
 	deaction		= {Spring.SendCommands,"cputext"}, 
 	},

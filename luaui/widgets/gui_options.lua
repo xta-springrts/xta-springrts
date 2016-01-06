@@ -31,7 +31,7 @@ end
 
 local rowgap						  	= 26
 local iRowHeight						= 14
-local width, height					  	= 570, 120 + maxbuttons*(rowgap+iRowHeight)
+local width, height					  	= 640, 120 + maxbuttons*(rowgap+iRowHeight)
 local iWidth							= 400
 
 local rows								= 0
