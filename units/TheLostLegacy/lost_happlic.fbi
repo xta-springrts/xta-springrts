@@ -80,7 +80,7 @@
 	//************************************************************
 	//  Weapons
 	//***********
-	weapon1=Happlic_GUN;
+	weapon1=NEWHAPLIC_GUN;
 	badtargetcategory=VTOL;
 	wpri_badtargetcategory=VTOL;
 	onlytargetcategory1=NOTAIR;
@@ -116,7 +116,7 @@
 
 	[SFXTypes]
 	{
-	explosiongenerator0=custom:BLUEPOPUPFLARE;
+	explosiongenerator0=custom:POPUPFLARE;
 	}
 	[customParams] 
 	{

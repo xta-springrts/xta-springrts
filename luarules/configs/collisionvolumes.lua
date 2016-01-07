@@ -155,6 +155,10 @@ local dynamicPieceCollisionVolume = {}	--dynamic per piece collision volume defi
 		off={44,8,44,0,4,0,2,1,0,0,0,0,0,4,0},
 	}
 	
+	unitCollisionVolume["lost_whale"] = {
+		on={46,30,95,0,-8,3,2,1,2,0,-2,0},
+		off={46,35,95,0,10,3,2,1,2,0,25,0},
+	}
 	pieceCollisionVolume["arm_big_bertha"] = {
 		["0"]={28,74,28,0,34,0,1,1},
 		["2"]={15,15,113,0,0,30,1,2},
@@ -195,5 +199,6 @@ local dynamicPieceCollisionVolume = {}	--dynamic per piece collision volume defi
 		off = {
 			["0"]={142,77,136,0,0,0,1,2},
 		}
+
 	}
 return unitCollisionVolume, pieceCollisionVolume, dynamicPieceCollisionVolume

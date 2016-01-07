@@ -3060,16 +3060,16 @@
 		canbuild3=lost_manta;
 		canbuild4=lost_visitor;
 		//canbuild5=arm_ranger_rt;
-		canbuild6=lost_petrel;
+		canbuild6=lost_interceptor;
 		canbuild7=lost_equalizer;
 		//canbuild8=arm_evaperator;//xtaids
 		canbuild9=lost_viking;
 		canbuild10=lost_mixer;
 		canbuild11=lost_stinger;
-		canbuild12=lost_whale;//xtaids
+		//canbuild12=lost_whale;//disabled due to bugs
 		canbuild13=lost_orc;
-		canbuild14=lost_interceptor;
-		//canbuild15=arm_infinite;//xtaids
+		//canbuild14=lost_interceptor;
+		canbuild14=lost_Pomornik;
 	}
 	[lost_adv_construction_sub]
 	{
@@ -3114,6 +3114,7 @@
 		canbuild11=Lost_convincer;
 		canbuild12=Lost_puncher;
 		canbuild13=Lost_turtle;
+		canbuild14=lost_Pomornik;
 	}
 
 	[lost_adv_construction_vehicle]

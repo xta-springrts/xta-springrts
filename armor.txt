@@ -224,6 +224,8 @@
 	lost_equalizer=99;
 	lost_viking=99;
 	lost_ambassador=99;
+	lost_Pomornik=99;
+	lost_Interceptor=99;
 }
 [group_subs]
 {
@@ -243,6 +245,7 @@
 	lost_construction_sub=99;
 	lost_squid=99;
 	lost_orc=99;
+	lost_whale=99;
 	//guardians
 	guardian_construction_sub=99;
 	guardian_abyss_knight=99;

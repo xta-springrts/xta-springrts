@@ -87,9 +87,9 @@
 	//************************************************************
 	//  Weapons
 	//***********
-	weapon1=ARM_BAT2;
-	weapon2=ARM_BAT2;
-	weapon3=ARM_BATS;
+	weapon1=LOST_BATSHIT;
+	weapon2=LOST_MINORBAT;
+	weapon3=LOST_MINORBAT;
 	nochasecategory=WEAPON;
 	badtargetcategory=VTOL;
 	wpri_badtargetcategory=VTOL;

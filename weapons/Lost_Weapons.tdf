@@ -1,4 +1,173 @@
 
+[NEWHAPLIC_GUN]
+{
+	name=Pop-up Cannon;
+	explosiongenerator=custom:popupcannon;
+	energypershot=200;
+	accuracy=375;
+	rgbcolor=1 0.60 0.0;
+	weaponType=Cannon;
+	turret=1;
+	range=1200; // 1330; in 9.725
+	reloadtime=2.5;
+	weaponvelocity=440;
+	areaofeffect=100;
+	soundstart=cannhvy5;
+	soundhitdry=xplomed2;
+	//minbarrelangle=-35;
+	startsmoke=1;
+	size=3.45;
+	rgbcolor=1 0.50 0.1;
+	stages=7;
+	separation=0.66;
+	alphadecay=0.8;
+	sizedecay=-0.11;
+	[DAMAGE]
+	{
+		default=308;
+		group_invincible=1;
+		group_ships=502;
+		group_large_ships=537;
+	}
+}
+[LOSTTIC_PULSE]
+{
+	name=Rocket;
+	vlaunch=1;
+	Weapontype=StarburstLauncher;
+	cegTag=BLUEVERTICALPULSE;
+	explosiongenerator=custom:TLLTRAIL;
+	model=egun;
+	range=1200;
+	Texture1=null;
+	Texture2=null;
+	Texture3=null;
+	Texture4=null;
+	reloadtime=10;
+	noautorange=1;
+	weapontimer=2;
+	flighttime=6;
+	weaponvelocity=800;
+	weaponacceleration=160;
+	startvelocity=30;
+	turnrate=20000;
+	areaofeffect=80;
+	soundstart=vpulsefire;
+	soundhit=vpulsehit;
+	firestarter=100;
+	smokedelay=0.1;
+	smoketrail=0;
+	tolerance=4000;
+	startsmoke=0;
+	[DAMAGE]
+	{
+		default=361;
+		group_invincible=1;
+	}
+}
+
+[LOST_MINORBAT]
+{
+	name=Pop-up Cannon;
+	explosiongenerator=custom:popupcannon;
+	energypershot=216;
+	accuracy=350;
+	movingaccuracy=700;
+	rgbcolor=1 0.60 0.0;
+	weaponType=Cannon;
+	turret=1;
+	range=1350; // 1330; in 9.725
+	reloadtime=3.75;
+	weaponvelocity=470;
+	areaofeffect=100;
+	soundstart=cannhvy5;
+	soundhitdry=xplomed2;
+	//minbarrelangle=-35;
+	startsmoke=1;
+	size=3.45;
+	rgbcolor=1 0.50 0.1;
+	stages=7;
+	separation=0.66;
+	alphadecay=0.8;
+	sizedecay=-0.11;
+	[DAMAGE]
+	{
+		default=368;//180dps
+		group_invincible=1;
+		group_ships=552;
+		group_large_ships=607;
+	}
+}
+[LOST_BATSHIT]
+{
+	name=BattleShip Cannon;
+	rgbcolor=1 0.8 0.5;
+	stages=20;
+	separation=0.45;
+	alphadecay=0.3;
+	sizedecay=-0.15;
+	nogap=1;
+	size=3;
+	weaponType=Cannon;
+	turret=1;
+	//color=3;
+	explosiongenerator=custom:BERTHASHOT;
+	cegTag=vulcanfx;
+	GroundBounce=0;
+	WaterBounce=0;
+	NumBounce=1;
+	BounceSlip=1.01;
+	BounceRebound=0.8;
+	bounceExplosionGenerator=custom:BERTHASHOT;
+	range=2750;
+	reloadtime=4;
+	weaponvelocity=800;
+	energypershot=1000;
+	areaofeffect=96;
+	soundstart=xplonuk4;
+	soundhitdry=xplonuk1;
+	firestarter=50;
+	accuracy=900;
+	movingaccuracy=1200;
+	aimrate=300;
+	tolerance=300;
+	holdtime=1;
+	startsmoke=1;
+	edgeeffectiveness=0.75;
+	[DAMAGE]
+	{
+		default=1220;
+		group_invincible=1;
+		group_ships=1780;
+		group_large_ships=1780;
+	}
+}
+[EQUAL_GUN]
+{
+	name=Plasma Cannon;
+	explosiongenerator=custom:popupcannon;
+	energypershot=500;
+	rgbcolor=1 0.33 0.0;
+	weaponType=Cannon;
+	turret=1;
+	range=1750;
+	reloadtime=5;
+	weaponvelocity=450;
+	areaofeffect=64;
+	soundstart=CANNHVY1;
+	soundhitdry=xplomed2;
+	startsmoke=1;
+	accuracy=900;
+	movingaccuracy=1800;
+	tolerance=300;
+	[DAMAGE]
+	{
+		default=444;
+		group_invincible=1;
+		group_ships=888;
+		group_large_ships=888;
+	}
+}
 [SPATHA_CANNON]
 {
 	name=Plasma Cannon;
@@ -462,6 +631,38 @@
 		group_large_ships=764;
 	}
 }
+[ODINNEW_GUN]
+{
+	name=Mini-Bertha Cannon;
+	explosiongenerator=custom:BluePlasmaExtraBANG;
+	energypershot=400;
+	accuracy=925;
+	rgbcolor=1 0.60 0.0;
+	weaponType=Cannon;
+	turret=1;
+	range=2250; // 1330; in 9.725
+	reloadtime=3.0;
+	weaponvelocity=770;
+	areaofeffect=82;
+	soundstart=lostartyplasma1;
+	soundhitdry=xplomed2;
+	//minbarrelangle=-35;
+	startsmoke=1;
+	size=3.45;
+	rgbcolor=0.4 0.6 1.0;
+	stages=7;
+	separation=0.66;
+	alphadecay=0.8;
+	sizedecay=-0.11;
+	cegTag=BluePlasmaExtraGlow;
+	[DAMAGE]
+	{
+		default=287;
+		group_invincible=1;
+		group_ships=432;
+		group_large_ships=487;
+	}
+}
 
 [Krow_Lightning_ORANGE]
 {
@@ -887,7 +1088,7 @@
 	name=Loki Cannon;
 	explosiongenerator=custom:BluePlasmaExtraBANG;
 	energypershot=216;
-	accuracy=375;
+	accuracy=750;
 	rgbcolor=1 0.60 0.0;
 	weaponType=Cannon;
 	turret=1;

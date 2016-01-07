@@ -82,7 +82,7 @@
 	//************************************************************
 	//  Weapons
 	//***********
-	weapon1=EQUAL_PULSE;
+	weapon1=LOSTTIC_PULSE;
 	nochasecategory=VTOL;
 	badtargetcategory=VTOL;
 	wpri_badtargetcategory=VTOL;

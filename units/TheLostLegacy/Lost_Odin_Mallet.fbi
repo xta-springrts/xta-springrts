@@ -26,7 +26,7 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=1812;
+	maxdamage=2012;
 	healtime=11;
 	buildcostmetal=2043;
 	buildcostenergy=33326;
@@ -81,7 +81,7 @@
 	//************************************************************
 	//  Weapons
 	//***********
-	weapon1=ODIN_GUN;
+	weapon1=ODINNEW_GUN;
 	//weapon2=odin_mallet_Lightning;
 	//weapon3=odin_mallet_Lightning;
 	wpri_badtargetcategory=VTOL;
@@ -112,11 +112,9 @@
 	//************************************************************
 	//  To be removed
 	//*****************
-
 	[SFXTypes]
 	{
-	explosiongenerator0=custom:crazyFLARE;
-	explosiongenerator1=custom:crazyFLARE;
+	explosiongenerator0=custom:BLUEPOPUPFLARE;
 	}
 	[customParams] 
 	{

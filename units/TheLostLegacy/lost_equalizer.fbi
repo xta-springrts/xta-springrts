@@ -5,7 +5,7 @@
 	//********************
 	side=Arm;
 	name=Equalizer;
-	description=Land Bombarder;
+	description=Broadside Bombarder;
 	icontype=sea;
 
 	//************************************************************
@@ -27,11 +27,11 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=9784; //was 9100//
+	maxdamage=11543; //was 9100//
 	healtime=30;
-	buildcostmetal=2854; //was 2292//
-	buildcostenergy=44321; //was 11477//
-	buildtime=35578; //was 17789//
+	buildcostmetal=3054; //was 2292//
+	buildcostenergy=48321; //was 11477//
+	buildtime=40578; //was 17789//
 	footprintx=4;
 	footprintz=4;
 
@@ -89,8 +89,13 @@
 	//************************************************************
 	//  Weapons
 	//***********
-	weapon1=CONQ_GUN;
-	weapon2=ARM_LIGHTLASER;
+	weapon1=EQUAL_GUN;//front
+	Weaponmaindir1=0 0 1;
+	Maxangledif1=240;
+	weapon2=EQUAL_GUN;//rear
+	Weaponmaindir2=0 0 -1;
+	Maxangledif2=240;
+	//weapon2=ARM_LIGHTLASER;
 	weapon3=COREDEPTHCHARGE;
 	nochasecategory=VTOL;
 	badtargetcategory=VTOL;

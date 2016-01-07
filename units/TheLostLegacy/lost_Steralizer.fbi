@@ -85,7 +85,7 @@
 	//************************************************************
 	//  Weapons
 	//***********
-	weapon1=EQUAL_PULSE;
+	weapon1=LOSTTIC_PULSE;
 	//weapon2=CORMH_WEAPON2;
 	nochasecategory=VTOL;
 	badtargetcategory=VTOL;

@@ -1,4 +1,24 @@
 
+[Lost_Interceptor_dead]
+	{
+	world=All Worlds;
+	description=Wreckage;
+	category=arm_corpses;
+	object=Lost_Interceptor_dead;
+	footprintx=4;
+	footprintz=4;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	metal=576;
+	damage=12000;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=41 36 63;//#AUTO#
+	collisionVolumeOffsets=0 -9 0;//#AUTO#
+	}
 [lost_shrinker_dead]
 	{
 	world=All Worlds;
@@ -2678,6 +2698,27 @@
 	blocking=0;
 	hitdensity=100;
 	metal=1617;
+	damage=794;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=41 16 41;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+
+[lost_whale_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=core_corpses;
+	object=lost_whale_dead;
+	footprintx=3;
+	footprintz=3;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	metal=617;
 	damage=794;
 	reclaimable=1;
 	featurereclamate=smudge01;
