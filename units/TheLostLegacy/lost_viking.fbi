@@ -5,7 +5,7 @@
 	//********************
 	side=Arm;
 	name=Viking;
-	description=Artillery Battleship;
+	description=Broadside Artillery Battleship;
 	icontype=sea;
 
 	//************************************************************
@@ -74,7 +74,7 @@
 	brakerate=0.013;
 	maxvelocity=1.4; //was 2//
 	minwaterdepth=30;
-	waterline=5;
+	waterline=2;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
@@ -89,7 +89,11 @@
 	//***********
 	weapon1=LOST_BATSHIT;
 	weapon2=LOST_MINORBAT;
+	Weaponmaindir2=0 0 1;
+	Maxangledif2=240;
 	weapon3=LOST_MINORBAT;
+	Weaponmaindir3=0 0 -1;
+	Maxangledif3=240;
 	nochasecategory=WEAPON;
 	badtargetcategory=VTOL;
 	wpri_badtargetcategory=VTOL;
@@ -123,8 +127,8 @@
 	version=1.2;
 	zbuffer=1;
 	collisionVolumeType = box;
-	collisionVolumeScales =60 60 120;
-	collisionVolumeOffsets = 0 -25 0;
+	collisionVolumeScales =60 70 120;
+	collisionVolumeOffsets = 0 -15 0;
 	collisionVolumeTest = 1;
 	pieceTrailCEGTag=Debree;//bleh
 	pieceTrailCEGRange = 4;
@@ -135,8 +139,8 @@
 
 	[SFXTypes]
 	{
-	explosiongenerator0=custom:dgunflare;
-	explosiongenerator1=custom:berthaflare;
+	explosiongenerator0=custom:berthaflare;
+	explosiongenerator1=custom:popupflare;
 	explosiongenerator2=custom:UNITFIRE;
 	}
 	[customParams] 

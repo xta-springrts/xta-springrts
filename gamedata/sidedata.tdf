@@ -3697,6 +3697,7 @@
 		canbuild6=Lost_spatha;
 		canbuild7=Lost_dreadnought;
 		canbuild8=Lost_titan;
+		canbuild9=lost_Pomornik;
 	}
 
 	[lost_ht_construction_builder]

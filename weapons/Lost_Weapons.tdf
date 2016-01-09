@@ -2296,7 +2296,7 @@
 	range=400;
 	reloadtime=4.0;
 	burst=1;
-	Trajectoryheight=0.2;
+	//Trajectoryheight=0.1;
 	Wobble=500;
 	dance=25;
 	burstrate=.2;
@@ -2692,7 +2692,7 @@
 
 [TLL_REVAMPEDFIREBALL]
 {
-	name=Flame Thrower;
+	name=Flame Thrower;//Not used
 	rendertype=4;
 	ballistic=0;
 	turret=1;
@@ -2768,7 +2768,7 @@
 	size=2;
 	[DAMAGE]
 	{
-	default=77;
+	default=88;
     	group_invincible=1;
 	group_landair=22;
 	}
