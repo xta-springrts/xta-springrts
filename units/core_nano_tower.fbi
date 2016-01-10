@@ -21,7 +21,7 @@
 	maxvelocity=0;
 	maxslope=10;
 	turnrate=1;
-	builddistance=110;
+	builddistance=125;
 	builder=1;
 	workertime=250;
 	repairspeed=150;

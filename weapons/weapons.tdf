@@ -812,7 +812,7 @@
 [ARMFIXED_GUN]
 {
 	name=Plasma Cannon;
-	explosiongenerator=custom:popupcannon;
+	explosiongenerator=custom:RedPlasma;
 	energypershot=500;
 	rgbcolor=1 0.33 0.0;
 	size=4;
@@ -3635,7 +3635,7 @@
 {
 	name=Plasma Cannon;
 	energypershot=525;
-	explosiongenerator=custom:popupcannon;
+	explosiongenerator=custom:RedPlasma;
 	size=4;
 	rgbcolor=1 0.33 0.0;
 	weaponType=Cannon;
@@ -6159,7 +6159,7 @@
 [ARM_BAT2]
 {
 	name=Plasma Cannon;
-	explosiongenerator=custom:popupcannon;
+	explosiongenerator=custom:RedPlasma;
 	energypershot=500;
 	rgbcolor=1 0.33 0.0;
 	weaponType=Cannon;
@@ -6184,7 +6184,7 @@
 [CONQ_GUN]
 {
 	name=Plasma Cannon;
-	explosiongenerator=custom:popupcannon;
+	explosiongenerator=custom:RedPlasma;
 	energypershot=500;
 	rgbcolor=1 0.33 0.0;
 	weaponType=Cannon;
@@ -6211,7 +6211,7 @@
 {
 	name=Plasma Cannon;
 	energypershot=525;
-	explosiongenerator=custom:popupcannon;
+	explosiongenerator=custom:RedPlasma;
 	rgbcolor=1 0.33 0.0;
 	weaponType=Cannon;
 	turret=1;

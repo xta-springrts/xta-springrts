@@ -84,8 +84,8 @@
 	//************************************************************
 	//  Weapons
 	//***********
-	explodeas=SMALL_BUILDINGEX2;
-	selfdestructas=MEDIUM_BUILDING;
+	explodeas=METAL_MAKER_LVL1_NORMAL;
+	selfdestructas=METAL_MAKER_LVL1_SELF;
 
 	//************************************************************
 	//  Orders

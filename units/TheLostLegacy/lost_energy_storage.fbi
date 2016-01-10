@@ -78,7 +78,7 @@
 	//************************************************************
 	//  Weapons
 	//***********
-	explodeas=ESTOR_BUILDINGEX;
+	explodeas=ENERGY_STORAGE_NORMAL;
 	selfdestructas=CRAWL_BLASTSML;
 
 	//************************************************************

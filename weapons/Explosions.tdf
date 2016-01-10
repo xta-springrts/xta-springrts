@@ -1,0 +1,170 @@
+//Notes, Self Destruction Deals FOUR times the damage and THREE times the AOE of default on Weak explosion Tiers.
+//On strong units Explosion Radius is 5 times the base weak explosion and starts at half of the self D of the weak tier,
+//and multiplies on base weak explosion by Ax2=B and then Bx3.5=?; However Radius stays the same at 5 times of weak.
+//This appears to be the OTA math. Should we stick with this formula?
+
+[T1_2X2_UNIT_STRONG_SELF]
+{
+	name=Small tank;
+	weaponType=Cannon;
+	turret=1;
+	range=480;
+	reloadtime=3.6;
+	weaponvelocity=250;
+	areaofeffect=120;
+	soundstart=largegun;
+	soundhitdry=xplomed2;
+	shakemagnitude=0;
+	shakeduration=0;
+	explosiongenerator=custom:T1_2X2_UNIT_EXPLOSION;
+	[DAMAGE]
+	{
+		default=350;
+		group_invincible=1;
+	}
+}
+[T1_2X2_UNIT_STRONG_NORMAL]
+{
+	name=Small tank;
+	weaponType=Cannon;
+	turret=1;
+	range=480;
+	reloadtime=3.6;
+	weaponvelocity=250;
+	areaofeffect=120;
+	soundstart=largegun;
+	soundhitdry=xplomed2;
+	shakemagnitude=0;
+	shakeduration=0;
+	explosiongenerator=custom:T1_2X2_UNIT_EXPLOSION;
+	[DAMAGE]
+	{
+		default=100;
+		group_invincible=1;
+	}
+}
+
+//Notes, Self Destruction Deals FOUR times the damage and THREE times the AOE of default
+[T1_2X2_UNIT_WEAK_SELF]
+{
+	name=Small tank;
+	weaponType=Cannon;
+	turret=1;
+	range=480;
+	reloadtime=3.6;
+	weaponvelocity=250;
+	areaofeffect=72;
+	soundstart=largegun;
+	soundhitdry=xplomed2;
+	shakemagnitude=0;
+	shakeduration=0;
+	explosiongenerator=custom:T1_2X2_UNIT_EXPLOSION;
+	[DAMAGE]
+	{
+		default=200;
+		group_invincible=1;
+	}
+}
+[T1_2X2_UNIT_WEAK_NORMAL]
+{
+	name=Small tank;
+	weaponType=Cannon;
+	turret=1;
+	range=480;
+	reloadtime=3.6;
+	weaponvelocity=250;
+	areaofeffect=24;
+	soundstart=largegun;
+	soundhitdry=xplomed2;
+	shakemagnitude=0;
+	shakeduration=0;
+	explosiongenerator=custom:T1_2X2_UNIT_EXPLOSION;
+	[DAMAGE]
+	{
+		default=50;
+		group_invincible=1;
+	}
+}
+
+
+
+[ENERGY_STORAGE_SELF]
+{
+	name=Small building;
+	weaponType=Cannon;
+	turret=1;
+	range=480;
+	reloadtime=3.6;
+	weaponvelocity=250;
+	areaofeffect=420;
+	soundstart=largegun;
+	soundhitdry=xplonuk1;
+	shakemagnitude=8;
+	shakeduration=0.5;
+	explosiongenerator=custom:EnergyStorageExplosion;
+	[DAMAGE]
+	{
+		default=1900;
+		group_invincible=1;
+	}
+}
+[ENERGY_STORAGE_NORMAL]
+{
+	name=Small building;
+	weaponType=Cannon;
+	turret=1;
+	range=480;
+	reloadtime=3.6;
+	weaponvelocity=250;
+	areaofeffect=150;
+	soundstart=largegun;
+	soundhitdry=xplonuk1;
+	shakemagnitude=8;
+	shakeduration=0.5;
+	explosiongenerator=custom:EnergyStorageExplosion;
+	[DAMAGE]
+	{
+		default=900;
+		group_invincible=1;
+	}
+}
+
+[METAL_MAKER_LVL1_NORMAL] // copied from OTA, larger aoe
+{
+	name=Small building_2;
+	weaponType=Cannon;
+	turret=1;
+	range=480;
+	reloadtime=3.6;
+	weaponvelocity=70;
+	areaofeffect=150;
+	soundhitdry=metalmakerboom;
+	shakemagnitude=0;
+	shakeduration=0;
+	explosiongenerator=custom:MetalMakerExplosionLEVEL1;
+	[DAMAGE]
+	{
+		default=100;
+		group_invincible=1;
+	}
+}
+
+[METAL_MAKER_LVL1_SELF] // copied from OTA, larger aoe
+{
+	name=Small building_2;
+	weaponType=Cannon;
+	turret=1;
+	range=480;
+	reloadtime=3.6;
+	weaponvelocity=70;
+	areaofeffect=200;
+	soundhitdry=metalmakerboom;
+	shakemagnitude=0;
+	shakeduration=0;
+	explosiongenerator=custom:MetalMakerExplosionLEVEL1;
+	[DAMAGE]
+	{
+		default=400;
+		group_invincible=1;
+	}
+}

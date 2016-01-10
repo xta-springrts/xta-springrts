@@ -145,7 +145,7 @@
 [EQUAL_GUN]
 {
 	name=Plasma Cannon;
-	explosiongenerator=custom:popupcannon;
+	explosiongenerator=custom:RedPlasma;
 	energypershot=500;
 	rgbcolor=1 0.33 0.0;
 	weaponType=Cannon;
@@ -950,7 +950,7 @@
 	beamweapon=1;
 	rgbcolor=0.3 0.5 1.0;
 	tolerance=5000;
-	explosiongenerator=custom:PARALYZER_BLUE;  //Noruas's FX added v8//
+	explosiongenerator=custom:ONESPARK;  //Noruas's FX added v8//
 	guidance=1;
 	beamdecay=0.5;
 	beamttl=1;
@@ -1352,7 +1352,7 @@
 [LOSTFIXED_GUN]
 {
 	name=Plasma Cannon;
-	explosiongenerator=custom:popupcannon;
+	explosiongenerator=custom:RedPlasma;
 	energypershot=500;
 	rgbcolor=1 0.33 0.0;
 	size=4;
@@ -2331,7 +2331,7 @@
   	texture1=testlightning;
 	LineOfSight=1;
 	Turret=1;
-	Range=260;
+	Range=245;
 	ReloadTime=1.50;
 	WeaponTimer=1;
 	WeaponVelocity=860;
@@ -2365,7 +2365,7 @@
 	rgbcolor=0.7 0.7 1.0;
 	beamtime=0.25;
 	beamdecay=0.9;
-	beamttl=10;
+	beamttl=3;
 	accuracy=50;
 	sprayangle=50;
 	range=575; 
@@ -2384,7 +2384,7 @@
 	firestarter=90;
 	beamweapon=1;
 	tolerance=5000;
-	explosiongenerator=custom:PARALYZER_BLUE;  //Noruas's FX added v8//
+	explosiongenerator=custom:ONESPARK;  //Noruas's FX added v8//
 	guidance=1;
 	[DAMAGE]
 	{

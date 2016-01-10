@@ -50,8 +50,8 @@
 	SightDistance=581.25;
 	
 	//    Weapons
-	ExplodeAs=BIG_UNITEX;
-	SelfDestructAs=BIG_UNIT;
+	explodeas=NANO_UNITEX;
+	selfdestructas=NANO_UNIT;
 	
 	//    Tracks/Flares
 	//LeaveTracks=1;

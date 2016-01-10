@@ -85,8 +85,8 @@
 	Weapon1=CORTRUCK_MISSILE;
 	badtargetcategory=NOTAIR;
 	wpri_badtargetcategory=NOTAIR;
-	explodeas=BIG_UNITEX;
-	selfdestructas=BIG_UNIT;
+	explodeas=T1_2X2_UNIT_STRONG_NORMAL;
+	selfdestructas=T1_2X2_UNIT_STRONG_SELF;
 
 	//************************************************************
 	//  Orders

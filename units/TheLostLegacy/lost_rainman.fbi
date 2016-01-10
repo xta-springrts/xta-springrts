@@ -86,8 +86,8 @@
 	nochasecategory=VTOL;
 	badtargetcategory=VTOL;
 	wpri_badtargetcategory=VTOL;
-	explodeas=BIG_UNITEX;
-	selfdestructas=BIG_UNIT;
+	explodeas=T1_2X2_UNIT_STRONG_NORMAL;
+	selfdestructas=T1_2X2_UNIT_STRONG_SELF;
 
 	//************************************************************
 	//  Orders

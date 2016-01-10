@@ -83,8 +83,8 @@
 	//  Weapons
 	//***********
 	Weapon1=PRIVATE_LIGHTNING;
-	explodeas=SMALL_UNITEX;
-	selfdestructas=SMALL_UNIT;
+	explodeas=T1_2X2_UNIT_WEAK_NORMAL;
+	selfdestructas=T1_2X2_UNIT_WEAK_SELF;
 
 	//************************************************************
 	//  Orders
