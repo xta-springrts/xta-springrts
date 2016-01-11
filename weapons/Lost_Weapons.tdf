@@ -2272,7 +2272,7 @@
 
 	[DAMAGE]
 		{
-		default=24;//48
+		default=25;//50
 		}
 	}
 

@@ -22,6 +22,13 @@
 		distance=1;
 		size=2.5;
 	}
+	[lost_commander]
+	{
+		bitmap=icons/lost_commander.tga;
+		radiusadjust=0;
+		distance=1;
+		size=2.5;
+	}
 	[core_krogoth]
 	{
 		bitmap=icons/core_krogoth.tga;
