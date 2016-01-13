@@ -625,7 +625,7 @@
 	//cegTag=TinyGreen;
 	[DAMAGE]
 	{
-		default=365;
+		default=411;
 		group_invincible=1;
 		group_ships=565;
 		group_large_ships=764;
@@ -657,10 +657,10 @@
 	cegTag=BluePlasmaExtraGlow;
 	[DAMAGE]
 	{
-		default=287;
+		default=376;
 		group_invincible=1;
-		group_ships=432;
-		group_large_ships=487;
+		group_ships=532;
+		group_large_ships=637;
 	}
 }
 

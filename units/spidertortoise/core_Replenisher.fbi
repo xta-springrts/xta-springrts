@@ -30,8 +30,8 @@
 	SoundCategory=COR_TOR;
 	EnergyStorage=100;
 	MetalStorage=200;
-	ExplodeAs=BIG_UNITEX;
-	SelfDestructAs=BIG_UNIT;
+	ExplodeAs=T1_3X3_UNIT_TURTLE_NORMAL;
+	SelfDestructAs=T1_3X3_UNIT_TURTLE_SELF;
 	Category=CORE TANK CONSTR NOWEAPON NOTAIR NOTSUB;
 	TEDClass=CNSTR;
 	yardmap=ooo ooo ooo;

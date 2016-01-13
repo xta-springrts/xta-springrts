@@ -168,3 +168,65 @@
 		group_invincible=1;
 	}
 }
+
+[T1_3X3_UNIT_TURTLE_SELF]
+{
+	name=Small tank;
+	weaponType=Cannon;
+	turret=1;
+	range=480;
+	reloadtime=3.6;
+	weaponvelocity=250;
+	areaofeffect=150;
+	soundstart=largegun;
+	soundhitdry=xplomed2;
+	shakemagnitude=0;
+	shakeduration=0;
+	explosiongenerator=custom:RedPlasma;
+	[DAMAGE]
+	{
+		default=600;
+		group_invincible=1;
+	}
+}
+[T1_3X3_UNIT_TURTLE_NORMAL]
+{
+	name=Small tank;
+	weaponType=Cannon;
+	turret=1;
+	range=480;
+	reloadtime=3.6;
+	weaponvelocity=250;
+	areaofeffect=150;
+	soundstart=largegun;
+	soundhitdry=xplomed2;
+	shakemagnitude=0;
+	shakeduration=0;
+	explosiongenerator=custom:RedPlasma;
+	[DAMAGE]
+	{
+		default=200;
+		group_invincible=1;
+	}
+}
+
+[T1_3X3_UNIT_TURTLE_ENERGY]
+{
+	name=Small tank;
+	weaponType=Cannon;
+	turret=1;
+	range=480;
+	reloadtime=3.6;
+	weaponvelocity=250;
+	areaofeffect=175;
+	soundstart=largegun;
+	soundhitdry=xplomed2;
+	shakemagnitude=0;
+	shakeduration=0;
+	explosiongenerator=custom:RedPlasma;
+	[DAMAGE]
+	{
+		default=300;
+		group_invincible=1;
+	}
+}

@@ -127,7 +127,7 @@
 	air=1;
 	water=1;
 	ground=1;
-	count=5;
+	count=0;
 	}
 	[UnstableSMOKE] 
 	{

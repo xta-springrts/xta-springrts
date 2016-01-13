@@ -24,8 +24,8 @@
 	NoAutoFire=0;
 	SightDistance=479;
 	SoundCategory=COR_TOR;
-	ExplodeAs=BIG_UNITEX;
-	SelfDestructAs=BIG_UNIT;
+	ExplodeAs=T1_3X3_UNIT_TURTLE_NORMAL;
+	SelfDestructAs=T1_3X3_UNIT_TURTLE_SELF;
 	Category=CORE TANK WEAPON NOTAIR NOTSUB;
 	TEDClass=TANK;
 	Copyright=Copyright 1997 Humongous Entertainment. All rights reserved.;

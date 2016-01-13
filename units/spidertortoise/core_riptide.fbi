@@ -16,7 +16,7 @@
 	MaxSlope=12;
 	MaxWaterDepth=100;
 	EnergyUse=2;
-	BuildTime=6729;
+	BuildTime=7729;
 	BMcode=1;
 	Builder=0;
 	ThreeD=1;
@@ -26,8 +26,8 @@
 	SightDistance=450;
 	sonardistance=400; 
 	SoundCategory=COR_TOR;
-	ExplodeAs=BIG_UNITEX;
-	SelfDestructAs=BIG_UNIT;
+	ExplodeAs=T1_3X3_UNIT_TURTLE_NORMAL;
+	SelfDestructAs=T1_3X3_UNIT_TURTLE_SELF;
 	Category=CORE TANK WEAPON NOTAIR NOTSUB;
 	TEDClass=TANK;
 	Copyright=Copyright 1997 Humongous Entertainment. All rights reserved.;

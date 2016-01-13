@@ -22,7 +22,7 @@
 	ThreeD=1;
 	ZBuffer=1;
 	NoAutoFire=0;
-	SightDistance=455;
+	SightDistance=415;
 	SoundCategory=COR_TOR;
 	ExplodeAs=BIG_UNITEX;
 	SelfDestructAs=BIG_UNIT;
