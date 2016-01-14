@@ -1,0 +1,111 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Core;
+	name=Advanced Metal Extractor;
+	description=Extracts Metal;
+	icontype=metal;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=Core METAL STATIC NOWEAPON NOTAIR NOTSEA NOTSUB;
+	tedclass=METAL;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=Core_adv_metal_extractor;
+	unitnumber=48;
+	objectname=Core_adv_metal_extractor.3do;
+	corpse=Core_adv_metal_extractor_dead;
+	buildpic=Core_adv_metal_extractor.DDS;
+	soundcategory=Core_MEX;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=879;
+	buildcostmetal=351;
+	buildcostenergy=3221;
+	buildtime=5500;
+	footprintx=4;
+	footprintz=4;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energyuse=80;
+	energystorage=0;
+	extractsmetal=0.0025;
+
+	//************************************************************
+	//  Building
+	//************
+	buildangle=32768;
+	yardmap=ooooooooo;
+	activatewhenbuilt=1;
+	collisionVolumeType=CylY;
+	collisionVolumeScales = 54 45 54;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	onoffable=1;
+	canRepeat=0;
+	canMove=0;
+	canAttack=0;
+	canGuard=0;
+
+	//************************************************************
+	//  Movement
+	//************
+	maxslope=18;
+	maxwaterdepth=22;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=367.5;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeas=SMALL_BUILDINGEX;
+	selfdestructas=SMALL_BUILDINGEX;
+	selfdestructcountdown=0;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=0;
+	designation=AM-BME1;
+	downloadable=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+}

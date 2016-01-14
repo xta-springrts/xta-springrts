@@ -1,0 +1,120 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Arm;
+	name=Eradicator;
+	description=Rapid Missile Tower;
+	icontype=building;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=ARM DEFENSIVE WEAPON NOTAIR NOTSUB;
+	tedclass=DEFENSIVE;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=core_eradicator;
+	unitnumber=39;
+	objectname=core_eradicator.3do;
+	corpse=core_eradicator_dead;
+	buildpic=core_eradicator.DDS;
+	soundcategory=HLT;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=2898;
+	healtime=11;
+	buildcostmetal=803;
+	buildcostenergy=11875;
+	buildtime=15176;
+	footprintx=4;
+	footprintz=4;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energyuse=0;
+	energystorage=100;
+
+	//************************************************************
+	//  Building
+	//************
+	buildangle=8192;
+	yardmap=yoy ooo oyo;
+	collisionVolumeType=CylY;
+	collisionVolumeScales=47 66 47;
+	collisionVolumeOffsets=0 0 -6;
+	collisionVolumeTest = 1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canattack=1;
+	canguard=1;
+	canstop=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	maxslope=10;
+	maxwaterdepth=22;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=600; // 920 in 9.725
+	airsightdistance=900;
+	radardistance=0;
+	losemitheight=60;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=gizmotron_rapid;
+	badtargetcategory=NOTAIR;
+	wpri_badtargetcategory=NOTAIR;
+	explodeas=MEDIUM_BUILDINGEX;
+	selfdestructas=MEDIUM_BUILDING;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	firestandorders=1;
+	standingfireorder=2;
+	defaultmissiontype=GUARD_NOMOVE;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=0;
+	designation=ARM-HLT;
+	downloadable=1;
+	shootme=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+	[SFXTypes]
+	{
+	explosiongenerator0=custom:greenflare;
+	}
+}

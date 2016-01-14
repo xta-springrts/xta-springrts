@@ -5,7 +5,7 @@
 	//********************
 	side=Arm;
 	name=Janus;
-	description=Heavy Skirmisher Tank;
+	description=Heavy Burst Tank;
 
 	//************************************************************
 	//  Categories
@@ -26,11 +26,11 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=771; // was 820//was 861//
+	maxdamage=896; // was 820//was 861//
 	healtime=30;
-	buildcostmetal=120; //127//
-	buildcostenergy=1044;
-	buildtime=1676;
+	buildcostmetal=187; //127//
+	buildcostenergy=2044;
+	buildtime=3076;
 	footprintx=2;
 	footprintz=2;
 
@@ -68,7 +68,7 @@
 	turnrate=555; // was 475
 	acceleration=0.4; // was 0.05
 	brakerate=0.2;
-	maxvelocity=2.35; // was 2.2
+	maxvelocity=1.62; // was 2.2
 	maxslope=10;
 	maxwaterdepth=12;
 

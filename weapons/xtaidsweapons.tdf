@@ -1,4 +1,107 @@
 
+[OLDSKOOL_IMMOLATOR]
+{
+	name=Plasma Cannon;
+	explosiongenerator=custom:RedPlasma;
+	energypershot=150;
+	rgbcolor=1.0 0.9 0.5;
+	stages=5;
+  	separation=0.45;
+  	alphadecay=0.1;
+  	sizedecay=-0.10;
+  	nogap=1;
+	size=3.5;
+	weaponType=Cannon;
+	turret=1;
+	range=900;
+	reloadtime=1.0;
+	weaponvelocity=1550; //550
+	areaofeffect=128;
+	startsmoke=1;
+	accuracy=600;
+	SoundStart=Cannon3;
+	SoundHit=XploMed4;
+	burnblow=1;
+	mygravity=0.001;
+	[DAMAGE]
+	{
+		default=200;
+		group_ships=275;
+		group_large_ships=355;
+		group_invincible=1;
+		group_landair=120;
+	}
+}
+
+[ARMPICK_LASER]
+{
+	name=Laser;
+	Weapontype=LaserCannon;
+	turret=1;
+	duration=0.11;
+	intensity=1;
+	thickness=1.3;
+	range=1000;
+	reloadtime=4.00;
+	energypershot=750;
+	weaponvelocity=1650;
+	areaofeffect=8;
+	soundstart=annigun1;
+	soundhitdry=lasrhit2;
+	firestarter=80;
+	rgbcolor=0.000 0.012 1.000;
+	tolerance=1300;
+	explosiongenerator=custom:SNIPELASER;
+	Texture1=purplelaser;
+	Texture2=null;
+	Texture3=null;
+	Texture4=null;
+	thickness=9;
+	[DAMAGE]
+	{
+		default=915;
+		group_invincible=1;
+		group_landair=765;
+		group_commanders=750;
+		lost_commanders=700;
+	}
+}
+[gizmotron_rapid]
+{
+	name=Missiles;
+	turret=1;
+	model=missile.s3o;
+	explosiongenerator=custom:KBOTMISSILEHIT;
+	Texture1=null;
+	range=710;
+	reloadtime=0.333;
+	weapontimer=5;
+	weaponvelocity=900;
+	startvelocity=570;
+	weaponacceleration=230;
+	turnrate=41660;
+	areaofeffect=48;
+	cylindertargeting=1;
+	soundstart=rockhvy2;
+	soundhitdry=xplomed2;
+	firestarter=70;
+	smokedelay=0.1;
+	tracks=1;
+	smoketrail=0;
+	dance=30;
+	trajectoryHeight=0.12;
+	cegTag=KBOTMISSILETRAIL;
+	Weapontype=MissileLauncher;
+	tolerance=10000;
+	startsmoke=1;
+	[DAMAGE]
+	{
+		default=35;//105
+		lost_commanders=33;//99
+		group_invincible=1;
+		group_landair=100;//300
+	}
+}
 [ARM_EVAP_ANNIHILATOR]
 {
 	name=Annihilator Weapon;
@@ -1601,7 +1704,7 @@
 	turret=1;
 	beamlaser=1;
 	beamtime=0.1;
-	explosiongenerator=custom:PARALYZER_Orange;
+	explosiongenerator=custom:ONESPARK;
 	paralyzer=1;
 	rgbcolor=1.000 0.706 0.000;
 	range=200;

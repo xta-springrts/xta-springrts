@@ -1,0 +1,116 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Arm;
+	name=Geothermal Driller;
+	description=Produces Energy/Makes Metal;
+	icontype=building;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=ARM ENERGY STATIC NOWEAPON NOTAIR NOTSEA NOTSUB;
+	tedclass=ENERGY;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=arm_energy_driller;
+	unitnumber=63;
+	objectname=arm_energy_driller.3do;
+	corpse=arm_geothermal_powerplant_dead;
+	buildpic=arm_energy_driller.png;
+	soundcategory=ARM_GEO;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=983;
+	buildcostmetal=942;
+	buildcostenergy=10653;
+	buildtime=18495;
+	footprintx=4;
+	footprintz=4;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=100;
+	energyuse=60;
+	makesmetal=1;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	buildangle=16384;
+	//yardmap=yycyy yoooy coooc yoooy yycyy;
+	activatewhenbuilt=1;
+	collisionVolumeType=CylY;
+	collisionVolumeScales=65 45 60;
+	collisionVolumeOffsets=0 -18 1;
+	//collisionVolumeTest = 1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	onoffable=1;
+	canRepeat=0;
+	canMove=0;
+	canAttack=0;
+	canGuard=0;
+
+	//************************************************************
+	//  Movement
+	//************
+	maxslope=15;
+	maxwaterdepth=11;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=367.5;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeas=CRAWL_BLASTSML;
+	selfdestructas=armmine5;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=0;
+	damagemodifier=0.66; //was 0.33333=66%bouns now 33%//
+	designation=AE-SC;
+	downloadable=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	pieceTrailCEGTag=NanoDebree;//bleh
+	pieceTrailCEGRange = 1;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+	[SFXTypes]
+	{
+		explosiongenerator0=custom:reactor_sfx_new_other;
+	}
+
+}

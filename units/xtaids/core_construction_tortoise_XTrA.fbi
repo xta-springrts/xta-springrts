@@ -1,0 +1,73 @@
+[UNITINFO]
+	{
+	UnitName=core_construction_tortoise_XTrA;
+	Version=1.5;
+	Side=CORE;
+	Objectname=core_construction_tortoise;
+	Designation=COR-TOR;
+	Name=Construction Tortoise;
+	buildpic=core_construction_tortoise.png;
+	script=core_construction_tortoise.cob;
+	Description=Tech Level 1.5;
+	FootprintX=3;
+	FootprintZ=3;
+	BuildCostEnergy=2876;//4121
+	BuildCostMetal=236;//434
+	MaxDamage=1950;
+	MaxWaterDepth=100;
+	MaxSlope=12;
+	EnergyUse=2;
+	BuildTime=5732;
+	workertime=250;
+	RepairSpeed=250;
+	ReclaimSpeed=250;
+	TerraformSpeed=500;//speed up terraforming
+	BMcode=1;
+	Builder=1;
+	ThreeD=1;
+	ZBuffer=1;
+	NoAutoFire=0;
+	SightDistance=440;
+	SoundCategory=COR_TOR;
+	EnergyStorage=200;
+	MetalStorage=200;
+	explodeas=NANO_UNITEX;
+	selfdestructas=NANO_UNIT;
+	Category=CORE TANK CONSTR NOWEAPON NOTAIR NOTSUB;
+	TEDClass=CNSTR;
+	Copyright=Copyright 1997 Humongous Entertainment. All rights reserved.;
+	Corpse=core_construction_tortoise_dead;
+	UnitNumber=29877;
+	mobilestandorders=1;
+	StandingMoveOrder=1;
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+	canguard=1;
+	canreclamate=1;
+	Builddistance=175;
+	MaxVelocity=0.95;
+	BrakeRate=0.135;
+	Acceleration=0.135;
+	TurnRate=377;
+	SteeringMode=1;
+	ShootMe=1;
+	EnergyMake=13;
+	MetalMake=0.22;
+	DefaultMissionType=Standby;
+	maneuverleashlength=640;
+	MovementClass=KBOTUW3;
+	Ovradjust=1;
+	collisionVolumeType = box;
+	collisionVolumeScales =25 22 25;
+	collisionVolumeOffsets = 0 -1 0;
+	collisionVolumeTest = 1;
+	pieceTrailCEGTag=NanoDebree;//bleh
+	pieceTrailCEGRange = 2;
+
+
+	[SFXTypes]
+	{
+	explosiongenerator0=custom:Nano;
+	}
+	}

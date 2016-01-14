@@ -247,8 +247,8 @@ local options = {
 	},
 	{
 		key    = "xtaidUnits",
-		name   = 'Enable "XTAids" Units',
-		desc   = "** ThirdParty ** Adds Xtaids unitpack. Submit your own unitpack or modification! Author: Noruas\nkey: xtaidUnits",
+		name   = 'Enable "XTrA" Units',
+		desc   = "** ThirdParty ** Adds XtrA unitpack. ARM/CORE Only. Author: Noruas\nkey: xtaidUnits",
 		type   = "bool",
 		def    = false,
 		section= "unitpacks",

@@ -1,0 +1,128 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Core;
+	name=Construction Seaplane;
+	description=Tech Level 1;
+	icontype=air;
+
+	//************************************************************
+	//  Categories
+	//**************
+	Category=CORE VTOL  CONSTR NOWEAPON NOTSUB;
+	tedclass=VTOL;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=core_construction_seaplane_xtra;
+	unitnumber=90;
+	objectname=core_construction_seaplane.3do;
+	buildpic=core_construction_seaplane.DDS;
+	script=core_construction_seaplane.cob;
+	soundcategory=CORE_CVTOL;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=374;
+	healtime=17;
+	buildcostmetal=250;
+	buildcostenergy=5824;
+	buildtime=17280;
+	footprintx=3;
+	footprintz=3;
+	ModelCenterOffset=0 -2 0;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalmake=0.3;
+	metalstorage=50;
+	energymake=11;
+	energyuse=0.1;
+	energystorage=50;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=1;
+	builddistance=90;
+	workertime=100;
+	RepairSpeed=100;
+	ReclaimSpeed=100;
+	TerraformSpeed=200;//speed up terraforming
+
+	//************************************************************
+	//  Abilities
+	//*************
+	amphibious=1;
+	canfly=1;
+	canguard=1;
+	canmove=1;
+	canpatrol=1;
+	canreclamate=1;
+	canstop=1;
+	canFight=1;
+	cansubmerge=1;
+	
+	//************************************************************
+	//  Movement
+	//************
+	turnrate=580;
+	acceleration=0.12;
+	brakerate=0.17;
+	maxvelocity=6.3;
+	maxslope=10;
+	maxwaterdepth=255;
+	cruisealt=75;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=405;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeas=NANO_UNITEX;
+	selfdestructas=NANO_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	mobilestandorders=1;
+	standingmoveorder=1;
+	defaultmissiontype=VTOL_Standby;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bankscale=1.5;
+	bmcode=1;
+	designation=CVA-W5;
+	downloadable=1;
+	maneuverleashlength=1280;
+	scale=0.8;
+	shootme=1;
+	steeringmode=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	collide=0;
+	pieceTrailCEGTag=NanoDebree;//bleh
+	pieceTrailCEGRange = 2;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+}

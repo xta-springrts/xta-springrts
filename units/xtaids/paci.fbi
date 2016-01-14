@@ -59,4 +59,10 @@
 	wpri_badTargetCategory=VTOL;
 	BadTargetCategory=VTOL;
 	NoChaseCategory=VTOL;
+	collisionVolumeType = box;
+	collisionVolumeScales = 26 30 17;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
 	}

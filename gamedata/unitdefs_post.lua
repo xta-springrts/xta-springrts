@@ -432,13 +432,29 @@ if (modOptions and not tobool(modOptions.xtaidunits)) then
 	"walker", "neutral_eyes", "armpur", "armbfortew", "armarch", "armbugger",
 	"boa", "armfff", "mercury", "tadg07", "armraz", "armhyren", "demolish",
 	"armrebel", "arm_tor", "tadg05", "arm_infinite", "arm_mech_lab",
+	"arm_spidernest_xtra",
+	"arm_construction_hovercraft_xtra", "arm_construction_seaplane_xtra" ,
+
+	"core_construction_hovercraft_xtra", "core_construction_seaplane_xtra" ,
 
 	"corbyp", "justice", "corpur", "astank", "corjar", "core_egg_shell",
 	"corscrew", "corcrw", "corfff", "screamer", "corebfortns", "corhback",
 	"commando", "corevashp", "core_emperor", "cor_jumbo", "scorp3g",
-	"nsaclash", "tadg06", "core_gizmo"
+	"nsaclash", "tadg06", "core_tortoise_plant_xtra", "core_gizmo"
   })
 end
+
+
+if (modOptions and tobool(modOptions.xtaidunits)) then
+  disableunits({
+	"arm_spidernest", "arm_construction_spider" ,
+	"arm_construction_hovercraft", "arm_construction_seaplane" ,
+
+	"core_construction_hovercraft", "core_construction_seaplane" ,
+	"core_tortoise_plant", "core_construction_tortoise" 
+  })
+end
+
 --------------------------------------------------------------------------------
 
 --------------------------------------------------------------------------------
@@ -449,7 +465,7 @@ if (modOptions and not tobool(modOptions.spidertortoise)) then
   disableunits({
 	"arm_spidernest",
 
-	"core_tortoise_plant" 
+	"core_tortoise_plant",
   })
 end
 --------------------------------------------------------------------------------
