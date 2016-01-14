@@ -18,7 +18,7 @@ end
 local nameScaling			= true
 local useThickLeterring		= true
 local heightOffset			= 50
-local fontSize				= 15		-- not real fontsize, it will be scaled
+local fontSize				= WG.commNameTagFontSize or 15		-- not real fontsize, it will be scaled
 local scaleFontAmount		= 120
 local fontShadow			= true		-- only shows if font has a white outline
 local shadowOpacity			= 0.35
@@ -223,6 +223,7 @@ end
 function widget:Initialize()
 	widgetHandler:AddAction("comnamescale", toggleNameScaling)
 	widgetHandler:AddAction("comnameshadow", toggleNameShadow)
+	widgetHandler:AddAction("comnametagsize", setFontSize)
 	isDecoyStart = modOptions and modOptions.commander == "decoystart"
 	
 	for i=1, #UnitDefs do
@@ -239,6 +240,7 @@ end
 function widget:Shutdown()
 	widgetHandler:RemoveAction("comnamescale")
 	widgetHandler:RemoveAction("comnameshadow")
+	widgetHandler:RemoveAction("comnametagsize")
 end
 
 -- doesnt get triggered anymore!?
@@ -283,22 +285,36 @@ function toggleNameShadow()
 	WG.fontShadow = fontShadow
 	if fontShadow then
 		myFont = font
-		fontSize = 15
+		fontSize = WG.commNameTagFontSize or 15
 	else
 		myFont = noShadowFont
 		myFont:SetAutoOutlineColor(true)
-		fontSize = 6
+		fontSize = WG.commNameTagFontSize or 6
 		
 	end
 	UpdateDrawList()
 	CheckAllComs()
 end
 
+function setFontSize(_,size)
+		
+	if size and #tostring(size) == 0 then
+		size = 12
+		Echo("Error: setting default font size")
+	end
+	
+	WG.commNameTagFontSize = size
+	fontSize = size or 12
+	comnameList = {}
+end
+
+
 function widget:GetConfigData() --save
     return 
 		{
         nameScaling = nameScaling,
 		fontShadow = fontShadow,
+		fontSize = fontSize,
 		}
 end
 
@@ -313,4 +329,10 @@ function widget:SetConfigData(data) --load config
 		fontShadow = data.fontShadow
 		WG.fontShadow = fontShadow
 	end
+	
+	if data.fontSize ~= nil then
+		WG.commNameTagFontSize = data.fontSize
+		fontSize = WG.commNameTagFontSize or 15
+	end
+	
 end

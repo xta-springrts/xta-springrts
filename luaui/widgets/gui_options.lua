@@ -968,12 +968,11 @@ local function drawSettings()
 				local ymid = button.y1 + (button.y2-button.y1)/2
 				local offset = scaleOffset
 				local desc = button.items[button.newValue] or button.items[button.value]
-				
+								
 				local y1	= button.y1 + buttonsize/4
 				local y2	= button.y2 - buttonsize/4
 								
 				local w = button.x2 - button.x0
-				
 				local dx = w/(button.max-button.min)
 				
 				gl.Color(cDark)
@@ -982,21 +981,21 @@ local function drawSettings()
 				
 				if (button.max - button.min) / button.step > 50 then
 					for x =button.min,button.max,button.step do
-						if (x/button.step)%10 == 0 or x == button.min or x == button.max then
+						if ((x-button.min)/button.step)%10 == 0 or x == button.min or x == button.max then
 							gl.Color(cYellow)
-							RectRound(button.x0+x*dx-offset,button.y1+buttonsize/4,button.x0+x*dx+1-offset,button.y2-buttonsize/4,1)
+							RectRound(button.x0+(x-button.min)*dx-offset,button.y1+buttonsize/4,button.x0+(x-button.min)*dx+1-offset,button.y2-buttonsize/4,1)
 						end
 					end
 				elseif  (button.max - button.min) / button.step > 20 then
 					for x =button.min,button.max,button.step do
-						if (x/button.step)%5 == 0 or x == button.min or x == button.max then
+						if ((x-button.min)/button.step)%5 == 0 or x == button.min or x == button.max then
 							gl.Color(cYellow)
-							RectRound(button.x0+x*dx-offset,button.y1+buttonsize/4,button.x0+x*dx+1-offset,button.y2-buttonsize/4,1)
+							RectRound(button.x0+(x-button.min)*dx-offset,button.y1+buttonsize/4,button.x0+(x-button.min)*dx+1-offset,button.y2-buttonsize/4,1)
 						end
 					end
 				else				
 					for x =button.min,button.max,button.step do
-						RectRound(button.x0+x*dx-offset,button.y1+buttonsize/4,button.x0+x*dx+1-offset,button.y2-buttonsize/4,1)
+						RectRound(button.x0+(x-button.min)*dx-offset,button.y1+buttonsize/4,button.x0+(x-button.min)*dx+1-offset,button.y2-buttonsize/4,1)
 					end
 				end
 				
@@ -1005,12 +1004,13 @@ local function drawSettings()
 				gl.BeginEnd(GL.LINE_STRIP, DrawLine,button.x0-offset , ymid,button.x2-offset,ymid)
 				gl.LineStipple(false)
 				gl.Texture(imgMarker)
+								
 				if (not button.newValue) or button.value == button.newValue then
 					gl.Color(cWhite)
-					gl.TexRect(button.x0+button.value*dx-size/2-offset,ymid-size/2,button.x0+button.value*dx+size/2-offset,ymid+size/2)
+					gl.TexRect(button.x0+(button.value-button.min)*dx-size/2-offset,ymid-size/2,button.x0+(button.value-button.min)*dx+size/2-offset,ymid+size/2)
 				else
 					gl.Color(cBlue)
-					gl.TexRect(button.x0+button.newValue*dx-size/2-offset,ymid-size/2,button.x0+button.newValue*dx+size/2-offset,ymid+size/2)
+					gl.TexRect(button.x0+(button.newValue-button.min)*dx-size/2-offset,ymid-size/2,button.x0+(button.newValue-button.min)*dx+size/2-offset,ymid+size/2)
 				end
 				gl.Texture(false)
 				
@@ -1140,20 +1140,25 @@ local function GetNearestvalue(x,xmin,xmax,vmin,vmax,vstep)
 	local vscale = vmax-vmin
 	
 	local val = (x-xmin)/xscale
+	
 	if val <= 0 then 
 		return vmin
 	elseif val >= 1 then
 		return vmax
 	end
-		
-	local smaller, larger
 	
 	local e = vmin
+	local smaller = e
+	local larger = vmin + vstep
 	
-	while e < vmax and e < val * vscale do
-		smaller = e
+	while e < vmax do
+		local t = vmin + val * vscale
+				
+		if e < t then
+			smaller = e
+			larger = e + vstep
+		end
 		e = e + vstep
-		larger = e
 	end
 	
 	local distUp = larger - val * vscale
@@ -1162,7 +1167,6 @@ local function GetNearestvalue(x,xmin,xmax,vmin,vmax,vstep)
 	if not target then return end
 	
 	return target
-
 end
 
 function widget:MouseMove(mx, my, dx, dy, mButton)
@@ -1175,6 +1179,7 @@ function widget:MouseMove(mx, my, dx, dy, mButton)
 						mx+dx < button.x2-scaleOffset and mx+dx > button.x0-scaleOffset then
 						 
 						local newValue = GetNearestvalue(mx+dx,button.x0-scaleOffset,button.x2-scaleOffset,button.min,button.max,button.step)
+						
 						if newValue and tostring(newValue):find("%.") then
 							local str = tostring(newValue)
 							local dec = str:find("%.")
@@ -1288,7 +1293,8 @@ function widget:MousePress(x, y, button)
 function widget:MouseRelease(x, y, button)
 	if button == 1 and (showSettings or showModOptions or showMapOptions) then
 		for _,button in pairs(Button) do
-			if button.section == currentSection and button.type and button.type == "scale" then				
+			if button.section == currentSection and button.type and button.type == "scale" then	
+				
 				if button.x0 and IsOnButton(x, y, button.x0-scaleOffset,button.y1,button.x2-scaleOffset,button.y2) then
 					if button.x0 and button.newValue then
 						x = math.max(x,button.x0-scaleOffset)
@@ -1304,7 +1310,6 @@ function widget:MouseRelease(x, y, button)
 							end
 							PlaySoundFile(sndButtonSlide,1.0,0,0,0,0,0,0,'userinterface')
 						elseif button.action and #button.action == 2 then
-							
 							button.action[1](button.action[2],button.value)
 							PlaySoundFile(sndButtonSlide,1.0,0,0,0,0,0,0,'userinterface')
 						end
@@ -1312,8 +1317,17 @@ function widget:MouseRelease(x, y, button)
 					return true
 				elseif button.newValue and button.value ~= button.newValue then
 					if y < button.y2 and y > button.y1 then 
+						
 						button.value = button.newValue
-						button.action[1](button.action[2],button.value)
+						
+						if button.action and #button.action == 3 then
+							if button.action[3] == -1 then
+								button.action[1](table.concat({button.action[2]," ",button.value}))
+							else
+								button.action[1](button.action[2],button.action[3])
+							end
+						end
+						
 						PlaySoundFile(sndButtonSlide,1.0,0,0,0,0,0,0,'userinterface')							
 					else
 						button.newValue = button.value

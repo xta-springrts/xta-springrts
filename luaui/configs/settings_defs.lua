@@ -322,6 +322,27 @@ local Buttons = {
 	deaction		= {Spring.SendCommands,"cputext"}, 
 	},
 	
+	{
+	key				= "comnametagsize",				
+	label			= "Commander nametags: font size",
+	value			= WG.commNameTagFontSize or 12,
+	section			= "widgets",
+	type 			= "scale",
+	min				= 4,
+	max				= 20,
+	step			= 1,
+	items			= {	
+						[4] ="Minimal",
+						[6]="Small",
+						[10]="Normal",
+						[12]="Big",
+						[14]="Large",
+						[16]="Larger",
+						[20]="Huge",
+					  },
+	action			= {Spring.SendCommands,"comnametagsize",-1},
+	},
+	
 	
 	{
 	key				= "water",				
