@@ -3,55 +3,56 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	side=guardian;
-	name=Radar Tower;
-	description=Radar Tower;
-	icontype=building;
+	side=Arm;
+	name=Sonar Radar Station;
+	description=Locates Water Units;
+	icontype=sea;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=guardian STATIC NOWEAPON RADAR NOTAIR NOTSEA NOTSUB;
-	tedclass=RADAR;
+	category=ARM STATIC NOWEAPON SONAR NOTLAND NOTAIR NOTSUB;
+	tedclass=SONAR;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=guardian_radar_tower;
-	unitnumber=56;
-	objectname=guardian_radar_tower.3do;
-	corpse=guardian_radar_tower_dead;
-	buildpic=guardian_radar_tower.png;
-	soundcategory=guardian_RADAR;
+	unitname=guardian_sonar_radar;
+	unitnumber=64;
+	objectname=guardian_sonar_radar.3do;
+	corpse=guardian_sonar_radar_dead;
+	buildpic=guardian_sonar_radar.png;
+	soundcategory=ARM_SONAR;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=93;
-	buildcostmetal=89;
-	buildcostenergy=876;
-	buildtime=1137;
+	maxdamage=214; //was 50//
+	buildcostmetal=154; //was 20//
+	buildcostenergy=1064; //was 403//
+	buildtime=912;
 	footprintx=3;
 	footprintz=3;
-	collisionVolumeType = CylY;
-	collisionVolumeScales =28 73 28;
-	collisionVolumeOffsets = 0 0 0;
-	collisionVolumeTest = 1;
 
 	//************************************************************
 	//  Resources
 	//*************
 	metalstorage=0;
-	energymake=5;
-	energyuse=5;
+	energymake=2;
+	energyuse=2;
 	energystorage=0;
+	windgenerator=0.001;
 
 	//************************************************************
 	//  Building
 	//************
 	buildangle=8192;
-	yardmap=oooo;
+	yardmap=www www www;
 	activatewhenbuilt=1;
+	collisionVolumeType=CylY;
+	collisionVolumeScales=29 47 20;
+	collisionVolumeOffsets=0 -2 0;
+	collisionVolumeTest = 1;
 
 	//************************************************************
 	//  Constructor
@@ -67,21 +68,19 @@
 	canMove=0;
 	canAttack=0;
 	canGuard=0;
-
+	
 	//************************************************************
 	//  Movement
 	//************
-	maxslope=15;
-	maxwaterdepth=22;
+	maxslope=10;
+	minwaterdepth=20;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=640;
-	airsightdistance=1000;
+	sightdistance=306.25;
+	sonardistance=1210; //was 1180//
 	radardistance=1800;
-	losemitheight=70;
-	radaremitheight=70;
 
 	//************************************************************
 	//  Weapons
@@ -98,10 +97,12 @@
 	//  Miscellaneous
 	//*****************
 	bmcode=0;
-	designation=AS-EWDL;
+	designation=AS-EWDW;
 	downloadable=1;
+	noshadow=1;
 	threed=1;
 	version=1.2;
+	waterline=25;
 	zbuffer=1;
 	pieceTrailCEGTag=Debree;//bleh
 	pieceTrailCEGRange = 4;
@@ -109,5 +110,10 @@
 	//************************************************************
 	//  To be removed
 	//*****************
+	[SFXTypes]
+	{
+	explosiongenerator0=custom:Nano;
+	explosiongenerator1=custom:Normallight;
+	}
 
 }

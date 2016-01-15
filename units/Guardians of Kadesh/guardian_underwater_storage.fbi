@@ -3,55 +3,53 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	side=guardian;
-	name=Advanced Radar Tower;
-	description=Long Range Radar Tower;
-	icontype=building;
+	side=Arm;
+	name=Underwater Storage;
+	description=Metal 12,000 and Energy 36,000 Storage;
+	icontype=sea;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=guardian STATIC NOWEAPON RADAR NOTAIR NOTSEA NOTSUB;
-	tedclass=RADAR;
+	category=ARM ENERGY STATIC NOWEAPON NOTLAND NOTAIR NOTSEA;
+	tedclass=ENERGY;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=guardian_advanced_radar_tower;
-	unitnumber=9;
-	objectname=guardian_advanced_radar_tower.3do;
-	corpse=guardian_advanced_radar_tower_dead;
-	buildpic=guardian_advanced_radar_tower.png;
-	soundcategory=guardian_ADVRADAR;
+	unitname=guardian_underwater_storage;
+	unitnumber=298;
+	objectname=guardian_underwater_storage.3do;
+	corpse=guardian_underwater_storage_dead;
+	buildpic=guardian_underwater_storage.png;
+	soundcategory=ARM_ESTOR;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=187;
-	buildcostmetal=143;
-	buildcostenergy=1571;
-	buildtime=3186;
-	footprintx=3;
-	footprintz=3;
+	maxdamage=1575;
+	buildcostmetal=296;
+	buildcostenergy=3050;
+	buildtime=15741;
+	footprintx=5;
+	footprintz=5;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energymake=22;
-	energyuse=22;
-	energystorage=0;
+	metalstorage=12000;
+	energyuse=0;
+	energystorage=36000;
 
 	//************************************************************
 	//  Building
 	//************
 	buildangle=8192;
-	yardmap=ooo ooo;
-	activatewhenbuilt=1;
-	collisionVolumeType=CylY;
-	collisionVolumeScales=45 82 45;
-	collisionVolumeOffsets=0 12 0;
-	collisionVolumeTest = 1;
+	yardmap=ooooo ooooo ooooo ooooo ooooo;
+	collisionVolumeType=CylZ;
+	collisionVolumeScales=60 70 62;
+	collisionVolumeOffsets=0 -18 0;
+	//collisionVolumeTest = 1;
 
 	//************************************************************
 	//  Constructor
@@ -62,32 +60,28 @@
 	//************************************************************
 	//  Abilities
 	//*************
-	onoffable=1;
 	canRepeat=0;
 	canMove=0;
-	canGuard=0;
 	canAttack=0;
-
+	canGuard=0;
+	
 	//************************************************************
 	//  Movement
 	//************
-	maxslope=15;
-	maxwaterdepth=22;
+	maxslope=20;
+	minwaterdepth=30;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=650;
-	airsightdistance=1020;
-	radardistance=3380;
-	losemitheight=56;
-	radaremitheight=56;
+	sightdistance=245;
+	radardistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
-	explodeas=SMALL_BUILDINGEX;
-	selfdestructas=SMALL_BUILDING;
+	explodeas=ESTOR_BUILDINGEX;
+	selfdestructas=ESTOR_BUILDING;
 
 	//************************************************************
 	//  Orders
@@ -98,7 +92,7 @@
 	//  Miscellaneous
 	//*****************
 	bmcode=0;
-	designation=AS-EWDL2;
+	designation=AM-WMSF;
 	downloadable=1;
 	threed=1;
 	version=1.2;

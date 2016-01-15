@@ -46,7 +46,7 @@
 	//  Building
 	//************
 	buildangle=8192;
-	yardmap=yoy ooo oyo;
+	yardmap=yooy oooo oooo oyyo;
 	collisionVolumeType=CylY;
 	collisionVolumeScales=47 66 47;
 	collisionVolumeOffsets=0 0 -6;

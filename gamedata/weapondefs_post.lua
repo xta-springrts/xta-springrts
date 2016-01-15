@@ -214,7 +214,7 @@ for id, weaponDef in pairs(WeaponDefs) do
 	for _, tag in pairs(ObsoleteTags) do
 		weaponDef[tag] = nil
 		warnings = warnings + 1
-		if warnings < 10 then
+		if warnings < 5 then
 			Echo("Removing obsolete weapondef tag: " .. tag .. " (in '" .. id .. "')")
 		end
 	end
@@ -285,8 +285,8 @@ for id, weaponDef in pairs(WeaponDefs) do
 	end
 end
 
-if warnings > 10 then
-	Echo("Removed " .. warnings - 10 .. " additional obsolete weapondef tags")
+if warnings > 5 then
+	Echo("Removed " .. warnings - 5 .. " additional obsolete weapondef tags")
 end
 
 --- Localised sounds, put sounds in customparams and access them from snd_local gadget.
