@@ -33,7 +33,8 @@
 	buildtime=3186;
 	footprintx=2;
 	footprintz=2;
-
+	usePieceCollisionVolumes=1;
+	
 	//************************************************************
 	//  Resources
 	//*************
