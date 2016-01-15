@@ -1,7 +1,7 @@
 function widget:GetInfo()
 	return {
 		name = "Underwater blue",
-		desc = "Make underwater units blueish",
+		desc = "Make underwater units blueish, can be fps expensive",
 		author = "Jools",
 		date = "Nov, 2013",
 		license = "GPLv2",
