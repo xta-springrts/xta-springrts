@@ -3,6 +3,7 @@
 --------------------------------------------------------------------------------
 local pairs = pairs
 local math = math
+local Echo = Spring.Echo
 
 local function isbool(x)   return (type(x) == 'boolean') end
 local function istable(x)  return (type(x) == 'table')   end
@@ -134,6 +135,49 @@ for wdName, wd in pairs(WeaponDefs) do
   end
 end
 
+local ObsoleteTags = {
+	"aimrate",
+    "ballistic",
+    "beamlaser",
+    "beamweapon",
+    "color",
+    "color2",
+    "dropped",
+    "endsmoke",
+    "explosionart",
+    "explosiongaf",
+    "guidance",
+    "holdtime",
+    "lavaexplosionart",
+    "lavaexplosiongaf",
+    "lineofsight",
+    "manualbombsettings",
+    "meteor",
+    "minbarrelangle",
+    "noautorange",
+    "noradar",
+    "pitchtolerance",
+    "propeller",
+    "randomdecay",
+    "rendertype",
+    "selfprop",
+    "shakeduration",
+    "shakemagnitude",
+    "shieldrepulsor",
+    "smokedelay",
+    "soundwater",
+    "startfire",
+    "startsmoke",
+    "targetmoveerro",
+    "toairweapon",
+    "twophase",
+    "unitsonly",
+    "useairlos",
+    "vlaunch",
+    "w",
+    "waterexplosionart",
+    "waterexplosiongaf",
+}
 
 --------------------------------------------------------------------------------
 -- XTA Weapon Definitions Post-processing
@@ -164,8 +208,17 @@ local velGravFactor = customGravity * 900 / math.sin(math.rad(2 * maxRangeAngle)
 local interceptorStyle = 2
 if modOptions and modOptions.nuke and not tobool(modOptions.nuke) then interceptorStyle = 1 end
 
+local warnings = 0
+
 for id, weaponDef in pairs(WeaponDefs) do
-	
+	for i, tag in pairs(ObsoleteTags) do
+		weaponDef[tag] = nil
+		warnings = warnings + 1
+		if warnings < 5 then
+			Echo(i, "Removing obsolete weapondef tag: " .. tag .. " (in '" .. id .. "')")
+		end
+	end
+		
 	weaponDef.soundhitwet = ""
 	if weaponDef.range and tonumber(weaponDef.range) < 550 or 
 		weaponDef.reloadtime and tonumber(weaponDef.reloadtime)<1.5 or
@@ -230,6 +283,10 @@ for id, weaponDef in pairs(WeaponDefs) do
 	else
 		weaponDef.craterboost = 0
 	end
+end
+
+if warnings > 5 then
+	Echo("Removed " .. warnings - 5 .. " additional obsolete weapondef tags")
 end
 
 --- Localised sounds, put sounds in customparams and access them from snd_local gadget.
