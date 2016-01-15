@@ -1,0 +1,152 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+piece  fuselage, wing1, wing2, bomb;
+
+static-var  Static_Var_1, Static_Var_2,Terraintype;
+
+lua_UnitStoppedMoving()
+{ 
+ 	return 0; 
+}
+ 
+lua_UnitStartedMoving() 
+{ 
+	return 0; 
+}
+
+SmokeUnit(healthpercent, sleeptime, smoketype)
+{
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 500;
+	}
+	while( TRUE )
+	{
+		healthpercent = get HEALTH;
+		if( healthpercent < 66 )
+		{
+			smoketype = 258;
+			if( Rand( 1, 66 ) < healthpercent )
+			{
+				smoketype = 257;
+			}
+			emit-sfx smoketype from fuselage;
+		}
+		sleeptime = healthpercent * 50;
+		if( sleeptime < 200 )
+		{
+			sleeptime = 200;
+		}
+		sleep sleeptime;
+	}
+}
+
+Activate()
+{
+	turn wing1 to z-axis <-90.000000> speed <75.000000>;
+	turn wing2 to z-axis <90.000000> speed <75.000000>;
+}
+
+Deactivate()
+{
+	turn wing1 to z-axis <0.000000> speed <75.000000>;
+	turn wing2 to z-axis <0.000000> speed <75.000000>;
+}
+
+StartMoving()
+{
+	signal 2;
+	set-signal-mask 2;
+	call-script lua_UnitStartedMoving();
+	while( TRUE )
+	{
+		if( Terraintype == 1 AND (get IN_WATER) )
+		{
+			emit-sfx 259 from fuselage;
+			emit-sfx 259 from wing1;
+			emit-sfx 259 from wing2;
+		}
+		sleep 150;
+	}
+}
+
+WakeBubbles(altitude)
+{
+	while ( TRUE )
+	{
+		while ( Terraintype == 1)
+		{
+			altitude = get UNIT_Y;
+			if (altitude < [8] AND altitude > 0)
+			{
+				emit-sfx 2 from wing1;
+				emit-sfx 3 from wing2;
+				emit-sfx 256 | 3 from fuselage;
+			}
+			sleep 32;
+		}
+		sleep 64;
+	}
+	sleep 64;
+}
+
+StopMoving()
+{
+	call-script lua_UnitStoppedMoving();
+}
+
+setSFXoccupy(_terraintype)
+{
+	Terraintype = _terraintype;
+}
+
+Create()
+{
+	start-script SmokeUnit();
+	start-script WakeBubbles();
+}
+
+SweetSpot(piecenum)
+{
+	piecenum = fuselage;
+}
+
+QueryPrimary(piecenum)
+{
+	piecenum = bomb;
+}
+
+Killed(severity, corpsetype)
+{
+	if( severity <= 25 )
+	{
+		corpsetype = 1;
+		explode fuselage type BITMAPONLY | BITMAP1;
+		explode wing1 type BITMAPONLY | BITMAP2;
+		explode wing2 type BITMAPONLY | BITMAP3;
+		return (0);
+	}
+	if( severity <= 50 )
+	{
+		corpsetype = 2;
+		explode fuselage type BITMAPONLY | BITMAP1;
+		explode wing1 type FALL | BITMAP2;
+		explode wing2 type FALL | BITMAP3;
+		return (0);
+	}
+	if( severity <= 99 )
+	{
+		corpsetype = 3;
+		explode fuselage type BITMAPONLY | BITMAP1;
+		explode wing1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+		explode wing2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+		return (0);
+	}
+	corpsetype = 3;
+	explode fuselage type BITMAPONLY | BITMAP1;
+	explode wing1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode wing2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+}

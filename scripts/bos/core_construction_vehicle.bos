@@ -1,0 +1,241 @@
+#define TAK			// This is a TAK script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+piece  base, body, lift, turret, cradle, rear, nano, panel_t,
+       panel_r, panel_l, panel_b, firepoint, door1, door2, tracks1, tracks2,
+       tracks3, tracks4, wheels1, wheels2, wheels3, wheels4, wheels5, wheels6,
+       wheels7;
+
+static-var  Static_Var_1, Static_Var_2, Static_Var_3, building;
+
+
+Build()
+{
+	while( building )
+	{
+		emit-sfx UNIT_SFX1 from firepoint;
+		sleep 100;
+	}
+}
+
+DamageControl(Func_Var_1)
+{
+	while( TRUE )
+	{
+		Func_Var_1 = get HEALTH;
+		if( Func_Var_1 < 50 )
+		{
+			emit-sfx SFXTYPE_WHITESMOKE from body;
+			if( Func_Var_1 < 25 )
+			{
+				emit-sfx SFXTYPE_BLACKSMOKE from turret;
+			}
+		}
+		sleep 1000;
+	}
+}
+
+AnimationControl(Func_Var_1)
+{
+	Func_Var_1 = 0;
+	while( TRUE )
+	{
+		if( Static_Var_1 OR Static_Var_2 )
+		{
+			if( Func_Var_1 == 0 )
+			{
+				show tracks1;
+				hide tracks4;
+				++Func_Var_1;
+			}
+			else if( Func_Var_1 == 1 )
+			{
+				show tracks2;
+				hide tracks1;
+				++Func_Var_1;
+			}
+			else if( Func_Var_1 == 2 )
+			{
+				show tracks3;
+				hide tracks2;
+				++Func_Var_1;
+			}
+			else if( Func_Var_1 == 3 )
+			{
+				show tracks4;
+				hide tracks3;
+				Func_Var_1 = 0;
+				if( Static_Var_2 )
+				{
+					--Static_Var_2;
+				}
+			}
+		}
+		++Static_Var_3;
+		sleep 50;
+	}
+}
+
+StartMoving()
+{
+	Static_Var_1 = 1;
+	Static_Var_3 = 0;
+	spin wheels1 around x-axis speed <480.115385> accelerate <75.016484>;
+	spin wheels2 around x-axis speed <480.115385> accelerate <75.016484>;
+	spin wheels3 around x-axis speed <480.115385> accelerate <75.016484>;
+	spin wheels4 around x-axis speed <480.115385> accelerate <75.016484>;
+	spin wheels5 around x-axis speed <480.115385> accelerate <75.016484>;
+	spin wheels6 around x-axis speed <480.115385> accelerate <75.016484>;
+	spin wheels7 around x-axis speed <480.115385> accelerate <75.016484>;
+}
+
+StopMoving()
+{
+	Static_Var_1 = 0;
+	Static_Var_2 = Static_Var_3 * 5 / 100;
+	stop-spin wheels1 around x-axis decelerate <200.043956>;
+	stop-spin wheels2 around x-axis decelerate <200.043956>;
+	stop-spin wheels3 around x-axis decelerate <200.043956>;
+	stop-spin wheels4 around x-axis decelerate <200.043956>;
+	stop-spin wheels5 around x-axis decelerate <200.043956>;
+	stop-spin wheels6 around x-axis decelerate <200.043956>;
+	stop-spin wheels7 around x-axis decelerate <200.043956>;
+}
+
+StartBuilding(Func_Var_1, Func_Var_2)
+{
+	signal 1;
+	set-signal-mask 1;
+	turn door1 to z-axis <0.000000> - <160.038462> speed <240.054945>;
+	turn door2 to z-axis <160.038462> speed <240.054945>;
+	sleep 250;
+	move lift to y-axis [12.500000] speed [20.000000];
+	move turret to y-axis [5.500000] speed [20.000000];
+	wait-for-move lift along y-axis;
+	move nano to z-axis [3.500000] speed [20.000000];
+	move rear to z-axis [-3.000000] speed [20.000000];
+	turn panel_t to x-axis <0.000000> - <60.010989> speed <240.054945>;
+	turn panel_b to x-axis <60.010989> speed <240.054945>;
+	turn panel_l to y-axis <60.010989> speed <240.054945>;
+	turn panel_r to y-axis <0.000000> - <60.010989> speed <240.054945>;
+	turn turret to y-axis Func_Var_1 speed <240.054945>;
+	turn cradle to x-axis <0.000000> - Func_Var_2 speed <240.054945>;
+	wait-for-turn turret around y-axis;
+	wait-for-turn cradle around x-axis;
+	set INBUILDSTANCE to 1;
+	building = 1;
+	start-script Build();
+	var Func_Var_3, Func_Var_4;
+	while( TRUE )
+	{
+		if( Rand( 1, 100 ) > 66 )
+		{
+			Func_Var_3 = Rand( 0, 2 ) * [1.000000];
+			Func_Var_4 = Rand( 0, 1 );
+			if( Func_Var_4 )
+			{
+				Func_Var_4 = 16384;
+			}
+			else
+			{
+				Func_Var_4 = 10922;
+			}
+			move turret to y-axis [5.500000] - Func_Var_3 speed [20.000000];
+			turn panel_t to x-axis <0.000000> - Func_Var_4 speed <160.038462>;
+			turn panel_b to x-axis Func_Var_4 speed <160.038462>;
+			turn panel_l to y-axis Func_Var_4 speed <160.038462>;
+			turn panel_r to y-axis <0.000000> - Func_Var_4 speed <160.038462>;
+		}
+		sleep 250;
+	}
+}
+
+StopBuilding()
+{
+	signal 1;
+	set-signal-mask 1;
+	set INBUILDSTANCE to 0;
+	building = 0;
+	move nano to z-axis [0.000000] speed [10.000000];
+	move rear to z-axis [0.000000] speed [10.000000];
+	turn panel_t to x-axis <0.000000> speed <160.038462>;
+	turn panel_b to x-axis <0.000000> speed <160.038462>;
+	turn panel_l to y-axis <0.000000> speed <160.038462>;
+	turn panel_r to y-axis <0.000000> speed <160.038462>;
+	turn turret to y-axis <0.000000> speed <160.038462>;
+	turn cradle to x-axis <0.000000> speed <160.038462>;
+	wait-for-turn turret around y-axis;
+	wait-for-turn cradle around x-axis;
+	move lift to y-axis [0.000000] speed [10.000000];
+	move turret to y-axis [0.000000] speed [10.000000];
+	sleep 250;
+	turn door1 to z-axis <0.000000> speed <160.038462>;
+	turn door2 to z-axis <0.000000> speed <160.038462>;
+}
+
+QueryNanoPiece(Func_Var_1)
+{
+	Func_Var_1 = 11;
+}
+
+Killed(Func_Var_1, Func_Var_2)
+{
+	if( Func_Var_1 >= 0 AND Func_Var_1 < 25 )
+	{
+		Func_Var_2 = 1;
+		explode nano type BITMAPONLY | 10000001;
+		explode cradle type BITMAPONLY | 10000001;
+		explode body type BITMAPONLY | 10000001;
+		explode turret type BITMAPONLY | 10000001;
+	}
+	else if( Func_Var_1 >= 25 AND Func_Var_1 < 50 )
+	{
+		Func_Var_2 = 2;
+		explode nano type FALL | 10000001;
+		explode cradle type FALL | 10000001;
+		explode body type BITMAPONLY | 10000001;
+		explode turret type 1 | 10000001;
+	}
+	else if( Func_Var_1 >= 50 AND Func_Var_1 < 100 )
+	{
+		Func_Var_2 = 3;
+		explode nano type 1 | 10000001;
+		explode rear type 1 | 10000001;
+		explode cradle type FALL | 8 | 16 | 2 | 10000001;
+		explode panel_t type FALL | 10000001;
+		explode panel_b type FALL | 10000001;
+		explode panel_l type FALL | 10000001;
+		explode panel_r type FALL | 10000001;
+		explode body type BITMAPONLY | 10000001;
+		explode turret type 1 | 10000001;
+	}
+	else if( Func_Var_1 >= 100 )
+	{
+		Func_Var_2 = 3;
+		explode nano type FALL | 8 | 16 | 2 | 10000001;
+		explode rear type FALL | 8 | 16 | 2 | 10000001;
+		explode cradle type FALL | 8 | 16 | 2 | 10000001;
+		explode panel_t type FALL | 10000001;
+		explode panel_b type FALL | 10000001;
+		explode panel_l type FALL | 10000001;
+		explode panel_r type FALL | 10000001;
+		explode body type 1 | 10000001;
+		explode turret type FALL | 8 | 16 | 2 | 10000001;
+	}
+}
+
+Create()
+{
+	Static_Var_1 = 0;
+	hide tracks1;
+	hide tracks2;
+	hide tracks3;
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 250;
+	}
+	start-script AnimationControl();
+	start-script DamageControl();
+}

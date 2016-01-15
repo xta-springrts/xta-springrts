@@ -1,0 +1,166 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+piece  base, sleeves, turret, barrela, flare, body, barrelb, anneau,
+       aim, bolt1, bolt2, bolt3, bolt4, bolt5, center;
+
+static-var  gun_1;
+
+// Signal definitions
+#define SIG_AIM				2
+
+
+CrazyON()
+{
+	while( TRUE )
+	{
+		if( gun_1 )
+		{
+			emit-sfx 2048 + 1 from bolt1;
+			emit-sfx 2048 + 1 from bolt2;
+			emit-sfx 2048 + 1 from bolt3;
+			emit-sfx 2048 + 1 from bolt4;
+			emit-sfx 2048 + 1 from bolt5;
+		}
+		sleep 1;
+	}
+}
+
+SmokeUnit(healthpercent, sleeptime, smoketype)
+{
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 400;
+	}
+	while( TRUE )
+	{
+		healthpercent = get HEALTH;
+		if( healthpercent < 66 )
+		{
+			smoketype = 256 | 2;
+			if( Rand( 1, 66 ) < healthpercent )
+			{
+				smoketype = 256 | 1;
+			}
+			emit-sfx smoketype from body;
+		}
+		sleeptime = healthpercent * 50;
+		if( sleeptime < 200 )
+		{
+			sleeptime = 200;
+		}
+		sleep sleeptime;
+	}
+}
+
+Create()
+{
+	hide flare;
+	hide center;
+	hide bolt1;
+	hide bolt2;
+	hide bolt3;
+	hide bolt4;
+	hide bolt5;
+	dont-shade body;
+	dont-cache flare;
+	dont-cache sleeves;
+	dont-cache turret;
+	dont-cache barrela;
+	dont-cache barrelb;
+	dont-cache anneau;
+	start-script SmokeUnit();
+	start-script CrazyON();
+	gun_1 = base;
+}
+
+AimPrimary(heading, pitch)
+{
+	signal SIG_AIM;
+	set-signal-mask SIG_AIM;
+	turn turret to y-axis heading speed <10.000000>;
+	turn sleeves to x-axis <0.000000> - pitch speed <15.000000>;
+	wait-for-turn turret around y-axis;
+	wait-for-turn sleeves around x-axis;
+	return (1);
+}
+
+FirePrimary()
+{
+	gun_1 = base;
+	emit-sfx 1024 + 0 from flare;
+	emit-sfx 1024 + 1 from center;
+	move barrela to z-axis [-2.500000] speed [1250.000000];
+	move barrelb to z-axis [-11.250000] speed [1250.000000];
+	sleep 100;
+	move barrela to z-axis [0.000000] speed [2.500000];
+	move barrelb to z-axis [0.000000] speed [3.750000];
+	sleep 1000;
+	gun_1 = sleeves;
+}
+
+AimFromPrimary(piecenum)
+{
+	piecenum = aim;
+}
+
+QueryPrimary(piecenum)
+{
+	piecenum = flare;
+}
+
+AimSecondary(heading, pitch)
+{
+	return (0);
+}
+
+AimFromSecondary(piecenum)
+{
+	piecenum = aim;
+}
+
+QuerySecondary(piecenum)
+{
+	piecenum = flare;
+}
+
+AimTertiary(heading, pitch)
+{
+	return (0);
+}
+
+AimFromTertiary(piecenum)
+{
+	piecenum = aim;
+}
+
+QueryTertiary(piecenum)
+{
+	piecenum = flare;
+}
+
+SweetSpot(piecenum)
+{
+	piecenum = aim;
+}
+
+Killed(severity, corpsetype)
+{
+	hide flare;
+	explode barrela type FALL | SMOKE | EXPLODE_ON_HIT | BITMAP1;
+	explode sleeves type FALL | SMOKE | EXPLODE_ON_HIT | BITMAP1;
+	explode turret type SHATTER | EXPLODE_ON_HIT | BITMAP2;
+	if( severity <= 25 )
+	{
+		corpsetype = 1;
+		return (0);
+	}
+	if( severity <= 50 )
+	{
+		corpsetype = 2;
+		return (0);
+	}
+	corpsetype = 3;
+}

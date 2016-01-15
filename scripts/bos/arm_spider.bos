@@ -1,0 +1,411 @@
+#define TAK			// This is a TAK script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+#define SIG_OVERLOAD 16
+
+piece  base, turret, barrel1, barrel2, flare1, flare2, leg1, leg2,
+       leg3, leg4, leg5, leg6, glowsource, shinesource;
+
+static-var  bMoving, restore_delay, gun_1, empOverload, justMoved, moveSpeed;
+
+
+ON()
+{
+	while( empOverload > 0 AND empOverload < 5 )
+	{
+		if( empOverload >= 1 )
+		{
+			emit-sfx UNIT_SFX1 from shinesource;
+			if( empOverload >= 2 )
+			{
+				emit-sfx UNIT_SFX2 from shinesource;
+				if( empOverload >= 3 )
+				{
+					emit-sfx UNIT_SFX3 from shinesource;
+					if( empOverload == 4 )
+					{
+						emit-sfx UNIT_SFX1 from shinesource;
+						emit-sfx UNIT_SFX2 from shinesource;
+						emit-sfx UNIT_SFX3 from shinesource;
+					}
+				}
+			}
+		}
+		sleep 33;
+	}
+}
+
+Overload()
+{
+	set-signal-mask 0;
+	if( empOverload == 0 )
+	{
+		set-signal-mask SIG_OVERLOAD;
+		empOverload = 1;
+		set MAX_SPEED to 1;
+		start-script ON();
+		sleep 333;
+		empOverload = 2;
+		sleep 333;
+		empOverload = 3;
+		sleep 333;
+		empOverload = 4;
+		set-signal-mask 0;
+		sleep 100;
+		empOverload = 5;
+		emit-sfx DETO_W3 from shinesource;
+		emit-sfx DETO_W2 from shinesource;
+		sleep 10000;
+		empOverload = 0;
+		set MAX_SPEED to moveSpeed;
+		return;
+	}
+	if( (empOverload > 0) AND (empOverload < 4) )
+	{
+		signal SIG_OVERLOAD;
+		empOverload = 0;
+		set MAX_SPEED to moveSpeed;
+	}
+}
+
+walk2()
+{
+	if( bMoving )
+	{
+		turn leg1 to y-axis <43.791209> now;
+		turn leg1 to y-axis <0.000000> speed <372.3>;
+		turn leg1 to z-axis <0.593407> now;
+		turn leg1 to z-axis <0.000000> speed <5.1>;
+		turn leg2 to z-axis <0.000000> now;
+		turn leg2 to z-axis <31.000000> speed <263.6588>;
+		turn leg3 to y-axis <34.692308> now;
+		turn leg3 to y-axis <34.093407> speed <5.1>;
+		turn leg3 to z-axis <31.593407> now;
+		turn leg3 to z-axis <0.593407> speed <263.6588>;
+		turn leg4 to y-axis <-40.093407> now;
+		turn leg4 to y-axis <-40.093407> speed <0>;
+		turn leg4 to z-axis <-31.000000> now;
+		turn leg4 to z-axis <-0.593407> speed <258.5588>;
+		turn leg5 to y-axis <-37.093407> now;
+		turn leg5 to y-axis <0.000000> speed <315.35>;
+		turn leg5 to z-axis <0.000000> now;
+		turn leg5 to z-axis <0.000000> speed <0>;
+		turn leg6 to y-axis <0.000000> now;
+		turn leg6 to y-axis <-30.390110> speed <258.5588>;
+		turn leg6 to z-axis <-45.000000> now;
+		sleep 118;
+	}
+	if( bMoving )
+	{
+		turn leg1 to z-axis <31.593407> speed <268.7588>;
+		turn leg2 to y-axis <34.692308> speed <294.7632>;
+		turn leg2 to z-axis <31.000000> speed <0>;
+		turn leg3 to y-axis <0.000000> speed <289.4951>;
+		turn leg3 to z-axis <0.000000> speed <5.1>;
+		turn leg4 to y-axis <0.000000> speed <341.1769>;
+		turn leg5 to z-axis <-31.000000> speed <263.6588>;
+		turn leg6 to z-axis <2.390110> speed <403.2269>;
+		sleep 118;
+	}
+	if( bMoving )
+	{
+		turn leg1 to y-axis <56.000000> speed <475.6451>;
+		turn leg1 to z-axis <31.000000> speed <5.1>;
+		turn leg2 to y-axis <34.692308> speed <0>;
+		turn leg2 to z-axis <0.593407> speed <258.5588>;
+		turn leg3 to z-axis <31.593407> speed <268.7588>;
+		turn leg4 to y-axis <-0.593407> speed <5.1>;
+		turn leg4 to z-axis <-31.000000> speed <258.5588>;
+		turn leg5 to y-axis <-31.593407> speed <268.7588>;
+		turn leg5 to z-axis <-31.000000> speed <0>;
+		turn leg6 to y-axis <3.000000> speed <284.3951>;
+		sleep 118;
+	}
+	if( bMoving )
+	{
+		turn leg1 to y-axis <43.791209> speed <103.3451>;
+		turn leg1 to z-axis <0.593407> speed <258.5588>;
+		turn leg2 to y-axis <0.000000> speed <294.7632>;
+		turn leg2 to z-axis <0.000000> speed <5.1>;
+		turn leg3 to y-axis <34.692308> speed <294.7632>;
+		turn leg3 to z-axis <31.593407> speed <0>;
+		turn leg4 to y-axis <-40.093407> speed <336.0769>;
+		turn leg4 to z-axis <-31.000000> speed <0>;
+		turn leg5 to y-axis <-37.093407> speed <46.56319>;
+		turn leg5 to z-axis <0.000000> speed <263.6588>;
+		turn leg6 to y-axis <0.000000> speed <25.82693>;
+		turn leg6 to z-axis <-45.000000> speed <403.2269>;
+		sleep 118;
+	}
+}
+
+stand()
+{
+	turn leg1 to z-axis <0.000000> speed <340>;
+	turn leg1 to y-axis <0.000000> speed <340>;
+	turn leg1 to x-axis <0.000000> speed <340>;
+	
+	turn leg2 to z-axis <0.000000> speed <340>;
+	turn leg2 to y-axis <0.000000> speed <340>;
+	turn leg2 to x-axis <0.000000> speed <340>;
+	
+	turn leg3 to z-axis <0.000000> speed <340>;
+	turn leg3 to y-axis <0.000000> speed <340>;
+	turn leg3 to x-axis <0.000000> speed <340>;
+	
+	turn leg4 to z-axis <0.000000> speed <340>;
+	turn leg4 to y-axis <0.000000> speed <340>;
+	turn leg4 to x-axis <0.000000> speed <340>;
+	
+	turn leg5 to z-axis <0.000000> speed <340>;
+	turn leg5 to y-axis <0.000000> speed <340>;
+	turn leg5 to x-axis <0.000000> speed <340>;
+	
+	turn leg6 to z-axis <0.000000> speed <340>;
+	turn leg6 to y-axis <0.000000> speed <340>;
+	turn leg6 to x-axis <0.000000> speed <340>;
+}
+
+MotionControl()
+{
+	var Func_Var_1;
+	while( TRUE )
+	{
+		Func_Var_1 = bMoving;
+		if( Func_Var_1 )
+		{
+			if (!empOverload)
+				call-script walk2();
+			else
+				sleep 100;
+		}
+		else
+		{
+			if (justMoved)
+			{
+				call-script stand();
+				justMoved = FALSE;
+			}
+			sleep 100;
+		}
+	}
+}
+
+SmokeUnit(healthpercent, sleeptime, smoketype)
+{
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 500;
+	}
+	start-script MotionControl();
+	while( TRUE )
+	{
+		healthpercent = get HEALTH;
+		if( healthpercent < 66 )
+		{
+			smoketype = SFXTYPE_BLACKSMOKE;
+			if( Rand( 1, 66 ) < healthpercent)
+			{
+				smoketype = SFXTYPE_WHITESMOKE;
+			}
+			emit-sfx smoketype from base;
+		}
+		sleeptime = healthpercent * 50;
+		if( sleeptime < 200 )
+		{
+			sleeptime = 200;
+		}
+		sleep sleeptime;
+	}
+}
+
+Create()
+{
+	hide flare1;
+	hide flare2;
+	bMoving = 0;
+	justMoved = FALSE;
+	moveSpeed = get MAX_SPEED;
+	gun_1 = 0;
+	restore_delay = 3000;
+	start-script SmokeUnit();
+}
+
+StartMoving()
+{
+	bMoving = 1;
+}
+
+StopMoving()
+{
+	bMoving = 0;
+	justMoved = TRUE;
+}
+
+SweetSpot(piecenum)
+{
+	piecenum = base;
+}
+
+SetMaxReloadTime(time)
+{
+	restore_delay = time * 2;
+}
+
+RestoreAfterDelay()
+{
+	sleep restore_delay;
+	turn turret to y-axis <0.000000> speed <90.000000>;
+	turn turret to x-axis <0.000000> speed <90.000000>;
+	wait-for-turn turret around y-axis;
+	wait-for-turn turret around x-axis;
+}
+
+AimPrimary(heading, pitch)
+{
+	signal 2;
+	set-signal-mask 2;
+	while( empOverload )
+	{
+		sleep 100;
+	}
+	turn turret to y-axis heading speed <225.000000>;
+	turn turret to x-axis <0.000000> - pitch speed <90.000000>;
+	wait-for-turn turret around y-axis;
+	wait-for-turn turret around x-axis;
+	start-script RestoreAfterDelay();
+	return (1);
+}
+
+FirePrimary()
+{
+	if( gun_1 )
+	{
+		move barrel2 to z-axis [-3.250000] speed [1250.000000];
+		wait-for-move barrel2 along z-axis;
+		move barrel2 to z-axis [0.000000] speed [7.500000];
+	}
+	else
+	{
+		move barrel1 to z-axis [-3.250000] speed [1250.000000];
+		wait-for-move barrel1 along z-axis;
+		move barrel1 to z-axis [0.000000] speed [7.500000];
+	}
+	gun_1 = !gun_1;
+}
+
+AimFromPrimary(piecenum)
+{
+	piecenum = 1;
+}
+
+QueryPrimary(piecenum)
+{
+	piecenum = 4 + gun_1;
+}
+
+AimSecondary(heading, pitch)
+{
+	return (0);
+}
+
+
+AimFromSecondary(piecenum)
+{
+	piecenum = 1;
+}
+
+QuerySecondary(piecenum)
+{
+	piecenum = 4 + gun_1;
+}
+
+AimTertiary(heading, pitch)
+{
+	return (0);
+}
+
+
+AimFromTertiary(piecenum)
+{
+	piecenum = 1;
+}
+
+QueryTertiary(piecenum)
+{
+	piecenum = 4 + gun_1;
+}
+
+
+
+Killed(Func_Var_1, Func_Var_2)
+{
+	hide flare1;
+	hide flare2;
+	if( Func_Var_1 <= 25 )
+	{
+		Func_Var_2 = 1;
+		explode barrel1 type BITMAPONLY | EXPTYPE_SMALLEXPLOSION;
+		explode barrel2 type BITMAPONLY | EXPTYPE_MEDIUMEXPLOSION;
+		explode base type BITMAPONLY | EXPTYPE_LARGEEXPLOSION;
+		explode flare1 type BITMAPONLY | EXPTYPE_XLARGEEXPLOSION;
+		explode flare2 type BITMAPONLY | EXPTYPE_BLOODEXPLOSION;
+		explode leg1 type BITMAPONLY | EXPTYPE_SMALLEXPLOSION;
+		explode leg2 type BITMAPONLY | EXPTYPE_MEDIUMEXPLOSION;
+		explode leg3 type BITMAPONLY | EXPTYPE_LARGEEXPLOSION;
+		explode leg4 type BITMAPONLY | EXPTYPE_XLARGEEXPLOSION;
+		explode leg5 type BITMAPONLY | EXPTYPE_BLOODEXPLOSION;
+		explode leg6 type BITMAPONLY | EXPTYPE_SMALLEXPLOSION;
+		explode turret type BITMAPONLY | EXPTYPE_MEDIUMEXPLOSION;
+		return (0);
+	}
+	if( Func_Var_1 <= 50 )
+	{
+		Func_Var_2 = 2;
+		explode barrel1 type FALL | EXPTYPE_SMALLEXPLOSION;
+		explode barrel2 type FALL | EXPTYPE_MEDIUMEXPLOSION;
+		explode base type BITMAPONLY | EXPTYPE_LARGEEXPLOSION;
+		explode flare1 type FALL | EXPTYPE_XLARGEEXPLOSION;
+		explode flare2 type FALL | EXPTYPE_BLOODEXPLOSION;
+		explode leg1 type FALL | EXPTYPE_SMALLEXPLOSION;
+		explode leg2 type FALL | EXPTYPE_MEDIUMEXPLOSION;
+		explode leg3 type FALL | EXPTYPE_LARGEEXPLOSION;
+		explode leg4 type FALL | EXPTYPE_XLARGEEXPLOSION;
+		explode leg5 type FALL | EXPTYPE_BLOODEXPLOSION;
+		explode leg6 type FALL | EXPTYPE_SMALLEXPLOSION;
+		explode turret type 1 | EXPTYPE_MEDIUMEXPLOSION;
+		return (0);
+	}
+	if( Func_Var_1 <= 99 )
+	{
+		Func_Var_2 = 3;
+		explode barrel1 type FALL | 8 | 16 | 2 | EXPTYPE_SMALLEXPLOSION;
+		explode barrel2 type FALL | 8 | 16 | 2 | EXPTYPE_MEDIUMEXPLOSION;
+		explode base type BITMAPONLY | EXPTYPE_LARGEEXPLOSION;
+		explode flare1 type FALL | 8 | 16 | 2 | EXPTYPE_XLARGEEXPLOSION;
+		explode flare2 type FALL | 8 | 16 | 2 | EXPTYPE_BLOODEXPLOSION;
+		explode leg1 type FALL | 8 | 16 | 2 | EXPTYPE_SMALLEXPLOSION;
+		explode leg2 type FALL | 8 | 16 | 2 | EXPTYPE_MEDIUMEXPLOSION;
+		explode leg3 type FALL | 8 | 16 | 2 | EXPTYPE_LARGEEXPLOSION;
+		explode leg4 type FALL | 8 | 16 | 2 | EXPTYPE_XLARGEEXPLOSION;
+		explode leg5 type FALL | 8 | 16 | 2 | EXPTYPE_BLOODEXPLOSION;
+		explode leg6 type FALL | 8 | 16 | 2 | EXPTYPE_SMALLEXPLOSION;
+		explode turret type 1 | EXPTYPE_MEDIUMEXPLOSION;
+		return (0);
+	}
+	Func_Var_2 = 3;
+	explode barrel1 type FALL | 8 | 16 | 2 | EXPTYPE_SMALLEXPLOSION;
+	explode barrel2 type FALL | 8 | 16 | 2 | EXPTYPE_MEDIUMEXPLOSION;
+	explode base type BITMAPONLY | EXPTYPE_LARGEEXPLOSION;
+	explode flare1 type FALL | 8 | 16 | 2 | EXPTYPE_XLARGEEXPLOSION;
+	explode flare2 type FALL | 8 | 16 | 2 | EXPTYPE_BLOODEXPLOSION;
+	explode leg1 type FALL | 8 | 16 | 2 | EXPTYPE_SMALLEXPLOSION;
+	explode leg2 type FALL | 8 | 16 | 2 | EXPTYPE_MEDIUMEXPLOSION;
+	explode leg3 type FALL | 8 | 16 | 2 | EXPTYPE_LARGEEXPLOSION;
+	explode leg4 type FALL | 8 | 16 | 2 | EXPTYPE_XLARGEEXPLOSION;
+	explode leg5 type FALL | 8 | 16 | 2 | EXPTYPE_BLOODEXPLOSION;
+	explode leg6 type FALL | 8 | 16 | 2 | EXPTYPE_SMALLEXPLOSION;
+	explode turret type 1 | 2 | EXPTYPE_MEDIUMEXPLOSION;
+}

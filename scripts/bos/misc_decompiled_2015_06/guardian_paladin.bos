@@ -1,0 +1,211 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+piece  base, wake1, wake2, wake3, wake4, hull, larm, ljet,
+       rarm, rjet, turret, pitchturret, barrel, flare, lightning, fire,
+       flare2, depthlaunch;
+
+// Signal definitions
+#define SIG_AIM				2
+#define SIG_MOVE			4
+
+
+SmokeUnit(healthpercent, sleeptime, smoketype)
+{
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 400;
+	}
+	while( TRUE )
+	{
+		healthpercent = get HEALTH;
+		if( healthpercent < 66 )
+		{
+			smoketype = 256 | 2;
+			if( Rand( 1, 66 ) < healthpercent )
+			{
+				smoketype = 256 | 1;
+			}
+			emit-sfx smoketype from hull;
+		}
+		sleeptime = healthpercent * 50;
+		if( sleeptime < 200 )
+		{
+			sleeptime = 200;
+		}
+		sleep sleeptime;
+	}
+}
+
+Create()
+{
+	hide wake1;
+	hide wake2;
+	hide wake3;
+	hide wake4;
+	hide flare;
+	hide lightning;
+	hide flare2;
+	start-script SmokeUnit();
+	move hull to y-axis [-2.500000] speed [1.250000];
+	spin flare around z-axis speed <3100.000000>;
+	spin flare2 around z-axis speed <-2900.000000>;
+}
+
+RestoreAfterDelay()
+{
+	sleep 4000;
+	turn turret to y-axis <0.000000> speed <30.000000>;
+	turn pitchturret to x-axis <0.000000> speed <10.000000>;
+}
+
+StartMoving()
+{
+	signal SIG_MOVE;
+	set-signal-mask SIG_MOVE;
+	while( TRUE )
+	{
+		emit-sfx 2 from wake1;
+		emit-sfx 2 from wake4;
+		sleep 150;
+		emit-sfx 2 from wake2;
+		emit-sfx 2 from wake3;
+		move hull to y-axis [2.500000] speed [5.000000];
+		sleep 150;
+	}
+}
+
+StopMoving()
+{
+	signal SIG_MOVE;
+	move hull to y-axis [-2.500000] speed [1.250000];
+}
+
+AimFromPrimary(piecenum)
+{
+	piecenum = turret;
+}
+
+QueryPrimary(piecenum)
+{
+	piecenum = fire;
+}
+
+AimPrimary(heading, pitch)
+{
+	signal SIG_AIM;
+	set-signal-mask 0;
+	set-signal-mask SIG_AIM;
+	turn turret to y-axis heading speed <50.000000>;
+	turn pitchturret to x-axis <0.000000> - pitch speed <20.000000>;
+	wait-for-turn turret around y-axis;
+	wait-for-turn pitchturret around x-axis;
+	start-script RestoreAfterDelay();
+	return (1);
+}
+
+FirePrimary()
+{
+	move pitchturret to z-axis [-5.000000] speed [50.000000];
+	show flare;
+	show flare2;
+	sleep 150;
+	hide flare;
+	hide flare2;
+	move pitchturret to z-axis [0.000000] speed [2.500000];
+	move lightning to z-axis [-15.000000] now;
+	turn lightning to z-axis <0.000000> now;
+	show lightning;
+	sleep 75;
+	hide lightning;
+	move lightning to z-axis [-7.500000] now;
+	turn lightning to z-axis <90.000000> now;
+	sleep 25;
+	show lightning;
+	sleep 75;
+	hide lightning;
+	move lightning to z-axis [0.000000] now;
+	turn lightning to z-axis <180.000000> now;
+	sleep 25;
+	show lightning;
+	sleep 75;
+	hide lightning;
+	move lightning to z-axis [7.500000] now;
+	turn lightning to z-axis <270.000000> now;
+	sleep 25;
+	show lightning;
+	sleep 75;
+	hide lightning;
+}
+
+AimFromSecondary(piecenum)
+{
+	piecenum = turret;
+}
+
+QuerySecondary(piecenum)
+{
+	piecenum = fire;
+}
+
+AimSecondary(heading, pitch)
+{
+	return (0);
+}
+
+AimFromTertiary(piecenum)
+{
+	piecenum = depthlaunch;
+}
+
+QueryTertiary(piecenum)
+{
+	piecenum = depthlaunch;
+}
+
+SweetSpot(piecenum)
+{
+	piecenum = base;
+}
+
+Killed(severity, corpsetype)
+{
+	hide flare;
+	hide flare2;
+	if( severity <= 25 )
+	{
+		corpsetype = 1;
+		explode hull type BITMAPONLY | BITMAP2;
+		explode depthlaunch type BITMAPONLY | BITMAP5;
+		explode larm type BITMAPONLY | BITMAP2;
+		explode ljet type BITMAPONLY | BITMAP1;
+		explode rarm type BITMAPONLY | BITMAP2;
+		explode rjet type BITMAPONLY | BITMAP1;
+		explode turret type BITMAPONLY | BITMAP2;
+		return (0);
+	}
+	if( severity <= 50 )
+	{
+		corpsetype = 2;
+		explode hull type BITMAPONLY | BITMAP1;
+		explode depthlaunch type BITMAPONLY | BITMAP2;
+		explode larm type FALL | EXPLODE_ON_HIT | BITMAP2;
+		explode ljet type BITMAPONLY | BITMAP1;
+		explode rarm type FALL | EXPLODE_ON_HIT | BITMAP2;
+		explode rjet type BITMAPONLY | BITMAP1;
+		explode turret type BITMAPONLY | BITMAP2;
+		explode barrel type SHATTER | EXPLODE_ON_HIT | BITMAP3;
+		return (0);
+	}
+	corpsetype = 3;
+	explode hull type BITMAPONLY | BITMAP1;
+	explode depthlaunch type BITMAPONLY | BITMAP1;
+	explode larm type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode ljet type BITMAPONLY | BITMAP1;
+	explode rarm type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode rjet type BITMAPONLY | BITMAP1;
+	explode turret type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode barrel type SHATTER | EXPLODE_ON_HIT | BITMAP3;
+}

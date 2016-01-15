@@ -1,0 +1,249 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+piece  base, bay, gantry, clamp1, clamp2, missile, smoke, strobe,
+       tracks1, tracks2, tracks3, tracks4, wheels1, wheels2, wheels3, wheels4,
+       wheels5, wheels6;
+
+static-var  Static_Var_1, Static_Var_2, bMoving, Static_Var_4,
+			Static_Var_5, RocketTypeSelect;
+
+
+SmokeUnit(healthpercent, sleeptime, smoketype)
+{
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 500;
+	}
+	while( TRUE )
+	{
+		healthpercent = get HEALTH;
+		if( healthpercent < 66 )
+		{
+			smoketype = 258;
+			if( Rand( 1, 66 ) < healthpercent )
+			{
+				smoketype = 257;
+			}
+			emit-sfx smoketype from base;
+		}
+		sleeptime = healthpercent * 50;
+		if( sleeptime < 200 )
+		{
+			sleeptime = 200;
+		}
+		sleep sleeptime;
+	}
+}
+
+TrackControl()
+{
+	while( bMoving )
+	{
+		++Static_Var_4;
+		if( Static_Var_4 == 2 )
+		{
+			hide tracks1;
+			show tracks2;
+		}
+		else if( Static_Var_4 == 3 )
+		{
+			hide tracks2;
+			show tracks3;
+		}
+		else if( Static_Var_4 == 4 )
+		{
+			hide tracks3;
+			show tracks4;
+		}
+		else
+		{
+			Static_Var_4 = 1;
+			hide tracks4;
+			show tracks1;
+		}
+		sleep 50;
+	}
+}
+
+Prepare()
+{
+	move bay to x-axis [0.000000] speed [20.000000];
+	wait-for-move bay along x-axis;
+	Static_Var_5 = 1;
+	turn gantry to x-axis <-90.000000> speed <90.000000>;
+	wait-for-turn gantry around x-axis;
+	turn clamp1 to z-axis <90.000000> speed <180.000000>;
+	turn clamp2 to z-axis <-90.000000> speed <180.000000>;
+	wait-for-turn clamp1 around y-axis;
+	wait-for-turn clamp2 around y-axis;
+	Static_Var_2 = 1;
+}
+
+Reload()
+{
+	Static_Var_2 = 0;
+	Static_Var_5 = 0;
+	turn clamp1 to z-axis <0.000000> speed <180.000000>;
+	turn clamp2 to z-axis <0.000000> speed <180.000000>;
+	wait-for-turn clamp1 around z-axis;
+	wait-for-turn clamp2 around z-axis;
+	turn gantry to x-axis <0.000000> speed <90.000000>;
+	wait-for-turn gantry around x-axis;
+	move bay to x-axis [-11] speed [20.000000];
+	wait-for-move bay along x-axis;
+	set-signal-mask 0;
+	sleep 500;
+	Static_Var_1 = 1;
+	show missile;
+}
+
+StartMoving()
+{
+	bMoving = TRUE;
+	start-script TrackControl();
+	spin wheels1 around x-axis speed <720.000000> accelerate <10.000000>;
+	spin wheels2 around x-axis speed <720.000000> accelerate <10.000000>;
+	spin wheels3 around x-axis speed <720.000000> accelerate <10.000000>;
+	spin wheels4 around x-axis speed <720.000000> accelerate <10.000000>;
+	spin wheels5 around x-axis speed <720.000000> accelerate <10.000000>;
+	spin wheels6 around x-axis speed <720.000000> accelerate <10.000000>;
+}
+
+StopMoving()
+{
+	bMoving = FALSE;
+	stop-spin wheels1 around x-axis decelerate <30.000000>;
+	stop-spin wheels2 around x-axis decelerate <30.000000>;
+	stop-spin wheels3 around x-axis decelerate <30.000000>;
+	stop-spin wheels4 around x-axis decelerate <30.000000>;
+	stop-spin wheels5 around x-axis decelerate <30.000000>;
+	stop-spin wheels6 around x-axis decelerate <30.000000>;
+}
+
+RestoreAfterDelay()
+{
+	sleep 5000;
+	start-script Reload();
+}
+
+AimWeapon1(heading, pitch)
+{
+	if(!RocketTypeSelect OR (get WEAPON_RELOADSTATE(2) > get GAME_FRAME)) return 0;
+	signal 2;
+	set-signal-mask 2;
+	if( Static_Var_1 )
+	{
+		start-script Prepare();
+	}
+	while( !Static_Var_2 )
+	{
+		sleep 250;
+	}
+	start-script RestoreAfterDelay();
+	return (1);
+}
+
+QueryWeapon1(piecenum)
+{
+	piecenum = smoke;
+}
+
+Shot1()
+{
+	hide missile;
+	Static_Var_1 = 0;
+	Static_Var_5 = 0;
+	start-script Reload();
+}
+
+AimWeapon2(heading, pitch)
+{
+	if(RocketTypeSelect OR (get WEAPON_RELOADSTATE(1) > get GAME_FRAME)) return 0;
+	signal 2;
+	set-signal-mask 2;
+	if( Static_Var_1 )
+	{
+		start-script Prepare();
+	}
+	while( !Static_Var_2 )
+	{
+		sleep 250;
+	}
+	start-script RestoreAfterDelay();
+	return (1);
+}
+
+QueryWeapon2(piecenum)
+{
+	piecenum = smoke;
+}
+
+Shot2()
+{
+	hide missile;
+	Static_Var_1 = 0;
+	Static_Var_5 = 0;
+	start-script Reload();
+}
+
+RocketType(select)
+{
+	RocketTypeSelect = select;
+}
+
+Create()
+{
+	hide tracks2;
+	hide tracks3;
+	hide tracks4;
+	move bay to x-axis [-11] now;
+	RocketTypeSelect = 1;
+	Static_Var_4 = 0;
+	bMoving = FALSE;
+	Static_Var_1 = 1;
+	Static_Var_2 = 0;
+	Static_Var_5 = 0;
+	start-script SmokeUnit();
+}
+
+SweetSpot(piecenum)
+{
+	piecenum = base;
+}
+
+Killed(severity, corpsetype)
+{
+	if( severity <= 25 )
+	{
+		corpsetype = 1;
+		explode base type BITMAPONLY | BITMAP1;
+		explode bay type BITMAPONLY | BITMAP1;
+		explode gantry type BITMAPONLY | BITMAP1;
+		explode clamp1 type BITMAPONLY | BITMAP1;
+		explode clamp2 type BITMAPONLY | BITMAP1;
+		explode missile type BITMAPONLY | BITMAP1;
+	}
+	else if( severity <= 50 )
+	{
+		corpsetype = 2;
+		explode base type BITMAPONLY | BITMAP1;
+		explode bay type BITMAPONLY | BITMAP1;
+		explode gantry type FALL | BITMAP1;
+		explode clamp1 type FALL | BITMAP1;
+		explode clamp2 type FALL | BITMAP1;
+		explode missile type BITMAPONLY | BITMAP1;
+	}
+	else
+	{
+		corpsetype = 3;
+		explode base type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+		explode bay type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+		explode gantry type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+		explode clamp1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+		explode clamp2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+		explode missile type BITMAPONLY | BITMAP1;
+	}
+}

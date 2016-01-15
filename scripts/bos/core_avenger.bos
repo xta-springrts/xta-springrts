@@ -1,0 +1,243 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+piece  missle1, missle2, base, winga, wingb, thrust1, thrust2;
+
+static-var  Static_Var_1, gun_1, statechg_DesiredState, statechg_StateChanging, Static_Var_5,MissilesOn;
+
+lua_UnitStoppedMoving()
+{ 
+ 	return 0; 
+}
+ 
+lua_UnitStartedMoving() 
+{ 
+	return 0; 
+}
+
+
+/*
+Crashing(Func_Var_1)
+{
+	Func_Var_1 = get HEALTH;
+	if( Func_Var_1 < 0 )
+	{
+		Static_Var_5 = 2;
+	}
+}
+*/
+
+activatescr()
+{
+	turn winga to z-axis <0.000000> now;
+	turn winga to z-axis <-91.203297> speed <63.214286>;
+	turn wingb to z-axis <0.000000> now;
+	turn wingb to z-axis <91.203297> speed <63.214286>;
+	//Static_Var_5 = 1;
+	sleep 1443;
+	//emit-sfx 1024 from thrust1;
+	//emit-sfx 1024 from thrust2;
+}
+
+/*
+Flamers()
+{
+	while( TRUE )
+	{
+		if( Static_Var_5 == 1 )
+		{
+			emit-sfx 1024 from thrust1;
+			emit-sfx 1024 from thrust2;
+		}
+		sleep 1;
+	}
+	if( Static_Var_5 == 2 )
+	{
+		emit-sfx 1024 from thrust2;
+		emit-sfx 1024 from base;
+		emit-sfx 1024 from winga;
+		emit-sfx 1024 from missle2;
+	}
+	sleep 1;
+}
+*/
+
+deactivatescr()
+{
+	turn winga to z-axis <-91.203297> now;
+	turn winga to z-axis <0.000000> speed <63.126374>;
+	//Static_Var_5 = 0;
+	turn wingb to z-axis <91.203297> now;
+	turn wingb to z-axis <0.000000> speed <63.126374>;
+	sleep 1445;
+}
+
+SmokeUnit(healthpercent, sleeptime, smoketype)
+{
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 500;
+	}
+	while( TRUE )
+	{
+		healthpercent = get HEALTH;
+		if( healthpercent < 66 )
+		{
+			smoketype = 258;
+			if( Rand( 1, 66 ) < healthpercent )
+			{
+				smoketype = 257;
+			}
+			emit-sfx smoketype from base;
+		}
+		sleeptime = healthpercent * 50;
+		if( sleeptime < 200 )
+		{
+			sleeptime = 200;
+		}
+		sleep sleeptime;
+	}
+}
+
+RequestState(requestedstate, currentstate)
+{
+	if( statechg_StateChanging )
+	{
+		statechg_DesiredState = requestedstate;
+		return (0);
+	}
+	statechg_StateChanging = TRUE;
+	currentstate = statechg_DesiredState;
+	statechg_DesiredState = requestedstate;
+	while( statechg_DesiredState != currentstate )
+	{
+		if( statechg_DesiredState )
+		{
+			call-script deactivatescr();
+			currentstate = 1;
+		}
+		else
+		{
+			call-script activatescr();
+			currentstate = 0;
+		}
+	}
+	statechg_StateChanging = FALSE;
+}
+
+MoveRate2()
+{
+	if( Rand( 1, 10 ) == 1 AND ( !Static_Var_1 ) )
+	{
+		Static_Var_1 = 1;
+		turn base to z-axis <239.989011> speed <120.016484>;
+		wait-for-turn base around z-axis;
+		turn base to z-axis <119.989011> speed <180.038462>;
+		wait-for-turn base around z-axis;
+		turn base to z-axis <0.000000> speed <120.016484>;
+		Static_Var_1 = 0;
+	}
+}
+
+Create()
+{
+	Static_Var_1 = 0;
+	gun_1 = missle1;
+	statechg_DesiredState = TRUE;
+	statechg_StateChanging = FALSE;
+	//start-script Flamers();
+	//start-script Crashing();
+	start-script SmokeUnit();
+}
+
+Activate()
+{
+	start-script RequestState(0);
+}
+
+Deactivate()
+{
+	start-script RequestState(1);
+}
+
+StartMoving()
+{
+	MissilesOn = 1;
+	call-script lua_UnitStartedMoving();
+}
+
+StopMoving()
+{
+	MissilesOn = 0;
+	call-script lua_UnitStoppedMoving();
+}
+
+AimFromPrimary(piecenum)
+{
+	piecenum = gun_1;
+}
+
+AimPrimary()
+{
+	if (MissilesOn) {return 1;   }
+	return 0;
+}
+
+FirePrimary()
+{
+	gun_1 = !gun_1;
+}
+
+QueryPrimary(piecenum)
+{
+	piecenum = gun_1;
+}
+
+SweetSpot(piecenum)
+{
+	piecenum = base;
+}
+
+Killed(severity, corpsetype)
+{
+	//start-script Crashing();
+	//Static_Var_5 = 2;
+	if( severity <= 25 )
+	{
+		corpsetype = 1;
+		explode base type BITMAPONLY | BITMAP1;
+		explode missle1 type BITMAPONLY | BITMAP1;
+		explode missle2 type BITMAPONLY | BITMAP1;
+		explode winga type BITMAPONLY | BITMAP1;
+		explode wingb type BITMAPONLY | BITMAP1;
+		return (0);
+	}
+	if( severity <= 50 )
+	{
+		corpsetype = 2;
+		explode base type BITMAPONLY | BITMAP1;
+		explode missle1 type FALL | BITMAP1;
+		explode missle2 type FALL | BITMAP1;
+		explode winga type SHATTER | BITMAP1;
+		explode wingb type BITMAPONLY | BITMAP1;
+		return (0);
+	}
+	if( severity <= 99 )
+	{
+		corpsetype = 3;
+		explode base type BITMAPONLY | BITMAP1;
+		explode missle1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+		explode missle2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+		explode winga type SHATTER | BITMAP1;
+		explode wingb type BITMAPONLY | BITMAP1;
+		return (0);
+	}
+	corpsetype = 3;
+	explode base type BITMAPONLY | BITMAP1;
+	explode missle1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+	explode missle2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+	explode winga type SHATTER | EXPLODE_ON_HIT | BITMAP1;
+	explode wingb type BITMAPONLY | BITMAP1;
+}

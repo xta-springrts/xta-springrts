@@ -1,0 +1,139 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+piece  base, tower, dish, ground;
+
+static-var  statechg_DesiredState, statechg_StateChanging;
+
+SetDirection(heading)
+{
+	var spd;
+	spd = get ABS(heading);
+	turn ground to y-axis heading speed spd;
+	turn base to y-axis 0-heading speed spd;
+}
+
+RockOnWaves()
+{
+	while(1)
+	{
+		turn ground to x-axis <1.0> speed <1.5>;
+		move ground to y-axis [-1.15] speed [0.15];
+		wait-for-turn ground around x-axis;
+		turn ground to x-axis <-1.0> speed <1.5>;
+		move ground to y-axis [-1.25] speed [0.15];
+		wait-for-move ground along y-axis;
+		move ground to y-axis [-1.15] speed [0.15];
+		wait-for-turn ground around x-axis;
+		turn ground to x-axis <1.0> speed <1.5>;
+		move ground to y-axis [-1.25] speed [0.15];
+		wait-for-move ground along y-axis;
+	}
+}
+
+#include "SmokeUnit.bos"
+
+Go()
+{
+	spin dish around y-axis speed <60.010989>;
+}
+
+Stop()
+{
+	stop-spin dish around y-axis;
+}
+
+InitState()
+{
+	statechg_DesiredState = TRUE;
+	statechg_StateChanging = FALSE;
+}
+
+RequestState(requestedstate, currentstate)
+{
+	if( statechg_StateChanging )
+	{
+		statechg_DesiredState = requestedstate;
+		return (0);
+	}
+	statechg_StateChanging = TRUE;
+	currentstate = statechg_DesiredState;
+	statechg_DesiredState = requestedstate;
+	while( statechg_DesiredState != currentstate )
+	{
+		if( !statechg_DesiredState )
+		{
+			call-script Go();
+			currentstate = 0;
+		}
+		if( statechg_DesiredState )
+		{
+			call-script Stop();
+			currentstate = 1;
+		}
+	}
+	statechg_StateChanging = FALSE;
+}
+
+Create()
+{
+	dont-cache base;
+	dont-cache tower;
+	dont-cache dish;
+	dont-shade base;
+	dont-shade tower;
+	dont-shade dish;
+	move ground to y-axis [-1.2] now;
+	call-script InitState();
+	start-script SmokeUnit();
+	start-script RockOnWaves();
+}
+
+Activate()
+{
+	start-script RequestState(0);
+}
+
+Deactivate()
+{
+	start-script RequestState(1);
+}
+
+SweetSpot(piecenum)
+{
+	piecenum = base;
+}
+
+Killed(severity, corpsetype)
+{
+	if( severity <= 25 )
+	{
+		corpsetype = 1;
+		explode base type BITMAPONLY | BITMAP1;
+		explode tower type BITMAPONLY | BITMAP4;
+		explode dish type BITMAPONLY | BITMAP2;
+		return (0);
+	}
+	if( severity <= 50 )
+	{
+		corpsetype = 2;
+		explode base type BITMAPONLY | BITMAP1;
+		explode tower type BITMAPONLY | BITMAP4;
+		explode dish type SHATTER | BITMAP2;
+		return (0);
+	}
+	if( severity <= 99 )
+	{
+		corpsetype = 3;
+		explode base type BITMAPONLY | BITMAP1;
+		explode tower type BITMAPONLY | BITMAP4;
+		explode dish type SHATTER | BITMAP2;
+		return (0);
+	}
+	corpsetype = 3;
+	explode base type BITMAPONLY | BITMAP1;
+	explode tower type BITMAPONLY | BITMAP4;
+	explode dish type SHATTER | EXPLODE_ON_HIT | BITMAP2;
+}

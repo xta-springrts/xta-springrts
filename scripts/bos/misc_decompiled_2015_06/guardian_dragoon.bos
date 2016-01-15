@@ -1,0 +1,420 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+piece  base, pod, ring, support, servo, leg, boot, claw,
+       support2, servo2, leg2, boot2, claw2, support3, servo3, leg3,
+       boot3, claw3, support4, servo4, leg4, boot4, claw4, turret,
+       pitchturret, barrel, fire1, fire2, shield, shi1, shi2, shi3;
+
+static-var  bMoving, Static_Var_2, Static_Var_3, Static_Var_4, Static_Var_5,
+            Static_Var_6;
+
+// Signal definitions
+#define SIG_AIM				2
+
+
+ShieldHitFX()
+{
+	signal 256;
+	set-signal-mask 256;
+	show shi1;
+	show shi2;
+	show shi3;
+	sleep 150;
+	hide shi1;
+	sleep 100;
+	hide shi2;
+	sleep 100;
+	hide shi3;
+}
+
+ShieldUnit()
+{
+	while( TRUE )
+	{
+		sleep 1000;
+		if( Static_Var_4 < 0 )
+		{
+			Static_Var_4 = 0;
+		}
+		if( Static_Var_2 == 1 )
+		{
+			Static_Var_4 = Static_Var_4 + 8 + Static_Var_6 / 112;
+			if( Static_Var_4 > 600 )
+			{
+				Static_Var_4 = 600;
+				if( Rand( 1, 30 ) <= 2 )
+				{
+					start-script ShieldHitFX();
+				}
+			}
+		}
+		if( Static_Var_3 == 0 )
+		{
+			if( Static_Var_4 >= 300 )
+			{
+				Static_Var_3 = 1;
+				set ARMORED to 1;
+				start-script ShieldHitFX();
+			}
+		}
+	}
+}
+
+HitByWeapon(Func_Var_1, Func_Var_2)
+{
+	Static_Var_5 = get HEALTH;
+	Static_Var_5 = Static_Var_5 * 9;
+	if( Static_Var_3 == 1 )
+	{
+		start-script ShieldHitFX();
+		Static_Var_4 = Static_Var_4 - 3 * ( Static_Var_6 - Static_Var_5 );
+		Static_Var_6 = Static_Var_5;
+		if( Static_Var_4 <= 0 )
+		{
+			set ARMORED to 0;
+			Static_Var_3 = 0;
+			Static_Var_4 = 0;
+		}
+		return (0);
+	}
+	if( Static_Var_5 <= Static_Var_6 - 18 )
+	{
+		signal 128;
+		set-signal-mask 128;
+		Static_Var_6 = Static_Var_5;
+		turn base to z-axis Func_Var_2 speed <105.000000>;
+		turn base to x-axis Func_Var_1 speed <105.000000>;
+		wait-for-turn base around z-axis;
+		wait-for-turn base around x-axis;
+		turn base to z-axis <0.000000> speed <30.000000>;
+		turn base to x-axis <0.000000> speed <30.000000>;
+		return (0);
+	}
+	Static_Var_6 = Static_Var_5;
+}
+
+MotionControl(Func_Var_1, Func_Var_2)
+{
+	Func_Var_2 = 1;
+	while( TRUE )
+	{
+		Func_Var_1 = bMoving;
+		if( Func_Var_1 )
+		{
+			if( bMoving )
+			{
+				turn servo to y-axis <65.000000> speed <220.000000>;
+				turn leg to z-axis <30.000000> speed <40.000000>;
+				turn boot to z-axis <15.000000> speed <60.000000>;
+				turn claw to z-axis <-5.000000> speed <40.000000>;
+				turn servo2 to y-axis <10.000000> speed <200.000000>;
+				turn leg2 to z-axis <0.000000> speed <20.000000>;
+				turn boot2 to z-axis <30.000000> speed <40.000000>;
+				turn claw2 to z-axis <-35.000000> speed <80.000000>;
+				turn servo3 to y-axis <-35.000000> speed <220.000000>;
+				turn leg3 to z-axis <5.000000> speed <20.000000>;
+				turn boot3 to z-axis <-35.000000> speed <20.000000>;
+				turn claw3 to z-axis <25.000000> speed <100.000000>;
+				turn servo4 to y-axis <30.000000> speed <140.000000>;
+				turn leg4 to z-axis <-40.000000> speed <40.000000>;
+				turn boot4 to z-axis <0.000000> speed <60.000000>;
+				turn claw4 to z-axis <-5.000000> speed <40.000000>;
+				turn pod to z-axis <5.000000> speed <20.000000>;
+				sleep 250;
+			}
+			if( bMoving )
+			{
+				turn servo to y-axis <70.000000> speed <20.000000>;
+				turn leg to z-axis <-10.000000> speed <160.000000>;
+				turn boot to z-axis <30.000000> speed <60.000000>;
+				turn claw to z-axis <-10.000000> speed <20.000000>;
+				turn servo2 to y-axis <25.000000> speed <60.000000>;
+				turn leg2 to z-axis <-15.000000> speed <60.000000>;
+				turn boot2 to z-axis <45.000000> speed <60.000000>;
+				turn servo3 to y-axis <-70.000000> speed <100.000000>;
+				turn leg3 to z-axis <-10.000000> speed <60.000000>;
+				turn boot3 to z-axis <30.000000> speed <260.000000>;
+				turn claw3 to z-axis <-10.000000> speed <140.000000>;
+				turn servo4 to y-axis <5.000000> speed <100.000000>;
+				turn leg4 to z-axis <-15.000000> speed <100.000000>;
+				turn boot4 to z-axis <45.000000> speed <180.000000>;
+				turn claw4 to z-axis <-35.000000> speed <120.000000>;
+				turn pod to x-axis <5.000000> speed <20.000000>;
+				turn pod to z-axis <0.000000> speed <10.000000>;
+				sleep 250;
+			}
+			if( bMoving )
+			{
+				turn servo to y-axis <40.000000> speed <120.000000>;
+				turn leg to z-axis <5.000000> speed <60.000000>;
+				turn boot to z-axis <-20.000000> speed <200.000000>;
+				turn claw to z-axis <15.000000> speed <100.000000>;
+				turn servo2 to y-axis <-10.000000> speed <140.000000>;
+				turn leg2 to z-axis <-40.000000> speed <100.000000>;
+				turn boot2 to z-axis <0.000000> speed <180.000000>;
+				turn claw2 to z-axis <-5.000000> speed <120.000000>;
+				turn servo3 to y-axis <-65.000000> speed <20.000000>;
+				turn leg3 to z-axis <30.000000> speed <160.000000>;
+				turn boot3 to z-axis <15.000000> speed <60.000000>;
+				turn claw3 to z-axis <-5.000000> speed <20.000000>;
+				turn servo4 to y-axis <-20.000000> speed <100.000000>;
+				turn leg4 to z-axis <0.000000> speed <60.000000>;
+				turn boot4 to z-axis <40.000000> speed <20.000000>;
+				turn claw4 to z-axis <-25.000000> speed <40.000000>;
+				turn pod to x-axis <0.000000> speed <20.000000>;
+				sleep 250;
+			}
+			if( bMoving )
+			{
+				turn servo to y-axis <-10.000000> speed <200.000000>;
+				turn leg to z-axis <0.000000> speed <20.000000>;
+				turn boot to z-axis <-30.000000> speed <40.000000>;
+				turn claw to z-axis <35.000000> speed <80.000000>;
+				turn servo2 to y-axis <-65.000000> speed <220.000000>;
+				turn leg2 to z-axis <-30.000000> speed <40.000000>;
+				turn boot2 to z-axis <-15.000000> speed <60.000000>;
+				turn claw2 to z-axis <5.000000> speed <40.000000>;
+				turn servo3 to y-axis <-30.000000> speed <140.000000>;
+				turn leg3 to z-axis <40.000000> speed <40.000000>;
+				turn boot3 to z-axis <0.000000> speed <60.000000>;
+				turn claw3 to z-axis <5.000000> speed <40.000000>;
+				turn servo4 to y-axis <35.000000> speed <220.000000>;
+				turn leg4 to z-axis <-5.000000> speed <20.000000>;
+				turn boot4 to z-axis <35.000000> speed <20.000000>;
+				turn pod to z-axis <-5.000000> speed <20.000000>;
+				sleep 250;
+			}
+			if( bMoving )
+			{
+				turn servo to y-axis <-25.000000> speed <60.000000>;
+				turn leg to z-axis <15.000000> speed <60.000000>;
+				turn boot to z-axis <-45.000000> speed <60.000000>;
+				turn servo2 to y-axis <-70.000000> speed <20.000000>;
+				turn leg2 to z-axis <10.000000> speed <160.000000>;
+				turn boot2 to z-axis <-30.000000> speed <60.000000>;
+				turn claw2 to z-axis <10.000000> speed <20.000000>;
+				turn servo3 to y-axis <-5.000000> speed <100.000000>;
+				turn leg3 to z-axis <15.000000> speed <100.000000>;
+				turn boot3 to z-axis <-45.000000> speed <180.000000>;
+				turn claw3 to z-axis <35.000000> speed <120.000000>;
+				turn servo4 to y-axis <70.000000> speed <140.000000>;
+				turn leg4 to z-axis <10.000000> speed <60.000000>;
+				turn boot4 to z-axis <-30.000000> speed <260.000000>;
+				turn claw4 to z-axis <10.000000> speed <140.000000>;
+				turn pod to x-axis <5.000000> speed <20.000000>;
+				turn pod to z-axis <0.000000> speed <10.000000>;
+				sleep 250;
+			}
+			if( bMoving )
+			{
+				turn servo to y-axis <10.000000> speed <140.000000>;
+				turn leg to z-axis <40.000000> speed <100.000000>;
+				turn boot to z-axis <0.000000> speed <180.000000>;
+				turn claw to z-axis <5.000000> speed <120.000000>;
+				turn servo2 to y-axis <-40.000000> speed <120.000000>;
+				turn leg2 to z-axis <-5.000000> speed <60.000000>;
+				turn boot2 to z-axis <20.000000> speed <200.000000>;
+				turn claw2 to z-axis <-15.000000> speed <100.000000>;
+				turn servo3 to y-axis <20.000000> speed <100.000000>;
+				turn leg3 to z-axis <0.000000> speed <60.000000>;
+				turn boot3 to z-axis <-40.000000> speed <20.000000>;
+				turn claw3 to z-axis <25.000000> speed <40.000000>;
+				turn servo4 to y-axis <65.000000> speed <20.000000>;
+				turn leg4 to z-axis <-30.000000> speed <160.000000>;
+				turn boot4 to z-axis <-15.000000> speed <60.000000>;
+				turn claw4 to z-axis <5.000000> speed <20.000000>;
+				turn pod to x-axis <0.000000> speed <20.000000>;
+				sleep 250;
+			}
+			Func_Var_2 = 1;
+		}
+		if( !Func_Var_1 )
+		{
+			if( Func_Var_2 )
+			{
+				turn servo to y-axis <45.000000> speed <90.000000>;
+				turn leg to z-axis <0.000000> speed <90.000000>;
+				turn boot to z-axis <0.000000> speed <90.000000>;
+				turn claw to z-axis <0.000000> speed <90.000000>;
+				turn servo2 to y-axis <-45.000000> speed <90.000000>;
+				turn leg2 to z-axis <0.000000> speed <90.000000>;
+				turn boot2 to z-axis <0.000000> speed <90.000000>;
+				turn claw2 to z-axis <0.000000> speed <90.000000>;
+				turn servo3 to y-axis <-45.000000> speed <90.000000>;
+				turn leg3 to z-axis <0.000000> speed <90.000000>;
+				turn boot3 to z-axis <0.000000> speed <90.000000>;
+				turn claw3 to z-axis <0.000000> speed <90.000000>;
+				turn servo4 to y-axis <45.000000> speed <90.000000>;
+				turn leg4 to z-axis <0.000000> speed <90.000000>;
+				turn boot4 to z-axis <0.000000> speed <90.000000>;
+				turn claw4 to z-axis <0.000000> speed <90.000000>;
+				turn pod to x-axis <0.000000> speed <10.000000>;
+				turn pod to z-axis <0.000000> speed <10.000000>;
+				Func_Var_2 = 0;
+			}
+			sleep 100;
+		}
+	}
+}
+
+Create()
+{
+	turn servo to y-axis <45.000000> now;
+	turn servo2 to y-axis <-45.000000> now;
+	turn servo3 to y-axis <-45.000000> now;
+	turn servo4 to y-axis <45.000000> now;
+	bMoving = FALSE;
+	Static_Var_2 = 0;
+	Static_Var_3 = 0;
+	Static_Var_4 = 0;
+	Static_Var_5 = 900;
+	Static_Var_6 = 900;
+	set ARMORED to 0;
+	spin shi1 around y-axis speed <800.000000>;
+	spin shi2 around y-axis speed <700.000000>;
+	spin shi3 around y-axis speed <600.000000>;
+	hide shi1;
+	hide shi2;
+	hide shi3;
+	dont-cache shi1;
+	dont-cache shi2;
+	dont-cache shi3;
+	hide fire1;
+	hide fire2;
+	spin fire1 around z-axis speed <3000.000000>;
+	spin fire2 around z-axis speed <300.000000>;
+	start-script MotionControl();
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 1000;
+	}
+	Static_Var_2 = 1;
+	Static_Var_3 = 1;
+	Static_Var_4 = 600;
+	set ARMORED to 1;
+	start-script ShieldUnit();
+}
+
+StartMoving()
+{
+	bMoving = TRUE;
+}
+
+StopMoving()
+{
+	bMoving = FALSE;
+}
+
+RestoreAfterDelay()
+{
+	sleep 3000;
+	turn turret to y-axis <0.000000> speed <60.000000>;
+	turn pitchturret to x-axis <0.000000> speed <30.000000>;
+}
+
+SweetSpot(piecenum)
+{
+	piecenum = base;
+}
+
+QueryPrimary(piecenum)
+{
+	piecenum = fire1;
+}
+
+AimFromPrimary(piecenum)
+{
+	piecenum = turret;
+}
+
+AimPrimary(heading, pitch)
+{
+	signal SIG_AIM;
+	set-signal-mask SIG_AIM;
+	turn turret to y-axis heading speed <320.000000>;
+	turn pitchturret to x-axis <0.000000> - pitch speed <120.000000>;
+	wait-for-turn turret around y-axis;
+	wait-for-turn pitchturret around x-axis;
+	start-script RestoreAfterDelay();
+	return (1);
+}
+
+QuerySecondary(piecenum)
+{
+	piecenum = fire1;
+}
+
+AimFromSecondary(piecenum)
+{
+	piecenum = turret;
+}
+
+AimSecondary(heading, pitch)
+{
+	return (0);
+}
+
+QueryTertiary(piecenum)
+{
+	piecenum = fire1;
+}
+
+AimFromTertiary(piecenum)
+{
+	piecenum = turret;
+}
+
+AimTertiary(heading, pitch)
+{
+	return (0);
+}
+
+FirePrimary()
+{
+	move barrel to z-axis [-2.500000] speed [125.000000];
+	show fire1;
+	show fire2;
+	sleep 100;
+	hide fire2;
+	sleep 100;
+	hide fire1;
+	move barrel to z-axis [0.000000] speed [15.000000];
+}
+
+Killed(severity, corpsetype)
+{
+	hide shi1;
+	hide shi2;
+	hide shi3;
+	hide fire1;
+	hide fire2;
+	if( severity <= 25 )
+	{
+		corpsetype = 1;
+		explode pod type BITMAPONLY | BITMAP2;
+		explode turret type BITMAPONLY | BITMAP5;
+		explode barrel type BITMAPONLY | BITMAP5;
+		return (0);
+	}
+	if( severity <= 50 )
+	{
+		corpsetype = 2;
+		explode pod type BITMAPONLY | BITMAP5;
+		explode turret type SHATTER | BITMAP2;
+		explode boot type FALL | BITMAP2;
+		explode boot3 type FALL | SMOKE | EXPLODE_ON_HIT | BITMAP2;
+		return (0);
+	}
+	corpsetype = 3;
+	explode pod type BITMAPONLY | BITMAP1;
+	explode ring type SHATTER | BITMAP4;
+	explode turret type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode barrel type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+	explode boot type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode leg2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode boot3 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode leg4 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+}

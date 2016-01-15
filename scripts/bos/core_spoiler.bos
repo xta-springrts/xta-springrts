@@ -1,0 +1,384 @@
+#define TAK			// This is a TAK script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+piece  base, beam, Door1, Turret, Gun, Door2, Stand, wheel1,
+       wheel2;
+
+static-var  statechg_DesiredState, statechg_StateChanging, oldHeading,
+			notBuilding, Static_Var_4;
+
+#define SIG_MOVE	2
+#define SIG_BUILD	4
+
+SelfD()
+{
+	if( Static_Var_4 == 0 )
+	{
+		sleep 1;
+		Static_Var_4 = 1;
+		play-sound( "count1", 15 );
+		emit-sfx UNIT_SFX1 from base;
+		sleep 999;
+		if( Static_Var_4 == 1 )
+		{
+			Static_Var_4 = 2;
+			play-sound( "count2", 15 );
+			emit-sfx UNIT_SFX2 from base;
+			sleep 1000;
+			if( Static_Var_4 == 2 )
+			{
+				Static_Var_4 = 3;
+				play-sound( "count3", 15 );
+				emit-sfx UNIT_SFX3 from base;
+				sleep 1000;
+				if( Static_Var_4 == 3 )
+				{
+					Static_Var_4 = 4;
+					play-sound( "count4", 15 );
+					emit-sfx UNIT_SFX4 from base;
+					sleep 1000;
+					if( Static_Var_4 == 4 )
+					{
+						Static_Var_4 = 5;
+						play-sound( "count5", 15 );
+						emit-sfx UNIT_SFX5 from base;
+						sleep 1000;
+						if( Static_Var_4 == 5 )
+						{
+							Static_Var_4 = 6;
+							emit-sfx UNIT_SFX6 from base;
+							play-sound( "count6", 35 );
+							play-sound( "count6", 35 );
+							sleep 100;
+							emit-sfx DETO_W1 from base;
+						}
+					}
+				}
+			}
+		}
+	}
+	if( Static_Var_4 > 0 AND Static_Var_4 < 5 )
+	{
+		Static_Var_4 = 0;
+		sleep 100;
+	}
+	if( Static_Var_4 == 5 )
+	{
+		emit-sfx DETO_W2 from base;
+		Static_Var_4 = 0;
+		sleep 100;
+	}
+}
+
+Build()
+{
+	set-signal-mask SIG_BUILD;
+	while( TRUE )
+	{
+		emit-sfx UNIT_SFX7 from beam;
+		sleep 100;
+	}
+}
+
+activatescr()
+{
+	move Door1 to y-axis [0.000000] now;
+	move Turret to y-axis [0.000000] now;
+	move Gun to x-axis [0.000000] now;
+	turn Gun to y-axis <0.000000> now;
+	turn Gun to y-axis <-90.016484> speed <5626.368132>;
+	sleep 16;
+
+	move Gun to y-axis [11.250000] speed [26.285049];
+	turn Door1 to z-axis <-91.846154> speed <214.593407>;
+	turn Door2 to z-axis <88.802198> speed <207.489011>;
+	sleep 89;
+
+	move Door1 to x-axis [-0.625000] speed [1.460236];
+	move Door1 to y-axis [-11.749985] speed [27.453262];
+	move Door2 to y-axis [-11.500000] speed [26.869125];
+	move Stand to y-axis [7.624985] speed [17.815414];
+	turn Door1 to z-axis <-91.846154> speed <0.000000>;
+	turn Door2 to z-axis <88.192308> speed <1.412088>;
+	sleep 89;
+
+	move Door1 to x-axis [-0.374985] speed [0.582718];
+	move Door1 to y-axis [-11.624985] speed [0.291367];
+	move Door2 to y-axis [-11.625000] speed [0.291367];
+	move Turret to x-axis [5.000000] speed [11.654999];
+	move Turret to y-axis [0.000000] speed [0.000000];
+	turn Door1 to z-axis <-90.626374> speed <2.835165>;
+	turn Door2 to y-axis <0.604396> speed <1.412088>;
+	turn Door2 to z-axis <88.192308> speed <0.000000>;
+	sleep 89;
+
+	set INBUILDSTANCE to 1;
+}
+
+deactivatescr()
+{
+	turn Gun to y-axis <0.000000> speed <160.038462>;
+	wait-for-turn Gun around y-axis;
+	move Door1 to x-axis [-0.374985] now;
+	move Door1 to x-axis [-0.625000] speed [0.578705];
+	move Door1 to y-axis [-11.624985] now;
+	move Door1 to y-axis [-11.749985] speed [0.289337];
+	move Door2 to y-axis [-11.625000] now;
+	move Door2 to y-axis [-11.500000] speed [0.289352];
+	move Turret to x-axis [5.000000] now;
+	move Turret to x-axis [0.000000] speed [11.574036];
+	move Turret to y-axis [0.000000] now;
+	move Turret to y-axis [0.000000] speed [0.000000];
+	move Stand to y-axis [7.624985] now;
+	move Gun to x-axis [0.000000] now;
+	move Gun to y-axis [11.250000] now;
+	turn Door1 to z-axis <-90.626374> now;
+	turn Door1 to z-axis <-91.846154> speed <2.813187>;
+	turn Door2 to y-axis <0.604396> now;
+	turn Door2 to y-axis <0.000000> speed <1.401099>;
+	turn Door2 to z-axis <88.192308> now;
+	turn Door2 to z-axis <88.192308> speed <0.000000>;
+	turn Gun to y-axis <-90.016484> now;
+	sleep 122;
+
+	move Door1 to x-axis [0.000000] speed [1.446747];
+	move Door1 to y-axis [0.000000] speed [27.199036];
+	move Door2 to y-axis [0.000000] speed [26.620361];
+	move Stand to y-axis [0.000000] speed [17.650452];
+	turn Door1 to z-axis <-91.846154> speed <0.000000>;
+	turn Door2 to z-axis <88.802198> speed <1.401099>;
+	sleep 122;
+
+	move Gun to y-axis [0.000000] speed [26.041656];
+	turn Door1 to z-axis <0.000000> speed <212.604396>;
+	turn Door2 to z-axis <0.000000> speed <205.560440>;
+	sleep 122;
+
+	turn Gun to y-axis <0.000000> speed <208.379121>;
+	sleep 522;
+
+	set INBUILDSTANCE to 0;
+}
+
+Steering(heading, steer, currentSpeed)
+{
+	signal SIG_MOVE;
+	set-signal-mask SIG_MOVE;
+	while(1)
+	{
+		heading = get HEADING;
+		steer = (heading - oldheading)*3;
+		turn wheel1 to y-axis steer speed <180>;	
+		turn wheel2 to y-axis steer speed <180>;	
+		currentSpeed = <3> *((get CURRENT_SPEED) * 100 / get MAX_SPEED);
+		if (currentSpeed < <100>) currentSpeed = <100>;
+		spin wheel1 around x-axis speed currentSpeed;
+		spin wheel2 around x-axis speed currentSpeed;
+		sleep 66;
+		oldheading = heading;
+	}
+}
+
+SmokeUnit(Func_Var_1, Func_Var_2, Func_Var_3)
+{
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 500;
+	}
+	while( TRUE )
+	{
+		Func_Var_1 = get HEALTH;
+		if( Func_Var_1 < 66 )
+		{
+			Func_Var_3 = SFXTYPE_BLACKSMOKE;
+			if( Rand( 1, 66 ) < Func_Var_1 )
+			{
+				Func_Var_3 = SFXTYPE_WHITESMOKE;
+			}
+			emit-sfx Func_Var_3 from base;
+		}
+		Func_Var_2 = Func_Var_1 * 50;
+		if( Func_Var_2 < 200 )
+		{
+			Func_Var_2 = 200;
+		}
+		sleep Func_Var_2;
+	}
+}
+
+RequestState(requestedstate, currentstate)
+{
+	if( statechg_StateChanging )
+	{
+		statechg_DesiredState = requestedstate;
+		return (0);
+	}
+	statechg_StateChanging = TRUE;
+	currentstate = statechg_DesiredState;
+	statechg_DesiredState = requestedstate;
+	while( statechg_DesiredState != currentstate )
+	{
+		if( statechg_DesiredState )
+		{
+			call-script deactivatescr();
+			notBuilding = 1;
+			currentstate = 1;
+		}
+		else
+		{
+			call-script activatescr();
+			notBuilding = 0;
+			currentstate = 0;
+		}
+	}
+	statechg_StateChanging = FALSE;
+}
+
+Create()
+{
+	notBuilding = 1;
+	oldheading = get HEADING;
+	statechg_DesiredState = TRUE;
+	statechg_StateChanging = FALSE;
+	start-script SmokeUnit();
+}
+
+Activate()
+{
+	start-script RequestState(0);
+}
+
+Deactivate()
+{
+	start-script RequestState(1);
+}
+
+StartBuilding(heading, pitch)
+{
+	start-script RequestState(0);
+	while( notBuilding ) sleep 100;
+	signal SIG_BUILD;
+	turn Gun to y-axis heading speed <160.038462>;
+	wait-for-turn Gun around y-axis;
+	start-script Build();
+}
+
+StopBuilding()
+{
+	signal SIG_BUILD;	
+	set-signal-mask SIG_BUILD;
+	sleep 6000;
+	set-signal-mask 0;
+	signal SIG_BUILD;	
+	start-script RequestState(1);
+}
+
+StartMoving()
+{
+	start-script Steering();
+}
+
+StopMoving()
+{
+	signal SIG_MOVE;
+	stop-spin wheel1 around x-axis;
+	stop-spin wheel2 around x-axis;
+}
+
+QueryNanoPiece(Func_Var_1)
+{
+	Func_Var_1 = 1;
+}
+
+SweetSpot(piecenum)
+{
+	piecenum = base;
+}
+
+AimFromPrimary(piecenum)
+{
+	piecenum = Gun;
+}
+
+QueryPrimary(piecenum)
+{
+	piecenum = Gun;
+}
+
+AimPrimary(heading, pitch)
+{
+	return (0);
+}
+
+AimFromSecondary(piecenum)
+{
+	piecenum = Gun;
+}
+
+QuerySecondary(piecenum)
+{
+	piecenum = Gun;
+}
+
+AimSecondary(heading, pitch)
+{
+	return (0);
+}
+
+Killed(Func_Var_1, Func_Var_2)
+{
+	if( Func_Var_1 <= 25 )
+	{
+		Func_Var_2 = 1;
+		explode base type BITMAPONLY | EXPTYPE_SMALLEXPLOSION;
+		explode beam type BITMAPONLY | EXPTYPE_MEDIUMEXPLOSION;
+		explode Door1 type BITMAPONLY | EXPTYPE_LARGEEXPLOSION;
+		explode Door2 type BITMAPONLY | EXPTYPE_XLARGEEXPLOSION;
+		explode Gun type BITMAPONLY | EXPTYPE_BLOODEXPLOSION;
+		explode Stand type BITMAPONLY | EXPTYPE_SMALLEXPLOSION;
+		explode Turret type BITMAPONLY | EXPTYPE_MEDIUMEXPLOSION;
+		explode wheel1 type BITMAPONLY | EXPTYPE_LARGEEXPLOSION;
+		explode wheel2 type BITMAPONLY | EXPTYPE_XLARGEEXPLOSION;
+		return (0);
+	}
+	if( Func_Var_1 <= 50 )
+	{
+		Func_Var_2 = 2;
+		explode base type BITMAPONLY | EXPTYPE_SMALLEXPLOSION;
+		explode beam type BITMAPONLY | EXPTYPE_MEDIUMEXPLOSION;
+		explode Door1 type FALL | EXPTYPE_LARGEEXPLOSION;
+		explode Door2 type FALL | EXPTYPE_XLARGEEXPLOSION;
+		explode Gun type 1 | EXPTYPE_BLOODEXPLOSION;
+		explode Stand type FALL | EXPTYPE_SMALLEXPLOSION;
+		explode Turret type FALL | EXPTYPE_MEDIUMEXPLOSION;
+		explode wheel1 type FALL | EXPTYPE_LARGEEXPLOSION;
+		explode wheel2 type FALL | EXPTYPE_XLARGEEXPLOSION;
+		return (0);
+	}
+	if( Func_Var_1 <= 99 )
+	{
+		Func_Var_2 = 3;
+		explode base type BITMAPONLY | EXPTYPE_SMALLEXPLOSION;
+		explode beam type BITMAPONLY | EXPTYPE_MEDIUMEXPLOSION;
+		explode Door1 type FALL | 8 | 16 | 2 | EXPTYPE_LARGEEXPLOSION;
+		explode Door2 type FALL | 8 | 16 | 2 | EXPTYPE_XLARGEEXPLOSION;
+		explode Gun type 1 | EXPTYPE_BLOODEXPLOSION;
+		explode Stand type FALL | 8 | 16 | 2 | EXPTYPE_SMALLEXPLOSION;
+		explode Turret type FALL | 8 | 16 | 2 | EXPTYPE_MEDIUMEXPLOSION;
+		explode wheel1 type FALL | 8 | 16 | 2 | EXPTYPE_LARGEEXPLOSION;
+		explode wheel2 type FALL | 8 | 16 | 2 | EXPTYPE_XLARGEEXPLOSION;
+		return (0);
+	}
+	Func_Var_2 = 3;
+	explode base type BITMAPONLY | EXPTYPE_SMALLEXPLOSION;
+	explode beam type BITMAPONLY | EXPTYPE_MEDIUMEXPLOSION;
+	explode Door1 type FALL | 8 | 16 | 2 | EXPTYPE_LARGEEXPLOSION;
+	explode Door2 type FALL | 8 | 16 | 2 | EXPTYPE_XLARGEEXPLOSION;
+	explode Gun type 1 | 2 | EXPTYPE_BLOODEXPLOSION;
+	explode Stand type FALL | 8 | 16 | 2 | EXPTYPE_SMALLEXPLOSION;
+	explode Turret type FALL | 8 | 16 | 2 | EXPTYPE_MEDIUMEXPLOSION;
+	explode wheel1 type FALL | 8 | 16 | 2 | EXPTYPE_LARGEEXPLOSION;
+	explode wheel2 type FALL | 8 | 16 | 2 | EXPTYPE_XLARGEEXPLOSION;
+}

@@ -1,0 +1,146 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+piece  base, light, bouy, blight;
+
+static-var  statechg_DesiredState, statechg_StateChanging,
+			windDirectionX, windDirectionZ;
+
+#define ROCK_AMPLITUDE		<1.8>
+#define MIN_ROCK_SPEED		<0.2>
+
+#include "WindDirection.bos"
+
+RockOnWaves()
+{
+	var x,z,xs,zs;
+	while(1)
+	{
+		x= ROCK_AMPLITUDE*windDirectionX/1000;
+		z= ROCK_AMPLITUDE*windDirectionZ/1000;
+		xs=x+x/2;	zs=z+z/2;
+		if (xs< MIN_ROCK_SPEED) xs= MIN_ROCK_SPEED;
+		zs=get ABS(zs);
+		if (zs< MIN_ROCK_SPEED) zs= MIN_ROCK_SPEED;
+		turn bouy to z-axis x speed xs;
+		turn bouy to x-axis z speed zs;
+		wait-for-turn bouy around x-axis;
+		wait-for-turn bouy around z-axis;
+		turn bouy to z-axis 0-x speed xs;
+		turn bouy to x-axis 0-z speed zs;
+		wait-for-turn bouy around x-axis;
+		wait-for-turn bouy around z-axis;
+	}
+}
+
+Standby()
+{
+	while( TRUE )
+	{
+		emit-sfx UNIT_SFX2 from blight;
+		sleep 700;
+	}
+}
+
+#include "SmokeUnit.bos"
+
+Go()
+{
+	spin base around y-axis speed <60.005495>;
+}
+
+Stop()
+{
+	stop-spin base around y-axis;
+}
+
+InitState()
+{
+	statechg_DesiredState = TRUE;
+	statechg_StateChanging = FALSE;
+}
+
+RequestState(requestedstate, currentstate)
+{
+	if( statechg_StateChanging )
+	{
+		statechg_DesiredState = requestedstate;
+		return (0);
+	}
+	statechg_StateChanging = TRUE;
+	currentstate = statechg_DesiredState;
+	statechg_DesiredState = requestedstate;
+	while( statechg_DesiredState != currentstate )
+	{
+		if( !statechg_DesiredState )
+		{
+			call-script Go();
+			currentstate = 0;
+		}
+		if( statechg_DesiredState )
+		{
+			call-script Stop();
+			currentstate = 1;
+		}
+	}
+	statechg_StateChanging = FALSE;
+}
+
+Create()
+{
+	dont-shade base;
+	dont-cache base;
+	dont-shade light;
+	dont-cache light;
+	call-script InitState();
+	start-script SmokeUnit();
+	start-script RockOnWaves();
+}
+
+Activate()
+{
+	start-script RequestState(0);
+}
+
+Deactivate()
+{
+	start-script RequestState(1);
+}
+
+SweetSpot(piecenum)
+{
+	piecenum = base;
+}
+
+Killed(severity, corpsetype)
+{
+	if( severity <= 25 )
+	{
+		corpsetype = 1;
+		explode base type BITMAPONLY | BITMAP1;
+		explode bouy type BITMAPONLY | BITMAP2;
+		explode light type BITMAPONLY | BITMAP3;
+		return (0);
+	}
+	if( severity <= 50 )
+	{
+		corpsetype = 2;
+		explode base type BITMAPONLY | BITMAP1;
+		explode bouy type BITMAPONLY | BITMAP2;
+		explode light type BITMAPONLY | BITMAP3;
+		return (0);
+	}
+	if( severity <= 99 )
+	{
+		corpsetype = 3;
+		explode base type BITMAPONLY | BITMAP1;
+		explode bouy type SHATTER | EXPLODE_ON_HIT | BITMAP2;
+		explode light type BITMAPONLY | BITMAP3;
+		return (0);
+	}
+	corpsetype = 3;
+	explode base type BITMAPONLY | BITMAP5;
+	explode light type BITMAPONLY | BITMAP3;
+}
