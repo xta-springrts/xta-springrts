@@ -62,7 +62,7 @@ Spring.SetUnitPieceCollisionVolumeData ( number unitID, number pieceIndex, boole
 	
 	Q: How am I supposed to guess the piece index number?
 	A: Open the model in UpSpring and locate your piece. Count all pieces above it in the piece tree.
-	   Piece index number is equal to number of pieces above it in tree. Root piece has index 0.
+	   Piece index number is equal to number of pieces above it in tree. Root piece has index 0. <==== 1 in spring 101
 	   Or start counting from tree top till your piece starting from 0. Count lines in Upspring
 	   not along the tree hierarchy.
 	Q: I defined all per piece volumes in here but unit still uses only one collision volume!
@@ -156,48 +156,60 @@ local dynamicPieceCollisionVolume = {}	--dynamic per piece collision volume defi
 	}
 	
 	unitCollisionVolume["lost_whale"] = {
-		on={46,30,95,0,-8,3,2,1,2,0,-2,0},
-		off={46,35,95,0,10,3,2,1,2,0,25,0},
+		on=	{
+				46,30,95, 			-- scale x,y,z
+				0,-8,3,				-- offset x,y,z
+				2,1,2,				-- vType, tType, axis
+				0,-2,0,				-- midpos x,y,z
+				0, 0, 0,			-- aimpos x,y,z
+			},
+		off={
+				46,35,95,
+				0,10,3,
+				2,1,2,
+				0,25,0,
+				0,0,0,
+			},
 	}
 	pieceCollisionVolume["arm_big_bertha"] = {
-		["0"]={28,74,28,0,34,0,1,1},
-		["2"]={15,15,113,0,0,30,1,2},
+		["base"]={28,74,28,0,34,0,1,1},
+		["sleeve"]={15,15,113,0,0,30,1,2},
 	}
 	--pieceCollisionVolume["arm_commander"] = {
 	--	["0"]={true,28,74,28,0,34,0,1,1},
 	--}	
 	pieceCollisionVolume["arm_vulcan"] = {
-		["1"]={60,94,60,0,47,-1,1,1},
-		["6"]={36,36,106,0,0,27,1,2},
+		["base"]={60,94,60,0,47,-1,1,1},
+		["spindle"]={36,36,106,0,0,27,1,2},
 	}
 
 	dynamicPieceCollisionVolume["arm_advanced_radar_tower"] = {
 		on = {
-			["0"]={25,45,25,0,22,0,1,1},
-			["2"]={76,29,29,0,3,0,1,0},
+			["base"]={25,45,25,0,22,0,1,1},
+			["turret"]={76,29,29,0,3,0,1,0},
 		},
 		off = {
-			["0"]={32,51,32,0,8,1,1,1},
+			["base"]={32,51,32,0,8,1,1,1},
 		}
 	}
 	dynamicPieceCollisionVolume["core_viper"] = {
 		on = {
-			["0"]={51,12,53,0,4,0,2,0},
-			["5"]={25,66,25,0,-14,0,1,1},
+			["base"]={51,12,53,0,4,0,2,0},
+			["stand"]={25,66,25,0,-14,0,1,1},
 			offsets={0,0,0,0,40,0}
 		},
 		off = {
-			["0"]={51,12,53,0,4,0,2,0},
+			["base"]={51,12,53,0,4,0,2,0},
 			offsets={0,0,0,0,8,0}
 		}
 	}
 	dynamicPieceCollisionVolume["core_krogoth_gantry"] = {
 		on = {
-			["0"]={142,77,136,0,0,0,1,2},
-			["23"]={108,49,108,0,14,36,1,2},
+			["base"]={142,77,136,0,0,0,1,2},
+			["crane"]={108,49,108,0,14,36,1,2},
 		},
 		off = {
-			["0"]={142,77,136,0,0,0,1,2},
+			["base"]={142,77,136,0,0,0,1,2},
 		}
 
 	}

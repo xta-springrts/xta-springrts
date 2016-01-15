@@ -331,7 +331,7 @@ do
 	end
 	
 	local dayofyear = modOptions and tonumber(modOptions.dayofyear) or 1
-	local year = modOptions and tonumber(modOptions.year) or 2015
+	local year = modOptions and tonumber(modOptions.year) or 2016
 	local leap_year
 	local math = _G.math
 	local mod = math_mod

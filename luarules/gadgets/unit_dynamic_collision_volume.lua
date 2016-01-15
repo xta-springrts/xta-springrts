@@ -40,7 +40,7 @@ local spActive = Spring.GetUnitIsActive
 local pairs = pairs	
 local min = math.min
 local Echo = Spring.Echo
-
+local startIndex
 
 if (gadgetHandler:IsSyncedCode()) then
 
@@ -97,6 +97,8 @@ if (gadgetHandler:IsSyncedCode()) then
 				end
 			end
 		end
+		local version = Game.version
+		startIndex = version > "100" and version:sub(1,1) == "1" and 1 or 0
 	end
 
 	
@@ -106,8 +108,12 @@ if (gadgetHandler:IsSyncedCode()) then
 	function gadget:UnitCreated(unitID, unitDefID, unitTeam)
 		if (pieceCollisionVolume[UnitDefs[unitDefID].name]) then
 			local t = pieceCollisionVolume[UnitDefs[unitDefID].name]
-			for pieceIndex=0, #spGetPieceList(unitID)-1 do
-				local p = t[tostring(pieceIndex)]
+			--for pieceIndex, pieceName in pairs (spGetPieceList(unitID)) do
+			-- it has to be done this way to access piece 0, uncomment when backwards compatibility is not needed
+			for pieceIndex=startIndex, #spGetPieceList(unitID)-1+startIndex do
+				-- hacky because GetPieceList always returns 1-based piecelist
+				local pieceName = spGetPieceList(unitID)[pieceIndex+1-startIndex]
+				p = t[pieceName]
 				if p then
 					spSetPieceCollisionData(unitID, pieceIndex, true, p[1], p[2], p[3], p[4], p[5], p[6], p[7], p[8])
 				else
@@ -116,11 +122,15 @@ if (gadgetHandler:IsSyncedCode()) then
 			end
 		elseif dynamicPieceCollisionVolume[UnitDefs[unitDefID].name] then
 			local t = dynamicPieceCollisionVolume[UnitDefs[unitDefID].name].on
-			for pieceIndex=0, #spGetPieceList(unitID)-1 do
-				local p = t[tostring(pieceIndex)]
+			--for pieceIndex, pieceName in pairs (spGetPieceList(unitID)) do
+			-- same here
+			for pieceIndex=startIndex, #spGetPieceList(unitID)-1+startIndex do
+				local pieceName = spGetPieceList(unitID)[pieceIndex+1-startIndex]
+				p = t[pieceName]
 				if p then
 					spSetPieceCollisionData(unitID, pieceIndex, true, p[1], p[2], p[3], p[4], p[5], p[6], p[7], p[8])
 				else
+					
 					spSetPieceCollisionData(unitID, pieceIndex, false, 1, 1, 1, 0, 0, 0, 1, 1)
 				end
 			end
@@ -247,8 +257,11 @@ if (gadgetHandler:IsSyncedCode()) then
 				if (defs.state ~= 0) then
 					if defs.perPiece then
 						t = dynamicPieceCollisionVolume[defs.name].off
-						for pieceIndex=0, defs.numPieces do
-							p = t[tostring(pieceIndex)]
+						--for pieceIndex, pieceName in pairs (spGetPieceList(unitID)) do
+						-- same here
+						for pieceIndex=startIndex, defs.numPieces-1+startIndex do
+							local pieceName = spGetPieceList(unitID)[pieceIndex+1-startIndex]
+							p = t[pieceName]
 							if p then
 								spSetPieceCollisionData(unitID, pieceIndex, true, p[1], p[2], p[3], p[4], p[5], p[6], p[7], p[8])
 							else
@@ -272,8 +285,11 @@ if (gadgetHandler:IsSyncedCode()) then
 				if (defs.state ~= 1) then
 					if defs.perPiece then
 						t = dynamicPieceCollisionVolume[defs.name].on
-						for pieceIndex=0, defs.numPieces do
-							p = t[tostring(pieceIndex)]
+						--for pieceIndex, pieceName in pairs (spGetPieceList(unitID)) do
+						-- same here
+						for pieceIndex=startIndex, defs.numPieces-1+startIndex do
+							local pieceName = spGetPieceList(unitID)[pieceIndex+1-startIndex]
+							p = t[pieceName]
 							if p then
 								spSetPieceCollisionData(unitID, pieceIndex, true, p[1], p[2], p[3], p[4], p[5], p[6], p[7], p[8])
 							else
