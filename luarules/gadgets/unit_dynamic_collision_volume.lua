@@ -53,11 +53,9 @@ if (gadgetHandler:IsSyncedCode()) then
 				local featureModel = FeatureDefs[Spring.GetFeatureDefID(featID)].modelname:lower()
 				if featureModel:len() > 4 then
 					local featureModelTrim
-					if Game.version > "91.0" then
-						featureModelTrim = featureModel:match("/.*%."):sub(2,-2)
-					else
-						featureModelTrim = featureModel:sub(1,-5)
-					end
+					
+					featureModelTrim = featureModel:match("/.*%."):sub(2,-2)
+					
 					if mapFeatures[featureModelTrim] then
 						local p = mapFeatures[featureModelTrim]
 						spSetFeatureCollisionData(featID, p[1], p[2], p[3], p[4], p[5], p[6], p[7], p[8], p[9])
@@ -65,11 +63,7 @@ if (gadgetHandler:IsSyncedCode()) then
 					elseif featureModel:find(".s3o") then
 						local xs, ys, zs, xo, yo, zo, vtype, htype, axis, _ = spGetFeatureCollisionData(featID)
 						if (vtype>=3 and xs==ys and ys==zs) then
-							if Game.version > "91.0" then
-								spSetFeatureCollisionData(featID, xs, ys*0.75, zs,  xo, yo-ys*0.09, zo,  1, htype, 1)
-							else
-								spSetFeatureCollisionData(featID, xs, ys*0.75, zs,  xo, yo-ys*0.09, zo,  vtype, htype, axis)
-							end
+							spSetFeatureCollisionData(featID, xs, ys*0.75, zs,  xo, yo-ys*0.09, zo,  1, htype, 1)
 						end
 					end
 				end
@@ -202,11 +196,9 @@ if (gadgetHandler:IsSyncedCode()) then
 		local featureModel = FeatureDefs[Spring.GetFeatureDefID(featureID)].modelname:lower()
 		if featureModel == "" then return end	--geovents or engine trees have no models		
 		local featureModelTrim
-		if Game.version > "91.0" then
-			featureModelTrim = featureModel:match("/.*%."):sub(2,-2)
-		else
-			featureModelTrim = featureModel:sub(1,-5)
-		end
+		
+		featureModelTrim = featureModel:match("/.*%."):sub(2,-2)
+		
 		if mapFeatures[featureModelTrim] then	-- it just might happen that some map features can have corpses
 			local p = mapFeatures[featureModelTrim]
 			spSetFeatureCollisionData(featureID, p[1], p[2], p[3], p[4], p[5], p[6], p[7], p[8], p[9])
