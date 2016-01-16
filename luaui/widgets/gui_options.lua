@@ -7,6 +7,7 @@ function widget:GetInfo()
       license   = "GNU GPL, v2 or later",
       layer 	= 5,
       enabled   = true,  --  loaded by default?
+	  handler	= true,
 	}
 end
 
@@ -15,7 +16,7 @@ local buttonsize					  	= 16
 local tabWidth							= 90
 local tabHeight							= 20
 local Echo								= Spring.Echo
-local Button, Section		  			= include("configs/settings_defs.lua")
+local Button, Section, Presets 			= include("configs/settings_defs.lua")
 local maxbuttons						= 4
 
 
@@ -67,6 +68,7 @@ local sndButtonOn 						= 'sounds/button8.wav'
 local sndButtonOff 						= 'sounds/button6.wav'
 local sndButtonTab 						= 'sounds/button5.wav'
 local sndButtonSlide					= 'sounds/button3.wav'
+local sndButtonDone						= 'sounds/butmain.wav'
 
 -- other
 local ButtonClose		 				= {}
@@ -90,10 +92,13 @@ local mapOptions 						= Spring.GetMapOptions()
 local OptionCount						= {}
 local MapOptionCount					= 0
 local currentSection					= "graphics"
+local currentPreset						= nil
+local busy 								= false
 
 
 --colors
 local cLight 							= {1,1,1,1}
+local cLight2 							= {0.9,0.9,1,0.4}
 local cWhite 							= {1,1,1,1}
 local cButton							= {0.8,0.8,0.8,1}
 local cSelect							= {0.4, 0.4, 0.8, 1}
@@ -109,6 +114,7 @@ local cYellow2							= {0.8, 0.8, 0.2, 0.3}
 local cRow								= {0.2,0.6,0.9,0.1}
 local cBorder							= {0, 0, 0, 0.6}
 local cAbove							= {0.8,0.8,0,0.5}
+local cText								= {0.8,0.8,0.4,0.55}
 
 
 --------------------------------------------------------------------------------			 
@@ -531,6 +537,28 @@ function InitButtons()
 	ButtonClose["x2"] 			= ButtonClose["x1"] + 60
 	ButtonClose["y2"] 			= posY + 50
 	
+	local row = 0
+	local column = 0
+	local w = width/3.66
+	local h = w
+	local b = 60
+	local m = 50
+			
+	for i, button in ipairs(Presets) do
+		button.above 			= false
+		button.x1				= Panel["main"]["x1"] + column * w + 100
+		button.x2				= button.x1 + w - b
+		button.y1				= Panel["main"]["y2"] - row * h - 230 - row*m
+		button.y2				= button.y1 + h - b
+		
+		if column < 2 then
+			column = column +1
+		else
+			column = 0
+			row = row +1
+		end
+	end
+	
 end
 
 --------------------------------------------------------------------------------			 
@@ -924,6 +952,44 @@ local function drawSettings()
 	
 	end
 	
+	-- Presets
+	
+		if currentSection == 'presets' then
+			
+			for _,preset in pairs(Presets) do
+								
+				myFontBig:Begin()
+				myFontBig:SetTextColor(cWhite)
+				myFontBig:Print(preset.label, (preset.x1+preset.x2)/2, preset.y1-30,14,'dcs')
+				myFontBig:End()
+				
+				myFont:Begin()
+				myFont:SetTextColor(cText)
+				myFont:Print(preset.desc, preset.x1, preset.y1-45,10,'do')
+				myFont:Print(preset.desc2, preset.x1, preset.y1-60,10,'do')
+				myFont:Print(#preset.widgets .. " widgets and " .. #preset.settings .. " settings", preset.x1, preset.y1-75,10,'do')
+				myFont:End()
+				
+				if preset.mouse then
+					gl.Color(cLight2)
+				else
+					gl.Color(cDark)
+				end
+				RectRound(preset.x1,preset.y1,preset.x2,preset.y2,4)
+				
+				gl.Texture(preset.image)
+				if preset.label == currentPreset then
+					gl.Color(cWhite)
+				else
+					gl.Color(cYellow)
+				end
+				gl.TexRect(preset.x1,preset.y1,preset.x2,preset.y2)
+				gl.Texture(false)
+				
+				
+			end
+			
+		end
 	
 	-- Buttons
 	
@@ -942,7 +1008,6 @@ local function drawSettings()
 	-- other
 	for _,button in pairs(Button) do
 		if currentSection == button["section"] then
-			
 			myFont:Begin()
 			if button["mouse"] then
 				myFont:SetTextColor(cLight)
@@ -1048,6 +1113,10 @@ local function drawIsAbove(x,y)
 		button["mouse"] = false
 	end
 	
+	for _,button in pairs(Presets) do
+		button["mouse"] = false
+	end
+	
 	ButtonClose.above = false
 	
 	for _,button in pairs(Section) do
@@ -1057,6 +1126,12 @@ local function drawIsAbove(x,y)
 		end
 	end
 	
+	for _,button in pairs(Presets) do
+		if IsOnButton(x, y, button["x1"],button["y1"],button["x2"],button["y2"]) then
+			button["mouse"] = true
+			return true
+		end
+	end
 	
 	for _,button in pairs(Button) do
 		if IsOnButton(x, y, button["x1"],button["y1"],button["x2"],button["y2"]) then
@@ -1225,7 +1300,9 @@ function widget:MousePress(x, y, button)
 							PlaySoundFile(sndButtonOn,1.0,0,0,0,0,0,0,'userinterface')
 						else
 							PlaySoundFile(sndButtonOff,1.0,0,0,0,0,0,0,'userinterface')
-						end		
+						end
+						currentPreset = nil
+						
 						if button.value then
 							button.deaction[1](button.deaction[2],button.deaction[3])
 						else
@@ -1270,6 +1347,38 @@ function widget:MousePress(x, y, button)
 			end	
 		end
 		
+		local myName = widget:GetInfo().name
+		
+		for _,button in pairs(Presets) do
+						
+			if IsOnButton(x, y, button["x1"],button["y1"],button["x2"],button["y2"]) then
+				PlaySoundFile(sndButtonOff,4.0,0,0,0,0,0,0,'userinterface')
+				InitButtons()				
+				
+				if button.widgets and #button.widgets > 0 then
+					
+					Echo("Loading preset: " .. button.label)
+					for name,data in pairs(widgetHandler.knownWidgets) do
+						--Echo("Processing widget:",name,data)
+						if name ~= myName then
+							widgetHandler:DisableWidget(name)
+						end
+					end
+					
+					for _,wname in pairs (button.widgets) do
+						widgetHandler:EnableWidget(wname)
+					end
+					
+					widgetHandler:SaveConfigData()
+					Echo("... Done!")
+					PlaySoundFile(sndButtonDone,4.0,0,0,0,0,0,0,'userinterface')
+					currentPreset = button.label
+				end
+				
+				return true
+			end	
+		end
+		
 		
 		if IsOnButton(x, y, ButtonClose["x1"],ButtonClose["y1"],ButtonClose["x2"],ButtonClose["y2"]) then
 			PlaySoundFile(sndButtonOff,1.0,0,0,0,0,0,0,'userinterface')
@@ -1309,9 +1418,11 @@ function widget:MouseRelease(x, y, button)
 								button.action[1](button.action[2],button.action[3])
 							end
 							PlaySoundFile(sndButtonSlide,1.0,0,0,0,0,0,0,'userinterface')
+							currentPreset = nil
 						elseif button.action and #button.action == 2 then
 							button.action[1](button.action[2],button.value)
 							PlaySoundFile(sndButtonSlide,1.0,0,0,0,0,0,0,'userinterface')
+							currentPreset = nil
 						end
 					end
 					return true
@@ -1326,9 +1437,12 @@ function widget:MouseRelease(x, y, button)
 							else
 								button.action[1](button.action[2],button.action[3])
 							end
+							
 						end
 						
-						PlaySoundFile(sndButtonSlide,1.0,0,0,0,0,0,0,'userinterface')							
+						PlaySoundFile(sndButtonSlide,1.0,0,0,0,0,0,0,'userinterface')
+						currentPreset = nil						
+						
 					else
 						button.newValue = button.value
 					end						
@@ -1347,9 +1461,6 @@ function widget:KeyPress(key, mods, isRepeat)
 		showModOptions = false
 		showMapOptions = false
 		showSettings = false
-		return false
-	elseif key == 0x124 and mods.ctrl then -- CTRL-F11
-		showSettings = true
 		return false
 	end
 	return false
