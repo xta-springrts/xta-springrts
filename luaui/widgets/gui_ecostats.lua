@@ -5,7 +5,7 @@ do
 
 ----------------------------------------------------------------------------------------------------------------------------
 -- Changelog
--- Version 2-0
+-- Version 2.0
 -- Fix some bugs, like remove dead option not working
 -- Remove kills display on main window (still exists in infotable)
 -- Rounded edges
