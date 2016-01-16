@@ -19,6 +19,7 @@ local CMD_UPGRADE_MEXX						= 31244
 CMD_FACTORYGUARD 							= 37460 
 CMD_BUILDSPEED 								= 33455
 CMD_ENERGYCONVERT 							= 39310
+CMD_DUCK									= 41111
 CMD_CAPTURE									= CMD.CAPTURE
 
 local SetCustomCommandDrawData				= Spring.SetCustomCommandDrawData
@@ -55,6 +56,17 @@ local factoryGuardCmd = {
   params  = { '0', 'Pass none', 'Pass 25%', 'Pass 50%', 'Pass 75%', 'Pass 100%'},
   hidden = true,
 }
+
+local duckCmd	= 	{
+	name 			= 'Duck',
+	action			= "",
+	disabled  		= false,
+	id				= CMD_DUCK,
+	type			= CMDTYPE.ICON_AREA,
+	tooltip			= "Call for  nearby ducks",
+	cursor			= "cursorattack",
+	texture     	= 'luaui/images/options/default.png'
+}	
 
 local function SetFactoryValues(unitID,guardLimit)
 	local nbGuard, nbPass
@@ -170,6 +182,10 @@ function gadget:UnitCreated(unitID, unitDefID, teamID)
 			InsertUnitCmdDesc(unitID, 74, factoryGuardCmd)
 			UpdateFactoryButton(unitID,defaultTeamSetting[teamID] or 0)
 		end
+	end
+	
+	if uD.canGuard and uD.name:find("nano_tower") then
+		InsertUnitCmdDesc(unitID, 66, duckCmd)
 	end
 end
 
