@@ -1,10 +1,16 @@
-local versionNumber = "1.73"
+local versionNumber = "2.0"
 
 do
 ---------------------------------------------------------------------------------------------------
 
 ----------------------------------------------------------------------------------------------------------------------------
 -- Changelog
+-- Version 2-0
+-- Fix some bugs, like remove dead option not working
+-- Remove kills display on main window (still exists in infotable)
+-- Rounded edges
+-- E/M bars fill whole width if resource text is not shown
+
 -- Version 1.72
 -- Put drawfunction in global scope
 -- Small bugfix with amount of players bug
@@ -69,7 +75,7 @@ function widget:GetInfo()
 		name = "Ecostats",
 		desc = "Display team eco",
 		author = "Jools",
-		date = "jan, 2014",
+		date = "jan, 2016",
 		license = "GNU GPL, v2 or later",
 		layer = 99,
 		enabled = false
@@ -134,11 +140,11 @@ local drawList
 local vsx,vsy                    	= gl.GetViewSizes()
 local right							= true
 local widgetHeight					
-local widgetWidth                	= 110
+local widgetWidth                	= 80
 local widgetPosX                 	= vsx-widgetWidth
 local widgetPosY                 	= 600
 local widgetRight			 	    = widgetPosX + widgetWidth
-local tH						 	= 75 -- team row height
+local tH						 	= 55 -- team row height
 local WBadge					 	= 14 -- width of player badge (side icon)
 local iPosX, iPosY
 local InfotablePosX, InfotablePosY	-- Expand bar bottom left coordinates
@@ -158,6 +164,7 @@ local fontPath  		= "LuaUI/Fonts/ebrima.ttf"
 local font2Path  		= "LuaUI/Fonts/ebrima.ttf"
 local myFont	 		= gl.LoadFont("FreeSansBold.otf",textsize, 1.9, 40) --gl.LoadFont(fontPath,textsize,2,20)
 local myFontBig	 		= gl.LoadFont(font2Path,textlarge,5,40)
+local bgcorner			= "luaui/images/bgcorner.png"
 
 local images			= {
 						["arm"]					= "LuaUI/Images/ecostats/arm_default.png",
@@ -187,7 +194,24 @@ local BuilderUnits			= {}
 local UnitBuildPower		= {}
 local AirUnits				= {}
 local MobileUnits			= {}
-			
+
+-- options
+Options = {}
+Options["contrastMore"] = {}
+Options["contrastLess"] = {}
+Options["borders"] = {}
+Options["disable"] = {}
+Options["FPBar1"] = {}
+Options["FPBar2"] = {}
+Options["BPBar1"] = {}
+Options["BPBar2"] = {}
+Options["widthInc"] = {}
+Options["widthDec"] = {}
+Options["heightInc"] = {}
+Options["heightDec"] = {}
+Options["resText"] = {}
+Options["removeDead"] = {}
+	
 ---------------------------------------------------------------------------------------------------
 --  Speed ups
 ---------------------------------------------------------------------------------------------------
@@ -234,7 +258,7 @@ function widget:Shutdown()
 end
 
 function Init()
-	
+	--Echo("Initing ecostats")
 	bestKills = 0
 	worstLosses = 0
 	killCounters = {}
@@ -346,8 +370,8 @@ function Init()
 	
 	updateButtons()
 	UpdateAllies()
-	if not Options.disable then
-		Echo("Ecostats:Options not loaded, using default settings. (This is normal during first run.)")
+	if not Options.configured then
+		Echo("Ecostats: options not loaded, using default settings. (This is normal during first run.)")
 		setDefaults()
 	end
 	
@@ -362,10 +386,10 @@ function Reinit()
 		
 	if (not inSpecMode) and gamestarted then 
 		if widgetWidth < 60 then widgetWidth = 60 end
-		if tH < 50 then tH = 50 end
+		if tH < 30 then tH = 30 end
 	else
 		if widgetWidth <  110 then widgetWidth = 110 end
-		if tH < 75 then tH = 75 end
+		if tH < 30 then tH = 30 end
 	end
 	
 	if maxPlayers == 1 then
@@ -407,46 +431,28 @@ end
 ---------------------------------------------------------------------------------------------------
 
 function setDefaults()
-	Options = {}
-	Options["contrastMore"] = {}
-	Options["contrastLess"] = {}
-	Options["contrast"] = 0.2
-	Options["borders"] = {}
-	Options["borders"]["On"] = false
-	Options["disable"] = {}
-	Options["disable"]["On"] = false
-	Options["FPBar1"] = {}
-	Options["FPBar1"]["On"] = true
-	Options["FPBar2"] = {}
-	Options["FPBar2"]["On"] = true
-	Options["BPBar1"] = {}
-	Options["BPBar1"]["On"] = true
-	Options["BPBar2"] = {}
-	Options["BPBar2"]["On"] = true
-	Options["kills1"] = {}
-	Options["kills1"]["On"] = false
-	Options["kills2"] = {}
-	Options["kills2"]["On"] = true
-	Options["widthInc"] = {}
-	Options["widthDec"] = {}
-	Options["heightInc"] = {}
-	Options["heightDec"] = {}
-	Options["resText"] = {}
-	Options["removeDead"] = {}
-	Options["resText"]["On"] = true
-	Options["removeDead"]["On"] = false
-	vsx,vsy 			= gl.GetViewSizes()
-	widgetWidth 		= 110
-	widgetPosX         	= vsx-widgetWidth
-	widgetPosY         	= 600
-	expandDown         	= true
-	expandLeft         	= true
-	right 				= true
-	tH					= 60
+	Options["contrast"] 			= 0.2
+	Options["borders"]["On"] 		= false
+	Options["disable"]["On"] 		= false
+	Options["FPBar1"]["On"] 		= true
+	Options["FPBar2"]["On"] 		= true
+	Options["BPBar1"]["On"]	 		= true
+	Options["BPBar2"]["On"] 		= true
+	Options["resText"]["On"] 		= true
+	Options["removeDead"]["On"] 	= true
+	vsx,vsy 						= gl.GetViewSizes()
+	widgetWidth 					= 110
+	widgetPosX         				= vsx-widgetWidth
+	widgetPosY         				= 600
+	expandDown         				= true
+	expandLeft         				= true
+	right 							= true
+	tH								= 56
+	Options["configured"] 			= true
 end
 
 function widget:GetConfigData(data)      -- save
-	--Echo("Saving config data")
+	
 	return {
 		vsx                = vsx,
 		vsy                = vsy,
@@ -456,17 +462,15 @@ function widget:GetConfigData(data)      -- save
 		expandDown         = expandDown,
 		expandLeft         = expandLeft,
 		tH				   = tH,
-		removeDeadOn 	   = Options.removeDead.On,
-		resTextOn 	   	   = Options.resText.On,
-		bordersOn 		   = Options.borders.On,
-		contrast 		   = Options.contrast,
-		disableOn		   = Options.disable.On,
-		FPBar1On		   = Options.FPBar1.On,
-		FPBar2On		   = Options.FPBar2.On,
-		BPBar1On		   = Options.BPBar1.On,
-		BPBar2On		   = Options.BPBar2.On,
-		kills1On 		   = Options.kills1.On,
-		kills2On 		   = Options.kills2.On,
+		removeDeadOn 	   = Options.removeDead and Options.removeDead.On,
+		resTextOn 	   	   = Options.resText and Options.resText.On, 
+		bordersOn 		   = Options.borders and Options.borders.On,
+		contrast 		   = Options.contrast or 0.2,
+		disableOn		   = Options.disable and Options.disable.On,
+		FPBar1On		   = Options.FPBar1 and Options.FPBar1.On,
+		FPBar2On		   = Options.FPBar2 and Options.FPBar2.On,
+		BPBar1On		   = Options.BPBar1 and Options.BPBar1.On,
+		BPBar2On		   = Options.BPBar2 and Options.BPBar2.On,
 		vsx                = vsx,
 		vsy                = vsy,
 		widgetPosX         = widgetPosX,
@@ -476,39 +480,23 @@ function widget:GetConfigData(data)      -- save
 		expandLeft         = expandLeft,
 		right			   = right,
 		tH				   = tH,
+		configured 		   = true
 	}
 end
 
 function widget:SetConfigData(data)      -- load
 	--Echo("Loading config data...")
-	Options = {}
-	Options["contrastMore"] = {}
-	Options["contrastLess"] = {}
+	
 	Options["contrast"] = data.contrast or 0.3
-	Options["borders"] = {}
 	Options["borders"]["On"] = data.bordersOn or false
-	Options["disable"] = {}
 	Options["disable"]["On"] = data.disableOn or false
-	Options["FPBar1"] = {}
 	Options["FPBar1"]["On"] = data.FPBar1On or false
-	Options["FPBar2"] = {}
 	Options["FPBar2"]["On"] = data.FPBar2On or false
-	Options["BPBar1"] = {}
 	Options["BPBar1"]["On"] = data.BPBar1On or false
-	Options["BPBar2"] = {}
 	Options["BPBar2"]["On"] = data.BPBar2On or false
-	Options["kills1"] = {}
-	Options["kills1"]["On"] = data.kills1On or false
-	Options["kills2"] = {}
-	Options["kills2"]["On"] = data.kills2On or false
-	Options["widthInc"] = {}
-	Options["widthDec"] = {}
-	Options["heightInc"] = {}
-	Options["heightDec"] = {}
-	Options["resText"] = {}
-	Options["removeDead"] = {}
 	Options["resText"]["On"] = data.resTextOn or false
 	Options["removeDead"]["On"] = data.removeDeadOn or false
+	
 	vsx					= data.vsx or vsx
 	vsy 				= data.vsy or vsy
 	widgetPosX         	= data.widgetPosX or widgetPosX
@@ -517,6 +505,7 @@ function widget:SetConfigData(data)      -- load
 	expandDown         	= data.expandDown or expandDown
 	expandLeft         	= data.expandLeft or expandLeft
 	tH					= data.tH or tH
+	Options.configured  = data.configured or false
 end
 
 ---------------------------------------------------------------------------------------------------
@@ -620,6 +609,84 @@ end
 
 -- Draw
 
+local function DrawRectRound(px,py,sx,sy,cs)
+	gl.TexCoord(0.8,0.8)
+	gl.Vertex(px+cs, py, 0)
+	gl.Vertex(sx-cs, py, 0)
+	gl.Vertex(sx-cs, sy, 0)
+	gl.Vertex(px+cs, sy, 0)
+	
+	gl.Vertex(px, py+cs, 0)
+	gl.Vertex(px+cs, py+cs, 0)
+	gl.Vertex(px+cs, sy-cs, 0)
+	gl.Vertex(px, sy-cs, 0)
+	
+	gl.Vertex(sx, py+cs, 0)
+	gl.Vertex(sx-cs, py+cs, 0)
+	gl.Vertex(sx-cs, sy-cs, 0)
+	gl.Vertex(sx, sy-cs, 0)
+	
+	local offset = 0.07		-- texture offset, because else gaps could show
+	local o = offset
+	-- top left
+	if py <= 0 or px <= 0 then o = 0.5 else o = offset end
+	gl.TexCoord(o,o)
+	gl.Vertex(px, py, 0)
+	gl.TexCoord(o,1-o)
+	gl.Vertex(px+cs, py, 0)
+	gl.TexCoord(1-o,1-o)
+	gl.Vertex(px+cs, py+cs, 0)
+	gl.TexCoord(1-o,o)
+	gl.Vertex(px, py+cs, 0)
+	-- top right
+	if py <= 0 or sx >= vsx then o = 0.5 else o = offset end
+	gl.TexCoord(o,o)
+	gl.Vertex(sx, py, 0)
+	gl.TexCoord(o,1-o)
+	gl.Vertex(sx-cs, py, 0)
+	gl.TexCoord(1-o,1-o)
+	gl.Vertex(sx-cs, py+cs, 0)
+	gl.TexCoord(1-o,o)
+	gl.Vertex(sx, py+cs, 0)
+	-- bottom left
+	if sy >= vsy or px <= 0 then o = 0.5 else o = offset end
+	gl.TexCoord(o,o)
+	gl.Vertex(px, sy, 0)
+	gl.TexCoord(o,1-o)
+	gl.Vertex(px+cs, sy, 0)
+	gl.TexCoord(1-o,1-o)
+	gl.Vertex(px+cs, sy-cs, 0)
+	gl.TexCoord(1-o,o)
+	gl.Vertex(px, sy-cs, 0)
+	-- bottom right
+	if sy >= vsy or sx >= vsx then o = 0.5 else o = offset end
+	gl.TexCoord(o,o)
+	gl.Vertex(sx, sy, 0)
+	gl.TexCoord(o,1-o)
+	gl.Vertex(sx-cs, sy, 0)
+	gl.TexCoord(1-o,1-o)
+	gl.Vertex(sx-cs, sy-cs, 0)
+	gl.TexCoord(1-o,o)
+	gl.Vertex(sx, sy-cs, 0)
+end
+
+local function RectRound(px,py,sx,sy,cs)
+	cs = cs or 6
+	local px,py,sx,sy,cs = math.floor(px),math.floor(py),math.ceil(sx),math.ceil(sy),math.floor(cs)
+	
+	gl.Texture(bgcorner)
+	gl.BeginEnd(GL.QUADS, DrawRectRound, px,py,sx,sy,cs)
+	gl.Texture(false)
+end
+
+local function DrawBorder(x0, y0, x1, y1, width)
+	glRect(x0, y0, x1, y0 + width)
+	glRect(x0, y1, x1, y1 - width)
+	glRect(x0, y0, x0 + width, y1)
+	glRect(x1, y0, x1 - width, y1)
+	--return RectRound(x0-1, y0-1, x1+1, y1+1,6) 
+end
+
 local function DrawEText(numberE, vOffset)
 	if Options["resText"]["On"] then
 		local label = tconcat({"+",formatRes(numberE)})
@@ -644,93 +711,45 @@ local function DrawEBar(tE,vOffset)-- where tE = team Energy = [0,1]
 	
 	local dx = 15
 	local dy = tH-35
-	glColor(0.3,0.3,0.3)
-	glRect(
-			widgetPosX + dx,
-			widgetPosY + widgetHeight -vOffset+dy,
-			widgetPosX + dx-5 + widgetWidth/2,
-			widgetPosY + widgetHeight -vOffset+dy-1
-			)
+	
+	local x0 = widgetPosX + dx
+	local x1 = Options["resText"]["On"] and widgetPosX + dx + (widgetWidth/2-5) or widgetPosX + (widgetWidth-5)
+	local xe = Options["resText"]["On"] and widgetPosX + dx + tE * (widgetWidth/2-5) or widgetPosX + tE * (widgetWidth-5)
+	
+	local y0 = widgetPosY + widgetHeight -vOffset+dy-1
+	local y1 = widgetPosY + widgetHeight -vOffset+dy-3
+	
 	glColor(1,1,0) --yellow 1
-	glRect(
-			widgetPosX + dx,
-			widgetPosY + widgetHeight -vOffset+dy-1,
-			widgetPosX + dx + tE * (widgetWidth/2-5),
-			widgetPosY + widgetHeight -vOffset+dy-3
-			)
-	glColor(1,0.5,0) --yellow 2
-	glRect(
-			widgetPosX + dx,
-			widgetPosY + widgetHeight -vOffset+dy-3,
-			widgetPosX + dx + tE * (widgetWidth/2-5),
-			widgetPosY + widgetHeight -vOffset+dy-4
-			)
-	glColor(0.3,0.3,0.3)
-	glRect(
-			widgetPosX + dx,
-			widgetPosY + widgetHeight -vOffset+dy-4,
-			widgetPosX + dx-5 + widgetWidth/2,
-			widgetPosY + widgetHeight -vOffset+dy-5
-			)
-	glRect(
-			widgetPosX + dx-5 + widgetWidth/2,
-			widgetPosY + widgetHeight -vOffset+dy,
-			widgetPosX + dx-4 + widgetWidth/2,
-			widgetPosY + widgetHeight -vOffset+dy-5
-			)
-	glRect(
-			widgetPosX + dx-1,
-			widgetPosY + widgetHeight -vOffset+dy,
-			widgetPosX + dx,
-			widgetPosY + widgetHeight -vOffset+dy-5
-			)
+	glRect(x0,y0,xe,y1)	
+	glColor(0.8,0.5,0) --yellow 2
+	glRect(x0,y1-1,xe,y1)
+		
+	glColor(0.6,0.6,0.3,0.5)
+	DrawBorder(x0-1,y0,x1+1,y1-1,1)
 	glColor(1,1,1,1)
 end
 
 local function DrawMBar(tM,vOffset) -- where tM = team Metal = [0,1]
 	local dx = 15
 	local dy = tH-25
-	glColor(0.3,0.3,0.3)
-	glRect(
-			widgetPosX + dx,
-			widgetPosY + widgetHeight -vOffset+dy,
-			widgetPosX + dx-5 + widgetWidth/2,
-			widgetPosY + widgetHeight -vOffset+dy-1
-			)
-	glColor(0.8,0.8,0.8)
-	glRect(
-			widgetPosX + dx,
-			widgetPosY + widgetHeight -vOffset+dy-1,
-			widgetPosX + dx + tM * (widgetWidth/2-5),
-			widgetPosY + widgetHeight -vOffset+dy-3
-			)
-	glColor(0.6,0.6,0.8)
-	glRect(
-			widgetPosX + dx,
-			widgetPosY + widgetHeight -vOffset+dy-3,
-			widgetPosX + dx + tM * (widgetWidth/2-5),
-			widgetPosY + widgetHeight -vOffset+dy-4
-			)
-	glColor(0.3,0.3,0.3)
-	glRect(
-			widgetPosX + dx,
-			widgetPosY + widgetHeight -vOffset+dy-4,
-			widgetPosX + dx-5 + widgetWidth/2,
-			widgetPosY + widgetHeight -vOffset+dy-5
-			)
-	glRect(
-			widgetPosX + dx-5 + widgetWidth/2,
-			widgetPosY + widgetHeight -vOffset+dy,
-			widgetPosX + dx-4 + widgetWidth/2,
-			widgetPosY + widgetHeight -vOffset+dy-5
-			)
-	glRect(
-			widgetPosX + dx-1,
-			widgetPosY + widgetHeight -vOffset+dy,
-			widgetPosX + dx,
-			widgetPosY + widgetHeight -vOffset+dy-5
-			)
-	glColor(1,1,1)
+	
+	local x0 = widgetPosX + dx
+	
+	local x1 = Options["resText"]["On"] and widgetPosX + dx + (widgetWidth/2-5) or widgetPosX + (widgetWidth-5)
+	local xm = Options["resText"]["On"] and widgetPosX + dx + tM * (widgetWidth/2-5) or widgetPosX + tM * (widgetWidth-5)
+	
+	local y0 = widgetPosY + widgetHeight -vOffset+dy-1
+	local y1 = widgetPosY + widgetHeight -vOffset+dy-3
+		
+	glColor(0.8,0.8,0.8,0.9)
+	glRect(x0,y0,xm,y1)		
+	glColor(0.6,0.6,0.8,0.8)
+	
+	glRect(x0,y1-1,xm,y1)
+	
+	glColor(0.5,0.5,0.5,0.5)
+	DrawBorder(x0-1,y0,x1+1,y1-1,1)
+	glColor(1,1,1,1)
 end
 
 local function DrawFPBar(tFP,vOffset,sM)-- where tFP = team Firepower = [0,1]
@@ -876,39 +895,19 @@ local function DrawLossesBar(losthp,vOffset,splits)
 	glColor(1,1,1,1)
 end
 
-local function DrawKillDeathText(kills, losses, vOffset)
-	if inSpecMode then
-		if not Options["kills2"]["On"] then return end
-	else
-		if not Options["kills1"]["On"] then return end
-	end
-	
-	local dx = 6
-	local dy = 68
-	--local len = 1+floor(1+math.log(kills+1)+math.log(losses+1))
-	local len  = 7 * #(tostring(losses))
-	local len2 = 7 * #(tostring(kills))+len
-	glColor(0.8,1,0.8,1)
-	if kills > 0 then glText(kills, widgetPosX + widgetWidth - 15 - dx - len2, widgetPosY + widgetHeight -vOffset+tH-dy+2,textsize) end
-	glColor(0.85,0.85,0.85,0.85)
-	if kills > 0 and losses > 0 then glText("/", widgetPosX  + widgetWidth - 10 - dx - len, widgetPosY + widgetHeight -vOffset+tH-dy+2,textsize) end
-	glColor(1,0.8,0.8,1)
-	if losses > 0 then glText(losses, widgetPosX + widgetWidth - dx - len, widgetPosY + widgetHeight -vOffset+tH-dy+2,textsize) end
-	glColor(1,1,1,1)
-end
-
 local function DrawBackground(posY)
 	local y1 = widgetPosY - posY + widgetHeight - 1
 	local y2 = widgetPosY - posY + tH + widgetHeight - 1
-	glColor(0,0,0,Options["contrast"])                              
-	glRect(widgetPosX,y1, widgetPosX + widgetWidth, y2)
+	
+	
+	glColor(0,0,0,Options["contrast"])
+	RectRound(widgetPosX,y1, widgetPosX + widgetWidth, y2,4)
+	
 	if Options["borders"]["On"] then
-		glColor(0,0,0,1)
-		glRect(widgetPosX,y1 -1 , widgetPosX + widgetWidth, y1) --bottom
-		glRect(widgetPosX,y2 - 1, widgetPosX + widgetWidth, y2) --top
-		glRect(widgetPosX , y1-1, widgetPosX + 1, y2  - 1) --left
-		glRect(widgetPosX + widgetWidth - 1, y1-1, widgetPosX + widgetWidth, y2  - 1)--right
+		glColor(0,0,0,0.66)
+		DrawBorder(widgetPosX,y1, widgetPosX + widgetWidth, y2,1)
 	end
+	
 	if (WG['guishader_api'] ~= nil) then
 		WG['guishader_api'].InsertRect(widgetPosX,y1, widgetPosX + widgetWidth, y2, 'ecostats_'..posY)
 	end
@@ -931,10 +930,7 @@ local function DrawExpandTableBorders(allyID)
 		glColor(0.3,0.3,0.3,1) 	
 	end
 	
-	glRect(x1, y1-1, x2, y1) 						-- lower
-	glRect(x1, y2, x2, y2+1) 						--upper
-	glRect(x1-1, y1, x1, y2) 						--left
-	glRect(x2, y1, x2+1, y2-1)						--right
+	DrawBorder(x1,y1,x2,y2,2)
 end
 
 local function DrawExpandTableButtons(allyID)
@@ -1020,7 +1016,7 @@ local function DrawExpandTable(allyID)
 	
 	
 	glColor(0.1,0.1,0.1,0.85)
-	glRect(x1, y1, x2, y2)
+	RectRound(x1, y1, x2, y2,2)
 	
 	local teamlbl = tconcat({"Team ",tostring(allyID)})
 	
@@ -1347,17 +1343,7 @@ local function DrawOptionRibbon()
 	Options["BPBar2"]["x2"] = x0 + 220 + t
 	Options["BPBar2"]["y2"] = widgetPosY - 220
 	Options["BPBar2"]["y1"] = widgetPosY - 220 - t
-	
-	Options["kills1"]["x1"] = x0 + 180
-	Options["kills1"]["x2"] = x0 + 180 + t
-	Options["kills1"]["y2"] = widgetPosY - 240
-	Options["kills1"]["y1"] = widgetPosY - 240 - t
-	
-	Options["kills2"]["x1"] = x0 + 220
-	Options["kills2"]["x2"] = x0 + 220 + t
-	Options["kills2"]["y2"] = widgetPosY - 240
-	Options["kills2"]["y1"] = widgetPosY - 240 - t
-	
+		
 	Options["removeDead"]["x1"] = x0 + 220
 	Options["removeDead"]["x2"] = x0 + 220 + t
 	Options["removeDead"]["y2"] = widgetPosY - 140
@@ -1370,7 +1356,7 @@ local function DrawOptionRibbon()
 	
 	
 	glColor(0,0,0,0.4)                              -- draws background rectangle
-	glRect(x0,widgetPosY, x1, widgetPosY -h)
+	RectRound(x0,widgetPosY, x1, widgetPosY -h)
 	glColor(0,0,0,1)
 	glRect(x0,widgetPosY, x0+1, widgetPosY-h)
 	glRect(x1 - 1,widgetPosY, x1, widgetPosY-h)
@@ -1407,7 +1393,6 @@ local function DrawOptionRibbon()
 	glText("Disable for non-spectators:", x0+5, widgetPosY - 110,textsize)
 	glText("Show firepower bar:", x0+5, widgetPosY - 210,textsize)
 	glText("Show buildpower bar:", x0+5, widgetPosY - 230,textsize)
-	glText("Show kills and losses:", x0+5, widgetPosY - 250,textsize)
 	glText("Show resource text:", x0+5, widgetPosY - 170,textsize)
 	glText("Remove dead teams:", x0+5, widgetPosY - 150,textsize)
 	glText("(Drag window to reposition)", x0+35, widgetPosY - 280,textsize)
@@ -1473,23 +1458,7 @@ local function DrawOptionRibbon()
 		Options["BPBar1"]["x2"],
 		Options["BPBar1"]["y2"]
 		)
-	Options["kills1"]["On"] = false
-	glColor(0.8,0.4,0.4,0.5)
-	glText("(N/A)", x0+170, widgetPosY - 250,textsize)
-	glColor(1,1,1,1)
-	
-	if Options["kills2"]["On"] then
-		glTexture(images["checkboxon"])
-	else
-		glTexture(images["checkboxoff"])
-	end
-	glTexRect(
-		Options["kills2"]["x1"],
-		Options["kills2"]["y1"],
-		Options["kills2"]["x2"],
-		Options["kills2"]["y2"]
-		)
-		
+			
 	if Options["resText"]["On"] then
 		glTexture(images["checkboxon"])
 	else
@@ -1691,8 +1660,10 @@ local function drawListStandard()
 	
 	if not gamestarted then updateButtons() end
 	
-	for _, data in ipairs(allyData) do
+	for i, data in pairs(allyData) do
 		local aID = data.aID
+		
+		if not aID then allyData[i] = nil return end
 		
 		if data.exists and isTeamReal(aID) and (aID == myAllyID or inSpecMode) and (aID ~= gaiaAllyID or haveZombies) then
 				
@@ -1712,11 +1683,14 @@ local function drawListStandard()
 	
 	splits = floor(0.001*maxHP/widgetWidth)
 
-	for _, data in ipairs(allyData) do
+	for i, data in pairs(allyData) do
 		local aID = data.aID
+	
+		if not aID then allyData[i] = nil return end
 		
+		if not data.drawpos then updateButtons() end
 		local drawpos = data.drawpos
-		
+				
 		if data.exists and drawpos and #(data.teams) > 0 and (aID == Spring.GetMyAllyTeamID() or inSpecMode) and (aID ~= gaiaAllyID or haveZombies) then
 			
 			if not data["isAlive"] then
@@ -1730,7 +1704,6 @@ local function drawListStandard()
 			if data["isAlive"] and t > 5 and gamestarted and not gameover then
 				DrawEBar(data["tE"]/maxEnergy,posy)
 				DrawEText(data["tE"],posy)
-				DrawKillDeathText(data["kills"],data["losses"],posy)
 				DrawKillBar(data["killedhp"],posy,splits)
 				DrawLossesBar(data["losthp"],posy,splits)
 			else
@@ -1780,7 +1753,7 @@ end
 
 function UpdateAllTeams()
 
-	for _,data in ipairs (allyData) do
+	for _,data in pairs (allyData) do
 		for _,teamID in pairs(data.teams) do
 			if inSpecMode or teamData[teamID].allyID == myAllyID then
 				setTeamTable(teamID)
@@ -1791,7 +1764,7 @@ function UpdateAllTeams()
 end
 
 function UpdateAllies()
-	for _, data in ipairs (allyData) do
+	for _, data in pairs (allyData) do
 		
 		local allyID = data.aID
 		if inSpecMode then
@@ -1833,7 +1806,7 @@ end
 
 function setTeamTable(teamID)
 	
-	local side, aID, isDead, commanderAlive, minc, einc, kills, losses, x, y, kills2, losses2, leaderName, leaderID, active, unitCount, spectator, country, rank
+	local side, aID, isDead, commanderAlive, minc, einc, kills, losses, x, y, leaderName, leaderID, active, unitCount, spectator, country, rank
 	
 	_,leaderID,isDead,isAI,side,aID,_,_ 				= Spring.GetTeamInfo(teamID)
 	leaderName,active,spectator,_,_,_,_,country,rank	= Spring.GetPlayerInfo(leaderID)
@@ -1854,7 +1827,6 @@ function setTeamTable(teamID)
 		tblue = tblue + 0.25
 	end
 	
-	kills2,losses2 				= Spring.GetTeamUnitStats(teamID)
 	_,_,_,minc 					= Spring.GetTeamResources(teamID,"metal")
 	_,_,_,einc 					= Spring.GetTeamResources(teamID,"energy")
 	x,_,y 						= Spring.GetTeamStartPosition(teamID)
@@ -1886,8 +1858,6 @@ function setTeamTable(teamID)
 	teamData[teamID]["einc"] 			= einc
 	teamData[teamID]["kills"]			= kills
 	teamData[teamID]["losses"]			= losses
-	teamData[teamID]["kills2"]			= kills2
-	teamData[teamID]["losses2"]			= losses2
 	teamData[teamID]["killedhp"]		= killedhp
 	teamData[teamID]["losthp"]			= losthp
 	teamData[teamID]["leaderID"]		= leaderID
@@ -1910,6 +1880,7 @@ function setAllyData(allyID)
 	
 	
 	if not allyData[index] then
+		
 		allyData[index] = {}
 		local teamList = Spring.GetTeamList(allyID)
 		allyData[index]["teams"] = teamList
@@ -1926,6 +1897,10 @@ function setAllyData(allyID)
 			setTeamTable(tID)
 		end
 	end
+	
+	if not isTeamAlive(allyID) and Options["removeDead"]["On"] then 
+		allyData[index] = nil
+	return end
 	
 	allyData[index]["teams"]			= teamList
 	allyData[index]["tE"] 				= getTeamSum(index,"einc")
@@ -1951,10 +1926,11 @@ function setAllyData(allyID)
 	allyData[index]["exists"]			= #teamList > 0
 	
 	if Options["removeDead"]["On"] then
-		allyData[index] = nil
+		if not allyData[index]["isAlive"] then
+			allyData[index] = nil
+		end
 	end
 	
-
 end
 
 function getTeamSum(allyIndex,param)
@@ -1995,7 +1971,7 @@ end
 function getNbTeams()
 	local nbTeams = 0
 	
-	for _,data in ipairs (allyData) do
+	for _,data in pairs (allyData) do
 		if #(data.teams) > 0 then nbTeams = nbTeams + 1 end
 	end
 	return nbTeams
@@ -2004,7 +1980,7 @@ end
 function getMaxPlayers()
 	local maxPlayers = 0
 	local myNum
-	for _,data in ipairs(allyData) do
+	for _,data in pairs(allyData) do
 		
 		myNum = #data.teams
 		if myNum > maxPlayers then maxPlayers = myNum end
@@ -2234,12 +2210,14 @@ function updateButtons()
 		
 	local drawpos = 0
 	
-	for _, data in ipairs(allyData) do
+	for i, data in pairs(allyData) do
 		local allyID = data.aID
+		
+		if not allyID then allyData[i] = nil return end
 		
 		if allyID and (allyID ~= gaiaAllyID or haveZombies) then 
 			
-			local w1 = 14
+			local w1 = 10
 			local x1, y1, x2, y2
 			local nbPlayers = #data.teams
 			maxPlayers = getMaxPlayers()
@@ -2325,6 +2303,7 @@ function updateButtons()
 		if isTeamReal(allyID) and (allyID == Spring.GetMyAllyTeamID() or inSpecMode) then
 			drawpos = drawpos + 1
 		end
+		
 		data["drawpos"] = drawpos
 	end
 end
@@ -2555,12 +2534,12 @@ function widget:TweakMousePress(x, y, button)
 		x1 = x0 + 200 + widgetWidth
 
 		if IsOnButton(x, y, Options["contrastLess"]["x1"],Options["contrastLess"]["y1"],Options["contrastLess"]["x2"],Options["contrastLess"]["y2"]) then
-			Options["contrast"] = Options["contrast"] - 0.1
+			Options["contrast"] = Options["contrast"] and Options["contrast"] - 0.1 or 0.2
 			if Options["contrast"] < 0 then Options["contrast"] = 0 end
 			Echo("Contrast = " .. formatRes1000(Options["contrast"]))
 			return true
 		elseif IsOnButton(x, y, Options["contrastMore"]["x1"],Options["contrastMore"]["y1"],Options["contrastMore"]["x2"],Options["contrastMore"]["y2"]) then
-			Options["contrast"] = Options["contrast"] + 0.1
+			Options["contrast"] = Options["contrast"] and Options["contrast"] + 0.1 or 0.2
 			if Options["contrast"] > 1.0 then Options["contrast"] = 1.0 end
 			Echo("Contrast = " .. formatRes1000(Options["contrast"]))
 			return true
@@ -2608,12 +2587,6 @@ function widget:TweakMousePress(x, y, button)
 		elseif IsOnButton(x, y, Options["BPBar2"]["x1"],Options["BPBar2"]["y1"],Options["BPBar2"]["x2"],Options["BPBar2"]["y2"]) then
 			Options["BPBar2"]["On"] = not Options["BPBar2"]["On"]	
 			return true	
-		elseif IsOnButton(x, y, Options["kills1"]["x1"],Options["kills1"]["y1"],Options["kills1"]["x2"],Options["kills1"]["y2"]) then
-			Options["kills1"]["On"] = not Options["kills1"]["On"]	
-			return true		
-		elseif IsOnButton(x, y, Options["kills2"]["x1"],Options["kills2"]["y1"],Options["kills2"]["x2"],Options["kills2"]["y2"]) then
-			Options["kills2"]["On"] = not Options["kills2"]["On"]	
-			return true	
 		elseif IsOnButton(x, y, Options["removeDead"]["x1"],Options["removeDead"]["y1"],Options["removeDead"]["x2"],Options["removeDead"]["y2"]) then
 			Options["removeDead"]["On"] = not Options["removeDead"]["On"]	
 			return true
@@ -2655,7 +2628,7 @@ end
 
 function widget:MouseMove(x, y, dx, dy, button)
 	if pressedExpandMove then
-		for _,data in ipairs (allyData) do
+		for _,data in pairs (allyData) do
 			local allyID = data.aID
 			if data.exists then
 				if Button["info"][allyID]["click"] then nbPlayers = #(data.teams) end
@@ -2764,7 +2737,7 @@ function widget:MousePress(x, y, button)
 						for _, commanderID in ipairs (comTable) do
 							com  = Spring.GetTeamUnitsByDefs(teamID,commanderID)[1] or com
 						end
-			
+						
 						if com then
 			
 							local cx, cy, cz
@@ -2805,7 +2778,7 @@ function widget:MousePress(x, y, button)
 		end	
 	
 		if pressedExpand then
-			for _,data in ipairs (allyData) do
+			for _,data in pairs (allyData) do
 				if data.exists then
 					local allyID = data.aID
 					local x15 = iPosX[allyID]
@@ -2836,8 +2809,9 @@ function widget:MousePress(x, y, button)
 		local x5, y5, x6, y6
 		local w
 		
-		for _,data in ipairs (allyData) do
+		for j,data in pairs (allyData) do
 			local allyID = data.aID
+			
 			if data.exists then
 				if allyID ~= gaiaAllyID or haveZombies then
 					w = 180 + cW * #data.teams
@@ -2862,7 +2836,7 @@ function widget:MousePress(x, y, button)
 		end
 		
 		-- second loop is needed for drag detection, because otherwise it returns true too soon
-		for _,data in ipairs (allyData) do
+		for _,data in pairs (allyData) do
 			local allyID = data.aID
 			if data.exists then
 				if IsOnButton(x,y,widgetPosX,widgetPosY,widgetPosX+widgetWidth,widgetPosY+widgetHeight) then
@@ -2965,10 +2939,8 @@ end
 ---------------------------------------------------------------------------------------------------
 		
 function makeStandardList()
-	local frame = GetGameFrame()
-	
+		
 	if (drawList) then gl.DeleteList(drawList) end
-	
 	drawList = gl.CreateList(drawListStandard)	
 end
 
@@ -2993,63 +2965,67 @@ function widget:DrawScreen()
 	
 	local t = GetGameSeconds()
 		
-	for _, data in pairs(allyData) do
-			local aID = data.aID
-			local drawpos = data.drawpos
+	for i, data in pairs(allyData) do
+		
+		local aID = data.aID
+		if not aID then allyData[i] = nil return end
+		
+		local drawpos = data.drawpos
+		
+		if data.exists and drawpos and (aID == myAllyID or inSpecMode) and (aID ~= gaiaAllyID or haveZombies)then
 			
-			if data.exists and drawpos and (aID == myAllyID or inSpecMode) and (aID ~= gaiaAllyID or haveZombies)then
-				
-				local posy = tH*(drawpos)
-				local label, isAlive, hasCom
-				
-				-- Infobutton
+			local posy = tH*(drawpos)
+			local label, isAlive, hasCom
+			
+			-- Infobutton
+			if Button["info"][aID] then
 				if not Button["info"][aID]["click"] then
 					DrawInfoButton(aID, Button["info"][aID]["mouse"],right,false)
 				else
 					DrawInfoButton(aID, Button["info"][aID]["mouse"],right,true)
 				end
-				
+			
 				-- Expand table border and buttons
 				if Button["info"][aID]["click"] and pressedExpand then
 					DrawExpandTableBorders(aID)
 					DrawExpandTableButtons(aID)
 				end
-				
-				-- Player faction images
-				for i, tID  in pairs (data.teams) do
-					if tID ~= gaiaID or haveZombies then
-						
-						local tData = teamData[tID]
-						local r = tData.red or 1
-						local g = tData.green or 1
-						local b = tData.blue or 1	
-						local alpha, sideImg
-						local side = tData.side
-						local posx = WBadge*(i-1)
-						local isZombie = haveZombies and tID == gaiaID
-						sideImg = images[side] or images["default"]
-						if isZombie then sideImg = images["zombie"] end
-						
-						data["isAlive"] = not tData.isDead
-						hasCom = tData.hasCom
-										
-						if GetGameSeconds() > 0 then
-							if not tData.isDead then
-								alpha = tData.active and 1 or 0.3
-								DrawSideImage(sideImg,posx,posy, r, g, b,alpha,not hasCom,Button["player"][tID]["mouse"],t, false,isZombie)
-							else
-								alpha = 0.8
-								sideImg = images["dead"]
-								
-								DrawSideImage(sideImg,posx,posy, r, g, b,alpha,true,Button["player"][tID]["mouse"],t, true,isZombie) --dead, big icon
-							end
+			end
+			-- Player faction images
+			for i, tID  in pairs (data.teams) do
+				if tID ~= gaiaID or haveZombies then
+					
+					local tData = teamData[tID]
+					local r = tData.red or 1
+					local g = tData.green or 1
+					local b = tData.blue or 1	
+					local alpha, sideImg
+					local side = tData.side
+					local posx = WBadge*(i-1)
+					local isZombie = haveZombies and tID == gaiaID
+					sideImg = images[side] or images["default"]
+					if isZombie then sideImg = images["zombie"] end
+					
+					data["isAlive"] = not tData.isDead
+					hasCom = tData.hasCom
+									
+					if GetGameSeconds() > 0 then
+						if not tData.isDead then
+							alpha = tData.active and 1 or 0.3
+							DrawSideImage(sideImg,posx,posy, r, g, b,alpha,not hasCom,Button["player"][tID]["mouse"],t, false,isZombie)
 						else
-							DrawBox( posx, posy, r, g, b)
+							alpha = 0.8
+							sideImg = images["dead"]
+							
+							DrawSideImage(sideImg,posx,posy, r, g, b,alpha,true,Button["player"][tID]["mouse"],t, true,isZombie) --dead, big icon
 						end
+					else
+						DrawBox( posx, posy, r, g, b)
 					end
 				end
 			end
 		end
+	end
 	
 end
 
