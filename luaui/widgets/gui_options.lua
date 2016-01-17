@@ -73,6 +73,8 @@ local sndButtonDone						= 'sounds/butmain.wav'
 -- other
 local ButtonClose		 				= {}
 local Panel					  			= {}
+local FirstButtonYes					= {}
+local FirstButtonNo						= {}
 
 -- variables
 
@@ -93,8 +95,7 @@ local OptionCount						= {}
 local MapOptionCount					= 0
 local currentSection					= "graphics"
 local currentPreset						= nil
-local busy 								= false
-
+local configured						= false
 
 --colors
 local cLight 							= {1,1,1,1}
@@ -115,6 +116,7 @@ local cRow								= {0.2,0.6,0.9,0.1}
 local cBorder							= {0, 0, 0, 0.6}
 local cAbove							= {0.8,0.8,0,0.5}
 local cText								= {0.8,0.8,0.4,0.55}
+local cText2							= {0.8,0.8,0.6,0.75}
 
 
 --------------------------------------------------------------------------------			 
@@ -181,6 +183,7 @@ function widget:Initialize()
 	
 	Panel["main"]					= {}
 	Panel["info"]					= {} -- info screen with mod options
+	Panel["firsttimer"]				= {} -- info screen with mod options
 	InitButtons()
 	
 	
@@ -483,6 +486,7 @@ function widget:Initialize()
 			value	= value or "N/A",
 		}
 	end
+
 end
 
 function updateHeights()
@@ -537,13 +541,31 @@ function InitButtons()
 	ButtonClose["x2"] 			= ButtonClose["x1"] + 60
 	ButtonClose["y2"] 			= posY + 50
 	
+	Panel["firsttimer"]["x1"]	= 400		
+	Panel["firsttimer"]["x2"]	= 800
+	Panel["firsttimer"]["y1"]	= 440
+	Panel["firsttimer"]["y2"]	= 600
+	
 	local row = 0
 	local column = 0
 	local w = width/3.66
 	local h = w
 	local b = 60
 	local m = 50
-			
+	
+	FirstButtonYes["x1"]		= Panel["firsttimer"]["x1"] + 80
+	FirstButtonYes["x2"]		= FirstButtonYes["x1"] + 100
+	FirstButtonYes["y1"]		= Panel["firsttimer"]["y1"] + 20
+	FirstButtonYes["y2"]		= FirstButtonYes["y1"] + 20
+	FirstButtonYes["label"]		= "Yes, please!"
+	
+	FirstButtonNo["x2"]			= Panel["firsttimer"]["x2"] - 80
+	FirstButtonNo["x1"]			= FirstButtonNo["x2"] - 100
+	FirstButtonNo["y1"]			= Panel["firsttimer"]["y1"] + 20
+	FirstButtonNo["y2"]			= FirstButtonNo["y1"] + 20
+	FirstButtonNo["label"]		= "Not now."
+	
+	
 	for i, button in ipairs(Presets) do
 		button.above 			= false
 		button.x1				= Panel["main"]["x1"] + column * w + 100
@@ -1149,6 +1171,52 @@ end
 
 function widget:DrawScreen()
 	if (not Spring.IsGUIHidden()) then
+	
+		if not configured then
+			-- first time message
+			
+			--border
+			gl.Color(cBorder)
+			DrawBorder(Panel["firsttimer"]["x1"],Panel["firsttimer"]["y1"], Panel["firsttimer"]["x2"], Panel["firsttimer"]["y2"])
+	
+			--background panel
+			gl.Color(cBack)
+			RectRound(Panel["firsttimer"]["x1"],Panel["firsttimer"]["y1"], Panel["firsttimer"]["x2"], Panel["firsttimer"]["y2"])
+			
+			--buttons
+			if FirstButtonYes.mouse then 
+				gl.Color(cAbove)
+			else
+				gl.Color(cSection)
+			end
+			
+			RectRound(FirstButtonYes["x1"],FirstButtonYes["y1"], FirstButtonYes["x2"], FirstButtonYes["y2"])
+			DrawBorder(FirstButtonYes["x1"],FirstButtonYes["y1"], FirstButtonYes["x2"], FirstButtonYes["y2"])
+			
+			if FirstButtonNo.mouse then 
+				gl.Color(cAbove)
+			else
+				gl.Color(cSection)
+			end
+			RectRound(FirstButtonNo["x1"],FirstButtonNo["y1"], FirstButtonNo["x2"], FirstButtonNo["y2"])
+			DrawBorder(FirstButtonNo["x1"],FirstButtonNo["y1"], FirstButtonNo["x2"], FirstButtonNo["y2"])
+			
+			myFontBig:Begin()
+			myFontBig:SetTextColor(cWhite)
+			myFontBig:Print("Welcome to XTA!", (Panel["firsttimer"]["x1"]+Panel["firsttimer"]["x2"])/2, Panel["firsttimer"]["y2"]-20,14,'vcs')
+			myFontBig:SetTextColor(cText2)
+			myFontBig:Print("Do you want to select a different layout preset?",Panel["firsttimer"]["x1"] + 20, Panel["firsttimer"]["y2"]-70,14,'do')
+			myFontBig:End()
+			
+			myFont:Begin()
+			myFont:SetTextColor(cWhite)
+			
+			myFont:Print(FirstButtonNo.label,(FirstButtonNo["x1"]+FirstButtonNo["x2"])/2,FirstButtonNo["y1"],12,'dcs')
+			myFont:Print(FirstButtonYes.label,(FirstButtonYes["x1"]+FirstButtonYes["x2"])/2,FirstButtonYes["y1"],12,'dcs')
+			myFont:End()
+			
+		end
+	
 		if showModOptions then
 			drawModOptions()
 		elseif showSettings then
@@ -1163,6 +1231,16 @@ function widget:IsAbove(x,y)
 	if (not Spring.IsGUIHidden()) then
 		if showModOptions or showSettings or showMapOptions then
 			drawIsAbove(x,y)
+		end
+		
+		if not configured then
+			FirstButtonNo["mouse"] = false
+			FirstButtonYes["mouse"] = false
+			if IsOnButton(x, y, FirstButtonNo["x1"],FirstButtonNo["y1"],FirstButtonNo["x2"],FirstButtonNo["y2"]) then
+				FirstButtonNo["mouse"] = true
+			elseif IsOnButton(x, y, FirstButtonYes["x1"],FirstButtonYes["y1"],FirstButtonYes["x2"],FirstButtonYes["y2"]) then
+				FirstButtonYes["mouse"] = true
+			end
 		end
 	end
 	--this callin must be present, otherwise function widget:TweakIsAbove(x,y) isn't called. Maybe a bug in widgethandler.
@@ -1379,12 +1457,23 @@ function widget:MousePress(x, y, button)
 			end	
 		end
 		
-		
 		if IsOnButton(x, y, ButtonClose["x1"],ButtonClose["y1"],ButtonClose["x2"],ButtonClose["y2"]) then
 			PlaySoundFile(sndButtonOff,1.0,0,0,0,0,0,0,'userinterface')
 			showSettings = false
 			showModOptions = false
 			showMapOptions = false
+		end
+	elseif button == 1 and not configured then
+		if IsOnButton(x, y, FirstButtonNo["x1"],FirstButtonNo["y1"],FirstButtonNo["x2"],FirstButtonNo["y2"]) then
+			configured = true
+			InitButtons()
+			PlaySoundFile(sndButtonOff,1.0,0,0,0,0,0,0,'userinterface')
+		elseif IsOnButton(x, y, FirstButtonYes["x1"],FirstButtonYes["y1"],FirstButtonYes["x2"],FirstButtonYes["y2"]) then
+			showSettings = true
+			configured = true
+			currentSection = 'presets'
+			InitButtons()
+			PlaySoundFile(sndButtonOff,1.0,0,0,0,0,0,0,'userinterface')
 		end
 		
 	elseif button == 2 or button == 3 then
@@ -1471,10 +1560,12 @@ function widget:GetConfigData(data)      -- save
 	return {
 			posX         		= posX,
 			posY         		= posY,
+			configured			= configured,
 		}
 	end
 
 function widget:SetConfigData(data)      -- load
+	configured				= data.configured or false
 	posX         			= data.posX or posX
 	posY         			= data.posY or posY
 end
