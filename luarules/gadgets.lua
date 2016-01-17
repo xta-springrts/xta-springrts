@@ -531,7 +531,6 @@ end
 
 
 function gadgetHandler:UpdateGadgetCallIn(name, g)
-	--Spring.Echo("UGC2:",name,g.ghInfo.name)
   local listName = name .. 'List'
   local ciList = self[listName]
   if (ciList) then
@@ -549,7 +548,6 @@ end
 
 
 function gadgetHandler:RemoveGadgetCallIn(name, g)
-	--Spring.Echo("RGC:",name,g.ghInfo.name)
   local listName = name .. 'List'
   local ciList = self[listName]
   if (ciList) then
@@ -1648,9 +1646,9 @@ end
 --  Draw call-ins
 --
 
-function gadgetHandler:Update(deltaTime)
+function gadgetHandler:Update()
   for _,g in ipairs(self.UpdateList) do
-    g:Update(deltaTime)
+    g:Update()
   end
   return
 end
@@ -1680,47 +1678,55 @@ function gadgetHandler:DrawGenesis()
   for _,g in ipairs(self.DrawGenesisList) do
     g:DrawGenesis()
   end
-  return
 end
-
 
 function gadgetHandler:DrawWorld()
   for _,g in ipairs(self.DrawWorldList) do
     g:DrawWorld()
   end
-  return
 end
-
 
 function gadgetHandler:DrawWorldPreUnit()
   for _,g in ipairs(self.DrawWorldPreUnitList) do
     g:DrawWorldPreUnit()
   end
-  return
 end
-
 
 function gadgetHandler:DrawWorldShadow()
   for _,g in ipairs(self.DrawWorldShadowList) do
     g:DrawWorldShadow()
   end
-  return
 end
-
 
 function gadgetHandler:DrawWorldReflection()
   for _,g in ipairs(self.DrawWorldReflectionList) do
     g:DrawWorldReflection()
   end
-  return
 end
-
 
 function gadgetHandler:DrawWorldRefraction()
   for _,g in ipairs(self.DrawWorldRefractionList) do
     g:DrawWorldRefraction()
   end
-  return
+end
+
+
+function gadgetHandler:DrawGroundPostDeferred()
+  for _,g in ipairs(self.DrawGroundPostDeferred) do
+    g:DrawGroundPostDeferred()
+  end
+end
+
+function gadgetHandler:DrawUnitsPostDeferred()
+  for _,g in ipairs(self.DrawUnitsPostDeferred) do
+    g:DrawUnitsPostDeferred()
+  end
+end
+
+function gadgetHandler:DrawFeaturesPostDeferred()
+  for _,g in ipairs(self.DrawFeaturesPostDeferred) do
+    g:DrawFeaturesPostDeferred()
+  end
 end
 
 
@@ -1764,6 +1770,20 @@ end
 function gadgetHandler:KeyRelease(key, mods, label, unicode)
   for _,g in ipairs(self.KeyReleaseList) do
     if (g:KeyRelease(key, mods, label, unicode)) then
+      return true
+    end
+  end
+  return false
+end
+
+
+function gadgetHandler:TextInput(utf8, ...)
+  if (self.tweakMode) then
+    return true
+  end
+
+  for _,g in ipairs(self.TextInputList) do
+    if (g:TextInput(utf8, ...)) then
       return true
     end
   end

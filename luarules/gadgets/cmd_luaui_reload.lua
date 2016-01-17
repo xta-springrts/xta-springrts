@@ -6,7 +6,7 @@ function gadget:GetInfo()
     date      = "Feb 2015",
     license   = "Round Objects",
     layer     = 0,
-    enabled   = true  --  loaded by default?
+    enabled   = true,  --  loaded by default?
   }
 end
 
@@ -15,22 +15,20 @@ if (gadgetHandler:IsSyncedCode()) then
 end
 
 function LuaUIReload(cmd, line, words, playerID)
-	Spring.Echo("LUR:",cmd,line,playerID,Spring.GetMyPlayerID())
+	
     if playerID and playerID==Spring.GetMyPlayerID() then
-        Spring.SendCommands("luaui reload")
+		Spring.SendCommands("luaui reload")
     end
 end
     
 
 function gadget:Initialize()
-	gadgetHandler:AddChatAction('reloadluaui', LuaUIReload, "")
+	gadgetHandler.AddChatAction('reloadluaui', LuaUIReload, "Reloads luaui, as this cannot be done from a widget directly")
 end
 
 function gadget:Shutdown()
-	gadgetHandler:RemoveChatAction('reloadluaui')
+	gadgetHandler.RemoveChatAction('reloadluaui')
 end
-
-
 
 
 --------------------------------------------------------------------------------
