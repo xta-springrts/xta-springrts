@@ -512,7 +512,7 @@ function widget:Shutdown()
 	end
 	
 	if (WG[TN].LastWidget) then
-		Spring.Echo(widget:GetInfo().name..">> last processed widget was \""..WG[TN].LastWidget.."\"") --for debugging
+		Spring.Log("widget",LOG.INFO,widget:GetInfo().name..">> last processed widget was \""..WG[TN].LastWidget.."\"") --for debugging
 	end
 	
 	WG[TN]=nil

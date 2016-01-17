@@ -57,7 +57,7 @@ function widget:Initialize()
     
 	local file = VFS.LoadFile('ctrlpanelImp.txt') 
 	if file then
-		Spring.Echo("RelativeMinimap: found ctrlpanelImp.txt and using its config")
+		Spring.Log("widget",LOG.INFO,"RelativeMinimap: found ctrlpanelImp.txt and using its config")
 		--Spring.Echo(file:find('xIcons'), " AND ",file:find('xIconSize'))
 		local XColsPos = file:find('xIcons')
 		local XSizePos = file:find('xIconSize')
