@@ -972,10 +972,8 @@ function widget:MouseRelease(x, y, mb)
         end
     end
     if buttonID == 1 then
-	  Echo("Reloading LuaUI...")
-	  Spring.PlaySoundFile(sndButton,1.0,0,0,0,0,0,0,'userinterface')
-	  
-      widgetHandler.actionHandler.GotChatMsg("luaui reload",playerID)
+	    Echo("Reloading LuaUI...")
+	    Spring.PlaySoundFile(sndButton,1.0,0,0,0,0,0,0,'userinterface')
 		Spring.SendCommands("luarules reloadluaui")
       return -1
     end

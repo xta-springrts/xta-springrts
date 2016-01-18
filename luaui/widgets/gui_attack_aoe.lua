@@ -687,7 +687,14 @@ function widget:TextCommand(command)
 	end
 	
 	if command:find("-ballistic", 4) then
-		enableBallistic = not enableBallistic
+		if command:find("0", 13) then
+			enableBallistic = false
+		elseif command:find("1", 13) then
+			enableBallistic = true
+		else
+			enableBallistic = not enableBallistic
+		end
+		
 		if enableBallistic then
 			Echo("Attack AoE: trace ballistic impact points")
 			Spring.SetConfigInt("XTA_ShowBallisticTraces",1)

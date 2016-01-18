@@ -194,9 +194,9 @@ local commonConfig = {
 "prevPageSlot 	auto",
 "deadIconSlot 	none",
 "nextPageSlot 	auto",
-"textBorder 	0.002",
-"iconBorder 	0.0015",
-"frameBorder 	0.0015"
+"textBorder 	0.002", --14
+"iconBorder 	0.0015", --15
+"frameBorder 	0.0015" --16
 }
 
 local config = {
@@ -210,33 +210,50 @@ function widget:Initialize()
 	widgetHandler:DisableWidget("Red Build/Order Menu")
 	local X, Y = Spring.GetViewGeometry()
 	
+	local ix = tonumber(Spring.GetConfigInt("XTA_MenuIconsX"))
+	local iy = tonumber(Spring.GetConfigInt("XTA_MenuIconsY"))
+	
 	if (X == 800 and Y == 600) then
-		config = {"xIcons 5", "yIcons 9", "xIconSize 0.044", "yIconSize 0.0586", "yPos 0.14" }
+		config = {ix and "xIcons ".. ix or "xIcons 5", iy and "yIcons ".. iy or "yIcons 9", "xIconSize 0.044", "yIconSize 0.0586", "yPos 0.14" }
 	elseif (X == 1024 and Y == 768) then
-		config = {"xIcons 5", "yIcons 9", "xIconSize 0.0435", "yIconSize 0.0580", "yPos 0.13"}
+		config = {ix and "xIcons ".. ix or "xIcons 5", iy and "yIcons ".. iy or "yIcons 9", "xIconSize 0.0435", "yIconSize 0.0580", "yPos 0.13"}
 	elseif (X == 1152 and Y == 864) then
-		config = {"xIcons 5", "yIcons 9", "xIconSize 0.0435", "yIconSize 0.0580", "yPos 0.13"}
+		config = {ix and "xIcons ".. ix or "xIcons 5", iy and "yIcons ".. iy or "yIcons 9", "xIconSize 0.0435", "yIconSize 0.0580", "yPos 0.13"}
 	elseif (X == 1280 and Y == 800) then
-		config = {"xIcons 5", "yIcons 9", "xIconSize 0.036", "yIconSize 0.0576", "yPos 0.13"}
+		config = {ix and "xIcons ".. ix or "xIcons 5", iy and "yIcons ".. iy or "yIcons 9", "xIconSize 0.036", "yIconSize 0.0576", "yPos 0.13"}
 	elseif (X == 1280 and Y == 960) then
-		config = {"xIcons 5", "yIcons 10", "xIconSize 0.041", "yIconSize 0.0546", "yPos 0.11"}
+		config = {ix and "xIcons ".. ix or "xIcons 5", iy and "yIcons ".. iy or "yIcons 10", "xIconSize 0.041", "yIconSize 0.0546", "yPos 0.11"}
 	elseif (X == 1280 and Y == 1024) then
-		config = {"xIcons 3", "yIcons 9", "xIconSize 0.055", "yIconSize 0.056", "yPos 0.12"}
+		config = {ix and "xIcons ".. ix or "xIcons 3", iy and "yIcons ".. iy or "yIcons 9", "xIconSize 0.055", "yIconSize 0.056", "yPos 0.12"}
 	elseif (X == 1440 and Y == 900) then
-		config = {"xIcons 5", "yIcons 10", "xIconSize 0.035", "yIconSize 0.056", "yPos 0.1"}
+		config = {ix and "xIcons ".. ix or "xIcons 5", iy and "yIcons ".. iy or "yIcons 10", "xIconSize 0.035", "yIconSize 0.056", "yPos 0.1"}
 	elseif (X == 1600 and Y == 1200) then
-		config = {"xIcons 5", "yIcons 10", "xIconSize 0.042", "yIconSize 0.056", "yPos 0.1"}
+		config = {ix and "xIcons ".. ix or "xIcons 5", iy and "yIcons ".. iy or "yIcons 10", "xIconSize 0.042", "yIconSize 0.056", "yPos 0.1"}
 	elseif (X == 1680 and Y == 1050) then
-		config = {"xIcons 5", "yIcons 10", "xIconSize 0.035", "yIconSize 0.056", "yPos 0.1"}
+		config = {ix and "xIcons ".. ix or "xIcons 5", iy and "yIcons ".. iy or "yIcons 10", "xIconSize 0.035", "yIconSize 0.056", "yPos 0.1"}
 	elseif (X == 1920 and Y == 1200) then
-		config = {"xIcons 5", "yIcons 10", "xIconSize 0.035", "yIconSize 0.056", "yPos 0.1"}
+		config = {ix and "xIcons ".. ix or "xIcons 5", iy and "yIcons ".. iy or "yIcons 10", "xIconSize 0.035", "yIconSize 0.056", "yPos 0.1"}
 	else
 		Echo("Control Panel Widget doens't support your " ..X.. "x" ..Y.. " resolution.")
 		Echo("Call back your default Layout.")
 		Shutdown()
 		return
 	end
-
+	
+	local xi 		= tonumber(config[1]:sub(8))
+	local xis 		= X * tonumber(config[3]:sub(11))
+	
+	local idec		= commonConfig[15]:find("%.")
+	local fdec		= commonConfig[16]:find("%.")
+	local ibdec 	= commonConfig[15]:sub(idec) or ".0"
+	local fbdec 	= commonConfig[16]:sub(fdec) or ".0"
+	local ib 		= X * tonumber("0" .. ibdec)
+	local fb 		= X * tonumber("0" .. fbdec)
+	
+	
+	local sizeX = xi * xis + 2 * xi * ib + 2 * fb
+	WG.buildmenuX = sizeX
+	
 	local file = io.open('ctrlpanelImp.txt', 'w')
 
 	for k, v in pairs(commonConfig) do
@@ -265,11 +282,11 @@ end
 	--DrawBackground()
 --end
 
--- function DrawBackground()
-	-- local y1 = 95
-	-- local y2 = 1024
-	-- local x1 = 2
-	-- local x2 = 230
+ --function DrawBackground()
+	 --local y1 = 95
+	 --local y2 = 1024
+	 --local x1 = 2
+	 --local x2 = WG.buildmenuX
 	-- gl.Color(0,0,0,0.1)                              -- draws background rectangle
 	-- gl.Rect(x1,y1,x2,y2)
 	-- gl.Color(0,0,0,0.2)
@@ -278,5 +295,5 @@ end
 	-- gl.Rect(x1-1,y1-1,x2+1,y1)
 	-- gl.Rect(x1-1,y2-1,x2+1,y2)
 	-- gl.Color(1,1,1,1)
--- end
+ --end
 
