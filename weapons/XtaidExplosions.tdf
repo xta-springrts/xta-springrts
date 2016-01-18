@@ -1,0 +1,25 @@
+//Notes, Self Destruction Deals FOUR times the damage and THREE times the AOE of default on Weak explosion Tiers.
+//On strong units Explosion Radius is 5 times the base weak explosion and starts at half of the self D of the weak tier,
+//and multiplies on base weak explosion by Ax2=B and then Bx3.5=?; However Radius stays the same at 5 times of weak.
+//This appears to be the OTA math. Should we stick with this formula?
+
+[VOLCANO_BLAST]
+{
+	name=Atomic Blast Weapon;
+	weaponType=Cannon;
+	turret=1;
+	range=600;
+	reloadtime=3.6;
+	weaponvelocity=150;
+	areaofeffect=500;
+	soundstart=largegun;
+	soundhitdry=xplonuk3;
+	shakemagnitude=24;
+	shakeduration=1.5;
+	explosiongenerator=custom:Volcano;
+	[DAMAGE]
+	{
+		default=5000;
+		group_invincible=1;
+	}
+}

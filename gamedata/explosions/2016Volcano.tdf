@@ -1,0 +1,58 @@
+[Volcano]//Gives better effect
+{
+	useAirLos=0;
+	usedefaultexplosions=0;
+	[HEATRISING] 
+	{
+	    class=CExpGenSpawner;
+		[properties]
+		{
+		pos=0, -70, 0;  
+		delay=0 r 115;				  
+		explosionGenerator=custom:ERUPTVOLCANO;
+		}
+	air=1;
+	water=1;
+	ground=1;
+	count=720;
+	}
+}
+
+[ERUPTVOLCANO]
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+		sizeGrowth=1;
+		sizeMod=1.0;
+		pos=0, 1, 0; 
+		gravity=0, 5.5, 0;
+		
+		colorMap=0.5 0.3 0.1 0.2 0.4 0.3 0.2 0.3 0.0 0.0 0.0 0.01;
+
+		Texture=smokesmall; //smokesmall;
+		airdrag=0.8;
+		
+		particleLifeSpread=80; 
+		particleSpeedSpread=20;  
+		particleSizeSpread=50;   
+		
+		particleLife=1;
+		numParticles=1; 
+		particleSpeed=30; 
+		particleSize=50;
+		
+		
+		
+		emitVector=0.0, 1, 0.0; 
+		emitRot=80;
+		emitRotSpread=5; 
+		directional=0; 
+
+		}
+	air=1;
+	water=1;
+	ground=1;
+	count=1;
+	}
+}

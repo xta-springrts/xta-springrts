@@ -1,0 +1,60 @@
+[UNITINFO]
+	{
+	UnitName=Arm_Tabitha;
+	Version=1;
+	Side=ARM;
+	Objectname=Arm_Tabitha;
+	buildpic=Arm_Tabitha.tga;
+	Designation=ARM-LRNC;
+	Name=Tabitha;
+	Description=EndGame Cannon;
+	FootprintX=5;
+	FootprintZ=5;
+	MaxDamage=33950;//2550
+	BuildCostEnergy=888222;//448222
+	BuildCostMetal=59868;//42168
+	MaxWaterDepth=0;
+	MaxSlope=16;
+	EnergyUse=0;
+	BuildTime=598527;
+	WorkerTime=0;
+	BMcode=0;
+	Builder=0;
+	ThreeD=1;
+	ZBuffer=1;
+	//NoAutoFire=1;
+	SightDistance=575;
+	RadarDistance=0;
+	SoundCategory=ARM_BRTHA;
+	EnergyStorage=0;
+	MetalStorage=0;
+	ExplodeAs=ATOMIC_NUKE;
+	SelfDestructAs=ATOMIC_NUKE;
+	Category=NOTAIR NOTSUB NOTSHIP;
+	TEDClass=FORT;
+	Copyright=Copyright 1997 Humongous Entertainment. All rights reserved.;
+	YardMap=ooooo ooooo ooooo ooooo ooooo;
+	//Corpse=Arm_Tabitha_dead;
+	UnitNumber=16;
+	firestandorders=1;
+	StandingFireOrder=2;
+	canstop=1;
+	ShootMe=1;
+	EnergyMake=0;
+	DefaultMissionType=GUARD_NOMOVE;
+	buildangle=4096;
+	Weapon1=TABITHA_HAMMER;
+	wpri_badTargetCategory=VTOL;
+	OnlyTargetCategory1=NOTAIR;
+	canattack=1;
+	canguard=1;
+	canAttackGround=0;
+	idletime=2200;
+	idleautoheal=2;
+	//iconType=bigstar;
+	CollisionSphereScale=.7;
+
+	collisionVolumeType=cylY;
+	collisionVolumeScales=110 120 110;
+
+	}

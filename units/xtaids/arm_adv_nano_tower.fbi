@@ -1,0 +1,83 @@
+[UNITINFO]
+{
+	Name=Advanced Nano Tower;
+	UnitName=arm_adv_nano_tower;
+	buildpic=arm_adv_nano_tower.png;
+	corpse=arm_adv_nano_tower_dead;
+	
+	//    Required Tags
+	BuildCostEnergy=25060;//12021
+	BuildCostMetal=825;//1650
+	BuildTime=46322;//38774
+	Category=NOTAIR NOTSUB NOTSHIP;
+	Description=Builds Advanced Structures;
+	FootprintX=4;
+	FootprintZ=4;
+	MaxDamage=4020;
+	ObjectName=arm_adv_nano_tower;
+	Side=ARM;
+	SoundCategory=ARM_COM;
+	TEDClass=CNSTR;
+	Commander=0;
+	
+	//    Movement
+	BrakeRate=1.5;
+	movementclass=KBOTSS2;
+	Acceleration=0;
+	CanMove=0;
+	MaxVelocity=0;
+	MaxSlope=13;
+	TurnRate=0;
+	
+	//    Construction
+	BuildDistance=400;
+	Builder=1;
+	WorkerTime=1000;
+	ReclaimSpeed=500;
+	
+	//    Resources
+	EnergyMake=20;
+	EnergyStorage=300;
+	EnergyUse=0;
+	MetalMake=1;
+	MetalStorage=300;
+	
+	//    Abilities
+	CanStop=1;
+	
+	//    Sight/Radar
+	RadarDistance=0;
+	SightDistance=950;
+	
+	//    Weapons
+	explodeas=ATOMIC_SMALLNANO;
+	selfdestructas=ATOMIC_SMALLNANO;
+	SelfDestructCountdown=5;
+	
+	//    Tracks/Flares
+	
+	//    Watersettings
+	MaxWaterDepth=0;
+	
+	//    Misc
+	SmoothAnim=1;
+	Upright=1;
+	Mass=10000;
+	pushResistant=1;
+	
+	//    Not Used By TASpring
+	noautofire=0;
+	unitnumber=9904;
+	canpatrol=1;
+	canguard=1;
+	steeringmode=1;
+	shootme=1;
+	defaultmissiontype=Standby;
+	maneuverleashlength=0;
+	canreclamate=1;
+	CantBeTransported=1;
+	iconType=nano2small;
+	
+	collisionVolumeType=cylY;
+	collisionVolumeScales=80 100 80;
+}

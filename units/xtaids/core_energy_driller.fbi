@@ -110,7 +110,7 @@
 	//*****************
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:reactor_sfx_new;
+	explosiongenerator0=custom:UNITFIRE;
 	}
 
 }

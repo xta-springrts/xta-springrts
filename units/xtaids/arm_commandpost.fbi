@@ -1,0 +1,104 @@
+[UNITINFO]
+{
+	Name=Arm Command Center;
+	UnitName=arm_commandpost;
+	UnitRestricted=1;
+	BUILDPIC=arm_commandpost.png;
+	
+	//    Required Tags
+	BuildCostEnergy=122021;
+	BuildCostMetal=7643;
+	BuildTime=200312;
+	Category=NOTAIR NOTSUB NOTSHIP COMMANDER;
+	Description=Counts as Commander;
+	FootprintX=8;
+	FootprintZ=8;
+	MaxDamage=15000;//10050
+	ObjectName=arm_commandpost;
+	Side=ARM;
+	SoundCategory=ARM_COM;
+	TEDClass=CNSTR;
+	Commander=1;
+	ShowPlayerName=1;
+	//YardMap=OOOOOOOO OOOOOOOO OOOOOOOO OOOOOOOO OOOOOOOO OOOOOOOO OOOOOOOO OOOOOOOO;
+	
+	//    Movement
+	BrakeRate=1.5;
+	movementclass=KBOTSS2;
+	Acceleration=0;
+	CanMove=0;
+	MaxVelocity=0;
+	MaxSlope=13;
+	TurnRate=0;
+	
+	
+	
+	//    Construction
+	BuildDistance=1000;//2410
+	Builder=1;
+	WorkerTime=1000;//200
+	ReclaimSpeed=500;
+	levelGround=false;
+	
+	//    Resources
+	EnergyMake=100;
+	EnergyStorage=10000;
+	EnergyUse=0;
+	MetalMake=4;//4
+	MetalStorage=10000;
+	
+	//    Abilities
+	CanStop=1;
+	canreclamate=1;
+	CantBeTransported=1;
+	Weapon1=ARM_BASE_ROCKET;
+	Weapon2=ARM_BASE_MISSILE;
+	//OnlyTargetCategory1=NOTAIR;
+	//OnlyTargetCategory2=LOWVTOL;
+	
+	//    Sight/Radar
+	RadarDistance=0;
+	SightDistance=1500;
+	
+	//    Weapons
+	ExplodeAs=NUCLEAR_MISSILE;
+	SelfDestructAs=NUCLEAR_MISSILE;
+	SelfDestructCountdown=5;
+	//WeaponMainDir2=0 -1 0;
+	//MaxAngleDif2=228;
+	
+	//    Tracks/Flares
+	
+	//    Watersettings
+	MaxWaterDepth=0;
+	
+	//    Misc
+	SmoothAnim=1;
+	//Upright=1;
+	Corpse=arm_commandpost_dead;
+	HideDamage=1;
+	Mass=10000;
+	pushResistant=1;
+	iconType=arm_commandpost;
+	// resistant to weapons from above
+	//flankingBonusMode=3;
+	//flankingBonusDir= 0 1 0 ;
+	//flankingBonusMax=1.2;	
+	//flankingBonusMin=.6;
+	
+	collisionVolumeType=cylY;
+	collisionVolumeScales=110 190 110;
+	collisionVolumeOffsets=0 -50 0;
+	collisionVolumeTest=0;
+
+	[SFXTypes]
+		{
+		explosiongenerator0=custom:smallrocketsmoke1;
+		}
+	[customparams] 	
+	{
+	iscommander=1;
+	side=arm;
+	//type=automatic;
+	}
+}

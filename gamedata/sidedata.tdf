@@ -630,9 +630,36 @@
 		canbuild31=arm_adv_shipyard;
 		canbuild32=arm_seaplane_platform;
 	}
+	[arm_commandpost]
+	{
+		canbuild1=arm_solar_collector;
+		canbuild2=arm_wind_generator;
+		canbuild3=arm_energy_storage;
+		canbuild4=arm_metal_storage;
+		canbuild5=arm_metal_extractor;
+		canbuild6=arm_metal_maker;
+		canbuild7=arm_kbot_lab;
+		canbuild8=arm_vehicle_plant;
+		canbuild9=arm_aircraft_plant;
+		canbuild10=arm_shipyard;
+		canbuild11=arm_sub_pen;
+		canbuild12=arm_light_laser_tower;
+		canbuild13=arm_radar_tower;
+		canbuild14=arm_floating_radar;
+		canbuild15=arm_sonar_station;
+		canbuild16=arm_tidal_generator;
+		canbuild17=arm_underwater_energy_storage;
+		canbuild18=arm_underwater_metal_storage;
+		canbuild19=arm_underwater_metal_extractor;
+		canbuild20=arm_floating_metal_maker;
+		canbuild21=arm_torpedo_launcher;
+		canbuild22=arm_floating_light_laser_tower;
+		canbuild23=arm_dragons_teeth;
+		canbuild24=armfff;
+	}
 	[arm_mech_lab]
 	{
-		canbuild1=arm_adv_construction_kbot;
+		canbuild1=arm_ht_construction_kbot;
 		canbuild2=arm_bantha;
 		canbuild3=arm_orcone;
 		canbuild4=arm_rhino;
@@ -643,7 +670,41 @@
 		canbuild9=arm_skynite;
 		canbuild10=arm_possum;
 		canbuild11=arm_odin;
-		canbuild12=arm_noruas;
+		canbuild12=arm_fatboy;
+		canbuild13=arm_archangel;
+		canbuild14=arm_noruas;
+	}
+	[arm_ht_construction_kbot]
+	{
+	 	canbuild1=arm_fortification_wall;
+	 	canbuild2=ARMBFORTEW;//xtaids
+		canbuild3=arm_mantle_extractor;
+	 	canbuild4=arm_moho_metal_maker;
+		canbuild5=arm_geothermal_powerplant;
+		canbuild6=arm_fusion_reactor;
+		canbuild7=arm_Quantum_reactor;
+		canbuild8=arm_advanced_radar_tower;
+		canbuild9=arm_radar_jamming_tower;
+		canbuild10=arm_picket;
+		canbuild11=arm_pitbull;
+		canbuild12=arm_flakker;
+		canbuild13=arm_guardian;
+		canbuild14=arm_adv_energy_storage;
+		canbuild15=arm_adv_metal_storage;
+		canbuild16=arm_shield_deflector;
+		canbuild18=arm_annihilator;
+		canbuild19=armarch;//xtaids
+		canbuild20=arm_tabitha;
+		canbuild21=arm_protector;
+		canbuild22=arm_kbot_lab;
+		canbuild23=arm_adv_kbot_lab;
+		canbuild24=arm_mech_lab; //xtaids
+		canbuild25=arm_stunner;
+		canbuild26=arm_retaliator;
+	 	canbuild27=MERCURY;//xtaids
+		canbuild28=arm_vulcan;
+		canbuild30=arm_adv_nano_tower;
+		canbuild31=arm_commandpost;
 	}
 	[arm_u0commander]
 	{

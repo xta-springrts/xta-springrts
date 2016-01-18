@@ -1,0 +1,60 @@
+[UNITINFO] // Generated with TAS Modit v2.2 Beta
+{
+	name=Fatboy;
+	unitname=arm_fatboy;
+	buildcostenergy=36352;
+	buildcostmetal=4163;
+	buildtime=51566;
+	category=ARM KBOT WEAPON NOTAIR NOTSUB MOBILE  ;
+	description=Barely Mobile Turret;
+	footprintx=3;
+	footprintz=3;
+	maxdamage=5833;//+12000
+	objectname=arm_fatboy;
+	side=ARM;
+	soundcategory=MAVERICK;
+	tedclass=KBOT;
+	brakerate=0.262;
+	movementclass=KBOTSf3;
+	acceleration=0.556;
+	canmove=1;
+	maxvelocity=0.7;
+	turnrate=534;
+	builder=0;
+	workertime=0;
+	canattack=1;
+	canstop=1;
+	idletime=1800;
+	sightdistance=620;
+	weapon1=ARMFATBOY_GUN;
+	wpri_badtargetcategory=VTOL;
+	explodeas=ATOMIC_BLASTPEN;
+	selfdestructas=CRAWL_BLASTSML;
+	maxwaterdepth=22;
+	corpse=arm_fatboy_DEAD;
+	smoothanim=1;
+	upright=1;
+	buildpic=arm_fatboy.DDS;
+	bmcode=1;
+	noautofire=0;
+	seismicsignature=0;
+	firestandorders=1;
+	standingfireorder=2;
+	defaultmissiontype=Standby;
+	canpatrol=1;
+	mobilestandorders=1;
+	standingmoveorder=1;
+	canguard=1;
+	steeringmode=2;
+	maneuverleashlength=640;
+	wter_badtargetcategory=SUB;
+	//mass=200000;
+	[SFXTypes]
+	{
+		explosiongenerator0=custom:dgunflare;
+	}
+	[customParams] 
+	{
+		canAreaAttack=1;
+	}
+}

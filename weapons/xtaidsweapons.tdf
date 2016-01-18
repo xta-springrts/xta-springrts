@@ -1,4 +1,171 @@
 
+[ARCHANGEL_FLAK]
+{
+	name=FLAK Cannon;
+	explosiongenerator=custom:RedPlasma;
+	energypershot=50;
+	rgbcolor=1.0 0.9 0.5;
+	stages=8;
+  	separation=0.45;
+  	alphadecay=0.1;
+  	sizedecay=-0.10;
+  	nogap=1;
+	size=3.5;
+	weaponType=Cannon;
+	turret=1;
+	range=850;
+	reloadtime=0.6;
+	weaponvelocity=1550; //550
+	areaofeffect=175;
+	startsmoke=1;
+	accuracy=600;
+	SoundStart=Cannon3;
+	SoundHit=XploMed4;
+	burnblow=1;
+	mygravity=0.001;
+	[DAMAGE]
+	{
+		default=100;
+		//group_ships=275;
+		//group_large_ships=355;
+		//group_invincible=1;
+		group_landair=500;
+	}
+}
+
+[TABITHA_HAMMER]
+{
+	name=NUKE Cannon;
+	rgbcolor=1 0.4 0.2;
+	stages=10;
+	separation=0.45;
+	alphadecay=0.3;
+	sizedecay=-0.15;
+	nogap=1;
+	size=4;
+	weaponType=Cannon;
+	turret=1;
+	range=11450;
+	explosiongenerator=custom:SMALL_NUKE_EXPLOSION_FX;
+	cegTag=NUCKLEARNANO;
+	GroundBounce=0;
+	WaterBounce=0;
+	NumBounce=1;
+	BounceSlip=1.01;
+	BounceRebound=0.8;
+	//bounceExplosionGenerator=custom:BERTHASHOT;
+	reloadtime=15;
+	weaponvelocity=800; //400
+	areaofeffect=450;
+	soundstart=armcomgun;
+	soundhitdry=armcomhit;
+	accuracy=600;
+	movingaccuracy=1200;
+	tolerance=500;
+	//minbarrelangle=-40;
+	startsmoke=1;
+	edgeeffectiveness=0.01;
+	energypershot=12500;
+	//color=3;
+	[DAMAGE]
+	{
+		default=6500;
+		group_ships=7200;
+		group_large_ships=8400;
+		group_invincible=1;
+		group_commanders=1400;
+	}
+}
+
+[ARM_PITBULL_ANNIHILATOR]
+{
+	name=Annihilator Weapon;
+	Weapontype=BeamLaser;
+	turret=1;
+	//minbarrelangle=-40;
+	pulseSpeed=7.0;
+	SoundTrigger=1;
+	LargeBeamLaser=1;
+	Intensity=0.001;
+	thickness=6.5;
+	beamtime=1;
+	beamdecay=0.9;
+	beamttl=10;
+	hardStop=0;
+	range=750;
+	reloadtime=6;
+	targetMoveError=0.5;
+	energypershot=2500;
+	weaponvelocity=1000;
+	areaofeffect=16;
+	soundhitdry=xplolrg1;
+	soundstart=annigun1;
+	firestarter=90;
+	waterweapon=1; //allow piercing of water surface
+	rgbcolor=0.000 0.247 1.000;
+	explosiongenerator=custom:BluePlasmaExtraBANG;
+	[DAMAGE]
+	{
+		default=3000;
+		group_commanders=1200;
+		group_ships=3000;
+		group_large_ships=3000;
+		group_invincible=1;
+	}
+}
+
+[ARMFATBOY_GUN]
+{
+	name=Plasma Cannon;
+	explosiongenerator=custom:RedPlasma;
+	energypershot=500;
+	rgbcolor=1 0.33 0.0;
+	size=4;
+	weaponType=Cannon;
+	turret=1;
+	range=1450;
+	reloadtime=3;
+	weaponvelocity=600; //550
+	areaofeffect=128;
+	soundstart=cannhvy5;
+	soundhitdry=xplomed2;
+	startsmoke=1;
+	accuracy=600;
+	[DAMAGE]
+	{
+		default=450;
+		group_ships=675;
+		group_large_ships=725;
+		group_invincible=1;
+	}
+}
+[ARM_Stationary_Shield]
+{
+	name=PlasmaRepulsor;
+	WeaponType="Shield";
+	shieldrepulser=1;
+	smartshield=1;
+	visibleshieldrepulse=1;
+	shieldenergyuse=400;
+	shieldforce=1;
+	shieldmaxspeed=4400;
+	shieldradius=425;
+	shieldpower=15000;
+	//shieldintercepttype=1;
+	shieldintercepttype=3;
+	shieldgoodcolor=0.2 1 0.2;
+	shieldbadcolor=1 0.2 0.2;
+	shieldalpha=0.4;
+	VisibleShieldHitFrames=70;
+        ShieldPowerRegen=250;
+        ShieldPowerRegenEnergy=300.0;
+        VisibleShield=1;
+        range=425;	
+	[DAMAGE]
+	{
+		default=100;
+	}
+}
 [OLDSKOOL_IMMOLATOR]
 {
 	name=Plasma Cannon;
@@ -1859,6 +2026,7 @@
 	startsmoke=1;
 	shakeduration=0;
 	rgbcolor=1 0.6 0.3;
+	energypershot=250;
 	[DAMAGE]
 	{
 		default=287;
@@ -2487,5 +2655,87 @@
 		group_large_ships=4400;
 		group_invincible=1;
 		group_commanders=1666;
+	}
+}
+
+[ARM_BASE_ROCKET]
+{
+	ID=100;
+	name=Missiles;
+	rendertype=1;
+	lineofsight=1;
+	explosiongenerator=custom:KBOTROCKETHIT;
+	cegTag=KBOTROCKETTRAIL;
+	Weapontype=MissileLauncher;
+	turret=1;
+	model=missile.s3o;
+	Texture1=null; //flare//
+	range=1500;
+	reloadtime=1.0;
+	weapontimer=50;
+	Trajectoryheight=1;
+	weaponvelocity=650;
+	startvelocity=350;
+	weaponacceleration=150;
+	turnrate=50000;
+	areaofeffect=48;
+	metalpershot=0;
+	soundstart=rocklit1;
+	soundhitdry=xplosml2;
+	firestarter=70;
+	smokedelay=0.1;
+	guidance=1;
+	tracks=1;
+	flighttime=6;
+	selfprop=1;
+	smoketrail=0;
+	tolerance=9000;
+	startsmoke=1;
+	[DAMAGE]
+	{
+		default=131;
+		group_landair=257;
+		group_invincible=1;
+	}
+}
+
+[ARM_BASE_MISSILE]
+{
+	ID=100;
+	name=Missiles;
+	rendertype=1;
+	lineofsight=1;
+	explosiongenerator=custom:KBOTMISSILEHIT;
+	cegTag=KBOTMISSILETRAIL;
+	Weapontype=MissileLauncher;
+	turret=1;
+	model=missile.s3o;
+	Texture1=null; //flare//
+	range=1500;
+	reloadtime=1.00;
+	weapontimer=50;
+	Trajectoryheight=1;
+	weaponvelocity=1050;
+	startvelocity=350;
+	weaponacceleration=300;
+	turnrate=50000;
+	areaofeffect=48;
+	metalpershot=0;
+	soundstart=rocklit1;
+	soundhitdry=xplosml2;
+	firestarter=70;
+	smokedelay=0.1;
+	guidance=1;
+	tracks=1;
+	flighttime=6;
+	selfprop=1;
+	smoketrail=0;
+	tolerance=9000;
+	startsmoke=1;
+	[DAMAGE]
+	{
+		default=31;
+		group_landair=101;
+		group_invincible=1;
 	}
 }

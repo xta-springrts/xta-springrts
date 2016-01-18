@@ -3,128 +3,106 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	side=Core;
-	name=Construction Hovercraft;
-	description=Tech Level 1;
-	icontype=hover;
+	side=Arm;
+	name=Adv. Metal Storage;
+	description=Increases Metal Storage  by 75,000;
+	icontype=metal;
 
 	//************************************************************
 	//  Categories
 	//**************
-	Category=CORE HOVER  CONSTR NOWEAPON NOTAIR NOTSUB;
-	tedclass=CONSTR;
+	category=ARM METAL  NOWEAPON  NOTAIR NOTSUB STORAGE;
+	tedclass=METAL;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=core_construction_hovercraft_xtra;
-	unitnumber=187;
-	objectname=core_construction_hovercraft.3do;
-	corpse=core_construction_hovercraft_dead;
-	buildpic=core_construction_hovercraft.DDS;
-	script=core_construction_hovercraft.cob;
-	soundcategory=CORE_CHOVER;
+	unitname=arm_adv_metal_storage;
+	unitnumber=51;
+	objectname=arm_adv_metal_storage.3do;
+	corpse=arm_adv_metal_storage_dead;
+	buildpic=arm_adv_metal_storage.DDS;
+	soundcategory=ARM_MSTOR;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=493;
-	healtime=60;
-	buildcostmetal=390;
-	buildcostenergy=4455;
-	buildtime=11028;
-	footprintx=3;
-	footprintz=3;
+	maxdamage=11329;
+	buildcostmetal=1220;
+	buildcostenergy=5535;
+	buildtime=17925;
+	footprintx=8;
+	footprintz=8;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalmake=0.3;
-	metalstorage=50;
-	energymake=14;
-	energyuse=1;
-	energystorage=80;
+	metalstorage=75000;
+	energyuse=0;
+	energystorage=0;
 
 	//************************************************************
 	//  Building
 	//************
+	buildangle=4096;
+	//yardmap=yooy oooo oooo oooo yooy;
+	activatewhenbuilt=1;
+	collisionVolumeType=CylY;
+	collisionVolumeScales=110 62 112;
+	collisionVolumeOffsets=0 -3 0;
+	//collisionVolumeTest = 1;
 
 	//************************************************************
 	//  Constructor
 	//***************
-	builder=1;
-	builddistance=180;
-	workertime=180;
-	RepairSpeed=180;
-	ReclaimSpeed=180;
-	TerraformSpeed=360;//speed up terraforming
+	builder=0;
+	workertime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canguard=1;
-	canhover=1;
-	canmove=1;
-	canpatrol=1;
-	canreclamate=1;
-	canstop=1;
-	canFight=1;
+	canRepeat=0;
+	canMove=0;
+	canAttack=0;
+	canGuard=0;
 	
 	//************************************************************
 	//  Movement
 	//************
-	movementclass=HOVER3;
-	turnrate=550;
-	acceleration=0.4;
-	brakerate=0.8;
-	maxvelocity=2.1;
-	maxslope=16;
-	maxwaterdepth=0;
+	maxslope=15;
+	maxwaterdepth=22;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=390;
+	sightdistance=367.5;
+	radardistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
-	explodeas=NANO_UNITEX;
-	selfdestructas=NANO_UNIT;
+	explodeas=ESTOR_BUILDINGEX;
+	selfdestructas=ESTOR_BUILDINGEX; //was CRAWL_BLASTSML modded by Gizmo//
 
 	//************************************************************
 	//  Orders
 	//**********
 	noautofire=0;
-	mobilestandorders=1;
-	standingmoveorder=1;
-	defaultmissiontype=Standby;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=1;
-	designation=HB-CW;
+	bmcode=0;
+	designation=AM-MSF;
 	downloadable=1;
-	maneuverleashlength=640;
-	shootme=1;
-	steeringmode=1;
 	threed=1;
 	version=1.2;
 	zbuffer=1;
-	collisionVolumeType = box;
-	collisionVolumeScales =32 18 45;
-	collisionVolumeOffsets = 0 8 0;
-	collisionVolumeTest = 1;
-	pieceTrailCEGTag=NanoDebree;//bleh
-	pieceTrailCEGRange = 2;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
 
 	//************************************************************
 	//  To be removed
 	//*****************
-	[SFXTypes]
-	{
-	explosiongenerator0=custom:Nano;
-	}
 
 }
