@@ -15,6 +15,7 @@ end
 local stateTexture		= LUAUI_DIRNAME.."images/resbar.dds"
 local buttonTexture		= LUAUI_DIRNAME.."images/button.dds"
 local showNoobButtons   = tonumber(Spring.GetConfigInt("XTA_ShowNoobButtons",1) or 1) == 1
+local Echo				= Spring.Echo
 
 local NeededFrameworkVersion = 9
 local CanvasX,CanvasY = 1272,734 --resolution in which the widget was made (for 1:1 size)
@@ -30,8 +31,7 @@ local Config = {
 		px = -0.5,py = CanvasY - 415, --default start position
 		
 		isx = 38,isy = 36, --icon size
-		ix = 4,iy = 8, --icons x/y
-		
+		ix = tonumber(Spring.GetConfigInt("XTA_MenuIconsX",4)) or 4,iy = tonumber(Spring.GetConfigInt("XTA_MenuIconsY",8)) or 8, --icons x/y
 		roundedPercentage = 0.2,	-- 0.25 == iconsize / 4 == cornersize
 		
 		iconscale = 0.92,
@@ -61,7 +61,7 @@ local Config = {
 		px = -0.5,py = CanvasY - 415 - 145,
 		
 		isx = 38,isy = 28,
-		ix = 4,iy = 4,
+		ix = tonumber(Spring.GetConfigInt("XTA_MenuIconsX",4)) or 4,iy = tonumber(Spring.GetConfigInt("XTA_OrderMenuIconsY",4)) or 4,
 		
 		roundedPercentage = 0.2,	-- 0.25 == iconsize / 4 == cornersize
 		
@@ -89,6 +89,18 @@ local Config = {
 	},
 }
 
+local ix = Config.buildmenu.ix
+
+-- tell our size to other widgets
+local X  =			15									-- solve numerically, easier than going through this widget code
+
+WG.buildmenuX = 	Config.buildmenu.px +     			--position
+					ix * Config.buildmenu.isx + 		--icon size
+					2 * Config.buildmenu.padding + 		--border padding
+					(ix-1) * Config.buildmenu.ispreadx + 	--space between icons
+					2 * Config.buildmenu.margin +		--distance from background border
+					ix*X								--unknown, but something is 15
+ 
 local guishaderEnabled = WG['guishader_api'] or false
 
 local sGetSelectedUnitsCount = Spring.GetSelectedUnitsCount
