@@ -24,6 +24,26 @@
 --- Do not remove
 --- Changelog processing starts here
 
+XTA 9.752 (Git 1030)
+|jls,nor
+20/01/2016
+
+Changes:
+* Arm Stumpy and Core Raider Cannon damage reduced from 62 to 56. (10 percent)
+* Reverted Penetrator Explosion, Risk over reward was not worth.
+* Increased Range of nano towers from 110 to 125.
+
+Enhancements:
+* New layout presets that makes it possible to fast select a functioning layout profile (widgets and settings)
+* Added a bunch of other options to the xta menu
+* New included widgets: gui-shader
+* New effects for Arm Guardian, Core Punisher and metal maker explosions
+
+Fixes:
+* Lots of bugfixes
+* Compatibility for spring 101 (air repair pads still WIP)
+
+
 XTA 9.751 (Git 977)
 |jls
 21/12/2015
