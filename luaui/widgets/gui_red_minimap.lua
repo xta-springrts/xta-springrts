@@ -12,16 +12,21 @@ function widget:GetInfo()
 	}
 end
 local rescalevalue = 1.26
-local buttonScale = 0.5
+local buttonScale = 1.0
 local NeededFrameworkVersion = 8
 local CanvasX,CanvasY = 1272/rescalevalue,734/rescalevalue --resolution in which the widget was made (for 1:1 size)
 --1272,734 == 1280,768 windowed
+local Echo = Spring.Echo
+local _,vsy 	= gl.GetViewSizes()
+local limitY = 0.1953125 * vsy
+local ratio = Game.mapX/Game.mapY
+local lRatio = WG.buildmenuX/limitY
 
 local Config = {
 	minimap = {
 		px = -0.5,py = -0.5, --default start position
-		sx = math.min(135*Game.mapX/Game.mapY,270),sy = 135, --background size
-		
+		sx = ratio > lRatio and WG.buildmenuX or ratio * limitY or 135, 
+		sy = ratio > lRatio and 1/ratio * WG.buildmenuX  or limitY, --background size
 		bsx = 15,bsy = 15, --button size
 
 		fadetime = 0.10, --fade effect time, in seconds
@@ -81,6 +86,9 @@ local function RedUIchecks()
 end
 
 local function AutoResizeObjects() --autoresize v2
+	
+	if true then return end -- evil function, die!
+	
 	if (LastAutoResizeX==nil) then
 		LastAutoResizeX = CanvasX
 		LastAutoResizeY = CanvasY
@@ -280,10 +288,10 @@ end
 function widget:Initialize()
 	widgetHandler:EnableWidget("Red_UI_Framework")
 	widgetHandler:EnableWidget("Red_Drawing")
-	widgetHandler:EnableWidget("RelativeMinimap")
+	--widgetHandler:EnableWidget("RelativeMinimap")
 	--oldMinimapGeometry = Spring.GetConfigString("MiniMapGeometry","2 2 200 200") -- store original geometry
 	oldMinimapGeometry = sGetMiniMapGeometry()
-	
+		
 	PassedStartupCheck = RedUIchecks()
 	if (not PassedStartupCheck) then return end
 	
@@ -291,7 +299,8 @@ function widget:Initialize()
 	
 	gl.SlaveMiniMap(true)
 	
-	AutoResizeObjects() --fix for displacement on crash issue
+	--AutoResizeObjects() --fix for displacement on crash issue
+	
 end
 
 local lastPos = {}
@@ -328,7 +337,7 @@ function widget:Update()
 		rMinimap.active = nil
 	end
 
-	AutoResizeObjects()
+	--AutoResizeObjects()
 	if ((lastPos.px ~= rMinimap.px) or (lastPos.py ~= rMinimap.py) or (lastPos.sx ~= rMinimap.sx) or (lastPos.sy ~= rMinimap.sy) or sceduleMinimapGeometry) then
 		sSendCommands(sformat("minimap geometry %i %i %i %i",
 		rMinimap.px,
@@ -348,8 +357,8 @@ function widget:DrawScreen()
 		return
 	end
 	-- this makes jK rage
-	gl.ResetState()
-	gl.ResetMatrices()
+	--gl.ResetState()
+	--gl.ResetMatrices()
 	----
 	
     --gl.SlaveMiniMap(true)
@@ -357,14 +366,21 @@ function widget:DrawScreen()
     --gl.SlaveMiniMap(false)
 	
 	-- this makes jK rage
-	gl.ResetState()
-	gl.ResetMatrices()
+	--gl.ResetState()
+	--gl.ResetMatrices()
 	----
 end
 
 function widget:Shutdown()
 	gl.SlaveMiniMap(false)
-	Spring.SendCommands("minimap geometry "..oldMinimapGeometry)
+	
+	if widgetHandler.knownWidgets.RelativeMinimap.active then
+		Echo("Unloading Red Minimap and restoring old one...") --other widgets do better restoring job than this
+		widgetHandler:DisableWidget("RelativeMinimap")
+		widgetHandler:EnableWidget("RelativeMinimap")
+	end
+	--Spring.SendCommands("minimap geometry "..oldMinimapGeometry)
+	--Echo("Minimapgeo is:",oldMinimapGeometry)
 end
 
 

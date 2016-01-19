@@ -23,11 +23,11 @@ end
     
 
 function gadget:Initialize()
-	gadgetHandler.AddChatAction('reloadluaui', LuaUIReload, "Reloads luaui, as this cannot be done from a widget directly")
+	gadgetHandler:AddChatAction('reloadluaui', LuaUIReload, "Reloads luaui, as this cannot be done from a widget directly")
 end
 
 function gadget:Shutdown()
-	gadgetHandler.RemoveChatAction('reloadluaui')
+	gadgetHandler:RemoveChatAction('reloadluaui')
 end
 
 

@@ -68,8 +68,8 @@ local PageNumCmd = {
 }
 
 if (Game.version:find("0.75")==nil)or(Game.version:find("svn")) then
-  PageNumCmd.texture  = PageNumCmd.iconname
-  PageNumCmd.iconname = nil
+  --PageNumCmd.texture  = PageNumCmd.iconname
+  --PageNumCmd.iconname = nil
 end
 
 local X, Y
@@ -233,6 +233,14 @@ function widget:Initialize()
 	if not btns.x or not btns.y then
 		btns = {x = 4, y = 9}
 	end
+	
+	-- support changing in xta menu
+	local ix = tonumber(Spring.GetConfigInt("XTA_MenuIconsX")) 
+	local iy = tonumber(Spring.GetConfigInt("XTA_MenuIconsY")) 
+	if ix and iy then
+		btns = {x = ix, y = iy}
+	end
+	
 	X, Y = Spring.GetViewGeometry()
 	local maxButSize=(1-0.097-0.31-4/Y)/btns.y-.0005 
 	TweakPosX = floor((maxButSize+0.0005)*btns.x*Y*1.12)
@@ -241,8 +249,9 @@ function widget:Initialize()
 	bntTxtSize = 22*Y/1200
 	TweakTitleSize = 10*Y/1200
 	rowSize, btnSize = floor(25*Y/1200), floor(80*Y/1200)
-
-
+	
+	WG.buildmenuX = btns.x*maxButSize*X/1.10 -- Found empirically, tested for col = 2 ... 10
+	
 	config = {
 		"xIcons         " .. btns.x,
 		"yIcons         " .. btns.y,
