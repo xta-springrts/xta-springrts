@@ -21,7 +21,7 @@ function widget:GetInfo()
     author    = "Adonai_Jr, heavily based on BA layout, see original source for credits",
     date      = "Jan 23, 2009", -- Corrected error message spawn, June 2012, Jools
     license   = "GNU GPL, v2 or later",
-    layer     = -10,
+    layer     = -12,
     handler   = true,
     enabled   = false  --  loaded by default?
   }
@@ -267,6 +267,13 @@ function widget:Initialize()
     Spring.SendCommands('ctrlpanel ctrlpanelImp.txt')
 
 	widgetHandler:ConfigLayoutHandler(CustomLayoutHandler)
+	
+	--make sure to reload red minimap after this, if it is enabled
+	if widgetHandler.knownWidgets["Red Minimap"].active then
+		widgetHandler:DisableWidget("Red Minimap")
+		widgetHandler:EnableWidget("Red Minimap")
+	end
+	
 end
 
 function widget:Shutdown()

@@ -592,6 +592,12 @@ function widget:Initialize()
 	ordermenu.page = 1
 	
 	AutoResizeObjects() --fix for displacement on crash issue
+	
+	--make sure to reload red minimap after this, if it is enabled
+	if widgetHandler.knownWidgets["Red Minimap"].active then
+		widgetHandler:DisableWidget("Red Minimap")
+		widgetHandler:EnableWidget("Red Minimap")
+	end
 end
 
 local function onNewCommands(buildcmds,othercmds)

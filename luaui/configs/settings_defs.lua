@@ -191,7 +191,6 @@ local Presets = {
 				"Lups",
 				"CustomFormations2",
 				"Select n Center! - XTA",
-				"Ally Resource Bars 1.84 Alpha 2",
 				"Commander Change",
 				"Fleas GUI",
 				"Initial Queue - XTA",
@@ -695,8 +694,8 @@ local Buttons = {
 	value			= tonumber(Spring.GetConfigInt("ShowFPS",1) or 1) == 1,
 	label			= "Show fps indicator:",
 	section			= "interface",
-	action			= {Spring.SendCommands,"fps 0"},
-	deaction		= {Spring.SendCommands,"fps 1"}, 
+	action			= {Spring.SendCommands,"fps 1"},
+	deaction		= {Spring.SendCommands,"fps 0"}, 
 	},
 	
 	{
@@ -704,8 +703,8 @@ local Buttons = {
 	value			= tonumber(Spring.GetConfigInt("ShowClock",1) or 1) == 1,
 	label			= "Show game time:",
 	section			= "interface",
-	action			= {Spring.SendCommands,"clock 0"},
-	deaction		= {Spring.SendCommands,"clock 1"}, 
+	action			= {Spring.SendCommands,"clock 1"},
+	deaction		= {Spring.SendCommands,"clock 0"}, 
 	},
 	
 	{
@@ -815,7 +814,7 @@ local Buttons = {
 	},
 	
 	{
-	value			= not (WG.fontShadow or false),
+	value			= WG.fontShadow or false,
 	key 			= "nameshadow",
 	label			= "Commander nametags: draw shadow around commander names:",
 	section			= "widgets",

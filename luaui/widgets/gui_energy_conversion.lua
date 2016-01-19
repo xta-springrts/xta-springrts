@@ -25,6 +25,7 @@ local px, py = 500, 100
 local sx, sy = 140, 72
 local scaling, fontSize, col1, col2, row1, row2, row3, row4
 local onsidemargin = 2
+local vsx, vsy 						= gl.GetViewSizes()
 
 local hoverLeft, hoverRight, hoverBottom, hoverTop, barBottom, barTop
 --------------------------------------------------------------------------------
@@ -32,6 +33,7 @@ local hoverLeft, hoverRight, hoverBottom, hoverTop, barBottom, barTop
 --------------------------------------------------------------------------------
 local format = string.format
 local floor = math.floor
+local bgcorner		= "luaui/images/bgcorner.png"
 
 local glColor = gl.Color
 local glRect = gl.Rect
@@ -52,6 +54,84 @@ local displayWindow = true
 --------------------------------------------------------------------------------
 -- Funcs
 --------------------------------------------------------------------------------
+local function drawBorder(x0, y0, x1, y1, width)
+	return RectRound(x0-1, y0-1, x1+1, y1+1,6) 
+	
+	--glRect(x0, y0, x1, y0 + width)
+	--glRect(x0, y1, x1, y1 - width)
+	--glRect(x0, y0, x0 + width, y1)
+	--glRect(x1, y0, x1 - width, y1)
+end
+
+local function DrawRectRound(px,py,sx,sy,cs)
+	gl.TexCoord(0.8,0.8)
+	gl.Vertex(px+cs, py, 0)
+	gl.Vertex(sx-cs, py, 0)
+	gl.Vertex(sx-cs, sy, 0)
+	gl.Vertex(px+cs, sy, 0)
+	
+	gl.Vertex(px, py+cs, 0)
+	gl.Vertex(px+cs, py+cs, 0)
+	gl.Vertex(px+cs, sy-cs, 0)
+	gl.Vertex(px, sy-cs, 0)
+	
+	gl.Vertex(sx, py+cs, 0)
+	gl.Vertex(sx-cs, py+cs, 0)
+	gl.Vertex(sx-cs, sy-cs, 0)
+	gl.Vertex(sx, sy-cs, 0)
+	
+	local offset = 0.07		-- texture offset, because else gaps could show
+	local o = offset
+	-- top left
+	if py <= 0 or px <= 0 then o = 0.5 else o = offset end
+	gl.TexCoord(o,o)
+	gl.Vertex(px, py, 0)
+	gl.TexCoord(o,1-o)
+	gl.Vertex(px+cs, py, 0)
+	gl.TexCoord(1-o,1-o)
+	gl.Vertex(px+cs, py+cs, 0)
+	gl.TexCoord(1-o,o)
+	gl.Vertex(px, py+cs, 0)
+	-- top right
+	if py <= 0 or sx >= vsx then o = 0.5 else o = offset end
+	gl.TexCoord(o,o)
+	gl.Vertex(sx, py, 0)
+	gl.TexCoord(o,1-o)
+	gl.Vertex(sx-cs, py, 0)
+	gl.TexCoord(1-o,1-o)
+	gl.Vertex(sx-cs, py+cs, 0)
+	gl.TexCoord(1-o,o)
+	gl.Vertex(sx, py+cs, 0)
+	-- bottom left
+	if sy >= vsy or px <= 0 then o = 0.5 else o = offset end
+	gl.TexCoord(o,o)
+	gl.Vertex(px, sy, 0)
+	gl.TexCoord(o,1-o)
+	gl.Vertex(px+cs, sy, 0)
+	gl.TexCoord(1-o,1-o)
+	gl.Vertex(px+cs, sy-cs, 0)
+	gl.TexCoord(1-o,o)
+	gl.Vertex(px, sy-cs, 0)
+	-- bottom right
+	if sy >= vsy or sx >= vsx then o = 0.5 else o = offset end
+	gl.TexCoord(o,o)
+	gl.Vertex(sx, sy, 0)
+	gl.TexCoord(o,1-o)
+	gl.Vertex(sx-cs, sy, 0)
+	gl.TexCoord(1-o,1-o)
+	gl.Vertex(sx-cs, sy-cs, 0)
+	gl.TexCoord(1-o,o)
+	gl.Vertex(sx, sy-cs, 0)
+end
+		
+function RectRound(px,py,sx,sy,cs)
+	cs = cs or 2
+	local px,py,sx,sy,cs = math.floor(px),math.floor(py),math.ceil(sx),math.ceil(sy),math.floor(cs)
+	
+	gl.Texture(bgcorner)
+	gl.BeginEnd(GL.QUADS, DrawRectRound, px,py,sx,sy,cs)
+	gl.Texture(false)
+end
 
 function widget:Initialize()
 	local playerID = Spring.GetMyPlayerID()
@@ -133,7 +213,7 @@ function widget:DrawScreen()
         
         -- Panel
         glColor(0, 0, 0, 0.4)
-        glRect(0, 0, sx, sy)
+        RectRound(0, 0, sx, sy)
         
         -- Text
         glColor(1, 1, 1, 1)

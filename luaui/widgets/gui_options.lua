@@ -18,6 +18,7 @@ local tabHeight							= 20
 local Echo								= Spring.Echo
 local Button, Section, Presets 			= include("configs/settings_defs.lua")
 local maxbuttons						= 4
+local SetMouseCursor					= Spring.SetMouseCursor
 
 
 for i,section in pairs(Section) do
@@ -69,13 +70,18 @@ local sndButtonOff 						= 'sounds/button6.wav'
 local sndButtonTab 						= 'sounds/button5.wav'
 local sndButtonSlide					= 'sounds/button3.wav'
 local sndButtonDone						= 'sounds/butmain.wav'
+local sndButtonPress					= 'sounds/buttn06.wav'
 
 -- other
 local ButtonClose		 				= {}
+local ButtonReload						= {}
+local ButtonToggle						= {}
 local Panel					  			= {}
 local FirstButtonYes					= {}
 local FirstButtonNo						= {}
+local FirstButtonToggle					= {}
 
+local defaultWidgetList 				= {}
 -- variables
 
 local waterType = 0
@@ -101,7 +107,7 @@ local configured						= false
 local cLight 							= {1,1,1,1}
 local cLight2 							= {0.9,0.9,1,0.4}
 local cWhite 							= {1,1,1,1}
-local cButton							= {0.8,0.8,0.8,1}
+local cButton							= {0.8,0.8,0.6,0.8}
 local cSelect							= {0.4, 0.4, 0.8, 1}
 local cSection							= {0.33,0.33,0.33,0.2}
 local cBack								= {0, 0, 0, 0.3}
@@ -126,6 +132,33 @@ local cText2							= {0.8,0.8,0.6,0.75}
 local function RefreshOptions()
 	Button,_,_  = include("configs/settings_defs.lua")
 	InitButtons()
+	--Echo("Refreshing options")
+end
+
+local function ToggleOwnWidgets(toggleOn)
+	local myName = widget:GetInfo().name
+	
+	for name, data in pairs(widgetHandler.knownWidgets) do
+		
+		if not data.fromZip then
+			
+			if toggleOn then
+				if defaultWidgetList[name] and not data.active then
+					widgetHandler:EnableWidget(name)
+					--Echo("Turning on: " .. name)
+				end
+			else
+				if name ~= myName then
+					if data.active then
+						widgetHandler:ToggleWidget(name)
+					else
+						widgetHandler:DisableWidget(name)
+					end
+					--Echo("Turning off: " .. name)
+				end
+			end
+		end
+	end
 end
 
 local function round(num, idp)
@@ -190,8 +223,7 @@ function widget:Initialize()
 	Panel["info"]					= {} -- info screen with mod options
 	Panel["firsttimer"]				= {} -- info screen with mod options
 	InitButtons()
-	
-	
+	ButtonToggle.value 				= false
 	if modOptions then
 		--general
 		Options["general"] = {
@@ -491,7 +523,19 @@ function widget:Initialize()
 			value	= value or "N/A",
 		}
 	end
-
+	
+	for name, order in pairs(widgetHandler.orderList) do
+		if order > 0 then 
+			defaultWidgetList[name] = true
+			Echo("Found default widget:",name)
+		end
+	end
+	
+	if not configured then
+		Echo("Init: turning widgets off...")
+		ToggleOwnWidgets(false)
+	end
+	
 end
 
 function updateHeights()
@@ -541,15 +585,27 @@ function InitButtons()
 	Panel["info"]["y1"]			= posY
 	Panel["info"]["y2"]			= posY + iHeight
 	
-	ButtonClose["x1"] 			= posX + width/2 - 30
+	
 	ButtonClose["y1"] 			= posY + 20
-	ButtonClose["x2"] 			= ButtonClose["x1"] + 60
+	ButtonClose["x2"] 			= posX + width/2 - 90
+	ButtonClose["x1"] 			= ButtonClose["x2"] - 60 
 	ButtonClose["y2"] 			= posY + 50
 	
+	ButtonReload["x1"] 			= posX + width/2 + 90
+	ButtonReload["y1"] 			= posY + 20
+	ButtonReload["x2"] 			= ButtonReload["x1"] + 120
+	ButtonReload["y2"] 			= posY + 45
+	
+	ButtonToggle["x1"] 			= posX + width/2 + 90
+	ButtonToggle["y1"] 			= posY + 70
+	ButtonToggle["x2"] 			= ButtonToggle["x1"] + 180
+	ButtonToggle["y2"] 			= posY + 95
+	ButtonToggle.label			= ButtonToggle.value and "Unload own widgets" or "Load own widgets"			
+	
 	Panel["firsttimer"]["x1"]	= 400		
-	Panel["firsttimer"]["x2"]	= 800
-	Panel["firsttimer"]["y1"]	= 440
-	Panel["firsttimer"]["y2"]	= 600
+	Panel["firsttimer"]["x2"]	= 940
+	Panel["firsttimer"]["y1"]	= 400
+	Panel["firsttimer"]["y2"]	= 660
 	
 	local row = 0
 	local column = 0
@@ -569,6 +625,12 @@ function InitButtons()
 	FirstButtonNo["y1"]			= Panel["firsttimer"]["y1"] + 20
 	FirstButtonNo["y2"]			= FirstButtonNo["y1"] + 20
 	FirstButtonNo["label"]		= "Not now."
+	
+	FirstButtonToggle["x2"]			= Panel["firsttimer"]["x2"] - 20
+	FirstButtonToggle["x1"]			= FirstButtonToggle["x2"] - 140
+	FirstButtonToggle["y1"]			= Panel["firsttimer"]["y1"] + 190
+	FirstButtonToggle["y2"]			= FirstButtonToggle["y1"] + 20
+	FirstButtonToggle["label"]		= FirstButtonToggle.value and "Widgets loaded" or "Load my widgets"
 	
 	
 	for i, button in ipairs(Presets) do
@@ -861,7 +923,8 @@ local function drawModOptions()
 	else
 		gl.Color(cGrey)
 	end
-	gl.TexRect(ButtonClose["x1"],ButtonClose["y1"],ButtonClose["x2"],ButtonClose["y2"])
+	RectRound(ButtonClose["x1"],ButtonClose["y1"],ButtonClose["x2"],ButtonClose["y2"])
+	
 	myFontBig:Begin()
 	myFontBig:SetTextColor(cWhite)
 	myFontBig:Print("Close", (ButtonClose["x1"]+ButtonClose["x2"])/2, (ButtonClose["y1"]+ButtonClose["y2"])/2,14,'vcs')
@@ -1026,10 +1089,33 @@ local function drawSettings()
 	else
 		gl.Color(cGrey)
 	end
-	gl.TexRect(ButtonClose["x1"],ButtonClose["y1"],ButtonClose["x2"],ButtonClose["y2"])
+	RectRound(ButtonClose["x1"],ButtonClose["y1"],ButtonClose["x2"],ButtonClose["y2"])
+	
+	--reload luaiui
+	if ButtonReload.above then
+		gl.Color(cAbove)
+	else
+		gl.Color(cGrey)
+	end
+	RectRound(ButtonReload["x1"],ButtonReload["y1"],ButtonReload["x2"],ButtonReload["y2"])
+	
+	--toggle widgets
+	if currentSection == "presets" then
+		if ButtonToggle.above then
+			gl.Color(cAbove)
+		else
+			gl.Color(cGrey)
+		end
+		RectRound(ButtonToggle["x1"],ButtonToggle["y1"],ButtonToggle["x2"],ButtonToggle["y2"])
+	end
+	
 	myFontBig:Begin()
 	myFontBig:SetTextColor(cWhite)
 	myFontBig:Print("Close", (ButtonClose["x1"]+ButtonClose["x2"])/2, (ButtonClose["y1"]+ButtonClose["y2"])/2,14,'vcs')
+	myFontBig:Print("Reload LuaUI", (ButtonReload["x1"]+ButtonReload["x2"])/2, (ButtonReload["y1"]+ButtonReload["y2"])/2,14,'vcs')
+	if currentSection	== "presets" then
+		myFontBig:Print(ButtonToggle.label, (ButtonToggle["x1"]+ButtonToggle["x2"])/2, (ButtonToggle["y1"]+ButtonToggle["y2"])/2,14,'vcs')
+	end
 	myFontBig:End()
 	
 	-- other
@@ -1133,6 +1219,10 @@ local function drawIsAbove(x,y)
 	
 	if not x or not y then return false end
 	
+	if IsOnButton(x, y, posX,posY,posX+width,posY+height) then
+		SetMouseCursor('Normal')
+	end
+	
 	for _,button in pairs(Button) do
 		button["mouse"] = false
 	end
@@ -1145,6 +1235,8 @@ local function drawIsAbove(x,y)
 	end
 	
 	ButtonClose.above = false
+	ButtonReload.above = false
+	ButtonToggle.above = false
 	
 	for _,button in pairs(Section) do
 		if IsOnButton(x, y, button["x1"],button["y1"],button["x2"],button["y2"]) then
@@ -1161,22 +1253,28 @@ local function drawIsAbove(x,y)
 	end
 	
 	for _,button in pairs(Button) do
-		if IsOnButton(x, y, button["x1"],button["y1"],button["x2"],button["y2"]) then
-			button["mouse"] = true
-			return true
+		if currentSection == button["section"] then
+			if IsOnButton(x, y, button["x1"],button["y1"],button["x2"],button["y2"]) then
+				button["mouse"] = true
+				return true
+			end
 		end
 	end
 	
 	if IsOnButton(x, y, ButtonClose["x1"],ButtonClose["y1"],ButtonClose["x2"],ButtonClose["y2"]) then
 		ButtonClose.above = true
+	elseif IsOnButton(x, y, ButtonReload["x1"],ButtonReload["y1"],ButtonReload["x2"],ButtonReload["y2"]) then
+		ButtonReload.above = true
+	elseif IsOnButton(x, y, ButtonToggle["x1"],ButtonToggle["y1"],ButtonToggle["x2"],ButtonToggle["y2"]) and currentSection == "presets" then 
+		ButtonToggle.above = true
 	end
-	
+		
 	return false
 end
 
 function widget:DrawScreen()
 	if (not Spring.IsGUIHidden()) then
-	
+		
 		if not configured then
 			-- first time message
 			
@@ -1206,18 +1304,39 @@ function widget:DrawScreen()
 			RectRound(FirstButtonNo["x1"],FirstButtonNo["y1"], FirstButtonNo["x2"], FirstButtonNo["y2"])
 			DrawBorder(FirstButtonNo["x1"],FirstButtonNo["y1"], FirstButtonNo["x2"], FirstButtonNo["y2"])
 			
+			if FirstButtonToggle.disabled then 
+				gl.Color(cGrey)
+			elseif FirstButtonToggle.mouse then 
+				gl.Color(cAbove)
+			else
+				gl.Color(cSection)
+			end
+			RectRound(FirstButtonToggle["x1"],FirstButtonToggle["y1"], FirstButtonToggle["x2"], FirstButtonToggle["y2"])
+			DrawBorder(FirstButtonToggle["x1"],FirstButtonToggle["y1"], FirstButtonToggle["x2"], FirstButtonToggle["y2"])
+			
 			myFontBig:Begin()
 			myFontBig:SetTextColor(cWhite)
 			myFontBig:Print("Welcome to XTA!", (Panel["firsttimer"]["x1"]+Panel["firsttimer"]["x2"])/2, Panel["firsttimer"]["y2"]-20,14,'vcs')
+			
 			myFontBig:SetTextColor(cText2)
 			myFontBig:Print("Do you want to select a different layout preset?",Panel["firsttimer"]["x1"] + 20, Panel["firsttimer"]["y2"]-70,14,'do')
+			myFontBig:Print("We have not yet loaded your custom widgets, you", Panel["firsttimer"]["x1"] + 20, Panel["firsttimer"]["y2"]-120,14,'do')
+			myFontBig:Print("can use the button to load/unload them, but first", Panel["firsttimer"]["x1"] + 20, Panel["firsttimer"]["y2"]-140,14,'do')
+			myFontBig:Print("make sure everything looks fine...", Panel["firsttimer"]["x1"] + 20, Panel["firsttimer"]["y2"]-160,14,'do')
 			myFontBig:End()
 			
 			myFont:Begin()
 			myFont:SetTextColor(cWhite)
 			
-			myFont:Print(FirstButtonNo.label,(FirstButtonNo["x1"]+FirstButtonNo["x2"])/2,FirstButtonNo["y1"],12,'dcs')
-			myFont:Print(FirstButtonYes.label,(FirstButtonYes["x1"]+FirstButtonYes["x2"])/2,FirstButtonYes["y1"],12,'dcs')
+			myFont:Print(FirstButtonNo.label,(FirstButtonNo["x1"]+FirstButtonNo["x2"])/2,FirstButtonNo["y1"]+2,12,'dcs')
+			myFont:Print(FirstButtonYes.label,(FirstButtonYes["x1"]+FirstButtonYes["x2"])/2,FirstButtonYes["y1"]+2,12,'dcs')
+			
+			if FirstButtonToggle.disabled then 
+				myFont:SetTextColor(cDark)
+			else
+				myFont:SetTextColor(cWhite)
+			end
+			myFont:Print(FirstButtonToggle.label,(FirstButtonToggle["x1"]+FirstButtonToggle["x2"])/2,FirstButtonToggle["y1"]+2,12,'dcs')
 			myFont:End()
 			
 		end
@@ -1241,10 +1360,13 @@ function widget:IsAbove(x,y)
 		if not configured then
 			FirstButtonNo["mouse"] = false
 			FirstButtonYes["mouse"] = false
+			FirstButtonToggle["mouse"] = false
 			if IsOnButton(x, y, FirstButtonNo["x1"],FirstButtonNo["y1"],FirstButtonNo["x2"],FirstButtonNo["y2"]) then
 				FirstButtonNo["mouse"] = true
 			elseif IsOnButton(x, y, FirstButtonYes["x1"],FirstButtonYes["y1"],FirstButtonYes["x2"],FirstButtonYes["y2"]) then
 				FirstButtonYes["mouse"] = true
+			elseif IsOnButton(x, y, FirstButtonToggle["x1"],FirstButtonToggle["y1"],FirstButtonToggle["x2"],FirstButtonToggle["y2"]) then
+				FirstButtonToggle["mouse"] = true
 			end
 		end
 	end
@@ -1284,6 +1406,7 @@ function widget:TextCommand(command)
 		showMapOptions = true
 	elseif command == 'xta-options' or command == 'settings' then
 		showSettings = true
+		RefreshOptions()
 	elseif string.lower(command):find("^setguiopacity") then
 		local value = command:sub(14)
 		if value then
@@ -1373,8 +1496,9 @@ function widget:MouseMove(mx, my, dx, dy, mButton)
  end 
  
 function widget:MousePress(x, y, button)
+	 
 	 if button == 1 and (showSettings or showModOptions or showMapOptions) then
-		
+				
 		for _,button in pairs(Button) do
 			if button.section == currentSection then
 				if not button.type then --checkbox
@@ -1385,7 +1509,7 @@ function widget:MousePress(x, y, button)
 							PlaySoundFile(sndButtonOff,1.0,0,0,0,0,0,0,'userinterface')
 						end
 						currentPreset = nil
-						
+												
 						if button.value then
 							button.deaction[1](button.deaction[2],button.deaction[3])
 						else
@@ -1410,8 +1534,7 @@ function widget:MousePress(x, y, button)
 								end
 							end
 						end
-						RefreshOptions()
-						
+												
 						return true
 					end
 				else
@@ -1464,10 +1587,19 @@ function widget:MousePress(x, y, button)
 						for _,setting in pairs (button.settings) do
 							if #setting == 2 then
 								setting[1](setting[2])
-								--Echo("Settings:",setting[1],setting[2])
 							elseif #setting == 3 then
 								setting[1](setting[2],setting[3])
-								--Echo("Settings:",setting[1],setting[2],setting[3])
+							end
+						end
+						RefreshOptions()
+						
+						-- Needs another round, because while the refreshoptions updates the values from spring config, it
+						-- also resets them
+						for _,setting in pairs (button.settings) do
+							if #setting == 2 then
+								setting[1](setting[2])
+							elseif #setting == 3 then
+								setting[1](setting[2],setting[3])
 							end
 						end
 						
@@ -1501,12 +1633,11 @@ function widget:MousePress(x, y, button)
 						widgetHandler:SaveConfigData()
 						currentPreset = button.label
 						Echo("... Done!")
+						ButtonToggle.value = false
+						InitButtons()
 						PlaySoundFile(sndButtonDone,4.0,0,0,0,0,0,0,'userinterface')
 					end
 					
-					
-					
-					RefreshOptions()
 					return true
 				end	
 			end
@@ -1517,18 +1648,37 @@ function widget:MousePress(x, y, button)
 			showSettings = false
 			showModOptions = false
 			showMapOptions = false
+		elseif IsOnButton(x, y, ButtonReload["x1"],ButtonReload["y1"],ButtonReload["x2"],ButtonReload["y2"]) then
+			PlaySoundFile(sndButtonPress,4.0,0,0,0,0,0,0,'userinterface')
+			Spring.SendCommands("luarules reloadluaui")
+			return true
+		elseif IsOnButton(x, y, ButtonToggle["x1"],ButtonToggle["y1"],ButtonToggle["x2"],ButtonToggle["y2"]) and currentSection == "presets" then 
+			PlaySoundFile(sndButtonPress,4.0,0,0,0,0,0,0,'userinterface')
+			ButtonToggle.value = not ButtonToggle.value
+			ToggleOwnWidgets(ButtonToggle.value)
+			InitButtons()
+			return true
 		end
 	elseif button == 1 and not configured then
 		if IsOnButton(x, y, FirstButtonNo["x1"],FirstButtonNo["y1"],FirstButtonNo["x2"],FirstButtonNo["y2"]) then
 			configured = true
 			InitButtons()
 			PlaySoundFile(sndButtonOff,1.0,0,0,0,0,0,0,'userinterface')
+			return true
 		elseif IsOnButton(x, y, FirstButtonYes["x1"],FirstButtonYes["y1"],FirstButtonYes["x2"],FirstButtonYes["y2"]) then
 			showSettings = true
 			configured = true
 			currentSection = 'presets'
 			InitButtons()
 			PlaySoundFile(sndButtonOff,1.0,0,0,0,0,0,0,'userinterface')
+			return true
+		elseif IsOnButton(x, y, FirstButtonToggle["x1"],FirstButtonToggle["y1"],FirstButtonToggle["x2"],FirstButtonToggle["y2"]) and not FirstButtonToggle.disabled then
+			PlaySoundFile(sndButtonPress,5.0,0,0,0,0,0,0,'userinterface')
+			FirstButtonToggle.value = not FirstButtonToggle.value
+			ToggleOwnWidgets(true)
+			FirstButtonToggle.disabled = true
+			InitButtons()
+			return true
 		end
 		
 	elseif button == 2 or button == 3 then
@@ -1544,6 +1694,7 @@ function widget:MousePress(x, y, button)
  end
  
 function widget:MouseRelease(x, y, button)
+	
 	if button == 1 and (showSettings or showModOptions or showMapOptions) then
 		for _,button in pairs(Button) do
 			if button.section == currentSection and button.type and button.type == "scale" then	
@@ -1559,7 +1710,7 @@ function widget:MouseRelease(x, y, button)
 							if button.action[3] == -1 then
 								button.action[1](table.concat({button.action[2]," ",button.value}))
 							elseif button.action[3] == -2 then
-								Echo("MR:",button.key,#button.action,button.action[1],button.action[2])
+								--Echo("MR:",button.key,#button.action,button.action[1],button.action[2])
 								button.action[1](button.action[2],button.value)
 							else
 								button.action[1](button.action[2],button.action[3])
@@ -1583,7 +1734,7 @@ function widget:MouseRelease(x, y, button)
 						end
 						
 					end
-					RefreshOptions()
+					--RefreshOptions()
 					return true
 				elseif button.newValue and button.value ~= button.newValue then
 					if y < button.y2 and y > button.y1 then 
@@ -1614,7 +1765,6 @@ function widget:MouseRelease(x, y, button)
 		end
 	end
 end 
- 
  
 function widget:KeyPress(key, mods, isRepeat) 
 	if (key == 0x069) and mods["ctrl"] and (not isRepeat) then 				-- i-key

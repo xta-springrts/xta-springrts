@@ -297,6 +297,12 @@ function widget:Initialize()
 	Spring.SendCommands('ctrlpanel ' .. LUAUI_DIRNAME .. 'ctrlpanelImp.txt')
 
 	widgetHandler:ConfigLayoutHandler(CustomLayoutHandler)
+	
+	--make sure to reload red minimap after this, if it is enabled
+	if widgetHandler.knownWidgets["Red Minimap"].active then
+		widgetHandler:DisableWidget("Red Minimap")
+		widgetHandler:EnableWidget("Red Minimap")
+	end
 end
 
 function widget:Shutdown()
