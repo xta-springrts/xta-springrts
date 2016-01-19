@@ -123,6 +123,11 @@ local cText2							= {0.8,0.8,0.6,0.75}
 -- Local functions
 --------------------------------------------------------------------------------
 
+local function RefreshOptions()
+	Button,_,_  = include("configs/settings_defs.lua")
+	InitButtons()
+end
+
 local function round(num, idp)
   local mult = 10^(idp or 0)
   return math.floor(num * mult + 0.5) / mult
@@ -1387,6 +1392,26 @@ function widget:MousePress(x, y, button)
 							button.action[1](button.action[2],button.action[3])
 						end
 						button["value"] = not button["value"]
+						
+						if button.key == "noob-buttons" then
+							if button.value then
+								widgetHandler:DisableWidget("Hide commands")
+							else
+								widgetHandler:EnableWidget("Hide commands")
+							end
+						end
+						
+						if button.reloadwidgets then
+							for _, widgetName in pairs(button.reloadwidgets) do
+								if widgetHandler.knownWidgets[widgetName].active then
+									Echo("Reloading widget:",widgetName)
+									widgetHandler:DisableWidget(widgetName)
+									widgetHandler:EnableWidget(widgetName)
+								end
+							end
+						end
+						RefreshOptions()
+						
 						return true
 					end
 				else
@@ -1427,34 +1452,64 @@ function widget:MousePress(x, y, button)
 		
 		local myName = widget:GetInfo().name
 		
-		for _,button in pairs(Presets) do
+		if currentSection == "presets" then
+			for _,button in pairs(Presets) do
+							
+				if IsOnButton(x, y, button["x1"],button["y1"],button["x2"],button["y2"]) then
+					PlaySoundFile(sndButtonOff,4.0,0,0,0,0,0,0,'userinterface')
+					InitButtons()				
+					
+					if button.settings and #button.settings > 0 then
 						
-			if IsOnButton(x, y, button["x1"],button["y1"],button["x2"],button["y2"]) then
-				PlaySoundFile(sndButtonOff,4.0,0,0,0,0,0,0,'userinterface')
-				InitButtons()				
-				
-				if button.widgets and #button.widgets > 0 then
-					
-					Echo("Loading preset: " .. button.label)
-					for name,data in pairs(widgetHandler.knownWidgets) do
-						--Echo("Processing widget:",name,data)
-						if name ~= myName then
-							widgetHandler:DisableWidget(name)
+						for _,setting in pairs (button.settings) do
+							if #setting == 2 then
+								setting[1](setting[2])
+								--Echo("Settings:",setting[1],setting[2])
+							elseif #setting == 3 then
+								setting[1](setting[2],setting[3])
+								--Echo("Settings:",setting[1],setting[2],setting[3])
+							end
 						end
+						
+						PlaySoundFile(sndButtonDone,4.0,0,0,0,0,0,0,'userinterface')
 					end
 					
-					for _,wname in pairs (button.widgets) do
-						widgetHandler:EnableWidget(wname)
+					if button.widgets and #button.widgets > 0 then
+						
+						Echo("Loading preset: " .. button.label)
+						for name,data in pairs(widgetHandler.knownWidgets) do
+							--Echo("Processing widget:",name,data)
+							if name ~= myName then
+								widgetHandler:DisableWidget(name)
+							end
+						end
+						
+						for _,wname in pairs (button.widgets) do
+							widgetHandler:EnableWidget(wname)
+						end
+						
+						for _,noobButton in pairs(Button) do
+							if noobButton.key == "noob-buttons" then
+								if noobButton.value then
+									widgetHandler:DisableWidget("Hide commands")
+								else
+									widgetHandler:EnableWidget("Hide commands")
+								end
+							end
+						end
+						
+						widgetHandler:SaveConfigData()
+						currentPreset = button.label
+						Echo("... Done!")
+						PlaySoundFile(sndButtonDone,4.0,0,0,0,0,0,0,'userinterface')
 					end
 					
-					widgetHandler:SaveConfigData()
-					Echo("... Done!")
-					PlaySoundFile(sndButtonDone,4.0,0,0,0,0,0,0,'userinterface')
-					currentPreset = button.label
-				end
-				
-				return true
-			end	
+					
+					
+					RefreshOptions()
+					return true
+				end	
+			end
 		end
 		
 		if IsOnButton(x, y, ButtonClose["x1"],ButtonClose["y1"],ButtonClose["x2"],ButtonClose["y2"]) then
@@ -1503,17 +1558,32 @@ function widget:MouseRelease(x, y, button)
 						if button.action and #button.action == 3 then
 							if button.action[3] == -1 then
 								button.action[1](table.concat({button.action[2]," ",button.value}))
+							elseif button.action[3] == -2 then
+								Echo("MR:",button.key,#button.action,button.action[1],button.action[2])
+								button.action[1](button.action[2],button.value)
 							else
 								button.action[1](button.action[2],button.action[3])
 							end
 							PlaySoundFile(sndButtonSlide,1.0,0,0,0,0,0,0,'userinterface')
 							currentPreset = nil
 						elseif button.action and #button.action == 2 then
+							--Echo("MR:",button.key,button.value)
 							button.action[1](button.action[2],button.value)
 							PlaySoundFile(sndButtonSlide,1.0,0,0,0,0,0,0,'userinterface')
 							currentPreset = nil
 						end
+						if button.reloadwidgets then
+							for _, widgetName in pairs(button.reloadwidgets) do
+								if widgetHandler.knownWidgets[widgetName].active then
+									Echo("Reloading widget:",widgetName)
+									widgetHandler:DisableWidget(widgetName)
+									widgetHandler:EnableWidget(widgetName)
+								end
+							end
+						end
+						
 					end
+					RefreshOptions()
 					return true
 				elseif button.newValue and button.value ~= button.newValue then
 					if y < button.y2 and y > button.y1 then 
@@ -1523,10 +1593,13 @@ function widget:MouseRelease(x, y, button)
 						if button.action and #button.action == 3 then
 							if button.action[3] == -1 then
 								button.action[1](table.concat({button.action[2]," ",button.value}))
+							elseif button.action[3] == -2 then
+								button.action[1](button.action[2],button.value)
 							else
 								button.action[1](button.action[2],button.action[3])
 							end
-							
+						elseif button.action and #button.action == 2 then
+							button.action[1](button.action[2],button.value)
 						end
 						
 						PlaySoundFile(sndButtonSlide,1.0,0,0,0,0,0,0,'userinterface')
@@ -1534,6 +1607,7 @@ function widget:MouseRelease(x, y, button)
 						
 					else
 						button.newValue = button.value
+						RefreshOptions()
 					end						
 				end
 			end
