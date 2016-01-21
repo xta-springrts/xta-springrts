@@ -207,23 +207,23 @@ for i =1,#files do
 	if fileName:find('sing.wav') or fileName:find('sing2.wav') or fileName:find('honk.wav') or fileName:find('honk2.wav') then 	--sing/honk sounds
 		t[fileName]  = {
 		file      		= fileName;
-		pitchmod  		= 0.1;
-		gainmod   		= 0;
+		pitchmod 		= 0.1;
+		gainmod			= 0.2;
 		gain  			= 1;
-		maxconcurrent  	= 4;
+		maxconcurrent  	= 8;
 		rolloff  		= 0;
 		priority  		= -1;
 		in3d 			= 0;
 		}
 	else
 	t[fileName]  = {
-		file      = fileName;
-		pitchmod  = 0.0;
-		gainmod   = 0.0;
-		gain  = 1;
-		maxconcurrent  = 8;
-		rolloff  = 0.4;
-		priority  = -3;
+		file      		= fileName;
+		pitchmod  		= 0.3;
+		gainmod   		= 0.2;
+		gain  			= 1;
+		maxconcurrent  	= 16;
+		rolloff  		= 0.4;
+		priority  		= -3;
 	}
 	end
 end
