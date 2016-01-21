@@ -41,7 +41,7 @@ if (gadgetHandler:IsSyncedCode()) then
 	local bestKills = nil
 	local killCounters = {}
 	local soundsOn = true -- change if you want sounds
-	local snd = "sounds/ding.wav" --path to sound file
+	local snd = "sounds/gui/ding.wav" --path to sound file
 	local function isUnitComplete(UnitID)
 		local health,maxHealth,paralyzeDamage,captureProgress,buildProgress=Spring.GetUnitHealth(UnitID)
 		if buildProgress and buildProgress>=1 then
@@ -68,7 +68,7 @@ if (gadgetHandler:IsSyncedCode()) then
 				if at~=bestTeam then
 					bestTeam=at
 					Spring.SetGameRulesParam("BestTeam",bestTeam)
-					if soundsOn then Spring.PlaySoundFile(snd) end
+					if soundsOn then Spring.PlaySoundFile(snd,1.0,nil,nil,nil,0,0,0,"ui") end
 					
 					Spring.SendMessage(friendlyName(bestTeam) .. " has taken the lead with " .. bestKills .. " kill" .. (bestKills > 1 and "s." or "!"))
 				end

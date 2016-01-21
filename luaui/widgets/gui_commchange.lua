@@ -68,14 +68,14 @@ commanderID["guardian_automatic"]	= (UnitDefNames["guardian_commander"] or {}).i
 commanderID["guardian_manual"] 		= (UnitDefNames["guardian_u0commander"] or {}).id
 
 -- sound
-local bell = 'sounds/bell.ogg'
-local beep = 'sounds/BEEP1.wav'
-local tock = 'sounds/ticktock.wav'
-local button = 'sounds/button9.wav'
-local button1 = 'sounds/button1.wav'
-local button2 = 'sounds/button2.wav'
-local button3 = 'sounds/buttn01.wav'
-local cancel = 'sounds/cancel2.wav'
+local bell = 'sounds/gui/bell.ogg'
+local beep = 'sounds/unit/robobeep.wav'
+local tock = 'sounds/gui/ticktock.wav'
+local button = 'sounds/gui/button9.wav'
+local button1 = 'sounds/gui/button1.wav'
+local button2 = 'sounds/gui/button2.wav'
+local button3 = 'sounds/gui/buttn01.wav'
+local cancel = 'sounds/gui/cancel2.wav'
 
 local duckSounds =	 {
 	[1] = 'sounds/critters/duckcall1.wav',

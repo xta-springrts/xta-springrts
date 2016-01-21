@@ -47,8 +47,8 @@ local cShadow						= {0.6, 0.6, 0.6, 0.6}
 local cDisabled						= {0.4, 0.4, 0.4, 1.0}
 
 --sounds
-local button6						= "sounds/button6.wav"
-local button8						= "sounds/button8.wav"
+local button6						= "sounds/gui/button6.wav"
+local button8						= "sounds/gui/button8.wav"
 
 local function IsOnButton(x, y, BLcornerX, BLcornerY,TRcornerX,TRcornerY)
 	if BLcornerX == nil then return false end

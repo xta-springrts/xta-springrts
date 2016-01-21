@@ -50,26 +50,25 @@ alarmTimes["position"]			= {}
 local spamBlock					= false
 
 ----------------------------------------------------------------------------
-local cloak1 = "sounds/kloak1.wav"
-local decloak1 = "sounds/kloak1un.wav"
-local cloak2 = "sounds/kloak2.wav"
-local decloak2 = "sounds/kloak2un.wav"
+local cloak1 = "sounds/unit/kloak1.wav"
+local decloak1 = "sounds/unit/kloak1un.wav"
+local cloak2 = "sounds/unit/kloak2.wav"
+local decloak2 = "sounds/unit/kloak2un.wav"
 
-local CD1 = "sounds/count1.wav"
-local CD2 = "sounds/count2.wav"
-local CD3 = "sounds/count3.wav"
-local CD4 = "sounds/count4.wav"
-local CD5 = "sounds/count5.wav"
-local CD6 = "sounds/count6.wav"
-local cancel = "sounds/cancel2.wav"
-local movefailed = "sounds/cantdo4.wav"
+local CD1 = "sounds/unit/count1.wav"
+local CD2 = "sounds/unit/count2.wav"
+local CD3 = "sounds/unit/count3.wav"
+local CD4 = "sounds/unit/count4.wav"
+local CD5 = "sounds/unit/count5.wav"
+local CD6 = "sounds/unit/count6.wav"
+local cancel = "sounds/unit/cancel2.wav"
+local movefailed = "sounds/unit/cantdo4.wav"
 
 local ADUnits = {}
 local CMD_SELFD = CMD.SELFD
 
-local volume = 3.0
-local VOLUI
-local VOLBATTLE
+local volume = 1.0
+
 ----------------------------------------------------------------------------
 
 local function round(num, idp)
@@ -99,9 +98,7 @@ function widget:Initialize()
 		
 	end
 	
-	VOLUI = 0.015*Spring.GetConfigInt('snd_volui') or 1.0 					-- snd_volui = [0,200]
-	VOLBATTLE = 0.015*Spring.GetConfigInt('snd_volbattle') or 1.0	 		-- snd_volbattle = [0,200]
-	Spring.Log("widget",LOG.INFO,"Unit sounds (XTA) loaded. Volumes (battle,ui,[0,200]):", VOLBATTLE/0.015,VOLUI/0.015)
+	Spring.Log("widget",LOG.INFO,"Unit sounds (XTA) loaded.")
 end
 
 function widget:UnitCloaked(unitID, unitDefID, teamID) 
@@ -109,9 +106,9 @@ function widget:UnitCloaked(unitID, unitDefID, teamID)
 	local _,_,_,_,side = GetTeamInfo(teamID)
 		
 	if side == "arm" then
-		PlaySoundFile(cloak1,VOLBATTLE,x,y,z,0,0,0,'battle')
+		PlaySoundFile(cloak1,1.0,x,y,z,0,0,0,'battle')
 	else
-		PlaySoundFile(cloak2,VOLBATTLE,x,y,z,0,0,0,'battle')
+		PlaySoundFile(cloak2,1.0,x,y,z,0,0,0,'battle')
 	end
 end
 
@@ -120,9 +117,9 @@ function widget:UnitDecloaked(unitID, unitDefID, teamID)
 	local _,_,_,_,side = GetTeamInfo(teamID)
 	
 	if side == "arm" then
-		PlaySoundFile(decloak1,VOLBATTLE,x,y,z,0,0,0,'battle')
+		PlaySoundFile(decloak1,1.0,x,y,z,0,0,0,'battle')
 	else
-		PlaySoundFile(decloak2,VOLBATTLE,x,y,z,0,0,0,'battle')
+		PlaySoundFile(decloak2,1.0,x,y,z,0,0,0,'battle')
 	end
 end
 
@@ -130,15 +127,15 @@ function widget:GameFrame(gameFrame)
 	for unitID, startFrame in pairs(ADUnits) do
 		if GetUnitTeam(unitID) == myTeamID and not GetUnitIsDead(unitID) then
 			if (gameFrame - startFrame) == 20 then -- adjust timing to be 10 frames before actual message, so it syncs better with engine timing
-				PlaySoundFile(CD2)
+				PlaySoundFile(CD2,1.0,nil,nil,nil,0,0,0,'unitreply')
 			elseif (gameFrame - startFrame) == 50 then
-				PlaySoundFile(CD3)
+				PlaySoundFile(CD3,1.0,nil,nil,nil,0,0,0,'unitreply')
 			elseif (gameFrame - startFrame) == 80 then
-				PlaySoundFile(CD4)
+				PlaySoundFile(CD4,1.0,nil,nil,nil,0,0,0,'unitreply')
 			elseif (gameFrame - startFrame) == 110 then
-				PlaySoundFile(CD5)
+				PlaySoundFile(CD5,1.0,nil,nil,nil,0,0,0,'unitreply')
 			elseif (gameFrame - startFrame) == 140 then
-				PlaySoundFile(CD6)
+				PlaySoundFile(CD6,1.0,nil,nil,nil,0,0,0,'unitreply')
 			end
 		end
 	end
@@ -154,10 +151,10 @@ function widget:UnitCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdOp
 		if not ADUnits[unitID] then
 			local frame = GetGameFrame()			
 			ADUnits[unitID] = frame
-			--PlaySoundFile(CD1)
+			--PlaySoundFile(CD1,1.0,nil,nil,nil,0,0,0,'unitreply')
 		else
 			ADUnits[unitID] = nil
-			PlaySoundFile(cancel)
+			PlaySoundFile(cancel,1.0,nil,nil,nil,0,0,0,'unitreply')
 		end
 	end
 	return true
@@ -249,14 +246,12 @@ function widget:UnitDamaged (unitID, unitDefID, unitTeam, damage, paralyzer, wea
 
 		local snd 
 		if isCommander then
-			snd = 'sounds/warning2.wav'
+			snd = 'sounds/unit/warning2.wav'
 		else
-			snd = 'sounds/warning1.wav'
+			snd = 'sounds/unit/warning1.wav'
 		end
-		-- ALL units have volume = 1.0 in unitdef. Some units, such as critters and DT:s have no volume, making the widget fail on nil index.
-		-- this was the previous lookup code for volume: udef.sounds.underattack[1].volume
-		-- now we read volume setting from spring config instead.
-		PlaySoundFile(snd, VOLUI, nil, "ui") 
+		
+		PlaySoundFile(snd, volume, nil,nil,nil,0,0,0, "ui") 
 
 		if (x and y and z) then SetLastMessagePosition(x,y,z) end
 	end
@@ -267,7 +262,7 @@ function widget:UnitMoveFailed(unitID, unitDefID, unitTeam)
 	local x,y,z = GetUnitPosition(unitID)
 	if (x and y and z) then SetLastMessagePosition(x,y,z) end
 	
-	PlaySoundFile(movefailed, 1.0, nil, "ui")
+	PlaySoundFile(movefailed, volume, nil,nil,nil,0,0,0, "ui")
 end 
 
 --changing teams, rejoin, becoming spec etc

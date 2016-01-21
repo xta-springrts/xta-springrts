@@ -19,13 +19,13 @@ if (gadgetHandler:IsSyncedCode()) then
 	end
 	function gadget:UnitCreated(unitID, unitDefID, unitTeam)
 		if UnitDefs[unitDefID].name == "fleagoth" then
-			Spring.PlaySoundStream("sounds/finalbattle.ogg")
+			Spring.PlaySoundStream("sounds/music/finalbattle.ogg")
 		end
 	end
 	function gadget:UnitDestroyed(unitID, unitDefID, unitTeam)
 		if UnitDefs[unitDefID].name == "fleagoth" then
 			Spring.StopSoundStream()
-			Spring.PlaySoundStream("sounds/fleabossdead.ogg")
+			Spring.PlaySoundStream("sounds/music/fleabossdead.ogg")
 		end
 	end
 end

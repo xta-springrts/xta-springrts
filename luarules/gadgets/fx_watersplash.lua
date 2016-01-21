@@ -31,7 +31,7 @@ if gadgetHandler:IsSyncedCode() then
 	local lavaCEG1							= "napalam"
 	local lavaCEG2							= "SMOKESHELL_Small"
 	--local duckCEG							= "blplasmaballbloom"
-	local duckSND							= 'sounds/ducks.ogg'
+	local duckSND							= 'sounds/battle/ducks.ogg'
 		
 	local PlaySoundFile						= Spring.PlaySoundFile
 	local shallowLimit						= -25

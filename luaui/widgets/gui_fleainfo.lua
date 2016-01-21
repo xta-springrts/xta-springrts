@@ -48,8 +48,8 @@ local cTex							= {1, 1, 1, 0.75}
 
 
 --sounds
-local button6						= "sounds/button6.wav"
-local button8						= "sounds/button8.wav"
+local button6						= "sounds/gui/button6.wav"
+local button8						= "sounds/gui/button8.wav"
 
 local imgFlea						= "luaui/images/fleabowl/armflea.png"
 local fleaData						= {}

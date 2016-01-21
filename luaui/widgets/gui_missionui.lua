@@ -188,7 +188,7 @@ function widget:GameOver()
 		end
 		victory = true
 		endTime = Spring.GetGameSeconds()
-		Spring.PlaySoundFile("sounds/victory2.wav")
+		Spring.PlaySoundFile("sounds/gui/victory2.wav")
 	else
 		startScript = VFS.LoadFile("Missions/" .. modOptions.mission ..".txt")
 		endTime = Spring.GetGameSeconds()

@@ -61,8 +61,8 @@ local math_floor							= math.floor
 local myFont	 							= gl.LoadFont("FreeSansBold.otf",textsize, 1.9, 40) 
 local myFontBig	 							= gl.LoadFont("FreeSansBold.otf",12, 1.9, 40)
 local shiftDown 							= false
-local sndButton								= 'sounds/button9.wav'
-local sndButton2							= 'sounds/minesel4.wav'
+local sndButton								= 'sounds/gui/button9.wav'
+local sndButton2							= 'sounds/unit/minesel4.wav'
 local squadron 								= {} -- squadron[unitID] = array. Table by source units containing a list of guarded units
 local ta_insert								= table.insert
 local ta_remove								= table.remove

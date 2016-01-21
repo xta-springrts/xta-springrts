@@ -37,7 +37,7 @@ if gadgetHandler:IsSyncedCode() then
 	local gameOverFrame
 	local transferStarted	= false
 	
-	local beep = "sounds/butmain4.wav"
+	local beep = "sounds/gui/butmain4.wav"
 	
 	function gadget:Initialize()
 		Spring.SetGameRulesParam("ShowEnd",0)
@@ -319,20 +319,21 @@ end
 			-- play victory/defeat sounds
 			
 			if not victoryPlayed then
+				
 				-- winners
 				if isWinner and isWinner[myAllyID] and (not mySpectatingState) then
-					Spring.PlaySoundFile("sounds/victory1.wav",8.0,0,0,0,0,0,0,'userinterface')
+					Spring.PlaySoundFile("sounds/gui/victory1.wav",8.0,0,0,0,0,0,0,'userinterface')
 					victoryPlayed = true
 				-- losers
 				elseif #winnerList > 0 then
 					-- no action
 				--draw
 				elseif #winnerList == 0 then
-					Spring.PlaySoundFile("sounds/victory3.wav",8.0,0,0,0,0,0,0,'userinterface')
+					Spring.PlaySoundFile("sounds/gui/victory3.wav",8.0,0,0,0,0,0,0,'userinterface')
 					victoryPlayed = true
 				--spectators
 				elseif mySpectatingState then
-					Spring.PlaySoundFile("sounds/victory1.wav",8.0,0,0,0,0,0,0,'userinterface')
+					Spring.PlaySoundFile("sounds/gui/victory1.wav",8.0,0,0,0,0,0,0,'userinterface')
 					victoryPlayed = true
 				end
 			end

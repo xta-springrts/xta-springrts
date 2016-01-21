@@ -357,17 +357,17 @@ function widget:DrawScreen()
 		return
 	end
 	-- this makes jK rage
-	--gl.ResetState()
-	--gl.ResetMatrices()
+	gl.ResetState()
+	gl.ResetMatrices()
 	----
 	
-    --gl.SlaveMiniMap(true)
-    gl.DrawMiniMap()
-    --gl.SlaveMiniMap(false)
+   gl.SlaveMiniMap(true)
+   gl.DrawMiniMap()
+   gl.SlaveMiniMap(false)
 	
 	-- this makes jK rage
-	--gl.ResetState()
-	--gl.ResetMatrices()
+	gl.ResetState()
+	gl.ResetMatrices()
 	----
 end
 

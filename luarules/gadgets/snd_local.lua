@@ -198,7 +198,7 @@ else
 		end
 		
 		if (LOS or isDampenedMode) and projectileWeaponDefID and sndstart[projectileWeaponDefID] then
-			PlaySoundFile(taconcat({"sounds/",sndstart[projectileWeaponDefID],".wav"}),volume,x,y,z,0,0,0,Channel)
+			PlaySoundFile(taconcat({"sounds/battle/",sndstart[projectileWeaponDefID],".wav"}),volume,x,y,z,0,0,0,Channel)
 		end
 		return true
 	end
@@ -219,33 +219,33 @@ else
 		
 		if (LOS or isDampenedMode) and weaponDefID then		
 			if gh >= 0 then -- explosion on land
-				if snddry[weaponDefID] then PlaySoundFile(taconcat({"sounds/",snddry[weaponDefID],".wav"}),volume,x,y,z,0,0,0,Channel) end
+				if snddry[weaponDefID] then PlaySoundFile(taconcat({"sounds/battle/",snddry[weaponDefID],".wav"}),volume,x,y,z,0,0,0,Channel) end
 				--Echo("Land")
 			else -- explosion on water
 				if y > 0 then -- hits something above water level, use dry sounds
-					if snddry[weaponDefID] then PlaySoundFile(taconcat({"sounds/",snddry[weaponDefID],".wav"}),volume,x,y,z,0,0,0,Channel) end
+					if snddry[weaponDefID] then PlaySoundFile(taconcat({"sounds/battle/",snddry[weaponDefID],".wav"}),volume,x,y,z,0,0,0,Channel) end
 					--Echo("On water but above water level")
 				else -- hits under or on water surface
 					if isLava then
 						--Echo("Lava hit",sndlava[weaponDefID])
-						if snddry[weaponDefID] then PlaySoundFile(taconcat({"sounds/",snddry[weaponDefID],".wav"}),volume/3,x,y,z,0,0,0,Channel) end
-						if sndlava[weaponDefID] then PlaySoundFile(taconcat({"sounds/",sndlava[weaponDefID],".wav"}),volume,x,y,z,0,0,0,Channel) end
+						if snddry[weaponDefID] then PlaySoundFile(taconcat({"sounds/battle/",snddry[weaponDefID],".wav"}),volume/3,x,y,z,0,0,0,Channel) end
+						if sndlava[weaponDefID] then PlaySoundFile(taconcat({"sounds/battle/",sndlava[weaponDefID],".wav"}),volume,x,y,z,0,0,0,Channel) end
 					else
 						--Echo("water hit",sndwet[weaponDefID])
 						if y > shallowHitLimit then -- projectile hits close to surface
 							if gh > shallowLimit then -- water is shallow
 								--Echo("Shallow water")
-								if snddry[weaponDefID] then PlaySoundFile(taconcat({"sounds/",snddry[weaponDefID],".wav"}),volume/2,x,y,z,0,0,0,Channel) end
-								if sndwet[weaponDefID] then PlaySoundFile(taconcat({"sounds/",sndwet[weaponDefID],".wav"}),volume/2,x,y,z,0,0,0,Channel) end
+								if snddry[weaponDefID] then PlaySoundFile(taconcat({"sounds/battle/",snddry[weaponDefID],".wav"}),volume/2,x,y,z,0,0,0,Channel) end
+								if sndwet[weaponDefID] then PlaySoundFile(taconcat({"sounds/battle/",sndwet[weaponDefID],".wav"}),volume/2,x,y,z,0,0,0,Channel) end
 								
 							else -- hits deep water
 								--Echo("Deep water")
-								if sndwet[weaponDefID] then PlaySoundFile(taconcat({"sounds/",sndwet[weaponDefID],".wav"}),volume,x,y,z,0,0,0,Channel) end
+								if sndwet[weaponDefID] then PlaySoundFile(taconcat({"sounds/battle/",sndwet[weaponDefID],".wav"}),volume,x,y,z,0,0,0,Channel) end
 							end
 						else -- projectile hits at a depth, ideally, there would be another type of explosion sound in this case. However,
 							-- this is already considered in weapon explosions, for example the wet sound of torpedoes is xplodep2, which is
 							-- a deep water sound. We still use standard wet sounds, this division is kept for future needs.
-							if sndwet[weaponDefID] then PlaySoundFile(taconcat({"sounds/",sndwet[weaponDefID],".wav"}),volume,x,y,z,0,0,0,Channel) end
+							if sndwet[weaponDefID] then PlaySoundFile(taconcat({"sounds/battle/",sndwet[weaponDefID],".wav"}),volume,x,y,z,0,0,0,Channel) end
 						end
 					end
 				end

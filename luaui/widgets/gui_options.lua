@@ -65,12 +65,12 @@ local imgArrows							= "LuaUI/Images/tweaksettings/arrows.png"
 local imgMarker							= "luaui/images/commchange/duck.png"
 
 --sounds
-local sndButtonOn 						= 'sounds/button8.wav'
-local sndButtonOff 						= 'sounds/button6.wav'
-local sndButtonTab 						= 'sounds/button5.wav'
-local sndButtonSlide					= 'sounds/button3.wav'
-local sndButtonDone						= 'sounds/butmain.wav'
-local sndButtonPress					= 'sounds/buttn06.wav'
+local sndButtonOn 						= 'sounds/gui/button8.wav'
+local sndButtonOff 						= 'sounds/gui/button6.wav'
+local sndButtonTab 						= 'sounds/gui/button5.wav'
+local sndButtonSlide					= 'sounds/gui/button3.wav'
+local sndButtonDone						= 'sounds/gui/butmain.wav'
+local sndButtonPress					= 'sounds/gui/buttn06.wav'
 
 -- other
 local ButtonClose		 				= {}

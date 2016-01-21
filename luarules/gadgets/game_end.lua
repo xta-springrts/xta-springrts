@@ -794,7 +794,7 @@ end
 			voteForDraw = Spring.GetGameRulesParam("VoteForDraw") == 1
 			
 			if (voteForEnd or voteForDraw) and (votetime == nil or votetime == 0) and not playedVoteSound then
-				Spring.PlaySoundFile("sounds/beep1.wav",3.0,0,0,0,0,0,0,'userinterface')
+				Spring.PlaySoundFile("sounds/gui/beep1.wav",3.0,0,0,0,0,0,0,'userinterface')
 				playedVoteSound = true
 			end
 			
