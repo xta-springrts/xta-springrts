@@ -27,6 +27,27 @@ local Echo = Spring.Echo
 -- General postprocessing
 local lowcpu = modOptions.lowcpu and tobool(modOptions.lowcpu)
 for name, ud in pairs(UnitDefs) do
+
+	-- prepend path to unit sounds due to folder re-arrangement
+	if ud.sounds then
+		for soundType, soundList in pairs(ud.sounds) do
+			
+			if type(soundList) == type({}) then
+				for i, path in pairs(soundList) do
+					if #path > 0 and not path:find("unit/") then
+						ud.sounds[soundType][i] = "unit/" .. path
+					end
+					--Echo("UDS:",name,ud.sounds[soundType][i])
+				end
+			else
+				if #soundList > 0 and not soundList:find("unit/") then
+					ud.sounds[soundType] = "unit/" .. soundList
+				end
+				--Echo("UDS:",name,ud.sounds[soundType])
+			end
+		end
+	end
+	
 	-- Tanks and hovers don't slow down when turning
 	if ud.maxvelocity and ud.category and ((ud.category:find("TANK",1,true) or ud.category:find("HOVER",1,true))) then
 		if not ud.turninplace then

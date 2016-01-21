@@ -61,6 +61,15 @@ local function hs2rgb(h, s)
 end
 
 local function ProcessWeaponDef(wdName,wd)
+  -- Change sounds/sounds.wav => sounds/battle/sounds.wav:
+	if wd.soundhitdry and #wd.soundhitdry > 0 then
+		wd.soundhitdry = "battle/" .. wd.soundhitdry
+	end
+	
+	if wd.soundstart and #wd.soundstart > 0 then
+		wd.soundstart = "battle/" .. wd.soundstart
+	end
+		
   -- weapon reloadTime and stockpileTime were seperated in 77b1
   if (tobool(wd.stockpile) and (wd.stockpiletime==nil)) then
     wd.stockpiletime = wd.reloadtime
@@ -133,7 +142,7 @@ for wdName, wd in pairs(WeaponDefs) do
   if (isstring(wdName) and istable(wd)) then
     ProcessWeaponDef(wdName, wd)
   end
-end
+end	
 
 local ObsoleteTags = {
 	"aimrate",
@@ -201,13 +210,17 @@ local inertialessWeapons = {
 local modOptions = Spring.GetModOptions()
 
 -- Adjustment of terrain damage, area of effect, kinetic force of weapons and cannon trajectory height
+-- also add water and lava sounds if not present
+
 local customGravity = 0.25
 local maxRangeAngle = 30  --in degrees >0 and <=45
 if modOptions and modOptions.gravity then customGravity=modOptions.gravity end
 local velGravFactor = customGravity * 900 / math.sin(math.rad(2 * maxRangeAngle))
 local interceptorStyle = 2
 if modOptions and modOptions.nuke and not tobool(modOptions.nuke) then interceptorStyle = 1 end
-
+ -- local waterColour = Game.waterBaseColor
+-- Echo("Water color:",waterColour)
+--local isLava = (waterColour and waterColour[1] > waterColour[3]) or Game.waterDamage > 0 
 local warnings = 0
 
 for id, weaponDef in pairs(WeaponDefs) do
@@ -243,21 +256,21 @@ for id, weaponDef in pairs(WeaponDefs) do
 		else
 			local AoE = tonumber(weaponDef.areaofeffect) or 0
 			if AoE<50 then
-				weaponDef.soundhitwet = "splshbig"
+				weaponDef.soundhitwet = "battle/splshbig" -- isLava and "battle/magma1" or 
 			elseif AoE<88 then
-				weaponDef.soundhitwet = "splssml"
+				weaponDef.soundhitwet = "battle/splssml" -- isLava and "battle/magma2" or 
 			elseif AoE<145 then
-				weaponDef.soundhitwet = "splsmed"
+				weaponDef.soundhitwet = "battle/splsmed" -- isLava and "battle/magma3" or 
 			elseif AoE>450 then
-				weaponDef.soundhitwet = weaponDef.soundhitdry
+				weaponDef.soundhitwet = weaponDef.soundhitdry -- isLava and "battle/lavaeruption2" or 
 			else
-				weaponDef.soundhitwet = "splslrg"
+				weaponDef.soundhitwet = "battle/splslrg" -- isLava and "battle/magma4" or 
 			end
 		end
 	elseif inertialessWeapons[weaponDef.weapontype] then
 		weaponDef.impulseboost = 0
 		weaponDef.impulsefactor = 0
-		weaponDef.soundhitwet = "sizzle"		
+		weaponDef.soundhitwet = "battle/sizzle"		
 		if weaponDef.weapontype == "LaserCannon" or weaponDef.weapontype == "EmgCannon" then
 			weaponDef.cegtag = ""	-- we use the projectile lights widget now
 		elseif weaponDef.weapontype == "BeamLaser" then
