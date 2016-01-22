@@ -186,12 +186,13 @@
 		canbuild31=arm_spidernest_Xtra;//Spiderpack vs. Tortoise
 		canbuild32=arm_spidernest;//Spiderpack vs. Tortoise
 		canbuild33=arm_hovercraft_platform; 
-		canbuild34=arm_stunner;
-		canbuild35=arm_retaliator;
-	 	canbuild36=ARMFFF;//xtaids
-	 	canbuild37=MERCURY;//xtaids
-		canbuild38=arm_vulcan;
-		canbuild39=arm_nano_tower;
+		canbuild34=arm_landship_lab; //xtaids
+		canbuild35=arm_stunner;
+		canbuild36=arm_retaliator;
+	 	canbuild37=ARMFFF;//xtaids
+	 	canbuild38=MERCURY;//xtaids
+		canbuild39=arm_vulcan;
+		canbuild40=arm_nano_tower;
 	}
 	[arm_adv_kbot_lab]
 	{
@@ -706,6 +707,58 @@
 		canbuild30=arm_adv_nano_tower;
 		canbuild31=arm_commandpost;
 	}
+	[arm_ht_construction_vehicle]
+	{
+	 	canbuild1=arm_fortification_wall;
+	 	canbuild2=ARMBFORTEW;//xtaids
+		canbuild3=arm_mantle_extractor;
+	 	canbuild4=arm_moho_metal_maker;
+		canbuild5=arm_geothermal_powerplant;
+		canbuild6=arm_fusion_reactor;
+		canbuild7=arm_Quantum_reactor;
+		canbuild8=arm_advanced_radar_tower;
+		canbuild9=arm_radar_jamming_tower;
+		canbuild10=arm_picket;
+		canbuild11=arm_pitbull;
+		canbuild12=arm_flakker;
+		canbuild13=arm_guardian;
+		canbuild14=arm_adv_energy_storage;
+		canbuild15=arm_adv_metal_storage;
+		canbuild16=arm_shield_deflector;
+		canbuild18=arm_annihilator;
+		canbuild19=armarch;//xtaids
+		canbuild20=arm_tabitha;
+		canbuild21=arm_protector;
+		canbuild22=arm_vehicle_plant;
+		canbuild23=arm_adv_vehicle_plant;
+		canbuild24=arm_landship_lab; //xtaids
+		canbuild25=arm_stunner;
+		canbuild26=arm_retaliator;
+	 	canbuild27=MERCURY;//xtaids
+		canbuild28=arm_vulcan;
+		canbuild30=arm_adv_nano_tower;
+		canbuild31=arm_commandpost;
+	}
+	[arm_landship_lab]
+	{
+		canbuild1=arm_ht_construction_vehicle;
+		canbuild2=arm_shelia;
+		canbuild3=arm_rebel;
+		//canbuild4=arm_screener;
+		canbuild5=arm_naga;
+		canbuild6=arm_weaver;
+		canbuild7=arm_overseer;
+		canbuild8=arm_doberman;
+		canbuild10=arm_big_wheelie;
+		canbuild12=arm_rottweiler;
+		canbuild13=arm_tor;//xtaids
+		canbuild14=arm_scarab;
+		canbuild15=arm_cerberus;
+		canbuild16=arm_mobile_fusion;
+		canbuild17=arm_falkor;
+		canbuild18=arm_Plesiosaur;
+	}
+
 	[arm_u0commander]
 	{
 		canbuild1=arm_solar_collector;

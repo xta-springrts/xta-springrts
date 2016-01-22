@@ -1729,6 +1729,7 @@
 	Texture3=null;
 	Texture4=null;
 	thickness=9;
+	collidefriendly=0;
 	[DAMAGE]
 	{
 		default=2260;
@@ -5953,6 +5954,7 @@
 	Weapontype=MissileLauncher;
 	tolerance=10000;
 	startsmoke=1;
+	flighttime=5;
 	[DAMAGE]
 	{
 		default=46;

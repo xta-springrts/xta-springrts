@@ -28,8 +28,8 @@
 	//  Health/Cost/Size
 	//********************
 	maxdamage=1063;
-	buildcostmetal=987;
-	buildcostenergy=11253;
+	buildcostmetal=787;
+	buildcostenergy=10253;
 	buildtime=18495;
 	footprintx=4;
 	footprintz=4;

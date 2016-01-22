@@ -38,7 +38,7 @@
 	//  Resources
 	//*************
 	metalstorage=0;
-	energyuse=80;
+	energyuse=40;
 	energystorage=0;
 	extractsmetal=0.0025;
 

@@ -1,4 +1,357 @@
 
+[ARM_FALKONPUNCH2]
+{
+	name=Plasma Cannon;
+	explosiongenerator=custom:RedPlasma;
+	energypershot=500;
+	rgbcolor=1 0.33 0.0;
+	weaponType=Cannon;
+	turret=1;
+	range=1600;
+	reloadtime=1.5;
+	weaponvelocity=750;
+	areaofeffect=64;
+	soundstart=CANNHVY1;
+	soundhitdry=xplomed2;
+	startsmoke=1;
+	accuracy=300;
+	movingaccuracy=600;
+	[DAMAGE]
+	{
+		default=444;
+		group_ships=549;
+		group_large_ships=549;
+		group_invincible=1;
+	}
+}
+[ARM_FALKONPUNCH1]
+{
+	name=Plasma Cannon;
+	explosiongenerator=custom:RedPlasma;
+	energypershot=500;
+	rgbcolor=1 0.33 0.0;
+	weaponType=Cannon;
+	turret=1;
+	range=1600;
+	reloadtime=2.0;
+	weaponvelocity=750;
+	areaofeffect=64;
+	soundstart=CANNHVY1;
+	soundhitdry=xplomed2;
+	startsmoke=1;
+	accuracy=300;
+	movingaccuracy=600;
+	[DAMAGE]
+	{
+		default=488;
+		group_ships=549;
+		group_large_ships=549;
+		group_invincible=1;
+	}
+}
+
+[ARMCEREBUS_GUN]
+{
+	name=Plasma Cannon;
+	explosiongenerator=custom:RedPlasma;
+	energypershot=500;
+	rgbcolor=1 0.33 0.0;
+	size=4;
+	weaponType=Cannon;
+	turret=1;
+	range=500;
+	reloadtime=1.5;
+	weaponvelocity=550; //550
+	areaofeffect=128;
+	soundstart=cannhvy5;
+	soundhitdry=xplomed2;
+	startsmoke=1;
+	accuracy=600;
+	[DAMAGE]
+	{
+		default=450;
+		group_ships=675;
+		group_large_ships=725;
+		group_invincible=1;
+	}
+}
+
+[ARM_BIGWHEELS_ANNIHILATOR]
+{
+	name=Annihilator Weapon;
+	Weapontype=BeamLaser;
+	turret=1;
+	//minbarrelangle=-40;
+	pulseSpeed=7.0;
+	SoundTrigger=1;
+	LargeBeamLaser=1;
+	Intensity=0.001;
+	thickness=6.5;
+	beamtime=1;
+	beamdecay=0.9;
+	beamttl=10;
+	hardStop=0;
+	range=1250;
+	reloadtime=3;
+	targetMoveError=0.5;
+	energypershot=2500;
+	weaponvelocity=1000;
+	areaofeffect=16;
+	soundhitdry=xplolrg1;
+	soundstart=annigun1;
+	firestarter=90;
+	waterweapon=1; //allow piercing of water surface
+	rgbcolor=0.000 0.247 1.000;
+	explosiongenerator=custom:BluePlasmaExtraBANG;
+	[DAMAGE]
+	{
+		default=3000;
+		group_commanders=1200;
+		group_ships=3000;
+		group_large_ships=3000;
+		group_invincible=1;
+	}
+}
+
+[DOBER_CANNON]
+{
+	name=Plasma Cannon;
+	weaponType=Cannon;
+	turret=1;
+	range=600;
+	explosiongenerator=custom:raven;
+	reloadtime=4.0;
+	weaponvelocity=900;
+	mygravity=0.001;
+	areaofeffect=111;
+	soundstart=scargun;
+	soundhitdry=exmine3;
+	tolerance=500;
+	CoreThickness=0.9;
+	energypershot=600;
+	rgbcolor=1 0.75 0.2;
+	stages=8;
+	separation=0.45;
+	alphadecay=0.3;
+	sizedecay=-0.1;
+	nogap=1;
+	size=3.5;
+	cegTag=UnitFire;
+	burnblow=1;
+	[DAMAGE]
+	{
+		default=450;
+		group_invincible=1;
+	}
+}
+[ARM_NAGGAR]
+{
+	name=BattleShip Cannon;
+	rgbcolor=1 0.8 0.5;
+	stages=20;
+	separation=0.45;
+	alphadecay=0.3;
+	sizedecay=-0.15;
+	nogap=1;
+	size=3;
+	weaponType=Cannon;
+	turret=1;
+	//color=3;
+	explosiongenerator=custom:BERTHASHOT;
+	cegTag=vulcanfx;
+	GroundBounce=0;
+	WaterBounce=0;
+	NumBounce=1;
+	BounceSlip=1.01;
+	BounceRebound=0.8;
+	bounceExplosionGenerator=custom:BERTHASHOT;
+	range=2450;
+	reloadtime=4.0;
+	weaponvelocity=800;
+	energypershot=1000;
+	areaofeffect=96;
+	soundstart=xplonuk4;
+	soundhitdry=xplonuk1;
+	firestarter=50;
+	accuracy=1100;
+	movingaccuracy=1400;
+	aimrate=300;
+	tolerance=300;
+	holdtime=1;
+	startsmoke=1;
+	edgeeffectiveness=0.75;
+	[DAMAGE]
+	{
+		default=1120;
+		group_invincible=1;
+		group_ships=1680;
+		group_large_ships=1680;
+	}
+}
+[SHELIA_LASER]
+{
+	name=High Energy Laser;
+	Weapontype=LaserCannon;
+	explosiongenerator=custom:GreenLaser;
+	cegTag=GREENCRAP;
+	duration=0.07;
+	thickness=2.5;
+	Intensity=1.0;
+	turret=1;
+	range=700;
+	reloadtime=1;
+	energypershot=150;
+	weaponvelocity=1650;
+	areaofeffect=8;
+	soundstart=Lasrmas2;
+	soundhitdry=lasrhit1;
+	firestarter=90;
+	rgbcolor=0.000 1.000 0.259;
+	tolerance=8000;
+	[DAMAGE]
+	{
+		default=185;
+		group_landair=91;
+		group_invincible=1;
+	}
+}
+[SHELIA_WEAPON]
+{
+	name=Annihilator Weapon;
+	Weapontype=BeamLaser;
+	explosiongenerator=custom:PURPLELASER;
+	turret=1;
+	thickness=1.2;
+	laserflaresize=6;
+	beamtime=0.1;
+	range=700;
+	reloadtime=0.1;
+	energypershot=30;
+	weaponvelocity=900;
+	areaofeffect=8;
+	targetMoveError=0.5;
+	soundstart=annigun1beamlaser;// was annigun1
+	SoundTrigger=1;
+	soundhitdry=xplolrg1;
+	firestarter=90;
+	rgbcolor=0.000 0.012 1.000;
+	pulseSpeed=4.0;
+	thickness=3.5;
+	avoidFeature=0;
+	[DAMAGE]
+	{
+		default=40;
+		group_commanders=30;
+		lost_commanders=27;
+		group_invincible=1;
+	}
+}
+
+[SHELIA_TORPEDO]
+{
+	name=Unguided Torpedo;
+	Weapontype=TorpedoLauncher;
+	CollideFriendly=0;
+	model=weapon_torpedo;
+	propeller=1;
+	range=600;
+	reloadtime=4;
+	weapontimer=4;
+	weaponvelocity=400;
+	startvelocity=100;
+	weaponacceleration=50;
+	turnrate=4750;
+	areaofeffect=16;
+	soundstart=torpedo1;
+	soundhitdry=xplodep1;
+	//tracks=1;
+	waterweapon=1;
+	tolerance=32767;
+	noautorange=1;
+	explosiongenerator=custom:DepthCharge;
+	[DAMAGE]
+	{
+		default=300;
+		group_subs=200;
+		group_stupidsubs=250;
+		group_ships=250;
+		group_large_ships=300;
+		group_torpedo_launcher=200;
+		group_invincible=1;
+		group_commanders=100;
+		lost_commanders=100;
+	}
+}
+[Weaver_EMG]
+{
+	name=E.M.G.;
+	//heightMod=1;
+	cylindertargeting=1;
+	rendertype=4;
+	//color=1;
+	size=1.5;
+	rgbcolor=1 0.87 0.3;
+	lineofsight=1;
+	turret=1;
+	range=333;
+	mygravity=0.08;
+	heightBoostFactor=1;
+	heightMod=-3.1;
+	reloadtime=0.1;
+	minbarrelangle=-24;
+	weapontimer=1;
+	weaponvelocity=700;
+	sprayangle=424;
+	areaofeffect=8;
+	burst=2;
+	burstrate=0.1;
+	soundstart=armsml2;
+	soundhitdry=lasrhit1;
+	soundtrigger=0;
+	tolerance=11000;
+	startsmoke=1;
+	explosiongenerator=custom:EMGFLASH;
+	guidance=1;
+	[DAMAGE]
+	{
+		default=37.5;
+		group_invincible=1;
+	}
+}
+[ROTTBIGDOG_FLAK]
+{
+	name=FLAK Cannon;
+	explosiongenerator=custom:RedPlasma;
+	energypershot=50;
+	rgbcolor=1.0 0.9 0.5;
+	stages=8;
+  	separation=0.45;
+  	alphadecay=0.1;
+  	sizedecay=-0.10;
+  	nogap=1;
+	size=3.5;
+	weaponType=Cannon;
+	turret=1;
+	range=850;
+	reloadtime=0.75;
+	weaponvelocity=1550; //550
+	areaofeffect=175;
+	startsmoke=1;
+	accuracy=600;
+	SoundStart=Cannon3;
+	SoundHit=SabotHit;
+	burnblow=1;
+	mygravity=0.001;
+	[DAMAGE]
+	{
+		default=125;
+		//group_ships=275;
+		//group_large_ships=355;
+		//group_invincible=1;
+		group_landair=575;
+	}
+}
+
 [ARCHANGEL_FLAK]
 {
 	name=FLAK Cannon;
@@ -20,7 +373,7 @@
 	startsmoke=1;
 	accuracy=600;
 	SoundStart=Cannon3;
-	SoundHit=XploMed4;
+	SoundHit=SabotHit;
 	burnblow=1;
 	mygravity=0.001;
 	[DAMAGE]
@@ -123,14 +476,14 @@
 	size=4;
 	weaponType=Cannon;
 	turret=1;
-	range=1450;
+	range=1600;
 	reloadtime=3;
 	weaponvelocity=600; //550
 	areaofeffect=128;
 	soundstart=cannhvy5;
 	soundhitdry=xplomed2;
 	startsmoke=1;
-	accuracy=600;
+	accuracy=700;
 	[DAMAGE]
 	{
 		default=450;
@@ -147,7 +500,7 @@
 	smartshield=1;
 	visibleshieldrepulse=1;
 	shieldenergyuse=400;
-	shieldforce=1;
+	shieldforce=2;
 	shieldmaxspeed=4400;
 	shieldradius=425;
 	shieldpower=15000;
@@ -224,6 +577,7 @@
 	Texture3=null;
 	Texture4=null;
 	thickness=9;
+	CollideFriendly=0;
 	[DAMAGE]
 	{
 		default=915;
@@ -241,7 +595,7 @@
 	explosiongenerator=custom:KBOTMISSILEHIT;
 	Texture1=null;
 	range=710;
-	reloadtime=0.333;
+	reloadtime=0.5;
 	weapontimer=5;
 	weaponvelocity=900;
 	startvelocity=570;
@@ -261,12 +615,13 @@
 	Weapontype=MissileLauncher;
 	tolerance=10000;
 	startsmoke=1;
+	flighttime=6;
 	[DAMAGE]
 	{
-		default=35;//105
+		default=45;//90
 		lost_commanders=33;//99
 		group_invincible=1;
-		group_landair=100;//300
+		group_landair=150;//300
 	}
 }
 [ARM_EVAP_ANNIHILATOR]
@@ -505,7 +860,7 @@
 	smartshield=1;
 	visibleshieldrepulse=1;
 	shieldenergyuse=300;
-	shieldforce=1;
+	shieldforce=2;
 	shieldmaxspeed=4000;
 	shieldradius=350;
 	shieldpower=10000;
@@ -2364,7 +2719,7 @@
 	myGravity=0.1;
 	[DAMAGE]
 	{
-		default=66.6;
+		default=88.8;
 		group_invincible=1;
 	}
 }
