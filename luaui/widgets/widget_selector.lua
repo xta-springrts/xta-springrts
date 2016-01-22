@@ -70,7 +70,7 @@ headerFont = ":n:" .. headerFont
 local myFont = gl.LoadFont("FreeSansBold.otf",16, 1.9, 40)
 local bgPadding = 3
 local bgcorner	= ":n:"..LUAUI_DIRNAME.."images/bgcorner.png"
-local sndButton 	= 'sounds/buttn06.wav'
+local sndButton 	= 'sounds/gui/buttn06.wav'
 
 local maxWidth = 0.01
 local borderx = yStep * 0.75

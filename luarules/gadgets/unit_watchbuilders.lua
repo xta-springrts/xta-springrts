@@ -1,4 +1,6 @@
-local versionNumber = "1.0"
+local versionNumber = "1.1"
+-- Move/add build commands sound from sounds.tfd
+
 
 function gadget:GetInfo()
 	return {
@@ -54,7 +56,9 @@ if (gadgetHandler:IsSyncedCode()) then
 			end
 		end			
 	end
-
+	
+	
+	
 	function gadget:Shutdown()
 		for id, unitDef in ipairs(UnitDefs) do
 			if unitDef.name then
@@ -62,6 +66,13 @@ if (gadgetHandler:IsSyncedCode()) then
 			end
 		end	
 	end	
+	
+	function gadget:AllowCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdOptions, cmdTag, synced)
+		if cmdID < 0 then
+			SendToUnsynced("queuebuildsound", unitTeam,unitID)
+		end
+		return true
+	end
 	
 	function gadget:UnitMoveFailed(unitID, unitDefID, unitTeam)
 		SendToUnsynced("movefailsound", unitTeam,unitID)
@@ -75,16 +86,25 @@ else
 	-----------------
 	
 	local PlaySoundFile				= Spring.PlaySoundFile
-	local failed					= "sounds/cantdo4.wav"
 	local myTeamID, mySpectatorState
 	local GetUnitDefID				= Spring.GetUnitDefID
+	local GetConfigInt				= Spring.GetConfigInt
+	local GetUnitTeam				= Spring.GetUnitTeam
 	
 	function gadget:Initialize()
+		gadgetHandler:AddSyncAction("queuebuildsound", QueueBuildSound)
 		gadgetHandler:AddSyncAction("movefailsound", MoveFailSound)
 		myTeamID = Spring.GetMyTeamID()
 		mySpectatorState = Spring.GetSpectatingState()
 	end
-
+	
+	function QueueBuildSound(_,teamID, unitID)
+		local uDefID = CallAsTeam(myTeamID,GetUnitDefID, unitID)
+		if teamID == myTeamID and uDefID then
+			PlaySoundFile("sounds/gui/button10.wav", 0.5, nil,nil,nil,nil,nil,nil, "userinterface")
+		end
+	end
+		
 	function MoveFailSound(_,teamID, unitID)
 		if mySpectatorState then return end
 		
@@ -92,9 +112,9 @@ else
 		local x,y,z = Spring.GetUnitPosition(unitID)
 		
 		if teamID == myTeamID and uDefID then
-			local disableText = (Spring.GetConfigInt("XTA_DisableMoveFailedText",0) or 0) == 1 
-			local disablesounds = (Spring.GetConfigInt("XTA_DisableMoveFailedSound",0) or 0) == 1
-		
+			local disableText = (GetConfigInt("XTA_DisableMoveFailedText",0) or 0) == 1 
+			local disablesounds = (GetConfigInt("XTA_DisableMoveFailedSound",0) or 0) == 1
+			
 			if uDefID and (x and y and z) then
 				
 				if not disableText then
@@ -103,7 +123,7 @@ else
 				end
 		
 				if not disablesounds then
-					Spring.PlaySoundFile("sounds/cantdo4.wav", 1.0, nil, "ui")
+					PlaySoundFile("sounds/unit/cantdo4.wav", 0.5, x,y,z,0,0,0, "unitreply")
 				end
 			end
 		end	

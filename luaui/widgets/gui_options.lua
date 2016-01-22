@@ -65,17 +65,18 @@ local imgArrows							= "LuaUI/Images/tweaksettings/arrows.png"
 local imgMarker							= "luaui/images/commchange/duck.png"
 
 --sounds
-local sndButtonOn 						= 'sounds/button8.wav'
-local sndButtonOff 						= 'sounds/button6.wav'
-local sndButtonTab 						= 'sounds/button5.wav'
-local sndButtonSlide					= 'sounds/button3.wav'
-local sndButtonDone						= 'sounds/butmain.wav'
-local sndButtonPress					= 'sounds/buttn06.wav'
+local sndButtonOn 						= 'sounds/gui/button8.wav'
+local sndButtonOff 						= 'sounds/gui/button6.wav'
+local sndButtonTab 						= 'sounds/gui/button5.wav'
+local sndButtonSlide					= 'sounds/gui/button3.wav'
+local sndButtonDone						= 'sounds/gui/butmain.wav'
+local sndButtonPress					= 'sounds/gui/buttn06.wav'
 
 -- other
 local ButtonClose		 				= {}
 local ButtonReload						= {}
 local ButtonToggle						= {}
+local ButtonBack		 				= {}
 local Panel					  			= {}
 local FirstButtonYes					= {}
 local FirstButtonNo						= {}
@@ -527,12 +528,12 @@ function widget:Initialize()
 	for name, order in pairs(widgetHandler.orderList) do
 		if order > 0 then 
 			defaultWidgetList[name] = true
-			Echo("Found default widget:",name)
+			--Echo("Found default widget:",name)
 		end
 	end
 	
 	if not configured then
-		Echo("Init: turning widgets off...")
+		--Echo("Init: turning widgets off...")
 		ToggleOwnWidgets(false)
 	end
 	
@@ -544,6 +545,7 @@ function updateHeights()
 end
 
 function InitButtons()
+	
 	
 	-- positions
 	for i, button in ipairs(Section) do
@@ -590,6 +592,11 @@ function InitButtons()
 	ButtonClose["x2"] 			= posX + width/2 - 90
 	ButtonClose["x1"] 			= ButtonClose["x2"] - 60 
 	ButtonClose["y2"] 			= posY + 50
+	
+	ButtonBack["y2"] 			= Panel["info"]["y2"] - 5
+	ButtonBack["y1"] 			= ButtonBack["y2"] - 30
+	ButtonBack["x1"] 			= posX + 5
+	ButtonBack["x2"] 			= ButtonBack["x1"] + 50
 	
 	ButtonReload["x1"] 			= posX + width/2 + 90
 	ButtonReload["y1"] 			= posY + 20
@@ -775,6 +782,8 @@ local function drawModOptions()
 	myFontBigger:SetTextColor(cWhite)
 	myFontBigger:Print("XTA Mod options", (Panel["info"]["x1"] + Panel["info"]["x2"])/2 , Panel["info"]["y2"] - 20,18,'cds')
 	myFontBigger:End()
+	
+	
 	-- content
 	local lastY = Panel["info"]["y2"] - 20
 	rows = 0
@@ -917,6 +926,17 @@ local function drawModOptions()
 	-- update height and position of window
 	updateHeights()
 	
+	ButtonBack["y2"] = Panel["info"]["y2"] - 5
+	ButtonBack["y1"] = ButtonBack["y2"] - 30
+	
+	-- go back button
+	if ButtonBack.above then
+		gl.Color(cAbove)
+	else
+		gl.Color(cGrey)
+	end
+	RectRound(ButtonBack["x1"],ButtonBack["y1"],ButtonBack["x2"],ButtonBack["y2"])
+	
 	-- exitbutton
 	if ButtonClose.above then
 		gl.Color(cAbove)
@@ -928,6 +948,7 @@ local function drawModOptions()
 	myFontBig:Begin()
 	myFontBig:SetTextColor(cWhite)
 	myFontBig:Print("Close", (ButtonClose["x1"]+ButtonClose["x2"])/2, (ButtonClose["y1"]+ButtonClose["y2"])/2,14,'vcs')
+	myFontBig:Print("Back", (ButtonBack["x1"]+ButtonBack["x2"])/2, (ButtonBack["y1"]+ButtonBack["y2"])/2,14,'vcs')
 	myFontBig:End()
 		
 	--reset state
@@ -953,6 +974,7 @@ local function drawMapOptions()
 	myFontBigger:SetTextColor(cWhite)
 	myFontBigger:Print(Game.mapName, (Panel["info"]["x1"] + Panel["info"]["x2"])/2 , Panel["info"]["y2"] - 20,18,'cds')
 	myFontBigger:End()
+	
 	-- content
 	local lastY = Panel["info"]["y2"] - 20
 	rows = 0
@@ -980,6 +1002,17 @@ local function drawMapOptions()
 	-- update height and position of window
 	updateHeights()
 	
+	ButtonBack["y2"] = Panel["info"]["y2"] - 5
+	ButtonBack["y1"] = ButtonBack["y2"] - 30
+	
+	-- go back button
+	if ButtonBack.above then
+		gl.Color(cAbove)
+	else
+		gl.Color(cGrey)
+	end
+	RectRound(ButtonBack["x1"],ButtonBack["y1"],ButtonBack["x2"],ButtonBack["y2"])
+	
 	-- exitbutton
 	if ButtonClose.above then
 		gl.Color(cAbove)
@@ -990,6 +1023,7 @@ local function drawMapOptions()
 	myFontBig:Begin()
 	myFontBig:SetTextColor(cWhite)
 	myFontBig:Print("Close", (ButtonClose["x1"]+ButtonClose["x2"])/2, (ButtonClose["y1"]+ButtonClose["y2"])/2,14,'vcs')
+	myFontBig:Print("Back", (ButtonBack["x1"]+ButtonBack["x2"])/2, (ButtonBack["y1"]+ButtonBack["y2"])/2,14,'vcs')
 	myFontBig:End()
 		
 	--reset state
@@ -1017,7 +1051,7 @@ local function drawSettings()
 	myFontBigger:SetTextColor(cWhite)
 	myFontBigger:Print("XTA game-settings", Panel["main"]["x1"]+width/2, Panel["main"]["y2"] - 30,18,'dcs')
 	myFontBigger:End()
-	
+		
 	-- Sections
 	for i, button in pairs(Section) do
 		--border
@@ -1082,6 +1116,16 @@ local function drawSettings()
 		end
 	
 	-- Buttons
+	ButtonBack["y2"] = Panel["main"]["y2"] - 5
+	ButtonBack["y1"] = ButtonBack["y2"] - 30
+	
+	-- go back button
+	if ButtonBack.above then
+		gl.Color(cAbove)
+	else
+		gl.Color(cGrey)
+	end
+	RectRound(ButtonBack["x1"],ButtonBack["y1"],ButtonBack["x2"],ButtonBack["y2"])
 	
 	-- exit
 	if ButtonClose.above then
@@ -1113,6 +1157,7 @@ local function drawSettings()
 	myFontBig:SetTextColor(cWhite)
 	myFontBig:Print("Close", (ButtonClose["x1"]+ButtonClose["x2"])/2, (ButtonClose["y1"]+ButtonClose["y2"])/2,14,'vcs')
 	myFontBig:Print("Reload LuaUI", (ButtonReload["x1"]+ButtonReload["x2"])/2, (ButtonReload["y1"]+ButtonReload["y2"])/2,14,'vcs')
+	myFontBig:Print("Back", (ButtonBack["x1"]+ButtonBack["x2"])/2, (ButtonBack["y1"]+ButtonBack["y2"])/2,14,'vcs')
 	if currentSection	== "presets" then
 		myFontBig:Print(ButtonToggle.label, (ButtonToggle["x1"]+ButtonToggle["x2"])/2, (ButtonToggle["y1"]+ButtonToggle["y2"])/2,14,'vcs')
 	end
@@ -1237,6 +1282,7 @@ local function drawIsAbove(x,y)
 	ButtonClose.above = false
 	ButtonReload.above = false
 	ButtonToggle.above = false
+	ButtonBack.above = false
 	
 	for _,button in pairs(Section) do
 		if IsOnButton(x, y, button["x1"],button["y1"],button["x2"],button["y2"]) then
@@ -1267,6 +1313,8 @@ local function drawIsAbove(x,y)
 		ButtonReload.above = true
 	elseif IsOnButton(x, y, ButtonToggle["x1"],ButtonToggle["y1"],ButtonToggle["x2"],ButtonToggle["y2"]) and currentSection == "presets" then 
 		ButtonToggle.above = true
+	elseif IsOnButton(x, y, ButtonBack["x1"],ButtonBack["y1"],ButtonBack["x2"],ButtonBack["y2"]) then 
+		ButtonBack.above = true
 	end
 		
 	return false
@@ -1402,11 +1450,14 @@ function widget:TextCommand(command)
 		Spring.SendCommands("luarules voteforend")
 	elseif command == 'show-modoptions' then
 		showModOptions = true
+		InitButtons()
 	elseif command == 'show-mapoptions' then
 		showMapOptions = true
+		InitButtons()
 	elseif command == 'xta-options' or command == 'settings' then
 		showSettings = true
 		RefreshOptions()
+		InitButtons()
 	elseif string.lower(command):find("^setguiopacity") then
 		local value = command:sub(14)
 		if value then
@@ -1528,7 +1579,7 @@ function widget:MousePress(x, y, button)
 						if button.reloadwidgets then
 							for _, widgetName in pairs(button.reloadwidgets) do
 								if widgetHandler.knownWidgets[widgetName].active then
-									Echo("Reloading widget:",widgetName)
+									--Echo("Reloading widget:",widgetName)
 									widgetHandler:DisableWidget(widgetName)
 									widgetHandler:EnableWidget(widgetName)
 								end
@@ -1648,6 +1699,7 @@ function widget:MousePress(x, y, button)
 			showSettings = false
 			showModOptions = false
 			showMapOptions = false
+			InitButtons()
 		elseif IsOnButton(x, y, ButtonReload["x1"],ButtonReload["y1"],ButtonReload["x2"],ButtonReload["y2"]) then
 			PlaySoundFile(sndButtonPress,4.0,0,0,0,0,0,0,'userinterface')
 			Spring.SendCommands("luarules reloadluaui")
@@ -1656,6 +1708,13 @@ function widget:MousePress(x, y, button)
 			PlaySoundFile(sndButtonPress,4.0,0,0,0,0,0,0,'userinterface')
 			ButtonToggle.value = not ButtonToggle.value
 			ToggleOwnWidgets(ButtonToggle.value)
+			InitButtons()
+			return true
+		elseif IsOnButton(x, y, ButtonBack["x1"],ButtonBack["y1"],ButtonBack["x2"],ButtonBack["y2"]) then
+			showSettings = false
+			showModOptions = false
+			showMapOptions = false
+			Spring.SendCommands("show-menu")
 			InitButtons()
 			return true
 		end
@@ -1726,7 +1785,7 @@ function widget:MouseRelease(x, y, button)
 						if button.reloadwidgets then
 							for _, widgetName in pairs(button.reloadwidgets) do
 								if widgetHandler.knownWidgets[widgetName].active then
-									Echo("Reloading widget:",widgetName)
+									--Echo("Reloading widget:",widgetName)
 									widgetHandler:DisableWidget(widgetName)
 									widgetHandler:EnableWidget(widgetName)
 								end

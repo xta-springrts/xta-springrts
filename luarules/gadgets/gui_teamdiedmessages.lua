@@ -73,8 +73,8 @@ if gadgetHandler:IsSyncedCode() then
 			else
 				msg = getMsg('Enemy',retired)
 			end
-		end				
-		PlaySoundFile("sounds/beep1.wav",3.0,0,0,0,0,0,0,'userinterface')
+		end
+		PlaySoundFile("sounds/gui/beep1.wav",3.0,0,0,0,0,0,0,'userinterface')
 		Echo(msg)
 	end	
 end

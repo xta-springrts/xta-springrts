@@ -98,27 +98,27 @@ Sing()
 	singing = Rand( 0, 9 );
 	if( singing == 0 )
 	{
-		play-sound( "honk", 15 );
-		play-sound( "honk", 15 );
-		play-sound( "honk", 15 );
-		play-sound( "honk", 15 );
-		play-sound( "honk", 15 );
+		play-sound( "unit/honk", 15 );
+		play-sound( "unit/honk", 15 );
+		play-sound( "unit/honk", 15 );
+		play-sound( "unit/honk", 15 );
+		play-sound( "unit/honk", 15 );
 	}
 	else if( singing == 1 )
 	{
-		play-sound( "ArmCom1", 15 );
-		play-sound( "ArmCom1", 15 );
-		play-sound( "ArmCom1", 15 );
-		play-sound( "ArmCom1", 15 );
-		play-sound( "ArmCom1", 15 );
+		play-sound( "unit/armcom1", 15 );
+		play-sound( "unit/armcom1", 15 );
+		play-sound( "unit/armcom1", 15 );
+		play-sound( "unit/armcom1", 15 );
+		play-sound( "unit/armcom1", 15 );
 	}
 	else if( singing > 1 AND singing < 10 )
 	{
-		play-sound( "sing", 15 );
-		play-sound( "sing", 15 );
-		play-sound( "sing", 15 );
-		play-sound( "sing", 15 );
-		play-sound( "sing", 15 );
+		play-sound( "unit/sing", 15 );
+		play-sound( "unit/sing", 15 );
+		play-sound( "unit/sing", 15 );
+		play-sound( "unit/sing", 15 );
+		play-sound( "unit/sing", 15 );
 	}
 }
 
@@ -953,7 +953,7 @@ StopBuilding()
 
 Killed(Func_Var_1, Func_Var_2)
 {
-	play-sound( "victory3", 60 );
+	play-sound( "gui/victory3", 60 );
 	sleep 1;
-	play-sound( "victory3", 60 );
+	play-sound( "gui/victory3", 60 );
 }

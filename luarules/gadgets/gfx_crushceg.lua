@@ -125,13 +125,12 @@ else
 	-------------------
 	
 	local PlaySoundFile				= Spring.PlaySoundFile
-	local crushsnd					= "sounds/crush3.wav"
+	local crushsnd					= "sounds/battle/crush3.wav"
 	local myTeamID
 	local myAllyID				
 	local GetFeaturePosition		= Spring.GetFeaturePosition
 	local IsPosInLos				= Spring.IsPosInLos
-	
-	
+		
 	function gadget:Initialize()
 		gadgetHandler:AddSyncAction("crushSound", CrushSound)
 		myTeamID = Spring.GetMyTeamID()
@@ -149,7 +148,7 @@ else
 		if x and y and z then
 			local los = CallAsTeam(myTeamID,IsPosInLos, x,y,z,myAllyID)			
 			if los then
-				PlaySoundFile (crushsnd, 2.0, x,y,z, 'battle')
+				PlaySoundFile (crushsnd, 2.0, x,y,z, 0,0,0,'battle')
 			end
 		end
 		

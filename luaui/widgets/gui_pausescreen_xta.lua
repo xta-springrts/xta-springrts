@@ -166,7 +166,7 @@ local function drawPause()
 		if ( paused ) then
 			if not soundPlayed then
 				
-				spPlaySoundFile(sound_1, 1)
+				spPlaySoundFile(sound_1, 1.0,nil,nil,nil,0,0,0,'ui')
 				soundPlayed = true
 			end
 			--sliding in
@@ -174,7 +174,7 @@ local function drawPause()
 		else
 			if not soundPlayed then
 				
-				spPlaySoundFile(sound_4, 1)
+				spPlaySoundFile(sound_4, 1.0,nil,nil,nil,0,0,0,'ui')
 				soundPlayed = true
 			end
 			--sliding out
@@ -223,7 +223,7 @@ local function drawPause()
 		if ( paused ) then
 			if not soundPlayed then
 				
-				spPlaySoundFile(sound_1, 1)
+				spPlaySoundFile(sound_1, 1.0,nil,nil,nil,0,0,0,'ui')
 				soundPlayed = true
 			end
 			--sliding in
@@ -231,7 +231,7 @@ local function drawPause()
 		else
 			if not soundPlayed then
 				
-				spPlaySoundFile(sound_4, 1)
+				spPlaySoundFile(sound_4, 1.0,nil,nil,nil,0,0,0,'ui')
 				soundPlayed = true
 			end
 			--sliding out

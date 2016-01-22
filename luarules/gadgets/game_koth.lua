@@ -42,7 +42,7 @@ for _, allyTeamID in ipairs(Spring.GetAllyTeamList()) do
 end 
 
 LUAUI_DIRNAME							= 'LuaUI/'
-local sndnotify 						= "Sounds/ding.wav"
+local sndnotify 						= "sounds/gui/ding.wav"
 local gaiaTeamID 						= Spring.GetGaiaTeamID()
 local gaiaAllyTeamID			 		= select(6, Spring.GetTeamInfo(gaiaTeamID))
 local haveZombies 						= (tonumber(Spring.GetModOptions().zombies) or 0) == 1
@@ -59,7 +59,7 @@ if(not gadgetHandler:IsSyncedCode()) then
 	local teamControl 					= -2
 	local r, g, b 						= 255, 255, 255
 	local grace 						= 1
-	local sndtick 						= "Sounds/ticktock.wav"
+	local sndtick 						= "Sounds/gui/ticktock.wav"
 	local textsize						= 14
 	local textbig						= 16
 	local myFont	 					= gl.LoadFont("FreeSansBold.otf",textsize, 1.9, 40) 

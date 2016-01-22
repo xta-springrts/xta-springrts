@@ -14,7 +14,7 @@ end
 
 if (gadgetHandler:IsSyncedCode()) then
 	
-	local snd = 'sounds/sneer_mono.ogg'
+	local snd = 'sounds/unit/sneer_mono.ogg'
 	local commanderTable = include("LuaRules/Configs/unit_commander_sounds_defs.lua")
 	local AreTeamsAllied = Spring.AreTeamsAllied
 

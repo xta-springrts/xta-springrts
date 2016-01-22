@@ -5,7 +5,7 @@ local Sections = {
 	},
 	
 	{
-		label		= "Sound",
+		label		= "Sounds",
 		name 		= "sound"
 	},
 	
@@ -208,7 +208,7 @@ local Presets = {
 				{Spring.SendCommands,"AdvModelShading 1"},
 				{Spring.SendCommands,"aoe-ballistic 0"},
 				{Spring.SendCommands,"water 0"},
-				{Spring.SetConfigInt,"XTA_MenuIconsX",3},
+				{Spring.SetConfigInt,"XTA_MenuIconsX",4},
 				{Spring.SetConfigInt,"XTA_MenuIconsY",8},
 			},
 			
@@ -404,7 +404,7 @@ local Presets = {
 				{Spring.SendCommands,"Shadows 1"},
 				{Spring.SendCommands,"AdvMapShading 1"},
 				{Spring.SendCommands,"AdvModelShading 1"},
-				{Spring.SendCommands,"aoe-ballistic 0 "},
+				{Spring.SendCommands,"aoe-ballistic 0"},
 				{Spring.SetConfigInt,"XTA_MenuIconsX",3},
 				{Spring.SetConfigInt,"XTA_MenuIconsY",10},
 			},

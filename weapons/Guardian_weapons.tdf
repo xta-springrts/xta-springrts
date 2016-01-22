@@ -123,7 +123,7 @@
 	FireStarter=25;
 	
 	SoundStart=goklaser1;
-	SoundHit=goklaser1hit.wav;
+	soundhitdry=goklaser1hit;
 	//SoundWater=CanLite2;
 	explosiongenerator=custom:BlueLaserPulseHit;
 	cegTag=guardianTinyPurpleLaser;	
@@ -198,7 +198,7 @@
 	AreaOfEffect=12;
 	soundstart=gokzeal1hit;
 	//soundstart=gokzeal1;
-	//soundhit=gokzeal1hit;//!!!
+	//soundhitdry=gokzeal1hit;//!!!
 	FireStarter=85;
 	BeamWeapon=1;
 	thickness=1;
@@ -235,7 +235,7 @@
 	AreaOfEffect=12;
 	soundstart=gokzeal1hit;
 	//soundstart=gokzeal1;
-	//soundhit=gokzeal1hit;//!!!
+	//soundhitdry=gokzeal1hit;//!!!
 	FireStarter=85;
 	BeamWeapon=1;
 	thickness=1;
@@ -273,7 +273,7 @@
 	AreaOfEffect=12;
 	soundstart=gokzeal1hit;
 	//soundstart=gokzeal1;
-	//soundhit=gokzeal1hit;//!!!
+	//soundhitdry=gokzeal1hit;//!!!
 	FireStarter=85;
 	BeamWeapon=1;
 	thickness=1;
@@ -311,7 +311,7 @@
 	explosiongenerator=custom:ElectricFlare;
 
 	soundstart=gokzeal1;
-	soundhit=gokzeal1hit;//!!!
+	soundhitdry=gokzeal1hit;//!!!
 
 	tolerance=8000;
 
@@ -403,8 +403,8 @@
 	turnrate=41660;
 	areaofeffect=96;
 	cylindertargeting = 1;
-	soundstart=gokneedle2.wav;
-	soundhitdry=gokneedle2hit.wav;
+	soundstart=gokneedle2;
+	soundhitdry=gokneedle2hit;
 	firestarter=70;
 	smokedelay=0.1;
 	tracks=1;
@@ -561,8 +561,8 @@
 	accuracy=400;
 	movingaccuracy=700;
 	
-	SoundStart=gokdef1.wav;
-	SoundHit=gokdef1hit.wav;
+	SoundStart=gokdef1;
+	soundhitdry=gokdef1hit;
 	//SoundWater=CanLite2;
 	explosiongenerator=custom:GreenLaserHit;
 	cegTag=guardianGreenLaser;	
@@ -597,8 +597,8 @@
 	turnrate=41660;
 	areaofeffect=48;
 	cylindertargeting = 1;
-	soundstart=gokpulse3.wav;
-	soundhitdry=gokpulse1hit.wav;
+	soundstart=gokpulse3;
+	soundhitdry=gokpulse1hit;
 	firestarter=70;
 	smokedelay=0.1;
 	tracks=1;
@@ -643,8 +643,8 @@
 	accuracy=400;
 	movingaccuracy=700;
 	
-	SoundStart=gokdef1.wav;
-	SoundHit=gokdef1hit.wav;
+	SoundStart=gokdef1;
+	soundhitdry=gokdef1hit;
 	//SoundWater=CanLite2;
 	explosiongenerator=custom:GreenLaserHit;
 	cegTag=guardianGreenLaser;	
@@ -714,8 +714,8 @@
 	weaponacceleration=130;
 	turnrate=24384;
 	areaofeffect=48;
-	soundstart=gokpulse3.wav;
-	soundhitdry=gokpulse1hit.wav;
+	soundstart=gokpulse3;
+	soundhitdry=gokpulse1hit;
 	firestarter=70;
 	smokedelay=0.1;
 	tracks=1;
@@ -755,8 +755,8 @@
 	weaponacceleration=131;
 	turnrate=24384;
 	areaofeffect=48;
-	soundstart=gokpulse3.wav;
-	soundhitdry=gokpulse1hit.wav;
+	soundstart=gokpulse3;
+	soundhitdry=gokpulse1hit;
 	firestarter=70;
 	smokedelay=0.1;
 	tracks=1;
@@ -806,7 +806,7 @@
 	accuracy=440; //600
 	
 	SoundStart=goklightarty1;
-	SoundHit=goklightarty1hit;
+	soundhitdry=goklightarty1hit;
 	//SoundWater=CanLite2;
 	explosiongenerator=custom:KBOTROCKETHIT;
 	//cegTag=guardianTinyPinkLaser;	
@@ -844,8 +844,8 @@
 	turnrate=6384;
 	tracks=1;
 	areaofeffect=65;
-	soundstart=gokneedle1.wav;
-	soundhitdry=gokneedle1hit.wav;
+	soundstart=gokneedle1;
+	soundhitdry=gokneedle1hit;
 	firestarter=70;
 	smoketrail=0;
 	startsmoke=0;
@@ -878,8 +878,8 @@
 	startvelocity=300;
 	weaponacceleration=0;
 	areaofeffect=65;
-	soundstart=gokpulse1.wav;
-	soundhitdry=gokpulse2hit.wav;
+	soundstart=gokpulse1;
+	soundhitdry=gokpulse2hit;
 	firestarter=70;
 	smoketrail=0;
 	startsmoke=0;
@@ -911,8 +911,8 @@
 	startvelocity=300;
 	weaponacceleration=320;
 	areaofeffect=48;
-	soundstart=gokpulse3.wav;
-	soundhitdry=gokpulse1hit.wav;
+	soundstart=gokpulse3;
+	soundhitdry=gokpulse1hit;
 	firestarter=70;
 	smoketrail=0;
 	startsmoke=0;
@@ -944,8 +944,8 @@
 	startvelocity=300;
 	weaponacceleration=320;
 	areaofeffect=48;
-	soundstart=gokpulse3.wav;
-	soundhitdry=gokpulse1hit.wav;
+	soundstart=gokpulse3;
+	soundhitdry=gokpulse1hit;
 	firestarter=70;
 	smoketrail=0;
 	startsmoke=0;
@@ -975,8 +975,8 @@
 	turnrate=41660;
 	areaofeffect=48;
 	cylindertargeting = 1;
-	soundstart=gokpulse3.wav;
-	soundhitdry=gokpulse1hit.wav;
+	soundstart=gokpulse3;
+	soundhitdry=gokpulse1hit;
 	firestarter=70;
 	smokedelay=0.1;
 	tracks=1;
@@ -1309,7 +1309,7 @@
 	FireStarter=25;
 	
 	SoundStart=goklaser1;
-	SoundHit=goklaser1hit.wav;
+	soundhitdry=goklaser1hit;
 	//SoundWater=CanLite2;
 	explosiongenerator=custom:BlueLaserPulseHit;
 	cegTag=guardianTinyPurpleLaser;	
@@ -1349,7 +1349,7 @@
 	FireStarter=25;
 	
 	SoundStart=goklaser1;
-	SoundHit=goklaser1hit.wav;
+	soundhitdry=goklaser1hit;
 	//SoundWater=CanLite2;
 	explosiongenerator=custom:BlueLaserPulseHit;
 	cegTag=guardianTinyPinkLaser;	
@@ -1391,8 +1391,8 @@
 	accuracy=800;
 	movingaccuracy=1600;
 	
-	SoundStart=gokdef1.wav;
-	SoundHit=gokdef1hit.wav;
+	SoundStart=gokdef1;
+	soundhitdry=gokdef1hit;
 	//SoundWater=CanLite2;
 	explosiongenerator=custom:GreenLaserHit;
 	cegTag=guardianGreenLaser;	
@@ -1436,8 +1436,8 @@
 	accuracy=800;
 	movingaccuracy=1600;
 	
-	SoundStart=gokdef1.wav;
-	SoundHit=gokdef1hit.wav;
+	SoundStart=gokdef1;
+	soundhitdry=gokdef1hit;
 	//SoundWater=CanLite2;
 	explosiongenerator=custom:GreenLaserHit;
 	cegTag=guardianGreenLaser;	
@@ -1480,7 +1480,7 @@
 	FireStarter=25;
 	
 	SoundStart=goklaser1;
-	SoundHit=goklaser1hit.wav;
+	soundhitdry=goklaser1hit;
 	//SoundWater=CanLite2;
 	explosiongenerator=custom:BlueLaserPulseHit;
 	cegTag=guardianTinyPurpleLaser;	
@@ -1524,7 +1524,7 @@
 	FireStarter=25;
 	
 	SoundStart=goklaser1;
-	SoundHit=goklaser1hit.wav;
+	soundhitdry=goklaser1hit;
 	//SoundWater=CanLite2;
 	explosiongenerator=custom:BlueLaserPulseHit;
 	cegTag=guardianTinyPurpleLaser;	
@@ -1564,7 +1564,7 @@
 	FireStarter=25;
 	
 	SoundStart=goklaser1;
-	SoundHit=goklaser1hit.wav;
+	soundhitdry=goklaser1hit;
 	//SoundWater=CanLite2;
 	explosiongenerator=custom:BlueLaserPulseHit;
 	cegTag=guardianTinyPurpleLaser;	
@@ -1604,7 +1604,7 @@
 	FireStarter=25;
 	
 	SoundStart=goklaser1;
-	SoundHit=goklaser1hit.wav;
+	soundhitdry=goklaser1hit;
 	//SoundWater=CanLite2;
 	explosiongenerator=custom:BlueLaserPulseHit;
 	cegTag=guardianTinyPinkLaser;	
@@ -1646,8 +1646,8 @@
 	accuracy=800;
 	movingaccuracy=1600;
 	
-	SoundStart=goktdisr1.wav;
-	SoundHit=goktdisr1hit.wav;
+	SoundStart=goktdisr1;
+	soundhitdry=goktdisr1hit;
 	//SoundWater=CanLite2;
 	explosiongenerator=custom:SNIPELASER;
 	cegTag=guardianPurpleLaser;	
@@ -1691,8 +1691,8 @@
 	accuracy=600;
 	movingaccuracy=1000;
 	
-	SoundStart=gokdef1.wav;
-	SoundHit=gokdef1hit.wav;
+	SoundStart=gokdef1;
+	soundhitdry=gokdef1hit;
 	//SoundWater=CanLite2;
 	explosiongenerator=custom:GreenLaserHit;
 	cegTag=guardianGreenLaser;	
@@ -1732,8 +1732,8 @@
 	turnrate=3384;
 	tracks=1;
 	areaofeffect=65;
-	soundstart=gokneedle1.wav;
-	soundhitdry=gokneedle1hit.wav;
+	soundstart=gokneedle1;
+	soundhitdry=gokneedle1hit;
 	firestarter=70;
 	smoketrail=0;
 	startsmoke=0;

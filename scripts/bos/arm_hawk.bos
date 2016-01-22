@@ -176,10 +176,14 @@ StartMoving()
 	call-script lua_UnitStartedMoving();
 }
 
+MoveRate0()
+{
+	call-script lua_UnitStoppedMoving();
+	MissilesOn = 0;
+}
 StopMoving()
 {
-	MissilesOn = 0;
-	call-script lua_UnitStoppedMoving();
+	
 }
 
 AimFromPrimary(piecenum)

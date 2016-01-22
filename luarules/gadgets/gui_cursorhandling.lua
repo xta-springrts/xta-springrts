@@ -108,7 +108,7 @@ else
 	-----------------
 	
 	local PlaySoundFile				= Spring.PlaySoundFile
-	local failed					= "sounds/cantdo4.wav"
+	local failed					= "sounds/gui/cantdo4.wav"
 	local myTeamID
 	local GetUnitDefID				= Spring.GetUnitDefID
 	
@@ -121,7 +121,7 @@ else
 		local udef = CallAsTeam(myTeamID,GetUnitDefID, targetID)
 		
 		if teamID == myTeamID and udef then
-			PlaySoundFile (failed, 1.0, nil, 'ui')
+			PlaySoundFile (failed, 1.0, nil,nil,nil,0,0,0, 'ui')
 		end
 	end	
 

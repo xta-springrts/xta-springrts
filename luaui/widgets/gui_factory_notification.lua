@@ -39,8 +39,8 @@ local Factories					= {}
 
 ----------------------------------------------------------------------------
 
-local cancel = "sounds/cancel2.wav"
-local movefailed = "sounds/cantdo4.wav"
+local cancel = "sounds/gui/cancel2.wav"
+local movefailed = "sounds/unit/cantdo4.wav"
 
 ----------------------------------------------------------------------------
 local function IsUnitComplete(unitID)

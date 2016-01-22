@@ -708,9 +708,9 @@ else
 		local myFontBig	 					= gl.LoadFont("FreeSansBold.otf",16, 1.9, 40) 
 		local myFontMed	 					= gl.LoadFont("FreeSansBold.otf",14, 1.9, 40) 
 		local myFontHuge 					= gl.LoadFont("FreeSansBold.otf",20, 1.9, 40) 
-		local button6						= "sounds/button6.wav"
-		local button8						= "sounds/button8.wav"
-		local beep							= "sounds/beep1.wav"
+		local button6						= "sounds/gui/button6.wav"
+		local button8						= "sounds/gui/button8.wav"
+		local beep							= "sounds/gui/beep1.wav"
 		local imgHero						= "LuaUI/Images/endstats/trophy.png"
 		local imgLost						= "LuaUI/Images/endstats/rose.png"
 		local imgTopKiller					= "LuaUI/Images/endstats/soldier.png"

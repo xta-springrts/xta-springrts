@@ -1,7 +1,18 @@
+//Replaced sounds ok1=>activate and ok1 = button10 for units that can move. See https://springrts.com/wiki/Gamedev:UnitDefs#sounds_Events
+
+// ok Unit is issued a command. 
+// activate Unit is activated, i.e. Is turned on. Also called when a mobile ground unit starts moving.
+// build Unit begins building. Called for both factories and mobile construction units.
+
+// => solution: 
+// if unit can move: 1) use ok1 = button10 if it also has build sound 2) else use nothing
+// else: use ok1 = activate sound
+// ok sound commented, using gadget instead.
 [Adv_Kbot]
 {
 	select1=servlrg1;
-	ok1=servlrg1;
+//	ok1=button10;
+	activate=servlrg1;
 	arrived1=servlrg1;
 	cant1=cantdo4;
 	underattack=warning1;
@@ -16,7 +27,8 @@
 [ADV_TORPLAUNCH]
 {
 	select1=torpadv2;
-	ok1=torpok1; //was torpadv1, it doesn't exist
+//	ok1=button10;
+	activate=torpok1;
 	cant1=cantdo4;
 	underattack=warning1;
 	count5=count1;
@@ -44,7 +56,8 @@
 [ARMPW]
 {
 	select1=servtny2;
-	ok1=servtny2;
+//	ok1=button10;
+	activate=servtny2;
 	arrived1=servtny2;
 	cant1=cantdo4;
 	underattack=warning1;
@@ -59,7 +72,8 @@
 [ARMSS]
 {
 	select1=sserpsel;
-	ok1=sserpok;
+//	ok1=button10;
+	activate=sserpok;
 	arrived1=sserpstp;
 	cant1=cantdo4;
 	underattack=warning1;
@@ -164,7 +178,8 @@
 [ARM_CKBOT]
 {
 	select1=kbarmsel;
-	ok1=kbarmmov;
+	activate=kbarmmov;
+//	ok1=button10;
 	arrived1=kbarmstp;
 	build=nanlath1;
 	repair=repair1;
@@ -183,7 +198,8 @@
 {
 	select1=kcarmsel;
 	unitcomplete=kcarmmov;
-	ok1=kcarmmov;
+//	ok1=button10;
+	activate=kcarmmov;
 	arrived1=kcarmstp;
 	cant1=cantdo4;
 	underattack=warning2;
@@ -204,7 +220,8 @@
 [ARM_CSEAPLN]
 {
 	select1=seapsel1;
-	ok1=vtolcrmv;
+//	ok1=button10;
+	activate=vtolcrmv;
 	arrived1=vtolarld;
 	cant1=cantdo4;
 	build=nanlath1;
@@ -222,7 +239,8 @@
 [ARM_CSHIP]
 {
 	select1=sharmsel;
-	ok1=sharmmov;
+//	ok1=button10;
+	activate=sharmmov;
 	arrived1=sharmstp;
 	cant1=cantdo4;
 	build=nanlath1;
@@ -240,7 +258,8 @@
 [ARM_CSUB]
 {
 	select1=suarmsel;
-	ok1=suarmmov;
+//	ok1=button10;
+	activate=suarmmov;
 	arrived1=suarmstp;
 	build=nanlath1;
 	repair=repair1;
@@ -273,7 +292,8 @@
 [ARM_CVEHICLE]
 {
 	select1=varmsel;
-	ok1=varmmove;
+//	ok1=button10;
+	activate=varmmove;
 	arrived1=varmstop;
 	cant1=cantdo4;
 	build=nanlath1;
@@ -291,7 +311,8 @@
 [ARM_CVTOL]
 {
 	select1=vtolarac;
-	ok1=vtolarmv;
+//	ok1=button10;
+	activate=vtolarmv;
 	arrived1=vtolarld;
 	cant1=cantdo4;
 	build=nanlath1;
@@ -345,7 +366,8 @@
 [ARM_HOVER_BIG]
 {
 	select1=hovlgsl1;
-	ok1=hovlgok1;
+//	ok1=button10;
+	activate=hovlgok1;
 	arrived1=hovlgof1;
 	cant1=cantdo4;
 	underattack=warning1;
@@ -360,7 +382,8 @@
 [ARM_HOVER_MID]
 {
 	select1=hovmdsl1;
-	ok1=hovmdok1;
+//	ok1=button10;
+	activate=hovmdok1;
 	arrived1=hovmdof1;
 	cant1=cantdo4;
 	underattack=warning1;
@@ -389,7 +412,8 @@
 [ARM_HOVER_SM]
 {
 	select1=hovsmsl1;
-	ok1=hovsmok1;
+//	ok1=button10;
+	activate=hovsmok1;
 	arrived1=hovsmof1;
 	cant1=cantdo4;
 	underattack=warning1;
@@ -404,7 +428,8 @@
 [ARM_JAM]
 {
 	select1=radjam1;
-	ok1=varmmove;
+//	ok1=button10;
+	activate=varmmove;
 	arrived1=varmstop;
 	cant1=cantdo4;
 	underattack=warning1;
@@ -421,7 +446,8 @@
 [ARM_JAMSUB]
 {
 	select1=watrjam1;
-	ok1=suarmmov;
+//	ok1=button10;
+	activate=suarmmov;
 	arrived1=suarmstp;
 	cant1=cantdo4;
 	underattack=warning1;
@@ -436,7 +462,8 @@
 [ARM_KBOT]
 {
 	select1=kbarmsel;
-	ok1=kbarmmov;
+//	ok1=button10;
+	activate=kbarmmov;
 	arrived1=kbarmstp;
 	cant1=cantdo4;
 	underattack=warning1;
@@ -523,7 +550,8 @@
 [ARM_RECTOR]
 {
 	select1=Necrsel1;
-	ok1=Necrok1;
+//	ok1=button10;
+	activate=Necrok1;
 	arrived1=Necrnan1;
 	cant1=cantdo4;
 	underattack=warning1;
@@ -538,7 +566,8 @@
 [ARM_SEAPLN]
 {
 	select1=seapsel1;
-	ok1=vtolcrmv;
+//	ok1=button10;
+	activate=vtolcrmv;
 	arrived1=vtolarld;
 	cant1=cantdo4;
 	build=nanlath1;
@@ -570,7 +599,8 @@
 [ARM_SEASONAR]
 {
 	select1=seasonr2;
-	ok1=vtolarmv;
+//	ok1=button10;
+	activate=vtolarmv;
 	arrived1=vtolarld;
 	cant1=cantdo4;
 	build=nanlath1;
@@ -588,7 +618,8 @@
 [ARM_SHIP]
 {
 	select1=sharmsel;
-	ok1=sharmmov;
+//	ok1=button10;
+	activate=sharmmov;
 	arrived1=sharmstp;
 	cant1=cantdo4;
 	underattack=warning1;
@@ -631,7 +662,8 @@
 [ARM_SUB]
 {
 	select1=suarmsel;
-	ok1=suarmmov;
+//	ok1=button10;
+	activate=suarmmov;
 	arrived1=suarmstp;
 	cant1=cantdo4;
 	underattack=warning1;
@@ -646,7 +678,8 @@
 [ARM_TANK]
 {
 	select1=tarmsel;
-	ok1=tarmmove;
+//	ok1=button10;
+	activate=tarmmove;
 	arrived1=tarmst0p;
 	cant1=cantdo4;
 	underattack=warning1;
@@ -727,7 +760,8 @@
 [ARM_VEHICLE]
 {
 	select1=varmsel;
-	ok1=varmmove;
+//	ok1=button10;
+	activate=varmmove;
 	arrived1=varmstop;
 	cant1=cantdo4;
 	underattack=warning1;
@@ -742,7 +776,8 @@
 [ARM_VTOL]
 {
 	select1=vtolarac;
-	ok1=vtolarmv;
+//	ok1=button10;
+	activate=vtolarmv;
 	arrived1=vtolarld;
 	cant1=cantdo4;
 	underattack=warning1;
@@ -785,7 +820,8 @@
 [CORAK]
 {
 	select1=servtny1;
-	ok1=servtny1;
+//	ok1=button10;
+	activate=servtny1;
 	arrived1=servtny1;
 	cant1=cantdo4;
 	underattack=warning2;
@@ -815,7 +851,8 @@
 [CORE_CHOVER]
 {
 	select1=hovmdsl2;
-	ok1=hovmdok2;
+//	ok1=button10;
+	activate=hovmdok2;
 	arrived1=hovmdof2;
 	cant1=cantdo4;
 	build=nanlath1;
@@ -834,7 +871,8 @@
 {
 	select1=kccorsel;
 	unitcomplete=kccorsel;
-	ok1=kcormov;
+//	ok1=button10;
+	activate=kcormov;
 	arrived1=kccorstp;
 	cant1=cantdo4;
 	underattack=warning2;
@@ -855,7 +893,8 @@
 [CORE_CSHIP]
 {
 	select1=shcorsel;
-	ok1=shcormov;
+//	ok1=button10;
+	activate=shcormov;
 	arrived1=shcorstp;
 	cant1=cantdo4;
 	build=nanlath2;
@@ -873,7 +912,8 @@
 [CORE_CSUB]
 {
 	select1=sucorsel;
-	ok1=sucormov;
+//	ok1=button10;
+	activate=sucormov;
 	arrived1=sucorstp;
 	cant1=cantdo4;
 	build=nanlath1;
@@ -891,7 +931,8 @@
 [CORE_CVEHICLE]
 {
 	select1=vcorsel;
-	ok1=vcormove;
+//	ok1=button10;
+	activate=vcormove;
 	arrived1=vcorstop;
 	cant1=cantdo4;
 	build=nanlath2;
@@ -909,7 +950,8 @@
 [CORE_CVTOL]
 {
 	select1=vtolcrac;
-	ok1=vtolcrmv;
+//	ok1=button10;
+	activate=vtolcrmv;
 	arrived1=vtolcrld;
 	cant1=cantdo4;
 	build=nanlath2;
@@ -981,7 +1023,8 @@
 [CORE_HOVER_BIG]
 {
 	select1=hovlgsl2;
-	ok1=hovlgok2;
+//	ok1=button10;
+	activate=hovlgok2;
 	arrived1=hovlgof2;
 	cant1=cantdo4;
 	underattack=warning2;
@@ -996,7 +1039,8 @@
 [CORE_HOVER_MID]
 {
 	select1=hovmdsl2;
-	ok1=hovmdok2;
+//	ok1=button10;
+	activate=hovmdok2;
 	arrived1=hovmdof2;
 	cant1=cantdo4;
 	underattack=warning2;
@@ -1025,7 +1069,8 @@
 [CORE_HOVER_SM]
 {
 	select1=hovsmsl2;
-	ok1=hovsmok2;
+//	ok1=button10;
+	activate=hovsmok2;
 	arrived1=hovsmof2;
 	cant1=cantdo4;
 	underattack=warning2;
@@ -1040,7 +1085,8 @@
 [CORE_JAM]
 {
 	select1=radjam2;
-	ok1=vcormove;
+//	ok1=button10;
+	activate=vcormove;
 	arrived1=vcorstop;
 	cant1=cantdo4;
 	underattack=warning2;
@@ -1057,7 +1103,8 @@
 [CORE_JAMSUB]
 {
 	select1=watrjam2;
-	ok1=suarmmov;
+//	ok1=button10;
+	activate=suarmmov;
 	arrived1=suarmstp;
 	cant1=cantdo4;
 	underattack=warning2;
@@ -1114,7 +1161,8 @@
 [CORE_NECRO]
 {
 	select1=Necrsel2;
-	ok1=Necrok2;
+//	ok1=button10;
+	activate=Necrok2;
 	arrived1=Necrnan2;
 	cant1=cantdo4;
 	underattack=warning2;
@@ -1158,7 +1206,8 @@
 [CORE_SHIP]
 {
 	select1=shcorsel;
-	ok1=shcormov;
+//	ok1=button10;
+	activate=shcormov;
 	arrived1=shcorstp;
 	cant1=cantdo4;
 	underattack=warning2;
@@ -1173,7 +1222,8 @@
 [CORE_SNIPE]
 {
 	select1=snipsel1;
-	ok1=snipok2;
+//	ok1=button10;
+	activate=snipok2;
 	arrived1=snipok1;
 	cant1=cantdo4;
 	underattack=warning2;
@@ -1216,7 +1266,8 @@
 [CORE_SUB]
 {
 	select1=sucorsel;
-	ok1=sucormov;
+//	ok1=button10;
+	activate=sucormov;
 	arrived1=sucorstp;
 	cant1=cantdo4;
 	underattack=warning2;
@@ -1231,7 +1282,8 @@
 [CORE_TANK]
 {
 	select1=tcorsel;
-	ok1=tcormove;
+//	ok1=button10;
+	activate=tcormove;
 	arrived1=tcorst0p;
 	cant1=cantdo4;
 	underattack=warning2;
@@ -1300,7 +1352,8 @@
 [CORE_VEHICLE]
 {
 	select1=vcorsel;
-	ok1=vcormove;
+//	ok1=button10;
+	activate=vcormove;
 	arrived1=vcorstop;
 	cant1=cantdo4;
 	underattack=warning2;
@@ -1315,7 +1368,8 @@
 [CORE_VTOL]
 {
 	select1=vtolcrac;
-	ok1=vtolcrmv;
+//	ok1=button10;
+	activate=vtolcrmv;
 	arrived1=vtolcrld;
 	cant1=cantdo4;
 	underattack=warning2;
@@ -1342,7 +1396,8 @@
 [CORSCORP]
 {
 	select1=scorpsel;
-	ok1=scorpok;
+//	ok1=button10;
+	activate=scorpok;
 	arrived1=scorpstp;
 	cant1=cantdo4;
 	underattack=warning2;
@@ -1357,7 +1412,8 @@
 [COR_CKBOT]
 {
 	select1=kbcorsel;
-	ok1=kbcormov;
+//	ok1=button10;
+	activate=kbcormov;
 	arrived1=kbcorstp;
 	cant1=cantdo4;
 	build=nanlath2;
@@ -1375,7 +1431,8 @@
 [COR_CSEAPLN]
 {
 	select1=seapsel2;
-	ok1=vtolcrmv;
+//	ok1=button10;
+	activate=vtolcrmv;
 	arrived1=vtolarld;
 	cant1=cantdo4;
 	build=nanlath1;
@@ -1393,7 +1450,8 @@
 [COR_DOOM]
 {
 	select1=doom;
-	ok1=doom;
+//	ok1=button10;
+	activate=doom;
 	cant1=cantdo4;
 	underattack=warning2;
 	count5=count1;
@@ -1421,7 +1479,8 @@
 [COR_HAMMERHEAD]
 {
 	select1=torpsel2;
-	ok1=torpok2;
+//	ok1=button10;
+	activate=torpok2;
 	arrived1=torpok2;
 	cant1=cantdo4;
 	underattack=warning2;
@@ -1450,7 +1509,8 @@
 [COR_KBOT]
 {
 	select1=kbcorsel;
-	ok1=kbcormov;
+//	ok1=button10;
+	activate=kbcormov;
 	arrived1=kbcorstp;
 	cant1=cantdo4;
 	underattack=warning2;
@@ -1480,7 +1540,8 @@
 [COR_SEAPLN]
 {
 	select1=seapsel2;
-	ok1=vtolcrmv;
+//	ok1=button10;
+	activate=vtolcrmv;
 	arrived1=vtolcrld;
 	cant1=cantdo4;
 	build=nanlath1;
@@ -1498,7 +1559,8 @@
 [COR_SEASONAR]
 {
 	select1=seasonr2;
-	ok1=vtolcrmv;
+//	ok1=button10;
+	activate=vtolcrmv;
 	arrived1=vtolarld;
 	cant1=cantdo4;
 	build=nanlath1;
@@ -1570,7 +1632,8 @@
 [HOVER]
 {
 	select1=phiblgto;
-	ok1=phiblgto;
+//	ok1=button10;
+	activate=phiblgto;
 	arrived1=phiblgof;
 	cant1=cantdo4;
 	underattack=warning1;
@@ -1599,7 +1662,8 @@
 [KROGOTH]
 {
 	select1=krogsel1;
-	ok1=krogok1;
+//	ok1=button10;
+	activate=krogok1;
 	arrived1=krogstp1;
 	cant1=cantdo4;
 	underattack=warning2;
@@ -1615,7 +1679,8 @@
 {  
 	select1=Orcsel1;
 	select2=Orcsel2;
-	ok1=Orcmove;
+//	ok1=button10;
+	activate=Orcmove;
 	arrived1=Orcthere;
 	cant1=Orcant;
 	underattack=Orcua;
@@ -1644,7 +1709,8 @@
 [MAVERICK]
 {
 	select1=mavbsel1;
-	ok1=mavbok1;
+//	ok1=button10;
+	activate=mavbok1;
 	arrived1=kbarmstp;
 	cant1=cantdo4;
 	underattack=warning1;
@@ -1733,7 +1799,8 @@
 [ROACH]
 {
 	select1=servsml6;
-	ok1=servsml6;
+//	ok1=button10;
+	activate=servsml6;
 	arrived1=servsml6;
 	cant1=cantdo4;
 	underattack=warning1;
@@ -1763,7 +1830,8 @@
 {
 	select1=skycruiserselect;
 	select2=skycruiserselect2;
-	ok1=skycruisergo;
+//	ok1=button10;
+	activate=skycruisergo;
 	arrived1=skycruiserstop;
 	cant1=cantdo4;
 	underattack=warning1;
@@ -1778,7 +1846,8 @@
 [Spider]
 {
 	select1=spider2;
-	ok1=spider4;
+//	ok1=button10;
+	activate=spider4;
 	arrived1=spider3;
 	cant1=cantdo4;
 	underattack=warning1;
@@ -1794,7 +1863,8 @@
 [SpiderBig]
 {
 	select1=BIGSPD3;
-	ok1=BIGSPD2;
+//	ok1=button10;
+	activate=BIGSPD2;
 	arrived1=BIGSPD1;
 	cant1=cantdo4;
 	underattack=warning1;
@@ -1810,7 +1880,8 @@
 [SpiderEMP]
 {
 	select1=SPDEMP1;
-	ok1=SPDEMP2;
+//	ok1=button10;
+	activate=SPDEMP2;
 	arrived1=SPDEMP2;
 	cant1=cantdo4;
 	underattack=warning1;
@@ -1826,7 +1897,8 @@
 [COR_TOR]   		// Tortoises
 	{
 	select1=Tortoise1;
-	ok1=Tortoise2;
+//	ok1=button10;
+	activate=Tortoise2;
 	arrived1=Tortoise3;
 	cant1=cantdo4;
 	underattack=warning1;
@@ -1856,7 +1928,8 @@
 [VADER]
 {
 	select1=servsml5;
-	ok1=servsml5;
+//	ok1=button10;
+	activate=servsml5;
 	arrived1=servsml5;
 	cant1=cantdo4;
 	underattack=warning1;
@@ -1886,7 +1959,8 @@
 [LOST_KBOT]		
 	{
 	select1=tllunitok;
-	ok1=tllkbotmove;
+//	ok1=button10;
+	activate=tllkbotmove;
 	arrived1=kbarmstp;
 	cant1=wearoff;
 	underattack=tllWarning;
@@ -1914,7 +1988,8 @@
 [LOST_SUB]		
 	{ 
 	select1=sucorsel;
-	ok1=tllsub;
+//	ok1=button10;
+	activate=tllsub;
 	arrived1=tllsub2;
 	cant1=wearoff;
 	underattack=tllWarning;
@@ -1929,7 +2004,8 @@
 [LOST_LVTOL]		//light vtols
 	{
 	select1=vtolarac;
-	ok1=tllvtolgo;
+//	ok1=button10;
+	activate=tllvtolgo;
 	arrived1=tllvtolstop;
 	cant1=wearoff;
 	underattack=tllWarning;
@@ -1944,7 +2020,8 @@
 [LOST_HVTOL]		//heavy vtols
 	{
 	select1=vtolarac;
-	ok1=tllvtolgo3;
+//	ok1=button10;
+	activate=tllvtolgo3;
 	arrived1=tllvtolstop3;
 	cant1=wearoff;
 	underattack=tllWarning;
@@ -1959,7 +2036,8 @@
 [LOST_VVTOL]		//V Vtols
 	{
 	select1=vtolarac;
-	ok1=tllvtolgo2;
+//	ok1=button10;
+	activate=tllvtolgo2;
 	arrived1=tllvtolstop2;
 	cant1=wearoff;
 	underattack=tllWarning;
@@ -2016,7 +2094,8 @@
 [LOST_HOVER]
 {
 	select1=servo1.wav;
-	ok1=servo2.wav;
+//	ok1=button10;
+	activate=servo2;
 	arrived1=servo3.wav;
 	cant1=cantdo4;
 	underattack=warning1;

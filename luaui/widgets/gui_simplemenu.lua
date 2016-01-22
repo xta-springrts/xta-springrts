@@ -47,8 +47,8 @@ local cShadow						= {0.6, 0.6, 0.6, 0.6}
 local cDisabled						= {0.4, 0.4, 0.4, 1.0}
 
 --sounds
-local button6						= "sounds/button6.wav"
-local button8						= "sounds/button8.wav"
+local button6						= "sounds/gui/button6.wav"
+local button8						= "sounds/gui/button8.wav"
 
 local function IsOnButton(x, y, BLcornerX, BLcornerY,TRcornerX,TRcornerY)
 	if BLcornerX == nil then return false end
@@ -273,23 +273,32 @@ function widget:DrawScreen()
 	end
 end
 
+local function ShowMenu()
+	ButtonMenu.click = true
+	PlaySoundFile(button6)
+	
+	mySpectatorState = Spring.GetSpectatingState()
+	local canVoteTeam = Spring.GetGameRulesParam("VotingAllyID")
+
+	if not mySpectatorState and canVoteTeam and canVoteTeam == myAllyTeamID then
+		Button[10].disabled 				= false
+	else
+		Button[10].disabled 				= true
+	end			
+end
+
+function widget:TextCommand(command)
+	if command == 'show-menu' then
+		ShowMenu()
+	end
+end
+
 function widget:MousePress(mx, my, mButton)
 	if not Spring.IsGUIHidden() then
 		
 		if mButton == 1 then
 			if IsOnButton(mx, my, ButtonMenu["x1"],ButtonMenu["y1"],ButtonMenu["x2"],ButtonMenu["y2"]) then
-				ButtonMenu.click = true
-				PlaySoundFile(button6)
-				
-				mySpectatorState = Spring.GetSpectatingState()
-				local canVoteTeam = Spring.GetGameRulesParam("VotingAllyID")
-			
-				if not mySpectatorState and canVoteTeam and canVoteTeam == myAllyTeamID then
-					Button[10].disabled 				= false
-				else
-					Button[10].disabled 				= true
-				end			
-				
+				ShowMenu()
 				return true
 			end
 		end

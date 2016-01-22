@@ -540,7 +540,7 @@
 	startsmoke=1;
 	accuracy=600;
 	SoundStart=Cannon3;
-	SoundHit=XploMed4;
+	soundhitdry=XploMed4;
 	burnblow=1;
 	mygravity=0.001;
 	[DAMAGE]
@@ -2893,7 +2893,7 @@
 	weaponvelocity=900;
 	areaofeffect=36;
 	soundstart=skynightfire;
-	soundhit=skynighthit;
+	soundhitdry=skynighthit;
 	tolerance=500;
 	weapontimer=1.5;
 	startsmoke=1;
