@@ -431,7 +431,7 @@ if (modOptions and not tobool(modOptions.xtaidunits)) then
 	"walker", "neutral_eyes", "armpur", "armbfortew", "armarch", "armbugger",
 	"boa", "armfff", "mercury", "tadg07", "armraz", "armhyren", "demolish",
 	"armrebel", "arm_tor", "tadg05", "arm_infinite", "arm_mech_lab",
-	"arm_spidernest_xtra", "arm_landship_lab",
+	"arm_spidernest_xtra", "arm_landship_lab",  "arm_ht_aircraft_plant",
 	"arm_construction_hovercraft_xtra", "arm_construction_seaplane_xtra" ,
 
 	"core_construction_hovercraft_xtra", "core_construction_seaplane_xtra" ,

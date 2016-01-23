@@ -6,17 +6,17 @@
 	Objectname=ARMFFF;
 	Designation=AFFF02-BTGD;
 	Name=Anti-gravity hangar;
-	Description=Builds sky cruisers;
+	Description=Builds sky cruisers & Large Planes;
 	FootprintX=10;
 	FootprintZ=10;
-	BuildCostEnergy=27941;
-	BuildCostMetal=5284;
-	MaxDamage=4802;
+	BuildCostEnergy=127941;
+	BuildCostMetal=15284;
+	MaxDamage=13522;
 	MaxWaterDepth=0;
 	MaxSlope=10;
 	EnergyUse=0;
-	BuildTime=84132;
-	WorkerTime=400;
+	BuildTime=284132;
+	WorkerTime=1000;
 	BMcode=0;
 	Builder=1;
 	ThreeD=1;
@@ -25,8 +25,8 @@
 	SightDistance=510;
 	RadarDistance=0;
 	SoundCategory=ARM_GANTRY;
-	EnergyStorage=500;
-	MetalStorage=100;
+	EnergyStorage=2500;
+	MetalStorage=2500;
 	ExplodeAs=LARGE_BUILDING;
 	SelfDestructAs=LARGE_BUILDING;
 	Category=ARM PLANT NOWEAPON NOTAIR NOTSUB;
@@ -46,7 +46,7 @@
 	downloadable=1;
 	BuildAngle=5768;
 	collisionVolumeType = box;
-	collisionVolumeScales =155 55 155;//100=6x6
-	collisionVolumeOffsets = 0 5 0;
+	collisionVolumeScales =155 110 155;//100=6x6
+	collisionVolumeOffsets = 0 -25 0;
 	collisionVolumeTest = 1;
 	}

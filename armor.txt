@@ -94,6 +94,11 @@
 	CoreVashp=99;
 	ArmHyren=99;
 	corcrw=99;
+	arm_ht_construction_aircraft=99;
+	arm_banisher=99;
+	arm_argentavis=99;
+	arm_orion=99;
+	arm_ala=99;
 	//xtaids
 	lost_adv_construction_aircraft=99;
 	lost_probe=99;

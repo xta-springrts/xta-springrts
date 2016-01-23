@@ -8,15 +8,15 @@
 	Buildpic=CIRR.JPG;
 	Name=Cirrus;
 	Description=Light Skycruiser;
-	FootprintX=3;
-	FootprintZ=3;
-	BuildCostEnergy=19946;
-	BuildCostMetal=1961;
-	MaxDamage=4130;
+	FootprintX=4;
+	FootprintZ=4;
+	BuildCostEnergy=39946;
+	BuildCostMetal=3961;
+	MaxDamage=6130;
 	MaxWaterDepth=0;
 	MaxSlope=10;
 	EnergyUse=1;
-	BuildTime=43453;
+	BuildTime=73453;
 	WorkerTime=0;
 	BMcode=1;
 	Builder=0;
@@ -42,7 +42,7 @@
 	canpatrol=1;
 	canstop=1;
 	canguard=1;
-	MaxVelocity=1.5;
+	MaxVelocity=1.8;
 	BrakeRate=1;
 	Acceleration=0.06;
 	TurnRate=200;
@@ -66,5 +66,5 @@
 	airhoverfactor=0;
 	Upright=1;
 	AirStrafe=0;
-	mass=100;
+	mass=200;
 	}

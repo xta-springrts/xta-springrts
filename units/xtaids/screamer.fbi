@@ -2,14 +2,14 @@
 {
 	name=Screamer;
 	unitname=screamer;
-	buildcostenergy=17660;
-	buildcostmetal=1762;
-	buildtime=37543;
+	buildcostenergy=27660;
+	buildcostmetal=3262;
+	buildtime=47543;
 	category=ARM WEAPON NOTAIR NOTSUB;
 	description=Long-Range Missile Anti Sky-Cruiser Tower;
 	footprintx=4;
 	footprintz=4;
-	maxdamage=3212;
+	maxdamage=6212;
 	objectname=SCREAMER;
 	side=CORE;
 	soundcategory=CORE_TARG;

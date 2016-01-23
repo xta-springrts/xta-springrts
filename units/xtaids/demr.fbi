@@ -10,13 +10,13 @@
 	Description=Heavy Skycruiser;
 	FootprintX=5;
 	FootprintZ=5;
-	BuildCostEnergy=52644;
-	BuildCostMetal=5264;
-	MaxDamage=9230;
+	BuildCostEnergy=102644;
+	BuildCostMetal=10264;
+	MaxDamage=16230;
 	MaxWaterDepth=0;
 	MaxSlope=10;
 	EnergyUse=5;
-	BuildTime=111754;
+	BuildTime=211754;
 	WorkerTime=0;
 	BMcode=1;
 	Builder=0;
@@ -68,5 +68,5 @@
 	attackrunlength=180;
 	airhoverfactor=0;
 	Upright=1;
-	mass=300;
+	mass=400;
 	}

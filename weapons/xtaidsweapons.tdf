@@ -1,4 +1,244 @@
 
+[ARMHTBOMB]
+{
+	name=Bombs;
+	weapontype=AircraftBomb;
+	//minbarrelangle=-90;
+	projectiles=3;
+	sprayangle=10000;
+	burst=4;
+	burstrate=.1;
+	dropped=1;
+	manualBombSettings=1;
+	accuracy=2000;
+	model=weapon_bomb;
+	cegTag=REDLIGHTBOMB;
+	range=700;
+	explosiongenerator=custom:PUFFY;
+	reloadtime=6;
+	areaofeffect=188;
+	soundstart=bombrel;
+	soundhitdry=xplomed2;
+	impulsefactor=2;
+	myGravity=0.7;
+	collidefriendly=0;
+	avoidfriendly=0;
+	[DAMAGE]
+	{
+		default=444;
+		group_commanders=222;
+		lost_commanders=200;
+		group_invincible=1;
+	}
+}
+[StrayHTBOMB]
+{
+	name=Many 1 bombs;
+	weaponType=Cannon;
+	turret=1;
+	tolerance=5000;
+	pitchtolerance=5000;
+	Noselfdamage=1;
+	explosiongenerator=custom:KBOTROCKETHIT;
+	collidefriendly=0;
+	burst=0;
+	weaponvelocity=100;
+	burstrate=0.12;
+	sprayangle=3000;
+	model=weapon_bomb;
+	cegTag=REDLIGHTBOMB;
+	range=700;
+	reloadtime=1;
+	accuracy=600;
+	weapontimer=15;
+	weaponvelocity=200;
+	areaofeffect=89;
+	edgeeffectiveness=0.25;
+	soundstart=bombrel;
+	soundhitdry=xplomed2;
+	soundtrigger=0;
+	firestarter=50;
+	commandfire=0;
+	[DAMAGE]
+	{
+		default=107.5;
+		group_invincible=1;
+		group_commanders=76;
+		lost_commanders=67;
+	}
+}
+[ARMVTOL_HTMISSILE]
+{
+	name=Guided Missiles;
+	explosiongenerator=custom:KBOTMISSILEHIT;
+	turret=1;
+	model=missile.s3o;
+	Texture1=null;
+	range=600;
+	reloadtime=0.45;
+	weapontimer=10;
+	weaponvelocity=559;
+	startvelocity=450;
+	weaponacceleration=130;
+	turnrate=24384;
+	areaofeffect=48;
+	soundstart=Rocklit3;
+	soundhitdry=xplosml2;
+	firestarter=70;
+	smokedelay=0.1;
+	tracks=1;
+	smoketrail=0;
+	cegTag=KBOTMISSILETRAIL;
+	Weapontype=MissileLauncher;
+	tolerance=8000;
+	startsmoke=1;
+	collidefriendly=0;
+	avoidfriendly=0;
+	WaterBounce=0;
+	[DAMAGE]
+	{
+		group_commanders=22;
+		lost_commanders=19;
+		default=44;
+		group_invincible=1;
+		group_landair=110;
+		group_skyair=110;
+	}
+}
+[FLAK_FIGHTER]
+{
+	name=Flak Cannon;
+	weaponType=Cannon;
+	turret=1;
+	range=600;
+	reloadtime=1.0;
+	weapontimer=0.78;
+	weaponvelocity=1250;
+	areaofeffect=50;
+	edgeeffectiveness=0;
+	cylindertargeting = 1;
+	soundstart=canlite2;
+	soundhitdry=xplomed2;
+	//minbarrelangle=-24;
+	tolerance=767;
+	burnblow=1;
+	explosiongenerator=custom:FlakCloud;
+	size=1;
+	rgbcolor=1 0.6 0.6;
+	rgbColor2=0.1 0.1 0.1;
+	stages=20;
+	separation=0.35;
+	alphadecay=0.2;
+	sizedecay=-0.2;
+	//color=1;
+	startsmoke=1;
+	craterboost=0.25;
+	cratermult=0.25;
+	[DAMAGE]
+	{
+		default=45;
+		group_landair=350;
+		group_skyair=350;
+		group_invincible=1;
+	}
+}
+[BANISHER_EMG]
+{
+	name=E.M.G.;
+	CollideFriendly=0;
+	Weapontype=EmgCannon;
+	cegTag=PEEWEESHINE;
+	//color=1;
+	turret=1;
+	range=600;
+	reloadtime=0.2;
+	weapontimer=2;
+	weaponvelocity=650;
+	sprayangle=546;
+	areaofeffect=12;
+//	burst=5;
+//	burstrate=0.07;
+	soundstart=armsml3;
+	soundhitdry=lasrhit1;
+	soundtrigger=1;
+	tolerance=6000;
+	pitchtolerance=18000;
+	startsmoke=0;
+	endsmoke=0;
+	explosiongenerator=custom:EMGFLASH;
+	turnrate=1024;
+//	tracks=1;
+	[DAMAGE]
+	{
+		default=11;
+		group_invincible=1;
+	}
+}
+[BANISHER_CANNON]
+{
+	name=Plasma Cannon;
+	weaponType=Cannon;
+	turret=1;
+	range=600;
+	explosiongenerator=custom:DGUNTRACE;
+	reloadtime=0.5;
+	weaponvelocity=900;
+	mygravity=0.001;
+	areaofeffect=32;
+	soundstart=scargun;
+	soundhitdry=exmine3;
+	tolerance=500;
+	CoreThickness=0.9;
+	energypershot=200;
+	rgbcolor=1 0.75 0.2;
+	stages=10;
+	separation=0.6;
+	alphadecay=0.3;
+	sizedecay=-0.1;
+	nogap=1;
+	size=3.5;
+	cegTag=UnitFire;
+	burnblow=1;
+	[DAMAGE]
+	{
+		default=150;
+		group_invincible=1;
+	}
+}
+[ARMALA_WEAPON]
+{
+	name=Annihilator Weapon;
+	Weapontype=LaserCannon;
+	turret=1;
+	range=950;
+	duration=0.08;
+	reloadtime=10;
+	energypershot=1000;
+	weaponvelocity=1650;
+	areaofeffect=8;
+	soundstart=annigun1;
+	soundhitdry=xplolrg1;
+	firestarter=90;
+	rgbcolor=0.000 0.012 1.000;
+	explosiongenerator=custom:SNIPELASER;
+	Texture1=purplelaser;
+	Texture2=null;
+	Texture3=null;
+	Texture4=null;
+	thickness=9;
+	collidefriendly=0;
+	[DAMAGE]
+	{
+		default=2260;
+		group_invincible=1;
+		group_commanders=1000;
+		lost_commanders=900;
+		group_landair=1212;
+		group_skyair=1212;
+		group_snipertargets=3500;
+	}
+}
+
 [ARM_FALKONPUNCH2]
 {
 	name=Plasma Cannon;
@@ -69,7 +309,7 @@
 	accuracy=600;
 	[DAMAGE]
 	{
-		default=450;
+		default=555;
 		group_ships=675;
 		group_large_ships=725;
 		group_invincible=1;
@@ -198,7 +438,7 @@
 	thickness=2.5;
 	Intensity=1.0;
 	turret=1;
-	range=700;
+	range=600;
 	reloadtime=1;
 	energypershot=150;
 	weaponvelocity=1650;
@@ -212,6 +452,7 @@
 	{
 		default=185;
 		group_landair=91;
+		group_skyair=91;
 		group_invincible=1;
 	}
 }
@@ -224,7 +465,7 @@
 	thickness=1.2;
 	laserflaresize=6;
 	beamtime=0.1;
-	range=700;
+	range=600;
 	reloadtime=0.1;
 	energypershot=30;
 	weaponvelocity=900;
@@ -349,6 +590,7 @@
 		//group_large_ships=355;
 		//group_invincible=1;
 		group_landair=575;
+		group_skyair=575;
 	}
 }
 
@@ -383,6 +625,7 @@
 		//group_large_ships=355;
 		//group_invincible=1;
 		group_landair=500;
+		group_skyair=500;
 	}
 }
 
@@ -550,6 +793,7 @@
 		group_large_ships=355;
 		group_invincible=1;
 		group_landair=120;
+		group_skyair=120;
 	}
 }
 
@@ -583,6 +827,7 @@
 		default=915;
 		group_invincible=1;
 		group_landair=765;
+		group_skyair=765;
 		group_commanders=750;
 		lost_commanders=700;
 	}
@@ -622,6 +867,7 @@
 		lost_commanders=33;//99
 		group_invincible=1;
 		group_landair=150;//300
+		group_skyair=150;
 	}
 }
 [ARM_EVAP_ANNIHILATOR]
@@ -691,6 +937,7 @@
 	{
 		default=999;
 		group_landair=1500;
+		group_skyair=1500;
 		group_invincible=1;
 	}
 }
@@ -764,6 +1011,7 @@
 	{
 		default=131;
 		group_landair=257;
+		group_skyair=257;
 		group_invincible=1;
 	}
 }
@@ -811,6 +1059,7 @@
 	{
 		default=31;
 		group_landair=101;
+		group_skyair=101;
 		group_invincible=1;
 	}
 }
@@ -998,6 +1247,7 @@
 	{
 		default=31;
 		group_landair=89;
+		group_skyair=89;
 		group_invincible=1;
 	}
 }
@@ -1008,7 +1258,7 @@
 	rendertype=1;
 	lineofsight=1;
 	turret=1;
-	model=DEMR1;
+	model=weapon_exphvyrock;
 	range=1200;
 	Trajectoryheight=0.5;
 	reloadtime=3;
@@ -1029,12 +1279,6 @@
 	selfprop=1;
 	smoketrail=1;
 	tolerance=9000;
-	explosiongaf=fx;
-	explosionart=explode3;
-	waterexplosiongaf=fx;
-	waterexplosionart=h2o;
-	lavaexplosiongaf=fx;
-	lavaexplosionart=lavasplash;
 	startsmoke=1;
 	[DAMAGE]
 	{
@@ -1052,7 +1296,7 @@
 	rendertype=1;
 	lineofsight=1;
 	turret=1;
-	model=DEMR1;
+	model=weapon_exphvyrock;
 	range=1200;
 	Trajectoryheight=0.5;
 	reloadtime=6;
@@ -1073,12 +1317,6 @@
 	selfprop=1;
 	smoketrail=1;
 	tolerance=9000;
-	explosiongaf=fx;
-	explosionart=explode3;
-	waterexplosiongaf=fx;
-	waterexplosionart=h2o;
-	lavaexplosiongaf=fx;
-	lavaexplosionart=lavasplash;
 	startsmoke=1;
 	[DAMAGE]
 	{
@@ -1268,7 +1506,7 @@
 	rendertype=1;
 	lineofsight=1;
 	turret=1;
-	model=missilejumbo;
+	model=weapon_exphvyrock;
 	range=1600;
 	reloadtime=3.0;
 	weapontimer=10;
@@ -1289,12 +1527,6 @@
 	selfprop=1;
 	smoketrail=1;
 	tolerance=9000;
-	explosiongaf=fx;
-	explosionart=explode3;
-	waterexplosiongaf=fx;
-	waterexplosionart=h2o;
-	lavaexplosiongaf=fx;
-	lavaexplosionart=lavasplash;
 	startsmoke=1;
 	[DAMAGE]
 	{
@@ -1375,6 +1607,7 @@
 	{
 		default=532;
 		group_landair=198;
+		group_skyair=198;
 		group_invincible=1;
 	}
 }
@@ -1465,12 +1698,6 @@
 	soundstart=cannon1;
 	soundhitdry=xplomed3;
 	minbarrelangle=-55;
-	explosiongaf=fx;
-	explosionart=explode3;
-	waterexplosiongaf=fx;
-	waterexplosionart=h2o;
-	lavaexplosiongaf=fx;
-	lavaexplosionart=lavasplash;
 	startsmoke=1;
 	[DAMAGE]
 	{
@@ -1676,8 +1903,8 @@
 	rendertype=1;
 	lineofsight=1;
 	turret=1;
-	model=missilejumbo;
-	range=1100;
+	model=weapon_exphvyrock;
+	range=1400;
 	reloadtime=3.0;
 	weapontimer=10;
 	weaponvelocity=1600;
@@ -1690,25 +1917,20 @@
 	soundhitdry=rockhit;
 	Trajectoryheight=0.3;
 	firestarter=70;
-	explosiongenerator=custom:popupcannon;
+	explosiongenerator=custom:redplasma;
+	//cegTag=RAVENTRAIL;
 	smokedelay=0.1;
 	guidance=1;
 	tracks=1;
 	selfprop=1;
 	smoketrail=1;
 	tolerance=9000;
-	explosiongaf=fx;
-	explosionart=explode3;
-	waterexplosiongaf=fx;
-	waterexplosionart=h2o;
-	lavaexplosiongaf=fx;
-	lavaexplosionart=lavasplash;
 	startsmoke=1;
 	[DAMAGE]
 	{
-		group_landair=387;
-		group_skyair=682;
-		default=247;
+		group_landair=600;
+		group_skyair=700;
+		default=350;
 		group_invincible=1;
 	}
 }
@@ -1719,8 +1941,8 @@
 	rendertype=1;
 	lineofsight=1;
 	turret=1;
-	model=missilejumbo;
-	range=1290;
+	model=weapon_exphvyrock;
+	range=1590;
 	reloadtime=3.0;
 	weapontimer=10;
 	weaponvelocity=1600;
@@ -1732,7 +1954,8 @@
 	metalpershot=0;
 	soundstart=WASP1;
 	soundhitdry=rockhit;
-	explosiongenerator=custom:popupcannon;
+	explosiongenerator=custom:redplasma;
+	//cegTag=RAVENTRAIL;
 	firestarter=70;
 	smokedelay=0.1;
 	guidance=1;
@@ -1743,9 +1966,9 @@
 	startsmoke=1;
 	[DAMAGE]
 	{
-		group_landair=400;
-		group_skyair=653;
-		default=287;
+		group_landair=600;
+		group_skyair=700;
+		default=350;
 		group_invincible=1;
 	}
 }
@@ -1798,11 +2021,10 @@
 	rendertype=1;
 	lineofsight=1;
 	turret=0;
-	model=DEMR1;
-	range=900;
+	model=weapon_exphvyrock;
+	range=1300;
 	reloadtime=10.5;
 	impulsefactor=0.25;
-	model=weapon_exphvyrock;
 	weapontimer=10;
 	weaponvelocity=1000;
 	startvelocity=800;
@@ -1812,28 +2034,23 @@
 	metalpershot=0;
 	soundstart=WASP1;
 	soundhitdry=rockhit;
-	explosiongenerator=custom:popupcannon;
 	firestarter=70;
 	smokedelay=0.1;
 	guidance=1;
 	tracks=1;
 	selfprop=1;
-	smoketrail=1;
+	smoketrail=0;
 	tolerance=9000;
-	explosiongaf=fx;
-	explosionart=explode3;
-	waterexplosiongaf=fx;
-	waterexplosionart=h2o;
-	lavaexplosiongaf=fx;
-	lavaexplosionart=lavasplash;
 	startsmoke=1;
-	Burst=4;
-	Burstrate=0.4;
+	Burst=5;
+	Burstrate=0.5;
+	explosiongenerator=custom:redplasma;
+	//cegTag=RAVENTRAIL;
 	[DAMAGE]
 	{
-		group_landair=251;
-		group_skyair=321;
-		default=187;
+		group_landair=451;
+		group_skyair=521;
+		default=350;
 		group_invincible=1;
 	}
 }
@@ -1854,7 +2071,7 @@
 	beamlaser=1;
 	impulsefactor=0.5;
 	beamtime=2;
-	range=900;
+	range=1300;
 	reloadtime=8.0;
 	energypershot=800;
 	weaponvelocity=1000;
@@ -1867,18 +2084,12 @@
 	beamweapon=1;
 	rgbcolor=0.000 1.000 0.447;
 	tolerance=200;
-	explosiongaf=fx;
-	explosionart=explode5;
-	waterexplosiongaf=fx;
-	waterexplosionart=h2oboom1;
-	lavaexplosiongaf=fx;
-	lavaexplosionart=lavasplashsm;
 	guidance=1;
 	[DAMAGE]
 	{
-		default=1425;
-		group_skyair=1900;
-		group_landair=2000;
+		default=2850;
+		group_skyair=3800;
+		group_landair=4000;
 		group_invincible=1;
 	}
 }
@@ -1893,7 +2104,7 @@
 	minbarrelangle=-24;
 	beamlaser=1;
 	beamtime=0.1;
-	range=655;
+	range=700;
 	reloadtime=0.1;
 	energypershot=10;
 	weaponvelocity=900;
@@ -1906,16 +2117,10 @@
 	beamweapon=1;
 	rgbcolor=0.059 0.000 1.000;
 	tolerance=500;
-	explosiongaf=fx;
-	explosionart=explode5;
-	waterexplosiongaf=fx;
-	waterexplosionart=h2oboom1;
-	lavaexplosiongaf=fx;
-	lavaexplosionart=lavasplashsm;
 	guidance=1;
 	[DAMAGE]
 	{
-		default=13;
+		default=26;
 		group_invincible=1;
 	}
 }
@@ -1930,11 +2135,11 @@
 	rgbcolor=1 0.87 0.3;
 	lineofsight=1;
 	turret=1;
-	range=600;
+	range=700;
 	mygravity=0.08;
 	heightBoostFactor=1;
 	heightMod=-3.1;
-	reloadtime=0.2;
+	reloadtime=0.1;
 	minbarrelangle=-24;
 	weapontimer=1;
 	weaponvelocity=700;
@@ -1947,13 +2152,7 @@
 	soundtrigger=0;
 	tolerance=11000;
 	startsmoke=1;
-	explosiongaf=fx;
-	explosionart=explode5;
 	explosiongenerator=custom:EMGFLASH;
-	waterexplosiongaf=fx;
-	waterexplosionart=h2oboom1;
-	lavaexplosiongaf=fx;
-	lavaexplosionart=lavasplashsm;
 	guidance=1;
 	[DAMAGE]
 	{
@@ -1968,8 +2167,8 @@
 	rendertype=1;
 	lineofsight=1;
 	turret=1;
-	model=DEMR1;
-	range=900;
+	model=weapon_exphvyrock;
+	range=1300;
 	reloadtime=2.8;
 	weapontimer=10;
 	weaponvelocity=1600;
@@ -1980,7 +2179,8 @@
 	metalpershot=0;
 	soundstart=WASP1;
 	soundhitdry=WASP2;
-	explosiongenerator=custom:popupcannon;
+	explosiongenerator=custom:redplasma;
+	//cegTag=RAVENTRAIL;
 	firestarter=70;
 	smokedelay=0.1;
 	guidance=1;
@@ -1988,18 +2188,12 @@
 	selfprop=1;
 	smoketrail=1;
 	tolerance=9000;
-	explosiongaf=fx;
-	explosionart=explode3;
-	waterexplosiongaf=fx;
-	waterexplosionart=h2o;
-	lavaexplosiongaf=fx;
-	lavaexplosionart=lavasplash;
 	startsmoke=1;
 	[DAMAGE]
 	{
-		group_landair=551;
-		group_skyair=421;
-		default=221;
+		group_landair=451;
+		group_skyair=521;
+		default=350;
 		group_invincible=1;
 	}
 }
@@ -2014,7 +2208,7 @@
 	beamlaser=1;
 	minbarrelangle=-24;
 	beamtime=0.1;
-	range=600;
+	range=700;
 	reloadtime=0.1;
 	energypershot=20;
 	weaponvelocity=900;
@@ -2027,16 +2221,10 @@
 	beamweapon=1;
 	rgbcolor=0.000 0.012 1.000;
 	tolerance=500;
-	explosiongaf=fx;
-	explosionart=explode5;
-	waterexplosiongaf=fx;
-	waterexplosionart=h2oboom1;
-	lavaexplosiongaf=fx;
-	lavaexplosionart=lavasplashsm;
 	guidance=1;
 	[DAMAGE]
 	{
-		default=28;
+		default=56;
 		group_invincible=1;
 	}
 }
@@ -2050,12 +2238,12 @@
 	rgbcolor=1 0.87 0.3;
 	lineofsight=1;
 	turret=1;
-	range=600;
+	range=700;
 	mygravity=0.08;
 	heightBoostFactor=1;
 	heightMod=-3.1;
 	minbarrelangle=-24;
-	reloadtime=0.2;
+	reloadtime=0.1;
 	weapontimer=1;
 	weaponvelocity=700;
 	sprayangle=424;
@@ -2067,13 +2255,7 @@
 	soundtrigger=0;
 	tolerance=11000;
 	startsmoke=1;
-	explosiongaf=fx;
-	explosionart=explode5;
 	explosiongenerator=custom:EMGFLASH;
-	waterexplosiongaf=fx;
-	waterexplosionart=h2oboom1;
-	lavaexplosiongaf=fx;
-	lavaexplosionart=lavasplashsm;
 	guidance=1;
 	[DAMAGE]
 	{
@@ -2088,8 +2270,8 @@
 	rendertype=1;
 	lineofsight=1;
 	turret=1;
-	model=DEMR1;
-	range=900;
+	model=weapon_exphvyrock;
+	range=1300;
 	reloadtime=5.6;
 	weapontimer=10;
 	weaponvelocity=1600;
@@ -2100,7 +2282,8 @@
 	metalpershot=0;
 	soundstart=WASP1;
 	soundhitdry=WASP2;
-	explosiongenerator=custom:popupcannon;
+	explosiongenerator=custom:redplasma;
+	//cegTag=RAVENTRAIL;
 	firestarter=70;
 	smokedelay=0.1;
 	guidance=1;
@@ -2108,18 +2291,12 @@
 	selfprop=1;
 	smoketrail=1;
 	tolerance=9000;
-	explosiongaf=fx;
-	explosionart=explode3;
-	waterexplosiongaf=fx;
-	waterexplosionart=h2o;
-	lavaexplosiongaf=fx;
-	lavaexplosionart=lavasplash;
 	startsmoke=1;
 	[DAMAGE]
 	{
-		group_landair=551;
-		group_skyair=421;
-		default=221;
+		group_landair=451;
+		group_skyair=521;
+		default=350;
 		group_invincible=1;
 	}
 }
@@ -2965,6 +3142,7 @@
 		group_invincible=1;
 		group_commanders=1000;
 		group_landair=1212;
+		group_skyair=1212;
 
 	}
 }
@@ -3050,6 +3228,7 @@
 	{
 		default=131;
 		group_landair=257;
+		group_skyair=257;
 		group_invincible=1;
 	}
 }
@@ -3091,6 +3270,7 @@
 	{
 		default=31;
 		group_landair=101;
+		group_skyair=101;
 		group_invincible=1;
 	}
 }

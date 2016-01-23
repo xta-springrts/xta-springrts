@@ -9,13 +9,13 @@
 	Description=Anti Sky-Cruiser Tank;
 	FootprintX=3.2;
 	FootprintZ=4;
-	BuildCostEnergy=9294;
-	BuildCostMetal=1254;
-	MaxDamage=2654;
+	BuildCostEnergy=29294;
+	BuildCostMetal=3254;
+	MaxDamage=4854;
 	MaxWaterDepth=100;
 	MaxSlope=12;
 	EnergyUse=0.8;
-	BuildTime=17320;
+	BuildTime=47320;
 	WorkerTime=0;
 	BMcode=1;
 	Builder=0;

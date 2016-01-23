@@ -235,6 +235,7 @@
 		default=9;
 	 	group_invincible=1;
 		group_landair=23;
+		group_skyair=23;
 	}
 }
 [AIR2AIRLASER]
@@ -262,6 +263,7 @@
 		default=6;
 		group_invincible=1;
 		group_landair=11;
+		group_skyair=11;
 	}
 }
 [AMD_ROCKET]
@@ -343,6 +345,7 @@
 		default=28;
 		group_invincible=1;
 		group_landair=100;
+		group_skyair=100;
 	}
 }
 [ARMAAS_WEAPON3]
@@ -378,6 +381,7 @@
 	{
 		default=45;
 		group_landair=350;
+		group_skyair=350;
 		group_invincible=1;
 	}
 }
@@ -446,6 +450,7 @@
 		default=60;
 		group_invincible=1;
 		group_landair=142;
+		group_skyair=142;
 	}
 }
 [ARMAIR_TORPEDO]
@@ -574,6 +579,7 @@
 		default=46;
 		lost_commanders=41;
 		group_landair=107;
+		group_skyair=107;
 		group_invincible=1;
 	}
 }
@@ -876,6 +882,7 @@
 	{
 		default=30;
 		group_landair=292;
+		group_skyair=292;
 		group_invincible=1;
 	}
 }
@@ -940,6 +947,7 @@
 		default=46;
 		lost_commanders=41;
 		group_landair=107;
+		group_skyair=107;
 		group_invincible=1;
 	}
 }
@@ -975,6 +983,7 @@
 		default=31;
 		lost_commanders=27;
 		group_landair=101;
+		group_skyair=101;
 		group_invincible=1;
 	}
 }
@@ -1342,6 +1351,7 @@
 		default=36;
 		lost_commanders=31;
 		group_landair=122;
+		group_skyair=122;
 		group_invincible=1;
 	}
 }
@@ -1522,6 +1532,7 @@
 		default=44;
 		group_invincible=1;
 		group_landair=143;
+		group_skyair=143;
 	}
 }
 [ARMSEHAK_WEAPON]
@@ -1603,6 +1614,7 @@
 		default=39;
 		group_invincible=1;
 		group_landair=308;
+		group_skyair=308;
 	}
 }
 [ARMSHIP_MISSILE]
@@ -1640,6 +1652,7 @@
 		default=42;
 		group_invincible=1;
 		group_landair=130;
+		group_skyair=130;
 	}
 }
 [ARMSH_WEAPON]
@@ -1737,6 +1750,7 @@
 		group_commanders=1000;
 		lost_commanders=900;
 		group_landair=1212;
+		group_skyair=1212;
 		group_snipertargets=3500;
 	}
 }
@@ -1775,6 +1789,7 @@
 		lost_commanders=37;
 		group_invincible=1;
 		group_landair=109;
+		group_skyair=109;
 	}
 }
 [ARMTRUCK_ROCKET]
@@ -1847,6 +1862,7 @@
 		default=44;
 		group_invincible=1;
 		group_landair=110;
+		group_skyair=110;
 	}
 }
 [ARMVULC_WEAPON]
@@ -1949,6 +1965,7 @@
 		default=23;
 		group_invincible=1;
 		group_landair=119;
+		group_skyair=119;
 	}
 }
 [ARM_ARTILLERY]
@@ -2242,6 +2259,7 @@
 	{
 		default=185;
 		group_landair=91;
+		group_skyair=91;
 		group_invincible=1;
 	}
 }
@@ -2304,6 +2322,7 @@
 		group_ships=130;
 		group_large_ships=130;
 		group_landair=69;
+		group_skyair=69;
 		group_invincible=1;
 	}
 }
@@ -2794,6 +2813,7 @@
 	{
 		default=51;
 		group_landair=119;
+		group_skyair=119;
 		group_invincible=1;
 	}
 }
@@ -2822,6 +2842,7 @@
 	{
 		default=7;
 		group_landair=19;
+		group_skyair=19;
 		group_invincible=1;
 	}
 }
@@ -3384,6 +3405,7 @@
 	{
 		default=190;
 		group_landair=93;
+		group_skyair=93;
 		group_invincible=1;
 	}
 }
@@ -3412,6 +3434,7 @@
 	{
 		default=144;
 		group_landair=72;
+		group_skyair=72;
 		group_invincible=1;
 	}
 }
@@ -3698,6 +3721,7 @@
 	{
 		default=58;
 		group_landair=294;
+		group_skyair=294;
 		group_invincible=1;
 	}
 }
@@ -3856,6 +3880,7 @@
 	{
 		default=2500;
 		group_landair=1550;
+		group_skyair=1550;
 		group_invincible=1;
 	}
 }
@@ -3893,6 +3918,7 @@
 	{
 		default=131;
 		group_landair=421;
+		group_skyair=421;
 		group_invincible=1;
 	}
 }
@@ -4312,6 +4338,7 @@
 		lost_commanders=31;
 		group_invincible=1;
 		group_landair=120;
+		group_skyair=120;
 	}
 }
 [CORSENT_GUN]
@@ -4355,6 +4382,7 @@
 		default=42;
 		group_invincible=1;
 		group_landair=201;
+		group_skyair=201;
 	}
 }
 [CORSENT_GUN_NOWEAPON]
@@ -4428,6 +4456,7 @@
 		default=68;
 		group_invincible=1;
 		group_landair=134;
+		group_skyair=134;
 	}
 }
 [CORSH_WEAPON]
@@ -4578,6 +4607,7 @@
 		default=181;
 		group_invincible=1;
 		group_landair=60;
+		group_skyair=60;
 	}
 }
 [CORTOAST_GUN]
@@ -4687,6 +4717,7 @@
 		lost_commanders=35;
 		group_invincible=1;
 		group_landair=110;
+		group_skyair=110;
 	}
 }
 [CORTRUCK_ROCKET]
@@ -4753,6 +4784,7 @@
 		default=1231;
 		group_invincible=1;
 		group_landair=986;
+		group_skyair=986;
 		group_commanders=950;
 		lost_commanders=860;
 	}
@@ -4792,6 +4824,7 @@
 		default=43;
 		group_invincible=1;
 		group_landair=112;
+		group_skyair=112;
 	}
 }
 [COR_BATS]
@@ -5466,6 +5499,7 @@
 		default=190;
 		group_invincible=1;
 		group_landair=50;
+		group_skyair=50;
 	}
 }
 [MEDIUM_BUILDING]
@@ -5923,6 +5957,7 @@
 	{
 		default=125;
 		group_landair=42;
+		group_skyair=42;
 		group_invincible=1;
 	}
 }
@@ -5961,6 +5996,7 @@
 		lost_commanders=41;
 		group_invincible=1;
 		group_landair=120;
+		group_skyair=120;
 	}
 }
 [CORE_MORT_HIGH]
@@ -6354,6 +6390,7 @@
 		group_ships=2000;
 		group_large_ships=2000;
 		group_landair=9999;
+		group_skyair=999;
 		group_invincible=1;
 	}
 }
@@ -6383,6 +6420,7 @@
 		default=87;
 		group_invincible=1;
 		group_landair=40;
+		group_skyair=40;
 	}
 }
 [CAPPY_DISINTEGRATOR]
@@ -6448,6 +6486,7 @@
 		default=28;
 		lost_commanders=25;
 		group_landair=68;
+		group_skyair=68;
 		group_invincible=1;
 	}
 }
@@ -6485,6 +6524,7 @@
 		default=33;
 		lost_commanders=27;
 		group_landair=68;
+		group_skyair=68;
 		group_invincible=1;
 	}
 }
@@ -7080,6 +7120,7 @@
 		lost_commanders=1700;
 		group_invincible=1;
 		group_landair=50;
+		group_skyair=50;
 	}
 }
 [SpiderDMGLIGHTNING]

@@ -57,7 +57,7 @@
 	DefaultMissionType=VTOL_standby;
 	maneuverleashlength=1280;
 	Weapon1=LIGHTSKYCRUISERANNI;
-	canattack=0;
+	canattack=1;
 	Weapon2=HEAVYFLYING_MISSILE;
 	wsec_badTargetCategory=NOTAIR;
 	NoChaseCategory=SUB;

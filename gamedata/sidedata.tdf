@@ -29,7 +29,7 @@
 		canbuild2=arm_peeper;
 		canbuild3=arm_hawk;
 		canbuild4=arm_brawler;
-		canbuild5=armpur;//xtaids
+		//canbuild5=armpur;//xtaids
 		canbuild6=arm_phoenix;
 		canbuild7=arm_eagle;
 		canbuild8=arm_ornith;//sea stuff below
@@ -74,12 +74,13 @@
 		canbuild31=arm_spidernest_Xtra;//Spiderpack vs. Tortoise
 		canbuild32=arm_spidernest;//Spiderpack vs. Tortoise
 		canbuild33=arm_hovercraft_platform; 
-		canbuild34=arm_stunner;
-		canbuild35=arm_retaliator;
-	 	canbuild36=ARMFFF;//xtaids
-	 	canbuild37=MERCURY;//xtaids
-		canbuild38=arm_vulcan;
-		canbuild39=arm_nano_tower;
+		canbuild34=arm_ht_aircraft_plant; 
+		canbuild35=arm_stunner;
+		canbuild36=arm_retaliator;
+	 	//canbuild36=ARMFFF;//xtaids
+	 	//canbuild37=MERCURY;//xtaids
+		canbuild37=arm_vulcan;
+		canbuild38=arm_nano_tower;
 	}
 	[arm_adv_construction_kbot]
 	{
@@ -119,8 +120,8 @@
 		canbuild34=arm_mech_lab; //xtaids
 		canbuild35=arm_stunner;
 		canbuild36=arm_retaliator;
-	 	canbuild37=ARMFFF;//xtaids
-	 	canbuild38=MERCURY;//xtaids
+	 	//canbuild37=ARMFFF;//xtaids
+	 	//canbuild38=MERCURY;//xtaids
 		canbuild39=arm_vulcan;
 		canbuild40=arm_nano_tower;
 	}
@@ -189,8 +190,8 @@
 		canbuild34=arm_landship_lab; //xtaids
 		canbuild35=arm_stunner;
 		canbuild36=arm_retaliator;
-	 	canbuild37=ARMFFF;//xtaids
-	 	canbuild38=MERCURY;//xtaids
+	 	//canbuild37=ARMFFF;//xtaids
+	 	//canbuild38=MERCURY;//xtaids
 		canbuild39=arm_vulcan;
 		canbuild40=arm_nano_tower;
 	}
@@ -200,7 +201,7 @@
 		canbuild2=arm_zeus;
 		canbuild3=arm_fido;
 		canbuild4=arm_invader;
-		canbuild5=Armbugger;//xtaids
+		//canbuild5=Armbugger;//xtaids
 		canbuild6=arm_eraser;
 		canbuild7=arm_zipper;
 		canbuild8=arm_maverick;
@@ -210,7 +211,7 @@
 		canbuild12=arm_pelican;
 		canbuild13=arm_shooter;
 		canbuild14=arm_infiltrator;
-		canbuild15=tadg07;//xtaids
+		//canbuild15=tadg07;//xtaids
 		canbuild16=arm_decoy_commander;
 		canbuild17=arm_fark;
 		canbuild18=armraz;//xtaids
@@ -222,7 +223,7 @@
 		canbuild1=arm_construction_aircraft;
 		canbuild2=arm_peeper;
 		canbuild3=arm_freedom_fighter;
-		canbuild4=armhyren;//xtaids
+		//canbuild4=armhyren;//xtaids
 		canbuild5=arm_thunder;
 		canbuild6=arm_atlas;
 		canbuild7=arm_tornado;
@@ -240,7 +241,7 @@
 		canbuild9=arm_millenium;
 		canbuild10=arm_escort;
 		canbuild11=arm_archer;
-		canbuild12=yeomen;//xtaids
+		//canbuild12=yeomen;//xtaids
 		canbuild13=arm_fibber;
 		canbuild14=arm_Plesiosaur;
 		canbuild15=arm_infinite;//xtaids
@@ -257,9 +258,9 @@
 		canbuild8=arm_merl;
 		canbuild9=arm_merl_rt;
 		canbuild10=arm_penetrator;
-		canbuild11=Demolish;//xtaids
+		//canbuild11=Demolish;//xtaids
 		canbuild12=arm_phalanx;
-		canbuild13=arm_tor;//xtaids
+		//canbuild13=arm_tor;//xtaids
 		canbuild14=arm_scarab;
 		canbuild15=arm_panther;
 		canbuild16=arm_mobile_fusion;
@@ -656,7 +657,10 @@
 		canbuild21=arm_torpedo_launcher;
 		canbuild22=arm_floating_light_laser_tower;
 		canbuild23=arm_dragons_teeth;
-		canbuild24=armfff;
+		canbuild24=arm_mech_lab;
+		canbuild25=arm_landship_lab;
+		canbuild26=arm_ht_aircraft_plant;
+		canbuild27=armfff;
 	}
 	[arm_mech_lab]
 	{
@@ -674,6 +678,38 @@
 		canbuild12=arm_fatboy;
 		canbuild13=arm_archangel;
 		canbuild14=arm_noruas;
+	}
+	[arm_ht_construction_aircraft]
+	{
+	 	canbuild1=arm_fortification_wall;
+	 	canbuild2=ARMBFORTEW;//xtaids
+		canbuild3=arm_mantle_extractor;
+	 	canbuild4=arm_moho_metal_maker;
+		canbuild5=arm_geothermal_powerplant;
+		canbuild6=arm_fusion_reactor;
+		canbuild7=arm_Quantum_reactor;
+		canbuild8=arm_advanced_radar_tower;
+		canbuild9=arm_radar_jamming_tower;
+		canbuild10=arm_picket;
+		canbuild11=arm_pitbull;
+		canbuild12=arm_flakker;
+		canbuild13=arm_guardian;
+		canbuild14=arm_adv_energy_storage;
+		canbuild15=arm_adv_metal_storage;
+		canbuild16=arm_shield_deflector;
+		canbuild18=arm_annihilator;
+		canbuild19=armarch;//xtaids
+		canbuild20=arm_tabitha;
+		canbuild21=arm_protector;
+		canbuild22=arm_aircraft_plant;
+		canbuild23=arm_adv_aircraft_plant;
+		canbuild24=arm_ht_aircraft_plant; //xtaids
+		canbuild25=arm_stunner;
+		canbuild26=arm_retaliator;
+	 	canbuild27=MERCURY;//xtaids
+		canbuild28=arm_vulcan;
+		canbuild30=arm_adv_nano_tower;
+		canbuild31=arm_commandpost;
 	}
 	[arm_ht_construction_kbot]
 	{
@@ -759,6 +795,18 @@
 		canbuild18=arm_Plesiosaur;
 	}
 
+	[arm_ht_aircraft_plant]
+	{
+		canbuild1=arm_ht_construction_aircraft;
+		canbuild2=arm_eagle;
+		canbuild3=arm_argentavis;
+		canbuild4=arm_banisher;
+		//canbuild5=armpur;//xtaids
+		canbuild6=arm_orion;
+		canbuild7=arm_eagle;
+		canbuild8=arm_ala;
+		canbuild9=arm_seahawk;
+	}
 	[arm_u0commander]
 	{
 		canbuild1=arm_solar_collector;
@@ -1483,7 +1531,7 @@
 		canbuild5=arm_samson;
 		canbuild6=arm_samson_rt; //mod option
 		canbuild7=armsparkle;//xtaids
-		canbuild8=armjanus;//xtaids
+		//canbuild8=armjanus;//xtaids
 		canbuild9=arm_podger;
 	}
 	[core_adv_aircraft_plant]
@@ -1491,7 +1539,7 @@
 		canbuild1=core_adv_construction_aircraft;
 		canbuild2=core_fink;
 		canbuild3=core_vamp;
-		canbuild4=corpur;//xtaids
+		//canbuild4=corpur;//xtaids
 		canbuild5=core_rapier;
 		canbuild6=core_hurricane;
 		canbuild7=core_vulture;
@@ -1501,7 +1549,7 @@
 		canbuild11=core_hunter;
 		canbuild12=core_construction_seaplane_xtra;
 		canbuild13=core_construction_seaplane;
-		canbuild14=CorCRW;//xtaids
+		//canbuild14=CorCRW;//xtaids
 	}
 	[core_adv_construction_aircraft]
 	{
@@ -1542,8 +1590,8 @@
 		canbuild35=core_neutron;
 		canbuild36=core_silencer;
 		canbuild37=core_krogoth_gantry;
-		canbuild38=corfff;//xtaids
-		canbuild39=screamer;//xtaids
+		//canbuild38=corfff;//xtaids
+		//canbuild39=screamer;//xtaids
 		canbuild40=core_buzzsaw; 
 		canbuild41=core_nano_tower;
 		canbuild42=COREBFORTNS;//xtaids                    
@@ -1587,8 +1635,8 @@
 		canbuild35=core_neutron;
 		canbuild36=core_silencer;
 		canbuild37=core_krogoth_gantry;
-		canbuild38=corfff;//xtaids
-		canbuild39=screamer;//xtaids
+		//canbuild38=corfff;//xtaids
+		//canbuild39=screamer;//xtaids
 		canbuild40=core_buzzsaw; 
 		canbuild41=core_nano_tower;
 		canbuild42=COREBFORTNS;//xtaids    
@@ -1662,8 +1710,8 @@
 		canbuild35=core_neutron;
 		canbuild36=core_silencer;
 		canbuild37=core_krogoth_gantry;
-		canbuild38=corfff;//xtaids
-		canbuild39=screamer;//xtaids
+		//canbuild38=corfff;//xtaids
+		//canbuild39=screamer;//xtaids
 		canbuild40=core_buzzsaw; 
 		canbuild41=core_nano_tower;
 		canbuild42=COREBFORTNS;//xtaids     
@@ -1684,7 +1732,7 @@
 		canbuild12=core_sumo;
 		canbuild13=core_gimp;
 		canbuild14=core_parasite;
-		canbuild15=commando;//xtaids
+		//canbuild15=commando;//xtaids
 		canbuild16=core_decoy_commander;
 		canbuild17=core_resurrection_kbot;
 	}
@@ -1693,7 +1741,7 @@
 		canbuild1=core_construction_aircraft;
 		canbuild2=core_fink;
 		canbuild3=core_avenger;
-		canbuild4=CoreVashp;//xtaids
+		//canbuild4=CoreVashp;//xtaids
 		canbuild5=core_shadow;
 		canbuild6=core_valkyrie;
 		canbuild7=core_voodoo;
@@ -1710,7 +1758,7 @@
 		canbuild8=core_warlord;
 		canbuild9=core_phantom;
 		canbuild10=core_shredder;
-		canbuild11=justice;//xtaids
+		//canbuild11=justice;//xtaids
 		canbuild12=core_leviathan;
 		canbuild13=Zulu;
 		canbuild14=core_Emperor;//xtaids
@@ -1722,13 +1770,13 @@
 		canbuild3=core_reaper;
 		canbuild4=core_deleter;
 		canbuild5=core_pillager;
-		canbuild6=core_egg_shell;//xtaids
+		//canbuild6=core_egg_shell;//xtaids
 		canbuild7=core_goliath;
 		canbuild8=core_informer;
 		canbuild9=core_diplomat;
 		canbuild10=core_diplomat_rt;
 		canbuild11=core_copperhead;
-		canbuild12=cor_jumbo;//xtaids
+		//canbuild12=cor_jumbo;//xtaids
 		canbuild13=core_hedgehog;
 		canbuild14=scorp3g;//xtaids
 		canbuild15=core_leveler;
@@ -2693,7 +2741,7 @@
 		canbuild8=core_freaker;
 		canbuild9=corjar;//xtaids
 		canbuild10=core_tic;
-		canbuild11=corscrew;//xtaids
+		//canbuild11=corscrew;//xtaids
 	}
 	[core_limiter]
 	{
@@ -2813,7 +2861,7 @@
 		canbuild4=core_raider;
 		canbuild5=core_slasher;
 		canbuild6=core_slasher_rt; //mod option
-		canbuild7=astank;//xtaids
+		//canbuild7=astank;//xtaids
 		canbuild8=core_spoiler;
 	}
 	[ARMFFF]//xtaids

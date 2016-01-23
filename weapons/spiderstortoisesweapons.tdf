@@ -8,6 +8,41 @@
 	model=missile.s3o;
 	Texture1=null;
 	range=704;
+	reloadtime=2.0;
+	weapontimer=5;
+	weaponvelocity=750;
+	startvelocity=550;
+	weaponacceleration=101;
+	turnrate=50000;
+	trajectoryHeight=0.08;
+	dance=30;
+	areaofeffect=48;
+	soundstart=rocklit1;
+	soundhitdry=xplosml2;
+	firestarter=70;
+	smokedelay=0.1;
+	tracks=1;
+	smoketrail=0;
+	tolerance=9000;
+	startsmoke=1;
+	[DAMAGE]
+	{
+		default=29;
+		group_landair=87;
+		group_skyair=87;
+		group_invincible=1;
+	}
+}
+[ARMHUNT_MISSILE2]
+{
+	name=Missiles;
+	explosiongenerator=custom:KBOTMISSILEHIT;
+	cegTag=KBOTMISSILETRAIL;
+	Weapontype=MissileLauncher;
+	turret=1;
+	model=missile.s3o;
+	Texture1=null;
+	range=704;
 	reloadtime=2.2;
 	weapontimer=5;
 	weaponvelocity=750;
@@ -29,40 +64,7 @@
 	{
 		default=29;
 		group_landair=87;
-		group_invincible=1;
-	}
-}
-[ARMHUNT_MISSILE2]
-{
-	name=Missiles;
-	explosiongenerator=custom:KBOTMISSILEHIT;
-	cegTag=KBOTMISSILETRAIL;
-	Weapontype=MissileLauncher;
-	turret=1;
-	model=missile.s3o;
-	Texture1=null;
-	range=704;
-	reloadtime=2.4;
-	weapontimer=5;
-	weaponvelocity=750;
-	startvelocity=550;
-	weaponacceleration=101;
-	turnrate=50000;
-	trajectoryHeight=0.08;
-	dance=30;
-	areaofeffect=48;
-	soundstart=rocklit1;
-	soundhitdry=xplosml2;
-	firestarter=70;
-	smokedelay=0.1;
-	tracks=1;
-	smoketrail=0;
-	tolerance=9000;
-	startsmoke=1;
-	[DAMAGE]
-	{
-		default=29;
-		group_landair=87;
+		group_skyair=87;
 		group_invincible=1;
 	}
 }
@@ -222,6 +224,7 @@
 		group_invincible=1;
 		group_commanders=1500;
 		group_landair=1912;
+		group_skyair=1912;
 
 	}
 }
@@ -252,6 +255,7 @@
 		default=11;
 	 	group_invincible=1;
 		group_landair=23;
+		group_skyair=23;
 	}
 }
 
@@ -297,7 +301,7 @@
 	model=missile.s3o;
 	Texture1=null;
 	range=695;
-	reloadtime=3;
+	reloadtime=2.7;
 	weapontimer=5;
 	weaponvelocity=750;
 	startvelocity=550;
@@ -318,6 +322,7 @@
 	{
 		default=75;
 		group_landair=173;
+		group_skyair=173;
 		group_invincible=1;
 	}
 }

@@ -1,4 +1,45 @@
 
+[arm_ht_aircraft_plant_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=core_corpses;
+	object=arm_ht_aircraft_plant_dead;
+	featuredead=arm_ht_aircraft_plant_heap;
+	footprintx=8;
+	footprintz=8;
+	height=20;
+	blocking=1;
+	hitdensity=100;
+	metal=5270;
+	damage=2440;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=150 30 160;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+[arm_ht_aircraft_plant_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=7x7b;
+	footprintx=8;
+	footprintz=8;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	metal=2635;
+	damage=1220;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=150 10 160;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
 [arm_landship_lab_dead]
 {
 	world=All Worlds;

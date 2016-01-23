@@ -2,14 +2,14 @@
 {
 	name=Mercury;
 	unitname=mercury;
-	buildcostenergy=16860;
-	buildcostmetal=1572;
-	buildtime=38843;
+	buildcostenergy=24860;
+	buildcostmetal=3072;
+	buildtime=43843;
 	category=ARM WEAPON NOTAIR NOTSUB;
-	description=Long-Range Missile Anti Sky-Cruiser Tower;
+	description=Anti Sky-Cruiser Tower;
 	footprintx=4;
 	footprintz=4;
-	maxdamage=3143;
+	maxdamage=5843;
 	objectname=MERCURY;
 	side=ARM;
 	soundcategory=ARM_TARG;

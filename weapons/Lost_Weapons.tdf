@@ -230,6 +230,7 @@
 		default=93;
 		lost_commanders=78;
 		group_landair=201;
+		group_skyair=201;
 		group_invincible=1;
 	}
 }
@@ -264,6 +265,7 @@
 	{
 		default=88;
 		group_landair=143;
+		group_skyair=143;
 		group_invincible=1;
 	}
 }
@@ -335,6 +337,7 @@
 	{
 		default=380.6;//122
 		group_landair=361;
+		group_skyair=361;
 	}
 }
 
@@ -511,6 +514,7 @@
 		default=44;
 		group_invincible=1;
 		group_landair=110;
+		group_skyair=110;
 	}
 }
 [RAPID_BOLTCANNON]
@@ -842,6 +846,7 @@
 	default=33;
     	group_invincible=1;
 	group_landair=99;
+		group_skyair=99;
 	}
 }
 [LOSTTRUCK_PULSE]
@@ -1031,6 +1036,7 @@
 	{
 		default=33;
 		group_landair=45;
+		group_skyair=45;
 		group_invincible=1;
 	}
 }
