@@ -1,0 +1,618 @@
+#define TAK			// This is a TAK script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+piece  torso, ruparm, luparm, rlowarm, llowarm, nano, pelvis, rflare,
+       lflare, lthigh, rthigh, rleg, lleg, rfoot, lfoot, backpack,
+       base, head, orbit, orbitfire;
+
+static-var  Static_Var_1, building, Static_Var_3, Static_Var_4, Static_Var_5,
+            Static_Var_6;
+
+
+Sing()
+{
+	Static_Var_6 = Rand( 0, 5 );
+	if( Static_Var_6 == 0 )
+	{
+		play-sound( "unit/sing", 15 );
+		play-sound( "unit/sing", 15 );
+		play-sound( "unit/sing", 15 );
+		play-sound( "unit/sing", 15 );
+		play-sound( "unit/sing", 15 );
+		return (0);
+	}
+	if( Static_Var_6 == 1 )
+	{
+		play-sound( "unit/armCom1", 15 );
+		play-sound( "unit/armCom1", 15 );
+		play-sound( "unit/corCom1", 15 );
+		play-sound( "unit/corCom1", 15 );
+		play-sound( "unit/armCom1", 15 );
+		play-sound( "unit/armCom1", 15 );
+		play-sound( "unit/corCom1", 15 );
+		play-sound( "unit/corCom1", 15 );
+		return (0);
+	}
+	if( Static_Var_6 > 1 AND Static_Var_6 < 6 )
+	{
+		play-sound( "unit/honk", 15 );
+		play-sound( "unit/honk", 15 );
+		play-sound( "unit/honk", 15 );
+		play-sound( "unit/honk", 15 );
+		play-sound( "unit/honk", 15 );
+		return (0);
+	}
+}
+
+walk()
+{
+	if( Static_Var_1 )
+	{
+		move pelvis to y-axis [-1.750000] now;
+		turn pelvis to x-axis <6.697802> now;
+		turn lthigh to x-axis <-41.796703> now;
+		turn rthigh to x-axis <17.598901> now;
+		turn torso to y-axis <4.197802> now;
+		turn ruparm to x-axis <-11.296703> now;
+		turn luparm to x-axis <11.296703> now;
+		turn rlowarm to x-axis <-41.796703> now;
+		turn llowarm to x-axis <-62.598901> now;
+		turn rleg to x-axis <39.395604> now;
+		turn lleg to x-axis <41.796703> now;
+		sleep 40;
+	}
+	if( Static_Var_1 )
+	{
+		turn torso to y-axis <3.895604> now;
+		turn ruparm to x-axis <-13.395604> now;
+		turn luparm to x-axis <12.296703> now;
+		turn rlowarm to x-axis <-41.796703> now;
+		sleep 40;
+	}
+	if( Static_Var_1 )
+	{
+		move pelvis to y-axis [-1.500000] now;
+		turn pelvis to x-axis <5.296703> now;
+		turn lthigh to x-axis <-29.500000> now;
+		turn rthigh to x-axis <8.796703> now;
+		turn torso to y-axis <3.197802> now;
+		turn ruparm to x-axis <-8.098901> now;
+		turn luparm to x-axis <6.296703> now;
+		turn rlowarm to x-axis <-41.796703> now;
+		turn llowarm to x-axis <-62.598901> now;
+		turn rleg to x-axis <51.697802> now;
+		turn lleg to x-axis <28.500000> now;
+		sleep 100;
+	}
+	if( Static_Var_1 )
+	{
+		move pelvis to y-axis [-0.750000] now;
+		turn pelvis to x-axis <4.598901> now;
+		turn lthigh to x-axis <-16.197802> now;
+		turn rthigh to x-axis <0.000000> now;
+		turn torso to y-axis <1.395604> now;
+		turn ruparm to x-axis <-3.197802> now;
+		turn luparm to x-axis <0.000000> now;
+		turn rlowarm to x-axis <-41.796703> now;
+		turn llowarm to x-axis <-62.598901> now;
+		turn rleg to x-axis <58.000000> now;
+		turn lleg to x-axis <16.197802> now;
+		sleep 90;
+	}
+	if( Static_Var_1 )
+	{
+		move pelvis to y-axis [0.000000] now;
+		turn pelvis to x-axis <3.500000> now;
+		turn lthigh to x-axis <7.000000> now;
+		turn rthigh to x-axis <-6.296703> now;
+		turn torso to y-axis <0.000000> now;
+		turn ruparm to x-axis <3.197802> now;
+		turn luparm to x-axis <-6.296703> now;
+		turn rlowarm to x-axis <-41.796703> now;
+		turn rleg to x-axis <44.296703> now;
+		turn lleg to x-axis <5.598901> now;
+		sleep 90;
+	}
+	if( Static_Var_1 )
+	{
+		move pelvis to y-axis [-0.500000] now;
+		turn pelvis to x-axis <4.598901> now;
+		turn lthigh to x-axis <10.895604> now;
+		turn rthigh to x-axis <-34.500000> now;
+		turn torso to y-axis <-1.395604> now;
+		turn ruparm to x-axis <6.697802> now;
+		turn luparm to x-axis <-8.098901> now;
+		turn rlowarm to x-axis <-41.796703> now;
+		turn llowarm to x-axis <-62.598901> now;
+		turn rleg to x-axis <71.395604> now;
+		turn lleg to x-axis <20.000000> now;
+		sleep 80;
+	}
+	if( Static_Var_1 )
+	{
+		move pelvis to y-axis [-0.750000] now;
+		turn lthigh to x-axis <13.000000> now;
+		turn rthigh to x-axis <-42.895604> now;
+		turn torso to y-axis <-2.500000> now;
+		turn ruparm to x-axis <8.395604> now;
+		turn luparm to x-axis <-9.098901> now;
+		turn rleg to x-axis <54.500000> now;
+		sleep 70;
+	}
+	if( Static_Var_1 )
+	{
+		move pelvis to y-axis [-1.000000] now;
+		turn pelvis to x-axis <5.296703> now;
+		turn lthigh to x-axis <16.895604> now;
+		turn rthigh to x-axis <-48.197802> now;
+		turn torso to y-axis <-3.197802> now;
+		turn ruparm to x-axis <10.197802> now;
+		turn luparm to x-axis <-10.197802> now;
+		turn rlowarm to x-axis <-41.796703> now;
+		turn llowarm to x-axis <-62.598901> now;
+		turn rleg to x-axis <34.500000> now;
+		turn lleg to x-axis <20.000000> now;
+		sleep 80;
+	}
+	if( Static_Var_1 )
+	{
+		move pelvis to y-axis [-1.750000] now;
+		turn pelvis to x-axis <6.697802> now;
+		turn lthigh to x-axis <15.500000> now;
+		turn rthigh to x-axis <-40.395604> now;
+		turn torso to y-axis <-4.197802> now;
+		turn ruparm to x-axis <11.296703> now;
+		turn luparm to x-axis <-11.296703> now;
+		turn rlowarm to x-axis <-41.796703> now;
+		turn llowarm to x-axis <-62.598901> now;
+		turn rleg to x-axis <40.395604> now;
+		turn lleg to x-axis <30.598901> now;
+		sleep 40;
+	}
+	if( Static_Var_1 )
+	{
+		turn ruparm to x-axis <13.395604> now;
+		turn luparm to x-axis <-12.296703> now;
+		turn rlowarm to x-axis <-41.796703> now;
+		turn llowarm to x-axis <-62.598901> now;
+		sleep 40;
+	}
+	if( Static_Var_1 )
+	{
+		move pelvis to y-axis [-1.500000] now;
+		turn pelvis to x-axis <5.296703> now;
+		turn lthigh to x-axis <9.500000> now;
+		turn rthigh to x-axis <-34.500000> now;
+		turn torso to y-axis <-3.197802> now;
+		turn ruparm to x-axis <8.395604> now;
+		turn luparm to x-axis <-8.395604> now;
+		turn rlowarm to x-axis <-41.796703> now;
+		turn llowarm to x-axis <-62.197802> now;
+		turn lleg to x-axis <44.000000> now;
+		sleep 100;
+	}
+	if( Static_Var_1 )
+	{
+		move pelvis to y-axis [-0.750000] now;
+		turn pelvis to x-axis <4.598901> now;
+		turn lthigh to x-axis <0.697802> now;
+		turn rthigh to x-axis <-26.395604> now;
+		turn torso to y-axis <-1.796703> now;
+		turn ruparm to x-axis <3.197802> now;
+		turn luparm to x-axis <-3.197802> now;
+		turn llowarm to x-axis <-62.598901> now;
+		turn lleg to x-axis <54.500000> now;
+		sleep 90;
+	}
+	if( Static_Var_1 )
+	{
+		move pelvis to y-axis [0.000000] now;
+		turn pelvis to x-axis <3.500000> now;
+		turn lthigh to x-axis <-16.895604> now;
+		turn rthigh to x-axis <3.895604> now;
+		turn torso to y-axis <0.000000> now;
+		turn ruparm to x-axis <-3.197802> now;
+		turn luparm to x-axis <3.895604> now;
+		turn rlowarm to x-axis <-41.796703> now;
+		turn llowarm to x-axis <-62.598901> now;
+		turn rleg to x-axis <8.098901> now;
+		turn lleg to x-axis <60.500000> now;
+		sleep 80;
+	}
+	if( Static_Var_1 )
+	{
+		move pelvis to y-axis [-0.500000] now;
+		turn pelvis to x-axis <4.598901> now;
+		turn lthigh to x-axis <-29.500000> now;
+		turn rthigh to x-axis <10.197802> now;
+		turn torso to y-axis <1.796703> now;
+		turn ruparm to x-axis <-6.697802> now;
+		turn luparm to x-axis <8.796703> now;
+		turn llowarm to x-axis <-62.598901> now;
+		turn rleg to x-axis <26.000000> now;
+		turn lleg to x-axis <56.296703> now;
+		sleep 80;
+	}
+	if( Static_Var_1 )
+	{
+		move pelvis to y-axis [-0.750000] now;
+		turn lthigh to x-axis <-44.000000> now;
+		turn rthigh to x-axis <12.296703> now;
+		turn torso to y-axis <2.500000> now;
+		turn ruparm to x-axis <-7.000000> now;
+		turn luparm to x-axis <9.796703> now;
+		turn lleg to x-axis <55.895604> now;
+		sleep 70;
+	}
+	move pelvis to y-axis [-1.000000] now;
+	turn pelvis to x-axis <5.296703> now;
+	turn lthigh to x-axis <-44.000000> now;
+	turn rthigh to x-axis <14.395604> now;
+	turn torso to y-axis <3.197802> now;
+	turn ruparm to x-axis <-8.796703> now;
+	turn luparm to x-axis <10.197802> now;
+	turn llowarm to x-axis <-62.598901> now;
+	turn lleg to x-axis <25.697802> now;
+	sleep 80;
+}
+
+walklegs()
+{
+	if( Static_Var_1 )
+	{
+		move pelvis to y-axis [-1.750000] now;
+		turn pelvis to x-axis <6.697802> now;
+		turn lthigh to x-axis <-41.796703> now;
+		turn rthigh to x-axis <17.598901> now;
+		turn rleg to x-axis <39.395604> now;
+		turn lleg to x-axis <41.796703> now;
+		sleep 40;
+	}
+	if( Static_Var_1 )
+	{
+		sleep 40;
+	}
+	if( Static_Var_1 )
+	{
+		move pelvis to y-axis [-1.500000] now;
+		turn pelvis to x-axis <5.296703> now;
+		turn lthigh to x-axis <-29.500000> now;
+		turn rthigh to x-axis <8.796703> now;
+		turn rleg to x-axis <51.697802> now;
+		turn lleg to x-axis <28.500000> now;
+		sleep 100;
+	}
+	if( Static_Var_1 )
+	{
+		move pelvis to y-axis [-0.750000] now;
+		turn pelvis to x-axis <4.598901> now;
+		turn lthigh to x-axis <-16.197802> now;
+		turn rthigh to x-axis <0.000000> now;
+		turn rleg to x-axis <58.000000> now;
+		turn lleg to x-axis <16.197802> now;
+		sleep 90;
+	}
+	if( Static_Var_1 )
+	{
+		move pelvis to y-axis [0.000000] now;
+		turn pelvis to x-axis <3.500000> now;
+		turn lthigh to x-axis <7.000000> now;
+		turn rthigh to x-axis <-6.296703> now;
+		turn rleg to x-axis <44.296703> now;
+		turn lleg to x-axis <5.598901> now;
+		sleep 90;
+	}
+	if( Static_Var_1 )
+	{
+		move pelvis to y-axis [-0.500000] now;
+		turn pelvis to x-axis <4.598901> now;
+		turn lthigh to x-axis <10.895604> now;
+		turn rthigh to x-axis <-34.500000> now;
+		turn rleg to x-axis <71.395604> now;
+		turn lleg to x-axis <20.000000> now;
+		sleep 80;
+	}
+	if( Static_Var_1 )
+	{
+		move pelvis to y-axis [-0.750000] now;
+		turn lthigh to x-axis <13.000000> now;
+		turn rthigh to x-axis <-42.895604> now;
+		turn rleg to x-axis <54.500000> now;
+		sleep 70;
+	}
+	if( Static_Var_1 )
+	{
+		move pelvis to y-axis [-1.000000] now;
+		turn pelvis to x-axis <5.296703> now;
+		turn lthigh to x-axis <16.895604> now;
+		turn rthigh to x-axis <-48.197802> now;
+		turn rleg to x-axis <34.500000> now;
+		turn lleg to x-axis <20.000000> now;
+		sleep 80;
+	}
+	if( Static_Var_1 )
+	{
+		move pelvis to y-axis [-1.750000] now;
+		turn pelvis to x-axis <6.697802> now;
+		turn lthigh to x-axis <15.500000> now;
+		turn rthigh to x-axis <-40.395604> now;
+		turn rleg to x-axis <40.395604> now;
+		turn lleg to x-axis <30.598901> now;
+		sleep 40;
+	}
+	if( Static_Var_1 )
+	{
+		sleep 40;
+	}
+	if( Static_Var_1 )
+	{
+		move pelvis to y-axis [-1.500000] now;
+		turn pelvis to x-axis <5.296703> now;
+		turn lthigh to x-axis <9.500000> now;
+		turn rthigh to x-axis <-34.500000> now;
+		turn lleg to x-axis <44.000000> now;
+		sleep 100;
+	}
+	if( Static_Var_1 )
+	{
+		move pelvis to y-axis [-0.750000] now;
+		turn pelvis to x-axis <4.598901> now;
+		turn lthigh to x-axis <0.697802> now;
+		turn rthigh to x-axis <-26.395604> now;
+		turn lleg to x-axis <54.500000> now;
+		sleep 90;
+	}
+	if( Static_Var_1 )
+	{
+		move pelvis to y-axis [0.000000] now;
+		turn pelvis to x-axis <3.500000> now;
+		turn lthigh to x-axis <-16.895604> now;
+		turn rthigh to x-axis <3.895604> now;
+		turn rleg to x-axis <8.098901> now;
+		turn lleg to x-axis <60.500000> now;
+		sleep 80;
+	}
+	if( Static_Var_1 )
+	{
+		move pelvis to y-axis [-0.500000] now;
+		turn pelvis to x-axis <4.598901> now;
+		turn lthigh to x-axis <-29.500000> now;
+		turn rthigh to x-axis <10.197802> now;
+		turn rleg to x-axis <26.000000> now;
+		turn lleg to x-axis <56.296703> now;
+		sleep 80;
+	}
+	if( Static_Var_1 )
+	{
+		move pelvis to y-axis [-0.750000] now;
+		turn lthigh to x-axis <-44.000000> now;
+		turn rthigh to x-axis <12.296703> now;
+		turn lleg to x-axis <55.895604> now;
+		sleep 70;
+	}
+	move pelvis to y-axis [-1.000000] now;
+	turn pelvis to x-axis <5.296703> now;
+	turn lthigh to x-axis <-44.000000> now;
+	turn rthigh to x-axis <14.395604> now;
+	turn lleg to x-axis <25.697802> now;
+	sleep 80;
+}
+
+MotionControl()
+{
+	var Func_Var_1, Func_Var_2, Func_Var_3;
+	Func_Var_3 = 1;
+	while( TRUE )
+	{
+		Func_Var_1 = Static_Var_1;
+		Func_Var_2 = building;
+		if( Func_Var_1 )
+		{
+			if( Func_Var_2 )
+			{
+				Static_Var_3 = 1;
+				call-script walklegs();
+			}
+			if( !Func_Var_2 )
+			{
+				Static_Var_3 = 0;
+				call-script walk();
+			}
+			Func_Var_3 = 1;
+		}
+		if( !Func_Var_1 )
+		{
+			Static_Var_3 = 1;
+			if( Func_Var_3 )
+			{
+				move pelvis to y-axis [0.000000] speed [2.500000];
+				turn rthigh to x-axis <0.000000> speed <200.000000>;
+				turn rleg to x-axis <0.000000> speed <200.000000>;
+				turn lthigh to x-axis <0.000000> speed <200.000000>;
+				turn lleg to x-axis <0.000000> speed <200.000000>;
+				if( !Func_Var_2 )
+				{
+					turn torso to x-axis <0.000000> speed <90.000000>;
+				}
+				Func_Var_3 = 0;
+			}
+			sleep 100;
+		}
+	}
+}
+
+Create()
+{
+	hide rflare;
+	hide lflare;
+	hide nano;
+	turn rlowarm to z-axis <20.000000> now;
+	turn llowarm to z-axis <-20.000000> now;
+	Static_Var_5 = 0;
+	Static_Var_1 = 0;
+	building = FALSE;
+	Static_Var_3 = 1;
+	Static_Var_4 = 0;
+	start-script MotionControl();
+	move orbit to y-axis [750.000000] now;
+	move orbitfire to x-axis [375.000000] now;
+	spin orbit around y-axis speed <54.895604>;
+}
+
+StartMoving()
+{
+	Static_Var_1 = 1;
+}
+
+StopMoving()
+{
+	Static_Var_1 = 0;
+}
+
+SweetSpot(piecenum)
+{
+	piecenum = torso;
+}
+
+QueryNanoPiece(Func_Var_1)
+{
+	Func_Var_1 = 5;
+}
+
+RestorePosition()
+{
+	Static_Var_4 = 0;
+	turn torso to y-axis <0.000000> speed <90.000000>;
+	turn ruparm to x-axis <0.000000> speed <45.000000>;
+	turn rlowarm to x-axis <0.000000> speed <45.000000>;
+	turn luparm to x-axis <0.000000> speed <45.000000>;
+	turn head to y-axis <0.000000> speed <90.000000>;
+	turn rlowarm to z-axis <20.000000> speed <45.000000>;
+	turn llowarm to z-axis <-20.000000> speed <45.000000>;
+	wait-for-turn torso around y-axis;
+	wait-for-turn ruparm around x-axis;
+	wait-for-turn luparm around x-axis;
+	building = FALSE;
+}
+
+AimFromPrimary(Func_Var_1)
+{
+	Func_Var_1 = 0;
+}
+
+QueryPrimary(Func_Var_1)
+{
+	Func_Var_1 = 8;
+}
+
+AimPrimary(Func_Var_1, Func_Var_2)
+{
+	if( Static_Var_4 == 1 )
+	{
+		return (0);
+	}
+	signal 2;
+	set-signal-mask 2;
+	building = TRUE;
+	while( !Static_Var_3 )
+	{
+		sleep 100;
+	}
+	turn torso to y-axis Func_Var_1 speed <300.098901>;
+	turn llowarm to x-axis <-90.000000> speed <75.000000>;
+	turn llowarm to z-axis <0.000000> speed <45.000000>;
+	wait-for-turn torso around y-axis;
+	wait-for-turn llowarm around x-axis;
+	return (1);
+}
+
+FirePrimary()
+{
+	sleep 100;
+}
+
+AimFromSecondary(Func_Var_1)
+{
+	Func_Var_1 = 18;
+}
+
+QuerySecondary(Func_Var_1)
+{
+	Func_Var_1 = 19;
+}
+
+AimSecondary()
+{
+	return (1);
+}
+
+FireSecondary()
+{
+}
+
+AimFromTertiary(Func_Var_1)
+{
+	Func_Var_1 = 0;
+}
+
+QueryTertiary(Func_Var_1)
+{
+	Func_Var_1 = 7;
+}
+
+AimTertiary(Func_Var_1, Func_Var_2)
+{
+	signal 2;
+	set-signal-mask 2;
+	Static_Var_4 = 1;
+	building = TRUE;
+	while( !Static_Var_3 )
+	{
+		sleep 100;
+	}
+	turn torso to y-axis Func_Var_1 speed <300.000000>;
+	turn ruparm to x-axis <-45.000000> speed <65.000000>;
+	turn rlowarm to x-axis <-45.000000> speed <65.000000>;
+	turn rlowarm to z-axis <0.000000> speed <45.000000>;
+	wait-for-turn torso around y-axis;
+	wait-for-turn ruparm around x-axis;
+	wait-for-turn rlowarm around x-axis;
+	return (1);
+}
+
+FireTertiary()
+{
+	emit-sfx 1024 + 0 from rflare;
+	move rlowarm to y-axis [2.500000] speed [1250.000000];
+	sleep 100;
+	move rlowarm to y-axis [0.000000] speed [5.000000];
+}
+
+StartBuilding(Func_Var_1, Func_Var_2)
+{
+	building = TRUE;
+	while( !Static_Var_3 )
+	{
+		sleep 100;
+	}
+	turn head to y-axis Func_Var_1 speed <300.098901>;
+	wait-for-turn head around y-axis;
+	set INBUILDSTANCE to 1;
+}
+
+TargetCleared(weaponnum)
+{
+	signal 2;
+	set-signal-mask 2;
+	call-script RestorePosition();
+}
+
+StopBuilding()
+{
+	set INBUILDSTANCE to 0;
+	signal 2;
+	set-signal-mask 2;
+	call-script RestorePosition();
+}

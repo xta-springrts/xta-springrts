@@ -23,7 +23,6 @@ local commanders = {
 	UnitDefNames["arm_u3commander"].id,
 	UnitDefNames["arm_u4commander"].id,
 	UnitDefNames["arm_scommander"].id,
-	UnitDefNames["armcom"].id,
 	UnitDefNames["arm_base"].id,
 	UnitDefNames["arm_nincommander"].id,
 	UnitDefNames["core_commander"].id,
@@ -34,7 +33,6 @@ local commanders = {
 	UnitDefNames["core_u3commander"].id,
 	UnitDefNames["core_u4commander"].id,
 	UnitDefNames["core_scommander"].id,
-	UnitDefNames["corcom"].id,
 	UnitDefNames["core_base"].id,
 	UnitDefNames["core_nincommander"].id,
 }

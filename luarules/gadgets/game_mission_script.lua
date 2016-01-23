@@ -82,7 +82,6 @@ local commanderList = {	-- XTA specific
 	arm_u3commander = 4000,
 	arm_u4commander = 9000,
 	arm_scommander = 50,
-	armcom = 200,
 	arm_base = 0,
 	arm_nincommander = 50,
 	core_commander = 50,
@@ -93,7 +92,6 @@ local commanderList = {	-- XTA specific
 	core_u3commander = 4000,
 	core_u4commander = 9000,
 	core_scommander = 50,
-	corcom = 200,
 	core_base = 0,
 	core_nincommander = 50,
 }

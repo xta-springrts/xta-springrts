@@ -132,7 +132,7 @@ Killed(Func_Var_1, Func_Var_2)
 {
 	Static_Var_2 = 0;
 	emit-sfx 1024 + 1 from forkshot;
-	play-sound( "BUTMAIN4", 6 );
+	play-sound( "gui/BUTMAIN4", 6 );
 	sleep 500;
 	move base to y-axis [-500.000000] speed [500.000000];
 	sleep 400;

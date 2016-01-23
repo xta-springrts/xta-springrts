@@ -108,7 +108,7 @@ else
 	-----------------
 	
 	local PlaySoundFile				= Spring.PlaySoundFile
-	local failed					= "sounds/gui/cantdo4.wav"
+	local failed					= "sounds/unit/cantdo4.wav"
 	local myTeamID
 	local GetUnitDefID				= Spring.GetUnitDefID
 	

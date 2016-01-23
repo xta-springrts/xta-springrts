@@ -69,7 +69,9 @@ local function ProcessWeaponDef(wdName,wd)
 	if wd.soundstart and #wd.soundstart > 0 then
 		wd.soundstart = "battle/" .. wd.soundstart
 	end
-		
+	--Echo("WD:",wdName,wd.soundstart,wd.soundhitdry)
+
+	
   -- weapon reloadTime and stockpileTime were seperated in 77b1
   if (tobool(wd.stockpile) and (wd.stockpiletime==nil)) then
     wd.stockpiletime = wd.reloadtime

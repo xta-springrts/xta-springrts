@@ -45,6 +45,11 @@
 	}
 --]]
 
+local Exceptions = {
+		["fleabossattack.wav"] = true,
+	}
+	
+
 local Sounds  = {
 	SoundItems  = {
 		IncomingChat  = {
@@ -204,6 +209,9 @@ for i =1,#files do
 	local fileName  = files[i]
 	--Echo("Unit sound:",fileName)	
 	
+	local startChar,endChar = fileName:find("unit/")
+	local shortName = fileName:sub(endChar+1)
+	
 	if fileName:find('sing.wav') or fileName:find('sing2.wav') or fileName:find('honk.wav') or fileName:find('honk2.wav') then 	--sing/honk sounds
 		t[fileName]  = {
 		file      		= fileName;
@@ -216,17 +224,53 @@ for i =1,#files do
 		in3d 			= 0;
 		}
 	else
-	t[fileName]  = {
-		file      		= fileName;
-		pitchmod  		= 0.3;
-		gainmod   		= 0.2;
-		gain  			= 1;
-		maxconcurrent  	= 16;
-		rolloff  		= 0.4;
-		priority  		= -3;
-	}
+		if not Exceptions[shortName] then
+			t[fileName]  = {
+			file      		= fileName;
+			pitchmod  		= 0.3;
+			gainmod   		= 0.2;
+			gain  			= 1;
+			maxconcurrent  	= 16;
+			rolloff  		= 0.4;
+			priority  		= -3;
+			}
+		else
+			Echo("Exception:",shortName)
+			t[fileName]  = {
+			file      		= fileName;
+			pitchmod  		= 0;
+			gainmod   		= 0;
+			gain  			= 1;
+			maxconcurrent  	= 1;
+			rolloff  		= 0;
+			priority  		= 1;
+			in3d 			= 0;
+			}
+		end
+		
 	end
 end
+--files  = VFS.DirList("sounds/music")
+-- t  = Sounds.SoundItems
+
+-- for i =1,#files do
+	-- local fileName  = files[i]
+	-- Echo("Music sound:",fileName)	
+	
+	-- t[fileName]  = {
+		-- file      		= fileName;
+		-- pitchmod  		= 0.0;
+		-- gainmod   		= 0.0;
+		-- gain  			= 1;
+		-- maxconcurrent  	= 2;
+		-- rolloff  		= 0;
+		-- priority  		= 1;
+	-- }
+-- end
+
+
+
+
 
 -- add sounds located in luaui too as gui sounds
 local uiFiles  = VFS.DirList("luaui/sounds")
@@ -289,11 +333,13 @@ for i =1,#uiFiles do
 end
 
 
-local t  = Sounds.SoundItems
-for i,v in pairs (t) do
-	--Echo("SoundItem: ",i)
-	for u,x in pairs(v) do
-		--Echo("SoundItem:", i, "Item:",u,x)
+
+for j, t in pairs(Sounds) do
+	for i,v in pairs (t) do
+		--Echo("SoundItem:",i,v)
+		for u,x in pairs(v) do
+			--Echo("SoundItem:", i, "Item:",u,x)
+		end
 	end
 end
 

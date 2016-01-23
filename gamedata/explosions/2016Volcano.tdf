@@ -19,9 +19,9 @@
 }
 
 [ERUPTVOLCANO]
-	{
-		class=CSimpleParticleSystem;
-		[properties]
+{
+	class=CSimpleParticleSystem;
+	[properties]
 		{
 		sizeGrowth=1;
 		sizeMod=1.0;
@@ -42,17 +42,13 @@
 		particleSpeed=30; 
 		particleSize=50;
 		
-		
-		
 		emitVector=0.0, 1, 0.0; 
 		emitRot=80;
 		emitRotSpread=5; 
 		directional=0; 
-
 		}
 	air=1;
 	water=1;
 	ground=1;
 	count=1;
-	}
 }

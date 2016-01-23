@@ -52,33 +52,33 @@ LandSequence()
 	start-script Float();
 	play-sound( "unit/TURMED3", 60 );
 	sleep 1500;
-	play-sound( "battle/bertha1", 60 );
+	play-sound( "battle/BERTHA1", 60 );
 	emit-sfx 1024 + 2 from gate;
 	emit-sfx 1024 + 4 from gate;
 	sleep 500;
-	play-sound( "battle/bertha2", 60 );
+	play-sound( "battle/BERTHA2", 60 );
 	sleep 500;
-	play-sound( "battle/bertha3", 60 );
-	sleep 500;
-	emit-sfx 1024 + 4 from gate;
-	play-sound( "battle/bertha4", 60 );
-	sleep 500;
-	play-sound( "battle/bertha5", 60 );
-	sleep 500;
-	play-sound( "battle/bertha6", 60 );
+	play-sound( "battle/BERTHA3", 60 );
 	sleep 500;
 	emit-sfx 1024 + 4 from gate;
-	play-sound( "battle/bertha5", 60 );
+	play-sound( "battle/BERTHA4", 60 );
+	sleep 500;
+	play-sound( "battle/BERTHA5", 60 );
+	sleep 500;
+	play-sound( "battle/BERTHA6", 60 );
 	sleep 500;
 	emit-sfx 1024 + 4 from gate;
-	play-sound( "battle/bertha4", 60 );
-	sleep 500;
-	play-sound( "battle/bertha3", 60 );
+	play-sound( "battle/BERTHA5", 60 );
 	sleep 500;
 	emit-sfx 1024 + 4 from gate;
-	play-sound( "battle/bertha2", 60 );
+	play-sound( "battle/BERTHA4", 60 );
 	sleep 500;
-	play-sound( "battle/bertha1", 60 );
+	play-sound( "battle/BERTHA3", 60 );
+	sleep 500;
+	emit-sfx 1024 + 4 from gate;
+	play-sound( "battle/BERTHA2", 60 );
+	sleep 500;
+	play-sound( "battle/BERTHA1", 60 );
 	emit-sfx 1024 + 4 from gate;
 	play-sound( "unit/CAPTURE2", 60 );
 	sleep 500;
@@ -118,21 +118,6 @@ Create()
 SweetSpot(piecenum)
 {
 	piecenum = base;
-}
-
-AimFromPrimary(piecenum)
-{
-	piecenum = gate;
-}
-
-QueryPrimary(piecenum)
-{
-	piecenum = gate;
-}
-
-AimPrimary(heading, pitch)
-{
-	return (0);
 }
 
 Killed(Func_Var_1, Func_Var_2)

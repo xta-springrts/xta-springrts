@@ -50,6 +50,7 @@ if gadgetHandler:IsSyncedCode() then
 	
 	-- only applies for units that call lua_UnitStoppedMoving() in cob
 	function UnitStoppedMoving(unitID,unitDefID,teamID)
+		--Echo("Unit stopped moving:",unitID)
 				
 		if not airlos[unitDefID] then
 			local this_airlos = Spring.GetUnitSensorRadius(unitID,"airLos")
@@ -74,6 +75,7 @@ if gadgetHandler:IsSyncedCode() then
 			Spring.SetUnitSensorRadius(unitID,"los",min(los[unitDefID] or 300,300))
 		else
 			Spring.SetUnitSensorRadius(unitID,"los",min(los[unitDefID] or 100,100))
+			SendToUnsynced("VTOLStoppedMoving", unitID,unitDefID)
 		end
 	end
 	
@@ -98,5 +100,34 @@ if gadgetHandler:IsSyncedCode() then
 		local success = Spring.MoveCtrl.SetMoveDef(unitID,"KBOTUW3")
 	end	
 else
-	return false
+
+-----------------
+	-- UNSYNCED PART --
+	-----------------
+	
+	local PlaySoundFile				= Spring.PlaySoundFile
+	local Echo 						= Spring.Echo
+	local GetConfigInt				= Spring.GetConfigInt
+	local GetUnitTeam				= Spring.GetUnitTeam
+	function gadget:Initialize()
+		gadgetHandler:AddSyncAction("VTOLStoppedMoving", VTOLStoppedMoving)
+		myTeamID = Spring.GetMyTeamID()
+	end
+	
+	function VTOLStoppedMoving(_,unitID, unitDefID )
+		
+		local teamID = GetUnitTeam(unitID)
+		if teamID and teamID == myTeamID then
+			local ud = UnitDefs[unitDefID]
+			if ud and not ud.sounds.arrived[1] then
+				Echo("Error:",ud.name)
+			end
+			local sound = ud and ud.sounds.arrived and ud.sounds.arrived[1] and ud.sounds.arrived[1].name
+			if sound then
+				--Echo("USM:",unitID,sound)
+				PlaySoundFile("sounds/"..sound ..".wav", 0.25, nil,nil,nil,nil,nil,nil, "unitreply")
+			end
+		end
+	end
+	
 end

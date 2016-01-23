@@ -86,8 +86,6 @@ function gadget:GameStart()
 				comtype = "arm_u4commander"
 			elseif modoptioncomtype == "noupgrade" then
 				comtype = "arm_u0commander"
-			elseif modoptioncomtype == "comshooter" then
-				comtype = "armcom"
 			elseif modoptioncomtype == "decoystart" then
 				comtype = "arm_decoy_commander"
 			elseif modoptioncomtype == "capturethebase" then
@@ -102,8 +100,6 @@ function gadget:GameStart()
 				comtype = "core_u4commander"
 			elseif modoptioncomtype == "noupgrade" then
 				comtype = "core_u0commander"
-			elseif modoptioncomtype == "comshooter" then
-				comtype = "corcom"
 			elseif modoptioncomtype == "decoystart" then
 				comtype = "core_decoy_commander"
 			elseif modoptioncomtype == "capturethebase" then

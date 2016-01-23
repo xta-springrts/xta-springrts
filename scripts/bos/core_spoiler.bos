@@ -18,39 +18,39 @@ SelfD()
 	{
 		sleep 1;
 		Static_Var_4 = 1;
-		play-sound( "count1", 15 );
+		play-sound( "unit/count1", 15 );
 		emit-sfx UNIT_SFX1 from base;
 		sleep 999;
 		if( Static_Var_4 == 1 )
 		{
 			Static_Var_4 = 2;
-			play-sound( "count2", 15 );
+			play-sound( "unit/count2", 15 );
 			emit-sfx UNIT_SFX2 from base;
 			sleep 1000;
 			if( Static_Var_4 == 2 )
 			{
 				Static_Var_4 = 3;
-				play-sound( "count3", 15 );
+				play-sound( "unit/count3", 15 );
 				emit-sfx UNIT_SFX3 from base;
 				sleep 1000;
 				if( Static_Var_4 == 3 )
 				{
 					Static_Var_4 = 4;
-					play-sound( "count4", 15 );
+					play-sound( "unit/count4", 15 );
 					emit-sfx UNIT_SFX4 from base;
 					sleep 1000;
 					if( Static_Var_4 == 4 )
 					{
 						Static_Var_4 = 5;
-						play-sound( "count5", 15 );
+						play-sound( "unit/count5", 15 );
 						emit-sfx UNIT_SFX5 from base;
 						sleep 1000;
 						if( Static_Var_4 == 5 )
 						{
 							Static_Var_4 = 6;
 							emit-sfx UNIT_SFX6 from base;
-							play-sound( "count6", 35 );
-							play-sound( "count6", 35 );
+							play-sound( "unit/count6", 35 );
+							play-sound( "unit/count6", 35 );
 							sleep 100;
 							emit-sfx DETO_W1 from base;
 						}

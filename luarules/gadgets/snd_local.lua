@@ -46,7 +46,7 @@ if gadgetHandler:IsSyncedCode() then
 		local modOptions = Spring.GetModOptions()
 		
 		if (not modOptions) or (modOptions and not modOptions.sounds) or modOptions.sounds == 'global' then
-			Echo("Local sounds disabled: global sounds")
+			Spring.Log("Gadget",LOG.INFO,"Local sounds disabled: global sounds")
 			gadgetHandler:RemoveGadget()
 			return
 		end
@@ -220,14 +220,11 @@ else
 		if (LOS or isDampenedMode) and weaponDefID then		
 			if gh >= 0 then -- explosion on land
 				if snddry[weaponDefID] then PlaySoundFile(taconcat({"sounds/battle/",snddry[weaponDefID],".wav"}),volume,x,y,z,0,0,0,Channel) end
-				--Echo("Land")
 			else -- explosion on water
 				if y > 0 then -- hits something above water level, use dry sounds
 					if snddry[weaponDefID] then PlaySoundFile(taconcat({"sounds/battle/",snddry[weaponDefID],".wav"}),volume,x,y,z,0,0,0,Channel) end
-					--Echo("On water but above water level")
 				else -- hits under or on water surface
 					if isLava then
-						--Echo("Lava hit",sndlava[weaponDefID])
 						if snddry[weaponDefID] then PlaySoundFile(taconcat({"sounds/battle/",snddry[weaponDefID],".wav"}),volume/3,x,y,z,0,0,0,Channel) end
 						if sndlava[weaponDefID] then PlaySoundFile(taconcat({"sounds/battle/",sndlava[weaponDefID],".wav"}),volume,x,y,z,0,0,0,Channel) end
 					else
@@ -264,7 +261,7 @@ else
 		local modOptions = Spring.GetModOptions()
 				
 		if (not modOptions) or (modOptions and not modOptions.sounds) or modOptions.sounds == 'global' then
-			Echo("Local sounds disabled (unsynced): global sounds")
+			Spring.Log("Gadget",LOG.INFO,"Local sounds disabled (unsynced): global sounds")
 			gadgetHandler:RemoveGadget()
 			return
 		elseif modOptions and modOptions.sounds == 'dampened15' then
@@ -331,26 +328,20 @@ else
 							end
 						end
 					end
-					--Echo("Lava sound for: ", id, weaponDef.name, wType, damage, sndlava[id])
 				else
 					if weaponDef.customParams.soundhitwet and len(weaponDef.customParams.soundhitwet) > 0 then
 						sndwet[id] = weaponDef.customParams.soundhitwet
-						--Echo("Wet sound for:", id, weaponDef.name, ":", sndwet[id])
 					else
 						--Echo("Local sounds: no soundhitwet sound: ", weaponDef.name)
 					end
 				end
 				if weaponDef.customParams.soundhitdry and len(weaponDef.customParams.soundhitdry) > 0 then
 					snddry[id] = weaponDef.customParams.soundhitdry
-					--Echo("Dry sound for:", id, weaponDef.name, ":", snddry[id])
 				else
-					--Echo("Local sounds: no soundshitdry sound: ", weaponDef.name)
 				end
 				if weaponDef.customParams.soundstart and len(weaponDef.customParams.soundstart) > 0 then
 					sndstart[id] = weaponDef.customParams.soundstart
-					--Echo("Start sound for:", id, weaponDef.name, ":", sndstart[id])
 				else
-					--Echo("Local sounds: no soundstart sound: ", weaponDef.name)
 				end
 			end
 			--end

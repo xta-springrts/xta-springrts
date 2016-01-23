@@ -30,7 +30,6 @@ local unitArray = {
 	"arm_u3commander",
 	"arm_u4commander",
 	"arm_scommander",
-	"armcom",
 	"arm_base",
 	"arm_nincommander",
 	"core_commander",
@@ -41,7 +40,6 @@ local unitArray = {
 	"core_u3commander",
 	"core_u4commander",
 	"core_scommander",
-	"corcom",
 	"core_base",
 	"core_nincommander",
 

@@ -95,7 +95,7 @@ if gadgetHandler:IsSyncedCode() then
 		if (waterColour and waterColour[1] > waterColour[3]) or Game.waterDamage > 0 then
 			isLava = true
 		end
-		Spring.Log("", LOG.INFO,"fx_watersplash: lava detected:",isLava)
+		Spring.Log("Gadget", LOG.INFO,"fx_watersplash: lava detected:",isLava)
 		for id,Def in pairs(WeaponDefs) do
 			if aerialTorpedoes[id] or (Def.damageAreaOfEffect ~= nil and Def.damageAreaOfEffect > 16 and not nonexplosiveWeapons[Def.type]) then
 				SetWatchWeapon(Def.id, true)

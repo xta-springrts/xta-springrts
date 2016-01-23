@@ -1,12 +1,12 @@
 local body = piece "Sphere"
 
-local volume 			= 5.0
+local volume 			= 3.0
 local PlaySoundFile 	= Spring.PlaySoundFile
 local GetUnitPosition 	= Spring.GetUnitPosition
 local GetGameFrame 		= Spring.GetGameFrame
 local SpawnCEG			= Spring.SpawnCEG
 local hatchCEG			= "fireballbloom"
-local snd 				= 'sounds/egg_hatch.wav'
+local snd 				= 'sounds/unit/egg_hatch.wav'
 
 function script.Create()
 	local buildprogress = select(5, Spring.GetUnitHealth(unitID))
