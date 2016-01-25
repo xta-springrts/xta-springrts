@@ -56,9 +56,10 @@
 	builder=1;
 	canassist=0;
 	canreclaim=0;
-	canrepair=0;
+	canrepair=1;
 	canrestore=0;
 	workertime=600; // was 200//
+	repairSpeed = 1800; //increase from workertime to make repair pads more useful
 
 	//************************************************************
 	//  Abilities

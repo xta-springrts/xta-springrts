@@ -58,7 +58,7 @@
 	builder=1;
 	builddistance=6;
 	workertime=600; // was 200 inspired by Ivork//ing
-	repairSpeed = 900; //increase from workertime to make repair pads more useful
+	repairSpeed = 1800; //increase from workertime to make repair pads more useful
 
 	//************************************************************
 	//  Abilities
@@ -71,6 +71,7 @@
 	canPatrol=0;
 	canGuard=0;
 	canRepeat=0;
+	canRepair=1;
 	
 	//************************************************************
 	//  Movement

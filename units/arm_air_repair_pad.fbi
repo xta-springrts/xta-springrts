@@ -58,7 +58,7 @@
 	builder=1;
 	builddistance=6;
 	workertime=600; //was 200 inspired by IvoryKing//
-	repairSpeed = 900; //increase from workertime to make repair pads more useful
+	repairSpeed = 1800; //increase from workertime to make repair pads more useful
 
 	//************************************************************
 	//  Abilities

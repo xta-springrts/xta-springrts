@@ -18,7 +18,7 @@
 	EnergyUse=2;
 	BuildTime=8732;
 	workertime=600;
-	RepairSpeed=200;
+	RepairSpeed=900;
 	ReclaimSpeed=200;
 	TerraformSpeed=400;//speed up terraforming
 	BMcode=1;
@@ -47,7 +47,7 @@
 	builder=1;
 	canassist=0;
 	canreclaim=0;
-	canrepair=0;
+	canrepair=1;
 	canrestore=0;
 	isairbase=1;
 	Builddistance=150;
