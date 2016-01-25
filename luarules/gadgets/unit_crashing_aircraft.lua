@@ -60,8 +60,8 @@ if (gadgetHandler:IsSyncedCode()) then
 		return damage, 1.0
 	end
 
-	function gadget:UnitDestroyed(unitID, unitDefID, teamID, attackerID, attackerDefID, attackerTeamID, preEvent)
-		if (preEvent) then return end
+	function gadget:UnitDestroyed(unitID, unitDefID, teamID, attackerID, attackerDefID, attackerTeamID)
+
 		crashingUnits[unitID] = nil
 	end
 end

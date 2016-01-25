@@ -886,8 +886,7 @@ function gadget:UnitFinished(unitID, unitDefID, teamID)
   end
 end
 
-function gadget:UnitDestroyed(unitID, unitDefID, teamID, _, _, _, preEvent)
-  if (preEvent) then return end
+function gadget:UnitDestroyed(unitID, unitDefID, teamID, _, _, _)
   
   if (morphUnits[unitID]) then
     StopMorph(unitID,morphUnits[unitID])

@@ -227,8 +227,7 @@ function gadget:UnitFinished(unitID, unitDefID, unitTeam)
 end
 
 
-function gadget:UnitDestroyed(unitID, unitDefID, unitTeam, _, _, _, preEvent)
-  if (preEvent) then return end
+function gadget:UnitDestroyed(unitID, unitDefID, unitTeam, _, _, _)
   local td = teamData[unitTeam]
   local healthBonus = healthDefIDs[unitDefID]
   if (healthBonus) then

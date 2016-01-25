@@ -352,8 +352,8 @@ if (gadgetHandler:IsSyncedCode()) then
 		return false
 	end
 
-	function gadget:UnitDestroyed(unitID, unitDefID, teamID, _, _, _, preEvent)
-		if preEvent then return end
+	function gadget:UnitDestroyed(unitID, unitDefID, teamID, _, _, _)
+
 		
 		isAlive[unitID] = nil
 		

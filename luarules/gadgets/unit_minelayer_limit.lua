@@ -249,8 +249,8 @@ if (gadgetHandler:IsSyncedCode()) then
 		end
 	end
 
-	function gadget:UnitDestroyed(unitID, unitDefID, teamID, attackerID, attackerDefID, attackerTeamID, preEvent)
-		if (preEvent) then return end
+	function gadget:UnitDestroyed(unitID, unitDefID, teamID, attackerID, attackerDefID, attackerTeamID)
+
 		
 		if minelayerDefTable[unitDefID] then
 			minelayerStock[unitID] = nil

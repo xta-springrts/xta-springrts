@@ -231,8 +231,8 @@ if (gadgetHandler:IsSyncedCode()) then
 
 
 	--check if a pop-up type unit was destroyed
-	function gadget:UnitDestroyed(unitID, unitDefID, unitTeam, _, _, _, preEvent)
-		if (preEvent) then return end
+	function gadget:UnitDestroyed(unitID, unitDefID, unitTeam, _, _, _)
+
 		
 		if popupUnits[unitID] then
 			popupUnits[unitID] = nil

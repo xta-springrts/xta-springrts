@@ -454,8 +454,8 @@ function gadget:UnitDamaged(uID, uDefID, uTeam, damage, paralyzer)
     end
 end
 
-function gadget:UnitDestroyed(uID, uDefID, uTeam, _, _, _, preEvent)
-	if (preEvent) then return end
+function gadget:UnitDestroyed(uID, uDefID, uTeam, _, _, _)
+
 	
     local cDefs = convertCapacities[uDefID]
     if cDefs and uID and ValidUnitID(uID) and uTeam and teamMMList[uTeam][cDefs.e][uID] then

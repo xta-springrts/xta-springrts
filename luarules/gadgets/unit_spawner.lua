@@ -794,8 +794,7 @@ if (gadgetHandler:IsSyncedCode()) then
 	  
 	end
 
-	function gadget:UnitDestroyed(unitID, unitDefID, unitTeam, _, _, _, preEvent)
-	  if preEvent then return end
+	function gadget:UnitDestroyed(unitID, unitDefID, unitTeam, _, _, _)
 	  
 	  if gameOver then return end
 	  chickenBirths[unitID] = nil

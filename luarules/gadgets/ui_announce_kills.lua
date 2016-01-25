@@ -59,8 +59,8 @@ if (gadgetHandler:IsSyncedCode()) then
 		end
 	end
 
-	function gadget:UnitDestroyed(u,ud,ut,a,ad,at, preEvent)
-		if (preEvent) then return end
+	function gadget:UnitDestroyed(u,ud,ut,a,ad,at)
+
 	
 		if ut and at and (not Spring.AreTeamsAllied(ut,at)) and isUnitComplete(u) and u and a and u~=a and (ut ~= Spring.GetGaiaTeamID() )then
 			killCounters[at]=killCounters[at]+1

@@ -312,8 +312,7 @@ function gadget:UnitCreated(unitID, unitDefID, teamID, builderID)
 	end
 end
 
-function gadget:UnitDestroyed(unitID, unitDefID, unitTeam, _, _, _, preEvent)
-	if (preEvent) then return end
+function gadget:UnitDestroyed(unitID, unitDefID, unitTeam, _, _, _)
 	
 	if RepairPadHeight[unitDefID] then
 		PadQueue[unitID] = nil

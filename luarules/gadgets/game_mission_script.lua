@@ -839,8 +839,8 @@ local function DoActions(actions, teamID, trigNo)
 	end
 end
 
-function gadget:UnitDestroyed(unitID, unitDefID, teamID, attackerID, attackerDefID, attackerTeamID, preEvent)
-	if (preEvent) then return end
+function gadget:UnitDestroyed(unitID, unitDefID, teamID, attackerID, attackerDefID, attackerTeamID)
+
 	
 	local _, _, _, _, build = spGetUnitHealth(unitID)
 	if build>=1 then	-- don't count destruction of unfinished units

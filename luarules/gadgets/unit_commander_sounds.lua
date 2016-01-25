@@ -225,8 +225,8 @@ else
 		return true
 	end
 
-	local function usUnitDestroyed(_, unitID, unitDefID, unitTeamID, attackerID, attackerDefID, attackerTeamID, preEvent)
-		if (preEvent) then return end
+	local function usUnitDestroyed(_, unitID, unitDefID, unitTeamID, attackerID, attackerDefID, attackerTeamID)
+
 		
 		if (CommanderUnitDefs[attackerDefID] == nil) then
 			return true	-- unit was not destroyed by a commander

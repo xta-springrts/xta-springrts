@@ -100,8 +100,8 @@ function gadget:GameStart()
 	end
 end
 
-function gadget:UnitDestroyed(unitID, unitDefID, teamID, attackerID, attackerDefID, attackerTeamID, preEvent)
-	if (preEvent) then return end
+function gadget:UnitDestroyed(unitID, unitDefID, teamID, attackerID, attackerDefID, attackerTeamID)
+
 	
 	if critterUnits[unitID] then critterUnits[unitID] = nil end
 end

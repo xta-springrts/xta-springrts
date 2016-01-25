@@ -216,8 +216,7 @@ function gadget:UnitCreated(unitID, unitDefID, unitTeam)
 end
 
 
-function gadget:UnitDestroyed(unitID, unitDefID, unitTeam, _, _, _, preEvent)
-  if (preEvent) then return end
+function gadget:UnitDestroyed(unitID, unitDefID, unitTeam, _, _, _)
   stealthUnits[unitID] = nil
   wantingUnits[unitID] = nil
   SendToUnsynced(SYNCSTR, unitID, false)

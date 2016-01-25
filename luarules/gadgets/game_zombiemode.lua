@@ -498,8 +498,8 @@ function gadget:UnitDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weap
 	end
 end
 
-function gadget:UnitDestroyed(unitID, unitDefID, unitTeam, attackerID, attackerDefID, attackerTeam, preEvent)
-	if (preEvent) then return end
+function gadget:UnitDestroyed(unitID, unitDefID, unitTeam, attackerID, attackerDefID, attackerTeam)
+
 	
 	if CommanderDefs[unitDefID] and unitTeam == gaiaTeamID then
 		zombieCommanders[unitID] = nil
