@@ -46,14 +46,7 @@
 --]]
 
 local Exceptions = {
-		["fleabossattack.wav"] 	= true,
-		["count1.wav"]			= true,
-		["count2.wav"]			= true,
-		["count3.wav"]			= true,
-		["count4.wav"]			= true,
-		["count5.wav"]			= true,
-		["count6.wav"]			= true,
-		["tllcount.wav"]		= true,
+		["fleabossattack.wav"] = true,
 	}
 	
 

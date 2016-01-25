@@ -535,12 +535,6 @@ function widget:Initialize()
 	if not configured then
 		--Echo("Init: turning widgets off...")
 		ToggleOwnWidgets(false)
-		for _,button in pairs(Button) do
-			if button.type == "scale" and button.value then
-				button.value = math.max(button.min,button.value)
-				button.value = math.min(button.max,button.value)
-			end
-		end
 	end
 	
 end
