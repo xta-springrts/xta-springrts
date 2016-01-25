@@ -38,10 +38,12 @@ Enhancements:
 * Added a bunch of other options to the xta menu
 * New included widgets: gui-shader
 * New effects for Arm Guardian, Core Punisher and metal maker explosions
+* Fixed incosistent build- and start-moving sounds
 
 Fixes:
 * Lots of bugfixes
 * Compatibility for spring 101 (air repair pads still WIP)
+* Moved sounds in "sounds" directory into subfolders for easier maintenance
 
 
 XTA 9.751 (Git 977)

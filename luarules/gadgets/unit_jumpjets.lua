@@ -320,7 +320,9 @@ function gadget:UnitCreated(unitID, unitDefID, unitTeam)
 end
 
 
-function gadget:UnitDestroyed(unitID, unitDefID)
+function gadget:UnitDestroyed(unitID, unitDefID,_, _, _, _, preEvent)
+  if (preEvent) then return end
+  
   lastJump[unitID] = nil
 end
 

@@ -46,7 +46,9 @@ if (gadgetHandler:IsSyncedCode()) then
 		end
 	end
 
-	function gadget:UnitDestroyed(unitID, unitDefID, teamID, attackerID, attackerDefID, attackerTeamID)
+	function gadget:UnitDestroyed(unitID, unitDefID, teamID, attackerID, attackerDefID, attackerTeamID, preEvent)
+		if (preEvent) then return end
+	
 		if blinkingUnits[unitID] then
 			blinkingUnits[unitID] = nil
 		end

@@ -171,7 +171,9 @@ function gadget:UnitCreated(unitID, unitDefID, teamID, builderID)
 	end
 end
 
-function gadget:UnitDestroyed(unitID, _, teamID)
+function gadget:UnitDestroyed(unitID, _, teamID, _, _, _, preEvent)
+	if (preEvent) then return end
+	
 	buildspeedlist[unitID] = nil
 end
 

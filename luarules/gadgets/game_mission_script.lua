@@ -839,7 +839,9 @@ local function DoActions(actions, teamID, trigNo)
 	end
 end
 
-function gadget:UnitDestroyed(unitID, unitDefID, teamID, attackerID, attackerDefID, attackerTeamID)
+function gadget:UnitDestroyed(unitID, unitDefID, teamID, attackerID, attackerDefID, attackerTeamID, preEvent)
+	if (preEvent) then return end
+	
 	local _, _, _, _, build = spGetUnitHealth(unitID)
 	if build>=1 then	-- don't count destruction of unfinished units
 		-- don't track gaia team's kills, but if a gaia unit is killed, it counts under per unit type kill

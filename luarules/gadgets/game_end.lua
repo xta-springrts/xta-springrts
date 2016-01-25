@@ -518,7 +518,10 @@ if (gadgetHandler:IsSyncedCode()) then
 		gadget.UnitGiven = gadget.UnitCreated
 		gadget.UnitCaptured = gadget.UnitCreated
 
-		function gadget:UnitDestroyed(unitID, unitDefID, unitTeamID)
+		function gadget:UnitDestroyed(unitID, unitDefID, unitTeamID, a1, a2, a3, preEvent,a8)
+			Echo("UD:",unitID, unitDefID, unitTeamID, a1, a2, a3, preEvent,a8)
+			if preEvent then return end
+		
 			if unitTeamID == gaiaTeamID and ignoreGaia ~= 0 then
 				-- skip gaia
 				return

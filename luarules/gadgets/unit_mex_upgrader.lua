@@ -298,7 +298,9 @@ function getClosestMex(unitID, upgradePairs, teamID, mexesInRange)
   return bestMexID, bestMexDefID 
 end 
 
-function gadget:UnitDestroyed(unitID, unitDefID, unitTeam, attackerID, attackerDefID, attackerTeam) 
+function gadget:UnitDestroyed(unitID, unitDefID, unitTeam, attackerID, attackerDefID, attackerTeam, preEvent)
+  if (preEvent) then return end
+  
   unregisterUnit(unitID, unitDefID, unitTeam, true) 
 end 
 

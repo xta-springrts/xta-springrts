@@ -22,7 +22,9 @@ if (gadgetHandler:IsSyncedCode()) then
 			Spring.PlaySoundStream("sounds/music/finalbattle.ogg")
 		end
 	end
-	function gadget:UnitDestroyed(unitID, unitDefID, unitTeam)
+	function gadget:UnitDestroyed(unitID, unitDefID, unitTeam, _, _, _, preEvent)
+	if (preEvent) then return end
+	
 		if UnitDefs[unitDefID].name == "fleagoth" then
 			Spring.StopSoundStream()
 			Spring.PlaySoundStream("sounds/music/fleabossdead.ogg")

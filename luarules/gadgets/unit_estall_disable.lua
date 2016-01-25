@@ -115,7 +115,8 @@ function gadget:UnitGiven(unitID, unitDefID, newTeamID)
 end
 
 
-function gadget:UnitDestroyed(unitID)
+function gadget:UnitDestroyed(unitID,_,_, _, _, _, preEvent)
+  if (preEvent) then return end
   RemoveUnit(unitID)
 end
 

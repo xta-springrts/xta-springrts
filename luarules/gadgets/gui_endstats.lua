@@ -285,7 +285,8 @@ if gadgetHandler:IsSyncedCode() then
 		
 		-- Callins
 		
-		function gadget:UnitDestroyed(unitID, unitDefID, teamID, attackerID, attackerDefID, attackerTeamID)
+		function gadget:UnitDestroyed(unitID, unitDefID, teamID, attackerID, attackerDefID, attackerTeamID, preEvent)
+		if (preEvent) then return end
 				
 			if teamID and isUnitComplete(unitID) then
 				local wasMorph = (Spring.GetUnitRulesParam(unitID,'removedByMorph') or 0) == 1

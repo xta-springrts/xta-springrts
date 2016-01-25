@@ -72,7 +72,9 @@ function gadget:UnitCreated(unitID, unitDefID, unitTeam, builderID)
   end
 end
 
-function gadget:UnitDestroyed(unitID, unitDefID, unitTeam)
+function gadget:UnitDestroyed(unitID, unitDefID, unitTeam, _, _, _, preEvent)
+  if (preEvent) then return end
+	
   plantList[unitID] = nil
   buildingUnits[unitID] = nil
 end
