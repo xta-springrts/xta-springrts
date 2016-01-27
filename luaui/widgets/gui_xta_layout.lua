@@ -235,8 +235,14 @@ function widget:Initialize()
 	end
 	
 	-- support changing in xta menu
-	local ix = tonumber(Spring.GetConfigInt("XTA_MenuIconsX")) 
-	local iy = tonumber(Spring.GetConfigInt("XTA_MenuIconsY")) 
+	local ix = tonumber(Spring.GetConfigInt("XTA_MenuIconsX",4))
+	local iy = tonumber(Spring.GetConfigInt("XTA_MenuIconsY",9))
+	
+	ix = math.min(ix,8)
+	ix = math.max(ix,2)
+	iy = math.min(iy,16)
+	iy = math.max(iy,3)
+		
 	if ix and iy then
 		btns = {x = ix, y = iy}
 	end
