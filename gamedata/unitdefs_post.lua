@@ -45,6 +45,12 @@ for name, ud in pairs(UnitDefs) do
 		else
 			ud.collide = 0
 		end
+		
+		--make air units heal slower => air repair pads are more useful
+		ud.idleAutoHeal = 2
+		ud.idleTime = 1800
+		
+		
 	end
 	-- convert from the pre-0.83 representation (pieceTrailCEGTag, pieceTrailCEGRange)
 	if (ud.piecetrailcegtag ~= nil and not lowcpu) then

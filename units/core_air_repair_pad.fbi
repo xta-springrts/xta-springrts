@@ -56,7 +56,7 @@
 	//  Constructor
 	//***************
 	builder=1;
-	builddistance=6;
+	builddistance=48;
 	workertime=600; // was 200 inspired by Ivork//ing
 	repairSpeed = 1800; //increase from workertime to make repair pads more useful
 

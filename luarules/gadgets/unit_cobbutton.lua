@@ -167,9 +167,7 @@ function gadget:GameFrame(n)
 end
 
 
-function gadget:UnitDestroyed(unitID,_, _, _, _, preEvent)
-	
-	if (preEvent) then return end
+function gadget:UnitDestroyed(unitID)
 	reloads[unitID] = nil
 end
 

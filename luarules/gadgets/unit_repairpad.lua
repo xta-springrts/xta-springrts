@@ -32,6 +32,8 @@ local AreTeamsAllied	= Spring.AreTeamsAllied
 local RepairPadHeight 	= {}
 local RepairpadList 	= {}
 local PieceList			= {}
+local TurnRadiuses		= {}
+local GunshipDefs		= {}
 local Echo				= Spring.Echo
 local AirDefs 			= {}
 CMD_REFUEL = 33457
@@ -72,7 +74,7 @@ function gadget:Initialize()
 		if unitDef.isAirBase then
 			RepairPadHeight[id] = Spring.GetUnitDefDimensions(id)["maxy"]
 			RepairpadList[#RepairpadList+1] = id
-			Echo("Repair pad:",id,unitDef.name)
+		--Echo("Repair pad:",id,unitDef.name)
 		end
 		
 	end
@@ -84,6 +86,33 @@ function gadget:Initialize()
 	end
 end
 
+local function CalculateAngle(a1,a2,b1,b2)
+	--Echo("Vectors:",a1,a2,b1,b2)
+	
+	local angle = math.atan2 (a1*b2-a2*b1,a1*b1+a2*b2) 
+	local dec	= angle/(2*math.pi)*360
+	dec = dec >= 0 and dec or dec + 360
+	dec = dec <= 180 and dec or 360 - dec
+	--Echo("Angle:",math.floor(dec))
+	return math.floor(dec)
+end
+
+local function CalculateDeviation(a1,a2,b1,b2)
+	--Echo("Vectors:",a1,a2,b1,b2)
+	
+	local angle = math.atan2 (a1*b2-a2*b1,a1*b1+a2*b2)
+	local dec	= angle/(2*math.pi)*360
+	--Echo("Dev=",dec)
+	return math.floor(dec)
+end
+
+
+local function CalculateDeviation2(a1,a2,b1,b2)
+	--Echo("Vectors:",a1,a2,b1,b2)
+	
+	local angle = math.atan2 (a1*b2-a2*b1,a1*b1+a2*b2)
+	return angle
+end
 
 local function AddrefuelCmdDesc(unitID)
   if (FindUnitCmdDesc(unitID, CMD_REFUEL)) then
@@ -102,7 +131,6 @@ local function AddrefuelCmdDesc(unitID)
   Spring.InsertUnitCmdDesc(unitID, insertID + 1, refuelCmdDesc)
 end
 
-
 local function UpdateButton(unitID, statusStr)
   local cmdDescID = FindUnitCmdDesc(unitID, CMD_REFUEL)
   if (cmdDescID == nil) then
@@ -120,7 +148,7 @@ end
 local function UnitLanded(unitID, padID, pieceID) 
 	local pieceNum = PieceList[padID][pieceID][2]
 	if pieceNum then
-		Echo(unitID .. " landed on:",padID,PieceList[padID][pieceID][1],"Q:",#PadQueue[padID])
+		--Echo(unitID .. " landed on:",padID,PieceList[padID][pieceID][1],"Q:",#PadQueue[padID])
 		Spring.UnitAttach(padID, unitID, pieceNum)
 		LandedUnits[unitID] = {padID,pieceID}
 		--Spring.GiveOrderToUnit(unitID,CMD.STOP,{},{})
@@ -133,20 +161,23 @@ local function UnitLanded(unitID, padID, pieceID)
 end
 
 local function refuelCommand(unitID, unitDefID, cmdParams, teamID)
-
-  if (AirDefs[unitDefID]) then
-	--Echo("Return to base:",UnitDefs[unitDefID].name)
-    --Spring.CallCOBScript(unitID, "Refuel", 0)
-    Spring.SetUnitFuel(unitID, 0)
-
+--Echo("Refuel:",unitID)
+  if (AirDefs[unitDefID]) and not PlaneQueue[unitID] then
+--Echo("--------------------> Unit:",unitID)
 	local pads = Spring.GetTeamUnitsByDefs(teamID,RepairpadList)
-	
-	--Echo("Repair pads:",#pads)
 	local distance = math.huge
 	local padID, pieceID
 	
-	for _,uID in pairs(pads) do -- find a free repair pad
-		
+	if not TurnRadiuses[unitDefID] then
+		TurnRadiuses[unitDefID] = UnitDefs[unitDefID].turnRadius
+		--Echo("Turnradius:",UnitDefs[unitDefID].name,TurnRadiuses[unitDefID],UnitDefs[unitDefID].turnRate)
+	end
+	
+	GunshipDefs[unitDefID] = UnitDefs[unitDefID].hoverAttack
+	
+	for j,uID in pairs(pads) do -- find a free repair pad
+	--Echo("-------------------------------------------")
+	--Echo("Checking pad-base:",j,uID,UnitDefs[GetUnitDefID(uID)].name)
 		local this_distance = Spring.GetUnitSeparation(unitID,uID) or math.huge
 		
 		if not PieceList[uID] then
@@ -154,7 +185,6 @@ local function refuelCommand(unitID, unitDefID, cmdParams, teamID)
 			for name, number in pairs (Spring.GetUnitPieceMap(uID)) do
 				if name:find('pad') then
 					PieceList[uID][#PieceList[uID]+1] = {name, number, nil} -- third variable is occupied state	
-					--Echo("New piece found:",name, number)
 				end
 			end
 		end
@@ -162,34 +192,55 @@ local function refuelCommand(unitID, unitDefID, cmdParams, teamID)
 		
 		--Echo("Pad status:",UnitDefs[Spring.GetUnitDefID(uID)].name,#PadQueue[uID])
 		if this_distance < distance then
-			Echo("Base found for:",UnitDefs[unitDefID].name,uID,this_distance,distance)
+			local occupant = ""
+			
 			for i,data in pairs(PieceList[uID]) do -- find a free spot
-				Echo("Checking pad:",i,"OCcupied:",data[3])
-				if not data[3] then -- not occupied
+				--Echo("Checking pad:",i,data[3] and "Taken" or "---")
+				if data[3] then -- occupied
+					occupant = occupant.."-"..data[3]
+					--Echo("Occupied by:",UnitDefs[GetUnitDefID(data[3])].name)
+				else
 					pieceID = i
 					PieceList[uID][pieceID]	= {data[1],data[2],unitID}
 					padID = uID
 					distance = this_distance
-					Echo("Base and pad found for:",UnitDefs[unitDefID].name,data[1],data[2],uID)
-					
 					break;
 				end
-				
 			end
-			if not padID then
-				Echo("No base found for:",unitID,UnitDefs[unitDefID].name)
-			end
+			--Echo("Occupied by:",occupant)
+		end
+		if padID then 
+			--Echo("Pad found for:",UnitDefs[unitDefID].name," ==> ",padID,PieceList[uID][1],PieceList[uID][2])
+			break;
 		end
 	end
+	
+	if not padID then
+		--Echo("No base found for:",unitID,UnitDefs[unitDefID].name)
+	end
+	
 	if padID then
 		table.insert(PadQueue[padID],{unitID,pieceID})
 		local h = RepairPadHeight[Spring.GetUnitDefID(padID)]
 		local x,y,z = Spring.GetUnitPosition(padID)
-		Spring.SetUnitLandGoal(unitID, x, y+h, z)
+		local ux,_,uz = Spring.GetUnitPosition(unitID)
 		local pieceName = PieceList[padID][pieceID][1]
-		PlaneQueue[unitID] = {padID,pieceID}
-		Echo(unitID," is landing on:",UnitDefs[Spring.GetUnitDefID(padID)].name,pieceName,distance)
+		local bvx, bvz = x-ux, z-uz
+		local pvx,_,pvz = Spring.GetUnitDirection(padID)
 		
+		local angle = CalculateAngle(bvx,bvz,pvx,pvz)
+		PlaneQueue[unitID] = {padID,pieceID}
+		
+		--Echo(unitID," is landing on:",UnitDefs[Spring.GetUnitDefID(padID)].name,pieceName,distance,angle)
+		
+		if angle < 45 then
+			Spring.SetUnitLandGoal(unitID, x, y+h, z)
+		else
+			local x1 = x - 500*pvx
+			local y1 = y + 200
+			local z1 = z - 500*pvz
+			Spring.SetUnitMoveGoal(unitID,x1,y1,z1)
+		end
 	end
     
 	local status
@@ -203,58 +254,160 @@ local function UnitHeadOff(unitID,padID)
 	local unitHdg = Spring.GetUnitHeading(unitID)
 	local vx,vz = Spring.GetVectorFromHeading(unitHdg)
 	local x,y,z = Spring.GetUnitPosition(unitID)
+	local unitDefID = Spring.GetUnitDefID(unitID)
 	local x1 = x+500*vx
 	local y1 = y + 200
 	local z1 = z + 500*vz
 	
-	local dist = ((x1-x)*(x1-x)+(y1-y)*(y1-y)+(z1-z)*(z1-z))^0.5
-	
-	Echo("Pos1:",x,y,z)
-	Echo("Pos2:",x1,y1,z1)
-	Echo("Hdg:",vx,vz)
-	
+	local b0 = Spring.TestMoveOrder(unitDefID,  x1, y1, z1, 0.0, 0.0, 0.0,  true, true, true)
+	if not b0 then
+		local loops = 0
+		repeat
+			x1 = x + math.random(-500,500)
+			y1 = y+200
+			z1 = z+ math.random(-500,500)
+			b0 = Spring.TestMoveOrder(unitDefID,  x1, y1, z1, 0.0, 0.0, 0.0,  true, true, true)
+			loops = loops +1
+		until b0 or loops > 15
+	end
+		
+	--local dist = ((x1-x)*(x1-x)+(y1-y)*(y1-y)+(z1-z)*(z1-z))^0.5
+		
 	--Spring.MarkerAddPoint (x,y,z,"P1")
-	Spring.MarkerAddPoint (x1,y1,z1,"P2")
-	Echo("Dist:",dist)
-	Spring.SetUnitMoveGoal(unitID,x1,y1,z1)
-	--Spring.SetUnitLandGoal(unitID, x, y+h, z)
+	--Spring.MarkerAddPoint (x1,y1,z1,"P4")
+	--Echo("Dist:",dist)
+	--Spring.SetUnitMoveGoal(unitID,x1,y1,z1)
+	Spring.SetUnitLandGoal(unitID, x1, y1+100, z1)
 	
 
 end
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
+local function WayPoint3()
+
+end
+
 function gadget:GameFrame(frame)
 	
-	if frame%16 == 0 then
+	if frame%32 == 0 then
+		
 		for padID, Queue  in pairs(PadQueue) do
 			for pieceID,data in pairs(Queue) do
 				local unitID = data[1]
 				local pieceID = data[2]
-				--Echo("PQ:",padID,Queue,data,unitID,pieceID)
-			
-			
+						
 				if unitID and Spring.ValidUnitID(unitID) and not LandedUnits[unitID] then
 					local distance = Spring.GetUnitSeparation(unitID,padID)
-					local ud = Spring.GetUnitDefID(padID)
-					local h = RepairPadHeight[ud]
 					local x,y,z = Spring.GetUnitPosition(padID)
 					
-					Spring.SetUnitLandGoal(unitID, x, y+h, z)
+					local pieceNum	= PieceList[padID][pieceID][2]					
+					local poff = Spring.GetUnitPieceInfo(padID,pieceNum)["offset"]
 					
-					if distance < 100 then
-						local unitHdg = Spring.GetUnitHeading(unitID)
-						local padHdg = Spring.GetUnitHeading(padID)
-											
-						if math.abs(unitHdg-padHdg) > 6000 then
-							Echo("Aborted landing:",unitID)
-							UnitHeadOff(unitID,padID)
+					
+					--Echo("Pos1:",pmin[1],pmin[2],pmin[3])
+					--Echo("Pos2:",pmax[1],pmax[2],pmax[3])
+					
+					
+					local px = x + poff[1]/2
+					local pz = z + poff[3]/2
+					
+					 -- for i, num in pairs(Spring.GetUnitPieceList(padID)) do
+					
+						 -- local pInfo = Spring.GetUnitPieceInfo(padID,i)
+						 -- Echo("Piece:",i,num,pInfo)
+						 -- pInfo = pInfo or {}
+						 -- for i,v in pairs(pInfo) do
+							-- if type(v) == type({}) then
+								-- for u,w in pairs(v) do
+									-- Echo("Info---->:",i,u,w)
+								-- end
+							-- else
+								-- Echo("Info:",i,v)
+							 -- end
+						 -- end
+					 -- end
+					
+					--Echo("Pos:",pieceID,pieceNum,x,pvx,y,py,z,pvz)
+					
+					local udid	= GetUnitDefID(unitID)
+					local ux,_,uz = Spring.GetUnitPosition(unitID)
+					local bvx, bvz = x-ux, z-uz
+					local pvx,_,pvz = Spring.GetUnitDirection(padID)
+					local movementAngle = CalculateAngle(bvx,bvz,pvx,pvz) 	-- angle between unit movement vector and base facing
+					local uvx,_,uvz = Spring.GetUnitDirection(unitID)						
+					local facingAngle = CalculateAngle(uvx,uvz,pvx,pvz) 	-- facingAngle between unit facing and base facing
+					local turnrad = TurnRadiuses[udid]
+					local L1 = 300 + 0.33 * turnrad
+					local L2 = GunshipDefs[udid] and 500 or 3.0 * turnrad
+					local P1Turn = GunshipDefs[udid] and 100 or 350
+					local P2Turn = GunshipDefs[udid] and 100 or 250
+					
+					local p0 = {px, y+25, pz}
+					local p1 = {px - L1*pvx, y+60, pz-L1*pvz}
+					local p2 = {px - L2*pvx, y+200, pz-L2*pvz}
+					
+					local dev = CalculateDeviation(bvx,bvz,pvx,pvz)
+					local dev2 = CalculateDeviation2(bvx,bvz,pvx,pvz)
+					local vP = {-pvz,0,pvx}
+					local vE = {vP[1]*distance*math.tan(dev2),0,vP[3]*distance*math.tan(dev2)}
+										
+					local pC = {p0[1]-vE[1],y+60,p0[3]-vE[3]}
+					
+					
+					if (distance > 300 or movementAngle > 180) and not GunshipDefs[udid] then
+						-- not close to approach yet
+						if movementAngle < 30 and facingAngle < 30 + 35 * distance/turnrad  then	
+							-- either land or prepare point
+							local distP1 = ((ux-p1[1])*(ux-p1[1])+(uz-p1[3])*(uz-p1[3]))^0.5
+							if distP1 > P1Turn and distance > P1Turn then
+								if movementAngle < 30 then
+									--waypoint Correction
+									Spring.SetUnitLandGoal(unitID,pC[1], pC[2],pC[3])
+								else
+									-- land goal
+									Spring.SetUnitLandGoal(unitID, p0[1], p0[2],p0[3],10)
+									local vx,vy,vz = Spring.GetUnitVelocity(unitID)
+									Spring.SetUnitVelocity(unitID,0.75*vx,0.75*vy,0.75*vz)
+									--Echo("Set land goal B:",movementAngle, facingAngle,distance,"P1:",distP1)
+								end
+							else
+								-- land goal
+								Spring.SetUnitLandGoal(unitID, p0[1], p0[2],p0[3],10)
+								local vx,vy,vz = Spring.GetUnitVelocity(unitID)
+								Spring.SetUnitVelocity(unitID,0.75*vx,0.75*vy,0.75*vz)
+								--Echo("Set land goal A:",movementAngle, facingAngle,distance,"P1:",distP1)
+								--Spring.MarkerAddPoint (p0[1], p0[2],p0[3],"P")
+							end
+						else
+							-- waypoint further
+							local distP2 = ((ux-p2[1])*(ux-p2[1])+(uz-p2[3])*(uz-p2[3]))^0.5
+							
+							if distP2 < P2Turn  then
+								--waypoint P1
+								Spring.SetUnitLandGoal(unitID,p1[1], p1[2],p1[3])
+								--Echo("Set waypoint 1B:",movementAngle, facingAngle,distance,"P2:",distP2)
+							else
+								--waypoint P2
+								Spring.SetUnitLandGoal(unitID,p2[1], p2[2],p2[3])
+								
+								--Echo("Set  waypoint 2:",movementAngle, facingAngle,distance,"P2:",distP2)
+							end
 						end
-					end
-					
-					--Echo("Repair queue:",padID,unitID,distance)
-					
-					if distance < 40 and pieceID then
-						UnitLanded(unitID, padID, pieceID) 
+					else
+						local vx,vy,vz = Spring.GetUnitVelocity(unitID)
+						Spring.SetUnitVelocity(unitID,0.5*vx,0.5*vy,0.5*vz)
+						Spring.SetUnitLandGoal(unitID, p0[1], p0[2],p0[3],10)
+						--Echo("Set land goal B:",movementAngle, facingAngle,distance)
+						if distance < 150 and movementAngle < 180 and not GunshipDefs[udid] then
+							if facingAngle > 15 then
+								--Echo("Aborted landing:",unitID,movementAngle,facingAngle,distance)
+								UnitHeadOff(unitID,padID)
+							end
+						end
+						
+						if distance < 60 and pieceID then
+							UnitLanded(unitID, padID, pieceID) 
+						end
 					end
 				end
 			end
@@ -263,35 +416,44 @@ function gadget:GameFrame(frame)
 	
 end
 
-function gadget:TeamDied(teamID)
-	Echo("Team died:",teamID)
-end
-
 function gadget:UnitCmdDone(unitID, unitDefID, unitTeam, cmdID, cmdTag, cmdParams, cmdOpts)
 	
 	if cmdID == CMD.REPAIR and LandedUnits[cmdParams[1]] then
 		local padID = unitID
 		local unitID = cmdParams[1]
 		local pieceID = LandedUnits[unitID][2]
-		Echo("Repairs done:",padID,unitID,pieceID)
+		--Echo("Repairs done:",padID,unitID,pieceID)
 		
 		
 		local health, maxHP =  Spring.GetUnitHealth(unitID)
 		
 		if health == maxHP then
 			PlaneQueue[unitID] = nil
+		--Echo("Piecelist status before:",padID)
+			
+			for i,data in pairs(PieceList[padID]) do
+			--Echo("Pad:", i, data[1], data[2], data[3])
+			end
+			
 			PieceList[padID][pieceID][3] = nil -- not occupied
+			
+			
+		--Echo("After--->")
+			for i,data in pairs(PieceList[padID]) do
+			--Echo("Pad:", i, data[1], data[2], data[3])
+			end
 			
 			for i,data in pairs(PadQueue[padID]) do
 				if data[1] == unitID then
 					table.remove(PadQueue[padID],i)
-					Echo("Removed:",unitID,padID,pieceID)
+					--Echo("Removed:",unitID,padID,pieceID)
 				end
 			end
 			
 			LandedUnits[unitID] = nil
-			Echo("Detaching unit:",unitID)
+			--Echo("Detaching unit:",unitID)
 			Spring.UnitDetach(unitID)
+			Spring.SetUnitVelocity(unitID,0,4,0)
 			UnitHeadOff(unitID,padID)				
 		else
 			Spring.PlaySoundFile('Sounds/unit/repair2.wav', 1.0, x, y, z,0,0,0,'battle')
@@ -325,7 +487,7 @@ function gadget:UnitDestroyed(unitID, unitDefID, unitTeam, _, _, _)
 		for i,data in pairs(PadQueue) do
 			if data[1] == unitID then
 				table.remove(PadQueue[padID],i)
-				Echo("Removed:",unitID,padID,pieceID)
+			--Echo("Removed:",unitID,padID,pieceID)
 			end
 		end
 		

@@ -49,6 +49,7 @@
 	//************
 	buildangle=16384;
 	activatewhenbuilt=1;
+	
 
 	//************************************************************
 	//  Constructor
@@ -58,6 +59,7 @@
 	canreclaim=0;
 	canrepair=1;
 	canrestore=0;
+	builddistance=48;
 	workertime=600; //was 200//
 	repairSpeed = 1800; //increase from workertime to make repair pads more useful
 
