@@ -75,7 +75,7 @@ local button = 'sounds/gui/button9.wav'
 local button1 = 'sounds/gui/button1.wav'
 local button2 = 'sounds/gui/button2.wav'
 local button3 = 'sounds/gui/buttn01.wav'
-local cancel = 'sounds/gui/cancel2.wav'
+local cancel = 'sounds/unit/cancel2.wav'
 
 local duckSounds =	 {
 	[1] = 'sounds/critters/duckcall1.wav',

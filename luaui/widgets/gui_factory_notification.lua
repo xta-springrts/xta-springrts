@@ -39,7 +39,7 @@ local Factories					= {}
 
 ----------------------------------------------------------------------------
 
-local cancel = "sounds/gui/cancel2.wav"
+local cancel = "sounds/unit/cancel2.wav"
 local movefailed = "sounds/unit/cantdo4.wav"
 
 ----------------------------------------------------------------------------

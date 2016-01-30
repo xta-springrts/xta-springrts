@@ -54,6 +54,8 @@ local Exceptions = {
 		["count5.wav"]			= true,
 		["count6.wav"]			= true,
 		["tllcount.wav"]		= true,
+		["cancel1.wav"]			= true,
+		["cancel2.wav"]			= true,
 	}
 	
 
