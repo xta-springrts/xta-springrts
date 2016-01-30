@@ -101,7 +101,9 @@ local function displayDamage(unitID, unitDefID, damage, paralyze)
   damageTable[1].riseTime = (math.min((damage / 2500), 2) + 1)
 end
 
-function widget:UnitDestroyed(unitID, unitDefID, unitTeam)
+function widget:UnitDestroyed(unitID, unitDefID, unitTeam, preEvent)
+	if preEvent == false then return end
+	
   if unitDamage[unitID] then
     local ux, uy, uz = GetUnitViewPosition(unitID)
     if ux then

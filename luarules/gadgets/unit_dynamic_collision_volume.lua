@@ -41,6 +41,7 @@ local pairs = pairs
 local min = math.min
 local Echo = Spring.Echo
 local startIndex
+local spring101 = (Game.version > "100" and Game.version:sub(1,1) == "1")
 
 if (gadgetHandler:IsSyncedCode()) then
 
@@ -193,7 +194,9 @@ if (gadgetHandler:IsSyncedCode()) then
 
 	-- Same as for 3DO units, but for features
 	function gadget:FeatureCreated(featureID, allyTeam)
-		local featureModel = FeatureDefs[Spring.GetFeatureDefID(featureID)].modelname:lower()
+		local featureModel = spring101 and 	FeatureDefs[Spring.GetFeatureDefID(featureID)].model.path:lower() or 
+											FeatureDefs[Spring.GetFeatureDefID(featureID)].modelname:lower()
+		
 		if featureModel == "" then return end	--geovents or engine trees have no models		
 		local featureModelTrim
 		

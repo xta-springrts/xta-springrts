@@ -160,7 +160,9 @@ function widget:UnitCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdOp
 	return true
 end
 
-function widget:UnitDestroyed(unitID, unitDefID, teamID, attackerID, attackerDefID, attackerTeamID)
+function widget:UnitDestroyed(unitID, unitDefID, teamID, preEvent)
+	if preEvent == false then return end
+	
 	if ADUnits[unitID] then
 		ADUnits[unitID] = nil
 	end

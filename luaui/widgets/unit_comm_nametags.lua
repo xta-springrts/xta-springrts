@@ -254,7 +254,9 @@ function widget:UnitCreated(unitID, unitDefID, unitTeam)
   CheckCom(unitID, unitDefID, unitTeam)
 end
 
-function widget:UnitDestroyed(unitID, unitDefID, unitTeam)
+function widget:UnitDestroyed(unitID, unitDefID, unitTeam, preEvent)
+	if preEvent == false then return end
+	
   comms[unitID] = nil
 end
 

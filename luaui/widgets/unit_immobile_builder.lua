@@ -131,7 +131,9 @@ if (idleFrames > 0) then
   end
 
 
-  function widget:UnitDestroyed(unitID, unitDefID, unitTeam)
+  function widget:UnitDestroyed(unitID, unitDefID, unitTeam, preEvent)
+	if preEvent == false then return end
+	
     idlers[unitID] = nil
   end
 

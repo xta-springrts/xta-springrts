@@ -76,7 +76,9 @@ function widget:UnitCreated(unitID, unitDefID, unitTeam, builderID)
 	end
 end
 
-function widget:UnitDestroyed(unitID, unitDefID, unitTeam, attackerID, attackerDefID, attackerTeam)
+function widget:UnitDestroyed(unitID, unitDefID, unitTeam, preEvent)
+	if preEvent == false then return end
+	
 	if geoUnits[unitDefID] then
 		updateFrame = Spring.GetGameFrame()
 	end

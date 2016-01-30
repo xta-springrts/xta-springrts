@@ -131,7 +131,9 @@ function widget:UnitFinished(unitID, unitDefID, unitTeam)
 	end
 end
 
-function widget:UnitDestroyed(unitID, unitDefID, unitTeam, attackerID, attackerDefID, attackerTeam)
+function widget:UnitDestroyed(unitID, unitDefID, unitTeam, preEvent)
+	if preEvent == false then return end
+	
 	if Factories[unitID] then
 		Factories[unitID] = nil
 	end

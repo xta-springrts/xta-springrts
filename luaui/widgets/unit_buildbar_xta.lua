@@ -605,7 +605,9 @@ function widget:UnitGiven(unitID, unitDefID, unitTeam, oldTeam)
   widget:UnitFinished(unitID, unitDefID, unitTeam)
 end
 
-function widget:UnitDestroyed(unitID, unitDefID, unitTeam)
+function widget:UnitDestroyed(unitID, unitDefID, unitTeam, preEvent)
+	if preEvent == false then return end
+	
   if (unitTeam ~= myTeamID) then
     return
   end

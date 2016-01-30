@@ -231,7 +231,9 @@ local function UnitFinished(_,unitID,unitDefID)
 end
 
 
-local function UnitDestroyed(_,unitID,unitDefID)
+local function UnitDestroyed(_,unitID,unitDefID, preEvent)
+	if preEvent == false then return end
+	
   registeredUnits[unitID] = nil
   if (unitDefID == cormexDefID) then
     cormexes[unitID] = nil
