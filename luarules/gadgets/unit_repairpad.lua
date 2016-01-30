@@ -504,6 +504,20 @@ function gadget:UnitDestroyed(unitID, unitDefID, unitTeam, _, _, _)
 	
 end
 
+function gadget:UnitDamaged(unitID, unitDefID, unitTeam)
+	if (AirDefs[unitDefID]) and not PlaneQueue[unitID] then 
+		local repairLevel  = select(8,Spring.GetUnitStates(unitID)) or 0.3
+		
+		
+		local health,maxhHP = Spring.GetUnitHealth(unitID)
+		--Echo("UD:",unitID,repairLevel,health,maxhHP)
+		
+		if health and maxhHP and repairLevel and health/maxhHP < repairLevel then
+			refuelCommand(unitID, unitDefID, {}, unitTeam)
+		end
+	end
+end
+
 function gadget:UnitGiven(unitID, unitDefID, newTeam, oldTeam)
 	if RepairPadHeight[unitDefID] then
 		if AreTeamsAllied(newTeam, oldteam) then

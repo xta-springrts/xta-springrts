@@ -35,7 +35,7 @@ local AIRPLANT = {
   [UnitDefNames["lost_adv_aircraft_plant"].id] = true,
   [UnitDefNames["lost_aircraft_plant"].id] = true,
   [UnitDefNames["lost_seaplane_platform"].id] = true,
-  [ UnitDefNames['guardian_areo_platform'].id ] = true,
+  [UnitDefNames['guardian_areo_platform'].id ] = true,
 }
 
 local plantList = {}
