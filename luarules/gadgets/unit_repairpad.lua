@@ -66,6 +66,13 @@ local refuelCmdDesc = {
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 function gadget:Initialize()
+
+	local version = Game.version
+	if not(version > "100" and version:sub(1,1) == "1") then
+		gadgetHandler:RemoveGadget()
+		return
+	end
+	
 	for id,unitDef in pairs(UnitDefs) do
 		if unitDef.canFly then
 			AirDefs[id] = true
