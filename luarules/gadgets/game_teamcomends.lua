@@ -95,6 +95,7 @@ if (gadgetHandler:IsSyncedCode()) then
 					if unitDef.name then
 						commanderTable[id] = true
 						commanderDefs[#commanderDefs+1]=id
+						Echo("Added commander:",unitDef.name)
 					end				
 				end
 			end
@@ -352,11 +353,9 @@ if (gadgetHandler:IsSyncedCode()) then
 		return false
 	end
 
-	function gadget:UnitDestroyed(unitID, unitDefID, teamID, _, _, _)
-
-		
+	function gadget:UnitDestroyed(unitID, unitDefID, teamID)
 		isAlive[unitID] = nil
-		
+		--Echo("TCE ===> UD:",unitID,commanderTable[unitDefID])
 		if commanderTable[unitDefID] then
 			local isTeamDead = select(3,Spring.GetTeamInfo(teamID))
 			local allyTeam = GetUnitAllyTeam(unitID)
