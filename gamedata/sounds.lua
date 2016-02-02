@@ -236,12 +236,13 @@ for i =1,#files do
 		if not Exceptions[shortName] then
 			t[fileName]  = {
 			file      		= fileName;
-			pitchmod  		= 0.3;
-			gainmod   		= 0.2;
-			gain  			= 1;
-			maxconcurrent  	= 16;
-			rolloff  		= 0.4;
+			pitchmod  		= 0.05;
+			gainmod   		= 0.05;
+			gain  			= 0.5;
+			maxconcurrent  	= 8;
+			rolloff  		= 0.8;
 			priority  		= -3;
+			in3d 			= 1;
 			}
 		else
 			Echo("Exception:",shortName)
