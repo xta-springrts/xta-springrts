@@ -52,7 +52,7 @@ function addon.DrawLoadScreen()
 	
 	--xta logo
 	gl.Color(1,1,1,0.75)
-	gl.Texture("bitmaps/logo/v1_1000pxtrans.png")
+	gl.Texture("bitmaps/logo/v6_1000pxtrans.png")
 	gl.TexRect(1-xDiv-0.2,1-yDiv-0.1,1-xDiv,1-yDiv)
 	gl.Texture(false)
 	

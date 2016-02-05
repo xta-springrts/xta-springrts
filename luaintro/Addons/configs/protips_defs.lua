@@ -8,7 +8,7 @@ local tips = {
 	'Press Alt to use the advanced version of the Guard command',
 	'Use T2 bombers to bombard an enemy with a lot of anti-air defences',
 	'Don\'t build anti-air defences in your base: build them instead a bit outside. That way they will shoot down bombers before they have released their payload',
-	'Don\'t forget to use combined arms',
+	'Use a variety of units to make use of their special attributes and abilities effectively',
 	'Don\'t start with building an air or advanced factory, unless you know what you\'re doing',
 	'Always remember to scout ahead',
 	'The best thing to build after your fusion is completed ... is another fusion!',
