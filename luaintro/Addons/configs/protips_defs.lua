@@ -12,7 +12,7 @@ local tips = {
 	'Don\'t start with building an air or advanced factory, unless you know what you\'re doing',
 	'Always remember to scout ahead',
 	'The best thing to build after your fusion is completed ... is another fusion!',
-	'Remember the river rule: it\'s cowardous to cross the river into enemy territory before 5 minutes into the game',
+	'Remember the river rule: it\'s cowardous to cross the river into enemy territory with your Commander before 5 minutes into the game',
 	'Combombs are totally fine, as long as not done right at the start. Later in the game you should have defences',
 	'If unsure what to bomb: go for heavy or normal fusions',
 	'Don\'t counter anti-air with air. Use ground forces instead.',

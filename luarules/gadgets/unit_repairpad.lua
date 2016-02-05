@@ -226,7 +226,7 @@ local function refuelCommand(unitID, unitDefID, cmdParams, teamID)
 		--Echo("No base found for:",unitID,UnitDefs[unitDefID].name)
 	end
 	
-	if padID then
+	if padID and PadQueue[padID] then
 		table.insert(PadQueue[padID],{unitID,pieceID})
 		local h = RepairPadHeight[Spring.GetUnitDefID(padID)]
 		local x,y,z = Spring.GetUnitPosition(padID)

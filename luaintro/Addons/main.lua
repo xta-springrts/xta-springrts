@@ -42,7 +42,7 @@ for _,word in pairs (words) do
 	
 end
 
-Spring.Echo("Lines, words:",i,#words)
+--Spring.Echo("Lines, words:",i,#words)
 
 function addon.LoadProgress(message, replaceLastLine)
 	lastLoadMessage = message
@@ -231,7 +231,7 @@ function addon.DrawLoadScreen()
 		
 		font2:Begin()
 		font2:SetTextColor({1, 1, 1, 0.9 })
-		Spring.Echo("lines:",#lines)
+		--Spring.Echo("lines:",#lines)
 		local y2 = #lines == 1 and y1 - vsy * 0.05 or y1 - vsy * 0.02
 		local ls = vsy * 0.06
 		for line, text in pairs(lines) do
