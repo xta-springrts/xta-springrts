@@ -199,7 +199,7 @@ function addon.DrawLoadScreen()
 		
 		local posy = 0.5 * (vsy-vsx/ar)
 		
-		local y0 = vsy * 0.168 + posy -- vsy-texy > 300 and vsy-texy or vsy * 0.25
+		local y0 = vsy * 0.222 + posy -- vsy-texy > 300 and vsy-texy or vsy * 0.25
 		local y1 = y0 + vsy * 0.2
 		local dy = 4
 		
@@ -231,8 +231,11 @@ function addon.DrawLoadScreen()
 		
 		font2:Begin()
 		font2:SetTextColor({1, 1, 1, 0.9 })
+		Spring.Echo("lines:",#lines)
+		local y2 = #lines == 1 and y1 - vsy * 0.05 or y1 - vsy * 0.02
+		local ls = vsy * 0.06
 		for line, text in pairs(lines) do
-			font2:Print(text,vsx * 0.5,y1 - vsy * (0.05 - 0.015) -line*vsy * (0.05 - 0.005),tipTextSize,'vo')
+			font2:Print(text,vsx * 0.5,y2 -line*ls,tipTextSize,'vo')
 		end
 		font2:End()
 		
