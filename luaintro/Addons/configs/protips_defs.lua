@@ -9,13 +9,17 @@ local tips = {
 	'Use T2 bombers to bombard an enemy with a lot of anti-air defences',
 	'Don\'t build anti-air defences in your base: build them instead a bit outside. That way they will shoot down bombers before they have released their payload',
 	'Don\'t forget to use combined arms',
-	'Don\t start with building an air or advanced factory, unless you know what you\'re doing',
+	'Don\'t start with building an air or advanced factory, unless you know what you\'re doing',
 	'Always remember to scout ahead',
 	'The best thing to build after your fusion is completed ... is another fusion!',
 	'Remember the river rule: it\'s cowardous to cross the river into enemy territory before 5 minutes into the game',
 	'Combombs are totally fine, as long as not done right at the start. Later in the game you should have defences',
 	'If unsure what to bomb: go for heavy or normal fusions',
 	'Don\'t counter anti-air with air. Use ground forces instead.',
+	'Dragon\'s teeth around defensive installations help prolong their life. Use Ctrl-alt-shift to automatically place a box of DT.',
+	'Cloak and stealth fulfil complimentary functions: cloak prevents visual, while stealth prevents radar detection. You can use both at the same time.',
+	'Radar jammers will also affect your own radars: disable them if you suspect the enemy has cloaked units inside your base',
+	'If you have absolutely no energy: build solars!',
 	
 }
 

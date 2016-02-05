@@ -24,25 +24,27 @@
 --- Do not remove
 --- Changelog processing starts here
 
-XTA 9.752 (Git 1030)
+XTA 9.752 (Git 1055)
 |jls,nor
-20/01/2016
+06/02/2016
 
 Changes:
 * Arm Stumpy and Core Raider Cannon damage reduced from 62 to 56. (10 percent)
 * Reverted Penetrator Explosion, Risk over reward was not worth.
 * Increased Range of nano towers from 110 to 125.
+* Aircraft now self heal 2 hp/sec after 90 seconds of inactivity. Instead, repair pads now repair faster: fixed: 1800 and mobile: 900 repairspeed.
 
 Enhancements:
 * New layout presets that makes it possible to fast select a functioning layout profile (widgets and settings)
 * Added a bunch of other options to the xta menu
-* New included widgets: gui-shader
+* New included widgets: gui-shader, group-label
 * New effects for Arm Guardian, Core Punisher and metal maker explosions
-* Fixed incosistent build- and start-moving sounds
+* Fixed inconsistent build- and start-moving sounds
+* New loadscreen logo, pictures and tips
 
 Fixes:
 * Lots of bugfixes
-* Compatibility for spring 101 (air repair pads still WIP)
+* Compatibility for spring 101, air repair pads are now handled by lua
 * Moved sounds in "sounds" directory into subfolders for easier maintenance
 
 
