@@ -534,10 +534,26 @@ local Buttons = {
 					  },
 	action			= {Spring.SetConfigInt,"snd_volmaster"},
 	},
-
+	
+	{
+	key				= "sndgeneral",				
+	label			= "General type sounds:",
+	value			= tonumber(Spring.GetConfigInt("snd_volgeneral",50)),
+	section			= "sound",
+	type 			= "scale",
+	min				= 0,
+	max				= 100,
+	step			= 1,
+	items			= {	
+						[0] ="Muted",
+						[100] = "Ear breaking",
+					  },
+	action			= {Spring.SetConfigInt,"snd_volgeneral"},
+	},
+	
 	{
 	key				= "sndbattle",				
-	label			= "Battle volume:",
+	label			= "Battle sounds:",
 	value			= tonumber(Spring.GetConfigInt("snd_volbattle",50)),
 	section			= "sound",
 	type 			= "scale",
@@ -549,6 +565,38 @@ local Buttons = {
 						[100] = "Ear breaking",
 					  },
 	action			= {Spring.SetConfigInt,"snd_volbattle"},
+	},
+	
+	{
+	key				= "sndunitreply",				
+	label			= "Unit reply sounds:",
+	value			= tonumber(Spring.GetConfigInt("snd_volunitreply",50)),
+	section			= "sound",
+	type 			= "scale",
+	min				= 0,
+	max				= 100,
+	step			= 1,
+	items			= {	
+						[0] ="Muted",
+						[100] = "Ear breaking",
+					  },
+	action			= {Spring.SetConfigInt,"snd_volunitreply"},
+	},
+	
+	{
+	key				= "sndui",				
+	label			= "User interface sounds:",
+	value			= tonumber(Spring.GetConfigInt("snd_volui",50)),
+	section			= "sound",
+	type 			= "scale",
+	min				= 0,
+	max				= 100,
+	step			= 1,
+	items			= {	
+						[0] ="Muted",
+						[100] = "Ear breaking",
+					  },
+	action			= {Spring.SetConfigInt,"snd_volui"},
 	},
 	
 	{
@@ -565,38 +613,6 @@ local Buttons = {
 						[100] = "Ear breaking",
 					  },
 	action			= {Spring.SetConfigInt,"snd_volmusic"},
-	},
-	
-	{
-	key				= "sndunitreply",				
-	label			= "Unit reply volume:",
-	value			= tonumber(Spring.GetConfigInt("snd_volunitreply",50)),
-	section			= "sound",
-	type 			= "scale",
-	min				= 0,
-	max				= 100,
-	step			= 1,
-	items			= {	
-						[0] ="Muted",
-						[100] = "Ear breaking",
-					  },
-	action			= {Spring.SetConfigInt,"snd_volunitreply"},
-	},
-	
-	{
-	key				= "sndgeneral",				
-	label			= "General volume:",
-	value			= tonumber(Spring.GetConfigInt("snd_general",50)),
-	section			= "sound",
-	type 			= "scale",
-	min				= 0,
-	max				= 100,
-	step			= 1,
-	items			= {	
-						[0] ="Muted",
-						[100] = "Ear breaking",
-					  },
-	action			= {Spring.SetConfigInt,"snd_general"},
 	},
 	
 	{
