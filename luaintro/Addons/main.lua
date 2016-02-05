@@ -2,7 +2,7 @@
 if addon.InGetInfo then
 	return {
 		name    = "Main",
-		desc    = "displays a simplae loadbar",
+		desc    = "displays a simple loadbar",
 		author  = "jK",
 		date    = "2012,2013",
 		license = "GPL2",
@@ -15,6 +15,34 @@ end
 ------------------------------------------
 
 local lastLoadMessage = ""
+local protips = include("luaintro/addons/configs/protips_defs.lua")
+local lineChars = 90
+
+local tip = protips[ math.random(#protips)]
+local words = {}
+for word in tip:gmatch("%S+") do table.insert(words, word) end
+
+local lines = {}
+local i = 1
+for _,word in pairs (words) do
+	if not lines[i] then
+		lines[i] = ""
+	end
+	
+	if #(lines[i]) + #word < lineChars then
+		if lines[i] and #(lines[i]) > 0 then
+			lines[i] = lines[i] .. " " .. word
+		else
+			lines[i] = word
+		end
+	else
+		i = i + 1
+		lines[i] = word
+	end
+	
+end
+
+Spring.Echo("Lines, words:",i,#words)
 
 function addon.LoadProgress(message, replaceLastLine)
 	lastLoadMessage = message
@@ -23,13 +51,14 @@ end
 ------------------------------------------
 
 local font = gl.LoadFont("FreeSansBold.otf", 50, 20, 1.95)
+local font2 = gl.LoadFont("luaui/fonts/atlantabook.ttf", 50, 4,2)
+
 
 function addon.DrawLoadScreen()
 	local loadProgress = SG.GetLoadProgress()
 
 	local vsx, vsy = gl.GetViewSizes()
-
-
+	local xDiv, yDiv, texy, ar = SG.GetDiv()
 	
 	-- draw progressbar
 	local hbw = 3.5/vsx
@@ -166,7 +195,16 @@ function addon.DrawLoadScreen()
 	gl.PushMatrix()
 	gl.Scale(1/vsx,1/vsy,1)
 		local barTextSize = vsy * (0.05 - 0.015)
-
+		local tipTextSize = vsy * (0.05 - 0.005)
+		
+		local posy = 0.5 * (vsy-vsx/ar)
+		
+		local y0 = vsy * 0.168 + posy -- vsy-texy > 300 and vsy-texy or vsy * 0.25
+		local y1 = y0 + vsy * 0.2
+		local dy = 4
+		
+		--Spring.Echo("XY:",yDiv,vsy * 0.2,yDiv > 0.1,y0,y1,yDiv*vsy,vsx/ar,posy)
+		
 		--font:Print(lastLoadMessage, vsx * 0.5, vsy * 0.3, 50, "sc")
 		--font:Print(Game.gameName, vsx * 0.5, vsy * 0.95, vsy * 0.07, "sca")
 		font:Print(lastLoadMessage, vsx * 0.2, vsy * 0.14, barTextSize, "sa")
@@ -175,6 +213,29 @@ function addon.DrawLoadScreen()
 		else
 			font:Print("Loading...", vsx * 0.5, vsy * 0.165, barTextSize, "oc")
 		end
+		--Spring.Echo("XY:",vsx,vsy)
+		--protip
+		gl.Color(0.0,0.0,0.0,0.6)
+		
+		gl.Rect(0,y0+dy,4*vsx,y1-dy)
+		
+		gl.Color(0,0,0,0.1)
+		gl.Rect(0,y1-dy,4*vsx,y1)
+		gl.Rect(0,y0,4*vsx,y0+dy)
+		
+		gl.Color(1,1,1,0.5)
+		gl.Rect(0,y1+1,4*vsx,y1+dy)
+		gl.Rect(0,y0-dy,4*vsx,y0)
+		
+		gl.Color(1,1,1,1)
+		
+		font2:Begin()
+		font2:SetTextColor({1, 1, 1, 0.9 })
+		for line, text in pairs(lines) do
+			font2:Print(text,vsx * 0.5,y1 - vsy * (0.05 - 0.015) -line*vsy * (0.05 - 0.005),tipTextSize,'vo')
+		end
+		font2:End()
+		
 	gl.PopMatrix()
 	
 	gl.PopMatrix()
