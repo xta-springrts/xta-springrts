@@ -5,7 +5,7 @@ local tips = {
 	'Press Ctrl-E to see how all your energy is spent',
 	'Press Ctrl-C to quickly zoom to your commander',
 	'Use Ctrl-Z to select all units of same type',
-	'Press Alt to use the advanced version of the Guard command',
+	'Hold Alt or Ctrl-Alt to use the advanced versions of the Guard command',
 	'Use T2 bombers to bombard an enemy with a lot of anti-air defences',
 	'Don\'t build anti-air defences in your base: build them instead a bit outside. That way they will shoot down bombers before they have released their payload',
 	'Use a variety of units to make use of their special attributes and abilities effectively',
@@ -16,11 +16,13 @@ local tips = {
 	'Combombs are totally fine, as long as not done right at the start. Later in the game you should have defences',
 	'If unsure what to bomb: go for heavy or normal fusions',
 	'Don\'t counter anti-air with air. Use ground forces instead.',
-	'Dragon\'s teeth around defensive installations help prolong their life. Use Ctrl-alt-shift to automatically place a box of DT.',
-	'Cloak and stealth fulfil complimentary functions: cloak prevents visual, while stealth prevents radar detection. You can use both at the same time.',
+	'Dragon\'s teeth around defensive installations help prolong their life. Use Ctrl-alt-shift to automatically place a box of DT\'s',
+	'Cloak and stealth fulfil complimentary functions: cloak prevents visual, while stealth prevents radar detection. Some units can use both at the same time.',
 	'Radar jammers will also affect your own radars: disable them if you suspect the enemy has cloaked units inside your base',
 	'If you have absolutely no energy: build solars!',
-	
+	'If gamemode is commander ends: a last commander who D-Guns the last enemy commander loses, but the one that lasers it to death instead wins.',
+	'The supreme art of war is to subdue the enemy without fighting.',
+	'Most units can shoot longer than they can see. Use scout units to provide visibility for them.',
 }
 
 return tips
