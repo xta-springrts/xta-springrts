@@ -50,7 +50,7 @@ if gadgetHandler:IsSyncedCode() then
 	
 	-- only applies for units that call lua_UnitStoppedMoving() in cob
 	function UnitStoppedMoving(unitID,unitDefID,teamID)
-		--Echo("Unit stopped moving:",unitID)
+		Echo("StoppedMoving called for unitID:",unitID)
 				
 		if not airlos[unitDefID] then
 			local this_airlos = Spring.GetUnitSensorRadius(unitID,"airLos")
@@ -80,7 +80,7 @@ if gadgetHandler:IsSyncedCode() then
 	end
 	
 	function UnitStartedMoving(unitID,unitDefID,teamID)
-		
+		Echo("StartMoving called for unitID:",unitID)
 		if airlos[unitDefID] then 
 			Spring.SetUnitSensorRadius(unitID,"airLos",airlos[unitDefID])
 		end

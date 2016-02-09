@@ -73,9 +73,8 @@ function widget:UnitCreated(unitID, allyTeam)
 	end
 end
 
-function widget:UnitDestroyed(unitID, unitDefID, teamID, preEvent)
-	if preEvent == false then return end
-	
+function widget:UnitDestroyed(unitID, unitDefID, teamID)
+		
 	if ( dots[unitID] ~= nil ) then
 		dots[unitID] = nil
 	end

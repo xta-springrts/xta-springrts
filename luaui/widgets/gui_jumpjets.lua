@@ -260,9 +260,8 @@ function widget:UnitCmdDone(unitID, unitDefID, unitTeam, cmdID, cmdTag)
 end
 
 
-function widget:UnitDestroyed(unitID,_,_, preEvent)
-	if preEvent == false then return end
-	
+function widget:UnitDestroyed(unitID,_,_)
+		
   lastJump[unitID] = nil
 end
 

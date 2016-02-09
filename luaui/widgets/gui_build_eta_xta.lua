@@ -182,9 +182,8 @@ function widget:UnitCreated(unitID, unitDefID, unitTeam)
 end
 
 
-function widget:UnitDestroyed(unitID, unitDefID, unitTeam, preEvent)
-	if preEvent == false then return end
-	
+function widget:UnitDestroyed(unitID, unitDefID, unitTeam)
+		
   etaTable[unitID] = nil
 end
 

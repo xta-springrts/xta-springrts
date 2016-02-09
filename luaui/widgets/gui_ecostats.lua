@@ -2388,9 +2388,8 @@ function widget:UnitGiven(unitID, unitDefID, unitTeam, oldTeam)
 	return false
 end
 
-function widget:UnitDestroyed(u,ud,ut, preEvent)
-	if preEvent == false then return end
-		
+function widget:UnitDestroyed(u,ud,ut)
+			
 	if teamData[ut] then
 		if AttackUnits[ud] then 
 		

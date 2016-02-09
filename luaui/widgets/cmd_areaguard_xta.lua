@@ -196,9 +196,8 @@ function widget:UnitDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weap
 	
 end
 
-function widget:UnitDestroyed(unitID, unitDefID, teamID, preEvent)
-	if preEvent == false then return end
-	
+function widget:UnitDestroyed(unitID, unitDefID, teamID)
+		
 	
 	if guardianTable[unitID] then
 		local sID = guardianTable[unitID]

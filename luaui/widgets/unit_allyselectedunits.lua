@@ -151,9 +151,8 @@ function widget:CommandsChanged( id, params, options )
 	sendSelectedUnits()
 end
 
-function widget:UnitDestroyed(unitID, _,_, preEvent)
-	if preEvent == false then return end
-	
+function widget:UnitDestroyed(unitID, _,_)
+		
 	hotUnits[ unitID ] = nil
 	myLastSelectedUnits[ unitID ] = nil
 	

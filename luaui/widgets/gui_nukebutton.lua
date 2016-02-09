@@ -311,9 +311,8 @@ function widget:MousePress(x, y, button)
 end
 
 
-function widget:UnitDestroyed( unitID, unitDefID, unitTeam, preEvent)
-	if preEvent == false then return end
-	
+function widget:UnitDestroyed( unitID, unitDefID, unitTeam)
+		
 	deleteNuke( unitID )
 end
 

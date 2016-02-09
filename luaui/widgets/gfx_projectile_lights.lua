@@ -52,9 +52,14 @@ local acos, cos			= math.acos, math.cos
 local abs				= math.abs
 local DegToRad			= 57.295779513082320876798
 
+local TooHigh = true
+local HighPing = false
+local FPSCount = Spring.GetFPS()
+local FPSLimit = 8
+
 local list      
 local plighttable = {}
-local BlackList = include("Configs/gfx_projectile_lights_defs.lua")	-- weapons that shouldn't use projectile lights
+local BlackList, Customlight, Armtrails, Coretrails, Tlltrails, Plasmabatts, Tlltrailssb, Armtrailssb, Coretrailssd = include("Configs/gfx_projectile_lights_defs.lua")	-- weapons that shouldn't use projectile lights
 local noise = {--this is so that it flashes a bit, should be addressed with (x+z)%10 +1
 	1.1,
 	1.0,
@@ -103,11 +108,10 @@ listL = glCreateList(function()	-- Laser cannon decal texture
     end)
 end)
 
-function IsTooHigh()
-	local cx, cy, cz = Spring.GetCameraPosition()
-	local smoothheight = Spring.GetSmoothMeshHeight(cx,cz)
-	local toohigh = ((cy-smoothheight)*(cy-smoothheight) >= 20000000)  -- i think faster
-	return toohigh
+function DrawStatus(toohigh,fps,ping)
+    TooHigh = toohigh
+    FPSCount = fps
+    HighPing = ping
 end
 
 function widget:Initialize() -- create lighttable
@@ -144,11 +148,11 @@ function widget:Initialize() -- create lighttable
 					weaponDef.projectilespeed * weaponDef.duration, colour.thickness^0.33333}			
 			elseif (weaponDef.type == 'LightningCannon') then
 				local colour = weaponDef.visuals
-				plighttable[w] = {colour.colorR, colour.colorG, colour.colorB, 0.75, true, 64*colour.thickness^0.45, 1.1}					
+				plighttable[w] = {colour.colorR, colour.colorG, colour.colorB, 0.16, true, 64*colour.thickness^0.50, 1.1}					
 			elseif (weaponDef.type == 'BeamLaser') then
-				local colour, alpha, thick, blend = weaponDef.visuals, 0.75, 0.45, 0.0
+				local colour, alpha, thick, blend = weaponDef.visuals, 0.15, 0.18, 0
 				if weaponDef.largeBeamLaser==true then
-					alpha, thick, blend = 0.16, 0.58, 0.12
+					alpha, thick, blend = 0.25, 0.80, 0.22
 				end
 				plighttable[w] = {colour.colorR+blend/2, colour.colorG+blend, colour.colorB, alpha, true, 64*colour.thickness^thick, 1.07}
 			elseif (weaponDef.type == 'Flame') then
@@ -158,23 +162,47 @@ function widget:Initialize() -- create lighttable
 	end
 end
 
+function widget:Shutdown()
+  widgetHandler:DeregisterGlobal('DrawManager_projectilelights', DrawStatus)
+end
+
 local plist = {}
+local plistlength = 0
 local frame = 0
 local x1, y1 = 0, 0
 local x2, y2 = Game.mapSizeX, Game.mapSizeZ
 local x, y, z, dx, dz, nx, ny, nz, ang
 local a, f, h = {}, {}, {}
-function widget:DrawWorldPreUnit()
+local effectsDisabled = false
 
+function widget:DrawWorldPreUnit()
+	
+	if TooHigh or (FPSCount < FPSLimit) or HighPing then 
+		return
+	end
+	
 	if frame < spGetGameFrame() then
 		frame = spGetGameFrame()
 		plist = spGetVisibleProjectiles(-1)
+		plistlength = #plist
+		--Spring.Echo(plistlength)
 	end
 
-	if #plist == 0 then
+	if plistlength == 0 then 
 		--dont do anything if there are no projectiles in range of view
 		return
 	end
+
+	if plistlength >= 650 then  --limits memory usage (laser/lightcannons eat memory for breakfast)
+		plistlength = 650
+	end
+
+	if plistlength > 250 then
+		effectsDisabled = true  --disable debree and lighning/laser effect
+	else
+		effectsDisabled = false
+	end
+
 
 	--enabling both test and mask means they wont be drawn over cliffs when obscured
 	--but also means that they will flicker cause of z-fighting when scrolling around...
@@ -192,19 +220,23 @@ function widget:DrawWorldPreUnit()
 	-- AND NOW FOR THE FUN STUFF!
 	local stpX, stpY, stpZ, r,g,b,al, w,nf	-- step in x,y,z axis for beam traversing,  RGBA values of lightparams,  light width, noize factor
 	local tx,ty,tz,px,py,pz,bx,bz, fa	-- target's x,y,z coordiantes,  x,y,z Position along the beam,  x,z position from iteration Before, alpha factor
-	for i=1, #plist do
+	for i=1, plistlength do
 		local pID = plist[i]
 		local wproj, pproj = spGetProjectileType(pID)
 
 		if pproj then
-			lightparams = {1.0, 0.8, 0.4, 0.3} -- debree from explosions
-		elseif wproj then
+			if effectsDisabled == false then
+				lightparams = {1.0, 0.8, 0.4, 0.3} -- debree from explosions
+			end
+		elseif wproj and plighttable[spGetProjectileDefID(pID)] and plighttable[spGetProjectileDefID(pID)][5] == true and effectsDisabled == false then
+			lightparams = plighttable[spGetProjectileDefID(pID)] -- beamlaser/lightningcannons projectile
+		elseif wproj and plighttable[spGetProjectileDefID(pID)] and plighttable[spGetProjectileDefID(pID)][5] == nil then
 			lightparams = plighttable[spGetProjectileDefID(pID)] -- weapon projectile
 		end
 
 		if lightparams then	-- there is a light defined for this projectile type
 			x, y, z = spGetProjectilePosition(pID)
-			if (x and y>0.0) and ( not IsTooHigh()) then -- projectile is above water					
+			if (x and y>0.0) then -- projectile is above water					
 				if lightparams[5] and type(lightparams[5])=="boolean" then -- BeamLaser and LightningCannon
 					tx,ty,tz = spGetProjectileVelocity(pID)
 					if tx then

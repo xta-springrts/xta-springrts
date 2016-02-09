@@ -72,9 +72,8 @@ function widget:UnitCreated(unitID, unitDefID, teamID)
 	end
 end
 
-function widget:UnitDestroyed(unitID, unitDefID, teamID, preEvent)
-	if preEvent == false then return end
-	
+function widget:UnitDestroyed(unitID, unitDefID, teamID)
+		
 	inWater[unitID] = nil
 end
 

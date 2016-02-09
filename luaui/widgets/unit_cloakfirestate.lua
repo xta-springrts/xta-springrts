@@ -113,8 +113,7 @@ function widget:UnitGiven(unitID, unitDefID, unitTeam)
   widget:UnitCreated(unitID, unitDefID, unitTeam)
 end
 
-function widget:UnitDestroyed(unitID, unitDefID, unitTeam, preEvent)
-	if preEvent == false then return end
-	
+function widget:UnitDestroyed(unitID, unitDefID, unitTeam)
+		
     cloakUnit[unitID] = nil
 end

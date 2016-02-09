@@ -172,6 +172,7 @@ local function UnitLanded(unitID, padID, pieceID)
 		local x,y,z = Spring.GetUnitPosition(padID)
 		Spring.PlaySoundFile('Sounds/unit/repair2.wav', 1.0, x, y, z,0,0,0,'battle')
 		CountQueues()
+		Spring.CallCOBScript(padID, "UnitLanded", 0,0,pieceNum)
 	end
 end
 
@@ -262,6 +263,7 @@ local function refuelCommand(unitID, unitDefID, cmdParams, teamID)
 			Spring.SetUnitMoveGoal(unitID,x1,y1,z1)
 		end
 		success = true
+		Spring.CallCOBScript(padID, "PrepareLanding", 0,0)
 	else
 		--Echo("Pad but no queue:",padID,teamID)
 	end
@@ -307,9 +309,12 @@ local function UnitHeadOff(unitID,padID)
 	if not b0 then
 		local loops = 0
 		repeat
-			x1 = x + math.random(-500,500)
+			local rx = math.random(200,500)
+			local rz = math.random(200,500)
+			local sign = math.random() > 0.5 and 1 or -1
+			x1 = x + sign * rx
 			y1 = y+200
-			z1 = z+ math.random(-500,500)
+			z1 = z+ sign * rz
 			b0 = Spring.TestMoveOrder(unitDefID,  x1, y1, z1, 0.0, 0.0, 0.0,  true, true, true)
 			loops = loops +1
 		until b0 or loops > 15
@@ -342,21 +347,23 @@ local function EjectUnit(unitID,padID)
 		local cmdDescID = FindUnitCmdDesc(padID, CMD_EJECT)
 		Spring.EditUnitCmdDesc(padID,cmdDescID,{disabled= true})
 		
+		Spring.CallCOBScript(padID, "UnitTookOff", 0,0)
 		UnitHeadOff(unitID,padID)
 	end
 end
 
-
 function gadget:GameFrame(frame)
 	
-	if frame%32 == 0 then
+	if frame%16 == 0 then
 		
 		for padID, Queue  in pairs(PadQueue) do
 			for pieceID,data in pairs(Queue) do
 				local unitID = data[1]
 				local pieceID = data[2]
-						
-				if unitID and Spring.ValidUnitID(unitID) and not LandedUnits[unitID] then
+				
+				--Echo("Processing:",padID,unitID,pieceID,Spring.ValidUnitID(unitID),Spring.ValidUnitID(padID))
+				
+				if unitID and Spring.ValidUnitID(unitID) and Spring.ValidUnitID(padID) and not LandedUnits[unitID] then
 					local distance = Spring.GetUnitSeparation(unitID,padID)
 					local x,y,z = Spring.GetUnitPosition(padID)
 					
@@ -505,17 +512,28 @@ function gadget:UnitCreated(unitID, unitDefID, teamID, builderID)
 	CountQueues()
 end
 
-function gadget:UnitDestroyed(unitID, unitDefID, unitTeam, _, _, _)
+function gadget:UnitDestroyed(unitID, unitDefID, unitTeam)
 	
 	if RepairPadHeight[unitDefID] then
-		PadQueue[unitID] = nil
+		--Echo("Pad died",unitID)
+		-- reset queue to pad
+		PadQueue[unitID] = nil 
 		
+		-- reset plane queue
 		for planeID,data in pairs(PlaneQueue) do
+			
 			local padID = data[1]
+			--Echo("PQ:",planeID,padID,unitID)
 			if padID == unitID then
-				PlaneQueue[unitID] = nil
+				PlaneQueue[planeID] = nil
+				local udID = GetUnitDefID(planeID)
+				local unitTeam = Spring.GetUnitTeam(planeID)
+				local success = refuelCommand(planeID, udID, {}, unitTeam)
 			end
 		end
+		
+		-- reset queue to pieces
+		PieceList[unitID] = nil
 	end
 	
 	if PlaneQueue[unitID] then
@@ -530,7 +548,9 @@ function gadget:UnitDestroyed(unitID, unitDefID, unitTeam, _, _, _)
 		end
 		
 		PlaneQueue[unitID] = nil
-		PieceList[padID][pieceID][3] = nil -- not occupied
+		if PieceList[padID] then
+			PieceList[padID][pieceID][3] = nil -- not occupied
+		end
 	end
 	
 	if WaitingUnits[unitID] then

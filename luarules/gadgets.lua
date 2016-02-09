@@ -39,7 +39,6 @@ VFS.Include(HANDLER_DIR .. 'system.lua',    nil, VFSMODE)
 VFS.Include(HANDLER_DIR .. 'callins.lua',   nil, VFSMODE)
 
 local actionHandler = VFS.Include(HANDLER_DIR .. 'actions.lua', nil, VFSMODE)
-local spring101 = (Game.version > "100" and Game.version:sub(1,1) == "1")
 
 --------------------------------------------------------------------------------
 
@@ -1310,24 +1309,12 @@ end
 
 function gadgetHandler:UnitDestroyed(
   unitID,     unitDefID,     unitTeam,
-  attackerID, attackerDefID, attackerTeam,
-  preEvent
-)
-  -- uncomment to maintain backward compatibility
-  -- for now we need compatibility with 98, 100 and 101
-	if spring101 then
-		if (not preEvent) then return end
-	else
-		if (preEvent) then return end
-	end
-
+  attackerID, attackerDefID, attackerTeam)
+  
   for _,g in r_ipairs(self.UnitDestroyedList) do
-	--Spring.Echo("G-UD:",g:GetInfo().name,unitID,preEvent)
     g:UnitDestroyed(
       unitID,     unitDefID,     unitTeam,
-      attackerID, attackerDefID, attackerTeam,
-      preEvent
-    )
+      attackerID, attackerDefID, attackerTeam)
   end
   return
 end
