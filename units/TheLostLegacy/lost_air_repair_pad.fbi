@@ -46,7 +46,7 @@
 	//  Building
 	//************
 	buildangle=1024;
-	yardmap=oooo oooo oooo oooo;
+	//yardmap=oooo oooo oooo oooo;
 	activatewhenbuilt=1;
 	collisionVolumeType=Box;
 	collisionVolumeScales=60 28 60;
@@ -57,7 +57,7 @@
 	//  Constructor
 	//***************
 	builder=1;
-	builddistance=6;
+	builddistance=128;
 	workertime=600; // was 200 inspired by Ivork//ing
 	repairSpeed = 1800; //increase from workertime to make repair pads more useful
 
@@ -73,6 +73,8 @@
 	canGuard=0;
 	canRepeat=0;
 	canrepair=1;
+	canRestore=0;
+	canReclaim=0;
 	
 	//************************************************************
 	//  Movement

@@ -36,22 +36,15 @@ local TurnRadiuses		= {}
 local GunshipDefs		= {}
 local Echo				= Spring.Echo
 local AirDefs 			= {}
-CMD_REFUEL = 33457
-
+local CMD_REFUEL 		= 33457
+local CMD_EJECT			= 36722
 local PadQueue 			= {}
 local PlaneQueue		= {}
 local LandedUnits		= {}
+local WaitingUnits		= {}
 
--- local PieceNames		= {
-	-- ['arm_air_repair_pad'] 		= {"landpad"},
-	-- ['arm_colossus'] 			= {"landpad1"},{"landpad2"},
-	-- ['core_air_repair_pad'] 	= {"pad"},
-	-- ['core_hive'] 				= {"pad1"},{"pad2"},
-	-- ['core_replenisher'] 		= {"pad"},
-	-- ['guardian_air_repair_pad'] = {"pad"},
-	-- ['lost_air_repair_pad'] 	= {"pad"},
-	-- ['lost_giant'] 				= {"pad1"},{"pad2"},
--- }
+local DEFAULTREPAIRLEVEL	= 0.3
+local QUEUEREPAIRLEVEL		= 0.8
 
 local refuelCmdDesc = {
   id      = CMD_REFUEL,
@@ -77,11 +70,10 @@ function gadget:Initialize()
 		if unitDef.canFly then
 			AirDefs[id] = true
 		end
-		--Echo("Pad check:",unitDef.name,unitDef.isAirBase)
+		
 		if unitDef.isAirBase then
 			RepairPadHeight[id] = Spring.GetUnitDefDimensions(id)["maxy"]
 			RepairpadList[#RepairpadList+1] = id
-		--Echo("Repair pad:",id,unitDef.name)
 		end
 		
 	end
@@ -94,25 +86,37 @@ function gadget:Initialize()
 end
 
 local function CalculateAngle(a1,a2,b1,b2)
-	--Echo("Vectors:",a1,a2,b1,b2)
-	
+		
 	local angle = math.atan2 (a1*b2-a2*b1,a1*b1+a2*b2) 
 	local dec	= angle/(2*math.pi)*360
 	dec = dec >= 0 and dec or dec + 360
 	dec = dec <= 180 and dec or 360 - dec
-	--Echo("Angle:",math.floor(dec))
 	return math.floor(dec)
 end
 
 local function CalculateDeviation(a1,a2,b1,b2)
-	--Echo("Vectors:",a1,a2,b1,b2)
-	
+		
 	local angle = math.atan2 (a1*b2-a2*b1,a1*b1+a2*b2)
 	local dec	= angle/(2*math.pi)*360
-	--Echo("Dev=",dec)
 	return math.floor(dec)
 end
 
+local function CountQueues()
+	local padq, planeq, wl = 0,0,0
+	
+	for _ in pairs(PadQueue) do
+		padq = padq + 1 
+	end
+	
+	for _ in pairs(PlaneQueue) do
+		planeq = planeq + 1 
+	end
+	
+	for _ in pairs(WaitingUnits) do
+		wl = wl+1
+	end
+	--Echo("Pads:",padq,"Planequeue:",planeq,"Waiting list:",wl)
+end
 
 local function CalculateDeviation2(a1,a2,b1,b2)
 	--Echo("Vectors:",a1,a2,b1,b2)
@@ -155,20 +159,26 @@ end
 local function UnitLanded(unitID, padID, pieceID) 
 	local pieceNum = PieceList[padID][pieceID][2]
 	if pieceNum then
-		--Echo(unitID .. " landed on:",padID,PieceList[padID][pieceID][1],"Q:",#PadQueue[padID])
+		--Echo(unitID .. " landed on:",padID,pieceNum,PieceList[padID][pieceID][1],"Q:",#PadQueue[padID])
 		Spring.UnitAttach(padID, unitID, pieceNum)
 		LandedUnits[unitID] = {padID,pieceID}
 		--Spring.GiveOrderToUnit(unitID,CMD.STOP,{},{})
 		--Spring.GiveOrderToUnit(padID,CMD.REPAIR,{unitID},{})
 		Spring.GiveOrderToUnit(padID,CMD.INSERT,{1,CMD.REPAIR,CMD.OPT_SHIFT,unitID},{"alt"})
 		
+		local cmdDescID = FindUnitCmdDesc(padID, CMD_EJECT)
+		Spring.EditUnitCmdDesc(padID,cmdDescID,{disabled= false})
+		
 		local x,y,z = Spring.GetUnitPosition(padID)
 		Spring.PlaySoundFile('Sounds/unit/repair2.wav', 1.0, x, y, z,0,0,0,'battle')
+		CountQueues()
 	end
 end
 
 local function refuelCommand(unitID, unitDefID, cmdParams, teamID)
 --Echo("Refuel:",unitID)
+  local success = false
+  --Echo("RC taken:",unitID,AirDefs[unitDefID],PlaneQueue[unitID],teamID)
   if (AirDefs[unitDefID]) and not PlaneQueue[unitID] then
 --Echo("--------------------> Unit:",unitID)
 	local pads = Spring.GetTeamUnitsByDefs(teamID,RepairpadList)
@@ -183,15 +193,16 @@ local function refuelCommand(unitID, unitDefID, cmdParams, teamID)
 	GunshipDefs[unitDefID] = UnitDefs[unitDefID].hoverAttack
 	
 	for j,uID in pairs(pads) do -- find a free repair pad
-	--Echo("-------------------------------------------")
-	--Echo("Checking pad-base:",j,uID,UnitDefs[GetUnitDefID(uID)].name)
+		--Echo("-------------------------------------------")
+		--Echo("Checking pad-base:",j,uID,UnitDefs[GetUnitDefID(uID)].name)
 		local this_distance = Spring.GetUnitSeparation(unitID,uID) or math.huge
 		
 		if not PieceList[uID] then
 			PieceList[uID] = {}
 			for name, number in pairs (Spring.GetUnitPieceMap(uID)) do
 				if name:find('pad') then
-					PieceList[uID][#PieceList[uID]+1] = {name, number, nil} -- third variable is occupied state	
+					PieceList[uID][#PieceList[uID]+1] = {name, number, nil} -- third variable is occupied state
+					--Echo("Added pad:",UnitDefs[GetUnitDefID(uID)].name,name,number)
 				end
 			end
 		end
@@ -223,7 +234,9 @@ local function refuelCommand(unitID, unitDefID, cmdParams, teamID)
 	end
 	
 	if not padID then
-		--Echo("No base found for:",unitID,UnitDefs[unitDefID].name)
+		--Echo("No pad found for:",unitID,UnitDefs[unitDefID].name)
+		WaitingUnits[unitID] = true
+		return false
 	end
 	
 	if padID and PadQueue[padID] then
@@ -248,12 +261,36 @@ local function refuelCommand(unitID, unitDefID, cmdParams, teamID)
 			local z1 = z - 500*pvz
 			Spring.SetUnitMoveGoal(unitID,x1,y1,z1)
 		end
+		success = true
+	else
+		--Echo("Pad but no queue:",padID,teamID)
 	end
     
 	local status
     status = '0'
 
 	UpdateButton(unitID, status)
+	return success
+	end
+end
+
+local function CheckWaitingList()
+	
+	for unitID in pairs(WaitingUnits) do
+		local health,maxhHP = Spring.GetUnitHealth(unitID)
+		if health and maxhHP and health/maxhHP < QUEUEREPAIRLEVEL then		
+			local unitDefID = GetUnitDefID(unitID)
+			local unitTeam = Spring.GetUnitTeam(unitID)
+			local success = refuelCommand(unitID, unitDefID, {}, unitTeam)
+			--Echo("UHO:",unitID,unitDefID,success)
+			if success then
+				WaitingUnits[unitID] = nil
+			else
+				break;
+			end
+		else
+			WaitingUnits[unitID] = nil
+		end
 	end
 end
 
@@ -278,21 +315,37 @@ local function UnitHeadOff(unitID,padID)
 		until b0 or loops > 15
 	end
 		
-	--local dist = ((x1-x)*(x1-x)+(y1-y)*(y1-y)+(z1-z)*(z1-z))^0.5
-		
-	--Spring.MarkerAddPoint (x,y,z,"P1")
-	--Spring.MarkerAddPoint (x1,y1,z1,"P4")
-	--Echo("Dist:",dist)
-	--Spring.SetUnitMoveGoal(unitID,x1,y1,z1)
-	Spring.SetUnitLandGoal(unitID, x1, y1+100, z1)
+	Spring.SetUnitLandGoal(unitID, x1, y1+100, z1,200)
+	CheckWaitingList()
+	CountQueues()
+end
+
+local function EjectUnit(unitID,padID)
+	local pieceID = LandedUnits[unitID][2]
 	
-
+	if pieceID then
+		PlaneQueue[unitID] = nil					
+		PieceList[padID][pieceID][3] = nil -- not occupied
+		
+		for i,data in pairs(PadQueue[padID]) do
+			if data[1] == unitID then
+				table.remove(PadQueue[padID],i)
+				--Echo("Removed:",unitID,padID,pieceID)
+			end
+		end
+		
+		LandedUnits[unitID] = nil
+		--Echo("Detaching unit:",unitID)
+		Spring.UnitDetach(unitID)
+		Spring.SetUnitVelocity(unitID,0,4,0)
+		
+		local cmdDescID = FindUnitCmdDesc(padID, CMD_EJECT)
+		Spring.EditUnitCmdDesc(padID,cmdDescID,{disabled= true})
+		
+		UnitHeadOff(unitID,padID)
+	end
 end
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-local function WayPoint3()
 
-end
 
 function gadget:GameFrame(frame)
 	
@@ -427,41 +480,11 @@ function gadget:UnitCmdDone(unitID, unitDefID, unitTeam, cmdID, cmdTag, cmdParam
 	
 	if cmdID == CMD.REPAIR and LandedUnits[cmdParams[1]] then
 		local padID = unitID
-		local unitID = cmdParams[1]
-		local pieceID = LandedUnits[unitID][2]
-		--Echo("Repairs done:",padID,unitID,pieceID)
-		
-		
+		local unitID = cmdParams[1]					
 		local health, maxHP =  Spring.GetUnitHealth(unitID)
-		
+
 		if health == maxHP then
-			PlaneQueue[unitID] = nil
-		--Echo("Piecelist status before:",padID)
-			
-			for i,data in pairs(PieceList[padID]) do
-			--Echo("Pad:", i, data[1], data[2], data[3])
-			end
-			
-			PieceList[padID][pieceID][3] = nil -- not occupied
-			
-			
-		--Echo("After--->")
-			for i,data in pairs(PieceList[padID]) do
-			--Echo("Pad:", i, data[1], data[2], data[3])
-			end
-			
-			for i,data in pairs(PadQueue[padID]) do
-				if data[1] == unitID then
-					table.remove(PadQueue[padID],i)
-					--Echo("Removed:",unitID,padID,pieceID)
-				end
-			end
-			
-			LandedUnits[unitID] = nil
-			--Echo("Detaching unit:",unitID)
-			Spring.UnitDetach(unitID)
-			Spring.SetUnitVelocity(unitID,0,4,0)
-			UnitHeadOff(unitID,padID)				
+			EjectUnit(unitID,padID)
 		else
 			Spring.PlaySoundFile('Sounds/unit/repair2.wav', 1.0, x, y, z,0,0,0,'battle')
 		end
@@ -469,22 +492,30 @@ function gadget:UnitCmdDone(unitID, unitDefID, unitTeam, cmdID, cmdTag, cmdParam
 end
 
 function gadget:UnitCreated(unitID, unitDefID, teamID, builderID)
-  
+	
   if (AirDefs[unitDefID]) then
     AddrefuelCmdDesc(unitID)
     UpdateButton(unitID, '0')
-    --RetreatCommand(unitID, unitDefID, { builderInfo[1] }, teamID)
   end
   
 	if RepairPadHeight[unitDefID] then
 		PadQueue[unitID] = {}
+		CheckWaitingList()
 	end
+	CountQueues()
 end
 
 function gadget:UnitDestroyed(unitID, unitDefID, unitTeam, _, _, _)
 	
 	if RepairPadHeight[unitDefID] then
 		PadQueue[unitID] = nil
+		
+		for planeID,data in pairs(PlaneQueue) do
+			local padID = data[1]
+			if padID == unitID then
+				PlaneQueue[unitID] = nil
+			end
+		end
 	end
 	
 	if PlaneQueue[unitID] then
@@ -502,13 +533,15 @@ function gadget:UnitDestroyed(unitID, unitDefID, unitTeam, _, _, _)
 		PieceList[padID][pieceID][3] = nil -- not occupied
 	end
 	
+	if WaitingUnits[unitID] then
+		WaitingUnits[unitID] = nil
+	end
+	CountQueues()
 end
 
 function gadget:UnitDamaged(unitID, unitDefID, unitTeam)
 	if (AirDefs[unitDefID]) and not PlaneQueue[unitID] then 
-		local repairLevel  = select(8,Spring.GetUnitStates(unitID)) or 0.3
-		
-		
+		local repairLevel  = select(8,Spring.GetUnitStates(unitID)) or DEFAULTREPAIRLEVEL
 		local health,maxhHP = Spring.GetUnitHealth(unitID)
 		--Echo("UD:",unitID,repairLevel,health,maxhHP)
 		
@@ -520,18 +553,29 @@ end
 
 function gadget:UnitGiven(unitID, unitDefID, newTeam, oldTeam)
 	if RepairPadHeight[unitDefID] then
-		if AreTeamsAllied(newTeam, oldteam) then
-			if not PadQueue[unitID] then
-				PadQueue[unitID] = {}
-				
-			end
-		else
-			PadQueue[unitID] = nil
+		--Echo("UG:",unitID,newTeam)
+		PadQueue[unitID] = {} -- clear queue but keep it queable
+		
+		for planeID,data in pairs(PlaneQueue) do
+			local padID = data[1]
+			if padID == unitID then
+				PlaneQueue[planeID] = nil
+				local udID = GetUnitDefID(planeID)
+				local unitTeam = Spring.GetUnitTeam(planeID)
+				local success = refuelCommand(planeID, udID, {}, unitTeam)
+			end	
 		end
+		
+		for pieceID in pairs(PieceList[unitID]) do
+			PieceList[unitID][pieceID][3] = nil -- not occupied
+		end
+		
+		CheckWaitingList()
+		CountQueues()
 	end
 	
 	if PlaneQueue[unitID] then
-		if AreTeamsAllied(newTeam, oldteam) then
+		if AreTeamsAllied(newTeam, oldTeam) then
 			-- do nothing for now
 		else
 			local padID = PlaneQueue[unitID][1]
@@ -545,12 +589,31 @@ function gadget:UnitGiven(unitID, unitDefID, newTeam, oldTeam)
 end
 
 function gadget:AllowCommand(unitID, unitDefID, teamID, cmdID, cmdParams, _)
-  local returnvalue
-  if cmdID ~= CMD_REFUEL then
-    return true
-  end
-  refuelCommand(unitID, unitDefID, cmdParams, teamID)  
-  return false
+  
+	if cmdID == CMD_REFUEL then
+		refuelCommand(unitID, unitDefID, cmdParams, teamID)  
+		return false
+	elseif cmdID == CMD.REPAIR then
+		if RepairPadHeight[unitDefID] then
+			if #cmdParams > 1 or not LandedUnits[cmdParams[1]] then
+				return false
+			end
+		end
+	elseif cmdID == CMD_EJECT and RepairPadHeight[unitDefID] then
+		local padID = unitID
+		if PieceList[padID] then
+			for i,data in pairs(PieceList[padID]) do
+				local unitID = data[3]
+				if unitID and LandedUnits[unitID] then
+					EjectUnit(unitID,padID)
+					Spring.GiveOrderToUnit(padID,CMD.STOP,{},{})
+				end
+			end
+		end
+		return false
+	end
+  
+  return true
 end
 
 function gadget:Shutdown()

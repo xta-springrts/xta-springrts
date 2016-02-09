@@ -139,6 +139,8 @@ if (gadgetHandler:IsSyncedCode()) then
 					
 					spPlaySoundFile(CommanderSounds.GLHFSongs[unitDefID][idx], volume)
 					switchGreetButtons()
+					switchThxButton(unitTeamID)
+					teamsThatHaveSaidThanks[unitTeamID] = true
 					firstGreetDone = true
 					return false
 				--ty command
@@ -319,8 +321,6 @@ else
 		spPlaySoundFile(CommanderSounds.CommanderRepaired, 1.0, spGetUnitPosition(unitID))
 		return true
 	end
-
-
 
 	function gadget:Initialize()
 		gadgetHandler:AddSyncAction('usUnitDamaged', usUnitDamaged)

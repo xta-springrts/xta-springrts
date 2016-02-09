@@ -21,6 +21,8 @@ CMD_BUILDSPEED 								= 33455
 CMD_ENERGYCONVERT 							= 39310
 CMD_DUCK									= 41111
 CMD_CAPTURE									= CMD.CAPTURE
+CMD_EJECT									= 36722
+CMD_REFUEL 									= 33457
 
 local SetCustomCommandDrawData				= Spring.SetCustomCommandDrawData
 local FindUnitCmdDesc 						= Spring.FindUnitCmdDesc
@@ -30,6 +32,7 @@ if (gadgetHandler:IsSyncedCode()) then
 --SYNCED
 
 local CMD_GUARD 							= CMD.GUARD
+local CMD_REPAIR 							= CMD.REPAIR
 local Echo 									= Spring.Echo
 local EditUnitCmdDesc						= Spring.EditUnitCmdDesc
 local FindUnitCmdDesc						= Spring.FindUnitCmdDesc
@@ -55,6 +58,16 @@ local factoryGuardCmd = {
   tooltip = 'Factory guard: pass through share of units guarding factory',
   params  = { '0', 'Pass none', 'Pass 25%', 'Pass 50%', 'Pass 75%', 'Pass 100%'},
   hidden = true,
+}
+
+local ejectCmd = {
+id      = CMD_EJECT,
+name    = "Release",
+action  = "eject",
+cursor  = 'Guard',
+type    = CMDTYPE.ICON,
+tooltip = "Release all attached units",
+disabled= true,
 }
 
 local duckCmd	= 	{
@@ -186,6 +199,12 @@ function gadget:UnitCreated(unitID, unitDefID, teamID)
 	
 	if uD.canGuard and uD.name:find("nano_tower") then
 		InsertUnitCmdDesc(unitID, 66, duckCmd)
+	end
+	
+	if uD.isAirBase then
+		local cmdDescID = FindUnitCmdDesc(unitID, CMD_REPAIR)
+		Spring.EditUnitCmdDesc(unitID,cmdDescID,{hidden = true})
+		InsertUnitCmdDesc(unitID, 50, ejectCmd)
 	end
 end
 
