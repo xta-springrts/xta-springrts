@@ -119,6 +119,8 @@
 	[SFXTypes]
 	{
 	explosiongenerator0=custom:Nano;
+	explosiongenerator1=custom:WhiteLightSmall;
+	explosiongenerator2=custom:RedLightSmall;
 	}
 
 }

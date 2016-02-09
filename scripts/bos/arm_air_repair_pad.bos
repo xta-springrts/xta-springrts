@@ -1,0 +1,155 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+piece  base, landpad, beam1, beam2, nano1, nano2, light1, light2;
+
+static-var  spray, landed, light;
+#define SIG_LIGHTS	2;
+
+Lights()
+{
+	set-signal-mask SIG_LIGHTS;
+	while( TRUE )
+	{
+		if (!landed)
+		{
+			if (light == 0)
+			{
+			emit-sfx 1025 from light1;
+			}
+			if (light == 1)
+			{
+			emit-sfx 1025 from light2;
+			}
+			light = !light;
+			sleep 1200;
+		}
+		if (landed)
+		{
+			emit-sfx 1026 from light1;
+			emit-sfx 1026 from light2;
+			sleep 100;
+		}
+	}
+}
+
+UnitLanded(pieceNum)
+{
+	landed = 1;
+}
+
+UnitTookOff()
+{
+	landed = 0;
+	signal SIG_LIGHTS;
+}
+
+PrepareLanding()
+{
+	landed = 0;
+	start-script Lights();
+	light = 0;
+}
+
+SmokeUnit(healthpercent, sleeptime, smoketype)
+{
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 400;
+	}
+	while( TRUE )
+	{
+		healthpercent = get HEALTH;
+		if( healthpercent < 66 )
+		{
+			smoketype = 256 | 2;
+			if( Rand( 1, 66 ) < healthpercent )
+			{
+				smoketype = 256 | 1;
+			}
+			emit-sfx smoketype from base;
+		}
+		sleeptime = healthpercent * 50;
+		if( sleeptime < 200 )
+		{
+			sleeptime = 200;
+		}
+		sleep sleeptime;
+	}
+}
+
+Create()
+{
+	spray = base;
+	start-script SmokeUnit();
+}
+
+SweetSpot(piecenum)
+{
+	piecenum = base;
+}
+
+QueryLandingPad(piecenum1, piecenum2)
+{
+	piecenum1 = 1;
+	piecenum2 = 1;
+}
+
+QueryNanoPiece(piecenum)
+{
+	if( spray == 0 )
+	{
+		piecenum = beam1;
+	}
+	if( spray != 0 )
+	{
+		piecenum = beam2;
+	}
+	spray = !spray;
+}
+
+Killed(severity, corpsetype)
+{
+	if( severity <= 25 )
+	{
+		corpsetype = 1;
+		explode base type BITMAPONLY | BITMAP1;
+		explode beam1 type BITMAPONLY | BITMAP2;
+		explode beam2 type BITMAPONLY | BITMAP3;
+		explode landpad type BITMAPONLY | BITMAP4;
+		explode nano1 type BITMAPONLY | BITMAP5;
+		explode nano2 type BITMAPONLY | BITMAP1;
+		return (0);
+	}
+	if( severity <= 50 )
+	{
+		corpsetype = 2;
+		explode base type BITMAPONLY | BITMAP1;
+		explode beam1 type FALL | BITMAP2;
+		explode beam2 type FALL | BITMAP3;
+		explode landpad type BITMAPONLY | BITMAP4;
+		explode nano1 type FALL | BITMAP5;
+		explode nano2 type FALL | BITMAP1;
+		return (0);
+	}
+	if( severity <= 99 )
+	{
+		corpsetype = 3;
+		explode base type BITMAPONLY | BITMAP1;
+		explode beam1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+		explode beam2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+		explode landpad type BITMAPONLY | BITMAP4;
+		explode nano1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+		explode nano2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+		return (0);
+	}
+	corpsetype = 3;
+	explode base type BITMAPONLY | BITMAP1;
+	explode beam1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode beam2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+	explode landpad type BITMAPONLY | BITMAP4;
+	explode nano1 type SHATTER | EXPLODE_ON_HIT | BITMAP5;
+	explode nano2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+}

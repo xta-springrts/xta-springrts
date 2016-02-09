@@ -1,0 +1,158 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+piece  base, pad, bridge, color, system, lathe, core, system2,
+       system2b, system3, system3b, light1, light2;
+
+static-var  Static_Var_1, landed, light;
+#define SIG_LIGHTS	2;
+
+Lights()
+{
+	set-signal-mask SIG_LIGHTS;
+	while( TRUE )
+	{
+		if (!landed)
+		{
+			if (light == 0)
+			{
+			emit-sfx 1025 from light1;
+			}
+			if (light == 1)
+			{
+			emit-sfx 1025 from light2;
+			}
+			light = !light;
+			sleep 1200;
+		}
+		if (landed)
+		{
+			emit-sfx 1026 from light1;
+			emit-sfx 1026 from light2;
+			sleep 100;
+		}
+	}
+}
+
+UnitLanded(pieceNum)
+{
+	landed = 1;
+}
+
+UnitTookOff()
+{
+	landed = 0;
+	signal SIG_LIGHTS;
+}
+
+PrepareLanding()
+{
+	landed = 0;
+	start-script Lights();
+	light = 0;
+}
+
+SmokeUnit(healthpercent, sleeptime, smoketype)
+{
+	var Func_Var_4;
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 400;
+	}
+	while( TRUE )
+	{
+		healthpercent = get HEALTH;
+		if( healthpercent < 66 )
+		{
+			smoketype = 256 | 2;
+			if( Rand( 1, 66 ) < healthpercent )
+			{
+				smoketype = 256 | 1;
+			}
+			Func_Var_4 = Rand( 1, 2 );
+			if( Func_Var_4 == 1 )
+			{
+				emit-sfx smoketype from core;
+			}
+			if( Func_Var_4 == 2 )
+			{
+				emit-sfx smoketype from bridge;
+			}
+		}
+		sleeptime = healthpercent * 50;
+		if( sleeptime < 200 )
+		{
+			sleeptime = 200;
+		}
+		sleep sleeptime;
+	}
+}
+
+Create()
+{
+	Static_Var_1 = 0;
+	dont-shade base;
+	dont-shade bridge;
+	dont-shade color;
+	dont-shade system;
+	dont-shade core;
+	dont-shade system2;
+	dont-shade system2b;
+	dont-shade system3;
+	dont-shade system3b;
+	start-script SmokeUnit();
+}
+
+SweetSpot(piecenum)
+{
+	piecenum = base;
+}
+
+QueryLandingPad(Func_Var_1, Func_Var_2)
+{
+	Func_Var_1 = 1;
+	Func_Var_2 = 1;
+}
+
+QueryNanoPiece(piecenum)
+{
+	piecenum = lathe;
+}
+
+Killed(severity, corpsetype)
+{
+	if( severity <= 25 )
+	{
+		corpsetype = 1;
+		explode base type BITMAPONLY | BITMAP5;
+		explode core type BITMAPONLY | BITMAP2;
+		explode bridge type BITMAPONLY | BITMAP2;
+		explode system2b type BITMAPONLY | BITMAP5;
+		explode system3b type BITMAPONLY | BITMAP5;
+		explode system2 type SHATTER | BITMAP4;
+		explode system3 type SHATTER | BITMAP4;
+		return (0);
+	}
+	if( severity <= 50 )
+	{
+		corpsetype = 2;
+		explode base type SHATTER | EXPLODE_ON_HIT | BITMAP3;
+		explode core type BITMAPONLY | BITMAP1;
+		explode bridge type FALL | SMOKE | EXPLODE_ON_HIT | BITMAP2;
+		explode system2b type BITMAPONLY | BITMAP2;
+		explode system3b type BITMAPONLY | BITMAP2;
+		explode system2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+		explode system3 type FALL | SMOKE | BITMAP3;
+		return (0);
+	}
+	corpsetype = 3;
+	explode base type SHATTER | EXPLODE_ON_HIT | BITMAP3;
+	explode core type BITMAPONLY | BITMAP1;
+	explode bridge type FALL | SMOKE | EXPLODE_ON_HIT | BITMAP2;
+	explode system2b type BITMAPONLY | BITMAP1;
+	explode system3b type BITMAPONLY | BITMAP2;
+	explode system2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode system3 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+}
