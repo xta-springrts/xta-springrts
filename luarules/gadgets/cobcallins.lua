@@ -26,6 +26,7 @@ if gadgetHandler:IsSyncedCode() then
 	local CMD_WAIT			= CMD.WAIT
 	
 	local gunships		= {}
+	local spring101 = (Game.version > "100" and Game.version:sub(1,1) == "1")
 		
 	function gadget:Initialize()	
 		gadgetHandler:RegisterGlobal("UnitStoppedMoving", UnitStoppedMoving)
@@ -52,6 +53,21 @@ if gadgetHandler:IsSyncedCode() then
 		gadgetHandler:DeregisterGlobal("PelicanReform")
 	end
 	
+	-- temporary fix for spring 100 and before
+	-- https://springrts.com/mantis/view.php?id=5080
+	if not spring101 then
+		function gadget:AllowCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdOptions, cmdTag, synced)
+			if UnitDefs[unitDefID].canFly then
+				if cmdID == CMD.GUARD or cmdID == CMD.AREAGUARD then
+					Spring.GiveOrderToUnit(unitID, CMD.IDLEMODE, { 0 }, { })  -- set to fly
+				elseif cmdID == CMD.STOP then
+					Spring.GiveOrderToUnit(unitID, CMD.IDLEMODE, { 1 }, { })  -- set to land
+				end
+			end
+			return true
+		end
+	end
+	
 	function UnitActivated(unitID,unitDefID,teamID)
 		--Echo("Activated() called for unitID:",unitID,UnitDefs[unitDefID].name)
 	end
@@ -62,7 +78,7 @@ if gadgetHandler:IsSyncedCode() then
 	
 	-- only applies for units that call lua_UnitStoppedMoving() in cob
 	function UnitStoppedMoving(unitID,unitDefID,teamID)
-		--Echo("StoppedMoving called for unitID:",unitID,UnitDefs[unitDefID].name)
+		--Echo("StoppedMoving() called for unitID:",unitID,UnitDefs[unitDefID].name)
 				
 		if not airlos[unitDefID] then
 			local this_airlos = Spring.GetUnitSensorRadius(unitID,"airLos")
@@ -92,7 +108,7 @@ if gadgetHandler:IsSyncedCode() then
 	end
 	
 	function UnitStartedMoving(unitID,unitDefID,teamID)
-		--Echo("StartMoving called for unitID:",unitID,UnitDefs[unitDefID].name)
+		--Echo("StartMoving() called for unitID:",unitID,UnitDefs[unitDefID].name)
 		if airlos[unitDefID] then 
 			Spring.SetUnitSensorRadius(unitID,"airLos",airlos[unitDefID])
 		end
