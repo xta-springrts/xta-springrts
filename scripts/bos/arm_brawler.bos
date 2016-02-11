@@ -94,24 +94,31 @@ Create()
 	start-script SmokeUnit();
 }
 
+MoveRate0()
+{
+	
+}
+
+MoveRate1()
+{
+	
+}
+
+MoveRate2()
+{
+	
+}
+
 Activate()
 {
 	start-script RequestState(0);
+	call-script lua_UnitStartedMoving();
 }
 
 Deactivate()
 {
-	start-script RequestState(1);
-}
-
-StartMoving()
-{
-	call-script lua_UnitStartedMoving();
-}
-
-StopMoving()
-{
 	call-script lua_UnitStoppedMoving();
+	start-script RequestState(1);
 }
 
 SweetSpot(piecenum)

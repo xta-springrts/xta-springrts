@@ -28,10 +28,12 @@ activatescr()
 	move wing2 to z-axis [0.000000] now;
 	move wing2 to z-axis [-1.850000] speed [1.853699];
 	sleep 998;
+	call-script lua_UnitStartedMoving();
 }
 
 deactivatescr()
 {
+	call-script lua_UnitStoppedMoving();
 	move wing1 to x-axis [6.750000] now;
 	move wing1 to x-axis [0.000000] speed [6.763513];
 	move wing1 to z-axis [-1.750000] now;
@@ -115,16 +117,7 @@ Activate()
 Deactivate()
 {
 	start-script RequestState(1);
-}
-
-StartMoving()
-{
-	call-script lua_UnitStartedMoving();
-}
-
-StopMoving()
-{
-	call-script lua_UnitStoppedMoving();
+	
 }
 
 RestoreAfterDelay()

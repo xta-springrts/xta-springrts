@@ -4,12 +4,99 @@
 #include "exptype.h"
 
 piece  base, landpad1, landpad2, radar, wake1, wake2, ground,
-	   ignite1, ignite2, ignite3, ignite4, ignite5, ignite6;
+	   ignite1, ignite2, ignite3, ignite4, ignite5, ignite6, light1, light2;
 
-static-var  Static_Var_1;
+static-var  Static_Var_1, landed, light, prepare;
 
 // Signal definitions
-#define SIG_MOVE			2
+#define SIG_MOVE			2;
+#define SIG_LIGHTS			4;
+
+Lights()
+{
+	set-signal-mask SIG_LIGHTS;
+	while( TRUE )
+	{
+		if (!landed && prepare)
+		{
+			if (light == 0)
+			{
+			emit-sfx 1025 from light1;
+			}
+			if (light == 1)
+			{
+			emit-sfx 1025 from light2;
+			}
+			light = !light;
+			sleep 1200;
+		}
+		if (landed == 1)
+		{
+			emit-sfx 1025 from light1;
+			emit-sfx 1025 from light2;
+			sleep 600;
+		}
+		if (landed == 2)
+		{
+			emit-sfx 1026 from light1;
+			emit-sfx 1026 from light2;
+			sleep 600;
+		}
+	}
+}
+
+UnitLanded(pieceNum)
+{
+	if (landed == 1)
+		{
+			landed = 2;
+		}
+	if (!landed)
+		{
+			landed = 1;
+		}
+	if (prepare == 2)
+		{
+			prepare = 1;
+		}
+	if (prepare == 1)
+		{
+			prepare = 0;
+		}
+}
+
+UnitTookOff()
+{
+	if (landed == 2)
+		{
+			landed = 1;
+		}
+	if (landed == 1)
+		{
+			landed = 0;
+		}
+	
+	if (!landed){
+		signal SIG_LIGHTS;
+	}
+	
+}
+
+PrepareLanding()
+{
+	if (prepare == 1)
+	{
+		prepare = 2;
+	}
+	if (!prepare)
+	{
+		prepare = 1;
+	}
+	if (!landed){
+	start-script Lights();
+	light = 0;
+	}
+}
 
 SetDirection(heading)
 {

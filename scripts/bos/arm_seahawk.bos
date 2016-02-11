@@ -171,10 +171,12 @@ Activate()
 	start-script RequestState(0);
 	spin sonar1 around y-axis speed <90.021978>;
 	spin sonar2 around y-axis speed <90.021978>;
+	call-script lua_UnitStartedMoving();
 }
 
 Deactivate()
 {
+	call-script lua_UnitStoppedMoving();
 	start-script RequestState(1);
 	stop-spin sonar1 around y-axis;
 	stop-spin sonar2 around y-axis;
@@ -184,7 +186,6 @@ StartMoving()
 {
 	signal 2;
 	set-signal-mask 2;
-	call-script lua_UnitStartedMoving();
 	emit-sfx 259 from lwing;
 	emit-sfx 259 from rwing;
 	
@@ -207,7 +208,7 @@ StartMoving()
 StopMoving()
 {
 	signal 2;
-	call-script lua_UnitStoppedMoving();
+	
 }
 
 setSFXoccupy(_terraintype)

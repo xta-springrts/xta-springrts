@@ -50,6 +50,7 @@ activatescr()
 		move arm3 to x-axis [2.000000] speed [10.000000];
 		move arm4 to x-axis [-2.000000] speed [10.000000];
 		sleep 998;
+		call-script lua_UnitStartedMoving();
 	}
 	sleep 44;
 }
@@ -58,6 +59,7 @@ deactivatescr()
 {
 	if( TRUE )
 	{
+		call-script lua_UnitStoppedMoving();
 		move arm1 to x-axis [0.000000] speed [3.000000];
 		move arm2 to x-axis [0.000000] speed [3.000000];
 		move arm3 to x-axis [0.000000] speed [2.000000];
@@ -220,7 +222,6 @@ StopMoving()
 {
 	signal 2;
 	_Moverate = 0;
-	call-script lua_UnitStoppedMoving();
 }
 
 MoveRate1()
@@ -229,7 +230,6 @@ MoveRate1()
 	set-signal-mask 2;
 	start-script ProcessFlames();
 	_Moverate = 1;
-	call-script lua_UnitStartedMoving();
 }
 
 MoveRate2()

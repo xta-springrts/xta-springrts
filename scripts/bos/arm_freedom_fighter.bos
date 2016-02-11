@@ -5,7 +5,7 @@
 
 piece  flare1, flare2, base, wing1, wing2, rearthrust, rearthrust2;
 
-static-var  Static_Var_1, gun_1, statechg_DesiredState, statechg_StateChanging, Static_Var_5,MissilesOn;
+static-var  Static_Var_1, gun_1, statechg_DesiredState, statechg_StateChanging, bMoving,MissilesOn;
 
 lua_UnitStoppedMoving()
 { 
@@ -24,7 +24,7 @@ Crashing(Func_Var_1)
 	Func_Var_1 = get HEALTH;
 	if( Func_Var_1 < 0 )
 	{
-		Static_Var_5 = 2;
+		bMoving = 2;
 	}
 }
 */
@@ -39,7 +39,7 @@ activatescr()
 	move wing2 to x-axis [2.449994] speed [1.680377];
 	move wing2 to z-axis [0.000000] now;
 	move wing2 to z-axis [-0.550000] speed [0.377228];
-	//Static_Var_5 = 1;
+	bMoving = 1;
 	turn wing1 to z-axis <0.000000> now;
 	turn wing1 to z-axis <0.890110> speed <0.615385>;
 	turn wing2 to z-axis <0.000000> now;
@@ -54,14 +54,14 @@ Flamers()
 {
 	while( TRUE )
 	{
-		if( Static_Var_5 == 1 )
+		if( bMoving == 1 )
 		{
 			emit-sfx 1024 from rearthrust;
 			emit-sfx 1024 from rearthrust2;
 		}
 		sleep 1;
 	}
-	if( Static_Var_5 == 2 )
+	if( bMoving == 2 )
 	{
 		emit-sfx 1024 + 1 from rearthrust;
 		emit-sfx 1024 + 1 from base;
@@ -85,7 +85,7 @@ deactivatescr()
 	move wing2 to x-axis [0.000000] speed [1.680377];
 	move wing2 to z-axis [-0.550000] now;
 	move wing2 to z-axis [0.000000] speed [0.377228];
-	//Static_Var_5 = 0;
+	bMoving = 0;
 	turn wing1 to z-axis <0.890110> now;
 	turn wing1 to z-axis <0.000000> speed <0.615385>;
 	turn wing2 to z-axis <-2.692308> now;
@@ -174,23 +174,13 @@ Create()
 Activate()
 {
 	start-script RequestState(0);
+	call-script lua_UnitStartedMoving();
 }
 
 Deactivate()
 {
-	start-script RequestState(1);
-}
-
-StartMoving()
-{
-	MissilesOn = 1;
-	call-script lua_UnitStartedMoving();
-}
-
-StopMoving()
-{
-	MissilesOn = 0;
 	call-script lua_UnitStoppedMoving();
+	start-script RequestState(1);
 }
 
 AimFromPrimary(piecenum)
@@ -200,7 +190,7 @@ AimFromPrimary(piecenum)
 
 AimPrimary()
 {
-	if (MissilesOn) {return 1;   }
+	if (bMoving) {return 1;   }
 	return 0;
 }
 

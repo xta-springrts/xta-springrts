@@ -5,7 +5,7 @@
 
 piece  base, wing1, wing2;
 
-static-var  Static_Var_1, Static_Var_2;
+static-var  desiredState, stateChanging;
 
 lua_UnitStoppedMoving()
 { 
@@ -81,34 +81,34 @@ SmokeUnit(healthpercent, sleeptime, smoketype)
 
 InitState()
 {
-	Static_Var_1 = 1;
-	Static_Var_2 = 0;
+	desiredState = 1;
+	stateChanging = 0;
 }
 
 RequestState(requestedstate, currentstate)
 {
-	if( Static_Var_2 )
+	if( stateChanging )
 	{
-		Static_Var_1 = requestedstate;
+		desiredState = requestedstate;
 		return (0);
 	}
-	Static_Var_2 = 1;
-	currentstate = Static_Var_1;
-	Static_Var_1 = requestedstate;
-	while( Static_Var_1 != currentstate )
+	stateChanging = 1;
+	currentstate = desiredState;
+	desiredState = requestedstate;
+	while( desiredState != currentstate )
 	{
-		if( Static_Var_1 == 0 )
+		if( desiredState == 0 )
 		{
 			call-script activatescr();
 			currentstate = 0;
 		}
-		if( Static_Var_1 == 1 )
+		if( desiredState == 1 )
 		{
 			call-script deactivatescr();
 			currentstate = 1;
 		}
 	}
-	Static_Var_2 = 0;
+	stateChanging = 0;
 }
 
 Create()
@@ -120,21 +120,13 @@ Create()
 Activate()
 {
 	start-script RequestState(0);
+	call-script lua_UnitStartedMoving();
 }
 
 Deactivate()
 {
-	start-script RequestState(1);
-}
-
-StartMoving()
-{
-	call-script lua_UnitStartedMoving();
-}
-
-StopMoving()
-{
 	call-script lua_UnitStoppedMoving();
+	start-script RequestState(1);
 }
 
 StartBuilding()

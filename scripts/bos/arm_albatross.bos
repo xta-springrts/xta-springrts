@@ -5,7 +5,7 @@
 
 piece  lwing, rwing, flare1, flare2, base, wake1, wake2, bombdrop;
 
-static-var  Static_Var_1, Terraintype, Static_Var_3, Static_Var_4;
+static-var  Static_Var_1, Terraintype, desiredState, stateChanging;
 
 lua_UnitStoppedMoving()
 { 
@@ -82,34 +82,34 @@ SmokeUnit(healthpercent, sleeptime, smoketype)
 
 InitState()
 {
-	Static_Var_3 = 1;
-	Static_Var_4 = 0;
+	desiredState = 1;
+	stateChanging = 0;
 }
 
 RequestState(requestedstate, currentstate)
 {
-	if( Static_Var_4 )
+	if( stateChanging )
 	{
-		Static_Var_3 = requestedstate;
+		desiredState = requestedstate;
 		return (0);
 	}
-	Static_Var_4 = 1;
-	currentstate = Static_Var_3;
-	Static_Var_3 = requestedstate;
-	while( Static_Var_3 != currentstate )
+	stateChanging = 1;
+	currentstate = desiredState;
+	desiredState = requestedstate;
+	while( desiredState != currentstate )
 	{
-		if( Static_Var_3 == 0 )
+		if( desiredState == 0 )
 		{
 			call-script activatescr();
 			currentstate = 0;
 		}
-		if( Static_Var_3 == 1 )
+		if( desiredState == 1 )
 		{
 			call-script deactivatescr();
 			currentstate = 1;
 		}
 	}
-	Static_Var_4 = 0;
+	stateChanging = 0;
 }
 
 WakeBubbles(altitude)
@@ -144,10 +144,12 @@ Create()
 Activate()
 {
 	start-script RequestState(0);
+	call-script lua_UnitStartedMoving();
 }
 
 Deactivate()
 {
+	call-script lua_UnitStoppedMoving();
 	start-script RequestState(1);
 }
 
@@ -155,7 +157,7 @@ StartMoving()
 {
 	signal 2;
 	set-signal-mask 2;
-	call-script lua_UnitStartedMoving();
+	
 	while( TRUE )
 	{
 		if( Terraintype == 1 AND (get IN_WATER) )
@@ -176,7 +178,6 @@ StartMoving()
 StopMoving()
 {
 	signal 2;
-	call-script lua_UnitStoppedMoving();
 }
 
 QueryTertiary(piecenum)

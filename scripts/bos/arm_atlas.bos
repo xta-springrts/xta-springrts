@@ -49,6 +49,7 @@ deactivatescr()
 {
 	if( TRUE )
 	{
+		
 		move arm1 to x-axis [0.000000] now;
 		move arm1 to x-axis [0.000000] speed [0.000000];
 		move arm2 to x-axis [0.000000] now;
@@ -155,6 +156,7 @@ Activate()
 	{
 		start-script RequestState(0);
 	}
+	call-script lua_UnitStartedMoving();
 }
 
 BeginTransport(Func_Var_1)
@@ -165,6 +167,7 @@ BeginTransport(Func_Var_1)
 
 Deactivate()
 {
+	call-script lua_UnitStoppedMoving();	
 	if( Static_Var_2 )
 	{
 		start-script RequestState(1);
@@ -194,12 +197,6 @@ StopMoving()
 {
 	signal 2;
 	_Moverate = 0;
-	call-script lua_UnitStoppedMoving();
-}
-
-MoveRate0()
-{
-	call-script lua_UnitStoppedMoving();
 }
 
 MoveRate1()
@@ -208,7 +205,6 @@ MoveRate1()
 	set-signal-mask 2;
 	start-script ProcessFlames();
 	_Moverate = 1;
-	call-script lua_UnitStartedMoving();	
 }
 
 MoveRate2()

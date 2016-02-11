@@ -6,7 +6,7 @@
 piece  base, jets, wing1, wing2, nose, vertjet1, vertjet2, THrust1,
        THrust2, Thrust3, Thrust4, Lightning;
 
-static-var  statechg_DesiredState, statechg_StateChanging, Static_Var_3, Static_Var_4;
+static-var  statechg_DesiredState, statechg_StateChanging, bMoving, Static_Var_4;
 
 lua_UnitStoppedMoving()
 { 
@@ -30,7 +30,7 @@ RolltheDice()
 
 activatescr()
 {
-		//Static_Var_3 = 1;
+		bMoving = 1;
 		turn jets to x-axis <0.000000> now;
 		turn jets to x-axis <89.637363> speed <61.516484>;
 		turn wing1 to y-axis <0.000000> now;
@@ -45,7 +45,7 @@ Flamers()
 {
 	while( TRUE )
 	{
-		if( Static_Var_3 == 1 )
+		if( bMoving == 1 )
 		{
 			emit-sfx 1024 from THrust1;
 			emit-sfx 1024 from THrust2;
@@ -65,8 +65,9 @@ deactivatescr()
 		turn wing1 to y-axis <0.000000> speed <62.901099>;
 		turn wing2 to y-axis <90.203297> now;
 		turn wing2 to y-axis <0.000000> speed <62.379121>;
-		//Static_Var_3 = 0;
+		bMoving = FALSE;
 		sleep 1446;
+		
 }
 
 SmokeUnit(healthpercent, sleeptime, smoketype)
@@ -133,21 +134,13 @@ Create()
 Activate()
 {
 	start-script RequestState(0);
+	call-script lua_UnitStartedMoving();
 }
 
 Deactivate()
 {
-	start-script RequestState(1);
-}
-
-StartMoving()
-{
-	call-script lua_UnitStartedMoving();
-}
-
-StopMoving()
-{
 	call-script lua_UnitStoppedMoving();
+	start-script RequestState(1);
 }
 
 QueryPrimary(piecenum)
