@@ -93,21 +93,13 @@ Create()
 Activate()
 {
 	start-script RequestState(0);
+	call-script lua_UnitStartedMoving();
 }
 
 Deactivate()
 {
-	start-script RequestState(1);
-}
-
-StartMoving()
-{
-	call-script lua_UnitStartedMoving();
-}
-
-StopMoving()
-{
 	call-script lua_UnitStoppedMoving();
+	start-script RequestState(1);
 }
 
 QueryPrimary(piecenum)

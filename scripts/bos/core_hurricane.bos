@@ -6,8 +6,7 @@
 piece  flare1, flare2, base, bombs, turret, wing1, wing2, tail1,
        thrust, tail2, barrels, thrusta1, thrusta2;
 
-static-var  gun_1, gun_2, Static_Var_3, statechg_DesiredState, statechg_StateChanging,
-            Static_Var_6;
+static-var  gun_1, gun_2, bPitch, statechg_DesiredState, statechg_StateChanging;
 
 lua_UnitStoppedMoving()
 { 
@@ -112,21 +111,13 @@ Create()
 Activate()
 {
 	start-script RequestState(0);
+	call-script lua_UnitStartedMoving();
 }
 
 Deactivate()
 {
-	start-script RequestState(1);
-}
-
-StartMoving()
-{
-	call-script lua_UnitStartedMoving();
-}
-
-StopMoving()
-{
 	call-script lua_UnitStoppedMoving();
+	start-script RequestState(1);
 }
 
 RestoreAfterDelay()
@@ -151,12 +142,12 @@ AimSecondary(heading, pitch)
 	signal 2;
 	set-signal-mask 2;
 	turn turret to y-axis heading speed <390.000000>;
-	Static_Var_3 = pitch;
-	if( Static_Var_3 > 0 )
+	bPitch = pitch;
+	if( bPitch > 0 )
 	{
-		Static_Var_3 = 0;
+		bPitch = 0;
 	}
-	turn barrels to x-axis <0.000000> - Static_Var_3 speed <350.000000>;
+	turn barrels to x-axis <0.000000> - bPitch speed <350.000000>;
 	wait-for-turn turret around y-axis;
 	wait-for-turn barrels around x-axis;
 	start-script RestoreAfterDelay();
@@ -185,12 +176,12 @@ AimFromSecondary(piecenum)
 	piecenum = turret;
 }
 
-QueryWeapon3(Func_Var_1)
+QueryWeapon3(piecenum)
 {
-	Func_Var_1 = 3;
+	piecenum = 3;
 }
 
-AimWeapon3(Func_Var_1, Func_Var_2)
+AimWeapon3(heading, pitch)
 {
 	signal 4;
 	set-signal-mask 4;

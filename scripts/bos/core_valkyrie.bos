@@ -174,10 +174,12 @@ Activate()
 	{
 		start-script RequestState(0);
 	}
+	call-script lua_UnitStartedMoving();
 }
 
 Deactivate()
 {
+	call-script lua_UnitStoppedMoving();
 	if( Static_Var_2 )
 	{
 		start-script RequestState(1);
@@ -203,7 +205,6 @@ StopMoving()
 {
 	signal 8;
 	_Moverate = 0;
-	call-script lua_UnitStoppedMoving();
 }
 
 MoveRate1()
@@ -212,7 +213,6 @@ MoveRate1()
 	set-signal-mask 8;
 	start-script ProcessFlames();
 	_Moverate = 1;
-	call-script lua_UnitStartedMoving();
 }
 
 MoveRate2()

@@ -5,7 +5,7 @@
 
 piece  missle1, missle2, base, winga, wingb, thrust1, thrust2;
 
-static-var  Static_Var_1, gun_1, statechg_DesiredState, statechg_StateChanging, Static_Var_5,MissilesOn;
+static-var  Static_Var_1, gun_1, statechg_DesiredState, statechg_StateChanging, bMoving;
 
 lua_UnitStoppedMoving()
 { 
@@ -24,7 +24,7 @@ Crashing(Func_Var_1)
 	Func_Var_1 = get HEALTH;
 	if( Func_Var_1 < 0 )
 	{
-		Static_Var_5 = 2;
+		bMoving = 2;
 	}
 }
 */
@@ -35,7 +35,7 @@ activatescr()
 	turn winga to z-axis <-91.203297> speed <63.214286>;
 	turn wingb to z-axis <0.000000> now;
 	turn wingb to z-axis <91.203297> speed <63.214286>;
-	//Static_Var_5 = 1;
+	bMoving = 1;
 	sleep 1443;
 	//emit-sfx 1024 from thrust1;
 	//emit-sfx 1024 from thrust2;
@@ -46,14 +46,14 @@ Flamers()
 {
 	while( TRUE )
 	{
-		if( Static_Var_5 == 1 )
+		if( bMoving == 1 )
 		{
 			emit-sfx 1024 from thrust1;
 			emit-sfx 1024 from thrust2;
 		}
 		sleep 1;
 	}
-	if( Static_Var_5 == 2 )
+	if( bMoving == 2 )
 	{
 		emit-sfx 1024 from thrust2;
 		emit-sfx 1024 from base;
@@ -68,7 +68,7 @@ deactivatescr()
 {
 	turn winga to z-axis <-91.203297> now;
 	turn winga to z-axis <0.000000> speed <63.126374>;
-	//Static_Var_5 = 0;
+	bMoving = 0;
 	turn wingb to z-axis <91.203297> now;
 	turn wingb to z-axis <0.000000> speed <63.126374>;
 	sleep 1445;
@@ -155,23 +155,13 @@ Create()
 Activate()
 {
 	start-script RequestState(0);
+	call-script lua_UnitStartedMoving();
 }
 
 Deactivate()
 {
-	start-script RequestState(1);
-}
-
-StartMoving()
-{
-	MissilesOn = 1;
-	call-script lua_UnitStartedMoving();
-}
-
-StopMoving()
-{
-	MissilesOn = 0;
 	call-script lua_UnitStoppedMoving();
+	start-script RequestState(1);
 }
 
 AimFromPrimary(piecenum)
@@ -181,8 +171,7 @@ AimFromPrimary(piecenum)
 
 AimPrimary()
 {
-	if (MissilesOn) {return 1;   }
-	return 0;
+	if (bMoving) {return 1;   }
 }
 
 FirePrimary()
@@ -203,7 +192,7 @@ SweetSpot(piecenum)
 Killed(severity, corpsetype)
 {
 	//start-script Crashing();
-	//Static_Var_5 = 2;
+	//bMoving = 2;
 	if( severity <= 25 )
 	{
 		corpsetype = 1;

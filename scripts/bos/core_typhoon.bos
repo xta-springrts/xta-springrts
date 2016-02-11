@@ -147,11 +147,13 @@ Create()
 
 Activate()
 {
+	call-script lua_UnitStartedMoving();
 	start-script RequestState(0);
 }
 
 Deactivate()
 {
+	call-script lua_UnitStoppedMoving();
 	start-script RequestState(1);
 }
 
@@ -159,7 +161,7 @@ StartMoving()
 {
 	signal 2;
 	set-signal-mask 2;
-	call-script lua_UnitStartedMoving();
+	
 	while( TRUE )
 	{
 		if( Terraintype == 1 AND (get IN_WATER) )
@@ -180,7 +182,6 @@ StartMoving()
 StopMoving()
 {
 	signal 2;
-	call-script lua_UnitStoppedMoving();
 }
 
 AimPrimary(heading, pitch)

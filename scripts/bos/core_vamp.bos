@@ -5,7 +5,7 @@
 
 piece  missilea, missileb, base, winga, wingb, thrustb;
 
-static-var  statechg_DesiredState, statechg_StateChanging, Static_Var_3, MissilesOn;
+static-var  statechg_DesiredState, statechg_StateChanging, bMoving;
 
 lua_UnitStoppedMoving()
 { 
@@ -23,7 +23,7 @@ Crashing(Func_Var_1)
 	Func_Var_1 = get HEALTH;
 	if( Func_Var_1 < 0 )
 	{
-		Static_Var_3 = 2;
+		bMoving = 2;
 	}
 }
 */
@@ -34,9 +34,10 @@ activatescr()
 	turn winga to z-axis <-111.692308> speed <76.813187>;
 	turn wingb to z-axis <0.000000> now;
 	turn wingb to z-axis <111.692308> speed <76.813187>;
-	//Static_Var_3 = 1;
+	bMoving = 1;
 	sleep 1454;
 	//emit-sfx 1024 from rearthrust;
+	//handled via LUPS now
 }
 
 /*
@@ -44,13 +45,13 @@ Flamers()
 {
 	while( TRUE )
 	{
-		if( Static_Var_3 == 1 )
+		if( bMoving == 1 )
 		{
 			emit-sfx 1024 from rearthrust;
 		}
 		sleep 1;
 	}
-	if( Static_Var_3 == 2 )
+	if( bMoving == 2 )
 	{
 		emit-sfx 1024 from missileb;
 		emit-sfx 1024 from base;
@@ -66,7 +67,7 @@ deactivatescr()
 {
 	turn winga to z-axis <-111.692308> now;
 	turn winga to z-axis <0.000000> speed <76.868132>;
-	//Static_Var_3 = 0;
+	bMoving = 0;
 	turn wingb to z-axis <111.692308> now;
 	turn wingb to z-axis <0.000000> speed <76.868132>;
 	sleep 1453;
@@ -132,41 +133,18 @@ Create()
 	//start-script Flamers();
 	//start-script Crashing();
 	start-script SmokeUnit();
-	MissilesOn = 1;
 }
 
 Activate()
 {
 	start-script RequestState(0);
+	call-script lua_UnitStartedMoving();
 }
 
 Deactivate()
 {
+	call-script lua_UnitStoppedMoving();
 	start-script RequestState(1);
-}
-
-StartMoving()
-{
-	MissilesOn = 1;
-	call-script lua_UnitStartedMoving();
-}
-
-StopMoving()
-{
-	MissilesOn = 0;
-	call-script lua_UnitStoppedMoving();
-}
-
-MoveRate0()
-{
-	MissilesOn = 0;
-	call-script lua_UnitStoppedMoving();
-}
-
-MoveRate1()
-{
-	MissilesOn = 1;
-	call-script lua_UnitStartedMoving();	
 }
 
 AimFromPrimary(piecenum)
@@ -176,8 +154,7 @@ AimFromPrimary(piecenum)
 
 AimPrimary(piecenum)
 {
-	if (MissilesOn) {return 1;   }
-	return 0;
+	if (bMoving) {return 1;   }
 }
 
 QueryPrimary(piecenum)
@@ -192,8 +169,7 @@ AimFromSecondary(piecenum)
 
 AimSecondary(piecenum)
 {
-	if (MissilesOn) {return 1;   }
-	return 0;
+	if (bMoving) {return 1;   }
 }
 
 QuerySecondary(piecenum)

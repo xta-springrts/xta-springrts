@@ -113,10 +113,12 @@ Create()
 Activate()
 {
 	start-script RequestState(0);
+	call-script lua_UnitStartedMoving();
 }
 
 Deactivate()
 {
+	call-script lua_UnitStoppedMoving();
 	start-script RequestState(1);
 }
 
@@ -124,7 +126,7 @@ StartMoving()
 {
 	signal 2;
 	set-signal-mask 2;
-	call-script lua_UnitStartedMoving();
+	
 	while( TRUE )
 	{
 		if( Terraintype == 3 )
@@ -144,7 +146,6 @@ StartMoving()
 StopMoving()
 {
 	signal 2;
-	call-script lua_UnitStoppedMoving();
 }
 
 FirePrimary()

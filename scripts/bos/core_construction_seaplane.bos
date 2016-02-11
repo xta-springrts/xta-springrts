@@ -5,7 +5,7 @@
 
 piece  base, leftwing, rightwing, nanopoint;
 
-static-var  Terraintype, Static_Var_2, Static_Var_3;
+static-var  Terraintype, desiredState, stateChanging;
 
 lua_UnitStoppedMoving()
 { 
@@ -72,34 +72,34 @@ SmokeUnit(healthpercent, sleeptime, smoketype)
 
 InitState()
 {
-	Static_Var_2 = 1;
-	Static_Var_3 = 0;
+	desiredState = 1;
+	stateChanging = 0;
 }
 
 RequestState(requestedstate, currentstate)
 {
-	if( Static_Var_3 )
+	if( stateChanging )
 	{
-		Static_Var_2 = requestedstate;
+		desiredState = requestedstate;
 		return (0);
 	}
-	Static_Var_3 = 1;
-	currentstate = Static_Var_2;
-	Static_Var_2 = requestedstate;
-	while( Static_Var_2 != currentstate )
+	stateChanging = 1;
+	currentstate = desiredState;
+	desiredState = requestedstate;
+	while( desiredState != currentstate )
 	{
-		if( Static_Var_2 == 0 )
+		if( desiredState == 0 )
 		{
 			call-script activatescr();
 			currentstate = 0;
 		}
-		if( Static_Var_2 == 1 )
+		if( desiredState == 1 )
 		{
 			call-script deactivatescr();
 			currentstate = 1;
 		}
 	}
-	Static_Var_3 = 0;
+	stateChanging = 0;
 }
 
 WakeBubbles(altitude)
@@ -132,17 +132,18 @@ Create()
 Activate()
 {
 	start-script RequestState(0);
+	call-script lua_UnitStartedMoving();
 }
 
 Deactivate()
 {
+	call-script lua_UnitStoppedMoving();
 	start-script RequestState(1);
 }
 
 StartMoving()
 {
 	signal 2;
-	call-script lua_UnitStartedMoving();
 	set-signal-mask 2;
 	while( TRUE )
 	{
@@ -160,7 +161,6 @@ StartMoving()
 StopMoving()
 {
 	signal 2;
-	call-script lua_UnitStoppedMoving();
 }
 
 StartBuilding()

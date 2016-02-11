@@ -52,20 +52,12 @@ Activate()
 	turn Rwing to z-axis <-90.021978> speed <100.021978>;
 	turn Lwing to z-axis <90.021978> speed <100.021978>;
 	spin radar around y-axis speed <90.021978>;
-}
-
-StartMoving()
-{
 	call-script lua_UnitStartedMoving();
-}
-
-StopMoving()
-{
-	call-script lua_UnitStoppedMoving();
 }
 
 Deactivate()
 {
+	call-script lua_UnitStoppedMoving();
 	turn Rwing to z-axis <0.000000> speed <100.021978>;
 	turn Lwing to z-axis <0.000000> speed <100.021978>;
 	stop-spin radar around y-axis;

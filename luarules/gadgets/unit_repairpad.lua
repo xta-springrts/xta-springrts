@@ -76,7 +76,6 @@ function gadget:Initialize()
 			RepairPadHeight[id] = Spring.GetUnitDefDimensions(id)["maxy"]
 			RepairpadList[#RepairpadList+1] = id
 		end
-		
 	end
 	gadgetHandler:RegisterCMDID(CMD_REFUEL)
 	for _, unitID in ipairs(Spring.GetAllUnits()) do

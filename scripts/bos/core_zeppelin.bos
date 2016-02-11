@@ -7,7 +7,7 @@ piece  base, link, arm1, arm2, arm3, jet1, jet2, jet3,
        jet4, flare1, flare2, gun, arm4, armr, arml, jetr,
        jetl, tail;
 
-static-var  _Moverate, Static_Var_2, statechg_DesiredState, statechg_StateChanging, Static_Var_5;
+static-var  _Moverate, Static_Var_2, statechg_DesiredState, statechg_StateChanging, FlareSide;
 
 lua_UnitStoppedMoving()
 { 
@@ -152,7 +152,7 @@ RequestState(requestedstate, currentstate)
 Create()
 {
 	_Moverate = 0;
-	Static_Var_5 = 0;
+	FlareSide = 0;
 	call-script InitState();
 	start-script SmokeUnit();
 	hide flare1;
@@ -161,11 +161,11 @@ Create()
 
 QueryPrimary(piecenum)
 {
-	if( Static_Var_5 == 0 )
+	if( FlareSide == 0 )
 	{
 		piecenum = flare1;
 	}
-	if( Static_Var_5 == 1 )
+	if( FlareSide == 1 )
 	{
 		piecenum = flare2;
 	}
@@ -173,22 +173,22 @@ QueryPrimary(piecenum)
 
 FirePrimary()
 {
-	Static_Var_5 = !Static_Var_5;
-	if( Static_Var_5 == 0 )
+	FlareSide = !FlareSide;
+	if( FlareSide == 0 )
 	{
 		show flare1;
 		sleep 150;
 		hide flare1;
 		return (0);
-		Static_Var_5 = 1;
+		FlareSide = 1;
 	}
-	if( Static_Var_5 == 1 )
+	if( FlareSide == 1 )
 	{
 		show flare2;
 		sleep 150;
 		hide flare2;
 		return (0);
-		Static_Var_5 = 0;
+		FlareSide = 0;
 	}
 }
 
@@ -216,14 +216,14 @@ SweetSpot(piecenum)
 	piecenum = base;
 }
 
-QueryTransport(Func_Var_1)
+QueryTransport(piecenum)
 {
-	Func_Var_1 = 1;
+	piecenum = 1;
 }
 
-BeginTransport(Func_Var_1)
+BeginTransport(bHeight)
 {
-	move link to y-axis [0.000000] - Func_Var_1 now;
+	move link to y-axis [0.000000] - bHeight now;
 	start-script RequestState(0);
 }
 
