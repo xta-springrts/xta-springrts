@@ -11,6 +11,7 @@ function widget:GetInfo()
 	handler   = true, --access to handler
 	}
 end
+-- 2016/2: Added sound effects
 
 local useRoundedRectangles = true
 local roundedSizeMultiplier = 1
@@ -407,6 +408,7 @@ local function handleMouse()
 end
 
 local function mouseEvent(t,e,o)
+	
 	if (t) then
 		for i=1,#t do
 			local m = Mouse[t[i][1]]
@@ -421,9 +423,24 @@ local function mouseEvent(t,e,o)
 				
 				if ((e==1) and (not isInRect(m[4][1],m[4][2],o))) then --last click was not in same area
 					--nuthin'
+					
+					
 				else
 					m[e] = nil --so only topmost area will get the event
 					t[i][2](Mouse.x,Mouse.y,o)
+					
+					if e == 2 then
+						if o.cmdid then
+							if o.cmdid > 0 then 
+								Spring.PlaySoundFile("sounds/gui/button7.wav", 1.0,"userinterface")
+							else
+								Spring.PlaySoundFile("sounds/gui/button6.wav", 1.0,"userinterface")
+							end
+						else
+							Spring.PlaySoundFile("sounds/gui/button5.wav", 1.0,"userinterface")
+						end
+					end
+					
 				end
 			end
 		end
