@@ -42,6 +42,7 @@ local PadQueue 			= {}
 local PlaneQueue		= {}
 local LandedUnits		= {}
 local WaitingUnits		= {}
+local ejectCEG			= "Sparks"
 
 local DEFAULTREPAIRLEVEL	= 0.3
 local QUEUEREPAIRLEVEL		= 0.8
@@ -118,6 +119,27 @@ local function CountQueues()
 	--Echo("Pads:",padq,"Planequeue:",planeq,"Waiting list:",wl)
 end
 
+local function ClearTables(padID,planeUnitID, pieceID)	
+	-- 1. reset pad queue
+	if PadQueue[padID] then
+		for pieceID, data in pairs(PadQueue[padID]) do
+			local planeID = data[1]
+			if planeID == planeUnitID then
+				PadQueue[padID][pieceID] = nil
+				Spring.CallCOBScript(padID, "UnitTookOff", 0,0)
+			end
+		end
+	end
+	
+	-- 2. reset plane queue
+	PlaneQueue[planeUnitID] = nil
+	
+	-- 3. reset piece queue
+	if PieceList[padID] then
+		PieceList[padID][pieceID][3] = nil -- not occupied
+	end
+end
+
 local function CalculateDeviation2(a1,a2,b1,b2)
 	--Echo("Vectors:",a1,a2,b1,b2)
 	
@@ -162,7 +184,7 @@ local function UnitLanded(unitID, padID, pieceID)
 		--Echo(unitID .. " landed on:",padID,pieceNum,PieceList[padID][pieceID][1],"Q:",#PadQueue[padID])
 		Spring.UnitAttach(padID, unitID, pieceNum)
 		LandedUnits[unitID] = {padID,pieceID}
-		--Spring.GiveOrderToUnit(unitID,CMD.STOP,{},{})
+		Spring.GiveOrderToUnit(unitID,CMD.ONOFF,{0},{})
 		--Spring.GiveOrderToUnit(padID,CMD.REPAIR,{unitID},{})
 		Spring.GiveOrderToUnit(padID,CMD.INSERT,{1,CMD.REPAIR,CMD.OPT_SHIFT,unitID},{"alt"})
 		
@@ -264,6 +286,7 @@ local function refuelCommand(unitID, unitDefID, cmdParams, teamID)
 		end
 		success = true
 		Spring.CallCOBScript(padID, "PrepareLanding", 0,0)
+		--Echo("Called PrepareLanding:",padID)
 	else
 		--Echo("Pad but no queue:",padID,teamID)
 	end
@@ -319,8 +342,8 @@ local function UnitHeadOff(unitID,padID)
 			loops = loops +1
 		until b0 or loops > 15
 	end
-		
-	Spring.SetUnitLandGoal(unitID, x1, y1+100, z1,200)
+	Spring.GiveOrderToUnit(unitID,CMD.MOVE,{x1,y1+100,z1},{})
+	--Spring.SetUnitLandGoal(unitID, x1, y1+100, z1,200) makes planes land on water
 	CheckWaitingList()
 	CountQueues()
 end
@@ -329,21 +352,16 @@ local function EjectUnit(unitID,padID)
 	local pieceID = LandedUnits[unitID][2]
 	
 	if pieceID then
-		PlaneQueue[unitID] = nil					
-		PieceList[padID][pieceID][3] = nil -- not occupied
 		
-		for i,data in pairs(PadQueue[padID]) do
-			if data[1] == unitID then
-				table.remove(PadQueue[padID],i)
-				--Echo("Removed:",unitID,padID,pieceID)
-			end
-		end
-		
+		ClearTables(padID,unitID, pieceID)
 		LandedUnits[unitID] = nil
+		
 		--Echo("Detaching unit:",unitID)
 		Spring.UnitDetach(unitID)
 		Spring.SetUnitVelocity(unitID,0,4,0)
+		local x,y,z = Spring.GetUnitPosition(padID)
 		
+		Spring.SpawnCEG(ejectCEG,x,y,z,0,0,0,1000)
 		local cmdDescID = FindUnitCmdDesc(padID, CMD_EJECT)
 		Spring.EditUnitCmdDesc(padID,cmdDescID,{disabled= true})
 		
@@ -354,16 +372,27 @@ end
 
 function gadget:GameFrame(frame)
 	
-	if frame%16 == 0 then
+	if frame%30 == 0 then
 		
 		for padID, Queue  in pairs(PadQueue) do
 			for pieceID,data in pairs(Queue) do
 				local unitID = data[1]
 				local pieceID = data[2]
-				
+				--Echo("GF:","pad:",padID,"piece:",pieceID, "unit:",unitID)
 				--Echo("Processing:",padID,unitID,pieceID,Spring.ValidUnitID(unitID),Spring.ValidUnitID(padID))
 				
-				if unitID and Spring.ValidUnitID(unitID) and Spring.ValidUnitID(padID) and not LandedUnits[unitID] then
+				if not Spring.ValidUnitID(padID) then
+					PadQueue[padID] = nil
+				elseif not Spring.ValidUnitID(unitID) then					
+					ClearTables(padID,unitID, pieceID)
+				elseif frame%300 == 0 then
+					local health, maxHP =  Spring.GetUnitHealth(unitID)
+					if health == maxHP then
+						ClearTables(padID,unitID, pieceID)
+					end
+				end
+				
+				if unitID and not LandedUnits[unitID] then
 					local distance = Spring.GetUnitSeparation(unitID,padID)
 					local x,y,z = Spring.GetUnitPosition(padID)
 					
@@ -514,14 +543,13 @@ end
 
 function gadget:UnitDestroyed(unitID, unitDefID, unitTeam)
 	
+	-- repair pad died
 	if RepairPadHeight[unitDefID] then
-		--Echo("Pad died",unitID)
-		-- reset queue to pad
+		-- 1. reset queue to pad
 		PadQueue[unitID] = nil 
 		
-		-- reset plane queue
+		-- 2. reset plane queue
 		for planeID,data in pairs(PlaneQueue) do
-			
 			local padID = data[1]
 			--Echo("PQ:",planeID,padID,unitID)
 			if padID == unitID then
@@ -532,25 +560,18 @@ function gadget:UnitDestroyed(unitID, unitDefID, unitTeam)
 			end
 		end
 		
-		-- reset queue to pieces
+		-- 3. reset queue to pieces
 		PieceList[unitID] = nil
 	end
 	
+	--plane died
 	if PlaneQueue[unitID] then
 		local padID = PlaneQueue[unitID][1]
 		local pieceID = PlaneQueue[unitID][2]
 		
-		for i,data in pairs(PadQueue) do
-			if data[1] == unitID then
-				table.remove(PadQueue[padID],i)
-			--Echo("Removed:",unitID,padID,pieceID)
-			end
-		end
+		ClearTables(padID,unitID,pieceID)
 		
-		PlaneQueue[unitID] = nil
-		if PieceList[padID] then
-			PieceList[padID][pieceID][3] = nil -- not occupied
-		end
+		CheckWaitingList()
 	end
 	
 	if WaitingUnits[unitID] then
@@ -600,10 +621,10 @@ function gadget:UnitGiven(unitID, unitDefID, newTeam, oldTeam)
 		else
 			local padID = PlaneQueue[unitID][1]
 			local pieceID = PlaneQueue[unitID][2]
-			PadQueue[padID][pieceID] = nil
 			
-			PlaneQueue[unitID] = nil
-			PieceList[padID][pieceID][3] = nil -- not occupied
+			ClearTables(padID,unitID,pieceID)
+			
+			CheckWaitingList()
 		end
 	end
 end

@@ -30,6 +30,8 @@ if gadgetHandler:IsSyncedCode() then
 	function gadget:Initialize()	
 		gadgetHandler:RegisterGlobal("UnitStoppedMoving", UnitStoppedMoving)
 		gadgetHandler:RegisterGlobal("UnitStartedMoving", UnitStartedMoving)
+		gadgetHandler:RegisterGlobal("UnitActivated", UnitActivated)
+		gadgetHandler:RegisterGlobal("UnitDeactivated", UnitDeactivated)
 		gadgetHandler:RegisterGlobal("PelicanTransform", PelicanTransform)
 		gadgetHandler:RegisterGlobal("PelicanReform", PelicanReform)
 		
@@ -42,15 +44,25 @@ if gadgetHandler:IsSyncedCode() then
 	end	
 	
 	function gadget:Shutdown()
-		gadgetHandler:DeregisterGlobal("UnitStoppedMoving", UnitStoppedMoving)
-		gadgetHandler:DeregisterGlobal("UnitStartedMoving", UnitStartedMoving)
-		gadgetHandler:DeregisterGlobal("PelicanTransform", PelicanTransform)
-		gadgetHandler:DeregisterGlobal("PelicanReform", PelicanReform)
+		gadgetHandler:DeregisterGlobal("UnitActivated")
+		gadgetHandler:DeregisterGlobal("UnitDeactivated")
+		gadgetHandler:DeregisterGlobal("UnitStoppedMoving")
+		gadgetHandler:DeregisterGlobal("UnitStartedMoving")
+		gadgetHandler:DeregisterGlobal("PelicanTransform")
+		gadgetHandler:DeregisterGlobal("PelicanReform")
+	end
+	
+	function UnitActivated(unitID,unitDefID,teamID)
+		--Echo("Activated() called for unitID:",unitID,UnitDefs[unitDefID].name)
+	end
+	
+	function UnitDeactivated(unitID,unitDefID,teamID)
+		--Echo("Deactivated() called for unitID:",unitID,UnitDefs[unitDefID].name)
 	end
 	
 	-- only applies for units that call lua_UnitStoppedMoving() in cob
 	function UnitStoppedMoving(unitID,unitDefID,teamID)
-		Echo("StoppedMoving called for unitID:",unitID)
+		--Echo("StoppedMoving called for unitID:",unitID,UnitDefs[unitDefID].name)
 				
 		if not airlos[unitDefID] then
 			local this_airlos = Spring.GetUnitSensorRadius(unitID,"airLos")
@@ -80,7 +92,7 @@ if gadgetHandler:IsSyncedCode() then
 	end
 	
 	function UnitStartedMoving(unitID,unitDefID,teamID)
-		Echo("StartMoving called for unitID:",unitID)
+		--Echo("StartMoving called for unitID:",unitID,UnitDefs[unitDefID].name)
 		if airlos[unitDefID] then 
 			Spring.SetUnitSensorRadius(unitID,"airLos",airlos[unitDefID])
 		end
