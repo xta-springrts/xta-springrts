@@ -11,7 +11,7 @@ local tips = {
 	'Use a variety of units to make use of their special attributes and abilities effectively',
 	'Don\'t start with building an air or advanced factory, unless you know what you\'re doing',
 	'Always remember to scout ahead',
-	'The best thing to build after your fusion is completed ... is another fusion!',
+	'The best thing to build after your fusion has been completed is ... another fusion!',
 	'Remember the river rule: it\'s cowardous to cross the river into enemy territory with your Commander before 5 minutes into the game',
 	'Combombs are totally fine, as long as not done right at the start. Later in the game you should have defences',
 	'If unsure what to bomb: go for heavy or normal fusions',
@@ -23,6 +23,13 @@ local tips = {
 	'If gamemode is commander ends: a last commander who D-Guns the last enemy commander loses, but the one that lasers it to death instead wins.',
 	'The supreme art of war is to subdue the enemy without fighting.',
 	'Most units can shoot longer than they can see. Use scout units to provide visibility for them.',
+	'On metal maps, buildpower is usually the limiting resource. Build constructors.',
+	'It only takes one of the second smallest mines to kill a Commander, if he\'s unlucky',
+	'If you manage to build a krogoth, protect it (with a lot of spam units) from being D-Gunned',
+	'In a King of the Hill (KOTH) game mode, be always aware of the timer',
+	'The Commander is visible under water if the enemy has sonar, or if even the smallest piece of his antennae appear above the surface',
+	'When units gain experience, they become stronger, faster and more accurate',
+	'Use crawling bombs to strike the enemy where he doesn\'t expect it',
 }
 
 return tips
