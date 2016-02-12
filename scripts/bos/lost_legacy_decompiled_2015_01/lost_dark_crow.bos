@@ -49,18 +49,10 @@ Create()
 
 Activate()
 {
-}
-
-Deactivate()
-{
-}
-
-StartMoving()
-{
 	call-script lua_UnitStartedMoving();
 }
 
-StopMoving()
+Deactivate()
 {
 	call-script lua_UnitStoppedMoving();
 }

@@ -132,9 +132,9 @@ SweetSpot(piecenum)
 	piecenum = base;
 }
 
-QueryTransport(Func_Var_1)
+QueryTransport(piecenum)
 {
-	Func_Var_1 = 1;
+	piecenum = 1;
 }
 
 QueryPrimary(piecenum)
@@ -211,15 +211,16 @@ FireWeapon2()
 
 Activate()
 {
+	call-script lua_UnitStartedMoving();
 	if( unitviewer )
 	{
 		start-script RequestState(0);
 	}
 }
 
-BeginTransport(Func_Var_1)
+BeginTransport(bHeight)
 {
-	move link to y-axis [0.000000] - Func_Var_1 now;
+	move link to y-axis [0.000000] - bHeight now;
 	start-script RequestState(0);
 }
 
@@ -229,6 +230,7 @@ Deactivate()
 	{
 		start-script RequestState(1);
 	}
+	call-script lua_UnitStoppedMoving();
 }
 
 EndTransport()
@@ -263,7 +265,6 @@ StartMoving()
 	turn rengine to x-axis <30.000000> speed <30.000000>;
 	turn lengine to x-axis <30.000000> speed <30.000000>;
 	turn rearengine to x-axis <70.000000> speed <30.000000>;
-	call-script lua_UnitStartedMoving();
 	sleep 1000;
 }
 
@@ -274,7 +275,6 @@ StopMoving()
 	turn rengine to x-axis <0.000000> speed <100.000000>;
 	turn lengine to x-axis <0.000000> speed <100.000000>;
 	turn rearengine to x-axis <0.000000> speed <100.000000>;
-	call-script lua_UnitStoppedMoving();
 	sleep 1000;
 }
 

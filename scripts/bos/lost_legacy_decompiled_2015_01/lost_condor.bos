@@ -52,24 +52,16 @@ Activate()
 	turn Rwing to y-axis <45.000000> speed <40.000000>;
 	turn Lwing to y-axis <-45.000000> speed <40.000000>;
 	spin radar around y-axis speed <80.000000>;
+	call-script lua_UnitStartedMoving();
 }
 
 Deactivate()
 {
+	call-script lua_UnitStoppedMoving();
 	turn Rwing to y-axis <0.000000> speed <20.000000>;
 	turn Lwing to y-axis <0.000000> speed <20.000000>;
 	stop-spin radar around y-axis;
 	turn radar to y-axis <0.000000> speed <50.000000>;
-}
-
-StartMoving()
-{
-	call-script lua_UnitStartedMoving();
-}
-
-StopMoving()
-{
-	call-script lua_UnitStoppedMoving();
 }
 
 SweetSpot(piecenum)

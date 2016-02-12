@@ -133,6 +133,7 @@ Activate()
 	{
 		start-script RequestState(0);
 	}
+	call-script lua_UnitStartedMoving();
 }
 
 BeginTransport(Func_Var_1)
@@ -143,6 +144,7 @@ BeginTransport(Func_Var_1)
 
 Deactivate()
 {
+	call-script lua_UnitStoppedMoving();
 	if( unitviewer )
 	{
 		start-script RequestState(1);
@@ -179,7 +181,6 @@ StartMoving()
 	move rengine to x-axis [6.250000] speed [7.500000];
 	move lengine to x-axis [0.000000] now;
 	move lengine to x-axis [-6.250000] speed [7.500000];
-	call-script lua_UnitStartedMoving();
 	sleep 1000;
 }
 
@@ -191,7 +192,6 @@ StopMoving()
 	move rengine to x-axis [0.000000] speed [7.500000];
 	move lengine to x-axis [-6.250000] now;
 	move lengine to x-axis [0.000000] speed [7.500000];
-	call-script lua_UnitStoppedMoving();
 	sleep 1000;
 }
 

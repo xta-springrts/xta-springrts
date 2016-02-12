@@ -106,10 +106,12 @@ Create()
 Activate()
 {
 	start-script RequestState(0);
+	call-script lua_UnitStartedMoving();
 }
 
 Deactivate()
 {
+	call-script lua_UnitStoppedMoving();
 	start-script RequestState(1);
 }
 
@@ -121,16 +123,6 @@ StartBuilding()
 StopBuilding()
 {
 	set INBUILDSTANCE to 0;
-}
-
-StartMoving()
-{
-	call-script lua_UnitStartedMoving();
-}
-
-StopMoving()
-{
-	call-script lua_UnitStoppedMoving();
 }
 
 QueryNanoPiece(piecenum)
