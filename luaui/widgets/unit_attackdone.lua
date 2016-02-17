@@ -73,20 +73,20 @@ function widget:UnitCmdDone(unitID, unitDefID, unitTeam, cmdID, cmdTag, cmdParam
 		local cmds = GetUnitCommands(unitID,1)
 		
 		if not cmds[1] then
-			if goToBase then
-				local x,y,z = homePos[unitID][1],homePos[unitID][2],homePos[unitID][3]
-				if x and y and z then
+			local x,y,z = homePos[unitID][1],homePos[unitID][2],homePos[unitID][3]
+			if x and y and z then
+				if goToBase then	
 					GiveOrderToUnit(unitID,CMD.MOVE,{x,y,z},{})
-				end
-			else
-				if ValidUnitID(unitID) then
-					local dist = Distance(x,z,homePos[unitID][1],homePos[unitID][3])
-					local frame = GetGameFrame()
-					
-					if dist/mapDist > 0.25 then
-						GiveOrderToUnit(unitID, CMD.IDLEMODE, { 0 }, { })  -- set to fly
-						GiveOrderToUnit(unitID, CMD.FIGHT, { x,y,z }, { }) -- otherwise it will still land
-						FlyingUnits[unitID] = frame
+				else
+					if ValidUnitID(unitID) then
+						local dist = Distance(x,z,homePos[unitID][1],homePos[unitID][3])
+						local frame = GetGameFrame()
+						
+						if dist/mapDist > 0.25 then
+							GiveOrderToUnit(unitID, CMD.IDLEMODE, { 0 }, { })  -- set to fly
+							GiveOrderToUnit(unitID, CMD.FIGHT, { x,y,z }, { }) -- otherwise it will still land
+							FlyingUnits[unitID] = frame
+						end
 					end
 				end
 			end
