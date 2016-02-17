@@ -99,6 +99,8 @@ else
 	end
 	
 	function QueueBuildSound(_,teamID, unitID)
+		if mySpectatorState then return end
+		
 		local uDefID = CallAsTeam(myTeamID,GetUnitDefID, unitID)
 		if teamID == myTeamID and uDefID then
 			PlaySoundFile("sounds/gui/button10.wav", 0.5, nil,nil,nil,nil,nil,nil, "userinterface")
