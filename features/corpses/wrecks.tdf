@@ -1949,6 +1949,29 @@
 	collisionVolumeScales=54 45 54;//#AUTO#
 	collisionVolumeOffsets=0 -2 0;//#AUTO#
 }
+
+
+[arm_geomantle_powerplant_dead] //copied from geothermal; it still explodes violently so this is never seen anyway
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=arm_corpses;
+	object=arm_geothermal_powerplant_dead;
+	featuredead=arm_geothermal_powerplant_heap;
+	footprintx=4;
+	footprintz=4;
+	height=40;
+	blocking=1;
+	hitdensity=100;
+	metal=416;
+	damage=704;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=54 45 54;//#AUTO#
+	collisionVolumeOffsets=0 -2 0;//#AUTO#
+}
 [arm_geothermal_powerplant_heap]
 {
 	world=All Worlds;
