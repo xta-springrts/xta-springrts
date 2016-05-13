@@ -76,9 +76,9 @@
 
 	
 	//    Sight/Radar
-	RadarDistance=4250;
+	RadarDistance=1250;
 	SightDistance=337.5;
-	SonarDistance=4000;
+	SonarDistance=1000;
 	ActivateWhenBuilt=1;
 
 	//************************************************************

@@ -27,7 +27,7 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=1406;
+	maxdamage=1265;//
 	healtime=30;
 	buildcostmetal=254;
 	buildcostenergy=2764;
@@ -71,7 +71,7 @@
 	turnrate=600;
 	acceleration=1.0;
 	brakerate=1.5;
-	maxvelocity=2;
+	maxvelocity=1.75;
 	maxslope=14;
 
 	//************************************************************

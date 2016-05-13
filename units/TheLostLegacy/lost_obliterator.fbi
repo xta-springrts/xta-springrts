@@ -32,8 +32,8 @@
 	buildcostmetal=8742;
 	buildcostenergy=77653;
 	buildtime=123425;
-	footprintx=5;
-	footprintz=4;
+	footprintx=7;//1.4 size
+	footprintz=6;
 
 	//************************************************************
 	//  Resources
@@ -47,12 +47,12 @@
 	//  Building
 	//************
 	buildangle=40000;
-	YardMap=ooooo ooooo ooooo ooooo;
+	YardMap=oooooo oooooo oooooo oooooo oooooo oooooo oooooo;
 	
 	activatewhenbuilt=0;
 	collisionVolumeType = box;
-	collisionVolumeScales =50 35 50;
-	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeScales =100 45 70;
+	collisionVolumeOffsets = 0 0 -25;
 	collisionVolumeTest = 1;
 
 	//************************************************************

@@ -13,7 +13,7 @@
           	size=3;
           	length=17;
           	sizeGrowth=0.75;
-          	ttl=25;
+          	ttl=10;
           	frontOffset=0;
           	sideTexture=muzzleside;
           	frontTexture=muzzlefront;

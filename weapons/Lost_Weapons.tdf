@@ -1,4 +1,118 @@
 
+[EXP_LOSTLIGHTROCKET]
+{
+	name=Heavy Launch Rocket;
+	Weapontype=MissileLauncher;
+	explosiongenerator=custom:BLUEPUFFYROCKET;
+	cegTag=BLUEROCKETTRAIL;
+	Texture1=null;
+	Texture2=null;
+	Texture3=null;
+	Texture4=null;
+	CollideFriendly=0;
+	impulsefactor=0.6;
+	turret=1;
+	model=weapon_exphvyrock;
+	range=1000;
+	reloadtime=4.5;
+	weapontimer=0.33; //6
+	weaponvelocity=350;
+	startvelocity=200;
+	weaponacceleration=200;
+	areaofeffect=52;  //80
+	//energypershot=20;
+	Burst=1;
+	Burstrate=0.1666;
+	Trajectoryheight=0.75;
+	Wobble=3200; //14000
+	Dance=50;
+	flighttime=3.5;
+	//turnrate=5000;	//4000
+	//edgeeffectiveness=0.75;
+	soundstart=RavenLGTRock;
+	soundhitdry=rocklgthit;
+	firestarter=70;
+	smokedelay=0.1;
+	smoketrail=0;
+	startsmoke=0;
+	[DAMAGE]
+	{
+		default=200;	//800
+		group_invincible=1;
+	}
+}
+[LOSTKBOT_MISSILE]
+{
+	name=Missiles;
+	explosiongenerator=custom:KBOTMISSILEHIT;
+	cegTag=KBOTMISSILETRAIL;
+	Weapontype=MissileLauncher;
+	turret=1;
+	model=missile.s3o;
+	Texture1=null;
+	range=700;
+	reloadtime=2;
+	weapontimer=5;
+	weaponvelocity=860;
+	startvelocity=470;
+	weaponacceleration=154;
+	turnrate=41660;
+	areaofeffect=48;
+	cylindertargeting = 1;
+	soundstart=rocklit1;
+	soundhitdry=xplosml2;
+	firestarter=70;
+	flighttime=2.5;
+	smokedelay=0.1;
+	tracks=1;
+	smoketrail=0;
+	tolerance=10000;
+	startsmoke=1;
+	trajectoryHeight=0.85;
+	dance=30;
+	[DAMAGE]
+	{
+		default=34;
+		lost_commanders=30;
+		group_landair=115;
+		group_skyair=115;
+		group_invincible=1;
+	}
+}
+
+[THUMP_GUN]
+{
+	name=Pop POP Cannon;
+	explosiongenerator=custom:popupcannon;
+	energypershot=115;
+	accuracy=425;
+	rgbcolor=1 0.60 0.0;
+	weaponType=Cannon;
+	turret=1;
+	range=375; // 1330 in 9.725
+	reloadtime=3;
+	weaponvelocity=930;
+	areaofeffect=95;
+	burnblow=1;
+	soundstart=cannhvy5;
+	soundhitdry=xplomed2;
+	//minbarrelangle=-40;
+	startsmoke=1;
+	size=3.45;
+	rgbcolor=1 0.50 0.1;
+	stages=7;
+	separation=0.66;
+	alphadecay=0.8;
+	sizedecay=-0.33;
+	mygravity=0.01;
+	[DAMAGE]
+	{
+		default=265;
+		group_invincible=1;
+		group_ships=400;
+		group_large_ships=480;
+	}
+}
 [NEWHAPLIC_GUN]
 {
 	name=Pop-up Cannon;
@@ -173,7 +287,7 @@
 	name=Plasma Cannon;
 	weaponType=Cannon;
 	turret=1;
-	range=450;
+	range=475;
 	explosiongenerator=custom:raven;
 	reloadtime=3.0;
 	weaponvelocity=475;
@@ -208,7 +322,7 @@
 	model=missile.s3o;
 	Texture1=null;
 	range=700;
-	reloadtime=2;
+	reloadtime=1.5;
 	weapontimer=5;
 	weaponvelocity=750;
 	startvelocity=550;
@@ -335,7 +449,7 @@
 	craterboost=0;
 	[DAMAGE]
 	{
-		default=380.6;//122
+		default=580.6;//122
 		group_landair=361;
 		group_skyair=361;
 	}
@@ -537,9 +651,9 @@
 	NumBounce=1;
 	BounceSlip=1.01;
 	BounceRebound=0.8;
-	range=6666;
+	range=5555;//6666
 	reloadtime=0.2; //4.67
-	weaponvelocity=1000; //800
+	weaponvelocity=800; //1000
 	energypershot=1100;
 	areaofeffect=135; //114
 	accuracy=800; //800
@@ -855,7 +969,7 @@
 	vlaunch=1;
 	Weapontype=StarburstLauncher;
 	cegTag=BLUEVERTICALPULSE;
-	explosiongenerator=custom:TLLTRAIL;
+	explosiongenerator=custom:BLUEPUFFYVERTICALROCKET;
 	model=egun;
 	range=1300;
 	Texture1=null;
@@ -897,7 +1011,7 @@
 	thickness=12;
 	beamtime=0.3;
 	Duration=0.1;
-	range=700; 
+	range=750; 
 	reloadtime=7.00;
 	energypershot=500;
 	weaponvelocity=900;
@@ -1011,7 +1125,7 @@
 	Texture1=null;
 	range=670;
 	explosiongenerator=custom:KBOTMISSILEHIT;
-	reloadtime=2.0;
+	reloadtime=1.8;
 	weapontimer=6;
 	flighttime=4;
 	weaponvelocity=750;
@@ -1095,10 +1209,11 @@
 	explosiongenerator=custom:BluePlasmaExtraBANG;
 	energypershot=216;
 	accuracy=750;
+	movingaccuracy=1500;
 	rgbcolor=1 0.60 0.0;
 	weaponType=Cannon;
 	turret=1;
-	range=1245; // 1330; in 9.725
+	range=1215; // 1330; in 9.725
 	reloadtime=3.3;
 	weaponvelocity=440;
 	areaofeffect=82;
@@ -1163,11 +1278,12 @@
 	ballistic=1;
 	turret=1;
 	projectiles=10;
-	range=400; 
+	range=350; 
 	explosiongenerator=custom:tllDgunTRAIL;
 	sprayangle=4096;
-	reloadtime=2;
-	weaponvelocity=496;
+	reloadtime=3.8;
+	weaponvelocity=996;
+	myGravity=0.01;
 	areaofeffect=48;
 	burnblow=1;
 	SoundTrigger=1;
@@ -1180,9 +1296,9 @@
 	size=2;
 	rgbcolor=0.35 0.35 1;
 	stages=5;
-  	separation=0.45;
+  	separation=0.6;
   	alphadecay=0.75;
-  	sizedecay=-0.5;
+  	sizedecay=-0.4;
   	nogap=1;
 	GroundBounce=1;
 	BounceSlip=1.01;
@@ -1192,7 +1308,7 @@
   	//dyndamageinverted=1;
 	[DAMAGE]
 	{
-		default=38;//190 dps
+		default=60;//150 dps
 	}
 }
 [TITAN_HEAVYROCKET]
@@ -1505,7 +1621,7 @@
 	twophase=1;
 	guidance=1;
 	tolerance=4000;
-	explosiongenerator=custom:GREEN_NUKE_EXPLOSION_FX;//GREEN_EMP_SHOT
+	explosiongenerator=custom:EMPPUFFYROCKET;//GREEN_EMP_SHOT
 	startsmoke=0;
 	impulsefactor=0.00;
 	impulseboost=0.00;
@@ -1533,7 +1649,7 @@
 	model=weapon_exphvyrock;
 	//cegTag=tllDgunTRAIL;
 	cegTag=Giga;
-	explosiongenerator=custom:BluePlasmaExtraBANG;
+	explosiongenerator=custom:BLUEPUFFYROCKET;
 	Texture1=null; //flare//
 	Texture2=null;//first segment of missiletrail//
 	Texture3=null;//flame//
@@ -1908,15 +2024,15 @@
 	LineOfSight=1;
 	Turret=1;
 
-	range=390;
-	reloadtime=3.0;
-	energypershot=50;
+	range=450;
+	reloadtime=4.0;
+	energypershot=150;
 	weaponvelocity=1000;
-	areaofeffect=16;
+	areaofeffect=8;
 	
 
-	soundstart=xplolrg1;
-	soundhitdry=lashit;
+	soundstart==xplomas2;//xplolrg1;
+	soundhitdry=xplomas2;
 
 	firestarter=90;
 	beamweapon=1;
@@ -1926,7 +2042,38 @@
 
 	[DAMAGE]
 		{
-		default=375;
+		default=400;
+		group_landair=125;
+		}
+	}
+
+[THUMPRAIL_WEAPON]
+	{
+	name=Railgun Weapon;
+	RenderType=7;
+	LineOfSight=1;
+	Turret=1;
+
+	range=375;
+	reloadtime=5.0;
+	energypershot=250;
+	weaponvelocity=1000;
+	areaofeffect=8;
+	
+
+	soundstart=xplomas2;//xplolrg1;
+	soundhitdry=xplomas2;
+
+	firestarter=90;
+	beamweapon=1;
+	rgbcolor=0.01 0.01 0.02;
+	explosiongenerator=custom:DGUNTRACE;
+
+
+	[DAMAGE]
+		{
+		default=625;
+		group_landair=225;
 		}
 	}
 

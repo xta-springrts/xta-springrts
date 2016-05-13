@@ -72,10 +72,10 @@
 	//  Movement
 	//************
 	movementclass=KBOTSS2;
-	turnrate=1010;
-	acceleration=1.8;
+	turnrate=310;
+	acceleration=1.0;
 	brakerate=14.0;
-	maxvelocity=1.2;
+	maxvelocity=1.1;
 	maxslope=20;
 	maxwaterdepth=25;
 
@@ -118,6 +118,12 @@
 	collisionVolumeScales =25 22 25;
 	collisionVolumeOffsets = 0 -1 0;
 	collisionVolumeTest = 1;
+	trackoffset=6.5;
+	trackstrength=6;
+	trackstretch=1;
+	tracktype=StdTank;
+	trackwidth=40;
+	LeaveTracks=1;
 
 	//************************************************************
 	//  To be removed

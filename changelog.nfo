@@ -23,6 +23,30 @@
 
 --- Do not remove
 --- Changelog processing starts here
+Changes:
+*Krogoth Gantry now has 9880 hitpoints or 1.5hp per 1m instead of 5727 for a 70% in hitpoints to promote reliability for krogoth gantry vs. buzzsaw.
+* Reduced range of VULCAN and BUZZSAW to match INTIMIDATOR and BIG BERTHA and with small range advantage of 400-600, or roughly 10 percent.
+
+--- The Lost Legacy:
+* Lost Legacy level 1 Missile Kbot Firestarter now has appropriate missile behavior and deals on par proper missile damage with arm and core.
+* Reduced Cost of Lost Advanced Landlabs by 100 metal or roughly 4-5%.
+* Reduced Eco Production of Adv. Lost legacy construction kbots by 10-20%.
+* Lost Loki T2 Arty Vehicle movespeed decreased from 1.7 to 1.5. Turnrate reduced from 400 to 366. Accuracy reduced by 50% when moving.
+* Increased hitpoints of High Tech Lab for Lost Legacy by 1.5hp per 1m for a 65% increase in hitpoints.
+* Lost Seagull Amphibious Missle Kbot max movespeed reduced to 1.75 from 2. Reduced Maxhitpoints by 10% from 1405 to 1265
+* Lost Ariman T1 Heavy Tank max move speed reduced from 1.6 to 1.5.
+* Doubled Reload time of Shotgun Tank Spade, Increased Accuracy, and reduced overall Dps from 190 to 150. Reduced range to 350 from 400. Increased hp by 100.
+* Reduced Troll Metal cost by 5% and Energy by 10%.
+* Reduced energy cost of Lost Fusion Reactor by 12% and decreased buildtime to 49000 roughly vs 57000.
+* DISABLED Archnano All-terrain stealthy tech2 construction spider from the T2 vehicle plant.
+* DISABLED Spatha Heavy Support Tank from the T2 Lab as its very high tier unit.
+* DISABLED TIC all-terrain missile kbot in T2 kbots.
+* ENABLED Thumper in T2 kbotLab to Lost's T2 vehicle plant as a muscle replacement.
+* ENABLED Spreader in T2 kbot lab, which functions as a mid range artillery unit.
+
+Enhancements:
+Fixes:
+
 
 XTA 9.752 (Git 1055)
 |jls,nor

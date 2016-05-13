@@ -29,8 +29,8 @@
 	//********************
 	maxdamage=3442;
 	buildcostmetal=3087;
-	buildcostenergy=17764;
-	buildtime=56432;
+	buildcostenergy=15764;
+	buildtime=49432;
 	footprintx=5;
 	footprintz=5;
 	collisionVolumeScales=77 51 77;
@@ -42,7 +42,7 @@
 	//  Resources
 	//*************
 	metalstorage=0;
-	energymake=720;
+	energymake=725;
 	energyuse=0;
 	energystorage=0;
 

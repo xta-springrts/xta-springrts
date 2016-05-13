@@ -68,7 +68,7 @@
 	turnrate=409; // was 430
 	acceleration=0.195;
 	brakerate=0.0976563;
-	maxvelocity=1.6;//was 2
+	maxvelocity=1.5;//was 2
 	maxslope=10;
 	maxwaterdepth=12;
 

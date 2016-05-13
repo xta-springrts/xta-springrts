@@ -5,7 +5,7 @@
 	//********************
 	side=Arm;
 	name=Assassin;
-	Description=Invisible Assault Kbot;
+	Description=Sniper/Assault Kbot;
 
 	//************************************************************
 	//  Categories
@@ -27,7 +27,7 @@
 	//  Health/Cost/Size
 	//********************
 	maxdamage=2400;//4200 // 3100; // same as latest patch
-	damagemodifier=0.88;//3472 with gun closed
+	//damagemodifier=0.88;//3472 with gun closed
 	healtime=30;
 	buildcostmetal=675; //OTA: 267
 	buildcostenergy=14342; //OTA: 2228
@@ -64,7 +64,7 @@
 	upright=1;
 	CloakCost=50;
 	CloakCostMoving=150;
-	MinCloakDistance=175;
+	MinCloakDistance=205;
 	DecloakOnFire=0;
 
 	//************************************************************

@@ -1,0 +1,133 @@
+
+[EMPPUFFYROCKET]
+{
+	usedefaultexplosions=0;
+
+	[SpewBOLTS] 
+	{
+	    class=CExpGenSpawner;
+		[properties]
+		{
+		pos=0, 2 r-2, 0;  
+		delay=0 r15;				  
+		explosionGenerator=custom:EMP_LIGHTNING_EXPLOSION_INIATE;
+		}
+	air=1;
+	water=1;
+	ground=1;
+	count=50;
+	}
+	[spikesofhell]
+	{
+		class=explspike;
+		[properties]
+		{
+			dir=-25 r50,-25 r50,-25 r50;
+			width=40;
+			length=1; //60;
+			alpha=1;
+			alphadecay=0.05;
+			color=0.5, 1.0, 0.2;
+
+		}
+		air=1;
+		water=0;
+		ground=1;
+  		count=30; 
+	}
+
+}
+
+[EMP_LIGHTNING_EXPLOSION_INIATE]
+{	[spikesofhell]
+	{
+		class=explspike;
+		[properties]
+		{
+			dir=-25 r50,-25 r50,-25 r50;
+			width=40;
+			length=1; //60;
+			alpha=1;
+			alphadecay=0.05;
+			color=0.5, 1.0, 0.2;
+
+		}
+		air=1;
+		water=0;
+		ground=1;
+  		count=1; 
+	}
+	usedefaultexplosions=0;
+	[G_blast]//base explo// 
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+		sizeGrowth=0.14;
+		sizeMod=1.0;
+		pos=3 r-3, 1 r-2, 3 r-3;  
+		gravity=0, 0, 0;
+	
+		colorMap=	0.25 1 0.5 0.02	0 0 0 0.01	0.25 1 0.5 0.02	0 0 0 0.01	0.25 1 0.5 0.02	0 0 0 0.01	0.25 1 0.5 0.02	0 0 0 0.01	0.25 1 0.5 0.02	0 0 0 0.01	0.25 1 0.5 0.02	0 0 0 0.01	0.25 1 0.5 0.02	0 0 0 0.01	0.25 1 0.5 0.02	0 0 0 0.01;
+
+		Texture=testlightning;
+		airdrag=0.99;
+		
+		particleLifeSpread=11; 
+		particleSpeedSpread=0;  
+		particleSizeSpread=5;   
+		
+		particleLife=31; //75;
+		numParticles=3; //150; 
+		particleSpeed=6; 
+		particleSize=21;
+		
+		
+		emitVector=0, 1, 0; 
+		emitRot=80;
+		emitRotSpread=5; 
+		directional=1; 
+
+		}
+	air=1;
+	water=1;
+	ground=1;
+	count=1;
+	}
+[G_blast2]//half sphere explo// 
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+		sizeGrowth=0.14;
+		sizeMod=1.0;
+		pos=3 r-3, 1 r-2, 3 r-3;  
+		gravity=0, 0, 0;
+	
+		colorMap=	0.5 1.0 0.2 0.02 	0 0 0 0.01	0.5 1.0 0.2 0.02 	0 0 0 0.01	0.5 1.0 0.2 0.02 	0 0 0 0.01	0.5 1.0 0.2 0.02 	0 0 0 0.01	0.5 1.0 0.2 0.02 	0 0 0 0.01	0.5 1.0 0.2 0.02 	0 0 0 0.01	0.5 1.0 0.2 0.02 	0 0 0 0.01	0.5 1.0 0.2 0.02 	0 0 0 0.01;
+
+		Texture=testlightning;
+		airdrag=0.99;
+		
+		particleLifeSpread=8; 
+		particleSpeedSpread=0;  
+		particleSizeSpread=6;   
+		
+		particleLife=34; //75;
+		numParticles=3; //200; 
+		particleSpeed=6; 
+		particleSize=22;
+		
+		
+		emitVector=0, 1, 0; 
+		emitRot=0;
+		emitRotSpread=80; 
+		directional=1; 
+
+		}
+	air=1;
+	water=1;
+	ground=1;
+	count=1;
+	}
+}

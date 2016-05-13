@@ -108,6 +108,7 @@
 			purplelaser=purplelaser.jpg;
 			gfxtexture=nano.tga;
 			testlightning=lightning2.jpg;
+			verticallightning=lightning3.jpg;
 
 		}
 	}

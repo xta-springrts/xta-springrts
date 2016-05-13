@@ -4,7 +4,7 @@
 	UnitName=lost_turtle;
 	
 	//    Required Tags
-	buildcostmetal=2037;
+	buildcostmetal=1637;
 	buildcostenergy=83265;
 	BuildTime=98025;
 	Category=LOST SPECIAL DEFENSIVE WEAPON LEVEL3 NOTAIR NOTSUB ;

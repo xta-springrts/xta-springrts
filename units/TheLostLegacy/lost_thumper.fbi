@@ -4,14 +4,14 @@
 	UnitName=Lost_thumper;
 	
 	//    Required Tags
-	BuildCostEnergy=15345;
-	BuildCostMetal=1857;
-	BuildTime=31280;
+	BuildCostEnergy=13345;
+	BuildCostMetal=1557;
+	BuildTime=27280;
 	Category=LOST TANK LEVEL3 WEAPON NOTAIR NOTSUB CTRL_W;
-	Description=Amphibious Artillery Tank;
+	Description=Armoured Anti-Armor Tank;
 	FootprintX=4;
 	FootprintZ=4;
-	MaxDamage=10654;
+	MaxDamage=8754;
 	ObjectName=Lost_thumper;
 	Side=TLL;
 	SoundCategory=CORE_TANK;
@@ -19,10 +19,10 @@
 	
 	//    Movement
 	BrakeRate=0.02;
-	movementclass=TANKDH3;
+	movementclass=TANKDTCRUSH;
 	Acceleration=0.01;
 	CanMove=1;
-	MaxVelocity=0.88;
+	MaxVelocity=0.85;
 	MaxSlope=20;
 	TurnRate=200;
 	
@@ -38,10 +38,10 @@
 	CanStop=1;
 	
 	//    Sight/Radar
-	SightDistance=512.5;
+	SightDistance=412.5;
 	
 	//    Weapons
-	Weapon1=Thumper_GUN;
+	Weapon1=THUMPRAIL_WEAPON;
 	wpri_badTargetCategory=VTOL;
 	BadTargetCategory=VTOL;
 	ExplodeAs=BIG_UNITEX;
@@ -70,4 +70,9 @@
 	collisionVolumeTest = 1;
 	pieceTrailCEGTag=Debree;//bleh
 	pieceTrailCEGRange = 4;
+	[SFXTypes]
+	{
+	explosiongenerator0=custom:POPUPFLARE;
+	explosiongenerator1=custom:UNITFIRE;
+	}
 }

@@ -4,8 +4,8 @@
 	//  Unit Description
 	//********************
 	side=Core;
-	name=Spreader;
-	Description=Cheap Long Range Rocket Kbot;
+	name=FireSpreader;
+	Description=Long Range Rocket Kbot;
 
 	//************************************************************
 	//  Categories
@@ -26,11 +26,12 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=876;
+	maxdamage=1165;
 	healtime=30;
-	buildcostmetal=276;
-	buildcostenergy=3452;
-	buildtime=4354;
+	buildcostmetal=486;
+	buildcostenergy=7452;
+	buildtime=11354;
+	damagemodifier=0.75;
 	footprintx=2;
 	footprintz=2;
 
@@ -83,7 +84,7 @@
 	//************************************************************
 	//  Weapons
 	//***********
-	Weapon1=TLLKBOT_LongROCKET;
+	Weapon1=EXP_LOSTLIGHTROCKET;
 	badtargetcategory=NOTAIR;
 	wpri_badtargetcategory=NOTAIR;
 	explodeas=BIG_UNITEX;

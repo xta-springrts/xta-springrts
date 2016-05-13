@@ -5,7 +5,7 @@
 	//********************
 	side=Core;
 	name=Troll;
-	description=Heavy Mortar Kbot;
+	description=Support Assault Kbot;
 
 	//************************************************************
 	//  Categories
@@ -28,9 +28,9 @@
 	//********************
 	maxdamage=4274;
 	healtime=30;
-	buildcostmetal=1156;
-	buildcostenergy=14546;
-	buildtime=21018;
+	buildcostmetal=1098;
+	buildcostenergy=13091;
+	buildtime=19333;
 	footprintx=3;
 	footprintz=3;
 

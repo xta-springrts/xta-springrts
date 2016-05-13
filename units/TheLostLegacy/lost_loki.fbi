@@ -5,7 +5,7 @@
 	//********************
 	side=Arm;
 	name=Loki;
-	description=Mobile Artillery;
+	description=Fast Artillery;
 
 	//************************************************************
 	//  Categories
@@ -26,7 +26,7 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=903;
+	maxdamage=933;
 	healtime=30;
 	buildcostmetal=732;
 	buildcostenergy=5351;
@@ -65,10 +65,10 @@
 	//  Movement
 	//************
 	movementclass=TANKSH3;
-	turnrate=400;
+	turnrate=366;
 	acceleration=0.3;
 	brakerate=0.8;
-	maxvelocity=1.7;
+	maxvelocity=1.5;
 	maxslope=12;
 	maxwaterdepth=0;
 

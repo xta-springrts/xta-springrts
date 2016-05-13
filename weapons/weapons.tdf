@@ -1872,9 +1872,9 @@
 	weaponType=Cannon;
 	turret=1;
 	//color=3;
-	range=7860;
+	range=5360;
 	reloadtime=0.25;
-	weaponvelocity=1100;
+	weaponvelocity=950;
 	energypershot=1500;
 	areaofeffect=100;
 	soundstart=xplonuk3;
@@ -2981,9 +2981,9 @@
 	weaponType=Cannon;
 	turret=1;
 	//color=3;
-	range=7168;
+	range=5200;
 	reloadtime=0.5;
-	weaponvelocity=1080;
+	weaponvelocity=920;
 	energypershot=3200;
 	areaofeffect=138;
 	soundstart=xplonuk3;

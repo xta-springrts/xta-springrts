@@ -26,7 +26,7 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=2341;
+	maxdamage=2441;
 	healtime=30;
 	buildcostmetal=664;
 	buildcostenergy=6660;
@@ -128,6 +128,6 @@
 
 	[SFXTypes]
 	{
-	explosiongenerator0=custom:tllDGUNTRAIL;
+	explosiongenerator0=custom:BLUEPOPUPFLARE;
 	}
 }
