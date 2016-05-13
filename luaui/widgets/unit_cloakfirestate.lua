@@ -28,14 +28,14 @@ local GetMyTeamID      = Spring.GetMyTeamID
 local GetSelectedUnits = Spring.GetSelectedUnits
 local GetUnitIsCloaked = Spring.GetUnitIsCloaked
 local GetPlayerInfo    = Spring.GetPlayerInfo
-
+local Echo				= Spring.Echo
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
 local cloakUnit = {}	--stores the desired fire state when decloaked of each unitID
 
 function widget:UnitCloaked(unitID, unitDefID, teamID)
-	if (teamID ~= team) or not UnitDefs[unitDefID].canMove then return end
+	if (teamID ~= team) or not UnitDefs[unitDefID].canMove or (not UnitDefs[unitDefID].decloakOnFire) then return end
 	local states = GetUnitStates(unitID)
 	cloakUnit[unitID] = states.firestate	--store last state
 	if states.firestate ~= 0 then
@@ -44,7 +44,7 @@ function widget:UnitCloaked(unitID, unitDefID, teamID)
 end
 
 function widget:UnitDecloaked(unitID, unitDefID, teamID)
-	if (teamID ~= team) or not UnitDefs[unitDefID].canMove then return end
+	if (teamID ~= team) or not UnitDefs[unitDefID].canMove or (not UnitDefs[unitDefID].decloakOnFire) then return end
 	local states = GetUnitStates(unitID)
 	if states.firestate == 0 then
 		local targetState = cloakUnit[unitID] or 2
