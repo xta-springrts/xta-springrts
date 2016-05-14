@@ -5,13 +5,13 @@
 	
 	//    Required Tags
 	BuildCostEnergy=77446;
-	BuildCostMetal=11950;
+	BuildCostMetal=15950;
 	BuildTime=181545;
 	Category=LOST TANK LEVEL3 WEAPON NOTAIR NOTSUB CTRL_W;
-	Description=Heavy Rocket/Shotgun Mechbot;
+	Description=Saturation Rocket/Shotgun Mechbot;
 	FootprintX=4;
 	FootprintZ=4;
-	MaxDamage=31872;
+	MaxDamage=53872;
 	ObjectName=lost_titan;
 	Side=TLL;
 	SoundCategory=KROGOTH;

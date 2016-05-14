@@ -5,6 +5,8 @@
 	Weapontype=MissileLauncher;
 	explosiongenerator=custom:BLUEPUFFYROCKET;
 	cegTag=BLUEROCKETTRAIL;
+	soundstart=RavenLGTRock;
+	soundhitdry=rocklgthit;
 	Texture1=null;
 	Texture2=null;
 	Texture3=null;
@@ -29,8 +31,6 @@
 	flighttime=3.5;
 	//turnrate=5000;	//4000
 	//edgeeffectiveness=0.75;
-	soundstart=RavenLGTRock;
-	soundhitdry=rocklgthit;
 	firestarter=70;
 	smokedelay=0.1;
 	smoketrail=0;
@@ -1315,8 +1315,10 @@
 {
 	name=Heavy Multi-Launch Rockets;
 	Weapontype=MissileLauncher;
-	explosiongenerator=custom:raven;
-	cegTag=RAVENTRAIL;
+	explosiongenerator=custom:BLUEPUFFYROCKET;
+	cegTag=BLUEROCKETTRAIL;
+	soundstart=RavenLGTRock;
+	soundhitdry=rocklgthit;
 	Texture1=null;
 	Texture2=null;
 	Texture3=null;
@@ -1326,30 +1328,29 @@
 	turret=1;
 	model=weapon_exphvyrock;
 	range=1100;
-	reloadtime=19;
+	reloadtime=5;
 	weapontimer=0.33; //6
 	weaponvelocity=300;
 	startvelocity=100;
 	weaponacceleration=120;
-	areaofeffect=140;  //80
-	energypershot=1200;
+	areaofeffect=70;  //80
+	energypershot=400;
 	Burst=8;
-	Burstrate=0.25;
+	Burstrate=0.3;
+	projectiles=1;
 	Trajectoryheight=1;
 	Wobble=3300; //14000
 	Dance=40;
 	flighttime=5;
 	//turnrate=5000;	//4000
 	//edgeeffectiveness=0.75;
-	soundstart=RavenHvyRock;
-	soundhitdry=rockhit;
 	firestarter=70;
 	smokedelay=0.1;
 	smoketrail=0;
 	startsmoke=0;
 	[DAMAGE]
 	{
-		default=666;	//800
+		default=333;	//333
 		group_invincible=1;
 	}
 }
@@ -1645,18 +1646,15 @@
 	rendertype=1;
 	lineofsight=1;
 	vlaunch=1;
-	range=750;
+	range=800;
 	model=weapon_exphvyrock;
-	//cegTag=tllDgunTRAIL;
-	cegTag=Giga;
-	explosiongenerator=custom:BLUEPUFFYROCKET;
 	Texture1=null; //flare//
 	Texture2=null;//first segment of missiletrail//
 	Texture3=null;//flame//
 	Texture4=null;//unknown//
 	reloadtime=3;
 	noautorange=1;
-	weapontimer=0.2;
+	weapontimer=0.333;
 	flighttime=10;
 	weaponvelocity=700;
 	weaponacceleration=400;
@@ -1664,8 +1662,10 @@
 	turnrate=40000;
 	areaofeffect=64;
 	metalpershot=0;
-	soundstart=vpulsefire;
-	soundhitdry=vpulsehit;
+	explosiongenerator=custom:BLUEPUFFYROCKET;
+	cegTag=BLUEROCKETTRAIL;
+	soundstart=RavenLGTRock;
+	soundhitdry=rocklgthit;
 	firestarter=100;
 	smokedelay=0.1;
 	selfprop=1;
@@ -1696,7 +1696,7 @@
 	weaponvelocity=333;
 	areaofeffect=96;
 	rgbcolor=1 0.33 0.0;
-	explosiongenerator=custom:blueballboom;
+	explosiongenerator=custom:DREADPlasma;
 	cegTag=blueBALLTRAIL;
 	soundstart=Altfire;
 	soundhitdry=PSaHit00;
@@ -1719,7 +1719,7 @@
 	energypershot=1000;
 	[DAMAGE]
 	{
-		default=1666;
+		default=2000;
 		group_commanders=1111;
 		lost_commanders=1000;
 	}
@@ -1734,9 +1734,9 @@
 	minbarrelangle=-45;
 	range=550;
 	sprayangle=1024;
-	reloadtime=0.1;
+	reloadtime=0.2;
 	explosiongenerator=custom:tllDgunTRAIL;
-	weaponvelocity=1200;
+	weaponvelocity=1100;
 	myGravity=0.01;
 	areaofeffect=16;
 	soundstart=tllplasma_01.wav;
@@ -1754,7 +1754,7 @@
   	sizedecay=-0.3;
 	[DAMAGE]
 	{
-		default=19;//x 5 190 damage
+		default=40;//x 5 200 damage
 	}
 }
 

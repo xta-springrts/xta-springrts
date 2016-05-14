@@ -4,14 +4,14 @@
 	UnitName=Lost_Spatha;
 	
 	//    Required Tags
-	BuildCostEnergy=21345;
+	BuildCostEnergy=24345;
 	BuildCostMetal=3065;
-	BuildTime=28280;
+	BuildTime=40280;
 	Category=LOST TANK LEVEL3 WEAPON NOTAIR NOTSUB CTRL_W;
 	Description=Heavy Patrol Tank;
 	FootprintX=4;
 	FootprintZ=4;
-	MaxDamage=17654;
+	MaxDamage=17954;
 	ObjectName=Lost_Spatha;
 	Side=TLL;
 	SoundCategory=CORE_TANK;
