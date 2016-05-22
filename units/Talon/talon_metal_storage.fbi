@@ -1,0 +1,108 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Arm;
+	name=Metal Storage;
+	description=Increases Metal Storage  by 9,000;
+	icontype=metal;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=ARM METAL  NOWEAPON  NOTAIR NOTSUB STORAGE;
+	tedclass=METAL;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=talon_metal_storage;
+	unitnumber=51;
+	objectname=talon_metal_storage.3do;
+	corpse=talon_metal_storage_dead;
+	buildpic=talon_metal_storage.png;
+	soundcategory=ARM_MSTOR;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=1229;
+	buildcostmetal=256;
+	buildcostenergy=635;
+	buildtime=2525;
+	footprintx=4;
+	footprintz=4;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=9000;
+	energyuse=0;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	buildangle=4096;
+	yardmap=yooy oooo oooo oooo yooy;
+	activatewhenbuilt=1;
+	collisionVolumeType=CylY;
+	collisionVolumeScales=60 32 62;
+	collisionVolumeOffsets=0 0 0;
+	//collisionVolumeTest = 1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canRepeat=0;
+	canMove=0;
+	canAttack=0;
+	canGuard=0;
+	
+	//************************************************************
+	//  Movement
+	//************
+	maxslope=15;
+	maxwaterdepth=22;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=367.5;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeas=ESTOR_BUILDINGEX;
+	selfdestructas=ESTOR_BUILDINGEX; //was CRAWL_BLASTSML modded by Gizmo//
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=0;
+	designation=AM-MSF;
+	downloadable=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+}

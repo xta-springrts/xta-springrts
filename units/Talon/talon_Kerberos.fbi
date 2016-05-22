@@ -1,0 +1,124 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Arm;
+	name=Kerberos;
+	description=Floating Heavy Laser Tower;
+	icontype=sea;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=ARM DEFENSIVE STATIC WEAPON NOTLAND NOTAIR NOTSUB;
+	tedclass=DEFENSIVE;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=talon_Kerberos;
+	unitnumber=177;
+	objectname=talon_Kerberos.3do;
+	corpse=talon_Kerberos_dead;
+	buildpic=talon_Kerberos.png;
+	soundcategory=ARM_KBOT;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=2813;
+	healtime=11;
+	buildcostmetal=908;
+	buildcostenergy=10592;
+	buildtime=15095;
+	footprintx=4;
+	footprintz=4;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energyuse=0.1;
+	energystorage=200;
+	windgenerator=0.001;
+
+	//************************************************************
+	//  Building
+	//************
+	buildangle=16384;
+	yardmap=ywwy wwww wwww ywwy;
+	activatewhenbuilt=1;
+	collisionVolumeType=CylY;
+	collisionVolumeScales=43 50 43;
+	//collisionVolumeOffsets=0 0 0;
+	collisionVolumeTest = 1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canattack=1;
+	canguard=1;
+	canstop=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	minwaterdepth=2;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=600;
+	airsightdistance=900;
+	radardistance=0;
+	losemitheight=36;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=ARMFHLT_LASER;
+	badtargetcategory=VTOL;
+	wpri_badtargetcategory=VTOL;
+	explodeas=BIG_UNITEX;
+	selfdestructas=BIG_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	firestandorders=1;
+	standingfireorder=2;
+	defaultmissiontype=GUARD_NOMOVE;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	ai_limit=limit ARMFHLT 6;
+	bmcode=0;
+	designation=ARM-FHL;
+	downloadable=1;
+	noshadow=1;
+	shootme=1;
+	threed=1;
+	version=1.2;
+	waterline=18;
+	zbuffer=1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+	[SFXTypes]
+	{
+	explosiongenerator0=custom:greenflare;
+	}
+}

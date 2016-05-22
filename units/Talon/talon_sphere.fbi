@@ -1,0 +1,128 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Core;
+	name=Sphere;
+	description=Bomb (450 Dmg);
+
+	//************************************************************
+	//  Categories
+	//**************
+	Category=CORE MINE KBOT PHIB MOBILE WEAPON NOTAIR NOTSEA NOTSUB;
+	tedclass=KBOT;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=talon_sphere;
+	unitnumber=130;
+	objectname=talon_sphere.3do;
+	buildpic=talon_sphere.png;
+	soundcategory=ROACH;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=225;
+	healtime=30;
+	buildcostmetal=15;
+	buildcostenergy=325;
+	buildtime=650;
+	footprintx=1;
+	footprintz=1;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=0.1;
+	energyuse=0.1;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canattack=1;
+	canguard=1;
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+	kamikaze=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementclass=CRAWLBOMB;
+	turnrate=1370;
+	acceleration=1.0;
+	brakerate=0.1;
+	maxvelocity=1.5;
+	maxslope=32;
+	maxwaterdepth=112;
+	turninplace=0;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=300;
+	radardistance=0;
+	//radardistancejam=10;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	nochasecategory=VTOL;
+	badtargetcategory=VTOL;
+	wpri_badtargetcategory=VTOL;
+	explodeas=SMALL_UNITEX; //WAS CRAWL_BLAST now smaller damage and smaller area of effect //fixed v9 gold//
+	selfdestructas=TALON_SPHERE;
+	selfdestructcountdown=0;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	firestandorders=1;
+	mobilestandorders=1;
+	standingfireorder=2;
+	standingmoveorder=1;
+	defaultmissiontype=Standby;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=1;
+	designation=UV-2-AB;
+	downloadable=1;
+	kamikazedistance=50;
+	maneuverleashlength=640;
+	shootme=1;
+	steeringmode=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	mass=100;  //70000
+	collisionVolumeType = box;
+	collisionVolumeScales =8 10 8;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+}

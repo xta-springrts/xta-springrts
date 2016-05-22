@@ -240,6 +240,20 @@ local morphDefs = {
 		cmdname = 'Resupply',
 		text = 'Rebuild mine supply',
 	},
+
+	talon_u0commander = {
+		into = 'talon_ucommander',
+		time = 30,
+		--xp = .015
+		--tech = 2
+	}, 
+	talon_ucommander = {
+		into = 'talon_u2commander',
+		time = 120,
+		xp = .15
+		--tech = 2
+	}, 
+
 	
 	
 }

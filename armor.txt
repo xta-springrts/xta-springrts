@@ -24,6 +24,12 @@
 	core_nincommander=99;
 	arm_nin2commander=99;
 	core_nin2commander=99;
+	talon_commander=99;
+	talon_u0commander=99;
+	talon_ucommander=99;
+	talon_u2commander=99;
+	talon_u3commander=99;
+	talon_u4commander=99;
 }
 
 [lost_commanders]
@@ -51,6 +57,11 @@
 [group_spiders]
 {
 	arm_spider=99;
+}
+
+[group_sphere]
+{
+	talon_sphere=99;
 }
 
 [group_landair]
@@ -131,6 +142,12 @@
 	guardian_shade=99;
 	guardian_ghost=99;
 	Guardian_Revenant=99;
+	//TALON
+	talon_construction_aircraft=99;
+	talon_recon=99;
+	talon_token=99;
+	talon_shade=99;
+	talon_wyvern=99;
 
 }
 
@@ -160,6 +177,9 @@
 	core_shock_mine=99;
 	guardian_zealot=99;
 	lost_charged_nail=99;
+	talon_Barada_mine=99;
+	talon_Klaatu_mine=99;
+	talon_Nikto_mine=99;
 }
 
 [group_walls]

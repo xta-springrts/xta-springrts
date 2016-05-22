@@ -1,0 +1,139 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Arm;
+	name=Obsidian;
+	description=Self-Fortifying Tank;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=ARM TANK WEAPON NOTAIR NOTSUB;
+	tedclass=TANK;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=talon_obsidian;
+	unitnumber=66;
+	objectname=talon_obsidian.3do;
+	corpse=talon_obsidian_dead;
+	buildpic=talon_obsidian.png;
+	soundcategory=ARM_TANK;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=1445; // was 3442
+	damagemodifier=0.5;
+	//onoffable=1;
+	digger=1;
+	healtime=30;
+	buildcostmetal=286; //165
+	buildcostenergy=3564; //1246
+	buildtime=6504;
+	footprintx=2;
+	footprintz=2;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=0.6;
+	energyuse=0.6;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canattack=1;
+	canguard=1;
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementclass=TANKBH3; //TANKBH3//
+	turnrate=228; // was 450
+	acceleration=0.24; 
+	brakerate=0.1;
+	maxvelocity=0.9;//was 2.05
+	maxslope=10;
+	maxwaterdepth=12;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=375;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=OBSIDANBLACK;
+	nochasecategory=VTOL;
+	badtargetcategory=VTOL;
+	wpri_badtargetcategory=VTOL;
+	explodeas=BIG_UNITEX;
+	selfdestructas=BIG_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	firestandorders=1;
+	StandingFireOrder=2;
+	mobilestandorders=1;
+	StandingMoveOrder=1;
+	defaultmissiontype=Standby;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=1;
+	designation=ARM-FA5;
+	downloadable=1;
+	leavetracks=1;
+	maneuverleashlength=640;
+	shootme=1;
+	steeringmode=1;
+	threed=1;
+	trackoffset=3;
+	trackstrength=6;
+	trackstretch=1;
+	tracktype=StdTank;
+	trackwidth=24;
+	version=1.2;
+	zbuffer=1;
+	collisionVolumeType = box;
+	collisionVolumeScales =34 17 34;
+	collisionVolumeOffsets = 0 -1 0;
+	collisionVolumeTest = 1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+	[SFXTypes]
+	{
+	explosiongenerator0=custom:NANODEBREE1;
+	explosiongenerator1=custom:rocketflare;
+	explosiongenerator2=custom:NANODEBREE1;
+	}
+
+}

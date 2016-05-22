@@ -1,0 +1,722 @@
+
+
+// Talon commander script!
+
+// Why are you using a start-script rockunit_();
+// And not the engine called RockUnit(..,..) ?
+// So, StartBuilding(Func_Var_1, Func_Var_2) has arguments now?
+// I knew it had heading, but wasn't aware of the pitch.
+// I reorganised alot the walk script, the idle animation
+// And the weapons aiming animation
+// The dgun gets priority over the nano, which gets priority over the laser
+// And no more using the laser while building.
+// I tried to make it so it would fire with the drone when nano or dgun is busy
+// But it doesn't work. Even the missiles, which are free to fire
+// Well, save that it doesn't work, so I removed that part
+// I redid the laser cool down, for yours had bugs:
+// For instance, it would never fire if you hit the Attack button like a madman
+// Or if you waited an hour, then gave an attack order, you'd still had to wait the delay
+// The shield wasn't working properly:
+// Under heavy fire, it would make the com armored half of times
+// Under heavier fire, it would make the com always armored
+// Under continuous fire, it would make the com not armored
+// (Depending on which line the HitByWeapon gets killed by the signal of the next HitByWeap)
+
+
+
+// This script should be compiled under Scriptor Version 1.0 RC1.
+// Other versions, or other compilers, won't manage to compile it.
+
+// Here write the value in UnitLimit in totala.ini.
+// Will only be used if Xon's hack's not here.
+#define UNITS_PER_PLAYER 500
+
+// Some factors to tweak:
+#define WALK_SPEED_FACTOR 6// Make the walk movements faster or slower
+#define WALK_PERIOD 330// Make the time between each walk movement longer or shorter
+#define LASER_COOL_DOWN 2100 // When no drone, forced delay between each laser shot
+
+// Height of the units that gives upgrades,
+// to be measured with the "caliper" unit
+#define MISSILE_UPGRADE_HEIGHT 7821545
+#define DRONE_UPGRADE_HEIGHT 8192000
+#define SHIELD_UPGRADE_HEIGHT 8309758
+#define RADAR_UPGRADE_HEIGHT 7879680
+
+
+
+#define TA
+#include "exptype.h"
+#include "sfxtype.h"
+
+piece	laser, torso, dgun, nano, arm, pelvis, 
+		rthight, lthight, hand, lfoot, lboot, rfoot, rboot, shoulder, 
+		base, head, rleg, lleg, 
+		rad, lshoulder, larm, lhand, oldshoulder;
+
+static-var	moving, aiming_any, aiming_primary, aiming_tertiary, aiming_nano;
+static-var	heading_any, laser_altern, laser_ready;
+
+// Signal definitions
+// Each must be a power of 2
+// And no higher than 128
+#define SIG_AIM1  2
+#define SIG_AIM2  4
+#define SIG_AIM3  8
+#define SIG_NANO 16
+#define SIG_ROCK 32
+#define SIG_IDLE 64
+#define SIG_FIRE1 128
+
+
+
+#define REST_UPPER\
+	stop-spin hand around y-axis;\
+	turn shoulder to x-axis <0> speed <40>;\
+	turn shoulder to y-axis <0> speed <40>;\
+	turn shoulder to z-axis <0> speed <40>;\
+	turn arm to x-axis <0> speed <40>;\
+	turn arm to y-axis <0> speed <40>;\
+	turn arm to z-axis <0> speed <40>;\
+	turn hand to x-axis <0> speed <40>;\
+	turn hand to y-axis <0> speed <40>;\
+	turn hand to z-axis <0> speed <40>;\
+	turn torso to x-axis <0> speed <40>;\
+	turn torso to y-axis <0> speed <40>;\
+	turn torso to z-axis <0> speed <40>;\
+	turn lshoulder to x-axis <0> speed <40>;\
+	turn lshoulder to y-axis <0> speed <40>;\
+	turn lshoulder to z-axis <0> speed <40>;\
+	turn larm to x-axis <0> speed <40>;\
+	turn larm to y-axis <0> speed <40>;\
+	turn larm to z-axis <0> speed <40>;\
+	turn lhand to x-axis <0> speed <40>;\
+	turn lhand to y-axis <0> speed <40>;\
+	turn lhand to z-axis <0> speed <40>;\
+	heading_any=0;
+
+
+// Somehow, blinking the shield at every shots,
+// with "RockUnit", makes the missiles run dry
+// Even when I used the signals.
+//
+//RockUnit(arg1,arg2)
+//{
+//	BLINK_SHIELD
+//}
+
+/*IdleAnimation()
+{
+	signal SIG_IDLE;
+	set-signal-mask SIG_IDLE;
+	var idle_seq;
+	while(TRUE)
+	{
+	
+		idle_seq=rand(1,23);
+	
+		if(idle_seq==1)
+		{	
+			if(rand(1,8)==1)
+			{
+				turn head to y-axis <60> speed <150>;
+			}
+			if(rand(1,7)==1)
+			{
+				turn head to y-axis <-60> speed <150>;
+			}
+			sleep 300;
+			turn head to y-axis rand(<-60>,<60>) speed <150>;
+			wait-for-turn head around y-axis;
+		}
+
+		
+		if(idle_seq==2)		
+		{	
+			turn shoulder to x-axis <40> speed <80>;
+			turn hand to x-axis <-60> speed <120>;
+			wait-for-turn hand around x-axis;
+			turn shoulder to x-axis <0> speed <80>;
+			turn hand to x-axis <0> speed <120>;
+			wait-for-turn hand around x-axis;
+			turn shoulder to x-axis <40> speed <80>;
+			turn hand to x-axis <-60> speed <120>;
+			wait-for-turn hand around x-axis;
+			REST_UPPER;
+		}
+
+		
+		if(idle_seq==3)		
+		{	
+			turn shoulder to x-axis <-40> speed <40>;
+			turn hand to x-axis <-50> speed <50>;
+			turn torso to y-axis <30> speed <30>;
+			turn head to y-axis <-30> speed <30>;
+			wait-for-turn torso around y-axis;
+			sleep 500;
+			turn head to y-axis <30> speed <60>;
+			turn torso to y-axis <-30> speed <60>;
+			wait-for-turn torso around y-axis;
+			sleep 500;
+			REST_UPPER;
+		}
+
+		
+		if(idle_seq==4)		
+		{	
+			turn torso to z-axis <10> speed <10>;
+			turn head to y-axis <-80> speed <80>;
+			turn shoulder to z-axis <40> speed <40>;
+			turn arm to z-axis <40> speed <40>;
+			wait-for-turn arm around z-axis;
+			sleep 300;
+			turn head to y-axis <40> speed <40>;
+			turn torso to z-axis <0> speed <10>;
+			turn shoulder to z-axis <0> speed <40>;
+			turn arm to z-axis <0> speed <40>;
+			turn shoulder to x-axis <-60> speed <60>;
+			turn hand to x-axis <-20> speed <20>;
+			wait-for-turn hand around x-axis;
+			sleep 300;
+			REST_UPPER;
+		}
+
+		if(idle_seq==5)		
+		{	
+			turn head to y-axis <80> speed <80>;
+			turn torso to z-axis <-10> speed <10>;
+			turn shoulder to z-axis <10> speed <10>;
+			wait-for-turn head around y-axis;
+			sleep 2000;
+			REST_UPPER;
+		}
+
+		if(idle_seq==6)		
+		{	
+			spin hand around y-axis speed <600>;
+			sleep 600;
+			REST_UPPER;
+		}		
+		
+		sleep rand(500, 3000);
+	}
+}*/
+
+
+
+MasterAnimation()
+{
+	var walk_seq, just_moved, head_aimnomove_seq;
+	walk_seq=1;
+	head_aimnomove_seq=11;
+	just_moved=TRUE;
+	sleep rand(0,WALK_PERIOD);
+	while(TRUE)
+	{
+		if(moving)
+		{
+			//signal SIG_IDLE;// Kill IdleAnimation
+
+			if(!aiming_any)
+			{
+				// Walking and not aiming
+				walk_seq=walk_seq;
+				// Upper Body Walk Animation: 4 poses:
+				if(walk_seq==1)
+				{
+					turn torso to y-axis <-10> speed <5> * WALK_SPEED_FACTOR;
+					turn head to y-axis <10> speed <5> * WALK_SPEED_FACTOR;
+					turn lthight to x-axis <-20> speed <10> * WALK_SPEED_FACTOR;
+
+					turn lleg to x-axis <-20> speed <10> * WALK_SPEED_FACTOR;
+					turn lfoot to x-axis <0> speed <30> * WALK_SPEED_FACTOR;
+					turn lboot to x-axis <-20> speed <25> * WALK_SPEED_FACTOR;
+
+					turn rthight to x-axis <10> speed <5> * WALK_SPEED_FACTOR;
+					turn rleg to x-axis <20> speed <10> * WALK_SPEED_FACTOR;
+					turn rfoot to x-axis <0> speed <15> * WALK_SPEED_FACTOR;
+					turn lboot to x-axis <20> speed <10> * WALK_SPEED_FACTOR;
+
+					turn shoulder to x-axis <30> speed <15> * WALK_SPEED_FACTOR;
+					turn arm to x-axis <0> speed <10> * WALK_SPEED_FACTOR;
+					turn hand to x-axis <0> speed <20> * WALK_SPEED_FACTOR;
+					
+					turn lshoulder to x-axis <-30> speed <15> * WALK_SPEED_FACTOR;
+					turn larm to x-axis <0> speed <10> * WALK_SPEED_FACTOR;
+					turn lhand to x-axis <0> speed <10> * WALK_SPEED_FACTOR;
+					
+					if(rand(1,28)==1)
+					{
+						turn head to y-axis <60> speed <150>;
+					}
+					if(rand(1,32)==1)
+					{
+						turn head to y-axis <-60> speed <150>;
+					}
+				}
+				if(walk_seq==2)
+				{
+					turn torso to y-axis <0> speed <5> * WALK_SPEED_FACTOR;
+					turn head to y-axis <0> speed <5> * WALK_SPEED_FACTOR;
+
+					turn lthight to x-axis <0> speed <10> * WALK_SPEED_FACTOR;
+					turn lleg to x-axis <0> speed <10> * WALK_SPEED_FACTOR;
+					turn lfoot to x-axis <0> speed <10> * WALK_SPEED_FACTOR;
+					turn lboot to x-axis <0> speed <15> * WALK_SPEED_FACTOR;
+
+					turn rthight to x-axis <0> speed <5> * WALK_SPEED_FACTOR;
+					turn rleg to x-axis <0> speed <10> * WALK_SPEED_FACTOR;
+					turn rfoot to x-axis <60> speed <30> * WALK_SPEED_FACTOR;
+					turn rboot to x-axis <30> speed <5> * WALK_SPEED_FACTOR;
+
+					turn shoulder to x-axis <0> speed <15> * WALK_SPEED_FACTOR;
+					turn arm to x-axis <0> speed <10> * WALK_SPEED_FACTOR;
+					turn hand to x-axis <0> speed <10> * WALK_SPEED_FACTOR;
+					
+					turn lshoulder to x-axis <0> speed <15> * WALK_SPEED_FACTOR;
+					turn larm to x-axis <10> speed <5> * WALK_SPEED_FACTOR;
+					turn lhand to x-axis <-40> speed <20> * WALK_SPEED_FACTOR;
+				}
+				if(walk_seq==3)
+				{
+					turn torso to y-axis <10> speed <5> * WALK_SPEED_FACTOR;
+					turn head to y-axis <-10> speed <5> * WALK_SPEED_FACTOR;
+
+					turn lthight to x-axis <10> speed <5> * WALK_SPEED_FACTOR;
+					turn lleg to x-axis <20> speed <10> * WALK_SPEED_FACTOR;
+					turn lfoot to x-axis <0> speed <15> * WALK_SPEED_FACTOR;
+					turn lboot to x-axis <20> speed <10> * WALK_SPEED_FACTOR;
+
+					turn rthight to x-axis <-20> speed <10> * WALK_SPEED_FACTOR;
+					turn rleg to x-axis <-20> speed <10> * WALK_SPEED_FACTOR;
+					turn rfoot to x-axis <0> speed <30> * WALK_SPEED_FACTOR;
+					turn rboot to x-axis <-20> speed <25> * WALK_SPEED_FACTOR;
+
+					turn shoulder to x-axis <-30> speed <15> * WALK_SPEED_FACTOR;
+					turn arm to x-axis <0> speed <10> * WALK_SPEED_FACTOR;
+					turn hand to x-axis <0> speed <10> * WALK_SPEED_FACTOR;
+					
+					turn lshoulder to x-axis <30> speed <15> * WALK_SPEED_FACTOR;
+					turn larm to x-axis <0> speed <10> * WALK_SPEED_FACTOR;
+					turn lhand to x-axis <0> speed <20> * WALK_SPEED_FACTOR;
+					
+				}
+				if(walk_seq==4)
+				{
+					turn torso to y-axis <0> speed <10> * WALK_SPEED_FACTOR;
+					turn head to y-axis <0> speed <10> * WALK_SPEED_FACTOR;
+
+					turn lthight to x-axis <0> speed <5> * WALK_SPEED_FACTOR;
+					turn lleg to x-axis <0> speed <10> * WALK_SPEED_FACTOR;
+					turn lfoot to x-axis <60> speed <30> * WALK_SPEED_FACTOR;
+					turn lboot to x-axis <30> speed <5> * WALK_SPEED_FACTOR;
+
+					turn rthight to x-axis <0> speed <10> * WALK_SPEED_FACTOR;
+					turn rleg to x-axis <0> speed <10> * WALK_SPEED_FACTOR;
+					turn rfoot to x-axis <0> speed <10> * WALK_SPEED_FACTOR;
+					turn rboot to x-axis <0> speed <15> * WALK_SPEED_FACTOR;
+
+					turn shoulder to x-axis <0> speed <15> * WALK_SPEED_FACTOR;
+					turn arm to x-axis <10> speed <5> * WALK_SPEED_FACTOR;
+					turn hand to x-axis <-40> speed <20> * WALK_SPEED_FACTOR;
+					
+					turn lshoulder to x-axis <0> speed <15> * WALK_SPEED_FACTOR;
+					turn larm to x-axis <0> speed <10> * WALK_SPEED_FACTOR;
+					turn lhand to x-axis <0> speed <10> * WALK_SPEED_FACTOR;
+				}
+				//++walk_seq;
+				//if(walk_seq>4)
+				//{
+				//	walk_seq=1;
+				//}
+			 }// end not aiming
+
+
+			// Walking, (aiming or not):
+			//walk_seq=walk_seq;
+			// Lower Body Walk Animation: 4 poses:
+			if(walk_seq==1)
+			{
+				turn lthight to x-axis <-20> speed <10> * WALK_SPEED_FACTOR;
+				turn lleg to x-axis <-20> speed <10> * WALK_SPEED_FACTOR;
+				turn lfoot to x-axis <0> speed <30> * WALK_SPEED_FACTOR;
+				turn lboot to x-axis <-20> speed <25> * WALK_SPEED_FACTOR;
+
+				turn rthight to x-axis <10> speed <5> * WALK_SPEED_FACTOR;
+				turn rleg to x-axis <20> speed <10> * WALK_SPEED_FACTOR;
+				turn rfoot to x-axis <0> speed <15> * WALK_SPEED_FACTOR;
+				turn lboot to x-axis <20> speed <10> * WALK_SPEED_FACTOR;
+			}
+			if(walk_seq==2)
+			{
+				turn lthight to x-axis <0> speed <10> * WALK_SPEED_FACTOR;
+				turn lleg to x-axis <0> speed <10> * WALK_SPEED_FACTOR;
+				turn lfoot to x-axis <0> speed <10> * WALK_SPEED_FACTOR;
+				turn lboot to x-axis <0> speed <15> * WALK_SPEED_FACTOR;
+
+				turn rthight to x-axis <0> speed <5> * WALK_SPEED_FACTOR;
+				turn rleg to x-axis <0> speed <10> * WALK_SPEED_FACTOR;
+				turn rfoot to x-axis <60> speed <30> * WALK_SPEED_FACTOR;
+				turn rboot to x-axis <30> speed <5> * WALK_SPEED_FACTOR;
+			}
+			if(walk_seq==3)
+			{
+				turn lthight to x-axis <10> speed <5> * WALK_SPEED_FACTOR;
+				turn lleg to x-axis <20> speed <10> * WALK_SPEED_FACTOR;
+				turn lfoot to x-axis <0> speed <15> * WALK_SPEED_FACTOR;
+				turn lboot to x-axis <20> speed <10> * WALK_SPEED_FACTOR;
+
+				turn rthight to x-axis <-20> speed <10> * WALK_SPEED_FACTOR;
+				turn rleg to x-axis <-20> speed <10> * WALK_SPEED_FACTOR;
+				turn rfoot to x-axis <0> speed <30> * WALK_SPEED_FACTOR;
+				turn rboot to x-axis <-20> speed <25> * WALK_SPEED_FACTOR;
+			}
+			if(walk_seq==4)
+			{
+				turn lthight to x-axis <0> speed <5> * WALK_SPEED_FACTOR;
+				turn lleg to x-axis <0> speed <10> * WALK_SPEED_FACTOR;
+				turn lfoot to x-axis <60> speed <30> * WALK_SPEED_FACTOR;
+				turn lboot to x-axis <30> speed <5> * WALK_SPEED_FACTOR;
+
+				turn rthight to x-axis <0> speed <10> * WALK_SPEED_FACTOR;
+				turn rleg to x-axis <0> speed <10> * WALK_SPEED_FACTOR;
+				turn rfoot to x-axis <0> speed <10> * WALK_SPEED_FACTOR;
+				turn rboot to x-axis <0> speed <15> * WALK_SPEED_FACTOR;
+			}
+			++walk_seq;
+			if(walk_seq>4)
+			{
+				walk_seq=1;
+			}
+			just_moved=TRUE;
+		}// end if moving
+
+
+
+		if((!moving) && just_moved)
+		{
+			// Stopping walk animation:
+			just_moved = FALSE;
+			turn head to y-axis <0> speed <10> * WALK_SPEED_FACTOR;
+			turn lthight to x-axis <0> speed <10> * WALK_SPEED_FACTOR;
+			turn lleg to x-axis <0> speed <10> * WALK_SPEED_FACTOR;
+			turn lfoot to x-axis <0> speed <10> * WALK_SPEED_FACTOR;
+			turn lboot to x-axis <0> speed <10> * WALK_SPEED_FACTOR;
+
+			turn rthight to x-axis <0> speed <10> * WALK_SPEED_FACTOR;
+			turn rleg to x-axis <0> speed <10> * WALK_SPEED_FACTOR;
+			turn rfoot to x-axis <0> speed <10> * WALK_SPEED_FACTOR;
+			turn rboot to x-axis <0> speed <10> * WALK_SPEED_FACTOR;
+			if(!aiming_any)
+			{
+				turn torso to y-axis <0> speed <10> * WALK_SPEED_FACTOR;
+				turn shoulder to x-axis <0> speed <10> * WALK_SPEED_FACTOR;
+				turn arm to x-axis <0> speed <10> * WALK_SPEED_FACTOR;
+				turn hand to x-axis <0> speed <10> * WALK_SPEED_FACTOR;
+				turn lshoulder to x-axis <0> speed <10> * WALK_SPEED_FACTOR;
+				turn larm to x-axis <0> speed <10> * WALK_SPEED_FACTOR;
+				turn lhand to x-axis <0> speed <10> * WALK_SPEED_FACTOR;
+				if((!moving) && (!aiming_any))//Kinda extraneous, but much safer, for in case someone add some wait or sleep above
+				{
+					//start-script IdleAnimation();
+				}
+			}
+		}
+		
+		if((!moving) && aiming_any)
+		{
+			if(head_aimnomove_seq==1)
+			{
+				turn head to y-axis <-60> speed <50>;
+			}
+			if(head_aimnomove_seq==5)
+			{
+				turn head to y-axis <60> speed <50>;
+			}
+			if(head_aimnomove_seq>=13)
+			{
+				turn head to y-axis <0> speed <50>;
+			}
+			++head_aimnomove_seq;
+			if(head_aimnomove_seq>111)
+			{
+				head_aimnomove_seq=1;
+			}
+		}
+
+		sleep WALK_PERIOD;
+	}
+}
+
+
+Create()
+{
+	
+	set UNIT_HEIGHT to 0;
+	set ACTIVATION to 0;
+	// Variable initialisations
+	// Most be rewritten one tick later
+	// But I'm not leaving them with unexpectable values
+	// Not even one instance, just to be sure it's safe
+	// Even some other bits of code get mangled
+
+	// I read the height used to find every unit of the same kind by reading the height of the unit, so 3do can be changed without having to re-measure the unit and report the change in the script
+
+	
+	moving=FALSE;
+	aiming_any=FALSE;
+	aiming_primary=FALSE;
+	aiming_tertiary=FALSE;
+	aiming_nano=FALSE;
+	heading_any=0;
+	
+	//hide lshoulder;
+	//hide larm;
+	//hide lhand;
+	
+	
+	// Hide/cache/move the pieces, right when unit begins existing
+	hide dgun;
+	hide laser;
+ 	//hide rad;	
+ 	sleep 2;//Just in case, to let everything fall into place
+
+	start-script MasterAnimation();
+}
+
+StartMoving()
+{
+	moving=TRUE;
+}
+
+StopMoving()
+{
+	moving=FALSE;
+}
+
+SweetSpot(piecenum)
+{
+	piecenum=torso;
+}
+
+
+// TargetCleared is one of the very few function
+// That is called always on home computer
+// Never on remote computer
+// Disabled because I'm afraid we have too many function running already
+//TargetCleared(unknown)
+//	{
+//	home_computer=TRUE;
+//	}
+
+// I *think*  so is QueryNanoPiece(piecenum)
+QueryNanoPiece(piecenum)
+{
+	piecenum=nano;
+}
+
+// Primary: Small Laser + Drone
+// Secondary: Missiles
+// Tertiary: DGun
+
+AimFromPrimary(piecenum)
+{
+	piecenum = torso;
+	// Always aim from torso
+	// Because aiming from a moving piece
+	// can cause constant reaiming without firing
+}
+
+QueryPrimary(piecenum)
+{
+	piecenum = laser;
+	//return;
+}
+
+RestorePrimary()
+{
+	sleep 4500;
+	aiming_primary=FALSE;
+	if((!aiming_tertiary) && (!aiming_nano))
+	{
+		aiming_any=FALSE;
+		REST_UPPER
+		//start-script IdleAnimation();
+	}
+	return;
+}
+
+AimPrimary(heading, pitch)
+{
+	signal SIG_AIM1;
+	set-signal-mask SIG_AIM1;
+	//signal SIG_IDLE;// Kill IdleAnimation
+	aiming_primary=FALSE;//So the "while" is performed at least once
+	aiming_any=TRUE;
+	while(aiming_tertiary || aiming_nano || !aiming_primary)
+	{
+		aiming_primary=TRUE;
+		while(aiming_tertiary || aiming_nano)
+		{
+			sleep 100;
+		}
+		if(pitch>32768)
+		{
+			pitch=pitch - 65536;
+		}		
+		if(laser_altern==0)
+		{
+			REST_UPPER;
+			heading_any=heading;
+			turn hand to y-axis <0> speed <40>;
+			turn torso to y-axis heading speed <300>;
+			turn shoulder to x-axis <-40> - pitch/2 speed <45>;
+			turn hand to x-axis <-50> - pitch/2 speed <45>;
+			wait-for-turn torso around y-axis;
+			wait-for-turn shoulder around x-axis;
+			wait-for-turn hand around x-axis;
+		}
+		while(!laser_ready)
+		{
+			sleep 10;
+		}
+	}
+	start-script RestorePrimary();
+	return (1);
+}
+
+FirePrimary()
+{
+
+	signal SIG_FIRE1;
+	set-signal-mask SIG_FIRE1;
+		show laser;
+		sleep 10;
+		hide laser;
+
+}
+
+AimSecondary(heading, pitch)
+{
+	signal SIG_AIM2;
+	set-signal-mask SIG_AIM2;
+	return(TRUE);
+}
+
+// This commander is begining to have too many function running at once
+// So I put the missile_altern= !missile_altern; at the end of the aiming,
+// And so can get rid of the FireSecondary()
+
+//FireSecondary()
+//{
+//	//start-script rockunit_();
+//	missile_altern= !missile_altern;
+//}
+
+AimFromSecondary(piecenum)
+{
+	piecenum = base;
+}
+
+QuerySecondary(piecenum)
+{
+	piecenum = base;
+}
+
+AimFromTertiary(piecenum)
+{
+	piecenum = torso;
+}
+
+QueryTertiary(piecenum)
+{
+	piecenum = dgun;
+}
+
+RestoreTertiary()
+{
+	sleep 480;
+	aiming_tertiary=FALSE;
+	if((!aiming_primary) && (!aiming_nano))
+	{
+		aiming_any=FALSE;
+		REST_UPPER
+		//start-script IdleAnimation();
+	}
+}
+
+AimTertiary(heading, pitch)
+{
+	signal SIG_AIM3;
+	set-signal-mask SIG_AIM3;
+	//signal SIG_IDLE;// Kill IdleAnimation
+	aiming_any = TRUE;
+	aiming_tertiary = TRUE;
+	if(pitch>32768)
+	{
+		pitch=pitch - 65536;
+	}
+	REST_UPPER;
+	heading_any=heading;
+	turn hand to y-axis <0> speed <40>;
+	turn torso to y-axis heading speed <300>;
+	turn shoulder to x-axis <-40> - pitch/2 speed <45>;
+	turn hand to x-axis <-50> - pitch/2 speed <45>;
+	wait-for-turn torso around y-axis;
+	wait-for-turn shoulder around x-axis;
+	wait-for-turn hand around x-axis;
+	start-script RestoreTertiary();
+	return (1);
+}
+
+FireTertiary()
+{
+	show dgun;
+	sleep 200;
+	hide dgun;	
+}
+
+StartBuilding(heading,pitch)
+{
+	signal SIG_NANO;
+	set-signal-mask SIG_NANO;
+	//signal SIG_IDLE;// Kill IdleAnimation
+	aiming_any = TRUE;
+	aiming_nano = TRUE;
+	while(aiming_nano)
+	{
+		while(aiming_tertiary)
+		{
+			sleep 100;
+		}
+		if(pitch>32768)
+		{
+			pitch=pitch - 65536;
+		}
+		REST_UPPER;
+		heading_any=heading;
+		turn hand to y-axis <0> speed <40>;
+		turn torso to y-axis heading speed <300>;
+		turn shoulder to x-axis <-40> - pitch/2 speed <45>;
+		turn hand to x-axis <-50> - pitch/2 speed <45>;
+		wait-for-turn torso around y-axis;
+		wait-for-turn shoulder around x-axis;
+		set INBUILDSTANCE to TRUE;
+		sleep 900;
+	}
+}
+
+
+StopBuilding()
+{
+	signal SIG_NANO;
+	set-signal-mask SIG_NANO;
+	set INBUILDSTANCE to FALSE;
+	aiming_nano=FALSE;
+	if((!aiming_primary) && (!aiming_tertiary))
+	{
+		aiming_any=FALSE;
+		REST_UPPER
+		//start-script IdleAnimation();
+	}
+}

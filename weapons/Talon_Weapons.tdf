@@ -1,0 +1,607 @@
+
+[BASIL_TORPEDO]
+{
+	name=Unguided Torpedo;
+	Weapontype=TorpedoLauncher;
+	CollideFriendly=0;
+	model=weapon_DEPTHCHARGE;
+	propeller=1;
+	range=200;
+	reloadtime=4;
+	weapontimer=4;
+	weaponvelocity=400;
+	startvelocity=100;
+	weaponacceleration=50;
+	turnrate=4750;
+	areaofeffect=16;
+	soundstart=torpedo1;
+	soundhitdry=xplodep1;
+	//tracks=1;
+	waterweapon=1;
+	tolerance=32767;
+	noautorange=1;
+	explosiongenerator=custom:DepthCharge;
+	[DAMAGE]
+	{
+		default=100;
+		group_subs=100;
+		group_stupidsubs=250;
+		group_ships=100;
+		group_large_ships=100;
+		group_torpedo_launcher=100;
+		group_invincible=1;
+		group_commanders=100;
+		lost_commanders=100;
+	}
+}
+[OBSIDANBLACK]
+{
+	name=Gauss Cannon;
+	weaponType=Cannon;
+	explosiongenerator=custom:DGUNTRACE;
+	turret=1;
+	//minbarrelangle=-45;
+	//cylindertargeting = 1;
+	range=300;
+	reloadtime=3.0;
+	weaponvelocity=700;
+	myGravity=0.01;
+	areaofeffect=8;
+	soundstart=Mavgun2;
+	soundhitdry=xplomed2;
+	tolerance=500;
+	weapontimer=1.5;
+	startsmoke=1;
+	size=0.85;
+	rgbcolor=0.9 0.66 0.3;
+	stages=10;
+	separation=0.5;
+	alphadecay=-0.01;
+	sizedecay=-0.2;
+	nogap=1;
+	[DAMAGE]
+	{
+		default=150;
+		group_invincible=1;
+	}
+}
+[Salamander_cannon]
+{
+	name=Plasma Cannon;
+	weaponType=Cannon;
+	turret=1;
+	explosiongenerator=custom:WindkbotRocket;
+	//minbarrelangle=-40;
+	Range=487; //454
+	//myGravity=1.2;
+	accuracy=720;
+	movingaccuracy=1520;
+	reloadtime=2.0;
+	weaponvelocity=390; //350
+	areaofeffect=48;
+	soundstart=cannon1;
+	soundhitdry=xplomed3;
+	tolerance=500;
+	startsmoke=1;
+	rgbcolor=0.8 0.4 0.2;
+	stages=5;
+	separation=0.44;
+	alphadecay=0.5;
+	sizedecay=-0.55;
+	[DAMAGE]
+	{
+		default=86;
+		group_invincible=1;
+	}
+}
+[HYDRA_FLAK]
+{
+	name=Flak Cannon;
+	weaponType=Cannon;
+	turret=1;
+	range=700;
+	reloadtime=2.0;
+	weapontimer=0.78;
+	weaponvelocity=1250;
+	areaofeffect=72;
+	edgeeffectiveness=0;
+	cylindertargeting = 1;
+	soundstart=canlite2;
+	soundhitdry=xplosml2;//xplomed2
+	//minbarrelangle=-24;
+	tolerance=767;
+	burnblow=1;
+	explosiongenerator=custom:KBOTMISSILEHIT;
+	//explosiongenerator=custom:FlakCloud;
+	size=1;
+	rgbcolor=1 0.6 0.6;
+	rgbColor2=0.1 0.1 0.1;
+	stages=20;
+	separation=0.35;
+	alphadecay=0.2;
+	sizedecay=-0.2;
+	//color=1;
+	startsmoke=1;
+	craterboost=0.25;
+	cratermult=0.25;
+	[DAMAGE]
+	{
+		default=35;
+		group_landair=100;
+		group_skyair=100;
+		group_invincible=1;
+	}
+}
+[SNITCH_WEAPON]
+{
+	name=Laser;
+	Weapontype=LaserCannon;
+	turret=1;
+	range=275;
+	thickness=7;
+	intensity=0.85;
+	reloadtime=2.0;
+	weaponvelocity=950;
+	areaofeffect=8;
+	burstrate=0.2;
+	duration=0.1;
+	Texture1=purplelaser;
+	Texture2=null;
+	Texture3=null;
+	Texture4=null;
+	soundtrigger=1;
+	soundstart=COMFIRE2;
+	explosiongenerator=custom:REDHEAVYLASER;
+	soundhitdry=lashit;
+	firestarter=50;
+	rgbcolor=1.000 0.059 0.000;
+	tolerance=2000;
+	[DAMAGE]
+	{
+		default=66.5;
+		group_invincible=1;
+		group_ships=50;
+		group_large_ships=50;
+	}
+}
+[TALON_WHINELASER]
+{
+	name=Light Laser;
+	Weapontype=LaserCannon;
+	turret=1;
+	range=325;
+	reloadtime=1;
+	weaponvelocity=1150;
+	explosiongenerator=custom:KBOTMISSILEHIT;
+	tolerance=500;
+	//minbarrelangle=-40;
+	duration=0.03;
+	thickness=1.0;
+	Intensity=0.5;
+	rgbcolor=1.0 0.8 0.25;
+	rgbcolor2=1.0 1.0 1.00;
+	energypershot=0;
+	areaofeffect=8;
+	soundtrigger=1;
+	soundstart=talongunfirerapid;
+	soundhitdry=talongunhit;
+	firestarter=30;
+	tolerance=500;
+	[DAMAGE]
+	{
+		default=40;
+		group_ships=60;
+		group_large_ships=60;
+		group_landair=50;
+		group_skyair=50;
+		group_invincible=1;
+	}
+}
+[EMERALD_LIGHTCANNON]
+{
+	name=Light Cannon;
+	weaponType=Cannon;
+	turret=1;
+	range=220;
+	explosiongenerator=custom:WindkbotMissle;
+	reloadtime=1.4;
+	weaponvelocity=528;
+	mygravity=0.01;
+	areaofeffect=32;
+	burnblow=1;
+	soundstart=canlite3;
+	soundhitdry=xplosml3;
+	tolerance=500;
+	startsmoke=1;
+	//minbarrelangle=-40;
+	size=1.5;
+	rgbcolor=0.9 0.6 0.35;
+	stages=5;
+	separation=0.25;
+	alphadecay=0.75;
+	sizedecay=-0.4;
+	nogap=1;
+	[DAMAGE]
+	{
+		default=51;//
+		group_commanders=44;
+		lost_commanders=41;
+		group_invincible=1;
+	}
+}
+
+[MERCURY_LIGHTCANNON]
+{
+	name=Light Cannon;
+	weaponType=Cannon;
+	turret=1;
+	range=265;
+	explosiongenerator=custom:WindkbotMissle;
+	reloadtime=1.5;
+	weaponvelocity=528;
+	mygravity=0.01;
+	areaofeffect=32;
+	burnblow=1;
+	soundstart=canlite3;
+	soundhitdry=xplosml3;
+	tolerance=500;
+	startsmoke=1;
+	//minbarrelangle=-40;
+	size=1.5;
+	rgbcolor=0.9 0.6 0.35;
+	stages=5;
+	separation=0.25;
+	alphadecay=0.75;
+	sizedecay=-0.4;
+	nogap=1;
+	[DAMAGE]
+	{
+		default=51;//
+		group_commanders=44;
+		lost_commanders=41;
+		group_invincible=1;
+	}
+}
+[TALON_DISINTEGRATOR]
+{
+	name=Disintegrator;
+	Weapontype=DGun;
+	turret=1;
+	TargetBorder=1;
+	range=220;
+	reloadtime=1.0;
+	weapontimer=4;
+	energypershot=250;
+	weaponvelocity=220;
+	areaofeffect=48;
+	soundtrigger=1;
+	soundstart=disigun1;
+	soundhitdry=xplomas2dgun;//was xplomas2
+	firestarter=70;
+	noexplode=1;
+	commandfire=1;
+	startsmoke=1;
+	explosiongenerator=custom:DGUNTRACE;
+	cegTag=DGUNTRAIL;
+	size=15;
+	rgbcolor=0.8 0.4 0.2;
+	stages=5;
+	separation=0.44;
+	alphadecay=0.5;
+	sizedecay=-0.55;
+	Tolerance=300;
+	avoidFriendly=0;
+	avoidFeature=0;
+	avoidGround=0;
+	avoidNeutral=0;
+	[DAMAGE]
+	{
+		default=30000;
+		group_invincible=1;
+	}
+}
+[TALONCOMLASER]
+{
+	name=Gun Laser;
+	Weapontype=LaserCannon;
+	explosiongenerator=custom:KBOTMISSILEHIT;
+	soundstart=talongunfirerapid;
+	soundhitdry=talongunhit;
+	FallOffRate=0;
+	turret=1;
+	range=200;
+	reloadtime=0.35;
+	weaponvelocity=1200;
+	duration=0.03;
+	thickness=1.0;
+	Intensity=0.5;
+	rgbcolor=1.0 0.8 0.25;
+	rgbcolor2=1.0 1.0 1.00;
+	areaofeffect=16;
+	soundtrigger=1;
+	firestarter=70;
+	tolerance=2000;
+	[DAMAGE]
+	{
+		default=30;
+		group_invincible=1;
+	}
+}
+[TALON_SPHERE]
+{
+	name=Plasma Cannon;
+	explosiongenerator=custom:RedPlasma;
+	energypershot=500;
+	rgbcolor=1 0.33 0.0;
+	size=4;
+	weaponType=Cannon;
+	turret=1;
+	range=50;
+	reloadtime=3;
+	weaponvelocity=650; //550
+	areaofeffect=128;
+	soundstart=cannhvy5;
+	soundhitdry=xplomed2;
+	startsmoke=1;
+	accuracy=600;
+	edgeeffectiveness=1;
+	[DAMAGE]
+	{
+		default=500;
+		group_ships=675;
+		group_large_ships=725;
+		group_sphere=25;
+	}
+}
+
+[TALON_KLAATU]
+{
+	name=Plasma Cannon;
+	explosiongenerator=custom:RedPlasma;
+	energypershot=500;
+	rgbcolor=1 0.33 0.0;
+	size=4;
+	weaponType=Cannon;
+	turret=1;
+	range=50;
+	reloadtime=3;
+	weaponvelocity=650; //550
+	areaofeffect=128;
+	soundstart=cannhvy5;
+	soundhitdry=xplomed2;
+	startsmoke=1;
+	accuracy=600;
+	edgeeffectiveness=1;
+	[DAMAGE]
+	{
+		default=500;
+		group_ships=675;
+		group_large_ships=725;
+		group_mines=0.5;
+	}
+}
+
+[talon_Nikto_blast]
+{
+	name=Flame Thrower;
+	rendertype=4;
+	ballistic=0;
+	turret=1;
+	range=500;
+	reloadtime=10.0;
+	weaponvelocity=333;
+	areaofeffect=164;
+	rgbcolor=1 0.33 0.0;
+	explosiongenerator=custom:DREADPlasma;
+	cegTag=blueBALLTRAIL;
+	soundstart=Altfire;
+	soundhitdry=PSaHit00;
+	startsmoke=1;
+	tolerance=500;
+	startsmoke=1;
+	burnblow=0;
+	myGravity=0.01;
+	GroundBounce=1;
+	BounceSlip=1.01;
+	BounceRebound=0.2;
+	NumBounce=2;
+	accuracy=1000; //1840//
+	movingaccuracy=2000; //3220//
+	//impulsefactor=2;
+	impulseboost=2;
+	cratermult=0.1;
+	craterboost=0.1;
+	noselfdamage=1;
+	energypershot=1000;
+	edgeeffectiveness=1;
+	[DAMAGE]
+	{
+		default=2000;
+		group_commanders=1111;
+		lost_commanders=1000;
+		group_mines=0.5;
+	}
+}
+
+[TALONBASIL_WEAPON]
+	{
+	name=Ultra Bullet Weapon;
+	RenderType=7;
+	LineOfSight=1;
+	Turret=1;
+
+	range=400;
+	reloadtime=4;
+	//energypershot=10;
+	weaponvelocity=1000;
+	areaofeffect=8;
+	collidefriendly=0;
+	avoidfriendly=0;
+	
+
+	soundstart=talongunfire;//xplolrg1;
+	soundhitdry=talongunhit;
+
+	firestarter=90;
+	beamweapon=1;
+	rgbcolor=0.01 0.01 0.02;
+	explosiongenerator=custom:KBOTMISSILEHIT;
+
+
+	[DAMAGE]
+		{
+		default=100;
+		group_landair=55;
+		}
+	}
+
+[TALONSNIPE_WEAPON]
+	{
+	name=Ultra Bullet Weapon;
+	RenderType=7;
+	LineOfSight=1;
+	Turret=1;
+
+	range=500;
+	reloadtime=4;
+	energypershot=10;
+	weaponvelocity=1000;
+	areaofeffect=8;
+	collidefriendly=0;
+	avoidfriendly=0;
+	
+
+	soundstart=talongunfire;//xplolrg1;
+	soundhitdry=talongunhit;
+
+	firestarter=90;
+	beamweapon=1;
+	rgbcolor=0.01 0.01 0.02;
+	explosiongenerator=custom:KBOTMISSILEHIT;
+
+
+	[DAMAGE]
+		{
+		default=150;
+		group_landair=75;
+		}
+	}
+
+[TALON_LIGHTLASER]
+{
+	name=Light Laser;
+	Weapontype=LaserCannon;
+	turret=1;
+	range=525;
+	reloadtime=0.666;
+	weaponvelocity=1650;
+	explosiongenerator=custom:KBOTMISSILEHIT;
+	tolerance=500;
+	//minbarrelangle=-40;
+	duration=0.03;
+	thickness=1.0;
+	Intensity=0.5;
+	rgbcolor=1.0 0.8 0.25;
+	rgbcolor2=1.0 1.0 1.00;
+	energypershot=5;
+	areaofeffect=8;
+	soundtrigger=1;
+	soundstart=talongunfirerapid;
+	soundhitdry=talongunhit;
+	firestarter=30;
+	tolerance=500;
+	[DAMAGE]
+	{
+		default=50;
+		group_ships=100;
+		group_large_ships=100;
+		group_landair=40;
+		group_skyair=40;
+		group_invincible=1;
+	}
+}
+[BIKE_LASER]
+{
+	explosiongenerator=custom:PINKFLASH;
+	cegTag=PINKCRAP;
+	Weapontype=LaserCannon;
+	name=Laser;
+	turret=1;
+	duration=0.12;
+	thickness=1.0;
+	intensity=0.8;
+	range=175;
+	accuracy=600;
+	movingaccuracy=900;
+	reloadtime=1.0;
+	weaponvelocity=800;
+	areaofeffect=8;
+	soundtrigger=1;
+	soundstart=lasrfir1;
+	soundhitdry=lasrhit2;
+	firestarter=50;
+	rgbcolor=1.000 0.000 0.506;
+	tolerance=1000;
+	[DAMAGE]
+	{
+		default=40;
+		group_invincible=1;
+	}
+}
+[INFANTRY_GUN]
+{
+	explosiongenerator=custom:KBOTMISSILEHIT;
+	duration=0.04;
+	intensity=0.85;
+	name=Laser;
+	Weapontype=LaserCannon;
+	thickness=0.5;
+	turret=1;
+	range=250;
+	accuracy=600;
+	movingaccuracy=900;
+	reloadtime=0.5;
+	weaponvelocity=1000;
+	areaofeffect=8;
+	soundtrigger=1;
+	soundstart=talongunfirerapid;
+	soundhitdry=talongunhit;
+	firestarter=50;
+	rgbcolor=1.0 0.8 0.25;
+	rgbcolor2=1.0 1.0 1.00;
+	tolerance=1000;
+	[DAMAGE]
+	{
+		default=25;
+		group_invincible=1;
+	}
+}
+
+[MERCENARY_GUN]
+{
+	explosiongenerator=custom:KBOTMISSILEHIT;
+	duration=0.04;
+	intensity=0.85;
+	name=Laser;
+	Weapontype=LaserCannon;
+	thickness=0.5;
+	turret=1;
+	range=280;
+	accuracy=600;
+	movingaccuracy=900;
+	reloadtime=0.5;
+	weaponvelocity=1000;
+	areaofeffect=8;
+	soundtrigger=1;
+	soundstart=talongunfirerapid;
+	soundhitdry=talongunhit;
+	firestarter=50;
+	rgbcolor=1.0 0.8 0.25;
+	rgbcolor2=1.0 1.0 1.00;
+	tolerance=1000;
+	[DAMAGE]
+	{
+		default=33;
+		group_invincible=1;
+	}
+}

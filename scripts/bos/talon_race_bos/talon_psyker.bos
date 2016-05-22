@@ -1,0 +1,760 @@
+#define TA			// This is a TAK script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+piece  base, torso, Hip, LegUL, LegUR, LegLR, LegLL, ArmUL, ArmUR, Head, ArmLR, HandR, rotate, sweet-spot, 
+       ArmLL, HandL, Staff, fp;
+       
+static-var bMoving, /*delay*/aimings /*psyking*/;
+
+StartMoving()
+{
+	signal 2;
+	set-signal-mask 2;
+	bMoving=1;
+	while(1)
+	{
+		turn Hip to z-axis <-5.000000> speed <200>;
+		turn torso to x-axis <5.000000> speed <200>;
+		turn torso to z-axis <7.000000> speed <200>;
+		turn LegUL to x-axis <-2.000000> speed <200>;
+		turn LegUL to z-axis <5.000000> speed <200>;
+		turn LegUR to x-axis <-10.428571> speed <200>;
+		turn LegUR to z-axis <5.000000> speed <200>;
+		turn LegLR to x-axis <22.813187> speed <200>;
+		turn LegLL to x-axis <-8.302198> speed <200>;
+		turn ArmUL to x-axis <-9.142857> speed <200>;
+		turn ArmUL to z-axis <-5.000000> speed <200>;
+		turn ArmUR to x-axis <-6.329670> speed <200>;
+		turn Head to x-axis <-5.000000> speed <200>;
+		turn ArmLR to x-axis <-82.637363> speed <200>;
+		turn HandR to x-axis <0.703297> speed <200>;
+		turn ArmLL to x-axis <-10.901099> speed <200>;
+		sleep 96;
+		move Hip to y-axis [-0.175000] speed [200];
+		turn Hip to y-axis <1.000000> speed <200>;
+		turn Hip to z-axis <-3.000000> speed <200>;
+		turn torso to x-axis <0.000000> speed <200>;
+		turn torso to y-axis <-3.000000> speed <200>;
+		turn torso to z-axis <5.000000> speed <200>;
+		turn LegUL to x-axis <4.000000> speed <200>;
+		turn LegUL to z-axis <3.000000> speed <200>;
+		turn LegUR to x-axis <-20.000000> speed <200>;
+		turn LegUR to z-axis <3.000000> speed <200>;
+		turn LegLR to x-axis <22.445055> speed <200>;
+		turn LegLL to x-axis <-5.653846> speed <200>;
+		turn ArmUL to x-axis <-14.769231> speed <200>;
+		turn ArmUL to y-axis <-2.000000> speed <200>;
+		turn ArmUL to z-axis <-2.000000> speed <200>;
+		turn ArmUR to x-axis <-1.054945> speed <200>;
+		turn Head to x-axis <0.000000> speed <200>;
+		turn Head to y-axis <3.000000> speed <200>;
+		turn ArmLR to x-axis <-84.038462> speed <200>;
+		turn HandR to x-axis <3.164835> speed <200>;
+		turn ArmLL to x-axis <-20.219780> speed <200>;
+		sleep 108;
+		move Hip to y-axis [-0.262500] speed [200];
+		turn Hip to y-axis <3.000000> speed <200>;
+		turn Hip to z-axis <-1.000000> speed <200>;
+		turn torso to x-axis <2.000000> speed <200>;
+		turn torso to y-axis <-7.000000> speed <200>;
+		turn torso to z-axis <2.000000> speed <200>;
+		turn LegUL to x-axis <7.000000> speed <200>;
+		turn LegUL to z-axis <1.000000> speed <200>;
+		turn LegUR to x-axis <-28.131868> speed <200>;
+		turn LegUR to z-axis <1.000000> speed <200>;
+		turn LegLR to x-axis <22.609890> speed <200>;
+		turn LegLL to x-axis <-3.450549> speed <200>;
+		turn ArmUL to x-axis <-17.582418> speed <200>;
+		turn ArmUL to y-axis <-5.000000> speed <200>;
+		turn ArmUL to z-axis <0.000000> speed <200>;
+		turn ArmUR to x-axis <1.576923> speed <200>;
+		turn Head to x-axis <-2.000000> speed <200>;
+		turn Head to y-axis <7.000000> speed <200>;
+		turn ArmLR to x-axis <-84.741758> speed <200>;
+		turn HandR to x-axis <4.390110> speed <200>;
+		turn ArmLL to x-axis <-24.879121> speed <200>;
+		sleep 119;
+		move Hip to y-axis [-0.350000] speed [200];
+		turn Hip to y-axis <5.000000> speed <200>;
+		turn Hip to z-axis <0.000000> speed <200>;
+		turn torso to x-axis <7.000000> speed <200>;
+		turn torso to y-axis <-10.000000> speed <200>;
+		turn torso to z-axis <0.000000> speed <200>;
+		turn LegUL to x-axis <10.000000> speed <200>;
+		turn LegUL to z-axis <0.000000> speed <200>;
+		turn LegUR to x-axis <-25.005495> speed <200>;
+		turn LegUR to z-axis <0.000000> speed <200>;
+		turn LegLR to x-axis <13.631868> speed <200>;
+		turn LegLL to x-axis <0.505495> speed <200>;
+		turn ArmUL to x-axis <-20.395604> speed <200>;
+		turn ArmUL to y-axis <-10.000000> speed <200>;
+		turn ArmUR to x-axis <4.219780> speed <200>;
+		turn Head to x-axis <-7.000000> speed <200>;
+		turn Head to y-axis <10.000000> speed <200>;
+		turn ArmLR to x-axis <-85.445055> speed <200>;
+		turn HandR to x-axis <5.626374> speed <200>;
+		turn ArmLL to x-axis <-29.538462> speed <200>;
+		sleep 119;
+		move Hip to y-axis [-0.262500] speed [200];
+		turn Hip to y-axis <3.000000> speed <200>;
+		turn Hip to z-axis <1.000000> speed <200>;
+		turn torso to x-axis <12.000000> speed <200>;
+		turn torso to y-axis <-7.000000> speed <200>;
+		turn torso to z-axis <-1.000000> speed <200>;
+		turn LegUL to x-axis <3.747253> speed <200>;
+		turn LegUL to z-axis <-1.000000> speed <200>;
+		turn LegUR to x-axis <-19.252747> speed <200>;
+		turn LegUR to z-axis <-1.000000> speed <200>;
+		turn LegLR to x-axis <-0.373626> speed <200>;
+		turn LegLL to x-axis <12.148352> speed <200>;
+		turn ArmUL to x-axis <-17.934066> speed <200>;
+		turn ArmUL to y-axis <-5.000000> speed <200>;
+		turn ArmUR to x-axis <0.527473> speed <200>;
+		turn Head to x-axis <-12.000000> speed <200>;
+		turn Head to y-axis <7.000000> speed <200>;
+		turn ArmLR to x-axis <-87.818681> speed <200>;
+		turn HandR to x-axis <7.560440> speed <200>;
+		turn ArmLL to x-axis <-23.208791> speed <200>;
+		sleep 121;
+		move Hip to y-axis [-0.175000] speed [200];
+		turn Hip to y-axis <1.000000> speed <200>;
+		turn Hip to z-axis <3.000000> speed <200>;
+		turn torso to x-axis <9.000000> speed <200>;
+		turn torso to y-axis <-3.000000> speed <200>;
+		turn torso to z-axis <-4.000000> speed <200>;
+		turn LegUL to x-axis <-2.500000> speed <200>;
+		turn LegUL to z-axis <-3.000000> speed <200>;
+		turn LegUR to x-axis <-10.335165> speed <200>;
+		turn LegUR to z-axis <-3.000000> speed <200>;
+		turn LegLR to x-axis <-15.445055> speed <200>;
+		turn LegLL to x-axis <20.274725> speed <200>;
+		turn ArmUL to x-axis <-15.472527> speed <200>;
+		turn ArmUL to y-axis <-2.000000> speed <200>;
+		turn ArmUR to x-axis <-3.164835> speed <200>;
+		turn Head to x-axis <-9.000000> speed <200>;
+		turn Head to y-axis <3.000000> speed <200>;
+		turn ArmLR to x-axis <-90.192308> speed <200>;
+		turn HandR to x-axis <9.494505> speed <200>;
+		turn ArmLL to x-axis <-16.879121> speed <200>;
+		sleep 111;
+		move Hip to y-axis [0.000000] speed [200];
+		turn Hip to y-axis <0.000000> speed <200>;
+		turn Hip to z-axis <5.000000> speed <200>;
+		turn torso to x-axis <5.000000> speed <200>;
+		turn torso to y-axis <0.000000> speed <200>;
+		turn torso to z-axis <-7.000000> speed <200>;
+		turn LegUL to x-axis <-10.428571> speed <200>;
+		turn LegUL to z-axis <-5.000000> speed <200>;
+		turn LegUR to x-axis <-2.000000> speed <200>;
+		turn LegUR to z-axis <-5.000000> speed <200>;
+		turn LegLR to x-axis <-8.302198> speed <200>;
+		turn LegLL to x-axis <22.813187> speed <200>;
+		turn ArmUL to x-axis <-10.549451> speed <200>;
+		turn ArmUL to y-axis <0.000000> speed <200>;
+		turn ArmUR to x-axis <-10.549451> speed <200>;
+		turn Head to x-axis <-5.000000> speed <200>;
+		turn Head to y-axis <0.000000> speed <200>;
+		turn ArmLR to x-axis <-94.945055> speed <200>;
+		turn HandR to x-axis <13.362637> speed <200>;
+		turn ArmLL to x-axis <-4.219780> speed <200>;
+		sleep 112;
+		move Hip to y-axis [-0.175000] speed [200];
+		turn Hip to y-axis <-1.000000> speed <200>;
+		turn Hip to z-axis <3.000000> speed <200>;
+		turn torso to x-axis <0.000000> speed <200>;
+		turn torso to y-axis <3.000000> speed <200>;
+		turn torso to z-axis <-5.000000> speed <200>;
+		turn LegUL to x-axis <-20.000000> speed <200>;
+		turn LegUL to z-axis <-3.000000> speed <200>;
+		turn LegUR to x-axis <4.000000> speed <200>;
+		turn LegUR to z-axis <-3.000000> speed <200>;
+		turn LegLR to x-axis <-5.653846> speed <200>;
+		turn LegLL to x-axis <22.445055> speed <200>;
+		turn ArmUL to x-axis <-3.164835> speed <200>;
+		turn ArmUL to y-axis <2.000000> speed <200>;
+		turn ArmUR to x-axis <-18.456044> speed <200>;
+		turn Head to x-axis <0.000000> speed <200>;
+		turn Head to y-axis <-3.000000> speed <200>;
+		turn ArmLR to x-axis <-80.703297> speed <200>;
+		turn HandR to x-axis <4.571429> speed <200>;
+		turn ArmLL to x-axis <-7.203297> speed <200>;
+		sleep 121;
+		move Hip to y-axis [-0.262500] speed [200];
+		turn Hip to y-axis <-3.000000> speed <200>;
+		turn Hip to z-axis <1.000000> speed <200>;
+		turn torso to x-axis <2.000000> speed <200>;
+		turn torso to y-axis <7.000000> speed <200>;
+		turn torso to z-axis <-2.000000> speed <200>;
+		turn LegUL to x-axis <-28.131868> speed <200>;
+		turn LegUL to z-axis <-1.000000> speed <200>;
+		turn LegUR to x-axis <7.000000> speed <200>;
+		turn LegUR to z-axis <-1.000000> speed <200>;
+		turn LegLR to x-axis <-3.450549> speed <200>;
+		turn LegLL to x-axis <22.609890> speed <200>;
+		turn ArmUL to x-axis <0.527473> speed <200>;
+		turn ArmUL to y-axis <5.000000> speed <200>;
+		turn ArmUR to x-axis <-22.412088> speed <200>;
+		turn Head to x-axis <-2.000000> speed <200>;
+		turn Head to y-axis <-7.000000> speed <200>;
+		turn ArmLR to x-axis <-73.576923> speed <200>;
+		turn HandR to x-axis <0.170330> speed <200>;
+		turn ArmLL to x-axis <-8.703297> speed <200>;
+		sleep 121;
+		move Hip to y-axis [-0.350000] speed [200];
+		turn Hip to y-axis <-5.000000> speed <200>;
+		turn Hip to z-axis <0.000000> speed <200>;
+		turn torso to x-axis <7.000000> speed <200>;
+		turn torso to y-axis <10.000000> speed <200>;
+		turn torso to z-axis <0.000000> speed <200>;
+		turn LegUL to x-axis <-25.005495> speed <200>;
+		turn LegUL to z-axis <0.000000> speed <200>;
+		turn LegUR to x-axis <10.000000> speed <200>;
+		turn LegUR to z-axis <0.000000> speed <200>;
+		turn LegLR to x-axis <0.505495> speed <200>;
+		turn LegLL to x-axis <13.631868> speed <200>;
+		turn ArmUL to x-axis <4.219780> speed <200>;
+		turn ArmUL to y-axis <7.000000> speed <200>;
+		turn ArmUR to x-axis <-26.368132> speed <200>;
+		turn Head to x-axis <-7.000000> speed <200>;
+		turn Head to y-axis <-10.000000> speed <200>;
+		turn ArmLR to x-axis <-66.461538> speed <200>;
+		turn HandR to x-axis <-4.219780> speed <200>;
+		turn ArmLL to x-axis <-10.197802> speed <200>;
+		sleep 109;
+		move Hip to y-axis [-0.262500] speed [200];
+		turn Hip to y-axis <-3.000000> speed <200>;
+		turn Hip to z-axis <-1.000000> speed <200>;
+		turn torso to x-axis <12.000000> speed <200>;
+		turn torso to y-axis <7.000000> speed <200>;
+		turn torso to z-axis <1.000000> speed <200>;
+		turn LegUL to x-axis <-19.252747> speed <200>;
+		turn LegUL to z-axis <1.000000> speed <200>;
+		turn LegUR to x-axis <3.747253> speed <200>;
+		turn LegUR to z-axis <1.000000> speed <200>;
+		turn LegLR to x-axis <12.148352> speed <200>;
+		turn LegLL to x-axis <-0.373626> speed <200>;
+		turn ArmUL to x-axis <0.873626> speed <200>;
+		turn ArmUL to y-axis <5.000000> speed <200>;
+		turn ArmUL to z-axis <-1.000000> speed <200>;
+		turn ArmUR to x-axis <-21.362637> speed <200>;
+		turn Head to x-axis <-12.000000> speed <200>;
+		turn Head to y-axis <-7.000000> speed <200>;
+		turn ArmLR to x-axis <-70.500000> speed <200>;
+		turn HandR to x-axis <-2.983516> speed <200>;
+		turn ArmLL to x-axis <-10.373626> speed <200>;
+		sleep 120;
+		move Hip to y-axis [-0.175000] speed [200];
+		turn Hip to y-axis <-1.000000> speed <200>;
+		turn Hip to z-axis <-3.000000> speed <200>;
+		turn torso to x-axis <9.000000> speed <200>;
+		turn torso to y-axis <3.000000> speed <200>;
+		turn torso to z-axis <4.000000> speed <200>;
+		turn LegUL to x-axis <-10.335165> speed <200>;
+		turn LegUL to z-axis <3.000000> speed <200>;
+		turn LegUR to x-axis <-2.500000> speed <200>;
+		turn LegUR to z-axis <3.000000> speed <200>;
+		turn LegLR to x-axis <20.274725> speed <200>;
+		turn LegLL to x-axis <-15.445055> speed <200>;
+		turn ArmUL to x-axis <-2.461538> speed <200>;
+		turn ArmUL to y-axis <2.000000> speed <200>;
+		turn ArmUL to z-axis <-3.000000> speed <200>;
+		turn ArmUR to x-axis <-16.346154> speed <200>;
+		turn Head to x-axis <-9.000000> speed <200>;
+		turn Head to y-axis <-3.000000> speed <200>;
+		turn ArmLR to x-axis <-74.549451> speed <200>;
+		turn HandR to x-axis <-1.752747> speed <200>;
+		turn ArmLL to x-axis <-10.549451> speed <200>;
+		sleep 122;
+		move Hip to y-axis [-0.021869] speed [200];
+		turn Hip to y-axis <-0.120879> speed <200>;
+		turn Hip to z-axis <-4.747253> speed <200>;
+		turn torso to x-axis <5.500000> speed <200>;
+		turn torso to y-axis <0.373626> speed <200>;
+		turn torso to z-axis <6.626374> speed <200>;
+		turn LegUL to x-axis <-3.038462> speed <200>;
+		turn LegUL to z-axis <4.747253> speed <200>;
+		turn LegUR to x-axis <-9.439560> speed <200>;
+		turn LegUR to z-axis <4.747253> speed <200>;
+		turn LegLR to x-axis <22.500000> speed <200>;
+		turn LegLL to x-axis <-9.197802> speed <200>;
+		turn ArmUL to x-axis <-8.302198> speed <200>;
+		turn ArmUL to y-axis <0.247253> speed <200>;
+		turn ArmUL to z-axis <-4.747253> speed <200>;
+		turn ArmUR to x-axis <-7.576923> speed <200>;
+		turn Head to x-axis <-5.500000> speed <200>;
+		turn Head to y-axis <-0.373626> speed <200>;
+		turn ArmLR to x-axis <-81.620879> speed <200>;
+		turn HandR to x-axis <0.395604> speed <200>;
+		turn ArmLL to x-axis <-10.851648> speed <200>;
+		sleep 78;
+	}
+}
+
+Restore()
+{
+	move torso to x-axis [0.000000] speed [50.000000];
+	turn torso to x-axis <0.000000> speed <50.120879>;
+	move torso to y-axis [0.000000] speed [50.000000];
+	turn torso to y-axis <0.000000> speed <50.120879>;
+	move torso to z-axis [0.000000] speed [50.000000];
+	turn torso to z-axis <0.000000> speed <50.120879>;
+	move LegUL to x-axis [0.000000] speed [50.000000];
+	turn LegUL to x-axis <0.000000> speed <50.120879>;
+	move LegUL to y-axis [0.000000] speed [50.000000];
+	turn LegUL to y-axis <0.000000> speed <50.120879>;
+	move LegUL to z-axis [0.000000] speed [50.000000];
+	turn LegUL to z-axis <0.000000> speed <50.120879>;
+	move LegUR to x-axis [0.000000] speed [50.000000];
+	turn LegUR to x-axis <0.000000> speed <50.120879>;
+	move LegUR to y-axis [0.000000] speed [50.000000];
+	turn LegUR to y-axis <0.000000> speed <50.120879>;
+	move LegUR to z-axis [0.000000] speed [50.000000];
+	turn LegUR to z-axis <0.000000> speed <50.120879>;
+	move LegLR to x-axis [0.000000] speed [50.000000];
+	turn LegLR to x-axis <0.000000> speed <50.120879>;
+	move LegLR to y-axis [0.000000] speed [50.000000];
+	turn LegLR to y-axis <0.000000> speed <50.120879>;
+	move LegLR to z-axis [0.000000] speed [50.000000];
+	turn LegLR to z-axis <0.000000> speed <50.120879>;
+	move LegLL to x-axis [0.000000] speed [50.000000];
+	turn LegLL to x-axis <0.000000> speed <50.120879>;
+	move LegLL to y-axis [0.000000] speed [50.000000];
+	turn LegLL to y-axis <0.000000> speed <50.120879>;
+	move LegLL to z-axis [0.000000] speed [50.000000];
+	turn LegLL to z-axis <0.000000> speed <50.120879>;
+	move ArmUL to x-axis [0.000000] speed [50.000000];
+	turn ArmUL to x-axis <4.219780> speed <50.120879>;
+	move ArmUL to y-axis [0.000000] speed [50.000000];
+	turn ArmUL to y-axis <7.000000> speed <50.120879>;
+	move ArmUL to z-axis [0.000000] speed [50.000000];
+	turn ArmUL to z-axis <0.000000> speed <50.120879>;
+	move ArmUR to x-axis [0.000000] speed [50.000000];
+	turn ArmUR to x-axis <-21.406593> speed <50.120879>;
+	move ArmUR to y-axis [0.000000] speed [50.000000];
+	turn ArmUR to y-axis <0.000000> speed <50.120879>;
+	move ArmUR to z-axis [0.000000] speed [50.000000];
+	turn ArmUR to z-axis <0.000000> speed <50.120879>;
+	move Head to x-axis [0.000000] speed [50.000000];
+	turn Head to x-axis <0.000000> speed <50.120879>;
+	move Head to y-axis [0.000000] speed [50.000000];
+	turn Head to y-axis <0.000000> speed <50.120879>;
+	move Head to z-axis [0.000000] speed [50.000000];
+	turn Head to z-axis <0.000000> speed <50.120879>;
+	move ArmLR to x-axis [0.000000] speed [50.000000];
+	turn ArmLR to x-axis <-38.681319> speed <50.120879>;
+	move ArmLR to y-axis [0.000000] speed [50.000000];
+	turn ArmLR to y-axis <0.000000> speed <50.120879>;
+	move ArmLR to z-axis [0.000000] speed [50.000000];
+	turn ArmLR to z-axis <0.000000> speed <50.120879>;
+	move HandR to x-axis [0.000000] speed [50.000000];
+	turn HandR to x-axis <-41.494505> speed <50.120879>;
+	move HandR to y-axis [0.000000] speed [50.000000];
+	turn HandR to y-axis <0.000000> speed <50.120879>;
+	move HandR to z-axis [0.000000] speed [50.000000];
+	turn HandR to z-axis <0.000000> speed <50.120879>;
+	move Staff to x-axis [0.000000] speed [50.000000];
+	turn Staff to x-axis <10.000000> speed <50.120879>;
+	move Staff to y-axis [0.000000] speed [50.000000];
+	turn Staff to y-axis <0.000000> speed <50.120879>;
+	move Staff to z-axis [0.000000] speed [50.000000];
+	turn Staff to z-axis <0.000000> speed <50.120879>;
+	move ArmLL to x-axis [0.000000] speed [50.000000];
+	turn ArmLL to x-axis <-10.197802> speed <50.120879>;
+	move ArmLL to y-axis [0.000000] speed [50.000000];
+	turn ArmLL to y-axis <0.000000> speed <50.120879>;
+	move ArmLL to z-axis [0.000000] speed [50.000000];
+	turn ArmLL to z-axis <0.000000> speed <50.120879>;
+	move HandL to x-axis [0.000000] speed [50.000000];
+	turn HandL to x-axis <0.000000> speed <50.120879>;
+	move HandL to y-axis [0.000000] speed [50.000000];
+	turn HandL to y-axis <0.000000> speed <50.120879>;
+	move HandL to z-axis [0.000000] speed [50.000000];
+	turn HandL to z-axis <0.000000> speed <50.120879>;
+}
+
+StopMoving()
+{
+	signal 2;
+	bMoving=0;
+	call-script restore();
+}
+
+Create()
+{
+	start-script StopMoving();
+	bMoving=0;
+	//delay=0;
+	//psyking=0;
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 1000;
+	}
+	spin rotate around y-axis speed <500>;
+	move sweet-spot to x-axis -536870912 now;
+}
+
+delayed_restore()
+{
+	start-script restore();
+	sleep 3000;
+	move Hip to x-axis [0.000000] speed [500.000000];
+	turn Hip to x-axis <0.000000> speed <500.120879>;
+	move Hip to y-axis [0.000000] speed [500.000000];
+	turn Hip to y-axis <0.000000> speed <500.120879>;
+	move Hip to z-axis [0.000000] speed [500.000000];
+	turn Hip to z-axis <0.000000> speed <500.120879>;
+}
+
+FirePrimary()
+{
+	//explode l_flare type BITMAPONLY | BITMAP5;//l_flare
+}
+
+QueryPrimary(piecenum)
+{
+	piecenum = fp;//l_flare
+}
+
+AimFromPrimary(piecenum)
+{
+	piecenum = base;
+}
+
+/*Wave()
+{
+	psyking=1;
+	turn ArmUL to x-axis <4.219780> speed <50>;
+	turn ArmUL to y-axis <7.000000> speed <50>;
+	turn ArmUR to x-axis <1.406593> speed <50>;
+	turn ArmLR to x-axis <-38.681319> speed <50>;
+	turn HandR to x-axis <-41.494505> speed <50>;
+	turn ArmLL to x-axis <-10.197802> speed <50>;
+	sleep 120;
+	turn torso to x-axis <-2.500000> speed <50>;
+	turn torso to y-axis <15.000000> speed <50>;
+	turn torso to z-axis <2.500000> speed <50>;
+	turn ArmUL to x-axis <16.483516> speed <50>;
+	turn ArmUL to y-axis <10.934066> speed <50>;
+	turn ArmUL to z-axis <-6.708791> speed <50>;
+	turn ArmUR to x-axis <-18.027473> speed <50>;
+	turn ArmUR to y-axis <8.329670> speed <50>;
+	turn Head to x-axis <2.500000> speed <50>;
+	turn Head to y-axis <-13.752747> speed <50>;
+	turn ArmLR to x-axis <-37.521978> speed <50>;
+	turn ArmLR to y-axis <10.181319> speed <50>;
+	turn HandR to x-axis <-28.071429> speed <50>;
+	turn HandR to y-axis <-11.104396> speed <50>;
+	turn ArmLL to x-axis <-27.087912> speed <50>;
+	turn HandL to x-axis <-3.467033> speed <50>;
+	sleep 120;
+	turn torso to x-axis <-5.000000> speed <50>;
+	turn torso to y-axis <30.005495> speed <50>;
+	turn torso to z-axis <5.000000> speed <50>;
+	turn ArmUL to x-axis <28.747253> speed <50>;
+	turn ArmUL to y-axis <14.868132> speed <50>;
+	turn ArmUL to z-axis <-13.417582> speed <50>;
+	turn ArmUR to x-axis <-37.467033> speed <50>;
+	turn ArmUR to y-axis <16.659341> speed <50>;
+	turn Head to x-axis <5.000000> speed <50>;
+	turn Head to y-axis <-27.505495> speed <50>;
+	turn ArmLR to x-axis <-36.362637> speed <50>;
+	turn ArmLR to y-axis <20.362637> speed <50>;
+	turn HandR to x-axis <-14.648352> speed <50>;
+	turn HandR to y-axis <-22.214286> speed <50>;
+	turn ArmLL to x-axis <-43.983516> speed <50>;
+	turn HandL to x-axis <-6.939560> speed <50>;
+	sleep 120;
+	turn torso to x-axis <-7.500000> speed <50>;
+	turn torso to y-axis <45.010989> speed <50>;
+	turn torso to z-axis <7.500000> speed <50>;
+	turn ArmUL to x-axis <41.010989> speed <50>;
+	turn ArmUL to y-axis <18.802198> speed <50>;
+	turn ArmUL to z-axis <-20.131868> speed <50>;
+	turn ArmUR to x-axis <-56.906593> speed <50>;
+	turn ArmUR to y-axis <24.989011> speed <50>;
+	turn Head to x-axis <7.500000> speed <50>;
+	turn Head to y-axis <-41.258242> speed <50>;
+	turn ArmLR to x-axis <-35.208791> speed <50>;
+	turn ArmLR to y-axis <30.543956> speed <50>;
+	turn HandR to x-axis <-1.225275> speed <50>;
+	turn HandR to y-axis <-33.324176> speed <50>;
+	turn ArmLL to x-axis <-60.873626> speed <50>;
+	turn HandL to x-axis <-10.412088> speed <50>;
+	sleep 120;
+	turn torso to x-axis <-10.000000> speed <50>;
+	turn torso to y-axis <60.010989> speed <50>;
+	turn torso to z-axis <10.000000> speed <50>;
+	turn ArmUL to x-axis <53.280220> speed <50>;
+	turn ArmUL to y-axis <22.736264> speed <50>;
+	turn ArmUL to z-axis <-26.840659> speed <50>;
+	turn ArmUR to x-axis <-76.346154> speed <50>;
+	turn ArmUR to y-axis <33.324176> speed <50>;
+	turn Head to x-axis <10.000000> speed <50>;
+	turn Head to y-axis <-55.010989> speed <50>;
+	turn ArmLR to x-axis <-34.049451> speed <50>;
+	turn ArmLR to y-axis <40.725275> speed <50>;
+	turn HandR to x-axis <12.192308> speed <50>;
+	turn HandR to y-axis <-44.428571> speed <50>;
+	turn ArmLL to x-axis <-77.769231> speed <50>;
+	turn HandL to x-axis <-13.884615> speed <50>;
+	sleep 100;
+	turn torso to x-axis <-5.000000> speed <50>;
+	turn torso to y-axis <45.010989> speed <50>;
+	turn torso to z-axis <7.500000> speed <50>;
+	turn ArmUL to x-axis <38.467033> speed <50>;
+	turn ArmUL to y-axis <14.170330> speed <50>;
+	turn ArmUR to y-axis <18.972527> speed <50>;
+	turn Head to x-axis <5.247253> speed <50>;
+	turn Head to y-axis <-41.258242> speed <50>;
+	turn ArmLR to x-axis <-30.115385> speed <50>;
+	turn ArmLR to y-axis <37.258242> speed <50>;
+	turn HandR to x-axis <21.681319> speed <50>;
+	turn HandR to y-axis <-31.005495> speed <50>;
+	turn Staff to x-axis <3.467033> speed <50>;
+	turn ArmLL to x-axis <-68.978022> speed <50>;
+	turn ArmLL to y-axis <4.857143> speed <50>;
+	sleep 100;
+	turn torso to x-axis <0.000000> speed <50>;
+	turn torso to y-axis <30.005495> speed <50>;
+	turn torso to z-axis <5.000000> speed <50>;
+	turn ArmUL to x-axis <23.653846> speed <50>;
+	turn ArmUL to y-axis <5.609890> speed <50>;
+	turn ArmUR to y-axis <4.626374> speed <50>;
+	turn Head to x-axis <0.500000> speed <50>;
+	turn Head to y-axis <-27.505495> speed <50>;
+	turn ArmLR to x-axis <-26.181319> speed <50>;
+	turn ArmLR to y-axis <33.785714> speed <50>;
+	turn HandR to x-axis <31.170330> speed <50>;
+	turn HandR to y-axis <-17.582418> speed <50>;
+	turn Staff to x-axis <6.939560> speed <50>;
+	turn ArmLL to x-axis <-60.181319> speed <50>;
+	turn ArmLL to y-axis <9.714286> speed <50>;
+	sleep 100;
+	turn torso to x-axis <5.000000> speed <50>;
+	turn torso to y-axis <15.000000> speed <50>;
+	turn torso to z-axis <2.500000> speed <50>;
+	turn ArmUL to x-axis <8.846154> speed <50>;
+	turn ArmUL to y-axis <-2.945055> speed <50>;
+	turn ArmUR to y-axis <-9.714286> speed <50>;
+	turn Head to x-axis <-4.247253> speed <50>;
+	turn Head to y-axis <-13.752747> speed <50>;
+	turn ArmLR to x-axis <-22.247253> speed <50>;
+	turn ArmLR to y-axis <30.313187> speed <50>;
+	turn HandR to x-axis <40.653846> speed <50>;
+	turn HandR to y-axis <-4.164835> speed <50>;
+	turn Staff to x-axis <10.412088> speed <50>;
+	turn ArmLL to x-axis <-51.390110> speed <50>;
+	turn ArmLL to y-axis <14.576923> speed <50>;
+	sleep 100;
+	turn torso to x-axis <10.000000> speed <50>;
+	turn torso to y-axis <0.000000> speed <50>;
+	turn torso to z-axis <0.000000> speed <50>;
+	turn ArmUL to x-axis <-5.961538> speed <50>;
+	turn ArmUL to y-axis <-11.510989> speed <50>;
+	turn ArmUR to y-axis <-24.065934> speed <50>;
+	turn Head to x-axis <-9.000000> speed <50>;
+	turn Head to y-axis <0.000000> speed <50>;
+	turn ArmLR to x-axis <-18.313187> speed <50>;
+	turn ArmLR to y-axis <26.840659> speed <50>;
+	turn HandR to x-axis <50.142857> speed <50>;
+	turn HandR to y-axis <9.252747> speed <50>;
+	turn Staff to x-axis <13.884615> speed <50>;
+	turn ArmLL to x-axis <-42.593407> speed <50>;
+	turn ArmLL to y-axis <19.434066> speed <50>;
+	sleep 100;
+	turn torso to x-axis <5.747253> speed <50>;
+	turn torso to y-axis <-11.252747> speed <50>;
+	turn torso to z-axis <-1.747253> speed <50>;
+	turn ArmUL to x-axis <-1.560440> speed <50>;
+	turn ArmUL to y-axis <-17.758242> speed <50>;
+	turn ArmUL to z-axis <-21.983516> speed <50>;
+	turn ArmUR to y-axis <-30.082418> speed <50>;
+	turn Head to x-axis <-5.000000> speed <50>;
+	turn Head to y-axis <10.000000> speed <50>;
+	turn ArmLR to x-axis <-24.329670> speed <50>;
+	turn ArmLR to y-axis <22.445055> speed <50>;
+	turn HandR to x-axis <57.780220> speed <50>;
+	turn Staff to x-axis <17.582418> speed <50>;
+	turn ArmLL to y-axis <16.197802> speed <50>;
+	sleep 100;
+	turn torso to x-axis <1.500000> speed <50>;
+	turn torso to y-axis <-22.505495> speed <50>;
+	turn torso to z-axis <-3.500000> speed <50>;
+	turn ArmUL to x-axis <2.829670> speed <50>;
+	turn ArmUL to y-axis <-24.005495> speed <50>;
+	turn ArmUL to z-axis <-17.120879> speed <50>;
+	turn ArmUR to y-axis <-36.098901> speed <50>;
+	turn Head to x-axis <-1.000000> speed <50>;
+	turn Head to y-axis <20.000000> speed <50>;
+	turn ArmLR to x-axis <-30.346154> speed <50>;
+	turn ArmLR to y-axis <18.049451> speed <50>;
+	turn HandR to x-axis <65.417582> speed <50>;
+	turn Staff to x-axis <21.285714> speed <50>;
+	turn ArmLL to y-axis <12.956044> speed <50>;
+	sleep 100;
+	turn torso to x-axis <-2.747253> speed <50>;
+	turn torso to y-axis <-33.758242> speed <50>;
+	turn torso to z-axis <-5.247253> speed <50>;
+	turn ArmUL to x-axis <7.225275> speed <50>;
+	turn ArmUL to y-axis <-30.252747> speed <50>;
+	turn ArmUL to z-axis <-12.263736> speed <50>;
+	turn ArmUR to y-axis <-42.115385> speed <50>;
+	turn Head to x-axis <3.000000> speed <50>;
+	turn Head to y-axis <30.005495> speed <50>;
+	turn ArmLR to x-axis <-36.362637> speed <50>;
+	turn ArmLR to y-axis <13.648352> speed <50>;
+	turn HandR to x-axis <43.434066> speed <50>;
+	turn Staff to x-axis <8.329670> speed <50>;
+	turn ArmLL to y-axis <9.714286> speed <50>;
+	sleep 100;
+	turn torso to x-axis <-7.000000> speed <50>;
+	turn torso to y-axis <-45.010989> speed <50>;
+	turn torso to z-axis <-7.000000> speed <50>;
+	turn ArmUL to x-axis <11.620879> speed <50>;
+	turn ArmUL to y-axis <-36.500000> speed <50>;
+	turn ArmUL to z-axis <-7.401099> speed <50>;
+	turn ArmUR to y-axis <-48.131868> speed <50>;
+	turn Head to x-axis <7.000000> speed <50>;
+	turn Head to y-axis <40.005495> speed <50>;
+	turn ArmLR to x-axis <-42.379121> speed <50>;
+	turn ArmLR to y-axis <9.252747> speed <50>;
+	turn HandR to x-axis <21.450549> speed <50>;
+	turn Staff to x-axis <-4.626374> speed <50>;
+	turn ArmLL to y-axis <6.478022> speed <50>;
+	sleep 100;
+	turn torso to x-axis <-5.247253> speed <50>;
+	turn torso to y-axis <-33.758242> speed <50>;
+	turn torso to z-axis <-5.247253> speed <50>;
+	turn ArmUL to x-axis <9.769231> speed <50>;
+	turn ArmUL to y-axis <-25.626374> speed <50>;
+	turn ArmUL to z-axis <-5.549451> speed <50>;
+	turn ArmUR to x-axis <-56.906593> speed <50>;
+	turn ArmUR to y-axis <-36.098901> speed <50>;
+	turn Head to x-axis <5.247253> speed <50>;
+	turn Head to y-axis <30.005495> speed <50>;
+	turn ArmLR to x-axis <-41.456044> speed <50>;
+	turn ArmLR to y-axis <6.939560> speed <50>;
+	turn HandR to x-axis <5.714286> speed <50>;
+	turn HandR to y-axis <6.939560> speed <50>;
+	turn Staff to x-axis <-3.467033> speed <50>;
+	turn ArmLL to x-axis <-34.494505> speed <50>;
+	turn ArmLL to y-axis <4.857143> speed <50>;
+	turn HandL to x-axis <-10.412088> speed <50>;
+	sleep 100;
+	turn torso to x-axis <-3.500000> speed <50>;
+	turn torso to y-axis <-22.505495> speed <50>;
+	turn torso to z-axis <-3.500000> speed <50>;
+	turn ArmUL to x-axis <7.917582> speed <50>;
+	turn ArmUL to y-axis <-14.747253> speed <50>;
+	turn ArmUL to z-axis <-3.697802> speed <50>;
+	turn ArmUR to x-axis <-37.467033> speed <50>;
+	turn ArmUR to y-axis <-24.065934> speed <50>;
+	turn Head to x-axis <3.500000> speed <50>;
+	turn Head to y-axis <20.000000> speed <50>;
+	turn ArmLR to x-axis <-40.527473> speed <50>;
+	turn ArmLR to y-axis <4.626374> speed <50>;
+	turn HandR to x-axis <-10.016484> speed <50>;
+	turn HandR to y-axis <4.626374> speed <50>;
+	turn Staff to x-axis <-2.313187> speed <50>;
+	turn ArmLL to x-axis <-26.395604> speed <50>;
+	turn ArmLL to y-axis <3.236264> speed <50>;
+	turn HandL to x-axis <-6.939560> speed <50>;
+	sleep 100;
+	turn torso to x-axis <-1.747253> speed <50>;
+	turn torso to y-axis <-11.252747> speed <50>;
+	turn torso to z-axis <-1.747253> speed <50>;
+	turn ArmUL to x-axis <6.065934> speed <50>;
+	turn ArmUL to y-axis <-3.873626> speed <50>;
+	turn ArmUL to z-axis <-1.846154> speed <50>;
+	turn ArmUR to x-axis <-18.027473> speed <50>;
+	turn ArmUR to y-axis <-12.032967> speed <50>;
+	turn Head to x-axis <1.747253> speed <50>;
+	turn Head to y-axis <10.000000> speed <50>;
+	turn ArmLR to x-axis <-39.604396> speed <50>;
+	turn ArmLR to y-axis <2.313187> speed <50>;
+	turn HandR to x-axis <-25.752747> speed <50>;
+	turn HandR to y-axis <2.313187> speed <50>;
+	turn Staff to x-axis <-1.153846> speed <50>;
+	turn ArmLL to x-axis <-18.296703> speed <50>;
+	turn ArmLL to y-axis <1.615385> speed <50>;
+	turn HandL to x-axis <-3.467033> speed <50>;
+	sleep 100;
+	turn torso to x-axis <0.000000> speed <50>;
+	turn torso to y-axis <0.000000> speed <50>;
+	turn torso to z-axis <0.000000> speed <50>;
+	turn ArmUL to x-axis <4.219780> speed <50>;
+	turn ArmUL to y-axis <7.000000> speed <50>;
+	turn ArmUL to z-axis <0.000000> speed <50>;
+	turn ArmUR to x-axis <1.406593> speed <50>;
+	turn ArmUR to y-axis <0.000000> speed <50>;
+	turn Head to x-axis <0.000000> speed <50>;
+	turn Head to y-axis <0.000000> speed <50>;
+	turn ArmLR to x-axis <-38.681319> speed <50>;
+	turn ArmLR to y-axis <0.000000> speed <50>;
+	turn HandR to x-axis <-41.494505> speed <50>;
+	turn HandR to y-axis <0.000000> speed <50>;
+	turn Staff to x-axis <0.000000> speed <50>;
+	turn ArmLL to x-axis <-10.197802> speed <50>;
+	turn ArmLL to y-axis <0.000000> speed <50>;
+	turn HandL to x-axis <0.000000> speed <50>;
+	sleep 100;
+	start-script restore();
+	sleep 750;
+	psyking=0;
+}*/
+
+smoke()
+{
+	while (aimings == 1)
+	{
+		//emit-sfx 256 | 1 from l_flare;
+		//emit-sfx 256 | 2 from l_flare;
+		sleep 10;
+		if( Rand( 1, 15 ) == 1 )
+		{
+		//	explode l_flare type BITMAPONLY | BITMAP5;
+		}
+	}
+}
+
+end()
+{
+	sleep 10000;
+	aimings = 0;
+}
+
+restore_db()
+{
+	sleep 2000;
+	aimings=0;
+}
+
+AimPrimary(h, p)
+{
+	signal 4;
+	set-signal-mask 4;
+	aimings=1;
+	start-script smoke();
+	turn hip to y-axis h speed <500>;
+	sleep (Rand( 1, 5000 ));
+	start-script restore_db();
+	return (1);
+}
+
+SweetSpot(piecenum)
+{
+	piecenum = sweet-spot;
+}
+
+Killed(severity, corpsetype)
+{
+	if( severity <= 50 )
+	{
+		corpsetype = 1;
+		return (0);
+	}
+	corpsetype = rand(2,6);
+	return (0);
+}

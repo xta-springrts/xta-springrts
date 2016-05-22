@@ -1,0 +1,414 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+piece  base, body, lbay, rbay, pad, radar, tower, frontmark,
+       rearmark, lhold, rhold, lnano1, lnano2, rnano1, rnano2, point1,
+       point2, point3, point4;
+
+static-var  Static_Var_1, Static_Var_2, statechg_DesiredState, statechg_StateChanging;
+
+// Signal definitions
+#define SIG_ACTIVATE			2
+
+RestoreAfterDelay()
+{
+	sleep 25000;
+}
+
+activatescr()
+{
+	signal 4;
+	set-signal-mask 4;
+	if( TRUE )
+	{
+		dont-cache lbay;
+		dont-cache rbay;
+		dont-cache frontmark;
+		dont-cache rearmark;
+		dont-cache lhold;
+		dont-cache rhold;
+		dont-cache lnano1;
+		dont-cache lnano2;
+		dont-cache rnano1;
+		dont-cache rnano2;
+		set ARMORED to 0;
+	}
+	if( TRUE )
+	{
+		move rearmark to z-axis [-2.500000] speed [1.000000];
+		move frontmark to z-axis [2.500000] speed [1.000000];
+		turn lbay to z-axis <-90.000000> speed <20.000000>;
+		turn rbay to z-axis <90.000000> speed <20.000000>;
+	}
+	if( TRUE )
+	{
+		turn lhold to z-axis <-75.000000> speed <40.000000>;
+		turn rhold to z-axis <75.000000> speed <40.000000>;
+	}
+	if( TRUE )
+	{
+		move lnano1 to x-axis [3.000000] speed [4.000000];
+		move lnano2 to x-axis [3.000000] speed [4.000000];
+		move rnano1 to x-axis [-3.000000] speed [4.000000];
+		move rnano2 to x-axis [-3.000000] speed [4.000000];
+		wait-for-move rnano2 along x-axis;
+	}
+	if( TRUE )
+	{
+		cache lbay;
+		cache rbay;
+		cache frontmark;
+		cache rearmark;
+		cache lhold;
+		cache rhold;
+		cache lnano1;
+		cache lnano2;
+		cache rnano1;
+		cache rnano2;
+		sleep 900;
+	}
+}
+
+deactivatescr()
+{
+	signal 4;
+	set-signal-mask 4;
+	if( TRUE )
+	{
+		dont-cache lbay;
+		dont-cache rbay;
+		dont-cache frontmark;
+		dont-cache rearmark;
+		dont-cache lhold;
+		dont-cache rhold;
+		dont-cache lnano1;
+		dont-cache lnano2;
+		dont-cache rnano1;
+		dont-cache rnano2;
+	}
+	if( TRUE )
+	{
+		move lnano1 to x-axis [0.000000] speed [4.000000];
+		move lnano2 to x-axis [0.000000] speed [4.000000];
+		move rnano1 to x-axis [0.000000] speed [4.000000];
+		move rnano2 to x-axis [0.000000] speed [4.000000];
+	}
+	if( TRUE )
+	{
+		turn lhold to z-axis <0.000000> speed <40.000000>;
+		turn rhold to z-axis <0.000000> speed <40.000000>;
+	}
+	if( TRUE )
+	{
+		move rearmark to z-axis [0.000000] speed [1.000000];
+		move frontmark to z-axis [0.000000] speed [1.000000];
+		turn lbay to z-axis <0.000000> speed <20.000000>;
+		turn rbay to z-axis <0.000000> speed <20.000000>;
+	}
+	if( TRUE )
+	{
+		cache lbay;
+		cache rbay;
+		cache frontmark;
+		cache rearmark;
+		cache lhold;
+		cache rhold;
+		cache lnano1;
+		cache lnano2;
+		cache rnano1;
+		cache rnano2;
+		set ARMORED to 1;
+	}
+}
+
+SmokeUnit(healthpercent, sleeptime, smoketype)
+{
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 400;
+	}
+	while( TRUE )
+	{
+		healthpercent = get HEALTH;
+		if( healthpercent < 66 )
+		{
+			smoketype = 256 | 2;
+			if( Rand( 1, 66 ) < healthpercent )
+			{
+				smoketype = 256 | 1;
+			}
+			emit-sfx smoketype from base;
+		}
+		sleeptime = healthpercent * 50;
+		if( sleeptime < 200 )
+		{
+			sleeptime = 200;
+		}
+		sleep sleeptime;
+	}
+}
+
+OpenYard()
+{
+	set YARD_OPEN to 1;
+	while( !get YARD_OPEN )
+	{
+		set BUGGER_OFF to 1;
+		sleep 1500;
+		set YARD_OPEN to 1;
+	}
+	set BUGGER_OFF to 0;
+}
+
+CloseYard()
+{
+	set YARD_OPEN to 0;
+	while( get YARD_OPEN )
+	{
+		set BUGGER_OFF to 1;
+		sleep 1500;
+		set YARD_OPEN to 0;
+	}
+	set BUGGER_OFF to 0;
+}
+
+Go()
+{
+	call-script activatescr();
+	call-script OpenYard();
+	set INBUILDSTANCE to 1;
+}
+
+Stop()
+{
+	sleep 3000;
+	set INBUILDSTANCE to 0;
+	call-script CloseYard();
+	start-script deactivatescr();
+}
+
+InitState()
+{
+	statechg_DesiredState = TRUE;
+	statechg_StateChanging = FALSE;
+}
+
+RequestState(requestedstate, currentstate)
+{
+	if( statechg_StateChanging )
+	{
+		statechg_DesiredState = requestedstate;
+		return (0);
+	}
+	statechg_StateChanging = TRUE;
+	currentstate = statechg_DesiredState;
+	statechg_DesiredState = requestedstate;
+	while( statechg_DesiredState != currentstate )
+	{
+		if( statechg_DesiredState == 0 )
+		{
+			call-script Go();
+			currentstate = 0;
+		}
+		if( statechg_DesiredState == 1 )
+		{
+			call-script Stop();
+			currentstate = 1;
+		}
+	}
+	statechg_StateChanging = FALSE;
+}
+
+Create()
+{
+	dont-cache radar;
+	dont-shade radar;
+	dont-shade lbay;
+	dont-shade rbay;
+	dont-shade tower;
+	dont-shade rhold;
+	dont-shade lhold;
+	dont-shade pad;
+	dont-shade body;
+	dont-shade frontmark;
+	dont-shade rearmark;
+	dont-shade lnano1;
+	dont-shade lnano2;
+	dont-shade rnano1;
+	dont-shade rnano2;
+	dont-cache point1;
+	dont-cache point2;
+	dont-cache point3;
+	dont-cache point4;
+	Static_Var_1 = 1;
+	call-script InitState();
+	start-script SmokeUnit();
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 1000;
+	}
+	spin radar around y-axis speed <100>;
+}
+
+QueryNanoPiece(piecenum)
+{
+	if( Static_Var_1 == 1 )
+	{
+		piecenum = point1;
+	}
+	if( Static_Var_1 == 2 )
+	{
+		piecenum = point2;
+	}
+	if( Static_Var_1 == 3 )
+	{
+		piecenum = point3;
+	}
+	if( Static_Var_1 == 4 )
+	{
+		piecenum = point4;
+	}
+	++Static_Var_1;
+	if( Static_Var_1 == 5 )
+	{
+		Static_Var_1 = 1;
+	}
+}
+
+Activate()
+{
+	signal SIG_ACTIVATE;
+	start-script RequestState(0);
+}
+
+Deactivate()
+{
+	signal SIG_ACTIVATE;
+	set-signal-mask SIG_ACTIVATE;
+	set-signal-mask 0;
+	start-script RequestState(1);
+}
+
+StartBuilding()
+{
+	dont-cache pad;
+	spin pad around y-axis speed <30.005495>;
+}
+
+StopBuilding()
+{
+	cache pad;
+	stop-spin pad around y-axis;
+}
+
+QueryBuildInfo(piecenum)
+{
+	piecenum = pad;
+}
+
+SweetSpot(piecenum)
+{
+	piecenum = base;
+}
+
+Killed(severity, corpsetype)
+{
+	if( severity <= 25 )
+	{
+		corpsetype = 1;
+		explode lnano1 type FALL | EXPLODE_ON_HIT | BITMAP1;
+		explode lnano2 type FALL | EXPLODE_ON_HIT | BITMAP2;
+		explode rnano1 type FALL | EXPLODE_ON_HIT | BITMAP3;
+		explode rnano2 type FALL | EXPLODE_ON_HIT | BITMAP4;
+		explode base type BITMAPONLY | BITMAP4;
+		explode lbay type BITMAPONLY | BITMAP1;
+		explode rbay type BITMAPONLY | BITMAP2;
+		explode radar type BITMAPONLY | BITMAP3;
+		explode tower type BITMAPONLY | BITMAP4;
+		explode lhold type BITMAPONLY | BITMAP4;
+		explode rhold type BITMAPONLY | BITMAP1;
+		return (0);
+	}
+	if( severity <= 50 )
+	{
+		corpsetype = 2;
+		explode lnano1 type FALL | EXPLODE_ON_HIT | BITMAP1;
+		explode lnano2 type FALL | EXPLODE_ON_HIT | BITMAP4;
+		explode rnano1 type FALL | EXPLODE_ON_HIT | BITMAP3;
+		explode rnano2 type FALL | EXPLODE_ON_HIT | BITMAP4;
+		explode lnano1 type FALL | EXPLODE_ON_HIT | BITMAP1;
+		explode lnano2 type FALL | EXPLODE_ON_HIT | BITMAP2;
+		explode rnano1 type FALL | EXPLODE_ON_HIT | BITMAP3;
+		explode base type BITMAPONLY | BITMAP5;
+		explode lbay type BITMAPONLY | BITMAP1;
+		explode rbay type BITMAPONLY | BITMAP2;
+		explode radar type BITMAPONLY | BITMAP3;
+		explode tower type BITMAPONLY | BITMAP4;
+		explode frontmark type BITMAPONLY | BITMAP4;
+		explode rearmark type BITMAPONLY | BITMAP4;
+		explode lhold type BITMAPONLY | BITMAP4;
+		explode rhold type BITMAPONLY | BITMAP4;
+		return (0);
+	}
+	if( severity <= 99 )
+	{
+		corpsetype = 3;
+		explode lnano1 type FALL | EXPLODE_ON_HIT | BITMAP1;
+		explode lnano2 type FALL | EXPLODE_ON_HIT | BITMAP2;
+		explode rnano1 type FALL | EXPLODE_ON_HIT | BITMAP3;
+		explode rnano2 type FALL | EXPLODE_ON_HIT | BITMAP4;
+		explode lnano1 type FALL | EXPLODE_ON_HIT | BITMAP4;
+		explode lnano2 type FALL | EXPLODE_ON_HIT | BITMAP4;
+		explode rnano1 type FALL | EXPLODE_ON_HIT | BITMAP3;
+		explode rnano2 type FALL | EXPLODE_ON_HIT | BITMAP2;
+		explode lnano1 type FALL | EXPLODE_ON_HIT | BITMAP1;
+		explode lnano2 type FALL | EXPLODE_ON_HIT | BITMAP2;
+		explode rnano1 type FALL | EXPLODE_ON_HIT | BITMAP3;
+		explode rnano2 type FALL | EXPLODE_ON_HIT | BITMAP4;
+		explode lnano1 type FALL | EXPLODE_ON_HIT | BITMAP4;
+		explode lnano2 type FALL | EXPLODE_ON_HIT | BITMAP4;
+		explode rnano1 type FALL | EXPLODE_ON_HIT | BITMAP3;
+		explode rnano2 type FALL | EXPLODE_ON_HIT | BITMAP2;
+		explode base type BITMAPONLY | BITMAP5;
+		explode lbay type BITMAPONLY | BITMAP1;
+		explode rbay type BITMAPONLY | BITMAP2;
+		explode radar type BITMAPONLY | BITMAP3;
+		explode tower type BITMAPONLY | BITMAP4;
+		explode frontmark type BITMAPONLY | BITMAP4;
+		explode rearmark type BITMAPONLY | BITMAP4;
+		explode lhold type BITMAPONLY | BITMAP4;
+		explode rhold type BITMAPONLY | BITMAP4;
+		return (0);
+	}
+	corpsetype = 3;
+	explode lnano1 type FALL | EXPLODE_ON_HIT | BITMAP1;
+	explode lnano2 type FALL | EXPLODE_ON_HIT | BITMAP2;
+	explode rnano1 type FALL | EXPLODE_ON_HIT | BITMAP3;
+	explode rnano2 type FALL | EXPLODE_ON_HIT | BITMAP4;
+	explode lnano1 type FALL | EXPLODE_ON_HIT | BITMAP4;
+	explode lnano2 type FALL | EXPLODE_ON_HIT | BITMAP4;
+	explode rnano1 type FALL | EXPLODE_ON_HIT | BITMAP3;
+	explode rnano2 type FALL | EXPLODE_ON_HIT | BITMAP2;
+	explode lnano1 type FALL | EXPLODE_ON_HIT | BITMAP1;
+	explode lnano2 type FALL | EXPLODE_ON_HIT | BITMAP2;
+	explode rnano1 type FALL | EXPLODE_ON_HIT | BITMAP3;
+	explode rnano2 type FALL | EXPLODE_ON_HIT | BITMAP4;
+	explode lnano1 type FALL | EXPLODE_ON_HIT | BITMAP4;
+	explode lnano2 type FALL | EXPLODE_ON_HIT | BITMAP4;
+	explode rnano1 type FALL | EXPLODE_ON_HIT | BITMAP3;
+	explode rnano2 type FALL | EXPLODE_ON_HIT | BITMAP2;
+	explode lnano1 type FALL | FIRE | SMOKE | EXPLODE_ON_HIT | BITMAP4;
+	explode lnano2 type FALL | FIRE | SMOKE | EXPLODE_ON_HIT | BITMAP4;
+	explode rnano1 type FALL | FIRE | SMOKE | EXPLODE_ON_HIT | BITMAP3;
+	explode rnano2 type FALL | FIRE | SMOKE | EXPLODE_ON_HIT | BITMAP2;
+	explode base type BITMAPONLY | BITMAP5;
+	explode lbay type BITMAPONLY | BITMAP1;
+	explode rbay type BITMAPONLY | BITMAP2;
+	explode radar type BITMAPONLY | BITMAP3;
+	explode frontmark type BITMAPONLY | BITMAP4;
+	explode rearmark type BITMAPONLY | BITMAP4;
+	explode lhold type BITMAPONLY | BITMAP4;
+	explode rhold type BITMAPONLY | BITMAP4;
+}

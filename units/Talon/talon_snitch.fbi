@@ -1,0 +1,131 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Arm;
+	name=Snitch;
+	description=Scout Gravitank;
+	icontype=hover;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=ARM HOVER WEAPON NOTAIR NOTSUB;
+	tedclass=TANK;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=talon_snitch;
+	unitnumber=283;
+	objectname=talon_snitch.3do;
+	corpse=talon_snitch_dead;
+	buildpic=talon_snitch.png;
+	soundcategory=ARM_HOVER_SM;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=666;//876 in 9.725 //1400
+	healtime=30;
+	buildcostmetal=156;//216//286 -- OTA: 76
+	buildcostenergy=2476;//3946//3476 -- OTA: 1169
+	buildtime=4582; // -- OTA: 3388
+	footprintx=2;
+	footprintz=2;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=1.6;
+	energyuse=1.6;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canattack=1;
+	canguard=1;
+	canhover=1;
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+	stealth=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementclass=HOVER2;
+	turnrate=376;
+	acceleration=1;
+	brakerate=0.01;
+	maxvelocity=2;
+	maxslope=16;
+	maxwaterdepth=0;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=420;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=SNITCH_WEAPON;
+	nochasecategory=VTOL;
+	badtargetcategory=VTOL;
+	wpri_badtargetcategory=VTOL;
+	explodeas=BIG_UNITEX;
+	selfdestructas=BIG_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	firestandorders=1;
+	mobilestandorders=1;
+	standingfireorder=2;
+	standingmoveorder=1;
+	defaultmissiontype=Standby;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=1;
+	designation=ARM-HLL;
+	downloadable=1;
+	maneuverleashlength=640;
+	shootme=1;
+	steeringmode=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	collisionVolumeType = box;
+	collisionVolumeScales =25 9 25;
+	collisionVolumeOffsets = 0 3 0;
+	collisionVolumeTest = 1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+	[SFXTypes]
+	{
+		explosiongenerator0=custom:redflare;
+	}
+
+}

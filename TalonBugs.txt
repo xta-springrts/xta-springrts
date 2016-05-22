@@ -1,0 +1,37 @@
+Incoming Freight Train of issues.
+Not talking to any LUA atm. Metal makers, com selecters, etc.
+
+The current .bos that has been uploaded are the best for resolving any issues.
+
+Tech 1 Sea not implemented or complete. 
+Tech2 not implemented period yet.
+No custom XTA flares or effects have been added.
+
+
+Currently no wreckages atm.
+Some wreckages have mistextured faces.  
+If anything else is not posted it is probably not known.
+
+Talon_infantry spams issues, which can probably be resolved quickly by copying talon_mercenary script.
+Talon_Shade tech 1 bomber is missing certain .bos weapon function, engine 101 complains.
+Talon_underwater_metal_extractor has screwy centered model just not resolved.
+Talon_commander has unknown aiming issues.
+Upgraded Commanders do not build anything atm.
+
+Tech 1 floating radar, anti air, light laser tower, will be manually created along with adding SEA units proper.
+
+Weapons are currently not final as not personally satisfied.
+Infantry currently uses basically one sound effect and special effect. (eww)
+Some units also currently share infantry weapons but at much better stastically advantage. (eww)
+
+Gameplay:
+
+Commander is fast, dgun travels faster, weapon is close range but deals more damage, slightly more fragile and less eco. 
+At first standing ground talon is at great disadvantage.
+
+Early Game Tech 1:
+Very weak commander, limited range, should always be on the move, can quickly expand, and should expand. Talon solars are 25 percent smaller than average, and overall are not so strong. Light Gun turrets are not as powerful or have range of light laser towers but can fortify vs range. Should try getting quickly to Sentry anti air as it has dual missile weaponry which makes them effective at early defense. Clone labs are fantastic for making infantry style units which can spread out quickly. They lack proper anti air but have efficent infantry units, that are able to swarm and beat others, however lack speed and firing arcs as they can only shoot forward so must turn to do so. The cheap drones however can expand quicky over water in other areas.
+
+If skipping clone lab, best alternative is getting a vehicle plant which is generic xta T1. The weaponry is currently uninspiring and not advanced however instead of a Minelayer they get a heavier tank that can fortify when not moving to gain bonus efficeny making it an effective mobile turret. Talon also gets tech 1 hovercrafts called gravtanks, which are slower than tech 1.5 hovercrafts but and closer to kbot counterparts with mobility differences.
+
+This makes early game Talon Stronger on FLAT/SEA maps, but at a disadvantage on hilly maps where clones are not strong enough perhaps to climb fortifed defences.

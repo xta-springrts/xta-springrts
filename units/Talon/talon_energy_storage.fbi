@@ -1,0 +1,109 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Arm;
+	name=Energy Storage;
+	description=Increases Energy Storage by 30,000;
+	icontype=building;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=ARM ENERGY  NOWEAPON  NOTAIR NOTSUB STORAGE;
+	tedclass=ENERGY;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=talon_energy_storage;
+	unitnumber=27;
+	objectname=talon_energy_storage.3do;
+	corpse=talon_energy_storage_dead;
+	buildpic=talon_energy_storage.png;
+	soundcategory=ARM_ESTOR;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=1106;
+	buildcostmetal=256;
+	buildcostenergy=2630;
+	buildtime=6710;
+	footprintx=4;
+	footprintz=4;
+	collisionVolumeType=CylY;
+	collisionVolumeScales=57 45 57;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energyuse=0;
+	energystorage=30000;
+
+	//************************************************************
+	//  Building
+	//************
+	buildangle=65535;
+	yardmap=yooy oooo oooo yooy;
+	activatewhenbuilt=1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canRepeat=0;
+	canMove=0;
+	canGuard=0;
+	canAttack=0;
+	//************************************************************
+	//  Movement
+	//************
+	maxslope=10;
+	maxwaterdepth=22;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=367.5;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeas=ENERGY_STORAGE_NORMAL;
+	selfdestructas=CRAWL_BLASTSML;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=0;
+	designation=AE-ESF;
+	downloadable=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+	[SFXTypes]
+	{
+	explosiongenerator0=custom:Glow;
+	}
+}

@@ -1,0 +1,188 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=talon;
+	name=Commander;
+	description=Commander;
+	icontype=talon_commander;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=talon commander WEAPON NOTAIR NOTSUB;
+	tedclass=COMMANDER;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=talon_ucommander;
+	unitnumber=21;
+	objectname=talon_commander.3do;
+	buildpic=talon_commander.png;
+	script=talon_commander.cob;
+	soundcategory=Arm_COM;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+
+	maxdamage=297;
+	healtime=100;
+	buildcostmetal=3145;
+	buildcostenergy=41843;
+	buildtime=34072;
+	footprintx=2;
+	footprintz=2;
+	mass=4000;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalmake=2.7;
+	//metaluse=-2;
+	metalstorage=2050;
+	energymake=67.5;
+	//energyuse=-50;
+	energystorage=2050;
+
+	//************************************************************
+	//  Building
+	//************
+	activatewhenbuilt=1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=1;
+	builddistance=210;
+	workertime=400;
+	RepairSpeed=400;
+	ReclaimSpeed=400;
+	//ResurrectSpeed=0;
+	TerraformSpeed=800;//speed up terraforming
+	capturespeed=1200;//50 percent faster
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canattack=1;
+	cancapture=1;
+	canManualFire=1;
+	canguard=1;
+	canmove=1;
+	canpatrol=1;
+	canreclamate=1;
+	canstop=1;
+	upright=1;
+	autoheal=5;//just like ota
+	idletime=900;
+	idleautoheal=5;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementclass=KBOTDS2;
+	turnrate=1044;
+	acceleration=0.15;
+	brakerate=0.3;
+	maxvelocity=1.45;
+	maxslope=20;
+	maxwaterdepth=35;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=720;
+	radardistance=1500;
+	sonardistance=1500;
+	losemitheight=44;
+	radaremitheight=44;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=TALONCOMLASER;
+	weapon2=talonCOMLASER;
+	weapon3=TALON_DISINTEGRATOR;
+	//weapon4=talonCOMPARALASER;
+	//weapon5=SAT_HEAVYROCKET;
+	//weapon6=talonSNIPE_WEAPON;
+	//weapon7=BOGUS_DISINTEGRATOR;
+	nochasecategory=WEAPON;
+	badtargetcategory=VTOL;
+	onlytargetcategory5=NOTAIR;
+	wpri_badtargetcategory=VTOL;
+	wspe_badtargetcategory=VTOL;
+	explodeas=COMMANDER_BLAST;
+	selfdestructas=COMMANDER_BLAST;
+
+	//************************************************************
+	//  Orders
+	//**********
+	firestandorders=1;
+	mobilestandorders=1;
+	standingfireorder=2;
+	standingmoveorder=0;
+	defaultmissiontype=Standby;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=1;
+	cancloak=1;
+	cloakcost=150;
+	cloakcostmoving=800;
+	cloakTimeout=85;
+	commander=1;
+	designation=talon-WM;
+	downloadable=1;
+	hidedamage=1;
+	damagemodifier=0.8;
+	immunetoparalyzer=1;
+	leavetracks=1;
+	maneuverleashlength=640;
+	mincloakdistance=60;
+	norestrict=1;
+	shootme=1;
+	showplayername=1;
+	smoothanim=1;
+	steeringmode=2;
+	threed=1;
+	trackoffset=0;
+	trackstrength=8;
+	trackstretch=1;
+	tracktype=ComTrack;
+	trackwidth=22;
+	version=1.2;
+	zbuffer=1;
+	MinCollisionSpeed=2.5;//weight
+	collisionVolumeType = box;
+	collisionVolumeScales =28 45 20;
+	collisionVolumeOffsets = 0 -2 0;
+	collisionVolumeTest = 1;
+
+	//************************************************************
+	//  Custom params
+	//*****************
+	[customparams] 	
+	{
+	iscommander=1;
+	side=talon;
+	type=automatic;
+	}
+	
+	//************************************************************
+	//  To be removed
+	//*****************
+	[SFXTypes]
+	{
+	explosiongenerator0=custom:dgunflare;
+	explosiongenerator1=custom:Nano;
+	explosiongenerator2=custom:redflare;
+	explosiongenerator3=custom:DGUNREADYFLARE;
+	explosiongenerator4=custom:ElectricSTOMP;
+	}
+
+}

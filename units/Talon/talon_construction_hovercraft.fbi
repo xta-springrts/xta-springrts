@@ -1,0 +1,129 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Arm;
+	name=Construction Gravitank;
+	description=Tech Level 1;
+	icontype=hover;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=ARM HOVER  CONSTR NOWEAPON NOTAIR NOTSUB;
+	tedclass=CONSTR;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=talon_construction_hovercraft;
+	unitnumber=175;
+	objectname=talon_construction_hovercraft.3do;
+	corpse=talon_construction_hovercraft_dead;
+	buildpic=talon_construction_hovercraft.png;
+	soundcategory=ARM_CHOVER;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=454;
+	healtime=60;
+	buildcostmetal=182;
+	buildcostenergy=2370;
+	buildtime=4494;
+	footprintx=2;
+	footprintz=2;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalmake=0.15;
+	metalstorage=50;
+	energymake=9;
+	energyuse=1;
+	energystorage=80;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=1;
+	builddistance=150;
+	workertime=150;
+	RepairSpeed=150;
+	ReclaimSpeed=150;
+	TerraformSpeed=300;//speed up terraforming
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canguard=1;
+	canhover=1;
+	canmove=1;
+	canpatrol=1;
+	canreclamate=1;
+	canstop=1;
+	canFight=1;
+	
+	//************************************************************
+	//  Movement
+	//************
+	movementclass=HOVER3;
+	turnrate=400;
+	acceleration=0.1;
+	brakerate=0.3;
+	maxvelocity=1.2;
+	maxslope=16;
+	maxwaterdepth=0;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=405;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeas=NANO_UNITEX;
+	selfdestructas=NANO_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	mobilestandorders=1;
+	standingmoveorder=1;
+	defaultmissiontype=Standby;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=1;
+	designation=ARM-HC2;
+	downloadable=1;
+	maneuverleashlength=640;
+	shootme=1;
+	steeringmode=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	collisionVolumeType = box;
+	collisionVolumeScales = 32 18 45;
+	collisionVolumeOffsets = 0 8 0;
+	collisionVolumeTest = 1;
+	pieceTrailCEGTag=NanoDebree;//bleh
+	pieceTrailCEGRange = 2;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+	[SFXTypes]
+	{
+	explosiongenerator0=custom:Nano;
+	}
+}

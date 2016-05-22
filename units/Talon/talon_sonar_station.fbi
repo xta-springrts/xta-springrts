@@ -1,0 +1,118 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Arm;
+	name=Sonar Station;
+	description=Locates Water Units;
+	icontype=sea;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=ARM STATIC NOWEAPON SONAR NOTLAND NOTAIR NOTSUB;
+	tedclass=SONAR;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=talon_sonar_station;
+	unitnumber=64;
+	objectname=talon_sonar_station.3do;
+	corpse=talon_sonar_station_dead;
+	buildpic=talon_sonar_station.png;
+	soundcategory=ARM_SONAR;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=50; //was 50//
+	buildcostmetal=48; //was 20//
+	buildcostenergy=806; //was 403//
+	buildtime=912;
+	footprintx=2;
+	footprintz=2;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=2;
+	energyuse=2;
+	energystorage=0;
+	windgenerator=0.001;
+
+	//************************************************************
+	//  Building
+	//************
+	buildangle=8192;
+	yardmap=wwww;
+	activatewhenbuilt=1;
+	collisionVolumeType=CylY;
+	collisionVolumeScales=29 47 20;
+	collisionVolumeOffsets=0 -2 0;
+	collisionVolumeTest = 1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	onoffable=1;
+	canRepeat=0;
+	canMove=0;
+	canAttack=0;
+	canGuard=0;
+	
+	//************************************************************
+	//  Movement
+	//************
+	maxslope=10;
+	minwaterdepth=20;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=306.25;
+	sonardistance=1210; //was 1180//
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeas=SMALL_BUILDINGEX;
+	selfdestructas=SMALL_BUILDING;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=0;
+	designation=AS-EWDW;
+	downloadable=1;
+	noshadow=1;
+	threed=1;
+	version=1.2;
+	waterline=1;
+	zbuffer=1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+	[SFXTypes]
+	{
+	explosiongenerator0=custom:Nano;
+	explosiongenerator1=custom:Normallight;
+	}
+
+}

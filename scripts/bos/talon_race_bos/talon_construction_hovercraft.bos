@@ -1,0 +1,354 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+piece  base, body, turret, lid1, lid2, nano1, nano2, beam1, beam2, w1, w2, w3, w4, w5, w6, w7, w8, w9, w10, w11, w12, wakes; 
+
+static-var  Static_Var_1, Static_Var_2, statechg_DesiredState, statechg_StateChanging, spray, Static_Var_4 ;
+
+// Signal definitions
+#define SIG_MOVE			2
+#define BANK_MORE 80
+#define BANK_LESS 40
+#define BANK_DAMP_SPEED <60>
+#define BANK_REFRESH 300// Put some time long enough for the unit to have travelled a while, but short enough so the script doesn't have a too long reaction time
+#define BANK_SIGNIFICATIVE_SPEED [1]// Actually, it's not a speed, but a distance, the distance covered during BANK_REFRESH. If that distance is too low, the difference between the two xz is deemed too low to get a significative angle out of it. Since half of digit are lost when x and z get packed into xz, any distance under 65536=[0.4] will lose all its significative digits and so will be unuseable.
+
+
+HitByWeapon(Func_Var_1, Func_Var_2)
+{
+	signal 4;
+	set-signal-mask 4;
+	turn body to z-axis 2*Func_Var_2 speed <105.021978>;
+	turn body to x-axis 2*Func_Var_1 speed <105.021978>;
+	wait-for-turn body around z-axis;
+	wait-for-turn body around x-axis;
+	turn body to z-axis <0.000000> speed <30.005495>;
+	turn body to x-axis <0.000000> speed <30.005495>;
+}
+
+WobbleUnit()
+{
+	while( TRUE )
+	{
+		if( Static_Var_4 )
+			move base to y-axis [2.250000] speed [2.50000];
+		else
+			move base to y-axis [-0.250000] speed [2.50000];
+		Static_Var_4 = !Static_Var_4;
+		sleep 750;
+	}
+}
+
+BankClerck()
+{
+	var present_xz, past_xz, banking_angle;
+	while(1)
+	{
+		present_xz=get PIECE_XZ(base);
+		banking_angle=0;
+		if (get XZ_HYPOT(present_xz - past_xz)>=BANK_SIGNIFICATIVE_SPEED)
+			{
+			banking_angle=(0 - (((get XZ_ATAN(past_xz - present_xz))*BANK_MORE)/BANK_LESS));
+			}
+		turn body to z-axis banking_angle speed BANK_DAMP_SPEED;
+		past_xz=present_xz;
+		sleep BANK_REFRESH;
+	}
+}
+
+activatescr()
+{
+	if( TRUE )
+	{
+		move lid2 to y-axis [-0.25] now;
+		move lid2 to z-axis [-3.343986] speed [5];
+		move lid1 to y-axis [-0.25] now;
+		move lid1 to z-axis [-3.343986] speed [5];
+		wait-for-move lid1 along z-axis;
+	}
+	if( TRUE )
+	{
+		hide lid1;
+		hide lid2;
+	}
+	if( TRUE )
+	{
+		move turret to y-axis [1.51632] speed [5];
+		move nano1 to z-axis [2.125] speed [5];
+		move nano2 to z-axis [2.125] speed [5];
+		wait-for-move nano1 along z-axis;
+	}
+	sleep 39;
+}
+
+deactivatescr()
+{
+	if( TRUE )
+	{
+		show lid1;
+		show lid2;
+	}
+	if( TRUE )
+	{
+		move turret to y-axis [0] speed [5];
+		move nano1 to z-axis [0] speed [5];
+		move nano2 to z-axis [0] speed [5];
+		wait-for-move nano1 along z-axis;
+	}
+	if( TRUE )
+	{
+		move lid1 to z-axis [0] speed [5];
+		move lid2 to z-axis [0] speed [5];
+		wait-for-move lid1 along z-axis;
+	}
+	if( TRUE )
+	{
+		move lid1 to y-axis [0] now;
+		move lid2 to y-axis [0] now;
+	}
+	sleep 27;
+}
+
+SmokeUnit(healthpercent, sleeptime, smoketype)
+{
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 400;
+	}
+	start-script WobbleUnit();
+	while( TRUE )
+	{
+		healthpercent = get HEALTH;
+		if( healthpercent < 66 )
+		{
+			smoketype = 256 | 2;
+			if( Rand( 1, 66 ) < healthpercent )
+			{
+				smoketype = 256 | 1;
+			}
+			emit-sfx smoketype from base;
+		}
+		sleeptime = healthpercent * 50;
+		if( sleeptime < 200 )
+		{
+			sleeptime = 200;
+		}
+		sleep sleeptime;
+	}
+}
+
+
+Go()
+{
+	call-script activatescr();
+	turn turret to y-axis Static_Var_2 speed <160.038462>;
+	wait-for-turn turret around y-axis;
+	set INBUILDSTANCE to 1;
+}
+
+Stop()
+{
+	set INBUILDSTANCE to 0;
+	turn turret to y-axis <0.000000> speed <160.038462>;
+	wait-for-turn turret around y-axis;
+	call-script deactivatescr();
+}
+
+InitState()
+{
+	statechg_DesiredState = TRUE;
+	statechg_StateChanging = FALSE;
+}
+
+RequestState(requestedstate, currentstate)
+{
+	if( statechg_StateChanging )
+	{
+		statechg_DesiredState = requestedstate;
+		return (0);
+	}
+	statechg_StateChanging = TRUE;
+	currentstate = statechg_DesiredState;
+	statechg_DesiredState = requestedstate;
+	while( statechg_DesiredState != currentstate )
+	{
+		if( statechg_DesiredState == 0 )
+		{
+			call-script Go();
+			currentstate = 0;
+		}
+		if( statechg_DesiredState == 1 )
+		{
+			call-script Stop();
+			currentstate = 1;
+		}
+	}
+	statechg_StateChanging = FALSE;
+}
+
+StartMoving()
+{
+	signal SIG_MOVE;
+	set-signal-mask SIG_MOVE;
+}
+
+StopMoving()
+{
+	signal SIG_MOVE;
+}
+
+waking()
+{
+	while( TRUE )
+	{
+		if( Static_Var_1 == 2 OR Static_Var_1 == 1 )
+		{
+		emit-sfx 3 from w1;
+		emit-sfx 3 from w2;
+		emit-sfx 3 from w3;
+		emit-sfx 3 from w4;
+		emit-sfx 3 from w5;
+		emit-sfx 3 from w6;
+		emit-sfx 3 from w7;
+		emit-sfx 3 from w8;
+		emit-sfx 3 from w9;
+		emit-sfx 3 from w10;
+		emit-sfx 3 from w11;
+		emit-sfx 3 from w12;
+		emit-sfx 5 from w1;
+		emit-sfx 5 from w2;
+		emit-sfx 5 from w3;
+		emit-sfx 5 from w4;
+		emit-sfx 5 from w5;
+		emit-sfx 5 from w6;
+		emit-sfx 5 from w7;
+		emit-sfx 5 from w8;
+		emit-sfx 5 from w9;
+		emit-sfx 5 from w10;
+		emit-sfx 5 from w11;
+		emit-sfx 5 from w12;
+		}
+		sleep 325;
+	}
+}
+
+setSFXoccupy(Func_Var_1)
+{
+	Static_Var_1 = Func_Var_1;
+}
+
+Create()
+{
+	start-script waking();
+	Static_Var_2 = 0;
+	call-script InitState();
+	start-script SmokeUnit();
+	start-script BankClerck();
+	spray = 1;
+}
+
+Activate()
+{
+	start-script RequestState(0);
+}
+
+Deactivate()
+{
+	start-script RequestState(1);
+}
+
+StartBuilding(Func_Var_1)
+{
+	Static_Var_2 = Func_Var_1;
+	start-script RequestState(0);
+}
+
+StopBuilding()
+{
+	start-script RequestState(1);
+}
+
+QueryNanoPiece(piecenum)
+{
+	if( spray == 1 )
+	{
+		piecenum = beam1;
+	}
+	if( spray == 2 )
+	{
+		piecenum = beam2;
+	}
+	++spray;
+	if( spray == 3 )
+	{
+		spray = 1;
+	}
+}
+
+TargetHeading(Func_Var_1)
+{
+	Static_Var_2 = 0 - Func_Var_1;
+}
+
+SweetSpot(piecenum)
+{
+	piecenum = base;
+}
+
+Killed(severity, corpsetype)
+{
+	if( severity <= 25 )
+	{
+		corpsetype = 1 + (Static_Var_1==1 || Static_Var_1==2);
+		explode beam1 type FALL | FIRE | SMOKE | BITMAP1;
+		explode beam1 type FALL | FIRE | SMOKE | BITMAP1;
+		explode base type BITMAPONLY | BITMAP2;
+		explode nano1 type FALL | BITMAP3;
+		explode nano2 type FALL | BITMAP3;
+		explode lid1 type BITMAPONLY | BITMAP4;
+		explode lid2 type BITMAPONLY | BITMAP5;
+		explode turret type SHATTER | BITMAP1;
+		explode body type BITMAPONLY | BITMAP2;
+		return (0);
+	}
+	if( severity <= 50 )
+	{
+		corpsetype = 2;
+		explode beam1 type FALL | FIRE | SMOKE | BITMAP1;
+		explode beam1 type FALL | FIRE | SMOKE | BITMAP1;
+		explode base type BITMAPONLY | BITMAP2;
+		explode nano1 type FALL | BITMAP3;
+		explode nano2 type FALL | BITMAP3;
+		explode lid1 type FALL | BITMAP4;
+		explode lid2 type FALL | BITMAP5;
+		explode turret type SHATTER | BITMAP1;
+		explode body type BITMAPONLY | BITMAP2;
+		return (0);
+	}
+	if( severity <= 99 )
+	{
+		corpsetype = 3;
+		explode beam1 type FALL | FIRE | SMOKE | BITMAP1;
+		explode beam1 type FALL | FIRE | SMOKE | BITMAP1;
+		explode base type BITMAPONLY | BITMAP2;
+		explode nano1 type FALL | FIRE | SMOKE | BITMAP3;
+		explode nano2 type FALL | FIRE | SMOKE | BITMAP3;
+		explode lid1 type FALL | FIRE | SMOKE | BITMAP3;
+		explode lid2 type FALL | FIRE | SMOKE | BITMAP3;
+		explode turret type SHATTER | BITMAP1;
+		explode body type BITMAPONLY | BITMAP2;
+		return (0);
+	}
+	corpsetype = 3;
+	explode beam1 type FALL | FIRE | SMOKE | BITMAP1;
+	explode beam1 type FALL | FIRE | SMOKE | BITMAP1;
+	explode base type BITMAPONLY | BITMAP2;
+	explode nano1 type FALL | FIRE | SMOKE | BITMAP3;
+	explode nano2 type FALL | FIRE | SMOKE | BITMAP3;
+	explode lid1 type FALL | FIRE | SMOKE | BITMAP3;
+	explode lid2 type FALL | FIRE | SMOKE | BITMAP3;
+	explode turret type SHATTER | BITMAP1;
+	explode body type BITMAPONLY | BITMAP2;
+}

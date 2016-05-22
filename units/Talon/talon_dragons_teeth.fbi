@@ -1,0 +1,114 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Arm;
+	name=Dragon's Teeth;
+	description=Perimeter Defense;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=ARM METAL NOWEAPON NOTAIR NOTSUB;
+	tedclass=DEFENSIVE;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=talon_dragons_teeth;
+	unitnumber=26;
+	objectname=talon_dragons_teeth.3do;
+	corpse=talon_dragons_teeth_dead;
+	buildpic=talon_dragons_teeth.png;
+	soundcategory=;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=2400; //was 3500;
+	buildcostmetal=6;
+	buildcostenergy=18;
+	buildtime=175;
+	footprintx=2;
+	footprintz=2;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=0;
+	energyuse=0;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	buildangle=0;
+	yardmap=oo oo;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	isfeature=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	maxslope=32;
+	maxwaterdepth=35;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=175;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeas=;
+	selfdestructas=;
+	
+	//************************************************************
+	//  Collision sphere mod to allow missiles to pass sometimes
+	//***********
+	CollisionSphereScale=0.5;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=0;
+	designation=A-102-C;
+	downloadable=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	buildangle=1;
+	levelground=0;
+	
+	//************************************************************
+	//  Custom params
+	//*****************
+	[customparams] 	
+	{
+	noalert=1;
+	dontCount=1;
+	}
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+}

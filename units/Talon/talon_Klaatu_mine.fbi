@@ -1,0 +1,123 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Arm;
+	name=Klaatu;
+	description=Low Focused Damage (450 Dmg);
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=ARM MINE DEFENSIVE STATIC WEAPON NOTAIR NOTSEA NOTSUB;
+	tedclass=MINE;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=talon_Klaatu_mine;
+	unitnumber=222;
+	objectname=talon_Klaatu_mine.3do;
+	buildpic=talon_Klaatu_mine.png;
+	soundcategory=MINE;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=15;
+	healtime=11;
+	buildcostmetal=10;
+	buildcostenergy=243;
+	buildtime=500;
+	footprintx=1;
+	footprintz=1;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energyuse=0;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	YardMap=y;
+	levelground=0;
+	upright=0;
+	collisionVolumeType=CylY;
+	collisionVolumeScales=15 7 15;
+	collisionVolumeOffsets=0 -1 0;
+	collisionVolumeTest = 1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canattack=0;
+	canmove=0;
+	canpatrol=0;
+	canstop=0;
+	kamikaze=1;
+	stealth=1;
+	canguard=0;
+	sonarStealth=1;
+	
+	//************************************************************
+	//  Movement
+	//************
+	maxslope=30;
+	maxwaterdepth=100;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=60;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeas=TALON_KLAATU;
+	selfdestructas=TALON_KLAATU;
+	selfdestructcountdown=0;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	firestandorders=1;
+	standingfireorder=2;
+	defaultmissiontype=Standby_Mine;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=0;
+	cancloak=1;
+	cloakcost=2;
+	designation=EG-3;
+	downloadable=1;
+	init_cloaked=1;
+	kamikazedistance=48;
+	mincloakdistance=5;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+	[customParams]
+	{
+	dontCount=1;
+	noalert=1;
+	}
+
+}
