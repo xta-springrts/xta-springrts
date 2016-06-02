@@ -308,7 +308,7 @@
 		group_invincible=1;
 	}
 }
-[ARMAAS_WEAPON1]
+[ARMAAS_WEAPON1] //archer, ranger
 {
 	name=Missiles;
 	Weapontype=MissileLauncher;
@@ -417,7 +417,7 @@
 		group_invincible=1;
 	}
 }
-[ARMAH_WEAPON]
+[ARMAH_WEAPON] //swatter
 {
 	name=Missiles;
 	cegTag=KBOTMISSILETRAIL;
@@ -951,7 +951,7 @@
 		group_invincible=1;
 	}
 }
-[ARMKBOT_MISSILE]
+[ARMKBOT_MISSILE] //panther, boa
 {
 	name=Missiles;
 	explosiongenerator=custom:KBOTMISSILEHIT;
@@ -1109,7 +1109,7 @@
 		group_invincible=1;
 	}
 }
-[ARMMH_WEAPON2]
+[ARMMH_WEAPON2] //wombat
 {
 	name=Heavy Multi-Launch Rockets;
 	Weapontype=MissileLauncher;
@@ -1317,7 +1317,7 @@
 	}
 }
 
-[ARMRL_MISSILE]
+[ARMRL_MISSILE] //jethro etc
 {
 	name=Missiles;
 	explosiongenerator=custom:KBOTMISSILEHIT;
@@ -1344,7 +1344,7 @@
 	smoketrail=0;
 	tolerance=10000;
 	startsmoke=1;
-	trajectoryHeight=0.85;
+	trajectoryHeight=0.20;
 	dance=30;
 	[DAMAGE]
 	{
@@ -1754,7 +1754,7 @@
 		group_snipertargets=3500;
 	}
 }
-[ARMTRUCK_MISSILE]
+[ARMTRUCK_MISSILE] //samson
 {
 	name=Missiles;
 	explosiongenerator=custom:KBOTMISSILEHIT;
@@ -1768,7 +1768,7 @@
 	startvelocity=550;
 	weaponacceleration=141;
 	turnrate=41660;
-	trajectoryHeight=0.08;
+	trajectoryHeight=0.16;
 	dance=30;
 	areaofeffect=48;
 	cylindertargeting = 1;
@@ -2781,7 +2781,7 @@
 		group_invincible=1;
 	}
 }
-[CORAH_WEAPON]
+[CORAH_WEAPON] //slinger
 {
 	name=Missiles;
 	turret=1;
@@ -4038,7 +4038,7 @@
 		group_invincible=1;
 	}
 }
-[CORMH_WEAPON2]
+[CORMH_WEAPON2] //nixer
 {
 	name=Heavy Multi-Launch Rockets;
 	Weapontype=MissileLauncher;
@@ -4303,7 +4303,7 @@
 		group_flamers=15;
 	}
 }
-[CORRL_MISSILE]
+[CORRL_MISSILE] //crasher
 {
 	name=Missiles;
 	turret=1;
@@ -4330,7 +4330,7 @@
 	Weapontype=MissileLauncher;
 	tolerance=10000;
 	startsmoke=1;
-	trajectoryHeight=0.08;
+	trajectoryHeight=0.20;
 	dance=30;
 	[DAMAGE]
 	{
@@ -4682,7 +4682,7 @@
 		lost_commanders=900;
 	}
 }
-[CORTRUCK_MISSILE]
+[CORTRUCK_MISSILE] //slasher
 {
 	name=Missiles;
 	turret=1;
@@ -4696,7 +4696,7 @@
 	weaponacceleration=136;
 	explosiongenerator=custom:KBOTMISSILEHIT;
 	turnrate=41660;
-	trajectoryHeight=0.08;
+	trajectoryHeight=0.16;
 	dance=30;
 	flighttime=2.5;
 	areaofeffect=48;
@@ -5154,7 +5154,7 @@
 		group_invincible=1;
 	}
 }
-[EXP_HEAVYROCKET]
+[EXP_HEAVYROCKET] //raven
 {
 	name=Heavy Multi-Launch Rockets;
 	Weapontype=MissileLauncher;
@@ -5961,7 +5961,7 @@
 		group_invincible=1;
 	}
 }
-[gizmotron]
+[gizmotron] //defender, pulverizer
 {
 	name=Missiles;
 	turret=1;
@@ -5984,7 +5984,7 @@
 	tracks=1;
 	smoketrail=0;
 	dance=30;
-	trajectoryHeight=0.12;
+	trajectoryHeight=0.25;
 	cegTag=KBOTMISSILETRAIL;
 	Weapontype=MissileLauncher;
 	tolerance=10000;
@@ -6452,7 +6452,7 @@
 		default=30000;
 	}
 }
-[SCOUT_MISSILE]
+[SCOUT_MISSILE] //skeeter, searcher, otter
 {
 	name=Missiles;
 	turret=1;
@@ -6478,7 +6478,7 @@
 	Weapontype=MissileLauncher;
 	tolerance=9000;
 	startsmoke=1;
-	Trajectoryheight=1;
+	Trajectoryheight=0.25;
 	collidefriendly=0;
 	avoidfriendly=0;
 	[DAMAGE]
@@ -6490,7 +6490,7 @@
 		group_invincible=1;
 	}
 }
-[LANDBOAT_MISSILE]
+[LANDBOAT_MISSILE] //landboats
 {
 	name=Missiles;
 	turret=1;
@@ -6516,7 +6516,7 @@
 	Weapontype=MissileLauncher;
 	tolerance=9000;
 	startsmoke=1;
-	Trajectoryheight=0.75;
+	Trajectoryheight=0.50;
 	collidefriendly=0;
 	avoidfriendly=0;
 	[DAMAGE]
