@@ -384,6 +384,12 @@ function widget:Initialize()
 			},
 			
 			{
+			name		= "The Talon faction:",
+			type		= "bool",
+			value		= modOptions["talonunits"] or "N/A",
+			},
+			
+			{
 			name		= "Disable all new units after XTA version 8.1:",
 			type		= "bool",
 			value		= modOptions["newunits"] or "N/A",

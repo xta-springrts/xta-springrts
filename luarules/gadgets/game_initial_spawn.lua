@@ -30,8 +30,12 @@ local changeStartUnitRegex = '^\177(%d+)$'
 local armcomDefID = UnitDefNames.arm_commander.id
 local corcomDefID = UnitDefNames.core_commander.id
 local lostcomDefID = UnitDefNames.lost_commander.id
+local guardiancomDefID = UnitDefNames.guardian_commander.id
+local taloncomDefID = UnitDefNames.talon_commander.id
+
 local isTLL	= false
 local isGOK	= false
+local isTAL	= false
 
 local validStartUnits = {
 	[UnitDefNames.arm_commander.id] = true,
@@ -83,6 +87,10 @@ function gadget:Initialize()
                 spSetTeamRulesParam(teamID, 'startUnit', armcomDefID)
 			elseif teamSide == 'lost' then
 				spSetTeamRulesParam(teamID, 'startUnit', lostcomDefID)
+			--elseif teamSide == 'guardian' then
+				--spSetTeamRulesParam(teamID, 'startUnit', guardiancomDefID)
+			--elseif teamSide == 'talon' then
+				--spSetTeamRulesParam(teamID, 'startUnit', taloncomDefID)
             end
             spawnTeams[teamID] = teamAllyID
         end
@@ -96,6 +104,7 @@ function gadget:Initialize()
 	end
 	isTLL = tonumber( (Spring.GetModOptions() or {}).tllunits) == 1
 	isGOK = tonumber( (Spring.GetModOptions() or {}).gokunits) == 1
+	isTAL = tonumber( (Spring.GetModOptions() or {}).talonunits) == 1
 	
 	if isTLL then
 		validStartUnits[UnitDefNames.lost_commander.id] = true
@@ -105,6 +114,11 @@ function gadget:Initialize()
 	if isGOK then
 		validStartUnits[UnitDefNames.guardian_commander.id] = true
 		validStartUnits[UnitDefNames.guardian_u0commander.id] = true
+	end
+	
+	if isTAL then
+		validStartUnits[UnitDefNames.talon_commander.id] = true
+		validStartUnits[UnitDefNames.talon_u0commander.id] = true
 	end
 	
 end
@@ -158,11 +172,12 @@ function gadget:RecvLuaMsg(msg, playerID)
 		end
 	elseif msg:sub(1,#COMMMSG) == COMMMSG then
 		local startUnit = tonumber(msg:match(changeStartUnitRegex))
-				
+		--Spring.Echo("Got msg with startUnit = ", startUnit,validStartUnits[startUnit])
 		if startUnit and validStartUnits[startUnit] then	
 			local localName, _, playerIsSpec, playerTeam = spGetPlayerInfo(playerID)
 			if not playerIsSpec then
 				spSetTeamRulesParam(playerTeam, 'startUnit', startUnit,{public=true})
+				--Spring.Echo("Set team start unit to:",playerTeam,startUnit)
 				return true
 			end
 		end

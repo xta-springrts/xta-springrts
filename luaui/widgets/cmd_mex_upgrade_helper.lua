@@ -55,7 +55,9 @@ local mexUnits = {
 	[5] = UnitDefNames["guardian_metal_extractor"].id,
 	[6] = UnitDefNames["guardian_underwater_metal_extractor"].id,
 	[7] = UnitDefNames["lost_metal_extractor"].id,
-	[8] = UnitDefNames["lost_underwater_metal_extractor"].id,	
+	[8] = UnitDefNames["lost_underwater_metal_extractor"].id,
+	[9] = UnitDefNames["talon_metal_extractor"].id,
+	[10] = UnitDefNames["talon_underwater_metal_extractor"].id,	
 }
 
 local mexDefs = {}
