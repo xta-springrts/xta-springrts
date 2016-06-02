@@ -1309,6 +1309,7 @@ function widget:MousePress(mx, my, mButton)
 						Spring.SendLuaUIMsg('195' .. 1)
 						lastStartID = commanderID["arm_" .. startType]
 						playSound(button3)
+						--Echo("Click on: Arm")
 				
 					-- core button
 					elseif IsOnButton(mx,my,Button["core"]["x0"],Button["core"]["y0"],Button["core"]["x1"],Button["core"]["y1"]) and startSide ~= "core" then
@@ -1316,28 +1317,28 @@ function widget:MousePress(mx, my, mButton)
 						Spring.SendLuaUIMsg('195' .. 2)
 						lastStartID = commanderID["core_" .. startType]
 						playSound(button3)
-					
+						--Echo("Click on: Core")
 					-- lost button
-					elseif IsOnButton(mx,my,Button["lost"]["x0"],Button["lost"]["y0"],Button["lost"]["x1"],Button["lost"]["y1"]) and startSide ~= "lost" then
+					elseif isTLL and IsOnButton(mx,my,Button["lost"]["x0"],Button["lost"]["y0"],Button["lost"]["x1"],Button["lost"]["y1"]) and startSide ~= "lost" then
 						Spring.SendLuaRulesMsg('\177' .. commanderID["lost_" .. startType])
 						Spring.SendLuaUIMsg('195' .. 3)
 						lastStartID = commanderID["lost_" .. startType]
 						playSound(button3)	
-						
+						--Echo("Click on: Lost")
 					-- guardian button
-					elseif IsOnButton(mx,my,Button["guardian"]["x0"],Button["guardian"]["y0"],Button["guardian"]["x1"],Button["guardian"]["y1"]) and startSide ~= "guardian" then
+					elseif isGOK and IsOnButton(mx,my,Button["guardian"]["x0"],Button["guardian"]["y0"],Button["guardian"]["x1"],Button["guardian"]["y1"]) and startSide ~= "guardian" then
 						Spring.SendLuaRulesMsg('\177' .. commanderID["guardian_" .. startType])
 						Spring.SendLuaUIMsg('195' .. 4)
 						lastStartID = commanderID["guardian_" .. startType]
 						playSound(button3)	
-					
+						--Echo("Click on: Guardian")
 					-- talon button
-					elseif IsOnButton(mx,my,Button["talon"]["x0"],Button["talon"]["y0"],Button["talon"]["x1"],Button["talon"]["y1"]) and startSide ~= "talon" then
+					elseif isTAL and IsOnButton(mx,my,Button["talon"]["x0"],Button["talon"]["y0"],Button["talon"]["x1"],Button["talon"]["y1"]) and startSide ~= "talon" then
 						Spring.SendLuaRulesMsg('\177' .. commanderID["talon_" .. startType])
 						Spring.SendLuaUIMsg('195' .. 5)
 						lastStartID = commanderID["talon_" .. startType]
 						playSound(button3)
-						
+						--Echo("Click on: Talon")
 					-- automatic
 					elseif IsOnButton(mx,my,Button["auto"]["x0"],Button["auto"]["y0"],Button["auto"]["x1"],Button["auto"]["y1"]) and myState ~= READY and startType ~= "automatic" then
 						Spring.SendLuaRulesMsg('\177' .. commanderID[startSide .. "_automatic"])
@@ -1360,6 +1361,7 @@ function widget:MousePress(mx, my, mButton)
 								myState = MARKED
 							end
 							playSound(button1)
+							Echo("Click on: Ready")
 						end
 					-- info
 					elseif IsOnButton(mx,my,Button["info"]["x0"],Button["info"]["y0"],Button["info"]["x1"],Button["info"]["y1"]) and myState ~= READY then

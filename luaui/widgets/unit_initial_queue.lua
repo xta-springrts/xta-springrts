@@ -932,7 +932,7 @@ function widget:GameFrame(n)
 				else
 					Spring.GiveOrderToUnit(uID, -buildData[1], {buildData[2], buildData[3], buildData[4], buildData[5]}, {"shift"})
 				end
-				Spring.Echo("Added order:",b,buildData[1])
+				--Spring.Echo("Added order:",b,buildData[1])
 			end
 			
 			widgetHandler:RemoveWidget(self)

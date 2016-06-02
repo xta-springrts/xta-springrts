@@ -292,7 +292,7 @@ local function BuildMorphDef(udSrc, morphData)
     end
     GG.MorphInfo[udSrc.id][udDst.id]=newData.cmd
     GG.MorphInfo["MAX_MORPH"] = MAX_MORPH
-	Spring.Echo("MD:","MorphCmd_"..udSrc.id,newData.cmd,udSrc.name)
+	--Spring.Echo("MD:","MorphCmd_"..udSrc.id,newData.cmd,udSrc.name)
 	
 	--needs synced check
 	if (gadgetHandler:IsSyncedCode()) then
@@ -1064,7 +1064,7 @@ end
 
 function gadget:AllowCommand(unitID, unitDefID, teamID, cmdID, cmdParams, cmdOptions)
 	local morphData = morphUnits[unitID]
-	Spring.Echo("Received command:",cmdID)
+	--Spring.Echo("Received command:",cmdID)
 	if (morphData) then
 		if (cmdID==morphData.def.stopCmd)or(cmdID==CMD_STOP)or(cmdID==CMD_MORPH_STOP) then
 			
