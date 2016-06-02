@@ -170,7 +170,7 @@
 	{
 	iscommander=1;
 	side=talon;
-	type=automatic;
+	type=manual;
 	}
 	
 	//************************************************************
