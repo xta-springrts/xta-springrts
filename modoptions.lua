@@ -270,6 +270,16 @@ local options = {
 		def    = false,
 		section= "unitpacks",
 	},
+	
+	{
+		key    = "talonUnits",
+		name   = "Enable 'Talon' faction?",
+		desc   = "Adds The Talon unitpack. Ensure that you have selected 'choose in game' for the starting commander  option or this feature won't be possible. Author: Noruas\nkey: talonUnits",
+		type   = "bool",
+		def    = false,
+		section= "unitpacks",
+	},
+	
 	{
 		key    = "spidertortoise",
 		name   = 'Enable "Spiders vs. Tortoise" Units?',
