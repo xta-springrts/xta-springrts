@@ -148,7 +148,7 @@ else
 		if teamID and teamID == myTeamID then
 			local ud = UnitDefs[unitDefID]
 			if ud and not ud.sounds.arrived[1] then
-				Echo("Error:",ud.name)
+				Echo("Error: no arrived sound for:",ud.name)
 			end
 			local sound = ud and ud.sounds.arrived and ud.sounds.arrived[1] and ud.sounds.arrived[1].name
 			if sound then
