@@ -21,7 +21,7 @@
 	unitnumber=105;
 	objectname=lost_probe.3do;
 	buildpic=lost_probe.png;
-	soundcategory=tll_VTOL;
+	soundcategory=LOST_VTOL;
 
 	//************************************************************
 	//  Health/Cost/Size
