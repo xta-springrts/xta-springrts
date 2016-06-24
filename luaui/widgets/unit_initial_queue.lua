@@ -45,7 +45,6 @@ local whiteColor = '\255\255\255\255' -- White
 ------------------------------------------------------------
 local sDefID -- Starting unit def ID
 local sDef -- UnitDefs[sDefID]
-local myTeamID = Spring.GetMyTeamID()
 
 local selDefID = nil -- Currently selected def ID
 local buildQueue = {}
@@ -73,24 +72,21 @@ local canMorph = true
 -- Maps units that could get disabled because of map conditions
 local disablable = {}
 local Button 	= {}
-local modOptions = Spring.GetModOptions()
 local requireCommander = (Spring.GetModOptions() or {}).commander == "choose"
-local Echo = Spring.Echo
-local GetTeamStartPosition = Spring.GetTeamStartPosition
 local startChosen = false
 local myFont = gl.LoadFont("FreeSansBold.otf",textsize, 1.9, 40)
 local gameStarting = false
 local updateHacked = false
 local showWhenStarting = false
 
-
-local CMD_MORPH_STOP 		= 32410
-local CMD_MORPHA			= 31418
-local CMD_MORPHC			= 31431
-local CMD_MORPHT			= 31420
-local CMD_MORPHG			= 31415
-local CMD_MORPH 			= CMD_MORPHA
-local CMD_SING				= 40123
+local CMDS = {}
+CMDS.MORPHA			= Spring.GetGameRulesParam("MorphCmd_"..UnitDefNames.arm_u0commander.id)
+CMDS.MORPHC			= Spring.GetGameRulesParam("MorphCmd_"..UnitDefNames.core_u0commander.id)
+CMDS.MORPHL			= Spring.GetGameRulesParam("MorphCmd_"..UnitDefNames.lost_u0commander.id)
+CMDS.MORPHG			= Spring.GetGameRulesParam("MorphCmd_"..UnitDefNames.guardian_u0commander.id)
+CMDS.MORPHT			= Spring.GetGameRulesParam("MorphCmd_"..UnitDefNames.talon_u0commander.id)
+CMDS.MORPH 			= 31410
+CMDS.SING			= 40123
 
 ------------------------------------------------------------
 -- Local functions
@@ -223,7 +219,7 @@ local function GetUnitCanCompleteQueue(uID)
 	local uBuilds = UnitDefs[uDefID].buildOptions
 	for i = 1, #uBuilds do
 		uCanBuild[uBuilds[i]] = true
-		--Echo("Unit can build:",i,uBuilds[i],uCanBuild[uBuilds[i]])
+		--Spring:Echo("Unit can build:",i,uBuilds[i],uCanBuild[uBuilds[i]])
 	end
 	
 	-- Can it build everything that was queued ?
@@ -254,13 +250,15 @@ local function GetQueueCosts()
 			eCost = eCost + uDef.energyCost
 			bCost = bCost + uDef.buildTime
 		else
-			if buildQueue[i][1] == CMD_MORPHA then
+			if buildQueue[i][1] == CMDS.MORPHA then
 				return mCost+634,eCost+1249,bCost+9000
-			elseif buildQueue[i][1] == CMD_MORPHC then
+			elseif buildQueue[i][1] == CMDS.MORPHC then
 				return mCost+688,eCost+1660,bCost+9000
-			elseif buildQueue[i][1] == CMD_MORPHT then
+			elseif buildQueue[i][1] == CMDS.MORPHL then
 				return mCost+800,eCost+1000,bCost+9000
-			elseif buildQueue[i][1] == CMD_MORPHG then
+			elseif buildQueue[i][1] == CMDS.MORPHG then
+				return mCost+745,eCost+1012,bCost+9000
+			elseif buildQueue[i][1] == CMDS.MORPHT then
 				return mCost+745,eCost+1012,bCost+9000
 			else
 				return mCost,eCost,bCost
@@ -288,13 +286,15 @@ local function changeFaction(startID,newSide,oldSide)
 	
 	if newSide then
 		if newSide == "arm" then
-			CMD_MORPH = CMD_MORPHA
+			CMDS.MORPH = CMDS.MORPHA
 		elseif newSide == "core" then
-			CMD_MORPH = CMD_MORPHC
+			CMDS.MORPH = CMDS.MORPHC
 		elseif newSide == "lost" then
-			CMD_MORPH = CMD_MORPHT
+			CMDS.MORPH = CMDS.MORPHL
 		elseif newSide == "guardian" then
-			CMD_MORPH = CMD_MORPHG
+			CMDS.MORPH = CMDS.MORPHG
+		elseif newSide == "talon" then
+			CMDS.MORPH = CMDS.MORPHT
 		end
 	end
 	
@@ -309,51 +309,95 @@ local function changeFaction(startID,newSide,oldSide)
 					buildData[1] = newID
 					buildQueue[b] = buildData
 				else
-					Echo("Warning: could not convert to: ", newSide,(UnitDefs[buildDataId] or {}).name)
+					Spring:Echo("Warning: could not convert to: ", newSide,(UnitDefs[buildDataId] or {}).name)
 				end
 			else
-				if buildDataId == CMD_MORPHA then
+				if buildDataId == CMDS.MORPHA then
 					if newSide == "core" then
-						local newID = CMD_MORPHC
+						local newID = CMDS.MORPHC
 						buildData[1] = newID
 						buildQueue[b] = buildData
 					elseif newSide == "lost" then
-						local newID = CMD_MORPHT
+						local newID = CMDS.MORPHL
 						buildData[1] = newID
 						buildQueue[b] = buildData
 					elseif newSide == "guardian" then
-						local newID = CMD_MORPHG
+						local newID = CMDS.MORPHG
+						buildData[1] = newID
+						buildQueue[b] = buildData
+					elseif newSide == "talon" then
+						local newID = CMDS.MORPHT
 						buildData[1] = newID
 						buildQueue[b] = buildData
 					end
-				elseif buildDataId == CMD_MORPHC then
+				elseif buildDataId == CMDS.MORPHC then
 					if newSide == "arm" then
-						local newID = CMD_MORPHA
+						local newID = CMDS.MORPHA
 						buildData[1] = newID
 						buildQueue[b] = buildData
 					elseif newSide == "lost" then
-						local newID = CMD_MORPHT
+						local newID = CMDS.MORPHL
 						buildData[1] = newID
 						buildQueue[b] = buildData
 					elseif newSide == "guardian" then
-						local newID = CMD_MORPHG
+						local newID = CMDS.MORPHG
+						buildData[1] = newID
+						buildQueue[b] = buildData
+					elseif newSide == "talon" then
+						local newID = CMDS.MORPHT
 						buildData[1] = newID
 						buildQueue[b] = buildData
 					end
-				elseif buildDataId == CMD_MORPHT then
+				elseif buildDataId == CMDS.MORPHL then
 					if newSide == "arm" then
-						local newID = CMD_MORPHA
+						local newID = CMDS.MORPHA
 						buildData[1] = newID
 						buildQueue[b] = buildData
 					elseif newSide == "core" then
-						local newID = CMD_MORPHC
+						local newID = CMDS.MORPHC
+						buildData[1] = newID
+						buildQueue[b] = buildData
+					elseif newSide == "lost" then
+						local newID = CMDS.MORPHL
 						buildData[1] = newID
 						buildQueue[b] = buildData
 					elseif newSide == "guardian" then
-						local newID = CMD_MORPHG
+						local newID = CMDS.MORPHG
+						buildData[1] = newID
+						buildQueue[b] = buildData
+					elseif newSide == "talon" then
+						local newID = CMDS.MORPHT
 						buildData[1] = newID
 						buildQueue[b] = buildData
 					end
+				elseif buildDataId == CMDS.MORPHG then
+					if newSide == "arm" then
+						local newID = CMDS.MORPHA
+						buildData[1] = newID
+						buildQueue[b] = buildData
+					elseif newSide == "core" then
+						local newID = CMDS.MORPHC
+						buildData[1] = newID
+						buildQueue[b] = buildData
+					elseif newSide == "lost" then
+						local newID = CMDS.MORPHL
+						buildData[1] = newID
+						buildQueue[b] = buildData
+					elseif newSide == "talon" then
+						local newID = CMDS.MORPHT
+						buildData[1] = newID
+						buildQueue[b] = buildData
+					end
+				elseif buildDataId == CMDS.MORPHT then
+					local newID
+					if newSide == "arm" then newID = CMDS.MORPHA
+					elseif newSide == "core" then newID = CMDS.MORPHC
+					elseif newSide == "lost" then newID = CMDS.MORPHL
+					elseif newSide == "guardian" then newID = CMDS.MORPHG
+					elseif newSide == "talon" then newID = CMDS.MORPHT
+					end
+					buildData[1] = newID
+					buildQueue[b] = buildData
 				end
 			end
 		end
@@ -366,7 +410,7 @@ end
 		
 local function addMorph()
 
-	buildQueue[#buildQueue + 1] =  {CMD_MORPH, 0, 0, 0, 0}
+	buildQueue[#buildQueue + 1] =  {CMDS.MORPH, 0, 0, 0, 0}
 	
 end
 
@@ -374,7 +418,7 @@ local function removeMorph()
 	
 	local morphIndex = {}
 	for i,cmd in pairs(buildQueue) do
-		if cmd[1] == CMD_MORPH or cmd[1] == CMD_MORPHA or cmd[1] == CMD_MORPHC then
+		if cmd[1] == CMDS.MORPH or cmd[1] == CMDS.MORPHA or cmd[1] == CMDS.MORPHC then
 			morphIndex[#morphIndex+1] = i
 		end
 	end
@@ -385,7 +429,7 @@ local function removeMorph()
 end
 
 local function addSing()
-	buildQueue[#buildQueue + 1] =  {CMD_SING, 0, 0, 0, 0}
+	buildQueue[#buildQueue + 1] =  {CMDS.SING, 0, 0, 0, 0}
 end
 ------------------------------------------------------------
 -- Initialize/shutdown
@@ -400,8 +444,7 @@ function widget:Initialize()
 		return
 	end
 	
-	local modOptions = Spring.GetModOptions()
-	if modOptions.mission then 				-- Don't run on missions; screen will be in the way.
+	if Spring.GetModOptions().mission then 				-- Don't run on missions; screen will be in the way.
 		widgetHandler:RemoveWidget(self)
 		return
 	end
@@ -412,7 +455,7 @@ function widget:Initialize()
 		disablable["arm_wind_generator"] = true
 		disablable["core_wind_generator"] = true
 	end
-	if not modOptions.space_mode or (modOptions.space_mode and modOptions.space_mode=="0") then
+	if not Spring.GetModOptions().space_mode or (Spring.GetModOptions().space_mode and Spring.GetModOptions().space_mode=="0") then
 		local map = Game.mapHumanName:lower()
 		local disableAir = Game.windMin <= 1 and Game.windMax <= 4 or map:find("comet") or map:find("moon")
 		local disableHovers = disableAir
@@ -432,12 +475,12 @@ function widget:Initialize()
 	end
 	-- Get our starting unit
 	-- Sometimes the information is not available, so the widget will error and exit :)
-	local _, _, _, _, mySide = Spring.GetTeamInfo(myTeamID)
+	local _, _, _, _, mySide = Spring.GetTeamInfo(Spring.GetMyTeamID())
 	local startUnitName = Spring.GetSideData(mySide)
 	sDefID = UnitDefNames[startUnitName].id
 	
 	-- look for changed commander
-	local startID = spGetTeamRulesParam(myTeamID, 'startUnit')
+	local startID = spGetTeamRulesParam(Spring.GetMyTeamID(), 'startUnit')
 	if sDefID and startID ~= "" then 
 		sDefID = startID 
 		mySide = UnitDefs[sDefID].customParams.side
@@ -631,7 +674,7 @@ local function drawPanel()
 end
 
 function ValidBuild(buildID)
-	return buildID ~= CMD_MORPH and buildID ~= CMD_MORPHA and buildID ~= CMD_MORPHC and buildID ~= CMD_SING
+	return buildID ~= CMDS.MORPH and buildID ~= CMDS.MORPHA and buildID ~= CMDS.MORPHC and buildID ~= CMDS.SING
 end
 
 function InitializeFaction(sDefID)
@@ -647,13 +690,15 @@ function InitializeFaction(sDefID)
 	
 	-- read faction of start unit and set morph command accordingly
 	if sDef.customParams and sDef.customParams.side == "arm" then
-		CMD_MORPH = CMD_MORPHA
+		CMDS.MORPH = CMDS.MORPHA
 	elseif sDef.customParams and sDef.customParams.side == "core" then
-		CMD_MORPH = CMD_MORPHC
+		CMDS.MORPH = CMDS.MORPHC
 	elseif sDef.customParams and sDef.customParams.side == "lost" then
-		CMD_MORPH = CMD_MORPHT
+		CMDS.MORPH = CMDS.MORPHL
 	elseif sDef.customParams and sDef.customParams.side == "guardian" then
-		CMD_MORPH = CMD_MORPHG
+		CMDS.MORPH = CMDS.MORPHG
+	elseif sDef.customParams and sDef.customParams.side == "talon" then
+		CMDS.MORPH = CMDS.MORPHT
 	end
 	
 	-- Retain the build list order, but move all sea units to the end
@@ -759,11 +804,11 @@ function widget:DrawWorld()
 			end
 		end
 		
-		local sx, sy, sz = Spring.GetTeamStartPosition(myTeamID) -- Returns -100, -100, -100 when none chosen
+		local sx, sy, sz = Spring.GetTeamStartPosition(Spring.GetMyTeamID()) -- Returns -100, -100, -100 when none chosen
 		-- not anymore, now default pos is (0,0) for some reason
 		if not startChosen then
 			if (sx > 0 and sz > 0) then
-				local startID = spGetTeamRulesParam(myTeamID, 'startUnit')
+				local startID = spGetTeamRulesParam(Spring.GetMyTeamID(), 'startUnit')
 				if startID and startID ~= "" then sDefID = startID end
 					
 				local newSide = UnitDefs[startID] and UnitDefs[startID].customParams and UnitDefs[startID].customParams.side
@@ -783,7 +828,7 @@ function widget:DrawWorld()
 			sy = Spring.GetGroundHeight(sx, sz)
 			
 			-- Draw the starting unit at start position
-			DrawUnitDef(sDefID, myTeamID, sx, sy, sz)
+			DrawUnitDef(sDefID, Spring.GetMyTeamID(), sx, sy, sz)
 			
 			-- Draw start units build radius
 			gl.Color(buildDistanceColor)
@@ -804,7 +849,7 @@ function widget:DrawWorld()
 				
 				queueLineVerts[#queueLineVerts + 1] = {v={buildData[2], buildData[3], buildData[4]}}
 			else
-				if buildData[1] == CMD_MORPH then
+				if buildData[1] == CMDS.MORPH then
 					local x,y,z
 					
 					if b > 1 then
@@ -815,7 +860,7 @@ function widget:DrawWorld()
 					end
 					
 					if not x or not y or not z then
-						x,y,z = Spring.GetTeamStartPosition(myTeamID)
+						x,y,z = Spring.GetTeamStartPosition(Spring.GetMyTeamID())
 					end
 					
 					DrawMorph(x,y,z)
@@ -880,13 +925,14 @@ function widget:GameFrame(n)
 				
 				local buildData = buildQueue[b]
 								
-				if buildData[1] == CMD_MORPH then
-					Spring.GiveOrderToUnit(uID,CMD_MORPH,{},{"shift"})
-				elseif buildData[1] == CMD_SING then
-					Spring.GiveOrderToUnit(uID,CMD_SING,{},{"shift"})
+				if buildData[1] == CMDS.MORPH then
+					Spring.GiveOrderToUnit(uID,CMDS.MORPH,{},{"shift"})
+				elseif buildData[1] == CMDS.SING then
+					Spring.GiveOrderToUnit(uID,CMDS.SING,{},{"shift"})
 				else
 					Spring.GiveOrderToUnit(uID, -buildData[1], {buildData[2], buildData[3], buildData[4], buildData[5]}, {"shift"})
 				end
+				--Spring.Echo("Added order:",b,buildData[1])
 			end
 			
 			widgetHandler:RemoveWidget(self)
@@ -905,7 +951,7 @@ end
 ------------------------------------------------------------
 function widget:IsAbove(mx, my)
 	if requireCommander then
-		local posx = GetTeamStartPosition(myTeamID)
+		local posx = Spring.GetTeamStartPosition(Spring.GetMyTeamID())
 		if not posx or posx <= 0 then return false end
 	end
 	tracedDefID = TraceDefID(mx, my)
@@ -1026,7 +1072,7 @@ end
 function widget:KeyPress(key, mods, isRepeat)
 		
 	if requireCommander then
-		local posx = GetTeamStartPosition(myTeamID)
+		local posx = Spring.GetTeamStartPosition(Spring.GetMyTeamID())
 		if not posx or posx <= 0 then return end
 	end
 	
@@ -1069,11 +1115,10 @@ function widget:RecvLuaMsg(msg, playerID)
 	
 	if msg:find(sidePrefix) then	
 		local _, _, playerIsSpec, playerTeam = Spring.GetPlayerInfo(playerID)
-		local myTeamID = Spring.GetMyTeamID()
 		
-		if myTeamID == playerTeam and not playerIsSpec then
+		if Spring.GetMyTeamID() == playerTeam and not playerIsSpec then
 			
-			local startID = spGetTeamRulesParam(myTeamID, 'startUnit')
+			local startID = spGetTeamRulesParam(Spring.GetMyTeamID(), 'startUnit')
 			if startID and startID ~= "" then sDefID = startID end
 					
 			local newSide = UnitDefs[startID] and UnitDefs[startID].customParams and UnitDefs[startID].customParams.side
@@ -1096,15 +1141,15 @@ function widget:TextCommand(cmd)
 		if cmd:find("hide",4) then
 			showWhenStarting = not showWhenStarting
 			if showWhenStarting then
-				Echo("Initial queue: do not hide menu when game is starting")
+				Spring:Echo("Initial queue: do not hide menu when game is starting")
 			else
-				Echo("Initial queue: hide menu when game is starting")
+				Spring:Echo("Initial queue: hide menu when game is starting")
 			end
 		end
 	end
 	
 	if requireCommander then
-		local posx = GetTeamStartPosition(myTeamID)
+		local posx = Spring.GetTeamStartPosition(Spring.GetMyTeamID())
 		if not posx or posx <= 0 then return end
 	end
 	
@@ -1123,7 +1168,7 @@ function widget:TextCommand(cmd)
 		end
 		
 		Spring.SetBuildFacing(newFacing)
-		Spring.Echo("Buildings set to face " .. ({"South", "East", "North", "West"})[1 + newFacing])
+		Spring.Spring:Echo("Buildings set to face " .. ({"South", "East", "North", "West"})[1 + newFacing])
 		return true
 	end
 	

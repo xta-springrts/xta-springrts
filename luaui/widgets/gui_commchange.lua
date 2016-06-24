@@ -32,14 +32,18 @@ local img 						= {}
 	img["ComCM"]			 	= "LuaUI/Images/commchange/ComCM.png"
 	img["ComCAD"] 				= "LuaUI/Images/commchange/ComCAD.png" -- core auto disabled
 	img["ComCMD"] 				= "LuaUI/Images/commchange/ComCMD.png"
-	img["ComTM"] 				= "LuaUI/Images/commchange/ComTM.png"
-	img["ComTMD"] 				= "LuaUI/Images/commchange/ComTMD.png"
-	img["ComTA"] 				= "LuaUI/Images/commchange/ComTA.png"
-	img["ComTAD"] 				= "LuaUI/Images/commchange/ComTAD.png"
+	img["ComLM"] 				= "LuaUI/Images/commchange/ComLM.png"
+	img["ComLMD"] 				= "LuaUI/Images/commchange/ComLMD.png"
+	img["ComLA"] 				= "LuaUI/Images/commchange/ComLA.png"
+	img["ComLAD"] 				= "LuaUI/Images/commchange/ComLAD.png"
 	img["ComGM"] 				= "LuaUI/Images/commchange/ComGM.png"
 	img["ComGMD"] 				= "LuaUI/Images/commchange/ComGMD.png"
 	img["ComGA"] 				= "LuaUI/Images/commchange/ComGA.png"
 	img["ComGAD"] 				= "LuaUI/Images/commchange/ComGAD.png"
+	img["ComTM"] 				= "LuaUI/Images/commchange/ComTM.png"
+	img["ComTMD"] 				= "LuaUI/Images/commchange/ComTMD.png"
+	img["ComTA"] 				= "LuaUI/Images/commchange/ComTA.png"
+	img["ComTAD"] 				= "LuaUI/Images/commchange/ComTAD.png"
 
 	--countdown
 	img["cnt3"] 				= "LuaUI/Images/commchange/3-cnt.png"
@@ -51,7 +55,8 @@ local img 						= {}
 	img["arm"] 					= "LuaUI/Images/commchange/arm.png"
 	img["core"] 				= "LuaUI/Images/commchange/core.png"
 	img["lost"] 				= "LuaUI/Images/commchange/lost.png"
-	img["guardian"]				= "LuaUI/Images/commchange/arm.png"
+	img["guardian"]				= "LuaUI/Images/commchange/guardian.png"
+	img["talon"]				= "LuaUI/Images/commchange/talon.png"
 
 	--other
 	img["duck"]					= "LuaUI/Images/commchange/duck.png"
@@ -66,6 +71,9 @@ commanderID["lost_automatic"]	= (UnitDefNames["lost_commander"] or {}).id
 commanderID["lost_manual"] 		= (UnitDefNames["lost_u0commander"] or {}).id
 commanderID["guardian_automatic"]	= (UnitDefNames["guardian_commander"] or {}).id
 commanderID["guardian_manual"] 		= (UnitDefNames["guardian_u0commander"] or {}).id
+commanderID["talon_automatic"]	= (UnitDefNames["talon_commander"] or {}).id
+commanderID["talon_manual"] 		= (UnitDefNames["talon_u0commander"] or {}).id
+
 
 -- sound
 local bell = 'sounds/gui/bell.ogg'
@@ -94,6 +102,7 @@ Button["arm"] = {}
 Button["core"] = {}
 Button["lost"] = {}
 Button["guardian"] = {}
+Button["talon"] = {}
 Button["ready"] = {}
 Button["info"] = {}
 Button["infopanel"] = {}
@@ -111,7 +120,7 @@ Button["specinfo"] = {}
 local vsx, vsy 								= gl.GetViewSizes()
 local scale
 local px, py 								= 300, 300
-local SIZEX, SIZEY  						= 360, 180 -- initial value before scaling
+local SIZEX, SIZEY  						= 480, 200 -- initial value before scaling
 local mid 									= px + SIZEX/2
 local sizex, sizey							-- values used after rescaling
 local th 									= 16 -- text height for buttons
@@ -147,35 +156,13 @@ local bgcorner								= "luaui/images/bgcorner.png"
 local hasSentStartMsg	 					= false
 local isTLL									= false
 local isGOK									= false
-
+local isTAL									= false
 
 --------------------------------------------------------------------------------
 -- Speedups
 --------------------------------------------------------------------------------
-local GetTeamList					= Spring.GetTeamList
-local glTexCoord					= gl.TexCoord
-local glVertex 						= gl.Vertex
-local glColor 						= gl.Color
-local glRect						= gl.Rect
-local glTexture 					= gl.Texture
-local glTexRect 					= gl.TexRect
-local glDepthTest 					= gl.DepthTest
-local glBeginEnd 					= gl.BeginEnd
-local GL_QUADS 						= GL.QUADS
+
 local Echo 							= Spring.Echo
-local spectator 					= Spring.GetSpectatingState()
-local spGetTeamStartPosition 		= Spring.GetTeamStartPosition
-local spGetTeamRulesParam 			= Spring.GetTeamRulesParam
-local spGetGroundHeight	 			= Spring.GetGroundHeight
-local spSendLuaRulesMsg 			= Spring.SendLuaRulesMsg
-local spSendLuaUIMsg 				= Spring.SendLuaUIMsg
-local GetTeamInfo 					= Spring.GetTeamInfo
-local PlaySoundFile 				= Spring.PlaySoundFile
-local IsGUIHidden					= Spring.IsGUIHidden
-local GetPlayerInfo					= Spring.GetPlayerInfo
-local GetPlayerList					= Spring.GetPlayerList
-local GetAllyTeamList				= Spring.GetAllyTeamList
-local GetAIInfo						= Spring.GetAIInfo
 local newSide		  				= {}
 	
 --------------------------------------------------------------------------------
@@ -195,36 +182,46 @@ local cCount				= {0.8, 0.8, 1, 1}
 -- Local functions
 --------------------------------------------------------------------------------
 local function QuadVerts(x, y, z, r)
-	glTexCoord(0, 0); glVertex(x - r, y, z - r)
-	glTexCoord(1, 0); glVertex(x + r, y, z - r)
-	glTexCoord(1, 1); glVertex(x + r, y, z + r)
-	glTexCoord(0, 1); glVertex(x - r, y, z + r)
+	gl.TexCoord(0, 0); gl.Vertex(x - r, y, z - r)
+	gl.TexCoord(1, 0); gl.Vertex(x + r, y, z - r)
+	gl.TexCoord(1, 1); gl.Vertex(x + r, y, z + r)
+	gl.TexCoord(0, 1); gl.Vertex(x - r, y, z + r)
 end
 
 local function initButtons()
+	local nb = 4 --arm+core + ready + info
+	nb = isTAL and nb + 1 or nb
+	nb = isTLL and nb + 1 or nb
+	nb = isGOK and nb + 1 or nb
+	
 	mid = px + sizex/2
 	Button["arm"]["x0"] = px
-	Button["arm"]["x1"] = isTLL and (isGOK and px + sizex/8 or px + sizex/6) or (isGOK and px + sizex/6) or px + sizex/4
+	Button["arm"]["x1"] = Button["arm"]["x0"] + sizex/nb
 	Button["arm"]["y0"] = py  + sizey - 24
 	Button["arm"]["y1"] = py  + sizey
 	
 	Button["core"]["x0"] = Button["arm"]["x1"]
-	Button["core"]["x1"] = isTLL and (isGOK and px + sizex/4 or px + sizex/3) or (isGOK and px + sizex/3) or px + sizex/2
+	Button["core"]["x1"] = Button["core"]["x0"] + sizex/nb
 	Button["core"]["y0"] = py  + sizey - 24
 	Button["core"]["y1"] = py  + sizey
 	
 	Button["lost"]["x0"] = Button["core"]["x1"]
-	Button["lost"]["x1"] = isGOK and px + 0.375*sizex or px + sizex/2
+	Button["lost"]["x1"] = Button["lost"]["x0"] + sizex/nb
 	Button["lost"]["y0"] = py  + sizey - 24
 	Button["lost"]["y1"] = py  + sizey
 	
 	Button["guardian"]["x0"] = isTLL and Button["lost"]["x1"] or Button["core"]["x1"]
-	Button["guardian"]["x1"] = px + sizex/2
+	Button["guardian"]["x1"] = Button["guardian"]["x0"] + sizex/nb
 	Button["guardian"]["y0"] = py  + sizey - 24
 	Button["guardian"]["y1"] = py  + sizey
 	
-	Button["ready"]["x0"] = (isGOK and Button["guardian"]["x1"]) or (isTLL and Button["lost"]["x1"]) or Button["core"]["x1"]
-	Button["ready"]["x1"] = myState ~= READY and (px + 4*sizex/5) or (px + sizex)
+	Button["talon"]["x0"] = isGOK and Button["guardian"]["x1"] or isTLL and Button["lost"]["x1"] or Button["core"]["x1"]
+	Button["talon"]["x1"] = Button["talon"]["x0"] + sizex/nb
+	Button["talon"]["y0"] = py  + sizey - 24
+	Button["talon"]["y1"] = py  + sizey
+	
+	Button["ready"]["x0"] = (isTAL and Button["talon"]["x1"]) or (isGOK and Button["guardian"]["x1"]) or (isTLL and Button["lost"]["x1"]) or Button["core"]["x1"]
+	Button["ready"]["x1"] = Button["ready"]["x0"] + sizex/nb
 	Button["ready"]["y0"] = py  + sizey - 24
 	Button["ready"]["y1"] = py  + sizey
 	
@@ -274,7 +271,7 @@ local function initButtons()
 end
 
 local function updateMyStartUnit()
-	local startID = spGetTeamRulesParam(myTeamID, 'startUnit')
+	local startID = Spring.GetTeamRulesParam(myTeamID, 'startUnit')
 	
 	local startSide = UnitDefs[startID] and UnitDefs[startID].customParams and UnitDefs[startID].customParams.side
 	local startType = UnitDefs[startID] and UnitDefs[startID].customParams and UnitDefs[startID].customParams.type
@@ -286,7 +283,7 @@ end
 
 local function updateSize()
 	-- update size for spectators
-	if spectator then
+	if Spring.GetSpectatingState() then
 		n = #(teamList)-1
 		sizex = 380
 		sizey = 50 + 20 * (n+2) -- add extra free row
@@ -294,8 +291,8 @@ local function updateSize()
 	
 	if Spring.IsReplay() then
 		
-		for i, pID in pairs(Spring.GetPlayerList()) do
-			local _,_,isSpec = Spring.GetPlayerInfo(pID)
+		for i, pID in pairs(Spring.Spring.GetPlayerList()) do
+			local _,_,isSpec = Spring.Spring.GetPlayerInfo(pID)
 			if not isSpec then
 				if not playerStates[pID] then
 					playerStates[pID] = "missing"
@@ -316,8 +313,8 @@ end
 local function updateStates()
 	
 	for i,playerID in pairs (playerList) do
-		local leaderName,active,spec,teamID,_,_,_,country,rank	= GetPlayerInfo(playerID)
-		local posx = spGetTeamStartPosition(teamID)
+		local leaderName,active,spec,teamID,_,_,_,country,rank	= Spring.GetPlayerInfo(playerID)
+		local posx = Spring.GetTeamStartPosition(teamID)
 		
 		if not active or APLStates[playerID] == 3 then
 			readyStates[playerID] = MISSING
@@ -345,7 +342,7 @@ local function updateStates()
 end
 
 local function playSound(snd)
-	PlaySoundFile(snd)
+	Spring.PlaySoundFile(snd)
 end
 
 local function DrawRectRound(px,py,sx,sy,cs)
@@ -419,10 +416,10 @@ function RectRound(px,py,sx,sy,cs)
 end
 
 local function drawBorder(x0, y0, x1, y1, width)
-	glRect(x0, y0, x1, y0 + width)
-	glRect(x0, y1, x1, y1 - width)
-	glRect(x0, y0, x0 + width, y1)
-	glRect(x1, y0, x1 - width, y1)
+	gl.Rect(x0, y0, x1, y0 + width)
+	gl.Rect(x0, y1, x1, y1 - width)
+	gl.Rect(x0, y0, x0 + width, y1)
+	gl.Rect(x1, y0, x1 - width, y1)
 end
 
 local function IsOnButton(x, y, BLcornerX, BLcornerY,TRcornerX,TRcornerY)
@@ -473,6 +470,7 @@ function widget:Initialize()
 	th3 = 20 * scale
 	isTLL = tonumber( (Spring.GetModOptions() or {}).tllunits) == 1
 	isGOK = tonumber( (Spring.GetModOptions() or {}).gokunits) == 1
+	isTAL = tonumber( (Spring.GetModOptions() or {}).talonunits) == 1
 	
 	updateMyStartUnit()
 	
@@ -488,55 +486,55 @@ function widget:Initialize()
 		--Echo("Commchange:",lastSide,lastType)
 		if lastSide then
 			if lastSide == "arm" then
-				spSendLuaUIMsg('195' .. 1)
+				Spring.SendLuaUIMsg('195' .. 1)
 			elseif lastSide == "core" then
-				spSendLuaUIMsg('195' .. 2)
+				Spring.SendLuaUIMsg('195' .. 2)
 			elseif lastSide == "lost" then
 				if isTLL then
-					spSendLuaUIMsg('195' .. 3)
+					Spring.SendLuaUIMsg('195' .. 3)
 				else
-					spSendLuaUIMsg('195' .. 1)
+					Spring.SendLuaUIMsg('195' .. 1)
 				end
 			elseif lastSide == "guardian" then
 				if isGOK then
-					spSendLuaUIMsg('195' .. 4)
+					Spring.SendLuaUIMsg('195' .. 4)
 				else
-					spSendLuaUIMsg('195' .. 1)
+					Spring.SendLuaUIMsg('195' .. 1)
 				end
 			end
 			
 			if lastType then
-				spSendLuaRulesMsg('\177' .. commanderID[lastSide .. "_" .. lastType])
+				Spring.SendLuaRulesMsg('\177' .. commanderID[lastSide .. "_" .. lastType])
 			end
 		end
 	else -- set manual commander as default for newbies
-		mySide = (mySide or select(5,Spring.GetTeamInfo(myTeamID))) or "arm"
+		mySide = (mySide or select(5,Spring.Spring.GetTeamInfo(myTeamID))) or "arm"
 		if mySide == "arm" then
-			spSendLuaRulesMsg('\177' .. commanderID["arm_manual"])
-			spSendLuaUIMsg('195' .. 1)
+			Spring.SendLuaRulesMsg('\177' .. commanderID["arm_manual"])
+			Spring.SendLuaUIMsg('195' .. 1)
 			lastStartID = commanderID["arm_manual"]
 		elseif mySide == "core" then
-			spSendLuaRulesMsg('\177' .. commanderID["core_manual"])
-			spSendLuaUIMsg('195' .. 2)
+			Spring.SendLuaRulesMsg('\177' .. commanderID["core_manual"])
+			Spring.SendLuaUIMsg('195' .. 2)
 			lastStartID = commanderID["core_manual"]
 		elseif mySide == "lost" then
 			if isTLL then
-				spSendLuaRulesMsg('\177' .. commanderID["lost_manual"])
-				spSendLuaUIMsg('195' .. 3)
+				Spring.SendLuaRulesMsg('\177' .. commanderID["lost_manual"])
+				Spring.SendLuaUIMsg('195' .. 3)
 				lastStartID = commanderID["lost_manual"]
 			else
-				spSendLuaRulesMsg('\177' .. commanderID["arm_manual"])
-				spSendLuaUIMsg('195' .. 1)
+				Spring.SendLuaRulesMsg('\177' .. commanderID["arm_manual"])
+				Spring.SendLuaUIMsg('195' .. 1)
 				lastStartID = commanderID["arm_manual"]
 			end
 		elseif mySide == "guardian" then
 			if isGOK then
-				spSendLuaRulesMsg('\177' .. commanderID["guardian_manual"])
-				spSendLuaUIMsg('195' .. 4)
+				Spring.SendLuaRulesMsg('\177' .. commanderID["guardian_manual"])
+				Spring.SendLuaUIMsg('195' .. 4)
 				lastStartID = commanderID["guardian_manual"]
 			else
-				spSendLuaRulesMsg('\177' .. commanderID["arm_manual"])
-				spSendLuaUIMsg('195' .. 1)
+				Spring.SendLuaRulesMsg('\177' .. commanderID["arm_manual"])
+				Spring.SendLuaUIMsg('195' .. 1)
 				lastStartID = commanderID["arm_manual"]
 			end
 		end	
@@ -561,27 +559,27 @@ function widget:Update()
 	updateSize()
 	
 	for _,playerID in pairs (playerList) do
-		local leaderName,active,spec,teamID,_,_,_,country,rank	= GetPlayerInfo(playerID)
+		local leaderName,active,spec,teamID,_,_,_,country,rank	= Spring.GetPlayerInfo(playerID)
 		APLStates[playerID] = Spring.GetGameRulesParam("player_" .. tostring(playerID) .. "_readyState")
 	end	
 	updateStates()
 	
-	if not spectator then
+	if not Spring.GetSpectatingState() then
 		updateMyStartUnit()
 	end
 	
 end
 
 function widget:DrawWorld()
-	if IsGUIHidden() or gameStarted then return end
+	if Spring.IsGUIHidden() or gameStarted then return end
 		
-	glColor(cAlpha)
-    glDepthTest(false)
+	gl.Color(cAlpha)
+    gl.DepthTest(false)
     for i = 1, #teamList do
         local teamID = teamList[i]
-        local tsx, tsy, tsz = spGetTeamStartPosition(teamID)
+        local tsx, tsy, tsz = Spring.GetTeamStartPosition(teamID)
         if tsx and tsx > 0 then
-			local _,_,_,_,teamside = GetTeamInfo(teamID)
+			local _,_,_,_,teamside = Spring.GetTeamInfo(teamID)
 			local startUnit = Spring.GetTeamRulesParam(teamID, 'startUnit')
 			if startUnit then
 				local cp = ((startUnit and UnitDefs[startUnit]) and UnitDefs[startUnit].customParams) or nil
@@ -589,26 +587,34 @@ function widget:DrawWorld()
 			end
 			
             if teamside == "arm" then
-                glTexture(img.arm)
-                glBeginEnd(GL_QUADS, QuadVerts, tsx, spGetGroundHeight(tsx, tsz), tsz, 80)
-				glTexture(false)
+                gl.Texture(img.arm)
+                gl.BeginEnd(GL.QUADS, QuadVerts, tsx, Spring.GetGroundHeight(tsx, tsz), tsz, 80)
+				gl.Texture(false)
             elseif teamside == "core" then
-                glTexture(img.core)
-                glBeginEnd(GL_QUADS, QuadVerts, tsx, spGetGroundHeight(tsx, tsz), tsz, 64)
-				glTexture(false)
+                gl.Texture(img.core)
+                gl.BeginEnd(GL.QUADS, QuadVerts, tsx, Spring.GetGroundHeight(tsx, tsz), tsz, 64)
+				gl.Texture(false)
+			elseif teamside == "guardian" then
+                gl.Texture(img.guardian)
+                gl.BeginEnd(GL.QUADS, QuadVerts, tsx, Spring.GetGroundHeight(tsx, tsz), tsz, 64)
+				gl.Texture(false)
+			elseif teamside == "talon" then
+                gl.Texture(img.talon)
+                gl.BeginEnd(GL.QUADS, QuadVerts, tsx, Spring.GetGroundHeight(tsx, tsz), tsz, 64)
+				gl.Texture(false)
 			else
-				glTexture(img.lost)
-                glBeginEnd(GL_QUADS, QuadVerts, tsx, spGetGroundHeight(tsx, tsz), tsz, 64)
-				glTexture(false)
+				gl.Texture(img.lost)
+                gl.BeginEnd(GL.QUADS, QuadVerts, tsx, Spring.GetGroundHeight(tsx, tsz), tsz, 64)
+				gl.Texture(false)
             end
         end
     end
-    glTexture(false)
+    gl.Texture(false)
 	
 end
 
 function widget:DrawScreenEffects(vsx, vsy)
-	if IsGUIHidden() then return end
+	if Spring.IsGUIHidden() then return end
 	
 	if not gameStarted and not gameOver then
 		local h = vsy/3
@@ -619,35 +625,35 @@ function widget:DrawScreenEffects(vsx, vsy)
 		
 		--CountDown
 		if gameState == COUNTDOWN and not Spring.IsReplay() then
-			glColor(cCount)
+			gl.Color(cCount)
 			
 			if cntDown == "3" then
-				glTexture(img.cnt3)
+				gl.Texture(img.cnt3)
 			elseif cntDown == "2" then
-				glTexture(img.cnt2)
+				gl.Texture(img.cnt2)
 			elseif cntDown == "1" then
-				glTexture(img.cnt1)
+				gl.Texture(img.cnt1)
 			elseif cntDown == "0" then
-				glTexture(img.cnt0)
+				gl.Texture(img.cnt0)
 			else
 				Echo(cntDown)
 			end
 			
-			glTexRect(x,y,x1,y1)
-			glTexture(false)
-			glColor(cWhite)
+			gl.TexRect(x,y,x1,y1)
+			gl.Texture(false)
+			gl.Color(cWhite)
 			
 			if cntDown ~= lastCount then
-				PlaySoundFile(tock)
+				Spring.PlaySoundFile(tock)
 				lastCount = cntDown
 			end
 		end
 		
 		if myState ~= READY then
-			if not spectator then
+			if not Spring.GetSpectatingState() then
 				-- Infobutton
-				glTexture(false)
-				glColor(cWhite)
+				gl.Texture(false)
+				gl.Color(cWhite)
 				drawBorder(Button["info"]["x0"],Button["info"]["y0"],Button["info"]["x1"],Button["info"]["y1"],1)
 				myFont:Begin()
 				myFont:SetTextColor(infoOn and cWhite or cGrey)
@@ -655,9 +661,9 @@ function widget:DrawScreenEffects(vsx, vsy)
 				myFont:End()
 				-- infopanel
 				if infoOn then
-					glColor(cDark)
-					glRect(Button["infopanel"]["x0"],Button["infopanel"]["y0"],Button["infopanel"]["x1"],Button["infopanel"]["y1"])
-					glColor(cWhite)
+					gl.Color(cDark)
+					gl.Rect(Button["infopanel"]["x0"],Button["infopanel"]["y0"],Button["infopanel"]["x1"],Button["infopanel"]["y1"])
+					gl.Color(cWhite)
 					drawBorder(Button["infopanel"]["x0"],Button["infopanel"]["y0"],Button["infopanel"]["x1"],Button["infopanel"]["y1"],1)
 					
 					local x0 = Button["infopanel"]["x0"]
@@ -742,14 +748,14 @@ function widget:DrawScreenEffects(vsx, vsy)
 			
 			if gameState ~= COUNTDOWN or Spring.IsReplay() then -- replay has countdown before everything
 				-- Panel
-				glColor(cDark)
-				glRect(px,py, px+sizex, py+sizey)
-				glColor(cWhite)
+				gl.Color(cDark)
+				gl.Rect(px,py, px+sizex, py+sizey)
+				gl.Color(cWhite)
 			end
 		end
 		
 		-- Highlight
-		glColor(cLight)
+		gl.Color(cLight)
 		if Button["arm"]["On"] then
 			RectRound(Button["arm"]["x0"],Button["arm"]["y0"], Button["arm"]["x1"], Button["arm"]["y1"])
 		elseif Button["core"]["On"] then
@@ -767,10 +773,10 @@ function widget:DrawScreenEffects(vsx, vsy)
 		elseif Button["duck"]["On"] then
 			RectRound(Button["duck"]["x0"],Button["duck"]["y0"], Button["duck"]["x1"], Button["duck"]["y1"])
 		end
-		glColor(cWhite)
+		gl.Color(cWhite)
 	elseif not gameOver then
 		-- game started text
-		if Spring.IsReplay() or spectator then
+		if Spring.IsReplay() or Spring.GetSpectatingState() then
 			local frame = Spring.GetGameFrame()
 			local gs = Spring.GetGameSpeed() or 1
 			local x0 = vsx/2
@@ -786,13 +792,14 @@ function widget:DrawScreenEffects(vsx, vsy)
 end
 
 function widget:DrawScreen()
-	if IsGUIHidden() or gameStarted or gameOver then return end
+	
+	if Spring.IsGUIHidden() or gameStarted or gameOver then return end
 	
 	local function firstToUpper(str)
 		return (str:gsub("^%l", string.upper))
 	end	
 	
-	local startID = spGetTeamRulesParam(myTeamID, 'startUnit')
+	local startID = Spring.GetTeamRulesParam(myTeamID, 'startUnit')
 	
 	-- Draw list with player connection and ready up states
 	myFont:Begin()
@@ -808,7 +815,7 @@ function widget:DrawScreen()
 		myFont:End()
 		
 		for _,playerID in pairs(playerList) do
-			local leaderName,active,spec,team,_,_,_,country,rank	= GetPlayerInfo(playerID)
+			local leaderName,active,spec,team,_,_,_,country,rank	= Spring.GetPlayerInfo(playerID)
 						
 			myFont:Begin()
 			if readyStates[playerID] == MISSING then
@@ -825,10 +832,10 @@ function widget:DrawScreen()
 						
 			if not spec then
 				myFont:Print(leaderName, 25, y0 - (th3+2) * playerID, th3, 'xno')
-				glColor(cRank)
-				glTexture("LuaUI/Images/commchange/C-Rank" .. rank ..".png")
-				glTexRect(10, y0 - (th3+2)* playerID, 22, y0 - (th3+2) * playerID+12)
-				glTexture (false)
+				gl.Color(cRank)
+				gl.Texture("LuaUI/Images/commchange/C-Rank" .. rank ..".png")
+				gl.TexRect(10, y0 - (th3+2)* playerID, 22, y0 - (th3+2) * playerID+12)
+				gl.Texture (false)
 			else
 				if readyStates[playerID] == MISSING then
 					myFont:SetTextColor({0.6, 0.2, 0.2, 0.8}) -- red
@@ -840,40 +847,40 @@ function widget:DrawScreen()
 			myFont:End()
 		end
 	end
-	glColor(cWhite)
+	gl.Color(cWhite)
 	
-	if spectator and not gameOver then -- Draw window with info for spectators
+	if Spring.GetSpectatingState() and not gameOver then -- Draw window with info for spectators
 		do
 			-- duck button
-			glColor(cDark)
-			glRect(Button["duck"]["x0"],Button["duck"]["y0"], Button["duck"]["x1"], Button["duck"]["y1"])
-			glColor(cBlack)
+			gl.Color(cDark)
+			gl.Rect(Button["duck"]["x0"],Button["duck"]["y0"], Button["duck"]["x1"], Button["duck"]["y1"])
+			gl.Color(cBlack)
 			drawBorder(Button["duck"]["x0"],Button["duck"]["y0"], Button["duck"]["x1"], Button["duck"]["y1"],1)
 			
 			myFont:Begin()
 			-- spectator info label
-			glColor(cDark)
-			glRect(Button["speclabel"]["x0"],Button["speclabel"]["y0"], Button["speclabel"]["x1"], Button["speclabel"]["y1"])
+			gl.Color(cDark)
+			gl.Rect(Button["speclabel"]["x0"],Button["speclabel"]["y0"], Button["speclabel"]["x1"], Button["speclabel"]["y1"])
 			myFont:SetTextColor(cWhite)
 			
 			myFont:Print("Info for spectators", Button["speclabel"]["x0"] + 78 ,Button["speclabel"]["y0"] + 10, th, 'xs')
 			
 			--exit button
-			glColor(cDark)
-			glRect(Button["exit"]["x0"],Button["exit"]["y0"], Button["exit"]["x1"], Button["exit"]["y1"])
-			glColor(cBlack)
+			gl.Color(cDark)
+			gl.Rect(Button["exit"]["x0"],Button["exit"]["y0"], Button["exit"]["x1"], Button["exit"]["y1"])
+			gl.Color(cBlack)
 			drawBorder(Button["exit"]["x0"],Button["exit"]["y0"], Button["exit"]["x1"], Button["exit"]["y1"],1)
-			glColor(cWhite)
+			gl.Color(cWhite)
 			myFont:SetTextColor(cWhite)
 			myFont:Print("X", Button["exit"]["x0"] + 10 ,Button["exit"]["y0"] + 10, 20, 'xs')
 			myFont:End()
 			
 			-- textures
 			local fr = 3 -- frame
-			glColor(cWhite)
-			glTexture(img.duck)
-			glTexRect(Button["duck"]["x0"]+fr,Button["duck"]["y0"]+fr, Button["duck"]["x1"]-fr, Button["duck"]["y1"]-fr)
-			glTexture(false)
+			gl.Color(cWhite)
+			gl.Texture(img.duck)
+			gl.TexRect(Button["duck"]["x0"]+fr,Button["duck"]["y0"]+fr, Button["duck"]["x1"]-fr, Button["duck"]["y1"]-fr)
+			gl.Texture(false)
 			
 			--player states billboard
 			-- x-size = [0,320]
@@ -908,32 +915,32 @@ function widget:DrawScreen()
 				--player data
 				local as = 0 -- ally separation space
 				
-				for _, aID in pairs(GetAllyTeamList()) do
+				for _, aID in pairs(Spring.GetAllyTeamList()) do
 					as = 8
 					-- draw line between allies
-					glColor(0.1, 0.1, 0.1, 0.3)
-					glRect(col_0, prevposy - 7, col_6+th2*gl.GetTextWidth("Skill"), prevposy - 8)
-					glColor(0.4, 0.4, 0.4, 0.3)
-					glRect(col_0, prevposy - 8, col_6+th2*gl.GetTextWidth("Skill"), prevposy - 9)
+					gl.Color(0.1, 0.1, 0.1, 0.3)
+					gl.Rect(col_0, prevposy - 7, col_6+th2*gl.GetTextWidth("Skill"), prevposy - 8)
+					gl.Color(0.4, 0.4, 0.4, 0.3)
+					gl.Rect(col_0, prevposy - 8, col_6+th2*gl.GetTextWidth("Skill"), prevposy - 9)
 					
 					local teamSkill = 0
 					local y2 = prevposy - as - rh
 					
-					for i, tID in pairs(GetTeamList(aID)) do
+					for i, tID in pairs(Spring.GetTeamList(aID)) do
 						
 						local y1 		= prevposy - as - rh
 						prevposy		= y1
 						as = 0
 						
-						local _,leaderID,_,isAI,_,allyID = GetTeamInfo(tID)
-						local leaderName,active,spec,team,allyteam,_,_,country,rank,customtable	= GetPlayerInfo(leaderID)
+						local _,leaderID,_,isAI,_,allyID = Spring.GetTeamInfo(tID)
+						local leaderName,active,spec,team,allyteam,_,_,country,rank,customtable	= Spring.GetPlayerInfo(leaderID)
 						local skill = GetSkill(customtable) or 0
 						
-						local aiID, aiName, aiHostID, aiShortName = GetAIInfo(tID)
+						local aiID, aiName, aiHostID, aiShortName = Spring.GetAIInfo(tID)
 						local isComShare = false
 						local pCount = 0
-						for _, pID in pairs (GetPlayerList(tID)) do
-							local _,_,isSspec = GetPlayerInfo(pID)
+						for _, pID in pairs (Spring.GetPlayerList(tID)) do
+							local _,_,isSspec = Spring.GetPlayerInfo(pID)
 							if isSpec == false then 
 								pCount = pCount + 1 
 							end
@@ -956,7 +963,7 @@ function widget:DrawScreen()
 						
 						if tID ~= Spring.GetGaiaTeamID() then
 							local marked = markedStates[i]
-							local startID = spGetTeamRulesParam(tID, 'startUnit')
+							local startID = Spring.GetTeamRulesParam(tID, 'startUnit')
 							local ps = tostring(playerStates[leaderID] or "?")
 							
 							local commside = UnitDefs[startID] and UnitDefs[startID].customParams and UnitDefs[startID].customParams.side or '?'
@@ -976,33 +983,33 @@ function widget:DrawScreen()
 							
 							--side
 							if commside == 'arm' then
-								glTexture(img.arm)
+								gl.Texture(img.arm)
 							elseif commside == 'core' then
-								glTexture(img.core)
+								gl.Texture(img.core)
 							elseif commside == 'lost' then
-								glTexture(img.lost)
+								gl.Texture(img.lost)
 							else
-								glTexture(img.cnt0)
+								gl.Texture(img.cnt0)
 							end
-							glColor(1, 1, 1, 0.8)
-							glTexRect(					col_1, y1 - 5, col_1 + 15, y1 - 5 + 15)
-							glColor(cWhite)
-							glTexture(false)
+							gl.Color(1, 1, 1, 0.8)
+							gl.TexRect(					col_1, y1 - 5, col_1 + 15, y1 - 5 + 15)
+							gl.Color(cWhite)
+							gl.Texture(false)
 							myFont:Print(commtype, 			col_2, y1, th2, 'xo')
 							
 							--rank
 							if not spec then
-								glColor(0.7, 0.7, 0.9, 0.8)
-								glTexture("LuaUI/Images/commchange/C-Rank" .. rank ..".png")
-								glTexRect(				col_3, y1 - 2, col_3 + 14, y1 - 2 + 14)
-								glTexture(false)
-								glColor(cWhite)
+								gl.Color(0.7, 0.7, 0.9, 0.8)
+								gl.Texture("LuaUI/Images/commchange/C-Rank" .. rank ..".png")
+								gl.TexRect(				col_3, y1 - 2, col_3 + 14, y1 - 2 + 14)
+								gl.Texture(false)
+								gl.Color(cWhite)
 							end
 							--name
 							myFont:Print(tostring(leaderName),col_4, y1, th2, 'xo')
 							-- status and skill
 							local statustext
-							local posx = spGetTeamStartPosition(tID)
+							local posx = Spring.GetTeamStartPosition(tID)
 							
 							if isAI then
 								if readyStates[leaderID] == MISSING then
@@ -1031,24 +1038,24 @@ function widget:DrawScreen()
 								end
 							end
 							myFont:Print(statustext,			col_5, y1, th2, 'xo')
-							if i == #GetTeamList(aID) then
+							if i == #Spring.GetTeamList(aID) then
 								myFont:SetTextColor({0.8,0.8,0.8,1})
 								myFont:Print(round(teamSkill,0),col_6, y2, th2, 'xo')
 							end
 							myFont:SetTextColor(cWhite)
 							myFont:End()
-							glColor(cWhite)
+							gl.Color(cWhite)
 							
 						end
 					end
 				end
 			end
-			glColor(cWhite)
+			gl.Color(cWhite)
 		end
 	elseif not gameOver then -- draw window with options for active players
 		do
 			-- border
-			glColor(cWhite)
+			gl.Color(cWhite)
 			drawBorder(Button["arm"]["x0"],Button["arm"]["y0"], Button["arm"]["x1"], Button["arm"]["y1"],1)
 			drawBorder(Button["core"]["x0"],Button["core"]["y0"], Button["core"]["x1"], Button["core"]["y1"],1)
 			if isTLL then
@@ -1056,6 +1063,9 @@ function widget:DrawScreen()
 			end
 			if isGOK then
 				drawBorder(Button["guardian"]["x0"],Button["guardian"]["y0"], Button["guardian"]["x1"], Button["guardian"]["y1"],1)
+			end
+			if isTAL then
+				drawBorder(Button["talon"]["x0"],Button["talon"]["y0"], Button["talon"]["x1"], Button["talon"]["y1"],1)
 			end
 			myFont:Begin()
 			-- Ready button
@@ -1083,10 +1093,10 @@ function widget:DrawScreen()
 			myFont:Print(lbl, 0.5*(Button["ready"]["x0"] + Button["ready"]["x1"]), 0.5 * (Button["ready"]["y0"] + Button["ready"]["y1"])-1, th, 'vcs')
 			
 			-- label/info panel
-			glColor(cDark)
-			glRect(Button["infolabel"]["x0"],Button["infolabel"]["y0"], Button["infolabel"]["x1"], Button["infolabel"]["y1"])
+			gl.Color(cDark)
+			RectRound(Button["infolabel"]["x0"],Button["infolabel"]["y0"], Button["infolabel"]["x1"], Button["infolabel"]["y1"])
 			drawBorder(Button["infolabel"]["x0"],Button["infolabel"]["y0"], Button["infolabel"]["x1"], Button["infolabel"]["y1"],1)
-			glColor(cWhite)
+			gl.Color(cWhite)
 			local txt = strInfo or "..."
 			
 			if myState == PRESENT then
@@ -1106,14 +1116,14 @@ function widget:DrawScreen()
 			myFont:Print(txt, Button["infolabel"]["x0"] + 10 ,Button["infolabel"]["y0"] + 10 , th2, 'ds')
 			
 			--exit button
-			glColor(cDark)
-			glRect(Button["exit"]["x0"],Button["exit"]["y0"], Button["exit"]["x1"], Button["exit"]["y1"])
-			glColor(cBlack)
+			gl.Color(cDark)
+			RectRound(Button["exit"]["x0"],Button["exit"]["y0"], Button["exit"]["x1"], Button["exit"]["y1"])
+			gl.Color(cBlack)
 			drawBorder(Button["exit"]["x0"],Button["exit"]["y0"], Button["exit"]["x1"], Button["exit"]["y1"],1)
 			myFont:SetTextColor(cWhite)
 			myFont:Print("X", Button["exit"]["x0"] + 10 ,Button["exit"]["y0"] + 10 , 20, 'xs')
 			
-			-- arm/core/lost buttons
+			-- arm/core/lost/guardian/talon buttons
 			
 			--arm
 			myFont:SetTextColor(mySide == "arm" and cWhite or cUnfocus)
@@ -1133,64 +1143,80 @@ function widget:DrawScreen()
 				myFont:SetTextColor(mySide == "guardian" and cWhite or cUnfocus )
 				myFont:Print("GoK", 0.5* (Button["guardian"]["x0"] + Button["guardian"]["x1"]), 0.5 * (Button["guardian"]["y0"] + Button["guardian"]["y1"]), th, 'vcs')
 			end
-			
+			-- TAL
+			if isTAL then
+				myFont:SetTextColor(mySide == "talon" and cWhite or cUnfocus )
+				myFont:Print("Talon", 0.5* (Button["talon"]["x0"] + Button["talon"]["x1"]), 0.5 * (Button["talon"]["y0"] + Button["talon"]["y1"]), th, 'vcs')
+			end
 			myFont:SetTextColor(cWhite)
 			
 			if myState ~= READY then
 				-- Commander Icons
-				glColor(cWhite)
+				gl.Color(cWhite)
 				
 				if mySide == "arm" then
 					if myType == "automatic" then
-						glTexture(img.ComAA)
-						glTexRect(Button["auto"]["x0"],Button["auto"]["y0"], Button["auto"]["x1"], Button["auto"]["y1"])
-						glTexture(img.ComAMD)
-						glTexRect(Button["manual"]["x0"],Button["manual"]["y0"], Button["manual"]["x1"], Button["manual"]["y1"])
+						gl.Texture(img.ComAA)
+						gl.TexRect(Button["auto"]["x0"],Button["auto"]["y0"], Button["auto"]["x1"], Button["auto"]["y1"])
+						gl.Texture(img.ComAMD)
+						gl.TexRect(Button["manual"]["x0"],Button["manual"]["y0"], Button["manual"]["x1"], Button["manual"]["y1"])
 					else
-						glTexture(img.ComAAD)
-						glTexRect(Button["auto"]["x0"],Button["auto"]["y0"], Button["auto"]["x1"], Button["auto"]["y1"])
-						glTexture(img.ComAM)
-						glTexRect(Button["manual"]["x0"],Button["manual"]["y0"], Button["manual"]["x1"], Button["manual"]["y1"])
+						gl.Texture(img.ComAAD)
+						gl.TexRect(Button["auto"]["x0"],Button["auto"]["y0"], Button["auto"]["x1"], Button["auto"]["y1"])
+						gl.Texture(img.ComAM)
+						gl.TexRect(Button["manual"]["x0"],Button["manual"]["y0"], Button["manual"]["x1"], Button["manual"]["y1"])
 					end
-					glTexture(false)
+					gl.Texture(false)
 				elseif mySide == "core" then
 					if myType == "automatic" then
-						glTexture(img.ComCA)
-						glTexRect(Button["auto"]["x0"],Button["auto"]["y0"], Button["auto"]["x1"], Button["auto"]["y1"])
-						glTexture(img.ComCMD)
-						glTexRect(Button["manual"]["x0"],Button["manual"]["y0"], Button["manual"]["x1"], Button["manual"]["y1"])
+						gl.Texture(img.ComCA)
+						gl.TexRect(Button["auto"]["x0"],Button["auto"]["y0"], Button["auto"]["x1"], Button["auto"]["y1"])
+						gl.Texture(img.ComCMD)
+						gl.TexRect(Button["manual"]["x0"],Button["manual"]["y0"], Button["manual"]["x1"], Button["manual"]["y1"])
 					else
-						glTexture(img.ComCAD)
-						glTexRect(Button["auto"]["x0"],Button["auto"]["y0"], Button["auto"]["x1"], Button["auto"]["y1"])
-						glTexture(img.ComCM)
-						glTexRect(Button["manual"]["x0"],Button["manual"]["y0"], Button["manual"]["x1"], Button["manual"]["y1"])
+						gl.Texture(img.ComCAD)
+						gl.TexRect(Button["auto"]["x0"],Button["auto"]["y0"], Button["auto"]["x1"], Button["auto"]["y1"])
+						gl.Texture(img.ComCM)
+						gl.TexRect(Button["manual"]["x0"],Button["manual"]["y0"], Button["manual"]["x1"], Button["manual"]["y1"])
 					end
-					glTexture(false)
+					gl.Texture(false)
 				elseif mySide == "lost" then
 					if myType == "automatic" then
-						glTexture(img.ComTA)
-						glTexRect(Button["auto"]["x0"],Button["auto"]["y0"], Button["auto"]["x1"], Button["auto"]["y1"])
-						glTexture(img.ComTMD)
-						glTexRect(Button["manual"]["x0"],Button["manual"]["y0"], Button["manual"]["x1"], Button["manual"]["y1"])
+						gl.Texture(img.ComLA)
+						gl.TexRect(Button["auto"]["x0"],Button["auto"]["y0"], Button["auto"]["x1"], Button["auto"]["y1"])
+						gl.Texture(img.ComLMD)
+						gl.TexRect(Button["manual"]["x0"],Button["manual"]["y0"], Button["manual"]["x1"], Button["manual"]["y1"])
 					else
-						glTexture(img.ComTAD)
-						glTexRect(Button["auto"]["x0"],Button["auto"]["y0"], Button["auto"]["x1"], Button["auto"]["y1"])
-						glTexture(img.ComTM)
-						glTexRect(Button["manual"]["x0"],Button["manual"]["y0"], Button["manual"]["x1"], Button["manual"]["y1"])
+						gl.Texture(img.ComLAD)
+						gl.TexRect(Button["auto"]["x0"],Button["auto"]["y0"], Button["auto"]["x1"], Button["auto"]["y1"])
+						gl.Texture(img.ComLM)
+						gl.TexRect(Button["manual"]["x0"],Button["manual"]["y0"], Button["manual"]["x1"], Button["manual"]["y1"])
+					end
+				elseif mySide == "talon" then
+					if myType == "automatic" then
+						gl.Texture(img.ComTA)
+						gl.TexRect(Button["auto"]["x0"],Button["auto"]["y0"], Button["auto"]["x1"], Button["auto"]["y1"])
+						gl.Texture(img.ComTMD)
+						gl.TexRect(Button["manual"]["x0"],Button["manual"]["y0"], Button["manual"]["x1"], Button["manual"]["y1"])
+					else
+						gl.Texture(img.ComTAD)
+						gl.TexRect(Button["auto"]["x0"],Button["auto"]["y0"], Button["auto"]["x1"], Button["auto"]["y1"])
+						gl.Texture(img.ComTM)
+						gl.TexRect(Button["manual"]["x0"],Button["manual"]["y0"], Button["manual"]["x1"], Button["manual"]["y1"])
 					end
 				elseif mySide == "guardian" then
 					if myType == "automatic" then
-						glTexture(img.ComGA)
-						glTexRect(Button["auto"]["x0"],Button["auto"]["y0"], Button["auto"]["x1"], Button["auto"]["y1"])
-						glTexture(img.ComGMD)
-						glTexRect(Button["manual"]["x0"],Button["manual"]["y0"], Button["manual"]["x1"], Button["manual"]["y1"])
+						gl.Texture(img.ComGA)
+						gl.TexRect(Button["auto"]["x0"],Button["auto"]["y0"], Button["auto"]["x1"], Button["auto"]["y1"])
+						gl.Texture(img.ComGMD)
+						gl.TexRect(Button["manual"]["x0"],Button["manual"]["y0"], Button["manual"]["x1"], Button["manual"]["y1"])
 					else
-						glTexture(img.ComGAD)
-						glTexRect(Button["auto"]["x0"],Button["auto"]["y0"], Button["auto"]["x1"], Button["auto"]["y1"])
-						glTexture(img.ComGM)
-						glTexRect(Button["manual"]["x0"],Button["manual"]["y0"], Button["manual"]["x1"], Button["manual"]["y1"])
+						gl.Texture(img.ComGAD)
+						gl.TexRect(Button["auto"]["x0"],Button["auto"]["y0"], Button["auto"]["x1"], Button["auto"]["y1"])
+						gl.Texture(img.ComGM)
+						gl.TexRect(Button["manual"]["x0"],Button["manual"]["y0"], Button["manual"]["x1"], Button["manual"]["y1"])
 					end
-					glTexture(false)
+					gl.Texture(false)
 				end
 			
 				--commander text
@@ -1199,10 +1225,10 @@ function widget:DrawScreen()
 				myFont:Print("Manual", px+3*sizex/4  , py + 10 , (th-2),'cxs')
 			end
 			myFont:End()
-			glColor(cWhite)
+			gl.Color(cWhite)
 		end
 	end
-	glColor(cWhite)
+	gl.Color(cWhite)
 end
 
 function widget:GameSetup(state, ready, playerStates)
@@ -1220,7 +1246,7 @@ function widget:GameSetup(state, ready, playerStates)
 			gameState = COUNTDOWN -- gamestate == 2
 			cntDown = strN
 			if not hasSentStartMsg then
-				spSendLuaUIMsg('776-717')
+				Spring.SendLuaUIMsg('776-717')
 				hasSentStartMsg = true
 			end
 		else
@@ -1247,7 +1273,7 @@ end
 
 function widget:MousePress(mx, my, mButton)
 	if not gameOver and not gameStarted then
-		if spectator  then
+		if Spring.GetSpectatingState()  then
 			if mButton == 1 then
 				if IsOnButton(mx,my,Button["exit"]["x0"],Button["exit"]["y0"],Button["exit"]["x1"],Button["exit"]["y1"]) then
 					widgetHandler:RemoveWidget()
@@ -1272,55 +1298,62 @@ function widget:MousePress(mx, my, mButton)
 			if IsOnButton(mx,my, px,py, px+sizex, Button["exit"]["y1"]) then
 				-- Check buttons
 				if mButton == 1 then
-					local startID = spGetTeamRulesParam(myTeamID, 'startUnit')
+					local startID = Spring.GetTeamRulesParam(myTeamID, 'startUnit')
 					local startSide = UnitDefs[startID] and UnitDefs[startID].customParams and UnitDefs[startID].customParams.side
 					local startType = UnitDefs[startID] and UnitDefs[startID].customParams and UnitDefs[startID].customParams.type
 					
 					--Echo("Old commander:",startID,startSide,startType)
 					-- arm button
 					if IsOnButton(mx,my,Button["arm"]["x0"],Button["arm"]["y0"],Button["arm"]["x1"],Button["arm"]["y1"]) and startSide ~= "arm" then	
-						spSendLuaRulesMsg('\177' .. commanderID["arm_" .. startType])
-						spSendLuaUIMsg('195' .. 1)
+						Spring.SendLuaRulesMsg('\177' .. commanderID["arm_" .. startType])
+						Spring.SendLuaUIMsg('195' .. 1)
 						lastStartID = commanderID["arm_" .. startType]
 						playSound(button3)
+						--Echo("Click on: Arm")
 				
 					-- core button
 					elseif IsOnButton(mx,my,Button["core"]["x0"],Button["core"]["y0"],Button["core"]["x1"],Button["core"]["y1"]) and startSide ~= "core" then
-						spSendLuaRulesMsg('\177' .. commanderID["core_" .. startType])
-						spSendLuaUIMsg('195' .. 2)
+						Spring.SendLuaRulesMsg('\177' .. commanderID["core_" .. startType])
+						Spring.SendLuaUIMsg('195' .. 2)
 						lastStartID = commanderID["core_" .. startType]
 						playSound(button3)
-					
+						--Echo("Click on: Core")
 					-- lost button
-					elseif IsOnButton(mx,my,Button["lost"]["x0"],Button["lost"]["y0"],Button["lost"]["x1"],Button["lost"]["y1"]) and startSide ~= "lost" then
-						spSendLuaRulesMsg('\177' .. commanderID["lost_" .. startType])
-						spSendLuaUIMsg('195' .. 3)
+					elseif isTLL and IsOnButton(mx,my,Button["lost"]["x0"],Button["lost"]["y0"],Button["lost"]["x1"],Button["lost"]["y1"]) and startSide ~= "lost" then
+						Spring.SendLuaRulesMsg('\177' .. commanderID["lost_" .. startType])
+						Spring.SendLuaUIMsg('195' .. 3)
 						lastStartID = commanderID["lost_" .. startType]
 						playSound(button3)	
-						
+						--Echo("Click on: Lost")
 					-- guardian button
-					elseif IsOnButton(mx,my,Button["guardian"]["x0"],Button["guardian"]["y0"],Button["guardian"]["x1"],Button["guardian"]["y1"]) and startSide ~= "guardian" then
-						spSendLuaRulesMsg('\177' .. commanderID["guardian_" .. startType])
-						spSendLuaUIMsg('195' .. 4)
+					elseif isGOK and IsOnButton(mx,my,Button["guardian"]["x0"],Button["guardian"]["y0"],Button["guardian"]["x1"],Button["guardian"]["y1"]) and startSide ~= "guardian" then
+						Spring.SendLuaRulesMsg('\177' .. commanderID["guardian_" .. startType])
+						Spring.SendLuaUIMsg('195' .. 4)
 						lastStartID = commanderID["guardian_" .. startType]
 						playSound(button3)	
-					
-					
+						--Echo("Click on: Guardian")
+					-- talon button
+					elseif isTAL and IsOnButton(mx,my,Button["talon"]["x0"],Button["talon"]["y0"],Button["talon"]["x1"],Button["talon"]["y1"]) and startSide ~= "talon" then
+						Spring.SendLuaRulesMsg('\177' .. commanderID["talon_" .. startType])
+						Spring.SendLuaUIMsg('195' .. 5)
+						lastStartID = commanderID["talon_" .. startType]
+						playSound(button3)
+						--Echo("Click on: Talon")
 					-- automatic
 					elseif IsOnButton(mx,my,Button["auto"]["x0"],Button["auto"]["y0"],Button["auto"]["x1"],Button["auto"]["y1"]) and myState ~= READY and startType ~= "automatic" then
-						spSendLuaRulesMsg('\177' .. commanderID[startSide .. "_automatic"])
+						Spring.SendLuaRulesMsg('\177' .. commanderID[startSide .. "_automatic"])
 						lastStartID = commanderID[startSide .. "_automatic"]
 						playSound(button2)
 					
 					-- manual
 					elseif IsOnButton(mx,my,Button["manual"]["x0"],Button["manual"]["y0"],Button["manual"]["x1"],Button["manual"]["y1"]) and myState ~= READY and startType ~= "manual" then
-						spSendLuaRulesMsg('\177' .. commanderID[startSide .. "_manual"])
+						Spring.SendLuaRulesMsg('\177' .. commanderID[startSide .. "_manual"])
 						lastStartID = commanderID[startSide .. "_manual"]
 						playSound(button2)			
 					
 					-- ready
 					elseif IsOnButton(mx,my,Button["ready"]["x0"],Button["ready"]["y0"],Button["ready"]["x1"],Button["ready"]["y1"]) and gameState ~= COUNTDOWN then
-						local pos = spGetTeamStartPosition(myTeamID)
+						local pos = Spring.GetTeamStartPosition(myTeamID)
 						if pos > 0 then
 							if myState ~= READY then 
 								myState = READY
@@ -1328,6 +1361,7 @@ function widget:MousePress(mx, my, mButton)
 								myState = MARKED
 							end
 							playSound(button1)
+							Echo("Click on: Ready")
 						end
 					-- info
 					elseif IsOnButton(mx,my,Button["info"]["x0"],Button["info"]["y0"],Button["info"]["x1"],Button["info"]["y1"]) and myState ~= READY then
@@ -1378,7 +1412,7 @@ end
 
 function widget:IsAbove(mx,my)
 	if not gameOver then	
-		if spectator and not gameStarted then
+		if Spring.GetSpectatingState() and not gameStarted then
 			Button["arm"]["On"] = false
 			Button["core"]["On"] = false
 			Button["lost"]["On"] = false
@@ -1475,9 +1509,9 @@ function widget:GameFrame(frame)
 end
 
 function widget:GameStart()
-	PlaySoundFile(bell,4.0,0,0,0,0,0,0,'userinterface')
-	if not spectator then
-		PlaySoundFile(beep,4.0,0,0,0,0,0,0,'unitreply')
+	Spring.PlaySoundFile(bell,4.0,0,0,0,0,0,0,'userinterface')
+	if not Spring.GetSpectatingState() then
+		Spring.PlaySoundFile(beep,4.0,0,0,0,0,0,0,'unitreply')
 	end
 	gameStarted = true
 end

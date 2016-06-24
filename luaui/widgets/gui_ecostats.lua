@@ -172,6 +172,7 @@ local images			= {
 						["tll"]					= "LuaUI/Images/ecostats/tll_default.png", -- name in Techa
 						["lost"]				= "LuaUI/Images/ecostats/tll_default.png", -- name in XTA
 						["guardian"]			= "LuaUI/Images/ecostats/guardian_default.png",
+						["talon"]				= "LuaUI/Images/ecostats/talon_default.png",
 						["contrast"]			= "LuaUI/Images/ecostats/contrast.png",
 						["borderson"]			= "LuaUI/Images/ecostats/borders.png",
 						["bordersoff"]			= "LuaUI/Images/ecostats/bordersOff.png",
@@ -540,6 +541,7 @@ local function friendlyName(teamID)
 		elseif side == "core" then return "Core"
 		elseif side == "lost" then return "Lost"
 		elseif side == "guardian" then return "Guardian"
+		elseif side == "talon" then return "Talon"
 		elseif not (side == nil or #side < 1) then return side
 		else return ("Team " .. teamID)
 		end
