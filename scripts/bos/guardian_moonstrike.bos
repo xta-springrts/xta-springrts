@@ -1,0 +1,258 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+piece  base, hull, hullshadow, weapon, shelter, udoor, ddoor, ldoor,
+       rdoor, flare, fire, color, system, cockpit, shield, shi1,
+       shi2, shi3;
+
+static-var  Static_Var_1, Static_Var_2, Static_Var_3, Static_Var_4, Static_Var_5,
+            Static_Var_6, Static_Var_7, Static_Var_8;
+
+// Signal definitions
+#define SIG_AIM				2
+
+
+ShieldHitFX()
+{
+	signal 256;
+	set-signal-mask 256;
+	show shi1;
+	show shi2;
+	show shi3;
+	sleep 150;
+	hide shi1;
+	sleep 100;
+	hide shi2;
+	sleep 100;
+	hide shi3;
+}
+
+ShieldUnit()
+{
+	while( TRUE )
+	{
+		sleep 1000;
+		if( Static_Var_6 < 0 )
+		{
+			Static_Var_6 = 0;
+		}
+		if( Static_Var_4 == 1 )
+		{
+			Static_Var_6 = Static_Var_6 + 5 + Static_Var_8 / 100;
+			if( Static_Var_6 > 400 )
+			{
+				Static_Var_6 = 400;
+				if( Rand( 1, 30 ) <= 2 )
+				{
+					start-script ShieldHitFX();
+				}
+			}
+		}
+		if( Static_Var_5 == 0 )
+		{
+			if( Static_Var_6 >= 200 )
+			{
+				Static_Var_5 = 1;
+				set ARMORED to 1;
+				start-script ShieldHitFX();
+			}
+		}
+	}
+}
+
+HitByWeapon(anglex, anglez)
+{
+	Static_Var_7 = get HEALTH;
+	Static_Var_7 = Static_Var_7 * 5;
+	if( Static_Var_5 == 1 )
+	{
+		start-script ShieldHitFX();
+		Static_Var_6 = Static_Var_6 - 3 * ( Static_Var_8 - Static_Var_7 );
+		Static_Var_8 = Static_Var_7;
+		if( Static_Var_6 <= 0 )
+		{
+			set ARMORED to 0;
+			Static_Var_5 = 0;
+			Static_Var_6 = 0;
+		}
+		return (0);
+	}
+	if( Static_Var_7 <= Static_Var_8 - 10 )
+	{
+		signal 128;
+		set-signal-mask 128;
+		Static_Var_8 = Static_Var_7;
+		turn base to z-axis anglez speed <105.000000>;
+		turn base to x-axis anglex speed <105.000000>;
+		wait-for-turn base around z-axis;
+		wait-for-turn base around x-axis;
+		turn base to z-axis <0.000000> speed <30.000000>;
+		turn base to x-axis <0.000000> speed <30.000000>;
+		return (0);
+	}
+	Static_Var_8 = Static_Var_7;
+}
+
+RequestState(requestedstate, currentstate)
+{
+	if( Static_Var_3 )
+	{
+		Static_Var_2 = requestedstate;
+		return (0);
+	}
+	Static_Var_3 = 1;
+	currentstate = Static_Var_2;
+	Static_Var_2 = requestedstate;
+	while( Static_Var_2 != currentstate )
+	{
+		if( !Static_Var_2 )
+		{
+			turn udoor to x-axis <-90.000000> speed <180.000000>;
+			turn ddoor to x-axis <90.000000> speed <180.000000>;
+			turn ldoor to z-axis <90.000000> speed <180.000000>;
+			turn rdoor to z-axis <-90.000000> speed <180.000000>;
+			wait-for-turn udoor around x-axis;
+			wait-for-turn ddoor around x-axis;
+			wait-for-turn ldoor around z-axis;
+			wait-for-turn rdoor around z-axis;
+			Static_Var_1 = 1;
+			currentstate = 0;
+		}
+		if( Static_Var_2 )
+		{
+			Static_Var_1 = 0;
+			turn udoor to x-axis <0.000000> speed <180.000000>;
+			turn ddoor to x-axis <0.000000> speed <180.000000>;
+			turn ldoor to z-axis <0.000000> speed <180.000000>;
+			turn rdoor to z-axis <0.000000> speed <180.000000>;
+			wait-for-turn udoor around x-axis;
+			wait-for-turn ddoor around x-axis;
+			wait-for-turn ldoor around z-axis;
+			wait-for-turn rdoor around z-axis;
+			currentstate = 1;
+		}
+	}
+	Static_Var_3 = 0;
+}
+
+Create()
+{
+	Static_Var_1 = 0;
+	Static_Var_2 = 1;
+	Static_Var_3 = 0;
+	Static_Var_4 = 0;
+	Static_Var_5 = 0;
+	Static_Var_6 = 0;
+	Static_Var_7 = 500;
+	Static_Var_8 = 500;
+	set ARMORED to 0;
+	spin shi1 around y-axis speed <800.000000>;
+	spin shi2 around y-axis speed <700.000000>;
+	spin shi3 around y-axis speed <600.000000>;
+	hide shi1;
+	hide shi2;
+	hide shi3;
+	dont-cache shi1;
+	dont-cache shi2;
+	dont-cache shi3;
+	hide flare;
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 1000;
+	}
+	Static_Var_4 = 1;
+	Static_Var_5 = 1;
+	Static_Var_6 = 400;
+	set ARMORED to 1;
+	start-script ShieldUnit();
+}
+
+StartMoving()
+{
+	dont-cache hull;
+}
+
+StopMoving()
+{
+	cache hull;
+}
+
+RestoreAfterDelay()
+{
+	sleep 10000;
+	set-signal-mask 0;
+	call-script RequestState(1);
+}
+
+AimPrimary(heading, pitch)
+{
+	start-script RequestState(0);
+	while( !Static_Var_1 )
+	{
+		sleep 200;
+		start-script RequestState(0);
+	}
+	signal SIG_AIM;
+	set-signal-mask 0;
+	set-signal-mask SIG_AIM;
+	start-script RestoreAfterDelay();
+	return (1);
+}
+
+FirePrimary()
+{
+	emit-sfx 1024 from flare;
+	sleep 150;
+}
+
+QueryPrimary(piecenum)
+{
+	piecenum = fire;
+}
+
+SweetSpot(piecenum)
+{
+	piecenum = base;
+}
+
+Killed(severity, corpsetype)
+{
+	hide shi1;
+	hide shi2;
+	hide shi3;
+	hide flare;
+	if( severity <= 25 )
+	{
+		corpsetype = 1;
+		explode hull type BITMAPONLY | BITMAP1;
+		explode weapon type BITMAPONLY | BITMAP2;
+		explode system type BITMAPONLY | BITMAP2;
+		explode udoor type BITMAPONLY | BITMAP3;
+		explode ddoor type BITMAPONLY | BITMAP3;
+		explode ldoor type BITMAPONLY | BITMAP3;
+		explode rdoor type BITMAPONLY | BITMAP3;
+		return (0);
+	}
+	if( severity <= 50 )
+	{
+		corpsetype = 2;
+		explode hull type BITMAPONLY | BITMAP1;
+		explode weapon type BITMAPONLY | BITMAP2;
+		explode system type SHATTER | EXPLODE_ON_HIT | BITMAP2;
+		explode udoor type FALL | BITMAP3;
+		explode ddoor type FALL | EXPLODE_ON_HIT | BITMAP3;
+		explode ldoor type FALL | BITMAP3;
+		explode rdoor type FALL | EXPLODE_ON_HIT | BITMAP3;
+		return (0);
+	}
+	corpsetype = 3;
+	explode hull type BITMAPONLY | BITMAP1;
+	explode weapon type BITMAPONLY | BITMAP2;
+	explode system type SHATTER | EXPLODE_ON_HIT | BITMAP2;
+	explode udoor type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+	explode ddoor type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+	explode ldoor type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+	explode rdoor type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+}

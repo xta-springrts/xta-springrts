@@ -128,5 +128,13 @@
 	//************************************************************
 	//  To be removed
 	//*****************
+	[SFXTypes]
+	{
+	explosiongenerator0=custom:BluePOPUPFLARE;
+	}
+	[customParams] 
+	{
+	canAreaAttack=1;
+	}
 
 }

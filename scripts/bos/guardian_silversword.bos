@@ -1,0 +1,294 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+piece  base, hull, plate1, plate2, head, plate3, plate4, plate5,
+       backhull, turretbase, turret, pitchturret, bar1, bar2, system, prism,
+       plate6, plate7, backpack, lightning, flare, fire, icon, whirl,
+       emit1, emit2, shield, shi1, shi2, shi3, shieldl, shi1l,
+       shi2l, shi3l, shieldr, shi1r, shi2r, shi3r;
+
+static-var  Static_Var_1, Static_Var_2, Static_Var_3, Static_Var_4, Static_Var_5,
+            Static_Var_6, Static_Var_7;
+
+// Signal definitions
+#define SIG_AIM				2
+#define SIG_MOVE			4
+
+
+ShieldHitFX()
+{
+	signal 256;
+	set-signal-mask 256;
+	show shi1;
+	show shi1l;
+	show shi1r;
+	show shi2;
+	show shi2l;
+	show shi2r;
+	show shi3;
+	show shi3l;
+	show shi3r;
+	sleep 150;
+	hide shi1;
+	hide shi1l;
+	hide shi1r;
+	sleep 100;
+	hide shi2;
+	hide shi2l;
+	hide shi2r;
+	sleep 100;
+	hide shi3;
+	hide shi3l;
+	hide shi3r;
+}
+
+ShieldUnit()
+{
+	while( TRUE )
+	{
+		sleep 1000;
+		if( Static_Var_5 < 0 )
+		{
+			Static_Var_5 = 0;
+		}
+		if( Static_Var_3 == 1 )
+		{
+			Static_Var_5 = Static_Var_5 + 11 + Static_Var_7 / 118;
+			if( Static_Var_5 > 900 )
+			{
+				Static_Var_5 = 900;
+				if( Rand( 1, 30 ) <= 2 )
+				{
+					start-script ShieldHitFX();
+				}
+			}
+		}
+		if( Static_Var_4 == 0 )
+		{
+			if( Static_Var_5 >= 450 )
+			{
+				Static_Var_4 = 1;
+				set ARMORED to 1;
+				start-script ShieldHitFX();
+			}
+		}
+	}
+}
+
+HitByWeapon(anglex, anglez)
+{
+	Static_Var_6 = get HEALTH;
+	Static_Var_6 = Static_Var_6 * 13;
+	if( Static_Var_4 == 1 )
+	{
+		start-script ShieldHitFX();
+		Static_Var_5 = Static_Var_5 - 9 * ( Static_Var_7 - Static_Var_6 );
+		Static_Var_7 = Static_Var_6;
+		if( Static_Var_5 <= 0 )
+		{
+			set ARMORED to 0;
+			Static_Var_4 = 0;
+			Static_Var_5 = 0;
+		}
+		return (0);
+	}
+	if( Static_Var_6 <= Static_Var_7 - 26 )
+	{
+		signal 128;
+		set-signal-mask 128;
+		Static_Var_7 = Static_Var_6;
+		turn base to z-axis anglez speed <105.000000>;
+		turn base to x-axis anglex speed <105.000000>;
+		wait-for-turn base around z-axis;
+		wait-for-turn base around x-axis;
+		turn base to z-axis <0.000000> speed <30.000000>;
+		turn base to x-axis <0.000000> speed <30.000000>;
+		return (0);
+	}
+	Static_Var_7 = Static_Var_6;
+}
+
+RockUnit(anglex, anglez)
+{
+	turn base to x-axis anglex speed <25.000000>;
+	turn base to z-axis anglez speed <25.000000>;
+	wait-for-turn base around z-axis;
+	wait-for-turn base around x-axis;
+	turn base to z-axis <0.000000> speed <10.000000>;
+	turn base to x-axis <0.000000> speed <10.000000>;
+}
+
+Reload()
+{
+	Static_Var_1 = 1;
+	sleep 60;
+	Static_Var_1 = 0;
+}
+
+StartMoving()
+{
+	spin whirl around y-axis speed <320.000000>;
+	signal SIG_MOVE;
+	set-signal-mask SIG_MOVE;
+	while( TRUE )
+	{
+		if( Static_Var_2 <= 9 )
+		{
+			emit-sfx 3 from emit1;
+			emit-sfx 5 from emit2;
+		}
+		sleep 75;
+	}
+}
+
+StopMoving()
+{
+	spin whirl around y-axis speed <120.000000>;
+}
+
+setSFXoccupy(state)
+{
+	Static_Var_2 = state;
+}
+
+Create()
+{
+	hide flare;
+	hide lightning;
+	hide whirl;
+	hide emit1;
+	hide emit2;
+	dont-cache backpack;
+	Static_Var_1 = 0;
+	Static_Var_3 = 0;
+	Static_Var_4 = 0;
+	Static_Var_5 = 0;
+	Static_Var_6 = 1300;
+	Static_Var_7 = 1300;
+	set ARMORED to 0;
+	spin shi1 around y-axis speed <750.000000>;
+	spin shi2 around y-axis speed <650.000000>;
+	spin shi3 around y-axis speed <550.000000>;
+	spin shi1l around y-axis speed <800.000000>;
+	spin shi2l around y-axis speed <700.000000>;
+	spin shi3l around y-axis speed <600.000000>;
+	spin shi1r around y-axis speed <800.000000>;
+	spin shi2r around y-axis speed <700.000000>;
+	spin shi3r around y-axis speed <600.000000>;
+	hide shi1;
+	hide shi2;
+	hide shi3;
+	hide shi1l;
+	hide shi2l;
+	hide shi3l;
+	hide shi1r;
+	hide shi2r;
+	hide shi3r;
+	dont-cache shi1;
+	dont-cache shi2;
+	dont-cache shi3;
+	dont-cache shi1l;
+	dont-cache shi2l;
+	dont-cache shi3l;
+	dont-cache shi1r;
+	dont-cache shi2r;
+	dont-cache shi3r;
+	spin flare around z-axis speed <300.000000>;
+	spin whirl around y-axis speed <120.000000>;
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 1000;
+	}
+	Static_Var_3 = 1;
+	Static_Var_4 = 1;
+	Static_Var_5 = 900;
+	set ARMORED to 1;
+	start-script ShieldUnit();
+}
+
+RestoreAfterDelay()
+{
+	sleep 600;
+	turn turret to y-axis <0.000000> speed <30.000000>;
+	turn pitchturret to x-axis <0.000000> speed <10.000000>;
+}
+
+SweetSpot(piecenum)
+{
+	piecenum = base;
+}
+
+QueryPrimary(piecenum)
+{
+	piecenum = fire;
+}
+
+AimFromPrimary(piecenum)
+{
+	piecenum = turret;
+}
+
+AimPrimary(heading, pitch)
+{
+	signal SIG_AIM;
+	set-signal-mask SIG_AIM;
+	turn turret to y-axis heading speed <90.000000>;
+	turn pitchturret to x-axis <0.000000> - pitch speed <30.000000>;
+	while( Static_Var_1 == 1 )
+	{
+		sleep 100;
+	}
+	turn turret to y-axis heading speed <90.000000>;
+	turn pitchturret to x-axis <0.000000> - pitch speed <30.000000>;
+	wait-for-turn turret around y-axis;
+	wait-for-turn pitchturret around x-axis;
+	start-script RestoreAfterDelay();
+	return (1);
+}
+
+FirePrimary()
+{
+	start-script Reload();
+	emit-sfx 1024 from flare;
+	sleep 75;
+}
+
+Killed(severity, corpsetype)
+{
+	hide shi1;
+	hide shi2;
+	hide shi3;
+	hide shi1l;
+	hide shi2l;
+	hide shi3l;
+	hide shi1r;
+	hide shi2r;
+	hide shi3r;
+	hide flare;
+	hide lightning;
+	if( severity <= 25 )
+	{
+		corpsetype = 1;
+		explode base type BITMAPONLY | BITMAP1;
+		explode turret type BITMAPONLY | BITMAP1;
+		return (0);
+	}
+	if( severity <= 50 )
+	{
+		corpsetype = 2;
+		explode base type BITMAPONLY | BITMAP1;
+		explode turret type BITMAPONLY | BITMAP1;
+		explode plate6 type FALL | EXPLODE_ON_HIT | BITMAP2;
+		explode plate7 type FALL | BITMAP2;
+		return (0);
+	}
+	corpsetype = 3;
+	explode base type BITMAPONLY | BITMAP1;
+	explode turret type BITMAPONLY | BITMAP2;
+	explode plate6 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode plate7 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode plate1 type FALL | SMOKE | EXPLODE_ON_HIT | BITMAP2;
+	explode plate2 type FALL | SMOKE | EXPLODE_ON_HIT | BITMAP2;
+}

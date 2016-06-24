@@ -222,6 +222,7 @@
 	//guardians
 	guardian_ravager=99;
 	guardian_paladin=99;
+	guardian_vigilant=99;
 }
 [group_large_ships]
 {
@@ -251,6 +252,9 @@
 	lost_ambassador=99;
 	lost_Pomornik=99;
 	lost_Interceptor=99;
+	//Guardians
+	guardian_sea_dragon=99;
+	guardian_kharon=99;
 }
 [group_subs]
 {

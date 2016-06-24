@@ -113,7 +113,8 @@
 
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:dgunflare;
+	//explosiongenerator0=custom:dgunflare;
+	explosiongenerator0=custom:snipeflare;
 	}
 	[customParams] 
 	{

@@ -1,8 +1,213 @@
+[GUARDEMP_WEAPON]
+{
+	name=Atomic Blast Weapon;
+	vlaunch=1;
+	Weapontype=StarburstLauncher;
+	model=egun;
+	cegTag=NUCKLEARNANO;
+	Texture1=null;
+	Texture2=null;
+	Texture3=null;
+	Texture4=null;
+	range=7630;
+	reloadtime=36;
+	noautorange=1;
+	weapontimer=5;
+	flighttime=30;
+	weaponvelocity=350;
+	weaponacceleration=100;
+	startvelocity=100;
+	turnrate=32768;
+	areaofeffect=484;
+	edgeeffectiveness=0.45;
+	energypershot=10000;
+	targetable=3;
+	soundstart=misicbm1;
+	soundhitdry=xplomed4;
+	firestarter=100;
+	smokedelay=0.01;
+	smoketrail=0;
+	propeller=0;
+	tolerance=4000;
+	explosiongenerator=custom:SMALL_NUKE_EXPLOSION_FX;
+	startsmoke=0;
+	[DAMAGE]
+	{
+		default=3474;
+		group_commanders=1000;
+		lost_commanders=900;
+		group_invincible=1;
+	}
+}
+
+[PILLAR_ANNIHILATOR]
+{
+	name=Annihilator Weapon;
+	Weapontype=BeamLaser;
+	turret=1;
+	//minbarrelangle=-40;
+	pulseSpeed=7.0;
+	SoundTrigger=1;
+	LargeBeamLaser=1;
+	Intensity=0.001;
+	thickness=7.5;
+	beamtime=1;
+	beamdecay=0.9;
+	beamttl=10;
+	hardStop=0;
+	range=900;
+	reloadtime=4;
+	targetMoveError=0.5;
+	energypershot=500;
+	weaponvelocity=1000;
+	areaofeffect=16;
+	//soundhitdry=gokion1hit;
+	soundstart=gokion1hit;
+	firestarter=90;
+	waterweapon=1; //allow piercing of water surface
+	rgbcolor=0.2 0.175 0.25;
+	explosiongenerator=custom:ElectricFlare;
+	accuracy=100;
+	sprayangle=500;
+	[DAMAGE]
+	{
+		default=1400;
+		group_commanders=900;
+		lost_commanders=900;
+		group_ships=1200;
+		group_large_ships=1300;
+		group_invincible=1;
+	}
+}
+
+[VIGILANT_3MISSILE]
+	{
+	ID=116;
+	Name=Guardian- Pulse Gun;
+	RenderType=1;
+	//Model=CorePulse1;
+	LineOfSight=1;
+	Turret=1;
+
+	Range=1425;
+	NoAutoRange=1;
+	AreaOfEffect=48;
+	ReloadTime=7.5;
+	burst=3;
+	burstrate=0.5;
+	WeaponTimer=1;
+	BurnBlow=0;
+	WeaponVelocity=1000;
+	StartVelocity=1000;
+	WeaponAcceleration=1000;
+	myGravity=0.9;
+	size=5.5;
+	rgbcolor=0.6 0.5 1.0;
+	stages=4;
+	separation=-0.4;
+	alphadecay=-0.1;
+	sizedecay=0.575;
+	
+	FireStarter=25;
+	accuracy=340; //600
+	
+	SoundStart=goklightarty1;
+	soundhitdry=goklightarty1hit;
+	//SoundWater=CanLite2;
+	explosiongenerator=custom:KBOTROCKETHIT;
+	//cegTag=guardianTinyPinkLaser;	
+
+	//CollideFriendly=0;
+	//AvoidFriendly=0;
+   	//AvoidFeature=0;
+
+	[DAMAGE]
+		{
+		Default=198;//Penetration 2, Rapid Fire
+		group_ships=411;
+		group_large_ships=411;
+
+		}
+	}
+
+[SEARING_RAPID]
+	{
+	ID=116;
+	Name=Guardian- Pulse Gun;
+	RenderType=1;
+	//Model=CorePulse1;
+	LineOfSight=1;
+	Turret=1;
+
+	Range=1100;
+	energypershot=250;
+	NoAutoRange=1;
+	AreaOfEffect=64;
+	ReloadTime=2.0;//5 because of no depthcharge
+	WeaponTimer=1;
+	BurnBlow=0;
+	WeaponVelocity=500;
+	StartVelocity=500;
+	WeaponAcceleration=500;
+	//myGravity=0.9;
+	rgbcolor=0.6 0.6 1.0;
+	
+	FireStarter=25;
+	accuracy=400;
+	movingaccuracy=700;
+	
+	SoundStart=gokdef1;
+	soundhitdry=gokdef1hit;
+	//SoundWater=CanLite2;
+	explosiongenerator=custom:GreenLaserHit;
+	cegTag=guardianGreenLaser;	
+
+	//CollideFriendly=0;
+	//AvoidFriendly=0;
+   	//AvoidFeature=0;
+
+	[DAMAGE]
+		{
+		default=332;
+		group_invincible=1;
+		group_ships=487;
+		group_large_ships=527;
+		}
+	}
+
+[Seadragon_GUN]
+{
+	name=Plasma Cannon;
+	explosiongenerator=custom:WhitePlasma;
+	cegTag=GUARDIANGUARDIAN;
+	energypershot=500;
+	rgbcolor=0.6 0.33 1.0;
+	size=4.4;
+	weaponType=Cannon;
+	turret=1;
+	range=1920;
+	reloadtime=3.6;
+	weaponvelocity=450;
+	areaofeffect=64;
+	soundstart=gokorchid1;
+	soundhitdry=gokorchid1hit;
+	startsmoke=1;
+	accuracy=1000;
+	movingaccuracy=2000;
+	tolerance=300;
+	[DAMAGE]
+	{
+		default=444;
+		group_invincible=1;
+		group_ships=888;
+		group_large_ships=888;
+	}
+}
 
 [GUARDFIXED_GUN]
 {
 	name=Plasma Cannon;
-	explosiongenerator=custom:BluePlasmaExtraBANG;
+	explosiongenerator=custom:WhitePlasma;
 	cegTag=GUARDIANGUARDIAN;
 	energypershot=500;
 	rgbcolor=0.6 0.33 1.0;
@@ -67,6 +272,51 @@
 		group_invincible=1;
 		group_ships=1430; //1120
 		group_large_ships=1430; //1120
+	}
+}
+
+[SEARING_BATS]
+{
+	name=Bertha Cannon;
+	rgbcolor=0.2 0.2 0.2;
+	stages=15;
+	separation=0.45;
+	alphadecay=0.1;
+	sizedecay=-0.15;
+	nogap=1;
+	size=3;
+	weaponType=Cannon;
+	turret=1;
+	//color=3;
+	explosiongenerator=custom:BERTHASHOT;
+	cegTag=GUARDIANREVERSE;
+	GroundBounce=0;
+	WaterBounce=0;
+	NumBounce=1;
+	BounceSlip=1.01;
+	BounceRebound=0.8;
+	bounceExplosionGenerator=custom:BERTHASHOT;
+	range=2875;
+	reloadtime=4.5; //4.67
+	weaponvelocity=1000; //800
+	energypershot=1200;
+	areaofeffect=96; //114
+	accuracy=950;
+	movingaccuracy=1400;
+	aimrate=500;
+	soundstart=gokamaryllis1;
+	soundhitdry=gokamaryllis1hit;
+	firestarter=50;
+	tolerance=300;
+	holdtime=1;
+	startsmoke=1;
+	edgeeffectiveness=0.09;
+	[DAMAGE]
+	{
+		default=1020;
+		group_invincible=1;
+		group_ships=1480;
+		group_large_ships=1480;
 	}
 }
 

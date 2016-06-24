@@ -65,7 +65,7 @@
 	idletime=1200;
 	idleautoheal=5;
 	collisionVolumeType = box;
-	collisionVolumeScales =25 17 25;
+	collisionVolumeScales =55 33 55;
 	collisionVolumeOffsets = 0 -1 0;
 	collisionVolumeTest = 1;
 	pieceTrailCEGTag=Debree;//bleh

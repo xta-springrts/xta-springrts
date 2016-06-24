@@ -1,0 +1,127 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+piece  base, core, decor, decor1, decor2, decor3, decor4, decor5,
+       decor6, decor7, decor8, socle, turret, turretrecoil, arm, system,
+       backpack, plate1, plate2, pitchturret, gun, barrel, plate3, plate4,
+       plate5, lightning, fire, flare, flare2;
+
+// Signal definitions
+#define SIG_AIM				2
+
+#define SMOKEPIECE1 backpack
+#define SMOKEPIECE2 gun
+
+#include "SmokeUnit.h"
+
+Create()
+{
+	hide lightning;
+	dont-shade flare;
+	dont-cache flare;
+	hide flare;
+	dont-shade flare2;
+	dont-cache flare2;
+	hide flare2;
+	start-script SmokeUnit();
+	spin flare around z-axis speed <3100.000000>;
+	spin flare2 around z-axis speed <-2900.000000>;
+}
+
+AimPrimary(heading, pitch)
+{
+	signal SIG_AIM;
+	set-signal-mask SIG_AIM;
+	turn turret to y-axis heading speed <30.000000>;
+	turn pitchturret to x-axis <0.000000> - pitch speed <20.000000>;
+	wait-for-turn turret around y-axis;
+	wait-for-turn pitchturret around x-axis;
+	return (1);
+}
+
+FirePrimary()
+{
+	emit-sfx 1024 from fire;
+	turn turretrecoil to x-axis <-10.000000> speed <37.000000>;
+	sleep 150;
+	move lightning to z-axis [-6.000000] now;
+	turn lightning to z-axis <0.000000> now;
+	sleep 25;
+	turn turretrecoil to x-axis <-10.000000> speed <15.000000>;
+	sleep 50;
+	move lightning to z-axis [-2.000000] now;
+	turn lightning to z-axis <90.000000> now;
+	sleep 25;
+	sleep 50;
+	turn turretrecoil to x-axis <-10.000000> speed <5.000000>;
+	sleep 375;
+	turn turretrecoil to x-axis <0.000000> speed <4.000000>;
+}
+
+QueryPrimary(piecenum)
+{
+	piecenum = fire;
+}
+
+AimFromPrimary(piecenum)
+{
+	piecenum = gun;
+}
+
+SweetSpot(piecenum)
+{
+	piecenum = base;
+}
+
+Killed(severity, corpsetype)
+{
+	hide flare;
+	hide flare2;
+	hide lightning;
+	explode backpack type BITMAPONLY | BITMAP1;
+	if( severity <= 25 )
+	{
+		corpsetype = 1;
+		explode base type BITMAPONLY | BITMAP5;
+		explode decor2 type BITMAPONLY | BITMAP5;
+		explode decor1 type BITMAPONLY | BITMAP5;
+		explode decor3 type BITMAPONLY | BITMAP5;
+		explode decor5 type BITMAPONLY | BITMAP5;
+		explode decor4 type BITMAPONLY | BITMAP5;
+		explode decor6 type BITMAPONLY | BITMAP5;
+		explode decor8 type BITMAPONLY | BITMAP5;
+		explode decor7 type BITMAPONLY | BITMAP5;
+		explode pitchturret type BITMAPONLY | BITMAP2;
+		return (0);
+	}
+	if( severity <= 50 )
+	{
+		corpsetype = 2;
+		explode base type BITMAPONLY | BITMAP2;
+		explode turretrecoil type SHATTER | BITMAP2;
+		explode decor2 type BITMAPONLY | BITMAP5;
+		explode decor1 type BITMAPONLY | BITMAP1;
+		explode decor3 type BITMAPONLY | BITMAP2;
+		explode decor5 type BITMAPONLY | BITMAP5;
+		explode decor4 type BITMAPONLY | BITMAP2;
+		explode decor6 type BITMAPONLY | BITMAP5;
+		explode decor8 type BITMAPONLY | BITMAP1;
+		explode decor7 type BITMAPONLY | BITMAP2;
+		explode pitchturret type BITMAPONLY | BITMAP1;
+		return (0);
+	}
+	corpsetype = 3;
+	explode base type BITMAPONLY | BITMAP1;
+	explode turretrecoil type SHATTER | BITMAP2;
+	explode decor2 type BITMAPONLY | BITMAP2;
+	explode decor1 type BITMAPONLY | BITMAP1;
+	explode decor3 type BITMAPONLY | BITMAP2;
+	explode decor5 type BITMAPONLY | BITMAP5;
+	explode decor4 type BITMAPONLY | BITMAP2;
+	explode decor6 type BITMAPONLY | BITMAP5;
+	explode decor8 type BITMAPONLY | BITMAP1;
+	explode decor7 type BITMAPONLY | BITMAP2;
+	explode pitchturret type BITMAPONLY | BITMAP1;
+}

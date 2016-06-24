@@ -1,0 +1,142 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Arm;
+	name=Vigilant;
+	description=Vertical Launcher Ship;
+	icontype=sea;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=ARM SHIP MOBILE WEAPON RADAR NOTLAND NOTAIR NOTSUB;
+	tedclass=SHIP;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=guardian_Vigilant;
+	unitnumber=50;
+	objectname=guardian_Vigilant.3do;
+	corpse=guardian_Vigilant_dead;
+	buildpic=guardian_Vigilant.png;
+	soundcategory=ARM_SHIP;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=3686;
+	healtime=30;
+	buildcostmetal=1664;
+	buildcostenergy=10706;
+	buildtime=21476;
+	footprintx=4;
+	footprintz=4;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=0.8;
+	energyuse=0.8;
+	energystorage=0;
+	windgenerator=0.001;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canattack=1;
+	canguard=1;
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+	floater=1;
+	activatewhenbuilt=1;
+	onoffable=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementclass=MEDIUMBOAT;
+	turnrate=402;
+	acceleration=0.01;
+	brakerate=0.015;
+	maxvelocity=1.7; //was 3//
+	minwaterdepth=12;
+	waterline=2;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=450; //was 735//
+	radardistance=1500; //was 0//
+	sonardistance=800;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=VIGILANT_3MISSILE;
+	hightrajectory=1;
+	weapon2=Guardian_MISSILE;
+	nochasecategory=VTOL;
+	badtargetcategory=VTOL;
+	wpri_badtargetcategory=VTOL;
+	explodeas=BIG_UNITEX;
+	selfdestructas=BIG_UNIT;
+	onlytargetcategory1=NOTAIR;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	firestandorders=1;
+	mobilestandorders=1;
+	standingfireorder=2;
+	standingmoveorder=1;
+	defaultmissiontype=Standby;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=1;
+	designation=ASD-SM;
+	downloadable=1;
+	maneuverleashlength=640;
+	scale=1.5;
+	shootme=1;
+	steeringmode=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	collisionVolumeType = box;
+	collisionVolumeScales =40 45 84;
+	collisionVolumeOffsets = 0 -15 0;
+	collisionVolumeTest = 1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+	[SFXTypes]
+	{
+	explosiongenerator0=custom:BluePOPUPFLARE;
+	}
+	[customParams] 
+	{
+	canAreaAttack=1;
+	}
+
+}

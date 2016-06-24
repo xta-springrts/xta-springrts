@@ -5,7 +5,7 @@
 	//********************
 	side=Core;
 	name=Leviathan;
-	description=Heavily Armoured Heavy Cannon;
+	description=Amphibious Heavy Cannon;
 	icontype=guardian_leviathan;
 
 	//************************************************************

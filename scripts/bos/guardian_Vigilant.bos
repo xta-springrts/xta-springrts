@@ -1,0 +1,322 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+piece  base, wake1, wake2, wake3, wake4, hull, larm, ljet,
+       rarm, rjet, bridge, turret, pitchturret, barrel, fire4, fire5,
+       control, weapon1, shelter1, udoor1, ddoor1, ldoor1, rdoor1, flare1,
+       fire1, color1, weapon2, shelter2, udoor2, ddoor2, ldoor2, rdoor2,
+       flare2, fire2, color2, weapon3, shelter3, udoor3, ddoor3, ldoor3,
+       rdoor3, flare3, fire3, color3, node, sphere, circle, plate1,
+       plate2, plate3, plate4;
+
+static-var  Static_Var_1, Static_Var_2, Static_Var_3, gun_1;
+
+// Signal definitions
+#define SIG_AIM				2
+#define SIG_AIM_2			4
+#define SIG_MOVE			8
+#define SIG_ACTIVATE			128
+
+#define SMOKEPIECE1 control
+#define SMOKEPIECE2 ddoor1
+
+#include "SmokeUnit.h"
+
+RequestState(requestedstate, currentstate)
+{
+	if( Static_Var_3 )
+	{
+		Static_Var_2 = requestedstate;
+		return (0);
+	}
+	Static_Var_3 = 1;
+	currentstate = Static_Var_2;
+	Static_Var_2 = requestedstate;
+	while( Static_Var_2 != currentstate )
+	{
+		if( !Static_Var_2 )
+		{
+			turn udoor1 to x-axis <-90.000000> speed <180.000000>;
+			turn ddoor1 to x-axis <90.000000> speed <180.000000>;
+			turn ldoor1 to z-axis <90.000000> speed <180.000000>;
+			turn rdoor1 to z-axis <-90.000000> speed <180.000000>;
+			turn udoor2 to x-axis <-90.000000> speed <180.000000>;
+			turn ddoor2 to x-axis <90.000000> speed <180.000000>;
+			turn ldoor2 to z-axis <90.000000> speed <180.000000>;
+			turn rdoor2 to z-axis <-90.000000> speed <180.000000>;
+			turn udoor3 to x-axis <-90.000000> speed <180.000000>;
+			turn ddoor3 to x-axis <90.000000> speed <180.000000>;
+			turn ldoor3 to z-axis <90.000000> speed <180.000000>;
+			turn rdoor3 to z-axis <-90.000000> speed <180.000000>;
+			wait-for-turn udoor1 around x-axis;
+			wait-for-turn ddoor1 around x-axis;
+			wait-for-turn ldoor1 around z-axis;
+			wait-for-turn rdoor1 around z-axis;
+			Static_Var_1 = 1;
+			currentstate = 0;
+		}
+		if( Static_Var_2 )
+		{
+			Static_Var_1 = 0;
+			turn udoor1 to x-axis <0.000000> speed <180.000000>;
+			turn ddoor1 to x-axis <0.000000> speed <180.000000>;
+			turn ldoor1 to z-axis <0.000000> speed <180.000000>;
+			turn rdoor1 to z-axis <0.000000> speed <180.000000>;
+			turn udoor2 to x-axis <0.000000> speed <180.000000>;
+			turn ddoor2 to x-axis <0.000000> speed <180.000000>;
+			turn ldoor2 to z-axis <0.000000> speed <180.000000>;
+			turn rdoor2 to z-axis <0.000000> speed <180.000000>;
+			turn udoor3 to x-axis <0.000000> speed <180.000000>;
+			turn ddoor3 to x-axis <0.000000> speed <180.000000>;
+			turn ldoor3 to z-axis <0.000000> speed <180.000000>;
+			turn rdoor3 to z-axis <0.000000> speed <180.000000>;
+			wait-for-turn udoor1 around x-axis;
+			wait-for-turn ddoor1 around x-axis;
+			wait-for-turn ldoor1 around z-axis;
+			wait-for-turn rdoor1 around z-axis;
+			currentstate = 1;
+		}
+	}
+	Static_Var_3 = 0;
+}
+
+RestoreAfterDelay()
+{
+	sleep 3500;
+	set-signal-mask 0;
+	call-script RequestState(1);
+}
+
+RestoreSecondaryAfterDelay()
+{
+	sleep 3000;
+	turn turret to y-axis <0.000000> speed <60.000000>;
+	turn pitchturret to x-axis <0.000000> speed <30.000000>;
+}
+
+Create()
+{
+	hide fire4;
+	hide fire5;
+	hide wake1;
+	hide wake2;
+	hide wake3;
+	hide wake4;
+	hide flare1;
+	hide flare2;
+	hide flare3;
+	Static_Var_1 = 0;
+	Static_Var_2 = 1;
+	Static_Var_3 = 0;
+	gun_1 = fire1;
+	start-script SmokeUnit();
+	spin fire4 around z-axis speed <3000.000000>;
+	spin fire5 around z-axis speed <300.000000>;
+	move node to y-axis [-7.000000] now;
+	move sphere to y-axis [-3.500000] now;
+}
+
+Activate()
+{
+	signal SIG_ACTIVATE;
+	set-signal-mask SIG_ACTIVATE;
+	move sphere to y-axis [0.000000] speed [1.750000];
+	sleep 250;
+	move sphere to y-axis [0.000000] speed [3.500000];
+	sleep 250;
+	move node to y-axis [0.000000] speed [1.750000];
+	sleep 250;
+	spin circle around y-axis speed <90.000000> accelerate <1.796703>;
+	move node to y-axis [0.000000] speed [3.500000];
+	sleep 250;
+	move node to y-axis [0.000000] speed [6.100000];
+	sleep 250;
+	move node to y-axis [0.000000] speed [8.400000];
+	sleep 250;
+	move node to y-axis [0.000000] speed [6.100000];
+	sleep 250;
+	move node to y-axis [0.000000] speed [3.500000];
+	sleep 250;
+	move node to y-axis [0.000000] speed [1.750000];
+}
+
+Deactivate()
+{
+	signal SIG_ACTIVATE;
+	set-signal-mask SIG_ACTIVATE;
+	spin circle around y-axis speed <0.000000> accelerate <-2.098901>;
+	move node to y-axis [-7.000000] speed [1.750000];
+	sleep 250;
+	move node to y-axis [-7.000000] speed [3.500000];
+	sleep 250;
+	move node to y-axis [-7.000000] speed [6.100000];
+	sleep 250;
+	move node to y-axis [-7.000000] speed [8.400000];
+	sleep 250;
+	move node to y-axis [-7.000000] speed [6.100000];
+	move sphere to y-axis [-3.500000] speed [3.500000];
+	sleep 250;
+	move node to y-axis [-7.000000] speed [3.500000];
+	sleep 250;
+	move node to y-axis [-7.000000] speed [1.750000];
+}
+
+StartMoving()
+{
+	signal SIG_MOVE;
+	set-signal-mask SIG_MOVE;
+	while( TRUE )
+	{
+		emit-sfx 2 from wake1;
+		emit-sfx 2 from wake4;
+		sleep 150;
+		emit-sfx 2 from wake2;
+		emit-sfx 2 from wake3;
+		move hull to y-axis [1.000000] speed [0.750000];
+		sleep 150;
+	}
+}
+
+StopMoving()
+{
+	signal SIG_MOVE;
+	move hull to y-axis [0.000000] speed [0.250000];
+}
+
+AimFromPrimary(piecenum)
+{
+	piecenum = turret;
+}
+
+QueryPrimary(piecenum)
+{
+	piecenum = gun_1;
+}
+
+AimPrimary(heading, pitch)
+{
+	start-script RequestState(0);
+	while( !Static_Var_1 )
+	{
+		sleep 200;
+		start-script RequestState(0);
+	}
+	signal SIG_AIM;
+	set-signal-mask 0;
+	set-signal-mask SIG_AIM;
+	start-script RestoreAfterDelay();
+	return (1);
+}
+
+FirePrimary()
+{
+	if( gun_1 == 24 )
+	{
+	emit-sfx 1024 from fire1;
+		//show flare1;
+	sleep 400;
+	gun_1 = fire2;
+		sleep 100;
+	emit-sfx 1024 from fire2;
+		sleep 400;
+	gun_1 = fire3;
+		sleep 100;
+	emit-sfx 1024 from fire3;
+		sleep 500;
+		gun_1 = fire1;
+		return (0);
+	}
+//	if( gun_1 == 33 )
+//	{
+//		//show flare2;
+//		sleep 150;
+//		gun_1 = fire3;
+//		return (0);
+//	}
+//	if( gun_1 == 42 )
+//	{
+//		//show flare3;
+//		sleep 150;
+//		gun_1 = fire1;
+//		return (0);
+//	}
+}
+
+QuerySecondary(piecenum)
+{
+	piecenum = fire4;
+}
+
+AimFromSecondary(piecenum)
+{
+	piecenum = turret;
+}
+
+AimSecondary(heading, pitch)
+{
+	signal SIG_AIM_2;
+	set-signal-mask SIG_AIM_2;
+	turn turret to y-axis heading speed <360.000000>;
+	turn pitchturret to x-axis <0.000000> - pitch speed <120.000000>;
+	wait-for-turn turret around y-axis;
+	wait-for-turn pitchturret around x-axis;
+	start-script RestoreSecondaryAfterDelay();
+	return (1);
+}
+
+FireSecondary()
+{
+	move barrel to z-axis [-1.500000] speed [50.000000];
+	sleep 100;
+	sleep 100;
+	move barrel to z-axis [0.000000] speed [6.000000];
+}
+
+SweetSpot(piecenum)
+{
+	piecenum = base;
+}
+
+Killed(severity, corpsetype)
+{
+	hide fire4;
+	hide fire5;
+	hide flare1;
+	hide flare2;
+	hide flare3;
+	if( severity <= 25 )
+	{
+		corpsetype = 1;
+		explode hull type BITMAPONLY | BITMAP5;
+		explode larm type BITMAPONLY | BITMAP2;
+		explode ljet type BITMAPONLY | BITMAP5;
+		explode rarm type BITMAPONLY | BITMAP2;
+		explode rjet type BITMAPONLY | BITMAP5;
+		explode bridge type BITMAPONLY | BITMAP2;
+		return (0);
+	}
+	if( severity <= 50 )
+	{
+		corpsetype = 2;
+		explode hull type BITMAPONLY | BITMAP1;
+		explode larm type FALL | EXPLODE_ON_HIT | BITMAP2;
+		explode ljet type BITMAPONLY | BITMAP1;
+		explode rarm type FALL | EXPLODE_ON_HIT | BITMAP2;
+		explode rjet type BITMAPONLY | BITMAP1;
+		explode bridge type SHATTER | EXPLODE_ON_HIT | BITMAP3;
+		explode plate1 type FALL | BITMAP3;
+		explode plate3 type FALL | BITMAP3;
+		return (0);
+	}
+	corpsetype = 3;
+	explode hull type BITMAPONLY | BITMAP1;
+	explode larm type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode ljet type BITMAPONLY | BITMAP1;
+	explode rarm type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode rjet type BITMAPONLY | BITMAP1;
+	explode bridge type BITMAPONLY | BITMAP1;
+	explode plate1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode plate3 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+}
