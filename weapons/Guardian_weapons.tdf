@@ -1,3 +1,79 @@
+
+[GUARDSTOCKEMP_WEAPON]
+{
+	name=Atomic Blast Weapon;
+	vlaunch=1;
+	Weapontype=StarburstLauncher;
+	model=egun;
+	cegTag=NUCKLEARNANO;
+	Texture1=null;
+	Texture2=null;
+	Texture3=null;
+	Texture4=null;
+	range=29630;
+	reloadtime=1;
+	stockpiletime=90;
+	stockpile=1;
+	noautorange=1;
+	weapontimer=5;
+	flighttime=120;
+	weaponvelocity=350;
+	weaponacceleration=100;
+	startvelocity=100;
+	turnrate=32768;
+	areaofeffect=484;
+	edgeeffectiveness=0.45;
+	energypershot=95000;
+	metalpershot=680;
+	targetable=3;
+	soundstart=misicbm1;
+	soundhitdry=xplomed4;
+	firestarter=100;
+	smokedelay=0.01;
+	smoketrail=0;
+	propeller=0;
+	tolerance=4000;
+	explosiongenerator=custom:SMALL_NUKE_EXPLOSION_FX;
+	startsmoke=0;
+	[DAMAGE]
+	{
+		default=3474;
+		group_commanders=1000;
+		lost_commanders=900;
+		group_invincible=1;
+	}
+}
+[GUARDMAV_WEAPON]
+{
+	name=Gauss Cannon;
+	weaponType=Cannon;
+	explosiongenerator=custom:WindkbotRocket;
+	turret=1;
+	//minbarrelangle=-45;
+	cylindertargeting = 1;
+	range=400;
+	reloadtime=1.5;
+	weaponvelocity=900;
+	areaofeffect=8;
+	soundstart=Mavgun2;
+	soundhitdry=xplomed2;
+	tolerance=500;
+	weapontimer=1.5;
+	startsmoke=1;
+	size=0.85;
+	rgbcolor=0.9 0.66 0.3;
+	stages=10;
+	separation=0.5;
+	alphadecay=-0.01;
+	sizedecay=-0.2;
+	nogap=1;
+	[DAMAGE]
+	{
+		default=133;
+		group_invincible=1;
+	}
+}
+
 [GUARDEMP_WEAPON]
 {
 	name=Atomic Blast Weapon;

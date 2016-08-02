@@ -1,4 +1,90 @@
 
+[Guardian_Evening_Moon_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=arm_corpses;
+	object=Guardian_Evening_Moon_dead;
+	featuredead=Guardian_Evening_Moon_heap;
+	footprintx=3;
+	footprintz=3;
+	height=40;
+	blocking=1;
+	hitdensity=100;
+	metal=2734;
+	damage=1840;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionvolumeoffsets=0 0 2;
+	collisionvolumescales=90 23 88;
+	collisionvolumetest=1;
+	collisionvolumetype=Box;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=81 23 81;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+[Guardian_Evening_Moon_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=3x3f;
+	footprintx=3;
+	footprintz=3;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	metal=1367;
+	damage=1840;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=81 6 81;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+[guardian_Valkyrie_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=lost_corpses;
+	object=guardian_Valkyrie_dead;
+	featuredead=guardian_Valkyrie_heap;
+	footprintx=2;
+	footprintz=2;
+	height=20;
+	blocking=1;
+	hitdensity=100;
+	metal=310;
+	damage=376;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=27 33 14;//#AUTO#
+	collisionVolumeOffsets=0 -2 0;//#AUTO#
+}
+[guardian_Valkyrie_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=2x2e;
+	footprintx=2;
+	footprintz=2;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	metal=155;
+	damage=188;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=27 8 14;//#AUTO#
+	collisionVolumeOffsets=0 -2 0;//#AUTO#
+}
 [guardian_pillar_dead]
 {
 	world=All Worlds;

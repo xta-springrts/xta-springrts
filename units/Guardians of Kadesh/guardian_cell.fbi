@@ -4,8 +4,8 @@
 	//  Unit Description
 	//********************
 	side=Arm;
-	name=Energy Cell;
-	description=Metal Storage 2,500 Energy Storage 10000;
+	name=Storage Cell;
+	description=Metal Storage 500 Energy Storage 8000;
 	icontype=building;
 
 	//************************************************************
@@ -39,9 +39,9 @@
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=3000;
+	metalstorage=500;
 	energyuse=0;
-	energystorage=10000;
+	energystorage=8000;
 
 	//************************************************************
 	//  Building

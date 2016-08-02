@@ -2949,7 +2949,7 @@
 		//canbuild31=arm_spidernest;//Spiderpack vs. Tortoise
 		//canbuild32=arm_hovercraft_platform; 
 		canbuild33=guardian_morning_star;
-		//canbuild34=arm_retaliator;
+		canbuild34=guardian_evening_moon;
 	 	//canbuild35=ARMFFF;//xtaids
 	 	//canbuild36=MERCURY;//xtaids
 		//canbuild37=arm_vulcan;
@@ -2990,7 +2990,7 @@
 		//canbuild31=arm_spidernest;//Spiderpack vs. Tortoise
 		//canbuild32=arm_hovercraft_platform; 
 		canbuild33=guardian_morning_star;
-		//canbuild34=arm_retaliator;
+		canbuild34=guardian_evening_moon;
 	 	//canbuild35=ARMFFF;//xtaids
 	 	//canbuild36=MERCURY;//xtaids
 		//canbuild37=arm_vulcan;
@@ -3205,10 +3205,11 @@
 		canbuild4=guardian_daemonknight;
 		canbuild5=guardian_farseer;
 		canbuild6=guardian_antichrist;
-		canbuild7=guardian_disciple;
-		canbuild8=guardian_Abomination;
-		canbuild9=guardian_everchosen;
-		canbuild10=guardian_leviathan;
+		canbuild7=guardian_Valkyrie;
+		canbuild8=guardian_disciple;
+		canbuild9=guardian_Abomination;
+		canbuild10=guardian_everchosen;
+		canbuild11=guardian_leviathan;
 	}
 
 	[guardian_Scaffold]

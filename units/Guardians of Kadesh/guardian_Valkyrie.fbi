@@ -4,55 +4,47 @@
 	//  Unit Description
 	//********************
 	side=Arm;
-	name=Pillar of Light;
-	description=Heavy Energy Weapon;
-	icontype=building;
+	name=Valkyrie;
+	description=Fast Jumper Kbot;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=ARM DEFENSIVE STATIC WEAPON RADAR NOTAIR NOTSEA NOTSUB;
-	tedclass=DEFENSIVE;
+	category=ARM KBOT WEAPON NOTAIR NOTSUB;
+	tedclass=KBOT;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=guardian_pillar;
-	unitnumber=7;
-	objectname=guardian_pillar.3do;
-	corpse=guardian_pillar_dead;
-	buildpic=guardian_pillar.png;
-	soundcategory=ARM_ANNI;
+	unitname=guardian_Valkyrie;
+	unitnumber=265;
+	objectname=guardian_Valkyrie.3do;
+	corpse=guardian_Valkyrie_dead;
+	buildpic=guardian_Valkyrie.png;
+	soundcategory=LOST_KBOT;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=8874;
-	healtime=11;
-	buildcostmetal=2833;
-	buildcostenergy=20543;
-	buildtime=30432;
-	footprintx=4;
-	footprintz=4;
+	maxdamage=2675;
+	healtime=30;
+	buildcostmetal=643;
+	buildcostenergy=12864;
+	buildtime=15277;
+	footprintx=2;
+	footprintz=2;
 
 	//************************************************************
 	//  Resources
 	//*************
 	metalstorage=0;
-	energymake=0;
-	energyuse=0;
-	energystorage=1500;
+	energymake=0.5;
+	energyuse=0.5;
+	energystorage=0;
 
 	//************************************************************
 	//  Building
 	//************
-	buildangle=40000;
-	yardmap=oooo oooo oooo oooo;
-	activatewhenbuilt=0;
-	collisionVolumeType = box;
-	collisionVolumeScales=46 86 46;
-	collisionVolumeOffsets = 0 0 0;
-	collisionVolumeTest = 1;
 
 	//************************************************************
 	//  Constructor
@@ -65,58 +57,75 @@
 	//*************
 	canattack=1;
 	canguard=1;
+	canmove=1;
+	canpatrol=1;
 	canstop=1;
+	stealth=1;
+	upright=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	maxslope=10;
-	maxwaterdepth=55;
+	movementclass=KBOTSS2;
+	turnrate=700;
+	acceleration=0.6;
+	brakerate=1.9;
+	maxvelocity=2.3;
+	maxslope=17;
+	maxwaterdepth=12;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=920;
-	radardistance=1850;
-	losemitheight=48;
-	radaremitheight=48;
+	sightdistance=425;
+	radardistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
-	weapon1=PILLAR_ANNIHILATOR;
-	wpri_badtargetcategory=VTOL;
+	Weapon1=GUARDMAV_WEAPON;
+	nochasecategory=VTOL;
 	badtargetcategory=VTOL;
-	explodeas=ATOMIC_BLASTSML;
-	selfdestructas=ATOMIC_BLAST;
+	wpri_badtargetcategory=VTOL;
+	explodeas=SMALL_UNITEX;
+	selfdestructas=SMALL_UNIT;
 
 	//************************************************************
 	//  Orders
 	//**********
+	noautofire=0;
 	firestandorders=1;
+	mobilestandorders=1;
 	standingfireorder=2;
-	defaultmissiontype=GUARD_NOMOVE;
+	standingmoveorder=1;
+	defaultmissiontype=Standby;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=0;
-	//damagemodifier=0.5;
-	designation=ARM-ANN1;
+	bmcode=1;
+	designation=ARM-KI2;
 	downloadable=1;
+	maneuverleashlength=640;
 	shootme=1;
+	smoothanim=1;
+	steeringmode=1;
 	threed=1;
 	version=1.2;
 	zbuffer=1;
+	collisionVolumeType = box;
+	collisionVolumeScales =31 33 27;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
 	pieceTrailCEGTag=Debree;//bleh
 	pieceTrailCEGRange = 4;
 
 	//************************************************************
 	//  To be removed
 	//*****************
-	[customParams] 
+	[SFXTypes]
 	{
-		canAreaAttack=1;
+	explosiongenerator0=custom:TinyBlue;
 	}
 
 }

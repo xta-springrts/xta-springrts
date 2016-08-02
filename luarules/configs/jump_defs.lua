@@ -20,4 +20,11 @@ return {
     reload    = 10, -- optional
     aaShootMe = true, -- optional
   },  
+ guardian_Valkyrie = {
+    range     = 435,
+    height    = 70,
+    speed     = 6, 
+    reload    = 10, -- optional
+    aaShootMe = true, -- optional
+  },  
 }

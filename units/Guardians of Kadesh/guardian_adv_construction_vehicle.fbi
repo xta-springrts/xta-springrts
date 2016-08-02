@@ -51,7 +51,7 @@
 	//  Constructor
 	//***************
 	builder=1;
-	builddistance=140;//170, edited by Jools
+	builddistance=160;//170, edited by Jools
 	workertime=240;
 	RepairSpeed=240;
 	ReclaimSpeed=240;
@@ -70,7 +70,7 @@
 	//************************************************************
 	//  Movement
 	//************
-	movementclass=TANKSH3;
+	movementclass=TANKDH4;
 	turnrate=315;
 	acceleration=0.16;
 	brakerate=0.3;

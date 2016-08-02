@@ -14,7 +14,7 @@
 	MaxDamage=2764;
 	ObjectName=lost_robber;
 	Side=TLL;
-	SoundCategory=TLL_HVTOL;
+	SoundCategory=ARM_VTOL;
 	TEDClass=VTOL;
 	
 	//    Movement
@@ -47,7 +47,7 @@
 	transportsize=4;
 	ReleaseHeld=1;
 	AirStrafe=0;
-	transportUnloadMethod=2;
+	//transportUnloadMethod=2;
 	LoadingRadius=200;
 	
 	//    Sight/Radar

@@ -2,14 +2,14 @@
 {
 	name=Enhancer;
 	unitname=guardian_nano_tower;
-	buildcostenergy=1832;
-	buildcostmetal=273;
+	buildcostenergy=2132;
+	buildcostmetal=298;
 	buildtime=5124;//2512
 	Category=guardian  CONSTR NOWEAPON NOTAIR NOTSUB;
 	description=Assists Lab Construction;
 	footprintx=3;
 	footprintz=3;
-	maxdamage=472;
+	maxdamage=522;
 	objectname=guardian_nano_tower;
 	side=guardian;
 	soundcategory=cor_CVEHICLE;
@@ -21,7 +21,7 @@
 	maxvelocity=0;
 	maxslope=10;
 	turnrate=1;
-	builddistance=135;
+	builddistance=165;
 	builder=1;
 	workertime=250;
 	repairspeed=150;

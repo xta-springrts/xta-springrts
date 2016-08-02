@@ -5,7 +5,7 @@
 	//********************
 	side=Arm;
 	name=Demon;
-	description=Assualt Stealth Engineer;
+	description=Assualt Engineer;
 	icontype=guardian_demon;
 	//decoyFor=guardian_demon;
 
@@ -29,10 +29,10 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=2764;
+	maxdamage=1864;
 	healtime=100;
-	buildcostmetal=552;
-	buildcostenergy=5432;
+	buildcostmetal=352;
+	buildcostenergy=3432;
 	buildtime=8024;
 	footprintx=2;
 	footprintz=2;
@@ -41,10 +41,10 @@
 	//  Resources
 	//*************
 	metalmake=0.25;
-	metalstorage=1000; //was 1000 modded by Gizmo//
+	metalstorage=300; //was 1000 modded by Gizmo//
 	energymake=8;
 	energyuse=0;
-	energystorage=1000; //was 1000 modded by Gizmo//
+	energystorage=300; //was 1000 modded by Gizmo//
 
 	//************************************************************
 	//  Building
@@ -55,12 +55,12 @@
 	//  Constructor
 	//***************
 	builder=1;
-	builddistance=210;
-	workertime=220;
-	RepairSpeed=220;
-	ReclaimSpeed=220;
+	builddistance=160;
+	workertime=160;
+	RepairSpeed=160;
+	ReclaimSpeed=160;
 	TerraformSpeed=400;//speed up terraforming
-	capturespeed=200;//Slow compared to 900
+	capturespeed=320;//Slow compared to 900
 
 	//************************************************************
 	//  Abilities
