@@ -69,7 +69,7 @@
 	turnrate=999;
 	acceleration=1.1;
 	brakerate=1.83105;
-	maxvelocity=1.25;
+	maxvelocity=1.4;
 	maxslope=14;
 	maxwaterdepth=12;
 

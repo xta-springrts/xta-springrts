@@ -1,0 +1,267 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+piece  base, body, stand, missile, tracks_animated, door, spinner, smoker1, smoker2, tracks_reverse, tracks_move;
+
+static-var  Static_Var_1, Static_Var_2, statechg_DesiredState, statechg_StateChanging, fired, smoking, bmoving;
+
+// Signal definitions
+#define SIG_AIM				2
+#define SIG_MOVE			4
+
+track_tracks()
+{
+	var pre;
+	var now;
+	pre = get XZ_ATAN(-419);
+	var dif;
+	while(1)
+	{
+		now = get XZ_ATAN(-419);
+		dif = pre - now;
+		if(dif > <2>)
+		{
+			hide tracks_reverse;
+			hide tracks_move;
+			show tracks_animated;
+		}
+		if(dif < <-2>)
+		{
+			show tracks_reverse;
+			hide tracks_move;
+			hide tracks_animated;
+		}
+		if(dif <= <2> && dif >= <-2>)
+		{
+			hide tracks_reverse;
+			show tracks_move;
+			hide tracks_animated;
+		}
+		sleep 200;
+		pre = now;
+	}
+}
+
+isMoving()
+{
+	var preang;
+	var prepos;
+	var ang;
+	var pos;
+	
+	preang = get XZ_ATAN(-419);
+	prepos = get PIECE_XZ(base);
+	
+	while(1)
+	{
+		ang = get XZ_ATAN(-419);
+		pos = get PIECE_XZ(base);
+		
+		bmoving = 0;
+		
+		if (ang != preang)
+		{
+			bmoving = 1;
+		}
+		if(pos != prepos)
+		{
+			bmoving = 1;
+		}
+		if(bmoving)
+		{
+			dont-Cache tracks_animated;
+			dont-cache tracks_reverse;
+			dont-cache tracks_move;
+		}
+		if(!bmoving)
+		{
+			Cache tracks_animated;
+			cache tracks_reverse;
+			cache tracks_move;
+		}
+		sleep 200;
+		prepos = pos;
+		preang = ang;
+	}
+}
+	
+	
+SmokeUnit(healthpercent, sleeptime, smoketype)
+{
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 400;
+	}
+	while( TRUE )
+	{
+		healthpercent = get HEALTH;
+		if( healthpercent < 66 )
+		{
+			smoketype = 256 | 2;
+			if( Rand( 1, 66 ) < healthpercent )
+			{
+				smoketype = 256 | 1;
+			}
+			emit-sfx smoketype from base;
+		}
+		sleeptime = healthpercent * 50;
+		if( sleeptime < 200 )
+		{
+			sleeptime = 200;
+		}
+		sleep sleeptime;
+	}
+}
+
+HitByWeapon(Func_Var_1, Func_Var_2)
+{
+	signal 8;
+	set-signal-mask 8;
+	turn base to z-axis Func_Var_2 speed <105.021978>;
+	turn base to x-axis Func_Var_1 speed <105.021978>;
+	wait-for-turn base around z-axis;
+	wait-for-turn base around x-axis;
+	turn base to z-axis <0.000000> speed <30.005495>;
+	turn base to x-axis <0.000000> speed <30.005495>;
+}
+
+Create()
+{
+	Static_Var_1 = 0;
+	Static_Var_2 = 10000;
+	start-script SmokeUnit();
+	spin spinner around z-axis speed <100>;
+	fired=0;
+	smoking=0;
+	spin base around y-axis speed <-30.005495>;
+	bmoving=0;
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 1;
+	}
+	stop-spin base around y-axis;
+	turn base to y-axis <0> speed <30>;
+	hide tracks_reverse;
+	hide tracks_move;
+	start-script track_tracks();
+	start-script ismoving();
+}
+
+/*StartMoving()
+{
+	signal SIG_MOVE;
+	set-signal-mask SIG_MOVE;
+	dont-Cache tracks_animated;
+	dont-cache tracks_reverse;
+	dont-cache tracks_move;
+}
+
+StopMoving()
+{
+	Cache tracks_animated;
+	cache tracks_reverse;
+	cache tracks_move;
+	signal SIG_MOVE;
+}*/
+
+RestoreAfterDelay()
+{
+	sleep Static_Var_2;
+	set-signal-mask 0;
+	turn stand to x-axis <0.000000> speed <100.021978>;
+	wait-for-turn stand around x-axis;
+	move door to x-axis [0] speed [10];
+	wait-for-move door along x-axis;
+	show missile;
+	fired=0;
+}
+
+AimPrimary(heading, pitch)
+{
+	signal SIG_AIM;
+	set-signal-mask SIG_AIM;
+	while (fired)
+	{
+		sleep 100;
+	}
+	move door to x-axis [-3.18999] speed [10];
+	wait-for-move door along x-axis;
+	turn stand to x-axis <-90.021978> speed <100.021978>;
+	wait-for-turn stand around x-axis;
+	while ( smoking < 15 )
+	{
+		emit-sfx 256 | 1 from smoker1;
+		emit-sfx 256 | 2 from smoker2;
+		sleep 100;
+		++smoking;
+	}
+	smoking = 0;
+	start-script RestoreAfterDelay();
+	return (1);
+}
+
+FirePrimary()
+{
+	hide missile;
+	fired=1;
+	sleep 1000;
+	turn stand to x-axis <0.000000> speed <100.021978>;
+	wait-for-turn stand around x-axis;
+	move door to x-axis [0] speed [10];
+	wait-for-move door along x-axis;
+	show missile;
+	sleep 1000;
+	fired=0;
+}
+
+QueryPrimary(piecenum)
+{
+	piecenum = missile;
+}
+
+SweetSpot(piecenum)
+{
+	piecenum = base;
+}
+
+Killed(severity, corpsetype)
+{
+	if( severity <= 25 )
+	{
+		corpsetype = 1;
+		explode base type BITMAPONLY | BITMAP1;
+		explode stand type BITMAPONLY | BITMAP2;
+		explode missile type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+		explode tracks_animated type BITMAPONLY | BITMAP4;
+		explode body type BITMAPONLY | BITMAP5;
+		return (0);
+	}
+	if( severity <= 50 )
+	{
+		corpsetype = 2;
+		explode base type BITMAPONLY | BITMAP1;
+		explode stand type SHATTER | BITMAP2;
+		explode missile type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+		explode tracks_animated type BITMAPONLY | BITMAP4;
+		explode body type BITMAPONLY | BITMAP5;
+		return (0);
+	}
+	if( severity <= 99 )
+	{
+		corpsetype = 3;
+		explode base type BITMAPONLY | BITMAP1;
+		explode stand type SHATTER | EXPLODE_ON_HIT | BITMAP2;
+		explode missile type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+		explode tracks_animated type BITMAPONLY | BITMAP4;
+		explode body type BITMAPONLY | BITMAP5;
+		return (0);
+	}
+	corpsetype = 3;
+	explode base type BITMAPONLY | BITMAP1;
+	explode stand type SHATTER | EXPLODE_ON_HIT | BITMAP2;
+	explode missile type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+	explode tracks_animated type BITMAPONLY | BITMAP4;
+	explode body type BITMAPONLY | BITMAP5;
+}

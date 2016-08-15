@@ -134,7 +134,7 @@
 	range=900;
 	reloadtime=4;
 	targetMoveError=0.5;
-	energypershot=500;
+	energypershot=800;
 	weaponvelocity=1000;
 	areaofeffect=16;
 	//soundhitdry=gokion1hit;

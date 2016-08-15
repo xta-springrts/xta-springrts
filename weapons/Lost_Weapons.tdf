@@ -16,7 +16,7 @@
 	turret=1;
 	model=weapon_exphvyrock;
 	range=1000;
-	reloadtime=4.5;
+	reloadtime=4.1;
 	weapontimer=0.33; //6
 	weaponvelocity=350;
 	startvelocity=200;
@@ -574,7 +574,7 @@
 	lineofsight=1;
 	turret=1;
 	range=300;
-	reloadtime=1.0;
+	reloadtime=1.333;
 	weaponvelocity=800;
 	areaofeffect=8;
 	duration=0.5;

@@ -1,0 +1,128 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Arm;
+	name=Scantron;
+	description=Mobile Radar/Paralyzer;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=ARM TANK MOBILE NOWEAPON RADAR NOTAIR NOTSEA NOTSUB;
+	tedclass=TANK;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=talon_scantron;
+	unitnumber=61;
+	objectname=talon_scantron.3do;
+	corpse=talon_scantron_dead;
+	buildpic=talon_scantron.png;
+	soundcategory=ARM_VEHICLE;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=820;
+	healtime=30;
+	buildcostmetal=265;
+	buildcostenergy=3830;
+	buildtime=4800;
+	footprintx=3;
+	footprintz=3;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=8;
+	energyuse=8;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	activatewhenbuilt=1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canguard=1;
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+	onoffable=1;
+	canfight=0;
+	canrepeat=0;
+	
+	//************************************************************
+	//  Movement
+	//************
+	movementclass=TANKSH3;
+	turnrate=500;
+	acceleration=0.32;
+	brakerate=0.12;
+	maxvelocity=1.1;
+	maxslope=16;
+	maxwaterdepth=0;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=520;
+	radardistance=2000;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=Radar_Lightning;
+	explodeas=BIG_UNITEX;
+	selfdestructas=BIG_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	mobilestandorders=1;
+	standingmoveorder=1;
+	defaultmissiontype=Standby;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=1;
+	designation=ARM-MRJ;
+	downloadable=1;
+	leavetracks=1;
+	maneuverleashlength=640;
+	shootme=1;
+	steeringmode=1;
+	threed=1;
+	trackoffset=3;
+	trackstrength=6;
+	trackstretch=1;
+	tracktype=StdTank;
+	trackwidth=24;
+	version=1.2;
+	zbuffer=1;
+	collisionVolumeType = box;
+	collisionVolumeScales =24 20 28;
+	collisionVolumeOffsets = 0 -1 0;
+	collisionVolumeTest = 1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+}

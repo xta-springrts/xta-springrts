@@ -1,4 +1,444 @@
 
+[ASH_ROCKET]
+{
+	name=Rockets;
+	Weapontype=MissileLauncher;
+	turret=1;
+	model=missile.s3o;
+	explosiongenerator=custom:KBOTROCKETHIT;
+	cegTag=KBOTROCKETTRAIL;
+	Texture1=null;
+	Texture2=null;
+	Texture3=null;
+	Texture4=null;
+	range=550;
+	reloadtime=4;
+	sprayangle=1024;
+	burst=3;
+	burstrate=.2;
+	flighttime=2;
+	weapontimer=4;
+	waterweapon=1;
+	weaponvelocity=450;
+	startvelocity=250;
+	weaponacceleration=100;
+	areaofeffect=78;
+	soundstart=rocklit1;
+	soundhitdry=xplosml2;
+	firestarter=70;
+	smoketrail=0;
+	startsmoke=0;
+	[DAMAGE]
+	{
+		lost_commanders=127;
+		default=111;//x3
+		group_invincible=1;
+	}
+}
+
+[GORGON_BOLT]
+{
+	name=Lightning Gun;
+	rendertype=7;
+	lineofsight=1;
+	turret=1;
+	range=370;
+	reloadtime=1.5;
+	weaponvelocity=800;
+	areaofeffect=8;
+	duration=0.75;
+	soundtrigger=0;
+	soundstart=lghthvy1;
+	soundhitdry=lashit;
+	firestarter=50;
+	beamweapon=1;
+	rgbcolor=1.000 0.706 0.000;
+	explosiongenerator=custom:LIGHTNING_ORANGE;
+	tolerance=3000;
+	startsmoke=1;
+	guidance=1;
+	[DAMAGE]
+	{
+		default=133;
+		group_invincible=1;
+	}
+}
+[VISIT_LASER]
+{
+	name=High Energy Laser;
+	Weapontype=LaserCannon;
+	explosiongenerator=custom:GreenLaser;
+	cegTag=GREENCRAP;
+	duration=0.08;
+	thickness=2.5;
+	intensity=0.9;
+	turret=1;
+	range=330;
+	reloadtime=1.7;
+	energypershot=280;
+	weaponvelocity=1050;
+	areaofeffect=8;
+	soundstart=Lasrmas2;
+	soundhitdry=lasrhit1;
+	firestarter=90;
+	rgbcolor=0.000 1.000 0.259;
+	tolerance=800;
+	[DAMAGE]
+	{
+		default=240;
+		group_invincible=1;
+	}
+}
+[FLAMEBEAMTHROWER]
+	{
+	name=Ultra Bullet Weapon;
+	RenderType=7;
+	LineOfSight=1;
+	Turret=1;
+	SoundTrigger=1;
+
+	range=240;
+	reloadtime=2;
+	burst=10;
+	burstrate=0.05;
+	sprayangle=192;
+	energypershot=0;
+	weaponvelocity=1000;
+	areaofeffect=16;
+	collidefriendly=1;
+	avoidfriendly=1;
+	
+
+	soundstart=flamlit1;//xplolrg1;
+	//soundhitdry=talongunhit;
+
+	firestarter=90;
+	beamweapon=1;
+	rgbcolor=0.3 0.15 0.01;
+	explosiongenerator=custom:FLAMETHROWER;
+
+
+	[DAMAGE]
+		{
+		default=15;
+		group_landair=7.5;
+		}
+	}
+
+[FLAMEBEAMTHROWER121]
+{
+	name=Flame Thrower;
+	weaponType=Flame;
+	explosiongenerator=custom:FLAMETHROWER;
+	NoSelfDamage=1;
+	SoundTrigger=1;
+	Texture1=flamer;
+	Texture2=null;
+	Texture3=null;
+	Texture4=null;
+	turret=1;
+	range=240;
+	reloadtime=2;//half a second
+	burst=10;
+	burstrate=0.05;
+	weapontimer=1;
+	weaponvelocity=1200;
+	areaofeffect=20;
+	flamegfxtime=0.1;
+	size=0.1;
+	sizegrowth=0.0;
+	sprayangle=1;
+	randomdecay=0;
+	soundstart=flamlit1;
+	soundhitdry=;
+	firestarter=100;
+	groundbounce=1;
+	smokedelay=1;
+	startsmoke=0;
+	endsmoke=0;
+	tolerance=8000;
+	//minbarrelangle=-90;
+	[DAMAGE]
+	{
+		default=12;
+		group_invincible=1;
+	}
+}
+[TALON_ARTILLERY]
+{
+	name=Plasma Cannon;
+	weaponType=Cannon;
+	turret=1;
+	range=1330;
+	size=3;
+	rgbcolor=0.9 0.4 0.2;
+	stages=8;
+	separation=0.5;
+	alphadecay=0.3;
+	sizedecay=-0.08;
+	energypershot=300;
+	reloadtime=1.9;
+	Burst=2;
+	Burstrate=0.4;
+	sprayangle=1000;
+	weaponvelocity=600;
+	//mygravity=0.24;
+	areaofeffect=64;
+	explosiongenerator=custom:WindkbotRocket;
+	soundstart=cannhvy2;
+	soundhitdry=xplomed4;
+	accuracy=1200;
+	movingaccuracy=1800;
+	tolerance=500;
+	//minbarrelangle=-40;
+	startsmoke=1;
+	startsmoke=1;
+	[DAMAGE]
+	{
+		default=178;
+		group_invincible=1;
+		group_ships=267;
+		group_ships=317;
+	}
+}
+[TALON_BULL]
+{
+	name=Plasma Cannon;
+	weaponType=Cannon;
+	turret=1;
+	range=400;
+	explosiongenerator=custom:WindkbotRocket;
+	reloadtime=2.0;
+	weaponvelocity=355;
+	//mygravity=0.24;
+	areaofeffect=64;
+	soundstart=cannon3;
+	soundhitdry=xplomed2;
+	tolerance=500;
+	startsmoke=1;
+	size=3.45;
+	rgbcolor=1 0.40 0.0;
+	stages=4;
+	separation=0.36;
+	alphadecay=0.5;
+	sizedecay=-0.2;
+	nogap=1;
+	[DAMAGE]
+	{
+		default=200;
+		group_invincible=1;
+	}
+}
+[WHITERIOT]
+{
+	name=Particle Cannon;
+	weaponType=Cannon;
+	turret=1;
+	range=250;
+	reloadtime=6;
+	weapontimer=0.78;
+	weaponvelocity=1050;
+	areaofeffect=96;
+	edgeeffectiveness=0;
+	cylindertargeting = 1;
+	soundstart=cannhvy4;
+	soundhitdry=snubhit;
+	//minbarrelangle=-24;
+	tolerance=767;
+	burnblow=1;
+	explosiongenerator=custom:PARTICLEBURN;
+	size=1;
+	rgbcolor=1 0.6 0.6;
+	rgbColor2=0.1 0.1 0.1;
+	stages=20;
+	separation=0.35;
+	alphadecay=0.2;
+	sizedecay=-0.2;
+	//color=1;
+	startsmoke=1;
+	craterboost=0.25;
+	cratermult=0.25;
+	[DAMAGE]
+	{
+		default=250;
+		group_invincible=1;
+	}
+}
+
+[ARMADILLO_ROCKET]
+{
+	name=Heavy Rockets;
+	explosiongenerator=custom:WindkbotRocket;
+	vlaunch=1;
+	Weapontype=StarburstLauncher;
+	model=weapon_fmdmisl;
+	cegTag=RAVENTRAIL;
+	range=800;
+	reloadtime=1.5;
+	weapontimer=0.25;
+	flighttime=8;
+	weaponvelocity=1100;
+	startvelocity=200;
+	weaponacceleration=100;
+	turnrate=63000;
+	areaofeffect=64;
+	soundstart=rocklit1;
+	soundhitdry=xplosml2;
+	firestarter=70;
+	smokedelay=0.1;
+	tracks=1;
+	smoketrail=0;
+	Texture1=null;
+	Texture2=null;
+	Texture3=null;
+	Texture4=null;
+	tolerance=9000;
+	startsmoke=0;
+	w=19.8;
+	[DAMAGE]
+	{
+		default=120;
+		group_landair=321;
+		group_skyair=321;
+		group_invincible=1;
+	}
+}
+[Square_RAPIDCANNON]
+{
+	name=Light Cannon;
+	weaponType=Cannon;
+	turret=1;
+	range=300;
+	explosiongenerator=custom:WindkbotMissle;
+	reloadtime=0.5;
+	weaponvelocity=528;
+	mygravity=0.01;
+	areaofeffect=32;
+	burnblow=1;
+	soundstart=canlite3;
+	soundhitdry=xplosml3;
+	tolerance=500;
+	startsmoke=1;
+	//minbarrelangle=-40;
+	size=1.5;
+	rgbcolor=0.9 0.6 0.35;
+	stages=5;
+	separation=0.25;
+	alphadecay=0.75;
+	sizedecay=-0.4;
+	nogap=1;
+	[DAMAGE]
+	{
+		default=51;//
+		group_commanders=44;
+		lost_commanders=41;
+		group_invincible=1;
+	}
+}
+[Radar_Lightning]
+{
+	Name=Lightning Beam;
+	rendertype=0;
+	lineofsight=1;
+	turret=1;
+	beamlaser=1;
+	LargeBeamLaser=1;
+	pulseSpeed=0.1;
+	thickness=6;
+	rgbcolor=0.0 1.0 0.7;
+	beamtime=0.25;
+	beamdecay=0.4;
+	beamttl=1;
+	accuracy=30;
+	sprayangle=30;
+	range=280; 
+	cylindertargeting = 1;
+	reloadtime=1.0;
+	energypershot=30;
+	weaponvelocity=400;
+  	texture1=testlightning;
+  	laserflaresize=1;
+	minbarrelangle=-35;
+  //texture2=flare;
+  //texture3=flare;
+  //texture4=smallflare;
+	areaofeffect=16;
+	SoundStart=LASERHITB;
+	//soundhitdry=lashit2;
+	firestarter=90;
+	beamweapon=1;
+	tolerance=5000;
+	explosiongenerator=custom:NULL;
+	guidance=1;
+	impulsefactor=0.00;
+	impulseboost=0.00;
+	cratermult=0;
+	paralyzer=1;
+	paralyzetime=10;
+	craterboost=0;
+	[DAMAGE]
+	{
+		default=580.6;//122
+		group_landair=361;
+		group_skyair=361;
+	}
+}
+
+[TALON_MEDIUMCANNON]
+{
+	name=Plasma Cannon;
+	weaponType=Cannon;
+	turret=1;
+	range=350;
+	reloadtime=1.65;
+	explosiongenerator=custom:WindkbotRocket;
+	weaponvelocity=338;
+	areaofeffect=42;
+	soundstart=cannon2;
+	soundhitdry=xplomed4;
+	tolerance=500;
+	startsmoke=1;
+	[DAMAGE]
+	{
+		default=106;
+		group_invincible=1;
+	}
+}
+[TALONGRAVI_ROCKET]
+{
+	name=Rocket;
+	vlaunch=1;
+	Weapontype=StarburstLauncher;
+	explosiongenerator=custom:PUFFY;
+	model=weapon_rocket;
+	range=1225;
+	cegTag=RAVENTRAIL;
+	Texture1=null;
+	Texture2=null;
+	Texture3=null;
+	Texture4=null;
+	reloadtime=11;
+	noautorange=1;
+	weapontimer=2;
+	flighttime=6;
+	weaponvelocity=800;
+	weaponacceleration=160;
+	startvelocity=30;
+	turnrate=20000;
+	areaofeffect=96;
+	soundstart=Rockhvy1;
+	soundhitdry=xplomed4;
+	firestarter=100;
+	smokedelay=0.1;
+	smoketrail=0;
+	tolerance=4000;
+	startsmoke=0;
+	[DAMAGE]
+	{
+		default=661;
+		group_invincible=1;
+	}
+}
 [BASIL_TORPEDO]
 {
 	name=Unguided Torpedo;

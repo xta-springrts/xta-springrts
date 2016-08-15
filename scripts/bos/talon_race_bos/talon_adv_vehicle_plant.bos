@@ -1,0 +1,459 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+piece  base, pad, hallr, halll, hallr1, halll1, roofr, roofl, roofr1, roofl1, doorr1, doorr2, doorr1a, doorr1b, doorl1, doorl2, doorl1a, doorl1b, nanor, nanol, sprayr, sprayl, nanodoorr, nanodoorl, cover, padsee;
+
+static-var  Static_Var_1, Static_Var_2, statechg_DesiredState, statechg_StateChanging;
+
+// Signal definitions
+#define SIG_ACTIVATE			2
+
+RestoreAfterDelay()
+{
+	sleep 5000;
+}
+
+activatescr()
+{
+	signal 4;
+	set-signal-mask 4;
+	if( TRUE )
+	{
+		dont-cache roofr;
+		dont-cache roofl;
+		dont-cache doorr1;
+		dont-cache doorr2;
+		dont-cache doorl1;
+		dont-cache doorl2;
+		dont-cache nanodoorr;
+		dont-cache nanodoorl;
+		dont-cache nanor;
+		dont-cache nanol;
+		dont-cache base;
+		set ARMORED to 0;
+	}
+	if( TRUE )
+	{
+		show cover;
+	}
+	if( TRUE )
+	{
+		turn roofl to z-axis <90> speed <100.000000>;
+		turn doorl1 to y-axis <90> speed <100.000000>;
+		turn doorr1 to y-axis <-90> speed <100.000000>;
+		turn doorl2 to y-axis <-90> speed <100.000000>;
+		turn doorr2 to y-axis <90> speed <100.000000>;
+		turn roofr to z-axis <-90> speed <100.000000>;
+		wait-for-turn doorr1 around y-axis;
+	}
+	if( TRUE )
+	{
+		move hallr to x-axis [-9] speed [4];
+		move halll to x-axis [9] speed [4];
+		wait-for-move hallr along x-axis;
+	}
+	if( TRUE )
+	{
+		move nanodoorr to y-axis [-9.152063] speed [4];
+		move nanodoorl to y-axis [-9.152063] speed [4];
+		wait-for-move nanodoorl along y-axis;
+	}
+	if( TRUE )
+	{
+		move nanor to z-axis [7.5] speed [4];
+		move nanol to z-axis [7.5] speed [4];
+		wait-for-move nanor along z-axis;
+	}
+	if( TRUE )
+	{
+		sleep 300;
+	}
+	if( TRUE )
+	{
+		cache roofr;
+		cache roofl;
+		cache doorr1;
+		cache doorr2;
+		cache doorl1;
+		cache doorl2;
+		cache nanodoorr;
+		cache nanodoorl;
+		cache nanor;
+		cache nanol;
+		sleep 300;
+	}
+}
+
+deactivatescr()
+{
+	signal 4;
+	set-signal-mask 4;
+	if( TRUE )
+	{
+		dont-cache roofr;
+		dont-cache roofl;
+		dont-cache doorr1;
+		dont-cache doorr2;
+		dont-cache doorl1;
+		dont-cache doorl2;
+		dont-cache nanodoorr;
+		dont-cache nanodoorl;
+		dont-cache nanor;
+		dont-cache nanol;
+		sleep 300;
+	}
+	if( TRUE )
+	{
+		move nanor to z-axis [0] speed [4];
+		move nanol to z-axis [0] speed [4];
+		wait-for-move nanor along z-axis;
+	}
+	if( TRUE )
+	{
+		move nanodoorr to y-axis [0] speed [4];
+		move nanodoorl to y-axis [0] speed [4];
+		wait-for-move nanodoorl along y-axis;
+	}
+	if( TRUE )
+	{
+		move hallr to x-axis [0] speed [4];
+		move halll to x-axis [0] speed [4];
+		wait-for-move hallr along x-axis;
+	}
+	if( TRUE )
+	{
+		turn roofl to z-axis <0> speed <100.000000>;
+		turn doorl1 to y-axis <0> speed <100.000000>;
+		turn doorr1 to y-axis <0> speed <100.000000>;
+		turn doorr2 to y-axis <0> speed <100.000000>;
+		turn roofr to z-axis <0> speed <100.000000>;
+		turn roofr to z-axis <0> speed <100.000000>;
+		wait-for-turn doorr1 around y-axis;
+	}
+	if( TRUE )
+	{
+		cache roofr;
+		cache roofl;
+		cache doorr1;
+		cache doorr2;
+		cache doorl1;
+		cache doorl2;
+		cache nanodoorr;
+		cache nanodoorl;
+		cache nanor;
+		cache nanol;
+		cache base;
+	}
+	if( TRUE )
+	{
+		//hide cover;
+		set ARMORED to 1;
+	}
+}
+
+SmokeUnit(healthpercent, sleeptime, smoketype)
+{
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 400;
+	}
+	while( TRUE )
+	{
+		healthpercent = get HEALTH;
+		if( healthpercent < 66 )
+		{
+			smoketype = 256 | 2;
+			if( Rand( 1, 66 ) < healthpercent )
+			{
+				smoketype = 256 | 1;
+			}
+			emit-sfx smoketype from base;
+		}
+		sleeptime = healthpercent * 50;
+		if( sleeptime < 200 )
+		{
+			sleeptime = 200;
+		}
+		sleep sleeptime;
+	}
+}
+
+OpenYard()
+{
+	set YARD_OPEN to 1;
+	while( !get YARD_OPEN )
+	{
+		set BUGGER_OFF to 1;
+		sleep 1500;
+		set YARD_OPEN to 1;
+	}
+	set BUGGER_OFF to 0;
+}
+
+CloseYard()
+{
+	set YARD_OPEN to 0;
+	while( get YARD_OPEN )
+	{
+		set BUGGER_OFF to 1;
+		sleep 1500;
+		set YARD_OPEN to 0;
+	}
+	set BUGGER_OFF to 0;
+}
+
+Go()
+{
+	call-script activatescr();
+	call-script OpenYard();
+	set INBUILDSTANCE to 1;
+}
+
+Stop()
+{
+	sleep 3000;
+	set INBUILDSTANCE to 0;
+	call-script CloseYard();
+	start-script deactivatescr();
+}
+
+InitState()
+{
+	statechg_DesiredState = TRUE;
+	statechg_StateChanging = FALSE;
+}
+
+RequestState(requestedstate, currentstate)
+{
+	if( statechg_StateChanging )
+	{
+		statechg_DesiredState = requestedstate;
+		return (0);
+	}
+	statechg_StateChanging = TRUE;
+	currentstate = statechg_DesiredState;
+	statechg_DesiredState = requestedstate;
+	while( statechg_DesiredState != currentstate )
+	{
+		if( statechg_DesiredState == 0 )
+		{
+			call-script Go();
+			currentstate = 0;
+		}
+		if( statechg_DesiredState == 1 )
+		{
+			call-script Stop();
+			currentstate = 1;
+		}
+	}
+	statechg_StateChanging = FALSE;
+}
+
+Create()
+{
+	dont-shade base;
+	dont-shade padsee;
+	dont-shade hallr;
+	dont-shade halll;
+	dont-shade hallr1;
+	dont-shade halll1;
+	dont-shade roofr;
+	dont-shade roofl;
+	dont-shade roofr1;
+	dont-shade roofl1;
+	dont-shade doorr1;
+	dont-shade doorr2;
+	dont-shade doorr1a;
+	dont-shade doorr1b;
+	dont-shade doorl1;
+	dont-shade doorl2;
+	dont-shade doorl1a;
+	dont-shade doorl1b;
+	dont-shade nanor;
+	dont-shade nanol;
+	dont-shade sprayr;
+	dont-shade sprayl;
+	dont-shade nanodoorr;
+	dont-shade nanodoorl;
+	dont-cache cover;
+	hide cover;
+	Static_Var_1 = 1;
+	call-script InitState();
+	start-script SmokeUnit();
+}
+
+QueryNanoPiece(piecenum)
+{
+	if( Static_Var_1 == 1 )
+	{
+		piecenum = sprayr;
+	}
+	if( Static_Var_1 == 2 )
+	{
+		piecenum = sprayl;
+	}
+	++Static_Var_1;
+	if( Static_Var_1 == 3 )
+	{
+		Static_Var_1 = 1;
+	}
+}
+
+Activate()
+{
+	signal SIG_ACTIVATE;
+	start-script RequestState(0);
+}
+
+Deactivate()
+{
+	signal SIG_ACTIVATE;
+	set-signal-mask SIG_ACTIVATE;
+	set-signal-mask 0;
+	start-script RequestState(1);
+}
+
+StartBuilding()
+{
+	spin pad around y-axis speed <30.005495>;
+	spin padsee around y-axis speed <30.005495>;
+	dont-cache padsee;
+}
+
+StopBuilding()
+{
+	stop-spin padsee around y-axis;
+	stop-spin pad around y-axis;
+	turn pad to y-axis <0> now;
+	cache padsee;
+}
+
+QueryBuildInfo(piecenum)
+{
+	piecenum = pad;
+}
+
+SweetSpot(piecenum)
+{
+	piecenum = base;
+}
+
+Killed(severity, corpsetype)
+{
+	if( severity <= 25 )
+	{
+		corpsetype = 1;
+		explode base type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+		explode pad type FALL | EXPLODE_ON_HIT | BITMAP2;
+		explode hallr type SHATTER | EXPLODE_ON_HIT | BITMAP3;
+		explode halll type SHATTER | EXPLODE_ON_HIT | BITMAP4;
+		explode hallr1 type SHATTER | EXPLODE_ON_HIT | BITMAP4;
+		explode halll1 type SHATTER | EXPLODE_ON_HIT | BITMAP3;
+		explode roofr type FALL | EXPLODE_ON_HIT | BITMAP2;
+		explode roofl type FALL | EXPLODE_ON_HIT | BITMAP1;
+		explode roofr1 type FALL | EXPLODE_ON_HIT | BITMAP2;
+		explode roofl1 type SHATTER | EXPLODE_ON_HIT | BITMAP3;
+		explode doorr1 type SHATTER | EXPLODE_ON_HIT | BITMAP4;
+		explode doorr2 type SHATTER | EXPLODE_ON_HIT | BITMAP3;
+		explode doorr1a type SHATTER | EXPLODE_ON_HIT | BITMAP2;
+		explode doorr1b type SHATTER | EXPLODE_ON_HIT | BITMAP1;
+		explode doorl1 type SHATTER | EXPLODE_ON_HIT | BITMAP2;
+		explode doorl2 type SHATTER | EXPLODE_ON_HIT | BITMAP3;
+		explode doorl1a type SHATTER | EXPLODE_ON_HIT | BITMAP4;
+		explode doorl1b type SHATTER | EXPLODE_ON_HIT | BITMAP4;
+		explode nanor type SHATTER | EXPLODE_ON_HIT | BITMAP1;
+		explode nanol type SHATTER | EXPLODE_ON_HIT | BITMAP1;
+		explode sprayr type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+		explode sprayl type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+		explode nanodoorr type SHATTER | EXPLODE_ON_HIT | BITMAP4;
+		explode nanodoorl type SHATTER | EXPLODE_ON_HIT | BITMAP3;
+
+		return (0);
+	}
+	if( severity <= 50 )
+	{
+		corpsetype = 2;
+		explode base type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+		explode pad type FALL | EXPLODE_ON_HIT | BITMAP2;
+		explode hallr type SHATTER | EXPLODE_ON_HIT | BITMAP3;
+		explode halll type SHATTER | EXPLODE_ON_HIT | BITMAP4;
+		explode hallr1 type SHATTER | EXPLODE_ON_HIT | BITMAP4;
+		explode halll1 type SHATTER | EXPLODE_ON_HIT | BITMAP3;
+		explode roofr type FALL | EXPLODE_ON_HIT | BITMAP2;
+		explode roofl type FALL | EXPLODE_ON_HIT | BITMAP1;
+		explode roofr1 type FALL | EXPLODE_ON_HIT | BITMAP2;
+		explode roofl1 type SHATTER | EXPLODE_ON_HIT | BITMAP3;
+		explode doorr1 type SHATTER | EXPLODE_ON_HIT | BITMAP4;
+		explode doorr2 type SHATTER | EXPLODE_ON_HIT | BITMAP3;
+		explode doorr1a type SHATTER | EXPLODE_ON_HIT | BITMAP2;
+		explode doorr1b type SHATTER | EXPLODE_ON_HIT | BITMAP1;
+		explode doorl1 type SHATTER | EXPLODE_ON_HIT | BITMAP2;
+		explode doorl2 type SHATTER | EXPLODE_ON_HIT | BITMAP3;
+		explode doorl1a type SHATTER | EXPLODE_ON_HIT | BITMAP4;
+		explode doorl1b type SHATTER | EXPLODE_ON_HIT | BITMAP4;
+		explode nanor type SHATTER | EXPLODE_ON_HIT | BITMAP1;
+		explode nanol type SHATTER | EXPLODE_ON_HIT | BITMAP1;
+		explode sprayr type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+		explode sprayl type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+		explode nanodoorr type SHATTER | EXPLODE_ON_HIT | BITMAP4;
+		explode nanodoorl type SHATTER | EXPLODE_ON_HIT | BITMAP3;
+
+		return (0);
+	}
+	if( severity <= 99 )
+	{
+		corpsetype = 3;
+		explode base type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+		explode pad type FALL | EXPLODE_ON_HIT | BITMAP2;
+		explode hallr type SHATTER | EXPLODE_ON_HIT | BITMAP3;
+		explode halll type SHATTER | EXPLODE_ON_HIT | BITMAP4;
+		explode hallr1 type SHATTER | EXPLODE_ON_HIT | BITMAP4;
+		explode halll1 type SHATTER | EXPLODE_ON_HIT | BITMAP3;
+		explode roofr type FALL | EXPLODE_ON_HIT | BITMAP2;
+		explode roofl type FALL | EXPLODE_ON_HIT | BITMAP1;
+		explode roofr1 type FALL | EXPLODE_ON_HIT | BITMAP2;
+		explode roofl1 type SHATTER | EXPLODE_ON_HIT | BITMAP3;
+		explode doorr1 type SHATTER | EXPLODE_ON_HIT | BITMAP4;
+		explode doorr2 type SHATTER | EXPLODE_ON_HIT | BITMAP3;
+		explode doorr1a type SHATTER | EXPLODE_ON_HIT | BITMAP2;
+		explode doorr1b type SHATTER | EXPLODE_ON_HIT | BITMAP1;
+		explode doorl1 type SHATTER | EXPLODE_ON_HIT | BITMAP2;
+		explode doorl2 type SHATTER | EXPLODE_ON_HIT | BITMAP3;
+		explode doorl1a type SHATTER | EXPLODE_ON_HIT | BITMAP4;
+		explode doorl1b type SHATTER | EXPLODE_ON_HIT | BITMAP4;
+		explode nanor type SHATTER | EXPLODE_ON_HIT | BITMAP1;
+		explode nanol type SHATTER | EXPLODE_ON_HIT | BITMAP1;
+		explode sprayr type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+		explode sprayl type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+		explode nanodoorr type SHATTER | EXPLODE_ON_HIT | BITMAP4;
+		explode nanodoorl type SHATTER | EXPLODE_ON_HIT | BITMAP3;
+		return (0);
+	}
+	corpsetype = 3;
+	explode base type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode pad type FALL | EXPLODE_ON_HIT | BITMAP2;
+	explode hallr type SHATTER | EXPLODE_ON_HIT | BITMAP3;
+	explode halll type SHATTER | EXPLODE_ON_HIT | BITMAP4;
+	explode hallr1 type SHATTER | EXPLODE_ON_HIT | BITMAP4;
+	explode halll1 type SHATTER | EXPLODE_ON_HIT | BITMAP3;
+	explode roofr type FALL | EXPLODE_ON_HIT | BITMAP2;
+	explode roofl type FALL | EXPLODE_ON_HIT | BITMAP1;
+	explode roofr1 type FALL | EXPLODE_ON_HIT | BITMAP2;
+	explode roofl1 type SHATTER | EXPLODE_ON_HIT | BITMAP3;
+	explode doorr1 type SHATTER | EXPLODE_ON_HIT | BITMAP4;
+	explode doorr2 type SHATTER | EXPLODE_ON_HIT | BITMAP3;
+	explode doorr1a type SHATTER | EXPLODE_ON_HIT | BITMAP2;
+	explode doorr1b type SHATTER | EXPLODE_ON_HIT | BITMAP1;
+	explode doorl1 type SHATTER | EXPLODE_ON_HIT | BITMAP2;
+	explode doorl2 type SHATTER | EXPLODE_ON_HIT | BITMAP3;
+	explode doorl1a type SHATTER | EXPLODE_ON_HIT | BITMAP4;
+	explode doorl1b type SHATTER | EXPLODE_ON_HIT | BITMAP4;
+	explode nanor type SHATTER | EXPLODE_ON_HIT | BITMAP1;
+	explode nanol type SHATTER | EXPLODE_ON_HIT | BITMAP1;
+	explode sprayr type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode sprayl type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode nanodoorr type SHATTER | EXPLODE_ON_HIT | BITMAP4;
+	explode nanodoorl type SHATTER | EXPLODE_ON_HIT | BITMAP3;
+}

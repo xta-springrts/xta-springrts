@@ -1,0 +1,303 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+piece  flare, body, base, turret, w1, w2, w3, w4, w5, w6, w7, w8, w9, w10, w11, w12, wakes, sleeve, barrel;
+
+static-var  Static_Var_1, restore_delay, Static_Var_4;
+
+// Signal definitions
+#define SIG_AIM				2
+#define SIG_MOVE			4
+#define BANK_MORE 80
+#define BANK_LESS 40
+#define BANK_DAMP_SPEED <60>
+#define BANK_REFRESH 300// Put some time long enough for the unit to have travelled a while, but short enough so the script doesn't have a too long reaction time
+#define BANK_SIGNIFICATIVE_SPEED [1]// Actually, it's not a speed, but a distance, the distance covered during BANK_REFRESH. If that distance is too low, the difference between the two xz is deemed too low to get a significative angle out of it. Since half of digit are lost when x and z get packed into xz, any distance under 65536=[0.4] will lose all its significative digits and so will be unuseable.
+
+WobbleUnit()
+{
+	while( TRUE )
+	{
+		if( Static_Var_4 )
+			move base to y-axis [2.250000] speed [2.50000];
+		else
+			move base to y-axis [-0.250000] speed [2.50000];
+		Static_Var_4 = !Static_Var_4;
+		sleep 750;
+	}
+}
+
+BankClerck()
+{
+	var present_xz, past_xz, banking_angle;
+	while(1)
+	{
+		present_xz=get PIECE_XZ(base);
+		banking_angle=0;
+		if (get XZ_HYPOT(present_xz - past_xz)>=BANK_SIGNIFICATIVE_SPEED)
+			{
+			banking_angle=(0 - (((get XZ_ATAN(past_xz - present_xz))*BANK_MORE)/BANK_LESS));
+			}
+		turn body to z-axis banking_angle speed BANK_DAMP_SPEED;
+		past_xz=present_xz;
+		sleep BANK_REFRESH;
+	}
+}
+
+SmokeUnit(healthpercent, sleeptime, smoketype)
+{
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 400;
+	}
+	start-script WobbleUnit();
+	while( TRUE )
+	{
+		healthpercent = get HEALTH;
+		if( healthpercent < 66 )
+		{
+			smoketype = 256 | 2;
+			if( Rand( 1, 66 ) < healthpercent )
+			{
+				smoketype = 256 | 1;
+			}
+			emit-sfx smoketype from body;
+		}
+		sleeptime = healthpercent * 50;
+		if( sleeptime < 200 )
+		{
+			sleeptime = 200;
+		}
+		sleep sleeptime;
+	}
+}
+
+RockUnit(anglex, anglez)
+{
+	signal 16;
+	set-signal-mask 16;
+	turn body to x-axis 2*anglex speed <50.010989>;
+	turn body to z-axis 2*anglez speed <50.010989>;
+	wait-for-turn body around z-axis;
+	wait-for-turn body around x-axis;
+	turn body to z-axis <0.000000> speed <20.000000>;
+	turn body to x-axis <0.000000> speed <20.000000>;
+}
+
+HitByWeapon(Func_Var_1, Func_Var_2)
+{
+	signal 16;
+	set-signal-mask 16;
+	turn body to z-axis 2*Func_Var_2 speed <105.021978>;
+	turn body to x-axis 2*Func_Var_1 speed <105.021978>;
+	wait-for-turn body around z-axis;
+	wait-for-turn body around x-axis;
+	turn body to z-axis <0.000000> speed <30.005495>;
+	turn body to x-axis <0.000000> speed <30.005495>;
+}
+
+StartMoving()
+{
+	signal SIG_MOVE;
+	set-signal-mask SIG_MOVE;
+}
+
+StopMoving()
+{
+	signal SIG_MOVE;
+}
+
+waking()
+{
+	while( TRUE )
+	{
+		if( Static_Var_1 == 2 OR Static_Var_1 == 1 )
+		{
+		emit-sfx 3 from w1;
+		emit-sfx 3 from w2;
+		emit-sfx 3 from w3;
+		emit-sfx 3 from w4;
+		emit-sfx 3 from w5;
+		emit-sfx 3 from w6;
+		emit-sfx 3 from w7;
+		emit-sfx 3 from w8;
+		emit-sfx 3 from w9;
+		emit-sfx 3 from w10;
+		emit-sfx 3 from w11;
+		emit-sfx 3 from w12;
+		emit-sfx 5 from w1;
+		emit-sfx 5 from w2;
+		emit-sfx 5 from w3;
+		emit-sfx 5 from w4;
+		emit-sfx 5 from w5;
+		emit-sfx 5 from w6;
+		emit-sfx 5 from w7;
+		emit-sfx 5 from w8;
+		emit-sfx 5 from w9;
+		emit-sfx 5 from w10;
+		emit-sfx 5 from w11;
+		emit-sfx 5 from w12;
+		}
+		sleep 325;
+	}
+}
+
+setSFXoccupy(Func_Var_1)
+{
+	Static_Var_1 = Func_Var_1;
+}
+
+Create()
+{
+	start-script waking();
+	hide flare;
+	dont-cache flare;
+	dont-cache body;
+	dont-cache turret;
+	dont-cache sleeve;
+	dont-cache barrel;
+	restore_delay = 3000;
+	start-script SmokeUnit();
+	start-script BankClerck();
+}
+
+SetMaxReloadTime(Func_Var_1)
+{
+	restore_delay = Func_Var_1 * 2;
+}
+
+RestoreAfterDelay()
+{
+	sleep restore_delay;
+	turn turret to y-axis <0.000000> speed <90.021978>;
+	turn sleeve to x-axis <0.000000> speed <50.010989>;
+}
+
+AimPrimary(heading, pitch)
+{
+	signal SIG_AIM;
+	set-signal-mask SIG_AIM;
+	while( Static_Var_1 != 2 AND Static_Var_1 != 1 )
+	{
+		sleep 100;
+	}
+	turn turret to y-axis heading speed <80.038462>;
+	turn sleeve to x-axis <0.000000> - pitch speed <60.016484>;
+	wait-for-turn turret around y-axis;
+	wait-for-turn sleeve around x-axis;
+	start-script RestoreAfterDelay();
+	return (1);
+}
+
+FirePrimary()
+{
+	move barrel to z-axis [-1] now;
+	show flare;
+	sleep 150;
+	hide flare;
+	move barrel to z-axis [0.000000] speed [3.000000];
+}
+
+AimFromPrimary(piecenum)
+{
+	piecenum = turret;
+}
+
+QueryPrimary(piecenum)
+{
+	piecenum = flare;
+}
+
+SweetSpot(piecenum)
+{
+	piecenum = base;
+}
+
+Killed(severity, corpsetype)
+{
+	hide flare;
+	if( severity <= 25 )
+	{
+		corpsetype = 1 + (Static_Var_1==1 || Static_Var_1==2);
+		explode barrel type BITMAPONLY | BITMAP1;
+		explode body type BITMAPONLY | BITMAP2;
+		explode turret type BITMAPONLY | BITMAP4;
+		explode sleeve type SHATTER | EXPLODE_ON_HIT | BITMAP4;
+		explode w1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+		explode w2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+		explode w3 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+		explode w4 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+		explode w5 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+		explode w6 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+		explode w7 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+		explode w8 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+		explode w9 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+		explode w10 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+		explode w11 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+		explode w12 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+
+		return (0);
+	}
+	if( severity <= 50 )
+	{
+		corpsetype = 2;
+		explode barrel type FALL | BITMAP1;
+		explode body type BITMAPONLY | BITMAP2;
+		explode turret type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+		explode sleeve type SHATTER | EXPLODE_ON_HIT | BITMAP4;
+		explode w1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+		explode w2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+		explode w3 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+		explode w4 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+		explode w5 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+		explode w6 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+		explode w7 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+		explode w8 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+		explode w9 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+		explode w10 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+		explode w11 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+		explode w12 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+
+		return (0);
+	}
+	if( severity <= 99 )
+	{
+		corpsetype = 3;
+		explode barrel type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+		explode body type BITMAPONLY | BITMAP2;
+		explode turret type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+		explode sleeve type SHATTER | EXPLODE_ON_HIT | BITMAP4;
+		explode w1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+		explode w2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+		explode w3 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+		explode w4 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+		explode w5 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+		explode w6 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+		explode w7 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+		explode w8 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+		explode w9 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+		explode w10 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+		explode w11 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+		explode w12 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+		return (0);
+	}
+	corpsetype = 3;
+	explode barrel type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+	explode body type BITMAPONLY | BITMAP2;
+	explode sleeve type SHATTER | EXPLODE_ON_HIT | BITMAP4;
+	explode turret type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode w1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+	explode w2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+	explode w3 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+	explode w4 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+	explode w5 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+	explode w6 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+	explode w7 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+	explode w8 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+	explode w9 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+	explode w10 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+	explode w11 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+	explode w12 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+}

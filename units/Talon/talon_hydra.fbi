@@ -5,7 +5,7 @@
 	//********************
 	side=Arm;
 	name=Hydra;
-	description=Anti-Air Hovercraft;
+	description=Flak Hovercraft;
 	icontype=hover;
 
 	//************************************************************
@@ -27,11 +27,11 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=812;
+	maxdamage=1812;
 	healtime=30;
-	buildcostmetal=187;
-	buildcostenergy=1888;
-	buildtime=3047;
+	buildcostmetal=837;
+	buildcostenergy=12888;
+	buildtime=15047;
 	footprintx=3;
 	footprintz=3;
 
@@ -78,13 +78,13 @@
 	//  Sight/Radar/Sonar
 	//*********************
 	sightdistance=420;
-	airsightdistance=704;
+	airsightdistance=824;
 	radardistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
-	weapon1=HYDRA_FLAK;
+	weapon1=CORSENT_GUN;
 	nochasecategory=NOTAIR;
 	badtargetcategory=NOTAIR;
 	wpri_badtargetcategory=NOTAIR;
