@@ -1,0 +1,191 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+piece  base, body, mis, mis2, rocket, fp;
+static-var smoke, trav, still;
+// Signal definitions
+#define SIG_AIM				2
+
+
+SmokeUnit(healthpercent, sleeptime, smoketype)
+{
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 400;
+	}
+	while( TRUE )
+	{
+		healthpercent = get HEALTH;
+		if( healthpercent < 66 )
+		{
+			smoketype = 256 | 2;
+			if( Rand( 1, 66 ) < healthpercent )
+			{
+				smoketype = 256 | 1;
+			}
+			emit-sfx smoketype from base;
+		}
+		sleeptime = healthpercent * 50;
+		if( sleeptime < 200 )
+		{
+			sleeptime = 200;
+		}
+		sleep sleeptime;
+	}
+}
+
+measure()
+{
+	while(1)
+	{
+		if(trav == 1)
+		{
+			sleep rand(1500,2000);
+			trav = 0;
+		}
+		sleep 1;
+	}
+}
+
+Create()
+{
+	trav=0;
+	dont-cache rocket;
+	dont-cache mis;
+	dont-cache mis2;
+	start-script SmokeUnit();
+	dont-shade base;
+	dont-shade body;
+	hide rocket;
+	smoke = 0;
+	still = 0;
+//	move fp to y-axis [40] now;
+	start-script measure();
+}
+
+restore()
+{
+	while(trav)
+	{
+		sleep 1;
+	}
+	smoke=0;
+	if(still)
+	{
+		explode rocket type BITMAPONLY | BITMAP3;
+	}
+	hide rocket;
+	move rocket to y-axis [0] now;
+	turn mis2 to x-axis <0> now;
+	move mis to y-axis [0] now;
+	still=0;
+	trav=0;
+}
+
+smoke1()
+{
+	while(smoke)
+	{
+		emit-sfx 256 | 1 from rocket;
+		sleep 1;
+	}
+	return(0);
+}
+
+AimPrimary(heading, pitch)
+{
+	signal SIG_AIM;
+	set-signal-mask SIG_AIM;
+//	while(enroute)
+//	{
+//		sleep 1;
+//	}
+	
+	smoke = 1;
+	start-script smoke1();
+	show rocket;
+	
+//	sleep 1;
+	
+//	turn mis2 to x-axis <0> now;
+//	move mis to y-axis [0] now;
+//	move rocket to y-axis [0] now;
+	still = 1;
+	if(!trav)
+	{
+		turn mis to y-axis heading now;
+	}
+	move mis to y-axis [20] speed [100];
+	wait-for-move mis along y-axis;
+	turn mis2 to x-axis <90> - pitch speed <150>;
+	wait-for-turn mis2 around x-axis;
+	move rocket to y-axis [200] speed [100];
+	
+	if(trav==0)
+	{
+		trav=1;
+	}
+	
+	start-script restore();
+	
+	return (1);
+}
+
+FirePrimary()
+{
+	smoke=0;
+	trav = 0;
+	hide rocket;
+	
+//	sleep 100;
+	trav=0;
+	still = 0;
+	turn mis2 to x-axis <0> now;
+	move mis to y-axis [0] now;
+	move rocket to y-axis [0] now;
+}
+
+AimFromPrimary(piecenum)
+{
+	piecenum = fp;
+}
+
+SweetSpot(piecenum)
+{
+	piecenum = base;
+}
+
+QueryPrimary(piecenum)
+{
+	piecenum = rocket;
+}
+
+Killed(severity, corpsetype)
+{
+	if( severity <= 25 )
+	{
+		corpsetype = 1;
+		explode base type BITMAPONLY | BITMAP3;
+		explode body type BITMAPONLY | BITMAP1;
+		return (0);
+	}
+	if( severity <= 50 )
+	{
+		corpsetype = 2;
+		explode base type BITMAPONLY | BITMAP3;
+		explode body type BITMAPONLY | BITMAP1;
+		return (0);
+	}
+	if( severity <= 99 )
+	{
+		corpsetype = 3;
+		explode base type BITMAPONLY | BITMAP3;
+		explode body type BITMAPONLY | BITMAP1;
+		return (0);
+	}
+	corpsetype = 3;
+	explode base type BITMAPONLY | BITMAP3;
+	explode body type BITMAPONLY | BITMAP1;
+}

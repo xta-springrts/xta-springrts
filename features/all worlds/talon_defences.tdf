@@ -1,3 +1,34 @@
+
+[talon_fortification_wall_dead]
+{
+	world=allworld;
+	description=Fortification Wall;
+	category=dragonteeth;
+	object=talon_fortification_wall;
+	footprintx=2;
+	footprintz=2;
+	height=65;
+	blocking=1;
+	hitdensity=100;
+	metal=27;
+	damage=4500;
+	crushResistance=450;
+	reclaimable=1;
+	autoreclaimable=0;
+	featuredead=rock_fort;
+	seqnamereclamate=tree1reclamate;
+	reclaimTime=500;
+	collisionVolumeType = box;
+	collisionVolumeScales =32 42 32;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	
+	[customparams] 	
+	{
+	noalert=1;
+	dontCount=1;
+	}
+}
 [talon_dragons_teeth_dead]
 {
 	world=allworld;

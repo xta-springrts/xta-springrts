@@ -1,0 +1,114 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Core;
+	name=Heavy Fusion Power Plant;
+	description=Produces Energy;
+	icontype=chfusion;
+
+	//************************************************************
+	//  Categories
+	//**************
+	Category=CORE ENERGY NOWEAPON NOTAIR NOTSUB;
+	tedclass=ENERGY;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=talon_fusion_power_plant;
+	unitnumber=106;
+	objectname=talon_fusion_power_plant.3do;
+	corpse=talon_fusion_power_plant_dead;
+	buildpic=talon_fusion_power_plant.png;
+	soundcategory=CORE_FUS;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=3800;
+	buildcostmetal=10111;
+	buildcostenergy=72662;
+	buildtime=156275;
+	footprintx=7;
+	footprintz=7;
+	collisionVolumeType = CylY;
+	collisionVolumeScales =94 81 94;
+	collisionVolumeOffsets = 0 10 0;
+	collisionVolumeTest = 1;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=3300;
+	energyuse=0;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	buildangle=16384;
+	YardMap=ooooooo ooooooo ooooooo ooooooo ooooooo ooooooo ooooooo;
+	activatewhenbuilt=1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canRepeat=0;
+	canMove=0;
+	canAttack=0;
+	canGuard=0;
+	
+	//************************************************************
+	//  Movement
+	//************
+	maxslope=10;
+	maxwaterdepth=33;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=367.5;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeas=GIANT_BLAST;
+	selfdestructas=armmine5;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=0;
+	designation=EF-5;
+	downloadable=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+	[SFXTypes]
+	{
+		explosiongenerator0=custom:ReactorTINYSequence;
+		explosiongenerator1=custom:ReactorBIgSequence;
+	}
+
+}

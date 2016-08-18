@@ -1,0 +1,126 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Arm;
+	name=Air Repair Pad;
+	description=Automatically repairs aircraft;
+	icontype=building;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=ARM PLANT STATIC NOWEAPON STRATEGIC STORAGE NOTAIR NOTSEA NOTSUB;
+	tedclass=STRATEGIC;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=talon_air_repair_pad;
+	unitnumber=154;
+	objectname=talon_air_repair_pad.3do;
+	corpse=talon_air_repair_pad_dead;
+	buildpic=talon_air_repair_pad.png;
+	soundcategory=AIRPLANT;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=680;
+	buildcostmetal=106;
+	buildcostenergy=2128;
+	buildtime=5489;
+	footprintx=4;
+	footprintz=4;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=5;
+	energyuse=0;
+	energystorage=100;
+
+	//************************************************************
+	//  Building
+	//************
+	buildangle=1024;
+	//yardmap=oooo oooo oooo oooo;
+	activatewhenbuilt=1;
+	collisionVolumeType=Box;
+	collisionVolumeScales=60 28 60;
+	collisionVolumeTest = 1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=1;
+	builddistance=128;
+	workertime=600; //was 200 inspired by IvoryKing//
+	repairSpeed = 1800; //increase from workertime to make repair pads more useful
+
+	//************************************************************
+	//  Abilities
+	//*************
+	isairbase=1;
+	onoffable=1;
+	canMove=0;
+	canAttack=0;
+	canFight=0;
+	canPatrol=0;
+	canGuard=0;
+	canRepeat=0;
+	noAutoFire=1;
+	canRepair=1;
+	canAssist=0;
+	canRestore=0;
+	canReclaim=0;
+
+	//************************************************************
+	//  Movement
+	//************
+	maxslope=10;
+	maxwaterdepth=255;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=306.25;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeas=BIG_UNITEX;
+	selfdestructas=BIG_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=0;
+	designation=ARM-SP1;
+	downloadable=1;
+	sortbias=0;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+	[SFXTypes]
+	{
+	explosiongenerator0=custom:Nano;
+	explosiongenerator1=custom:WhiteLightSmall;
+	explosiongenerator2=custom:RedLightSmall;
+	}
+
+}

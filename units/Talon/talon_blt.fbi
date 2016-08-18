@@ -1,0 +1,126 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Arm;
+	name=B.L.T.;
+	description=Blue Laser Tower;
+	icontype=building;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=ARM DEFENSIVE STATIC WEAPON RADAR NOTAIR NOTSEA NOTSUB;
+	tedclass=DEFENSIVE;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=talon_blt;
+	unitnumber=7;
+	objectname=talon_blt.3do;
+	corpse=talon_blt_dead;
+	buildpic=talon_blt.png;
+	soundcategory=ARM_ANNI;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=4765;
+	healtime=11;
+	buildcostmetal=4095;
+	buildcostenergy=25463;
+	buildtime=50000;
+	footprintx=4;
+	footprintz=4;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=0;
+	energyuse=0;
+	energystorage=2500;
+
+	//************************************************************
+	//  Building
+	//************
+	buildangle=40000;
+	yardmap=oooo oooo oooo oooo;
+	activatewhenbuilt=0;
+	collisionVolumeType = box;
+	collisionVolumeScales =50 35 50;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canattack=1;
+	canguard=1;
+	canstop=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	maxslope=10;
+	maxwaterdepth=33;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=920;
+	radardistance=1850;
+	losemitheight=48;
+	radaremitheight=48;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=Blooper_BEAM;
+	wpri_badtargetcategory=VTOL;
+	badtargetcategory=VTOL;
+	explodeas=ATOMIC_BLASTSML;
+	selfdestructas=ATOMIC_BLAST;
+
+	//************************************************************
+	//  Orders
+	//**********
+	firestandorders=1;
+	standingfireorder=2;
+	defaultmissiontype=GUARD_NOMOVE;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=0;
+	damagemodifier=0.5;
+	designation=ARM-ANN1;
+	downloadable=1;
+	shootme=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+	[customParams] 
+	{
+		canAreaAttack=1;
+	}
+	[SFXTypes]
+	{
+	explosiongenerator0=custom:snipeflare;
+	}
+
+}

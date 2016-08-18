@@ -1,4 +1,46 @@
 
+[guardian_underwater_fusion_reactor_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=arm_corpses;
+	object=guardian_underwater_fusion_reactor_dead;
+	featuredead=guardian_underwater_fusion_reactor_heap;
+	footprintx=5;
+	footprintz=5;
+	height=20;
+	blocking=0;
+	hitdensity=100;
+	metal=2668;
+	damage=985;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=68 36 42;//#AUTO#
+	collisionVolumeOffsets=-10 0 0;//#AUTO#
+}
+[guardian_underwater_fusion_reactor_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=5x5c;
+	footprintx=5;
+	footprintz=5;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	metal=1834;
+	damage=492;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=81 6 81;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+
 [Guardian_Evening_Moon_dead]
 {
 	world=All Worlds;

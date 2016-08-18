@@ -1,0 +1,114 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Arm;
+	name=Advanced Radar Tower;
+	description=Long Range Radar Tower;
+	icontype=building;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=ARM STATIC NOWEAPON RADAR NOTAIR NOTSEA NOTSUB;
+	tedclass=RADAR;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=talon_advanced_radar_tower;
+	unitnumber=9;
+	objectname=talon_advanced_radar_tower.3do;
+	corpse=talon_advanced_radar_tower_dead;
+	buildpic=talon_advanced_radar_tower.png;
+	soundcategory=ARM_ADVRADAR;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=197;
+	buildcostmetal=98;
+	buildcostenergy=1041;
+	buildtime=3186;
+	footprintx=2;
+	footprintz=2;
+	usePieceCollisionVolumes=1;
+	
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=18;
+	energyuse=18;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	buildangle=8192;
+	yardmap=oo oo;
+	activatewhenbuilt=1;
+	collisionVolumeType=CylY;
+	collisionVolumeScales=45 52 45;
+	collisionVolumeOffsets=0 12 0;
+	collisionVolumeTest = 1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	onoffable=1;
+	canRepeat=0;
+	canMove=0;
+	canGuard=0;
+	canAttack=0;
+
+	//************************************************************
+	//  Movement
+	//************
+	maxslope=15;
+	maxwaterdepth=22;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=550;
+	airsightdistance=920;
+	radardistance=2780;
+	losemitheight=56;
+	radaremitheight=56;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeas=SMALL_BUILDINGEX;
+	selfdestructas=SMALL_BUILDING;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=0;
+	designation=AS-EWDL2;
+	downloadable=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+}

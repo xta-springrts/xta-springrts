@@ -1,4 +1,68 @@
 
+[TALONFIXED_GUN]
+{
+	name=Plasma Cannon;
+	explosiongenerator=custom:RedPlasma;
+	energypershot=500;
+	rgbcolor=1 0.33 0.0;
+	size=4;
+	weaponType=Cannon;
+	turret=1;
+	range=1925;
+	reloadtime=3;
+	weaponvelocity=650; //550
+	areaofeffect=128;
+	soundstart=cannhvy5;
+	soundhitdry=xplomed2;
+	startsmoke=1;
+	accuracy=650;
+	[DAMAGE]
+	{
+		default=450;
+		group_ships=675;
+		group_large_ships=725;
+		group_invincible=1;
+	}
+}
+[Blooper_BEAM]
+{
+	name=Annihilator Weapon;
+	Weapontype=LaserCannon;
+	turret=1;
+	range=1500;
+	reloadtime=1.2;
+	accuracy=1000;
+	energypershot=900;
+	weaponvelocity=1200;
+	areaofeffect=8;
+	soundstart=annigun1;
+	soundhitdry=xplolrg1;
+	Texture1=null;
+	Texture2=null;
+	Texture3=null;
+	Texture4=null;
+	firestarter=90;
+	rgbcolor=0.1 0.2 1.000;
+	tolerance=500;
+	explosiongenerator=custom:SNIPELASER;
+	Texture1=purplelaser;
+	Texture2=null;
+	Texture3=null;
+	Texture4=null;
+	w=84.75;
+	thickness=6.7;
+	duration=0.25;
+	beamdecay=0.3;
+	beamttl=50;
+	hardStop=0;
+	[DAMAGE]
+	{
+		default=1000;
+		group_landair=650;
+		group_skyair=650;
+		group_invincible=1;
+	}
+}
 [ASH_ROCKET]
 {
 	name=Rockets;

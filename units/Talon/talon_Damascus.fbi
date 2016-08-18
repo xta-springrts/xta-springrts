@@ -1,0 +1,120 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Arm;
+	name=Damascus;
+	description=Cruise Missile Launcher;
+	icontype=nuke;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=ARM STRATEGIC STATIC WEAPON NOTAIR NOTSEA NOTSUB;
+	tedclass=STRATEGIC;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=talon_Damascus;
+	unitnumber=322;
+	objectname=talon_Damascus.3do;
+	corpse=talon_Damascus_dead;
+	buildpic=talon_Damascus.png;
+	soundcategory=NUC;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=2546;
+	healtime=11;
+	buildcostmetal=3875; // OTA: 1802
+	buildcostenergy=142261;//264522; // OTA: 52134
+	buildtime=121453; //202869 //OTA: 111453 -- OTA values reset
+	footprintx=4;
+	footprintz=4;
+	collisionVolumeType = Box;
+	collisionVolumeScales=62 28 64;
+	collisionVolumeOffsets=0 -6 0;
+	collisionVolumeTest = 1;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=0;
+	energyuse=0;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	buildangle=8192;
+	yardmap=oooo oooo oooo oooo;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canattack=1;
+	canguard=1;
+	canstop=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	maxslope=10;
+	maxwaterdepth=0;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=500;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=ARMEMP_WEAPON;
+	badtargetcategory=VTOL;
+	wpri_badtargetcategory=VTOL;
+	explodeas=ATOMIC_BLASTSML;
+	selfdestructas=NUCLEAR_MISSILE;
+	onlytargetcategory1=NOTAIR;
+	onlytargetcategory2=NOTAIR;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	firestandorders=1;
+	standingfireorder=2;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=0;
+	designation=ARM-MIDS;
+	downloadable=1;
+	shootme=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+	[customParams] 
+	{
+	canAreaAttack=1;
+	}
+
+}
