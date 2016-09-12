@@ -5,9 +5,7 @@
 
 piece  base, dome, ground, glow;
 
-static-var  mmState;
-
-#define OPERATING 1024
+static-var  mmState, OPERATING;
 
 SetDirection(heading)
 {
@@ -37,7 +35,7 @@ RockOnWaves()
 
 activatescr()
 {
-	set OPERATING to 1;
+	OPERATING = 1;
 	turn dome to x-axis <0.000000> now;
 	turn dome to x-axis <180.285714> speed <112.467033>;
 	sleep 1676;
@@ -50,7 +48,7 @@ deactivatescr()
 {
 	mmState = 0;
 	set ACTIVATION to 0;
-	set OPERATING to 0;
+	OPERATING = 0;
 	turn dome to x-axis <180.285714> now;
 	turn dome to x-axis <0.000000> speed <112.467033>;
 	sleep 1676;
@@ -78,12 +76,18 @@ Standby()
 	}
 }
 
+MMStatus(State)
+{
+    OPERATING = State;
+    //get PRINT(OPERATING);
+}
+
 ImAMetalMaker()
 {
 	mmState = -1;
 	while( TRUE )
 	{
-		if ((get OPERATING) == 1)
+		if (OPERATING == 1)
 		{
 			if (mmState != 1) {
 				call-script activatescr();

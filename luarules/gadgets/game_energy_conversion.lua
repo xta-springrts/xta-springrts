@@ -134,7 +134,8 @@ local function UpdateMetalMakers(teamID, energyUse)
 			if (defs.built) then
 				if (defs.emped) then
 					if (defs.status == 1) then
-						spSetUnitCOBValue(unitID,1024,0)
+						Spring.CallCOBScript(unitID,"MMStatus",0,0)
+						--spSetUnitCOBValue(unitID,1024,0)
 						defs.status = 0
 						teamActiveMM[teamID] = (teamActiveMM[teamID] - 1)
 					end
@@ -142,14 +143,16 @@ local function UpdateMetalMakers(teamID, energyUse)
 					if (energyUse > 0) then
 						energyUse = (energyUse - defs.capacity)
 						if (defs.status == 0) then
-							spSetUnitCOBValue(unitID,1024,1)
+							--spSetUnitCOBValue(unitID,1024,1)
+							Spring.CallCOBScript(unitID,"MMStatus",0,1)
 							defs.status = 1
 							teamActiveMM[teamID] = (teamActiveMM[teamID] + 1)
 						end
 					else
 						if (teamActiveMM[teamID] == 0) then break end
 						if (defs.status == 1) then
-							spSetUnitCOBValue(unitID,1024,0)
+							Spring.CallCOBScript(unitID,"MMStatus",0,0) 
+							--spSetUnitCOBValue(unitID,1024,0)
 							defs.status = 0
 							teamActiveMM[teamID] = (teamActiveMM[teamID] - 1)
 						end
@@ -436,7 +439,8 @@ function gadget:UnitFinished(uID, uDefID, uTeam)
 		if not teamMMList[uTeam][cDefs.e][uID].emped then
 			teamMMList[uTeam][cDefs.e][uID].status = 1
 			teamActiveMM[uTeam] = teamActiveMM[uTeam] + 1
-			spSetUnitCOBValue(uID,1024,1)
+			--spSetUnitCOBValue(uID,1024,1)
+			Spring.CallCOBScript(uID,"MMStatus",0,1)
 			AdjustTeamCapacity(uTeam, cDefs.c, cDefs.e)
 		end
     end
