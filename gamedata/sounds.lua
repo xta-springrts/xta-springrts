@@ -245,7 +245,7 @@ for i =1,#files do
 			in3d 			= 1;
 			}
 		else
-			Echo("Exception:",shortName)
+			Echo("Sounds.lua: Excepted the following from sounditem parsing: ",shortName)
 			t[fileName]  = {
 			file      		= fileName;
 			pitchmod  		= 0;
