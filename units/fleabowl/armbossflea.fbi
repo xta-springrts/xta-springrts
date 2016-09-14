@@ -8,6 +8,7 @@
 	buildpic=armflea.jpg;
 	Name=Flea;
 	Description=Free Experience Pack;
+	Script=arm_flea.cob;
 	FootprintX=1;
 	FootprintZ=1;
 	BuildCostEnergy=64245324;

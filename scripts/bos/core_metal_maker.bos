@@ -5,13 +5,11 @@
 
 piece  base, glow, plug, glowpoint;
 
-static-var  statechg_DesiredState, statechg_StateChanging, mmState;
-
-#define OPERATING 1024
+static-var  statechg_DesiredState, statechg_StateChanging, mmState, OPERATING;
 
 Go()
 {
-	set OPERATING to 1;
+	OPERATING = 1;
 	dont-cache glow;
 	turn plug to z-axis <0.000000> speed <50.010989>;
 	wait-for-turn plug around z-axis;
@@ -24,7 +22,7 @@ Stop()
 {
 	mmState = 0;
 	set ACTIVATION to 0;
-	set OPERATING to 0;
+	OPERATING = 0;
 	cache plug;
 	turn plug to z-axis <180.043956> speed <50.010989>;
 	wait-for-turn plug around z-axis;
@@ -54,12 +52,19 @@ Deactivate()
 	call-script Stop();
 }
 
+
+MMStatus(State)
+{
+    OPERATING = State;
+    //get PRINT(OPERATING);
+}
+
 ImAMetalMaker()
 {
 	mmState = -1;
 	while( TRUE )
 	{
-		if ((get OPERATING) == 1)
+		if (OPERATING == 1)
 		{
 			if (mmState != 1) {
 				call-script Go();

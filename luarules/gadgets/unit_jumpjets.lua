@@ -95,7 +95,11 @@ local jumpDefNames  = VFS.Include"LuaRules/Configs/jump_defs.lua"
 
 local jumpDefs = {}
 for name, data in pairs(jumpDefNames) do
-  jumpDefs[UnitDefNames[name].id] = data
+	if UnitDefNames[name] then
+		jumpDefs[UnitDefNames[name].id] = data
+	else
+		Spring.Echo("Jumpjets: No unitdef called:",name)
+	end
 end
 
 

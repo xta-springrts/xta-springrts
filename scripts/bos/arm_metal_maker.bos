@@ -5,13 +5,11 @@
 
 piece  base, sphereOn, sphereOff, glow;
 
-static-var  mmState;
-
-#define OPERATING 1024
+static-var  mmState, OPERATING;
 
 Go()
 {
-	set OPERATING to 1;
+	OPERATING = 1;
 	show sphereOn;
 	hide sphereOff;
 	//move sphere to y-axis [1.600000] speed [1.600000];
@@ -22,7 +20,7 @@ Go()
 
 Stop()
 {	
-	set OPERATING to 0;
+	OPERATING = 0;
 	mmState = 0;
 	set ACTIVATION to 0;
 	hide sphereOn;
@@ -45,7 +43,7 @@ ImAMetalMaker()
 	mmState = -1;
 	while( TRUE )
 	{
-		if ((get OPERATING) == 1)
+		if (OPERATING == 1)
 		{
 			if (mmState != 1) {
 				call-script Go();
@@ -71,6 +69,12 @@ Standby()
 		}
 		sleep 450;
 	}
+}
+
+MMStatus(State)
+{
+    OPERATING = State;
+    //get PRINT(OPERATING);
 }
 
 SmokeUnit(healthpercent, sleeptime, smoketype)

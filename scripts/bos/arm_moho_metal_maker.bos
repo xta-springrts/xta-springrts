@@ -5,13 +5,11 @@
 
 piece  base2, lid2, lid3, mmakercore, lid1, lid4, glowingthing, glow;
 
-static-var  mmState;
-
-#define OPERATING 1024
+static-var  mmState, OPERATING;
 
 activatescr()
 {
-	set OPERATING to 1;
+	OPERATING = 1;
 	turn lid2 to x-axis <30.395604> speed <38.598901>;
 	turn lid3 to x-axis <-26.796703> speed <35.500000>;
 	turn mmakercore to y-axis <-30.395604> speed <39.395604>;
@@ -44,7 +42,7 @@ activatescr()
 deactivatescr()
 {
 	set ACTIVATION to 0;
-	set OPERATING to 0;
+	OPERATING = 0;
 	mmState = 0;
 	move mmakercore to y-axis [12.500000] speed [39.500000];
 	turn mmakercore to y-axis <-60.796703> speed <42.697802>;
@@ -75,13 +73,18 @@ Deactivate()
 	call-script deactivatescr();
 }
 
+MMStatus(State)
+{
+    OPERATING = State;
+    //get PRINT(OPERATING);
+}
 
 ImAMetalMaker()
 {
 	mmState = -1;
 	while( TRUE )
 	{
-		if ((get OPERATING) == 1)
+		if (OPERATING == 1)
 		{
 			if (mmState != 1) {
 				call-script activatescr();				
@@ -149,7 +152,7 @@ Create()
 	dont-shade mmakercore;
 	set ARMORED to 0;
 	set ACTIVATION to 0;
-	set OPERATING to 0;
+	OPERATING = 0;
 	start-script SmokeUnit();
 	start-script Standby();
 }

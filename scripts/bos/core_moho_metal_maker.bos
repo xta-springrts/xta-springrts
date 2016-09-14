@@ -5,14 +5,13 @@
 
 piece  base, flap2, flap3, flap4, flap1, topcap, glowingthing, glow;
 
-static-var  mmState;
+static-var  mmState, OPERATING;
 
-#define OPERATING 1024
 #define SIG_OPEN		16
 
 activatescr()
 {
-	set OPERATING to 1;
+	OPERATING = 1;
 	turn flap3 to z-axis <-69.296703> speed <261.697802>;
 	sleep 265;
 
@@ -46,7 +45,7 @@ activatescr()
 deactivatescr()
 {	
 	mmState = 0;
-	set OPERATING to 0;
+	OPERATING = 0;
 	set ACTIVATION to 0;
 	move topcap to y-axis [-40.250000] speed [144.750000];
 	sleep 265;
@@ -109,12 +108,19 @@ Standby()
 	}
 }
 
+
+MMStatus(State)
+{
+    OPERATING = State;
+    //get PRINT(OPERATING);
+}
+
 ImAMetalMaker()
 {
 	mmState = -1;
 	while( TRUE )
 	{
-		if ((get OPERATING) == 1)
+		if (OPERATING == 1)
 		{
 			if (mmState != 1) {
 				call-script go();

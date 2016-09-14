@@ -1,0 +1,127 @@
+#define TAK			// This is a TAK script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+piece  base, engine, gate;
+
+static-var  Static_Var_1, Static_Var_2;
+
+
+Float()
+{
+	move base to y-axis [15.500000] speed [5.000000];
+	sleep 20;
+	move base to y-axis [10.500000] speed [5.000000];
+	sleep 20;
+	move base to y-axis [13.000000] speed [5.000000];
+	sleep 20;
+	move base to y-axis [10.500000] speed [5.000000];
+	sleep 20;
+	move base to y-axis [13.000000] speed [5.000000];
+	sleep 20;
+	start-script Float();
+}
+
+LandSequence()
+{
+	play-sound( "battle/largegun", 60 );
+	Static_Var_1 = 1;
+	move base to y-axis [5000.000000] now;
+	move base to z-axis [-5000.000000] now;
+	turn base to y-axis <180.000000> speed <1000.000000>;
+	wait-for-turn base around y-axis;
+	sleep 1000;
+	move base to y-axis [2500.000000] speed [250.000000];
+	move base to z-axis [-2500.000000] speed [250.000000];
+	turn base to y-axis <90.000000> speed <10.000000>;
+	wait-for-turn base around y-axis;
+	move base to y-axis [13.000000] speed [250.000000];
+	move base to z-axis [0.000000] speed [250.000000];
+	turn base to y-axis <0.000000> speed <10.000000>;
+	wait-for-turn base around y-axis;
+	sleep 1750;
+	play-sound( "unit/SEAPOFF1", 60 );
+	emit-sfx 1024 + 3 from base;
+	emit-sfx 1024 + 3 from engine;
+	emit-sfx 1024 + 3 from gate;
+	Static_Var_1 = 0;
+	sleep 3200;
+	play-sound( "unit/mavbot2", 60 );
+	sleep 1500;
+	start-script Float();
+	play-sound( "unit/TURMED3", 60 );
+	sleep 1500;
+	play-sound( "battle/BERTHA1", 60 );
+	emit-sfx 1024 + 2 from gate;
+	emit-sfx 1024 + 4 from gate;
+	sleep 500;
+	play-sound( "battle/BERTHA2", 60 );
+	sleep 500;
+	play-sound( "battle/BERTHA3", 60 );
+	sleep 500;
+	emit-sfx 1024 + 4 from gate;
+	play-sound( "battle/BERTHA4", 60 );
+	sleep 500;
+	play-sound( "battle/BERTHA5", 60 );
+	sleep 500;
+	play-sound( "battle/BERTHA6", 60 );
+	sleep 500;
+	emit-sfx 1024 + 4 from gate;
+	play-sound( "battle/BERTHA5", 60 );
+	sleep 500;
+	emit-sfx 1024 + 4 from gate;
+	play-sound( "battle/BERTHA4", 60 );
+	sleep 500;
+	play-sound( "battle/BERTHA3", 60 );
+	sleep 500;
+	emit-sfx 1024 + 4 from gate;
+	play-sound( "battle/BERTHA2", 60 );
+	sleep 500;
+	play-sound( "battle/BERTHA1", 60 );
+	emit-sfx 1024 + 4 from gate;
+	play-sound( "unit/CAPTURE2", 60 );
+	sleep 500;
+	play-sound( "unit/CAPTURE2", 60 );
+	sleep 500;
+	play-sound( "unit/CAPTURE2", 60 );
+	sleep 500;
+	play-sound( "unit/CAPTURE2", 60 );
+	sleep 500;
+	play-sound( "unit/CAPTURE2", 60 );
+	Static_Var_2 = 1;
+}
+
+SpecialEffects()
+{
+	if( Static_Var_2 == 1 )
+	{
+		emit-sfx 1024 + 1 from gate;
+		sleep 10;
+	}
+	if( Static_Var_1 == 1 )
+	{
+		emit-sfx 1024 + 0 from engine;
+		sleep 10;
+	}
+	sleep 10;
+	start-script SpecialEffects();
+}
+
+Create()
+{
+	set ARMORED to 0;
+	start-script SpecialEffects();
+	start-script LandSequence();
+}
+
+SweetSpot(piecenum)
+{
+	piecenum = base;
+}
+
+Killed(Func_Var_1, Func_Var_2)
+{
+	sleep 333;
+	explode base type 1;
+}
