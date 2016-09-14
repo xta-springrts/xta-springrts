@@ -1,0 +1,122 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Arm;
+	name=Trident;
+	description=Torpedo Bomber;
+	icontype=air;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=ARM VTOL MOBILE WEAPON NOTLAND NOTSEA NOTSUB;
+	tedclass=VTOL;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=talon_trident;
+	unitnumber=43;
+	objectname=talon_trident.3do;
+	buildpic=talon_trident.png;
+	soundcategory=ARM_VTOL;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=921; //was 610//
+	healtime=30;
+	buildcostmetal=388;
+	buildcostenergy=6038;
+	buildtime=15096; //was 14096//
+	footprintx=3;
+	footprintz=3;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=1.5;
+	energyuse=1.5;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canattack=1;
+	canfly=1;
+	canguard=1;
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	turnrate=840;
+	acceleration=0.2;
+	brakerate=0.06;
+	maxvelocity=12.3; //was 9.7//
+	maxslope=10;
+	maxwaterdepth=255;
+	cruisealt=150;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=525;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=ARMAIR_TORPEDO;
+	wpri_badtargetcategory=VTOL;
+	explodeas=BIG_UNITEX;
+	selfdestructas=BIG_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	firestandorders=1;
+	mobilestandorders=1;
+	standingfireorder=0;
+	standingmoveorder=0;
+	defaultmissiontype=VTOL_standby;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	attackrunlength=10;
+	bankscale=1;
+	bmcode=1;
+	designation=AFD-J9;
+	downloadable=1;
+	maneuverleashlength=1280;
+	moverate1=8;
+	shootme=1;
+	steeringmode=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+}

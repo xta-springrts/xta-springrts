@@ -84,11 +84,11 @@
 	//************************************************************
 	//  Weapons
 	//***********
-	weapon1=Blooper_BEAM;
+	weapon1=TALON_OTHER;
 	wpri_badtargetcategory=VTOL;
 	badtargetcategory=VTOL;
-	explodeas=ATOMIC_BLASTSML;
-	selfdestructas=ATOMIC_BLAST;
+	explodeas=CRAWL_BLASTSML;
+	selfdestructas=armmine5;
 
 	//************************************************************
 	//  Orders

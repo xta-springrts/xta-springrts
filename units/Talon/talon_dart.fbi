@@ -1,0 +1,134 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Arm;
+	name=Dart;
+	description=Stealth Spy Plane;
+	icontype=air;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=ARM VTOL  CONSTR NOWEAPON NOTSUB;
+	tedclass=VTOL;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=talon_dart;
+	unitnumber=18;
+	objectname=talon_dart.3do;
+	buildpic=talon_dart.png;
+	soundcategory=ARM_CVTOL;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=786;
+	healtime=17;
+	buildcostmetal=563;
+	buildcostenergy=23160;
+	buildtime=33633;
+	footprintx=2;
+	footprintz=2;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalmake=0.0;//0.2
+	metalstorage=00;
+	energymake=5.5;//11
+	energyuse=0.1;
+	energystorage=50;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	//builder=1;
+	//builddistance=120;
+	//workertime=90;
+	//RepairSpeed=90;
+	//ReclaimSpeed=90;
+	//TerraformSpeed=180;//speed up terraforming
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canfly=1;
+	canguard=1;
+	canmove=1;
+	canpatrol=1;
+	//canreclamate=1;
+	canstop=1;
+	//canFight=1;
+	stealth=1;
+	cancloak=1;
+	cloakcost=300;
+	cloakcostmoving=600;
+	mincloakdistance=150;
+	
+	//************************************************************
+	//  Movement
+	//************
+	turnrate=350;
+	acceleration=0.1;
+	brakerate=0.15;
+	maxvelocity=2.5;
+	maxslope=10;
+	maxwaterdepth=0;
+	cruisealt=70;
+	hoverattack=1;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=920;
+	//radardistance=2800;
+	//sonardistance=1105;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeas=armmine3;
+	selfdestructas=armmine3;
+	//Has a weapon scripted ready to go
+	//weapon1=AIRWEAK_BEAM;
+	AirStrafe=0;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	mobilestandorders=1;
+	standingmoveorder=1;
+	defaultmissiontype=VTOL_standby;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bankscale=1.5;
+	bmcode=1;
+	designation=ARM-CA1;
+	downloadable=1;
+	maneuverleashlength=1280;
+	scale=0.8;
+	shootme=1;
+	steeringmode=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	collide=0;
+	pieceTrailCEGTag=NanoDebree;//bleh
+	pieceTrailCEGRange = 2;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+}

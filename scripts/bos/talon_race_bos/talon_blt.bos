@@ -111,6 +111,7 @@ FirePrimary()
 		start-script flareflash2();
 		move barrel2 to z-axis [0.000000] speed [5.000000];
 	}
+	sleep 800;
 	++gun_1;
 	if( gun_1 == 2 )
 	{

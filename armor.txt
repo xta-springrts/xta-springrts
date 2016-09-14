@@ -148,7 +148,16 @@
 	talon_token=99;
 	talon_shade=99;
 	talon_wyvern=99;
-
+	talon_construction_seaplane=99;
+	talon_vigilante=99;
+	talon_trident=99;
+	talon_cyclone=99;
+	talon_corsair=99;
+	talon_echelon=99;
+	talon_adv_construction_aircraft=99;
+	talon_eclipse=99;
+	talon_vulture=99;
+	talon_dart=99;
 }
 
 [group_mines]

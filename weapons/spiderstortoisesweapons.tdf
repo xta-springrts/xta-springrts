@@ -351,8 +351,8 @@
 	thickness=3.5;
 	[DAMAGE]
 	{
-		default=2400;
-		group_commanders=1320;
+		default=2000;
+		group_commanders=1020;
 		group_invincible=1;
 	}
 }

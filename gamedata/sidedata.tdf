@@ -4377,6 +4377,23 @@
 
 //------------------TALON
 
+	[talon_adv_aircraft_plant]
+	{
+		canbuild1=talon_adv_construction_aircraft;
+		canbuild2=talon_recon;
+		canbuild3=talon_echelon;
+		canbuild4=talon_vulture;
+		//canbuild5=armpur;//xtaids
+		canbuild6=talon_eclipse;
+		canbuild7=talon_dart;
+		canbuild8=talon_wyvern;//sea stuff below
+		canbuild9=talon_trident;
+		canbuild10=talon_corsair;
+		canbuild11=talon_vigilante;
+		//canbuild12=arm_construction_seaplane_xtra;
+		canbuild13=talon_construction_seaplane;
+	}
+
 	[talon_aircraft_plant]
 	{
 		canbuild1=talon_construction_aircraft;
@@ -4403,6 +4420,93 @@
 		canbuild11=talon_squarepants;
 	}
 	
+	[talon_adv_construction_aircraft]
+	{
+	 	canbuild1=talon_fortification_wall;
+	 	//canbuild2=ARMBFORTEW;//xtaids
+		canbuild3=talon_moho_mine;
+	 	canbuild4=talon_moho_metal_maker;
+		canbuild5=talon_geothermal_powerplant;
+		canbuild6=talon_cloakable_fusion_reactor;
+		canbuild7=talon_fusion_power_plant;
+		canbuild8=talon_advanced_radar_tower;
+		canbuild9=arm_radar_jamming_tower;
+		canbuild10=talon_light_laser_tower;
+		canbuild11=talon_cobalt;
+		canbuild12=talon_popcorn;
+		canbuild13=talon_slinger;
+		canbuild14=talon_energy_storage;
+		canbuild15=talon_metal_storage;
+		canbuild16=talon_targeting_facility;
+		canbuild17=talon_air_repair_pad;
+		canbuild18=talon_blt;
+		//canbuild19=armarch;//xtaids
+		canbuild20=talon_langer_max;
+		canbuild21=Talon_Armistice;
+		canbuild22=talon_hovercraft_platform;
+		canbuild23=talon_adv_hovercraft_platform;
+		canbuild24=talon_vehicle_plant;
+		canbuild25=talon_adv_vehicle_plant;
+		canbuild26=talon_aircraft_plant;
+		canbuild27=talon_adv_aircraft_plant;
+		canbuild28=talon_shipyard;
+		//canbuild29=arm_sub_pen;
+		canbuild30=talon_adv_shipyard;
+		//canbuild31=arm_spidernest_Xtra;//Spiderpack vs. Tortoise
+		//canbuild32=arm_spidernest;//Spiderpack vs. Tortoise
+		canbuild33=talon_clone_lab; 
+		canbuild34=talon_seaplane_platform; //xtaids
+		canbuild35=talon_damascus;
+		canbuild36=talon_rod_of_god;
+	 	//canbuild37=ARMFFF;//xtaids
+	 	//canbuild38=MERCURY;//xtaids
+		canbuild39=arm_vulcan;
+		canbuild40=talon_nano_tower;
+	}
+
+	[talon_adv_construction_hovercraft]//NOSEAYET
+	{
+	 	canbuild1=talon_fortification_wall;
+	 	//canbuild2=ARMBFORTEW;//xtaids
+		canbuild3=talon_moho_mine;
+	 	canbuild4=talon_moho_metal_maker;
+		canbuild5=talon_geothermal_powerplant;
+		canbuild6=talon_cloakable_fusion_reactor;
+		canbuild7=talon_fusion_power_plant;
+		canbuild8=talon_advanced_radar_tower;
+		canbuild9=arm_radar_jamming_tower;
+		canbuild10=talon_light_laser_tower;
+		canbuild11=talon_cobalt;
+		canbuild12=talon_popcorn;
+		canbuild13=talon_slinger;
+		canbuild14=talon_energy_storage;
+		canbuild15=talon_metal_storage;
+		canbuild16=talon_targeting_facility;
+		canbuild17=talon_air_repair_pad;
+		canbuild18=talon_blt;
+		//canbuild19=armarch;//xtaids
+		canbuild20=talon_langer_max;
+		canbuild21=Talon_Armistice;
+		canbuild22=talon_hovercraft_platform;
+		canbuild23=talon_adv_hovercraft_platform;
+		canbuild24=talon_vehicle_plant;
+		canbuild25=talon_adv_vehicle_plant;
+		canbuild26=talon_aircraft_plant;
+		canbuild27=talon_adv_aircraft_plant;
+		canbuild28=talon_shipyard;
+		//canbuild29=arm_sub_pen;
+		canbuild30=talon_adv_shipyard;
+		//canbuild31=arm_spidernest_Xtra;//Spiderpack vs. Tortoise
+		//canbuild32=arm_spidernest;//Spiderpack vs. Tortoise
+		canbuild33=talon_clone_lab; 
+		canbuild34=talon_seaplane_platform; //xtaids
+		canbuild35=talon_damascus;
+		canbuild36=talon_rod_of_god;
+	 	//canbuild37=ARMFFF;//xtaids
+	 	//canbuild38=MERCURY;//xtaids
+		canbuild39=arm_vulcan;
+		canbuild40=talon_nano_tower;
+	}
 	[talon_adv_construction_vehicle]
 	{
 	 	canbuild1=talon_fortification_wall;
@@ -4424,7 +4528,7 @@
 		canbuild17=talon_air_repair_pad;
 		canbuild18=talon_blt;
 		//canbuild19=armarch;//xtaids
-		canbuild20=arm_big_bertha;
+		canbuild20=talon_langer_max;
 		canbuild21=Talon_Armistice;
 		canbuild22=talon_hovercraft_platform;
 		canbuild23=talon_adv_hovercraft_platform;
@@ -4438,13 +4542,13 @@
 		//canbuild31=arm_spidernest_Xtra;//Spiderpack vs. Tortoise
 		//canbuild32=arm_spidernest;//Spiderpack vs. Tortoise
 		canbuild33=talon_clone_lab; 
-		//canbuild34=arm_landship_lab; //xtaids
+		canbuild34=talon_seaplane_platform; //xtaids
 		canbuild35=talon_damascus;
-		canbuild36=arm_retaliator;
+		canbuild36=talon_rod_of_god;
 	 	//canbuild37=ARMFFF;//xtaids
 	 	//canbuild38=MERCURY;//xtaids
 		canbuild39=arm_vulcan;
-		canbuild40=arm_nano_tower;
+		canbuild40=talon_nano_tower;
 	}
 
 	[talon_clone_lab]
@@ -4455,7 +4559,8 @@
 		canbuild4=talon_infantry; 
 		canbuild5=talon_mercenary;
 		canbuild6=talon_sphere;
-		canbuild7=talon_psyker;
+		canbuild7=talon_hip;
+		canbuild8=talon_psyker;
 	}
 	[talon_commander]
 	{
@@ -4488,9 +4593,9 @@
 		canbuild27=talon_floating_dragons_teeth;
 		canbuild28=talon_adv_vehicle_plant;
 		canbuild29=talon_adv_hovercraft_platform;
-		//canbuild30=arm_adv_aircraft_plant;
+		canbuild30=talon_adv_aircraft_plant;
 		//canbuild31=arm_adv_shipyard;
-		//canbuild32=arm_seaplane_platform;
+		canbuild32=talon_seaplane_platform;
 	}
 
 	[talon_construction_aircraft]
@@ -4506,11 +4611,11 @@
 		canbuild9=talon_aircraft_plant;
 		canbuild10=talon_shipyard;
 		//canbuild11=talon_sub_pen;
-		//canbuild12=core_nano_tower;
+		canbuild12=talon_nano_tower;
 		canbuild13=talon_light_laser_tower;
 		canbuild14=talon_radar_tower;
 		canbuild15=talon_torpedo_launcher; //added v9Beta
-		//canbuild16=core_adv_aircraft_plant;
+		canbuild16=talon_adv_aircraft_plant;
 		canbuild17=talon_geothermal_powerplant;
 		canbuild18=talon_cobalt;
 		canbuild19=talon_sentry;
@@ -4519,7 +4624,7 @@
 		//canbuild22=core_tortoise_plant_Xtra;//spiders vs. tortoise
 		//canbuild23=core_tortoise_plant;//spiders vs. tortoise
 		canbuild24=talon_hovercraft_platform;
-		//canbuild25=core_seaplane_platform;
+		canbuild25=talon_seaplane_platform;
 		canbuild26=talon_adv_hovercraft_platform;
 		canbuild27=talon_adv_vehicle_plant;
 		//canbuild28=core_adv_shipyard;
@@ -4561,19 +4666,60 @@
 		//canbuild32=arm_spidernest_Xtra;//Spiderpack vs. Tortoise
 		//canbuild33=arm_spidernest;//Spiderpack vs. Tortoise
 		canbuild34=talon_hovercraft_platform;
-		//canbuild35=arm_seaplane_platform;
+		canbuild35=talon_seaplane_platform;
 		canbuild36=talon_adv_vehicle_plant;
-		//canbuild37=arm_adv_aircraft_plant;
+		canbuild37=talon_adv_aircraft_plant;
 		//canbuild38=arm_adv_shipyard;
-		//canbuild39=arm_Underwater_moho_mine;
-		//canbuild40=arm_moho_mine;
-		//canbuild41=arm_air_repair_pad;
-		//canbuild42=arm_protector;
-		//canbuild43=arm_repulsor;
-		//canbuild44=arm_nano_tower;
+		canbuild44=talon_nano_tower;
 
 	}
-
+	[talon_construction_seaplane]
+	{
+		canbuild1=talon_solar_collector;
+		canbuild2=talon_wind_generator;
+		canbuild3=talon_energy_storage;
+		canbuild4=talon_metal_storage;
+		canbuild5=talon_metal_extractor;
+		canbuild6=talon_metal_maker;
+		canbuild7=talon_clone_lab;
+		canbuild8=talon_vehicle_plant;
+		canbuild9=talon_aircraft_plant;
+		canbuild10=talon_shipyard;
+		//canbuild11=arm_sub_pen;
+		canbuild12=talon_light_laser_tower;
+		canbuild13=talon_radar_tower;
+		canbuild14=talon_adv_aircraft_plant;
+		canbuild15=talon_geothermal_powerplant;
+		canbuild16=talon_cobalt;
+		canbuild17=talon_sentry;
+		canbuild18=talon_dragons_teeth;
+		canbuild19=talon_painless;
+		canbuild20=talon_sonar_station;
+		//canbuild21=arm_floating_radar;
+		canbuild22=talon_tidal_generator;
+		canbuild23=talon_underwater_energy_storage;
+		canbuild24=talon_underwater_metal_storage;
+		canbuild25=talon_underwater_metal_extractor;
+		canbuild26=talon_floating_metal_maker;
+		canbuild27=talon_kerberos;
+		canbuild28=talon_floating_dragons_teeth;
+		//canbuild29=talon_stingray;
+		canbuild30=talon_torpedo_launcher;
+		//canbuild31=arm_floating_light_laser_tower;
+		//canbuild32=arm_spidernest_Xtra;//Spiderpack vs. Tortoise
+		//canbuild33=arm_spidernest;//Spiderpack vs. Tortoise
+		canbuild34=talon_hovercraft_platform;
+		canbuild35=talon_seaplane_platform;
+		//canbuild36=arm_adv_shipyard;
+		canbuild37=talon_adv_vehicle_plant;
+		canbuild38=talon_adv_hovercraft_platform;
+		canbuild39=talon_moho_mine;
+		canbuild40=talon_air_repair_pad;
+		//canbuild41=ARM_Underwater_moho_mine;
+		canbuild42=talon_Armistice;
+		//canbuild43=arm_repulsor;
+		canbuild44=talon_nano_tower;
+	}
 	[talon_construction_vehicle]
 	{
 		canbuild1=talon_solar_collector;
@@ -4587,7 +4733,7 @@
 		canbuild9=talon_aircraft_plant;
 		canbuild10=talon_shipyard;
 		//canbuild11=talon_sub_pen;
-		//canbuild12=core_nano_tower;
+		canbuild12=talon_nano_tower;
 		canbuild13=talon_light_laser_tower;
 		canbuild14=talon_radar_tower;
 		canbuild15=talon_torpedo_launcher; //added v9Beta
@@ -4600,9 +4746,9 @@
 		//canbuild22=core_tortoise_plant_Xtra;//spiders vs. tortoise
 		//canbuild23=core_tortoise_plant;//spiders vs. tortoise
 		canbuild24=talon_hovercraft_platform;
-		//canbuild25=core_seaplane_platform;
+		canbuild25=talon_seaplane_platform;
 		canbuild26=talon_adv_hovercraft_platform;
-		//canbuild27=core_adv_aircraft_plant;
+		canbuild27=talon_adv_aircraft_plant;
 		//canbuild28=core_adv_shipyard;
 	}
 
@@ -4648,7 +4794,23 @@
 		canbuild16=talon_Barada_mine;
 		canbuild17=talon_Klaatu_mine;
 		canbuild18=talon_Nikto_mine;
+		canbuild19=talon_nano_tower;
 	}
+
+	[talon_seaplane_platform]
+	{
+		//canbuild1=arm_construction_seaplane_xtra;
+		canbuild2=talon_construction_seaplane;
+		canbuild3=talon_recon;	
+		canbuild4=talon_Echelon;
+		canbuild5=talon_trident;
+		canbuild6=talon_cyclone;
+		canbuild7=talon_corsair;
+		//canbuild8=talon_Insignia;
+		canbuild9=talon_vigilante;
+		canbuild10=talon_wyvern;
+	}
+		
 
 	[talon_vehicle_plant]
 	{

@@ -1,0 +1,146 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+piece  fp1, fp2, base, body, rotor1, rotor2, barrel1, barrel2, proper;
+
+static-var  Static_Var_1, statechg_DesiredState, statechg_StateChanging, gun_1;
+
+
+Activate()
+{
+	move proper to y-axis [-9] speed [9];
+	spin rotor1 around y-axis speed <500> accelerate <10>;
+	spin rotor2 around y-axis speed <-500> accelerate <-10>;
+}
+
+Deactivate()
+{
+	move proper to y-axis [0] speed [9];
+	while(get PIECE_Y(base) > get GROUND_HEIGHT(get PIECE_XZ(base)))
+	{
+		sleep 100;
+	}
+	spin rotor1 around y-axis speed rand(<0>,<15>) accelerate <-3>;
+	spin rotor2 around y-axis speed rand(<-15>,<0>) accelerate <3>;
+}
+
+SmokeUnit(healthpercent, sleeptime, smoketype)
+{
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 400;
+	}
+	while( TRUE )
+	{
+		healthpercent = get HEALTH;
+		if( healthpercent < 66 )
+		{
+			smoketype = 256 | 2;
+			if( Rand( 1, 66 ) < healthpercent )
+			{
+				smoketype = 256 | 1;
+			}
+			emit-sfx smoketype from base;
+		}
+		sleeptime = healthpercent * 50;
+		if( sleeptime < 200 )
+		{
+			sleeptime = 200;
+		}
+		sleep sleeptime;
+	}
+}
+
+StartMoving()
+{
+	signal 4;
+	set-signal-mask 4;
+	turn base to x-axis <30> speed <90>;
+	wait-for-turn base around x-axis;
+	turn base to x-axis <15> speed <30>;
+}
+
+StopMoving()
+{
+	signal 4;
+	set-signal-mask 4;
+	turn base to x-axis <0> speed <10>;
+}
+
+Create()
+{
+	Static_Var_1 = 0;
+	start-script SmokeUnit();	
+	gun_1 = 0;
+	hide fp1;
+	hide fp2;
+}
+
+RestoreAfterDelay()
+{
+	sleep 1234;
+	turn body to y-axis <0.000000> speed <10.021978>;
+	//turn body to x-axis <0.000000> speed <50.010989>;
+}
+
+AimPrimary(heading, pitch)
+{
+	signal 2;
+	set-signal-mask 2;
+	turn body to y-axis heading speed <120.060440>;
+	//turn body to x-axis <0.000000> - pitch speed <150.032967>;
+	wait-for-turn body around y-axis;
+	//wait-for-turn body around x-axis;
+	start-script RestoreAfterDelay();
+	return(1);
+}
+
+FirePrimary()
+{
+	if(!gun_1)
+	{
+		move barrel1 to z-axis [-1] now;
+		move barrel1 to z-axis [0.000000] speed [3.000000];
+		show fp1;
+		sleep 150;
+		hide fp1;
+	}
+	if(gun_1)
+	{
+		move barrel2 to z-axis [-1] now;
+		move barrel2 to z-axis [0.000000] speed [3.000000];
+		show fp2;
+		sleep 150;
+		hide fp2;
+	}
+	gun_1 = !gun_1;
+}
+
+QueryPrimary(piecenum)
+{
+	piecenum = gun_1;
+}
+
+AimFromPrimary(piecenum)
+{
+	piecenum = base;
+}
+
+SweetSpot(piecenum)
+{
+	piecenum = base;
+}
+
+Killed(severity, corpsetype)
+{
+	explode base type BITMAPONLY | EXPLODE_ON_HIT | BITMAP1;
+	explode fp1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode proper type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAPNUKE;
+	explode rotor1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+	explode rotor2 type SHATTER | EXPLODE_ON_HIT | BITMAP4;
+	explode barrel1 type SHATTER | EXPLODE_ON_HIT | BITMAPNUKE;
+	explode fp2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode barrel2 type SHATTER | EXPLODE_ON_HIT | BITMAPNUKE;
+}

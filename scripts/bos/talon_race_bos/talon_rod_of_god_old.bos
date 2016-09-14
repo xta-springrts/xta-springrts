@@ -1,0 +1,591 @@
+//
+// ThunderStorm Turret!
+//
+// Script and weapon by zwzsg on a model by Bidigam
+//
+
+#define SECURE_XZ\
+if(xz<0)\
+{\
+xz=0 - xz;\
+}\
+x=xz/65536;\
+z=xz - x*65536;\
+if(z>32767)\
+{\
+z=65536 - z;\
+/*x=x+(1-2*(xz<0));*/\
+x=x+(xz>0);\
+}\
+if(707333111<get XZ_HYPOT((x/2)*65536 + (z/2)))\
+{\
+xz=500333222;\
+}
+
+#define WEAPON_RELOADTIME 15000 // Copy back here the value in the weapon TDF
+#define WEAPON_RANGE (22000*([0.4])) // Copy back here the value in the weapon TDF, the *[0.4] is to convert the range in pixel into script units
+#define WEAPON_COMMANDFIRE 0 // Copy back here the value in the weapon TDF
+
+#define MARK_TARGET FALSE // Show an explosion on the point targetted by the AimPrimary(heading,pitch)
+
+#define AGE_OF_MATURE_CLOUD 0 // time before the could is ripe for lightening
+#define CLOUD_DURATION 0
+#define CLOUD_REFRESH 0
+#define CLOUD_POINTS_PER_REFRESH 0
+#define CLOUD_ALTITUDE [2000]
+#define CLOUD_RADIUS [0]
+#define LIGHTNING_RADIUS [15]//Somehow all lightnings comes from the first point anyway, so let it be centered. But strangely when centered all lightening hit at same point. So let's center only the first.
+
+#define SCALE 82/100
+
+#define SIGNAL_PRIMAIRE 2
+#define SIGNAL_PRIMAIRE_BIS 4
+#define SIGNAL_TIR 8
+#define SIGNAL_CREATE 16
+
+#define TA
+#include "exptype.h"
+#include "sfxtype.h"
+
+
+#if WEAPON_COMMANDFIRE
+	#define KILL_AIM_WHEN_TARGET_CLEARED TRUE
+	#define REPRESS_AIMING TRUE
+#else
+	#define KILL_AIM_WHEN_TARGET_CLEARED FALSE
+	#define REPRESS_AIMING FALSE
+#endif
+
+piece base, body, rocket, invisibilisers, aimer, target, cloud_shoulder, cloud_arm, cloud_hand, lightning, towerthing, spinner, smoker1, smoker2, glow;
+
+static-var DelayBeforeFoldBack, sav_primary_heading, sav_primary_pitch, chosen_point_xz, busy_blowing, block_angle, firing, sav_firing_xz, smoking, thrusting, firsttime, canfire, xz, x, z;
+
+
+
+Create()
+	{
+	dont-shade glow;
+	dont-cache glow;
+	DelayBeforeFoldBack=10000;
+	busy_blowing=FALSE;
+	firing=FALSE;
+	spin spinner around y-axis speed <500>;
+	thrusting=0;
+	canfire=0;
+	smoking=0;
+	dont-shade base;
+	dont-shade rocket;
+	dont-shade body;
+	show invisibilisers;
+	dont-cache invisibilisers;//remove its shadow
+	dont-shade invisibilisers;
+	hide invisibilisers;//Let's let digger=1; takes care of that. Ah ok no, it would hide the pit.
+	move aimer to y-axis [11000] now; // 200000 makes very weird things
+	//hide turret_glow;
+	while(get BUILD_PERCENT_LEFT)
+		{
+		sleep 100;
+		}
+	set-signal-mask SIGNAL_CREATE;// Becomes killeable, so the unfolding in the aiming first kill the following folding
+	//move turret to y-axis [-32]*SCALE speed [16]*SCALE;
+	set ARMORED to TRUE;
+	firsttime=1;
+	}
+
+
+SetMaxReloadTime(time)
+	{
+	DelayBeforeFoldBack=time*3/2;
+	}
+
+
+#if REPRESS_AIMING
+SmokeALotThenFoldIn()
+	{
+	var t,p;
+	turn cloud_shoulder to y-axis get XZ_ATAN(get PIECE_XZ(base) - chosen_point_xz) now;
+	xz = get PIECE_XZ(base) - chosen_point_xz;
+	SECURE_XZ;
+	move cloud_arm to z-axis get XZ_HYPOT(xz) now;
+	move cloud_hand to y-axis CLOUD_ALTITUDE + get GROUND_HEIGHT(chosen_point_xz) - get PIECE_Y(base) now;
+	move lightning to y-axis CLOUD_ALTITUDE + get GROUND_HEIGHT(chosen_point_xz) - get PIECE_Y(base) now;
+	move lightning to z-axis 0 now;//Somehow all lightnings comes from the first point anyway, so let it be centered. But strangely when centered all lightening hit at same point. So let's center only the first.
+	for(t=0;t<=CLOUD_DURATION;t=t + CLOUD_REFRESH)
+		{
+		for(p=CLOUD_POINTS_PER_REFRESH;p>=1;--p)
+			{
+			turn cloud_arm to y-axis rand(0,65536) now;
+			move cloud_hand to z-axis rand(0,CLOUD_RADIUS) now;
+			if(has_fired)
+				{
+				move lightning to z-axis rand(0,LIGHTNING_RADIUS) now;
+				}
+			//emit-sfx SFXTYPE_WHITESMOKE from cloud_hand;
+			emit-sfx SFXTYPE_BLACKSMOKE from cloud_hand;
+			}
+		sleep CLOUD_REFRESH;
+		if (t>AGE_OF_MATURE_CLOUD)
+			{
+			if(!firing)
+				{
+				t=5+CLOUD_DURATION;
+				}
+			}
+		}
+#else
+OnlyFoldIn()
+	{
+	sleep WEAPON_RELOADTIME + 1500;
+#endif
+	sleep WEAPON_RELOADTIME - CLOUD_DURATION + AGE_OF_MATURE_CLOUD + 1500;
+	busy_blowing=FALSE;// Make sure that is after the weapon has reloaded
+	sleep 300;
+	set ARMORED to TRUE;
+	}
+
+AimFromPrimary(piece_to_aim_from)
+	{
+	piece_to_aim_from=aimer;
+	}
+
+
+thrust()
+{
+	while (thrusting)
+	{
+		explode spinner type BITMAPONLY | BITMAP3;
+		emit-sfx 256 | 1 from smoker1;
+		emit-sfx 256 | 2 from smoker2;
+		sleep 100;
+		
+		emit-sfx 256 | 1 from smoker1;
+		emit-sfx 256 | 2 from smoker2;
+		sleep 100;
+	}
+}
+
+launch()
+{
+	if (firsttime)
+		{
+		firsttime = 0;
+		show rocket;
+		while ( smoking < 15 )
+		{
+			emit-sfx 256 | 1 from smoker1;
+			emit-sfx 256 | 2 from smoker2;
+			sleep 100;
+			++smoking;
+		}
+		smoking = 0;
+		thrusting = 1;
+
+		start-script thrust();
+		dont-cache rocket;
+		dont-cache spinner;
+		dont-cache smoker1;
+		dont-cache smoker2;
+		move rocket to y-axis [5] speed [2];
+		wait-for-move rocket along y-axis;
+		move rocket to y-axis [10] speed [4];
+		wait-for-move rocket along y-axis;
+		move rocket to y-axis [15] speed [6];
+		wait-for-move rocket along y-axis;
+		move rocket to y-axis [20] speed [8];
+		wait-for-move rocket along y-axis;
+		move rocket to y-axis [25] speed [10];
+		wait-for-move rocket along y-axis;
+		move rocket to z-axis [-5] speed [5];
+		wait-for-move rocket along z-axis;
+		move rocket to z-axis [-10] speed [5.5];
+		wait-for-move rocket along z-axis;
+		move rocket to z-axis [-15] speed [6];
+		wait-for-move rocket along z-axis;
+		move rocket to z-axis [-20] speed [6.5];
+		wait-for-move rocket along z-axis;
+		move rocket to z-axis [-25] speed [7];
+		wait-for-move rocket along z-axis;
+		move rocket to z-axis [-30] speed [7.5];
+		wait-for-move rocket along z-axis;
+		move rocket to z-axis [-35] speed [8];
+		wait-for-move rocket along z-axis;
+		move rocket to z-axis [-40] speed [8.5];
+		wait-for-move rocket along z-axis;
+		move rocket to z-axis [-45] speed [9];
+		wait-for-move rocket along z-axis;
+		move rocket to z-axis [-50] speed [9.5];
+		wait-for-move rocket along z-axis;
+		move rocket to z-axis [-55] speed [10];
+		wait-for-move rocket along z-axis;
+		move rocket to z-axis [-60] speed [10.5];
+		wait-for-move rocket along z-axis;
+		move rocket to z-axis [-65] speed [11];
+		wait-for-move rocket along z-axis;
+		move rocket to z-axis [-70] speed [11.5];
+		wait-for-move rocket along z-axis;
+		move rocket to z-axis [-75] speed [12];
+		wait-for-move rocket along z-axis;
+		move rocket to z-axis [-80] speed [12.5];
+		wait-for-move rocket along z-axis;
+		move rocket to z-axis [-85] speed [13];
+		wait-for-move rocket along z-axis;
+		move rocket to z-axis [-90] speed [13.5];
+		wait-for-move rocket along z-axis;
+		move rocket to z-axis [-95] speed [14];
+		wait-for-move rocket along z-axis;
+		move rocket to z-axis [-100] speed [14.5];
+		wait-for-move rocket along z-axis;
+		move rocket to z-axis [-105] speed [15];
+		wait-for-move rocket along z-axis;
+		move rocket to z-axis [-110] speed [15.5];
+		wait-for-move rocket along z-axis;
+		move rocket to z-axis [-115] speed [16];
+		wait-for-move rocket along z-axis;
+		move rocket to z-axis [-120] speed [16.5];
+		wait-for-move rocket along z-axis;
+		move rocket to z-axis [-125] speed [17];
+		wait-for-move rocket along z-axis;
+		move rocket to z-axis [-130] speed [17.5];
+		wait-for-move rocket along z-axis;
+		move rocket to z-axis [-135] speed [18];
+		wait-for-move rocket along z-axis;
+		move rocket to z-axis [-140] speed [18.5];
+		wait-for-move rocket along z-axis;
+		move rocket to z-axis [-145] speed [19];
+		wait-for-move rocket along z-axis;
+		move rocket to z-axis [-160] speed [19.5];
+		wait-for-move rocket along z-axis;
+		move rocket to z-axis [-165] speed [20];
+		wait-for-move rocket along z-axis;
+		move rocket to z-axis [-170] speed [20.5];
+		wait-for-move rocket along z-axis;
+		move rocket to z-axis [-175] speed [21];
+		wait-for-move rocket along z-axis;
+		move rocket to z-axis [-180] speed [21.5];
+		wait-for-move rocket along z-axis;
+		move rocket to z-axis [-185] speed [22];
+		wait-for-move rocket along z-axis;
+		move rocket to z-axis [-190] speed [22.5];
+		wait-for-move rocket along z-axis;
+		move rocket to z-axis [-195] speed [23];
+		wait-for-move rocket along z-axis;
+		move rocket to z-axis [-200] speed [23.5];
+		wait-for-move rocket along z-axis;
+		move rocket to z-axis [-205] speed [24];
+		wait-for-move rocket along z-axis;
+		move rocket to z-axis [-210] speed [24.5];
+		wait-for-move rocket along z-axis;
+		move rocket to z-axis [-215] speed [25];
+		wait-for-move rocket along z-axis;
+		move rocket to z-axis [-220] speed [25.5];
+		wait-for-move rocket along z-axis;
+		move rocket to z-axis [-225] speed [26];
+		wait-for-move rocket along z-axis;
+		move rocket to z-axis [-230] speed [26.5];
+		wait-for-move rocket along z-axis;
+		move rocket to z-axis [-235] speed [27];
+		wait-for-move rocket along z-axis;
+		move rocket to z-axis [-240] speed [27.5];
+		wait-for-move rocket along z-axis;
+		move rocket to z-axis [-245] speed [28];
+		wait-for-move rocket along z-axis;
+		move rocket to z-axis [-250] speed [28.5];
+		wait-for-move rocket along z-axis;
+		move rocket to z-axis [-255] speed [29];
+		wait-for-move rocket along z-axis;
+		move rocket to z-axis [-260] speed [29.5];
+		wait-for-move rocket along z-axis;
+		move rocket to z-axis [-265] speed [30];
+		wait-for-move rocket along z-axis;
+		move rocket to z-axis [-270] speed [30.5];
+		wait-for-move rocket along z-axis;
+		move rocket to z-axis [-275] speed [31];
+		wait-for-move rocket along z-axis;
+		move rocket to z-axis [-280] speed [31.5];
+		wait-for-move rocket along z-axis;
+		move rocket to z-axis [-285] speed [32];
+		wait-for-move rocket along z-axis;
+		move rocket to z-axis [-290] speed [32.5];
+		wait-for-move rocket along z-axis;
+		move rocket to z-axis [-395] speed [33];
+		wait-for-move rocket along z-axis;
+		move rocket to z-axis [-400] speed [33.5];
+		wait-for-move rocket along z-axis;
+
+		
+		thrusting = 0;
+		
+		hide rocket;
+		sleep 1000;
+		move rocket to y-axis [-40] now;
+		move rocket to z-axis [0] now;
+		sleep 5000;
+	}
+	canfire=1;
+}
+
+AimPrimary(heading,pitch)
+	{
+	if (firsttime)
+	{
+		start-script launch();
+	}
+	while(!canfire)
+	{
+		sleep 100;
+	}
+	#if REPRESS_AIMING
+	if(busy_blowing)
+		{
+		signal SIGNAL_PRIMAIRE_BIS;
+		set-signal-mask SIGNAL_PRIMAIRE_BIS;
+		while(busy_blowing)
+			{
+			sleep 200;
+			}
+		}
+	#endif
+	
+	signal SIGNAL_PRIMAIRE;
+	set-signal-mask SIGNAL_PRIMAIRE;
+	
+	sav_primary_heading=heading;
+	sav_primary_pitch=pitch;
+	
+	
+	// Script to determine the absolute xz position of target point
+	// Works only for LOS weapon, and within range
+	// The idea is:
+	// - Put the turret center on a very up position
+	// - Wait till an aiming is done
+	// - Retrieve the heading and pitch
+	// - Turn the turret accordingly
+	// - Move a piece further and further folling the weapon LOS, until it goes underground
+	// - Use dichotomia inside the interval [turret, point underground] to find the exact limit where the piece moving along weapon LOS goes through ground
+	// - Use that position as xz
+	
+	
+	var arm_length, arm_length_inc, zhypsqthsq, wfpc_rxz, wfpc_ro, wfpc_theta;
+	
+	
+	if (sav_primary_pitch<= 32768)// to prevent any lock
+		{
+		//start-script ExtinguishWormHole();
+		while(TRUE)
+			{
+			sleep 12600000;
+			}
+		return;
+		}
+
+	turn aimer to y-axis sav_primary_heading now;
+	turn aimer to x-axis (0 - sav_primary_pitch) now;
+   	move target to z-axis 0 now;
+   	arm_length=1;
+   	while (get GROUND_HEIGHT(get PIECE_XZ(target))<get PIECE_Y(target) && arm_length!=2147483646)//while target_point is over the ground
+   		{
+   		arm_length=arm_length*2;
+   		
+   		if (arm_length==1073741824)//another, better, lock prevention
+   			{arm_length=1073741823;}//another, better, lock prevention
+   		
+   		move target to z-axis arm_length now;
+   		//wait-for-move target along z-axis;
+   		//explode target type BITMAPONLY | BITMAP2;
+   		}
+   	
+	arm_length_inc=arm_length/2;
+	arm_length=0;
+   	while (arm_length_inc>0)
+   		{
+   		move target to z-axis (arm_length + arm_length_inc) now;
+   		//wait-for-move target along z-axis;
+   		//explode target type BITMAPONLY | BITMAPNUKE;
+   		if (get GROUND_HEIGHT(get PIECE_XZ(target))<=get PIECE_Y(target))//if target_point is over the ground
+   			{
+   			arm_length=arm_length +	 arm_length_inc;
+   			}
+   		arm_length_inc=arm_length_inc/2;
+   		}
+   	
+
+	if (arm_length==2147483616)// Yes, 16 not 46.// Detect when it was not able to find the intersection between the ground and the line of fire
+   		{
+		//start-script ExtinguishWormHole();
+		while(TRUE)
+			{
+			sleep 12600000;
+			}
+		return;
+   		}
+   	
+   	
+   	zhypsqthsq=get PIECE_Y(aimer) + get PIECE_Y(target);
+   	zhypsqthsq=arm_length*arm_length - zhypsqthsq*zhypsqthsq;
+   	zhypsqthsq=get HYPOT(zhypsqthsq,zhypsqthsq);// get HYPOT(var,var) is square root of var
+
+	chosen_point_xz=get PIECE_XZ(target);
+	
+	#if MARK_TARGET
+	explode target type BITMAPONLY | BITMAP2;
+	#endif
+	
+	turn aimer to y-axis <0> now;
+   	turn aimer to x-axis <0> now;
+   	move target to z-axis 0 now;
+	
+	wfpc_rxz=get PIECE_XZ(base) - chosen_point_xz;
+	
+	//vortex_xz_entry=chosen_point_xz;
+	xz = get PIECE_XZ(base) - chosen_point_xz;
+	SECURE_XZ;
+	if((get XZ_HYPOT(xz))>WEAPON_RANGE)
+		{
+		while(1)
+			{
+			sleep 16777215;
+			}
+		}
+	
+	signal SIGNAL_CREATE;// Kill the Create() script, so as to kill the folding back at the end of the Create()
+	set ARMORED to FALSE;
+	busy_blowing=TRUE;
+	firing=FALSE;
+	#if REPRESS_AIMING
+	start-script SmokeALotThenFoldIn();
+	sleep AGE_OF_MATURE_CLOUD;
+	#else
+	/*var t,p;
+	//if(done_firing)
+		//{
+		for(t=0;t<=AGE_OF_MATURE_CLOUD;t=t + CLOUD_REFRESH)
+			{
+			turn cloud_shoulder to y-axis get XZ_ATAN(get PIECE_XZ(base) - chosen_point_xz) now;
+			move cloud_arm to z-axis get XZ_HYPOT(get PIECE_XZ(base) - chosen_point_xz) now;
+			move cloud_hand to y-axis CLOUD_ALTITUDE + get GROUND_HEIGHT(chosen_point_xz) - get PIECE_Y(base) now;
+			move lightning to y-axis CLOUD_ALTITUDE + get GROUND_HEIGHT(chosen_point_xz) - get PIECE_Y(base) now;
+			for(p=CLOUD_POINTS_PER_REFRESH;p>=1;--p)
+				{
+				turn cloud_arm to y-axis rand(0,65536) now;
+				move cloud_hand to z-axis rand(0,CLOUD_RADIUS) now;
+				emit-sfx SFXTYPE_WHITESMOKE from cloud_hand;
+				}
+			turn cloud_shoulder to y-axis get XZ_ATAN(get PIECE_XZ(base) - sav_firing_xz) now;
+			move cloud_arm to z-axis get XZ_HYPOT(get PIECE_XZ(base) - sav_firing_xz) now;
+			move cloud_hand to y-axis CLOUD_ALTITUDE + get GROUND_HEIGHT(sav_firing_xz) - get PIECE_Y(base) now;
+			move lightning to y-axis CLOUD_ALTITUDE + get GROUND_HEIGHT(sav_firing_xz) - get PIECE_Y(base) now;
+			sleep CLOUD_REFRESH;
+			}
+		//}*/
+	while(firing)
+		{
+		sleep 100;
+		}
+	start-script OnlyFoldIn();
+	sav_firing_xz=chosen_point_xz;
+	#endif
+	return(TRUE);
+	}
+
+QueryPrimary(piece_to_fire_from)
+	{
+	piece_to_fire_from=lightning;
+	#if REPRESS_AIMING
+	return;
+	#else
+	turn cloud_shoulder to y-axis get XZ_ATAN(get PIECE_XZ(base) - sav_firing_xz) now;
+	xz = get PIECE_XZ(base) - sav_firing_xz;
+	SECURE_XZ;
+	move cloud_arm to z-axis get XZ_HYPOT(xz) now;
+	move cloud_hand to y-axis CLOUD_ALTITUDE + get GROUND_HEIGHT(sav_firing_xz) - get PIECE_Y(base) now;
+	move lightning to y-axis CLOUD_ALTITUDE + get GROUND_HEIGHT(sav_firing_xz) - get PIECE_Y(base) now;
+	move lightning to z-axis 0 now;//Somehow all lightnings comes from the first point anyway, so let it be centered. But strangely when centered all lightening hit at same point. So let's center only the first.
+	#endif
+	}
+
+FirePrimary()
+	{
+	#if REPRESS_AIMING
+	return;
+	#else
+	signal SIGNAL_TIR;// Normally never needed, as by the time the next shot is fired, the previous FirePrimary is done, but just in case, kill any previous FirPrimary that would still be running. Even if there should be none.
+	set-signal-mask SIGNAL_TIR;
+	firing=TRUE;
+	var t,p,xz2;
+	xz2=sav_firing_xz;
+	for(t=0;t<=CLOUD_DURATION - AGE_OF_MATURE_CLOUD;t=t + CLOUD_REFRESH)
+		{
+		turn cloud_shoulder to y-axis get XZ_ATAN(get PIECE_XZ(base) - xz) now;
+		move cloud_arm to z-axis get XZ_HYPOT(get PIECE_XZ(base) - xz) now;
+		move cloud_hand to y-axis CLOUD_ALTITUDE + get GROUND_HEIGHT(xz) - get PIECE_Y(base) now;
+		move lightning to y-axis CLOUD_ALTITUDE + get GROUND_HEIGHT(xz) - get PIECE_Y(base) now;
+		for(p=CLOUD_POINTS_PER_REFRESH;p>=1;--p)
+			{
+			turn cloud_arm to y-axis rand(0,65536) now;
+			move cloud_hand to z-axis rand(0,CLOUD_RADIUS) now;
+			move lightning to z-axis rand(0,LIGHTNING_RADIUS) now;
+			//emit-sfx SFXTYPE_WHITESMOKE from cloud_hand;
+			//emit-sfx SFXTYPE_BLACKSMOKE from cloud_hand;
+			}
+		sleep CLOUD_REFRESH;
+		}
+	firing=FALSE;
+	#endif
+	}
+
+#if KILL_AIM_WHEN_TARGET_CLEARED
+TargetCleared(which)
+	{
+	signal SIGNAL_PRIMAIRE_BIS;
+	return;
+	}
+#endif
+
+SweetSpot(piece_enemies_will_aim_at)
+	{
+	piece_enemies_will_aim_at=towerthing;
+	}
+
+Killed(severity, corpsetype)
+{
+	if( severity <= 25 )
+	{
+		corpsetype = 1;
+		explode base type BITMAPONLY | BITMAP2;
+		explode body type BITMAPONLY | BITMAP3;
+		explode smoker1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+		explode smoker2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+		explode spinner type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+		explode rocket type SHATTER | EXPLODE_ON_HIT | BITMAP5;
+		return (0);
+	}
+	if( severity <= 50 )
+	{
+		corpsetype = 2;
+		explode base type BITMAPONLY | BITMAP2;
+		explode body type BITMAPONLY | BITMAP3;
+		explode smoker1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+		explode smoker2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+		explode spinner type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+		explode rocket type SHATTER | EXPLODE_ON_HIT | BITMAP5;
+		return (0);
+	}
+	if( severity <= 99 )
+	{
+		corpsetype = 3;
+		explode base type BITMAPONLY | BITMAP2;
+		explode body type BITMAPONLY | BITMAP3;
+		explode smoker1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+		explode smoker2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+		explode spinner type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+		explode rocket type SHATTER | EXPLODE_ON_HIT | BITMAP5;
+		return (0);
+	}
+	corpsetype = 3;
+	explode base type BITMAPONLY | BITMAP2;
+	explode body type BITMAPONLY | BITMAP3;
+	explode smoker1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+	explode smoker2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+	explode spinner type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+	explode rocket type SHATTER | EXPLODE_ON_HIT | BITMAP5;
+}

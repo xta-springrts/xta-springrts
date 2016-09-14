@@ -1,4 +1,152 @@
 
+[NUCLEAR_GOD]
+{
+	name=Nuclear Missile;
+	Weapontype=StarburstLauncher;
+	model=weapon_ballmiss;
+	range=32000;
+	reloadtime=6;
+	stockpiletime=180;
+	noautorange=1;
+	weapontimer=7;
+	flighttime=120;
+	weaponvelocity=450;
+	weaponacceleration=100;
+	turnrate=28000;
+	areaofeffect=1150;
+	energypershot=110000;
+	metalpershot=1875;
+	stockpile=1;
+	targetable=3;
+	commandfire=1;
+	soundstart=misicbm1;
+	soundhitdry=xtanewnuke;
+	firestarter=100;
+	smokedelay=0.05;
+	smoketrail=0;
+	tolerance=4000;
+	shakemagnitude=34;
+	shakeduration=2;
+	startsmoke=0;
+	craterboost=0.25;
+	cratermult=0.25;
+	explosiongenerator=custom:RODOFGODBLAST;
+	cegTag=NUCKLEARMINI;
+	Texture1=null;
+	Texture2=null;
+	Texture3=null;
+	Texture4=null;
+	[DAMAGE]
+	{
+		default=15540;
+		group_invincible=1;
+		group_commanders=2700;
+		lost_commanders=2400;
+	}
+}
+
+[TALON_LANGER_MAX]
+{
+	name=Intimidator Cannon;
+	rgbcolor=1 0.8 0.5;
+	stages=20;
+	separation=0.45;
+	alphadecay=0.3;
+	sizedecay=-0.15;
+	nogap=1;
+	size=3;
+	weaponType=Cannon;
+	explosiongenerator=custom:BERTHASHOT;
+	cegTag=vulcanfx;
+	GroundBounce=0;
+	WaterBounce=0;
+	NumBounce=1;
+	BounceSlip=1.01;
+	BounceRebound=0.8;
+	bounceExplosionGenerator=custom:BERTHASHOT;
+	turret=1;
+	//color=3;
+	range=5240;
+	reloadtime=5.95; //5.34 = +10%
+	weaponvelocity=1300; //850 = + 27%
+	energypershot=1200;
+	areaofeffect=132; // -16%
+	soundstart=xplonuk3;
+	soundhitdry=xplonuk1;
+	firestarter=50;
+	accuracy=800; //1000
+	aimrate=650;
+	tolerance=300;
+	holdtime=1;
+	startsmoke=1;
+	edgeeffectiveness=0.1;
+	[DAMAGE]
+	{
+		default=864; //+27%
+		group_ships=1280; //+27%
+		group_large_ships=1280; //+27%
+		group_invincible=1;
+	}
+}
+[TALON_OTHER]
+{
+	name=Doomsday Weapon;
+	Weapontype=BeamLaser;
+	turret=1;
+	beamdecay=0.5;
+	beamtime=0.5;
+	beamttl=5;
+	range=1500;
+	reloadtime=6;
+	energypershot=800;
+	weaponvelocity=1000;
+	areaofeffect=16;
+	targetMoveError=0.5;
+	soundstart=CORSNIPE_laser;
+	soundhitdry=xplosml4;
+	SoundTrigger=1;
+	firestarter=90;
+	rgbcolor=0.2 0.3 1.000;
+	explosiongenerator=custom:PURPLELASER;
+	pulseSpeed=0.5;
+	thickness=3.5;
+	[DAMAGE]
+	{
+		default=2000;
+		group_commanders=1020;
+		group_invincible=1;
+	}
+}
+
+[HELL2AIRLASERShort]
+{
+	name=Long Energy Laser;
+	Weapontype=LaserCannon;
+	//minbarrelangle=-30;
+	duration=0.06;
+	thickness=0.75;
+	CoreThickness=1.0;
+	Intensity=0.4;
+	duration=0.03;
+	rgbcolor=1 0.8 0.4;
+	turret=1;
+	range=680;
+	explosiongenerator=custom:LightFlylaser;
+	reloadtime=0.5;
+	weaponvelocity=1600;
+	areaofeffect=12;
+	soundstart=LASRLIT1;
+	soundhitdry=lasrhit2;
+	firestarter=90;
+	tolerance=500;
+	[DAMAGE]
+	{
+		default=10;
+	 	group_invincible=1;
+		group_landair=33;
+		group_skyair=33;
+	}
+}
 [TALONFIXED_GUN]
 {
 	name=Plasma Cannon;
@@ -77,15 +225,15 @@
 	Texture4=null;
 	range=550;
 	reloadtime=4;
-	sprayangle=1024;
+	sprayangle=512;
 	burst=3;
 	burstrate=.2;
 	flighttime=2;
 	weapontimer=4;
 	waterweapon=1;
 	weaponvelocity=450;
-	startvelocity=250;
-	weaponacceleration=100;
+	startvelocity=300;
+	weaponacceleration=50;
 	areaofeffect=78;
 	soundstart=rocklit1;
 	soundhitdry=xplosml2;

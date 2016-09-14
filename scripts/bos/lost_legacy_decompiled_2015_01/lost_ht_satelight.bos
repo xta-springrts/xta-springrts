@@ -1,0 +1,223 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+piece  base, body, fusee, fum1, fum2, fum3, flare1, flare2,
+       antenne, arm, flare, lights, p1, p2, p3;
+
+static-var  gun_1, restore_delay, Static_Var_3;
+
+// Signal definitions
+#define SIG_AIM				2
+
+#include "StateChg.h"
+
+activatescr()
+{
+	if( TRUE )
+	{
+		dont-cache lights;
+		sleep 1000;
+	}
+	sleep 300;
+}
+
+deactivatescr()
+{
+	if( TRUE )
+	{
+		sleep 1000;
+		cache lights;
+	}
+	sleep 110;
+}
+
+Go()
+{
+	dont-cache lights;
+	call-script activatescr();
+	gun_1 = body;
+}
+
+Stop()
+{
+	gun_1 = base;
+	sleep 10000;
+	call-script deactivatescr();
+	cache lights;
+}
+
+fum()
+{
+	while( Static_Var_3 == 1 )
+	{
+		emit-sfx 256 | 1 from fum1;
+		emit-sfx 256 | 1 from fum2;
+		emit-sfx 256 | 1 from fum3;
+		sleep 250;
+	}
+}
+
+Launchsequence()
+{
+	sleep 500;
+	start-script fum();
+	move p1 to y-axis [100.000000] speed [5.000000];
+	show flare1;
+	sleep 50;
+	hide flare1;
+	spin flare1 around y-axis speed <300.000000>;
+	sleep 50;
+	show flare1;
+	sleep 50;
+	hide flare1;
+	sleep 50;
+	show flare1;
+	sleep 50;
+	hide flare1;
+	sleep 50;
+	turn arm to y-axis <90.000000> speed <60.000000>;
+	spin flare2 around y-axis speed <500.000000>;
+	show flare2;
+	show flare1;
+	sleep 50;
+	hide flare1;
+	sleep 50;
+	show flare1;
+	sleep 50;
+	hide flare1;
+	sleep 1000;
+	move p2 to y-axis [100.000000] speed [20.000000];
+	sleep 1000;
+	move p3 to y-axis [100.000000] speed [80.000000];
+	sleep 1000;
+	move fusee to y-axis [1000.000000] speed [100.000000];
+	sleep 10000;
+	Static_Var_3 = 0;
+	hide flare2;
+	hide fusee;
+	hide fum1;
+	hide fum2;
+	hide fum3;
+	spin antenne around y-axis speed <50.000000>;
+}
+#define ACTIVATECMD			call-script Go();
+#define DEACTIVATECMD		call-script Stop();
+#include "StateChg.h"
+
+Create()
+{
+	move flare to y-axis [5000.000000] now;
+	hide flare1;
+	hide flare2;
+	gun_1 = base;
+	Static_Var_3 = 1;
+	turn body to y-axis <20.000000> now;
+	restore_delay = 3000;
+	call-script InitState();
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 500;
+	}
+	call-script Launchsequence();
+}
+
+Activate()
+{
+	start-script RequestState(0);
+}
+
+Deactivate()
+{
+	start-script RequestState(1);
+}
+
+SetMaxReloadTime(Func_Var_1)
+{
+	restore_delay = Func_Var_1 * 2;
+}
+
+RestoreAfterDelay()
+{
+	sleep restore_delay;
+	set-signal-mask 0;
+	start-script RequestState(1);
+}
+
+AimPrimary(heading, pitch)
+{
+	start-script RequestState(0);
+	signal SIG_AIM;
+	set-signal-mask SIG_AIM;
+	while( !gun_1 )
+	{
+		sleep 1000;
+		start-script RequestState(0);
+	}
+	dont-cache antenne;
+	turn antenne to y-axis <-45.000000> speed <50.000000>;
+	wait-for-turn antenne around y-axis;
+	start-script RestoreAfterDelay();
+	return (1);
+}
+
+AimFromPrimary(piecenum)
+{
+	piecenum = flare;
+}
+
+FirePrimary()
+{
+	gun_1 = base;
+	sleep 50;
+	start-script RequestState(1);
+	spin antenne around y-axis speed <50.000000>;
+	cache antenne;
+}
+
+QueryPrimary(piecenum)
+{
+	piecenum = flare;
+}
+
+SweetSpot(piecenum)
+{
+	piecenum = base;
+}
+
+Killed(severity, corpsetype)
+{
+	if( severity <= 25 )
+	{
+		corpsetype = 1;
+		explode antenne type BITMAPONLY | BITMAP1;
+		explode body type BITMAPONLY | BITMAP2;
+		explode arm type BITMAPONLY | BITMAP4;
+		explode flare1 type BITMAPONLY | BITMAP5;
+		explode flare2 type BITMAPONLY | BITMAP1;
+		return (0);
+	}
+	if( severity <= 50 )
+	{
+		corpsetype = 2;
+		explode body type SHATTER | BITMAP1;
+		explode arm type FALL | BITMAP4;
+		explode flare type FALL | BITMAP5;
+		return (0);
+	}
+	if( severity <= 99 )
+	{
+		corpsetype = 3;
+		explode body type SHATTER | BITMAP1;
+		explode antenne type BITMAPONLY | BITMAP2;
+		explode arm type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+		explode flare type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+		return (0);
+	}
+	corpsetype = 3;
+	explode body type SHATTER | EXPLODE_ON_HIT | BITMAP1;
+	explode flare type BITMAPONLY | BITMAP2;
+	explode antenne type SHATTER | EXPLODE_ON_HIT | BITMAP1;
+	explode arm type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+}

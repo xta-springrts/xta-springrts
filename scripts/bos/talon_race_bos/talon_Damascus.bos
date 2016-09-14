@@ -113,20 +113,20 @@ AimPrimary(heading, pitch)
 //	move mis to y-axis [0] now;
 //	move rocket to y-axis [0] now;
 	still = 1;
-	if(!trav)
-	{
-		turn mis to y-axis heading now;
-	}
-	move mis to y-axis [20] speed [100];
-	wait-for-move mis along y-axis;
-	turn mis2 to x-axis <90> - pitch speed <150>;
-	wait-for-turn mis2 around x-axis;
-	move rocket to y-axis [200] speed [100];
-	
-	if(trav==0)
-	{
-		trav=1;
-	}
+//	if(!trav)
+//	{
+//		turn mis to y-axis heading now;
+//	}
+//	move mis to y-axis [20] speed [100];
+//	wait-for-move mis along y-axis;
+//	turn mis2 to x-axis <90> - pitch speed <150>;
+//	wait-for-turn mis2 around x-axis;
+//	move rocket to y-axis [200] speed [100];
+//	
+//	if(trav==0)
+//	{
+//		trav=1;
+//	}
 	
 	start-script restore();
 	
