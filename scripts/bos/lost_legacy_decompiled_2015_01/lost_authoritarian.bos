@@ -1,0 +1,261 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+piece  base, post, mturret, lspindle, rspindle, mbarrel1, mbarrel2, mbarrel3,
+       mbarrel4, mbarrel5, mbarrel6, fturret, fbarrel1, fbarrel2, mfirept1, mfirept2,
+       mfirept3, mfirept4, mfirept5, mfirept6, firept1, firept2;
+
+static-var  restore_delay, gun_2, gun_1;
+
+// Signal definitions
+#define SIG_AIM				2
+#define SIG_AIM_2			4
+
+#define SMOKEPIECE1 base
+
+#include "SmokeUnit.h"
+
+Create()
+{
+	restore_delay = 2000;
+	gun_2 = post;
+	gun_1 = post;
+	start-script SmokeUnit();
+}
+
+SetMaxReloadTime(Func_Var_1)
+{
+	restore_delay = Func_Var_1 * 2;
+}
+
+RestoreAfterDelay()
+{
+	sleep restore_delay;
+	turn post to y-axis <0.000000> speed <60.000000>;
+	turn mturret to x-axis <0.000000> speed <30.000000>;
+	turn fturret to y-axis <0.000000> speed <150.000000>;
+	turn fbarrel1 to x-axis <0.000000> speed <90.000000>;
+	turn fbarrel2 to x-axis <0.000000> speed <90.000000>;
+}
+
+AimPrimary(heading, pitch)
+{
+	signal SIG_AIM;
+	set-signal-mask SIG_AIM;
+	turn post to y-axis heading speed <120.000000>;
+	turn mturret to x-axis <0.000000> - pitch speed <60.000000>;
+	wait-for-turn post around y-axis;
+	wait-for-turn mturret around x-axis;
+	start-script RestoreAfterDelay();
+	return (1);
+}
+
+AimSecondary(heading, pitch)
+{
+	signal SIG_AIM_2;
+	set-signal-mask SIG_AIM_2;
+	turn fturret to y-axis heading speed <200.000000>;
+	turn fbarrel1 to x-axis <0.000000> - pitch speed <150.000000>;
+	turn fbarrel2 to x-axis <0.000000> - pitch speed <150.000000>;
+	wait-for-turn fturret around y-axis;
+	wait-for-turn fbarrel1 around x-axis;
+	wait-for-turn fbarrel2 around x-axis;
+	start-script RestoreAfterDelay();
+	return (1);
+}
+
+FirePrimary()
+{
+	if( gun_1 == 1 )
+	{
+		move mbarrel3 to z-axis [-7.000000] now;
+		move mbarrel3 to z-axis [0.000000] speed [50.000000];
+		turn lspindle to z-axis <119.027473> speed <500.000000>;
+		wait-for-turn lspindle around z-axis;
+	}
+	if( gun_1 == 2 )
+	{
+		move mbarrel4 to z-axis [-7.000000] now;
+		move mbarrel4 to z-axis [0.000000] speed [50.000000];
+		turn rspindle to z-axis <-119.027473> speed <500.000000>;
+		wait-for-turn rspindle around z-axis;
+	}
+	if( gun_1 == 3 )
+	{
+		move mbarrel2 to z-axis [-7.000000] now;
+		move mbarrel2 to z-axis [0.000000] speed [50.000000];
+		turn lspindle to z-axis <239.054945> speed <500.000000>;
+		wait-for-turn lspindle around z-axis;
+	}
+	if( gun_1 == 4 )
+	{
+		move mbarrel5 to z-axis [-7.000000] now;
+		move mbarrel5 to z-axis [0.000000] speed [50.000000];
+		turn rspindle to z-axis <-239.054945> speed <500.000000>;
+		wait-for-turn rspindle around z-axis;
+	}
+	if( gun_1 == 5 )
+	{
+		move mbarrel1 to z-axis [-7.000000] now;
+		move mbarrel1 to z-axis [0.000000] speed [50.000000];
+		turn lspindle to z-axis <0.000000> speed <500.000000>;
+		wait-for-turn lspindle around z-axis;
+	}
+	if( gun_1 == 6 )
+	{
+		move mbarrel6 to z-axis [-7.000000] now;
+		move mbarrel6 to z-axis [0.000000] speed [50.000000];
+		turn rspindle to z-axis <0.000000> speed <500.000000>;
+		wait-for-turn rspindle around z-axis;
+	}
+	++gun_1;
+	if( gun_1 == 7 )
+	{
+		gun_1 = post;
+	}
+}
+
+FireSecondary()
+{
+	if( gun_2 == 1 )
+	{
+		gun_2 = mturret;
+	}
+	if( gun_2 == 2 )
+	{
+		gun_2 = post;
+	}
+}
+
+AimFromPrimary(piecenum)
+{
+	piecenum = mturret;
+}
+
+AimFromSecondary(piecenum)
+{
+	piecenum = fturret;
+}
+
+QueryPrimary(piecenum)
+{
+	if( gun_1 == 1 )
+	{
+		piecenum = mfirept3;
+	}
+	if( gun_1 == 2 )
+	{
+		piecenum = mfirept4;
+	}
+	if( gun_1 == 3 )
+	{
+		piecenum = mfirept2;
+	}
+	if( gun_1 == 4 )
+	{
+		piecenum = mfirept5;
+	}
+	if( gun_1 == 5 )
+	{
+		piecenum = mfirept1;
+	}
+	if( gun_1 == 6 )
+	{
+		piecenum = mfirept6;
+	}
+}
+
+QuerySecondary(piecenum)
+{
+	if( gun_2 == 1 )
+	{
+		piecenum = firept1;
+	}
+	if( gun_2 == 2 )
+	{
+		piecenum = firept2;
+	}
+}
+
+SweetSpot(piecenum)
+{
+	piecenum = base;
+}
+
+Killed(severity, corpsetype)
+{
+	if( severity <= 25 )
+	{
+		corpsetype = 1;
+		explode base type BITMAPONLY | BITMAP1;
+		explode mturret type BITMAPONLY | BITMAP2;
+		explode lspindle type BITMAPONLY | BITMAP3;
+		explode rspindle type BITMAPONLY | BITMAP4;
+		explode fturret type BITMAPONLY | BITMAP5;
+		explode post type BITMAPONLY | BITMAP1;
+		explode mbarrel1 type BITMAPONLY | BITMAP2;
+		explode mbarrel2 type BITMAPONLY | BITMAP3;
+		explode mbarrel3 type BITMAPONLY | BITMAP4;
+		explode mbarrel4 type BITMAPONLY | BITMAP5;
+		explode mbarrel5 type BITMAPONLY | BITMAP1;
+		explode mbarrel6 type BITMAPONLY | BITMAP2;
+		explode fbarrel1 type BITMAPONLY | BITMAP3;
+		explode fbarrel2 type BITMAPONLY | BITMAP4;
+		return (0);
+	}
+	if( severity <= 50 )
+	{
+		corpsetype = 2;
+		explode base type BITMAPONLY | BITMAP1;
+		explode mturret type SHATTER | BITMAP2;
+		explode lspindle type SHATTER | BITMAP3;
+		explode rspindle type SHATTER | BITMAP4;
+		explode fturret type SHATTER | BITMAP5;
+		explode post type SHATTER | BITMAP1;
+		explode mbarrel1 type FALL | BITMAP2;
+		explode mbarrel2 type FALL | BITMAP3;
+		explode mbarrel3 type FALL | BITMAP4;
+		explode mbarrel4 type FALL | BITMAP5;
+		explode mbarrel5 type FALL | BITMAP1;
+		explode mbarrel6 type FALL | BITMAP2;
+		explode fbarrel1 type FALL | BITMAP3;
+		explode fbarrel2 type FALL | BITMAP4;
+		return (0);
+	}
+	if( severity <= 99 )
+	{
+		corpsetype = 3;
+		explode base type BITMAPONLY | BITMAP1;
+		explode mturret type SHATTER | BITMAP2;
+		explode lspindle type SHATTER | BITMAP3;
+		explode rspindle type SHATTER | BITMAP4;
+		explode fturret type SHATTER | BITMAP5;
+		explode post type SHATTER | BITMAP1;
+		explode mbarrel1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+		explode mbarrel2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+		explode mbarrel3 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+		explode mbarrel4 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+		explode mbarrel5 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+		explode mbarrel6 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+		explode fbarrel1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+		explode fbarrel2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+		return (0);
+	}
+	corpsetype = 3;
+	explode base type BITMAPONLY | BITMAP1;
+	explode mturret type SHATTER | EXPLODE_ON_HIT | BITMAP2;
+	explode lspindle type SHATTER | EXPLODE_ON_HIT | BITMAP3;
+	explode rspindle type SHATTER | EXPLODE_ON_HIT | BITMAP4;
+	explode fturret type SHATTER | EXPLODE_ON_HIT | BITMAP5;
+	explode post type SHATTER | EXPLODE_ON_HIT | BITMAP1;
+	explode mbarrel1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode mbarrel2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+	explode mbarrel3 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+	explode mbarrel4 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+	explode mbarrel5 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+	explode mbarrel6 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode fbarrel1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+	explode fbarrel2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+}

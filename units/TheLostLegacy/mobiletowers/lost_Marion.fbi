@@ -1,0 +1,141 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Arm; 
+	name=Marion Platform;
+	description=Fast Crawler Transport;
+	icontype=hover;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=ARM HOVER TPORT NOWEAPON NOTAIR NOTSUB;
+	tedclass=HOVER;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=lost_Marion;
+	unitnumber=183;
+	objectname=lost_Marion.3do;
+	corpse=lost_Marion_dead;
+	buildpic=lost_Marion.png;
+	soundcategory=ARM_HOVER_BIG;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=2000;//
+	healtime=30;
+	buildcostmetal=453;//+300 metal
+	buildcostenergy=3432;//+2000 Energy
+	buildtime=13280;
+	footprintx=4;
+	footprintz=4;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=2.4;
+	energyuse=2.4;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	//builder=0;
+	//workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canguard=0;
+	canhover=0;
+	canload=1;
+	canmove=1;
+	canpatrol=0;
+	canstop=1;
+	canfight=0;
+	
+	//************************************************************
+	//  Movement
+	//************
+	MovementClass=TANKBH3;
+	turnrate=150;
+	acceleration=0.05;
+	brakerate=0.01;
+	maxvelocity=1.2;
+	minwaterdepth=12;
+	trackoffset=8;
+	trackstrength=8;
+	trackstretch=1;
+	tracktype=StdTank;
+	trackwidth=43;
+	leavetracks=1;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=305;
+	radardistance=0;
+	losemitheight=44;
+	radaremitheight=44;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeas=BIG_UNITEX;
+	selfdestructas=BIG_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	firestandorders=0;
+	mobilestandorders=0;
+	standingmoveorder=1;
+	defaultmissiontype=Standby;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=1;
+	designation=ARM-THC;
+	downloadable=1;
+	maneuverleashlength=640;
+	//scale=0.5;
+	shootme=1;
+	steeringmode=1;
+	threed=1;
+	transportcapacity=1;
+	transportmaxunits=1;
+	transportsize=4;
+	loadingradius=100;
+	IsAirBase=1;
+	Isfireplatform=1;
+	ReleaseHeld=1;
+	cantbetransported=1;
+	//waterline=4;
+	zbuffer=1;
+	collisionVolumeType = box;
+	collisionVolumeScales =55 27 70;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+	[SFXTypes]
+	{
+	explosiongenerator0=custom:UNITFIRE;
+	}
+}

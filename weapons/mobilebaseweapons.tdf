@@ -1,0 +1,219 @@
+
+[FACETIME_MISSILE]
+{
+	name=Missiles;
+	explosiongenerator=custom:KBOTROCKETHIT;
+	cegTag=KBOTROCKETTRAIL;
+	Weapontype=MissileLauncher;
+	turret=1;
+	model=missile.s3o;
+	Texture1=null;
+	range=750;
+	reloadtime=2.0;
+	weapontimer=5;
+	weaponvelocity=750;
+	startvelocity=650;
+	weaponacceleration=101;
+	turnrate=50000;
+	trajectoryHeight=0.08;
+	dance=30;
+	areaofeffect=32;
+	soundstart=CORSLING_fire;
+	soundhitdry=xplosml2;
+	firestarter=70;
+	smokedelay=0.1;
+	tracks=1;
+	smoketrail=0;
+	tolerance=9000;
+	startsmoke=1;
+	[DAMAGE]
+	{
+		default=98;
+		group_landair=187;
+		group_skyair=187;
+		group_invincible=1;
+	}
+}
+
+
+[FALCON_PUNCH]
+{
+	name=Wimpy Crawling Bomb;
+	weaponType=Cannon;
+	turret=1;
+	range=1550;
+	reloadtime=3.6;
+	weaponvelocity=250;
+	areaofeffect=400;
+	soundstart=largegun;
+	soundhitdry=xplonuk3;
+	shakemagnitude=24;
+	shakeduration=1.5;
+	edgeeffectiveness=0.9;
+	explosiongenerator=custom:LaunchNuke;
+	[DAMAGE]
+	{
+		default=2500;
+		group_invincible=1;
+		group_walls=2251;
+		group_commanders=1500;
+		lost_commanders=1500;
+	}
+}
+[BASERAIL_WEAPON]
+	{
+	name=Railgun Weapon;
+	RenderType=7;
+	LineOfSight=1;
+	Turret=1;
+
+	range=400;
+	reloadtime=4.0;
+	energypershot=250;
+	weaponvelocity=1000;
+	areaofeffect=8;
+	
+
+	soundstart=xplomas2;//xplolrg1;
+	soundhitdry=xplomas2;
+
+	firestarter=90;
+	beamweapon=1;
+	rgbcolor=0.01 0.01 0.02;
+	explosiongenerator=custom:DGUNTRACE;
+
+
+	[DAMAGE]
+		{
+		default=600;
+		group_landair=200;
+		}
+	}
+
+[BASERAPIDCANNON]
+{
+	name=Gauss Cannon;
+	rendertype=4;
+	lineofsight=1;
+	turret=1;
+	minbarrelangle=-45;
+	range=710;
+	reloadtime=0.2;
+	explosiongenerator=custom:tllDgunTRAIL;
+	weaponvelocity=1000;
+	areaofeffect=16;
+	sprayangle=1024;
+	soundstart=tllplasma_01.wav;
+	soundhitdry=xplomed2;
+	tolerance=500;
+	weapontimer=1.5;
+	startsmoke=1;
+	guidance=1;
+	minbarrelangle=-80;
+	size=1;
+	rgbcolor=0.55 0.5 1;
+	stages=5;
+  	separation=0.8;
+  	alphadecay=0.06;
+  	sizedecay=-0.3;
+	myGravity=0.05;
+	[DAMAGE]
+	{
+		default=50;//x 5 250 damage
+	}
+}
+
+
+[BASE_LOSTLIGHTROCKET]
+{
+	name=Heavy Launch Rocket;
+	Weapontype=MissileLauncher;
+	explosiongenerator=custom:BLUEPUFFYROCKET;
+	cegTag=BLUEROCKETTRAIL;
+	soundstart=RavenLGTRock;
+	soundhitdry=rocklgthit;
+	Texture1=null;
+	Texture2=null;
+	Texture3=null;
+	Texture4=null;
+	CollideFriendly=0;
+	impulsefactor=0.6;
+	turret=1;
+	model=weapon_exphvyrock;
+	range=1150;
+	reloadtime=1.2;
+	weapontimer=0.33; //6
+	weaponvelocity=450;
+	startvelocity=300;
+	weaponacceleration=200;
+	areaofeffect=52;  //80
+	energypershot=50;
+	Burst=1;
+	Burstrate=0.1666;
+	Trajectoryheight=0.75;
+	Wobble=3200; //14000
+	Dance=50;
+	flighttime=3.5;
+	//turnrate=5000;	//4000
+	//edgeeffectiveness=0.75;
+	firestarter=70;
+	smokedelay=0.1;
+	smoketrail=0;
+	startsmoke=0;
+	[DAMAGE]
+	{
+		default=200;	//800
+		group_invincible=1;
+	}
+}
+
+[BASEGreen_Lightning]
+{
+	Name=Lightning Beam;
+	rendertype=0;
+	lineofsight=1;
+	turret=1;
+	beamlaser=1;
+	LargeBeamLaser=1;
+	pulseSpeed=0.1;
+	thickness=6;
+	rgbcolor=0.0 1.0 0.7;
+	beamtime=0.25;
+	beamdecay=0.333;
+	beamttl=1;
+	accuracy=30;
+	sprayangle=30;
+	range=450; 
+	cylindertargeting = 1;
+	reloadtime=0.5;
+	energypershot=33;
+	weaponvelocity=400;
+  	texture1=testlightning;
+  	laserflaresize=1;
+	minbarrelangle=-35;
+  //texture2=flare;
+  //texture3=flare;
+  //texture4=smallflare;
+	areaofeffect=16;
+	SoundStart=LASERHITB;
+	//soundhitdry=lashit2;
+	firestarter=90;
+	beamweapon=1;
+	tolerance=5000;
+	explosiongenerator=custom:NULL;
+	guidance=1;
+	impulsefactor=0.00;
+	impulseboost=0.00;
+	cratermult=0;
+	paralyzer=1;
+	paralyzetime=10;
+	craterboost=0;
+	[DAMAGE]
+	{
+		default=580.6;//122
+		group_landair=361;
+		group_skyair=361;
+		group_commanders=300;
+		lost_commanders=300;
+	}
+}

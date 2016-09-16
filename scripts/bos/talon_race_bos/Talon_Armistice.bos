@@ -90,10 +90,10 @@ AimPrimary(heading, pitch)
 {
 	signal SIG_AIM;
 	set-signal-mask SIG_AIM;
-	while (dontshoot)
-	{
-		sleep 100;
-	}
+//	while (dontshoot)
+//	{
+//		sleep 100;
+//	}
 	dont-cache pylon1;
 	dont-cache pylon2;
 	dont-cache pylon3;
@@ -112,12 +112,12 @@ AimPrimary(heading, pitch)
 
 FirePrimary()
 {
-	dontshoot=1;
+//	dontshoot=1;
 	hide missile;
 	move missile to y-axis [0] now;
-	sleep 1000;
+//	sleep 1000;
 	call-script reload();
-	dontshoot=0;
+//	dontshoot=0;
 }
 
 AimFromPrimary(piecenum)

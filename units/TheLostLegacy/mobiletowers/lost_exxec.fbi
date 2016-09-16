@@ -1,0 +1,137 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Arm;
+	name=Exxec;
+	description=Light Laser Escort;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=ARM KBOT WEAPON NOTAIR NOTSUB;
+	tedclass=KBOT;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=lost_exxec;
+	unitnumber=77;
+	objectname=lost_exxec.3do;
+	corpse=lost_exxec_dead;
+	buildpic=lost_exxec.png;
+	soundcategory=ARM_KBOT;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=1400;
+	healtime=30;
+	buildcostmetal=407; //OTA: 267
+	buildcostenergy=3742; //OTA: 2228
+	buildtime=9478; //OTA: 5478
+	footprintx=2;
+	footprintz=2;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=1.1;
+	energyuse=1.1;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canattack=1;
+	canguard=1;
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+	upright=0;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementclass=KBOTSS2;
+	turnrate=260;
+	acceleration=0.2;
+	brakerate=1.9;
+	maxvelocity=1.0;
+	maxslope=17;
+	maxwaterdepth=12;
+	trackoffset=9;
+	trackstrength=7;
+	trackstretch=1;
+	tracktype=StdTank;
+	trackwidth=36;
+	leavetracks=1;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=450;
+	radardistance=0;
+	losemitheight=52;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=ARM_LIGHTLASER;
+	nochasecategory=VTOL;
+	badtargetcategory=VTOL;
+	wpri_badtargetcategory=VTOL;
+	explodeas=MEDIUM_BUILDINGEX;
+	selfdestructas=MEDIUM_BUILDING;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	firestandorders=1;
+	mobilestandorders=1;
+	standingfireorder=2;
+	standingmoveorder=1;
+	defaultmissiontype=Standby;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=1;
+	designation=ARM-KL;
+	downloadable=1;
+	maneuverleashlength=640;
+	shootme=1;
+	smoothanim=1;
+	steeringmode=2;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	pieceTrailCEGTag=NanoDebree;//bleh
+	pieceTrailCEGRange = 1;
+	collisionVolumeType = box;
+	collisionVolumeScales =30 35 25;
+	collisionVolumeOffsets = 0 -4 0;
+	collisionVolumeTest = 1;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+	[SFXTypes]
+	{
+		explosiongenerator0=custom:redflare;
+	}
+}

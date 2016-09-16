@@ -3470,7 +3470,7 @@
 		canbuild28=lost_shipyard;
 		canbuild29=lost_sub_pen;
 		canbuild30=lost_adv_shipyard;
-		//canbuild31=arm_spidernest;//Spiderpack vs. Tortoise
+		canbuild31=lost_tower_yard;//Spiderpack vs. Tortoise
 		canbuild32=lost_hovercraft_platform;
 		canbuild33=lost_ht_plant; //xtaids
 		canbuild34=lost_freezer;
@@ -3503,12 +3503,13 @@
 		canbuild19=lost_besom;
 		canbuild20=lost_dragons_teeth;
 		canbuild21=lost_happlic;
-		canbuild22=Lost_Odin_Mallet;//Spiderpack vs. Tortoise
+		canbuild22=lost_tower_yard;//Spiderpack vs. Tortoise
 		canbuild23=lost_hovercraft_platform;
 		canbuild24=lost_seaplane_platform;
 		canbuild25=lost_adv_kbot_lab;
 		canbuild26=lost_adv_vehicle_plant;
 		canbuild27=lost_adv_shipyard;
+		canbuild28=Lost_Odin_Mallet;//Spiderpack vs. Tortoise
 	}
 
 
@@ -3578,7 +3579,7 @@
 		canbuild28=lost_shipyard;
 		canbuild29=lost_sub_pen;
 		canbuild30=lost_adv_shipyard;
-		//canbuild31=arm_spidernest;//Spiderpack vs. Tortoise
+		canbuild31=lost_tower_yard;//Spiderpack vs. Tortoise
 		canbuild32=lost_hovercraft_platform;
 		canbuild33=lost_ht_plant; //xtaids
 		canbuild34=lost_freezer;
@@ -3684,7 +3685,7 @@
 		canbuild28=lost_shipyard;
 		canbuild29=lost_sub_pen;
 		canbuild30=lost_adv_shipyard;
-		//canbuild31=arm_spidernest;//Spiderpack vs. Tortoise
+		canbuild31=lost_tower_yard;//Spiderpack vs. Tortoise
 		canbuild32=lost_hovercraft_platform;
 		canbuild33=lost_ht_plant; //xtaids
 		canbuild34=lost_freezer;
@@ -3738,7 +3739,7 @@
 		canbuild28=lost_shipyard;
 		canbuild29=lost_sub_pen;
 		canbuild30=lost_adv_shipyard;
-		//canbuild31=arm_spidernest;//Spiderpack vs. Tortoise
+		canbuild31=lost_tower_yard;//Spiderpack vs. Tortoise
 		canbuild32=lost_hovercraft_platform;
 		canbuild33=lost_ht_plant; //xtaids
 		canbuild34=lost_freezer;
@@ -3773,7 +3774,7 @@
 		canbuild21=lost_torpedo_launcher;
 		canbuild22=lost_floating_light_laser_tower;
 		canbuild23=lost_dragons_teeth;
-		//canbuild24=arm_spidernest;//Spiderpack vs. Tortoise
+		canbuild24=lost_tower_yard;//Spiderpack vs. Tortoise
 		canbuild25=lost_hovercraft_platform;
 		canbuild26=lost_floating_dragons_teeth;
 		canbuild27=lost_adv_vehicle_plant;
@@ -3807,7 +3808,7 @@
 		canbuild21=lost_torpedo_launcher;
 		canbuild22=lost_floating_light_laser_tower;
 		canbuild23=lost_dragons_teeth;
-		//canbuild24=arm_spidernest;//Spiderpack vs. Tortoise
+		canbuild24=lost_tower_yard;//Spiderpack vs. Tortoise
 		canbuild25=lost_hovercraft_platform;
 		canbuild26=lost_floating_dragons_teeth;
 		canbuild27=lost_adv_vehicle_plant;
@@ -3841,7 +3842,7 @@
 		canbuild21=lost_torpedo_launcher;
 		canbuild22=lost_floating_light_laser_tower;
 		canbuild23=lost_dragons_teeth;
-		//canbuild24=arm_spidernest;//Spiderpack vs. Tortoise
+		canbuild24=lost_tower_yard;//Spiderpack vs. Tortoise
 		canbuild25=lost_hovercraft_platform;
 		canbuild26=lost_floating_dragons_teeth;
 		canbuild27=lost_adv_vehicle_plant;
@@ -3875,7 +3876,7 @@
 		canbuild21=lost_torpedo_launcher;
 		canbuild22=lost_floating_light_laser_tower;
 		canbuild23=lost_dragons_teeth;
-		//canbuild24=arm_spidernest;//Spiderpack vs. Tortoise
+		canbuild24=lost_tower_yard;//Spiderpack vs. Tortoise
 		canbuild25=lost_hovercraft_platform;
 		canbuild26=lost_floating_dragons_teeth;
 		canbuild27=lost_adv_vehicle_plant;
@@ -3909,7 +3910,7 @@
 		canbuild21=lost_torpedo_launcher;
 		canbuild22=lost_floating_light_laser_tower;
 		canbuild23=lost_dragons_teeth;
-		//canbuild24=arm_spidernest;//Spiderpack vs. Tortoise
+		canbuild24=lost_tower_yard;//Spiderpack vs. Tortoise
 		canbuild25=lost_hovercraft_platform;
 		canbuild26=lost_floating_dragons_teeth;
 		canbuild27=lost_adv_vehicle_plant;
@@ -3943,7 +3944,7 @@
 		canbuild21=lost_torpedo_launcher;
 		canbuild22=lost_floating_light_laser_tower;
 		canbuild23=lost_dragons_teeth;
-		//canbuild24=arm_spidernest;//Spiderpack vs. Tortoise
+		canbuild24=lost_tower_yard;//Spiderpack vs. Tortoise
 		canbuild25=lost_hovercraft_platform;
 		canbuild26=lost_floating_dragons_teeth;
 		canbuild27=lost_adv_vehicle_plant;
@@ -3982,12 +3983,13 @@
 		canbuild19=lost_besom;
 		canbuild20=lost_dragons_teeth;
 		canbuild21=lost_happlic;
-		canbuild22=Lost_Odin_Mallet;//Spiderpack vs. Tortoise
+		canbuild22=lost_tower_yard;//Spiderpack vs. Tortoise
 		canbuild23=lost_hovercraft_platform;
 		canbuild24=lost_seaplane_platform;
 		canbuild25=lost_adv_vehicle_plant;
 		canbuild26=lost_adv_aircraft_plant;
 		canbuild27=lost_adv_shipyard;
+		canbuild28=Lost_Odin_Mallet;//Spiderpack vs. Tortoise
 	}
 
 	[Lost_decoy_commander]
@@ -4015,7 +4017,7 @@
 		canbuild21=lost_torpedo_launcher;
 		canbuild22=lost_floating_light_laser_tower;
 		canbuild23=lost_dragons_teeth;
-		//canbuild24=arm_spidernest;//Spiderpack vs. Tortoise
+		canbuild24=lost_tower_yard;//Spiderpack vs. Tortoise
 		canbuild25=lost_hovercraft_platform;
 		canbuild26=lost_floating_dragons_teeth;
 		canbuild27=lost_adv_vehicle_plant;
@@ -4070,12 +4072,13 @@
 		canbuild19=lost_besom;
 		canbuild20=lost_dragons_teeth;
 		canbuild21=lost_happlic;
-		canbuild22=Lost_Odin_Mallet;//Spiderpack vs. Tortoise
+		canbuild22=lost_tower_yard;//Spiderpack vs. Tortoise
 		canbuild23=lost_hovercraft_platform;
 		canbuild24=lost_seaplane_platform;
 		canbuild25=lost_adv_kbot_lab;
 		canbuild26=lost_adv_aircraft_plant;
 		canbuild27=lost_adv_shipyard;
+		canbuild28=Lost_Odin_Mallet;//Spiderpack vs. Tortoise
 	}
 
 	[lost_construction_hovercraft]
@@ -4110,6 +4113,7 @@
 		canbuild28=lost_floating_dragons_teeth;
 		canbuild29=lost_nosmaeb;
 		canbuild30=lost_torpedo_launcher;
+		canbuild31=lost_tower_yard;//Spiderpack vs. Tortoise
 		//canbuild31=arm_floating_light_laser_tower;
 		canbuild32=lost_odin_mallet;//Spiderpack vs. Tortoise
 		canbuild33=lost_hovercraft_platform;
@@ -4213,6 +4217,7 @@
 		canbuild29=lost_nosmaeb;
 		canbuild30=lost_torpedo_launcher;
 		//canbuild31=arm_floating_light_laser_tower;
+		canbuild31=lost_tower_yard;//Spiderpack vs. Tortoise
 		canbuild32=lost_odin_mallet;//Spiderpack vs. Tortoise
 		canbuild33=lost_hovercraft_platform;
 		canbuild34=lost_seaplane_platform;
@@ -4327,6 +4332,56 @@
 		canbuild7=lost_shark;
 		canbuild8=lost_plunger;
 	}
+
+	[lost_tower_yard]
+	{
+		canbuild1=lost_construction_fortress;
+		canbuild2=lost_exxec;
+		canbuild3=lost_marion;
+		canbuild4=lost_bagger;
+		canbuild5=lost_watch_tower;
+		//canbuild6=lost_watch_tower;//jumping flame tower
+		canbuild7=lost_fascist;
+		canbuild8=lost_falcon_heavy;
+		canbuild9=lost_authoritarian;
+		canbuild10=lost_totalitarian;
+	}
+
+	[lost_construction_fortress]
+	{
+		canbuild1=lost_solar_collector;
+		canbuild2=lost_solar_wind;//xta
+		canbuild3=lost_energy_storage;
+		canbuild4=lost_metal_storage;
+		canbuild5=lost_metal_extractor;
+		canbuild6=lost_metal_maker;
+		canbuild7=lost_kbot_lab;
+		canbuild8=lost_vehicle_plant;
+		canbuild9=lost_aircraft_plant;
+		canbuild10=lost_shipyard;
+		canbuild11=lost_sub_pen;
+		canbuild12=lost_light_laser_tower;
+		canbuild13=lost_radar_tower;
+		canbuild14=lost_adv_kbot_lab;
+		canbuild15=lost_geothermal_powerplant;
+		canbuild16=lost_beamson;
+		canbuild17=lost_besom;
+		canbuild18=lost_dragons_teeth;
+		canbuild19=lost_happlic;
+		canbuild20=lost_odin_mallet;//Spiderpack vs. Tortoise
+		canbuild21=lost_tower_yard;//Spiderpack vs. Tortoise
+		canbuild22=lost_hovercraft_platform;
+		canbuild23=lost_seaplane_platform;
+		canbuild24=lost_adv_vehicle_plant;
+		canbuild25=lost_adv_aircraft_plant;
+		canbuild26=lost_adv_shipyard;
+		canbuild27=lost_moho_mine;
+		canbuild28=lost_air_repair_pad;
+		canbuild29=lost_peacemaker;
+		canbuild30=lost_nano_tower;
+		canbuild31=lost_marion;
+
+	}
 	[lost_construction_seaplane]
 	{
 		canbuild1=lost_solar_collector;
@@ -4360,6 +4415,7 @@
 		canbuild29=lost_nosmaeb;
 		canbuild30=lost_torpedo_launcher;
 		//canbuild31=arm_floating_light_laser_tower;
+		canbuild31=lost_tower_yard;//Spiderpack vs. Tortoise
 		canbuild32=lost_odin_mallet;//Spiderpack vs. Tortoise
 		canbuild33=lost_hovercraft_platform;
 		canbuild34=lost_seaplane_platform;

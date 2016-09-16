@@ -282,8 +282,8 @@ local options = {
 	
 	{
 		key    = "spidertortoise",
-		name   = 'Enable "Spiders vs. Tortoise" Units?',
-		desc   = "** ThirdParty ** Adds Spiders and Tortoise unitpack. Originally by TA: Mayhem and TA SECT! Author: Noruas\nkey: spidertortoise",
+		name   = 'Enable "Spiders, Tortoise, & Towers" Units?',
+		desc   = "** ThirdParty ** Adds Spiders, Tortoise, and Towers unitpack. Originally by TA: Mayhem and TA SECT! Author: Noruas\nkey: spidertortoise",
 		type   = "bool",
 		def    = false,
 		section= "unitpacks",

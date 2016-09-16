@@ -1,0 +1,162 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+piece  base, pring, ppt1, ppt2, post, gatgun, barrels, firept,
+       flare, shell;
+
+static-var  gun_2, restore_delay;
+
+// Signal definitions
+#define SIG_AIM				2
+#define SIG_AIM_2			4
+
+#define SMOKEPIECE1 base
+
+#include "SmokeUnit.h"
+
+Create()
+{
+	hide flare;
+	hide shell;
+	hide ppt1;
+	hide ppt2;
+	gun_2 = 1;
+	restore_delay = 2000;
+	start-script SmokeUnit();
+}
+
+SetMaxReloadTime(Func_Var_1)
+{
+	restore_delay = Func_Var_1 * 2;
+}
+
+RestoreAfterDelay()
+{
+	sleep restore_delay;
+	turn gatgun to y-axis <0.000000> speed <30.000000>;
+	turn gatgun to x-axis <0.000000> speed <30.000000>;
+	turn pring to y-axis <0.000000> speed <50.000000>;
+	stop-spin barrels around z-axis;
+}
+
+AimPrimary(heading, pitch)
+{
+	signal SIG_AIM;
+	set-signal-mask SIG_AIM;
+	turn post to y-axis heading speed <150.000000>;
+	turn gatgun to x-axis <0.000000> - pitch speed <100.000000>;
+	wait-for-turn post around y-axis;
+	wait-for-turn gatgun around x-axis;
+	spin barrels around z-axis speed <200.043956>;
+	start-script RestoreAfterDelay();
+	return (1);
+}
+
+AimSecondary(heading, pitch)
+{
+	signal SIG_AIM_2;
+	set-signal-mask SIG_AIM_2;
+	turn pring to y-axis heading speed <75.000000>;
+	wait-for-turn pring around y-axis;
+	return (1);
+}
+
+FirePrimary()
+{
+	emit-sfx UNIT_SFX1 from flare;
+	sleep 50;
+}
+
+FireSecondary()
+{
+	if( gun_2 == 1 )
+	{
+	emit-sfx UNIT_SFX2 from ppt1;
+	sleep 250;
+		gun_2 = 2;
+		return (0);
+	}
+	if( gun_2 == 2 )
+	{
+	emit-sfx UNIT_SFX2 from ppt2;
+	sleep 250;
+		gun_2 = 1;
+		return (0);
+	}
+}
+
+QueryPrimary(piecenum)
+{
+	piecenum = firept;
+}
+
+QuerySecondary(piecenum)
+{
+	if( gun_2 == 1 )
+	{
+		piecenum = ppt1;
+	}
+	if( gun_2 == 2 )
+	{
+		piecenum = ppt2;
+	}
+}
+
+AimFromPrimary(piecenum)
+{
+	piecenum = gatgun;
+}
+
+AimFromSecondary(piecenum)
+{
+	piecenum = gatgun;
+}
+
+SweetSpot(piecenum)
+{
+	piecenum = base;
+}
+
+Killed(severity, corpsetype)
+{
+	hide flare;
+	hide shell;
+	if( severity <= 25 )
+	{
+		corpsetype = 1;
+		explode barrels type BITMAPONLY | BITMAP1;
+		explode pring type BITMAPONLY | BITMAP2;
+		explode base type BITMAPONLY | BITMAP3;
+		explode gatgun type BITMAPONLY | BITMAP4;
+		explode post type BITMAPONLY | BITMAP5;
+		return (0);
+	}
+	if( severity <= 50 )
+	{
+		corpsetype = 2;
+		explode barrels type SHATTER | BITMAP1;
+		explode pring type SHATTER | BITMAP2;
+		explode base type BITMAPONLY | BITMAP3;
+		explode gatgun type FALL | BITMAP4;
+		explode post type SHATTER | BITMAP5;
+		return (0);
+	}
+	if( severity <= 99 )
+	{
+		corpsetype = 3;
+		explode barrels type SHATTER | BITMAP1;
+		explode pring type SHATTER | BITMAP2;
+		explode base type BITMAPONLY | BITMAP3;
+		explode gatgun type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+		explode post type SHATTER | BITMAP5;
+		return (0);
+	}
+	corpsetype = 3;
+	explode barrels type SHATTER | EXPLODE_ON_HIT | BITMAP1;
+	explode pring type SHATTER | EXPLODE_ON_HIT | BITMAP2;
+	explode base type BITMAPONLY | BITMAP3;
+	explode gatgun type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+	explode post type SHATTER | EXPLODE_ON_HIT | BITMAP5;
+}

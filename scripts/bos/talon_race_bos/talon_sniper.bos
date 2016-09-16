@@ -314,10 +314,10 @@ AimPrimary(heading, pitch)
 {
 	signal SIG_AIM;
 	set-signal-mask SIG_AIM;
-	while (bmoving == 1)
-	{
-		sleep 300;
-	}
+//	while (bmoving == 1)
+//	{
+//		sleep 300;
+//	}
 	bAiming = TRUE;
 	if( Rand( 1, 6 ) == 1 )
 	{

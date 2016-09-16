@@ -62,7 +62,7 @@
 	canmove=1;
 	canpatrol=1;
 	canstop=1;
-	CanDropFlare=0;
+	CanDropFlare=1;
 
 	//************************************************************
 	//  Movement
@@ -78,7 +78,7 @@
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=525;
+	sightdistance=385;
 	airsightdistance=700;
 	radardistance=0;
 

@@ -73,16 +73,17 @@ local exceptionList = {
   "lost_announcer",
   "lost_hoplit",
   "lost_troll",
-  "Lost_Dreadnought",
+  "Lost_dreadnought",
   "lost_titan",
   "lost_steralizer",
   "lost_violator",
   "lost_obliterator",
-  "Lost_Devastator",
+  "Lost_devastator",
   "lost_ht_satelight",
   "lost_viking",
   "lost_equalizer",
   "lost_visitor",
+  "lost_falcon_heavy",
 }
   
   

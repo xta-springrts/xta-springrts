@@ -1,0 +1,119 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+piece  base, body, aim, emitnano;
+
+static-var  Static_Var_1, Static_Var_2;
+
+#define SMOKEPIECE1 aim
+
+#include "StateChg.h"
+
+Activatescr()
+{
+	sleep 1;
+}
+
+Deactivatescr()
+{
+	sleep 1;
+}
+#include "SmokeUnit.h"
+
+Go()
+{
+	call-script Activatescr();
+	turn aim to y-axis Static_Var_1 speed <160.000000>;
+	wait-for-turn aim around y-axis;
+	set INBUILDSTANCE to 1;
+}
+
+Stop()
+{
+	set INBUILDSTANCE to 0;
+	call-script Deactivatescr();
+}
+#define ACTIVATECMD			call-script Go();
+#define DEACTIVATECMD		call-script Stop();
+#include "StateChg.h"
+
+Create()
+{
+	call-script InitState();
+	start-script SmokeUnit();
+	Static_Var_1 = 0;
+	Static_Var_2 = 5000;
+}
+
+RestoreAfterDelay()
+{
+	sleep Static_Var_2;
+	turn aim to y-axis <0.000000> speed <400.000000>;
+	wait-for-turn aim around y-axis;
+}
+
+Activate()
+{
+	start-script RequestState(0);
+}
+
+Deactivate()
+{
+	start-script RequestState(1);
+}
+
+StartBuilding(Func_Var_1)
+{
+	Static_Var_1 = Func_Var_1;
+	start-script RequestState(0);
+}
+
+StopBuilding()
+{
+	start-script RequestState(1);
+}
+
+QueryNanoPiece(piecenum)
+{
+	piecenum = emitnano;
+}
+
+TargetHeading(Func_Var_1)
+{
+	Static_Var_1 = 0 - Func_Var_1;
+}
+
+SweetSpot(piecenum)
+{
+	piecenum = aim;
+}
+
+Killed(severity, corpsetype)
+{
+	if( severity <= 25 )
+	{
+		corpsetype = 3;
+		explode base type BITMAPONLY | BITMAP1;
+		explode aim type BITMAPONLY | BITMAP3;
+		return (0);
+	}
+	if( severity <= 50 )
+	{
+		corpsetype = 3;
+		explode base type FALL | BITMAP1;
+		explode aim type FALL | BITMAP3;
+		return (0);
+	}
+	if( severity <= 99 )
+	{
+		corpsetype = 3;
+		explode base type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+		explode aim type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+		return (0);
+	}
+	corpsetype = 3;
+	explode base type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+	explode aim type SHATTER | EXPLODE_ON_HIT | BITMAP3;
+}

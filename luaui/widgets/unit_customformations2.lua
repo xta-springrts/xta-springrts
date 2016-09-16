@@ -49,6 +49,7 @@ local lineFadeRate = 2.0
 
 -- What commands are eligible for custom formations
 local CMD_SETTARGET = 34923
+local CMD_JUMP = 38521
 
 local formationCmds = {
 	[CMD.MOVE] = true,
@@ -56,7 +57,8 @@ local formationCmds = {
 	[CMD.ATTACK] = true,
 	[CMD.PATROL] = true,
 	[CMD.UNLOAD_UNIT] = true,
-	[CMD_SETTARGET] = true -- set target
+	[CMD_SETTARGET] = true, -- set target
+	[CMD_JUMP] = true -- jumpjets
 }
 
 -- What commands require alt to be held 
@@ -76,9 +78,10 @@ local overrideCmds = {
 -- What commands can be issued at a position or unit/feature ID (Only used by GetUnitPosition)
 local positionCmds = {
 	[CMD.MOVE]=true,		[CMD.ATTACK]=true,		[CMD.RECLAIM]=true,		[CMD.RESTORE]=true,		[CMD.RESURRECT]=true,
-	[CMD.PATROL]=true,		[CMD.CAPTURE]=true,		[CMD.FIGHT]=true, 		[CMD.MANUALFIRE]=true,	
-	[CMD.UNLOAD_UNIT]=true,	[CMD.UNLOAD_UNITS]=true,[CMD.LOAD_UNITS]=true,	[CMD.GUARD]=true,		[CMD.AREA_ATTACK] = true,
-	[CMD_SETTARGET] = true -- set target
+	[CMD.PATROL]=true,		[CMD.CAPTURE]=true,		[CMD.FIGHT]=true, 		[CMD.MANUALFIRE]=true,		[CMD.UNLOAD_UNIT]=true,
+	[CMD.UNLOAD_UNITS]=true,	[CMD.LOAD_UNITS]=true,		[CMD.GUARD]=true,		[CMD.AREA_ATTACK]=true,		[CMD_SETTARGET]=true, -- set target
+	[CMD_JUMP]= true -- jumpjets
+
 }
 
 
@@ -88,7 +91,7 @@ function widget:Initialize()
 	end
 end
 
-function widget:Shutdown()
+function widget:ShutDown()
 	if not requiresAlt[CMD.ATTACK] then
 		Spring.SendCommands('unbind Alt+a areaattack')
 	end
@@ -135,7 +138,6 @@ local glPopMatrix = gl.PopMatrix
 local glScale = gl.Scale
 local glTranslate = gl.Translate
 local glLoadIdentity = gl.LoadIdentity
-local Echo = Spring.Echo
 
 local spGetActiveCommand = Spring.GetActiveCommand
 local spSetActiveCommand = Spring.SetActiveCommand
@@ -601,7 +603,9 @@ function widget:MouseRelease(mx, my, mButton)
 				-- Give order (i.e. pass the command to the engine to use as normal)
 				GiveNotifyingOrder(usingCmd, {targetID}, cmdOpts)			
 			elseif usingCmd == CMD_MOVE then 
-				GiveNotifyingOrder(usingCmd, fNodes[1], cmdOpts)			
+				GiveNotifyingOrder(usingCmd, {fNodes[1][1],fNodes[1][2],fNodes[1][3]}, cmdOpts)
+			elseif usingCmd == CMD_JUMP then 
+				GiveNotifyingOrder(usingCmd, fNodes[1], cmdOpts)
 			else
 				-- Deselect command, select default command instead
 				spSetActiveCommand(0)
@@ -844,11 +848,6 @@ function widget:SetConfigData(data) -- Loading
 	maxHungarianUnits = data['maxHungarianUnits'] or defaultHungarianUnits
 end
 
--- remove on game over
-function widget:GameOver()
-	widgetHandler:RemoveWidget(self)
-	return
-end
 ---------------------------------------------------------------------------------------------------------
 -- Matching Algorithms
 ---------------------------------------------------------------------------------------------------------

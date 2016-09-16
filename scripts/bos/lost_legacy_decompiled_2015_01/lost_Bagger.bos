@@ -1,0 +1,132 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+piece  unload_shoulder, unload_arm, load_shoulder, load_arm, base, transpot1, transpot2;
+
+static-var  Static_Var_1, Static_Var_2, Static_Var_3, Static_Var_4, Static_Var_5,
+            Static_Var_6, Static_Var_7, unitviewer, Static_Var_9;
+
+#define SMOKEPIECE1 base
+
+
+TransportPickup(unitid, piecenum)
+{
+	if( Static_Var_9 >= 2 )
+	{
+	--Static_Var_9;
+	--Static_Var_9;
+	}
+	set BUSY to 1;
+	turn load_shoulder to y-axis get XZ_ATAN(get PIECE_XZ(load_shoulder) - get UNIT_XZ(unitid)) now;
+	move load_arm to z-axis get XZ_HYPOT(get PIECE_XZ(load_shoulder) - get UNIT_XZ(unitid)) now;
+	move load_arm to y-axis get UNIT_Y(unitid) - get PIECE_Y(load_shoulder) now;
+	attach-unit unitid to load_arm;
+	move load_arm to z-axis [0.000000] speed get XZ_HYPOT(get PIECE_XZ(load_shoulder) - get UNIT_XZ(unitid)) / [0.001526] * [0.006104];
+	move load_arm to y-axis get PIECE_Y(base) - get PIECE_Y(load_shoulder) speed ( get PIECE_Y(base) - get UNIT_Y(unitid) ) / [0.001526] * [0.006104];
+	sleep 250;
+	++Static_Var_9;
+	
+	if( Static_Var_9 == 1 )
+	{
+	attach-unit unitid to transpot1;
+	}
+	if( Static_Var_9 == 2 )
+	{
+	attach-unit unitid to transpot2;
+	}
+	
+	//if( Static_Var_9 == 3 )
+	//{
+//	--Static_Var_9;
+//	--Static_Var_9;
+//	}
+	set BUSY to 0;
+}
+
+TransportDrop(unitid, position)
+{
+	set BUSY to 1;
+	turn unload_shoulder to y-axis get XZ_ATAN(get PIECE_XZ(unload_shoulder) - position) now;
+	move unload_arm to z-axis [0.000000] now;
+	move unload_arm to y-axis get PIECE_Y(base) - get PIECE_Y(unload_shoulder) now;
+	attach-unit unitid to unload_arm;
+	move unload_arm to z-axis get XZ_HYPOT(get PIECE_XZ(unload_shoulder) - position) speed get XZ_HYPOT(get PIECE_XZ(unload_shoulder) - position) / [0.000916] * [0.006104];
+	move unload_arm to y-axis get GROUND_HEIGHT(position) - get PIECE_Y(unload_shoulder) speed ( get PIECE_Y(base) - get GROUND_HEIGHT(position) ) / [0.000916] * [0.006104];
+	sleep 150;
+//	if( Static_Var_9 > 1 )
+//	{
+//	--Static_Var_9;
+//	}
+
+//	--Static_Var_9;
+	drop-unit unitid;
+	set BUSY to 0;
+}
+
+EmbeddedSpringTest()
+{
+	wait-for-move base along x-axis;
+	wait-for-move base along y-axis;
+	wait-for-move base along z-axis;
+	wait-for-turn base around x-axis;
+	wait-for-turn base around y-axis;
+	wait-for-turn base around z-axis;
+	Static_Var_1 = 0;
+}
+#include "SmokeUnit.h"
+
+Create()
+{
+	Static_Var_9 = 0;
+	Static_Var_7 = 2000;
+	start-script SmokeUnit();
+	set ACTIVATION to 1;
+	Static_Var_1 = 0 - 1;
+	start-script EmbeddedSpringTest();
+	sleep 1;
+	Static_Var_1 = 1;
+	set ACTIVATION to 1;
+}
+
+QueryTransport(piecenum)
+{
+	if( Static_Var_9 == 1 )
+	{
+	piecenum = transpot1;
+	}
+	if( Static_Var_9 == 2 )
+	{
+	piecenum = transpot2;
+	}
+}
+Demo()
+{
+	unitviewer = TRUE;
+}
+
+SweetSpot(piecenum)
+{
+	piecenum = base;
+}
+
+Killed(severity, corpsetype)
+{
+	if( severity <= 25 )
+	{
+		corpsetype = 1;
+		return (0);
+	}
+	if( severity <= 50 )
+	{
+		corpsetype = 2;
+		return (0);
+	}
+	if( severity <= 99 )
+	{
+		corpsetype = 3;
+		return (0);
+	}
+	corpsetype = 3;
+}

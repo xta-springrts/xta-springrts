@@ -16,7 +16,7 @@ function widget:GetInfo()
     date      = "May 30, 2008",
     license   = "GNU GPL, v2 or later",
     layer     = 10000,
-    enabled   = false,
+    enabled   = true,
   }
 end
 
@@ -70,11 +70,7 @@ end
 
 local jumpDefs = {}
 for name, data in pairs(jumpDefNames) do
-	if UnitDefNames[name] then
-		jumpDefs[UnitDefNames[name].id] = data
-	else
-		Spring.Echo("Jumpjets: No unitdef called:",name)
-	end
+  jumpDefs[UnitDefNames[name].id] = data
 end
 
 local ignore = {
@@ -232,7 +228,13 @@ end
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
-
+function widget:Initialize()
+	local playerID = Spring.GetMyPlayerID()
+	local _, _, spec, _, _, _, _, _ = Spring.GetPlayerInfo(playerID)
+	if ( spec == true ) then
+		widgetHandler:RemoveWidget()
+	end
+end
 
 function widget:CommandNotify(id, params, options)
   if (id ~= CMD_JUMP) then
@@ -240,7 +242,7 @@ function widget:CommandNotify(id, params, options)
   end
   for _, unitID in ipairs(spGetSelectedUnits()) do
     local _, _, _, shift   = spGetModKeyState()
-    if (#spGetCommandQueue(unitID,1) == 0 or not shift) then
+    if (#spGetCommandQueue(unitID,-1) == 0 or not shift) then
       lastJump[unitID] = {
         pos   = {spGetUnitPosition(unitID)},
         frame = spGetGameFrame(),
@@ -251,33 +253,22 @@ end
 
 
 function widget:UnitCmdDone(unitID, unitDefID, unitTeam, cmdID, cmdTag)
-  if jumpDefs[unitDefID] then
-    local que = spGetCommandQueue(unitID,2)
-    local cmd = que and que[2] or nil 
-    if (cmd and cmd.id == CMD_JUMP) then
-        lastJump[unitID] = {
-          pos = {spGetUnitPosition(unitID)}, 
-          frame = spGetGameFrame(),
-        }
-    end
+  local cmd
+  if spGetCommandQueue(unitID,1) then
+	cmd = spGetCommandQueue(unitID,-1)[2] 
+  end
+  if (cmd and cmd.id == CMD_JUMP) then
+      lastJump[unitID] = {
+        pos = {spGetUnitPosition(unitID)}, 
+        frame = spGetGameFrame(),
+      }
   end
 end
 
 
-function widget:UnitDestroyed(unitID,_,_)
-		
+function widget:UnitDestroyed(unitID)
   lastJump[unitID] = nil
 end
-
-
-function widget:Initialize()
-  -- check for custom key bind, bind jump if does not exist
-  local hotkeys = Spring.GetActionHotKeys("markingmenu")
-  if hotkeys == nil then
-	Spring.SendCommands("unbind any+j mouse2")  
-	Spring.SendCommands("bind any+j jump")
-  end
-end 
 
 
 function widget:DrawWorld()
@@ -294,7 +285,6 @@ end
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
-
 
 
 

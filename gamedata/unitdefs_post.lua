@@ -471,6 +471,8 @@ if (modOptions and not tobool(modOptions.spidertortoise)) then
 	"arm_spidernest",
 
 	"core_tortoise_plant",
+
+	"lost_tower_yard",
   })
 end
 --------------------------------------------------------------------------------

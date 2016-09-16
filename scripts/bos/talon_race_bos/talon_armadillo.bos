@@ -3,7 +3,7 @@
 #include "sfxtype.h"
 #include "exptype.h"
 
-piece  base, v1, v2, v3, v4, body, hatchesA, hatchesB, flare, gun, barrel; //fronta, frontb, frontc, backa, backb, backc, rightAA, rightAB, rightAC, rightBA, rightBB, rightBC, leftAA, leftAB, leftAC, leftBA, leftBB, leftBC, rightAbase, rightBbase, leftAbase, leftBbase;
+piece  base, v1, v2, v3, v4, body, hatchesA, hatchesB, flare, gun, barrel, aimpoint; //fronta, frontb, frontc, backa, backb, backc, rightAA, rightAB, rightAC, rightBA, rightBB, rightBC, leftAA, leftAB, leftAC, leftBA, leftBB, leftBC, rightAbase, rightBbase, leftAbase, leftBbase;
 
 static-var  gun_1, bmoving, baiming, restore_delay;
 
@@ -245,7 +245,7 @@ QueryPrimary(piecenum)
 
 AimFromPrimary(piecenum)
 {
-	piecenum = base;
+	piecenum = aimpoint;
 }
 
 
@@ -295,7 +295,7 @@ QueryTertiary(piecenum)
 
 AimFromTertiary(piecenum)
 {
-	piecenum = body;
+	piecenum = aimpoint;
 }
 
 SweetSpot(piecenum)

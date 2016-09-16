@@ -1,0 +1,72 @@
+[UNITINFO] // Generated with TAS Modit v2.2 Beta
+{
+	name=Falcon Heavy;
+	unitname=lost_falcon_heavy;
+	buildcostenergy=9542;
+	buildcostmetal=465;
+	buildtime=18124;//2312
+	category=Lost  CONSTR NOWEAPON NOTAIR NOTSUB;
+	description=Transportable Rocket;
+	footprintx=2;
+	footprintz=2;
+	maxdamage=1100;
+	objectname=lost_falcon_heavy;
+	side=Lost;
+	soundcategory=CORE_CVEHICLE;
+	tedclass=CONSTR;
+	brakerate=1.5;
+	movementclass=HOVER3;
+	acceleration=0;
+	canmove=0;
+	maxvelocity=0;
+	maxslope=16;
+	turnrate=1;
+	//builddistance=125;
+	//builder=1;
+	//workertime=233;
+	//repairspeed=150;
+	//reclaimspeed=100;
+	//energystorage=500;
+	//energyuse=10;
+	//metalstorage=100;
+	Weapon1=FALCON_PUNCH;
+	canstop=1;
+	idletime=1800;
+	idleautoheal=5;
+	sightdistance=300;
+	airsightdistance=400;
+	losemitheight=100;
+	explodeas=ATOMIC_BLASTPEN;
+	selfdestructas=FALCON_PUNCH;
+	selfdestructcountdown=1;
+	maxwaterdepth=10;
+	upright=1;
+	buildpic=lost_falcon_heavy.png;
+	icontype=building;
+	//mass=999999999999;
+	noautofire=0;
+	seismicsignature=0;
+	defaultmissiontype=Standby;
+	canpatrol=1;
+	canguard=1;
+	canFight=1;
+	steeringmode=1;
+	maneuverleashlength=380;
+	//canreclamate=1;
+	cantbetransported=0;
+	activatewhenbuilt=1;
+	//onoffable=1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+	collisionVolumeType=box;
+	collisionVolumeScales=25 75 25;
+	collisionVolumeOffsets=0 -5 0;
+	//collisionVolumeTest = 1;
+	[SFXTypes]
+	{
+	explosiongenerator0=custom:DGUNTRAIL;
+	explosiongenerator1=custom:DGUNTRAIL;
+	explosiongenerator2=custom:PUFFY;
+	explosiongenerator3=custom:PUFFY;
+	}
+}

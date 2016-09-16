@@ -1,0 +1,44 @@
+[UNITINFO]
+	{
+	UnitName=lost_tower_yard;
+	Version=2.2;
+	Side=CORE;
+	Objectname=lost_tower_yard;
+	Designation=CHKBC;
+	Name=Tower Assembly Yard;
+	buildpic=lost_tower_yard.png;
+	Description=Transportable Towers Yard;
+	FootprintX=5;
+	FootprintZ=5;
+	BuildCostEnergy=4324;//7965
+	BuildCostMetal=1154;//1504
+	BuildTime=10431;
+	MaxDamage=2765;
+	MaxWaterDepth=10;
+	MaxSlope=15;
+	WorkerTime=250;
+	BMcode=0;
+	Builder=1;
+	ThreeD=1;
+	ZBuffer=1;
+	NoAutoFire=0;
+	SightDistance=525;
+	SoundCategory=Core_HOVER_PLANT;
+	EnergyStorage=600;
+	MetalStorage=600;
+	ExplodeAs=LARGE_BUILDINGEX;
+	SelfDestructAs=LARGE_BUILDING;
+	Category=CORE PLANT NOWEAPON NOTAIR NOTSUB;
+	TEDClass=PLANT;
+	YardMap=occco ccccc ccccc ccccc occco;
+	Corpse=lost_tower_yard_dead;
+	firestandorders=1;
+	StandingFireOrder=2;
+	mobilestandorders=1;
+	StandingMoveOrder=1;
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+	}

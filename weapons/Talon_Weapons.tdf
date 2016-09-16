@@ -132,7 +132,7 @@
 	turret=1;
 	range=680;
 	explosiongenerator=custom:LightFlylaser;
-	reloadtime=0.5;
+	reloadtime=1;
 	weaponvelocity=1600;
 	areaofeffect=12;
 	soundstart=LASRLIT1;
@@ -141,10 +141,10 @@
 	tolerance=500;
 	[DAMAGE]
 	{
-		default=10;
+		default=17;
 	 	group_invincible=1;
-		group_landair=33;
-		group_skyair=33;
+		group_landair=38;
+		group_skyair=38;
 	}
 }
 [TALONFIXED_GUN]
@@ -1115,12 +1115,13 @@
 	Turret=1;
 
 	range=500;
-	reloadtime=4;
+	reloadtime=4.5;
 	energypershot=10;
 	weaponvelocity=1000;
 	areaofeffect=8;
 	collidefriendly=0;
 	avoidfriendly=0;
+	movingaccuracy=1000;
 	
 
 	soundstart=talongunfire;//xplolrg1;
@@ -1183,8 +1184,8 @@
 	thickness=1.0;
 	intensity=0.8;
 	range=175;
-	accuracy=600;
-	movingaccuracy=900;
+	accuracy=300;
+	movingaccuracy=600;
 	reloadtime=1.0;
 	weaponvelocity=800;
 	areaofeffect=8;
