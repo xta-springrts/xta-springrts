@@ -46,3 +46,13 @@ Create()
 		sleep 500;
 	}
 }
+
+AimFromPrimary(piecenum)
+{
+	piecenum = rocket;
+}
+
+QueryPrimary(piecenum)
+{
+	piecenum = rocket;
+}
