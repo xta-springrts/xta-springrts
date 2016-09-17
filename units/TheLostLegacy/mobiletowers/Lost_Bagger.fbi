@@ -68,11 +68,11 @@
 	//************************************************************
 	//  Movement
 	//************
-	MovementClass=TANKBH3;
+	movementclass=TANKSH4;
 	turnrate=150;
 	acceleration=0.05;
 	brakerate=0.01;
-	maxvelocity=0.8;
+	maxvelocity=0.7;
 	minwaterdepth=12;
 	trackoffset=8;
 	trackstrength=9;

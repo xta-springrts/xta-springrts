@@ -53,11 +53,11 @@
 	explosiongenerator=custom:LaunchNuke;
 	[DAMAGE]
 	{
-		default=2500;
+		default=1700;
 		group_invincible=1;
-		group_walls=2251;
-		group_commanders=1500;
-		lost_commanders=1500;
+		group_walls=1151;
+		group_commanders=900;
+		lost_commanders=900;
 	}
 }
 [BASERAIL_WEAPON]

@@ -8,8 +8,8 @@
 	Name=Construction Fortress;
 	buildpic=lost_construction_fortress.png;
 	Description=Fortifed Vehicle Tech 1.5;
-	FootprintX=3;
-	FootprintZ=3;
+	FootprintX=4;
+	FootprintZ=4;
 	BuildCostEnergy=3876;//4121
 	BuildCostMetal=613;//434
 	MaxDamage=3000;
@@ -46,7 +46,7 @@
 	canguard=1;
 	canreclamate=1;
 	Builddistance=225;
-	MaxVelocity=1.05;
+	MaxVelocity=0.75;
 	BrakeRate=0.105;
 	Acceleration=0.105;
 	TurnRate=277;
@@ -56,10 +56,10 @@
 	MetalMake=0.5;
 	DefaultMissionType=Standby;
 	maneuverleashlength=640;
-	MovementClass=TANKBH3;
+	movementclass=TANKSH4;
 	Ovradjust=1;
 	collisionVolumeType = box;
-	collisionVolumeScales =25 22 25;
+	collisionVolumeScales =35 30 35;
 	collisionVolumeOffsets = 0 -1 0;
 	collisionVolumeTest = 1;
 	pieceTrailCEGTag=NanoDebree;//bleh

@@ -12,15 +12,22 @@
 	maxdamage=754;
 	objectname=lost_watch_tower;
 	side=Lost;
-	soundcategory=CORE_CVEHICLE;
+	soundcategory=MINE;
 	tedclass=CONSTR;
-	brakerate=1.5;
-	movementclass=HOVER3;
-	acceleration=0;
-	canmove=0;
-	maxvelocity=0;
+
+
+	//UNIT_REMOVECOMMANDS.LUA THANK YOU
+
+	brakerate=10000;
+	movementclass=KBOTSf3;
+	acceleration=00000000000001;
+	canmove=1;
+	pushResistant=1;
+	maxvelocity=0.00000000000000001;
 	maxslope=16;
-	turnrate=1;
+	turnrate=0.00000000000000000001;
+	turnInPlace=0;
+
 	//builddistance=125;
 	//builder=1;
 	//workertime=233;
@@ -34,7 +41,7 @@
 	idleautoheal=5;
 	sightdistance=1000;
 	airsightdistance=1200;
-	losemitheight=100;
+	losemitheight=50;
 	explodeas=T1_2X2_UNIT_STRONG_NORMAL;
 	selfdestructas=T1_2X2_UNIT_STRONG_SELF;
 	corpse=lost_watch_tower_dead;
@@ -46,11 +53,9 @@
 	noautofire=0;
 	seismicsignature=0;
 	defaultmissiontype=Standby;
-	canpatrol=1;
-	canguard=1;
-	canFight=1;
-	steeringmode=1;
-	maneuverleashlength=380;
+	canpatrol=0;
+	canguard=0;
+	canFight=0;
 	//canreclamate=1;
 	cantbetransported=0;
 	activatewhenbuilt=1;

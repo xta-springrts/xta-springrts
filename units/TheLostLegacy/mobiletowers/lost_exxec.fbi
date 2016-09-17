@@ -21,7 +21,7 @@
 	objectname=lost_exxec.3do;
 	corpse=lost_exxec_dead;
 	buildpic=lost_exxec.png;
-	soundcategory=ARM_KBOT;
+	SoundCategory=COR_TOR;
 
 	//************************************************************
 	//  Health/Cost/Size

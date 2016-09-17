@@ -9,18 +9,24 @@
 	description=Anti-Spam Tower;
 	footprintx=3;
 	footprintz=3;
-	maxdamage=2860;
+	maxdamage=2750;
 	objectname=lost_totalitarian;
 	side=Lost;
 	soundcategory=GUARD;
 	tedclass=CONSTR;
-	brakerate=1.5;
-	movementclass=HOVER3;
-	acceleration=0;
-	canmove=0;
-	maxvelocity=0;
+
+	//UNIT_REMOVECOMMANDS.LUA THANK YOU
+
+	brakerate=10000;
+	movementclass=KBOTSf3;
+	acceleration=00000000000001;
+	canmove=1;
+	pushResistant=1;
+	maxvelocity=0.00000000000000001;
 	maxslope=16;
-	turnrate=1;
+	turnrate=0.00000000000000000001;
+	turnInPlace=0;
+
 	//builddistance=125;
 	//builder=1;
 	//workertime=233;
@@ -55,9 +61,9 @@
 	noautofire=0;
 	seismicsignature=0;
 	defaultmissiontype=Standby;
-	canpatrol=1;
-	canguard=1;
-	canFight=1;
+	canpatrol=0;
+	canguard=0;
+	canFight=0;
 	canattack=1;
 	steeringmode=1;
 	maneuverleashlength=380;

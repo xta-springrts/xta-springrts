@@ -23,9 +23,9 @@
 	ZBuffer=1;
 	NoAutoFire=0;
 	SightDistance=525;
-	SoundCategory=Core_HOVER_PLANT;
-	EnergyStorage=600;
-	MetalStorage=600;
+	soundcategory=CORE_GANTRY;
+	EnergyStorage=400;
+	MetalStorage=400;
 	ExplodeAs=LARGE_BUILDINGEX;
 	SelfDestructAs=LARGE_BUILDING;
 	Category=CORE PLANT NOWEAPON NOTAIR NOTSUB;
