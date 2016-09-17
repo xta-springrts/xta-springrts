@@ -130,6 +130,7 @@ local RemoveWait = {
 	[UnitDefNames.lost_fascist.id] = true,
 	[UnitDefNames.lost_falcon_heavy.id] = true,
 	[UnitDefNames.lost_authoritarian.id] = true,
+	[UnitDefNames.lost_falcon_heavy_new.id] = true,
 	
 }
 
@@ -239,6 +240,7 @@ local RemoveStop = {
 	[UnitDefNames.guardian_underwater_generator.id] = true,
 	[UnitDefNames.guardian_floating_solar_collector.id] = true,
 	[UnitDefNames.lost_watch_tower.id] = true,
+	[UnitDefNames.lost_falcon_heavy_new.id] = true,
 }
 
 local RemoveMove = {
@@ -252,6 +254,7 @@ local RemoveMove = {
 	[UnitDefNames.lost_fascist.id] = true,
 	[UnitDefNames.lost_falcon_heavy.id] = true,
 	[UnitDefNames.lost_authoritarian.id] = true,
+	[UnitDefNames.lost_falcon_heavy_new.id] = true,
 }
 
 local RemoveMoveState = {
@@ -263,6 +266,7 @@ local RemoveMoveState = {
 	[UnitDefNames.lost_fascist.id] = true,
 	[UnitDefNames.lost_falcon_heavy.id] = true,
 	[UnitDefNames.lost_authoritarian.id] = true,
+	[UnitDefNames.lost_falcon_heavy_new.id] = true,
 }
 
 local RemoveFireState = {
@@ -270,6 +274,7 @@ local RemoveFireState = {
 	[UnitDefNames.core_air_repair_pad.id] = true,
 	[UnitDefNames.lost_air_repair_pad.id] = true,
 	[UnitDefNames.lost_watch_tower.id] = true,
+	[UnitDefNames.lost_falcon_heavy_new.id] = true,
 }
 
 local RemoveAreaAttack = {

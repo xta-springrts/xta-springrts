@@ -2,14 +2,14 @@
 {
 	name=Totalitarian;
 	unitname=lost_totalitarian;
-	buildcostenergy=9867;
-	buildcostmetal=1324;
-	buildtime=20624;//2312
+	buildcostenergy=14867;
+	buildcostmetal=1624;
+	buildtime=30624;//2312
 	category=Lost  CONSTR NOWEAPON NOTAIR NOTSUB;
 	description=Anti-Spam Tower;
 	footprintx=3;
 	footprintz=3;
-	maxdamage=2750;
+	maxdamage=4650;
 	objectname=lost_totalitarian;
 	side=Lost;
 	soundcategory=GUARD;
@@ -41,7 +41,7 @@
 	idletime=1800;
 	idleautoheal=5;
 
-	sightdistance=450;
+	sightdistance=520;
 
 	weapon1=BASERAPIDCANNON;
 	weapon2=BASERAIL_WEAPON;

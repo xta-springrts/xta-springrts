@@ -1,20 +1,19 @@
 [UNITINFO] // Generated with TAS Modit v2.2 Beta
 {
-	name=Watch Tower;
-	unitname=lost_watch_tower;
-	buildcostenergy=1542;
-	buildcostmetal=203;
-	buildtime=5124;//2312
+	name=Falcon Heavy;
+	unitname=lost_falcon_heavy_new;
+	buildcostenergy=9542;
+	buildcostmetal=365;
+	buildtime=18124;//2312
 	category=Lost  CONSTR NOWEAPON NOTAIR NOTSUB;
-	description=Transportable Watch Tower;
+	description=Transportable Rocket;
 	footprintx=2;
 	footprintz=2;
-	maxdamage=754;
-	objectname=lost_watch_tower;
+	maxdamage=550;
+	objectname=lost_falcon_heavy;
 	side=Lost;
-	soundcategory=MINE;
+	soundcategory=NUC;
 	tedclass=CONSTR;
-
 
 	//UNIT_REMOVECOMMANDS.LUA THANK YOU
 
@@ -36,34 +35,49 @@
 	//energystorage=500;
 	//energyuse=10;
 	//metalstorage=100;
+	Weapon1=LOSTFALCON_WEAPON;
+	Weapon2=LAUNCH_FALCON_ROCKET;
 	canstop=1;
 	idletime=1800;
 	idleautoheal=5;
-	sightdistance=1000;
-	airsightdistance=1200;
-	losemitheight=50;
-	explodeas=T1_2X2_UNIT_STRONG_NORMAL;
-	selfdestructas=T1_2X2_UNIT_STRONG_SELF;
-	corpse=lost_watch_tower_dead;
+	sightdistance=300;
+	airsightdistance=400;
+	losemitheight=100;
+	explodeas=LAUNCH_FALCON_ROCKET;
+	selfdestructas=FALCON_PUNCH;
+	selfdestructcountdown=1;
 	maxwaterdepth=10;
 	upright=1;
-	buildpic=lost_watch_tower.png;
+	buildpic=lost_falcon_heavy.png;
 	icontype=building;
 	//mass=999999999999;
-	noautofire=0;
+	noautofire=1;
 	seismicsignature=0;
 	defaultmissiontype=Standby;
 	canpatrol=0;
 	canguard=0;
 	canFight=0;
+	steeringmode=1;
+	maneuverleashlength=380;
 	//canreclamate=1;
 	cantbetransported=0;
 	activatewhenbuilt=1;
 	//onoffable=1;
 	pieceTrailCEGTag=Debree;//bleh
 	pieceTrailCEGRange = 4;
-	collisionVolumeType=Box;
-	collisionVolumeScales=65 40 65;
-	collisionVolumeOffsets=0 -2 0;
+	collisionVolumeType=box;
+	collisionVolumeScales=25 75 25;
+	collisionVolumeOffsets=0 -5 0;
 	//collisionVolumeTest = 1;
+	[SFXTypes]
+	{
+	explosiongenerator0=custom:DGUNTRAIL;
+	explosiongenerator1=custom:DGUNTRAIL;
+	explosiongenerator2=custom:PUFFY;
+	explosiongenerator3=custom:PUFFY;
+	}
+	[customParams] 
+	{
+		canAreaAttack=1;
+	}
 }

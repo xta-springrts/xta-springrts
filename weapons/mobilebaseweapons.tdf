@@ -1,4 +1,94 @@
 
+[LAUNCH_FALCON_ROCKET]
+{
+	name=Rocket;
+	vlaunch=1;
+	Weapontype=StarburstLauncher;
+	model=lost_falcon_heavy_projectile;
+	range=1;
+	commandfire=1;
+	reloadtime=1550;
+	noautorange=1;
+	weapontimer=3;
+	flighttime=60;
+	weaponvelocity=800;
+	weaponacceleration=180;
+	turnrate=32768;
+	areaofeffect=128;
+	startvelocity=100;
+	energypershot=0;
+	metalpershot=0;
+	explosiongenerator=custom:PUFFY;
+	cegTag=RAVENTRAIL;
+	Texture1=null;
+	Texture2=null;
+	Texture3=null;
+	Texture4=null;
+	soundstart=Rockhvy1;
+	soundhitdry=xplomed4;
+	firestarter=100;
+	smokedelay=0.1;
+	smoketrail=0;
+	tracks=1;
+	tolerance=4000;
+	startsmoke=1;
+	collidefriendly=0;
+	avoidfriendly=0;
+
+	[DAMAGE]
+	{
+		default=125;
+		group_invincible=1;
+		group_rockets=1000000;//just die son
+	}
+}
+
+[LOSTFALCON_WEAPON]
+{
+	name=Atomic Blast Weapon;
+	vlaunch=1;
+	Weapontype=StarburstLauncher;
+	model=lost_falcon_heavy_projectile;
+	cegTag=DGUNTRAIL;
+	Texture1=null;
+	Texture2=null;
+	Texture3=null;
+	Texture4=null;
+	range=1550;
+	commandfire=1;
+	reloadtime=5;
+	noautorange=1;
+	weapontimer=3;
+	flighttime=15;
+	weaponvelocity=500;
+	weaponacceleration=100;
+	startvelocity=200;
+	turnrate=32768;
+	areaofeffect=360;
+	edgeeffectiveness=0.75;
+	energypershot=100;
+	//targetable=3;
+	soundstart=misicbm1;
+	soundhitdry=xplomed4;
+	firestarter=100;
+	smokedelay=0.01;
+	smoketrail=0;
+	propeller=0;
+	tolerance=4000;
+	explosiongenerator=custom:LaunchNuke;
+	startsmoke=0;
+	collidefriendly=0;
+	avoidfriendly=0;
+
+	[DAMAGE]
+	{
+		default=1574;
+		group_commanders=600;
+		lost_commanders=500;
+		group_invincible=1;
+	}
+}
+
 [FACETIME_MISSILE]
 {
 	name=Missiles;
@@ -81,6 +171,8 @@
 	beamweapon=1;
 	rgbcolor=0.01 0.01 0.02;
 	explosiongenerator=custom:DGUNTRACE;
+	collidefriendly=0;
+	avoidfriendly=1;
 
 
 	[DAMAGE]
@@ -97,7 +189,7 @@
 	lineofsight=1;
 	turret=1;
 	minbarrelangle=-45;
-	range=710;
+	range=725;
 	reloadtime=0.2;
 	explosiongenerator=custom:tllDgunTRAIL;
 	weaponvelocity=1000;
@@ -117,6 +209,8 @@
   	alphadecay=0.06;
   	sizedecay=-0.3;
 	myGravity=0.05;
+	collidefriendly=0;
+	avoidfriendly=1;
 	[DAMAGE]
 	{
 		default=50;//x 5 250 damage
@@ -140,7 +234,7 @@
 	impulsefactor=0.6;
 	turret=1;
 	model=weapon_exphvyrock;
-	range=1150;
+	range=1225;
 	reloadtime=1.2;
 	weapontimer=0.33; //6
 	weaponvelocity=450;
