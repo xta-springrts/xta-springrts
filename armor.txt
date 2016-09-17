@@ -265,6 +265,14 @@
 	guardian_sea_dragon=99;
 	guardian_kharon=99;
 }
+
+[group_rockets]
+{
+	lost_falcon_heavy_new=99;
+	lost_falcon_heavy=99;
+}
+
+
 [group_subs]
 {
 	arm_lurker=99;

@@ -59,8 +59,8 @@
 	movementclass=TANKSH4;
 	Ovradjust=1;
 	collisionVolumeType = box;
-	collisionVolumeScales =35 30 35;
-	collisionVolumeOffsets = 0 -1 0;
+	collisionVolumeScales =45 35 60;
+	collisionVolumeOffsets = 0 -5 0;
 	collisionVolumeTest = 1;
 	pieceTrailCEGTag=NanoDebree;//bleh
 	pieceTrailCEGRange = 2;

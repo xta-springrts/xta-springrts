@@ -2,14 +2,14 @@
 {
 	name=Authoritarian;
 	unitname=lost_authoritarian;
-	buildcostenergy=8542;
-	buildcostmetal=1003;
-	buildtime=18624;//2312
+	buildcostenergy=14542;
+	buildcostmetal=1203;
+	buildtime=30624;//2312
 	category=Lost  CONSTR NOWEAPON NOTAIR NOTSUB;
 	description=Area Control Tower;
 	footprintx=3;
 	footprintz=3;
-	maxdamage=2000;
+	maxdamage=2825;
 	objectname=lost_authoritarian;
 	side=Lost;
 	soundcategory=GUARD;

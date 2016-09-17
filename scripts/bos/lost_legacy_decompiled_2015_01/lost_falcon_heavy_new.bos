@@ -1,0 +1,86 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+piece  base, rocket, flare;
+
+static-var Static_Var_6;
+
+
+// Signal definitions
+#define SIG_AIM				2
+
+FLY()
+{
+	while( TRUE )
+	{
+		emit-sfx UNIT_SFX1 from flare;
+		sleep 25;
+	}
+}
+
+BeginJump()
+{
+	Static_Var_6 = 1;
+	while( Static_Var_6 == 1 )
+	{
+	start-script FLY();
+	emit-sfx UNIT_SFX3 from flare;
+	Static_Var_6 = 1;
+	turn base to x-axis <30.000000> speed <50.000000>;
+	sleep 3000;
+	turn base to x-axis <170.000000> speed <20.000000>;
+	sleep 30000;
+	}
+}
+
+EndJump()
+{
+	Static_Var_6 = 0;
+	emit-sfx DETO_W1 from base;
+}
+
+
+Create()
+	{
+	Static_Var_6 = 0;
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 500;
+	}
+}
+
+AimPrimary(heading, pitch)
+{
+	signal SIG_AIM;
+	set-signal-mask SIG_AIM;
+	//while( !gun_1 )
+	return (1);
+}
+
+AimFromPrimary(piecenum)
+{
+	piecenum = rocket;
+}
+
+QueryPrimary(piecenum)
+{
+	piecenum = rocket;
+}
+
+FirePrimary()
+{
+	emit-sfx 4096 + 1 from flare;
+	hide rocket;
+}
+
+AimFromSecondary(piecenum)
+{
+	piecenum = rocket;
+}
+
+QuerySecondary(piecenum)
+{
+	piecenum = rocket;
+}

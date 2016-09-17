@@ -19,7 +19,7 @@
 	unitname=lost_shaman;
 	unitnumber=256;
 	objectname=lost_shaman.3do;
-	corpse=lost_shaman_dead;
+	corpse=core_resurrection_kbot_dead;
 	buildpic=lost_shaman.png;
 	soundcategory=CORE_NECRO;
 

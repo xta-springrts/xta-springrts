@@ -4342,7 +4342,7 @@
 		canbuild5=lost_watch_tower;
 		//canbuild6=lost_watch_tower;//jumping flame tower
 		canbuild7=lost_fascist;
-		canbuild8=lost_falcon_heavy;
+		canbuild8=lost_falcon_heavy_new;
 		canbuild9=lost_authoritarian;
 		canbuild10=lost_totalitarian;
 	}
