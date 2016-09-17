@@ -119,7 +119,7 @@
 	transportmaxunits=8;
 	transportsize=4;
 	loadingradius=100;
-	IsAirBase=1;
+	//IsAirBase=1;
 	Isfireplatform=1;
 	ReleaseHeld=1;
 	cantbetransported=1;

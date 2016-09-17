@@ -30,7 +30,7 @@
 	SelfDestructAs=LARGE_BUILDING;
 	Category=CORE PLANT NOWEAPON NOTAIR NOTSUB;
 	TEDClass=PLANT;
-	YardMap=occco ccccc ccccc ccccc occco;
+	YardMap=ccccc ccccc ccccc ccccc ccccc;//occco ccccc ccccc ccccc occco
 	Corpse=lost_tower_yard_dead;
 	firestandorders=1;
 	StandingFireOrder=2;
