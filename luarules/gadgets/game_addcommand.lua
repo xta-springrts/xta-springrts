@@ -203,8 +203,12 @@ function gadget:UnitCreated(unitID, unitDefID, teamID)
 	
 	if uD.isAirBase then
 		local cmdDescID = FindUnitCmdDesc(unitID, CMD_REPAIR)
-		Spring.EditUnitCmdDesc(unitID,cmdDescID,{hidden = true})
-		InsertUnitCmdDesc(unitID, 50, ejectCmd)
+		if cmdDescID then
+			Spring.EditUnitCmdDesc(unitID,cmdDescID,{hidden = true})
+			InsertUnitCmdDesc(unitID, 50, ejectCmd)
+		else
+			Echo("Warning: airbase unit has no repair command:",UnitDefs[unitDefID].name)
+		end
 	end
 end
 
