@@ -2560,12 +2560,12 @@
 	collisionVolumeOffsets=0 -1 0;//#AUTO#
 }
 
-[lost_nosmeab_dead]
+[lost_nosmaeb_dead]
 {
 	world=All Worlds;
 	description=Wreckage;
 	category=lost_corpses;
-	object=lost_nosmeab_dead.3do;
+	object=lost_nosmaeb_dead.3do;
 	footprintx=4;
 	footprintz=4;
 	height=20;
