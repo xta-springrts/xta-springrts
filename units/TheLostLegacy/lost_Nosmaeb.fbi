@@ -20,7 +20,7 @@
 	unitname=lost_Nosmaeb;
 	unitnumber=188;
 	objectname=lost_Nosmaeb.3do;
-	corpse=lost_nosmeab_dead;
+	corpse=lost_nosmaeb_dead;
 	buildpic=lost_Nosmaeb.png;
 	soundcategory=;
 
