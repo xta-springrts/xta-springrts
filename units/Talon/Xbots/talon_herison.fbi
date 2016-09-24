@@ -3,55 +3,48 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	side=Arm;
-	name=Moho Mine;
-	description=Advanced Metal Extractor;
-	icontype=metal;
+	side=Core;
+	name=Herison;
+	description=Crawling Bomb;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=ARM METAL STATIC NOWEAPON NOTAIR NOTSEA NOTSUB;
-	tedclass=METAL;
+	Category=CORE MINE KBOT PHIB MOBILE WEAPON NOTAIR NOTSEA NOTSUB;
+	tedclass=KBOT;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=talon_moho_mine;
-	unitnumber=49;
-	objectname=talon_moho_mine.3do;
-	corpse=talon_moho_mine_dead;
-	buildpic=talon_moho_mine.png;
-	soundcategory=ARM_MOHO;
+	unitname=talon_herison;
+	unitnumber=130;
+	objectname=talon_herison.3do;
+	buildpic=talon_herison.png;
+	soundcategory=ROACH;
+	script=arm_invader.cob;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=1373;
-	buildcostmetal=732;
-	buildcostenergy=4650;
-	buildtime=32750;
-	footprintx=5;
-	footprintz=5;
+	maxdamage=187;
+	healtime=30;
+	buildcostmetal=60;
+	buildcostenergy=4071;
+	buildtime=7899;
+	footprintx=1;
+	footprintz=1;
 
 	//************************************************************
 	//  Resources
 	//*************
 	metalstorage=0;
-	energyuse=300;
+	energymake=0.1;
+	energyuse=0.1;
 	energystorage=0;
-	extractsmetal=0.006;
 
 	//************************************************************
 	//  Building
 	//************
-	buildangle=2048;
-	yardmap=yyoyy yoooy ooooo ooooo yyoyy;
-	activatewhenbuilt=1;
-	collisionVolumeType = CylY;
-	collisionVolumeScales = 54 45 54;
-	collisionVolumeOffsets = 0 0 0;
-	collisionVolumeTest = 1;
 
 	//************************************************************
 	//  Constructor
@@ -62,53 +55,74 @@
 	//************************************************************
 	//  Abilities
 	//*************
-	onoffable=1;
-	canRepeat=0;
-	canMove=0;
-	canAttack=0;
-	canGuard=0;
+	canattack=1;
+	canguard=1;
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+	kamikaze=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	maxslope=19;
-	maxwaterdepth=22;
+	movementclass=CRAWLBOMB;
+	turnrate=1370;
+	acceleration=1.0;
+	brakerate=1.2;
+	maxvelocity=2.1;
+	maxslope=32;
+	maxwaterdepth=112;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=367.5;
+	sightdistance=300;
 	radardistance=0;
+	radardistancejam=10;
 
 	//************************************************************
 	//  Weapons
 	//***********
-	explodeas=MEDIUM_BUILDINGEX;
-	selfdestructas=MEDIUM_BUILDING;
+	nochasecategory=VTOL;
+	badtargetcategory=VTOL;
+	wpri_badtargetcategory=VTOL;
+	explodeas=CRAWL_BLASTSML; //WAS CRAWL_BLAST now smaller damage and smaller area of effect //fixed v9 gold//
+	selfdestructas=CRAWL_BLAST;
+	selfdestructcountdown=0;
 
 	//************************************************************
 	//  Orders
 	//**********
 	noautofire=0;
+	firestandorders=1;
+	mobilestandorders=1;
+	standingfireorder=2;
+	standingmoveorder=1;
+	defaultmissiontype=Standby;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=0;
-	designation=AM-MME;
+	bmcode=1;
+	designation=UV-2-AB;
 	downloadable=1;
+	kamikazedistance=60;
+	maneuverleashlength=640;
+	shootme=1;
+	steeringmode=1;
 	threed=1;
 	version=1.2;
 	zbuffer=1;
+	mass=2000;  //70000
+	collisionVolumeType = box;
+	collisionVolumeScales =8 10 8;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
 	pieceTrailCEGTag=Debree;//bleh
 	pieceTrailCEGRange = 4;
 
 	//************************************************************
 	//  To be removed
 	//*****************
-	[SFXTypes]
-	{
-	explosiongenerator0=custom:UNITFIRE;
-	}
 
 }

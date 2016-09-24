@@ -7,7 +7,7 @@
 	Designation=CORE-DR5;
 	Name=Riptide;
 	buildpic=core_Riptide.png;
-	Description=Torpedo Cannon Tortoise;
+	Description=Torpedo/Cannon Tortoise;
 	FootprintX=4;
 	FootprintZ=4;
 	BuildCostEnergy=4463;

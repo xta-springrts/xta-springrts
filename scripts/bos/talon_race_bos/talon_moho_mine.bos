@@ -37,9 +37,9 @@ SmokeUnit(healthpercent, sleeptime, smoketype)
 
 Smoke()
 {
-	emit-sfx 256 | 2 from smoker;
+	emit-sfx UNIT_SFX1 from smoker;
 	sleep 10;
-	emit-sfx 256 | 1 from smoker;
+	emit-sfx UNIT_SFX1 from smoker;
 	sleep 10;
 	if(smoking)
 	{
@@ -102,6 +102,7 @@ Create()
 	spin spinner around y-axis speed <5000>;
 	dont-shade drill;
 	dont-shade base;
+	hide smoker;
 	Static_Var_1 = 0;
 	Static_Var_2 = 0;
 	call-script InitState();

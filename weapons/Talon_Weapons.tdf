@@ -1,4 +1,94 @@
 
+[Crusader_LASER]
+{
+	name=High Energy Laser;
+	Weapontype=LaserCannon;
+	explosiongenerator=custom:GreenLaser;
+	cegTag=GREENCRAP;
+	duration=0.06;
+	thickness=1.5;
+	intensity=0.6;
+	turret=1;
+	range=500;
+	reloadtime=2.2;
+	energypershot=200;
+	weaponvelocity=1050;
+	areaofeffect=8;
+	soundstart=Lasrmas2;
+	soundhitdry=lasrhit1;
+	firestarter=90;
+	rgbcolor=0.000 1.000 0.259;
+	tolerance=800;
+	accuracy=400;
+	movingaccuracy=800;
+	[DAMAGE]
+	{
+		default=150;
+		group_invincible=1;
+	}
+}
+
+[XBOT_ROCKET]
+{
+	name=Rockets;
+	Weapontype=MissileLauncher;
+	turret=1;
+	model=guardian_missile.3do;
+	explosiongenerator=custom:KBOTROCKETHIT;
+	cegTag=GUARDIANRocketTRAIL;
+	Texture1=null;
+	Texture2=null;
+	Texture3=null;
+	Texture4=null;
+	range=433;
+	reloadtime=4.0;
+	weapontimer=2;
+	weaponvelocity=300;
+	startvelocity=300;
+	weaponacceleration=0;
+	areaofeffect=65;
+	soundstart=gokpulse1;
+	soundhitdry=gokpulse2hit;
+	firestarter=70;
+	smoketrail=0;
+	startsmoke=0;
+	[DAMAGE]
+	{
+		lost_commanders=156;
+		default=198;
+		group_invincible=1;
+	}
+}
+
+[WOLF_GUN]
+{
+	explosiongenerator=custom:KBOTMISSILEHIT;
+	duration=0.04;
+	intensity=0.85;
+	name=Laser;
+	Weapontype=LaserCannon;
+	thickness=0.5;
+	turret=1;
+	range=225;
+	accuracy=600;
+	movingaccuracy=900;
+	reloadtime=0.5;
+	weaponvelocity=1000;
+	areaofeffect=8;
+	soundtrigger=1;
+	soundstart=talongunfirerapid;
+	soundhitdry=talongunhit;
+	firestarter=50;
+	rgbcolor=1.0 0.8 0.25;
+	rgbcolor2=1.0 1.0 1.00;
+	tolerance=1000;
+	[DAMAGE]
+	{
+		default=25;
+		group_invincible=1;
+	}
+}
+
 [NUCLEAR_GOD]
 {
 	name=Nuclear Missile;
@@ -103,6 +193,8 @@
 	areaofeffect=16;
 	targetMoveError=0.5;
 	soundstart=CORSNIPE_laser;
+	accuracy=10;
+	movingaccuracy=500;
 	soundhitdry=xplosml4;
 	SoundTrigger=1;
 	firestarter=90;
@@ -1145,7 +1237,7 @@
 	name=Light Laser;
 	Weapontype=LaserCannon;
 	turret=1;
-	range=525;
+	range=485;
 	reloadtime=0.666;
 	weaponvelocity=1650;
 	explosiongenerator=custom:KBOTMISSILEHIT;
@@ -1213,7 +1305,7 @@
 	range=250;
 	accuracy=600;
 	movingaccuracy=900;
-	reloadtime=0.5;
+	reloadtime=0.75;
 	weaponvelocity=1000;
 	areaofeffect=8;
 	soundtrigger=1;
@@ -1242,7 +1334,7 @@
 	range=280;
 	accuracy=600;
 	movingaccuracy=900;
-	reloadtime=0.5;
+	reloadtime=0.75;
 	weaponvelocity=1000;
 	areaofeffect=8;
 	soundtrigger=1;

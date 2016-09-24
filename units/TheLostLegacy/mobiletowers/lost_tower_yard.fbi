@@ -39,6 +39,7 @@
 	canmove=1;
 	canpatrol=1;
 	canstop=1;
+	Weapon1=LOSTFALCON_WEAPON;
 	pieceTrailCEGTag=Debree;//bleh
 	pieceTrailCEGRange = 4;
 	}

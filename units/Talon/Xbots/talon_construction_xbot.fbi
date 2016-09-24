@@ -4,111 +4,127 @@
 	//  Unit Description
 	//********************
 	side=Arm;
-	name=Moho Mine;
-	description=Advanced Metal Extractor;
-	icontype=metal;
+	name=Construction Xbot;
+	description=Tech Level 1.5;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=ARM METAL STATIC NOWEAPON NOTAIR NOTSEA NOTSUB;
-	tedclass=METAL;
+	category=ARM KBOT CONSTR MOBILE NOWEAPON STORAGE NOTAIR NOTSEA NOTSUB;
+	tedclass=CONSTR;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=talon_moho_mine;
-	unitnumber=49;
-	objectname=talon_moho_mine.3do;
-	corpse=talon_moho_mine_dead;
-	buildpic=talon_moho_mine.png;
-	soundcategory=ARM_MOHO;
+	unitname=talon_construction_xbot;
+	unitnumber=3;
+	objectname=talon_construction_xbot.3do;
+	corpse=talon_construction_xbot_dead;
+	buildpic=talon_construction_xbot.png;
+	soundcategory=ARM_CKBOT;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=1373;
-	buildcostmetal=732;
-	buildcostenergy=4650;
-	buildtime=32750;
-	footprintx=5;
-	footprintz=5;
+	maxdamage=587;
+	healtime=53;
+	buildcostmetal=200;
+	buildcostenergy=3084;
+	buildtime=8074;
+	footprintx=2;
+	footprintz=2;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energyuse=300;
-	energystorage=0;
-	extractsmetal=0.006;
+	metalmake=0.2;
+	metalstorage=100;
+	energymake=10;
+	energyuse=0.1;
+	energystorage=100;
 
 	//************************************************************
 	//  Building
 	//************
-	buildangle=2048;
-	yardmap=yyoyy yoooy ooooo ooooo yyoyy;
-	activatewhenbuilt=1;
-	collisionVolumeType = CylY;
-	collisionVolumeScales = 54 45 54;
-	collisionVolumeOffsets = 0 0 0;
-	collisionVolumeTest = 1;
 
 	//************************************************************
 	//  Constructor
 	//***************
-	builder=0;
-	workertime=0;
+	builder=1;
+	builddistance=130;//170, edited by Jools
+	workertime=150;
+	RepairSpeed=150;
+	ReclaimSpeed=150;
+	TerraformSpeed=300;//speed up terraforming
 
 	//************************************************************
 	//  Abilities
 	//*************
-	onoffable=1;
-	canRepeat=0;
-	canMove=0;
-	canAttack=0;
-	canGuard=0;
+	canguard=1;
+	canmove=1;
+	canpatrol=1;
+	canreclamate=1;
+	canFight=1;
+	canstop=1;
+	upright=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	maxslope=19;
-	maxwaterdepth=22;
+	movementclass=KBOTSS2;
+	turnrate=1010;
+	acceleration=1.8;
+	brakerate=14.0;
+	maxvelocity=1.4;
+	maxslope=20;
+	maxwaterdepth=25;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=367.5;
+	sightdistance=373.5;
 	radardistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
-	explodeas=MEDIUM_BUILDINGEX;
-	selfdestructas=MEDIUM_BUILDING;
+	explodeas=NANO_UNITEX;
+	selfdestructas=NANO_UNIT;
 
 	//************************************************************
 	//  Orders
 	//**********
 	noautofire=0;
+	mobilestandorders=1;
+	standingmoveorder=1;
+	defaultmissiontype=Standby;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=0;
-	designation=AM-MME;
+	bmcode=1;
+	designation=ARM-ACK1;
 	downloadable=1;
+	maneuverleashlength=640;
+	shootme=1;
+	smoothanim=1;
+	steeringmode=1;
 	threed=1;
 	version=1.2;
 	zbuffer=1;
-	pieceTrailCEGTag=Debree;//bleh
-	pieceTrailCEGRange = 4;
+	pieceTrailCEGTag=NanoDebree;//bleh
+	pieceTrailCEGRange = 2;
+	collisionVolumeType = box;
+	collisionVolumeScales =25 22 25;
+	collisionVolumeOffsets = 0 -1 0;
+	collisionVolumeTest = 1;
 
 	//************************************************************
 	//  To be removed
 	//*****************
+
 	[SFXTypes]
 	{
-	explosiongenerator0=custom:UNITFIRE;
+	explosiongenerator0=custom:Nano;
 	}
-
 }

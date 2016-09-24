@@ -4,9 +4,10 @@
 	//  Unit Description
 	//********************
 	side=talon;
-	name=Commander;
-	description=Commander;
+	name=Decoy Commander;
+	description=Decoy Commander;
 	icontype=talon_commander;
+	decoyFor=talon_commander;
 
 	//************************************************************
 	//  Categories
@@ -17,11 +18,11 @@
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=talon_commander;
-	unitnumber=21;
+	unitname=talon_decoy_commander;
 	objectname=talon_commander.3do;
 	buildpic=talon_commander.png;
 	soundcategory=Arm_COM;
+	script=talon_commander.cob;
 
 	//************************************************************
 	//  Health/Cost/Size
@@ -29,9 +30,9 @@
 
 	maxdamage=2700;
 	healtime=100;
-	buildcostmetal=2487;
-	buildcostenergy=40883;
-	buildtime=32072;
+	buildcostmetal=687;
+	buildcostenergy=9883;
+	buildtime=13072;
 	footprintx=2;
 	footprintz=2;
 	mass=4000;
@@ -39,12 +40,12 @@
 	//************************************************************
 	//  Resources
 	//*************
-	metalmake=1.8;
+	metalmake=0.25;
 	//metaluse=-2;
-	metalstorage=1050;
-	energymake=45;
+	metalstorage=1000;
+	energymake=12;
 	//energyuse=-50;
-	energystorage=1050;
+	energystorage=1000;
 
 	//************************************************************
 	//  Building
@@ -56,12 +57,12 @@
 	//***************
 	builder=1;
 	builddistance=180;
-	workertime=300;
-	RepairSpeed=300;
-	ReclaimSpeed=300;
+	workertime=225;
+	RepairSpeed=225;
+	ReclaimSpeed=225;
 	//ResurrectSpeed=0;
 	TerraformSpeed=600;//speed up terraforming
-	capturespeed=900;//50 percent faster
+	capturespeed=225;//50 percent faster
 
 	//************************************************************
 	//  Abilities
@@ -93,7 +94,7 @@
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=720;
+	sightdistance=640;
 	radardistance=800;
 	sonardistance=800;
 	losemitheight=44;
@@ -103,8 +104,8 @@
 	//  Weapons
 	//***********
 	weapon1=TALONCOMLASER;
-	weapon2=talonCOMLASER;
-	weapon3=TALON_DISINTEGRATOR;
+	//weapon2=talonCOMLASER;
+	weapon3=BOGUS_DISINTEGRATOR;
 	//weapon4=talonCOMPARALASER;
 	//weapon5=SAT_HEAVYROCKET;
 	//weapon6=talonSNIPE_WEAPON;
@@ -114,8 +115,8 @@
 	onlytargetcategory5=NOTAIR;
 	wpri_badtargetcategory=VTOL;
 	wspe_badtargetcategory=VTOL;
-	explodeas=COMMANDER_BLAST;
-	selfdestructas=COMMANDER_BLAST;
+	explodeas=DECOY_COMMANDER_BLAST;
+	selfdestructas=DECOY_BLAST;
 
 	//************************************************************
 	//  Orders
@@ -132,11 +133,9 @@
 	bmcode=1;
 	cancloak=1;
 	cloakcost=150;
-	cloakcostmoving=800;
+	cloakcostmoving=500;
 	cloakTimeout=85;
-	commander=1;
 	designation=talon-WM;
-	downloadable=1;
 	hidedamage=1;
 	damagemodifier=0.8;
 	immunetoparalyzer=1;
@@ -168,6 +167,7 @@
 	[customparams] 	
 	{
 	iscommander=1;
+	isdecoycommander=1;
 	side=talon;
 	type=automatic;
 	}

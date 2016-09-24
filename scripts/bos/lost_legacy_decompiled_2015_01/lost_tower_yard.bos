@@ -1,0 +1,206 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+piece  base, nano1, nano2, nano3, nano4, beam1, beam2, beam3,
+       beam4;
+
+static-var  Static_Var_1, unitviewer;
+
+// Signal definitions
+#define SIG_ACTIVATE			2
+
+#define SMOKEPIECE1 base
+
+#include "StateChg.h"
+
+activatescr()
+{
+	turn nano1 to y-axis <45.010989> speed <100.000000>;
+	turn nano2 to y-axis <-45.010989> speed <100.000000>;
+	turn nano3 to y-axis <-45.010989> speed <100.000000>;
+	turn nano4 to y-axis <45.010989> speed <100.000000>;
+	sleep 689;
+	return (0);
+	// Build by COBBLER Ver4.0 Copyright @1998 DIGITAL CONCEPT SOFTWARE (MANU@inext.fr) / http://www.annihilationcenter.com/DCS/  
+}
+
+deactivatescr()
+{
+	turn nano1 to y-axis <0.000000> speed <100.000000>;
+	turn nano2 to y-axis <0.000000> speed <100.000000>;
+	turn nano3 to y-axis <0.000000> speed <100.000000>;
+	turn nano4 to y-axis <0.000000> speed <100.000000>;
+	sleep 683;
+}
+#include "SmokeUnit.h"
+#include "Yard.h"
+
+Go()
+{
+	dont-cache beam1;
+	dont-cache beam2;
+	dont-cache beam3;
+	dont-cache beam4;
+	dont-cache nano1;
+	dont-cache nano2;
+	dont-cache nano3;
+	dont-cache nano4;
+	call-script activatescr();
+	call-script OpenYard();
+	set INBUILDSTANCE to 1;
+}
+
+Stop()
+{
+	set INBUILDSTANCE to 0;
+	call-script CloseYard();
+	call-script deactivatescr();
+	cache beam1;
+	cache beam2;
+	cache beam3;
+	cache beam4;
+	cache nano1;
+	cache nano2;
+	cache nano3;
+	cache nano4;
+}
+#define ACTIVATECMD			call-script Go();
+#define DEACTIVATECMD		call-script Stop();
+#include "StateChg.h"
+
+Create()
+{
+	dont-cache base;
+	dont-shade beam1;
+	dont-shade beam2;
+	dont-shade beam3;
+	dont-shade beam4;
+	dont-shade nano1;
+	dont-shade nano2;
+	dont-shade nano3;
+	dont-shade nano4;
+	unitviewer = FALSE;
+	Static_Var_1 = 1;
+	call-script InitState();
+	start-script SmokeUnit();
+}
+
+QueryNanoPiece(piecenum)
+{
+	if( Static_Var_1 == 1 )
+	{
+		piecenum = beam1;
+	}
+	if( Static_Var_1 == 2 )
+	{
+		piecenum = beam2;
+	}
+	if( Static_Var_1 == 3 )
+	{
+		piecenum = beam3;
+	}
+	if( Static_Var_1 == 4 )
+	{
+		piecenum = beam4;
+	}
+	++Static_Var_1;
+	if( Static_Var_1 == 5 )
+	{
+		Static_Var_1 = 1;
+	}
+}
+
+Demo()
+{
+	unitviewer = TRUE;
+}
+
+Activate()
+{
+	signal SIG_ACTIVATE;
+	start-script RequestState(0);
+}
+
+Deactivate()
+{
+	signal SIG_ACTIVATE;
+	set-signal-mask SIG_ACTIVATE;
+	if( !unitviewer )
+	{
+		sleep 5000;
+	}
+	set-signal-mask 0;
+	start-script RequestState(1);
+}
+
+StartBuilding()
+{
+}
+
+StopBuilding()
+{
+}
+
+QueryBuildInfo(piecenum)
+{
+	piecenum = base;
+}
+
+SweetSpot(piecenum)
+{
+	piecenum = base;
+}
+
+AimFromPrimary(piecenum)
+{
+	piecenum = base;
+}
+
+QueryPrimary(piecenum)
+{
+	piecenum = base;
+}
+
+
+
+Killed(severity, corpsetype)
+{
+	if( severity <= 25 )
+	{
+		corpsetype = 1;
+		explode base type BITMAPONLY | BITMAP1;
+		explode nano1 type BITMAPONLY | BITMAP2;
+		explode nano2 type BITMAPONLY | BITMAP3;
+		explode nano3 type BITMAPONLY | BITMAP4;
+		explode nano4 type BITMAPONLY | BITMAP5;
+		return (0);
+	}
+	if( severity <= 50 )
+	{
+		corpsetype = 2;
+		explode base type BITMAPONLY | BITMAP1;
+		explode nano1 type FALL | BITMAP2;
+		explode nano2 type FALL | BITMAP3;
+		explode nano3 type FALL | BITMAP4;
+		explode nano4 type FALL | BITMAP5;
+		return (0);
+	}
+	if( severity <= 99 )
+	{
+		corpsetype = 3;
+		explode base type BITMAPONLY | BITMAP1;
+		explode nano1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+		explode nano2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+		explode nano3 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+		explode nano4 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+		return (0);
+	}
+	corpsetype = 3;
+	explode base type BITMAPONLY | BITMAP1;
+	explode nano1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode nano2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+	explode nano3 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+	explode nano4 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+}

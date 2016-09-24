@@ -4,54 +4,47 @@
 	//  Unit Description
 	//********************
 	side=Arm;
-	name=Moho Mine;
-	description=Advanced Metal Extractor;
-	icontype=metal;
+	name=Wolf;
+	description=Infantry Xbot;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=ARM METAL STATIC NOWEAPON NOTAIR NOTSEA NOTSUB;
-	tedclass=METAL;
+	category=ARM KBOT MOBILE WEAPON NOTAIR NOTSEA NOTSUB;
+	tedclass=KBOT;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=talon_moho_mine;
-	unitnumber=49;
-	objectname=talon_moho_mine.3do;
-	corpse=talon_moho_mine_dead;
-	buildpic=talon_moho_mine.png;
-	soundcategory=ARM_MOHO;
+	unitname=talon_wolf;
+	unitnumber=30;
+	objectname=talon_wolf.3do;
+	corpse=talon_wolf_dead;
+	buildpic=talon_wolf.png;
+	soundcategory=ARM_KBOT;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=1373;
-	buildcostmetal=732;
-	buildcostenergy=4650;
-	buildtime=32750;
-	footprintx=5;
-	footprintz=5;
+	maxdamage=1200;
+	healtime=30;
+	buildcostmetal=158;
+	buildcostenergy=2156;
+	buildtime=3312;
+	footprintx=2;
+	footprintz=2;
 
 	//************************************************************
 	//  Resources
 	//*************
 	metalstorage=0;
-	energyuse=300;
+	energymake=0.8;
+	energyuse=0.8;
 	energystorage=0;
-	extractsmetal=0.006;
 
 	//************************************************************
 	//  Building
 	//************
-	buildangle=2048;
-	yardmap=yyoyy yoooy ooooo ooooo yyoyy;
-	activatewhenbuilt=1;
-	collisionVolumeType = CylY;
-	collisionVolumeScales = 54 45 54;
-	collisionVolumeOffsets = 0 0 0;
-	collisionVolumeTest = 1;
 
 	//************************************************************
 	//  Constructor
@@ -62,17 +55,23 @@
 	//************************************************************
 	//  Abilities
 	//*************
-	onoffable=1;
-	canRepeat=0;
-	canMove=0;
-	canAttack=0;
-	canGuard=0;
+	canattack=1;
+	canguard=1;
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+	upright=0;
 
 	//************************************************************
 	//  Movement
 	//************
-	maxslope=19;
-	maxwaterdepth=22;
+	movementclass=KBOTSF2;
+	turnrate=900;
+	acceleration=3.0;
+	brakerate=3.0;
+	maxvelocity=2.00;
+	maxslope=14;
+	maxwaterdepth=12;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
@@ -83,23 +82,40 @@
 	//************************************************************
 	//  Weapons
 	//***********
-	explodeas=MEDIUM_BUILDINGEX;
-	selfdestructas=MEDIUM_BUILDING;
+	weapon1=WOLF_GUN;
+	nochasecategory=VTOL;
+	badtargetcategory=VTOL;
+	wpri_badtargetcategory=VTOL;
+	explodeas=BIG_UNITEX;
+	selfdestructas=BIG_UNIT;
 
 	//************************************************************
 	//  Orders
 	//**********
 	noautofire=0;
+	firestandorders=1;
+	mobilestandorders=1;
+	standingfireorder=2;
+	standingmoveorder=1;
+	defaultmissiontype=Standby;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=0;
-	designation=AM-MME;
+	bmcode=1;
+	designation=ARM-KG;
 	downloadable=1;
+	maneuverleashlength=640;
+	shootme=1;
+	smoothanim=1;
+	steeringmode=2;
 	threed=1;
 	version=1.2;
 	zbuffer=1;
+	collisionVolumeType = box;
+	collisionVolumeScales =25 27 25;
+	collisionVolumeOffsets = 0 -1 0;
+	collisionVolumeTest = 1;
 	pieceTrailCEGTag=Debree;//bleh
 	pieceTrailCEGRange = 4;
 
@@ -108,7 +124,11 @@
 	//*****************
 	[SFXTypes]
 	{
-	explosiongenerator0=custom:UNITFIRE;
+	explosiongenerator0=custom:rocketflare;
+	}
+	[customParams] 
+	{
+    canAreaAttack=1;
 	}
 
 }

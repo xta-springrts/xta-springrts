@@ -29,7 +29,7 @@
 	maxdamage=720;
 	buildcostmetal=215;
 	buildcostenergy=0;
-	buildtime=2416;
+	buildtime=3016;
 	footprintx=6;
 	footprintz=6;
 

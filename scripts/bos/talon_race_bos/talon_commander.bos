@@ -529,7 +529,7 @@ AimFromPrimary(piecenum)
 
 QueryPrimary(piecenum)
 {
-	piecenum = laser;
+	piecenum = dgun;
 	//return;
 }
 
@@ -560,10 +560,10 @@ AimPrimary(heading, pitch)
 		{
 			sleep 100;
 		}
-		if(pitch>32768)
-		{
-			pitch=pitch - 65536;
-		}		
+//		if(pitch>32768)
+//		{
+//			pitch=pitch - 65536;
+//		}		
 		if(laser_altern==0)
 		{
 			REST_UPPER;
@@ -576,10 +576,10 @@ AimPrimary(heading, pitch)
 			wait-for-turn shoulder around x-axis;
 			wait-for-turn hand around x-axis;
 		}
-		while(!laser_ready)
-		{
-			sleep 10;
-		}
+//		while(!laser_ready)
+//		{
+//			sleep 10;
+//		}
 	}
 	start-script RestorePrimary();
 	return (1);

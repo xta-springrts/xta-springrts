@@ -4,54 +4,49 @@
 	//  Unit Description
 	//********************
 	side=Arm;
-	name=Moho Mine;
-	description=Advanced Metal Extractor;
-	icontype=metal;
+	name=Husher;
+	description=Radar Jammer;
+	icontype=building;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=ARM METAL STATIC NOWEAPON NOTAIR NOTSEA NOTSUB;
-	tedclass=METAL;
+	category=ARM KBOT MOBILE NOWEAPON JAMMER NOTAIR NOTSEA NOTSUB;
+	tedclass=KBOT;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=talon_moho_mine;
-	unitnumber=49;
-	objectname=talon_moho_mine.3do;
-	corpse=talon_moho_mine_dead;
-	buildpic=talon_moho_mine.png;
-	soundcategory=ARM_MOHO;
+	unitname=talon_husher;
+	unitnumber=10;
+	objectname=talon_husher.3do;
+	corpse=talon_husher_dead;
+	buildpic=talon_husher.png;
+	soundcategory=ARM_JAM;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=1373;
-	buildcostmetal=732;
-	buildcostenergy=4650;
-	buildtime=32750;
-	footprintx=5;
-	footprintz=5;
+	maxdamage=587;
+	healtime=30;
+	buildcostmetal=187;
+	buildcostenergy=3183;
+	buildtime=9108;
+	footprintx=2;
+	footprintz=2;
 
 	//************************************************************
 	//  Resources
 	//*************
 	metalstorage=0;
-	energyuse=300;
+	energymake=10;
+	energyuse=10;
 	energystorage=0;
-	extractsmetal=0.006;
 
 	//************************************************************
 	//  Building
 	//************
-	buildangle=2048;
-	yardmap=yyoyy yoooy ooooo ooooo yyoyy;
 	activatewhenbuilt=1;
-	collisionVolumeType = CylY;
-	collisionVolumeScales = 54 45 54;
-	collisionVolumeOffsets = 0 0 0;
-	collisionVolumeTest = 1;
 
 	//************************************************************
 	//  Constructor
@@ -62,53 +57,70 @@
 	//************************************************************
 	//  Abilities
 	//*************
+	canguard=1;
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
 	onoffable=1;
-	canRepeat=0;
-	canMove=0;
-	canAttack=0;
-	canGuard=0;
-
+	canfight=0;
+	canrepeat=0;
+	
 	//************************************************************
 	//  Movement
 	//************
-	maxslope=19;
-	maxwaterdepth=22;
+	movementclass=KBOTSS2;
+	turnrate=950;
+	acceleration=10;
+	brakerate=1.0;
+	maxvelocity=1.3;
+	maxslope=32;
+	maxwaterdepth=112;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=367.5;
+	sightdistance=350;
 	radardistance=0;
+	radardistancejam=500;//600
 
 	//************************************************************
 	//  Weapons
 	//***********
-	explodeas=MEDIUM_BUILDINGEX;
-	selfdestructas=MEDIUM_BUILDING;
+	explodeas=BIG_UNITEX;
+	selfdestructas=BIG_UNIT;
+	canattack=0; //added
 
 	//************************************************************
 	//  Orders
 	//**********
 	noautofire=0;
+	mobilestandorders=1;
+	standingmoveorder=1;
+	defaultmissiontype=Standby;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=0;
-	designation=AM-MME;
+	bmcode=1;
+	designation=ARM-CB;
 	downloadable=1;
+	maneuverleashlength=100; //640//
+	ovradjust=1;
+	shootme=1;
+	smoothanim=1;
+	steeringmode=1;
 	threed=1;
 	version=1.2;
 	zbuffer=1;
+	collisionVolumeType = box;
+	collisionVolumeScales =25 22 25;
+	collisionVolumeOffsets = 0 -1 0;
+	collisionVolumeTest = 1;
 	pieceTrailCEGTag=Debree;//bleh
 	pieceTrailCEGRange = 4;
 
 	//************************************************************
 	//  To be removed
 	//*****************
-	[SFXTypes]
-	{
-	explosiongenerator0=custom:UNITFIRE;
-	}
 
 }

@@ -1,0 +1,137 @@
+//CORE BOMBER HERISON
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+piece base, ground, leg1, leg2, leg3, leg4 ;
+
+static-var bMoving ;
+	
+walkscr()
+	{
+		WHILE (bMoving )
+			{
+			IF (bMoving )
+				{
+				TURN leg1 to z-axis <0> NOW;
+				TURN leg1 to z-axis <-38> SPEED <131>;
+				TURN leg2 to y-axis <55> NOW;
+				TURN leg2 to y-axis <55> SPEED <0>;
+				TURN leg2 to z-axis <38> NOW;
+				TURN leg2 to z-axis <0> SPEED <131>;
+				TURN leg3 to y-axis <0> NOW;
+				TURN leg3 to y-axis <60> SPEED <206>;
+				TURN leg3 to z-axis <37> NOW;
+				TURN leg4 to y-axis <-60> NOW;
+				TURN leg4 to y-axis <0> SPEED <206>;
+				TURN leg4 to z-axis <0> NOW;
+				TURN leg4 to z-axis <0> SPEED <0>;
+				SLEEP <140>; //298
+				}
+			IF (bMoving )
+				{
+				TURN leg1 to y-axis <-55> SPEED <188>;
+				TURN leg1 to z-axis <-38> SPEED <0>;
+				TURN leg2 to y-axis <0> SPEED <188>;
+				TURN leg2 to z-axis <0> SPEED <0>;
+				TURN leg3 to z-axis <0> SPEED <129>;
+				TURN leg4 to z-axis <-38> SPEED <130>;
+				SLEEP <140>;
+				}
+			IF (bMoving )
+				{
+				TURN leg1 to y-axis <-55> SPEED <0>;
+				TURN leg1 to z-axis <0> SPEED <131>;
+				TURN leg2 to z-axis <38> SPEED <131>;
+				TURN leg3 to y-axis <0> SPEED <206>;
+				TURN leg3 to z-axis <0> SPEED <0>;
+				TURN leg4 to y-axis <-60> SPEED <206>;
+				TURN leg4 to z-axis <-38> SPEED <0>;
+				SLEEP <140>;
+				}
+			TURN leg1 to y-axis <0> SPEED <188>;
+			TURN leg1 to z-axis <0> SPEED <0>;
+			TURN leg2 to y-axis <45> SPEED <188>;
+			TURN leg2 to z-axis <28> SPEED <0>;
+			TURN leg3 to z-axis <27> SPEED <129>;
+			TURN leg4 to y-axis <-50> SPEED <0>;
+			TURN leg4 to z-axis <0> SPEED <130>;
+			SLEEP <140>;
+			}
+	}
+MotionControl(moving)
+	{
+		WHILE ( TRUE )
+			{
+			moving = bMoving ;
+			IF (moving )
+				{
+				CALL-SCRIPT walkscr();
+				}
+			IF (!moving )
+				{
+				SLEEP <100>;
+				}
+			}
+	}
+Create()
+	{
+		bMoving = FALSE;
+		START-SCRIPT MotionControl();
+	}
+StartMoving()
+	{
+		bMoving = TRUE;
+	}
+StopMoving()
+	{
+		bMoving = FALSE;
+	}
+SweetSpot(piecenum)
+	{
+		piecenum = leg1;
+	}
+Killed(severity,corpsetype)
+	{
+		IF (severity <= 25 )
+			{
+			corpsetype = 1 ;
+			EXPLODE  base type  	BITMAPONLY | BITMAP1;
+			EXPLODE  ground type  	BITMAPONLY | BITMAP2;
+			EXPLODE  leg1 type  	BITMAPONLY | BITMAP3;
+			EXPLODE  leg2 type  	BITMAPONLY | BITMAP4;
+			EXPLODE  leg3 type  	BITMAPONLY | BITMAP5;
+			EXPLODE  leg4 type  	BITMAPONLY | BITMAP1;
+			RETURN ( 0 );
+			}
+		IF (severity <= 50 )
+			{
+			corpsetype = 2 ;
+			EXPLODE  base type  	BITMAPONLY | BITMAP1;
+			EXPLODE  ground type  	SHATTER | BITMAP2;
+			EXPLODE  leg1 type  	SHATTER | BITMAP3;
+			EXPLODE  leg2 type  	FALL | BITMAP4;
+			EXPLODE  leg3 type  	FALL | BITMAP5;
+			EXPLODE  leg4 type  	FALL | BITMAP1;
+			RETURN ( 0 );
+			}
+		IF (severity <= 99 )
+			{
+			corpsetype = 3 ;
+			EXPLODE  base type  	BITMAPONLY | BITMAP1;
+			EXPLODE  ground type  	SHATTER | EXPLODE_ON_HIT | BITMAP2;
+			EXPLODE  leg1 type  	FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+			EXPLODE  leg2 type  	FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+			EXPLODE  leg3 type  	FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+			EXPLODE  leg4 type  	FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+			RETURN ( 0 );
+			}
+		corpsetype = 3 ;
+		EXPLODE  base type  	BITMAPONLY | BITMAP1;
+		EXPLODE  ground type  	SHATTER | EXPLODE_ON_HIT | BITMAP2;
+		EXPLODE  leg1 type  	FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+		EXPLODE  leg2 type  	FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+		EXPLODE  leg3 type  	FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+		EXPLODE  leg4 type  	FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+	}

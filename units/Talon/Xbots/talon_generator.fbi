@@ -4,33 +4,33 @@
 	//  Unit Description
 	//********************
 	side=Arm;
-	name=Moho Mine;
-	description=Advanced Metal Extractor;
-	icontype=metal;
+	name=Generator;
+	description=Produces Energy;
+	icontype=building;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=ARM METAL STATIC NOWEAPON NOTAIR NOTSEA NOTSUB;
-	tedclass=METAL;
+	category=ARM ENERGY STATIC NOWEAPON NOTAIR NOTSEA NOTSUB;
+	tedclass=ENERGY;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=talon_moho_mine;
-	unitnumber=49;
-	objectname=talon_moho_mine.3do;
-	corpse=talon_moho_mine_dead;
-	buildpic=talon_moho_mine.png;
-	soundcategory=ARM_MOHO;
+	unitname=talon_generator;
+	unitnumber=63;
+	objectname=talon_generator.3do;
+	corpse=talon_generator_dead;
+	buildpic=talon_generator.png;
+	soundcategory=ARM_SOLAR;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=1373;
-	buildcostmetal=732;
-	buildcostenergy=4650;
-	buildtime=32750;
+	maxdamage=875;
+	buildcostmetal=270;
+	buildcostenergy=1542;
+	buildtime=5495;
 	footprintx=5;
 	footprintz=5;
 
@@ -38,20 +38,20 @@
 	//  Resources
 	//*************
 	metalstorage=0;
-	energyuse=300;
-	energystorage=0;
-	extractsmetal=0.006;
+	//energyuse=-20;
+	energymake=40;
+	energystorage=150;
 
 	//************************************************************
 	//  Building
 	//************
-	buildangle=2048;
-	yardmap=yyoyy yoooy ooooo ooooo yyoyy;
+	buildangle=16384;
+	yardmap=yycyy yoooy coooc yoooy yycyy;
 	activatewhenbuilt=1;
-	collisionVolumeType = CylY;
-	collisionVolumeScales = 54 45 54;
-	collisionVolumeOffsets = 0 0 0;
-	collisionVolumeTest = 1;
+	collisionVolumeType=CylY;
+	collisionVolumeScales=83 78 83;
+	collisionVolumeOffsets=0 -18 1;
+	//collisionVolumeTest = 1;
 
 	//************************************************************
 	//  Constructor
@@ -62,7 +62,7 @@
 	//************************************************************
 	//  Abilities
 	//*************
-	onoffable=1;
+	//onoffable=1;
 	canRepeat=0;
 	canMove=0;
 	canAttack=0;
@@ -71,8 +71,8 @@
 	//************************************************************
 	//  Movement
 	//************
-	maxslope=19;
-	maxwaterdepth=22;
+	maxslope=15;
+	maxwaterdepth=11;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
@@ -83,8 +83,8 @@
 	//************************************************************
 	//  Weapons
 	//***********
-	explodeas=MEDIUM_BUILDINGEX;
-	selfdestructas=MEDIUM_BUILDING;
+	explodeas=ATOMIC_BLASTPEN;
+	selfdestructas=ATOMIC_BLASTSML;
 
 	//************************************************************
 	//  Orders
@@ -95,20 +95,21 @@
 	//  Miscellaneous
 	//*****************
 	bmcode=0;
-	designation=AM-MME;
-	downloadable=1;
+	damagemodifier=0.9; //was 0.33333=66%bouns now 33%//
+	designation=AE-SC;
 	threed=1;
 	version=1.2;
 	zbuffer=1;
-	pieceTrailCEGTag=Debree;//bleh
-	pieceTrailCEGRange = 4;
+	pieceTrailCEGTag=NanoDebree;//bleh
+	pieceTrailCEGRange = 1;
 
 	//************************************************************
 	//  To be removed
 	//*****************
 	[SFXTypes]
 	{
-	explosiongenerator0=custom:UNITFIRE;
+	explosiongenerator0=custom:RedLight;
+	explosiongenerator1=custom:Normallight;
 	}
 
 }
