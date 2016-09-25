@@ -28,7 +28,7 @@
 	//********************
 	maxdamage=1550;
 	healtime=30;
-	buildcostmetal=341;
+	buildcostmetal=351;
 	buildcostenergy=3434;
 	buildtime=7012;
 	footprintx=2;
@@ -69,7 +69,7 @@
 	turnrate=900;
 	acceleration=3.0;
 	brakerate=3.0;
-	maxvelocity=1.6;
+	maxvelocity=1.525;
 	maxslope=14;
 	maxwaterdepth=12;
 

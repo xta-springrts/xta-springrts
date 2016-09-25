@@ -17,8 +17,8 @@ RestoreAfterDelay()
 
 activatescr()
 {
-	signal 4;
-	set-signal-mask 4;
+//	signal 4;
+//	set-signal-mask 4;
 	if( TRUE )
 	{
 		dont-cache doors;
@@ -159,7 +159,7 @@ Go()
 
 Stop()
 {
-	sleep 3000;
+	//sleep 3000;
 	set INBUILDSTANCE to 0;
 	call-script CloseYard();
 	start-script deactivatescr();
@@ -199,18 +199,6 @@ RequestState(requestedstate, currentstate)
 
 Create()
 {
-	dont-shade base;
-	dont-shade pad;
-	dont-shade towers;
-	dont-shade doors;
-	dont-shade lights;
-	dont-shade post1;
-	dont-shade post2;
-	dont-shade nano1;
-	dont-shade nano2;
-	dont-shade tower1;
-	dont-shade tower2;
-	dont-cache radar;
 	Static_Var_1 = 1;
 	call-script InitState();
 	start-script SmokeUnit();

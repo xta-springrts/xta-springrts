@@ -29,9 +29,9 @@
 	//********************
 	maxdamage=1890;
 	healtime=30;
-	buildcostmetal=403;
+	buildcostmetal=453;
 	buildcostenergy=811;
-	buildtime=3360;
+	buildtime=3860;
 	footprintx=3;
 	footprintz=4;
 

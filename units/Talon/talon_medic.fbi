@@ -116,6 +116,7 @@
 	collide=0;
 	pieceTrailCEGTag=NanoDebree;//bleh
 	pieceTrailCEGRange = 2;
+	airhoverfactor=0;
 
 	//************************************************************
 	//  To be removed

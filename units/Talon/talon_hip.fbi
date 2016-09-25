@@ -93,10 +93,10 @@
 	explodeas=AIR_UNITEX;
 	selfdestructas=MEDIUM_UNIT; 
 	FlareDelay=0.1;
-	FlareDropVector=0 0 -1;
-	FlareEfficiency=0.4;
+	FlareDropVector=0 -3 -1;
+	FlareEfficiency=0.5;
 	FlareSalvoSize=3;
-	FlareReload=3;
+	FlareReload=10;
 
 	//************************************************************
 	//  Orders
@@ -126,11 +126,7 @@
 	pieceTrailCEGTag=Debree;//bleh
 	pieceTrailCEGRange = 4;
 	AirStrafe=0;
-	flaredelay=0.2;
-	flaredropvector=0 -3 0;
-	flareefficieny=0.5;
-	flarereload=200;
-	candropflare=1;
+	airhoverfactor=0;
 
 	//************************************************************
 	//  To be removed
