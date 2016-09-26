@@ -15,12 +15,12 @@ static-var  bMoving, bAiming, Static_Var_3, Static_Var_4, restore_delay,
 
 HitByWeapon()
 {
-	if ( get HEALTH > 99 )
+	if ( (get HEALTH) > 99 )
 	{
 		hide head;
 		set ARMORED to 0;
 	}
-	if ( get HEALTH < 100 )
+	if ( (get HEALTH) < 100 )
 	{
 		show head;
 		set ARMORED to 1;
