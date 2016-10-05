@@ -28,7 +28,7 @@
 	//********************
 	maxdamage=360; // was 645
 	healtime=30;
-	buildcostmetal=30; //was 99(5%)//was 88
+	buildcostmetal=40; //was 99(5%)//was 88
 	buildcostenergy=850;
 	buildtime=1700;
 	footprintx=1;

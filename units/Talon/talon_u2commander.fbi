@@ -28,7 +28,7 @@
 	//  Health/Cost/Size
 	//********************
 
-	maxdamage=297;
+	maxdamage=3300;
 	healtime=100;
 	buildcostmetal=5345;
 	buildcostenergy=57843;

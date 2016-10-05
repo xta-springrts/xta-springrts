@@ -22,6 +22,7 @@
 	objectname=talon_hip.3do;
 	buildpic=talon_hip.png;
 	soundcategory=ARM_SEAPLN;
+	corpse=talon_mercenary_dead;
 
 	//************************************************************
 	//  Health/Cost/Size

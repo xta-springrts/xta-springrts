@@ -1,17 +1,17 @@
 
-[lost_generator_dead]
+[talon_generator_dead]
 {
 	world=All Worlds;
 	description=Wreckage;
 	category=lost_corpses;
-	object=lost_generator_dead;
-	featuredead=lost_generator_heap;
+	object=talon_generator_dead;
+	featuredead=talon_generator_heap;
 	footprintx=5;
 	footprintz=5;
 	height=40;
 	blocking=1;
 	hitdensity=100;
-	metal=204;
+	metal=234;
 	damage=2152;
 	reclaimable=1;
 	featurereclamate=smudge01;
@@ -24,7 +24,7 @@
 	collisionVolumeScales=86 20 86;//#AUTO#
 	collisionVolumeOffsets=0 -1 0;//#AUTO#
 }
-[lost_generator_heap]
+[talon_generator_heap]
 {
 	world=All Worlds;
 	description=Wreckage;
@@ -35,7 +35,7 @@
 	height=4;
 	blocking=0;
 	hitdensity=100;
-	metal=102;
+	metal=122;
 	damage=2152;
 	reclaimable=1;
 	featurereclamate=smudge01;

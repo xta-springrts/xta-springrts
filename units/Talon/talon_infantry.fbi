@@ -5,7 +5,7 @@
 	//********************
 	side=Core;
 	name=Infantry;
-	description=Assualt Clone;
+	description=Swarm Clone;
 
 	//************************************************************
 	//  Categories
@@ -28,7 +28,7 @@
 	//********************
 	maxdamage=290; // was 645
 	healtime=30;
-	buildcostmetal=20; //was 99(5%)//was 88
+	buildcostmetal=25; //was 99(5%)//was 88
 	buildcostenergy=400;
 	buildtime=800;
 	footprintx=1;

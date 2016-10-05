@@ -15,7 +15,7 @@
 	impulsefactor=0.6;
 	turret=1;
 	model=weapon_exphvyrock;
-	range=1000;
+	range=1100;
 	reloadtime=4.0;
 	weapontimer=0.33; //6
 	weaponvelocity=350;

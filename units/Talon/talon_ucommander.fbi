@@ -28,7 +28,7 @@
 	//  Health/Cost/Size
 	//********************
 
-	maxdamage=297;
+	maxdamage=2950;
 	healtime=100;
 	buildcostmetal=3145;
 	buildcostenergy=41843;
@@ -104,7 +104,7 @@
 	//  Weapons
 	//***********
 	weapon1=TALONCOMLASER;
-	weapon2=talonCOMLASER;
+	//weapon2=talonCOMLASER;
 	weapon3=TALON_DISINTEGRATOR;
 	//weapon4=talonCOMPARALASER;
 	//weapon5=SAT_HEAVYROCKET;

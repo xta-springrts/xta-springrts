@@ -19,7 +19,7 @@
 	unitname=talon_biker;
 	unitnumber=29;
 	objectname=talon_biker.3do;
-	//corpse=talon_biker_dead;
+	corpse=talon_mercenary_dead;
 	buildpic=talon_biker.png;
 	soundcategory=ARM_VEHICLE;
 

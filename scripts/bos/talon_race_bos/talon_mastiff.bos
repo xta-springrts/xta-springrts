@@ -1,0 +1,372 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+piece  spoint1, spoint2, GP, turret, lmissile, rmissile, torso, ruparm,
+       luparm, pelvis, lthigh, rthigh, rleg, rfoot, lleg, lfoot,
+       lloarm, lhand, rloarm, rhand, mpoint1, mpoint2, lbarrel, rbarrel,
+       arms;
+
+static-var  restore_delay, bAiming, gun_1;
+
+// Signal definitions
+#define SIG_MOVE			2
+#define SIG_AIM				4
+
+#define SMOKEPIECE1 torso
+
+
+walk()
+{
+	while( TRUE )
+	{
+		if( TRUE )
+		{
+			move torso to y-axis [0.000000] now;
+			move ruparm to y-axis [0.000000] now;
+			move ruparm to z-axis [0.000000] now;
+			move luparm to y-axis [-0.300000] now;
+			move luparm to z-axis [0.300000] now;
+			turn pelvis to z-axis <-3.593407> now;
+			turn torso to z-axis <5.401099> now;
+			turn lthigh to x-axis <33.758242> now;
+			turn rthigh to x-axis <0.000000> now;
+			turn rleg to x-axis <42.758242> now;
+			turn rfoot to x-axis <-31.956044> now;
+			turn lleg to x-axis <7.192308> now;
+			turn lfoot to x-axis <-11.692308> now;
+			turn ruparm to x-axis <22.945055> now;
+			turn luparm to x-axis <-51.302198> now;
+			turn lloarm to x-axis <21.148352> now;
+			turn lhand to x-axis <36.456044> now;
+			turn rloarm to x-axis <0.000000> now;
+			turn rhand to x-axis <-5.846154> now;
+			sleep 130;
+		}
+		if( TRUE )
+		{
+			move torso to y-axis [0.150000] now;
+			move ruparm to y-axis [0.600000] now;
+			move ruparm to z-axis [-0.350000] now;
+			move luparm to y-axis [0.000000] now;
+			move luparm to z-axis [0.200000] now;
+			turn pelvis to z-axis <-2.247253> now;
+			turn torso to z-axis <2.247253> now;
+			turn lthigh to x-axis <47.258242> now;
+			turn rthigh to x-axis <6.747253> now;
+			turn rleg to x-axis <-28.802198> now;
+			turn rfoot to x-axis <16.648352> now;
+			turn lleg to x-axis <-5.846154> now;
+			turn lfoot to x-axis <0.000000> now;
+			turn ruparm to x-axis <7.192308> now;
+			turn luparm to x-axis <-29.247253> now;
+			turn lloarm to x-axis <13.500000> now;
+			turn lhand to x-axis <16.203297> now;
+			turn rloarm to x-axis <3.593407> now;
+			turn rhand to x-axis <106.225275> now;
+			sleep 130;
+		}
+		if( TRUE )
+		{
+			move torso to y-axis [0.350000] now;
+			move ruparm to z-axis [-0.100000] now;
+			move luparm to z-axis [0.000000] now;
+			turn pelvis to z-axis <-0.890110> now;
+			turn torso to z-axis <-1.346154> now;
+			turn lthigh to x-axis <51.302198> now;
+			turn rthigh to x-axis <9.445055> now;
+			turn rleg to x-axis <10.802198> now;
+			turn rfoot to x-axis <-10.346154> now;
+			turn lleg to x-axis <0.000000> now;
+			turn lfoot to x-axis <21.148352> now;
+			turn luparm to x-axis <0.000000> now;
+			turn lloarm to x-axis <0.000000> now;
+			turn lhand to x-axis <0.000000> now;
+			turn rloarm to x-axis <-40.956044> now;
+			turn rhand to x-axis <143.126374> now;
+			sleep 130;
+		}
+		if( TRUE )
+		{
+			move torso to y-axis [0.200000] now;
+			move ruparm to z-axis [0.100000] now;
+			turn pelvis to z-axis <2.247253> now;
+			turn torso to z-axis <-4.945055> now;
+			turn lthigh to x-axis <0.890110> now;
+			turn rthigh to x-axis <20.703297> now;
+			turn rleg to x-axis <3.593407> now;
+			turn rfoot to x-axis <-14.846154> now;
+			turn lleg to x-axis <55.813187> now;
+			turn lfoot to x-axis <0.890110> now;
+			turn ruparm to x-axis <-18.000000> now;
+			turn luparm to x-axis <18.000000> now;
+			turn lloarm to x-axis <-3.148352> now;
+			turn lhand to x-axis <-5.401099> now;
+			sleep 130;
+		}
+		if( TRUE )
+		{
+			move torso to y-axis [0.000000] now;
+			move ruparm to y-axis [-0.150000] now;
+			move ruparm to z-axis [0.200000] now;
+			turn pelvis to z-axis <3.593407> now;
+			turn torso to z-axis <-4.500000> now;
+			turn lthigh to x-axis <-16.203297> now;
+			turn rthigh to x-axis <35.549451> now;
+			turn rfoot to x-axis <-9.000000> now;
+			turn lleg to x-axis <54.912088> now;
+			turn lfoot to x-axis <-21.604396> now;
+			turn ruparm to x-axis <-48.604396> now;
+			turn luparm to x-axis <20.247253> now;
+			turn lloarm to x-axis <9.000000> now;
+			turn lhand to x-axis <-17.093407> now;
+			turn rloarm to x-axis <14.401099> now;
+			turn rhand to x-axis <46.357143> now;
+			sleep 130;
+		}
+		if( TRUE )
+		{
+			move torso to y-axis [0.150000] now;
+			move ruparm to z-axis [0.200000] now;
+			move luparm to y-axis [0.600000] now;
+			turn pelvis to z-axis <2.247253> now;
+			turn torso to z-axis <-2.247253> now;
+			turn lthigh to x-axis <0.000000> now;
+			turn rthigh to x-axis <46.357143> now;
+			turn rfoot to x-axis <5.846154> now;
+			turn lleg to x-axis <0.000000> now;
+			turn lfoot to x-axis <0.000000> now;
+			turn ruparm to x-axis <-33.758242> now;
+			turn luparm to x-axis <11.247253> now;
+			turn lloarm to x-axis <0.000000> now;
+			turn lhand to x-axis <116.571429> now;
+			turn rhand to x-axis <20.247253> now;
+			sleep 130;
+		}
+		if( TRUE )
+		{
+			move torso to y-axis [0.350000] now;
+			move ruparm to z-axis [0.100000] now;
+			move luparm to y-axis [0.600000] now;
+			turn pelvis to z-axis <0.890110> now;
+			turn torso to z-axis <1.346154> now;
+			turn lthigh to x-axis <11.247253> now;
+			turn rthigh to x-axis <60.313187> now;
+			turn rfoot to x-axis <10.802198> now;
+			turn lleg to x-axis <13.049451> now;
+			turn lfoot to x-axis <-14.846154> now;
+			turn ruparm to x-axis <5.401099> now;
+			turn luparm to x-axis <-9.000000> now;
+			turn lloarm to x-axis <-28.802198> now;
+			turn lhand to x-axis <148.978022> now;
+			turn rloarm to x-axis <-5.846154> now;
+			turn rhand to x-axis <6.747253> now;
+			sleep 130;
+		}
+		move torso to y-axis [0.200000] now;
+		move ruparm to z-axis [0.000000] now;
+		move luparm to y-axis [0.000000] now;
+		turn pelvis to z-axis <-1.791209> now;
+		turn torso to z-axis <5.401099> now;
+		turn lthigh to x-axis <36.901099> now;
+		turn rthigh to x-axis <27.005495> now;
+		turn rleg to x-axis <39.159341> now;
+		turn lleg to x-axis <-0.445055> now;
+		turn lfoot to x-axis <-17.093407> now;
+		turn luparm to x-axis <-21.148352> now;
+		turn lloarm to x-axis <-40.505495> now;
+		turn lhand to x-axis <90.016484> now;
+		turn rloarm to x-axis <4.049451> now;
+		turn rhand to x-axis <-9.901099> now;
+		sleep 130;
+	}
+}
+#include "SmokeUnit.h"
+
+Create()
+{
+	hide mpoint1;
+	hide mpoint2;
+	dont-shade mpoint1;
+	dont-shade mpoint2;
+	bAiming = FALSE;
+	restore_delay = 3000;
+	gun_1 = spoint1;
+	start-script SmokeUnit();
+}
+
+SetMaxReloadTime(Func_Var_1)
+{
+	restore_delay = Func_Var_1 * 2;
+}
+
+StartMoving()
+{
+	signal SIG_MOVE;
+	set-signal-mask SIG_MOVE;
+	start-script walk();
+}
+
+StopMoving()
+{
+	move torso to y-axis [0.000000] now;
+	move ruparm to y-axis [0.000000] now;
+	move ruparm to z-axis [0.000000] now;
+	move luparm to y-axis [0.000000] now;
+	move luparm to z-axis [0.000000] now;
+	turn pelvis to z-axis <0.000000> now;
+	turn torso to z-axis <0.000000> now;
+	turn lthigh to x-axis <0.000000> now;
+	turn rthigh to x-axis <0.000000> now;
+	turn rleg to x-axis <0.000000> now;
+	turn rfoot to x-axis <0.000000> now;
+	turn lleg to x-axis <0.000000> now;
+	turn lfoot to x-axis <0.000000> now;
+	turn ruparm to x-axis <0.000000> now;
+	turn luparm to x-axis <0.000000> now;
+	turn lloarm to x-axis <0.000000> now;
+	turn lhand to x-axis <0.000000> now;
+	turn rloarm to x-axis <0.000000> now;
+	turn rhand to x-axis <0.000000> now;
+	signal SIG_MOVE;
+}
+
+SweetSpot(piecenum)
+{
+	piecenum = GP;
+}
+
+RestoreAfterDelay()
+{
+	sleep restore_delay;
+	turn turret to y-axis <0.000000> speed <80.000000>;
+	wait-for-turn turret around y-axis;
+}
+
+AimFromPrimary(piecenum)
+{
+	piecenum = turret;
+}
+
+QueryPrimary(piecenum)
+{
+	if( gun_1 == 0 )
+	{
+		piecenum = mpoint1;
+	}
+	if( gun_1 == 1 )
+	{
+		piecenum = mpoint2;
+	}
+}
+
+AimPrimary(heading, pitch)
+{
+	signal SIG_AIM;
+	set-signal-mask SIG_AIM;
+	bAiming = TRUE;
+	turn turret to y-axis heading speed <110.000000>;
+	turn arms to x-axis <0.000000> - pitch speed <45.027473>;
+	wait-for-turn turret around y-axis;
+	start-script RestoreAfterDelay();
+	return (1);
+}
+
+FirePrimary()
+{
+	if( gun_1 == 0 )
+	{
+		gun_1 = spoint2;
+		sleep 100;
+		return (0);
+	}
+	if( gun_1 == 1 )
+	{
+		gun_1 = spoint1;
+		sleep 100;
+		return (0);
+	}
+}
+
+Killed(severity, corpsetype)
+{
+	hide mpoint1;
+	hide mpoint2;
+	if( severity <= 25 )
+	{
+		corpsetype = 1;
+		explode lfoot type BITMAPONLY | BITMAP4;
+		explode lhand type BITMAPONLY | BITMAP5;
+		explode lleg type BITMAPONLY | BITMAP1;
+		explode lloarm type BITMAPONLY | BITMAP2;
+		explode lthigh type BITMAPONLY | BITMAP3;
+		explode luparm type BITMAPONLY | BITMAP4;
+		explode pelvis type BITMAPONLY | BITMAP5;
+		explode rfoot type BITMAPONLY | BITMAP1;
+		explode rhand type BITMAPONLY | BITMAP2;
+		explode rleg type BITMAPONLY | BITMAP3;
+		explode rloarm type BITMAPONLY | BITMAP4;
+		explode rthigh type BITMAPONLY | BITMAP5;
+		explode ruparm type BITMAPONLY | BITMAP1;
+		explode torso type BITMAPONLY | BITMAP2;
+		explode turret type BITMAPONLY | BITMAP3;
+		return (0);
+	}
+	if( severity <= 50 )
+	{
+		corpsetype = 2;
+		explode lfoot type FALL | BITMAP4;
+		explode lhand type FALL | BITMAP5;
+		explode lleg type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+		explode lloarm type FALL | BITMAP2;
+		explode lthigh type FALL | BITMAP3;
+		explode luparm type FALL | BITMAP4;
+		explode pelvis type BITMAPONLY | BITMAP5;
+		explode rfoot type FALL | BITMAP1;
+		explode rhand type FALL | BITMAP2;
+		explode rleg type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+		explode rloarm type FALL | BITMAP4;
+		explode rthigh type FALL | BITMAP5;
+		explode ruparm type FALL | BITMAP1;
+		explode torso type BITMAPONLY | BITMAP2;
+		explode turret type BITMAPONLY | BITMAP3;
+		return (0);
+	}
+	if( severity <= 99 )
+	{
+		corpsetype = 3;
+		explode lfoot type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+		explode lhand type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+		explode lleg type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+		explode lloarm type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+		explode lthigh type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+		explode luparm type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+		explode pelvis type BITMAPONLY | BITMAP5;
+		explode rfoot type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+		explode rhand type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+		explode rleg type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+		explode rloarm type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+		explode rthigh type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+		explode ruparm type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+		explode torso type BITMAPONLY | BITMAP2;
+		explode turret type BITMAPONLY | BITMAP3;
+		return (0);
+	}
+	corpsetype = 3;
+	explode lfoot type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+	explode lhand type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+	explode lleg type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+	explode lloarm type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode lthigh type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+	explode luparm type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+	explode pelvis type BITMAPONLY | BITMAP5;
+	explode rfoot type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+	explode rhand type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode rleg type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+	explode rloarm type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+	explode rthigh type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+	explode ruparm type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+	explode torso type BITMAPONLY | BITMAP2;
+	explode turret type BITMAPONLY | BITMAP3;
+}

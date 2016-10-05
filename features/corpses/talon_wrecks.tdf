@@ -1,0 +1,3271 @@
+
+[talon_adv_aircraft_plant_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=arm_corpses;
+	object=talon_adv_aircraft_plant_dead;
+	featuredead=talon_adv_aircraft_plant_heap;
+	footprintx=7;
+	footprintz=6;
+	height=20;
+	blocking=1;
+	hitdensity=100;
+	metal=1768;
+	damage=1680;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionvolumeoffsets=0 -17 -23;
+	collisionvolumescales=106 40 48;
+	collisionvolumetest=1;
+	collisionvolumetype=Box;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=110 36 85;//#AUTO#
+	collisionVolumeOffsets=0 -15 0;//#AUTO#
+}
+[talon_adv_aircraft_plant_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=6x6a;
+	footprintx=6;
+	footprintz=6;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	metal=884;
+	damage=1680;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=110 9 85;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+
+[talon_conspiracy_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=core_corpses;
+	object=talon_conspiracy_dead;
+	featuredead=talon_conspiracy_heap;
+	footprintx=2;
+	footprintz=2;
+	height=20;
+	blocking=1;
+	hitdensity=100;
+	metal=163;
+	damage=236;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType = CylY;
+	collisionVolumeScales =28 77 28;
+	collisionVolumeOffsets = 0 -7 0;
+	collisionVolumeTest = 1;
+	collisionVolumeType=cyly;//#AUTO#
+	collisionVolumeScales=43 66 43;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+[talon_conspiracy_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=2x2c;
+	footprintx=2;
+	footprintz=2;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	metal=32;
+	damage=236;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=cyly;//#AUTO#
+	collisionVolumeScales=43 16 43;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+
+[talon_adv_construction_hovercraft_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=core_corpses;
+	object=talon_adv_construction_hovercraft_dead;
+	footprintx=3;
+	footprintz=3;
+	height=20;
+	blocking=0;
+	hitdensity=100;
+	metal=312;
+	damage=592;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	featuredead=talon_adv_construction_hovercraft_dead;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=29 16 41;//#AUTO#
+	collisionVolumeOffsets=0 7 0;//#AUTO#
+}
+[talon_adv_construction_hovercraft_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=core_corpses;
+	object=3x3a;
+	footprintx=3;
+	footprintz=3;
+	height=20;
+	blocking=0;
+	hitdensity=0;
+	metal=160;
+	damage=592;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=29 4 41;//#AUTO#
+	collisionVolumeOffsets=0 7 0;//#AUTO#
+}
+
+[talon_adv_construction_vehicle_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=core_corpses;
+	object=talon_adv_construction_vehicle_dead;
+	featuredead=talon_adv_construction_vehicle_heap;
+	footprintx=3;
+	footprintz=3;
+	height=20;
+	blocking=1;
+	hitdensity=100;
+	metal=364;
+	damage=976;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=27 18 36;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+[talon_adv_construction_vehicle_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=3x3a;
+	footprintx=3;
+	footprintz=3;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	metal=182;
+	damage=976;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=27 5 36;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+
+[talon_adv_hovercraft_platform_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=core_corpses;
+	object=talon_adv_hovercraft_platform_dead;
+	featuredead=talon_adv_hovercraft_platform_heap;
+	footprintx=8;
+	footprintz=7;
+	height=20;
+	blocking=1;
+	hitdensity=100;
+	metal=624;
+	damage=2500;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=Box;
+	collisionVolumeScales=120 26 108;
+	collisionVolumeOffsets=0 0 0;
+	collisionVolumeTest = 1;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=108 29 97;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+[talon_adv_hovercraft_platform_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=7x7d;
+	footprintx=8;
+	footprintz=7;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	metal=323;
+	damage=1343;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=108 7 97;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+
+[talon_adv_shipyard_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=core_corpses;
+	object=talon_adv_shipyard_dead;
+	footprintx=7;
+	footprintz=7;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	metal=1968;
+	damage=24000;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=Box;
+	collisionVolumeScales=116 56 120;
+	collisionVolumeOffsets=0 -10 -4;
+	collisionVolumeTest = 1;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=108 36 108;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+
+[talon_adv_vehicle_plant_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=arm_corpses;
+	object=talon_adv_vehicle_plant_dead;
+	featuredead=talon_adv_vehicle_plant_heap;
+	footprintx=6;
+	footprintz=6;
+	height=20;
+	blocking=1;
+	hitdensity=100;
+	metal=1587;
+	damage=1948;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionvolumeoffsets=0 -1 2;
+	collisionvolumescales=96 34 90;
+	collisionvolumetest=1;
+	collisionvolumetype=Box;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=86 31 81;//#AUTO#
+	collisionVolumeOffsets=0 -1 2;//#AUTO#
+}
+[talon_adv_vehicle_plant_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=6x6d;
+	footprintx=6;
+	footprintz=6;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	metal=794;
+	damage=1948;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=86 8 81;//#AUTO#
+	collisionVolumeOffsets=0 -1 2;//#AUTO#
+}
+
+[talon_advanced_radar_tower_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=arm_corpses;
+	object=talon_advanced_radar_tower_dead;
+	featuredead=talon_advanced_radar_tower_heap;
+	footprintx=2;
+	footprintz=2;
+	height=40;
+	blocking=1;
+	hitdensity=100;
+	metal=85;
+	damage=44;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType = Ell;
+	collisionVolumeScales =28 64 28;
+	collisionVolumeOffsets = 0 -16 0;
+	collisionVolumeTest = 1;
+	collisionVolumeType=cyly;//#AUTO#
+	collisionVolumeScales=41 47 41;//#AUTO#
+	collisionVolumeOffsets=0 11 0;//#AUTO#
+}
+[talon_advanced_radar_tower_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=2x2c;
+	footprintx=2;
+	footprintz=2;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	metal=144;
+	damage=44;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=cyly;//#AUTO#
+	collisionVolumeScales=41 12 41;//#AUTO#
+	collisionVolumeOffsets=0 11 0;//#AUTO#
+}
+
+[talon_air_repair_pad_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=arm_corpses;
+	object=talon_air_repair_pad_dead;
+	featuredead=talon_air_repair_pad_heap;
+	footprintx=4;
+	footprintz=4;
+	height=40;
+	blocking=1;
+	hitdensity=100;
+	metal=85;
+	damage=544;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=54 25 54;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+[talon_air_repair_pad_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=4x4a;
+	footprintx=1;
+	footprintz=1;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	metal=42;
+	damage=544;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=54 6 54;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+
+[talon_aircraft_plant_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=core_corpses;
+	object=talon_aircraft_plant_dead;
+	featuredead=talon_aircraft_plant_heap;
+	footprintx=7;
+	footprintz=6;
+	height=20;
+	blocking=1;
+	hitdensity=100;
+	metal=664;
+	damage=1540;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=Box;
+	collisionVolumeScales=110 33 50;
+	collisionVolumeOffsets=0 -14 -23;
+	collisionVolumeTest = 1;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=112 30 82;//#AUTO#
+	collisionVolumeOffsets=0 -13 0;//#AUTO#
+}
+[talon_aircraft_plant_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=6x6b;
+	footprintx=6;
+	footprintz=6;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	metal=332;
+	damage=1540;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=112 7 82;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+
+[talon_armadillo_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=arm_corpses;
+	object=talon_armadillo_dead;
+	featuredead=talon_armadillo_heap;
+	footprintx=3;
+	footprintz=3;
+	height=20;
+	blocking=1;
+	hitdensity=100;
+	metal=867;
+	damage=832;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=38 18 45;//#AUTO#
+	collisionVolumeOffsets=0 -1 0;//#AUTO#
+}
+[talon_armadillo_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=3x3f;
+	footprintx=3;
+	footprintz=3;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	metal=470;
+	damage=432;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=38 5 45;//#AUTO#
+	collisionVolumeOffsets=0 -1 0;//#AUTO#
+}
+
+[Talon_Armistice_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=arm_corpses;
+	object=Talon_Armistice_dead;
+	featuredead=Talon_Armistice_heap;
+	footprintx=5;
+	footprintz=6;
+	height=20;
+	blocking=1;
+	hitdensity=100;
+	metal=991;
+	damage=624;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionvolumeoffsets=0 0 0;
+	collisionvolumescales=30 52 30;
+	collisionvolumetest=1;
+	collisionvolumetype=Box;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=36 43 36;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+[Talon_Armistice_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=5x5b;
+	footprintx=5;
+	footprintz=5;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	metal=496;
+	damage=624;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=36 11 36;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+
+[talon_ash_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=core_corpses;
+	object=talon_ash_dead;
+	footprintx=3;
+	footprintz=3;
+	height=20;
+	blocking=0;
+	hitdensity=100;
+	metal=508;
+	damage=368;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	featuredead=talon_ash_dead;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=38 20 38;//#AUTO#
+	collisionVolumeOffsets=0 5 0;//#AUTO#
+}
+[talon_ash_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=cor_corpses;
+	object=3x3d;
+	footprintx=3;
+	footprintz=3;
+	height=20;
+	blocking=0;
+	hitdensity=0;
+	metal=254;
+	damage=368;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=38 5 38;//#AUTO#
+	collisionVolumeOffsets=0 5 0;//#AUTO#
+}
+
+[talon_Basilisk_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=arm_corpses;
+	object=talon_Basilisk_dead;
+	footprintx=2;
+	footprintz=2;
+	height=20;
+	blocking=0;
+	hitdensity=0;
+	metal=136;
+	damage=640;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	featuredead=talon_Basilisk_dead;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=23 8 23;//#AUTO#
+	collisionVolumeOffsets=0 3 0;//#AUTO#
+}
+[talon_Basilisk_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=arm_corpses;
+	object=3x3e;
+	footprintx=3;
+	footprintz=3;
+	height=20;
+	blocking=0;
+	hitdensity=100;
+	metal=85;
+	damage=320;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=23 2 23;//#AUTO#
+	collisionVolumeOffsets=0 3 0;//#AUTO#
+}
+
+[talon_blt_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=arm_corpses;
+	object=talon_blt_dead;
+	featuredead=talon_blt_heap;
+	footprintx=2;
+	footprintz=2;
+	height=20;
+	blocking=1;
+	hitdensity=100;
+	metal=2467;
+	damage=4984;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=CylY;
+	collisionVolumeScales=43 72 43;
+	collisionVolumeOffsets=0 0 0;
+	collisionVolumeTest = 1;
+	collisionVolumeType=cyly;//#AUTO#
+	collisionVolumeScales=39 59 39;//#AUTO#
+	collisionVolumeOffsets=0 0 -5;//#AUTO#
+}
+[talon_blt_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=2x2a;
+	footprintx=2;
+	footprintz=2;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	metal=1234;
+	damage=2984;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=cyly;//#AUTO#
+	collisionVolumeScales=39 15 39;//#AUTO#
+	collisionVolumeOffsets=0 0 -5;//#AUTO#
+}
+
+[talon_Burninator_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=core_corpses;
+	object=talon_Burninator_dead;
+	featuredead=talon_Burninator_heap;
+	footprintx=2;
+	footprintz=2;
+	height=20;
+	blocking=1;
+	hitdensity=100;
+	metal=233;
+	damage=300;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=34 17 34;//#AUTO#
+	collisionVolumeOffsets=0 -1 0;//#AUTO#
+}
+[talon_Burninator_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=2x2b;
+	footprintx=2;
+	footprintz=2;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	metal=116;
+	damage=150;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=34 4 34;//#AUTO#
+	collisionVolumeOffsets=0 -1 0;//#AUTO#
+}
+
+[talon_Cataphract_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=cor_corpses;
+	object=talon_Cataphract_dead;
+	footprintx=3;
+	footprintz=3;
+	height=20;
+	blocking=0;
+	hitdensity=100;
+	metal=114;
+	damage=632;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	featuredead=talon_Cataphract_dead;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=40 17 40;//#AUTO#
+	collisionVolumeOffsets=0 -2 0;//#AUTO#
+}
+[talon_Cataphract_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=cor_corpses;
+	object=3x3a;
+	footprintx=3;
+	footprintz=3;
+	height=20;
+	blocking=0;
+	hitdensity=10;
+	metal=92;
+	damage=56;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=40 4 40;//#AUTO#
+	collisionVolumeOffsets=0 -2 0;//#AUTO#
+}
+
+[talon_cloakable_fusion_reactor_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=arm_corpses;
+	object=talon_cloakable_fusion_reactor_dead;
+	featuredead=talon_cloakable_fusion_reactor_heap;
+	footprintx=5;
+	footprintz=4;
+	height=40;
+	blocking=1;
+	hitdensity=100;
+	metal=2336;
+	damage=1760;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=69 46 48;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+[talon_cloakable_fusion_reactor_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=4x4a;
+	footprintx=4;
+	footprintz=4;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	metal=1168;
+	damage=880;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=69 11 48;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+
+[talon_clone_lab_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=arm_corpses;
+	object=talon_clone_lab_dead;
+	featuredead=talon_clone_lab_heap;
+	footprintx=5;
+	footprintz=6;
+	height=40;
+	blocking=1;
+	hitdensity=100;
+	metal=364;
+	damage=2152;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionvolumeoffsets=0 -7 0;
+	collisionvolumescales=95 22 95;
+	collisionvolumetest=1;
+	collisionvolumetype=Box;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=86 20 86;//#AUTO#
+	collisionVolumeOffsets=0 -1 0;//#AUTO#
+}
+[talon_clone_lab_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=5x5b;
+	footprintx=5;
+	footprintz=5;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	metal=182;
+	damage=2152;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=86 5 86;//#AUTO#
+	collisionVolumeOffsets=0 -1 0;//#AUTO#
+}
+
+[Talon_Cobalt_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=core_corpses;
+	object=Talon_Cobalt_dead;
+	featuredead=Talon_Cobalt_heap;
+	footprintx=3;
+	footprintz=3;
+	height=20;
+	blocking=1;
+	hitdensity=100;
+	metal=471;
+	damage=950;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=CylY;
+	collisionVolumeScales=43 74 43;
+	collisionVolumeOffsets=0 0 0;
+	collisionVolumeTest = 1;
+	collisionVolumeType=cyly;//#AUTO#
+	collisionVolumeScales=39 77 39;//#AUTO#
+	collisionVolumeOffsets=8 -1 -13;//edited
+}
+[Talon_Cobalt_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=3x3a;
+	footprintx=3;
+	footprintz=3;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	metal=236;
+	damage=950;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=cyly;//#AUTO#
+	collisionVolumeScales=39 19 39;//#AUTO#
+	collisionVolumeOffsets=0 -1 -13;//#AUTO#
+}
+
+[talon_construction_hovercraft_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=core_corpses;
+	object=talon_construction_hovercraft_dead;
+	footprintx=3;
+	footprintz=3;
+	height=20;
+	blocking=0;
+	hitdensity=100;
+	metal=112;
+	damage=592;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	featuredead=talon_construction_hovercraft_dead;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=29 16 41;//#AUTO#
+	collisionVolumeOffsets=0 7 0;//#AUTO#
+}
+[talon_construction_hovercraft_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=core_corpses;
+	object=3x3a;
+	footprintx=3;
+	footprintz=3;
+	height=20;
+	blocking=0;
+	hitdensity=0;
+	metal=60;
+	damage=592;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=29 4 41;//#AUTO#
+	collisionVolumeOffsets=0 7 0;//#AUTO#
+}
+
+[talon_construction_vehicle_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=core_corpses;
+	object=talon_construction_vehicle_dead;
+	featuredead=talon_construction_vehicle_heap;
+	footprintx=3;
+	footprintz=3;
+	height=20;
+	blocking=1;
+	hitdensity=100;
+	metal=120;
+	damage=660;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=27 18 36;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+[talon_construction_vehicle_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=3x3d;
+	footprintx=3;
+	footprintz=3;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	metal=70;
+	damage=660;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=27 5 36;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+
+[talon_Damascus_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=arm_corpses;
+	object=talon_Damascus_dead;
+	featuredead=talon_Damascus_heap;
+	footprintx=3;
+	footprintz=3;
+	height=20;
+	blocking=1;
+	hitdensity=100;
+	metal=2756;
+	damage=2048;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=56 25 58;//#AUTO#
+	collisionVolumeOffsets=0 -5 0;//#AUTO#
+}
+[talon_Damascus_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=3x3a;
+	footprintx=3;
+	footprintz=3;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	metal=3605;
+	damage=2048;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=56 6 58;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+
+[talon_emerald_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=arm_corpses;
+	object=talon_emerald_dead;
+	featuredead=talon_emerald_heap;
+	footprintx=2;
+	footprintz=2;
+	height=20;
+	blocking=1;
+	hitdensity=100;
+	metal=82;
+	damage=794;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=20 15 22;//#AUTO#
+	collisionVolumeOffsets=0 -1 0;//#AUTO#
+}
+[talon_emerald_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=2x2d;
+	footprintx=2;
+	footprintz=2;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	metal=46;
+	damage=794;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=20 4 22;//#AUTO#
+	collisionVolumeOffsets=0 -1 0;//#AUTO#
+}
+
+[talon_energy_storage_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=arm_corpses;
+	object=talon_energy_storage_dead;
+	featuredead=talon_energy_storage_heap;
+	featurereclamate=smudge01;
+	footprintx=4;
+	footprintz=4;
+	height=40;
+	blocking=1;
+	hitdensity=100;
+	metal=192;
+	damage=800;
+	reclaimable=1;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=cyly;//#AUTO#
+	collisionVolumeScales=51 41 51;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+[talon_energy_storage_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=4x4c;
+	footprintx=4;
+	footprintz=4;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	metal=96;
+	damage=800;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=cyly;//#AUTO#
+	collisionVolumeScales=51 10 51;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+
+[talon_fusion_power_plant_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=core_corpses;
+	object=talon_fusion_power_plant_dead;
+	featuredead=talon_fusion_power_plant_heap;
+	footprintx=5;
+	footprintz=5;
+	height=20;
+	blocking=1;
+	hitdensity=100;
+	metal=4003;
+	damage=2400;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=cyly;//#AUTO#
+	collisionVolumeScales=85 73 85;//#AUTO#
+	collisionVolumeOffsets=0 9 0;//#AUTO#
+}
+[talon_fusion_power_plant_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=5x5d;
+	footprintx=5;
+	footprintz=5;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	metal=2002;
+	damage=2400;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=cyly;//#AUTO#
+	collisionVolumeScales=85 18 85;//#AUTO#
+	collisionVolumeOffsets=0 9 0;//#AUTO#
+}
+
+[talon_geothermal_powerplant_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=core_corpses;
+	object=talon_geothermal_powerplant_dead;
+	featuredead=talon_geothermal_powerplant_heap;
+	footprintx=4;
+	footprintz=4;
+	height=20;
+	blocking=1;
+	hitdensity=100;
+	metal=404;
+	damage=744;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=59 41 54;//#AUTO#
+	collisionVolumeOffsets=0 -3 0;//#AUTO#
+}
+[talon_geothermal_powerplant_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=4x4b;
+	footprintx=4;
+	footprintz=4;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	metal=202;
+	damage=744;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=59 10 54;//#AUTO#
+	collisionVolumeOffsets=0 -3 0;//#AUTO#
+}
+
+[talon_gorgon_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=arm_corpses;
+	object=talon_gorgon_dead;
+	featuredead=talon_gorgon_heap;
+	footprintx=3;
+	footprintz=3;
+	height=20;
+	blocking=1;
+	hitdensity=100;
+	metal=374;
+	damage=1682;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=36 23 36;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+[talon_gorgon_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=3x3f;
+	footprintx=3;
+	footprintz=3;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	metal=187;
+	damage=1682;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=36 6 36;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+
+[talon_gremlin_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=arm_corpses;
+	object=talon_gremlin_dead;
+	featuredead=talon_gremlin_heap;
+	footprintx=3;
+	footprintz=3;
+	height=20;
+	blocking=1;
+	hitdensity=100;
+	metal=20;
+	damage=96;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=29 15 36;//#AUTO#
+	collisionVolumeOffsets=0 -1 0;//#AUTO#
+}
+[talon_gremlin_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=3x3b;
+	footprintx=3;
+	footprintz=3;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	metal=10;
+	damage=48;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=29 4 36;//#AUTO#
+	collisionVolumeOffsets=0 -1 0;//#AUTO#
+}
+
+[talon_hovercraft_platform_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=core_corpses;
+	object=talon_hovercraft_platform_dead;
+	featuredead=talon_hovercraft_platform_heap;
+	footprintx=8;
+	footprintz=7;
+	height=20;
+	blocking=1;
+	hitdensity=100;
+	metal=624;
+	damage=2500;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=Box;
+	collisionVolumeScales=120 26 108;
+	collisionVolumeOffsets=0 0 0;
+	collisionVolumeTest = 1;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=108 29 97;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+[talon_hovercraft_platform_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=7x7d;
+	footprintx=8;
+	footprintz=7;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	metal=323;
+	damage=1343;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=108 7 97;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+
+[talon_hydra_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=arm_corpses;
+	object=talon_hydra_dead;
+	featuredead=talon_hydra_heap;
+	footprintx=2;
+	footprintz=2;
+	height=20;
+	blocking=1;
+	hitdensity=100;
+	metal=555;
+	damage=1219;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=cyly;//#AUTO#
+	collisionVolumeScales=35 62 35;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+[talon_hydra_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=2x2c;
+	footprintx=2;
+	footprintz=2;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	metal=328;
+	damage=609;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=cyly;//#AUTO#
+	collisionVolumeScales=35 16 35;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+[talon_Kerberos_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=arm_corpses;
+	object=talon_Kerberos_dead;
+	featuredead=talon_Kerberos_heap;
+	footprintx=2;
+	footprintz=2;
+	height=20;
+	blocking=1;
+	hitdensity=100;
+	metal=467;
+	damage=984;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=CylY;
+	collisionVolumeScales=43 72 43;
+	collisionVolumeOffsets=0 0 0;
+	collisionVolumeTest = 1;
+	collisionVolumeType=cyly;//#AUTO#
+	collisionVolumeScales=39 59 39;//#AUTO#
+	collisionVolumeOffsets=0 0 -5;//#AUTO#
+}
+[talon_Kerberos_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=2x2a;
+	footprintx=2;
+	footprintz=2;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	metal=234;
+	damage=984;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=cyly;//#AUTO#
+	collisionVolumeScales=39 15 39;//#AUTO#
+	collisionVolumeOffsets=0 0 -5;//#AUTO#
+}
+
+[talon_infantry_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=talon_infantry_dead;
+	footprintx=2;
+	footprintz=2;
+	height=1;
+	blocking=0;
+	hitdensity=20;
+	metal=6;
+	energy=86;
+	damage=20000;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=18 6 15;//#AUTO#
+	collisionVolumeOffsets=0 -1 0;//#AUTO#
+}
+
+[talon_mercenary_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=talon_mercenary_dead;
+	footprintx=2;
+	footprintz=2;
+	height=1;
+	blocking=0;
+	hitdensity=20;
+	metal=22;
+	energy=86;
+	damage=20000;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=18 6 15;//#AUTO#
+	collisionVolumeOffsets=0 -1 0;//#AUTO#
+}
+
+[talon_sniper_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=talon_sniper_dead;
+	footprintx=2;
+	footprintz=2;
+	height=1;
+	blocking=0;
+	hitdensity=20;
+	metal=32;
+	energy=86;
+	damage=20000;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=18 6 15;//#AUTO#
+	collisionVolumeOffsets=0 -1 0;//#AUTO#
+}
+
+[talon_psyker_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=talon_psyker_dead;
+	footprintx=2;
+	footprintz=2;
+	height=1;
+	blocking=0;
+	hitdensity=20;
+	metal=22;
+	energy=86;
+	damage=20000;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=18 6 15;//#AUTO#
+	collisionVolumeOffsets=0 -1 0;//#AUTO#
+}
+
+[talon_nunchuck_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=arm_corpses;
+	object=talon_nunchuck_dead;
+	featuredead=talon_nunchuck_heap;
+	footprintx=3;
+	footprintz=3;
+	height=20;
+	blocking=1;
+	hitdensity=100;
+	metal=622;
+	damage=1420;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=38 18 45;//#AUTO#
+	collisionVolumeOffsets=0 -1 0;//#AUTO#
+}
+[talon_nunchuck_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=2x2e;
+	footprintx=3;
+	footprintz=3;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	metal=312;
+	damage=1420;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=38 5 45;//#AUTO#
+	collisionVolumeOffsets=0 -1 0;//#AUTO#
+}
+
+[talon_light_laser_tower_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=core_corpses;
+	object=talon_light_laser_tower_dead;
+	featuredead=talon_light_laser_tower_heap;
+	footprintx=2;
+	footprintz=2;
+	height=20;
+	blocking=1;
+	hitdensity=100;
+	metal=154;
+	damage=568;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType = CylY;
+	collisionVolumeScales =28 38 28;
+	collisionVolumeOffsets = 0 -2 0;
+	collisionVolumeTest = 1;
+	collisionVolumeType=cyly;//#AUTO#
+	collisionVolumeScales=25 56 25;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+[talon_light_laser_tower_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=2x2a;
+	footprintx=2;
+	footprintz=2;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	metal=107;
+	damage=568;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=cyly;//#AUTO#
+	collisionVolumeScales=25 14 25;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+
+[talon_mercury_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=core_corpses;
+	object=talon_mercury_dead;
+	featuredead=talon_mercury_heap;
+	footprintx=2;
+	footprintz=2;
+	height=20;
+	blocking=1;
+	hitdensity=100;
+	metal=85;
+	damage=846;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=21 15 23;//#AUTO#
+	collisionVolumeOffsets=0 -1 0;//#AUTO#
+}
+[talon_mercury_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=2x2e;
+	footprintx=2;
+	footprintz=2;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	metal=58;
+	damage=846;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=21 4 23;//#AUTO#
+	collisionVolumeOffsets=0 -1 0;//#AUTO#
+}
+
+[talon_metal_extractor_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=core_corpses;
+	object=talon_metal_extractor_dead;
+	featuredead=talon_metal_extractor_heap;
+	footprintx=3;
+	footprintz=3;
+	height=20;
+	blocking=1;
+	hitdensity=100;
+	metal=41;
+	damage=40;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=cyly;//#AUTO#
+	collisionVolumeScales=49 26 49;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+[talon_metal_extractor_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=3x3e;
+	footprintx=3;
+	footprintz=3;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	metal=20;
+	damage=140;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=cyly;//#AUTO#
+	collisionVolumeScales=49 12 49;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+
+[talon_metal_maker_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=core_corpses;
+	object=talon_metal_maker_dead;
+	featuredead=talon_metal_maker_heap;
+	footprintx=4;
+	footprintz=3;
+	height=20;
+	blocking=1;
+	hitdensity=100;
+	metal=0;
+	damage=120;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=41 20 32;//#AUTO#
+	collisionVolumeOffsets=0 -1 0;//#AUTO#
+}
+[talon_metal_maker_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=3x3d;
+	footprintx=3;
+	footprintz=3;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	metal=0;
+	damage=120;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=41 5 32;//#AUTO#
+	collisionVolumeOffsets=0 -1 0;//#AUTO#
+}
+
+[talon_metal_storage_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=core_corpses;
+	object=talon_metal_storage_dead;
+	featuredead=talon_metal_storage_heap;
+	footprintx=5;
+	footprintz=5;
+	height=20;
+	blocking=1;
+	hitdensity=100;
+	metal=256;
+	damage=1045;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=65 30 55;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+[talon_metal_storage_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=5x5a;
+	footprintx=5;
+	footprintz=5;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	metal=128;
+	damage=1045;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=cyly;//#AUTO#
+	collisionVolumeScales=55 10 55;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+
+[talon_mirage_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=arm_corpses;
+	object=talon_mirage_dead;
+	featuredead=talon_mirage_heap;
+	footprintx=3;
+	footprintz=3;
+	height=20;
+	blocking=1;
+	hitdensity=100;
+	metal=78;
+	damage=368;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=23 15 23;//#AUTO#
+	collisionVolumeOffsets=0 -1 0;//#AUTO#
+}
+[talon_mirage_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=3x3b;
+	footprintx=3;
+	footprintz=3;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	metal=39;
+	damage=368;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=23 4 23;//#AUTO#
+	collisionVolumeOffsets=0 -1 0;//#AUTO#
+}
+
+[talon_moho_metal_maker_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=core_corpses;
+	object=talon_moho_metal_maker_dead;
+	featuredead=talon_moho_metal_maker_heap;
+	footprintx=4;
+	footprintz=4;
+	height=20;
+	blocking=1;
+	hitdensity=100;
+	metal=0;
+	damage=320;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=cyly;//#AUTO#
+	collisionVolumeScales=54 63 54;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+[talon_moho_metal_maker_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=4x4c;
+	footprintx=4;
+	footprintz=4;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	metal=0;
+	damage=160;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=cyly;//#AUTO#
+	collisionVolumeScales=54 16 54;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+
+[talon_moho_mine_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=arm_corpses;
+	object=talon_moho_mine_dead;
+	featuredead=talon_moho_mine_heap;
+	footprintx=5;
+	footprintz=5;
+	height=40;
+	blocking=1;
+	hitdensity=100;
+	metal=452;
+	damage=1258;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=cyly;//#AUTO#
+	collisionVolumeScales=49 41 49;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+[talon_moho_mine_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=5x5a;
+	footprintx=5;
+	footprintz=5;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	metal=51;
+	damage=1258;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=cyly;//#AUTO#
+	collisionVolumeScales=49 10 49;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+
+[talon_november_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=arm_corpses;
+	object=talon_november_dead;
+	footprintx=3;
+	footprintz=3;
+	height=20;
+	blocking=0;
+	hitdensity=100;
+	metal=460;
+	damage=360;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	featuredead=talon_november_dead;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=38 20 38;//#AUTO#
+	collisionVolumeOffsets=0 5 0;//#AUTO#
+}
+[talon_november_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=arm_corpses;
+	object=3x3a;
+	footprintx=3;
+	footprintz=3;
+	height=20;
+	blocking=0;
+	hitdensity=100;
+	metal=230;
+	damage=360;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=38 5 38;//#AUTO#
+	collisionVolumeOffsets=0 5 0;//#AUTO#
+}
+
+[talon_langer_max_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=core_corpses;
+	object=talon_langer_max_dead;
+	featuredead=talon_langer_max_heap;
+	footprintx=3;
+	footprintz=3;
+	height=20;
+	blocking=1;
+	hitdensity=100;
+	metal=3176;
+	damage=1520;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=cyly;//#AUTO#
+	collisionVolumeScales=50 67 50;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+[talon_langer_max_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=3x3c;
+	footprintx=3;
+	footprintz=3;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	metal=2133;
+	damage=1520;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=cyly;//#AUTO#
+	collisionVolumeScales=50 17 50;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+
+[talon_obsidian_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=core_corpses;
+	object=talon_obsidian_dead;
+	featuredead=talon_obsidian_heap;
+	footprintx=3;
+	footprintz=3;
+	height=20;
+	blocking=1;
+	hitdensity=100;
+	metal=236;
+	damage=915;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=27 23 36;//#AUTO#
+	collisionVolumeOffsets=0 -1 0;//#AUTO#
+}
+[talon_obsidian_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=3x3e;
+	footprintx=3;
+	footprintz=3;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	metal=118;
+	damage=915;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=27 6 36;//#AUTO#
+	collisionVolumeOffsets=0 -1 0;//#AUTO#
+}
+
+[talon_Ogopogo_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=core_corpses;
+	object=talon_Ogopogo_dead;
+	featuredead=talon_Ogopogo_heap;
+	footprintx=3;
+	footprintz=3;
+	height=20;
+	blocking=1;
+	hitdensity=100;
+	metal=236;
+	damage=915;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=27 23 36;//#AUTO#
+	collisionVolumeOffsets=0 -1 0;//#AUTO#
+}
+[talon_Ogopogo_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=3x3e;
+	footprintx=3;
+	footprintz=3;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	metal=118;
+	damage=915;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=27 6 36;//#AUTO#
+	collisionVolumeOffsets=0 -1 0;//#AUTO#
+}
+
+[talon_painless_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=arm_corpses;
+	object=talon_painless_dead;
+	featuredead=talon_painless_heap;
+	footprintx=3;
+	footprintz=3;
+	height=20;
+	blocking=1;
+	hitdensity=100;
+	metal=801;
+	damage=663;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=cyly;//#AUTO#
+	collisionVolumeScales=44 41 44;//#AUTO#
+	collisionVolumeOffsets=0 -13 0;//#AUTO#
+}
+[talon_painless_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=3x3b;
+	footprintx=3;
+	footprintz=3;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	metal=496;
+	damage=624;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=cyly;//#AUTO#
+	collisionVolumeScales=44 10 44;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+
+[talon_popcorn_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=arm_corpses;
+	object=talon_popcorn_dead;
+	featuredead=talon_popcorn_heap;
+	footprintx=2;
+	footprintz=2;
+	height=20;
+	blocking=1;
+	hitdensity=100;
+	metal=855;
+	damage=1219;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=cyly;//#AUTO#
+	collisionVolumeScales=35 62 35;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+[talon_popcorn_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=2x2c;
+	footprintx=2;
+	footprintz=2;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	metal=428;
+	damage=609;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=cyly;//#AUTO#
+	collisionVolumeScales=35 16 35;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+
+[talon_quartz_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=arm_corpses;
+	object=talon_quartz_dead;
+	featuredead=talon_quartz_heap;
+	footprintx=3;
+	footprintz=3;
+	height=20;
+	blocking=1;
+	hitdensity=100;
+	metal=114;
+	damage=739;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=27 23 36;//#AUTO#
+	collisionVolumeOffsets=0 -1 0;//#AUTO#
+}
+[talon_quartz_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=3x3d;
+	footprintx=3;
+	footprintz=3;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	metal=57;
+	damage=739;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=27 6 36;//#AUTO#
+	collisionVolumeOffsets=0 -1 0;//#AUTO#
+}
+
+[talon_radar_tower_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=core_corpses;
+	object=talon_radar_tower_dead;
+	featuredead=talon_radar_tower_heap;
+	footprintx=2;
+	footprintz=2;
+	height=20;
+	blocking=1;
+	hitdensity=100;
+	metal=38;
+	damage=41;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType = CylY;
+	collisionVolumeScales =28 64 28;
+	collisionVolumeOffsets = 0 -2 0;
+	collisionVolumeTest = 1;
+	collisionVolumeType=cyly;//#AUTO#
+	collisionVolumeScales=25 86 25;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+[talon_radar_tower_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=2x2d;
+	footprintx=2;
+	footprintz=2;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	metal=24;
+	damage=41;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=cyly;//#AUTO#
+	collisionVolumeScales=25 22 25;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+
+[talon_reality_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=arm_corpses;
+	object=talon_reality_dead;
+	featuredead=talon_reality_heap;
+	footprintx=3;
+	footprintz=3;
+	height=20;
+	blocking=1;
+	hitdensity=100;
+	metal=117;
+	damage=384;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=22 18 25;//#AUTO#
+	collisionVolumeOffsets=0 -1 0;//#AUTO#
+}
+[talon_reality_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=3x3e;
+	footprintx=3;
+	footprintz=3;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	metal=102;
+	damage=384;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=22 5 25;//#AUTO#
+	collisionVolumeOffsets=0 -1 0;//#AUTO#
+}
+
+[talon_rod_of_god_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=arm_corpses;
+	object=talon_rod_of_god_dead;
+	featuredead=talon_rod_of_god_heap;
+	footprintx=3;
+	footprintz=3;
+	height=40;
+	blocking=1;
+	hitdensity=100;
+	metal=2734;
+	damage=1840;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionvolumeoffsets=0 0 2;
+	collisionvolumescales=90 23 88;
+	collisionvolumetest=1;
+	collisionvolumetype=Box;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=81 23 81;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+[talon_rod_of_god_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=3x3f;
+	footprintx=3;
+	footprintz=3;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	metal=1367;
+	damage=1840;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=81 6 81;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+
+[talon_salamander_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=core_corpses;
+	object=talon_salamander_dead;
+	featuredead=talon_salamander_heap;
+	footprintx=2;
+	footprintz=2;
+	height=20;
+	blocking=1;
+	hitdensity=100;
+	metal=118;
+	damage=640;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=21 25 22;//#AUTO#
+	collisionVolumeOffsets=0 -1 -1;//#AUTO#
+}
+[talon_salamander_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=2x2d;
+	footprintx=2;
+	footprintz=2;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	metal=59;
+	damage=640;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=21 6 22;//#AUTO#
+	collisionVolumeOffsets=0 -1 -1;//#AUTO#
+}
+
+
+[talon_Sapphire_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=core_corpses;
+	object=talon_Sapphire_dead;
+	featuredead=talon_Sapphire_heap;
+	footprintx=3;
+	footprintz=3;
+	height=20;
+	blocking=1;
+	hitdensity=100;
+	metal=578;
+	damage=3611;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=36 23 36;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+[talon_Sapphire_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=3x3c;
+	footprintx=3;
+	footprintz=3;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	metal=389;
+	damage=2611;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=36 6 36;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+
+[talon_scantron_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=arm_corpses;
+	object=talon_scantron_dead;
+	featuredead=talon_scantron_heap;
+	footprintx=3;
+	footprintz=3;
+	height=20;
+	blocking=1;
+	hitdensity=100;
+	metal=167;
+	damage=384;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=22 18 25;//#AUTO#
+	collisionVolumeOffsets=0 -1 0;//#AUTO#
+}
+[talon_scantron_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=3x3e;
+	footprintx=3;
+	footprintz=3;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	metal=102;
+	damage=384;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=22 5 25;//#AUTO#
+	collisionVolumeOffsets=0 -1 0;//#AUTO#
+}
+
+[talon_seaplane_platform_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=core_corpses;
+	object=talon_seaplane_platform_dead;
+	footprintx=7;
+	footprintz=7;
+	height=20;
+	blocking=0;
+	hitdensity=100;
+	metal=1479;
+	damage=1600;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=cyly;//#AUTO#
+	collisionVolumeScales=101 36 101;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+
+[talon_sentry_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=arm_corpses;
+	object=talon_sentry_dead;
+	featuredead=talon_sentry_heap;
+	footprintx=2;
+	footprintz=2;
+	height=20;
+	blocking=1;
+	hitdensity=100;
+	metal=63;
+	damage=236;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType = CylY;
+	collisionVolumeScales =28 45 28;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	collisionVolumeType=cyly;//#AUTO#
+	collisionVolumeScales=25 41 25;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+[talon_sentry_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=2x2c;
+	footprintx=2;
+	footprintz=2;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	metal=32;
+	damage=236;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=cyly;//#AUTO#
+	collisionVolumeScales=25 10 25;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+
+[talon_shipyard_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=arm_corpses;
+	object=talon_shipyard_dead;
+	footprintx=7;
+	footprintz=7;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	metal=492;
+	damage=24000;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionvolumeoffsets=-2 -3 -3;
+	collisionvolumescales=116 63 116;
+	collisionvolumetest=1;
+	collisionvolumetype=Box;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=108 36 108;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+
+[talon_slinger_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=arm_corpses;
+	object=talon_slinger_dead;
+	featuredead=talon_slinger_heap;
+	footprintx=3;
+	footprintz=3;
+	height=40;
+	blocking=1;
+	hitdensity=100;
+	metal=1557;
+	damage=2302;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=Ell;
+	collisionVolumeScales=56 112 56;
+	collisionVolumeOffsets=0 -27 0;
+	collisionVolumeType=cyly;//#AUTO#
+	collisionVolumeScales=50 52 50;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+[talon_slinger_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=4x4d;
+	footprintx=3;
+	footprintz=3;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	metal=778;
+	damage=2302;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=cyly;//#AUTO#
+	collisionVolumeScales=50 13 50;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+
+[talon_snitch_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=cor_corpses;
+	object=talon_snitch_dead;
+	footprintx=2;
+	footprintz=2;
+	height=20;
+	blocking=1;
+	hitdensity=100;
+	metal=70;
+	damage=640;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	featuredead=talon_snitch_heap;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=23 8 23;//#AUTO#
+	collisionVolumeOffsets=0 -3 0;//#AUTO#
+}
+[talon_snitch_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=cor_corpses;
+	object=3x3b;
+	footprintx=3;
+	footprintz=3;
+	height=20;
+	blocking=0;
+	hitdensity=0;
+	metal=35;
+	damage=320;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=23 5 23;//#AUTO#
+	collisionVolumeOffsets=0 -1 0;//#AUTO#
+}
+
+[talon_solar_collector_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=core_corpses;
+	object=talon_solar_collector_dead;
+	featuredead=talon_solar_collector_heap;
+	footprintx=4;
+	footprintz=4;
+	height=20;
+	blocking=1;
+	hitdensity=100;
+	metal=86;
+	damage=261;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=68 36 68;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+[talon_solar_collector_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=5x5c;
+	footprintx=5;
+	footprintz=5;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	metal=58;
+	damage=261;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=68 9 68;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+
+[talon_sonar_station_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=core_corpses;
+	object=talon_sonar_station_dead;
+	footprintx=2;
+	footprintz=2;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	metal=16;
+	damage=24000;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=Box;//#AUTO#
+	collisionVolumeScales=37 30 30;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+
+[talon_squarepants_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=arm_corpses;
+	object=talon_squarepants_dead;
+	featuredead=talon_squarepants_heap;
+	footprintx=3;
+	footprintz=3;
+	height=20;
+	blocking=1;
+	hitdensity=100;
+	metal=438;
+	damage=1984;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=27 23 36;//#AUTO#
+	collisionVolumeOffsets=0 -1 0;//#AUTO#
+}
+[talon_squarepants_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=3x3a;
+	footprintx=3;
+	footprintz=3;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	metal=219;
+	damage=1984;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=27 6 36;//#AUTO#
+	collisionVolumeOffsets=0 -1 0;//#AUTO#
+}
+
+[talon_targeting_facility_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=arm_corpses;
+	object=talon_targeting_facility_dead;
+	featuredead=talon_targeting_facility_heap;
+	footprintx=5;
+	footprintz=4;
+	height=20;
+	blocking=1;
+	hitdensity=100;
+	metal=404;
+	damage=1160;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=cyly;//#AUTO#
+	collisionVolumeScales=50 35 50;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+[talon_targeting_facility_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=4x4a;
+	footprintx=5;
+	footprintz=4;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	metal=352;
+	damage=580;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=cyly;//#AUTO#
+	collisionVolumeScales=50 9 50;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+
+[talon_tidal_generator_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=arm_corpses;
+	object=talon_tidal_generator_dead;
+	footprintx=3;
+	footprintz=3;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	metal=66;
+	damage=24000;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+}
+
+[talon_topaz_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=arm_corpses;
+	object=talon_topaz_dead;
+	featuredead=talon_topaz_heap;
+	footprintx=2;
+	footprintz=2;
+	height=20;
+	blocking=1;
+	hitdensity=100;
+	metal=121;
+	damage=440;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=20 27 12;//#AUTO#
+	collisionVolumeOffsets=0 -3 0;//#AUTO#
+}
+[talon_topaz_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=2x2e;
+	footprintx=2;
+	footprintz=2;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	metal=61;
+	damage=440;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=20 7 12;//#AUTO#
+	collisionVolumeOffsets=0 -3 0;//#AUTO#
+}
+
+[talon_torpedo_launcher_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=arm_corpses;
+	object=talon_torpedo_launcher_dead;
+	footprintx=3;
+	footprintz=3;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	metal=264;
+	damage=24000;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=cyly;//#AUTO#
+	collisionVolumeScales=32 16 29;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+
+[talon_Tribulation_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=arm_corpses;
+	object=talon_Tribulation_dead;
+	featuredead=talon_Tribulation_heap;
+	footprintx=3;
+	footprintz=3;
+	height=20;
+	blocking=1;
+	hitdensity=100;
+	metal=1150;
+	damage=624;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=27 23 36;//#AUTO#
+	collisionVolumeOffsets=0 -1 0;//#AUTO#
+}
+[talon_Tribulation_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=3x3d;
+	footprintx=3;
+	footprintz=3;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	metal=575;
+	damage=312;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=27 6 36;//#AUTO#
+	collisionVolumeOffsets=0 -1 0;//#AUTO#
+}
+
+[talon_underwater_energy_storage_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=arm_corpses;
+	object=talon_underwater_energy_storage_dead;
+	featuredead=talon_underwater_energy_storage_heap;
+	footprintx=4;
+	footprintz=4;
+	height=20;
+	blocking=0;
+	hitdensity=100;
+	metal=227;
+	damage=1158;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=cylz;//#AUTO#
+	collisionVolumeScales=54 63 56;//#AUTO#
+	collisionVolumeOffsets=0 -16 0;//#AUTO#
+}
+[talon_underwater_energy_storage_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=4x4b;
+	footprintx=4;
+	footprintz=4;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	metal=113;
+	damage=579;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=cylz;//#AUTO#
+	collisionVolumeScales=54 16 56;//#AUTO#
+	collisionVolumeOffsets=0 -16 0;//#AUTO#
+}
+
+[talon_underwater_metal_extractor_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=arm_corpses;
+	object=talon_underwater_metal_extractor_dead;
+	featuredead=talon_underwater_metal_extractor_heap;
+	footprintx=3;
+	footprintz=3;
+	height=20;
+	blocking=0;
+	hitdensity=100;
+	metal=104;
+	damage=264;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=cyly;//#AUTO#
+	collisionVolumeScales=39 31 39;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+[talon_underwater_metal_extractor_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=3x3d;
+	footprintx=3;
+	footprintz=3;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	metal=52;
+	damage=132;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=cyly;//#AUTO#
+	collisionVolumeScales=39 10 39;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+[talon_underwater_metal_storage_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=arm_corpses;
+	object=talon_underwater_metal_storage_dead;
+	featuredead=talon_underwater_metal_storage_heap;
+	footprintx=4;
+	footprintz=4;
+	height=20;
+	blocking=0;
+	hitdensity=100;
+	metal=288;
+	damage=1300;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=cyly;//#AUTO#
+	collisionVolumeScales=53 35 65;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+[talon_underwater_metal_storage_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=4x4b;
+	footprintx=4;
+	footprintz=4;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	metal=144;
+	damage=650;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=cyly;//#AUTO#
+	collisionVolumeScales=53 9 65;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+
+[talon_underwater_metal_maker_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=core_corpses;
+	object=talon_underwater_metal_maker_dead;
+	featuredead=talon_underwater_metal_maker_heap;
+	footprintx=4;
+	footprintz=3;
+	height=20;
+	blocking=1;
+	hitdensity=100;
+	metal=0;
+	damage=120;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=41 20 32;//#AUTO#
+	collisionVolumeOffsets=0 -1 0;//#AUTO#
+}
+[talon_underwater_metal_maker_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=3x3d;
+	footprintx=3;
+	footprintz=3;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	metal=0;
+	damage=120;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=41 5 32;//#AUTO#
+	collisionVolumeOffsets=0 -1 0;//#AUTO#
+}
+
+[talon_Unobtanium_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=arm_corpses;
+	object=talon_Unobtanium_dead;
+	featuredead=talon_Unobtanium_heap;
+	footprintx=3;
+	footprintz=3;
+	height=20;
+	blocking=1;
+	hitdensity=100;
+	metal=78;
+	damage=368;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=23 15 23;//#AUTO#
+	collisionVolumeOffsets=0 -1 0;//#AUTO#
+}
+[talon_Unobtanium_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=3x3b;
+	footprintx=3;
+	footprintz=3;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	metal=39;
+	damage=368;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=23 4 23;//#AUTO#
+	collisionVolumeOffsets=0 -1 0;//#AUTO#
+}
+
+[talon_vanguard_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=arm_corpses;
+	object=talon_vanguard_dead;
+	featuredead=talon_vanguard_heap;
+	footprintx=2;
+	footprintz=2;
+	height=20;
+	blocking=1;
+	hitdensity=100;
+	metal=855;
+	damage=1219;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=cyly;//#AUTO#
+	collisionVolumeScales=35 62 35;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+[talon_vanguard_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=2x2c;
+	footprintx=2;
+	footprintz=2;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	metal=428;
+	damage=609;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=cyly;//#AUTO#
+	collisionVolumeScales=35 16 35;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+
+[talon_vehicle_plant_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=arm_corpses;
+	object=talon_vehicle_plant_dead;
+	featuredead=talon_vehicle_plant_heap;
+	footprintx=6;
+	footprintz=6;
+	height=40;
+	blocking=1;
+	hitdensity=100;
+	metal=496;
+	damage=2064;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionvolumeoffsets=-5 0 0;
+	collisionvolumescales=110 34 92;
+	collisionvolumetest=1;
+	collisionvolumetype=Box;
+	collisionVolumeType=cylz;//#AUTO#
+	collisionVolumeScales=83 67 83;//#AUTO#
+	collisionVolumeOffsets=0 -16 0;//#AUTO#
+}
+[talon_vehicle_plant_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=6x6a;
+	footprintx=6;
+	footprintz=6;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	metal=248;
+	damage=2064;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=cylz;//#AUTO#
+	collisionVolumeScales=83 17 83;//#AUTO#
+	collisionVolumeOffsets=0 -16 0;//#AUTO#
+}
+
+[talon_visitant_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=arm_corpses;
+	object=talon_visitant_dead;
+	footprintx=3;
+	footprintz=3;
+	height=20;
+	blocking=1;
+	hitdensity=100;
+	metal=410;
+	damage=464;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	featuredead=talon_visitant_heap;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=45 20 45;//#AUTO#
+	collisionVolumeOffsets=0 5 0;//#AUTO#
+}
+[talon_visitant_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=arm_corpses;
+	object=3x3d;
+	footprintx=3;
+	footprintz=3;
+	height=20;
+	blocking=0;
+	hitdensity=100;
+	metal=105;
+	damage=164;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=45 5 45;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+
+[talon_whinestone_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=core_corpses;
+	object=talon_whinestone_dead;
+	featuredead=talon_whinestone_heap;
+	footprintx=2;
+	footprintz=2;
+	height=20;
+	blocking=1;
+	hitdensity=100;
+	metal=135;
+	damage=846;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=21 15 23;//#AUTO#
+	collisionVolumeOffsets=0 -1 0;//#AUTO#
+}
+[talon_whinestone_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=2x2e;
+	footprintx=2;
+	footprintz=2;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	metal=68;
+	damage=846;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=21 4 23;//#AUTO#
+	collisionVolumeOffsets=0 -1 0;//#AUTO#
+}
+
+[talon_wind_generator_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=core_corpses;
+	object=talon_wind_generator_dead;
+	featuredead=talon_wind_generator_heap;
+	footprintx=4;
+	footprintz=4;
+	height=20;
+	blocking=1;
+	hitdensity=100;
+	metal=44;
+	damage=1430;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=51 96 51;//#AUTO#
+	collisionVolumeOffsets=0 -2 0;//#AUTO#
+}
+[talon_wind_generator_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=4x4a;
+	footprintx=4;
+	footprintz=4;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	metal=22;
+	damage=1430;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=51 24 51;//#AUTO#
+	collisionVolumeOffsets=0 -2 0;//#AUTO#
+}

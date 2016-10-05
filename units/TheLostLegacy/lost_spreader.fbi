@@ -28,7 +28,7 @@
 	//********************
 	maxdamage=1165;
 	healtime=30;
-	buildcostmetal=486;
+	buildcostmetal=456;
 	buildcostenergy=7452;
 	buildtime=11354;
 	damagemodifier=0.75;
@@ -85,10 +85,11 @@
 	//  Weapons
 	//***********
 	Weapon1=EXP_LOSTLIGHTROCKET;
-	badtargetcategory=NOTAIR;
-	wpri_badtargetcategory=NOTAIR;
+	badtargetcategory=VTOL;
+	wpri_badtargetcategory=VTOL;
 	explodeas=BIG_UNITEX;
 	selfdestructas=BIG_UNIT;
+	onlytargetcategory1=NOTAIR; //Added 8.2 By Gizmo
 
 	//************************************************************
 	//  Orders
