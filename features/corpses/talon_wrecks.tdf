@@ -107,7 +107,7 @@
 	reclaimable=1;
 	featurereclamate=smudge01;
 	seqnamereclamate=tree1reclamate;
-	featuredead=talon_adv_construction_hovercraft_dead;
+	featuredead=talon_adv_construction_hovercraft_heap;
 	collisionVolumeType=box;//#AUTO#
 	collisionVolumeScales=29 16 41;//#AUTO#
 	collisionVolumeOffsets=0 7 0;//#AUTO#
@@ -530,7 +530,7 @@
 	reclaimable=1;
 	featurereclamate=smudge01;
 	seqnamereclamate=tree1reclamate;
-	featuredead=talon_ash_dead;
+	featuredead=talon_ash_heap;
 	collisionVolumeType=box;//#AUTO#
 	collisionVolumeScales=38 20 38;//#AUTO#
 	collisionVolumeOffsets=0 5 0;//#AUTO#
@@ -572,7 +572,7 @@
 	reclaimable=1;
 	featurereclamate=smudge01;
 	seqnamereclamate=tree1reclamate;
-	featuredead=talon_Basilisk_dead;
+	featuredead=talon_Basilisk_heap;
 	collisionVolumeType=box;//#AUTO#
 	collisionVolumeScales=23 8 23;//#AUTO#
 	collisionVolumeOffsets=0 3 0;//#AUTO#
@@ -702,7 +702,7 @@
 	reclaimable=1;
 	featurereclamate=smudge01;
 	seqnamereclamate=tree1reclamate;
-	featuredead=talon_Cataphract_dead;
+	featuredead=talon_Cataphract_heap;
 	collisionVolumeType=box;//#AUTO#
 	collisionVolumeScales=40 17 40;//#AUTO#
 	collisionVolumeOffsets=0 -2 0;//#AUTO#
@@ -878,7 +878,7 @@
 	reclaimable=1;
 	featurereclamate=smudge01;
 	seqnamereclamate=tree1reclamate;
-	featuredead=talon_construction_hovercraft_dead;
+	featuredead=talon_construction_hovercraft_heap;
 	collisionVolumeType=box;//#AUTO#
 	collisionVolumeScales=29 16 41;//#AUTO#
 	collisionVolumeOffsets=0 7 0;//#AUTO#
@@ -1859,7 +1859,7 @@
 	reclaimable=1;
 	featurereclamate=smudge01;
 	seqnamereclamate=tree1reclamate;
-	featuredead=talon_november_dead;
+	featuredead=talon_november_heap;
 	collisionVolumeType=box;//#AUTO#
 	collisionVolumeScales=38 20 38;//#AUTO#
 	collisionVolumeOffsets=0 5 0;//#AUTO#

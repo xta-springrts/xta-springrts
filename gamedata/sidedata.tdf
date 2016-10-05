@@ -784,7 +784,7 @@
 	{
 		canbuild1=arm_ht_construction_vehicle;
 		canbuild2=arm_shelia;
-		canbuild3=arm_rebel;
+		canbuild3=armrebel;
 		//canbuild4=arm_screener;
 		canbuild5=arm_naga;
 		canbuild6=arm_weaver;
@@ -4900,7 +4900,7 @@
 		canbuild23=talon_underwater_energy_storage;
 		canbuild24=talon_underwater_metal_storage;
 		canbuild25=talon_underwater_metal_extractor;
-		canbuild26=talon_floating_metal_maker;
+		canbuild26=talon_underwater_metal_maker;
 		canbuild27=talon_kerberos;
 		canbuild28=talon_floating_dragons_teeth;
 		//canbuild29=talon_stingray;
