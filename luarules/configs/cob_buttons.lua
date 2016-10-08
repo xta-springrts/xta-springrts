@@ -61,6 +61,16 @@ return {
     {cob = "Sing"},
   },
   --]]
+
+  talon_berserker = {
+    {
+	name     = "Overcharge",
+	tooltip  = "Overheat to cause 1000 Damage onself",
+	cob      = "Overheat",  -- only this is required
+     	reload   = 15,
+      duration = 1,        
+	},
+    },
   arm_podger = {
     {
       name     = "Self-Charge",
@@ -304,5 +314,6 @@ return {
 	type = CMDTYPE.ICON_MODE,
 	params = {'1', 'Guided', 'V Launch'},
     },
+
   },
 }

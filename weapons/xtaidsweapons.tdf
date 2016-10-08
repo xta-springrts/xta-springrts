@@ -1048,12 +1048,6 @@
 	selfprop=1;
 	smoketrail=0;
 	tolerance=9000;
-	explosiongaf=fx;
-	explosionart=explode3;
-	waterexplosiongaf=fx;
-	waterexplosionart=h2o;
-	lavaexplosiongaf=fx;
-	lavaexplosionart=lavasplash;
 	startsmoke=1;
 	[DAMAGE]
 	{
@@ -1485,12 +1479,6 @@
 	firestarter=90;
 	beamweapon=1;
 	
-	explosiongaf=fx;
-	explosionart=explode5;
-	waterexplosiongaf=fx;
-	waterexplosionart=h2oboom1;
-	lavaexplosiongaf=fx;
-	lavaexplosionart=lavasplashsm;
 	tolerance=500;
 	guidance=1;
 	[DAMAGE]
@@ -1596,12 +1584,6 @@
 	selfprop=1;
 	smoketrail=1;
 	tolerance=9000;
-	explosiongaf=fx;
-	explosionart=explode3;
-	waterexplosiongaf=fx;
-	waterexplosionart=h2o;
-	lavaexplosiongaf=fx;
-	lavaexplosionart=lavasplash;
 	startsmoke=1;
 	[DAMAGE]
 	{
@@ -1639,12 +1621,6 @@
 	selfprop=1;
 	smoketrail=1;
 	tolerance=9000;
-	explosiongaf=fx;
-	explosionart=explode3;
-	waterexplosiongaf=fx;
-	waterexplosionart=h2o;
-	lavaexplosiongaf=fx;
-	lavaexplosionart=lavasplash;
 	startsmoke=1;
 	[DAMAGE]
 	{
@@ -1753,12 +1729,6 @@
 	areaofeffect=48;
 	soundstart=canlite3;
 	soundhitdry=xplosml3;
-	explosiongaf=fx;
-	explosionart=explode4;
-	waterexplosiongaf=fx;
-	waterexplosionart=h2o;
-	lavaexplosiongaf=fx;
-	lavaexplosionart=lavasplash;
 	tolerance=500;
 	startsmoke=1;
 	minbarrelangle=-40;
@@ -1782,12 +1752,6 @@
 	areaofeffect=48;
 	soundstart=canlite3;
 	soundhitdry=xplosml3;
-	explosiongaf=fx;
-	explosionart=explode4;
-	waterexplosiongaf=fx;
-	waterexplosionart=h2o;
-	lavaexplosiongaf=fx;
-	lavaexplosionart=lavasplash;
 	tolerance=500;
 	startsmoke=1;
 	minbarrelangle=-40;
@@ -1820,12 +1784,6 @@
 	selfprop=1;
 	smoketrail=1;
 	tolerance=8000;
-	explosiongaf=fx;
-	explosionart=explode3;
-	waterexplosiongaf=fx;
-	waterexplosionart=h2o;
-	lavaexplosiongaf=fx;
-	lavaexplosionart=lavasplash;
 	startsmoke=1;
 	pitchtolerance=18000;
 	guidance=1;
@@ -2921,7 +2879,7 @@
 	reloadtime=0.5;
 	rgbcolor=0.7 0.2 1;
 	soundhitdry=xplolrg;
-	soundstart=ionbeam;
+	soundstart=lasblade1;
 	targetmoveerror=0.30000001192093;
 	thickness=1;
 	tolerance=10000;

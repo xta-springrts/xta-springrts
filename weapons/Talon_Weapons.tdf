@@ -1,4 +1,317 @@
 
+[Talon_AbandonCannon]
+{
+	name=Plasma Cannon;
+	explosiongenerator=custom:RedPlasma;
+	energypershot=500;
+	rgbcolor=1 0.33 0.0;
+	weaponType=Cannon;
+	turret=1;
+	range=1700;
+	reloadtime=1.25;
+	weaponvelocity=750;
+	areaofeffect=64;
+	soundstart=CANNHVY1;
+	soundhitdry=xplomed2;
+	startsmoke=1;
+	accuracy=300;
+	movingaccuracy=600;
+	[DAMAGE]
+	{
+		default=444;
+		group_ships=549;
+		group_large_ships=549;
+		group_invincible=1;
+	}
+}
+
+[TALON_ABANDONROCKET] //raven
+{
+	name=Heavy Multi-Launch Rockets;
+	Weapontype=MissileLauncher;
+	explosiongenerator=custom:raven;
+	cegTag=RAVENTRAIL;
+	Texture1=null;
+	Texture2=null;
+	Texture3=null;
+	Texture4=null;
+	CollideFriendly=0;
+	impulsefactor=0.6;
+	turret=1;
+	model=weapon_exphvyrock;
+	range=1200;
+	reloadtime=1;
+	weapontimer=0.33; //6
+	weaponvelocity=300;
+	startvelocity=100;
+	weaponacceleration=120;
+	areaofeffect=120;  //80
+	energypershot=100;
+	Burst=1;
+	Burstrate=0.1666;
+	Trajectoryheight=1;
+	Wobble=2900; //14000
+	Dance=40;
+	flighttime=5;
+	//turnrate=5000;	//4000
+	//edgeeffectiveness=0.75;
+	soundstart=RavenHvyRock;
+	soundhitdry=rockhit;
+	firestarter=70;
+	smokedelay=0.1;
+	smoketrail=0;
+	startsmoke=0;
+	[DAMAGE]
+	{
+		default=300;	//800
+		group_invincible=1;
+	}
+}
+[TALOS_ARMIES]
+{
+	name=Annihilator Weapon;
+	Weapontype=LaserCannon;
+	turret=1;
+	range=550;
+	reloadtime=0.333;
+	energypershot=100;
+	weaponvelocity=800;
+	areaofeffect=16;
+	soundstart=talosrapid;
+	soundhitdry=talosrapidhit;
+	firestarter=90;
+	rgbcolor=0.000 0.1 1.000;
+	tolerance=500;
+	Texture1=purplelaser;
+	Texture2=null;
+	Texture3=null;
+	Texture4=null;
+	w=124.75;
+	thickness=16.7;
+	duration=0.08;
+	beamdecay=0.3;
+	beamttl=50;
+	hardStop=0;
+	explosiongenerator=custom:SNIPELASER;
+	[DAMAGE]
+	{
+		default=150;
+		group_invincible=1;
+	}
+}
+
+[TALON_BELLGATOR]
+{
+	name=Disintegrator;
+	Weapontype=DGun;
+	turret=1;
+	TargetBorder=1;
+	range=500;
+	reloadtime=30.0;
+	weapontimer=4;
+	energypershot=15000;
+	weaponvelocity=660;
+	areaofeffect=25;
+	soundtrigger=1;
+	soundstart=bellfire;
+	soundhitdry=Bellhit;
+	firestarter=70;
+	noexplode=0;
+	commandfire=0;
+	startsmoke=1;
+	explosiongenerator=custom:WILDTHING;
+	cegTag=GUARDIANREVERSE;
+	size=15;
+	rgbcolor=0.8 0.4 0.2;
+	stages=5;
+	separation=0.44;
+	alphadecay=0.5;
+	sizedecay=-0.55;
+	Tolerance=300;
+	avoidFriendly=0;
+	avoidFeature=0;
+	avoidGround=0;
+	avoidNeutral=0;
+	[DAMAGE]
+	{
+		default=30000;
+		group_invincible=1;
+	}
+}
+[CHURCH_LIGHTNING]
+	{
+	ID=217; 
+	Name=Private Lightning Beam;
+	explosiongenerator=custom:LIGHTNING_Commander;  
+	RenderType=7;
+  	texture1=testlightning;
+	LineOfSight=1;
+	Turret=1;
+	Range=600;
+	ReloadTime=3;
+	soundtrigger=0;
+	burst=5;
+	energypershot=40;
+	burstrate=0.1;
+	sprayangle=1024;
+	WeaponTimer=1;
+	WeaponVelocity=860;
+	Duration=1;
+	AreaOfEffect=12;
+	SoundStart=lashit;
+	//soundhitdry=lashit2;
+	FireStarter=85;
+	BeamWeapon=1;
+	thickness=3;
+	rgbcolor=0.3 0.9 0.9;
+	beamdecay=0.9;
+	beamttl=10;
+	Tolerance=600;
+	[DAMAGE]
+		{
+		Default=50;
+		}
+	}
+
+[TALOS_ROCKET]
+{
+	name=Heavy Rockets;
+	explosiongenerator=custom:WindkbotRocket;
+	vlaunch=1;
+	Weapontype=StarburstLauncher;
+	model=weapon_fmdmisl;
+	cegTag=RAVENTRAIL;
+	range=1000;
+	reloadtime=3;
+	weapontimer=1;
+	flighttime=6;
+	weaponvelocity=1000;
+	startvelocity=100;
+	weaponacceleration=300;
+	turnrate=63000;
+	areaofeffect=64;
+	soundstart=rocklit1;
+	soundhitdry=xplosml2;
+	firestarter=70;
+	smokedelay=0.1;
+	tracks=1;
+	smoketrail=0;
+	Texture1=null;
+	Texture2=null;
+	Texture3=null;
+	Texture4=null;
+	tolerance=9000;
+	startsmoke=0;
+	w=19.8;
+	[DAMAGE]
+	{
+		default=120;
+		group_landair=221;
+		group_skyair=221;
+		group_invincible=1;
+	}
+}
+
+[TALOS_SHOULDER]
+{
+	name=Heavy Rockets;
+	explosiongenerator=custom:KBOTROCKETHIT;
+	cegTag=KBOTROCKETTRAIL;
+	vlaunch=0;
+	Weapontype=MissileLauncher;
+	model=missile.s3o;
+	range=800;
+	reloadtime=1.0;
+	fixedLauncher=1;
+	weapontimer=0.0;
+	flighttime=12;
+	weaponvelocity=800;
+	startvelocity=50;
+	weaponacceleration=150;
+	turnrate=9000;
+	areaofeffect=64;
+	soundstart=Rocklit3;
+	soundhitdry=xplosml2;
+	firestarter=70;
+	smokedelay=0.1;
+	tracks=1;
+	smoketrail=0;
+	Texture1=null;
+	Texture2=null;
+	Texture3=null;
+	Texture4=null;
+	tolerance=9000;
+	startsmoke=0;
+	w=19.8;
+	turret=1;
+	[DAMAGE]
+	{
+		default=120;
+		group_landair=221;
+		group_skyair=221;
+		group_invincible=1;
+	}
+}
+[BerserkerFart]
+{
+	name=Lightning Gun;
+	weaponType=Cannon;
+	turret=1;
+	range=1;
+	reloadtime=1.45;
+	weaponvelocity=800;
+	areaofeffect=256;
+	duration=0.5;
+	beamttl=10;
+	soundtrigger=1;
+	soundstart=steamturtle;
+	soundhitdry=steamturtle;
+	firestarter=50;
+	rgbcolor=0.5 0.5 1;
+	explosiongenerator=custom:ButtSmoke;
+	startsmoke=1;
+	tolerance=1000;
+	impulseboost=0.0;
+	cratermult=0;
+	impulsefactor=0.0;
+	[DAMAGE]
+	{
+		default=1000;
+	}
+}
+[BERSERKERBEAM]
+{
+	explosiongenerator=custom:PURPLELASER;
+	duration=0.4;
+	intensity=0.75;
+	name=Laser;
+	Weapontype=LaserCannon;
+	thickness=1.5;
+	turret=1;
+	range=365;
+	accuracy=300;
+	movingaccuracy=600;
+	reloadtime=0.25;
+	burst=4;
+	energypershot=40;
+	burstrate=0.05;
+	sprayangle=256;
+	weaponvelocity=1300;
+	areaofeffect=8;
+	soundtrigger=0;
+	rgbcolor=0.5 0.225 1.000;
+	//soundstart=corcomgun;
+	soundstart=annigun1beamlaser;// was annigun1
+	//soundhitdry=talongunhit;
+	firestarter=50;
+	tolerance=1000;
+	[DAMAGE]
+	{
+		default=33;//8
+		group_invincible=1;
+	}
+}
+
 [Crusader_LASER]
 {
 	name=High Energy Laser;
@@ -224,7 +537,7 @@
 	turret=1;
 	range=680;
 	explosiongenerator=custom:LightFlylaser;
-	reloadtime=1;
+	reloadtime=0.75;
 	weaponvelocity=1600;
 	areaofeffect=12;
 	soundstart=LASRLIT1;
@@ -233,7 +546,7 @@
 	tolerance=500;
 	[DAMAGE]
 	{
-		default=17;
+		default=22;
 	 	group_invincible=1;
 		group_landair=38;
 		group_skyair=38;

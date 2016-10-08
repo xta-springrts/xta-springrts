@@ -2328,7 +2328,8 @@ Seqnamereclamate=tree1reclamate;
 	energy=0;
 }
 
-[Razen_DEAD]{
+[Razen_DEAD]
+{
 	world=All Worlds;
 	description=Wreckage;
 	category=corpses;

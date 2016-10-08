@@ -1,0 +1,138 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Core;
+	name=Repentance;
+	description=Harmonic Disintegrater;
+
+	//************************************************************
+	//  Categories
+	//**************
+	Category=CORE TANK WEAPON NOTAIR NOTSUB;
+	tedclass=TANK;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=talon_Repentance;
+	unitnumber=110;
+	objectname=talon_Repentance.3do;
+	corpse=talon_Repentance_dead;
+	buildpic=talon_Repentance.png;
+	soundcategory=CORE_TANK;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=30000;
+	healtime=30;
+	buildcostmetal=8654;
+	buildcostenergy=57560;
+	buildtime=77786;
+	footprintx=5;
+	footprintz=5;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=0.5;
+	energyuse=0.5;
+	energystorage=800;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canattack=1;
+	canguard=1;
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementclass=TANKDTCRUSH; //TANKSH4//
+	turnrate=309;
+	acceleration=0.3;
+	brakerate=0.3;
+	maxvelocity=0.8;
+	maxslope=16;
+	maxwaterdepth=12;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=480;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=CHURCH_LIGHTNING;
+	weapon3=TALON_BELLGATOR;
+	nochasecategory=VTOL;
+	badtargetcategory=VTOL;
+	wpri_badtargetcategory=VTOL;
+	explodeas=GIANT_BLAST;
+	selfdestructas=armmine5;
+	onlytargetcategory1=NOTAIR; //Added 8.2 By Gizmo
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	firestandorders=1;
+	mobilestandorders=1;
+	standingfireorder=2;
+	standingmoveorder=1;
+	defaultmissiontype=Standby;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=1;
+	designation=PS20;
+	downloadable=1;
+	leavetracks=1;
+	maneuverleashlength=640;
+	shootme=1;
+	steeringmode=1;
+	threed=1;
+	trackoffset=8;
+	trackstrength=10;
+	trackstretch=1;
+	tracktype=StdTank;
+	trackwidth=64;
+	version=1.2;
+	zbuffer=1;
+	mass=75000;
+	collisionVolumeType = box;
+	collisionVolumeScales =66 78 99;
+	collisionVolumeOffsets = 0 -15 0;
+	collisionVolumeTest = 1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+	[SFXTypes]
+	{
+	explosiongenerator0=custom:berthaflare;
+	explosiongenerator1=custom:ButtSmoke;
+	}
+}

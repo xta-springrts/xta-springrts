@@ -1,0 +1,103 @@
+[WILDTHING]//Gives better effect
+{
+	useAirLos=0;
+	usedefaultexplosions=0;
+	[SHOCKEWAVE1] 
+	{
+	    class=CExpGenSpawner;
+		[properties]
+		{
+		pos=5 r10, 5 r10, 5 r10;  
+		delay=5 r 95;				  
+		explosionGenerator=custom:second6;
+		}
+	air=1;
+	water=1;
+	ground=1;
+	count=25;
+	}
+	[SHOCKEWAVE2] 
+	{
+	    class=CExpGenSpawner;
+		[properties]
+		{
+		pos=5 r10, 5 r10, 5 r10;  
+		delay=5 r 95;				  
+		explosionGenerator=custom:second5;
+		}
+	air=1;
+	water=1;
+	ground=1;
+	count=25;
+	}
+	[SHOCKEWAVE3] 
+	{
+	    class=CExpGenSpawner;
+		[properties]
+		{
+		pos=5 r10, 5 r10, 5 r10;  
+		delay=5 r 95;				  
+		explosionGenerator=custom:second4;
+		}
+	air=1;
+	water=1;
+	ground=1;
+	count=25;
+	}
+	[SHOCKEWAVE4] 
+	{
+	    class=CExpGenSpawner;
+		[properties]
+		{
+		pos=5 r10, 5 r10, 5 r10;  
+		delay=5 r 95;				  
+		explosionGenerator=custom:second3;
+		}
+	air=1;
+	water=1;
+	ground=1;
+	count=25;
+	}
+	[SHOCKEWAVE5] 
+	{
+	    class=CExpGenSpawner;
+		[properties]
+		{
+		pos=5 r10, 5 r10, 5 r10;  
+		delay=5 r 95;				  
+		explosionGenerator=custom:second2;
+		}
+	air=1;
+	water=1;
+	ground=1;
+	count=25;
+	}
+	[SHOCKEWAVE6] 
+	{
+	    class=CExpGenSpawner;
+		[properties]
+		{
+		pos=5 r10, 5 r10, 5 r10;  
+		delay=5 r 95;				  
+		explosionGenerator=custom:second1;
+		}
+	air=1;
+	water=1;
+	ground=1;
+	count=25;
+	}
+	[TENDRIL] 
+	{
+	    class=CExpGenSpawner;
+		[properties]
+		{
+		pos=10 r-20, 15 r-5, 10 r-20;  
+		delay=0 r100;				  
+		explosionGenerator=custom:DREAD_LIGHTNING_EXPLOSION_REALSPEW;
+		}
+	air=1;
+	water=1;
+	ground=1;
+	count=100;
+	}
+}

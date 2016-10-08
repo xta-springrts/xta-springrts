@@ -4459,6 +4459,7 @@
 		canbuild5=talon_shade;
 		canbuild6=talon_wyvern;
 		//canbuild7=arm_tornado;
+		canbuild7=talon_hip;
 	}
 
 	[talon_adv_vehicle_plant]
@@ -4516,7 +4517,7 @@
 		canbuild36=talon_rod_of_god;
 	 	//canbuild37=ARMFFF;//xtaids
 	 	//canbuild38=MERCURY;//xtaids
-		canbuild39=arm_vulcan;
+		canbuild39=talon_exp_vehicle_plant;
 		canbuild40=talon_nano_tower;
 	}
 
@@ -4560,7 +4561,7 @@
 		canbuild36=talon_rod_of_god;
 	 	//canbuild37=ARMFFF;//xtaids
 	 	//canbuild38=MERCURY;//xtaids
-		canbuild39=arm_vulcan;
+		canbuild39=talon_exp_vehicle_plant;
 		canbuild40=talon_nano_tower;
 	}
 	[talon_adv_construction_vehicle]
@@ -4603,7 +4604,7 @@
 		canbuild36=talon_rod_of_god;
 	 	//canbuild37=ARMFFF;//xtaids
 	 	//canbuild38=MERCURY;//xtaids
-		canbuild39=arm_vulcan;
+		canbuild39=talon_exp_vehicle_plant;
 		canbuild40=talon_nano_tower;
 	}
 
@@ -4615,8 +4616,7 @@
 		canbuild4=talon_infantry; 
 		canbuild5=talon_mercenary;
 		canbuild6=talon_sphere;
-		canbuild7=talon_hip;
-		canbuild8=talon_psyker;
+		canbuild7=talon_psyker;
 	}
 	[talon_commander]
 	{
@@ -4952,6 +4952,15 @@
 		canbuild28=talon_adv_shipyard;
 	}
 
+	[talon_exp_vehicle_plant]
+	{
+		canbuild1=talon_construction_xbot;
+		canbuild2=talon_berserker;
+		canbuild3=talon_Repentance;
+		canbuild4=talon_talos;
+		canbuild5=talon_abaddon;
+		canbuild6=talon_adv_construction_vehicle;
+	}
 	[talon_adv_hovercraft_platform]
 	{
 		canbuild1=talon_adv_construction_hovercraft;
@@ -5007,6 +5016,7 @@
 		canbuild5=talon_trident;
 		canbuild6=talon_cyclone;
 		canbuild7=talon_corsair;
+		canbuild8=talon_hip;
 		//canbuild8=talon_Insignia;
 		canbuild9=talon_vigilante;
 		canbuild10=talon_wyvern;
@@ -5061,6 +5071,7 @@
 		canbuild41=talon_moho_mine;
 		canbuild43=talon_Armistice;
 		canbuild44=talon_nano_tower;
+		canbuild45=talon_exp_vehicle_plant;
 
 	}
 	[talon_xbot_box]

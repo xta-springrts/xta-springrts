@@ -85,6 +85,7 @@ local exceptionList = {
   "lost_visitor",
   "lost_falcon_heavy",
   "lost_falcon_heavy_new",
+  "talon_berserker",
 }
   
   

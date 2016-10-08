@@ -1,0 +1,151 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Arm;
+	name=Abaddon;
+	description=Rolling Fortress;
+
+	//************************************************************
+	//  Categories
+	//**************
+	Category=CORE TANK WEAPON NOTAIR NOTSUB;
+	tedclass=TANK;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=talon_abaddon;
+	unitnumber=110;
+	objectname=talon_abaddon.3do;
+	corpse=talon_abaddon_dead;
+	buildpic=talon_abaddon.png;
+	soundcategory=CORE_TANK;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=87123;
+	healtime=30;
+	buildcostmetal=23546;
+	buildcostenergy=115435;
+	buildtime=183786;
+	footprintx=4;
+	footprintz=4;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=50;
+	energyuse=25;
+	energystorage=1200;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+	onoffable=1;
+	activatewhenbuilt=1;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canattack=1;
+	canguard=1;
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementclass=TANKDTCRUSH; //TANKSH4//
+	turnrate=259;
+	acceleration=0.2;
+	brakerate=0.2;
+	maxvelocity=0.75;
+	maxslope=16;
+	maxwaterdepth=12;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=580;
+	RadarDistance=1800;
+	RadarDistanceJam=280;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=Talon_AbandonCannon;
+	weapon3=TALON_ABANDONROCKET;
+	nochasecategory=VTOL;
+	badtargetcategory=VTOL;
+	wpri_badtargetcategory=VTOL;
+	weapon2=TALON_LIGHTLASER;
+	Weaponmaindir2=-1 0 0;//1 0 1;
+	Maxangledif2=200;
+	weapon4=TALON_LIGHTLASER;
+	Weaponmaindir4=1 0 0;//1 0 1;
+	Maxangledif4=200;
+	weapon5=TALON_LIGHTLASER;
+	Weaponmaindir5=0 -1 0;//1 0 1;
+	Maxangledif5=200;
+	explodeas=ATOMIC_BLASTPEN;
+	selfdestructas=ATOMIC_BLASTSML;
+	onlytargetcategory1=NOTAIR; //Added 8.2 By Gizmo
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	firestandorders=1;
+	mobilestandorders=1;
+	standingfireorder=2;
+	standingmoveorder=1;
+	defaultmissiontype=Standby;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=1;
+	designation=PS20;
+	downloadable=1;
+	leavetracks=1;
+	maneuverleashlength=640;
+	shootme=1;
+	steeringmode=1;
+	threed=1;
+	trackoffset=8;
+	trackstrength=10;
+	trackstretch=1;
+	tracktype=StdTank;
+	trackwidth=64;
+	version=1.2;
+	zbuffer=1;
+	mass=75000;
+	collisionVolumeType = box;
+	collisionVolumeScales =88 80 125;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+	[SFXTypes]
+	{
+	explosiongenerator0=custom:dgunflare;
+	explosiongenerator1=custom:dgunflare;
+	explosiongenerator2=custom:rocketflare;
+	}
+}
