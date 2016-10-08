@@ -17,8 +17,6 @@ RestoreAfterDelay()
 
 activatescr()
 {
-	signal 4;
-	set-signal-mask 4;
 	if( TRUE )
 	{
 		dont-cache roofr;
@@ -88,8 +86,6 @@ activatescr()
 
 deactivatescr()
 {
-	signal 4;
-	set-signal-mask 4;
 	if( TRUE )
 	{
 		dont-cache roofr;

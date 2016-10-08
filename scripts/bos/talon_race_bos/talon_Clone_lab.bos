@@ -12,8 +12,6 @@ static-var  Static_Var_1, Static_Var_2, statechg_DesiredState, statechg_StateCha
 
 activatescr()
 {
-	signal 4;
-	set-signal-mask 4;
 	if( TRUE )
 	{
 		dont-cache nano;
@@ -27,8 +25,6 @@ activatescr()
 
 deactivatescr()
 {
-	signal 4;
-	set-signal-mask 4;
 	if( TRUE )
 	{
 		move tank to y-axis [0] speed [4];

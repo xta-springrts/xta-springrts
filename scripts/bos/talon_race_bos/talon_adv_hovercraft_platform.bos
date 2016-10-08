@@ -1,0 +1,383 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+piece  beam1, beam2, beam3, beam4, base, body, pier1, pier2,
+       pier3, pier4, side1, side2, turn1, turn2, cover1, cover2,
+       pad, block1, block2, nano1a, nano1b, nano2a, nano2b, padsee;
+
+static-var  Static_Var_1, Static_Var_2;
+
+// Signal definitions
+#define SIG_ACTIVATE			2
+
+#define SMOKEPIECE1 base
+
+#include "StateChg.h"
+
+RestoreAfterDelay()
+{
+	sleep 5000;
+}
+
+activatescr()
+{
+	if( TRUE )
+	{
+		set ARMORED to 0;
+	}
+	if( TRUE )
+	{
+		dont-cache pier1;
+		dont-cache pier2;
+		dont-cache pier3;
+		dont-cache pier4;
+		dont-cache cover1;
+		dont-cache cover2;
+		set ARMORED to 0;
+	}
+	if( TRUE )
+	{
+		move pier1 to z-axis [-12.199347] speed [10.000000];
+		move pier3 to z-axis [-12.199347] speed [10.000000];
+		move pier2 to z-axis [12.199347] speed [10.000000];
+		move pier4 to z-axis [12.199347] speed [10.000000];
+		turn cover1 to x-axis <120.000000> speed <100.000000>;
+		turn cover2 to x-axis <-120.000000> speed <100.000000>;
+		wait-for-turn cover1 around x-axis;
+		wait-for-move pier3 along x-axis;
+	}
+	if( TRUE )
+	{
+		cache pier1;
+		cache pier2;
+		cache pier3;
+		cache pier4;
+	}
+	if( TRUE )
+	{
+		dont-cache side2;
+		dont-cache side1;
+		dont-cache block1;
+		dont-cache block2;
+		dont-cache nano1a;
+		dont-cache nano2a;
+		dont-cache nano1b;
+		dont-cache nano2b;
+	}
+	if( TRUE )
+	{
+		move side2 to x-axis [10.375000] speed [10.000000];
+		move side1 to x-axis [-10.375000] speed [10.000000];
+		wait-for-move side2 along x-axis;
+	}
+	if( TRUE )
+	{
+		move nano2a to x-axis [-2.500000] speed [10.000000];
+		move nano2b to x-axis [-2.500000] speed [10.000000];
+		move nano1a to x-axis [2.500000] speed [10.000000];
+		move nano1b to x-axis [2.500000] speed [10.000000];
+		turn turn1 to y-axis <90.000000> speed <100.000000>;
+		turn turn2 to y-axis <90.000000> speed <100.000000>;
+		wait-for-move nano1a along x-axis;
+		wait-for-turn turn1 around y-axis;
+	}
+	if( TRUE )
+	{
+		cache side2;
+		cache side1;
+		cache cover2;
+		cache cover1;
+		cache block1;
+		cache block2;
+		cache nano1a;
+		cache nano2a;
+		cache nano1b;
+		cache nano2b;
+	}
+	if( TRUE )
+	{
+		sleep 300;
+	}
+}
+
+deactivatescr()
+{
+	if( TRUE )
+	{
+		dont-cache side2;
+		dont-cache side1;
+		dont-cache cover2;
+		dont-cache cover1;
+		dont-cache block1;
+		dont-cache block2;
+		dont-cache nano1a;
+		dont-cache nano2a;
+		dont-cache nano1b;
+		dont-cache nano2b;
+	}
+	if( TRUE )
+	{
+		move nano2a to x-axis [0.000000] speed [10.000000];
+		move nano2b to x-axis [0.000000] speed [10.000000];
+		move nano1a to x-axis [0.000000] speed [10.000000];
+		move nano1b to x-axis [0.000000] speed [10.000000];
+		turn turn1 to y-axis <0.000000> speed <100.000000>;
+		turn turn2 to y-axis <0.000000> speed <100.000000>;
+		wait-for-move nano1a along x-axis;
+		wait-for-turn turn1 around y-axis;
+	}
+	if( TRUE )
+	{
+		turn cover2 to z-axis <0.000000> speed <100.000000>;
+		turn cover1 to z-axis <0.000000> speed <100.000000>;
+		wait-for-turn cover2 around z-axis;
+	}
+	if( TRUE )
+	{
+		move side2 to x-axis [0.000000] speed [10.000000];
+		move side1 to x-axis [0.000000] speed [10.000000];
+		wait-for-move side2 along x-axis;
+	}
+	if( TRUE )
+	{
+		cache side2;
+		cache side1;
+		cache block1;
+		cache block2;
+		cache nano1a;
+		cache nano2a;
+		cache nano1b;
+		cache nano2b;
+	}
+	if( TRUE )
+	{
+		dont-cache pier1;
+		dont-cache pier2;
+		dont-cache pier3;
+		dont-cache pier4;
+	}
+	if( TRUE )
+	{
+		move pier1 to z-axis [0.000000] speed [10.000000];
+		move pier3 to z-axis [0.000000] speed [10.000000];
+		move pier2 to z-axis [0.000000] speed [10.000000];
+		move pier4 to z-axis [0.000000] speed [10.000000];
+		turn cover1 to x-axis <0.000000> speed <100.000000>;
+		turn cover2 to x-axis <0.000000> speed <100.000000>;
+		wait-for-move pier3 along z-axis;
+		wait-for-turn cover1 around x-axis;
+	}
+	if( TRUE )
+	{
+		cache pier1;
+		cache pier2;
+		cache pier3;
+		cache pier4;
+	}
+	if( TRUE )
+	{
+		set ARMORED to 1;
+		sleep 300;
+	}
+}
+#include "SmokeUnit.h"
+#include "Yard.h"
+
+Go()
+{
+	call-script activatescr();
+	call-script OpenYard();
+	set INBUILDSTANCE to 1;
+}
+
+Stop()
+{
+	sleep 3000;
+	set INBUILDSTANCE to 0;
+	call-script CloseYard();
+	start-script deactivatescr();
+}
+#define ACTIVATECMD			call-script Go();
+#define DEACTIVATECMD		call-script Stop();
+#include "StateChg.h"
+
+Create()
+{
+	dont-shade side2;
+	dont-shade side1;
+	dont-shade cover2;
+	dont-shade cover1;
+	dont-shade block1;
+	dont-shade block2;
+	dont-shade nano1a;
+	dont-shade nano2a;
+	dont-shade nano1b;
+	dont-shade nano2b;
+	dont-shade pier1;
+	dont-shade pier2;
+	dont-shade pier3;
+	dont-shade pier4;
+	dont-shade base;
+	dont-shade padsee;
+	dont-shade body;
+	Static_Var_1 = 1;
+	call-script InitState();
+	start-script SmokeUnit();
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 1000;
+	}
+}
+
+QueryNanoPiece(piecenum)
+{
+	if( Static_Var_1 == 1 )
+	{
+		piecenum = beam1;
+	}
+	if( Static_Var_1 == 2 )
+	{
+		piecenum = beam2;
+	}
+	if( Static_Var_1 == 3 )
+	{
+		piecenum = beam3;
+	}
+	if( Static_Var_1 == 4 )
+	{
+		piecenum = beam4;
+	}
+	++Static_Var_1;
+	if( Static_Var_1 == 5 )
+	{
+		Static_Var_1 = 1;
+	}
+}
+
+Activate()
+{
+	signal SIG_ACTIVATE;
+	start-script RequestState(0);
+}
+
+Deactivate()
+{
+	signal SIG_ACTIVATE;
+	set-signal-mask SIG_ACTIVATE;
+	set-signal-mask 0;
+	start-script RequestState(1);
+}
+
+StartBuilding()
+{
+	spin pad around y-axis speed <30.005495>;
+	spin padsee around y-axis speed <30.005495>;
+	dont-cache padsee;
+}
+
+StopBuilding()
+{
+	stop-spin padsee around y-axis;
+	stop-spin pad around y-axis;
+	turn pad to y-axis <0.000000> now;
+	cache padsee;
+}
+
+QueryBuildInfo(piecenum)
+{
+	piecenum = pad;
+}
+
+SweetSpot(piecenum)
+{
+	piecenum = base;
+}
+
+Killed(severity, corpsetype)
+{
+	if( severity <= 25 )
+	{
+		corpsetype = 1;
+		explode pad type FALL | EXPLODE_ON_HIT | BITMAP2;
+		explode cover2 type SHATTER | BITMAP3;
+		explode cover2 type SHATTER | BITMAP3;
+		explode nano1a type FALL | SMOKE | EXPLODE_ON_HIT | BITMAP1;
+		explode nano2a type FALL | SMOKE | EXPLODE_ON_HIT | BITMAP2;
+		explode nano1b type FALL | SMOKE | EXPLODE_ON_HIT | BITMAP1;
+		explode nano2b type FALL | SMOKE | EXPLODE_ON_HIT | BITMAP2;
+		explode beam1 type FALL | SMOKE | EXPLODE_ON_HIT | BITMAP1;
+		explode beam2 type FALL | SMOKE | EXPLODE_ON_HIT | BITMAP2;
+		explode beam3 type FALL | SMOKE | EXPLODE_ON_HIT | BITMAP1;
+		explode beam4 type FALL | SMOKE | EXPLODE_ON_HIT | BITMAP2;
+		explode side2 type SHATTER | BITMAP3;
+		explode side1 type SHATTER | BITMAP4;
+		explode pier1 type SHATTER | BITMAP1;
+		explode pier2 type SHATTER | BITMAP2;
+		explode pier3 type SHATTER | SMOKE | BITMAP3;
+		explode pier4 type SHATTER | SMOKE | BITMAP4;
+		return (0);
+	}
+	if( severity <= 50 )
+	{
+		corpsetype = 2;
+		explode pad type FALL | EXPLODE_ON_HIT | BITMAP2;
+		explode cover2 type FALL | EXPLODE_ON_HIT | BITMAP3;
+		explode cover2 type FALL | EXPLODE_ON_HIT | BITMAP3;
+		explode nano1a type FALL | SMOKE | EXPLODE_ON_HIT | BITMAP1;
+		explode nano2a type FALL | SMOKE | EXPLODE_ON_HIT | BITMAP2;
+		explode nano1b type FALL | SMOKE | EXPLODE_ON_HIT | BITMAP1;
+		explode nano2b type FALL | SMOKE | EXPLODE_ON_HIT | BITMAP2;
+		explode beam1 type FALL | SMOKE | EXPLODE_ON_HIT | BITMAP1;
+		explode beam2 type FALL | SMOKE | EXPLODE_ON_HIT | BITMAP2;
+		explode beam3 type FALL | SMOKE | EXPLODE_ON_HIT | BITMAP1;
+		explode beam4 type FALL | SMOKE | EXPLODE_ON_HIT | BITMAP2;
+		explode side2 type SHATTER | EXPLODE_ON_HIT | BITMAP3;
+		explode side1 type SHATTER | EXPLODE_ON_HIT | BITMAP4;
+		explode pier1 type SHATTER | EXPLODE_ON_HIT | BITMAP1;
+		explode pier2 type SHATTER | EXPLODE_ON_HIT | BITMAP2;
+		explode pier3 type SHATTER | SMOKE | EXPLODE_ON_HIT | BITMAP3;
+		explode pier4 type SHATTER | SMOKE | EXPLODE_ON_HIT | BITMAP4;
+		return (0);
+	}
+	if( severity <= 99 )
+	{
+		corpsetype = 3;
+		explode pad type FALL | SMOKE | EXPLODE_ON_HIT | BITMAP2;
+		explode cover2 type FALL | SMOKE | EXPLODE_ON_HIT | BITMAP3;
+		explode cover2 type FALL | SMOKE | EXPLODE_ON_HIT | BITMAP3;
+		explode nano1a type FALL | SMOKE | EXPLODE_ON_HIT | BITMAP1;
+		explode nano2a type FALL | SMOKE | EXPLODE_ON_HIT | BITMAP2;
+		explode nano1b type FALL | SMOKE | EXPLODE_ON_HIT | BITMAP1;
+		explode nano2b type FALL | SMOKE | EXPLODE_ON_HIT | BITMAP2;
+		explode beam1 type FALL | SMOKE | EXPLODE_ON_HIT | BITMAP1;
+		explode beam2 type FALL | SMOKE | EXPLODE_ON_HIT | BITMAP2;
+		explode beam3 type FALL | SMOKE | EXPLODE_ON_HIT | BITMAP1;
+		explode beam4 type FALL | SMOKE | EXPLODE_ON_HIT | BITMAP2;
+		explode side2 type SHATTER | EXPLODE_ON_HIT | BITMAP3;
+		explode side1 type SHATTER | EXPLODE_ON_HIT | BITMAP4;
+		explode pier1 type SHATTER | EXPLODE_ON_HIT | BITMAP1;
+		explode pier2 type SHATTER | EXPLODE_ON_HIT | BITMAP2;
+		explode pier3 type SHATTER | SMOKE | EXPLODE_ON_HIT | BITMAP3;
+		explode pier4 type SHATTER | SMOKE | EXPLODE_ON_HIT | BITMAP4;
+		return (0);
+	}
+	explode pad type FALL | SMOKE | EXPLODE_ON_HIT | BITMAP2;
+	explode cover2 type FALL | SMOKE | EXPLODE_ON_HIT | BITMAP3;
+	explode cover2 type FALL | SMOKE | EXPLODE_ON_HIT | BITMAP3;
+	explode nano1a type FALL | SMOKE | EXPLODE_ON_HIT | BITMAP1;
+	explode nano2a type FALL | SMOKE | EXPLODE_ON_HIT | BITMAP2;
+	explode nano1b type FALL | SMOKE | EXPLODE_ON_HIT | BITMAP1;
+	explode nano2b type FALL | SMOKE | EXPLODE_ON_HIT | BITMAP2;
+	explode beam1 type FALL | SMOKE | EXPLODE_ON_HIT | BITMAP1;
+	explode beam2 type FALL | SMOKE | EXPLODE_ON_HIT | BITMAP2;
+	explode beam3 type FALL | SMOKE | EXPLODE_ON_HIT | BITMAP1;
+	explode beam4 type FALL | SMOKE | EXPLODE_ON_HIT | BITMAP2;
+	explode side2 type SHATTER | EXPLODE_ON_HIT | BITMAP3;
+	explode side1 type SHATTER | EXPLODE_ON_HIT | BITMAP4;
+	explode pier1 type SHATTER | EXPLODE_ON_HIT | BITMAP1;
+	explode pier2 type SHATTER | EXPLODE_ON_HIT | BITMAP2;
+	explode pier3 type SHATTER | SMOKE | EXPLODE_ON_HIT | BITMAP3;
+	explode pier4 type SHATTER | SMOKE | EXPLODE_ON_HIT | BITMAP4;
+}

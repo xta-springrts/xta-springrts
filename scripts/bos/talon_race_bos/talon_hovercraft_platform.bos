@@ -18,8 +18,6 @@ RestoreAfterDelay()
 
 activatescr()
 {
-	signal 4;
-	set-signal-mask 4;
 	if( TRUE )
 	{
 		dont-cache ltower1;
@@ -97,8 +95,6 @@ activatescr()
 
 deactivatescr()
 {
-	signal 4;
-	set-signal-mask 4;
 	if( TRUE )
 	{
 		dont-cache lside;

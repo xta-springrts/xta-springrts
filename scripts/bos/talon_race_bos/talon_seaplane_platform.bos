@@ -75,8 +75,6 @@ xz=500333222;\
 
 activatescr()
 {
-	signal 4;
-	set-signal-mask 4;
 	if( TRUE )
 	{
 		dont-cache nanobar;
@@ -102,8 +100,6 @@ activatescr()
 
 deactivatescr()
 {
-	signal 4;
-	set-signal-mask 4;
 	if( TRUE )
 	{
 		dont-cache nanobar;
