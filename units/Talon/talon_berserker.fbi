@@ -26,12 +26,12 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=3000;//really 4000 hp
-	damagemodifier=0.5;//last 1000 hp becomes 2000 hp
+	maxdamage=6000;//really 4000 hp
+	damagemodifier=1;//last 1000 hp becomes 2000 hp
 	healtime=30;
-	buildcostmetal=1232; 
+	buildcostmetal=1337; 
 	buildcostenergy=14325; 
-	buildtime=31478; 
+	buildtime=30078; 
 	footprintx=2;
 	footprintz=2;
 

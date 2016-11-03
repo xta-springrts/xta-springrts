@@ -4954,7 +4954,7 @@
 
 	[talon_exp_vehicle_plant]
 	{
-		canbuild1=talon_construction_xbot;
+		canbuild1=talon_decoy_commander;
 		canbuild2=talon_berserker;
 		canbuild3=talon_Repentance;
 		canbuild4=talon_talos;

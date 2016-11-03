@@ -2,14 +2,14 @@
 {
 	name=Talos;
 	unitname=talon_talos;
-	buildcostenergy=63542;
-	buildcostmetal=8543;
-	buildtime=91566;
+	buildcostenergy=66542;
+	buildcostmetal=10543;
+	buildtime=151566;
 	category=ARM KBOT WEAPON NOTAIR NOTSUB MOBILE  ;
 	description=Assault Mech;
 	footprintx=3;
 	footprintz=3;
-	maxdamage=43463;//+1500
+	maxdamage=39463;//+1500
 	objectname=talon_talos;
 	side=ARM;
 	soundcategory=MAVERICK;
