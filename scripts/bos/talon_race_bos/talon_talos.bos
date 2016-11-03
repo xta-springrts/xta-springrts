@@ -410,7 +410,7 @@ AimWeapon4(heading, pitch)
 	signal SIG_AIM_2;
 	set-signal-mask SIG_AIM_2;
 	//turn head to y-axis <360> speed <160.6484>;
-	turn torso to y-axis heading speed <15.6484>;
+	//turn torso to y-axis heading speed <160.6484>;
 	//turn ruparm to x-axis <0.> - pitch speed <160>;
 	//turn luparm to x-axis <0.> - pitch speed <160>;
 	//wait-for-turn torso around y-axis;
@@ -444,7 +444,7 @@ AimWeapon5(heading, pitch)
 	signal SIG_AIM_4;
 	set-signal-mask SIG_AIM_4;
 	//turn head to y-axis <360> speed <160.6484>;
-	turn torso to y-axis heading speed <15.6484>;
+	//turn torso to y-axis heading speed <150.6484>;
 	//turn ruparm to x-axis <0.> - pitch speed <160>;
 	//turn luparm to x-axis <0.> - pitch speed <160>;
 	//wait-for-turn torso around y-axis;

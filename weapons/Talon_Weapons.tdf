@@ -1618,7 +1618,7 @@
 	range=200;
 	accuracy=600;
 	movingaccuracy=900;
-	reloadtime=1;
+	reloadtime=0.75;
 	weaponvelocity=1000;
 	areaofeffect=8;
 	soundtrigger=1;
@@ -1647,7 +1647,7 @@
 	range=230;
 	accuracy=600;
 	movingaccuracy=900;
-	reloadtime=0.75;
+	reloadtime=0.666;
 	weaponvelocity=1000;
 	areaofeffect=8;
 	soundtrigger=1;
@@ -1659,7 +1659,7 @@
 	tolerance=1000;
 	[DAMAGE]
 	{
-		default=33;
+		default=25;
 		group_invincible=1;
 	}
 }
