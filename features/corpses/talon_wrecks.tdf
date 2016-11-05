@@ -1,4 +1,25 @@
 
+[talon_STC_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=core_corpses;
+	object=talon_STC_dead;
+	footprintx=16;
+	footprintz=16;
+	height=20;
+	blocking=1;
+	hitdensity=100;
+	metal=8270;
+	damage=32440;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=300 30 300;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+
 [talon_exp_vehicle_plant_dead]
 {
 	world=All Worlds;
@@ -613,7 +634,7 @@
 	height=20;
 	blocking=1;
 	hitdensity=100;
-	metal=867;
+	metal=567;
 	damage=832;
 	reclaimable=1;
 	featurereclamate=smudge01;
@@ -633,7 +654,7 @@
 	height=4;
 	blocking=0;
 	hitdensity=100;
-	metal=470;
+	metal=270;
 	damage=432;
 	reclaimable=1;
 	featurereclamate=smudge01;

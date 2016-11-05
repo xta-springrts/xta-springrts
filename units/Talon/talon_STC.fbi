@@ -4,89 +4,86 @@
 	//  Unit Description
 	//********************
 	side=Core;
-	name=Infantry;
-	description=Swarm Clone;
+	name=Standard Template Construct;
+	description=Needs Aerial Assistance;
+	icontype=plant;
 
 	//************************************************************
 	//  Categories
 	//**************
-	Category=CORE KBOT WEAPON MOBILE NOTAIR NOTSEA NOTSUB;
-	tedclass=KBOT;
+	Category=CORE PLANT NOWEAPON NOTAIR NOTSUB;
+	tedclass=PLANT;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=talon_infantry;
-	unitnumber=82;
-	objectname=talon_infantry.3do;
-	corpse=talon_infantry_dead;
-	buildpic=talon_infantry.png;
-	soundcategory=CORAK;
+	unitname=talon_STC;
+	unitnumber=253;
+	objectname=talon_STC.3do;
+	corpse=talon_STC_dead;
+	buildpic=talon_STC.png;
+	soundcategory=CORE_GANTRY;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=280; // was 645
+	maxdamage=17865;//5726
 	healtime=30;
-	buildcostmetal=30; //was 99(5%)//was 88
-	buildcostenergy=400;
-	buildtime=800;
-	footprintx=1;
-	footprintz=1;
+	buildcostmetal=8132;
+	buildcostenergy=12574;
+	buildtime=45937;
+	footprintx=16;
+	footprintz=16;
+	usePieceCollisionVolumes=1;
+	//collisionVolumeType = Box;
+	//collisionVolumeScales =96 63 96;
+	//collisionVolumeOffsets = 0 0 0;
+	//collisionVolumeTest = 1;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energymake=0.3;
-	energyuse=0.3;
-	energystorage=0;
+	metalstorage=1800;
+	energyuse=0;
+	energystorage=4400;
 
 	//************************************************************
 	//  Building
 	//************
 
+	YardMap=oooooooooooooooo occcccccccccccco occcccccccccccco occcccccccccccco occcccccccccccco occcccccccccccco occcccccccccccco occcccccccccccco occcccccccccccco occcccccccccccco occcccccccccccco occcccccccccccco occcccccccccccco occcccccccccccco occcccccccccccco oooooooooooooooo;
+
 	//************************************************************
 	//  Constructor
 	//***************
-	builder=0;
-	workertime=0;
+	builder=1;
+	workertime=400;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
-	canguard=1;
 	canmove=1;
 	canpatrol=1;
 	canstop=1;
-	upright=1;
+	canguard=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	movementclass=KBOTSS2;
-	turnrate=1210; // was 1100
-	acceleration=0.915527;
-	brakerate=1.83105;
-	maxvelocity=1.5; // was 1.72
-	maxslope=17;
-	maxwaterdepth=25;
+	maxslope=30;
+	maxwaterdepth=89;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=412.5;
+	sightdistance=367.5;
 	radardistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
-	weapon1=INFANTRY_GUN;
-	WeaponMainDir1= 0 0 1;
-	MaxAngleDif1=230;
-	//explodeas=SMALL_UNITEX;
-	//selfdestructas=SMALL_UNIT;
+	explodeas=LARGE_BUILDINGEX;
+	selfdestructas=LARGE_BUILDING;
 
 	//************************************************************
 	//  Orders
@@ -95,35 +92,29 @@
 	firestandorders=1;
 	mobilestandorders=1;
 	standingfireorder=2;
-	standingmoveorder=1;
-	defaultmissiontype=Standby;
+	standingmoveorder=2;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=1;
-	designation=KA-L4;
+	bmcode=0;
+	designation=GKA-DML;
 	downloadable=1;
-	maneuverleashlength=640;
-	shootme=1;
-	smoothanim=1;
-	steeringmode=2;
 	threed=1;
 	version=1.2;
 	zbuffer=1;
-	collisionVolumeType = box;
-	collisionVolumeScales =15 15 15;
-	collisionVolumeOffsets = 0 -1 0;
-	collisionVolumeTest = 1;
 	pieceTrailCEGTag=Debree;//bleh
 	pieceTrailCEGRange = 4;
-	[SFXTypes]
-	{
-		explosiongenerator0=custom:redflare;
-	}
 
 	//************************************************************
 	//  To be removed
 	//*****************
+	[SFXTypes]
+	{
+	explosiongenerator0=custom:Nano;
+	explosiongenerator1=custom:WhiteLight;
+	explosiongenerator2=custom:YellowLight;
+	explosiongenerator3=custom:YellowLight1;
+	}
 
 }

@@ -4460,6 +4460,7 @@
 		canbuild6=talon_wyvern;
 		//canbuild7=arm_tornado;
 		canbuild7=talon_hip;
+		canbuild8=talon_medic;
 	}
 
 	[talon_adv_vehicle_plant]
@@ -4517,7 +4518,7 @@
 		canbuild36=talon_rod_of_god;
 	 	//canbuild37=ARMFFF;//xtaids
 	 	//canbuild38=MERCURY;//xtaids
-		canbuild39=talon_exp_vehicle_plant;
+		canbuild39=talon_STC;
 		canbuild40=talon_nano_tower;
 	}
 
@@ -5023,6 +5024,16 @@
 	}
 		
 
+	[talon_STC]
+	{
+		canbuild1=talon_adv_construction_aircraft;
+		canbuild2=talon_ack_ack;
+		canbuild3=talon_resurgence;
+		canbuild4=talon_Independence;
+		canbuild5=talon_Bentusi;
+		canbuild6=talon_construction_aircraft;
+		canbuild7=talon_medic;
+	}
 	[talon_vehicle_plant]
 	{
 		canbuild1=talon_construction_vehicle;

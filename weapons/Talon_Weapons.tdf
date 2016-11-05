@@ -1,4 +1,129 @@
 
+[ANNISAUCER_WEAPON]
+{
+	name=Annihilator Weapon;
+	Weapontype=BeamLaser;
+	turret=1;
+	//minbarrelangle=-40;
+	pulseSpeed=7.0;
+	SoundTrigger=1;
+	LargeBeamLaser=1;
+	Intensity=0.001;
+	thickness=12.5;
+  	laserflaresize=3;
+	beamtime=2;
+	beamdecay=0.9;
+	beamttl=10;
+	hardStop=0;
+	range=600;
+	reloadtime=5;
+	energypershot=4000;
+	weaponvelocity=1000;
+	areaofeffect=64;
+	soundhitdry=xplolrg1;
+	soundstart=annigun2;
+	firestarter=90;
+	waterweapon=1; //allow piercing of water surface
+	rgbcolor=1.000 0.333 0.000;
+	explosiongenerator=custom:RedPlasma;
+	avoidFeature=0;
+	[DAMAGE]
+	{
+		default=13500;
+		group_commanders=2800;
+		lost_commanders=2500;
+		group_ships=10000;
+		group_large_ships=10000;
+		group_invincible=1;
+	}
+}
+[MARSSAUCER_WEAPON]
+	{
+	Name=Lightning Beam;
+	rendertype=0;
+	lineofsight=1;
+	turret=1;
+	beamlaser=1;
+	LargeBeamLaser=1;
+	pulseSpeed=0.5;
+	thickness=12;
+	beamtime=1;
+	Duration=0.2;
+	range=600; 
+	reloadtime=2.00;
+	energypershot=300;
+	weaponvelocity=900;
+  	texture1=testlightning;
+  	laserflaresize=3;
+	minbarrelangle=-55;
+	noexplode=1;
+  //texture2=null;
+  //texture3=null;
+  //texture4=null;
+	areaofeffect=16;
+	firestarter=90;
+	beamweapon=1;
+	rgbcolor=1.0 0.0 0.0;
+	tolerance=5000;
+	soundstart=marsattack;
+	//soundhitdry=LASERHITB;
+	explosiongenerator=custom:Gator;
+	guidance=1;
+	beamdecay=0.9;
+	beamttl=1;
+	intensity=0.85;
+	avoidFeature=0;
+	[DAMAGE]
+	{
+		default=578;
+		lost_commanders=300;
+		group_commanders=370;
+	}
+}
+
+[MARSSAUCERGREEN_WEAPON]
+	{
+	Name=Lightning Beam;
+	rendertype=0;
+	lineofsight=1;
+	turret=1;
+	beamlaser=1;
+	LargeBeamLaser=1;
+	pulseSpeed=0.5;
+	thickness=12;
+	beamtime=1;
+	Duration=0.2;
+	range=600; 
+	reloadtime=2.00;
+	energypershot=300;
+	weaponvelocity=900;
+  	texture1=testlightning;
+  	laserflaresize=3;
+	minbarrelangle=-55;
+	noexplode=1;
+  //texture2=null;
+  //texture3=null;
+  //texture4=null;
+	areaofeffect=16;
+	firestarter=90;
+	beamweapon=1;
+	rgbcolor=0.0 1.0 0.0;
+	tolerance=5000;
+	soundstart=marsattack;
+	//soundhitdry=LASERHITB;
+	explosiongenerator=custom:GreenLaser;
+	guidance=1;
+	beamdecay=0.9;
+	beamttl=1;
+	intensity=0.85;
+	avoidFeature=0;
+	[DAMAGE]
+	{
+		default=578;
+		lost_commanders=300;
+		group_commanders=370;
+	}
+}
 [Talon_AbandonCannon]
 {
 	name=Plasma Cannon;
@@ -107,7 +232,9 @@
 	turret=1;
 	TargetBorder=1;
 	range=500;
-	reloadtime=30.0;
+	reloadtime=10.0;
+	stockpile=1;
+	stockpiletime=30;
 	weapontimer=4;
 	energypershot=15000;
 	weaponvelocity=660;
@@ -128,10 +255,10 @@
 	alphadecay=0.5;
 	sizedecay=-0.55;
 	Tolerance=300;
-	avoidFriendly=0;
-	avoidFeature=0;
-	avoidGround=0;
-	avoidNeutral=0;
+	avoidFriendly=1;
+	avoidFeature=1;
+	avoidGround=1;
+	avoidNeutral=1;
 	[DAMAGE]
 	{
 		default=30000;
@@ -353,7 +480,7 @@
 	Texture2=null;
 	Texture3=null;
 	Texture4=null;
-	range=433;
+	range=444;
 	reloadtime=4.0;
 	weapontimer=2;
 	weaponvelocity=300;
@@ -368,7 +495,7 @@
 	[DAMAGE]
 	{
 		lost_commanders=156;
-		default=198;
+		default=222;
 		group_invincible=1;
 	}
 }
@@ -397,7 +524,7 @@
 	tolerance=1000;
 	[DAMAGE]
 	{
-		default=25;
+		default=33;
 		group_invincible=1;
 	}
 }
@@ -1628,6 +1755,8 @@
 	rgbcolor=1.0 0.8 0.25;
 	rgbcolor2=1.0 1.0 1.00;
 	tolerance=1000;
+	collidefriendly=0;
+	avoidfriendly=0;
 	[DAMAGE]
 	{
 		default=33;
@@ -1657,6 +1786,8 @@
 	rgbcolor=1.0 0.8 0.25;
 	rgbcolor2=1.0 1.0 1.00;
 	tolerance=1000;
+	collidefriendly=0;
+	avoidfriendly=0;
 	[DAMAGE]
 	{
 		default=25;

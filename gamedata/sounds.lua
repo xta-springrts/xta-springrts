@@ -56,6 +56,7 @@ local Exceptions = {
 		["tllcount.wav"]		= true,
 		["cancel1.wav"]			= true,
 		["cancel2.wav"]			= true,
+		["marsattack.wav"]		= true,
 	}
 	
 
