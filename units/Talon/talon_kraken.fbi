@@ -3,48 +3,50 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	side=Core;
-	name=Repentance;
-	description=Harmonic Disintegrater;
+	side=Arm;
+	name=Kraken;
+	description=Long-Ranged Sniper Sub;
+	icontype=sea;
 
 	//************************************************************
 	//  Categories
 	//**************
-	Category=CORE TANK WEAPON NOTAIR NOTSUB;
-	tedclass=TANK;
+	category=ARM SUB MOBILE WEAPON SONAR NOTLAND NOTAIR NOTSEA;
+	tedclass=SUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=talon_Repentance;
-	unitnumber=110;
-	objectname=talon_Repentance.3do;
-	corpse=talon_Repentance_dead;
-	buildpic=talon_Repentance.png;
-	soundcategory=CORE_TANK;
+	unitname=talon_kraken;
+	unitnumber=67;
+	objectname=talon_kraken.3do;
+	corpse=talon_kraken_dead;
+	buildpic=talon_kraken.png;
+	soundcategory=ARM_SUB;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=30000;
-	healtime=30;
-	buildcostmetal=11654;
-	buildcostenergy=62560;
-	buildtime=137786;
-	footprintx=5;
-	footprintz=5;
+	maxdamage=843; //was 1525//
+	healtime=10;
+	buildcostmetal=491; //was 1151//
+	buildcostenergy=3724;
+	buildtime=9894;
+	footprintx=3;
+	footprintz=3;
 
 	//************************************************************
 	//  Resources
 	//*************
 	metalstorage=0;
-	energymake=0.5;
-	energyuse=0.5;
-	energystorage=800;
+	energymake=0.4;
+	energyuse=0.4;
+	energystorage=0;
 
 	//************************************************************
 	//  Building
 	//************
+	activatewhenbuilt=1;
 
 	//************************************************************
 	//  Constructor
@@ -60,43 +62,43 @@
 	canmove=1;
 	canpatrol=1;
 	canstop=1;
+	floater=1;
+	upright=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	movementclass=TANKDTCRUSH; //TANKSH4//
-	turnrate=309;
-	acceleration=0.3;
-	brakerate=0.3;
-	maxvelocity=0.8;
-	maxslope=16;
-	maxwaterdepth=12;
+	movementclass=BOATSUB;
+	turnrate=512;
+	acceleration=0.06;
+	brakerate=0.08;
+	maxvelocity=1.575;
+	minwaterdepth=20;// not used, minWaterDepth in movedef used instead (36)
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=480;
+	sightdistance=190;
 	radardistance=0;
+	sonardistance=700;
 
 	//************************************************************
 	//  Weapons
 	//***********
-	weapon1=CHURCH_LIGHTNING;
-	weapon3=TALON_BELLGATOR;
+	weapon1=ARM_TORPEDO;
 	nochasecategory=VTOL;
 	badtargetcategory=VTOL;
 	wpri_badtargetcategory=VTOL;
-	explodeas=GIANT_BLAST;
-	selfdestructas=armmine5;
-	onlytargetcategory1=NOTAIR; //Added 8.2 By Gizmo
+	explodeas=SMALL_UNITEX;
+	selfdestructas=SMALL_UNIT;
 
 	//************************************************************
 	//  Orders
 	//**********
 	noautofire=0;
-	firestandorders=1;
+	firestandorders=0;
 	mobilestandorders=1;
-	standingfireorder=2;
+	standingfireorder=1;
 	standingmoveorder=1;
 	defaultmissiontype=Standby;
 
@@ -104,24 +106,18 @@
 	//  Miscellaneous
 	//*****************
 	bmcode=1;
-	designation=PS20;
+	designation=ASD-SM;
 	downloadable=1;
-	leavetracks=1;
 	maneuverleashlength=640;
 	shootme=1;
 	steeringmode=1;
 	threed=1;
-	trackoffset=8;
-	trackstrength=10;
-	trackstretch=1;
-	tracktype=StdTank;
-	trackwidth=64;
 	version=1.2;
+	waterline=36;// set to equal minWaterDepth, was 30
 	zbuffer=1;
-	mass=75000;
 	collisionVolumeType = box;
-	collisionVolumeScales =66 78 99;
-	collisionVolumeOffsets = 0 -15 0;
+	collisionVolumeScales =35 18 38;
+	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
 	pieceTrailCEGTag=Debree;//bleh
 	pieceTrailCEGRange = 4;
@@ -130,9 +126,4 @@
 	//  To be removed
 	//*****************
 
-	[SFXTypes]
-	{
-	explosiongenerator0=custom:berthaflare;
-	explosiongenerator1=custom:ButtSmoke;
-	}
 }

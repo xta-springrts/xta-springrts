@@ -6,7 +6,7 @@
 	buildcostmetal=1203;
 	buildtime=30624;//2312
 	category=Lost  CONSTR NOWEAPON NOTAIR NOTSUB;
-	description=Area Control Tower;
+	description=Transportable Artillery;
 	footprintx=3;
 	footprintz=3;
 	maxdamage=2825;

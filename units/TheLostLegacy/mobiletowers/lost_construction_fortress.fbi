@@ -7,7 +7,7 @@
 	Designation=COR-TOR;
 	Name=Construction Fortress;
 	buildpic=lost_construction_fortress.png;
-	Description=Fortifed Vehicle Tech 1.5;
+	Description=Fortress Vehicle Tech 1.5;
 	FootprintX=4;
 	FootprintZ=4;
 	BuildCostEnergy=3876;//4121

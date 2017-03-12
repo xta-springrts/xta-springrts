@@ -1,0 +1,89 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+piece  base, body, fp;
+
+// Signal definitions
+#define SIG_AIM				2
+
+SetDirection(heading)
+{
+	var spd;
+	spd = get ABS(heading);
+	turn body to y-axis heading speed spd;
+	turn base to y-axis 0-heading speed spd;
+}
+
+RockOnWaves()
+{
+	while(1)
+	{
+		turn body to x-axis <1.0> speed <1.5>;
+		move body to y-axis [0.0] speed [0.15];
+		wait-for-turn body around x-axis;
+		turn body to x-axis <-1.0> speed <1.5>;
+		move body to y-axis [-0.1] speed [0.15];
+		wait-for-move body along y-axis;
+		move body to y-axis [0.0] speed [0.15];
+		wait-for-turn body around x-axis;
+		turn body to x-axis <1.0> speed <1.5>;
+		move body to y-axis [-0.1] speed [0.15];
+		wait-for-move body along y-axis;
+	}
+}
+
+
+Create()
+{
+	hide fp;
+	start-script RockOnWaves();
+}
+
+AimPrimary(heading, pitch)
+{
+	signal SIG_AIM;
+	set-signal-mask SIG_AIM;
+	turn fp to y-axis heading speed <300.071429>;
+	turn fp to x-axis <0.000000> - pitch speed <200.038462>;
+	wait-for-turn fp around y-axis;
+	wait-for-turn fp around x-axis;
+	return (1);
+}
+
+FirePrimary()
+{
+	//emit-sfx UNIT_SFX1 from fp;
+}
+
+AimFromPrimary(piecenum)
+{
+	piecenum = fp;
+}
+
+QueryPrimary(piecenum)
+{
+	piecenum = fp;
+}
+
+SweetSpot(piecenum)
+{
+	piecenum = base;
+}
+
+Killed(severity, corpsetype)
+{
+	if( severity <= 25 )
+	{
+		return (0);
+	}
+	if( severity <= 50 )
+	{
+		return (0);
+	}
+	if( severity <= 99 )
+	{
+		return (0);
+	}
+}

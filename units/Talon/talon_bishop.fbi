@@ -3,48 +3,50 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	side=Core;
-	name=Repentance;
-	description=Harmonic Disintegrater;
+	side=Arm;
+	name=Bishop;
+	description=Transport Ship;
+	icontype=sea;
 
 	//************************************************************
 	//  Categories
 	//**************
-	Category=CORE TANK WEAPON NOTAIR NOTSUB;
-	tedclass=TANK;
+	category=ARM SHIP TPORT  NOWEAPON NOTAIR NOTSUB;
+	tedclass=SHIP;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=talon_Repentance;
-	unitnumber=110;
-	objectname=talon_Repentance.3do;
-	corpse=talon_Repentance_dead;
-	buildpic=talon_Repentance.png;
-	soundcategory=CORE_TANK;
+	unitname=talon_bishop;
+	unitnumber=73;
+	objectname=talon_bishop.3do;
+	corpse=talon_bishop_dead;
+	buildpic=talon_bishop.png;
+	soundcategory=ARM_SHIP;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=30000;
+	maxdamage=1987;
 	healtime=30;
-	buildcostmetal=11654;
-	buildcostenergy=62560;
-	buildtime=137786;
-	footprintx=5;
-	footprintz=5;
+	buildcostmetal=306;
+	buildcostenergy=1546;
+	buildtime=7269;
+	footprintx=6;
+	footprintz=6;
 
 	//************************************************************
 	//  Resources
 	//*************
 	metalstorage=0;
-	energymake=0.5;
-	energyuse=0.5;
-	energystorage=800;
+	energymake=0.3;
+	energystorage=0;
+	windgenerator=0.001;
 
 	//************************************************************
 	//  Building
 	//************
+	buildangle=16384;
 
 	//************************************************************
 	//  Constructor
@@ -55,48 +57,45 @@
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
 	canguard=1;
+	canload=1;
 	canmove=1;
 	canpatrol=1;
 	canstop=1;
-
+	floater=1;
+	waterline=13;
+	canfight=0;
+	
 	//************************************************************
 	//  Movement
 	//************
-	movementclass=TANKDTCRUSH; //TANKSH4//
-	turnrate=309;
-	acceleration=0.3;
-	brakerate=0.3;
-	maxvelocity=0.8;
-	maxslope=16;
-	maxwaterdepth=12;
+	movementclass=smallboat;
+	turnrate=256;
+	acceleration=0.027;
+	brakerate=0.036;
+	maxvelocity=2.85;
+	minwaterdepth=12;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=480;
+	sightdistance=375;
 	radardistance=0;
+	losemitheight=72;
+	radaremitheight=72;
 
 	//************************************************************
 	//  Weapons
 	//***********
-	weapon1=CHURCH_LIGHTNING;
-	weapon3=TALON_BELLGATOR;
-	nochasecategory=VTOL;
-	badtargetcategory=VTOL;
-	wpri_badtargetcategory=VTOL;
-	explodeas=GIANT_BLAST;
-	selfdestructas=armmine5;
-	onlytargetcategory1=NOTAIR; //Added 8.2 By Gizmo
+	explodeas=BIG_UNITEX;
+	selfdestructas=BIG_UNIT;
 
 	//************************************************************
 	//  Orders
 	//**********
 	noautofire=0;
-	firestandorders=1;
-	mobilestandorders=1;
-	standingfireorder=2;
+	firestandorders=0;
+	mobilestandorders=0;
 	standingmoveorder=1;
 	defaultmissiontype=Standby;
 
@@ -104,24 +103,21 @@
 	//  Miscellaneous
 	//*****************
 	bmcode=1;
-	designation=PS20;
+	designation=ASD-ST;
 	downloadable=1;
-	leavetracks=1;
 	maneuverleashlength=640;
+	scale=0.5;
 	shootme=1;
 	steeringmode=1;
 	threed=1;
-	trackoffset=8;
-	trackstrength=10;
-	trackstretch=1;
-	tracktype=StdTank;
-	trackwidth=64;
+	transportcapacity=20;
+	transportsize=4;
+	loadingradius=260;
 	version=1.2;
 	zbuffer=1;
-	mass=75000;
 	collisionVolumeType = box;
-	collisionVolumeScales =66 78 99;
-	collisionVolumeOffsets = 0 -15 0;
+	collisionVolumeScales =55 47 70;
+	collisionVolumeOffsets = 0 -25 0;
 	collisionVolumeTest = 1;
 	pieceTrailCEGTag=Debree;//bleh
 	pieceTrailCEGRange = 4;
@@ -129,10 +125,9 @@
 	//************************************************************
 	//  To be removed
 	//*****************
-
 	[SFXTypes]
 	{
-	explosiongenerator0=custom:berthaflare;
-	explosiongenerator1=custom:ButtSmoke;
+	explosiongenerator0=custom:UNITFIRE;
 	}
+
 }

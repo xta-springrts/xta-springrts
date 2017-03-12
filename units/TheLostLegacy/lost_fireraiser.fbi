@@ -82,7 +82,7 @@
 	//************************************************************
 	//  Weapons
 	//***********
-	Weapon1=Fireraiser_ROCKET;
+	Weapon1=LOSTKBOTO_ROCKET;
 	nochasecategory=VTOL;
 	badtargetcategory=VTOL;
 	wpri_badtargetcategory=VTOL;

@@ -3,44 +3,47 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	side=Core;
-	name=Repentance;
-	description=Harmonic Disintegrater;
+	side=talon;
+	name=Construction Ship;
+	description=Tech Level 1;
+	icontype=sea;
 
 	//************************************************************
 	//  Categories
 	//**************
-	Category=CORE TANK WEAPON NOTAIR NOTSUB;
-	tedclass=TANK;
+	category=talon SHIP CONSTR NOWEAPON NOTAIR NOTSUB;
+	tedclass=SHIP;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=talon_Repentance;
-	unitnumber=110;
-	objectname=talon_Repentance.3do;
-	corpse=talon_Repentance_dead;
-	buildpic=talon_Repentance.png;
-	soundcategory=CORE_TANK;
+	unitname=talon_construction_ship;
+	unitnumber=24;
+	objectname=talon_construction_ship.3do;
+	corpse=talon_construction_ship_dead;
+	buildpic=talon_construction_ship.DDS;
+	soundcategory=arm_CSHIP;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=30000;
-	healtime=30;
-	buildcostmetal=11654;
-	buildcostenergy=62560;
-	buildtime=137786;
-	footprintx=5;
-	footprintz=5;
+	maxdamage=711;
+	healtime=42;
+	buildcostmetal=168;
+	buildcostenergy=2030;
+	buildtime=3121;
+	footprintx=3;
+	footprintz=3;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energymake=0.5;
-	energyuse=0.5;
-	energystorage=800;
+	metalmake=0.2;
+	metalstorage=50;
+	energymake=6;
+	energyuse=0.1;
+	energystorage=50;
+	windgenerator=0.001;
 
 	//************************************************************
 	//  Building
@@ -49,54 +52,53 @@
 	//************************************************************
 	//  Constructor
 	//***************
-	builder=0;
-	workertime=0;
+	builder=1;
+	builddistance=275; //was 200//
+	workertime=125; //was 125//
+	RepairSpeed=150;
+	ReclaimSpeed=150;
+	TerraformSpeed=300;//speed up terraforming
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
 	canguard=1;
 	canmove=1;
 	canpatrol=1;
+	canreclamate=1;
 	canstop=1;
-
+	floater=1;
+	canFight=1;
+	
 	//************************************************************
 	//  Movement
 	//************
-	movementclass=TANKDTCRUSH; //TANKSH4//
-	turnrate=309;
-	acceleration=0.3;
-	brakerate=0.3;
-	maxvelocity=0.8;
-	maxslope=16;
-	maxwaterdepth=12;
+	movementclass=Smallboat;
+	turnrate=200;
+	acceleration=0.04;
+	brakerate=0.05;
+	maxvelocity=2.1;
+	minwaterdepth=15;
+	waterline=3.5;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=480;
+	sightdistance=436;
 	radardistance=0;
+	sonardistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
-	weapon1=CHURCH_LIGHTNING;
-	weapon3=TALON_BELLGATOR;
-	nochasecategory=VTOL;
-	badtargetcategory=VTOL;
-	wpri_badtargetcategory=VTOL;
-	explodeas=GIANT_BLAST;
-	selfdestructas=armmine5;
-	onlytargetcategory1=NOTAIR; //Added 8.2 By Gizmo
+	explodeas=NANO_UNITEX;
+	selfdestructas=NANO_UNIT;
 
 	//************************************************************
 	//  Orders
 	//**********
 	noautofire=0;
-	firestandorders=1;
 	mobilestandorders=1;
-	standingfireorder=2;
 	standingmoveorder=1;
 	defaultmissiontype=Standby;
 
@@ -104,35 +106,28 @@
 	//  Miscellaneous
 	//*****************
 	bmcode=1;
-	designation=PS20;
+	designation=talon-CS1;
 	downloadable=1;
-	leavetracks=1;
 	maneuverleashlength=640;
 	shootme=1;
 	steeringmode=1;
 	threed=1;
-	trackoffset=8;
-	trackstrength=10;
-	trackstretch=1;
-	tracktype=StdTank;
-	trackwidth=64;
 	version=1.2;
 	zbuffer=1;
-	mass=75000;
 	collisionVolumeType = box;
-	collisionVolumeScales =66 78 99;
-	collisionVolumeOffsets = 0 -15 0;
+	collisionVolumeScales =28 35 45;
+	collisionVolumeOffsets = 0 -10 0;
 	collisionVolumeTest = 1;
-	pieceTrailCEGTag=Debree;//bleh
-	pieceTrailCEGRange = 4;
+	pieceTrailCEGTag=NanoDebree;//bleh
+	pieceTrailCEGRange = 2;
 
 	//************************************************************
 	//  To be removed
 	//*****************
-
 	[SFXTypes]
 	{
-	explosiongenerator0=custom:berthaflare;
-	explosiongenerator1=custom:ButtSmoke;
+	explosiongenerator0=custom:Nano;
+	explosiongenerator1=custom:UNITFIRE;
 	}
+
 }

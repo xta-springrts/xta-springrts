@@ -1,4 +1,36 @@
 
+[TLLER_LIGHTLASER]
+{
+	name=Light Laser;
+	Weapontype=LaserCannon;
+	turret=1;
+	range=450;
+	reloadtime=1.2;
+	weaponvelocity=1250;
+	explosiongenerator=custom:Gator;
+	cegTag=REDCRAP;
+	tolerance=500;
+	//minbarrelangle=-40;
+	duration=0.06;
+	thickness=1.6;
+	Intensity=0.88;
+	energypershot=20;
+	areaofeffect=8;
+	soundtrigger=1;
+	soundstart=lasrfir3;
+	soundhitdry=lasrhit2;
+	firestarter=30;
+	tolerance=500;
+	[DAMAGE]
+	{
+		default=104;
+		group_ships=130;
+		group_large_ships=130;
+		group_landair=69;
+		group_skyair=69;
+		group_invincible=1;
+	}
+}
 [LAUNCH_FALCON_ROCKET]
 {
 	name=Rocket;

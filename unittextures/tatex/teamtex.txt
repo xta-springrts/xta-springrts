@@ -25,3 +25,7 @@ GoKColor4_100
 GoKGradient1_100
 GoKGradient2_100
 GoKGradient3_100
+
+race32Dk
+race32Lt
+raceLogoGouraud
