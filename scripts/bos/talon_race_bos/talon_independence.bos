@@ -1,0 +1,333 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+piece  base, fpmain, fp1boltland, fp2boltland, fp3boltland, fp4boltland, fp1boltair, fp2boltair, fp3boltair, fp4boltair;
+
+// Signal definitions
+#define SIG_AIM				2
+#define SIG_AIM2			4
+#define SIG_AIM3			8
+#define SIG_AIM4			16
+#define SIG_AIM5			32
+#define SIG_AIM6			64
+#define SIG_AIM7			128
+#define SIG_AIM8			256
+#define SIG_AIM9			512
+
+SetDirection(heading)
+{
+	var spd;
+	spd = get ABS(heading);
+	turn base to y-axis heading speed spd;
+	turn fpmain to y-axis 0-heading speed spd;
+}
+
+RockOnWaves()
+{
+	while(1)
+	{
+		turn base to x-axis <1.0> speed <1.5>;
+		move base to y-axis [0.0] speed [0.15];
+		wait-for-turn base around x-axis;
+		turn base to x-axis <-1.0> speed <1.5>;
+		move base to y-axis [-0.1] speed [0.15];
+		wait-for-move base along y-axis;
+		move base to y-axis [0.0] speed [0.15];
+		wait-for-turn base around x-axis;
+		turn base to x-axis <1.0> speed <1.5>;
+		move base to y-axis [-0.1] speed [0.15];
+		wait-for-move base along y-axis;
+	}
+}
+
+
+Create()
+{
+	hide fpmain;
+	start-script RockOnWaves();
+}
+
+AimPrimary(heading, pitch)
+{
+	signal SIG_AIM;
+	set-signal-mask SIG_AIM;
+	turn fpmain to y-axis heading speed <300.071429>;
+	turn fpmain to x-axis <0.000000> - pitch speed <200.038462>;
+	wait-for-turn fpmain around y-axis;
+	wait-for-turn fpmain around x-axis;
+	return (1);
+}
+
+FirePrimary()
+{
+	//emit-sfx UNIT_SFX1 from fp1;
+}
+
+AimFromPrimary(piecenum)
+{
+	piecenum = fpmain;
+}
+
+QueryPrimary(piecenum)
+{
+	piecenum = fpmain;
+}
+////////////////////////////
+////////////////////////////
+
+
+AimWeapon2(heading, pitch)
+{
+	signal SIG_AIM2;
+	set-signal-mask SIG_AIM2;
+	turn fp4boltland to y-axis heading speed <300.071429>;
+	turn fp4boltland to x-axis <0.000000> - pitch speed <200.038462>;
+	wait-for-turn fp4boltland around y-axis;
+	wait-for-turn fp4boltland around x-axis;
+	return (1);
+}
+
+FireWeapon2()
+{
+	//emit-sfx UNIT_SFX1 from fp1;
+}
+
+AimFromWeapon2(piecenum)
+{
+	piecenum = fp4boltland;
+}
+
+QueryWeapon2(piecenum)
+{
+	piecenum = fp4boltland;
+}
+////////////////////////////
+////////////////////////////
+
+
+AimWeapon3(heading, pitch)
+{
+	signal SIG_AIM3;
+	set-signal-mask SIG_AIM3;
+	turn fp3boltland to y-axis heading speed <300.071429>;
+	turn fp3boltland to x-axis <0.000000> - pitch speed <200.038462>;
+	wait-for-turn fp3boltland around y-axis;
+	wait-for-turn fp3boltland around x-axis;
+	return (1);
+}
+
+FireWeapon3()
+{
+	//emit-sfx UNIT_SFX1 from fp1;
+}
+
+AimFromWeapon3(piecenum)
+{
+	piecenum = fp3boltland;
+}
+
+QueryWeapon3(piecenum)
+{
+	piecenum = fp3boltland;
+}
+////////////////////////////
+////////////////////////////
+
+
+AimWeapon4(heading, pitch)
+{
+	signal SIG_AIM4;
+	set-signal-mask SIG_AIM4;
+	turn fp2boltland to y-axis heading speed <300.071429>;
+	turn fp2boltland to x-axis <0.000000> - pitch speed <200.038462>;
+	wait-for-turn fp2boltland around y-axis;
+	wait-for-turn fp2boltland around x-axis;
+	return (1);
+}
+
+FireWeapon4()
+{
+	//emit-sfx UNIT_SFX1 from fp1;
+}
+
+AimFromWeapon4(piecenum)
+{
+	piecenum = fp2boltland;
+}
+
+QueryWeapon4(piecenum)
+{
+	piecenum = fp2boltland;
+}
+////////////////////////////
+////////////////////////////
+
+
+AimWeapon5(heading, pitch)
+{
+	signal SIG_AIM5;
+	set-signal-mask SIG_AIM5;
+	turn fp1boltland to y-axis heading speed <300.071429>;
+	turn fp1boltland to x-axis <0.000000> - pitch speed <200.038462>;
+	wait-for-turn fp1boltland around y-axis;
+	wait-for-turn fp1boltland around x-axis;
+	return (1);
+}
+
+FireWeapon5()
+{
+	//emit-sfx UNIT_SFX1 from fp1;
+}
+
+AimFromWeapon5(piecenum)
+{
+	piecenum = fp1boltland;
+}
+
+QueryWeapon5(piecenum)
+{
+	piecenum = fp1boltland;
+}
+////////////////////////////////////////////
+////////////////////////////
+////////////////////////////////////////////
+
+////////////////////////////
+////////////////////////////
+
+
+AimWeapon6(heading, pitch)
+{
+	signal SIG_AIM6;
+	set-signal-mask SIG_AIM6;
+	turn fp4boltair to y-axis heading speed <300.071429>;
+	turn fp4boltair to x-axis <0.000000> - pitch speed <200.038462>;
+	wait-for-turn fp4boltair around y-axis;
+	wait-for-turn fp4boltair around x-axis;
+	return (1);
+}
+
+FireWeapon6()
+{
+	//emit-sfx UNIT_SFX1 from fp1;
+}
+
+AimFromWeapon6(piecenum)
+{
+	piecenum = fp4boltair;
+}
+
+QueryWeapon6(piecenum)
+{
+	piecenum = fp4boltair;
+}
+////////////////////////////
+////////////////////////////
+
+
+AimWeapon7(heading, pitch)
+{
+	signal SIG_AIM7;
+	set-signal-mask SIG_AIM7;
+	turn fp3boltair to y-axis heading speed <300.071429>;
+	turn fp3boltair to x-axis <0.000000> - pitch speed <200.038462>;
+	wait-for-turn fp3boltair around y-axis;
+	wait-for-turn fp3boltair around x-axis;
+	return (1);
+}
+
+FireWeapon7()
+{
+	//emit-sfx UNIT_SFX1 from fp1;
+}
+
+AimFromWeapon7(piecenum)
+{
+	piecenum = fp3boltair;
+}
+
+QueryWeapon7(piecenum)
+{
+	piecenum = fp3boltair;
+}
+////////////////////////////
+////////////////////////////
+
+
+AimWeapon8(heading, pitch)
+{
+	signal SIG_AIM8;
+	set-signal-mask SIG_AIM8;
+	turn fp2boltair to y-axis heading speed <300.071429>;
+	turn fp2boltair to x-axis <0.000000> - pitch speed <200.038462>;
+	wait-for-turn fp2boltair around y-axis;
+	wait-for-turn fp2boltair around x-axis;
+	return (1);
+}
+
+FireWeapon8()
+{
+	//emit-sfx UNIT_SFX1 from fp1;
+}
+
+AimFromWeapon8(piecenum)
+{
+	piecenum = fp2boltair;
+}
+
+QueryWeapon8(piecenum)
+{
+	piecenum = fp2boltair;
+}
+////////////////////////////
+////////////////////////////
+
+
+AimWeapon9(heading, pitch)
+{
+	signal SIG_AIM9;
+	set-signal-mask SIG_AIM9;
+	turn fp1boltair to y-axis heading speed <300.071429>;
+	turn fp1boltair to x-axis <0.000000> - pitch speed <200.038462>;
+	wait-for-turn fp1boltair around y-axis;
+	wait-for-turn fp1boltair around x-axis;
+	return (1);
+}
+
+FireWeapon9()
+{
+	//emit-sfx UNIT_SFX1 from fp1;
+}
+
+AimFromWeapon9(piecenum)
+{
+	piecenum = fp1boltair;
+}
+
+QueryWeapon9(piecenum)
+{
+	piecenum = fp1boltair;
+}
+
+SweetSpot(piecenum)
+{
+	piecenum = base;
+}
+
+Killed(severity, corpsetype)
+{
+	if( severity <= 25 )
+	{
+		return (0);
+	}
+	if( severity <= 50 )
+	{
+		return (0);
+	}
+	if( severity <= 99 )
+	{
+		return (0);
+	}
+}

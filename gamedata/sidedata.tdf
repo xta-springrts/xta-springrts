@@ -4339,12 +4339,12 @@
 		canbuild2=lost_exxec;
 		canbuild3=lost_marion;
 		canbuild4=lost_bagger;
-		canbuild5=lost_watch_tower;
+		//canbuild5=lost_watch_tower;
 		//canbuild6=lost_watch_tower;//jumping flame tower
-		canbuild7=lost_fascist;
+		//canbuild7=lost_fascist;
 		canbuild8=lost_falcon_heavy_new;
-		canbuild9=lost_authoritarian;
-		canbuild10=lost_totalitarian;
+		//canbuild9=lost_authoritarian;
+		//canbuild10=lost_totalitarian;
 	}
 
 	[lost_construction_fortress]
@@ -4379,7 +4379,11 @@
 		canbuild28=lost_air_repair_pad;
 		canbuild29=lost_peacemaker;
 		canbuild30=lost_nano_tower;
-		canbuild31=lost_marion;
+		canbuild31=lost_watch_tower;
+		//canbuild6=lost_watch_tower;//jumping flame tower
+		canbuild32=lost_fascist;
+		canbuild33=lost_authoritarian;
+		canbuild34=lost_totalitarian;
 
 	}
 	[lost_construction_seaplane]
@@ -4442,7 +4446,7 @@
 		//canbuild5=armpur;//xtaids
 		canbuild6=talon_eclipse;
 		canbuild7=talon_dart;
-		canbuild8=talon_wyvern;//sea stuff below
+		canbuild8=talon_rukh;//sea stuff below
 		canbuild9=talon_trident;
 		canbuild10=talon_corsair;
 		canbuild11=talon_vigilante;
@@ -4921,6 +4925,38 @@
 		//canbuild43=arm_repulsor;
 		canbuild44=talon_nano_tower;
 	}
+
+	[talon_construction_ship]
+	{
+		canbuild1=talon_adv_shipyard;
+		canbuild2=talon_torpedo_launcher;
+		canbuild3=talon_tidal_generator;
+		canbuild4=talon_sonar_station;
+		//canbuild5=arm_floating_radar;
+		canbuild6=talon_light_laser_tower;
+		//canbuild7=arm_floating_light_laser_tower;
+		canbuild8=talon_shipyard;
+		//canbuild9=talon_sub_pen;
+		//canbuild10=arm_sentry;
+		canbuild11=talon_underwater_energy_storage;
+		canbuild12=talon_underwater_metal_maker;
+		canbuild13=talon_underwater_metal_storage;
+		canbuild14=talon_Kerberos;
+		canbuild15=talon_underwater_metal_extractor;
+		canbuild16=talon_floating_dragons_teeth;
+		canbuild17=talon_kbot_lab;
+		canbuild18=talon_vehicle_plant;
+		canbuild19=talon_hovercraft_platform;
+		canbuild20=talon_aircraft_plant;
+		canbuild21=talon_dragons_teeth;
+		canbuild22=talon_seaplane_platform;
+		canbuild23=talon_adv_vehicle_plant;
+		canbuild24=talon_adv_kbot_lab;
+		canbuild25=talon_adv_aircraft_plant;
+		canbuild26=talon_geothermal_powerplant;
+		canbuild27=talon_nano_tower;
+	}
+
 	[talon_construction_vehicle]
 	{
 		canbuild1=talon_solar_collector;
@@ -5022,8 +5058,18 @@
 		canbuild9=talon_vigilante;
 		canbuild10=talon_wyvern;
 	}
-		
 
+	[talon_shipyard]
+	{
+		canbuild1=talon_construction_ship;
+		canbuild2=talon_charon;
+		canbuild3=talon_vasculitis;
+		canbuild4=talon_mainstay;
+		canbuild5=talon_bishop;
+		canbuild6=talon_kraken;
+	}
+
+		
 	[talon_STC]
 	{
 		canbuild1=talon_adv_construction_aircraft;

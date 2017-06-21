@@ -232,7 +232,7 @@
 	turret=1;
 	TargetBorder=1;
 	range=500;
-	reloadtime=10.0;
+	reloadtime=20.0;
 	stockpile=1;
 	stockpiletime=30;
 	weapontimer=4;
@@ -627,7 +627,7 @@
 	beamtime=0.5;
 	beamttl=5;
 	range=1500;
-	reloadtime=6;
+	reloadtime=5;
 	energypershot=800;
 	weaponvelocity=1000;
 	areaofeffect=16;
@@ -644,8 +644,8 @@
 	thickness=3.5;
 	[DAMAGE]
 	{
-		default=2000;
-		group_commanders=1020;
+		default=2200;
+		group_commanders=1120;
 		group_invincible=1;
 	}
 }

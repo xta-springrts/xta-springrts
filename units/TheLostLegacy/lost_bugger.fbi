@@ -5,7 +5,7 @@
 	//********************
 	side=Lost;
 	name=Bugger;
-	description=Stealthy Explosive Scout;
+	description=Paralyzer Explosive Scout;
 
 	//************************************************************
 	//  Categories
@@ -26,7 +26,7 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=522; // was 645
+	maxdamage=562; // was 645
 	healtime=30;
 	buildcostmetal=94; //was 99(5%)//was 88
 	buildcostenergy=1186;
@@ -67,9 +67,9 @@
 	//************
 	movementclass=CRAWLBOMB;
 	turnrate=1210; // was 1100
-	acceleration=0.915527;
-	brakerate=1.83105;
-	maxvelocity=1.95; // was 1.72
+	acceleration=1.415527;
+	brakerate=1.23105;
+	maxvelocity=2.1; // was 1.72
 	maxslope=17;
 	maxwaterdepth=25;
 
@@ -91,7 +91,7 @@
 	//************************************************************
 	//  Weapons
 	//***********
-	Weapon1=Bugger_LASER;
+	Weapon1=Bugger_Lightning;
 	explodeas=DECOY_COMMANDER_BLAST;
 	selfdestructas=DECOY_BLAST;
 
@@ -118,9 +118,9 @@
 	threed=1;
 	version=1.2;
 	zbuffer=1;
-	Stealth=1;
-	sonarStealth=1;
-	MinCollisionSpeed=10;//weight
+	//Stealth=1;
+	//sonarStealth=1;
+	MinCollisionSpeed=15;//weight
 	collisionVolumeType = box;
 	collisionVolumeScales =12 10 12;
 	collisionVolumeOffsets = 0 0 0;

@@ -27,8 +27,8 @@
 	SoundCategory=Skycruiser;
 	EnergyStorage=10000;
 	MetalStorage=10000;
-	explodeas=GIANT_BLAST;
-	selfdestructas=GIANT_BLAST;
+	explodeas=armmine5;
+	selfdestructas=armmine5;
 	Category=CORE VTOL WEAPON NOTSUB;
 	TEDClass=VTOL;
 	Copyright=Copyright 1997 Humongous Entertainment. All rights reserved.;

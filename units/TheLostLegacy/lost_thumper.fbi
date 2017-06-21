@@ -4,14 +4,14 @@
 	UnitName=Lost_thumper;
 	
 	//    Required Tags
-	BuildCostEnergy=13345;
-	BuildCostMetal=1557;
-	BuildTime=27280;
+	BuildCostEnergy=11345;
+	BuildCostMetal=1487;
+	BuildTime=24280;
 	Category=LOST TANK LEVEL3 WEAPON NOTAIR NOTSUB CTRL_W;
 	Description=Armoured Anti-Armor Tank;
 	FootprintX=4;
 	FootprintZ=4;
-	MaxDamage=8754;
+	MaxDamage=8854;
 	ObjectName=Lost_thumper;
 	Side=TLL;
 	SoundCategory=CORE_TANK;

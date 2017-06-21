@@ -158,6 +158,7 @@
 	talon_eclipse=99;
 	talon_vulture=99;
 	talon_dart=99;
+	talon_rukh=99;
 }
 
 [group_mines]
@@ -232,6 +233,13 @@
 	guardian_ravager=99;
 	guardian_paladin=99;
 	guardian_vigilant=99;
+	//talon
+	talon_charon=99;
+	talon_mainstay=99;
+	talon_bishop=99;
+	talon_construction_ship=99;
+	talon_vasculitis=99;
+
 }
 [group_large_ships]
 {
@@ -295,6 +303,8 @@
 	//guardians
 	guardian_construction_sub=99;
 	guardian_abyss_knight=99;
+	//talon
+	talon_kraken=99;
 }
 
 [group_subskillers]

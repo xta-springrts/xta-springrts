@@ -6,7 +6,7 @@
 	buildcostmetal=274;
 	buildtime=5624;//2312
 	category=Lost  CONSTR NOWEAPON NOTAIR NOTSUB;
-	description=Long-Range Missile Tower;
+	description=Transportable Missile Tower;
 	footprintx=3;
 	footprintz=3;
 	maxdamage=1543;

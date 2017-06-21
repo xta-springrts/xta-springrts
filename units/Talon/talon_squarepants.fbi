@@ -26,9 +26,9 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=5044;
+	maxdamage=5844;
 	healtime=30;
-	buildcostmetal=785;
+	buildcostmetal=885;
 	buildcostenergy=7133;
 	buildtime=10112;
 	footprintx=3;
@@ -83,7 +83,7 @@
 	//  Weapons
 	//***********
 	weapon1=Square_RAPIDCANNON;
-	weapon3=ARM_TORPEDO;
+	weapon3=COAX_TORPEDO;
 	nochasecategory=VTOL;
 	badtargetcategory=VTOL;
 	wpri_badtargetcategory=VTOL;

@@ -3,48 +3,52 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	side=Core;
-	name=Repentance;
-	description=Harmonic Disintegrater;
+	side=Arm;
+	name=Mainstay;
+	description=Coastal Patrol Boat;
+	icontype=sea;
 
 	//************************************************************
 	//  Categories
 	//**************
-	Category=CORE TANK WEAPON NOTAIR NOTSUB;
-	tedclass=TANK;
+	category=ARM SHIP MOBILE WEAPON NOTLAND NOTAIR NOTSUB;
+	tedclass=SHIP;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=talon_Repentance;
-	unitnumber=110;
-	objectname=talon_Repentance.3do;
-	corpse=talon_Repentance_dead;
-	buildpic=talon_Repentance.png;
-	soundcategory=CORE_TANK;
+	unitname=talon_mainstay;
+	unitnumber=59;
+	objectname=talon_mainstay.3do;
+	corpse=talon_mainstay_dead;
+	buildpic=talon_mainstay.DDS;
+	soundcategory=ARM_SHIP;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=30000;
+	maxdamage=2903;
 	healtime=30;
-	buildcostmetal=11654;
-	buildcostenergy=62560;
-	buildtime=137786;
-	footprintx=5;
-	footprintz=5;
+	buildcostmetal=898;// 981 in p1.7 //765 in 9.725 //was 1197// -- OTA: 898
+	buildcostenergy=4537; //4425 in 9.725 // -- OTA: 4537
+	buildtime=13391; //8453; // -- OTA:  13391
+	footprintx=4;
+	footprintz=4;
 
 	//************************************************************
 	//  Resources
 	//*************
 	metalstorage=0;
-	energymake=0.5;
-	energyuse=0.5;
-	energystorage=800;
+	energymake=2;
+	energyuse=2;
+	energystorage=0;
+	windgenerator=0.001;
 
 	//************************************************************
 	//  Building
 	//************
+	buildangle=16384;
+	activatewhenbuilt=1;
 
 	//************************************************************
 	//  Constructor
@@ -60,35 +64,38 @@
 	canmove=1;
 	canpatrol=1;
 	canstop=1;
+	floater=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	movementclass=TANKDTCRUSH; //TANKSH4//
-	turnrate=309;
-	acceleration=0.3;
-	brakerate=0.3;
-	maxvelocity=0.8;
-	maxslope=16;
-	maxwaterdepth=12;
+	movementclass=Smallboat;
+	turnrate=343;
+	acceleration=0.08;
+	brakerate=0.09;
+	maxvelocity=2.9;
+	minwaterdepth=12;
+	waterline=4.99;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=480;
+	sightdistance=555; //was 495//
 	radardistance=0;
+	sonardistance=350; //was 485//
+	losemitheight=32;
+	radaremitheight=32;
 
 	//************************************************************
 	//  Weapons
 	//***********
-	weapon1=CHURCH_LIGHTNING;
-	weapon3=TALON_BELLGATOR;
-	nochasecategory=VTOL;
-	badtargetcategory=VTOL;
+	weapon1=ARM_ROY;
+	weapon3=ARMDEPTHCHARGE;
 	wpri_badtargetcategory=VTOL;
-	explodeas=GIANT_BLAST;
-	selfdestructas=armmine5;
-	onlytargetcategory1=NOTAIR; //Added 8.2 By Gizmo
+	wspe_badtargetcategory=NOTSUB;
+	explodeas=BIG_UNITEX;
+	selfdestructas=BIG_UNIT;
+	onlytargetcategory3=NOTAIR;
 
 	//************************************************************
 	//  Orders
@@ -104,23 +111,17 @@
 	//  Miscellaneous
 	//*****************
 	bmcode=1;
-	designation=PS20;
+	designation=ASD-SD;
 	downloadable=1;
-	leavetracks=1;
 	maneuverleashlength=640;
+	scale=0.5;
 	shootme=1;
 	steeringmode=1;
 	threed=1;
-	trackoffset=8;
-	trackstrength=10;
-	trackstretch=1;
-	tracktype=StdTank;
-	trackwidth=64;
 	version=1.2;
 	zbuffer=1;
-	mass=75000;
 	collisionVolumeType = box;
-	collisionVolumeScales =66 78 99;
+	collisionVolumeScales =30 35 60;
 	collisionVolumeOffsets = 0 -15 0;
 	collisionVolumeTest = 1;
 	pieceTrailCEGTag=Debree;//bleh
@@ -132,7 +133,7 @@
 
 	[SFXTypes]
 	{
-	explosiongenerator0=custom:berthaflare;
-	explosiongenerator1=custom:ButtSmoke;
+	explosiongenerator0=custom:POPUPFLARE;
+	explosiongenerator1=custom:UNITFIRE;
 	}
 }
