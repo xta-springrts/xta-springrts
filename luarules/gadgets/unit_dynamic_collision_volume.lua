@@ -92,8 +92,7 @@ if (gadgetHandler:IsSyncedCode()) then
 				end
 			end
 		end
-		local version = Game.version
-		startIndex = version > "100" and version:sub(1,1) == "1" and 1 or 0
+		startIndex = Script.IsEngineMinVersion(101) and 1 or 0
 	end
 
 	

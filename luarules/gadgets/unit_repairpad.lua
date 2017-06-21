@@ -61,8 +61,9 @@ local refuelCmdDesc = {
 --------------------------------------------------------------------------------
 function gadget:Initialize()
 
-	local version = Game.version
-	if not(version > "100" and version:sub(1,1) == "1") then
+	Spring.Echo("Min version:",)
+	if not(Script.IsEngineMinVersion(101)) then
+		Spring.Echo("Repair Pad: not supported with this engine, removing gadget")
 		gadgetHandler:RemoveGadget()
 		return
 	end

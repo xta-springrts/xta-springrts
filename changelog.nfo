@@ -53,7 +53,7 @@ Changes:
 
 Enhancements:
 Fixes:
-
+* Make some gadgets compatible with changed engine nomenclature (compatibility for later engine 103)
 
 XTA 9.752 (Git 1055)
 |jls,nor
