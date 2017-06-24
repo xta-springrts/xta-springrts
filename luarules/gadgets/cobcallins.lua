@@ -26,7 +26,7 @@ if gadgetHandler:IsSyncedCode() then
 	local CMD_WAIT			= CMD.WAIT
 	
 	local gunships		= {}
-	local spring101 = (Game.version > "100" and Game.version:sub(1,1) == "1")
+	local spring101 = Script.IsEngineMinVersion(101)
 		
 	function gadget:Initialize()	
 		gadgetHandler:RegisterGlobal("UnitStoppedMoving", UnitStoppedMoving)
