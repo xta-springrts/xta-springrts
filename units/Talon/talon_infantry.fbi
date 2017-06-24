@@ -45,6 +45,7 @@
 	//************************************************************
 	//  Building
 	//************
+	showNanoFrame=1;
 
 	//************************************************************
 	//  Constructor
@@ -112,16 +113,17 @@
 	version=1.2;
 	zbuffer=1;
 	collisionVolumeType = box;
-	collisionVolumeScales =15 15 15;
+	collisionVolumeScales =14 15 14;
 	collisionVolumeOffsets = 0 -1 0;
 	collisionVolumeTest = 1;
 	pieceTrailCEGTag=Debree;//bleh
 	pieceTrailCEGRange = 4;
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:redflare;
+	explosiongenerator0=custom:Nano;
+	explosiongenerator1=custom:NanoDebree1;//ONESPARK
+	explosiongenerator2=custom:NanoDebree1;//ONESPARK
 	}
-
 	//************************************************************
 	//  To be removed
 	//*****************

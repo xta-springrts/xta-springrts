@@ -21,16 +21,16 @@
 	unitnumber=54;
 	objectname=talon_charon.3do;
 	corpse=talon_charon_dead;
-	buildpic=talon_charon.DDS;
+	buildpic=talon_charon.png;
 	soundcategory=ARM_SHIP;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=489; //was 821//
+	maxdamage=500; //was 821//
 	healtime=30;
-	buildcostmetal=105;
-	buildcostenergy=562;
+	buildcostmetal=111;
+	buildcostenergy=600;
 	buildtime=1532;
 	footprintx=2;
 	footprintz=2;
@@ -75,7 +75,7 @@
 	turnrate=511;
 	acceleration=0.2;
 	brakerate=0.23;
-	maxvelocity=3.4;//3.8
+	maxvelocity=3.2;//3.8
 	minwaterdepth=6;
 	waterline=2.6;
 

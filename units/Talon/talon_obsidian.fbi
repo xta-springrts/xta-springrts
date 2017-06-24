@@ -31,9 +31,9 @@
 	//onoffable=1;
 	digger=1;
 	healtime=30;
-	buildcostmetal=286; //165
-	buildcostenergy=3564; //1246
-	buildtime=6504;
+	buildcostmetal=276; //165
+	buildcostenergy=2264; //1246
+	buildtime=3404;
 	footprintx=2;
 	footprintz=2;
 

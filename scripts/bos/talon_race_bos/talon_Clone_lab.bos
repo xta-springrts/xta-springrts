@@ -3,9 +3,9 @@
 #include "sfxtype.h"
 #include "exptype.h"
 
-piece  GP, base, nano, tank;
+piece  GP, base, nano, tank, emit;
 
-static-var  Static_Var_1, Static_Var_2, statechg_DesiredState, statechg_StateChanging;
+static-var  Static_Var_1, Static_Var_2, statechg_DesiredState, statechg_StateChanging, buildlight;
 
 // Signal definitions
 #define SIG_ACTIVATE			2
@@ -15,10 +15,11 @@ activatescr()
 	if( TRUE )
 	{
 		dont-cache nano;
-		spin nano around y-axis speed <100>;
+		//spin nano around y-axis speed <100>;
 		move tank to y-axis [-12] speed [4];
 		wait-for-move tank along y-axis;
 		set ARMORED to 0;
+	buildlight = 1;
 		sleep 300;
 	}
 }
@@ -29,9 +30,10 @@ deactivatescr()
 	{
 		move tank to y-axis [0] speed [4];
 		wait-for-move tank along y-axis;
-		stop-spin nano around y-axis;
+		//stop-spin nano around y-axis;
 		cache nano;
 		set ARMORED to 1;
+	buildlight = 0;
 		sleep 300;
 	}
 }
@@ -61,6 +63,46 @@ SmokeUnit(healthpercent, sleeptime, smoketype)
 		}
 		sleep sleeptime;
 	}
+}
+
+UpDownNano()
+{
+
+	if( buildlight == 0 )
+	{
+	move emit to y-axis [5] speed [3];
+	wait-for-move emit along y-axis;
+	move emit to y-axis [-2] speed [3];
+	wait-for-move emit along y-axis;
+	start-script UpDownNano();
+	}
+	
+	if( buildlight == 1 )
+	{
+	move emit to y-axis [0] speed [10];
+	wait-for-move emit along y-axis;
+	sleep 150;
+	start-script UpDownNano();
+	}
+	
+}
+
+Standby()
+{
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 100;
+	}
+	if( buildlight == 0 )
+	{
+		emit-sfx 1024 + 1 from emit;
+	}
+	if( buildlight == 1 )
+	{
+		emit-sfx 1024 + 0 from emit;
+	}
+		sleep 50;
+	start-script Standby();
 }
 
 OpenYard()
@@ -137,12 +179,16 @@ RequestState(requestedstate, currentstate)
 Create()
 {
 	Static_Var_1 = 1;
+	buildlight = 0;
 	call-script InitState();
 	start-script SmokeUnit();
+	hide tank;
 	while( get BUILD_PERCENT_LEFT )
 	{
 		sleep 1000;
 	}
+	start-script Standby();
+	start-script UpDownNano();
 }
 
 QueryNanoPiece(piecenum)

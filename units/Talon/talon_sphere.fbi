@@ -44,6 +44,7 @@
 	//************************************************************
 	//  Building
 	//************
+	showNanoFrame=1;
 
 	//************************************************************
 	//  Constructor
@@ -120,6 +121,12 @@
 	collisionVolumeTest = 1;
 	pieceTrailCEGTag=Debree;//bleh
 	pieceTrailCEGRange = 4;
+	[SFXTypes]
+	{
+	explosiongenerator0=custom:Nano;
+	explosiongenerator1=custom:NanoDebree1;//ONESPARK
+	explosiongenerator2=custom:NanoDebree1;//ONESPARK
+	}
 
 	//************************************************************
 	//  To be removed

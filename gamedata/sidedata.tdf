@@ -4615,13 +4615,13 @@
 
 	[talon_clone_lab]
 	{
-		canbuild1=talon_medic;
+		canbuild1=talon_psyker;
 		canbuild2=talon_biker;
 		canbuild3=talon_sniper;
 		canbuild4=talon_infantry; 
 		canbuild5=talon_mercenary;
 		canbuild6=talon_sphere;
-		canbuild7=talon_psyker;
+		//canbuild7=talon_medic;
 	}
 	[talon_commander]
 	{
@@ -5022,6 +5022,30 @@
 
 	[talon_medic]
 	{
+		//canbuild1=talon_solar_collector;
+		//canbuild2=talon_wind_generator;
+		//canbuild3=talon_energy_storage;
+		//canbuild4=talon_metal_storage;
+		//canbuild5=talon_metal_extractor;
+		//canbuild6=talon_metal_maker;
+		//canbuild7=talon_clone_lab;
+		//canbuild8=talon_vehicle_plant;
+		//canbuild9=talon_aircraft_plant;
+		//canbuild10=talon_shipyard;
+		//canbuild11=talon_hovercraft_platform;
+		//canbuild12=talon_light_laser_tower;
+		//canbuild13=talon_radar_tower;
+		canbuild14=talon_dragons_teeth;
+		//canbuild15=talon_sentry;
+		canbuild16=talon_Barada_mine;
+		canbuild17=talon_Klaatu_mine;
+		canbuild18=talon_Nikto_mine;
+		//canbuild19=talon_nano_tower;
+		//canbuild20=talon_xbot_box;
+	}
+
+	[talon_psyker]
+	{
 		canbuild1=talon_solar_collector;
 		canbuild2=talon_wind_generator;
 		canbuild3=talon_energy_storage;
@@ -5037,9 +5061,9 @@
 		canbuild13=talon_radar_tower;
 		canbuild14=talon_dragons_teeth;
 		canbuild15=talon_sentry;
-		canbuild16=talon_Barada_mine;
-		canbuild17=talon_Klaatu_mine;
-		canbuild18=talon_Nikto_mine;
+		//canbuild16=talon_Barada_mine;
+		//canbuild17=talon_Klaatu_mine;
+		//canbuild18=talon_Nikto_mine;
 		canbuild19=talon_nano_tower;
 		canbuild20=talon_xbot_box;
 	}

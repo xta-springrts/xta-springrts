@@ -5,7 +5,7 @@
 	//********************
 	side=Core;
 	name=Seer;//Psyker
-	description=Watch Unit;
+	description=Basic Builder/Resurrection Unit;
 
 	//************************************************************
 	//  Categories
@@ -26,21 +26,22 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=565; // was 645
+	maxdamage=375; // was 645
 	healtime=30;
-	buildcostmetal=45; //was 99(5%)//was 88
-	buildcostenergy=700;
-	buildtime=1400;
+	buildcostmetal=60; //was 99(5%)//was 88
+	buildcostenergy=1200;
+	buildtime=2200;
 	footprintx=1;
 	footprintz=1;
 
 	//************************************************************
 	//  Resources
-	//*************
-	metalstorage=0;
-	energymake=0.3;
-	energyuse=0.3;
-	energystorage=0;
+
+	metalmake=0.05;//0.2
+	metalstorage=50;
+	energymake=4;//11
+	energyuse=2;
+	energystorage=50;
 
 	//************************************************************
 	//  Building
@@ -49,8 +50,15 @@
 	//************************************************************
 	//  Constructor
 	//***************
-	builder=0;
-	workertime=0;
+	builder=1;
+	builddistance=80;
+	workertime=50;
+	RepairSpeed=50;
+	ReclaimSpeed=50;
+	ResurrectSpeed=75;//max rez speed
+	TerraformSpeed=125;//speed up terraforming
+	showNanoSpray=0;
+	showNanoFrame=1;
 
 	//************************************************************
 	//  Abilities
@@ -61,6 +69,7 @@
 	canpatrol=1;
 	canstop=1;
 	upright=1;
+	canresurrect=1;
 
 	//************************************************************
 	//  Movement
@@ -69,22 +78,22 @@
 	turnrate=1210; // was 1100
 	acceleration=0.915527;
 	brakerate=1.83105;
-	maxvelocity=0.7; // was 1.72
+	maxvelocity=0.95; // was 1.72
 	maxslope=17;
 	maxwaterdepth=25;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=712.5;
+	sightdistance=412.5;
 	radardistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
 	//weapon1=AK_LASER;
-	//explodeas=SMALL_UNITEX;
-	//selfdestructas=SMALL_UNIT;
+	explodeas=NANO_UNITEX;
+	selfdestructas=NANO_UNIT;
 
 	//************************************************************
 	//  Orders
@@ -113,11 +122,13 @@
 	collisionVolumeScales =12 16 12;
 	collisionVolumeOffsets = 0 -1 0;
 	collisionVolumeTest = 1;
-	pieceTrailCEGTag=Debree;//bleh
-	pieceTrailCEGRange = 4;
+	pieceTrailCEGTag=NanoDebree;//bleh
+	pieceTrailCEGRange = 2;
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:redflare;
+	explosiongenerator0=custom:Nano;
+	explosiongenerator1=custom:WANDGLOW;//ONESPARK
+	explosiongenerator2=custom:WANDGLOW;//ONESPARK
 	}
 
 	//************************************************************

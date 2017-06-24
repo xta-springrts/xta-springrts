@@ -31,7 +31,7 @@
 	healtime=30;
 	buildcostmetal=765;
 	buildcostenergy=1277;
-	buildtime=9520;
+	buildtime=6720;
 	FootprintX=6;
 	FootprintZ=5;
 

@@ -6,7 +6,7 @@
 piece  base, torso, Hip, LegUL, LegUR, LegLR, LegLL, ArmUL, ArmUR, Head, ArmLR, HandR, rotate, sweet-spot, 
        ArmLL, HandL, Staff, fp;
        
-static-var bMoving, /*delay*/aimings /*psyking*/;
+static-var bMoving, /*delay*/aimings /*psyking*/, statechg_DesiredState, statechg_StateChanging, Static_Var_1, bWaving, Spaz;
 
 StartMoving()
 {
@@ -31,7 +31,7 @@ StartMoving()
 		turn ArmLR to x-axis <-82.637363> speed <200>;
 		turn HandR to x-axis <0.703297> speed <200>;
 		turn ArmLL to x-axis <-10.901099> speed <200>;
-		sleep 96;
+		sleep 48;
 		move Hip to y-axis [-0.175000] speed [200];
 		turn Hip to y-axis <1.000000> speed <200>;
 		turn Hip to z-axis <-3.000000> speed <200>;
@@ -53,7 +53,7 @@ StartMoving()
 		turn ArmLR to x-axis <-84.038462> speed <200>;
 		turn HandR to x-axis <3.164835> speed <200>;
 		turn ArmLL to x-axis <-20.219780> speed <200>;
-		sleep 108;
+		sleep 54;
 		move Hip to y-axis [-0.262500] speed [200];
 		turn Hip to y-axis <3.000000> speed <200>;
 		turn Hip to z-axis <-1.000000> speed <200>;
@@ -75,7 +75,7 @@ StartMoving()
 		turn ArmLR to x-axis <-84.741758> speed <200>;
 		turn HandR to x-axis <4.390110> speed <200>;
 		turn ArmLL to x-axis <-24.879121> speed <200>;
-		sleep 119;
+		sleep 59;
 		move Hip to y-axis [-0.350000] speed [200];
 		turn Hip to y-axis <5.000000> speed <200>;
 		turn Hip to z-axis <0.000000> speed <200>;
@@ -96,7 +96,7 @@ StartMoving()
 		turn ArmLR to x-axis <-85.445055> speed <200>;
 		turn HandR to x-axis <5.626374> speed <200>;
 		turn ArmLL to x-axis <-29.538462> speed <200>;
-		sleep 119;
+		sleep 59;
 		move Hip to y-axis [-0.262500] speed [200];
 		turn Hip to y-axis <3.000000> speed <200>;
 		turn Hip to z-axis <1.000000> speed <200>;
@@ -117,7 +117,7 @@ StartMoving()
 		turn ArmLR to x-axis <-87.818681> speed <200>;
 		turn HandR to x-axis <7.560440> speed <200>;
 		turn ArmLL to x-axis <-23.208791> speed <200>;
-		sleep 121;
+		sleep 60;
 		move Hip to y-axis [-0.175000] speed [200];
 		turn Hip to y-axis <1.000000> speed <200>;
 		turn Hip to z-axis <3.000000> speed <200>;
@@ -138,7 +138,7 @@ StartMoving()
 		turn ArmLR to x-axis <-90.192308> speed <200>;
 		turn HandR to x-axis <9.494505> speed <200>;
 		turn ArmLL to x-axis <-16.879121> speed <200>;
-		sleep 111;
+		sleep 56;
 		move Hip to y-axis [0.000000] speed [200];
 		turn Hip to y-axis <0.000000> speed <200>;
 		turn Hip to z-axis <5.000000> speed <200>;
@@ -159,7 +159,7 @@ StartMoving()
 		turn ArmLR to x-axis <-94.945055> speed <200>;
 		turn HandR to x-axis <13.362637> speed <200>;
 		turn ArmLL to x-axis <-4.219780> speed <200>;
-		sleep 112;
+		sleep 56;
 		move Hip to y-axis [-0.175000] speed [200];
 		turn Hip to y-axis <-1.000000> speed <200>;
 		turn Hip to z-axis <3.000000> speed <200>;
@@ -180,7 +180,7 @@ StartMoving()
 		turn ArmLR to x-axis <-80.703297> speed <200>;
 		turn HandR to x-axis <4.571429> speed <200>;
 		turn ArmLL to x-axis <-7.203297> speed <200>;
-		sleep 121;
+		sleep 60;
 		move Hip to y-axis [-0.262500] speed [200];
 		turn Hip to y-axis <-3.000000> speed <200>;
 		turn Hip to z-axis <1.000000> speed <200>;
@@ -201,7 +201,7 @@ StartMoving()
 		turn ArmLR to x-axis <-73.576923> speed <200>;
 		turn HandR to x-axis <0.170330> speed <200>;
 		turn ArmLL to x-axis <-8.703297> speed <200>;
-		sleep 121;
+		sleep 60;
 		move Hip to y-axis [-0.350000] speed [200];
 		turn Hip to y-axis <-5.000000> speed <200>;
 		turn Hip to z-axis <0.000000> speed <200>;
@@ -222,7 +222,7 @@ StartMoving()
 		turn ArmLR to x-axis <-66.461538> speed <200>;
 		turn HandR to x-axis <-4.219780> speed <200>;
 		turn ArmLL to x-axis <-10.197802> speed <200>;
-		sleep 109;
+		sleep 54;
 		move Hip to y-axis [-0.262500] speed [200];
 		turn Hip to y-axis <-3.000000> speed <200>;
 		turn Hip to z-axis <-1.000000> speed <200>;
@@ -244,7 +244,7 @@ StartMoving()
 		turn ArmLR to x-axis <-70.500000> speed <200>;
 		turn HandR to x-axis <-2.983516> speed <200>;
 		turn ArmLL to x-axis <-10.373626> speed <200>;
-		sleep 120;
+		sleep 60;
 		move Hip to y-axis [-0.175000] speed [200];
 		turn Hip to y-axis <-1.000000> speed <200>;
 		turn Hip to z-axis <-3.000000> speed <200>;
@@ -266,7 +266,7 @@ StartMoving()
 		turn ArmLR to x-axis <-74.549451> speed <200>;
 		turn HandR to x-axis <-1.752747> speed <200>;
 		turn ArmLL to x-axis <-10.549451> speed <200>;
-		sleep 122;
+		sleep 61;
 		move Hip to y-axis [-0.021869] speed [200];
 		turn Hip to y-axis <-0.120879> speed <200>;
 		turn Hip to z-axis <-4.747253> speed <200>;
@@ -288,7 +288,7 @@ StartMoving()
 		turn ArmLR to x-axis <-81.620879> speed <200>;
 		turn HandR to x-axis <0.395604> speed <200>;
 		turn ArmLL to x-axis <-10.851648> speed <200>;
-		sleep 78;
+		sleep 39;
 	}
 }
 
@@ -381,50 +381,25 @@ StopMoving()
 	call-script restore();
 }
 
-Create()
+Build()
 {
-	start-script StopMoving();
-	bMoving=0;
-	//delay=0;
-	//psyking=0;
-	while( get BUILD_PERCENT_LEFT )
+	if( bwaving == 1 )
 	{
-		sleep 1000;
+		emit-sfx UNIT_SFX2 from fp;
+		sleep 50;
 	}
-	spin rotate around y-axis speed <500>;
-	move sweet-spot to x-axis -536870912 now;
+	if( bwaving == 0 )
+	{
+	sleep (Rand( 1000, 10000 ));
+		emit-sfx UNIT_SFX3 from fp;
+	}
+	start-script Build();
 }
 
-delayed_restore()
+Wave()
 {
-	start-script restore();
-	sleep 3000;
-	move Hip to x-axis [0.000000] speed [500.000000];
-	turn Hip to x-axis <0.000000> speed <500.120879>;
-	move Hip to y-axis [0.000000] speed [500.000000];
-	turn Hip to y-axis <0.000000> speed <500.120879>;
-	move Hip to z-axis [0.000000] speed [500.000000];
-	turn Hip to z-axis <0.000000> speed <500.120879>;
-}
-
-FirePrimary()
-{
-	//explode l_flare type BITMAPONLY | BITMAP5;//l_flare
-}
-
-QueryPrimary(piecenum)
-{
-	piecenum = fp;//l_flare
-}
-
-AimFromPrimary(piecenum)
-{
-	piecenum = base;
-}
-
-/*Wave()
-{
-	psyking=1;
+	if( bwaving == 1 )
+	{
 	turn ArmUL to x-axis <4.219780> speed <50>;
 	turn ArmUL to y-axis <7.000000> speed <50>;
 	turn ArmUR to x-axis <1.406593> speed <50>;
@@ -700,10 +675,54 @@ AimFromPrimary(piecenum)
 	turn ArmLL to y-axis <0.000000> speed <50>;
 	turn HandL to x-axis <0.000000> speed <50>;
 	sleep 100;
+	}
+	start-script Wave();
+//	start-script restore();
+}
+
+Create()
+{
+	start-script StopMoving();
+	start-script Wave();
+	bMoving=0;
+	bwaving=0;
+	//delay=0;
+	//psyking=0;
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 1000;
+	}
+	spin rotate around y-axis speed <500>;
+	move sweet-spot to x-axis -536870912 now;
+	start-script Build();
+}
+
+delayed_restore()
+{
 	start-script restore();
-	sleep 750;
-	psyking=0;
-}*/
+	sleep 3000;
+	move Hip to x-axis [0.000000] speed [500.000000];
+	turn Hip to x-axis <0.000000> speed <500.120879>;
+	move Hip to y-axis [0.000000] speed [500.000000];
+	turn Hip to y-axis <0.000000> speed <500.120879>;
+	move Hip to z-axis [0.000000] speed [500.000000];
+	turn Hip to z-axis <0.000000> speed <500.120879>;
+}
+
+FirePrimary()
+{
+	//explode l_flare type BITMAPONLY | BITMAP5;//l_flare
+}
+
+QueryPrimary(piecenum)
+{
+	piecenum = fp;//l_flare
+}
+
+AimFromPrimary(piecenum)
+{
+	piecenum = base;
+}
 
 smoke()
 {
@@ -736,7 +755,10 @@ AimPrimary(h, p)
 	signal 4;
 	set-signal-mask 4;
 	aimings=1;
+	bwaving=0;
 	start-script smoke();
+	start-script Wave();
+	start-script BUILD();
 	turn hip to y-axis h speed <500>;
 	sleep (Rand( 1, 5000 ));
 	start-script restore_db();
@@ -747,6 +769,84 @@ SweetSpot(piecenum)
 {
 	piecenum = sweet-spot;
 }
+
+
+Go()
+{
+	sleep 200;
+	turn base to y-axis Static_Var_1 speed <160.038462>;
+	wait-for-turn torso around y-axis;
+	bwaving=1;
+	set INBUILDSTANCE to 1;
+}
+
+Stop()
+{
+	bwaving=0;
+	set INBUILDSTANCE to 0;
+	turn base to y-axis <0.000000> speed <320.038462>;
+	wait-for-turn torso around y-axis;
+	call-script Restore();
+}
+
+InitState()
+{
+	statechg_DesiredState = TRUE;
+	statechg_StateChanging = FALSE;
+}
+
+RequestState(requestedstate, currentstate)
+{
+	if( statechg_StateChanging )
+	{
+		statechg_DesiredState = requestedstate;
+		return (0);
+	}
+	statechg_StateChanging = TRUE;
+	currentstate = statechg_DesiredState;
+	statechg_DesiredState = requestedstate;
+	while( statechg_DesiredState != currentstate )
+	{
+		if( statechg_DesiredState == 0 )
+		{
+			call-script Go();
+			currentstate = 0;
+		}
+		if( statechg_DesiredState == 1 )
+		{
+			call-script Stop();
+			currentstate = 1;
+		}
+	}
+	statechg_StateChanging = FALSE;
+}
+
+Activate()
+{
+	start-script RequestState(0);
+}
+
+Deactivate()
+{
+	start-script RequestState(1);
+}
+
+StartBuilding(Func_Var_1)
+{
+	Static_Var_1 = Func_Var_1;
+	start-script RequestState(0);
+}
+
+StopBuilding()
+{
+	start-script RequestState(1);
+}
+
+QueryNanoPiece(piecenum)
+{
+		piecenum = fp;
+}
+
 
 Killed(severity, corpsetype)
 {

@@ -11,7 +11,7 @@
 	Description=Armoured Anti-Armor Tank;
 	FootprintX=4;
 	FootprintZ=4;
-	MaxDamage=8854;
+	MaxDamage=9454;
 	ObjectName=Lost_thumper;
 	Side=TLL;
 	SoundCategory=CORE_TANK;

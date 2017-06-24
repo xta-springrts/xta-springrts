@@ -6,7 +6,7 @@
 	Buildpic=talon_ack_ack.png;
 	objectname=talon_ack_ack.3do;
 	Name=ACK ACK;
-	Description=Primitive Anti-Land Saucer;
+	Description=Anti-Land Saucer;
 	FootprintX=5;
 	FootprintZ=5;
 	BuildCostEnergy=38598;

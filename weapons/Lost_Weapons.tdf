@@ -653,11 +653,11 @@
 	rendertype=7;
 	lineofsight=1;
 	turret=1;
-	range=300;
+	range=315;
 	reloadtime=1.333;
 	weaponvelocity=800;
 	areaofeffect=8;
-	duration=0.5;
+	duration=0.25;
 	soundtrigger=0;
 	soundstart=lghthvy1;
 	soundhitdry=lashit;
@@ -880,7 +880,7 @@
 	sprayangle=30;
 	range=575; 
 	cylindertargeting = 1;
-	reloadtime=0.7;
+	reloadtime=0.75;
 	energypershot=10;
 	weaponvelocity=400;
   	texture1=testlightning;
@@ -900,7 +900,7 @@
 	[DAMAGE]
 	{
 		default=66.6;//122
-		group_landair=61;
+		group_landair=31;
 	}
 }
 
@@ -922,7 +922,7 @@
 	sprayangle=30;
 	range=575; 
 	cylindertargeting = 1;
-	reloadtime=0.75;
+	reloadtime=0.78;
 	energypershot=10;
 	weaponvelocity=400;
   	texture1=testlightning;
@@ -942,7 +942,7 @@
 	[DAMAGE]
 	{
 		default=66.6;//122
-		group_landair=61;
+		group_landair=31;
 	}
 }
 
@@ -1288,8 +1288,8 @@
 	name=Loki Cannon;
 	explosiongenerator=custom:BluePlasmaExtraBANG;
 	energypershot=216;
-	accuracy=750;
-	movingaccuracy=1500;
+	accuracy=950;
+	movingaccuracy=1800;
 	rgbcolor=1 0.60 0.0;
 	weaponType=Cannon;
 	turret=1;

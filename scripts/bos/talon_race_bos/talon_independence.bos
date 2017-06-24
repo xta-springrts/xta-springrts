@@ -46,6 +46,7 @@ RockOnWaves()
 Create()
 {
 	hide fpmain;
+	hide base;
 	start-script RockOnWaves();
 }
 

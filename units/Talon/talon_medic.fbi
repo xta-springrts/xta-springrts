@@ -4,8 +4,8 @@
 	//  Unit Description
 	//********************
 	side=Arm;
-	name=Medic Drone;
-	description=Tech 0/ Minelayer;
+	name=Prick;
+	description=Stealthy Minelayer;
 	icontype=air;
 
 	//************************************************************
@@ -26,9 +26,9 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=225;
+	maxdamage=333;
 	healtime=12;
-	buildcostmetal=66;
+	buildcostmetal=87;
 	buildcostenergy=1065;
 	buildtime=3000;
 	footprintx=1;
@@ -37,7 +37,7 @@
 	//************************************************************
 	//  Resources
 	//*************
-	metalmake=0.1;//0.2
+	//metalmake=0.1;//0.2
 	metalstorage=50;
 	energymake=4;//11
 	energyuse=0.1;
@@ -74,7 +74,7 @@
 	turnrate=250;
 	acceleration=0.08;
 	brakerate=0.05;
-	maxvelocity=1.5;
+	maxvelocity=3.5;
 	maxslope=10;
 	maxwaterdepth=0;
 	cruisealt=40;
@@ -84,6 +84,7 @@
 	//*********************
 	sightdistance=320;
 	radardistance=0;
+	stealth=1;
 
 	//************************************************************
 	//  Weapons

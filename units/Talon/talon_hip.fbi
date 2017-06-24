@@ -30,8 +30,8 @@
 	maxdamage=585;
 	healtime=30;
 	buildcostmetal=134;
-	buildcostenergy=1307;
-	buildtime=2500;
+	buildcostenergy=1877;
+	buildtime=3232;
 	footprintx=2;
 	footprintz=2;
 	ModelCenterOffset=0 -1 0;

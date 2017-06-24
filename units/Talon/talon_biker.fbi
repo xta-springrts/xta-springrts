@@ -28,7 +28,7 @@
 	//********************
 	maxdamage=253.33; // 410; in 9.725 //reduced by 45 hp 
 	healtime=30;
-	buildcostmetal=55; // OTA: 37
+	buildcostmetal=50; // OTA: 37
 	buildcostenergy=700; // OTA:  564
 	buildtime=1500; // OTA: 1465
 	footprintx=1;
@@ -45,6 +45,7 @@
 	//************************************************************
 	//  Building
 	//************
+	showNanoFrame=1;
 
 	//************************************************************
 	//  Constructor
@@ -121,7 +122,7 @@
 	version=1.2;
 	zbuffer=1;
 	collisionVolumeType = box;
-	collisionVolumeScales =22 15 30;
+	collisionVolumeScales =16 15 28;
 	collisionVolumeOffsets = 0 -1 0;
 	collisionVolumeTest = 1;
 	pieceTrailCEGTag=Debree;//bleh
@@ -131,5 +132,11 @@
 	//************************************************************
 	//  To be removed
 	//*****************
+	[SFXTypes]
+	{
+	explosiongenerator0=custom:Nano;
+	explosiongenerator1=custom:NanoDebree1;//ONESPARK
+	explosiongenerator2=custom:NanoDebree1;//ONESPARK
+	}
 
 }

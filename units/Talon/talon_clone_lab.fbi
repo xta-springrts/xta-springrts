@@ -27,9 +27,9 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=1890;
+	maxdamage=1490;
 	healtime=30;
-	buildcostmetal=487;
+	buildcostmetal=476;
 	buildcostenergy=811;
 	buildtime=4060;
 	footprintx=3;
@@ -57,6 +57,7 @@
 	//***************
 	builder=1;
 	workertime=100;
+	showNanoSpray=0;
 
 	//************************************************************
 	//  Abilities
@@ -111,6 +112,7 @@
 
 	[SFXTypes]
 	{
-	explosiongenerator0=custom:Nano;
+	explosiongenerator0=custom:PORTALGLOW;
+	explosiongenerator1=custom:WhiteLightFast;
 	}
 }

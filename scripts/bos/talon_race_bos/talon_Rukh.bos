@@ -3,348 +3,85 @@
 #include "sfxtype.h"
 #include "exptype.h"
 
+piece  base, link, jet1, jet2, jet3,
+       jet4;
 
-piece  base, pod1, pod2, flamer1, flamer2, flamer3, flamer4, body, ar, sh, adjust, s1, s2;
+static-var  Static_Var_1, unitviewer, Static_Var_5;
 
-static-var  Static_Var_1, statechg_DesiredState, statechg_StateChanging, playernumb, myid, flameon, on, moving, min, max, numbtranspo, aring, water;
+#define SMOKEPIECE1 base
 
-#define SECURE_XZ\
-if(xz<0)\
-{\
-xz=0 - xz;\
-}\
-x=xz/65536;\
-z=xz - x*65536;\
-if(z>32767)\
-{\
-z=65536 - z;\
-/*x=x+(1-2*(xz<0));*/\
-x=x+(xz>0);\
-}\
-if(707333111<get XZ_HYPOT((x/2)*65536 + (z/2)))\
-{\
-xz=500333222;\
+#include "StateChg.h"
+
+lua_UnitStoppedMoving()
+{
 }
 
-// Signal definitions
-#define SIG_MOVE			2
-#define SIG_FIRE1			4
-// Lowest valid unit ID number
-#ifndef MIN_ID
-#define MIN_ID 69
-#endif
-
-// Highest valid unit ID number
-#ifndef MAX_ID
-#define MAX_ID 70
-#endif
-
-// ID of current unit
-#ifndef MY_ID
-#define MY_ID 71
-#endif
-
-// Player number of the unit given in parameter
-#ifndef UNIT_TEAM
-#define UNIT_TEAM 72
-#endif
-
-// Like BUILD_PERCENT_LEFT, but comes with a unit parameter
-#ifndef UNIT_BUILD_PERCENT_LEFT
-#define UNIT_BUILD_PERCENT_LEFT 73
-#endif
-
-// Is unit allied to the current COB script
-#ifndef UNIT_ALLIED
-#define UNIT_ALLIED 74
-#endif
-
-// Is unit owned by the local computer
-#ifndef UNIT_IS_ON_THIS_COMP
-#define UNIT_IS_ON_THIS_COMP 75
-#endif
-
-// Kills * 100
-#ifndef VETERAN_LEVEL
-#define VETERAN_LEVEL 32
-#endif
-
-ARmovement()
+lua_UnitStartedMoving()
 {
-	while(1)//(!on && !moving && ((get STANDINGFIREORDERS) == 0))
-	{
-		if(aring)
-		{
-			spin sh around y-axis speed <1000>;
-			move ar to z-axis [37.5] speed [150];
-			wait-for-move ar along z-axis;
-			move ar to z-axis [-37.5] speed [100];
-			wait-for-move ar along z-axis;
-		}
-		if(!aring)
-		{
-			move ar to z-axis [0] now;
-			wait-for-move ar along z-axis;
-			stop-spin sh around y-axis;
-			sleep 500;
-		}
-	}
 }
 
-adjustit()
+MorphPassenger(Func_Var_1, Func_Var_2)
 {
-      turn adjust to x-axis 0 now;
-      turn adjust to z-axis 0 now;
-      move s1 to x-axis 0 - [600] now;
-      move s2 to x-axis [600] now;
-      turn adjust to z-axis get ATAN(get PIECE_Y(s1) - get PIECE_Y(s2),get XZ_HYPOT(get PIECE_XZ(s1) - get PIECE_XZ(s2))) now;
-      move s1 to x-axis 0 now;
-      move s2 to x-axis 0 now;
-      move s1 to z-axis [600] now;
-      move s2 to z-axis 0 - [600] now;
-      turn adjust to x-axis get ATAN(get PIECE_Y(s1) - get PIECE_Y(s2),get XZ_HYPOT(get PIECE_XZ(s1) - get PIECE_XZ(s2))) now;
-      move s1 to z-axis 0 now;
-      move s2 to z-axis 0 now;
-      wait-for-turn adjust around x-axis;
-      wait-for-turn adjust around z-axis;
-}
-
-detect()
-{
-	var xz, z, x, distance;
-	var unit_id;
-	var height;
-	while(1)
-	{
-		if(!on && !moving && ((get STANDINGFIREORDERS) == 0))
-		{
-			call-script adjustit();
-			for (unit_ID = min; unit_ID <= max; ++unit_ID)
-			{
-				if (((get UNIT_XZ(unit_ID)) == (get PIECE_XZ(ar))) && ((get UNIT_Y(unit_ID)) == (get PIECE_Y(ar))))
-				{
-					attach-unit unit_ID to -1;
-				}
-			}
-			numbtranspo=0;
-			for (unit_ID = (min); unit_ID <= (max); ++unit_ID)
-			{
-				height = get UNIT_HEIGHT(unit_ID);
-				if (!( height == 1387897 || height == 984374 || height == 879385 || height == 988612))
-				{
-					if (get UNIT_XZ(unit_ID) == get PIECE_XZ(base))
-					{
-						if (get UNIT_Y(unit_ID) == get PIECE_Y(base))
-						{
-							if(unit_ID != myid)
-							{
-								++numbtranspo;
-							}
-						}
-					}
-				}
-			}
-			for (unit_ID = (min); unit_ID <= (max); ++unit_ID)
-			{
-				height = get UNIT_HEIGHT(unit_ID);
-				if( height != 2030654 && height != 6190599 && height != 2819134 && height != 4240981 &&
-				height != 2935482 && height != 3276800 && height != 7414670 && height != 3934944 && 
-				height != 4761580 && height != [25.5] && height != 1105920 && 
-				height != ARMAAS && height != ARMACSUB && height != ARMBATS && height != ARMCARRY && 
-				height != ARMCRUS && height != ARMCS && height != ARMMSHIP && height != ARMPT &&
-				height != ARMROY && height != ARMSCRAM && height != ARMSJAM && height != ARMSUB && 
-				height != ARMSUBK && height != ARMTSHIP &&
-				height != CORACSUB && height != CORARCH && height != CORBATS && height != CORCRUS &&
-				height != CORCS && height != CORMSHIP && height != CORPT && height != CORROY &&
-				height != CORSHARK && height != CORSJAM && height != CORSSUB && height != CORSUB &&
-				height != CORTSHIP &&
-				height != ARMTHOVR && height != CORTHOVR &&
-				height != ARMDREAD && height != CORDREAD && height != VANGUARD && 
-				height != VIKING &&
-				height != TALACS && height != TALASUB && height != TALCAR && height != TALCRUS &&
-				height != TALCS && height != TALDREAD && height != TALEWS && height != TALLAS &&
-				height != TALLSHIP && height != TALMSHIP && height != TALROY && height != TALSTEALTHS &&
-				height != TALSUB && height != TALTSHIP && height != TALTSUB && height != 4578563 && height != 1093865)
-				{
-					if(get UNIT_ALLIED(unit_ID))
-					{
-						xz = get UNIT_XZ(unit_ID) - get PIECE_XZ(base);
-						SECURE_XZ;
-						distance=get XZ_HYPOT(xz);
-						if (distance <= [40])
-						{
-							if ((get UNIT_Y(unit_id)) <= ((get PIECE_Y(base)) + [5]))
-							{
-								if ((get UNIT_Y(unit_id)) >= ((get PIECE_Y(base)) - [5]))
-								{
-									if (!( height == 1387897 || height == 984374 || height == 879385 || height == 988612))
-									{
-										if(numbtranspo < 20)
-										{
-											attach-unit unit_ID to -1;
-										}
-									}
-									if ( height == 1387897 || height == 984374 || height == 879385 || height == 988612)
-									{
-										attach-unit unit_ID to -1;
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-			sleep 2048;
-		}
-
-
-		if(!on && !moving && ((get STANDINGFIREORDERS) == 1))
-		{
-			call-script adjustit();
-			show arrows;
-			hide circle;
-			aring=1;
-			for (unit_ID = (min); unit_ID <= (max); ++unit_ID)
-			{
-				if (unit_ID != myid)
-				{
-					if (((get UNIT_XZ(unit_ID)) == (get PIECE_XZ(base))) && ((get UNIT_Y(unit_ID)) == (get PIECE_Y(base))))
-					{
-						if ((get UNIT_IS_ON_THIS_COMP(unit_id)))
-						{
-							attach-unit unit_ID to ar;
-						}
-					}
-					if ((get UNIT_IS_ON_THIS_COMP(unit_id)))
-					{
-						while (((get UNIT_XZ(unit_ID)) == (get PIECE_XZ(ar))) && ((get UNIT_Y(unit_ID)) == (get PIECE_Y(ar))))
-						{
-							drop-unit unit_ID;
-							sleep 1;
-						}
-					}
-				}
-			}
-			aring=0;
-		}
-		if(on || moving || ((get STANDINGFIREORDERS) == 2))
-		{
-			hide circle;
-			hide arrows;
-			for (unit_ID = min; unit_ID <= max; ++unit_ID)
-			{
-				if ((get UNIT_HEIGHT(unit_ID)) != (get UNIT_HEIGHT(myid)))
-				{
-					if (((get UNIT_XZ(unit_ID)) == (get PIECE_XZ(ar))) && ((get UNIT_Y(unit_ID)) == (get PIECE_Y(ar))))
-					{
-						attach-unit unit_ID to -1;
-					}
-				}
-			}
-		}
-		sleep 500;
-	}
-}
-
-
-SmokeUnit(healthpercent, sleeptime, smoketype)
-{
-	while( get BUILD_PERCENT_LEFT )
-	{
-		sleep 400;
-	}
-	while( TRUE )
-	{
-		healthpercent = get HEALTH;
-		if( healthpercent < 66 )
-		{
-			smoketype = 256 | 2;
-			if( Rand( 1, 66 ) < healthpercent )
-			{
-				smoketype = 256 | 1;
-			}
-			emit-sfx smoketype from base;
-		}
-		sleeptime = healthpercent * 50;
-		if( sleeptime < 200 )
-		{
-			sleeptime = 200;
-		}
-		sleep sleeptime;
-	}
-}
-
-InitState()
-{
-	statechg_DesiredState = TRUE;
-	statechg_StateChanging = FALSE;
+	drop-unit Func_Var_1;
+	emit-sfx 1026 from link;
+	emit-sfx 1026 from link;
+	sleep 10;
+	attach-unit Func_Var_2 to link;
 }
 
 ProcessFlames()
 {
-	while( 1 )
+	while( TRUE )
 	{
-		if( flameon )
+		if( Static_Var_1 == 1 OR Static_Var_1 == 2 )
 		{
-			emit-sfx 0 from flamer1;
-			emit-sfx 0 from flamer2;
-			emit-sfx 0 from flamer3;
-			emit-sfx 0 from flamer4;
+			emit-sfx 1024 + 0 from jet1;
+			emit-sfx 1024 + 0 from jet2;
+			emit-sfx 1024 + 0 from jet3;
+			emit-sfx 1024 + 0 from jet4;
 		}
-		sleep 33;
+		sleep 10;
 	}
 }
 
-RequestState(requestedstate, currentstate)
+loadscr()
 {
-	if( statechg_StateChanging )
+	if( TRUE )
 	{
-		statechg_DesiredState = requestedstate;
-		return (0);
+		sleep 998;
 	}
-	statechg_StateChanging = TRUE;
-	currentstate = statechg_DesiredState;
-	statechg_DesiredState = requestedstate;
-	while( statechg_DesiredState != currentstate )
-	{
-		if( statechg_DesiredState == 0 )
-		{
-			//call-script activatescr();
-			currentstate = 0;
-		}
-		if( statechg_DesiredState == 1 )
-		{
-			//call-script deactivatescr();
-			currentstate = 1;
-		}
-	}
-	statechg_StateChanging = FALSE;
+	sleep 44;
 }
+
+unloadscr()
+{
+	if( TRUE )
+	{
+		sleep 998;
+	}
+	sleep 44;
+}
+#include "SmokeUnit.h"
+
+RestoreAfterDelay()
+{
+	sleep 3000;
+}
+#define ACTIVATECMD			call-script loadscr();
+#define DEACTIVATECMD		call-script unloadscr();
+#include "StateChg.h"
 
 Create()
 {
-	hide ar;
-	min = get MIN_ID;
-	max = get MAX_ID;
-	on=0;
-	moving=0;
-	flameon=0;
 	Static_Var_1 = 0;
+	Static_Var_5 = 0;
 	call-script InitState();
 	start-script SmokeUnit();
-	dont-cache arrows;
-	aring=0;
-	while( get BUILD_PERCENT_LEFT )
-	{
-		sleep 1000;
-	}
-	playernumb=get UNIT_TEAM(get MY_ID);
-	myid=get MY_ID;
-	if (get UNIT_IS_ON_THIS_COMP(myid))
-	{
-		start-script armovement();
-		start-script detect();
-	}
+}
+
+Demo()
+{
+	unitviewer = TRUE;
 }
 
 SweetSpot(piecenum)
@@ -354,249 +91,88 @@ SweetSpot(piecenum)
 
 QueryTransport(Func_Var_1)
 {
-	Func_Var_1 = base;
-}
-
-Activate()
-{
-	on=1;
-	var unit_ID;
-	hide circle;
-	flameon=1;
-	dont-cache pod1;
-	dont-cache pod2;
-
-}
-
-Deactivate()
-{
-	on=0;
-	flameon=0;
-	cache pod1;
-	cache pod2;
+	Func_Var_1 = 1;
 }
 
 BeginTransport(Func_Var_1)
 {
-	//set ACTIVATION to 1;
+	move link to y-axis [0.000000] - Func_Var_1 now;
 	start-script RequestState(0);
 }
 
 EndTransport()
 {
-	//set ACTIVATION to 0;
 	start-script RequestState(1);
 }
 
-AimPrimary(h,p)
+StopMoving()
 {
-	signal SIG_FIRE1;
-	set-signal-mask SIG_FIRE1;
-	while(moving)
-	{
-		sleep 500;;
-	}
-	//sleep 2500;
-	if (get UNIT_IS_ON_THIS_COMP(get(MY_ID)))
-	{
-		var xz, z, x, distance;
-		var unit_id;
-		var height;
-		numbtranspo=0;
-		for (unit_ID = min; unit_ID <= max; ++unit_ID)
-		{
-			if (!( get UNIT_HEIGHT(unit_id) == 1387897 || get UNIT_HEIGHT(unit_id) == 984374 || get UNIT_HEIGHT(unit_id) == 879385 || get UNIT_HEIGHT(unit_id) == 988612))
-			{
-				if (get UNIT_XZ(unit_ID) == get PIECE_XZ(base))
-				{
-					if (get UNIT_Y(unit_ID) == get PIECE_Y(base))
-					{
-						if(unit_ID != myid)
-						{
-							++numbtranspo;
-						}
-					}
-				}
-			}
-		}
-		if (!( water == 2 OR water == 1 ))
-		{
-			for (unit_ID = min; unit_ID <= max; ++unit_ID)
-			{
-				height = get UNIT_HEIGHT(unit_ID);
-				if( height != 2030654 && height != 6190599 && height != 2819134 && height != 4240981 &&
-				height != 2935482 && height != 3276800 && height != 7414670 && height != 3934944 && 
-				height != 4761580 && height != [25.5] && height != 1105920 && 
-				height != ARMAAS && height != ARMACSUB && height != ARMBATS && height != ARMCARRY && 
-				height != ARMCRUS && height != ARMCS && height != ARMMSHIP && height != ARMPT &&
-				height != ARMROY && height != ARMSCRAM && height != ARMSJAM && height != ARMSUB && 
-				height != ARMSUBK && height != ARMTSHIP &&
-				height != CORACSUB && height != CORARCH && height != CORBATS && height != CORCRUS &&
-				height != CORCS && height != CORMSHIP && height != CORPT && height != CORROY &&
-				height != CORSHARK && height != CORSJAM && height != CORSSUB && height != CORSUB &&
-				height != CORTSHIP &&
-				height != ARMTHOVR && height != CORTHOVR &&
-				height != ARMDREAD && height != CORDREAD && height != VANGUARD && 
-				height != VIKING &&
-				height != TALACS && height != TALASUB && height != TALCAR && height != TALCRUS &&
-				height != TALCS && height != TALDREAD && height != TALEWS && height != TALLAS &&
-				height != TALLSHIP && height != TALMSHIP && height != TALROY && height != TALSTEALTHS &&
-				height != TALSUB && height != TALTSHIP && height != TALTSUB && height != 4578563 && height != 1093865)
-				{
-					xz = get UNIT_XZ(unit_ID) - get PIECE_XZ(base);
-					SECURE_XZ;
-					distance=get XZ_HYPOT(xz);
-					if (distance <= [6.4])
-					{
-						if (get UNIT_Y(unit_id) < get PIECE_Y(base))
-						{
-							if ((get UNIT_IS_ON_THIS_COMP(unit_id)))
-							{
-								if (!( height == 1387897 || height == 984374 || height == 879385 || height == 988612))
-								{
-									if(numbtranspo < 20)
-									{
-										//while (get UNIT_Y(unit_ID) != get PIECE_Y(base))
-										//{
-											//while (get UNIT_XZ(unit_ID) != get PIECE_XZ(base))
-											//{
-												attach-unit unit_ID to -1;
-											//}
-										//}
-										
-										return(0);
-										
-									}
-								}
-								if ( height == 1387897 || height == 984374 || height == 879385 || height == 988612)
-								{
-									//while (get UNIT_Y(unit_ID) != get PIECE_Y(base))
-									//{
-										//while (get UNIT_XZ(unit_ID) != get PIECE_XZ(base))
-										//{
-											attach-unit unit_ID to -1;
-										//}
-									//}
-									return(0);
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-	}
-}
-QueryPrimary(p)
-{
-	p=base;
-}
-
-AimFromPrimary(p)
-{
-	p=base;
+	signal 2;
+	Static_Var_1 = 0;
+	call-script lua_UnitStoppedMoving();
 }
 
 MoveRate1()
 {
 	signal 2;
 	set-signal-mask 2;
-	//start-script ProcessFlames();
-	//Static_Var_1 = 1;
+	start-script ProcessFlames();
+	Static_Var_1 = 1;
+	call-script lua_UnitStartedMoving();
 }
 
 MoveRate2()
 {
 	signal 2;
 	set-signal-mask 2;
-	//start-script ProcessFlames();
-	//Static_Var_1 = 2;
+	start-script ProcessFlames();
+	Static_Var_1 = 2;
 }
 
 MoveRate3()
 {
 	signal 2;
 	set-signal-mask 2;
-	//start-script ProcessFlames();
-	//Static_Var_1 = 3;
-}
-
-StartMoving()
-{
-	signal 2;
-	moving=1;
-	set-signal-mask SIG_MOVE;
-	turn pod1 to x-axis <30> speed <45>;
-	turn pod2 to x-axis <30> speed <45>;
-}
-
-StopMoving()
-{
-	Static_Var_1 = 0;
-	moving=0;
-	signal 2;
-	turn pod1 to x-axis <0> speed <30>;
-	turn pod2 to x-axis <0> speed <30>;
-}
-
-setSFXoccupy(Func_Var_1)
-{
-	water = Func_Var_1;
+	start-script ProcessFlames();
+	Static_Var_1 = 3;
 }
 
 Killed(severity, corpsetype)
 {
-	//var count;
-	//for ( count = min; count < max; ++count )
-	//{
-	//	drop-unit count;
-	//}
 	if( severity <= 25 )
 	{
 		corpsetype = 1;
-		explode pod1 type BITMAPONLY | BITMAP1;
-		explode pod2 type BITMAPONLY | BITMAP2;
-		explode body type BITMAPONLY | BITMAP3;
 		explode base type BITMAPONLY | BITMAP4;
-		explode flamer1 type FALL | SMOKE | FIRE | BITMAP5;
-		explode flamer2 type FALL | SMOKE | FIRE | BITMAP1;
-		explode flamer3 type FALL | SMOKE | FIRE | BITMAP2;
-		explode flamer4 type FALL | SMOKE | FIRE | BITMAPNUKE;
+		explode jet1 type BITMAPONLY | BITMAP5;
+		explode jet2 type BITMAPONLY | BITMAP1;
+		explode jet3 type BITMAPONLY | BITMAP2;
+		explode link type BITMAPONLY | BITMAP3;
 		return (0);
 	}
 	if( severity <= 50 )
 	{
 		corpsetype = 2;
-		explode pod1 type BITMAPONLY | BITMAP1;
-		explode pod2 type BITMAPONLY | BITMAP2;
-		explode body type BITMAPONLY | BITMAP3;
 		explode base type BITMAPONLY | BITMAP4;
-		explode flamer1 type FALL | SMOKE | FIRE | BITMAP5;
-		explode flamer2 type FALL | SMOKE | FIRE | BITMAP1;
-		explode flamer3 type FALL | SMOKE | FIRE | BITMAP2;
-		explode flamer4 type FALL | SMOKE | FIRE | BITMAPNUKE;
+		explode jet1 type FALL | BITMAP5;
+		explode jet2 type FALL | BITMAP1;
+		explode jet3 type FALL | BITMAP2;
+		explode link type FALL | BITMAP3;
 		return (0);
 	}
 	if( severity <= 99 )
 	{
 		corpsetype = 3;
-		explode pod1 type BITMAPONLY | BITMAP1;
-		explode pod2 type BITMAPONLY | BITMAP2;
-		explode body type BITMAPONLY | BITMAP3;
 		explode base type BITMAPONLY | BITMAP4;
-		explode flamer1 type FALL | SMOKE | FIRE | BITMAP5;
-		explode flamer2 type FALL | SMOKE | FIRE | BITMAP1;
-		explode flamer3 type FALL | SMOKE | FIRE | BITMAP2;
-		explode flamer4 type FALL | SMOKE | FIRE | BITMAPNUKE;
+		explode jet1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+		explode jet2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+		explode jet3 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+		explode link type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
 		return (0);
 	}
 	corpsetype = 3;
-	explode pod1 type BITMAPONLY | BITMAP1;
-	explode pod2 type BITMAPONLY | BITMAP2;
-	explode body type BITMAPONLY | BITMAP3;
 	explode base type BITMAPONLY | BITMAP4;
-	explode flamer1 type FALL | SMOKE | FIRE | BITMAP5;
-	explode flamer2 type FALL | SMOKE | FIRE | BITMAP1;
-	explode flamer3 type FALL | SMOKE | FIRE | BITMAP2;
-	explode flamer4 type FALL | SMOKE | FIRE | BITMAPNUKE;
+	explode jet1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+	explode jet2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+	explode jet3 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode link type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
 }

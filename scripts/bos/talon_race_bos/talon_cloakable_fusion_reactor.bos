@@ -2,7 +2,7 @@
 #define max_units	5000
 #define radius		[100]
 
-piece  crystal, base, towers, pillars, tubes, GP, rays1, rays2;
+piece  crystal, base, towers, pillars, tubes, GP, rays1, rays2, trueglow, flareglow;
 
 #define SECURE_XZ\
 if(xz<0)\
@@ -100,8 +100,6 @@ sharing()
 
 Detect()
 {
-	dont-shade rays1;
-	dont-shade rays2;
 	move rays1 to y-axis [25] now;
 	shared = 0;
 	sleep rand(500,5000);
@@ -214,12 +212,10 @@ Create()
 {
 	hide rays1;
 	hide rays2;
+	hide crystal;
+	hide trueglow;
+	hide flareglow;
 	start-script SmokeUnit();
-	dont-shade base;
-	dont-shade towers;
-	dont-shade pillars;
-	dont-shade tubes;
-	dont-shade crystal;
 	while( get BUILD_PERCENT_LEFT )
 	{
 		sleep 1000;

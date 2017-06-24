@@ -107,4 +107,9 @@
 	//  To be removed
 	//*****************
 
+	[SFXTypes]
+	{
+	explosiongenerator0=custom:WhiteLightBIGFast;
+	explosiongenerator1=custom:WhiteLightBIGFast;
+	}
 }
