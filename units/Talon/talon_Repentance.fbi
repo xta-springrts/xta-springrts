@@ -86,8 +86,8 @@
 	nochasecategory=VTOL;
 	badtargetcategory=VTOL;
 	wpri_badtargetcategory=VTOL;
-	explodeas=GIANT_BLAST;
-	selfdestructas=armmine5;
+	explodeas=DEATHSAUCER;
+	selfdestructas=DEATHSAUCER;
 	onlytargetcategory1=NOTAIR; //Added 8.2 By Gizmo
 
 	//************************************************************

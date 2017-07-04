@@ -27,8 +27,8 @@
 	SoundCategory=Skycruiser;
 	EnergyStorage=10000;
 	MetalStorage=10000;
-	explodeas=armmine5;
-	selfdestructas=armmine5;
+	explodeas=DEATHSAUCER;
+	selfdestructas=DEATHSAUCER;
 	Category=CORE VTOL WEAPON NOTSUB;
 	TEDClass=VTOL;
 	UnitNumber=9;
@@ -99,4 +99,11 @@
 	AirStrafe=0;
 	mass=6500;
 	collide=1;
+
+	[SFXTypes]
+	{
+	explosiongenerator0=custom:DEATHCOMMANDER2017;
+	explosiongenerator1=custom:DEATHCOMMANDER2017;
+	explosiongenerator2=custom:DEATHCOMMANDER2017;
+	}
 	}

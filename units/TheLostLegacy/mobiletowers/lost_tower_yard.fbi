@@ -5,9 +5,9 @@
 	Side=CORE;
 	Objectname=lost_tower_yard;
 	Designation=CHKBC;
-	Name=Tower Assembly Yard;
+	Name=Missile Crawler Assembly Yard;
 	buildpic=lost_tower_yard.png;
-	Description=Transportable Towers Yard;
+	Description=Missile/Crawler Yard;
 	FootprintX=5;
 	FootprintZ=5;
 	BuildCostEnergy=4324;//7965

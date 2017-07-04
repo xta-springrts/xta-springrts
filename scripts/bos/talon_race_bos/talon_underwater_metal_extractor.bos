@@ -50,18 +50,18 @@ bubble()
 Go()
 {
 	bubbling=1;
-	spin circle1 around x-axis speed Static_Var_1 accelerate <1>;
-	spin circle2 around x-axis speed Static_Var_2 accelerate <-2>;
-	spin drill around x-axis speed Static_Var_1 accelerate <1>;
+	spin circle1 around y-axis speed Static_Var_1 accelerate <1>;
+	spin circle2 around y-axis speed Static_Var_2 accelerate <-2>;
+	spin drill around y-axis speed Static_Var_1 accelerate <1>;
 	start-script bubble();
 }
 
 Stop()
 {
 	bubbling=0;
-	stop-spin circle1 around x-axis decelerate <1>;
-	stop-spin circle2 around x-axis decelerate <-2>;
-	stop-spin drill around x-axis decelerate <1>;
+	stop-spin circle1 around y-axis decelerate <1>;
+	stop-spin circle2 around y-axis decelerate <-2>;
+	stop-spin drill around y-axis decelerate <1>;
 	wait-for-turn drill around y-axis;
 }
 

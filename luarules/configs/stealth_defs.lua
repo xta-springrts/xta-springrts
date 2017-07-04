@@ -15,6 +15,12 @@ local stealthDefs = {
     energy = 450,
     delay  = 30,
   },
+  talon_cloakable_fusion_reactor = {
+    draw   = true,
+    init   = false,
+    energy = 500,
+    delay  = 30,
+  },
   arm_infiltrator = {
     draw   = true,
     init   = false,

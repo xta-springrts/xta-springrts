@@ -50,8 +50,8 @@
 	yardmap=ywwy wwww wwww ywwy;
 	activatewhenbuilt=1;
 	collisionVolumeType=CylY;
-	collisionVolumeScales=43 50 43;
-	//collisionVolumeOffsets=0 0 0;
+	collisionVolumeScales=43 65 43;
+	collisionVolumeOffsets=0 20 0;
 	collisionVolumeTest = 1;
 
 	//************************************************************

@@ -37,6 +37,9 @@ local problemFactories = {
 	core_vehicle_plant = true,
 	arm_adv_vehicle_plant = true,
 	core_adv_vehicle_plant = true,
+	talon_adv_aircraft_plant = true,
+	talon_aircraft_plant = true,
+	lost_tower_yard = true,
 }
 
 local AIteams = {}

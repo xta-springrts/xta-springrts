@@ -4,7 +4,7 @@
 	//  Unit Description
 	//********************
 	side=Arm;
-	name=Radar Jamming Tower;
+	name=Conspiracy;
 	description=Hides your Radar blips from the enemy;
 	icontype=building;
 

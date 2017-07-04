@@ -17,7 +17,7 @@
 		air=1;
 		water=1;
 		ground=1;
-  		count=12; 
+  		count=36; 
 	}
 
 	[UnstableEnergy] 
@@ -25,45 +25,14 @@
 	    class=CExpGenSpawner;
 		[properties]
 		{
-		pos=10 r-20, 15 r-5, 10 r-20;  
-		delay=0 r1;				  
+		pos=1 r-2, 15 r-2, 1 r-2;  
+		delay=0 r60;				  
 		explosionGenerator=custom:ParticleLight;
 		}
 	air=1;
 	water=1;
 	ground=1;
-	count=1;
-	}
-
-	[UnstableEnergy2] 
-	{
-	    class=CExpGenSpawner;
-		[properties]
-		{
-		pos=10 r-20, 15 r-5, 10 r-20;  
-		delay=2 r1;				  
-		explosionGenerator=custom:ParticleLight;
-		}
-	air=1;
-	water=1;
-	ground=1;
-	count=1;
-	}
-
-
-	[UnstableEnergy3] 
-	{
-	    class=CExpGenSpawner;
-		[properties]
-		{
-		pos=10 r-20, 15 r-5, 10 r-20;  
-		delay=4 r1;				  
-		explosionGenerator=custom:ParticleLight;
-		}
-	air=1;
-	water=1;
-	ground=1;
-	count=1;
+	count=60;
 	}
 
 	usedefaultexplosions=0;	
@@ -79,7 +48,7 @@
       		heat = 10;
 		Texture=Light;
       		maxheat = 10;
-      		heatFalloff = 0.5;
+      		heatFalloff = 0.7;
       		size = 5.0 r35;
       		sizeGrowth = -5;
       		sizemod = 0;
@@ -89,9 +58,82 @@
 		useAirLos=0;
       		}
 	air=1;
-      	water=0;
+      	water=1;
       	ground=1;
       	count=1;
 	useAirLos=0;
    	}
+[GROUNDRING]
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+		sizeGrowth=2;
+		sizeMod=1.0;
+		pos=0, 0, 0; 
+		gravity=0, 0.3, 0;
+		
+		colorMap=0.2 0.2 0.2 0.1 0.5 0.5 0.5 0.1  0.1 0.1 0.1 0.1 0.0 0.0 0.0 0.0;
+
+		Texture=smokesmall; //smokesmall;
+		airdrag=0.85;
+		  
+		
+		particleLife=10;
+		particleLifeSpread=1;  
+		numParticles=2; 
+		particleSpeed=8; 
+		particleSpeedSpread=4; 
+		particleSize=15;
+		particleSizeSpread=5; 
+		
+		
+		
+		emitVector=0.0, 1, 0.0; 
+		emitRot=80;
+		emitRotSpread=5; 
+		directional=0; 
+
+		}
+	air=1;
+	water=1;
+	ground=1;
+	count=1;
+	}
+	[electricwave]//base explo// 
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+		sizeGrowth=0.14;
+		sizeMod=1.0;
+		pos=3 r-3, 1 r-2, 3 r-3;  
+		gravity=0, 0, 0;
+	
+		colorMap=	0.2 0.5 1.0 0.02 	0 0 0 0.01	0.75 0.5 0.0 0.02 	0 0 0 0.01;
+
+		Texture=testlightning;
+		airdrag=0.99;
+		
+		particleLifeSpread=18; 
+		particleSpeedSpread=0;  
+		particleSizeSpread=5;   
+		
+		particleLife=8; //75;
+		numParticles=1; //150; 
+		particleSpeed=3; 
+		particleSize=14;
+		
+		
+		emitVector=0, 1, 0; 
+		emitRot=80;
+		emitRotSpread=5; 
+		directional=1; 
+
+		}
+	air=1;
+	water=1;
+	ground=1;
+	count=1;
+	}
 }

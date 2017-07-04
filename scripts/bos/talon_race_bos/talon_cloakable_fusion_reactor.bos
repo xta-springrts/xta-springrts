@@ -1,186 +1,50 @@
 #define TA			// This is a TA script
-#define max_units	5000
-#define radius		[100]
+#include "sfxtype.h"
+#include "exptype.h"
 
 piece  crystal, base, towers, pillars, tubes, GP, rays1, rays2, trueglow, flareglow;
 
-#define SECURE_XZ\
-if(xz<0)\
-{\
-xz=0 - xz;\
-}\
-x=xz/65536;\
-z=xz - x*65536;\
-if(z>32767)\
-{\
-z=65536 - z;\
-/*x=x+(1-2*(xz<0));*/\
-x=x+(xz>0);\
-}\
-if(707333111<get XZ_HYPOT((x/2)*65536 + (z/2)))\
-{\
-xz=500333222;\
+static-var shared, CloakGlow;
+
+CloakControl()
+{
+	while( TRUE )
+	{
+		CloakGlow = get CLOAKED;
+		if( CloakGlow == 1 ) 
+			{
+		show crystal;
+		show rays1;
+		show rays2;
+	sleep 100;
+			}
+		else if( CloakGlow == 0 ) 
+		{
+		emit-sfx UNIT_SFX1 from trueglow;
+		//emit-sfx UNIT_SFX1 from flareglow;
+		hide crystal;
+		hide rays1;
+		hide rays2;
+	sleep 100;
+		}
+	}
+	sleep 100;
 }
-
-#include "sfxtype.h"
-#include "exptype.h"
-// Lowest valid unit ID number
-#ifndef MIN_ID
-#define MIN_ID 69
-#endif
-
-// Highest valid unit ID number
-#ifndef MAX_ID
-#define MAX_ID 70
-#endif
-
-// ID of current unit
-#ifndef MY_ID
-#define MY_ID 71
-#endif
-
-// Player number of the unit given in parameter
-#ifndef UNIT_TEAM
-#define UNIT_TEAM 72
-#endif
-
-// Like BUILD_PERCENT_LEFT, but comes with a unit parameter
-#ifndef UNIT_BUILD_PERCENT_LEFT
-#define UNIT_BUILD_PERCENT_LEFT 73
-#endif
-
-// Is unit allied to the current COB script
-#ifndef UNIT_ALLIED
-#define UNIT_ALLIED 74
-#endif
-
-// Is unit owned by the local computer
-#ifndef UNIT_IS_ON_THIS_COMP
-#define UNIT_IS_ON_THIS_COMP 75
-#endif
-
-// Kills * 100
-#ifndef VETERAN_LEVEL
-#define VETERAN_LEVEL 32
-#endif
-
-#define talfus 6970681
-#define talckfus 6136734
-#define armfus 2936732
-#define armckfus 3384605
-#define corfus 3995730
-#define corckfus 4247847
-#define corsfus 6835975
-
-#define armfusSize ([16] + [1.25])
-#define armckfusSize ([16] + [1.25])
-#define corfusSize ([16] + [1.25])
-#define corckfusSize ([16] + [1.25])
-#define talfusSize ([22.4] + [2.5])
-#define talckfusSize ([22.4] + [2.5])
-#define corsfusSize ([32] + [5])
-
-#define mySize talfusSize
-
-
-static-var shared;
-
 sharing()
 {
 	while(1)
 	{
-			move rays1 to y-axis [5] speed [40];
-			move rays2 to y-axis [0] speed [20];
-			wait-for-move rays1 along y-axis;
-			move rays1 to y-axis [25] speed [40];
-			move rays2 to y-axis [-10] speed [20];
-			wait-for-move rays1 along y-axis;
+		move rays1 to y-axis [5] speed [40];
+		move rays2 to y-axis [0] speed [20];
+		wait-for-move rays1 along y-axis;
+		move rays1 to y-axis [25] speed [40];
+		move rays2 to y-axis [-10] speed [20];
+		wait-for-move rays1 along y-axis;
+	sleep 100;
 	}
+	sleep 100;
 }
 
-Detect()
-{
-	move rays1 to y-axis [25] now;
-	shared = 0;
-	sleep rand(500,5000);
-	var distance, unit_ID, xz, x, z, spynumb, numb_spies;
-	var max, min, height;
-	max = (get MAX_ID);
-	min = (get MIN_ID);
-	while (1)
-	{
-		numb_spies = 0;
-		for (unit_ID = min; unit_ID <= max; ++unit_ID)
-		{
-			if((get UNIT_ALLIED(unit_ID)) == 1)
-			{
-				if((get UNIT_BUILD_PERCENT_LEFT(unit_ID)) == 0)
-				{
-					height = get UNIT_HEIGHT(unit_ID);
-					if((height == corsfus))
-					{
-						xz = get UNIT_XZ(unit_ID) - get PIECE_XZ(base);
-						SECURE_XZ;
-						distance=get XZ_HYPOT(xz);
-						if (distance <= mySize + corsfusSize)
-						{
-							++numb_spies;
-						}
-					}
-					if((height == corfus) || (height == corckfus))
-					{
-						xz = get UNIT_XZ(unit_ID) - get PIECE_XZ(base);
-						SECURE_XZ;
-						distance=get XZ_HYPOT(xz);
-						if (distance <= mySize + corfusSize)
-						{
-							++numb_spies;
-						}
-					}
-					if((height == talfus) || (height == talckfus))
-					{
-						xz = get UNIT_XZ(unit_ID) - get PIECE_XZ(base);
-						SECURE_XZ;
-						distance=get XZ_HYPOT(xz);
-						if (distance <= mySize + talfusSize)
-						{
-							++numb_spies;
-						}
-					}
-					if((height == armfus) || (height == armckfus))
-					{
-						xz = get UNIT_XZ(unit_ID) - get PIECE_XZ(base);
-						SECURE_XZ;
-						distance=get XZ_HYPOT(xz);
-						if (distance <= mySize + armfusSize)
-						{
-							++numb_spies;
-						}
-					}
-				}
-			}
-		}
-		if (numb_spies <= 3)
-		{
-			shared = 0;
-			hide rays1;
-			hide rays2;
-			dont-cache crystal;
-			set ACTIVATION to 0;
-		}
-		if (numb_spies > 3)
-		{
-		 	cache crystal;
-			spin rays1 around y-axis speed <30>;
-			show rays1;
-			spin rays2 around y-axis speed <-15>;
-			show rays2;
-			shared = 1;
-			set ACTIVATION to 1;
-		}
-		sleep rand(4000,6000);
-	}
-}
 SmokeUnit(healthpercent, sleeptime, smoketype)
 {
 	while( get BUILD_PERCENT_LEFT )
@@ -210,9 +74,9 @@ SmokeUnit(healthpercent, sleeptime, smoketype)
 
 Create()
 {
+	hide crystal;
 	hide rays1;
 	hide rays2;
-	hide crystal;
 	hide trueglow;
 	hide flareglow;
 	start-script SmokeUnit();
@@ -220,10 +84,9 @@ Create()
 	{
 		sleep 1000;
 	}
-//	start-script detect();
-//	start-script sharing();
-	dont-cache crystal;
 	spin crystal around y-axis speed <100>;
+	start-script cloakcontrol();
+	start-script sharing();
 }
 
 SweetSpot(piecenum)

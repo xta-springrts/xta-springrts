@@ -1,0 +1,106 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Core;
+	name=Underwater Fission Power Plant;
+	description=Produces Energy;
+	icontype=sea;
+
+	//************************************************************
+	//  Categories
+	//**************
+	Category=CORE ENERGY NOWEAPON NOTAIR NOTSUB;
+	tedclass=ENERGY;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=talon_underwater_fusion_power_plant;
+	unitnumber=196;
+	objectname=talon_underwater_fusion_power_plant.3do;
+	corpse=talon_underwater_fusion_power_plant_dead;
+	buildpic=talon_underwater_fusion_power_plant.png;
+	soundcategory=CORE_UWFUSION;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=3950;
+	buildcostmetal=3873;
+	buildcostenergy=38349;
+	buildtime=94838;
+	footprintx=5;
+	footprintz=5;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=850;
+	energyuse=0;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	buildangle=8192;
+	yardmap=ooooo ooooo ooooo ooooo ooooo;
+	activatewhenbuilt=1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canRepeat=0;
+	canMove=0;
+	canAttack=0;
+	canGuard=0;
+	
+	//************************************************************
+	//  Movement
+	//************
+	maxslope=26;
+	maxwaterdepth=255;
+	minwaterdepth=40;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=192.5;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeas=CRAWL_BLAST; 
+	selfdestructas=armmine5; 
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=0;
+	designation=EF-UW2;
+	downloadable=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+}

@@ -1,4 +1,140 @@
 
+[RIFTERBOY]
+{
+	name=Rift Cannon;
+	weaponType=Cannon;
+	turret=1;
+	range=400;
+	energypershot=200;
+	reloadtime=6.0;
+	weapontimer=0.78;
+	weaponvelocity=450;
+	areaofeffect=96;
+	edgeeffectiveness=0;
+	cylindertargeting = 1;
+	soundstart=cannhvy4;
+	soundhitdry=blueplasma;
+	//minbarrelangle=-24;
+	tolerance=767;
+	burnblow=1;
+	explosiongenerator=custom:PARTICLEBURN;
+	//Nano
+	cegTag=Nano;
+	size=1;
+	rgbcolor=1 0.6 0.6;
+	rgbColor2=0.1 0.1 0.1;
+	stages=20;
+	separation=0.35;
+	alphadecay=0.2;
+	sizedecay=-0.2;
+	//color=1;
+	startsmoke=1;
+	craterboost=0.25;
+	cratermult=0.25;
+	impulsefactor=2.00;
+	impulseboost=2.00;
+	[DAMAGE]
+	{
+		default=125;//250dmg+
+		group_invincible=1;
+	}
+}
+
+[deathsaurcerpart2]
+{
+	ID=27;
+	name=Atomic Blast Weapon;
+	rendertype=4;
+	ballistic=1;
+	turret=1;
+	range=600;
+	reloadtime=3.6;
+	weaponvelocity=250;
+	areaofeffect=516;
+	soundstart=largegun;
+	soundhitdry=xplonuk3;
+	shakemagnitude=24;
+	shakeduration=1.5;
+	explosiongenerator=custom:SMALL_NUKE_EXPLOSION_FX;
+	[DAMAGE]
+	{
+		default=1600;
+		group_landair=1200;
+		group_skyair=500;
+    	group_invincible=1;
+		group_invincible=1;
+	}
+}
+[deathsaucer]
+{
+	name=Atomic Blast Weapon;
+	weaponType=Cannon;
+	turret=1;
+	range=380;
+	reloadtime=3.6;
+	weaponvelocity=250;
+	soundstart=largegun;
+	soundhitdry=xplonuk2;
+	shakemagnitude=32;
+	shakeduration=2;
+	areaofeffect=750;
+	edgeeffectiveness=0.8;
+	explosiongenerator=custom:DEATHCOMMANDER2017;
+	[DAMAGE]
+	{
+		default=5000;
+		group_commanders=2000;
+		lost_commanders=2200;//should only allow for 10 percent room of error
+		group_ships=10000;
+		group_large_ships=10000;
+		group_landair=5000;
+		group_invincible=1;
+	}
+}
+
+[VAUC_ROCKET]
+{
+	ID=100;
+	name=Missiles;
+	rendertype=1;
+	lineofsight=1;
+	explosiongenerator=custom:KBOTROCKETHIT;
+	cegTag=KBOTROCKETTRAIL;
+	//Weapontype=MissileLauncher;
+	//turret=0;
+	vlaunch=1;
+	Weapontype=StarburstLauncher;
+	model=missile.s3o;
+	Texture1=null; //flare//
+	range=400;
+	reloadtime=3.666;
+	weapontimer=0.2;
+	Trajectoryheight=1;
+	weaponvelocity=550;
+	startvelocity=250;
+	weaponacceleration=150;
+	turnrate=40000;
+	areaofeffect=48;
+	metalpershot=0;
+	soundstart=rocklit1;
+	soundhitdry=xplosml2;
+	firestarter=70;
+	smokedelay=0.1;
+	guidance=0;
+	tracks=0;
+	flighttime=4;
+	selfprop=1;
+	smoketrail=0;
+	tolerance=9000;
+	startsmoke=1;
+	[DAMAGE]
+	{
+		default=131;
+		group_landair=207;
+		group_skyair=207;
+		group_invincible=1;
+	}
+}
 [ANNISAUCER_WEAPON]
 {
 	name=Annihilator Weapon;
@@ -17,7 +153,7 @@
 	hardStop=0;
 	range=600;
 	reloadtime=5;
-	energypershot=4000;
+	energypershot=5000;
 	weaponvelocity=1000;
 	areaofeffect=64;
 	soundhitdry=xplolrg1;
@@ -500,6 +636,36 @@
 	}
 }
 
+[FLYING_BulletGUN]
+{
+	explosiongenerator=custom:EMGFLASH;
+	duration=0.04;
+	intensity=0.85;
+	name=Laser;
+	Weapontype=LaserCannon;
+	thickness=0.5;
+	turret=1;
+	range=425;
+	accuracy=100;
+	movingaccuracy=100;
+	reloadtime=0.1;
+	weaponvelocity=1000;
+	areaofeffect=8;
+	soundtrigger=1;
+	soundstart=talongunfirerapid;
+	soundhitdry=talongunhit;
+	firestarter=50;
+	rgbcolor=1.0 0.8 0.25;
+	rgbcolor2=1.0 1.0 1.00;
+	tolerance=1000;
+	[DAMAGE]
+	{
+		default=11;
+		group_landair=2;
+		group_invincible=1;
+	}
+}
+
 [WOLF_GUN]
 {
 	explosiongenerator=custom:KBOTMISSILEHIT;
@@ -540,7 +706,7 @@
 	noautorange=1;
 	weapontimer=7;
 	flighttime=120;
-	weaponvelocity=450;
+	weaponvelocity=2000;
 	weaponacceleration=100;
 	turnrate=28000;
 	areaofeffect=1150;
@@ -560,7 +726,7 @@
 	startsmoke=0;
 	craterboost=0.25;
 	cratermult=0.25;
-	explosiongenerator=custom:RODOFGODBLAST;
+	explosiongenerator=custom:DeathCommander;
 	cegTag=NUCKLEARMINI;
 	Texture1=null;
 	Texture2=null;
@@ -787,23 +953,29 @@
 	lineofsight=1;
 	turret=1;
 	range=370;
-	reloadtime=1.5;
+	reloadtime=2.0;
 	weaponvelocity=800;
 	areaofeffect=8;
 	duration=0.75;
-	soundtrigger=0;
-	soundstart=lghthvy1;
+	beamtime=0.15;
+	beamdecay=0.2;
+	beamttl=2;
+	burst=4;
+	burstrate=0.1;
+	sprayangle=96;
+	soundtrigger=1;
+	soundstart=lghthvyota;
 	soundhitdry=lashit;
 	firestarter=50;
 	beamweapon=1;
-	rgbcolor=1.000 0.706 0.000;
+	rgbcolor=1.000 0.806 0.600;
 	explosiongenerator=custom:LIGHTNING_ORANGE;
 	tolerance=3000;
 	startsmoke=1;
 	guidance=1;
 	[DAMAGE]
 	{
-		default=133;
+		default=55;
 		group_invincible=1;
 	}
 }
@@ -975,13 +1147,13 @@
 }
 [WHITERIOT]
 {
-	name=Particle Cannon;
+	name=Rift Cannon;
 	weaponType=Cannon;
 	turret=1;
-	range=250;
+	range=270;
 	reloadtime=6;
 	weapontimer=0.78;
-	weaponvelocity=1050;
+	weaponvelocity=450;
 	areaofeffect=96;
 	edgeeffectiveness=0;
 	cylindertargeting = 1;
@@ -1002,9 +1174,11 @@
 	startsmoke=1;
 	craterboost=0.25;
 	cratermult=0.25;
+	impulsefactor=2.00;
+	impulseboost=2.00;
 	[DAMAGE]
 	{
-		default=250;
+		default=50;//300dmg+
 		group_invincible=1;
 	}
 }

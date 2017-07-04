@@ -1,0 +1,116 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=talon;
+	name=Floating Radar Tower;
+	description=Radar Tower;
+	icontype=building;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=talon STATIC NOWEAPON RADAR NOTAIR NOTLAND NOTSUB;
+	tedclass=RADAR;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=talon_floating_radar;
+	unitnumber=546;
+	objectname=talon_floating_radar.3do;
+	corpse=talon_radar_tower_dead;
+	buildpic=talon_floating_radar.png;
+	soundcategory=ARM_RADAR;
+	script=talon_radar_tower.cob;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=122;
+	buildcostmetal=83;
+	buildcostenergy=1143;
+	buildtime=1537;
+	footprintx=3;
+	footprintz=3;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=5;
+	energyuse=5;
+	energystorage=0;
+	windgenerator=0.001;
+
+	//************************************************************
+	//  Building
+	//************
+	buildangle=8192;
+	yardmap=ooooooooo;
+	activatewhenbuilt=1;
+	collisionVolumeType = CylY;
+	collisionVolumeScales =37 60 37;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	onoffable=1;
+	canRepeat=0;
+	canMove=0;
+	canAttack=0;
+	canGuard=0;
+
+	//************************************************************
+	//  Movement
+	//************
+	maxslope=10;
+	minwaterdepth=3;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=500;
+	airsightdistance=920;
+	radardistance=2100;
+	losemitheight=48;
+	radaremitheight=48;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeas=SMALL_BUILDINGEX;
+	selfdestructas=SMALL_BUILDING;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=0;
+	designation=AS-EWDL;
+	downloadable=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+  	waterline=6;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+}

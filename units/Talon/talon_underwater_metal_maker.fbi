@@ -5,7 +5,7 @@
 	//********************
 	side=Arm;
 	name=Underwater Metal Maker;
-	description=Floating Metal Maker;
+	description=Hidden Metal Maker;
 	icontype=metal;
 
 	//************************************************************

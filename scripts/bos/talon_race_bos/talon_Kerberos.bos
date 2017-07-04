@@ -11,6 +11,24 @@ static-var  gun_1;
 #define SIG_AIM				2
 
 
+RockOnWaves()
+{
+	while(1)
+	{
+		turn base to x-axis <1.0> speed <1.5>;
+		move base to y-axis [0.0] speed [0.3];
+		wait-for-turn base around x-axis;
+		turn base to x-axis <-1.0> speed <1.5>;
+		move base to y-axis [-0.2] speed [0.3];
+		wait-for-move base along y-axis;
+		move base to y-axis [0.0] speed [0.3];
+		wait-for-turn base around x-axis;
+		turn base to x-axis <1.0> speed <1.5>;
+		move base to y-axis [-0.2] speed [0.3];
+		wait-for-move base along y-axis;
+	}
+}
+
 SmokeUnit(healthpercent, sleeptime, smoketype)
 {
 	while( get BUILD_PERCENT_LEFT )
@@ -44,30 +62,9 @@ Create()
 	hide flare3;
 	hide flare2;
 	hide flare4;
-	dont-shade base;
-	dont-shade body;
-	dont-cache flare1;
-	dont-cache flare2;
-	dont-cache flare3;
-	dont-cache flare4;
-	dont-shade turret;
-	dont-shade sleeve;
-	dont-shade barrel1;
-	dont-shade barrel2;
-	dont-shade barrel3;
-	dont-shade barrel4;
-	dont-shade flare1;
-	dont-shade flare2;
-	dont-shade flare3;
-	dont-shade flare4;
-	dont-cache turret;
-	dont-cache sleeve;
-	dont-cache barrel1;
-	dont-cache barrel2;
-	dont-cache barrel3;
-	dont-cache barrel4;
 	gun_1 = 0;
 	start-script SmokeUnit();
+	start-script RockOnWaves();
 }
 
 AimPrimary(heading, pitch)

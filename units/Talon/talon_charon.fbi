@@ -89,7 +89,7 @@
 	//************************************************************
 	//  Weapons
 	//***********
-	weapon1=ARMPT_LASER;
+	weapon1=MERCENARY_GUN;
 	weapon3=SCOUT_MISSILE;
 	wsec_badtargetcategory=NOTAIR;
 	explodeas=SMALL_UNITEX;

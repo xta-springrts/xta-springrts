@@ -1,0 +1,208 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+piece  base, arms, mis;
+
+static-var  Static_Var_1, Static_Var_2, Static_Var_3, statechg_DesiredState, statechg_StateChanging, slow, bubbling;
+
+
+SmokeUnit(healthpercent, sleeptime, smoketype)
+{
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 400;
+	}
+	while( TRUE )
+	{
+		healthpercent = get HEALTH;
+		if( healthpercent < 66 )
+		{
+			smoketype = 256 | 2;
+			if( Rand( 1, 66 ) < healthpercent )
+			{
+				smoketype = 256 | 1;
+			}
+			emit-sfx smoketype from base;
+		}
+		sleeptime = healthpercent * 50;
+		if( sleeptime < 200 )
+		{
+			sleeptime = 200;
+		}
+		sleep sleeptime;
+	}
+}
+
+bubble()
+{
+	emit-sfx 256 | 3 from mis;
+	emit-sfx 256 | 3 from mis;
+	sleep 100;
+	if(bubbling)
+	{
+		start-script bubble();
+	}
+}
+Go()
+{
+	bubbling=1;
+	spin arms around y-axis speed Static_Var_1 accelerate Static_Var_2;
+	start-script bubble();
+}
+
+Stop()
+{
+	bubbling=0;
+	stop-spin arms around y-axis decelerate Static_Var_3;
+	wait-for-turn arms around y-axis;
+}
+
+InitState()
+{
+	statechg_DesiredState = TRUE;
+	statechg_StateChanging = FALSE;
+}
+
+RequestState(requestedstate, currentstate)
+{
+	if( statechg_StateChanging )
+	{
+		statechg_DesiredState = requestedstate;
+		return (0);
+	}
+	statechg_StateChanging = TRUE;
+	currentstate = statechg_DesiredState;
+	statechg_DesiredState = requestedstate;
+	while( statechg_DesiredState != currentstate )
+	{
+		if( statechg_DesiredState == 0 )
+		{
+			call-script Go();
+			currentstate = 0;
+		}
+		if( statechg_DesiredState == 1 )
+		{
+			call-script Stop();
+			currentstate = 1;
+		}
+	}
+	statechg_StateChanging = FALSE;
+}
+
+Create()
+{
+	Static_Var_1 = 0;
+	Static_Var_2 = 30;
+	Static_Var_3 = 60;
+	slow = 0;
+	dont-cache arms;
+	dont-shade arms;
+	dont-shade base;
+	call-script InitState();
+	start-script SmokeUnit();
+}
+
+QueryPrimary(piecenum)
+{
+	piecenum = mis;
+}
+
+restore()
+{
+	sleep 2000;
+	set ACTIVATION to 1;
+}
+
+AimPrimary(heading, pitch)
+{
+	signal 2;
+	set-signal-mask 2;
+	set ACTIVATION to 0;
+	while(slow)
+	{
+		sleep 10;
+	}
+	while(!Static_Var_1)
+	{
+		sleep 10000;
+	}
+	start-script restore();
+	return (1);
+}
+
+FirePrimary()
+{
+	slow = 1;
+	if (Static_Var_1)
+	{
+		sleep 124000000 / Static_Var_1;
+	}
+	slow = 0;
+}
+
+AimFromPrimary(piecenum)
+{
+	piecenum = mis;
+}
+
+Activate()
+{
+	start-script RequestState(0);
+}
+
+Deactivate()
+{
+	start-script RequestState(1);
+}
+
+SweetSpot(piecenum)
+{
+	piecenum = base;
+}
+
+/*HitByWeapon(Func_Var_1, Func_Var_2)
+{
+	signal 2;
+	set-signal-mask 2;
+	if (!(get BUILD_PERCENT_LEFT))
+	{
+		set ACTIVATION to 0;
+		sleep 8000;
+		set ACTIVATION to 1;
+	}
+}*/
+
+SetSpeed(Func_Var_1)
+{
+	Static_Var_1 = Func_Var_1 * 5;
+}
+
+Killed(severity, corpsetype)
+{
+	if( severity <= 25 )
+	{
+		corpsetype = 1;
+		explode arms type BITMAPONLY | BITMAP1;
+		explode base type BITMAPONLY | BITMAP2;
+		return (0);
+	}
+	if( severity <= 50 )
+	{
+		corpsetype = 2;
+		explode arms type SHATTER | BITMAP1;
+		explode base type BITMAPONLY | BITMAP2;
+		return (0);
+	}
+	if( severity <= 99 )
+	{
+		corpsetype = 3;
+		explode arms type SHATTER | EXPLODE_ON_HIT | BITMAP1;
+		explode base type BITMAPONLY | BITMAP2;
+		return (0);
+	}
+	corpsetype = 3;
+	explode arms type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+	explode base type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+}

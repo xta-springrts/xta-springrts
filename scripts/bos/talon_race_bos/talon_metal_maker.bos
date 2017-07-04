@@ -3,26 +3,99 @@
 #include "sfxtype.h"
 #include "exptype.h"
 
-piece  base, body, NP, SP, EP, WP;
+piece  base, body, NP, SP, EP, WP, glow;
 
-static-var  statechg_DesiredState, statechg_StateChanging;
+static-var  mmState, OPERATING;
 
+Go()
+{
+	turn NP to z-axis <180> speed <100>;
+	turn SP to z-axis <-180> speed <100>;
+	turn EP to x-axis <180> speed <100>;
+	turn WP to x-axis <-180> speed <100>;
+	OPERATING = 1;
+	sleep 1000;
+	mmState = 1;
+	set ACTIVATION to 1;
+}
+
+Stop()
+{	
+	turn NP to z-axis <0> speed <-80>;
+	turn SP to z-axis <0> speed <-80>;
+	turn EP to x-axis <0> speed <-80>;
+	turn WP to x-axis <0> speed <-80>;
+	OPERATING = 0;
+	mmState = 0;
+	set ACTIVATION to 0;
+}
+
+Activate()
+{
+	call-script Go();
+}
+
+Deactivate()
+{
+	call-script Stop();
+}
+
+ImAMetalMaker()
+{
+	mmState = -1;
+	while( TRUE )
+	{
+		if (OPERATING == 1)
+		{
+			if (mmState != 1) {
+				call-script Go();
+			}
+		}
+		else
+		{
+			if (mmState != 0) {
+				call-script Stop();
+			}
+		}
+		sleep 1000;
+	}
+}
+
+Standby()
+{
+	while( TRUE )
+	{
+		if (mmState == 1)
+		{
+		emit-sfx 1025 from glow;
+		}
+		sleep 450;
+	}
+}
+
+MMStatus(State)
+{
+    OPERATING = State;
+    //get PRINT(OPERATING);
+}
 
 SmokeUnit(healthpercent, sleeptime, smoketype)
 {
 	while( get BUILD_PERCENT_LEFT )
 	{
-		sleep 400;
+		sleep 500;
 	}
+	start-script ImAMetalMaker();
+	start-script Standby();
 	while( TRUE )
 	{
 		healthpercent = get HEALTH;
 		if( healthpercent < 66 )
 		{
-			smoketype = 256 | 2;
+			smoketype = 258;
 			if( Rand( 1, 66 ) < healthpercent )
 			{
-				smoketype = 256 | 1;
+				smoketype = 257;
 			}
 			emit-sfx smoketype from base;
 		}
@@ -35,29 +108,17 @@ SmokeUnit(healthpercent, sleeptime, smoketype)
 	}
 }
 
+/*
 Go()
 {
-	turn NP to z-axis <180> speed <100>;
-	turn SP to z-axis <-180> speed <100>;
-	turn EP to x-axis <180> speed <100>;
-	turn WP to x-axis <-180> speed <100>;
-	set ARMORED to 0;
+	show sphereOn;
+	hide sphereOff;
 }
 
 Stop()
 {
-	turn NP to z-axis <0> speed <-100>;
-	turn SP to z-axis <0> speed <-100>;
-	turn EP to x-axis <0> speed <-100>;
-	turn WP to x-axis <0> speed <-100>;
-	wait-for-turn WP around x-axis;
-	set ARMORED to 1;
-}
-
-InitState()
-{
-	statechg_DesiredState = TRUE;
-	statechg_StateChanging = FALSE;
+	hide sphereOn;
+	show sphereOff;
 }
 
 RequestState(requestedstate, currentstate)
@@ -72,31 +133,29 @@ RequestState(requestedstate, currentstate)
 	statechg_DesiredState = requestedstate;
 	while( statechg_DesiredState != currentstate )
 	{
-		if( statechg_DesiredState == 0 )
-		{
-			call-script Go();
-			currentstate = 0;
-		}
-		if( statechg_DesiredState == 1 )
+		if( statechg_DesiredState )
 		{
 			call-script Stop();
 			currentstate = 1;
 		}
+		else
+		{
+			call-script Go();
+			currentstate = 0;
+		}
 	}
 	statechg_StateChanging = FALSE;
 }
-
+*/
 Create()
 {
-	dont-shade NP;
-	dont-shade SP;
-	dont-shade WP;
-	dont-shade EP;
-	dont-shade body;
-	call-script InitState();
+	hide glow;
+	//statechg_DesiredState = TRUE;
+	//statechg_StateChanging = FALSE;
 	start-script SmokeUnit();
 }
 
+/*
 Activate()
 {
 	start-script RequestState(0);
@@ -106,15 +165,7 @@ Deactivate()
 {
 	start-script RequestState(1);
 }
-
-HitByWeapon(Func_Var_1, Func_Var_2)
-{
-	signal 2;
-	set-signal-mask 2;
-	set ACTIVATION to 0;
-	sleep 8000;
-	set ACTIVATION to 1;
-}
+*/
 
 SweetSpot(piecenum)
 {
@@ -127,36 +178,20 @@ Killed(severity, corpsetype)
 	{
 		corpsetype = 1;
 		explode base type BITMAPONLY | BITMAP1;
-		explode np type BITMAPONLY | BITMAP2;
-		explode sp type BITMAPONLY | BITMAP3;
-		explode ep type BITMAPONLY | BITMAP4;
-		explode wp type BITMAPONLY | BITMAP5;
 		return (0);
 	}
 	if( severity <= 50 )
 	{
 		corpsetype = 2;
 		explode base type BITMAPONLY | BITMAP1;
-		explode np type SHATTER | BITMAP5;
-		explode sp type SHATTER | BITMAP5;
-		explode ep type SHATTER | BITMAP5;
-		explode wp type SHATTER | BITMAP5;
 		return (0);
 	}
 	if( severity <= 99 )
 	{
 		corpsetype = 3;
 		explode base type BITMAPONLY | BITMAP1;
-		explode np type SHATTER | BITMAP5;
-		explode sp type SHATTER | BITMAP5;
-		explode ep type SHATTER | BITMAP5;
-		explode wp type SHATTER | BITMAP5;
 		return (0);
 	}
 	corpsetype = 3;
 	explode base type SHATTER | EXPLODE_ON_HIT | BITMAP1;
-	explode np type SHATTER | BITMAP5;
-	explode sp type SHATTER | BITMAP5;
-	explode ep type SHATTER | BITMAP5;
-	explode wp type SHATTER | BITMAP5;
 }

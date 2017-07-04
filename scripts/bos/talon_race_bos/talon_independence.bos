@@ -321,14 +321,17 @@ Killed(severity, corpsetype)
 {
 	if( severity <= 25 )
 	{
+		emit-sfx UNIT_SFX1 from base;
 		return (0);
 	}
 	if( severity <= 50 )
 	{
+		emit-sfx UNIT_SFX1 from base;
 		return (0);
 	}
 	if( severity <= 99 )
 	{
+		emit-sfx UNIT_SFX1 from base;
 		return (0);
 	}
 }

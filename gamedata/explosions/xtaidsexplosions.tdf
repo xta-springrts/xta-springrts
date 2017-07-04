@@ -41,12 +41,12 @@
 		Texture=flamespark;
 		airdrag=0.95;
 		
-		particleLifeSpread=0.3; //random decay//
-		particleSpeedSpread=3;  //random speed//
+		particleLifeSpread=3; //random decay//
+		particleSpeedSpread=5;  //random speed//
 		
-		particleLife=27;
+		particleLife=7;
 		numParticles=23; 
-		particleSpeed=7.1;
+		particleSpeed=3.1;
 		particleSize=3.1;
 		
 		
@@ -75,9 +75,9 @@
 		
 		particleLifeSpread=10; //random decay//
 		
-		particleLife=27; 
-		numParticles=23; 
-		particleSpeed=10.1;
+		particleLife=12; 
+		numParticles=7; 
+		particleSpeed=14.1;
 		particleSize=3.1;
 		
 		
@@ -91,73 +91,8 @@
 	ground=1;
 	count=1;
 	}
-[heatcloud]
-   		{
-		class=heatcloud;
-      		[properties]
-      		{
-      		heat = 5;
-      		maxheat = 8;
-      		heatFalloff = 1;
-      		size = 2.55;
-      		sizeGrowth = 1.5;
-      		sizemod = 0;
-      		sizemodmod = 0;
-      		speed = 0, 0.10r, 0;
-      		pos = 0, -0.15, 0;
-      		}
-	air=1;
-      	water=1;
-      	ground=1;
-      	count=5;
-	}
-[heatcloud2]
-   		{
-		class=heatcloud;
-      		[properties]
-      		{
-      		heat = 5;
-      		maxheat = 9;
-      		heatFalloff = 1;
-      		size = 1.33;
-      		sizeGrowth = 2.0;
-      		sizemod = 0;
-      		sizemodmod = 0;
-      		speed = 0, 0.10r, 0;
-      		pos = 0, -0.15, 0;
-      		}
-	air=1;
-      	water=1;
-      	ground=1;
-      	count=5;
-	}
-[heatcloud3]
-   		{
-		class=heatcloud;
-      		[properties]
-      		{
-      		heat = 5;
-      		maxheat = 12;
-      		heatFalloff = 1;
-      		size = 8.22;
-      		sizeGrowth = -2.1;
-      		sizemod = 0;
-      		sizemodmod = 0;
-      		speed = 0, 0.10r, 0;
-      		pos = 0, -0.15, 0;
-      		}
-	air=1;
-      	water=1;
-      	ground=1;
-      	count=5;
-	}
 
-		underwater=1;
-		air=1;
-		water=1;
-		ground=1;
-		count=48;
-	}
+}
 
 [BLUE]
 {

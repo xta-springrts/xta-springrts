@@ -5,7 +5,7 @@
 	//********************
 	side=Arm;
 	name=Armadillo;
-	description=Heavy Missile Launcher;
+	description=Frontline Support;
 
 	//************************************************************
 	//  Categories
@@ -28,9 +28,9 @@
 	//********************
 	maxdamage=4054;
 	healtime=30;
-	buildcostmetal=875;
+	buildcostmetal=925;
 	buildcostenergy=10432;
-	buildtime=17888;
+	buildtime=15888;
 	footprintx=3;
 	footprintz=3;
 

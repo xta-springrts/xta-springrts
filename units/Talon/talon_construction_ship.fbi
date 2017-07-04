@@ -21,7 +21,7 @@
 	unitnumber=24;
 	objectname=talon_construction_ship.3do;
 	corpse=talon_construction_ship_dead;
-	buildpic=talon_construction_ship.DDS;
+	buildpic=talon_construction_ship.png;
 	soundcategory=arm_CSHIP;
 
 	//************************************************************

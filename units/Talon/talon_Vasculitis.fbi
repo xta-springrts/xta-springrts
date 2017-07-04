@@ -7,11 +7,11 @@
 	Designation=talon_Vasculitis;
 	Name=Vasculitis;
 	Description=Multi-Purpose Patrol Frigate;
-	buildpic=talon_Vasculitis.png;
+	buildpic=talon_vasculitis.png;
 	FootprintX=3;
 	FootprintZ=3;
 	BuildCostEnergy=2312;
-	BuildCostMetal=387;
+	BuildCostMetal=385;
 	MaxDamage=1571;
 	EnergyUse=1;
 	BuildTime=3654;
@@ -30,7 +30,6 @@
 	SelfDestructAs=SMALL_UNIT;
 	Category=ARM SHIP WEAPON NOTAIR NOTSUB;
 	TEDClass=SHIP;
-	buildpic=talon_Vasculitis.jpg;
 	Copyright=Copyright 1997 Humongous Entertainment. All rights reserved.;
 	UnitNumber=65564453;
 	firestandorders=1;
@@ -54,9 +53,9 @@
 	MovementClass=Smallboat;
 	icontype=sea;
 	buildangle=16384;
-	Weapon1=BOAT_ROCKET1;
-	Weapon2=BOAT_ROCKET2;
-	Weapon3=BOAT_TORPEDO;
+	Weapon1=BOAT_ROCKET2;
+	Weapon2=BOAT_TORPEDO;
+	Weapon3=VAUC_ROCKET;
 	canattack=1;
 	ActivateWhenBuilt=1;
 	MinWaterDepth=12;

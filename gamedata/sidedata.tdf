@@ -4467,6 +4467,20 @@
 		canbuild8=talon_medic;
 	}
 
+	[talon_adv_shipyard]
+	{
+		canbuild1=talon_adv_construction_ship;
+		canbuild2=core_hive;
+		canbuild3=core_shark;
+		canbuild4=core_missile_frigate;
+		canbuild6=core_nightfall;
+		canbuild7=core_executioner;
+		canbuild8=core_warlord;
+		canbuild9=core_phantom;
+		canbuild10=core_shredder;
+		canbuild12=core_leviathan;
+		canbuild13=Zulu;
+	}
 	[talon_adv_vehicle_plant]
 	{
 		canbuild1=talon_adv_construction_vehicle;
@@ -4566,9 +4580,49 @@
 		canbuild36=talon_rod_of_god;
 	 	//canbuild37=ARMFFF;//xtaids
 	 	//canbuild38=MERCURY;//xtaids
-		canbuild39=talon_exp_vehicle_plant;
-		canbuild40=talon_nano_tower;
+		canbuild37=talon_underwater_energy_storage;
+		canbuild38=talon_underwater_metal_storage;
+		canbuild39=talon_Underwater_moho_mine;
+		canbuild40=talon_underwater_fusion_power_plant;
+		canbuild41=talon_advanced_sonar_station;
+		canbuild42=Core_Resistor;
+		canbuild43=talon_underwater_metal_maker;
+		canbuild44=talon_advanced_torpedo_launcher;
+		canbuild45=talon_Kerberos;
+		canbuild46=talon_lighthouse;
+		canbuild47=talon_torpedo_launcher;
+		canbuild48=arm_naval_flakker;
+		canbuild49=talon_exp_vehicle_plant;
+		canbuild50=talon_nano_tower;
 	}
+	[talon_adv_construction_ship]
+	{
+		canbuild1=talon_floating_dragons_teeth;
+		canbuild2=talon_underwater_metal_extractor;
+		canbuild3=talon_Underwater_moho_mine;
+		canbuild4=talon_underwater_metal_maker;
+		canbuild5=talon_underwater_energy_storage;
+		canbuild6=talon_underwater_metal_storage;
+		canbuild7=talon_underwater_fusion_power_plant;
+		canbuild8=talon_floating_radar;
+		canbuild9=talon_advanced_radar_tower;
+		canbuild10=talon_advanced_sonar_station;
+		canbuild11=talon_conspiracy;
+		canbuild12=talon_air_repair_pad;
+		canbuild13=arm_repulsor;
+		canbuild14=talon_advanced_torpedo_launcher;
+		canbuild15=talon_Kerberos;
+		canbuild16=talon_lighthouse;
+		canbuild17=talon_torpedo_launcher;
+		canbuild18=arm_naval_flakker;
+		//canbuild19=arm_sub_pen;
+		canbuild20=talon_shipyard;
+		canbuild21=talon_adv_shipyard;
+		canbuild22=talon_seaplane_platform;
+		canbuild23=talon_hovercraft_platform;
+		canbuild24=talon_adv_hovercraft_platform; 
+		canbuild25=talon_nano_tower;
+	}	
 	[talon_adv_construction_vehicle]
 	{
 	 	canbuild1=talon_fortification_wall;
@@ -4638,7 +4692,7 @@
 		canbuild11=talon_sub_pen;
 		canbuild12=talon_light_laser_tower;
 		canbuild13=talon_radar_tower;
-		//canbuild14=arm_floating_radar;
+		canbuild14=talon_floating_radar;
 		canbuild15=talon_sonar_station;
 		canbuild16=talon_tidal_generator;
 		canbuild17=talon_underwater_energy_storage;
@@ -4674,7 +4728,7 @@
 		canbuild11=talon_sub_pen;
 		canbuild12=talon_light_laser_tower;
 		canbuild13=talon_radar_tower;
-		//canbuild14=arm_floating_radar;
+		canbuild14=talon_floating_radar;
 		canbuild15=talon_sonar_station;
 		canbuild16=talon_tidal_generator;
 		canbuild17=talon_underwater_energy_storage;
@@ -4710,7 +4764,7 @@
 		canbuild11=talon_sub_pen;
 		canbuild12=talon_light_laser_tower;
 		canbuild13=talon_radar_tower;
-		//canbuild14=arm_floating_radar;
+		canbuild14=talon_floating_radar;
 		canbuild15=talon_sonar_station;
 		canbuild16=talon_tidal_generator;
 		canbuild17=talon_underwater_energy_storage;
@@ -4746,7 +4800,7 @@
 		canbuild11=talon_sub_pen;
 		canbuild12=talon_light_laser_tower;
 		canbuild13=talon_radar_tower;
-		//canbuild14=arm_floating_radar;
+		canbuild14=talon_floating_radar;
 		canbuild15=talon_sonar_station;
 		canbuild16=talon_tidal_generator;
 		canbuild17=talon_underwater_energy_storage;
@@ -4782,7 +4836,7 @@
 		canbuild11=talon_sub_pen;
 		canbuild12=talon_light_laser_tower;
 		canbuild13=talon_radar_tower;
-		//canbuild14=arm_floating_radar;
+		canbuild14=talon_floating_radar;
 		canbuild15=talon_sonar_station;
 		canbuild16=talon_tidal_generator;
 		canbuild17=talon_underwater_energy_storage;
@@ -4857,13 +4911,13 @@
 		canbuild18=talon_dragons_teeth;
 		canbuild19=talon_painless;
 		canbuild20=talon_sonar_station;
-		//canbuild21=arm_floating_radar;
+		canbuild21=talon_floating_radar;
 		canbuild22=talon_tidal_generator;
 		canbuild23=talon_underwater_energy_storage;
 		canbuild24=talon_underwater_metal_storage;
 		canbuild25=talon_underwater_metal_extractor;
 		canbuild26=talon_underwater_metal_maker;
-		//canbuild27=arm_sentry;
+		canbuild27=talon_lighthouse;
 		canbuild28=talon_floating_dragons_teeth;
 		canbuild29=talon_Kerberos;
 		canbuild30=talon_torpedo_launcher;
@@ -4900,7 +4954,7 @@
 		canbuild18=talon_dragons_teeth;
 		canbuild19=talon_painless;
 		canbuild20=talon_sonar_station;
-		//canbuild21=arm_floating_radar;
+		canbuild21=talon_floating_radar;
 		canbuild22=talon_tidal_generator;
 		canbuild23=talon_underwater_energy_storage;
 		canbuild24=talon_underwater_metal_storage;
@@ -4908,7 +4962,7 @@
 		canbuild26=talon_underwater_metal_maker;
 		canbuild27=talon_kerberos;
 		canbuild28=talon_floating_dragons_teeth;
-		//canbuild29=talon_stingray;
+		canbuild29=talon_lighthouse;
 		canbuild30=talon_torpedo_launcher;
 		//canbuild31=arm_floating_light_laser_tower;
 		//canbuild32=arm_spidernest_Xtra;//Spiderpack vs. Tortoise
@@ -4920,9 +4974,9 @@
 		canbuild38=talon_adv_hovercraft_platform;
 		canbuild39=talon_moho_mine;
 		canbuild40=talon_air_repair_pad;
-		//canbuild41=ARM_Underwater_moho_mine;
+		canbuild41=talon_Underwater_moho_mine;
 		canbuild42=talon_Armistice;
-		//canbuild43=arm_repulsor;
+		canbuild43=arm_repulsor;
 		canbuild44=talon_nano_tower;
 	}
 
@@ -4932,12 +4986,12 @@
 		canbuild2=talon_torpedo_launcher;
 		canbuild3=talon_tidal_generator;
 		canbuild4=talon_sonar_station;
-		//canbuild5=arm_floating_radar;
+		canbuild5=talon_floating_radar;
 		canbuild6=talon_light_laser_tower;
 		//canbuild7=arm_floating_light_laser_tower;
 		canbuild8=talon_shipyard;
 		//canbuild9=talon_sub_pen;
-		//canbuild10=arm_sentry;
+		canbuild10=talon_lighthouse;
 		canbuild11=talon_underwater_energy_storage;
 		canbuild12=talon_underwater_metal_maker;
 		canbuild13=talon_underwater_metal_storage;
@@ -5164,7 +5218,7 @@
 		canbuild5=talon_striker;
 		canbuild6=talon_herison;
 		canbuild7=talon_husher;//xtaids
-		canbuild8=talon_decoy_commander;//xtaids
+		canbuild8=talon_waddler;//xtaids
 	}
 	//TACTICS VERSION BELOW, SECRET TESTING
 

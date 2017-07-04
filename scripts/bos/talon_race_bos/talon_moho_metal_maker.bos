@@ -3,26 +3,96 @@
 #include "sfxtype.h"
 #include "exptype.h"
 
-piece  base, body, top, cover;
+piece  base, body, top, cover, glow;
 
-static-var  statechg_DesiredState, statechg_StateChanging;
+static-var  mmState, OPERATING;
 
+Go()
+{
+	move top to y-axis [10] speed [5];
+	OPERATING = 1;
+	mmState = 1;
+	set ACTIVATION to 1;
+}
+
+Stop()
+{	
+	move top to y-axis [0] speed [4];
+	OPERATING = 0;
+	mmState = 0;
+	set ACTIVATION to 0;
+}
+
+Activate()
+{
+	call-script Go();
+}
+
+Deactivate()
+{
+	call-script Stop();
+}
+
+ImAMetalMaker()
+{
+	mmState = -1;
+	while( TRUE )
+	{
+		if (OPERATING == 1)
+		{
+			if (mmState != 1) {
+				call-script Go();
+			}
+		}
+		else
+		{
+			if (mmState != 0) {
+				call-script Stop();
+			}
+		}
+		sleep 1000;
+	}
+}
+
+Standby()
+{
+	while( TRUE )
+	{
+		if (mmState == 1)
+		{
+		emit-sfx 1025 from glow;
+		sleep 200;
+		emit-sfx 1025 from glow;
+		sleep 200;
+		emit-sfx 1026 from glow;
+		}
+		sleep 200;
+	}
+}
+
+MMStatus(State)
+{
+    OPERATING = State;
+    //get PRINT(OPERATING);
+}
 
 SmokeUnit(healthpercent, sleeptime, smoketype)
 {
 	while( get BUILD_PERCENT_LEFT )
 	{
-		sleep 400;
+		sleep 500;
 	}
+	start-script ImAMetalMaker();
+	start-script Standby();
 	while( TRUE )
 	{
 		healthpercent = get HEALTH;
 		if( healthpercent < 66 )
 		{
-			smoketype = 256 | 2;
+			smoketype = 258;
 			if( Rand( 1, 66 ) < healthpercent )
 			{
-				smoketype = 256 | 1;
+				smoketype = 257;
 			}
 			emit-sfx smoketype from base;
 		}
@@ -35,26 +105,17 @@ SmokeUnit(healthpercent, sleeptime, smoketype)
 	}
 }
 
+/*
 Go()
 {
-	dont-cache top;
-	move top to y-axis [10] speed [5];
-	set ARMORED to 0;
-	wait-for-move top along y-axis;
+	show sphereOn;
+	hide sphereOff;
 }
 
 Stop()
 {
-	move top to y-axis [0] speed [5];
-	set ARMORED to 1;
-	wait-for-move top along y-axis;
-	cache top;
-}
-
-InitState()
-{
-	statechg_DesiredState = TRUE;
-	statechg_StateChanging = FALSE;
+	hide sphereOn;
+	show sphereOff;
 }
 
 RequestState(requestedstate, currentstate)
@@ -69,37 +130,30 @@ RequestState(requestedstate, currentstate)
 	statechg_DesiredState = requestedstate;
 	while( statechg_DesiredState != currentstate )
 	{
-		if( statechg_DesiredState == 0 )
-		{
-			call-script Go();
-			currentstate = 0;
-		}
-		if( statechg_DesiredState == 1 )
+		if( statechg_DesiredState )
 		{
 			call-script Stop();
 			currentstate = 1;
 		}
+		else
+		{
+			call-script Go();
+			currentstate = 0;
+		}
 	}
 	statechg_StateChanging = FALSE;
 }
-
+*/
 Create()
 {
-	dont-shade body;
-	dont-shade top;
-	dont-shade cover;
-	dont-cache cover;
 	hide cover;
-	call-script InitState();
+	hide glow;
+	//statechg_DesiredState = TRUE;
+	//statechg_StateChanging = FALSE;
 	start-script SmokeUnit();
-	while( get BUILD_PERCENT_LEFT )
-	{
-		sleep 500;
-	}
-	show cover;
-	
 }
 
+/*
 Activate()
 {
 	start-script RequestState(0);
@@ -109,18 +163,7 @@ Deactivate()
 {
 	start-script RequestState(1);
 }
-
-HitByWeapon(Func_Var_1, Func_Var_2)
-{
-	signal 2;
-	set-signal-mask 2;
-	if (!(get BUILD_PERCENT_LEFT))
-	{
-		set ACTIVATION to 0;
-		sleep 8000;
-		set ACTIVATION to 1;
-	}
-}
+*/
 
 SweetSpot(piecenum)
 {

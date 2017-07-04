@@ -21,7 +21,7 @@
 	unitnumber=59;
 	objectname=talon_mainstay.3do;
 	corpse=talon_mainstay_dead;
-	buildpic=talon_mainstay.DDS;
+	buildpic=talon_mainstay.png;
 	soundcategory=ARM_SHIP;
 
 	//************************************************************

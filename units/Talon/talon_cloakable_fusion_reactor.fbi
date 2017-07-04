@@ -4,7 +4,7 @@
 	//  Unit Description
 	//********************
 	side=Arm;
-	name=Medium Cloakable Fusion Reactor;
+	name=Medium Cloakable Fission Reactor;
 	description=Produces Energy;
 	icontype=fusion;
 
@@ -106,5 +106,10 @@
 	//************************************************************
 	//  To be removed
 	//*****************
+	[SFXTypes]
+	{
+	explosiongenerator0=custom:REACTORTALONBlue;
+	explosiongenerator1=custom:REACTORTALONBlue;
+	}
 
 }

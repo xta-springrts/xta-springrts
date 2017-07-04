@@ -31,7 +31,7 @@ for i=1,#WeaponDefs do
 end
 
 function gadget:Explosion(weaponID, px, py, pz, ownerID)
-  if (nux[weaponID] and py-GetGroundHeight(px,pz)>100) then
+  if (nux[weaponID] and py-GetGroundHeight(px,pz)>200) then
     return true
   end
   return false

@@ -1,0 +1,134 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=talon;
+	name=Adv. Construction Ship;
+	description=Tech Level 2;
+	icontype=sea;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=talon SHIP CONSTR NOWEAPON NOTAIR NOTSUB;
+	tedclass=SHIP;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=talon_adv_construction_ship;
+	unitnumber=24;
+	objectname=talon_adv_construction_ship.3do;
+	corpse=talon_adv_construction_ship_dead;
+	buildpic=talon_adv_construction_ship.png;
+	soundcategory=arm_CSHIP;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=1111;
+	healtime=42;
+	buildcostmetal=668;
+	buildcostenergy=7030;
+	buildtime=11121;
+	footprintx=4;
+	footprintz=4;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalmake=0.5;
+	metalstorage=50;
+	energymake=16;
+	energyuse=0.1;
+	energystorage=50;
+	windgenerator=0.001;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=1;
+	builddistance=275; //200//
+	workertime=400; //was 240//
+	RepairSpeed=400;
+	ReclaimSpeed=400;
+	TerraformSpeed=800;//speed up terraforming
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canguard=1;
+	canmove=1;
+	canpatrol=1;
+	canreclamate=1;
+	canstop=1;
+	floater=1;
+	canFight=1;
+	
+	//************************************************************
+	//  Movement
+	//************
+	movementclass=BOATSUB;
+	turnrate=200;
+	acceleration=0.04;
+	brakerate=0.05;
+	maxvelocity=2.1;
+	minwaterdepth=15;
+	waterline=3.5;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=536;
+	radardistance=0;
+	sonardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeas=NANO_UNITEX;
+	selfdestructas=NANO_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	mobilestandorders=1;
+	standingmoveorder=1;
+	defaultmissiontype=Standby;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=1;
+	designation=talon-CS1;
+	downloadable=1;
+	maneuverleashlength=640;
+	shootme=1;
+	steeringmode=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	collisionVolumeType = box;
+	collisionVolumeScales =35 45 85;
+	collisionVolumeOffsets = 0 -10 0;
+	collisionVolumeTest = 1;
+	pieceTrailCEGTag=NanoDebree;//bleh
+	pieceTrailCEGRange = 2;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+	[SFXTypes]
+	{
+	explosiongenerator0=custom:Nano;
+	explosiongenerator1=custom:Nano;
+	explosiongenerator2=custom:UNITFIRE;
+	}
+
+}

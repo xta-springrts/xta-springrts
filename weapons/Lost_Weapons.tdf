@@ -654,12 +654,15 @@
 	lineofsight=1;
 	turret=1;
 	range=315;
-	reloadtime=1.333;
+	reloadtime=1.7;
 	weaponvelocity=800;
 	areaofeffect=8;
-	duration=0.25;
+	duration=0.3;
+	beamtime=0.15;
+	beamdecay=0.2;
+	beamttl=5;
 	soundtrigger=0;
-	soundstart=lghthvy1;
+	soundstart=lghthvyota;
 	soundhitdry=lashit;
 	firestarter=50;
 	beamweapon=1;
@@ -670,7 +673,7 @@
 	guidance=1;
 	[DAMAGE]
 	{
-		default=91;
+		default=100;
 		group_invincible=1;
 	}
 }
@@ -1608,7 +1611,7 @@
 	startsmoke=0;
 	craterboost=0.25;
 	cratermult=0.25;
-	explosiongenerator=custom:NUKE_EXPLOSION_FX_COM;
+	explosiongenerator=custom:DeathCommander;
 	cegTag=dgunflare;
 	Texture1=null;
 	Texture2=null;

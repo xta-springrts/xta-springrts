@@ -1,0 +1,137 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+piece  torp1, torp2, base, tail, w1, w2;
+
+static-var  gun_1;
+
+// Signal definitions
+#define SIG_MOVE			2
+#define BANK_MORE 80
+#define BANK_LESS 40
+#define BANK_DAMP_SPEED <30>
+#define BANK_REFRESH 300// Put some time long enough for the unit to have travelled a while, but short enough so the script doesn't have a too long reaction time
+#define BANK_SIGNIFICATIVE_SPEED [1]// Actually, it's not a speed, but a distance, the distance covered during BANK_REFRESH. If that distance is too low, the difference between the two xz is deemed too low to get a significative angle out of it. Since half of digit are lost when x and z get packed into xz, any distance under 65536=[0.4] will lose all its significative digits and so will be unuseable.
+
+SmokeUnit(healthpercent, sleeptime, smoketype)
+{
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 400;
+	}
+	healthpercent = get HEALTH;
+	sleeptime = healthpercent*healthpercent;
+	if( healthpercent < 66 )
+	{
+		emit-sfx 256 | 3 from base;
+		sleep sleeptime;
+		emit-sfx 256 | 3 from torp2;
+		if( Rand( 1, 66 ) > healthpercent )
+		{
+			emit-sfx 256 | 3 from torp1;
+			sleep sleeptime;
+			emit-sfx 256 | 3 from tail;
+			sleep sleeptime;
+			emit-sfx 256 | 3 from base;
+			sleep sleeptime;
+			emit-sfx 256 | 3 from torp2;
+			sleep sleeptime;
+		}
+	}
+	start-script smokeunit();
+}
+
+BankClerck()
+{
+	var present_xz, past_xz, banking_angle;
+	while(1)
+	{
+		present_xz=get PIECE_XZ(base);
+		banking_angle=0;
+		if (get XZ_HYPOT(present_xz - past_xz)>=BANK_SIGNIFICATIVE_SPEED)
+			{
+			banking_angle=(0 - (((get XZ_ATAN(past_xz - present_xz))*BANK_MORE)/BANK_LESS));
+			}
+		turn base to z-axis banking_angle speed BANK_DAMP_SPEED;
+		past_xz=present_xz;
+		sleep BANK_REFRESH;
+	}
+}
+
+Create()
+{
+	spin tail around z-axis speed <50>;
+	gun_1 = torp1;
+	start-script SmokeUnit();
+	start-script BankClerck();
+}
+
+StartMoving()
+{
+	signal SIG_MOVE;
+	set-signal-mask SIG_MOVE;
+	while( TRUE )
+	{
+		emit-sfx 3 from w1;
+		emit-sfx 3 from w2;
+		sleep 250;
+	}
+}
+
+StopMoving()
+{
+	signal SIG_MOVE;
+}
+
+FirePrimary()
+{
+	gun_1 = !gun_1;
+}
+
+QueryPrimary(piecenum)
+{
+	piecenum = gun_1;
+}
+
+SweetSpot(piecenum)
+{
+	piecenum = base;
+}
+
+Killed(severity, corpsetype)
+{
+	if( severity <= 25 )
+	{
+		corpsetype = 1;
+		explode base type FALL | FIRE | SMOKE | EXPLODE_ON_HIT | BITMAP1;
+		explode torp1 type BITMAPONLY | BITMAP2;
+		explode torp2 type BITMAPONLY | BITMAP3;
+		explode tail type BITMAPONLY | BITMAP4;
+		return (0);
+	}
+	if( severity <= 50 )
+	{
+		corpsetype = 2;
+		explode base type FALL | FIRE | SMOKE | EXPLODE_ON_HIT | BITMAP1;
+		explode torp1 type BITMAPONLY | BITMAP2;
+		explode torp2 type BITMAPONLY | BITMAP3;
+		explode tail type BITMAPONLY | BITMAP4;
+		return (0);
+	}
+	if( severity <= 99 )
+	{
+		corpsetype = 3;
+		explode base type FALL | FIRE | SMOKE | EXPLODE_ON_HIT | BITMAP1;
+		explode torp1 type BITMAPONLY | BITMAP2;
+		explode torp2 type BITMAPONLY | BITMAP3;
+		explode tail type BITMAPONLY | BITMAP4;
+		return (0);
+	}
+	corpsetype = 3;
+	explode base type FALL | FIRE | SMOKE | EXPLODE_ON_HIT | BITMAP1;
+	explode torp1 type BITMAPONLY | BITMAP2;
+	explode torp2 type BITMAPONLY | BITMAP3;
+	explode tail type BITMAPONLY | BITMAP4;
+}

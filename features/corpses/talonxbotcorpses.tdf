@@ -1,4 +1,45 @@
 
+[talon_waddler_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=arm_corpses;
+	object=talon_waddler_dead;
+	featuredead=talon_waddler_heap;
+	footprintx=2;
+	footprintz=2;
+	height=20;
+	blocking=1;
+	hitdensity=100;
+	metal=414;
+	damage=700;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=27 32 23;//#AUTO#
+	collisionVolumeOffsets=0 -4 0;//#AUTO#
+}
+[talon_waddler_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=2x2e;
+	footprintx=2;
+	footprintz=2;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	metal=257;
+	damage=700;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=27 8 23;//#AUTO#
+	collisionVolumeOffsets=0 -4 0;//#AUTO#
+}
 [talon_generator_dead]
 {
 	world=All Worlds;

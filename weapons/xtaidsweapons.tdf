@@ -1334,10 +1334,6 @@
 	areaofeffect=516;
 	soundstart=largegun;
 	soundhitdry=xplonuk3;
-	explosiongaf=fx;
-	explosionart=explode2;
-	waterexplosiongaf=h2obboom;
-	waterexplosionart=h2obboom;
 	shakemagnitude=24;
 	shakeduration=1.5;
 	explosiongenerator=custom:SMALL_NUKE_EXPLOSION_FX;

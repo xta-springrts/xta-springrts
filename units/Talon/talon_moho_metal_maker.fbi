@@ -107,7 +107,9 @@
 	
 	[SFXTypes]
 	{
-	explosiongenerator0=custom:GlowSmall;
-	explosiongenerator1=custom:ReactorSequence;
+		explosiongenerator0=custom:BIGMETALYELLOW;
+		explosiongenerator1=custom:BIGMETALYELLOW;
+		explosiongenerator2=custom:BIGMETALRED;
 	}
+
 }

@@ -4,7 +4,7 @@
 	//  Unit Description
 	//********************
 	side=Core;
-	name=Heavy Fusion Power Plant;
+	name=Heavy Fisson Power Plant;
 	description=Produces Energy;
 	icontype=chfusion;
 
@@ -107,8 +107,8 @@
 	//*****************
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:ReactorTINYSequence;
-		explosiongenerator1=custom:ReactorBIgSequence;
+		explosiongenerator0=custom:REACTORTALONYELLOW;
+		explosiongenerator1=custom:REACTORTALONYELLOW;
 	}
 
 }
