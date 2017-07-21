@@ -1100,7 +1100,7 @@ function widget:DrawScreen()
 			local txt = strInfo or "..."
 			
 			if myState == PRESENT then
-				txt = table.concat({strInfo," (click to change Commander)"})
+				txt = table.concat({txt," (click to change Commander)"})
 			elseif myState == MARKED then
 				txt = "Press ready (or click to change Commander)"
 			elseif myState == OTHER then
