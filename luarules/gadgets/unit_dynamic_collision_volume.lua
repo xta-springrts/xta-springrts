@@ -41,7 +41,7 @@ local pairs = pairs
 local min = math.min
 local Echo = Spring.Echo
 local startIndex
-local spring101 = (Game.version > "100" and Game.version:sub(1,1) == "1")
+local spring101 = Script.IsEngineMinVersion(101)
 
 if (gadgetHandler:IsSyncedCode()) then
 
