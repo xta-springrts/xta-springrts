@@ -4,8 +4,8 @@
 	//  Unit Description
 	//********************
 	side=Arm;
-	name=Gorgon;
-	description=Bolt-Thrower Gravitank;
+	name=Chimaera;
+	description=Dual-Weapon Gravitank;
 	icontype=hover;
 
 	//************************************************************
@@ -17,21 +17,21 @@
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=talon_gorgon;
+	unitname=talon_Chimaera;
 	unitnumber=174;
-	objectname=talon_gorgon.3do;
-	corpse=talon_gorgon_dead;
-	buildpic=talon_gorgon.png;
+	objectname=talon_Chimaera.3do;
+	corpse=talon_Chimaera_dead;
+	buildpic=talon_Chimaera.png;
 	soundcategory=ARM_HOVER_MID;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=6587; //was 2155// 
+	maxdamage=10789; //was 2155// 
 	healtime=30;
-	buildcostmetal=1000; //was 372//was 864 -- OTA 272
-	buildcostenergy=13742; //was 2856 // -- OTA 2856
-	buildtime=18740; //was 8115// -- OTA 8115
+	buildcostmetal=1931; //was 372//was 864 -- OTA 272
+	buildcostenergy=20742; //was 2856 // -- OTA 2856
+	buildtime=33740; //was 8115// -- OTA 8115
 	footprintx=3;
 	footprintz=3;
 
@@ -70,7 +70,7 @@
 	turnrate=500;
 	acceleration=0.4;
 	brakerate=0.3;
-	maxvelocity=1.6;
+	maxvelocity=1.2;
 	maxslope=16;
 	maxwaterdepth=0;
 
@@ -83,7 +83,8 @@
 	//************************************************************
 	//  Weapons
 	//***********
-	weapon1=Gorgon_Bolt;
+	weapon1=TALON_LASERCHIMERA;//hlt
+	weapon3=TALONCHIMERA_CANNON;//cannon
 	nochasecategory=VTOL;
 	badtargetcategory=VTOL;
 	wpri_badtargetcategory=VTOL;
@@ -126,6 +127,8 @@
 	{
 	//explosiongenerator0=custom:snipeflare;
 	explosiongenerator0=custom:BluePOPUPFLARE;
+	explosiongenerator1=custom:greenflare;
+	explosiongenerator2=custom:POPUPFLAREFAST;
 	}
 
 }

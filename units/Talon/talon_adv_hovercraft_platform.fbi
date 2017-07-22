@@ -33,7 +33,7 @@
 	buildcostenergy=4277;
 	buildtime=13520;
 	FootprintX=6;
-	FootprintZ=5;
+	FootprintZ=6;
 
 	//************************************************************
 	//  Resources
@@ -46,7 +46,7 @@
 	//************************************************************
 	//  Building
 	//************
-	YardMap=oyyyyo occcco occcco occcco oyyyyo;
+	YardMap=oyyyyo oyyyyo occcco occcco oyyyyo oyyyyo;
 	collisionVolumeType=Box;
 	collisionVolumeScales=78 28 66;
 	collisionVolumeTest = 1;

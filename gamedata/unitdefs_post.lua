@@ -473,6 +473,8 @@ if (modOptions and not tobool(modOptions.spidertortoise)) then
 	"core_tortoise_plant",
 
 	"lost_tower_yard",
+
+	"talon_xbot_box",
   })
 end
 --------------------------------------------------------------------------------
