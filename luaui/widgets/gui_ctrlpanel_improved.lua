@@ -56,11 +56,6 @@ local PageNumCmd = {
   actions  = { "buildiconsfirst", "firstmenu" }
 }
 
-if (Game.version:find("0.75")==nil)or(Game.version:find("svn")) then
-  PageNumCmd.texture  = PageNumCmd.iconname
-  PageNumCmd.iconname = nil
-end
-
 --------------------------------------------------------------------------------
 
 local function CustomLayoutHandler(xIcons, yIcons, cmdCount, commands)
