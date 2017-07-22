@@ -4478,8 +4478,8 @@
 		canbuild8=core_warlord;
 		canbuild9=core_phantom;
 		canbuild10=core_shredder;
-		canbuild12=core_leviathan;
-		canbuild13=Zulu;
+		canbuild12=talon_Chimaera;
+		canbuild13=talon_flying_dutchman;
 	}
 	[talon_adv_vehicle_plant]
 	{
@@ -5062,6 +5062,8 @@
 		canbuild6=talon_hydra;
 		canbuild7=talon_november;
 		canbuild8=talon_Ash;//
+		canbuild9=talon_Chimaera;
+		canbuild10=talon_flying_dutchman;
 	}
 
 	[talon_hovercraft_platform]

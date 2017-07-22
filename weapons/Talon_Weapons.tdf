@@ -1,4 +1,93 @@
 
+[TALON_LASERCHIMERA]
+{
+	name=High Energy Laser;
+	Weapontype=LaserCannon;
+	explosiongenerator=custom:GreenLaser;
+	cegTag=GREENCRAP;
+	duration=0.07;
+	thickness=2.5;
+	Intensity=1.0;
+	turret=1;
+	range=425;
+	reloadtime=1.5;
+	energypershot=150;
+	weaponvelocity=1650;
+	areaofeffect=8;
+	soundstart=Lasrmas2;
+	soundhitdry=lasrhit1;
+	firestarter=90;
+	rgbcolor=0.000 1.000 0.259;
+	tolerance=8000;
+	[DAMAGE]
+	{
+		default=185;
+		group_landair=91;
+		group_skyair=91;
+		group_invincible=1;
+	}
+}
+[TALONCHIMERA_CANNON]
+{
+	name=Gauss Cannon;
+	weaponType=Cannon;
+	explosiongenerator=custom:WindkbotRocket;
+	turret=1;
+	//minbarrelangle=-45;
+	cylindertargeting = 1;
+	range=425;
+	reloadtime=1.5;
+	weaponvelocity=900;
+	areaofeffect=8;
+	soundstart=Mavgun2;
+	soundhitdry=xplomed2;
+	tolerance=500;
+	weapontimer=1.5;
+	startsmoke=1;
+	size=0.85;
+	rgbcolor=0.9 0.66 0.3;
+	stages=10;
+	separation=0.5;
+	alphadecay=-0.01;
+	sizedecay=-0.2;
+	nogap=1;
+	[DAMAGE]
+	{
+		default=185;
+		group_invincible=1;
+	}
+}
+[TALONDUTCH]
+{
+	name=Heavy Cannon;
+	weaponType=Cannon;
+	turret=1;
+	//minbarrelangle=-25;
+	range=625;
+	reloadtime=2.5;
+	weaponvelocity=500;
+	areaofeffect=64;
+	explosiongenerator=custom:popupcannon;
+	soundstart=cannhvy1;
+	soundhitdry=xplomed2;
+	accuracy=600;
+	movingaccuracy=1200;
+	tolerance=500;
+	startsmoke=1;
+	size=3.45;
+	rgbcolor=1 0.50 0.1;
+	stages=7;
+	separation=0.66;
+	alphadecay=0.8;
+	sizedecay=-0.11;
+	[DAMAGE]
+	{
+		default=415;
+		group_ships=584;
+		group_large_ships=584;
+		group_invincible=1;
+	}
+}
 [RIFTERBOY]
 {
 	name=Rift Cannon;
