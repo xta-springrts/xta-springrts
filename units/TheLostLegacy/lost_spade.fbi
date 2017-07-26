@@ -19,7 +19,7 @@
 	unitname=lost_spade;
 	unitnumber=261;
 	objectname=lost_spade.3do;
-	corpse=arm_panther_dead;
+	corpse=lost_spade_dead;
 	buildpic=lost_spade.png;
 	soundcategory=ARM_TANK;
 

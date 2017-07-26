@@ -9,7 +9,7 @@
 	description=Rift-Cannon Riot Xbot;
 	footprintx=3;
 	footprintz=3;
-	maxdamage=2333;//+12000
+	maxdamage=2500;//+12000
 	objectname=talon_waddler;
 	script=arm_fatboy.cob;
 	side=ARM;

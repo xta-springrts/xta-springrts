@@ -1367,7 +1367,7 @@
 	reloadtime=3.8;
 	weaponvelocity=996;
 	myGravity=0.01;
-	areaofeffect=48;
+	areaofeffect=64;
 	burnblow=1;
 	SoundTrigger=1;
 	soundstart=tllPLASMA03;
@@ -1389,6 +1389,7 @@
 	NumBounce=5;
  	//dyndamageexp=0.9;
   	//dyndamageinverted=1;
+	impulsefactor=2.5;
 	[DAMAGE]
 	{
 		default=60;//150 dps
@@ -1486,7 +1487,7 @@
 	reloadtime=1.5;
 	weaponvelocity=1000;
 	myGravity=0.01;
-	areaofeffect=72;
+	areaofeffect=86;
 	SoundTrigger=1;
 	soundstart=tllPLASMA03;
 	//soundhitdry=lasrhit1;
@@ -1508,6 +1509,7 @@
  	//dyndamageexp=0.9;
   	//dyndamageinverted=1;
 	burnblow=1;
+	impulsefactor=2.5;
 	[DAMAGE]
 	{
 		default=200;//500 dps

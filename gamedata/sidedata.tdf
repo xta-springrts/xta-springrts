@@ -4473,13 +4473,12 @@
 		canbuild2=core_hive;
 		canbuild3=core_shark;
 		canbuild4=core_missile_frigate;
-		canbuild6=core_nightfall;
+		canbuild6=talon_flying_dutchman;
 		canbuild7=core_executioner;
 		canbuild8=core_warlord;
 		canbuild9=core_phantom;
 		canbuild10=core_shredder;
 		canbuild12=talon_Chimaera;
-		canbuild13=talon_flying_dutchman;
 	}
 	[talon_adv_vehicle_plant]
 	{
@@ -5005,7 +5004,7 @@
 		canbuild21=talon_dragons_teeth;
 		canbuild22=talon_seaplane_platform;
 		canbuild23=talon_adv_vehicle_plant;
-		canbuild24=talon_adv_kbot_lab;
+		canbuild24=talon_adv_hovercraft_plateform;
 		canbuild25=talon_adv_aircraft_plant;
 		canbuild26=talon_geothermal_powerplant;
 		canbuild27=talon_nano_tower;
