@@ -684,8 +684,8 @@
 	firestarter=90;
 	rgbcolor=0.000 1.000 0.259;
 	tolerance=800;
-	accuracy=400;
-	movingaccuracy=800;
+	accuracy=600;
+	movingaccuracy=1200;
 	[DAMAGE]
 	{
 		default=150;
@@ -815,7 +815,7 @@
 	startsmoke=0;
 	craterboost=0.25;
 	cratermult=0.25;
-	explosiongenerator=custom:DeathCommander;
+	explosiongenerator=custom:DEATHCOMMANDER2017;
 	cegTag=NUCKLEARMINI;
 	Texture1=null;
 	Texture2=null;

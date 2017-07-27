@@ -31,7 +31,7 @@
 	healtime=30;
 	buildcostmetal=134;
 	buildcostenergy=1877;
-	buildtime=3232;
+	buildtime=3932;
 	footprintx=2;
 	footprintz=2;
 	ModelCenterOffset=0 -1 0;
