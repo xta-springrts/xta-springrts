@@ -86,7 +86,6 @@ function widget:Initialize()
 		local x,y,z = GetUnitPosition(unitID)
 		
 		if y < 0 and (localTeamID == unitTeam) then
-				--Echo(UnitDefs[unitDefID].tedClass)
 				if IsWaterDragUnit[tostring(UnitDefs[unitDefID].moveDef.name)] ~= nil then
 					waterUnits[unitID] = 1
 				end
