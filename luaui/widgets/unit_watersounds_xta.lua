@@ -12,10 +12,13 @@ end
 
 -- TODO
 -- How it works with enemy units?? (fix: make a gadget)
--- Add some missing units
 -- Unit should not make noice when they are building, gaurding, ... etc (fix: commander)
+-- Add splash animation when entering water
+-- Use footprint to set the size of sound volume and the splash fx
+-- Add a bubbles animation when going submerge (with sound)
+-- Building hover platforms, tidels, metal makers, radar and  plashes
 
-local waterUnitsList = {
+local IsWaterDragUnit = {
 	["kbotsf2"] 	= true, 
 	["kbotsf3"] 	= true,					
 	["kbotss2"] 	= true,						
@@ -33,6 +36,15 @@ local waterUnitsList = {
 	["tankdh4"] 	= true,						-- beaver, crab, triton, crock, garpike, muskrat, zulu -- land	
 }
 
+local IsHover = {
+	["hover1"] 		= true,
+	["hover2"]		= true,
+	["hover3"]		= true,
+	["hover4"]		= true,
+	["hover9"]		= true,
+	["hover10"]		= true,	
+}
+
 --Speed-ups           
 local GetLocalTeamID			= Spring.GetLocalTeamID
 local PlaySoundFile				= Spring.PlaySoundFile
@@ -46,12 +58,14 @@ local GetAllUnits				= Spring.GetAllUnits
 local GetUnitDefDimensions		= Spring.GetUnitDefDimensions
 
 -- locals
-local CD1 						= "sounds/unit/watfusn1.wav"
-local CD2 						= "sounds/battle/splslrg.wav"
-local CD3 						= "sounds/battle/splsmed.wav"
+local WATER_MOVEMENT			= "sounds/unit/watfusn1.wav"
+local NONHOVER_SPLASH			= "sounds/battle/splslrg.wav"
+local DESTROYED_SPLASH 			= "sounds/battle/splsmed.wav"
+local HOVER_PLASH				= "sounds/unit/hovmdof1.wav"
+local UNDERWATER_MOVING			= "sounds/unit/suarmmov.wav"
 local waterUnits 				= {}
 local CMD_MOVE 					= CMD.MOVE
-local volume 					= 4.0
+local volume 					= 1.0
 local unitDefRadius				= {}
 local localTeamID				= nil
 
@@ -72,9 +86,8 @@ function widget:Initialize()
 		local x,y,z = GetUnitPosition(unitID)
 		
 		if y < 0 and (localTeamID == unitTeam) then
-				--Echo(UnitDefs[unitDefID].tedClass)
-				if waterUnitsList[tostring(UnitDefs[unitDefID].moveDef.name)] ~= nil then
-					waterUnits[unitID] = 3
+				if IsWaterDragUnit[tostring(UnitDefs[unitDefID].moveDef.name)] ~= nil then
+					waterUnits[unitID] = 1
 				end
 		end
 	end
@@ -91,9 +104,15 @@ function widget:Update(dt)
 			
 			local x,y,z = GetUnitPosition(k)
 			local unitDefID = GetUnitDefID(k)
+			local height = GetUnitDefDimensions(unitDefID)["height"]
+			local level = GetUnitDefDimensions(unitDefID)["height"] + y
+			
 			--not submersive
-			if  (GetUnitDefDimensions(unitDefID)["radius"] + y > 0) then
-				PlaySoundFile(CD1,volume,x,y,x,0,0,0,'battle')
+			if  (level > 0) then
+				PlaySoundFile(WATER_MOVEMENT,volume * 4 * (level/height),x,y,x,0,0,0,'battle')
+			--submersive
+			else
+				PlaySoundFile(UNDERWATER_MOVING, volume + 4 / (1-level),x,y,x,0,0,0,'battle')
 			end
 			waterUnits[k] = 3
 		
@@ -109,12 +128,11 @@ function widget:UnitCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdOp
 	if waterUnits[unitID] then
 		if cmdID == CMD_MOVE then
 			local x,y,z = GetUnitPosition(unitID)			
-			waterUnits[unitID] = 4
+			waterUnits[unitID] = 3
 		end
 	end
 	
 end
-
 
 function widget:UnitIdle(unitID, unitDefID, unitTeam)
    
@@ -130,9 +148,11 @@ end
 function widget:UnitDestroyed(unitID, unitDefID, teamID)
 		
 	if waterUnits[unitID] then
-		waterUnits[unitID] = nil
+		local x,y,z = GetUnitPosition(unitID)
+		local radius = GetUnitDefDimensions(unitDefID)["radius"]
 		--make water explode sound
-		PlaySoundFile(CD3,volume,x,y,z,0,0,0,'battle')
+		PlaySoundFile(DESTROYED_SPLASH, volume * abs((radius-10))/60, x,y,z,0,0,0,'battle')
+		waterUnits[unitID] = nil
 	end
 	
 end
@@ -163,13 +183,18 @@ function widget:UnitEnteredWater(unitID, unitDefID, unitTeam)
 	
 	--make sure units created in water dont splash
 	if y > -10 then
-		PlaySoundFile(CD2,volume,x,y,z,0,0,0,'battle')
+		local radius = GetUnitDefDimensions(unitDefID)["radius"]
+		if IsHover[tostring(UnitDefs[unitDefID].moveDef.name)] then
+			PlaySoundFile(HOVER_PLASH, volume * math.abs((radius-10))/60 ,x,y,z,0,0,0,'battle')
+		else
+			PlaySoundFile(NONHOVER_SPLASH, volume * math.abs((radius-10))/60,x,y,z,0,0,0,'battle')
+		end
 	end
 	
 	--store soundy units in water
-	if waterUnitsList[tostring(UnitDefs[unitDefID].moveDef.name)] ~= nil then
+	if IsWaterDragUnit[tostring(UnitDefs[unitDefID].moveDef.name)] ~= nil then
 		--Echo(UnitDefs[unitDefID].name)
-		waterUnits[unitID] = 3
+		waterUnits[unitID] = 2
 	end
 	
 end
