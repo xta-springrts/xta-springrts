@@ -239,6 +239,9 @@
 	talon_bishop=99;
 	talon_construction_ship=99;
 	talon_vasculitis=99;
+	talon_adv_construction_ship=99;
+	talon_anonymous=99;
+	talon_sardine=99;
 
 }
 [group_large_ships]
@@ -272,6 +275,10 @@
 	//Guardians
 	guardian_sea_dragon=99;
 	guardian_kharon=99;
+	//talon
+	talon_nexus=99;
+	talon_zamak=99;
+	talon_imperator=99;
 }
 
 [group_rockets]
@@ -312,6 +319,7 @@
 	arm_piranha=99;
 	core_shark=99;
 	lost_manta=99;
+	talon_lancelet=99;
 }
 
 
@@ -337,6 +345,8 @@
         core_advanced_torpedo_launcher=99;
         lost_torpedo_launcher=99;
         lost_advanced_torpedo_launcher=99;
+        talon_advanced_torpedo_launcher=99;
+        talon_torpedo_launcher=99;
 }
 //Commander Shooter Demo 
 [ARMCOM]

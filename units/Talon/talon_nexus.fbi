@@ -3,101 +3,108 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	side=Core;
-	name=Sphere;
-	description=Bomb (450 Dmg);
+	side=Arm;
+	name=Nexus;
+	description=Radar/Energy Carrier;
+	icontype=sea;
 
 	//************************************************************
 	//  Categories
 	//**************
-	Category=CORE MINE KBOT PHIB MOBILE WEAPON NOTAIR NOTSEA NOTSUB;
-	tedclass=KBOT;
+	category=ARM SHIP RADAR MOBILE NOWEAPON NOTAIR NOTLAND NOTSUB;
+	tedclass=SHIP;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=talon_sphere;
-	unitnumber=130;
-	objectname=talon_sphere.3do;
-	buildpic=talon_sphere.png;
-	soundcategory=ROACH;
+	unitname=talon_nexus;
+	unitnumber=19;
+	objectname=talon_nexus.3do;
+	corpse=talon_nexus_dead;
+	buildpic=talon_nexus.png;
+	soundcategory=ARM_SHIP;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=225;
+	maxdamage=5879; //was 3100//
 	healtime=30;
-	buildcostmetal=15;
-	buildcostenergy=325;
-	buildtime=650;
-	footprintx=1;
-	footprintz=1;
+	buildcostmetal=2143; //was 1372//
+	buildcostenergy=10257;
+	buildtime=25394;
+	footprintx=6;
+	footprintz=6;
 
 	//************************************************************
 	//  Resources
 	//*************
 	metalstorage=0;
-	energymake=0.1;
-	energyuse=0.1;
-	energystorage=0;
+	energymake=370;
+	energyuse=40;
+	energystorage=100;
+	windgenerator=0.001;
 
 	//************************************************************
 	//  Building
 	//************
-	showNanoFrame=1;
+	buildangle=16384;
+	activatewhenbuilt=1;
+	
 
 	//************************************************************
 	//  Constructor
 	//***************
-	builder=0;
-	workertime=0;
+	builder=1;
+	canassist=0;
+	canreclaim=0;
+	canrepair=1;
+	canrestore=0;
+	builddistance=48;
+	workertime=600; //was 200//
+	repairSpeed = 1800; //increase from workertime to make repair pads more useful
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
 	canguard=1;
 	canmove=1;
 	canpatrol=1;
 	canstop=1;
-	kamikaze=1;
+	floater=1;
+	isairbase=1;
+	onoffable=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	movementclass=KBOTSS2;
-	turnrate=1370;
-	acceleration=1.0;
-	brakerate=0.1;
-	maxvelocity=1.5;
-	maxslope=32;
-	maxwaterdepth=112;
-	turninplace=0;
+	movementclass=LARGEBOAT;
+	turnrate=152;
+	acceleration=0.01;
+	brakerate=0.015;
+	maxvelocity=2.5;
+	minwaterdepth=30;
+	waterline=4.99;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=300;
-	radardistance=0;
-	//radardistancejam=10;
+	sightdistance=945;
+	radardistance=2500; //was 1800//
+	losemitheight=56;
+	radaremitheight=56;
 
 	//************************************************************
 	//  Weapons
 	//***********
-	nochasecategory=VTOL;
-	badtargetcategory=VTOL;
-	wpri_badtargetcategory=VTOL;
-	explodeas=SMALL_UNITEX; //WAS CRAWL_BLAST now smaller damage and smaller area of effect //fixed v9 gold//
-	selfdestructas=TALON_SPHERE;
-	selfdestructcountdown=0;
+	Weapon3=RIFTERBOY;
+	explodeas=CRAWL_BLAST; 
+	selfdestructas=armmine5; 
 
 	//************************************************************
 	//  Orders
 	//**********
 	noautofire=0;
-	firestandorders=1;
 	mobilestandorders=1;
-	standingfireorder=2;
 	standingmoveorder=1;
 	defaultmissiontype=Standby;
 
@@ -105,31 +112,28 @@
 	//  Miscellaneous
 	//*****************
 	bmcode=1;
-	designation=UV-2-AB;
+	designation=ASD-SC;
 	downloadable=1;
-	kamikazedistance=50;
 	maneuverleashlength=640;
 	shootme=1;
 	steeringmode=1;
 	threed=1;
 	version=1.2;
 	zbuffer=1;
-	mass=100;  //70000
 	collisionVolumeType = box;
-	collisionVolumeScales =8 10 8;
-	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeScales =65 45 100;
+	collisionVolumeOffsets = 0 -5 0;
 	collisionVolumeTest = 1;
 	pieceTrailCEGTag=Debree;//bleh
 	pieceTrailCEGRange = 4;
-	[SFXTypes]
-	{
-	explosiongenerator0=custom:Nano;
-	explosiongenerator1=custom:NanoDebree1;//ONESPARK
-	explosiongenerator2=custom:NanoDebree1;//ONESPARK
-	}
 
 	//************************************************************
 	//  To be removed
 	//*****************
-
+	[SFXTypes]
+	{
+	explosiongenerator0=custom:UNITFIRE;
+	explosiongenerator1=custom:WhiteLightSmall;
+	explosiongenerator2=custom:RedLightSmall;
+	}
 }

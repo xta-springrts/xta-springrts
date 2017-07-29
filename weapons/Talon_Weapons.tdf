@@ -1,4 +1,68 @@
 
+[TALON_TRUEBEAM]
+{
+	name=Doomsday Weapon;
+	Weapontype=BeamLaser;
+	turret=1;
+	beamdecay=0.5;
+	beamtime=0.5;
+	beamttl=5;
+	range=1375;
+	reloadtime=5;
+	energypershot=800;
+	weaponvelocity=1000;
+	areaofeffect=16;
+	targetMoveError=0.1;
+	soundstart=CORSNIPE_laser;
+	accuracy=10;
+	movingaccuracy=10;
+	soundhitdry=xplosml4;
+	SoundTrigger=1;
+	firestarter=90;
+	rgbcolor=0.1 0.9 1.000;
+	explosiongenerator=custom:PURPLELASER;
+	pulseSpeed=0.5;
+	thickness=3.5;
+	[DAMAGE]
+	{
+		default=2200;
+		group_commanders=1120;
+		lost_commanders=1000;
+		group_invincible=1;
+	}
+}
+
+[charon_GUN]
+{
+	explosiongenerator=custom:KBOTMISSILEHIT;
+	duration=0.04;
+	intensity=0.85;
+	name=Laser;
+	Weapontype=LaserCannon;
+	thickness=0.5;
+	turret=1;
+	range=220;
+	accuracy=600;
+	movingaccuracy=900;
+	reloadtime=1.333;
+	weaponvelocity=1000;
+	areaofeffect=8;
+	soundtrigger=1;
+	soundstart=talongunfirerapid;
+	soundhitdry=talongunhit;
+	firestarter=50;
+	rgbcolor=1.0 0.8 0.25;
+	rgbcolor2=1.0 1.0 1.00;
+	tolerance=1000;
+	collidefriendly=0;
+	avoidfriendly=0;
+	[DAMAGE]
+	{
+		default=33;
+		group_invincible=1;
+	}
+}
+
 [TALON_LASERCHIMERA]
 {
 	name=High Energy Laser;
@@ -893,7 +957,7 @@
 	soundhitdry=xplosml4;
 	SoundTrigger=1;
 	firestarter=90;
-	rgbcolor=0.2 0.3 1.000;
+	rgbcolor=0.1 0.9 1.000;
 	explosiongenerator=custom:PURPLELASER;
 	pulseSpeed=0.5;
 	thickness=3.5;

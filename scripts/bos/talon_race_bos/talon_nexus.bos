@@ -1,0 +1,401 @@
+#define TA			// This is a TA script
+#define plantheight 2449660
+#define height 593536
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+piece  pad1, flare1, flare2, flare3, base, dish, w1, w2, w3, w4, w5, w6, w7, w8, w9, w10, w11, w12, wakes, turret, gun, pad2, pad3;
+
+static-var  Static_Var_1, gun_1, statechg_DesiredState, statechg_StateChanging, ifplant, padnum, landed, prepare;
+
+// Signal definitions
+#define SIG_MOVE			2
+#define SIG_AIM				4
+#define SIG_LIGHTS			8
+
+Lights()
+{
+	set-signal-mask SIG_LIGHTS;
+	while( TRUE )
+	{
+		if (!landed && prepare)
+		{
+		show pad1;
+		show pad2;
+		show pad3;
+			sleep 1200;
+		}
+		if (landed == 1)
+		{
+		show pad1;
+		show pad2;
+		show pad3;
+			sleep 600;
+		}
+		if (landed == 2)
+		{
+		show pad1;
+		show pad2;
+		show pad3;
+			sleep 600;
+		}
+		else
+		
+			hide pad1;
+			hide pad2;
+			hide pad3;
+			sleep 333;
+		
+	}
+}
+
+UnitLanded(pieceNum)
+{
+	if (landed == 1)
+		{
+			landed = 2;
+		}
+	if (!landed)
+		{
+			landed = 1;
+		}
+	if (prepare == 2)
+		{
+			prepare = 1;
+		}
+	if (prepare == 1)
+		{
+			prepare = 0;
+		}
+}
+
+UnitTookOff()
+{
+	if (landed == 2)
+		{
+			landed = 1;
+		}
+	if (landed == 1)
+		{
+			landed = 0;
+		}
+	
+	if (!landed)
+	{
+	}
+	
+}
+
+PrepareLanding()
+{
+	if (prepare == 1)
+	{
+		prepare = 2;
+	}
+	if (!prepare)
+	{
+		prepare = 1;
+	}
+	if (!landed)
+	{
+		signal SIG_LIGHTS;
+	}
+}
+
+InitState()
+{
+	statechg_DesiredState = TRUE;
+	statechg_StateChanging = FALSE;
+}
+
+RockOnWaves()
+{
+	while(1)
+	{
+		turn base to x-axis <1.0> speed <1.5>;
+		move base to y-axis [0.0] speed [0.3];
+		wait-for-turn base around x-axis;
+		turn base to x-axis <-1.0> speed <1.5>;
+		move base to y-axis [-0.2] speed [0.3];
+		wait-for-move base along y-axis;
+		move base to y-axis [0.0] speed [0.3];
+		wait-for-turn base around x-axis;
+		turn base to x-axis <1.0> speed <1.5>;
+		move base to y-axis [-0.2] speed [0.3];
+		wait-for-move base along y-axis;
+	}
+}
+
+RequestState(requestedstate, currentstate)
+{
+	if( statechg_StateChanging )
+	{
+		statechg_DesiredState = requestedstate;
+		return (0);
+	}
+	statechg_StateChanging = TRUE;
+	currentstate = statechg_DesiredState;
+	statechg_DesiredState = requestedstate;
+	while( statechg_DesiredState != currentstate )
+	{
+		if( statechg_DesiredState == 0 )
+		{
+			currentstate = 0;
+		}
+		if( statechg_DesiredState == 1 )
+		{
+			currentstate = 1;
+		}
+	}
+	statechg_StateChanging = FALSE;
+}
+
+
+SmokeUnit(healthpercent, sleeptime, smoketype)
+{
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 400;
+	}
+	while( TRUE )
+	{
+		healthpercent = get HEALTH;
+		if( healthpercent < 66 )
+		{
+			smoketype = 256 | 2;
+			if( Rand( 1, 66 ) < healthpercent )
+			{
+				smoketype = 256 | 1;
+			}
+			emit-sfx smoketype from base;
+		}
+		sleeptime = healthpercent * 50;
+		if( sleeptime < 200 )
+		{
+			sleeptime = 200;
+		}
+		sleep sleeptime;
+	}
+}
+
+RestoreAfterDelay()
+{
+	sleep 3000;
+	spin dish around y-axis speed <60.010989>;
+	turn gun to x-axis <0.000000> speed <35.005495>;
+	turn turret to y-axis <0.000000> speed <15.000000>;
+}
+
+Create()
+{
+		hide pad1;
+		hide pad2;
+		hide pad3;
+	Static_Var_1 = 0;
+	hide flare1;
+	hide flare2;
+	hide flare3;
+	call-script InitState();
+	start-script SmokeUnit();
+	start-script RockOnWaves();
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 1000;
+	}
+	spin dish around y-axis speed <60.010989>;
+}
+
+
+StartMoving()
+{
+	signal SIG_MOVE;
+	set-signal-mask SIG_MOVE;
+	while( TRUE )
+	{
+		emit-sfx 3 from w1;
+		emit-sfx 3 from w2;
+		emit-sfx 3 from w3;
+		emit-sfx 3 from w4;
+		emit-sfx 3 from w5;
+		emit-sfx 3 from w6;
+		emit-sfx 3 from w7;
+		emit-sfx 3 from w8;
+		emit-sfx 3 from w9;
+		emit-sfx 3 from w10;
+		emit-sfx 3 from w11;
+		emit-sfx 3 from w12;
+		emit-sfx 5 from w1;
+		emit-sfx 5 from w2;
+		emit-sfx 5 from w3;
+		emit-sfx 5 from w4;
+		emit-sfx 5 from w5;
+		emit-sfx 5 from w6;
+		emit-sfx 5 from w7;
+		emit-sfx 5 from w8;
+		emit-sfx 5 from w9;
+		emit-sfx 5 from w10;
+		emit-sfx 5 from w11;
+		emit-sfx 5 from w12;
+		sleep 250;
+	}
+}
+
+StopMoving()
+{
+	signal SIG_MOVE;
+}
+
+SweetSpot(piecenum)
+{
+	piecenum = base;
+}
+
+QueryLandingPad(Func_Var_1, Func_Var_2)
+{
+	Func_Var_1 = pad1;
+	Func_Var_2 = pad1;
+}
+
+AimTertiary(heading, pitch)
+{
+	signal SIG_AIM;
+	set-signal-mask SIG_AIM;
+	turn turret to y-axis heading speed <250>;
+	turn dish to y-axis heading speed <250>;
+	turn gun to x-axis <0.000000> - pitch speed <250>;
+	wait-for-turn turret around y-axis;
+	wait-for-turn gun around x-axis;
+	start-script RestoreAfterDelay();
+	return (1);
+}
+
+flareu()
+{
+		emit-sfx UNIT_SFX1 from flare1;
+	sleep 45;
+}
+
+flared()
+{
+		emit-sfx UNIT_SFX1 from flare2;
+	sleep 45;
+}
+
+flaret()
+{
+		emit-sfx UNIT_SFX1 from flare3;
+	sleep 45;
+	hide flare3;
+}
+
+FireTertiary()
+{
+	if( gun_1 == 1 )
+	{
+		start-script flareu();
+	}
+	if( gun_1 == 2 )
+	{
+		start-script flared();
+	}
+	if( gun_1 == 3 )
+	{
+		start-script flaret();
+	}
+	++gun_1;
+	if( gun_1 == 4 )
+	{
+		gun_1 = 1;
+	}
+}
+
+QueryTertiary(piecenum)
+{
+	piecenum = gun_1;
+}
+
+AimFromTertiary(piecenum)
+{
+	piecenum = gun_1;
+}
+
+Killed(severity, corpsetype)
+{
+	if( severity <= 25 )
+	{
+		corpsetype = 1;
+		explode base type BITMAPONLY | BITMAP1;
+		explode dish type BITMAPONLY | BITMAP2;
+		explode pad1 type BITMAPONLY | BITMAP3;
+		explode w1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+		explode w2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+		explode w3 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+		explode w4 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+		explode w5 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+		explode w6 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+		explode w7 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+		explode w8 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+		explode w9 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+		explode w10 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+		explode w11 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+		explode w12 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+		return (0);
+	}
+	if( severity <= 50 )
+	{
+		corpsetype = 2;
+		explode base type BITMAPONLY | BITMAP1;
+		explode dish type SHATTER | BITMAP2;
+		explode pad1 type FALL | BITMAP3;
+		explode w1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+		explode w2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+		explode w3 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+		explode w4 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+		explode w5 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+		explode w6 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+		explode w7 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+		explode w8 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+		explode w9 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+		explode w10 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+		explode w11 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+		explode w12 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+		return (0);
+	}
+	if( severity <= 99 )
+	{
+		corpsetype = 3;
+		explode base type BITMAPONLY | BITMAP1;
+		explode dish type SHATTER | BITMAP2;
+		explode pad1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+		explode w1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+		explode w2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+		explode w3 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+		explode w4 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+		explode w5 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+		explode w6 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+		explode w7 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+		explode w8 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+		explode w9 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+		explode w10 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+		explode w11 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+		explode w12 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+		return (0);
+	}
+	corpsetype = 3;
+	explode base type BITMAPONLY | BITMAP1;
+	explode dish type SHATTER | EXPLODE_ON_HIT | BITMAP2;
+	explode pad1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+	explode w1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+	explode w2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+	explode w3 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+	explode w4 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+	explode w5 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+	explode w6 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+	explode w7 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+	explode w8 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+	explode w9 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+	explode w10 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+	explode w11 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+	explode w12 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+}

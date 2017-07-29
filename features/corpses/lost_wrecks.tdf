@@ -1350,7 +1350,7 @@
 	world=All Worlds;
 	description=Wreckage;
 	category=lost_corpses;
-	object=lost_archer_dead;
+	object=lost_archer_dead.3do;
 	footprintx=3;
 	footprintz=3;
 	height=20;

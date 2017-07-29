@@ -1,0 +1,195 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+piece  flare, base, body, turret, sleeve, wake1, wake2, tail, sidewake1, sidewake2;
+
+static-var  gun_1, restore_delay, left, right;
+
+// Signal definitions
+// Signal definitions
+#define SIG_AIM				2
+#define SIG_MOVE			4
+#define BANK_MORE 80
+#define BANK_LESS 40
+#define BANK_DAMP_SPEED <30>
+#define BANK_REFRESH 300// Put some time long enough for the unit to have travelled a while, but short enough so the script doesn't have a too long reaction time
+#define BANK_SIGNIFICATIVE_SPEED [1]// Actually, it's not a speed, but a distance, the distance covered during BANK_REFRESH. If that distance is too low, the difference between the two xz is deemed too low to get a significative angle out of it. Since half of digit are lost when x and z get packed into xz, any distance under 65536=[0.4] will lose all its significative digits and so will be unuseable.
+
+BankClerck()
+{
+	var present_xz, past_xz, banking_angle;
+	while(1)
+	{
+		present_xz=get PIECE_XZ(base);
+		banking_angle=0;
+		if (get XZ_HYPOT(present_xz - past_xz)>=BANK_SIGNIFICATIVE_SPEED)
+			{
+			banking_angle=(0 - (((get XZ_ATAN(past_xz - present_xz))*BANK_MORE)/BANK_LESS));
+			}
+		turn body to z-axis banking_angle speed BANK_DAMP_SPEED;
+		past_xz=present_xz;
+		sleep BANK_REFRESH;
+	}
+}
+
+SmokeUnit(healthpercent, sleeptime, smoketype)
+{
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 400;
+	}
+	healthpercent = get HEALTH;
+	sleeptime = healthpercent*healthpercent;
+	if( healthpercent < 66 )
+	{
+		emit-sfx 256 | 3 from base;
+		sleep sleeptime;
+		emit-sfx 256 | 3 from sidewake2;
+		if( Rand( 1, 66 ) > healthpercent )
+		{
+			emit-sfx 256 | 3 from turret;
+			sleep sleeptime;
+			emit-sfx 256 | 3 from flare;
+			sleep sleeptime;
+			emit-sfx 256 | 3 from base;
+			sleep sleeptime;
+			emit-sfx 256 | 3 from sidewake1;
+			sleep sleeptime;
+			emit-sfx 256 | 3 from sidewake2;
+			sleep sleeptime;
+		}
+	}
+	start-script smokeunit();
+}
+
+Create()
+{
+	restore_delay = 3000;
+	start-script SmokeUnit();
+	start-script BankClerck();
+	hide flare;
+	spin tail around z-axis speed <50>;
+}
+
+SetMaxReloadTime(Func_Var_1)
+{
+	restore_delay = Func_Var_1 * 2;
+}
+
+RestoreAfterDelay()
+{
+	sleep 3000;
+	turn turret to y-axis <0.000000> speed <50.000000>;
+	turn sleeve to x-axis <0.000000> speed <50.010989>;
+}
+
+StartMoving()
+{
+	signal SIG_MOVE;
+	set-signal-mask SIG_MOVE;
+	while( TRUE )
+	{
+		emit-sfx 3 from wake1;
+		emit-sfx 3 from wake2;
+		sleep 175;
+	}
+}
+
+StopMoving()
+{
+	signal SIG_MOVE;
+}
+
+AimPrimary(heading, pitch)
+{
+	signal SIG_AIM;
+	set-signal-mask SIG_AIM;
+	turn turret to y-axis heading speed <175.038462>;
+	turn sleeve to x-axis <0.000000> - pitch speed <80.016484>;
+	wait-for-turn turret around y-axis;
+	wait-for-turn sleeve around x-axis;
+	start-script RestoreAfterDelay();
+	return (1);
+}
+
+FirePrimary()
+{
+	sleep 50;
+}
+
+AimFromPrimary(piecenum)
+{
+	piecenum = turret;
+}
+
+QueryPrimary(piecenum)
+{
+	piecenum = flare;
+}
+
+SweetSpot(piecenum)
+{
+	piecenum = base;
+}
+
+Killed(severity, corpsetype)
+{
+	if( severity <= 25 )
+	{
+		corpsetype = 1;
+		explode base type BITMAPONLY | BITMAP3;
+		explode flare type BITMAPONLY | BITMAP4;
+		explode body type BITMAPONLY | BITMAP5;
+		explode turret type BITMAPONLY | BITMAP1;
+		explode sleeve type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+		explode wake1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+		explode wake2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+		explode tail type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+		explode sidewake1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+		explode sidewake2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+		return (0);
+	}
+	if( severity <= 50 )
+	{
+		corpsetype = 2;
+		explode base type BITMAPONLY | BITMAP3;
+		explode flare type FALL | BITMAP5;
+		explode body type BITMAPONLY | BITMAP5;
+		explode turret type BITMAPONLY | BITMAP1;
+		explode sleeve type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+		explode wake1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+		explode wake2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+		explode tail type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+		explode sidewake1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+		explode sidewake2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+		return (0);
+	}
+	if( severity <= 99 )
+	{
+		corpsetype = 3;
+		explode base type BITMAPONLY | BITMAP3;
+		explode flare type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+		explode body type BITMAPONLY | BITMAP5;
+		explode turret type BITMAPONLY | BITMAP1;
+		explode sleeve type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+		explode wake1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+		explode wake2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+		explode tail type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+		explode sidewake1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+		explode sidewake2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+		return (0);
+	}
+	corpsetype = 3;
+	explode base type BITMAPONLY | BITMAP3;
+	explode flare type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+	explode body type BITMAPONLY | BITMAP5;
+	explode turret type BITMAPONLY | BITMAP1;
+	explode sleeve type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+	explode wake1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+	explode wake2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+	explode tail type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+	explode sidewake1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+	explode sidewake2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+}

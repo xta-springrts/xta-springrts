@@ -3,48 +3,52 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	side=Core;
-	name=Sphere;
-	description=Bomb (450 Dmg);
+	side=Arm;
+	name=Imperator;
+	description=Battleship Bombarder;
+	icontype=sea;
 
 	//************************************************************
 	//  Categories
 	//**************
-	Category=CORE MINE KBOT PHIB MOBILE WEAPON NOTAIR NOTSEA NOTSUB;
-	tedclass=KBOT;
+	category=ARM SHIP MOBILE WEAPON NOTLAND NOTAIR NOTSUB;
+	tedclass=SHIP;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=talon_sphere;
-	unitnumber=130;
-	objectname=talon_sphere.3do;
-	buildpic=talon_sphere.png;
-	soundcategory=ROACH;
+	unitname=talon_Imperator;
+	unitnumber=23;
+	objectname=talon_Imperator.3do;
+	corpse=talon_Imperator_dead;
+	buildpic=talon_Imperator.png;
+	soundcategory=ARM_SHIP;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=225;
+	maxdamage=14784; //was 9100//
 	healtime=30;
-	buildcostmetal=15;
-	buildcostenergy=325;
-	buildtime=650;
-	footprintx=1;
-	footprintz=1;
+	buildcostmetal=3854; //was 2292//
+	buildcostenergy=44321; //was 11477//
+	buildtime=41578; //was 17789//
+	footprintx=4;
+	footprintz=4;
 
 	//************************************************************
 	//  Resources
 	//*************
 	metalstorage=0;
-	energymake=0.1;
-	energyuse=0.1;
+	energymake=2.5;
+	energyuse=2.5;
 	energystorage=0;
+	windgenerator=0.001;
 
 	//************************************************************
 	//  Building
 	//************
-	showNanoFrame=1;
+	buildangle=16384;
+	activatewhenbuilt=1;
 
 	//************************************************************
 	//  Constructor
@@ -60,36 +64,41 @@
 	canmove=1;
 	canpatrol=1;
 	canstop=1;
-	kamikaze=1;
+	floater=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	movementclass=KBOTSS2;
-	turnrate=1370;
-	acceleration=1.0;
-	brakerate=0.1;
-	maxvelocity=1.5;
-	maxslope=32;
-	maxwaterdepth=112;
-	turninplace=0;
+	movementclass=MEDIUMBOAT;
+	turnrate=184;
+	acceleration=0.01;
+	brakerate=0.015;
+	maxvelocity=1.8;
+	minwaterdepth=30;
+	waterline=4.99;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=300;
+	sightdistance=510; //was 630//
 	radardistance=0;
-	//radardistancejam=10;
+	sonardistance=400; //was 475//
+	losemitheight=44;
+	radaremitheight=44;
 
 	//************************************************************
 	//  Weapons
 	//***********
+	weapon1=CONQ_GUN;
+	weapon2=LANDBOAT_GUN;
+	weapon3=COREDEPTHCHARGE;
 	nochasecategory=VTOL;
 	badtargetcategory=VTOL;
 	wpri_badtargetcategory=VTOL;
-	explodeas=SMALL_UNITEX; //WAS CRAWL_BLAST now smaller damage and smaller area of effect //fixed v9 gold//
-	selfdestructas=TALON_SPHERE;
-	selfdestructcountdown=0;
+	wspe_badtargetcategory=NOTSUB;
+	explodeas=ATOMIC_BLASTPEN;
+	selfdestructas=CRAWL_BLASTSML;
+	onlytargetcategory3=NOTAIR;
 
 	//************************************************************
 	//  Orders
@@ -105,31 +114,35 @@
 	//  Miscellaneous
 	//*****************
 	bmcode=1;
-	designation=UV-2-AB;
+	designation=ASD-SC;
 	downloadable=1;
-	kamikazedistance=50;
 	maneuverleashlength=640;
+	scale=0.5;
 	shootme=1;
 	steeringmode=1;
 	threed=1;
 	version=1.2;
 	zbuffer=1;
-	mass=100;  //70000
 	collisionVolumeType = box;
-	collisionVolumeScales =8 10 8;
-	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeScales =45 60 90;
+	collisionVolumeOffsets = 0 -20 0;
 	collisionVolumeTest = 1;
 	pieceTrailCEGTag=Debree;//bleh
 	pieceTrailCEGRange = 4;
-	[SFXTypes]
-	{
-	explosiongenerator0=custom:Nano;
-	explosiongenerator1=custom:NanoDebree1;//ONESPARK
-	explosiongenerator2=custom:NanoDebree1;//ONESPARK
-	}
 
 	//************************************************************
 	//  To be removed
 	//*****************
 
+	[SFXTypes]
+	{
+	explosiongenerator0=custom:dgunflare;
+	explosiongenerator1=custom:dgunflare;
+	explosiongenerator2=custom:dgunflare;
+	explosiongenerator3=custom:UNITFIRE;
+	}
+	[customParams] 
+	{
+	canAreaAttack=1;
+	}
 }

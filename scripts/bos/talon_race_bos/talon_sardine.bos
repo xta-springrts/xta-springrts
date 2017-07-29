@@ -1,0 +1,221 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+piece  flare1, flare2, flare3, flare4, base, body, turret, sleeve, barrel1, barrel2, barrel3, barrel4, boxmissile1, boxmissile2;
+
+static-var  gun_1, gun_2;
+
+// Signal definitions
+#define SIG_AIM				2
+#define SIG_AIM_2			4
+
+
+SmokeUnit(healthpercent, sleeptime, smoketype)
+{
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 400;
+	}
+	while( TRUE )
+	{
+		healthpercent = get HEALTH;
+		if( healthpercent < 66 )
+		{
+			smoketype = 256 | 2;
+			if( Rand( 1, 66 ) < healthpercent )
+			{
+				smoketype = 256 | 1;
+			}
+			emit-sfx smoketype from base;
+		}
+		sleeptime = healthpercent * 50;
+		if( sleeptime < 200 )
+		{
+			sleeptime = 200;
+		}
+		sleep sleeptime;
+	}
+}
+
+Create()
+{
+	hide flare1;
+	hide flare3;
+	hide flare2;
+	hide flare4;
+	gun_1 = 0;
+	gun_2 = boxmissile1;
+	start-script SmokeUnit();
+}
+
+RestoreAfterDelay()
+{
+	sleep 6000;
+	turn turret to y-axis <0.000000> speed <150.000000>;
+	wait-for-turn turret around y-axis;
+}
+
+
+AimPrimary(heading, pitch)
+{
+	signal SIG_AIM;
+	set-signal-mask SIG_AIM;
+	turn turret to y-axis heading speed <250>;
+	turn sleeve to x-axis <0.000000> - pitch speed <250>;
+	wait-for-turn turret around y-axis;
+	wait-for-turn sleeve around x-axis;
+	start-script RestoreAfterDelay();
+	return (1);
+}
+
+FirePrimary()
+{
+	if( gun_1 == 0 )
+	{
+	emit-sfx UNIT_SFX1 from flare1;
+		move barrel1 to z-axis [-2.500000] now;
+		sleep 80;
+		move barrel1 to z-axis [0.000000] speed [5];
+	}
+	if( gun_1 == 1 )
+	{
+	emit-sfx UNIT_SFX1 from flare2;
+		move barrel2 to z-axis [-2.500000] now;
+		sleep 80;
+		move barrel2 to z-axis [0.000000] speed [5];
+	}
+	if( gun_1 == 2 )
+	{
+	emit-sfx UNIT_SFX1 from flare3;
+		move barrel3 to z-axis [-2.500000] now;
+		sleep 80;
+		move barrel3 to z-axis [0.000000] speed [5];
+	}
+	if( gun_1 == 3 )
+	{
+	emit-sfx UNIT_SFX1 from flare4;
+		move barrel4 to z-axis [-2.500000] now;
+		sleep 80;
+		move barrel4 to z-axis [0.000000] speed [5];
+	}
+	++gun_1;
+	if( gun_1 == 4 )
+	{
+		gun_1 = 0;
+	}
+}
+
+QueryPrimary(piecenum)
+{
+	if( gun_1 == 0 )
+	{
+		piecenum = flare1;
+	}
+	if( gun_1 == 1 )
+	{
+		piecenum = flare2;
+	}
+	if( gun_1 == 2 )
+	{
+		piecenum = flare3;
+	}
+	if( gun_1 == 3 )
+	{
+		piecenum = flare4;
+	}
+}
+
+AimFromPrimary(piecenum)
+{
+	piecenum = turret;
+}
+
+AimTertiary(heading, pitch)
+{
+	signal SIG_AIM_2;
+	set-signal-mask SIG_AIM_2;
+	start-script RestoreAfterDelay();
+	return (1);
+}
+
+FireTertiary()
+{
+	if( gun_2 == boxmissile2 )
+	{
+		gun_2 = boxmissile1;
+	}
+	if( gun_2 == boxmissile1 )
+	{
+		gun_2 = boxmissile2;
+	}
+}
+
+AimFromTertiary(piecenum)
+{
+	piecenum = boxmissile1;
+}
+
+
+QueryTertiary(piecenum)
+{
+	piecenum = gun_2;
+}
+
+SweetSpot(piecenum)
+{
+	piecenum = base;
+}
+
+Killed(severity, corpsetype)
+{
+	hide flare1;
+	hide flare2;
+	hide flare3;
+	hide flare4;
+	if( severity <= 25 )
+	{
+		corpsetype = 1;
+		explode barrel1 type BITMAPONLY | BITMAP1;
+		explode barrel3 type BITMAPONLY | BITMAP2;
+		explode barrel2 type BITMAPONLY | BITMAP1;
+		explode barrel4 type BITMAPONLY | BITMAP2;
+		explode base type BITMAPONLY | BITMAP3;
+		explode sleeve type BITMAPONLY | BITMAP1;
+		explode turret type BITMAPONLY | BITMAP2;
+		return (0);
+	}
+	if( severity <= 50 )
+	{
+		corpsetype = 2;
+		explode barrel1 type SHATTER | BITMAP1;
+		explode barrel3 type SHATTER | BITMAP2;
+		explode barrel2 type FALL | BITMAP1;
+		explode barrel4 type FALL | BITMAP2;
+		explode base type BITMAPONLY | BITMAP3;
+		explode sleeve type SHATTER | BITMAP1;
+		explode turret type SHATTER | BITMAP2;
+		return (0);
+	}
+	if( severity <= 99 )
+	{
+		corpsetype = 3;
+		explode barrel1 type SHATTER | BITMAP1;
+		explode barrel3 type SHATTER | BITMAP2;
+		explode barrel2 type FALL | BITMAP1;
+		explode barrel4 type FALL | BITMAP2;
+		explode base type BITMAPONLY | BITMAP3;
+		explode sleeve type SHATTER | BITMAP1;
+		explode turret type SHATTER | BITMAP2;
+		return (0);
+	}
+	corpsetype = 3;
+	explode barrel1 type SHATTER | BITMAP1;
+	explode barrel3 type SHATTER | BITMAP2;
+	explode barrel2 type FALL | BITMAP1;
+	explode barrel4 type FALL | BITMAP2;
+	explode base type BITMAPONLY | BITMAP3;
+	explode sleeve type SHATTER | BITMAP1;
+	explode turret type SHATTER | BITMAP2;
+}

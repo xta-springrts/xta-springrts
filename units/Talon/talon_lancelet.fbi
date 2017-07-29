@@ -3,48 +3,50 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	side=Core;
-	name=Sphere;
-	description=Bomb (450 Dmg);
+	side=Arm;
+	name=Lancelet;
+	description=Submarine Killer;
+	icontype=sea;
 
 	//************************************************************
 	//  Categories
 	//**************
-	Category=CORE MINE KBOT PHIB MOBILE WEAPON NOTAIR NOTSEA NOTSUB;
-	tedclass=KBOT;
+	category=ARM SUB MOBILE WEAPON SONAR NOTLAND NOTAIR NOTSEA;
+	tedclass=SUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=talon_sphere;
-	unitnumber=130;
-	objectname=talon_sphere.3do;
-	buildpic=talon_sphere.png;
-	soundcategory=ROACH;
+	unitname=talon_lancelet;
+	unitnumber=68;
+	objectname=talon_lancelet.3do;
+	corpse=talon_lancelet_dead;
+	buildpic=talon_lancelet.png;
+	soundcategory=ARM_SUB;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=225;
-	healtime=30;
-	buildcostmetal=15;
-	buildcostenergy=325;
-	buildtime=650;
-	footprintx=1;
-	footprintz=1;
+	maxdamage=1131; //was 2010//
+	healtime=10;
+	buildcostmetal=1132; //was 2896//
+	buildcostenergy=10962;
+	buildtime=35534;
+	footprintx=3;
+	footprintz=3;
 
 	//************************************************************
 	//  Resources
 	//*************
 	metalstorage=0;
-	energymake=0.1;
-	energyuse=0.1;
+	energymake=0.5;
+	energyuse=0.5;
 	energystorage=0;
 
 	//************************************************************
 	//  Building
 	//************
-	showNanoFrame=1;
+	activatewhenbuilt=1;
 
 	//************************************************************
 	//  Constructor
@@ -60,36 +62,34 @@
 	canmove=1;
 	canpatrol=1;
 	canstop=1;
-	kamikaze=1;
+	floater=1;
+	upright=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	movementclass=KBOTSS2;
-	turnrate=1370;
-	acceleration=1.0;
-	brakerate=0.1;
-	maxvelocity=1.5;
-	maxslope=32;
-	maxwaterdepth=112;
-	turninplace=0;
+	movementclass=BOATSUB;
+	turnrate=389; //was 311//
+	acceleration=0.7;
+	brakerate=0.9;
+	maxvelocity=2.625;
+	minwaterdepth=15;// not used, minWaterDepth in movedef used instead (36)
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=300;
-	radardistance=0;
-	//radardistancejam=10;
+	sightdistance=220; //was 562.5//
+	sonardistance=890; //was 689//
 
 	//************************************************************
 	//  Weapons
 	//***********
+	weapon1=ARMSMART_TORPEDO;
 	nochasecategory=VTOL;
 	badtargetcategory=VTOL;
 	wpri_badtargetcategory=VTOL;
-	explodeas=SMALL_UNITEX; //WAS CRAWL_BLAST now smaller damage and smaller area of effect //fixed v9 gold//
-	selfdestructas=TALON_SPHERE;
-	selfdestructcountdown=0;
+	explodeas=SMALL_UNITEX;
+	selfdestructas=SMALL_UNIT;
 
 	//************************************************************
 	//  Orders
@@ -97,7 +97,7 @@
 	noautofire=0;
 	firestandorders=1;
 	mobilestandorders=1;
-	standingfireorder=2;
+	standingfireorder=1;
 	standingmoveorder=1;
 	defaultmissiontype=Standby;
 
@@ -105,28 +105,21 @@
 	//  Miscellaneous
 	//*****************
 	bmcode=1;
-	designation=UV-2-AB;
+	designation=ASD-SK;
 	downloadable=1;
-	kamikazedistance=50;
 	maneuverleashlength=640;
 	shootme=1;
 	steeringmode=1;
 	threed=1;
 	version=1.2;
+	waterline=39;// set to equal minWaterDepth, was 30
 	zbuffer=1;
-	mass=100;  //70000
 	collisionVolumeType = box;
-	collisionVolumeScales =8 10 8;
+	collisionVolumeScales =35 18 49;
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
 	pieceTrailCEGTag=Debree;//bleh
 	pieceTrailCEGRange = 4;
-	[SFXTypes]
-	{
-	explosiongenerator0=custom:Nano;
-	explosiongenerator1=custom:NanoDebree1;//ONESPARK
-	explosiongenerator2=custom:NanoDebree1;//ONESPARK
-	}
 
 	//************************************************************
 	//  To be removed

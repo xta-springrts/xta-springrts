@@ -4470,14 +4470,14 @@
 	[talon_adv_shipyard]
 	{
 		canbuild1=talon_adv_construction_ship;
-		canbuild2=core_hive;
-		canbuild3=core_shark;
-		canbuild4=core_missile_frigate;
+		canbuild2=talon_nexus;
+		canbuild3=talon_lancelet;
+		//canbuild4=core_missile_frigate;
 		canbuild6=talon_flying_dutchman;
-		canbuild7=core_executioner;
-		canbuild8=core_warlord;
-		canbuild9=core_phantom;
-		canbuild10=core_shredder;
+		canbuild7=talon_Zamak;
+		canbuild8=talon_Imperator;
+		canbuild9=talon_anonymous;
+		canbuild10=talon_sardine;//createmodel
 		canbuild12=talon_Chimaera;
 	}
 	[talon_adv_vehicle_plant]
@@ -4590,7 +4590,7 @@
 		canbuild45=talon_Kerberos;
 		canbuild46=talon_lighthouse;
 		canbuild47=talon_torpedo_launcher;
-		canbuild48=arm_naval_flakker;
+		canbuild48=talon_kernel;
 		canbuild49=talon_exp_vehicle_plant;
 		canbuild50=talon_nano_tower;
 	}
@@ -4613,7 +4613,7 @@
 		canbuild15=talon_Kerberos;
 		canbuild16=talon_lighthouse;
 		canbuild17=talon_torpedo_launcher;
-		canbuild18=arm_naval_flakker;
+		canbuild18=talon_kernel;
 		//canbuild19=arm_sub_pen;
 		canbuild20=talon_shipyard;
 		canbuild21=talon_adv_shipyard;
@@ -5004,7 +5004,7 @@
 		canbuild21=talon_dragons_teeth;
 		canbuild22=talon_seaplane_platform;
 		canbuild23=talon_adv_vehicle_plant;
-		canbuild24=talon_adv_hovercraft_plateform;
+		canbuild24=talon_adv_hovercraft_platform;
 		canbuild25=talon_adv_aircraft_plant;
 		canbuild26=talon_geothermal_powerplant;
 		canbuild27=talon_nano_tower;
