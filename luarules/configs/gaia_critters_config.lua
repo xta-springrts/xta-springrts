@@ -96,12 +96,12 @@ local critterConfig = {
 --{ spawnBox = {x1=3400, z1=300, x2=5000, z2=1500}, unitNames = {["critter_goldfish"]=10} },
 --},
 
-["Tropical"] = {
-  { spawnCircle = {x=1000, z=5300, r=800}, unitNames = {["critter_goldfish"]=3} },
-  { spawnCircle = {x=8100, z=5300, r=800}, unitNames = {["critter_goldfish"]=3} },
-  { spawnCircle = {x=4600, z=5200, r=3500}, unitNames = {["critter_gull"]=2} },
-  { spawnCircle = {x=4600, z=5200, r=500}, unitNames = {["critter_duck"]=2} },
-},
+--["Tropical"] = {
+--  { spawnCircle = {x=1000, z=5300, r=800}, unitNames = {["critter_goldfish"]=3} },
+--  { spawnCircle = {x=8100, z=5300, r=800}, unitNames = {["critter_goldfish"]=3} },
+--  { spawnCircle = {x=4600, z=5200, r=3500}, unitNames = {["critter_gull"]=2} },
+--  { spawnCircle = {x=4600, z=5200, r=500}, unitNames = {["critter_duck"]=2} },
+--},
 
 --["tumult"] = {
 --{ spawnBox = {x1=3440, z1=3440, x2=3680, z2=3780} , unitNames = {["critter_duck"]=3} },
