@@ -1,6 +1,6 @@
 local rnd = math.random
 local critterConfig = {
-
+--
 
 ["Tropical"] = {
 [1] = {
