@@ -324,6 +324,13 @@ end
 function gadget:UnitDestroyed(unitID, unitDefID, teamID, attackerID, attackerDefID, attackerTeamID)
 	if critterUnits[unitID] then 
 		critterUnits[unitID] = nil
+		if critterPrey[unitID] ~= nil then
+			critterPrey[unitID] = nil
+		elseif critterPred[unitID] ~= nil then
+			critterPred[unitID] = nil
+		else
+			--Spring.Echo("error????")
+		end
 	end
 end
 
