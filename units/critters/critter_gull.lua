@@ -34,6 +34,8 @@ turnRate            = 500,
 turnRadius		  	= 5,
 ----aircraft related
 canFly              = true,
+floatOnWater 		= true,
+floater 			= true,
 cruiseAlt           = 200,
 hoverAttack         = true,
 airStrafe			= false,

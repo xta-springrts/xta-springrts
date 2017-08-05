@@ -290,7 +290,7 @@ function gadget:GameFrame(f)
 			for unitID, data in pairs(critterPred) do
 				if data.lifespan > 0 then
 					if data.lifespan < 4000 then
-						if math.random() < .4 then
+						if math.random() < .2 then
 							for name,number in pairs(critterConfig[Game.mapName][data.area]["prey"].unitNames) do 
 								local nearest = nearest_friend_from_unit(unitID, name)	
 								if nearest then

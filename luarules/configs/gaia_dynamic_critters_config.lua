@@ -14,7 +14,7 @@ local critterConfig = {
 	},
 },
 
-["trefoil"] = {
+["Trefoil"] = {
 [1] = {
 		["prey"] = { spawnBox = {x1=5666, z1=4888, x2=8000, z2=6400}, unitNames = {["critter_goldfish"]=10} },
 		["pred"] = { spawnBox = {x1=5666, z1=4888, x2=8000, z2=6400}, unitNames = {["critter_goldfish_big"]=10} },
@@ -25,7 +25,7 @@ local critterConfig = {
 	},
 },
 
-["trefoil_v2"] = {
+["Trefoil_v2"] = {
 [1] = {
 		["prey"] = { spawnBox = {x1=5666, z1=4888, x2=8000, z2=6400}, unitNames = {["critter_goldfish"]=10} },
 		["pred"] = { spawnBox = {x1=5666, z1=4888, x2=8000, z2=6400}, unitNames = {["critter_goldfish_big"]=10} },
