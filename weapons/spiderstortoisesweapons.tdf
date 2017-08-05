@@ -345,14 +345,15 @@
 	soundhitdry=xplosml4;
 	SoundTrigger=1;
 	firestarter=90;
-	rgbcolor=0.1 0.2 1.000;
+	rgbcolor=0.1 0.9 1.000;
 	explosiongenerator=custom:PINKFLASH;
 	pulseSpeed=0.5;
 	thickness=3.5;
 	[DAMAGE]
 	{
-		default=2000;
+		default=PURPLELASER;
 		group_commanders=1020;
+		lost_commanders=820;
 		group_invincible=1;
 	}
 }
