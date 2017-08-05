@@ -21,14 +21,14 @@
 	unitname=Talon_Flying_Dutchman;
 	unitnumber=23;
 	objectname=Talon_Flying_Dutchman.3do;
-	corpse=arm_Plesiosaur_dead;
+	corpse=Talon_Flying_Dutchman_dead;
 	buildpic=Talon_Flying_Dutchman.png;
 	soundcategory=CORE_SHIP;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=15032; //was 9100//
+	maxdamage=12032; //was 9100//
 	healtime=30;
 	buildcostmetal=2653; //was 2292//
 	buildcostenergy=35212; //was 11477//
