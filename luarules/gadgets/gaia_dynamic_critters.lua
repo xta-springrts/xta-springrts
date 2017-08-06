@@ -16,7 +16,7 @@ if (not gadgetHandler:IsSyncedCode()) then
 end
 
 -- settings
-local addingAfterExtinction = 1		-- respam after area extinction species
+local addingAfterExtinction = 2		-- respam after area extinction species
 local evolveTimePace		= 151 	-- time between predation procreation moment (before 257)
 local procreatChangePrey	= 0.2	-- 
 local procreatChangePred	= 0.5 	-- (only when predation was succes so 0.5 * 0.2 = 0.1)
