@@ -297,6 +297,14 @@ local options = {
 		section= "xtagame",
 	},
 	{
+		key    = "dynamic_critters",
+		name   = 'Enable cute animals (dynamic)?',
+		desc   = "On some maps critters will pred/prey around\nkey: critters",
+		type   = "bool",
+		def    = true,
+		section= "xtagame",
+	},
+	{
 		key    = "buildspeed",
 		name   = 'Enable variable production rate',
 		desc   = "Enable variable production rate button to be added to build menu (may be expensive)\nkey: buildspeed",
