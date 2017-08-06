@@ -167,7 +167,7 @@ function addNewCritters(addingAfterExtinction)
 			if (areaNotEmpty[area] == nil) or (areaNotEmpty[area] ~= role) then
 				if cC.spawnBox then	
 					for unitName, unitAmount in ipairs(cC.unitNames) do
-						for i=1, addingAfterExtintion do
+						for i=1, addingAfterExtinction do
 							local unitID = nil
 							local x = random(cC.spawnBox.x1, cC.spawnBox.x2)
 							local z = random(cC.spawnBox.z1, cC.spawnBox.z2)
@@ -182,7 +182,7 @@ function addNewCritters(addingAfterExtinction)
 					end
 				elseif cC.spawnCircle then	
 					for unitName, unitAmount in pairs(cC.unitNames) do
-						for i=1, addingAfterExtintion do
+						for i=1, addingAfterExtinction do
 							local a = rad(random(0, 360))
 							local r = random(0, cC.spawnCircle.r)
 							local x = cC.spawnCircle.x + r*sin(a)
