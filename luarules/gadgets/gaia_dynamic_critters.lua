@@ -142,7 +142,7 @@ function makeBabyCritter(uID, role, name, shape)
 end
 
 
-function addNewCritters(AddingAfterExtintion)
+function addNewCritters(addingAfterExtinction)
 
 	local unitsCritters = GetTeamUnits(GaiaTeamID)
 	for index, unitID in pairs(unitsCritters) do
