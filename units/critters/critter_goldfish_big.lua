@@ -1,8 +1,8 @@
 unitDef = {
   unitname               = [[critter_goldfish_big]],
-  name                   = [[Goldfish_big]],
+  name                   = [[Goldfish]],
   description            = [[shiny!]],
-  iconType 				 = "blank",
+  iconType = "blank",
   acceleration           = 0.039,
   activateWhenBuilt      = true,
   brakeRate              = 0.25,
