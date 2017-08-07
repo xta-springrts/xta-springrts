@@ -17,14 +17,15 @@ end
 
 -- settings
 local addingAfterExtinction = 2		-- respam after area extinction species
-local evolveTimePace		= 151 	-- time between predation procreation moment (before 257)
-local procreatChangePrey	= 0.2	-- 
+local evolveTimePace		= 191 	-- time between predation procreation moment (before 257)(higher is better for prey)
+local procreatChangePrey	= 0.3	-- 
 local procreatChangePred	= 0.5 	-- (only when predation was succes so 0.5 * 0.2 = 0.1)
-local predationChange		= 0.2	-- change of succesful predation
+local predationChange		= 0.3	-- change of succesful predation
 local lifeSpanPrey			= 5000	-- begin lifespan prey
 local lifeSpanPred			= 5000	-- begin lifespan pred
 local predationRadius		= 900 	-- radius of predation possibilities
-local procreatePredatorValue= 4000	-- 
+local procreateLifespan		= 4000	-- Lifspan prey start having babies (procreate safety)
+local predLife				= 3000  -- Lifespan whenpredation kicks in (hunger)
 
 -- locals
 local GaiaTeamID  			= Spring.GetGaiaTeamID()
@@ -47,7 +48,8 @@ local critterPrey 			= {} 	-- prey alive
 local critterPred 			= {} 	-- preditor alive
 local numberOfAreas 		= 0
 local critterDied 			= {}
-local areaNotEmpty 			= {}
+local areaNotEmptyPrey      = {}
+local areaNotEmptyPred      = {}
 local spGetGroundHeight 	= Spring.GetGroundHeight
 local random 				= math.random
 local sin, cos 				= math.sin, math.cos
@@ -143,30 +145,34 @@ end
 
 function addNewCritters(addingAfterExtinction)
 
-	local unitsCritters = GetTeamUnits(GaiaTeamID)
-	for index, unitID in pairs(unitsCritters) do
+	local critterUnits = GetTeamUnits(GaiaTeamID)
+	local total = 0
+	for index, unitID in pairs(critterUnits) do
 		if critterPrey[unitID] ~= nil then
 			if critterPrey[unitID].area and critterPrey[unitID].role then
-				areaNotEmpty[critterPrey[unitID].area] = critterPrey[unitID].role
-			else
-				Echo("why is this nil.. please add the properties to this unit.")
+				areaNotEmptyPrey[critterPrey[unitID].area] = critterPrey[unitID].role
 			end
 		elseif critterPred[unitID] ~= nil then
 			if critterPred[unitID].area and critterPred[unitID].role  then
-				areaNotEmpty[critterPred[unitID].area] = critterPred[unitID].role
-			else
-				Echo("why is this nil.. please add the properties to this unit.")
+				areaNotEmptyPred[critterPred[unitID].area] = critterPred[unitID].role
 			end
 		else 
-			--Spring.Echo("There is an unit that is not pred nor prey :S") TODO PLEASE FIX THIS STUFFFFFFFFFFF
+			--Spring.Echo("There is an unit that is not pred nor prey :S") 
+			--DestroyUnit(unitID)
 		end
 	end
 	
+	local preyPred = nil
 	for area, pP in ipairs(critterConfig[Game.mapName]) do
 		for role, cC in pairs(pP) do
-			if (areaNotEmpty[area] == nil) or (areaNotEmpty[area] ~= role) then
-				if cC.spawnBox then	
-					for unitName, unitAmount in ipairs(cC.unitNames) do
+			if role == "prey" then
+				preyPred = areaNotEmptyPrey
+			else
+				preyPred = areaNotEmptyPred
+			end
+			if (preyPred[area] == nil) or (preyPred[area] ~= role) then
+				if cC.spawnBox then
+					for unitName, unitAmount in pairs(cC.unitNames) do
 						for i=1, addingAfterExtinction do
 							local unitID = nil
 							local x = random(cC.spawnBox.x1, cC.spawnBox.x2)
@@ -201,7 +207,8 @@ function addNewCritters(addingAfterExtinction)
 		end
 	end
 	
-	areaNotEmpty = {}
+	areaNotEmptyPrey = {}
+	areaNotEmptyPred = {}
 end
 
 
@@ -278,7 +285,7 @@ function gadget:GameFrame(f)
 			critterDied = {}
 			for unitID, data in pairs(critterPrey) do
 				if (data.lifespan > 0) then	
-					if (data.lifespan < procreatePredatorValue) then
+					if (data.lifespan < procreateLifespan) then
 						if math.random() < procreatChangePrey then
 							makeBabyCritter(unitID, "prey", data.name, data.shape)
 						end				
@@ -289,22 +296,24 @@ function gadget:GameFrame(f)
 					DestroyUnit(unitID)
 					if unitDefID then
 						critterPrey[unitID] = nil
+						critterUnits[unitID] = nil
 					end
 				end
 			end
-		if (f%(4 * evolveTimePace) == 0) then
-			addNewCritters(addingAfterExtinction)
-		end
+			if (f%(4 * evolveTimePace) == 0) then
+				addNewCritters(addingAfterExtinction)
+			end
 		else
 			for unitID, data in pairs(critterPred) do
 				if data.lifespan > 0 then
-					if data.lifespan < procreatePredatorValue then
+					if data.lifespan < predLife then
 						if math.random() < predationChange then
 							for name,number in pairs(critterConfig[Game.mapName][data.area]["prey"].unitNames) do 
 								local nearest = nearest_friend_from_unit(unitID, name)	
 								if nearest then
 									if critterPrey[nearest] ~= nil then
 										critterPrey[nearest] = nil
+										critterUnits[nearest] = nil
 										critterDied[nearest] = unitID
 										x,y,z = GetUnitPosition(nearest)
 										GiveOrderToUnit(unitID, CMD.MOVE, {x, spGetGroundHeight(x, z), z}, {})

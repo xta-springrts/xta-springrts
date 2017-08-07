@@ -44,6 +44,7 @@ unitDef = {
   upright                = true,
   waterline              = 20,
   workerTime             = 0,
+  collide 				= false,
 
 }
 
