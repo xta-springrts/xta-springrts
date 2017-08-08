@@ -13,10 +13,9 @@ end
 -- TODO
 -- How it works with enemy units?? (fix: make a gadget)
 -- Unit should not make noice when they are building, gaurding, ... etc (fix: commander)
--- Add splash animation when entering water
--- Use footprint to set the size of sound volume and the splash fx
 -- Add a bubbles animation when going submerge (with sound)
--- Building hover platforms, tidels, metal makers, radar and  plashes
+-- Building hover platforms, tidels, metal makers, radar and ... splashes (these should be removed from soundfx)
+-- Add the option to make crittes in water LOS only visible
 
 local IsWaterDragUnit = {
 	["kbotsf2"] 	= true, 
@@ -56,6 +55,7 @@ local GetUnitDefID				= Spring.GetUnitDefID
 local Echo						= Spring.Echo
 local GetAllUnits				= Spring.GetAllUnits
 local GetUnitDefDimensions		= Spring.GetUnitDefDimensions
+local GaiaTeamID  				= Spring.GetGaiaTeamID()
 
 -- locals
 local WATER_MOVEMENT			= "sounds/unit/watfusn1.wav"
@@ -180,23 +180,25 @@ function widget:UnitEnteredWater(unitID, unitDefID, unitTeam)
 
 	--all units splash in water comming in to the water
 	local x,y,z = GetUnitPosition(unitID)
+	local unitTeam = GetUnitTeam(unitID)
 	
+	if unitTeam ~= GaiaTeamID then
 	--make sure units created in water dont splash
-	if y > -10 then
-		local radius = GetUnitDefDimensions(unitDefID)["radius"]
-		if IsHover[tostring(UnitDefs[unitDefID].moveDef.name)] then
-			PlaySoundFile(HOVER_PLASH, volume * math.abs((radius-10))/60 ,x,y,z,0,0,0,'battle')
-		else
-			PlaySoundFile(NONHOVER_SPLASH, volume * math.abs((radius-10))/60,x,y,z,0,0,0,'battle')
+		if y > -10 then
+			local radius = GetUnitDefDimensions(unitDefID)["radius"]
+			if IsHover[tostring(UnitDefs[unitDefID].moveDef.name)] then
+				PlaySoundFile(HOVER_PLASH, volume * math.abs((radius-10))/60 ,x,y,z,0,0,0,'battle')
+			else
+				PlaySoundFile(NONHOVER_SPLASH, volume * math.abs((radius-10))/60,x,y,z,0,0,0,'battle')
+			end
+		end
+		
+		--store soundy units in water
+		if IsWaterDragUnit[tostring(UnitDefs[unitDefID].moveDef.name)] ~= nil then
+			--Echo(UnitDefs[unitDefID].name)
+			waterUnits[unitID] = 2
 		end
 	end
-	
-	--store soundy units in water
-	if IsWaterDragUnit[tostring(UnitDefs[unitDefID].moveDef.name)] ~= nil then
-		--Echo(UnitDefs[unitDefID].name)
-		waterUnits[unitID] = 2
-	end
-	
 end
 
 

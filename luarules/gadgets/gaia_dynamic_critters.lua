@@ -79,6 +79,7 @@ local function makeUnitCritter(unitID, role, loc, unitName, ss)
 	SetUnitNoSelect(unitID, true)
 	SetUnitStealth(unitID, true)
 	critterUnits[unitID] = true
+	Spring.SetUnitAlwaysVisible(unitID, true)
 	if (role == "prey") then
 		critterPrey[unitID] = {lifespan = lifeSpanPrey, area = loc, role = "prey", name = unitName, shape = ss}
 	else
