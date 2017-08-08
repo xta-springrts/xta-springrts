@@ -20,14 +20,14 @@ local addingAfterExtinction = 2		-- respam after area extinction species
 local evolveTimePace		= 191 	-- time between predation procreation moment (before 257)(higher is better for prey)
 local procreatChangePrey	= 0.3	-- 
 local procreatChangePred	= 0.5 	-- (only when predation was succes so 0.5 * 0.2 = 0.1)
-local predationChange		= 0.3	-- change of succesful predation
+local predationChange		= 0.4	-- change of succesful predation
 local lifeSpanPrey			= 5000	-- begin lifespan prey
 local lifeSpanPred			= 5000	-- begin lifespan pred
-local predationRadius		= 900 	-- radius of predation possibilities
 local procreateLifespan		= 4000	-- Lifspan prey start having babies (procreate safety)
 local predLife				= 3000  -- Lifespan whenpredation kicks in (hunger)
 
 -- locals
+local total					= 0
 local GaiaTeamID  			= Spring.GetGaiaTeamID()
 local GiveOrderToUnit		= Spring.GiveOrderToUnit
 local SetUnitNeutral		= Spring.SetUnitNeutral
@@ -92,7 +92,8 @@ function nearest_friend_from_unit(uID, unitType)
   local nearest_friendID = nil
   local nearest_friend_distance = 9999999999
   local x,y,z = GetUnitPosition(uID)
-  friend = GetUnitsInCylinder(x,z, predationRadius)
+  local radiusPredation = critterConfig[Game.mapName][critterPred[uID].area]["pred"].predRadius
+  friend = GetUnitsInCylinder(x,z, radiusPredation)
   if (friend == nil) then return nil end
 	  for i in pairs(friend) do
 		if (friend[i] ~= uID and units_allied(friend[i], uID)) then 
@@ -147,8 +148,9 @@ end
 function addNewCritters(addingAfterExtinction)
 
 	local critterUnits = GetTeamUnits(GaiaTeamID)
-	local total = 0
+	total = 0
 	for index, unitID in pairs(critterUnits) do
+		total = total + 1
 		if critterPrey[unitID] ~= nil then
 			if critterPrey[unitID].area and critterPrey[unitID].role then
 				areaNotEmptyPrey[critterPrey[unitID].area] = critterPrey[unitID].role
@@ -160,18 +162,20 @@ function addNewCritters(addingAfterExtinction)
 		else 
 			--Spring.Echo("There is an unit that is not pred nor prey :S") 
 			--DestroyUnit(unitID)
+			--local unitDefID = GetUnitDefID(unitID)
+			--Echo(UnitDefs[unitDefID].name)
 		end
 	end
 	
 	local preyPred = nil
-	for area, pP in ipairs(critterConfig[Game.mapName]) do
+	for area, pP in pairs(critterConfig[Game.mapName]) do
 		for role, cC in pairs(pP) do
 			if role == "prey" then
 				preyPred = areaNotEmptyPrey
 			else
 				preyPred = areaNotEmptyPred
 			end
-			if (preyPred[area] == nil) or (preyPred[area] ~= role) then
+			if ((preyPred[area] == nil) or (preyPred[area] ~= role)) and total < 1000 then
 				if cC.spawnBox then
 					for unitName, unitAmount in pairs(cC.unitNames) do
 						for i=1, addingAfterExtinction do
@@ -274,7 +278,7 @@ function gadget:GameFrame(f)
 		if (f%2 == 0) then
 			for prey, pred in pairs(critterDied) do
 				DestroyUnit(prey)
-				if math.random() < procreatChangePred then
+				if math.random() < procreatChangePred and (total < 1000) then
 					makeBabyCritter(pred, "pred", critterPred[pred].name, critterPred[pred].shape)
 				end
 				if critterPred[pred].shape == "circle" then
@@ -287,18 +291,16 @@ function gadget:GameFrame(f)
 			for unitID, data in pairs(critterPrey) do
 				if (data.lifespan > 0) then	
 					if (data.lifespan < procreateLifespan) then
-						if math.random() < procreatChangePrey then
+						if math.random() < procreatChangePrey and (total < 1000) then
 							makeBabyCritter(unitID, "prey", data.name, data.shape)
 						end				
 					end
-					critterPrey[unitID].lifespan = critterPrey[unitID].lifespan - 2 * evolveTimePace
+					critterPrey[unitID].lifespan = critterPrey[unitID].lifespan - 1 * evolveTimePace - random(1, evolveTimePace)
 				else	
 					local unitDefID = GetUnitDefID(unitID)
 					DestroyUnit(unitID)
-					if unitDefID then
-						critterPrey[unitID] = nil
-						critterUnits[unitID] = nil
-					end
+					critterPrey[unitID] = nil
+					critterUnits[unitID] = nil
 				end
 			end
 			if (f%(4 * evolveTimePace) == 0) then
@@ -319,17 +321,17 @@ function gadget:GameFrame(f)
 										x,y,z = GetUnitPosition(nearest)
 										GiveOrderToUnit(unitID, CMD.MOVE, {x, spGetGroundHeight(x, z), z}, {})
 										GiveOrderToUnit(nearest, CMD.MOVE, {x, spGetGroundHeight(x, z), z}, {})
-										critterPred[unitID].lifespan = critterPred[unitID].lifespan + 2 * evolveTimePace
+										critterPred[unitID].lifespan = critterPred[unitID].lifespan + 1 * evolveTimePace + random(1, evolveTimePace)
 									end
 								else
-									critterPred[unitID].lifespan = critterPred[unitID].lifespan - 4 * evolveTimePace
+									critterPred[unitID].lifespan = critterPred[unitID].lifespan - 3 * evolveTimePace - random(1, evolveTimePace)
 								end
 							end
 						else
-							critterPred[unitID].lifespan = critterPred[unitID].lifespan - 4 * evolveTimePace
+							critterPred[unitID].lifespan = critterPred[unitID].lifespan - 3 * evolveTimePace - random(1, evolveTimePace)
 						end
 					else
-						critterPred[unitID].lifespan = critterPred[unitID].lifespan - 4 * evolveTimePace
+						critterPred[unitID].lifespan = critterPred[unitID].lifespan - 3 * evolveTimePace - random(1, evolveTimePace)
 					end
 				else	
 					DestroyUnit(unitID)
