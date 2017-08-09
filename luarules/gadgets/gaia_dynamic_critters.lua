@@ -17,14 +17,14 @@ end
 
 -- settings
 local addingAfterExtinction = 2		-- respam after area extinction species
-local evolveTimePace		= 191 	-- time between predation procreation moment (before 257)(higher is better for prey)
+local evolveTimePace		= 151 	-- time between predation procreation moment (before 257)(higher is better for prey)
 local procreatChangePrey	= 0.2	-- 
 local procreatChangePred	= 0.5 	-- (only when predation was succes so 0.5 * 0.2 = 0.1)
 local predationChange		= 0.4	-- change of succesful predation
 local lifeSpanPrey			= 5000	-- begin lifespan prey
 local lifeSpanPred			= 5000	-- begin lifespan pred
-local procreateLifespan		= 4000	-- Lifspan prey start having babies (procreate safety)
-local predLife				= 3000  -- Lifespan whenpredation kicks in (hunger)
+local procreateLifespan		= 5000	-- Lifspan prey start having babies (procreate safety)
+local predLife				= 4000  -- Lifespan whenpredation kicks in (hunger)
 local maximumCritters		= 500	-- collusion makes cpu work
 
 -- locals
