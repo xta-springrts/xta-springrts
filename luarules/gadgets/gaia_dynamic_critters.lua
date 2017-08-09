@@ -234,7 +234,7 @@ end
 
 -- spawning critters in game start prevents them from being spawned every time you do /luarules reload
 function gadget:GameStart()
-	for area, pP in ipairs(critterConfig[Game.mapName]) do
+	for area, pP in pairs(critterConfig[Game.mapName]) do
 		numberOfAreas = numberOfAreas + 1
 		for role, cC in pairs(pP) do
 			if cC.spawnBox then	

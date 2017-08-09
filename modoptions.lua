@@ -298,8 +298,16 @@ local options = {
 	},
 	{
 		key    = "dynamic_critters",
-		name   = 'Enable cute animals (dynamic)?',
-		desc   = "On some maps critters will pred/prey around\nkey: critters",
+		name   = 'Enable cute animals doing predation?',
+		desc   = "On some maps critters will they wiggle and wubble around\nkey: critters do predation",
+		type   = "bool",
+		def    = true,
+		section= "xtagame",
+	},
+		{
+		key    = "dynamic_critters_full",
+		name   = 'Enable cute animals doing predation and plants?',
+		desc   = "On some maps critters will they wiggle and wubble around\nkey: critters do predation with plants",
 		type   = "bool",
 		def    = true,
 		section= "xtagame",
