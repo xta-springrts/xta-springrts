@@ -20,9 +20,9 @@ local addingAfterExtinction = 2		-- respam after area extinction species
 local evolveTimePace		= 151 	-- time between predation procreation moment (before 257)(higher is better for prey)
 local procreatChangePrey	= 0.2	-- 
 local procreatChangePred	= 0.5 	-- (only when predation was succes so 0.5 * 0.2 = 0.1)
-local predationChange		= 0.4	-- change of succesful predation
+local predationChange		= 0.5	-- change of succesful predation
 local lifeSpanPrey			= 5000	-- begin lifespan prey
-local lifeSpanPred			= 5000	-- begin lifespan pred
+local lifeSpanPred			= 4000	-- begin lifespan pred
 local procreateLifespan		= 5000	-- Lifspan prey start having babies (procreate safety)
 local predLife				= 4000  -- Lifespan whenpredation kicks in (hunger)
 local maximumCritters		= 500	-- collusion makes cpu work
@@ -322,17 +322,17 @@ function gadget:GameFrame(f)
 										x,y,z = GetUnitPosition(nearest)
 										GiveOrderToUnit(unitID, CMD.MOVE, {x, spGetGroundHeight(x, z), z}, {})
 										GiveOrderToUnit(nearest, CMD.MOVE, {x, spGetGroundHeight(x, z), z}, {})
-										critterPred[unitID].lifespan = critterPred[unitID].lifespan + 1 * evolveTimePace + random(1, evolveTimePace)
+										critterPred[unitID].lifespan = critterPred[unitID].lifespan + random(1, evolveTimePace)
 									end
 								else
-									critterPred[unitID].lifespan = critterPred[unitID].lifespan - 3 * evolveTimePace - random(1, evolveTimePace)
+									critterPred[unitID].lifespan = critterPred[unitID].lifespan - 2 * evolveTimePace - random(1, evolveTimePace)
 								end
 							end
 						else
-							critterPred[unitID].lifespan = critterPred[unitID].lifespan - 3 * evolveTimePace - random(1, evolveTimePace)
+							critterPred[unitID].lifespan = critterPred[unitID].lifespan - 2 * evolveTimePace - random(1, evolveTimePace)
 						end
 					else
-						critterPred[unitID].lifespan = critterPred[unitID].lifespan - 3 * evolveTimePace - random(1, evolveTimePace)
+						critterPred[unitID].lifespan = critterPred[unitID].lifespan - 2 * evolveTimePace - random(1, evolveTimePace)
 					end
 				else	
 					DestroyUnit(unitID)
