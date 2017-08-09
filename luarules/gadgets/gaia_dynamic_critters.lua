@@ -18,12 +18,12 @@ end
 -- settings
 local addingAfterExtinction = 2		-- respam after area extinction species
 local evolveTimePace		= 151 	-- time between predation procreation moment (before 257)(higher is better for prey)
-local procreatChangePrey	= 0.2	-- 
-local procreatChangePred	= 0.5 	-- (only when predation was succes so 0.5 * 0.2 = 0.1)
-local predationChange		= 0.5	-- change of succesful predation
-local lifeSpanPrey			= 5000	-- begin lifespan prey
+local procreatChangePrey	= 0.4	-- 
+local procreatChangePred	= 0.6 	-- (only when predation was succes so 0.6 * 0.6 = 0.32)
+local predationChange		= 0.6	-- change of succesful predation
+local lifeSpanPrey			= 3000	-- begin lifespan prey
 local lifeSpanPred			= 4000	-- begin lifespan pred
-local procreateLifespan		= 5000	-- Lifspan prey start having babies (procreate safety)
+local procreateLifespan		= 3000	-- Lifspan prey start having babies (procreate safety)
 local predLife				= 4000  -- Lifespan whenpredation kicks in (hunger)
 local maximumCritters		= 500	-- collusion makes cpu work
 
@@ -322,7 +322,7 @@ function gadget:GameFrame(f)
 										x,y,z = GetUnitPosition(nearest)
 										GiveOrderToUnit(unitID, CMD.MOVE, {x, spGetGroundHeight(x, z), z}, {})
 										GiveOrderToUnit(nearest, CMD.MOVE, {x, spGetGroundHeight(x, z), z}, {})
-										critterPred[unitID].lifespan = critterPred[unitID].lifespan + random(1, evolveTimePace)
+										--critterPred[unitID].lifespan = critterPred[unitID].lifespan + random(1, evolveTimePace)
 									end
 								else
 									critterPred[unitID].lifespan = critterPred[unitID].lifespan - 2 * evolveTimePace - random(1, evolveTimePace)
@@ -346,13 +346,13 @@ end
 function gadget:UnitDestroyed(unitID, unitDefID, teamID, attackerID, attackerDefID, attackerTeamID)
 	if critterUnits[unitID] then 
 		critterUnits[unitID] = nil
-		if critterPrey[unitID] ~= nil then
-			critterPrey[unitID] = nil
-		elseif critterPred[unitID] ~= nil then
-			critterPred[unitID] = nil
-		else
-			--Spring.Echo("error????")
-		end
+	end
+	if critterPrey[unitID] ~= nil then
+		critterPrey[unitID] = nil
+	elseif critterPred[unitID] ~= nil then
+		critterPred[unitID] = nil
+	else
+		--Spring.Echo("error????")
 	end
 end
 
