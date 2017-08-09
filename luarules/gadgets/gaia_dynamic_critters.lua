@@ -18,13 +18,14 @@ end
 -- settings
 local addingAfterExtinction = 2		-- respam after area extinction species
 local evolveTimePace		= 191 	-- time between predation procreation moment (before 257)(higher is better for prey)
-local procreatChangePrey	= 0.3	-- 
+local procreatChangePrey	= 0.2	-- 
 local procreatChangePred	= 0.5 	-- (only when predation was succes so 0.5 * 0.2 = 0.1)
 local predationChange		= 0.4	-- change of succesful predation
 local lifeSpanPrey			= 5000	-- begin lifespan prey
 local lifeSpanPred			= 5000	-- begin lifespan pred
 local procreateLifespan		= 4000	-- Lifspan prey start having babies (procreate safety)
 local predLife				= 3000  -- Lifespan whenpredation kicks in (hunger)
+local maximumCritters		= 500	-- collusion makes cpu work
 
 -- locals
 local total					= 0
@@ -175,7 +176,7 @@ function addNewCritters(addingAfterExtinction)
 			else
 				preyPred = areaNotEmptyPred
 			end
-			if ((preyPred[area] == nil) or (preyPred[area] ~= role)) and total < 1000 then
+			if ((preyPred[area] == nil) or (preyPred[area] ~= role)) and total < maximumCritters then
 				if cC.spawnBox then
 					for unitName, unitAmount in pairs(cC.unitNames) do
 						for i=1, addingAfterExtinction do
@@ -278,7 +279,7 @@ function gadget:GameFrame(f)
 		if (f%2 == 0) then
 			for prey, pred in pairs(critterDied) do
 				DestroyUnit(prey)
-				if math.random() < procreatChangePred and (total < 1000) then
+				if math.random() < procreatChangePred and (total < maximumCritters) then
 					makeBabyCritter(pred, "pred", critterPred[pred].name, critterPred[pred].shape)
 				end
 				if critterPred[pred].shape == "circle" then
@@ -291,7 +292,7 @@ function gadget:GameFrame(f)
 			for unitID, data in pairs(critterPrey) do
 				if (data.lifespan > 0) then	
 					if (data.lifespan < procreateLifespan) then
-						if math.random() < procreatChangePrey and (total < 1000) then
+						if math.random() < procreatChangePrey and (total < maximumCritters) then
 							makeBabyCritter(unitID, "prey", data.name, data.shape)
 						end				
 					end

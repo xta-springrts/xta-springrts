@@ -16,15 +16,15 @@ local critterConfig = {
 ["Trefoil_v2"] = {
 [1] = {
 		["prey"] = { spawnBox = {x1=0, z1=4200, x2=2000, z2=8000}, unitNames = {["critter_goldfish"]=10} },
-		["pred"] = { spawnBox = {x1=0, z1=4200, x2=2000, z2=8000}, unitNames = {["critter_goldfish_big"]=10}, predRadius = 450  },
+		["pred"] = { spawnBox = {x1=0, z1=4200, x2=2000, z2=8000}, unitNames = {["critter_goldfish_big"]=10}, predRadius = 900  },
 	},
 [2] = {
 		["prey"] = { spawnBox = {x1=7000, z1=0, x2=8000, z2=2000}, unitNames = {["critter_goldfish"]=10} },
-		["pred"] = { spawnBox = {x1=7000, z1=0, x2=8000, z2=2000}, unitNames = {["critter_goldfish_big"]=10}, predRadius = 450  },
+		["pred"] = { spawnBox = {x1=7000, z1=0, x2=8000, z2=2000}, unitNames = {["critter_goldfish_big"]=10}, predRadius = 900  },
 	},
 [3] = {
 		["prey"] = { spawnBox = {x1=6000, z1=4200, x2=8000, z2=8000}, unitNames = {["critter_goldfish"]=10} },
-		["pred"] = { spawnBox = {x1=6000, z1=4200, x2=8000, z2=8000}, unitNames = {["critter_goldfish_big"]=10}, predRadius = 450  },
+		["pred"] = { spawnBox = {x1=6000, z1=4200, x2=8000, z2=8000}, unitNames = {["critter_goldfish_big"]=10}, predRadius = 900  },
 	},
 [4] = {
 		["prey"] = { spawnBox = {x1=0, z1=0, x2=1400, z2=1800}, unitNames = {["critter_goldfish"]=10} },
