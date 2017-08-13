@@ -131,7 +131,30 @@ local wildlifeConfig = {
 		},
 	},
 
-
+	["Lowland_Crossing_TNM01-V4"] = {
+		[1] = {
+			["food"] = { 
+				spawn= {shape = "box", dim = {x1=500, z1=500, x2=2500, z2=3500} },
+				unitNames = {["tree"] = 10},
+				radius = 100,
+				name = "tree"
+			},
+			["prey"] = { 
+				spawn= {shape = "box", dim = {x1=500, z1=500, x2=2500, z2=3500} },
+				unitNames = {["critter_duck"] = 5},
+				radius = 600,
+				name = "critter_duck"
+			},
+			["pred"] = { 
+				spawn= {shape = "box", dim = {x1=500, z1=500, x2=2500, z2=3500} },
+				unitNames = {["critter_gull"] = 1},
+				radius = 600,
+				name = "critter_gull"
+			},
+		},
+	},
+	
+	
 	["Trefoil_v2"] = {
 		[1] = {
 			["food"] = { 
