@@ -17,15 +17,14 @@ end
 
 -- settings
 local addingAfterExtinction = 2		-- respam after area extinction species
-local evolveTimePace		= 151 	-- time between predation procreation moment (before 257)(higher is better for prey)
+local evolveTimePace		= 191 	-- time between predation procreation moment (before 257)(higher is better for prey)
 local procreatChangePrey	= 0.3	-- 
-local procreatChangePred	= 0.6 	-- (only when predation was succes so 0.6 * 0.7 = 0.42)
-local predationChange		= 0.7	-- change of succesful predation
-local lifeSpanPrey			= 3000	-- begin lifespan prey
-local lifeSpanPred			= 3000	-- begin lifespan pred
-local procreateLifespan		= 2000	-- Lifspan prey start having babies (procreate safety)
-local predLife				= 2500  -- Lifespan whenpredation kicks in (hunger)
-local maximumCritters		= 500	-- collusion makes cpu work
+local procreatChangePred	= 0.5 	-- (only when predation was succes so 0.5 * 0.2 = 0.1)
+local predationChange		= 0.4	-- change of succesful predation
+local lifeSpanPrey			= 5000	-- begin lifespan prey
+local lifeSpanPred			= 5000	-- begin lifespan pred
+local procreateLifespan		= 4000	-- Lifspan prey start having babies (procreate safety)
+local predLife				= 3000  -- Lifespan whenpredation kicks in (hunger)
 
 -- locals
 local total					= 0
@@ -43,7 +42,7 @@ local CreateUnit			= Spring.CreateUnit
 local GetTeamUnits			= Spring.GetTeamUnits
 local Echo					= Spring.Echo
 local DestroyUnit			= Spring.DestroyUnit
-local critterConfig 		= include("LuaRules/Configs/gaia_dynamic_critters_config.lua")
+local critterConfig 		= include("LuaRules/Configs/gaia_dynamic_critters_config_full.lua")
 local critterUnits 			= {}	-- critter units that are currently alive
 local critterPrey 			= {} 	-- prey alive
 local critterPred 			= {} 	-- preditor alive
@@ -99,9 +98,9 @@ function nearest_friend_from_unit(uID, unitType)
 	  for i in pairs(friend) do
 		if (friend[i] ~= uID and units_allied(friend[i], uID)) then 
 			local unitDefID = GetUnitDefID(friend[i])
-			if (UnitDefs[unitDefID].name == unitType) then --and critterUnits[friend[i]]~= nil then
+			if (UnitDefs[unitDefID].name == unitType) then
 				local d = GetUnitSeparation(uID, friend[i])
-				if (d < nearest_friend_distance then
+				if (d < nearest_friend_distance) then
 					nearest_friend_distance = d
 					nearest_friendID = friend[i]
 				 end
@@ -176,7 +175,7 @@ function addNewCritters(addingAfterExtinction)
 			else
 				preyPred = areaNotEmptyPred
 			end
-			if ((preyPred[area] == nil) or (preyPred[area] ~= role)) and total < maximumCritters then
+			if ((preyPred[area] == nil) or (preyPred[area] ~= role)) and total < 1000 then
 				if cC.spawnBox then
 					for unitName, unitAmount in pairs(cC.unitNames) do
 						for i=1, addingAfterExtinction do
@@ -235,7 +234,7 @@ end
 
 -- spawning critters in game start prevents them from being spawned every time you do /luarules reload
 function gadget:GameStart()
-	for area, pP in pairs(critterConfig[Game.mapName]) do
+	for area, pP in ipairs(critterConfig[Game.mapName]) do
 		numberOfAreas = numberOfAreas + 1
 		for role, cC in pairs(pP) do
 			if cC.spawnBox then	
@@ -279,7 +278,7 @@ function gadget:GameFrame(f)
 		if (f%2 == 0) then
 			for prey, pred in pairs(critterDied) do
 				DestroyUnit(prey)
-				if math.random() < procreatChangePred and (total < maximumCritters) then
+				if math.random() < procreatChangePred and (total < 1000) then
 					makeBabyCritter(pred, "pred", critterPred[pred].name, critterPred[pred].shape)
 				end
 				if critterPred[pred].shape == "circle" then
@@ -292,7 +291,7 @@ function gadget:GameFrame(f)
 			for unitID, data in pairs(critterPrey) do
 				if (data.lifespan > 0) then	
 					if (data.lifespan < procreateLifespan) then
-						if math.random() < procreatChangePrey and (total < maximumCritters) then
+						if math.random() < procreatChangePrey and (total < 1000) then
 							makeBabyCritter(unitID, "prey", data.name, data.shape)
 						end				
 					end
@@ -304,7 +303,7 @@ function gadget:GameFrame(f)
 					critterUnits[unitID] = nil
 				end
 			end
-			if (f%(10 * evolveTimePace) == 0) then
+			if (f%(4 * evolveTimePace) == 0) then
 				addNewCritters(addingAfterExtinction)
 			end
 		else
@@ -322,17 +321,17 @@ function gadget:GameFrame(f)
 										x,y,z = GetUnitPosition(nearest)
 										GiveOrderToUnit(unitID, CMD.MOVE, {x, spGetGroundHeight(x, z), z}, {})
 										GiveOrderToUnit(nearest, CMD.MOVE, {x, spGetGroundHeight(x, z), z}, {})
-										critterPred[unitID].lifespan = critterPred[unitID].lifespan + random(1, evolveTimePace)
+										critterPred[unitID].lifespan = critterPred[unitID].lifespan + 1 * evolveTimePace + random(1, evolveTimePace)
 									end
 								else
-									critterPred[unitID].lifespan = critterPred[unitID].lifespan - random(1, evolveTimePace)
+									critterPred[unitID].lifespan = critterPred[unitID].lifespan - 3 * evolveTimePace - random(1, evolveTimePace)
 								end
 							end
 						else
-							critterPred[unitID].lifespan = critterPred[unitID].lifespan  - random(1, evolveTimePace)
+							critterPred[unitID].lifespan = critterPred[unitID].lifespan - 3 * evolveTimePace - random(1, evolveTimePace)
 						end
 					else
-						critterPred[unitID].lifespan = critterPred[unitID].lifespan - random(1, evolveTimePace)
+						critterPred[unitID].lifespan = critterPred[unitID].lifespan - 3 * evolveTimePace - random(1, evolveTimePace)
 					end
 				else	
 					DestroyUnit(unitID)
@@ -346,13 +345,13 @@ end
 function gadget:UnitDestroyed(unitID, unitDefID, teamID, attackerID, attackerDefID, attackerTeamID)
 	if critterUnits[unitID] then 
 		critterUnits[unitID] = nil
-	end
-	if critterPrey[unitID] ~= nil then
-		critterPrey[unitID] = nil
-	elseif critterPred[unitID] ~= nil then
-		critterPred[unitID] = nil
-	else
-		--Spring.Echo("error????")
+		if critterPrey[unitID] ~= nil then
+			critterPrey[unitID] = nil
+		elseif critterPred[unitID] ~= nil then
+			critterPred[unitID] = nil
+		else
+			--Spring.Echo("error????")
+		end
 	end
 end
 
