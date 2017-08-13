@@ -24,7 +24,7 @@ local procreatSuccesFood	= 0.7   				-- succesrate procreation food
 local procreatSuccesPrey	= 0.4   				-- succesrate procreation prey
 local predationSucces		= 0.7					--
 local procreatSuccesPred	= 0.3					--
-local maxWildlife			= 300  					-- maximal amount of critters be spawned
+local maxWildlife			= 500  					-- maximal amount of critters be spawned
 local addingAfterExtinction = 2						-- respam after area extinction species
 local ExtraLifeLost			= 0.5
 
