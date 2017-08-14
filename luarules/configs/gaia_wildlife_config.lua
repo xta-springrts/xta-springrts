@@ -5,8 +5,14 @@ local wildlifeConfig = {
 -- The radius on prey determine there foraging distance to available food. (same for pred-> prey dist.)
 -- Set units at start on different places on the map which get respawn after possible extinction
 -- For full settings see gadged
--- TODO maybe add number of trees spawned in radius as parameters here later
 
+-- TODO 
+-- add number of trees spawned in radius as parameters here later
+
+-- ADVISE FOR USE
+-- when radius of maximal trees is chosen large the amount of wildlife in restricted. (good for small maps)
+-- As a side effect the likelihood that trees wander around the map is higher. (not packed together)
+-- Radius incrementals for predators and preys make them much more effective
 
 	["LakeDay_v1"] = {
 		[1] = {
@@ -136,7 +142,7 @@ local wildlifeConfig = {
 			["food"] = { 
 				spawn= {shape = "box", dim = {x1=500, z1=500, x2=2500, z2=3500} },
 				unitNames = {["tree"] = 10},
-				radius = 100,
+				radius = 1000,
 				name = "tree"
 			},
 			["prey"] = { 
