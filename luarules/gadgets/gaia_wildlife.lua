@@ -89,7 +89,7 @@ end
 
 function makeUnitWildlife(unitID, unitRole, unitArea, unitName, spawnshape, unitRadius, spawnDim, maxLifeSpan)
 	SetUnitNeutral(unitID, true)
-	SetUnitNoSelect(unitID, true)
+	--SetUnitNoSelect(unitID, true)
 	SetUnitStealth(unitID, true)
 	Spring.SetUnitAlwaysVisible(unitID, true)
 	wildlifeUnits[unitID] = {

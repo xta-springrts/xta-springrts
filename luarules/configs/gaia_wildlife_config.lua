@@ -286,6 +286,49 @@ local wildlifeConfig = {
 			},
 		},
 	},
+	
+	["WidePass Fineto"] = {
+		[1] = {
+			["food"] = { 
+				spawn= {shape = "circle", dim = {x=1500, z=1500, r=1500} },
+				unitNames = {["tree_energy"] = 50},
+				radius = 300,
+				name = "tree_energy"
+			},
+		},
+		[2] = {
+			["food"] = { 
+				spawn= {shape = "circle", dim = {x=1500, z=9000, r=1500} },
+				unitNames = {["tree_energy"] = 50},
+				radius = 300,
+				name = "tree_energy"
+			},
+		},
+		[3] = {
+			["food"] = { 
+				spawn= {shape = "circle", dim = {x=4500, z=9000, r=1500} },
+				unitNames = {["tree_energy"] = 50},
+				radius = 300,
+				name = "tree_energy"
+			},
+		},
+		[4] = {
+			["food"] = { 
+				spawn= {shape = "circle", dim = {x=4500, z=1500, r=1500} },
+				unitNames = {["tree_energy"] = 50},
+				radius = 300,
+				name = "tree_energy"
+			},
+		},
+		[5] = {
+			["food"] = { 
+				spawn= {shape = "box", dim = {x1=2450, z1=2300, x2=3906, z2=7928} },
+				unitNames = {["tree_energy"] = 50},
+				radius = 300,
+				name = "tree_energy"
+			},
+		},
+	},
 
 
 }
