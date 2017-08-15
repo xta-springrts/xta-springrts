@@ -1,5 +1,5 @@
 unitDef = {
-  unitname            = [[tree_enery]],
+  unitname            = [[tree_energy]],
   name                = [[tree_energy]],
   iconType = "blank",
   description         = [[TREE WITH METAL!]],

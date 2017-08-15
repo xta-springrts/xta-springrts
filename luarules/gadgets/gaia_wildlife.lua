@@ -11,6 +11,8 @@ function gadget:GetInfo()
 end
 
 -- TODO do seasons
+-- setting new circle/box for wildlife babies. 
+-- adding config parameter for maximum units in radius (food)
 
 -- synced only
 if (not gadgetHandler:IsSyncedCode()) then
@@ -41,6 +43,8 @@ local totalWildlife			= 0
 local wildlifeUnits 		= {}					-- critter units that are currently alive
 local preyEatsFood			= {}
 local predEatsPrey			= {}
+local GetUnitRadius			= Spring.GetUnitRadius
+local GetUnitDefDimensions	= Spring.GetUnitDefDimensions
 local Enable				= Spring.MoveCtrl.Enable
 local SetPosition  			= Spring.MoveCtrl.SetPosition
 local GaiaTeamID  			= Spring.GetGaiaTeamID()
@@ -195,12 +199,12 @@ function spawnUnit(dim, shape, unitName, unitRole, begin)
 		local z = dim.z + r*cos(a)
 		unitID = CreateUnit(unitName, x, spGetGroundHeight(x, z), z, 0, GaiaTeamID)
 	end
-	if unitRole == "food" then							-- maybe also check for original location
+	if unitRole == "food" then							
 		Enable(unitID)
 	end
 	if unitRole == "food" and begin ~= "true" then
-		local height = 23                             	-- This needs to be something obtained of unit property.
-		local x, y , z = GetUnitPosition(unitID)
+		local height = GetUnitRadius(unitID) + 15
+		local x, y, z = GetUnitPosition(unitID)
 		SetPosition(unitID, x, y - height, z)
 	end 
 	return unitID
@@ -342,6 +346,15 @@ function gadget:GameStart()
 	end
 end
 
+
+function growingFood(unitID)
+	local x, y , z = GetUnitPosition(unitID)
+	local groundHeight = spGetGroundHeight(x, z)
+	if y <  (groundHeight + 1) then
+		local growth = abs(spGetGroundHeight(x, z) - y) * 0.5
+		SetPosition(unitID, x, y + growth, z)
+	end
+end
  
 function gadget:GameFrame(f)
 	
@@ -352,16 +365,6 @@ function gadget:GameFrame(f)
 	
 	if (f%evolveTimePace) == 0 then 
 		if (f%2 == 0) then
-			
-			-- first erasing some stuff maybe
-			--local critters = GetTeamUnits(GaiaTeamID)
-			--for index, unitID in pairs(critters) do
-				--if wildlifeUnits[unitID] == nil then
-					--DestroyUnit(unitID)
-					--Echo(unitID, "erased manually")
-				--end
-			--end
-			
 			
 			for unitID, data in pairs(wildlifeUnits) do
 				
@@ -376,13 +379,8 @@ function gadget:GameFrame(f)
 							procreateFood(unitID, data)
 						end
 						
-						if data.lifespan < 15 * evolveTimePace then
-							local x, y , z = GetUnitPosition(unitID)
-							local groundHeight = spGetGroundHeight(x, z)
-							if y <  (groundHeight + 1) then
-								local growth = abs(spGetGroundHeight(x, z) - y) * 0.5
-								SetPosition(unitID, x, y + growth, z)
-							end
+						if data.lifespan < 20 * evolveTimePace then
+							growingFood(unitID)
 						end
 					else
 						DestroyUnit(unitID)
