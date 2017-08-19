@@ -12,37 +12,84 @@ end
 
 -- TODO do seasons
 -- setting new circle/box for wildlife babies. 
--- adding config parameter for maximum units in radius (food)
+-- make predators compete, by age?? succes?
+-- preference setttings for pred eat prey1 or prey2 also for prey eat food1 or food2
+-- option to exlude alternative foodsource (prey1 only eats food1 for instance)
 
+-- TODO experimental
+-- Improve predators when offspring of a good predetor (by changing unitdef speed,...)(optional)
+-- implement fast growing trees easy foraged and hard foraged trees grow slower
+-- above implementation set through to ofspring if succesfull
+-- 
+	
 -- synced only
 if (not gadgetHandler:IsSyncedCode()) then
 	return false
-end
+end 
 
 -- settings
 local evolveTimePace		= 337 					-- time between predation procreation moment (191,151, 257, 337)
-local maximumTreesInArea	= 9
-local procreatSuccesFood	= 0.7   				-- succesrate procreation food
-local procreatSuccesPrey	= 0.4   				-- succesrate procreation prey
-local predationSucces		= 0.7					--
-local procreatSuccesPred	= 0.3					--
 local maxWildlife			= 500  					-- maximal amount of critters be spawned
 local addingAfterExtinction = 2						-- respam after area extinction species
-local ExtraLifeLost			= 0.5
-
--- might be changed on own risk
-local maxLifeSpanFood		= 25 * evolveTimePace 	-- begin lifespan food
-local maxLifeSpanPrey		= 20 * evolveTimePace	-- begin lifespan prey
-local maxLifeSpanPred		= 15 * evolveTimePace	-- begin lifespan pred
-local procreateLifespanFood	= 20 * evolveTimePace
+local ExtraLifeLost			= 0.5					-- 0.5 default
 local makeUnitWildlifeTime	= 20 * evolveTimePace
+local underwaterTrees		= false
+
+-- might be changed on own risk (some values might need to be in certain range because of dependencies)
+-- also possible to change by config file (see config)
+local defaultMaxLifespan = {
+	food1 = 25 * evolveTimePace, 		-- begin lifespan food1
+	prey1 = 20 * evolveTimePace,		
+	pred1 = 15 * evolveTimePace,		
+	food2 = 25 * evolveTimePace, 		
+	prey2 = 20 * evolveTimePace,		
+	pred2 = 15 * evolveTimePace			
+}
+local defaultProcreateLifespan = {
+	food1 = 20 * evolveTimePace, 		-- only used and tested	
+	prey1 = 20 * evolveTimePace,	
+	pred1 = 20 * evolveTimePace,	
+	food2 = 20 * evolveTimePace, 	
+	prey2 = 20 * evolveTimePace,	
+	pred2 = 20 * evolveTimePace	
+}
+local defaultMaxInRadius = {
+	food1 = 9, 		
+	prey1 = 9, 
+	pred1 = 30,
+	food2 = 30,
+	prey2 = 30,
+	pred2 = 30
+}
+local defaultProcreatSucces = {
+	food1 = 0.7, 		
+	prey1 = 0.4, 
+	pred1 = 0.3,
+	food2 = 0.7,
+	prey2 = 0.4,
+	pred2 = 0.3
+}
+local defaultPredationSucces = {
+	pred1 = 0.7,
+	pred2 = 0.7
+}	
+local defaultRadius = {
+	food1 = 100, 		
+	prey1 = 100, 
+	pred1 = 200,
+	food2 = 200,
+	prey2 = 200,
+	pred2 = 200
+}
 
 -- locals
 local numberOfAreas 		= 0
 local totalWildlife			= 0
 local wildlifeUnits 		= {}					-- critter units that are currently alive
-local preyEatsFood			= {}
-local predEatsPrey			= {}
+local prey1EatsFood			= {}
+local prey2EatsFood			= {}
+local pred1EatsPrey			= {}
+local pred2EatsPrey			= {}
 local GetUnitRadius			= Spring.GetUnitRadius
 local GetUnitDefDimensions	= Spring.GetUnitDefDimensions
 local Enable				= Spring.MoveCtrl.Enable
@@ -91,20 +138,47 @@ function randomPatrol(unitID, dim, shape)
 end
 
 
-function makeUnitWildlife(unitID, unitRole, unitArea, unitName, spawnshape, unitRadius, spawnDim, maxLifeSpan)
+function copyTable(t)
+  local t2 = {};
+  for k,v in pairs(t) do
+    if type(v) == "table" then
+        t2[k] = copyTable(v);
+    else
+        t2[k] = v;
+    end
+  end
+  return t2;
+end
+
+
+function makeUnitWildlife(unitID, data)
 	SetUnitNeutral(unitID, true)
 	--SetUnitNoSelect(unitID, true)
 	SetUnitStealth(unitID, true)
 	Spring.SetUnitAlwaysVisible(unitID, true)
-	wildlifeUnits[unitID] = {
-		lifespan = maxLifeSpan,
-		area = unitArea,
-		name = unitName,
-		shape = spawnshape,
-		radius = unitRadius,
-		role = unitRole,
-		dim = spawnDim
-	}
+	local dataNew = nil
+	dataNew = copyTable(data)
+	if dataNew["maxLifespan"] == nil then
+		dataNew.lifespan = defaultMaxLifespan[dataNew.role]
+	else
+		dataNew.lifespan = dataNew["maxLifespan"]
+	end
+	if dataNew["procreateLifespan"] == nil then
+		dataNew.procreateLifespan = defaultProcreateLifespan[dataNew.role]
+	end
+	if dataNew["maxInRadius"] == nil then
+		dataNew.maxInRadius = defaultMaxInRadius[dataNew.role]
+	end
+	if dataNew["procreatSucces"] == nil then
+		dataNew.procreatSucces = defaultProcreatSucces[dataNew.role]
+	end	
+	if dataNew["radius"] == nil then
+		dataNew.radius = defaultRadius[dataNew.role]
+	end	
+	if (dataNew.role == "pred1" or dataNew.role == "pred2") and (dataNew["predationSucces"] == nil) then
+		dataNew.predationSucces = defaultPredationSucces[dataNew.role]
+	end
+	wildlifeUnits[unitID] = dataNew
 end
 
 
@@ -148,7 +222,7 @@ function addNewWildlife(addingAfterExtinction)
 	for index, unitID in pairs(critters) do
 		if wildlifeUnits[unitID] == nil then
 			DestroyUnit(unitID)
-			Echo(unitID, "erased manually")
+			--Echo(unitID, "erased manually")
 		end
 	end
 
@@ -156,27 +230,29 @@ function addNewWildlife(addingAfterExtinction)
 	local areaNotEmpty = {}
 	for unitID, data in pairs(wildlifeUnits) do
 		if data == nil or data.area == nil or data.role == nil then
-			Echo("nil")
 		else
 			totalWildlife = totalWildlife + 1
 			areaNotEmpty[data.area] = data.role
 		end
 	end
 
+	-- MAYBE THIS GOES WRONG IF ONE ROLE IS NOT SPECIFIED
 	for area, all in pairs(wildlifeCon) do
 		for role, data in pairs(all) do
 			if ((areaNotEmpty[area] == nil) or (areaNotEmpty[area] ~= role)) and totalWildlife < maxWildlife then
 				for unitName, unitAmount in pairs(data.unitNames) do
-					for i=1, addingAfterExtinction do
-						unitID = spawnUnit(data.spawn.dim, data.spawn.shape, unitName, role, "true")
-						if role == "food" then
-							makeUnitWildlife(unitID, role, area, unitName, data.spawn.shape, data.radius, data.spawn.dim, maxLifeSpanFood/2)
-						elseif role == "prey" then
-							makeUnitWildlife(unitID, role, area, unitName, data.spawn.shape, data.radius, data.spawn.dim, maxLifeSpanPrey)
-							randomPatrol(unitID, data.spawn.dim, data.spawn.shape)
-						else
-							makeUnitWildlife(unitID, role, area, unitName, data.spawn.shape, data.radius, data.spawn.dim, maxLifeSpanPred)
-							randomPatrol(unitID, data.spawn.dim, data.spawn.shape)
+					-- All roles need to bespecified otherwise some where is an ERROR
+					if wildlifeCon[area][role].unitNames[data.name] ~= 0 then
+						for i=1, addingAfterExtinction do
+							unitID = spawnUnit(data.spawn.dim, unitName, data.spawn.shape, role)
+							if unitID ~= nil then	
+								if role == "food1" and unitID ~= nil then
+									makeUnitWildlife(unitID, data) 
+								else
+									makeUnitWildlife(unitID, data)
+									randomPatrol(unitID, data.spawn.dim, data.spawn.shape)
+								end
+							end
 						end
 					end
 				end
@@ -187,25 +263,30 @@ function addNewWildlife(addingAfterExtinction)
 end
 
 
-function spawnUnit(dim, shape, unitName, unitRole, begin)
+function spawnUnit(dim, unitName, shape, role)
+	local x
+	local z
 	if shape == "box" then
-		local x = random(dim.x1, dim.x2)
-		local z = random(dim.z1, dim.z2)
-		unitID = CreateUnit(unitName, x, spGetGroundHeight(x, z), z, 0, GaiaTeamID)
+		x = random(dim.x1, dim.x2)
+		z = random(dim.z1, dim.z2)
 	else
 		local a = rad(random(0, 360))
 		local r = random(0, dim.r)
-		local x = dim.x + r*sin(a)
-		local z = dim.z + r*cos(a)
+		x = dim.x + r*sin(a)
+		z = dim.z + r*cos(a)
+	end
+	if role ~= "food1" then
 		unitID = CreateUnit(unitName, x, spGetGroundHeight(x, z), z, 0, GaiaTeamID)
-	end
-	if unitRole == "food" then							
-		Enable(unitID)
-	end
-	if unitRole == "food" and begin ~= "true" then
-		local height = GetUnitRadius(unitID) + 15
-		local x, y, z = GetUnitPosition(unitID)
-		SetPosition(unitID, x, y - height, z)
+	else
+		if spGetGroundHeight(x, z) > 0 or underwaterTrees then
+			unitID = CreateUnit(unitName, x, spGetGroundHeight(x, z), z, 0, GaiaTeamID)
+			Enable(unitID)
+			local height = GetUnitRadius(unitID) + 15
+			local x, y, z = GetUnitPosition(unitID)
+			SetPosition(unitID, x, y - height, z)
+		else
+			return nil
+		end
 	end 
 	return unitID
 end
@@ -213,22 +294,26 @@ end
 
 -- This function can be way more efficient by keep track of the number of neigbours (keep track what happend to neigbour trees)
 function procreateFood(unitID, data)
-	if (data.lifespan < procreateLifespanFood) then
+	if (data.lifespan < data.procreateLifespan) then
 		local totalWildlifeNeighbours = 0
 		local x,y,z = GetUnitPosition(unitID)
-		if random() < procreatSuccesFood and (totalWildlife < maxWildlife) then
+		if random() < data.procreatSucces and (totalWildlife < maxWildlife-(maxWildlife/4)) then
 			neighbours = GetUnitsInCylinder(x,z, data.radius)
 			if (neighbours ~= nil) then 
 				for i in pairs(neighbours) do
 					local unitDefID = GetUnitDefID(neighbours[i])
-					if neighbours[i] ~= unitID and units_allied(neighbours[i], unitID) and UnitDefs[unitDefID].name == data.name then 
+					if neighbours[i] ~= unitID and units_allied(neighbours[i], unitID) and UnitDefs[unitDefID].name == data.name and wildlifeUnits[neighbours[i]]~= nil then 
 						totalWildlifeNeighbours = totalWildlifeNeighbours + 1
 					end
 				end
 			end
-			if (totalWildlifeNeighbours < maximumTreesInArea) then
-				uID = spawnUnit({r = data.radius, x = x, z = z}, "circle", data.name, data.role, "false")
-				makeUnitWildlife(uID, data.role, data.area, data.name, data.shape, data.radius, data.dim, maxLifeSpanFood)
+			if (totalWildlifeNeighbours < data.maxInRadius) then
+				uID = spawnUnit({r = data.radius, x = x, z = z}, data.name, "circle", data.role)
+				babyData = copyTable(data)
+				--babyData[] =          TODO add some new properties to new trees (evolution)(random)
+				if uID ~= nil then
+					makeUnitWildlife(uID, babyData)
+				end
 			end
 		end
 	end
@@ -236,12 +321,34 @@ end
 
 
 function foragingAndProcreation(unitID, data)
-	local nearest = nearest_friend_from_unit(unitID, wildlifeCon[data.area]["food"].name, data.radius)
+
+	if wildlifeCon[data.area]["food1"] ~= nil then
+		nearest1, _, _,_, dist1 = nearest_friend_from_unit(unitID, wildlifeCon[data.area]["food1"].name, data.radius)
+	end
+	if wildlifeCon[data.area]["food2"] ~= nil then			
+		nearest2, _, _,_, dist2 = nearest_friend_from_unit(unitID, wildlifeCon[data.area]["food2"].name, data.radius)
+	end
+	local nearest = nil
+	if nearest1 ~= nil and nearest2 ~= nil then
+		if dist1 < dist2 then						-- maybe also deside if its eats the food (prefers)
+			nearest = nearest2
+		else 
+			nearest = nearest1
+		end
+	elseif nearest1 ~= nil and nearest2 == nil then
+		nearest = nearest1
+	elseif nearest1 == nil and nearest2 ~= nil then
+		nearest = nearest2
+	end
 	if nearest ~= nil then
 		wildlifeUnits[nearest] = nil
 		local x, y, z = GetUnitPosition(nearest)
 		GiveOrderToUnit(unitID, CMD.MOVE, {x, y, z}, {})
-		preyEatsFood[unitID] = nearest
+		if data.role == "prey1" then
+			prey1EatsFood[unitID] = nearest
+		else 
+			prey2EatsFood[unitID] = nearest
+		end
 		procreatePrey(unitID, data)
 	else
 		wildlifeUnits[unitID].lifespan = data.lifespan - ExtraLifeLost * random(1, evolveTimePace)
@@ -250,59 +357,98 @@ end
 
 
 function procreatePrey(unitID, data)
-	if random() < procreatSuccesPrey then
+	if random() < data.procreatSucces and (totalWildlife < maxWildlife) then
 		local x, y, z = GetUnitPosition(unitID)
-		local begin = false
 		local shape = "circle"
-		local dim = {x=x, z=z, r=30}
-		uID = spawnUnit(dim, shape, data.name, data.role, begin)
-		randomPatrol(uID, data.dim, wildlifeUnits[unitID].shape)
-		if wildlifeUnits[unitID].shape == "circle" then
-			local newDim = {x=x, z=z, r = wildlifeCon[data.area]["prey"].spawn.dim.r}
-			--makeUnitWildlife(uID, data.role, data.area, data.name, shape, data.radius, newDim, maxLifeSpanPrey)
-			makeUnitWildlife(uID, data.role, data.area, data.name, data.shape, data.radius, data.dim, maxLifeSpanPrey)
-		else
-			-- TODO now it uses old radius improvement adds other radius
-			--local newDim = {x=x, y=y, r = wildlifeCon[data.area]["prey"].spawn.dim.radius}
-			makeUnitWildlife(uID, data.role, data.area, data.name, data.shape, data.radius, data.dim, maxLifeSpanPrey)
-		end	
+		local dim = {x=x, z=z, r = data.maxInRadius}
+		uID = spawnUnit(dim, data.name, shape, data.role)
+		
+		-- for now no evolution 
+		if unitID ~= nil then
+			babyData = copyTable(data)
+			if data.spawn.shape == "circle" then
+				-- local newDim = {x=x, z=z, r = wildlifeCon[data.area]["prey"].spawn.dim.r}
+				-- TODO now it uses old radius -->> improvement adds other radius (only to data of babies or also to behavior of babies?)
+				-- make this optional? (todo)		
+				randomPatrol(uID, data.spawn.dim, data.spawn.shape)
+				--makeUnitWildlife(uID, data.role, data.area, data.name, shape, data.radius, newDim, maxLifeSpanPrey)
+				--babyData[] =          TODO 
+				makeUnitWildlife(uID, babyData)
+				
+			else
+				randomPatrol(uID, data.spawn.dim, data.spawn.shape)
+				-- TODO now it uses old radius improvement adds other radius
+				--local newDim = {x=x, y=y, r = wildlifeCon[data.area]["prey"].spawn.dim.radius}
+				makeUnitWildlife(uID, babyData)
+			end	
+		end
 	end
 end
 
 
 function procreatePred(unitID, data)
-	if random() < procreatSuccesPred then
+	if random() < data.procreatSucces then
 		local x, y, z = GetUnitPosition(unitID)
-		local begin = false
 		local shape = "circle"
-		local dim = {x=x, z=z, r=30}
-		uID = spawnUnit(dim, shape, data.name, data.role, begin)
-		randomPatrol(uID, data.dim, wildlifeUnits[unitID].shape)
-		if wildlifeUnits[unitID].shape == "circle" then
-			local newDim = {x=x, z=z, r = wildlifeCon[data.area]["pred"].spawn.dim.r}
-			--makeUnitWildlife(uID, data.role, data.area, data.name, shape, data.radius, newDim, maxLifeSpanPred)
-			makeUnitWildlife(uID, data.role, data.area, data.name, data.shape, data.radius, data.dim, maxLifeSpanPred)
-		else
-			-- TODO now it uses old radius improvement adds other radius
-			--local newDim = {x=x, y=y, r = wildlifeCon[data.area]["prey"].spawn.dim.radius}
-			makeUnitWildlife(uID, data.role, data.area, data.name, data.shape, data.radius, data.dim, maxLifeSpanPred)
-		end	
+		local dim = {x=x, z=z, r=data.maxInRadius}
+		uID = spawnUnit(dim, data.name, shape, data.role)
+		-- again same here, introduce evolution by adjusting predatorSucces, radius, etc (dangerous if randomly applied)
+		-- make it depended on neigboring predator (mating)???
+		if unitID ~= nil then
+			babyData = copyTable(data)
+			if wildlifeUnits[unitID].shape == "circle" then
+				--local newDim = {x=x, z=z, r = wildlifeCon[data.area]["pred"].spawn.dim.r}
+				--makeUnitWildlife(uID, data.role, data.area, data.name, shape, data.radius, newDim, maxLifeSpanPred)
+				--babyData[] =          TODO 
+				randomPatrol(uID, data.spawn.dim, data.spawn.shape)
+				makeUnitWildlife(uID, babyData)
+			else
+				-- TODO now it uses old radius improvement adds other radius
+				--local newDim = {x=x, y=y, r = wildlifeCon[data.area]["prey"].spawn.dim.radius}
+				--babyData[] =          TODO 
+				randomPatrol(uID, data.spawn.dim, data.spawn.shape) -- patrol with new dimentions (evolution)??
+				makeUnitWildlife(uID, babyData)
+			end
+		end
 	end
 end
 
 
 function predationAndProcreation(unitID, data)
-	if random() < predationSucces then
-		local prey = nearest_friend_from_unit(unitID, wildlifeCon[data.area]["prey"].name, data.radius)
+	if random() < data.predationSucces then
+		if wildlifeCon[data.area].prey1 ~= nil then
+			prey1,_,_,_,dist1 = nearest_friend_from_unit(unitID, wildlifeCon[data.area]["prey1"].name, data.radius)
+		end
+		if wildlifeCon[data.area].prey2 ~= nil then
+			prey2,_,_,_,dist2 = nearest_friend_from_unit(unitID, wildlifeCon[data.area]["prey2"].name, data.radius)
+		end
+		local prey = nil
+		if pred1 ~= nil and pred2 ~= nil then
+			if dist1 < dist2 then						-- maybe also deside if its eats the prey (prefers)
+				prey = prey2
+			else 
+				prey = prey1
+			end
+		elseif prey1 ~= nil and prey2 == nil then
+			prey = prey1
+		elseif prey1 == nil and prey2 ~= nil then
+			prey = prey2
+		end
 		if prey ~= nil then
 			procreatePred(unitID, data)
 			wildlifeUnits[prey] = nil
 			local x, y, z = GetUnitPosition(prey)
 			GiveOrderToUnit(unitID, CMD.MOVE, {x, y, z}, {})
-			GiveOrderToUnit(prey, CMD.MOVE, {x, y, z}, {})
-			predEatsPrey[unitID] = prey
+			--local unitDefID = GetUnitDefID(prey)
+			--Echo(UnitDefs[unitDefID].name)
+			GiveOrderToUnit(prey, CMD.MOVE, {x, y, z}, {})		
+			if data.role == "pred1" then
+				pred1EatsPrey[unitID] = prey
+			else 
+				pred2EatsPrey[unitID] = prey
+			end
 		else
-			wildlifeUnits[unitID].lifespan = data.lifespan - ExtraLifeLost * random(1, evolveTimePace)
+			wildlifeUnits[unitID].lifespan = data.lifespan - (ExtraLifeLost * random(1, evolveTimePace))
 		end
 	end
 end
@@ -330,15 +476,14 @@ function gadget:GameStart()
 			for unitName, unitAmount in pairs(data.unitNames) do
 				for i=1, unitAmount do
 					totalWildlife = totalWildlife + 1
-					unitID = spawnUnit(data.spawn.dim, data.spawn.shape, unitName, role, "true")
-					if role == "food" then
-						makeUnitWildlife(unitID, role, area, unitName, data.spawn.shape, data.radius, data.spawn.dim, maxLifeSpanFood/2)
-					elseif role == "prey" then
-						makeUnitWildlife(unitID, role, area, unitName, data.spawn.shape, data.radius, data.spawn.dim, maxLifeSpanPrey)
-						randomPatrol(unitID, data.spawn.dim, data.spawn.shape)
-					else
-						makeUnitWildlife(unitID, role, area, unitName, data.spawn.shape, data.radius, data.spawn.dim, maxLifeSpanPred)
-						randomPatrol(unitID, data.spawn.dim, data.spawn.shape)
+					unitID = spawnUnit(data.spawn.dim, data.name, data.spawn.shape, data.role)
+					if unitID ~= nil then
+						if role == "food1" then 						-- immobile growing food unit 
+							makeUnitWildlife(unitID, data)
+						else
+							makeUnitWildlife(unitID, data)				-- possibly mobile non growing
+							randomPatrol(unitID, data.spawn.dim, data.spawn.shape)
+						end
 					end
 				end
 			end
@@ -355,6 +500,196 @@ function growingFood(unitID)
 		SetPosition(unitID, x, y + growth, z)
 	end
 end
+
+
+function eating(tableEaten)
+	for individual, dinner in pairs(tableEaten) do
+		if wildlifeUnits[individual] ~= nil then
+			randomPatrol(individual, wildlifeUnits[individual].spawn.dim, wildlifeUnits[individual].spawn.shape)
+		else
+			--Echo("eating individual missing and deleted (also dinner) deleted")
+			DestroyUnit(individual)
+		end
+		DestroyUnit(dinner)
+		wildlifeUnits[dinner] = nil
+	end
+end
+
+function checkAgeAndNothing(unitID, data)
+	if data.lifespan > 0 then
+		-- do nothing
+	else
+		DestroyUnit(unitID)
+		wildlifeUnits[unitID] = nil
+		--Echo(unitID, "WHY THE DESTROYUNIT FUNCTION DOESNT WORK HERE?????")
+		--
+		--
+		--
+		--????????????????????????????????????
+		
+	end
+end
+
+
+function oneDelayRecur() 
+	
+	-- update eating 
+	eating(prey1EatsFood)
+	prey1EatsFood = {}
+	
+	eating(pred1EatsPrey)
+	pred1EatsPrey = {}
+
+	eating(prey2EatsFood)
+	prey2EatsFood = {}
+	
+	eating(pred2EatsPrey)
+	pred2EatsPrey = {}
+	
+	for unitID, data in pairs(wildlifeUnits) do
+	
+		-- aging for all wildlife
+		wildlifeUnits[unitID].lifespan = data.lifespan - (0.5 * evolveTimePace + ExtraLifeLost * random(1, evolveTimePace))
+
+		-- removing age died wildlife
+		
+		-- food
+		if data.role == "food1" then
+			checkAgeAndNothing(unitID, data)
+		elseif data.role == "food2" then
+			checkAgeAndNothing(unitID, data)
+		-- prey
+		elseif data.role == "prey1" then
+			checkAgeAndNothing(unitID, data)
+		elseif data.role == "prey2" then
+			checkAgeAndNothing(unitID, data)
+		
+		-- pred
+		elseif data.role == "pred1" then
+			checkAgeAndNothing(unitID, data)
+		elseif data.role == "pred2" then
+			checkAgeAndNothing(unitID, data)
+		else
+			Echo("roleless wildlife?")
+		end
+	end
+	
+	--erasing stuff (I NEED THIS BECAUSE THE ABOVE ERASE DOES NOT WORK)
+	local critters = GetTeamUnits(GaiaTeamID)
+	for index, unitID in pairs(critters) do
+		if wildlifeUnits[unitID] == nil then
+			DestroyUnit(unitID)
+			--Echo("removed", unitID)
+		end
+	end
+
+end
+
+
+function firstTwoDelayrecur()
+
+	for unitID, data in pairs(wildlifeUnits) do
+				
+		-- aging for all wildlife
+		wildlifeUnits[unitID].lifespan = data.lifespan - (0.5 * evolveTimePace + ExtraLifeLost * random(1, evolveTimePace))
+		-- food (steady)
+		if data.role == "food1" then
+			if (data.lifespan > 0) then	
+				
+				if (data.lifespan < 20 * evolveTimePace) then
+					procreateFood(unitID, data)
+				end
+				
+				if data.lifespan < 20 * evolveTimePace then
+					growingFood(unitID)
+				end
+			else
+				DestroyUnit(unitID)
+				wildlifeUnits[unitID] = nil
+			end
+		end
+		
+		-- prey
+		if data.role == "prey1" then					
+			if data.lifespan > 0 then
+				foragingAndProcreation(unitID, data)
+			else
+				DestroyUnit(unitID)
+				wildlifeUnits[unitID] = nil
+			end
+			
+		end
+
+		-- pred
+		if data.role == "pred1" then
+			if data.lifespan > 0 then
+				if (data.lifespan < 20 * evolveTimePace) then
+					predationAndProcreation(unitID, data)
+				end
+			else
+				DestroyUnit(unitID)
+				wildlifeUnits[unitID] = nil
+			end
+		end
+		
+	end
+	
+end
+
+function secondTwoDelayRecur()
+	
+	
+	for unitID, data in pairs(wildlifeUnits) do
+	
+	-- aging for all critters
+		wildlifeUnits[unitID].lifespan = data.lifespan - (0.5 * evolveTimePace + ExtraLifeLost * random(1, evolveTimePace))
+		
+		
+	-- food (possibly non steady)
+		if data.role == "food2" then
+			if (data.lifespan > 0) then	
+				
+				if (data.lifespan < 20 * evolveTimePace) then
+					procreateFood(unitID, data)
+				end
+				
+				if data.lifespan < 20 * evolveTimePace then
+					growingFood(unitID)
+				end
+			else
+				DestroyUnit(unitID)
+				wildlifeUnits[unitID] = nil
+			end
+		end
+		
+		
+		-- prey
+		if data.role == "prey2" then					
+			if data.lifespan > 0 then
+				foragingAndProcreation(unitID, data)
+			else
+				DestroyUnit(unitID)
+				wildlifeUnits[unitID] = nil
+			end
+			
+		end
+
+
+		-- pred
+		if data.role == "pred2" then
+			if data.lifespan > 0 then
+				if (data.lifespan < 20 * evolveTimePace) then
+					-- THIS GOES TOTALLY WRONG 
+					predationAndProcreation(unitID, data)
+				end
+			else
+				DestroyUnit(unitID)
+				wildlifeUnits[unitID] = nil
+			end
+		end
+	
+	end
+end
  
 function gadget:GameFrame(f)
 	
@@ -364,126 +699,23 @@ function gadget:GameFrame(f)
 	end
 	
 	if (f%evolveTimePace) == 0 then 
-		if (f%2 == 0) then
-			
-			for unitID, data in pairs(wildlifeUnits) do
-				
-				-- aging for all critters
-				wildlifeUnits[unitID].lifespan = data.lifespan - 0.5 * evolveTimePace - ExtraLifeLost * random(1, evolveTimePace)	
-				
-				-- food
-				if data.role == "food" then
-					if (data.lifespan > 0) then	
-						
-						if (data.lifespan < 20 * evolveTimePace) then
-							procreateFood(unitID, data)
-						end
-						
-						if data.lifespan < 20 * evolveTimePace then
-							growingFood(unitID)
-						end
-					else
-						DestroyUnit(unitID)
-						wildlifeUnits[unitID] = nil
-					end
-				end
-				
-				
-				-- prey
-				if data.role == "prey" then					
-					if data.lifespan > 0 then
-						foragingAndProcreation(unitID, data)
-					else
-						DestroyUnit(unitID)
-						wildlifeUnits[unitID] = nil
-					end
-					
-				end
-			
-			
-				-- pred
-				if data.role == "pred" then
-					if data.lifespan > 0 then
-						if (data.lifespan < 20 * evolveTimePace) then
-							predationAndProcreation(unitID, data)
-						end
-					else
-						DestroyUnit(unitID)
-						wildlifeUnits[unitID] = nil
-					end
-				end
-
-				
-			end
 		
+		if (f%2 ~= 0) or (f < evolveTimePace) then
+			
+			--Echo("one")
+			-- do all the actions which were preformed in the other time spend
+			oneDelayRecur()	
+			
+		elseif (f%4 ~= 0) then
+			
+			--Echo("firstTwo")
+			-- do everything involving the first set of food, prey and preds
+			firstTwoDelayrecur()
 		else
 			
-			-- update eating food
-			for prey, eatenfood in pairs(preyEatsFood) do
-				if wildlifeUnits[prey] ~= nil then
-					randomPatrol(prey, wildlifeUnits[prey].dim, wildlifeUnits[prey].shape)
-				end
-				DestroyUnit(eatenfood)
-			end
-			preyEatsFood = {}
-			
-			-- update eating prey
-			for pred, eatenprey in pairs(predEatsPrey) do
-				if wildlifeUnits[pred] ~= nil then
-					randomPatrol(pred, wildlifeUnits[pred].dim, wildlifeUnits[pred].shape)
-				end
-				DestroyUnit(eatenprey)
-			end
-			preyEatsFood = {}
-		
-			for unitID, data in pairs(wildlifeUnits) do
-			
-				-- aging for all critters
-				wildlifeUnits[unitID].lifespan = data.lifespan - 0.5 * evolveTimePace - ExtraLifeLost * random(1, evolveTimePace)
-				
-				-- food
-				if data.role == "food" then
-					if data.lifespan > 0 then
-						
-
-					else
-						DestroyUnit(unitID)
-						wildlifeUnits[unitID] = nil
-					end
-				end
-				
-				-- prey
-				if data.role == "prey" then
-					if data.lifespan > 0 then
-						
-
-					else
-						DestroyUnit(unitID)
-						wildlifeUnits[unitID] = nil
-					end
-				end
-				
-
-				-- pred
-				if data.role == "pred" then
-					if data.lifespan > 0 then
-						
-
-					else
-						DestroyUnit(unitID)
-						wildlifeUnits[unitID] = nil
-					end
-				end
-			
-			end
-			
-			--erasing stuff (WHY???)
-			local critters = GetTeamUnits(GaiaTeamID)
-			for index, unitID in pairs(critters) do
-				if wildlifeUnits[unitID] == nil then
-					DestroyUnit(unitID)
-				end
-			end
+			--Echo("secondTwo")
+			-- do everything for the second set
+			secondTwoDelayRecur()
 		end
 	end
 end
