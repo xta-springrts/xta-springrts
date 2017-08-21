@@ -120,9 +120,8 @@
 	pieceTrailCEGRange = 4;
 	[SFXTypes]
 	{
-	explosiongenerator0=custom:Nano;
-	explosiongenerator1=custom:NanoDebree1;//ONESPARK
-	explosiongenerator2=custom:NanoDebree1;//ONESPARK
+	explosiongenerator0=custom:rocketflare;
+	explosiongenerator1=custom:EmgFlare;
 	}
 	//************************************************************
 	//  To be removed

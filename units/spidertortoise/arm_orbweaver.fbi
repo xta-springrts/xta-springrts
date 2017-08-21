@@ -57,4 +57,6 @@ Ovradjust=1;
 	collisionVolumeTest = 1;
 	pieceTrailCEGTag=Debree;//bleh
 	pieceTrailCEGRange = 4;
+
+	smoothanim=1;
 }

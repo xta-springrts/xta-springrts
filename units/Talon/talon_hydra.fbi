@@ -126,6 +126,7 @@
 
 	[SFXTypes]
 	{
-	explosiongenerator0=custom:rocketflare;
+	explosiongenerator0=custom:FLAKFLARE;
+	explosiongenerator1=custom:FLAKFLARE;
 	}
 }

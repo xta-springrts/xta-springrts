@@ -135,14 +135,11 @@ Create()
 	spin spinner around z-axis speed <100>;
 	fired=0;
 	smoking=0;
-	spin base around y-axis speed <-30.005495>;
 	bmoving=0;
 	while( get BUILD_PERCENT_LEFT )
 	{
 		sleep 1;
 	}
-	stop-spin base around y-axis;
-	turn base to y-axis <0> speed <30>;
 	hide tracks_reverse;
 	hide tracks_move;
 	start-script track_tracks();

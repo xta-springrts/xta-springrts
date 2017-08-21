@@ -160,13 +160,10 @@ Create()
 	turn leftAbase to y-axis <-90> now;
 	turn leftBbase to y-axis <90> now;*/
 
-	spin base around y-axis speed <-30.005495>;
 	while( get BUILD_PERCENT_LEFT )
 	{
 		sleep 1;
 	}
-	stop-spin base around y-axis;
-	turn base to y-axis <0> speed <30>;
 }
 
 

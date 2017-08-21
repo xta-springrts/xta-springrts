@@ -130,4 +130,9 @@
 	//  To be removed
 	//*****************
 
+	[SFXTypes]
+	{
+		explosiongenerator0=custom:redflare;
+		explosiongenerator1=custom:redflare;
+	}
 }

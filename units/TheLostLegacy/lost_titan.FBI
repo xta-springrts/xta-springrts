@@ -50,12 +50,12 @@
 	//    Weapons
 	Weapon1=TITAN_SHOTGUN;
 	Weapon2=TITAN_HEAVYROCKET;
-	wpri_badTargetCategory=VTOL;
-	BadTargetCategory=VTOL;
+	//wpri_badTargetCategory=VTOL;
+	//BadTargetCategory=VTOL;
 	DamageModifier=0.75;
 	explodeas=CRAWL_BLASTSML;
 	selfdestructas=armmine5;
-	NoChaseCategory=VTOL;
+	//NoChaseCategory=VTOL;
 	
 	//    Tracks/Flares
 	//LeaveTracks=1;

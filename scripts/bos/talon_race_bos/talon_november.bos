@@ -122,15 +122,12 @@ Create()
 	Static_Var_2 = 3000;
 	start-script BankClerck();
 	Static_Var_3 = 0;
-	spin base around y-axis speed <-30.005495>;
 	while( get BUILD_PERCENT_LEFT )
 	{
 		sleep 1;
 	}
 	start-script WobbleUnit();
 	
-	stop-spin base around y-axis;
-	turn base to y-axis <0.000000> speed <30.005495>;
 }
 
 RestorePrimary(Func_Var_1)

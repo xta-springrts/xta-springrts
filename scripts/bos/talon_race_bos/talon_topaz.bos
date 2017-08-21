@@ -104,16 +104,14 @@ AimPrimary(heading, pitch)
 
 f1()
 {
-	show flare1;
+	emit-sfx UNIT_SFX1 from flare1;
 	sleep 150;
-	hide flare1;
 }
 
 f2()
 {
-	show flare2;
+	emit-sfx UNIT_SFX1 from flare2;
 	sleep 150;
-	hide flare2;
 }
 
 FirePrimary()

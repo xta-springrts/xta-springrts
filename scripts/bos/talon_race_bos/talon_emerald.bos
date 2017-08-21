@@ -102,11 +102,10 @@ AimPrimary(heading, pitch)
 
 FirePrimary()
 {
+	emit-sfx UNIT_SFX1 from flare;
 	move barrel to z-axis [-1.400000] now;
 	move barrel to z-axis [0.000000] speed [3.000000];
-	show flare;
 	sleep 150;
-	hide flare;
 }
 
 /*FirePrimary()

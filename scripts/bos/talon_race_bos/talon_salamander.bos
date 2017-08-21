@@ -197,9 +197,8 @@ AimPrimary(heading, pitch)
 
 flarebleh()
 {
-	show flare1;
+	emit-sfx UNIT_SFX1 from flare1;
 	sleep 150;
-	hide flare1;
 }
 
 FirePrimary()
@@ -215,10 +214,9 @@ FirePrimary()
 	if( gun_1 == 1 )
 	{
 		//salvo = 1;
+	emit-sfx UNIT_SFX1 from flare2;
 		move barrel2 to z-axis [-1.200000] now;
-		show flare2;
 		sleep 150;
-		hide flare2;
 		move barrel2 to z-axis [0.000000] speed [5.000000];
 		//sleep 2500;
 		//salvo = 0;

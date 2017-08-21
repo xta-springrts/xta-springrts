@@ -129,6 +129,7 @@
 	[SFXTypes]
 	{
 	explosiongenerator0=custom:rocketflare;
+	explosiongenerator1=custom:EmgFlare;
 	}
 
 }

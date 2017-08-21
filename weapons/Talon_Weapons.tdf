@@ -128,6 +128,7 @@
 	turret=1;
 	//minbarrelangle=-25;
 	range=625;
+	energypershot=200;
 	reloadtime=2.5;
 	weaponvelocity=500;
 	areaofeffect=64;
@@ -859,7 +860,7 @@
 	noautorange=1;
 	weapontimer=7;
 	flighttime=120;
-	weaponvelocity=2000;
+	weaponvelocity=1500;
 	weaponacceleration=100;
 	turnrate=28000;
 	areaofeffect=1150;
@@ -1346,7 +1347,7 @@
 	cegTag=RAVENTRAIL;
 	range=800;
 	reloadtime=1.5;
-	weapontimer=0.25;
+	weapontimer=0.75;
 	flighttime=8;
 	weaponvelocity=1100;
 	startvelocity=200;
@@ -1935,38 +1936,39 @@
 }
 
 [TALONBASIL_WEAPON]
-	{
-	name=Ultra Bullet Weapon;
-	RenderType=7;
-	LineOfSight=1;
-	Turret=1;
-
-	range=400;
+{
+	name=Laser;
+	Weapontype=LaserCannon;
+	turret=1;
+	range=425;
+	thickness=3;
+	intensity=0.85;
 	reloadtime=4;
-	//energypershot=10;
-	weaponvelocity=1000;
+	weaponvelocity=1750;
 	areaofeffect=8;
+	burstrate=0.2;
+	duration=0.1;
+	Texture1=purplelaser;
+	Texture2=null;
+	Texture3=null;
+	Texture4=null;
+	soundtrigger=1;
+	soundstart=talonsniper;
+	explosiongenerator=custom:WhiteLight;
+	soundhitdry=talongunhit;
+	firestarter=50;
+	rgbcolor=1.000 0.8 0.6;
+	tolerance=2000;
 	collidefriendly=0;
 	avoidfriendly=0;
-	
-
-	soundstart=talongunfire;//xplolrg1;
-	soundhitdry=talongunhit;
-
-	firestarter=90;
-	beamweapon=1;
-	rgbcolor=0.01 0.01 0.02;
-	explosiongenerator=custom:KBOTMISSILEHIT;
-
-
+	movingaccuracy=1000;
 	[DAMAGE]
-		{
-		default=100;
-		group_landair=55;
-		}
+	{
+		default=120;
+		group_invincible=1;
 	}
-
-[TALONSNIPE_WEAPON]
+}
+[TALONSNIPE_WEAPONOLD]
 	{
 	name=Ultra Bullet Weapon;
 	RenderType=7;
@@ -1999,6 +2001,39 @@
 		}
 	}
 
+[TALONSNIPE_WEAPON]
+{
+	name=Laser;
+	Weapontype=LaserCannon;
+	turret=1;
+	range=485;
+	thickness=3;
+	intensity=0.85;
+	reloadtime=4;
+	weaponvelocity=1750;
+	areaofeffect=8;
+	burstrate=0.2;
+	duration=0.1;
+	Texture1=purplelaser;
+	Texture2=null;
+	Texture3=null;
+	Texture4=null;
+	soundtrigger=1;
+	soundstart=talonsniper;
+	explosiongenerator=custom:WhiteLight;
+	soundhitdry=talongunhit;
+	firestarter=50;
+	rgbcolor=1.000 0.8 0.6;
+	tolerance=2000;
+	collidefriendly=0;
+	avoidfriendly=0;
+	movingaccuracy=1000;
+	[DAMAGE]
+	{
+		default=120;
+		group_invincible=1;
+	}
+}
 [TALON_LIGHTLASER]
 {
 	name=Light Laser;
@@ -2062,31 +2097,31 @@
 }
 [INFANTRY_GUN]
 {
-	explosiongenerator=custom:KBOTMISSILEHIT;
+	explosiongenerator=custom:ONESPARK;
 	duration=0.04;
 	intensity=0.85;
 	name=Laser;
 	Weapontype=LaserCannon;
 	thickness=0.5;
 	turret=1;
-	range=200;
+	range=220;
 	accuracy=600;
-	movingaccuracy=900;
-	reloadtime=0.75;
-	weaponvelocity=1000;
+	movingaccuracy=2500;
+	reloadtime=0.2;
+	weaponvelocity=600;
 	areaofeffect=8;
 	soundtrigger=1;
 	soundstart=talongunfirerapid;
 	soundhitdry=talongunhit;
 	firestarter=50;
-	rgbcolor=1.0 0.8 0.25;
+	rgbcolor=1.0 0.8 0.7;
 	rgbcolor2=1.0 1.0 1.00;
 	tolerance=1000;
 	collidefriendly=0;
 	avoidfriendly=0;
 	[DAMAGE]
 	{
-		default=33;
+		default=7;
 		group_invincible=1;
 	}
 }
@@ -2100,14 +2135,14 @@
 	Weapontype=LaserCannon;
 	thickness=0.5;
 	turret=1;
-	range=230;
+	range=260;
 	accuracy=600;
 	movingaccuracy=900;
-	reloadtime=0.666;
+	reloadtime=0.75;
 	weaponvelocity=1000;
 	areaofeffect=8;
 	soundtrigger=1;
-	soundstart=talongunfirerapid;
+	soundstart=talongunfire;
 	soundhitdry=talongunhit;
 	firestarter=50;
 	rgbcolor=1.0 0.8 0.25;
@@ -2117,7 +2152,7 @@
 	avoidfriendly=0;
 	[DAMAGE]
 	{
-		default=25;
+		default=35;
 		group_invincible=1;
 	}
 }

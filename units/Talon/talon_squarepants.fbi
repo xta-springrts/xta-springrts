@@ -41,6 +41,7 @@
 	energymake=0.5;
 	energyuse=0.5;
 	energystorage=0;
+	activatewhenbuilt=1;
 
 	//************************************************************
 	//  Building
@@ -83,7 +84,7 @@
 	//  Weapons
 	//***********
 	weapon1=Square_RAPIDCANNON;
-	weapon3=COAX_TORPEDO;
+	weapon3=BOAT_TORPEDO;
 	nochasecategory=VTOL;
 	badtargetcategory=VTOL;
 	wpri_badtargetcategory=VTOL;

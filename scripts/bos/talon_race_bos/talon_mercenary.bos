@@ -300,11 +300,10 @@ QueryPrimary(piecenum)
 
 FirePrimary()
 {
-	show Flare;
+	emit-sfx UNIT_SFX1 from flare;
 	turn Lrecoil to x-axis <-15.000000> speed <0.010989> * <180.000000>;
 	turn Rrecoil to x-axis <-15.000000> speed <0.010989> * <180.000000>;
 	wait-for-turn Lrecoil around x-axis;
-	hide Flare;
 	turn Lrecoil to x-axis <0.000000> speed <0.010989> * <20.000000>;
 	turn Rrecoil to x-axis <0.000000> speed <0.010989> * <20.000000>;
 }
