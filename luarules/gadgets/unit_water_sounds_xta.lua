@@ -16,6 +16,8 @@ end
 -- Building hover platforms, tidels, metal makers, radar and ... splashes (these should be removed from soundfx)
 -- Add the option to make crittes in water LOS only visible
 
+
+
 local IsWaterDragUnit = {
 	["kbotsf2"] 	= true, 
 	["kbotsf3"] 	= true,					
@@ -44,7 +46,8 @@ local IsHover = {
 }
 
 --Speed-ups
-local abs						= math.abs           
+local abs						= math.abs
+local random 					= math.random           
 --local GetLocalTeamID			= Spring.MY_UNITS
 local PlaySoundFile				= Spring.PlaySoundFile
 local GetUnitPosition			= Spring.GetUnitPosition
@@ -69,6 +72,8 @@ local CMD_MOVE 					= CMD.MOVE
 local volume 					= 1.0
 local unitDefRadius				= {}
 local SECOND					= 31
+local delaySounds				= {}
+local pairs						= pairs
 
 
 function gadget:Initialize()
@@ -90,9 +95,59 @@ function gadget:Initialize()
 end
 
 
+function delay(unitID, submerge)
+	
+end
+
+
+function dragSound(unitID)
+	local x,y,z = GetUnitPosition(unitID)
+	local unitDefID = GetUnitDefID(unitID)
+	if unitDefID ~= nil and x ~= nil and (notMovingWaterUnits[unitID] ~= nil or waterUnits[unitID] ~= nil) then
+		local height = GetUnitDefDimensions(unitDefID)["height"]
+		local level = GetUnitDefDimensions(unitDefID)["height"] + y
+		local velocity = GetUnitVelocity(unitID)
+		
+		if velocity > 0.0001 then 
+			--not submersive
+			if  (level > 0) then
+				
+				PlaySoundFile(WATER_MOVEMENT,volume * 4 * (level/height),x,y,x,0,0,0,'battle')
+				
+			--submersive
+			else
+				PlaySoundFile(UNDERWATER_MOVING, volume + 4 / (1-level),x,y,x,0,0,0,'battle')
+			end
+		else
+			notMovingWaterUnits[unitID] = nil
+			waterUnits[unitID] = true
+		end
+	end
+end
+
+
+function updateDelaySounds(delaySounds)
+	for unitID, delay in pairs(delaySounds) do
+		if (notMovingWaterUnits[unitID] ~= nil or waterUnits[unitID] ~= nil) then
+			if delaySounds[unitID] < 0 then
+				dragSound(unitID)
+			else
+				delaySounds[unitID] = delaySounds[unitID] - 1
+			end
+		end
+	end
+end 
+
+
 function gadget:GameFrame(f)
+	
+	updateDelaySounds(delaySounds) 
+	
 	if f%SECOND == 0 then
+	
 		if f%2 == 0 then
+			
+			-- updating 
 			
 			-- checking if moving units are still moving
 			for unitID,v in pairs(notMovingWaterUnits) do
@@ -106,25 +161,7 @@ function gadget:GameFrame(f)
 			
 			-- making watery sounds
 			for unitID,v in pairs(waterUnits) do
-				local x,y,z = GetUnitPosition(unitID)
-				local unitDefID = GetUnitDefID(unitID)
-				local height = GetUnitDefDimensions(unitDefID)["height"]
-				local level = GetUnitDefDimensions(unitDefID)["height"] + y
-				local velocity = GetUnitVelocity(unitID)
-				
-				if velocity > 0.0001 then 
-					--not submersive
-					if  (level > 0) then
-						PlaySoundFile(WATER_MOVEMENT,volume * 4 * (level/height),x,y,x,0,0,0,'battle')
-						
-					--submersive
-					else
-						PlaySoundFile(UNDERWATER_MOVING, volume + 4 / (1-level),x,y,x,0,0,0,'battle')
-					end
-				else
-					notMovingWaterUnits[unitID] = nil
-					waterUnits[unitID] = true
-				end
+				delaySounds[unitID] = random(1,SECOND)				
 			end
 		end
 	end
@@ -206,8 +243,4 @@ function gadget:UnitLeftWater(unitID, unitDefID, unitTeam)
 	notMovingWaterUnits[unitID] = nil
 	waterUnits[unitID] = nil
 	
-end
-
-function gadget:Shutdown()
-	gadgetHandler:RemoveGadget(self)
 end
