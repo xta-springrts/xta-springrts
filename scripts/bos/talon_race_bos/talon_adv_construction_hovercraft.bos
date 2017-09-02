@@ -195,14 +195,11 @@ Create()
 	start-script SmokeUnit();
 	start-script BankClerck();
 	Static_Var_5 = 1;
-	spin base around y-axis speed <-30.005495>;
 	while( get BUILD_PERCENT_LEFT )
 	{
 		sleep 1;
 	}
 	start-script WobbleUnit();
-	stop-spin base around y-axis;
-	turn base to y-axis <0.000000> speed <30.005495>;
 }
 
 Activate()

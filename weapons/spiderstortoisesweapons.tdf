@@ -75,13 +75,14 @@
 	weaponType=BeamLaser;
 	turret=1;
 	beamtime=0.6;
-	rgbcolor=0.6 0.6 1.000;
+	rgbcolor=0.6 0.6 1.0;
+	Intensity=1.0;
 	range=345;
 	reloadtime=1.2;
 	weapontimer=1;
 	weaponvelocity=500;
 	NoSelfDamage=1;
-	sprayangle=212;
+	sprayangle=12;
 	areaofeffect=8;
 	SoundTrigger=1;
 	burst=1;
@@ -199,16 +200,16 @@
 	Weapontype=LaserCannon;
 	turret=1;
 	range=1100;
-	duration=0.1;
+	duration=0.2;
 	reloadtime=9;
-	energypershot=500;
-	weaponvelocity=1150;
+	energypershot=300;
+	weaponvelocity=1650;
 	areaofeffect=8;
 	soundstart=LNGPARA;
-	soundhitdry=lasrhit1;
+	soundhitdry=lghthvy2;
 	firestarter=90;
-	rgbcolor=0.6 0.6 1.000;
-	explosiongenerator=custom:PARALYZER_BLUE;	
+	rgbcolor=0.6 0.9 0.6;
+	explosiongenerator=custom:TLLTRAIL;	
   	texture1=testlightning;
 	Texture2=null;
 	Texture3=null;
@@ -223,6 +224,7 @@
 		default=3260;
 		group_invincible=1;
 		group_commanders=1500;
+		lost_commanders=1120;
 		group_landair=1912;
 		group_skyair=1912;
 
@@ -335,7 +337,7 @@
 	beamdecay=0.5;
 	beamtime=0.375;
 	beamttl=5;
-	range=1000;
+	range=1050;
 	reloadtime=12;
 	energypershot=400;
 	weaponvelocity=1000;
@@ -346,12 +348,12 @@
 	SoundTrigger=1;
 	firestarter=90;
 	rgbcolor=0.1 0.9 1.000;
-	explosiongenerator=custom:PINKFLASH;
+	explosiongenerator=custom:PURPLELASER;
 	pulseSpeed=0.5;
 	thickness=3.5;
 	[DAMAGE]
 	{
-		default=PURPLELASER;
+		default=1900;
 		group_commanders=1020;
 		lost_commanders=820;
 		group_invincible=1;
@@ -405,7 +407,7 @@
 	impulsefactor=0.6;
 	turret=1;
 	model=weapon_exphvyrock;
-	range=560;
+	range=590;
 	reloadtime=6;
 	weapontimer=0.33; //6
 	weaponvelocity=300;

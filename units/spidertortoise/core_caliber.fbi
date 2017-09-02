@@ -7,7 +7,7 @@
 	Designation=CORE-DR5;
 	Name=Caliber;
 	buildpic=core_caliber.png;
-	Description=Experimental Tortoise;
+	Description=Support Anti-Missile Tortoise;
 	FootprintX=4;
 	FootprintZ=4;
 	BuildCostEnergy=7234;
@@ -53,4 +53,6 @@
 	wpri_badTargetCategory=NOTAIR;
 	BadTargetCategory=NOTAIR;
 	canattack=1;
+
+	smoothanim=1;
 	}

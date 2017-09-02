@@ -128,7 +128,8 @@
 	//*****************
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:redflare;
+	explosiongenerator0=custom:rocketflare;
+	explosiongenerator1=custom:rocketflare;
 	}
 
 }

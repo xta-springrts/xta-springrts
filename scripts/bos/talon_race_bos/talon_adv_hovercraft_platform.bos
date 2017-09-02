@@ -205,23 +205,6 @@ Stop()
 
 Create()
 {
-	dont-shade side2;
-	dont-shade side1;
-	dont-shade cover2;
-	dont-shade cover1;
-	dont-shade block1;
-	dont-shade block2;
-	dont-shade nano1a;
-	dont-shade nano2a;
-	dont-shade nano1b;
-	dont-shade nano2b;
-	dont-shade pier1;
-	dont-shade pier2;
-	dont-shade pier3;
-	dont-shade pier4;
-	dont-shade base;
-	dont-shade padsee;
-	dont-shade body;
 	Static_Var_1 = 1;
 	call-script InitState();
 	start-script SmokeUnit();
@@ -272,17 +255,10 @@ Deactivate()
 
 StartBuilding()
 {
-	spin pad around y-axis speed <30.005495>;
-	spin padsee around y-axis speed <30.005495>;
-	dont-cache padsee;
 }
 
 StopBuilding()
 {
-	stop-spin padsee around y-axis;
-	stop-spin pad around y-axis;
-	turn pad to y-axis <0.000000> now;
-	cache padsee;
 }
 
 QueryBuildInfo(piecenum)

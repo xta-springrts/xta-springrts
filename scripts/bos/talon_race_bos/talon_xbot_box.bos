@@ -1,0 +1,337 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+piece  base, a, b1, b2, b3, b4, b11, b12,
+       b21, b22, b31, b32, b41, b42, couvercle, baseb,
+       ported, porteg, poteau, basec, bras, pointa, pointb, pointc;
+
+static-var  Static_Var_1;
+
+// Signal definitions
+#define SIG_ACTIVATE			2
+
+#define SMOKEPIECE1 couvercle
+#define SMOKEPIECE2 baseb
+#define SMOKEPIECE3 ported
+#define SMOKEPIECE4 porteg
+
+#include "StateChg.h"
+
+activatescr()
+{
+	if( TRUE )
+	{
+		move ported to y-axis [-1.000000] speed [100.000000];
+		move porteg to y-axis [-1.000000] speed [100.000000];
+		wait-for-move ported along y-axis;
+		wait-for-move porteg along y-axis;
+	}
+	if( TRUE )
+	{
+		move ported to x-axis [-5.000000] speed [50.000000];
+		move porteg to x-axis [5.000000] speed [50.000000];
+		wait-for-move ported along x-axis;
+		wait-for-move porteg along x-axis;
+	}
+	if( TRUE )
+	{
+		move ported to z-axis [-5.000000] speed [50.000000];
+		move porteg to z-axis [5.000000] speed [50.000000];
+		wait-for-move ported along z-axis;
+		wait-for-move porteg along z-axis;
+	}
+	if( TRUE )
+	{
+		turn a to y-axis <45.005495> speed <100.000000>;
+		wait-for-turn a around y-axis;
+	}
+	if( TRUE )
+	{
+		move poteau to y-axis [1.000000] speed [20.000000];
+		turn couvercle to x-axis <-135.027473> speed <100.000000>;
+		wait-for-move poteau along y-axis;
+		wait-for-turn couvercle around x-axis;
+	}
+	if( TRUE )
+	{
+		turn a to y-axis <0.000000> speed <100.000000>;
+		wait-for-turn a around y-axis;
+	}
+	if( TRUE )
+	{
+		move b1 to z-axis [9.000000] speed [50.000000];
+		move b2 to x-axis [9.000000] speed [50.000000];
+		move b3 to z-axis [-9.000000] speed [50.000000];
+		move b4 to x-axis [-9.000000] speed [50.000000];
+		move basec to y-axis [3.000000] speed [25.000000];
+		wait-for-move basec along y-axis;
+		wait-for-move b1 along z-axis;
+		wait-for-move b2 along x-axis;
+		wait-for-move b3 along z-axis;
+		wait-for-move b4 along z-axis;
+	}
+	if( TRUE )
+	{
+		turn b11 to y-axis <-45.005495> speed <100.000000>;
+		turn b12 to y-axis <45.005495> speed <100.000000>;
+		turn b21 to y-axis <45.005495> speed <100.000000>;
+		turn b22 to y-axis <-45.005495> speed <100.000000>;
+		turn b31 to y-axis <45.005495> speed <100.000000>;
+		turn b32 to y-axis <-45.005495> speed <100.000000>;
+		turn b41 to y-axis <45.005495> speed <100.000000>;
+		turn b42 to y-axis <-45.005495> speed <100.000000>;
+		turn bras to x-axis <-100.016484> speed <100.000000>;
+		wait-for-turn bras around x-axis;
+	}
+	sleep 34;
+}
+
+deactivatescr()
+{
+	if( TRUE )
+	{
+		turn b11 to y-axis <0.000000> speed <25.000000>;
+		turn b12 to y-axis <0.000000> speed <25.000000>;
+		turn b21 to y-axis <0.000000> speed <25.000000>;
+		turn b22 to y-axis <0.000000> speed <25.000000>;
+		turn b31 to y-axis <0.000000> speed <25.000000>;
+		turn b32 to y-axis <0.000000> speed <25.000000>;
+		turn b41 to y-axis <0.000000> speed <25.000000>;
+		turn b42 to y-axis <0.000000> speed <25.000000>;
+		turn bras to x-axis <0.000000> speed <50.000000>;
+		wait-for-turn bras around x-axis;
+	}
+	if( TRUE )
+	{
+		move b1 to z-axis [0.000000] speed [25.000000];
+		move b2 to x-axis [0.000000] speed [25.000000];
+		move b3 to z-axis [0.000000] speed [25.000000];
+		move b4 to x-axis [0.000000] speed [25.000000];
+		move basec to y-axis [0.000000] speed [25.000000];
+		wait-for-move basec along y-axis;
+		wait-for-move b1 along z-axis;
+		wait-for-move b2 along x-axis;
+		wait-for-move b3 along z-axis;
+		wait-for-move b4 along z-axis;
+	}
+	if( TRUE )
+	{
+		turn a to y-axis <45.005495> speed <50.000000>;
+		wait-for-turn a around y-axis;
+	}
+	if( TRUE )
+	{
+		move poteau to y-axis [0.000000] speed [20.000000];
+		turn couvercle to x-axis <0.000000> speed <100.000000>;
+		wait-for-move poteau along y-axis;
+		wait-for-turn couvercle around x-axis;
+	}
+	if( TRUE )
+	{
+		turn a to y-axis <0.000000> speed <50.000000>;
+		wait-for-turn a around y-axis;
+	}
+	if( TRUE )
+	{
+		move ported to z-axis [0.000000] speed [25.000000];
+		move porteg to z-axis [0.000000] speed [25.000000];
+		wait-for-move ported along z-axis;
+		wait-for-move porteg along z-axis;
+	}
+	if( TRUE )
+	{
+		move ported to x-axis [0.000000] speed [25.000000];
+		move porteg to x-axis [0.000000] speed [25.000000];
+		wait-for-move ported along x-axis;
+		wait-for-move porteg along x-axis;
+	}
+	if( TRUE )
+	{
+		move ported to y-axis [0.000000] speed [50.000000];
+		move porteg to y-axis [0.000000] speed [50.000000];
+		wait-for-move ported along y-axis;
+		wait-for-move porteg along y-axis;
+	}
+	sleep 34;
+}
+#include "SmokeUnit.h"
+#include "Yard.h"
+
+Go()
+{
+	call-script activatescr();
+	call-script OpenYard();
+	set INBUILDSTANCE to 1;
+}
+
+Stop()
+{
+	set INBUILDSTANCE to 0;
+	call-script CloseYard();
+	call-script deactivatescr();
+}
+#define ACTIVATECMD			call-script Go();
+#define DEACTIVATECMD		call-script Stop();
+#include "StateChg.h"
+
+Create()
+{
+	Static_Var_1 = 0;
+	call-script InitState();
+	start-script SmokeUnit();
+}
+
+QueryNanoPiece(piecenum)
+{
+	if( Static_Var_1 == 0 )
+	{
+		piecenum = pointa;
+	}
+	if( Static_Var_1 == 1 )
+	{
+		piecenum = pointb;
+	}
+	if( Static_Var_1 == 2 )
+	{
+		piecenum = pointc;
+	}
+	++Static_Var_1;
+	if( Static_Var_1 == 3 )
+	{
+		Static_Var_1 = 0;
+	}
+}
+
+Activate()
+{
+	signal SIG_ACTIVATE;
+	start-script RequestState(0);
+}
+
+Deactivate()
+{
+	signal SIG_ACTIVATE;
+	set-signal-mask SIG_ACTIVATE;
+	set-signal-mask 0;
+	start-script RequestState(1);
+}
+
+StartBuilding()
+{
+}
+
+StopBuilding()
+{
+}
+
+QueryBuildInfo(piecenum)
+{
+	piecenum = a;
+}
+
+SweetSpot(piecenum)
+{
+	piecenum = base;
+}
+
+Killed(severity, corpsetype)
+{
+	if( severity <= 25 )
+	{
+		corpsetype = 1;
+		explode baseb type SHATTER | BITMAPONLY | BITMAP1;
+		explode bras type BITMAPONLY | BITMAP2;
+		explode basec type BITMAPONLY | BITMAP3;
+		explode ported type BITMAPONLY | BITMAP4;
+		explode porteg type BITMAPONLY | BITMAP5;
+		explode poteau type BITMAPONLY | BITMAP1;
+		explode a type BITMAPONLY | BITMAP2;
+		explode b1 type BITMAPONLY | BITMAP3;
+		explode b2 type BITMAPONLY | BITMAP3;
+		explode b3 type BITMAPONLY | BITMAP3;
+		explode b4 type BITMAPONLY | BITMAP3;
+		explode b11 type BITMAPONLY | BITMAP4;
+		explode b12 type BITMAPONLY | BITMAP5;
+		explode b21 type BITMAPONLY | BITMAP1;
+		explode b22 type BITMAPONLY | BITMAP2;
+		explode b31 type BITMAPONLY | BITMAP4;
+		explode b32 type BITMAPONLY | BITMAP5;
+		explode b41 type BITMAPONLY | BITMAP1;
+		explode b42 type BITMAPONLY | BITMAP2;
+		explode couvercle type BITMAPONLY | BITMAP1;
+		return (0);
+	}
+	if( severity <= 50 )
+	{
+		corpsetype = 2;
+		explode baseb type SHATTER | BITMAPONLY | BITMAP1;
+		explode bras type FALL | FIRE | BITMAP2;
+		explode basec type FALL | SMOKE | BITMAP3;
+		explode ported type BITMAPONLY | BITMAP4;
+		explode porteg type BITMAPONLY | BITMAP5;
+		explode poteau type SHATTER | BITMAP1;
+		explode a type SHATTER | BITMAP2;
+		explode b1 type BITMAPONLY | BITMAP3;
+		explode b2 type BITMAPONLY | BITMAP4;
+		explode b3 type BITMAPONLY | BITMAP5;
+		explode b4 type BITMAPONLY | BITMAP1;
+		explode b11 type BITMAPONLY | BITMAP3;
+		explode b21 type BITMAPONLY | BITMAP4;
+		explode b31 type BITMAPONLY | BITMAP5;
+		explode b41 type BITMAPONLY | BITMAP1;
+		explode b12 type BITMAPONLY | BITMAP3;
+		explode b22 type BITMAPONLY | BITMAP4;
+		explode b32 type BITMAPONLY | BITMAP5;
+		explode b42 type BITMAPONLY | BITMAP1;
+		explode couvercle type BITMAPONLY | BITMAP1;
+		return (0);
+	}
+	if( severity <= 99 )
+	{
+		corpsetype = 3;
+		explode baseb type SHATTER | BITMAPONLY | BITMAP1;
+		explode bras type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+		explode basec type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+		explode ported type BITMAPONLY | BITMAP4;
+		explode porteg type BITMAPONLY | BITMAP5;
+		explode poteau type SHATTER | BITMAP1;
+		explode a type SHATTER | BITMAP2;
+		explode b1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+		explode b2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+		explode b3 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+		explode b4 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+		explode b11 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+		explode b21 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+		explode b31 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+		explode b41 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+		explode b12 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+		explode b22 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+		explode b32 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+		explode b42 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+		explode couvercle type SHATTER | BITMAP2;
+		return (0);
+	}
+	corpsetype = 3;
+	explode baseb type SHATTER | BITMAPONLY | BITMAP1;
+	explode bras type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode basec type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+	explode ported type BITMAPONLY | BITMAP4;
+	explode porteg type BITMAPONLY | BITMAP5;
+	explode poteau type SHATTER | BITMAP1;
+	explode a type SHATTER | BITMAP2;
+	explode b1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode b2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+	explode b3 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+	explode b4 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+	explode b11 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode b21 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+	explode b31 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+	explode b41 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+	explode b12 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode b22 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+	explode b32 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+	explode b42 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+	explode couvercle type SHATTER | BITMAP2;
+}

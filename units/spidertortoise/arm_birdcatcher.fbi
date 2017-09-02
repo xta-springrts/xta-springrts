@@ -53,11 +53,16 @@ Weapon1=WolfSpider_GUN;
 wpri_badTargetCategory=NOTAIR;
 BadTargetCategory=NOWEAPON;
 Ovradjust=1;
-Downloadable=1;
+	smoothanim=1;
 	collisionVolumeType = box;
 	collisionVolumeScales =26 19 26;
 	collisionVolumeOffsets = 0 -1 0;
 	collisionVolumeTest = 1;
 	pieceTrailCEGTag=Debree;//bleh
 	pieceTrailCEGRange = 4;
+	[SFXTypes]
+	{
+	explosiongenerator0=custom:EmgFlare;
+	explosiongenerator1=custom:DEBREE2;
+	}
 }

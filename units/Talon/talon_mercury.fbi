@@ -5,7 +5,7 @@
 	//********************
 	side=Arm;
 	name=Mercury;
-	description=Assault Tank;
+	description=Assault GraviTank;
 	icontype=hover;
 
 	//************************************************************
@@ -29,9 +29,9 @@
 	//********************
 	maxdamage=812;
 	healtime=30;
-	buildcostmetal=156;
-	buildcostenergy=1288;
-	buildtime=2547;
+	buildcostmetal=142;
+	buildcostenergy=1266;
+	buildtime=2147;
 	footprintx=2;
 	footprintz=2;
 

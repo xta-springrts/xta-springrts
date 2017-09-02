@@ -313,17 +313,10 @@ Deactivate()
 
 StartBuilding()
 {
-	spin pad around y-axis speed <30.005495>;
-	spin padsee around y-axis speed <30.005495>;
-	dont-cache padsee;
 }
 
 StopBuilding()
 {
-	stop-spin padsee around y-axis;
-	stop-spin pad around y-axis;
-	turn pad to y-axis <0> now;
-	cache padsee;
 }
 
 QueryBuildInfo(piecenum)

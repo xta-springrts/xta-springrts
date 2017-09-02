@@ -29,7 +29,7 @@
 	MetalStorage=10;
 	explodeas=ATOMIC_BLASTPEN;
 	selfdestructas=ATOMIC_BLASTSML;
-	Category=CORE VTOL WEAPON NOTSUB;
+	Category=CORE WEAPON NOTSUB;
 	TEDClass=VTOL;
 	Copyright=Copyright 1997 Humongous Entertainment. All rights reserved.;
 	UnitNumber=9;

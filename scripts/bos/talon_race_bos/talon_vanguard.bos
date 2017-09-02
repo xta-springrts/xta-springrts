@@ -71,11 +71,6 @@ Create()
 	hide flare2;
 	hide flare1b;
 	hide flare2b;
-	dont-cache flare1;
-	dont-cache flare2;
-	dont-cache flare1b;
-	dont-cache flare2b;
-	cache tracks;
 	gun_1 = flare1;
 	gun_2 = flare1b;
 	staller = 0;
@@ -84,14 +79,10 @@ Create()
 	//turn sleeve to x-axis <-45.000000> now;
 	//turn gun2 to x-axis <-45.000000> now;
 	start-script SmokeUnit();
-	
-	spin base around y-axis speed <-30.005495>;
 	while( get BUILD_PERCENT_LEFT )
 	{
 		sleep 1;
 	}
-	stop-spin base around y-axis;
-	turn base to y-axis <0> speed <30>;
 }
 
 SetMaxReloadTime(Func_Var_1)
