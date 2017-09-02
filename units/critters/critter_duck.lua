@@ -32,8 +32,9 @@ unitDef = {
   maxSlope            = 45,
   maxVelocity         = 1,
   --maxReverseVelocity   = 2.5,  ---**** als upgrade
-  maxWaterDepth       = 22,  
+  maxWaterDepth       = 2000,  
   movementClass       = [[HOVER9]],
+  minWaterDepth       = 0,
   --crushStrength 	  = 25,
   moveState           = -1,
   noAutoFire          = false,
@@ -60,7 +61,6 @@ unitDef = {
   turnRate            = 500,
   workerTime          = 0,
   script              = [[critter_duck.lua]], -- [[tpdude.lua]], 
-
 }
 
 return lowerkeys({ critter_duck = unitDef })

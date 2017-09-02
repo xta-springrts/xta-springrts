@@ -27,6 +27,7 @@ unitDef = {
   maxVelocity            = 2.9,
   minCloakDistance       = 75,
   minWaterDepth          = 15, -- not used, minWaterDepth in movedef used instead (36)
+  maxWaterDepth			= 2000,
   modelCenterOffset      = [[0 0 -4]],
   movementClass          = [[BOATSUB]],
   noAutoFire             = false,
@@ -43,8 +44,7 @@ unitDef = {
   turnRate               = 3000,
   upright                = true,
   waterline              = 20,
-  workerTime             = 0,
-
+  workerTime             = 0
 }
 
 return lowerkeys({ critter_goldfish_big = unitDef })

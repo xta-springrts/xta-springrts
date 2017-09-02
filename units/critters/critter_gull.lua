@@ -19,6 +19,8 @@ maxDamage           = 10,
 idleAutoHeal        = 0,
 ----movement
 maxVelocity         = 4,
+maxWaterDepth		= 2000,
+minWaterDepth       = 0,
 acceleration        = 0.2,
 brakeRate           = 3.75,
 moverate1           = [[3]],

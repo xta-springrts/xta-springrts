@@ -1,8 +1,8 @@
 unitDef = {
-  unitname            = [[tree_energy]],
-  name                = [[tree_energy]],
+  unitname            = [[tree_water]],
+  name                = [[tree_water]],
   iconType = "blank",
-  description         = [[TREE WITH METAL!]],
+  description         = [[TREE WITH ENERGY!]],
   buildCostEnergy     = 20,
   buildCostMetal      = 10,
   builder             = false,
@@ -30,9 +30,9 @@ unitDef = {
   noChaseCategory     = [[MOBILE STATIC]],
   objectName          = [[ad0_pine_1_s.s3o]], --
   sonarStealth		  = true,
-  script              = [[tree_energy.lua]], -- [[tpdude.lua]], 
-  minWaterDepth       = 0,
-  maxWaterDepth		  = 0,
+  script              = [[tree_water.lua]], -- [[tpdude.lua]], 
+  minWaterDepth       = 10,
+  maxWaterDepth		  = 50,
 }
 
-return lowerkeys({ tree_energy = unitDef })
+return lowerkeys({ tree_water = unitDef })

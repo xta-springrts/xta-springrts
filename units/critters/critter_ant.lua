@@ -34,6 +34,7 @@ unitDef = {
   maxVelocity         = 0.9,
   maxWaterDepth       = 2,  
   movementClass       = [[SPID3]],
+  minWaterDepth       = 0,
   --crushStrength 	  = 25,
   moveState           = -1,
   noAutoFire          = false,
@@ -60,7 +61,6 @@ unitDef = {
   turnRate            = 2000,
   workerTime          = 0,
   script              = [[critter_ant.cob]], -- [[tpdude.lua]], 
-
 }
 
 return lowerkeys({ critter_ant = unitDef })

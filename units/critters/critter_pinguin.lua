@@ -32,7 +32,8 @@ unitDef = {
   maxDamage           = 10,
   maxSlope            = 45,
   maxVelocity         = 0.5,
-  maxWaterDepth       = 22,  
+  maxWaterDepth       = 2000,
+  minWaterDepth       = 0,  
   movementClass       = [[HOVER9]],
   --crushStrength 	  = 25,
   moveState           = -1,
@@ -60,7 +61,6 @@ unitDef = {
   turnRate            = 2000,
   workerTime          = 0,
   script              = [[critter_pinguin.lua]], -- [[tpdude.lua]], 
-
 }
 
 return lowerkeys({ critter_pinguin = unitDef })
