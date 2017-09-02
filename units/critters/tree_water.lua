@@ -16,7 +16,7 @@ unitDef = {
   sonarStealth		  = true,
   levelGround 		= false,
   isImmobile 		=true,
-  buildcostmetal	= 100,
+  buildcostmetal	= 10,
   repairSpeed 		= 3000,
 
 	----------	
