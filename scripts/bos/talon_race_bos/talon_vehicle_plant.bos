@@ -266,12 +266,10 @@ Deactivate()
 
 StartBuilding()
 {
-	spin rotary around y-axis speed <30.005495>;
 }
 
 StopBuilding()
 {
-	stop-spin rotary around y-axis;
 }
 
 QueryBuildInfo(piecenum)

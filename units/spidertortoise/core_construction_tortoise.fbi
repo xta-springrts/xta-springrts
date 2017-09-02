@@ -64,6 +64,7 @@
 	pieceTrailCEGTag=NanoDebree;//bleh
 	pieceTrailCEGRange = 2;
 
+	smoothanim=1;
 
 	[SFXTypes]
 	{

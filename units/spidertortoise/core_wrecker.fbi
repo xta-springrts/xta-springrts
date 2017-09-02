@@ -59,4 +59,11 @@
 	collisionVolumeTest = 1;
 	pieceTrailCEGTag=Debree;//bleh
 	pieceTrailCEGRange = 4;
+
+	smoothanim=1;
+	[SFXTypes]
+	{
+	explosiongenerator0=custom:POPUPFLARE;
+	explosiongenerator1=custom:POPUPFLARE;
+	}
 	}

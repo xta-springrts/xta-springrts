@@ -29,7 +29,7 @@
 	MetalStorage=10000;
 	explodeas=DEATHSAUCER;
 	selfdestructas=DEATHSAUCER;
-	Category=CORE VTOL WEAPON NOTSUB;
+	Category=CORE WEAPON NOTSUB;
 	TEDClass=VTOL;
 	UnitNumber=9;
 	firestandorders=1;
@@ -51,7 +51,6 @@
 	Scale=1;
 	BankScale=1;
 	EnergyMake=100;
-	DefaultMissionType=VTOL_standby;
 	maneuverleashlength=1280;
 	canattack=1;
 	Weapon1=ANNISAUCER_WEAPON;

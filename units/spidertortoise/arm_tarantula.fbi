@@ -12,7 +12,7 @@ FootprintX=3;
 FootprintZ=3;
 BuildCostEnergy=8654;
 BuildCostMetal=968;
-MaxDamage=4880;
+MaxDamage=4480;
 MaxWaterDepth=0;
 MaxSlope=10;
 EnergyUse=0;
@@ -59,4 +59,13 @@ DefaultMissionType=Standby;
 	collisionVolumeTest = 1;
 	pieceTrailCEGTag=Debree;//bleh
 	pieceTrailCEGRange = 4;
+
+	smoothanim=1;
+
+	[SFXTypes]
+	{
+	explosiongenerator0=custom:POPUPFLARE;
+	explosiongenerator1=custom:POPUPFLARE;
+	explosiongenerator2=custom:redflare;
+	}
 }

@@ -15,7 +15,7 @@
 	MaxWaterDepth=0;
 	MaxSlope=10;
 	EnergyUse=5;
-	BuildTime=89033;
+	BuildTime=79033;
 	WorkerTime=0;
 	BMcode=1;
 	Builder=0;
@@ -29,7 +29,7 @@
 	MetalStorage=10;
 	explodeas=ATOMIC_BLASTPEN;
 	selfdestructas=ATOMIC_BLASTSML;
-	Category=CORE VTOL WEAPON NOTSUB;
+	Category=CORE WEAPON NOTSUB;
 	TEDClass=VTOL;
 	Copyright=Copyright 1997 Humongous Entertainment. All rights reserved.;
 	UnitNumber=9;
@@ -52,7 +52,6 @@
 	Scale=1;
 	BankScale=1;
 	EnergyMake=0;
-	DefaultMissionType=VTOL_standby;
 	maneuverleashlength=1280;
 	canattack=1;
 	weapon1=ARMFLAK_GUN;

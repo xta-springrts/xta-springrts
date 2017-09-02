@@ -95,13 +95,10 @@ Create()
 	turn turret to x-axis <45.000000> now;
 	turn sleeves to x-axis <-45.000000> now;
 	bAiming = TRUE;
-	spin body around y-axis speed <-30.005495>;
 	while( get BUILD_PERCENT_LEFT )
 	{
 		sleep 1;
 	}
-	stop-spin body around y-axis;
-	turn body to y-axis <0> speed <30>;
 }
 
 SetMaxReloadTime(Func_Var_1)

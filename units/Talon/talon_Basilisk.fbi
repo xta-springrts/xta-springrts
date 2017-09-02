@@ -128,6 +128,7 @@
 
 	[SFXTypes]
 	{
-	explosiongenerator0=custom:rocketflare;
+	explosiongenerator0=custom:POPUPFLAREFAST;
+	explosiongenerator1=custom:POPUPFLAREFAST;
 	}
 }

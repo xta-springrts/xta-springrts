@@ -270,20 +270,6 @@ RequestState(requestedstate, currentstate)
 
 Create()
 {
-	dont-shade lside;
-	dont-shade rside;
-	dont-shade ldoor;
-	dont-shade rdoor;
-	dont-shade lpost;
-	dont-shade rpost;
-	dont-shade lnano;
-	dont-shade rnano;
-	dont-shade ltower1;
-	dont-shade ltower2;
-	dont-shade rtower1;
-	dont-shade rtower2;
-	dont-shade base;
-	dont-shade pad;
 	Static_Var_1 = 1;
 	call-script InitState();
 	start-script SmokeUnit();
@@ -326,15 +312,10 @@ Deactivate()
 
 StartBuilding()
 {
-	dont-cache pad;
-	spin pad around y-axis speed <30.005495>;
 }
 
 StopBuilding()
 {
-	cache pad;
-	stop-spin pad around y-axis;
-	turn pad to y-axis <0.000000> speed <30.005495>;
 }
 
 QueryBuildInfo(piecenum)
