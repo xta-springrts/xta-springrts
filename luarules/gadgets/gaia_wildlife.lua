@@ -793,7 +793,7 @@ function gadget:Initialize()
 	end
 	
 	Echo("gaia_wildlife.lua: gadget:Initialize() Game.mapName=" .. Game.mapName)
-	if (not wildlifeCon) and (not wildlifeCon == "easy") then
+	if (wildlifeConfig[wildlifeConfig[Game.mapName]]==nil) or (wildlifeConfig[Game.mapName] == nil) then
 		Echo("no wildlife config for this map")
 		gadgetHandler:RemoveGadget(self)
 	end	
