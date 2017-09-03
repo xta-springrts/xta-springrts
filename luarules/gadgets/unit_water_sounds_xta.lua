@@ -169,22 +169,6 @@ function gadget:UnitDestroyed(unitID, unitDefID, teamID)
 end
 
 
-function gadget:UnitGiven(unitID, unitDefID, unitTeam, oldTeam)
-	if waterUnits[unitID] or notMovingWaterUnits[unitID] then
-		waterUnits[unitID] = nil
-		notMovingWaterUnits[unitID] = nil
-	end
-end
-
-
-function gadget:UnitTaken(unitID, unitDefID, unitTeam, newTeam)
-	if (waterUnits[unitID] or notMovingWaterUnits[unitID])and (not AreTeamsAllied(unitTeam, newTeam)) then
-		waterUnits[unitID] = nil
-		notMovingWaterUnits[unitID] = nil
-	end
-end
-
-
 function gadget:UnitEnteredWater(unitID, unitDefID, unitTeam)
 	local x,y,z = GetUnitPosition(unitID)
 	local unitTeam = GetUnitTeam(unitID)

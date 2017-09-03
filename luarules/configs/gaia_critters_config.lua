@@ -72,6 +72,9 @@ local critterConfig = {
   { spawnBox = {x1=100, z1=100, x2=6000, z2=6000}, unitNames = {["critter_gull"]=3} },
 },
 
+-- uses wildlife
+
+--[[
 ["TheColdPlace"] = {
   { spawnBox = {x1=2700, z1=1800, x2=4500, z2=3200}, unitNames = {["critter_goldfish"]=10} },
   { spawnBox = {x1=1500, z1=3700, x2=5400, z2=4000}, unitNames = {["critter_pinguin"]=10} },
@@ -90,7 +93,7 @@ local critterConfig = {
   { spawnCircle = {x=1500, z=2300, r=200}, unitNames = {["critter_pinguin"]=5} },
   { spawnCircle = {x=5400, z=2000, r=200}, unitNames = {["critter_pinguin"]=5} },
 },
-
+--]]
 --["trefoil"] = {
 --{ spawnBox = {x1=5666, z1=4888, x2=8000, z2=6400}, unitNames = {["critter_goldfish"]=10} },
 --{ spawnBox = {x1=3400, z1=300, x2=5000, z2=1500}, unitNames = {["critter_goldfish"]=10} },
