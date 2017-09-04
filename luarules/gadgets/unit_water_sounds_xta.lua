@@ -1,9 +1,9 @@
 
 function gadget:GetInfo()
   return {
-    name = "soundy units in water",
-    desc = "in tha water",
-    author = "res (tx to pic)",
+    name = "unit water sounds",
+    desc = "sounds from unit in the water",
+    author = "res (tx to picasso)",
     date = "23,Jul,2017",
     license = "GNU GPL, v3 or later",
     layer = 0,
@@ -76,7 +76,8 @@ function gadget:Initialize()
 	for _, unitID in ipairs(GetAllUnits()) do
 		local unitDefID = GetUnitDefID(unitID)
 		local x,y,z = GetUnitPosition(unitID)
-		if y < 0 then 
+		local unitTeam = GetUnitTeam(unitID)
+		if y < 0 and unitTeam ~= GaiaTeamID then 
 			if IsWaterDragUnit[tostring(UnitDefs[unitDefID].moveDef.name)] ~= nil then
 				waterUnits[unitID] = true
 			end
