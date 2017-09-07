@@ -1,12 +1,12 @@
 unitDef = {
   airSightDistance		= 0,
   autoHeal				= 100,
-  unitname            	= [[tree]],
-  name                	= [[tree]],
+  unitname            	= [[palmetto_10_metal]],
+  name                	= [[palmetto_10_metal]],
   iconType 				= "blank",
-  description         	= [[Tree]],
+  description         	= [[Palmetto with 10 metal to reclaim!]],
   buildCostEnergy     	= 20,
-  buildCostMetal      	= 0,
+  buildCostMetal      	= 10,
   builder             	= false,
   blocking				= false,
   canAttack           	= false,
@@ -30,22 +30,22 @@ unitDef = {
   onOffable 			= false,
   
   --TODO
-  --corpse				= [[dead_tree]]
+  --corpse				= [[]]
   --remove health bars
   health				= 100,
-  height 				= 30,
-  footprintX          	= 1,
-  footprintZ          	= 1,
+  height 				= 1,
+  footprintX          	= 4,
+  footprintZ          	= 4,
   idleAutoHeal        	= 0,  
   maxDamage           	= 10,
   moveState           	= 1,
   noAutoFire          	= false,
   noChaseCategory     	= [[MOBILE STATIC]],
-  objectName          	= [[ad0_pine_1_s.s3o]], --
+  objectName          	= [[palmetto_1.s3o]], --
   sonarStealth		  	= true,
   script              	= [[tree.lua]], -- [[tpdude.lua]], 
   maxWaterDepth			= 0,
   minWaterDepth       	= 0,
 }
 
-return lowerkeys({ tree = unitDef })
+return lowerkeys({ palmetto_10_metal = unitDef })

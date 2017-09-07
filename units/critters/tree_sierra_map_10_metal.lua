@@ -1,12 +1,12 @@
 unitDef = {
   airSightDistance		= 0,
   autoHeal				= 100,
-  unitname            	= [[tree]],
-  name                	= [[tree]],
+  unitname            	= [[tree_sierra_map_10_metal]],
+  name                	= [[tree_sierra_map_10_metal]],
   iconType 				= "blank",
-  description         	= [[Tree]],
+  description         	= [[tree_sierra_map_10_metal]],
   buildCostEnergy     	= 20,
-  buildCostMetal      	= 0,
+  buildCostMetal      	= 10,
   builder             	= false,
   blocking				= false,
   canAttack           	= false,
@@ -33,7 +33,7 @@ unitDef = {
   --corpse				= [[dead_tree]]
   --remove health bars
   health				= 100,
-  height 				= 30,
+  height 				= 50,
   footprintX          	= 1,
   footprintZ          	= 1,
   idleAutoHeal        	= 0,  
@@ -41,11 +41,11 @@ unitDef = {
   moveState           	= 1,
   noAutoFire          	= false,
   noChaseCategory     	= [[MOBILE STATIC]],
-  objectName          	= [[ad0_pine_1_s.s3o]], --
+  objectName          	= [[S44tree_spruceb.s3o]], --
   sonarStealth		  	= true,
   script              	= [[tree.lua]], -- [[tpdude.lua]], 
   maxWaterDepth			= 0,
   minWaterDepth       	= 0,
 }
 
-return lowerkeys({ tree = unitDef })
+return lowerkeys({ tree_sierra_map_10_metal = unitDef })

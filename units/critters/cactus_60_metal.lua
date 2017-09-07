@@ -1,12 +1,12 @@
 unitDef = {
   airSightDistance		= 0,
   autoHeal				= 100,
-  unitname            	= [[tree]],
-  name                	= [[tree]],
+  unitname            	= [[cactus_60_metal]],
+  name                	= [[cactus_60_metal]],
   iconType 				= "blank",
-  description         	= [[Tree]],
+  description         	= [[Cactus with 60 metal to reclaim!]],
   buildCostEnergy     	= 20,
-  buildCostMetal      	= 0,
+  buildCostMetal      	= 60,
   builder             	= false,
   blocking				= false,
   canAttack           	= false,
@@ -33,19 +33,19 @@ unitDef = {
   --corpse				= [[dead_tree]]
   --remove health bars
   health				= 100,
-  height 				= 30,
-  footprintX          	= 1,
-  footprintZ          	= 1,
+  height 				= 20,
+  footprintX          	= 2,
+  footprintZ          	= 2,
   idleAutoHeal        	= 0,  
   maxDamage           	= 10,
   moveState           	= 1,
   noAutoFire          	= false,
   noChaseCategory     	= [[MOBILE STATIC]],
-  objectName          	= [[ad0_pine_1_s.s3o]], --
+  objectName          	= [[Cactus6.s3o]], --
   sonarStealth		  	= true,
   script              	= [[tree.lua]], -- [[tpdude.lua]], 
   maxWaterDepth			= 0,
   minWaterDepth       	= 0,
 }
 
-return lowerkeys({ tree = unitDef })
+return lowerkeys({ cactus_60_metal = unitDef })

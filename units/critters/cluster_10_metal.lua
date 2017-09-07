@@ -1,12 +1,12 @@
 unitDef = {
   airSightDistance		= 0,
   autoHeal				= 100,
-  unitname            	= [[tree]],
-  name                	= [[tree]],
+  unitname            	= [[cluster_10_metal]],
+  name                	= [[cluster_10_metal]],
   iconType 				= "blank",
-  description         	= [[Tree]],
+  description         	= [[Cluster with 10 metal to reclaim!]],
   buildCostEnergy     	= 20,
-  buildCostMetal      	= 0,
+  buildCostMetal      	= 10,
   builder             	= false,
   blocking				= false,
   canAttack           	= false,
@@ -30,22 +30,22 @@ unitDef = {
   onOffable 			= false,
   
   --TODO
-  --corpse				= [[dead_tree]]
+  --corpse				= [[cluster1_dead]]
   --remove health bars
   health				= 100,
-  height 				= 30,
-  footprintX          	= 1,
-  footprintZ          	= 1,
+  height 				= 20,
+  footprintX          	= 4,
+  footprintZ          	= 4,
   idleAutoHeal        	= 0,  
   maxDamage           	= 10,
   moveState           	= 1,
   noAutoFire          	= false,
   noChaseCategory     	= [[MOBILE STATIC]],
-  objectName          	= [[ad0_pine_1_s.s3o]], --
+  objectName          	= [[cluster1.s3o]], --
   sonarStealth		  	= true,
   script              	= [[tree.lua]], -- [[tpdude.lua]], 
   maxWaterDepth			= 0,
   minWaterDepth       	= 0,
 }
 
-return lowerkeys({ tree = unitDef })
+return lowerkeys({ cluster_10_metal = unitDef })

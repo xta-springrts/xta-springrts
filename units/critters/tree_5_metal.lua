@@ -1,12 +1,12 @@
 unitDef = {
   airSightDistance		= 0,
   autoHeal				= 100,
-  unitname            	= [[tree]],
-  name                	= [[tree]],
+  unitname            	= [[tree_5_metal]],
+  name                	= [[tree_5_metal]],
   iconType 				= "blank",
-  description         	= [[Tree]],
+  description         	= [[Tree with 5 metal to reclaim!]],
   buildCostEnergy     	= 20,
-  buildCostMetal      	= 0,
+  buildCostMetal      	= 5,
   builder             	= false,
   blocking				= false,
   canAttack           	= false,
@@ -48,4 +48,4 @@ unitDef = {
   minWaterDepth       	= 0,
 }
 
-return lowerkeys({ tree = unitDef })
+return lowerkeys({ tree_5_metal = unitDef })

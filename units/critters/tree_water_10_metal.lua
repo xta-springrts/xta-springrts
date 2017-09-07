@@ -1,12 +1,12 @@
 unitDef = {
-  airSightDistance		= 0,
+airSightDistance		= 0,
   autoHeal				= 100,
-  unitname            	= [[tree]],
-  name                	= [[tree]],
+  unitname            	= [[tree_water_10_metal]],
+  name                	= [[tree_water_10_metal]],
   iconType 				= "blank",
-  description         	= [[Tree]],
+  description         	= [[Tree with 10 metal to reclaim in shallow water!]],
   buildCostEnergy     	= 20,
-  buildCostMetal      	= 0,
+  buildCostMetal      	= 10,
   builder             	= false,
   blocking				= false,
   canAttack           	= false,
@@ -44,8 +44,8 @@ unitDef = {
   objectName          	= [[ad0_pine_1_s.s3o]], --
   sonarStealth		  	= true,
   script              	= [[tree.lua]], -- [[tpdude.lua]], 
-  maxWaterDepth			= 0,
-  minWaterDepth       	= 0,
+  minWaterDepth       	= 10,
+  maxWaterDepth		  	= 50,
 }
 
-return lowerkeys({ tree = unitDef })
+return lowerkeys({ tree_water_10_metal = unitDef })

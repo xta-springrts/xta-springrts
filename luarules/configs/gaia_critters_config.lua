@@ -72,9 +72,6 @@ local critterConfig = {
   { spawnBox = {x1=100, z1=100, x2=6000, z2=6000}, unitNames = {["critter_gull"]=3} },
 },
 
--- uses wildlife
-
---[[
 ["TheColdPlace"] = {
   { spawnBox = {x1=2700, z1=1800, x2=4500, z2=3200}, unitNames = {["critter_goldfish"]=10} },
   { spawnBox = {x1=1500, z1=3700, x2=5400, z2=4000}, unitNames = {["critter_pinguin"]=10} },
@@ -93,17 +90,17 @@ local critterConfig = {
   { spawnCircle = {x=1500, z=2300, r=200}, unitNames = {["critter_pinguin"]=5} },
   { spawnCircle = {x=5400, z=2000, r=200}, unitNames = {["critter_pinguin"]=5} },
 },
---]]
+
 --["trefoil"] = {
 --{ spawnBox = {x1=5666, z1=4888, x2=8000, z2=6400}, unitNames = {["critter_goldfish"]=10} },
 --{ spawnBox = {x1=3400, z1=300, x2=5000, z2=1500}, unitNames = {["critter_goldfish"]=10} },
 --},
 
 --["Tropical"] = {
---  { spawnCircle = {x=1000, z=5300, r=800}, unitNames = {["critter_goldfish"]=3} },
---  { spawnCircle = {x=8100, z=5300, r=800}, unitNames = {["critter_goldfish"]=3} },
---  { spawnCircle = {x=4600, z=5200, r=3500}, unitNames = {["critter_gull"]=2} },
---  { spawnCircle = {x=4600, z=5200, r=500}, unitNames = {["critter_duck"]=2} },
+  --{ spawnCircle = {x=1000, z=5300, r=800}, unitNames = {["critter_goldfish"]=3} },
+  --{ spawnCircle = {x=8100, z=5300, r=800}, unitNames = {["critter_goldfish"]=3} },
+  --{ spawnCircle = {x=4600, z=5200, r=3500}, unitNames = {["arm_construction_kbot"]=20} },
+  --{ spawnCircle = {x=4600, z=5200, r=500}, unitNames = {["critter_duck"]=2} },
 --},
 
 --["tumult"] = {
