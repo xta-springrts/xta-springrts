@@ -40,11 +40,15 @@ Description:
 	other behaviors. There are some behaviors between the above evolution as hunting, socialising etc... . These 
 	behaviors can be easy made from the functions given in the gadget. (see there for an example)(use candy function)
 
+	The function behave below list all the behaviors you can give wildlife in "update period". (bookkeeping time)
+	These behaviors are set in the luarules/gadgets/gaia_wildlife_behavior_functions.lua file which uses the functions
+	from luarules/gadgets/gaia_wildlife_action_functions.lua. To make new behaviors make sure you only use functions
+	that dont interfere with gameplay (dont make new changes like predate, forage, etc... ) so by doing so the gadget
+	will not mistakenly apply behaviors for eaten wildlife. 
+	
 	TODO
 	- setting new circle/box for wildlife babies. 
 	- above implementation set through to ofspring if succesfull
-	- can i make it so that not all roles should be specified
-	- do we want trees to stay in there bedefined domein?
 ]]--
 
 	
@@ -54,20 +58,26 @@ if (not gadgetHandler:IsSyncedCode()) then
 end 
 
 -- settings
-local evolveTimePace		= 337 					-- time between predation procreation moment (191,151, 257, 337)
-local maxWildlife			= 500  					-- maximal amount of critters be spawned
-local addingAfterExtinction = 2						-- respam after area extinction species
-local ExtraLifeLost			= 0.5					-- 0.5 default
-local makeUnitWildlifeTime	= 20 * evolveTimePace
-local actionSpan 			= evolveTimePace * 9/10	-- max time that happenings are delayed to look more natural
-
--- more settings
-local canCapture			= true 					-- if false units get destroyed when tried to capture
-local showBehaviors			= true
+local evolveTimePace			= 337 						-- time between predation procreation moment (191,151, 257, 337)
+local maxWildlife				= 500  						-- maximal amount of critters be spawned
+local addingAfterExtinction 	= 2							-- respam after area extinction species
+local ExtraLifeLost				= 0.5						-- 0.5 default
+local makeUnitWildlifeTime		= 20 * evolveTimePace
+local actionSpan 				= evolveTimePace * 9/10		-- max time that happenings are delayed to look more natural
+local randomTable 				= 0 			
+local canCapture				= true 						-- if false units get destroyed when tried to capture
+local showBehaviors				= true
 
 -- Global stuff
 mapX = Game.mapX
 mapY = Game.mapY
+local numberOfAreas 			= 0
+local totalWildlife				= 0
+local wildlifeUnits 			= {}						-- wildlife that are currently alive
+local prey1EatsFood			= {}
+local prey2EatsFood			= {}
+local pred1EatsPrey			= {}
+local pred2EatsPrey			= {}
 
 -- locals
 local defaultMaxLifespan = {
@@ -115,35 +125,6 @@ local defaultRadius = {
 	pred2 = 200
 }
 
--- locals
-local numberOfAreas 		= 0
-local totalWildlife			= 0
-local wildlifeUnits 		= {}					-- wildlife that are currently alive
-local prey1EatsFood			= {}
-local prey2EatsFood			= {}
-local pred1EatsPrey			= {}
-local pred2EatsPrey			= {}
-local actions 				= {"growing", "procreate", "destroy", "forage", "predate",  	-- impact gadget dynamics
-	"behave", "guardSameRole", "patrol", "guardDinner", "attackSame", "toMoveTo",			-- visual candy
-	"patrolAroundUnit", "patrolAroundDinner", "patrolAroundSame", "attackDinner", "moveToDinner"}							-- visual candy
-local delayedHappenings		= {
-growing 			= {}, 
-procreate 			= {},
-destroy 			= {},
-forage 				= {},
-predate 			= {},
-behave				= {},
-guardSameRole		= {},
-patrol				= {},
-guardDinner			= {},
-attackSame			= {},
-toMoveTo			= {},
-patrolAroundUnit	= {},
-patrolAroundDinner 	= {},
-patrolAroundSame	= {},
-attackDinner		= {},
-moveToDinner		= {},
-}
 local GetUnitRadius			= Spring.GetUnitRadius
 local GetUnitDefDimensions	= Spring.GetUnitDefDimensions
 local Enable				= Spring.MoveCtrl.Enable
@@ -173,32 +154,8 @@ local pairs					= pairs
 local ipairs				= ipairs
 local min					= math.min
 local max					= math.max
-
-local wildlifeCon			= {}
-if wildlifeConfig[wildlifeConfig[Game.mapName]] == nil then
-	wildlifeCon		= wildlifeConfig[Game.mapName]
-else
-	wildlifeCon		= wildlifeConfig[wildlifeConfig[Game.mapName]]
-end	
-
-
-function randomPatrol(unitID, dim, shape)
-	if shape == "box" then	
-		for i=1,5 do
-			local x = random(dim.x1, dim.x2)
-			local z = random(dim.z1, dim.z2)
-			GiveOrderToUnit(unitID, CMD.PATROL , {x, spGetGroundHeight(x, z), z}, {"shift"})
-		end
-	else
-		for i=1,5 do
-			local a = rad(random(0, 360))
-			local r = random(0, dim.r)
-			local x = dim.x + r*sin(a)
-			local z = dim.z + r*cos(a)
-			GiveOrderToUnit(unitID, CMD.PATROL , {x, spGetGroundHeight(x, z), z}, {"shift"})
-		end
-	end
-end
+local wildlifeCon 			= wildlifeConfig[wildlifeConfig[Game.mapName]] or wildlifeConfig[Game.mapName]
+local delayedHappenings		= {}
 
 
 function copyTable(t)
@@ -261,8 +218,9 @@ function makeUnitWildlife(unitID, data)
 end
 
 
-function nearest_friend_from_unit(unitID, unitName, radius, unitName2)
-	unitname2 = unitname2 or unitname
+function nearest_friend_from_unit(unitID, unitName, radius, unitName2, radius2)
+	local radius = radius2 or radius
+	local unitname2 = unitname2 or unitname
 	local nearest_friendID = nil
 	local nearest_friend_distance = 9999999999
 	local x,y,z = GetUnitPosition(unitID)
@@ -398,6 +356,224 @@ function spawnUnit(dim, unitName, shape, role, noGrowing)
 end
 
 
+function eating(tableEaten)
+	for individual, dinner in pairs(tableEaten) do
+		if wildlifeUnits[individual] ~= nil then
+			randomPatrol(individual, wildlifeUnits[individual].spawn.dim, wildlifeUnits[individual].spawn.shape)
+		else
+			DestroyUnit(individual)
+		end
+		DestroyUnit(dinner)
+		wildlifeUnits[dinner] = nil
+	end
+end
+
+
+function onMap(coor, method, shape) -- only box
+	shape = shape or "box"
+	local coordinates = {} 
+	if method == "point" then
+		coordinates.x = min(max(0, coor.x1), mapX*512)
+		coordinates.z = min(max(0, coor.z1), mapX*512)
+		coordinates.y = spGetGroundHeight(x, z)
+	else
+		if shape == "box" then
+			coordinates.x1 = min(max(0, coor.x1), mapX*512) 
+			coordinates.x2 = min(max(0, coor.x2), mapX*512) 
+			coordinates.z1 = min(max(0, coor.z1), mapY*512)
+			coordinates.z2 = min(max(0, coor.z2), mapY*512)
+		else 
+			local newCoor = onMap({x1 = coor.x - coor.r, z1 = coor.z - coor.r, x2 = coor.x + coor.r , z2 =  coor.z + coor.r})
+			local xWidth = newCoor.x2-newCoor.x1
+			local zWidth = newCoor.z2-newCoor.z1
+			local newRadius = min(xWidth, zWidth)/2
+			coordinates.r = newRadius
+			coordinates.x = newCoor.x1 + newRadius
+			coordinates.z = newCoor.z1 + newRadius
+		end
+	end
+	return coordinates
+end
+	
+	
+function agingAndBehavior(unitID, data)
+	if data.lifespan > 0 then
+		delayedHappenings[#delayedHappenings+1] = {delay = random(1,floor(actionSpan/4)), unitID = unitID, action = behave}
+	else
+		DestroyUnit(unitID)
+		wildlifeUnits[unitID] = nil
+	end
+end
+
+
+-- behaviors set further down 
+function behave(unitID, data)
+	if showBehaviors == true then
+		local behaviors = {}
+		if data.role == "food1" or data.role == "food2" then
+			behaviors[1] = socialise
+			behaviors[2] = hunt
+			behaviors[3] = fight
+			behaviors[4] = wanderAroundDinner
+		elseif data.role == "prey1" or data.role == "prey2" then
+			behaviors[1] = socialise
+			behaviors[2] = hunt
+			behaviors[3] = fight
+			behaviors[4] = wanderAroundDinner		
+		elseif data.role == "pred1" or data.role == "pred2" then
+			behaviors[1] = socialise
+			behaviors[2] = hunt
+			behaviors[3] = fight
+			behaviors[4] = wanderAroundDinner		
+		end
+		local index = random(1,#behaviors)
+		behaviors[index](unitID, data)
+	end
+end
+
+
+function oneDelayRecur() 
+	eating(prey1EatsFood)
+	prey1EatsFood = {}
+	eating(pred1EatsPrey)
+	pred1EatsPrey = {}
+	eating(prey2EatsFood)
+	prey2EatsFood = {}
+	eating(pred2EatsPrey)
+	pred2EatsPrey = {}
+	for unitID, data in pairs(wildlifeUnits) do
+		wildlifeUnits[unitID].lifespan = data.lifespan - (0.5 * evolveTimePace + ExtraLifeLost * random(1, evolveTimePace))
+		agingAndBehavior(unitID, data)
+	end
+	local critters = GetTeamUnits(GaiaTeamID)
+	for index, unitID in pairs(critters) do
+		if wildlifeUnits[unitID] == nil then
+			DestroyUnit(unitID)
+		end
+	end
+end
+ 
+
+function firstTwoDelayrecur()
+	for unitID, data in pairs(wildlifeUnits) do
+		wildlifeUnits[unitID].lifespan = data.lifespan - (0.5 * evolveTimePace + ExtraLifeLost * random(1, evolveTimePace))
+		local rdm = random(1,actionSpan)
+		if data.role == "food1" then
+			if (data.lifespan > 0) then	
+				if (data.lifespan < 20 * evolveTimePace) then
+					delayedHappenings[#delayedHappenings+1] = {delay = rdm, unitID = unitID, action = procreateFood}
+				end
+				if data.lifespan < 20 * evolveTimePace and data.noGrowing == nil then
+					delayedHappenings[#delayedHappenings+1] = {delay = rdm, unitID = unitID, action = growingFood}
+				end
+			else
+				delayedHappenings[#delayedHappenings+1] = {delay = rdm, unitID = unitID, action = DestroyUnit}
+			end
+		end
+		if data.role == "prey1" then					
+			if data.lifespan > 0 then
+				delayedHappenings[#delayedHappenings+1] = {delay = rdm, unitID = unitID, action = foragingAndProcreation}
+			else
+				delayedHappenings[#delayedHappenings+1] = {delay = rdm, unitID = unitID, action = DestroyUnit}
+			end
+		end
+		if data.role == "pred1" then
+			if data.lifespan > 0 then
+				if (data.lifespan < 20 * evolveTimePace) then
+					delayedHappenings[#delayedHappenings+1] = {delay = rdm, unitID = unitID, action = predationAndProcreation}
+				end
+			else
+				delayedHappenings[#delayedHappenings+1] = {delay = rdm, unitID = unitID, action = DestroyUnit}
+			end
+		end
+	end
+end
+
+
+function secondTwoDelayRecur()
+	for unitID, data in pairs(wildlifeUnits) do
+		wildlifeUnits[unitID].lifespan = data.lifespan - (0.5 * evolveTimePace + ExtraLifeLost * random(1, evolveTimePace))
+		local rdm = random(1,actionSpan)
+		if data.role == "food2" then
+			if (data.lifespan > 0) then	
+				if (data.lifespan < 20 * evolveTimePace) then
+					delayedHappenings[#delayedHappenings+1] = {delay = rdm, action = procreateFood}
+				end
+				if data.lifespan < 20 * evolveTimePace and data.noGrowing == nil then 
+					delayedHappenings[#delayedHappenings+1] = {delay = rdm, unitID = unitID, action = growingFood}
+				end
+			else
+				delayedHappenings[#delayedHappenings+1] = {delay = rdm, unitID = unitID, action = DestroyUnit}
+			end
+		end
+		if data.role == "prey2" then					
+			if data.lifespan > 0 then
+				delayedHappenings[#delayedHappenings+1] = {delay = rdm, unitID = unitID, action = foragingAndProcreation}
+			else
+				delayedHappenings[#delayedHappenings+1] = {delay = rdm, unitID = unitID, action = DestroyUnit}
+			end
+		end
+		if data.role == "pred2" then
+			if data.lifespan > 0 then
+				if (data.lifespan < 20 * evolveTimePace) then
+					delayedHappenings[#delayedHappenings+1] = {delay = rdm, unitID = unitID, action = predationAndProcreation}
+				end
+			else
+				delayedHappenings[#delayedHappenings+1] = {delay = rdm, unitID = unitID, action = DestroyUnit}
+			end
+		end
+	end
+end
+
+
+function updateDelayedHappenings(delayedHappenings) 
+	for i, happening in ipairs(delayedHappenings) do 
+		if wildlifeUnits[happening.unitID] ~= nil then
+			if happening.delay > 0 then
+				delayedHappenings[i].delay = happening.delay - 1
+			else
+				local unitID = happening.unitID
+				if happening.action == DestroyUnit then
+					happening.action(unitID)
+					wildlifeUnits[unitID] = nil
+				elseif happening.action == randomPatrol then
+					randomPatrol(unitID, wildlifeUnits[unitID].spawn.dim, wildlifeUnits[unitID].spawn.shape)
+				else
+					happening.action(unitID, wildlifeUnits[unitID])
+				end
+				table.remove(delayedHappenings, i)
+			end
+		end
+	end
+end
+
+------------------------------
+
+
+--[[
+		
+
+]]
+
+function randomPatrol(unitID, dim, shape)
+	if shape == "box" then	
+		for i=1,5 do
+			local x = random(dim.x1, dim.x2)
+			local z = random(dim.z1, dim.z2)
+			GiveOrderToUnit(unitID, CMD.PATROL , {x, spGetGroundHeight(x, z), z}, {"shift"})
+		end
+	else
+		for i=1,5 do
+			local a = rad(random(0, 360))
+			local r = random(0, dim.r)
+			local x = dim.x + r*sin(a)
+			local z = dim.z + r*cos(a)
+			GiveOrderToUnit(unitID, CMD.PATROL , {x, spGetGroundHeight(x, z), z}, {"shift"})
+		end
+	end
+end
+
+
 function procreateFood(unitID, data)
 	if (data.lifespan < data.procreateLifespan) then
 		local totalWildlifeNeighbours = 0
@@ -416,7 +592,7 @@ function procreateFood(unitID, data)
 				local newCoor = onMap({r = data.radius, z = z, x = x}, "area", "circle")
 				uID = spawnUnit({r = newCoor.r, x = newCoor.x, z = newCoor.z}, data.name, "circle", data.role, data.noGrowing)
 				babyData = copyTable(data)
-				-- might wanna adjust babydata
+				-- might wanna adjust babydata 
 				if uID ~= nil then
 					randomPatrol(uID, data.spawn.dim, data.spawn.shape)
 					makeUnitWildlife(uID, babyData)
@@ -428,7 +604,7 @@ end
 
 
 function foragingAndProcreation(unitID, data)
-	nearest = nearest_friend_from_unit(unitID, wildlifeCon[data.area]["food1"].name, data.radius, wildlifeCon[data.area]["food2"].name)
+	nearest = nearest_friend_from_unit(unitID, wildlifeCon[data.area]["food1"].name, data.radius, wildlifeCon[data.area]["food2"].name, nil)
 	if nearest ~= nil then
 		wildlifeUnits[nearest] = nil
 		local x, y, z = GetUnitPosition(nearest)
@@ -492,7 +668,7 @@ end
 
 function predationAndProcreation(unitID, data)
 	if random() < data.predationSucces then
-		prey = nearest_friend_from_unit(unitID, wildlifeCon[data.area]["prey1"].name, data.radius, wildlifeCon[data.area]["prey2"].name)
+		prey = nearest_friend_from_unit(unitID, wildlifeCon[data.area]["prey1"].name, data.radius, wildlifeCon[data.area]["prey2"].name, nil)
 		if prey ~= nil then
 			procreatePred(unitID, data)
 			wildlifeUnits[prey] = nil
@@ -521,60 +697,13 @@ function growingFood(unitID)
 end
 
 
-function eating(tableEaten)
-	for individual, dinner in pairs(tableEaten) do
-		if wildlifeUnits[individual] ~= nil then
-			randomPatrol(individual, wildlifeUnits[individual].spawn.dim, wildlifeUnits[individual].spawn.shape)
-		else
-			DestroyUnit(individual)
-		end
-		DestroyUnit(dinner)
-		wildlifeUnits[dinner] = nil
-	end
-end
-
-
-function onMap(coor, method, shape) -- only box
-	shape = shape or "box"
-	local coordinates = {} 
-	if method == "point" then
-		coordinates.x = min(max(0, coor.x1), mapX*512)
-		coordinates.z = min(max(0, coor.z1), mapX*512)
-		coordinates.y = spGetGroundHeight(x, z)
-	else
-		if shape == "box" then
-			coordinates.x1 = min(max(0, coor.x1), mapX*512) 
-			coordinates.x2 = min(max(0, coor.x2), mapX*512) 
-			coordinates.z1 = min(max(0, coor.z1), mapY*512)
-			coordinates.z2 = min(max(0, coor.z2), mapY*512)
-		else 
-			local newCoor = onMap({x1 = coor.x - coor.r, z1 = coor.z - coor.r, x2 = coor.x + coor.r , z2 =  coor.z + coor.r})
-			local xWidth = newCoor.x2-newCoor.x1
-			local zWidth = newCoor.z2-newCoor.z1
-			local newRadius = min(xWidth, zWidth)/2
-			coordinates.r = newRadius
-			coordinates.x = newCoor.x1 + newRadius
-			coordinates.z = newCoor.z1 + newRadius
-		end
-	end
-	return coordinates
-end
-	
-	
 function patrolAroundSame(unitID, data)
-	toPatrolAround = nearest_friend_from_unit(unitID, wildlifeCon[data.area][data.role].name, data.radius, wildlifeCon[data.area][data.role].name)
+	toPatrolAround = nearest_friend_from_unit(unitID, wildlifeCon[data.area][data.role].name, data.radius, nil, 1000)
 	if toPatrolAround ~= nil then
 		local x, y, z = GetUnitPosition(toPatrolAround)
 		if x~=nil then
 			local coor =  onMap({x1 = x - 200, z1 = z - 200, x2 = x + 200 , z2 = z + 200}, "area")
 			randomPatrol(unitID, coor, "box")
-			if random() < 0.2 then
-				if x ~= nil then
-					local coor =  onMap({x1 = x - 200, z1 = z - 200, x2 = x + 200 , z2 = z + 200}, "area")
-					randomPatrol(toPatrolAround, coor, "box")
-				end
-				-- add delayed order to undo patrol of patroled unit?
-			end
 		end
 	end
 end
@@ -582,9 +711,9 @@ end
 
 function patrolAroundDinner(unitID, data)
 	if data.role == "prey1" or data.role == "prey2" then
-		toPatrolAround = nearest_friend_from_unit(unitID, wildlifeCon[data.area]["food1"].name, data.radius, wildlifeCon[data.area]["food2"].name)
+		toPatrolAround = nearest_friend_from_unit(unitID, wildlifeCon[data.area]["food1"].name, data.radius, wildlifeCon[data.area]["food2"].name, 1000)
 	elseif data.role == "pred1" or data.role == "pred2" then
-		toPatrolAround = nearest_friend_from_unit(unitID, wildlifeCon[data.area]["prey1"].name, data.radius, wildlifeCon[data.area]["prey2"].name)
+		toPatrolAround = nearest_friend_from_unit(unitID, wildlifeCon[data.area]["prey1"].name, data.radius, wildlifeCon[data.area]["prey2"].name, 1000)
 	end
 	if toPatrolAround ~= nil then
 		local x, y, z = GetUnitPosition(toPatrolAround)
@@ -597,18 +726,27 @@ end
 
 
 function guardSameRole(unitID, data)
-	toGuard = nearest_friend_from_unit(unitID, wildlifeCon[data.area][data.role].name, data.radius, wildlifeCon[data.area][data.role].name)
+	toGuard = nearest_friend_from_unit(unitID, wildlifeCon[data.area][data.role].name, data.radius, nil, 1000)
 	if toGuard ~= nil then
 		GiveOrderToUnit(unitID, CMD.GUARD, {toGuard}, {})
 	end
 end
 
 
+function moveToSame(unitID, data)
+	toMoveTo = nearest_friend_from_unit(unitID, wildlifeCon[data.area][data.role].name, data.radius, nil, 1000)
+	if toMoveTo ~= nil then
+		local x, y, z = GetUnitPosition(toMoveTo)
+		GiveOrderToUnit(unitID, CMD.MOVE, {x, y, z}, {})
+	end
+end
+
+
 function moveToDinner(unitID, data)
 	if data.role == "prey1" or data.role == "prey2" then
-		toMoveTo = nearest_friend_from_unit(unitID, wildlifeCon[data.area]["food1"].name, data.radius, wildlifeCon[data.area]["food2"].name)
+		toMoveTo = nearest_friend_from_unit(unitID, wildlifeCon[data.area]["food1"].name, data.radius, wildlifeCon[data.area]["food2"].name, 1000)
 	elseif data.role == "pred1" or data.role == "pred2" then
-		toMoveTo = nearest_friend_from_unit(unitID, wildlifeCon[data.area]["prey1"].name, data.radius, wildlifeCon[data.area]["prey2"].name)
+		toMoveTo = nearest_friend_from_unit(unitID, wildlifeCon[data.area]["prey1"].name, data.radius, wildlifeCon[data.area]["prey2"].name, 1000)
 	end
 	if toMoveTo ~= nil then
 		local x, y, z = GetUnitPosition(toMoveTo)
@@ -619,9 +757,9 @@ end
 
 function guardDinner(unitID, data)
 	if data.role == "prey1" or data.role == "prey2" then
-		toGuard = nearest_friend_from_unit(unitID, wildlifeCon[data.area]["food1"].name, data.radius, wildlifeCon[data.area]["food2"].name)
+		toGuard = nearest_friend_from_unit(unitID, wildlifeCon[data.area]["food1"].name, data.radius, wildlifeCon[data.area]["food2"].name, 1000)
 	elseif data.role == "pred1" or data.role == "pred2" then
-		toGuard = nearest_friend_from_unit(unitID, wildlifeCon[data.area]["prey1"].name, data.radius, wildlifeCon[data.area]["prey2"].name)
+		toGuard = nearest_friend_from_unit(unitID, wildlifeCon[data.area]["prey1"].name, data.radius, wildlifeCon[data.area]["prey2"].name, 1000)
 	end
 	if toGuard ~= nil then
 		GiveOrderToUnit(unitID, CMD.GUARD, {toGuard}, {})
@@ -631,237 +769,164 @@ end
 
 function attackDinner(unitID, data)
 	if data.role == "prey1" or data.role == "prey2" then
-		toattack = nearest_friend_from_unit(unitID, wildlifeCon[data.area]["food1"].name, data.radius, wildlifeCon[data.area]["food2"].name)
+		toattack = nearest_friend_from_unit(unitID, wildlifeCon[data.area]["food1"].name, data.radius, wildlifeCon[data.area]["food2"].name, 1000)
 	elseif data.role == "pred1" or data.role == "pred2" then
-		toattack = nearest_friend_from_unit(unitID, wildlifeCon[data.area]["prey1"].name, data.radius, wildlifeCon[data.area]["prey2"].name)
+		toattack = nearest_friend_from_unit(unitID, wildlifeCon[data.area]["prey1"].name, data.radius, wildlifeCon[data.area]["prey2"].name, 1000)
 	end
 	if toattack ~= nil then
-		GiveOrderToUnit(unitID, CMD.GUARD, {toattack}, {})
+		GiveOrderToUnit(unitID, CMD.ATTACK, {toattack}, {})
 	end
 end
 
 
 function attackSame(unitID, data)
-	toattack = nearest_friend_from_unit(unitID, wildlifeCon[data.area][data.role].name, data.radius, wildlifeCon[data.area][data.role].name)
+	toattack = nearest_friend_from_unit(unitID, wildlifeCon[data.area][data.role].name, data.radius, wildlifeCon[data.area][data.role].name, 1000)
 	if toattack ~= nil then
 		GiveOrderToUnit(unitID, CMD.ATTACK , {toattack}, {})
-		if random() < 0.2 then
-			GiveOrderToUnit(toattack, CMD.ATTACK , {unitID}, {})
-		end
 	end
 end
 
--- {"growing", "procreate", "destroy", "forage", "predate", "behave", "guardSameRole", "patrol", "guardDinner", "attackSame", "toMoveTo"}
--- attack (might give the other to attack back)
+function destroyUnit()
+
+end
 
 
+----------------------------
+
+--[[
+	This file contains all the behaviors that last one evolvetime (on average) that can be called during
+	update time with the function behave. Its better to avoid thesebehaviors in function from the the file
+	gaia_wildlife_action_functions.lua since its notsure if these units still are alife and might give 
+	weird behavior of the gadget. 
+	
+	The allowed used functions (which can be extended) which make up behaviors are:
+	
+	for all (food, prey, pred)
+	-- guardSameRole				looks for a similar unit in range and guard it
+	-- patrolAroundSame				looks ... and patrols around the found location (repeat this to keep track of unit)
+	-- attackSame					looks ... and attacks it (if unit cant attack this might resolve in guarding behavior)
+	-- patrol						patrol original coordinates
+	-- moveToSame					move to same in radius
+	
+	for only prey and pred
+	-- moveToDinner					move to dinner in range 
+	-- patrolAroundDinner			patrol to dinner in range (keep repeating to follow the unit)
+	-- attackDinner					attack dinner in range
+	-- guardDinner					guard dinner in range
+	
+	range is set to 1000 for all these functions . Not that it is important that the behaviors dont span over
+	the actionspan time because otherwise theotherfunctions in other time span (procreate.. etc) mightbehave
+	wrongly. Here the time span is around 10 seconds to perform the behaviors. (set to evolvetime)
+]]--
+
+function timeSequence(totalActions)
+	local totalActions = totalActions
+	local timespan = actionSpan
+	local timeSpanLeft = actionSpan
+	local startTimes = {}
+	local beginTime = 1
+	for i = 1,totalActions, 1 do
+		startTimes[i] = random(beginTime, floor(beginTime + timeSpanLeft/totalActions) )
+		beginTime = floor(startTimes[i])
+		timeSpanLeft = timespan - beginTime
+		totalActions = totalActions - 1
+	end
+	return startTimes
+end
+
+-- all species
 function socialise(unitID, data)
-	delayedHappenings.guardSameRole[unitID] = {delay = random(1,actionSpan/4), action = guardSameRole}
+	beginTimes = timeSequence(6)
+	delayedHappenings[#delayedHappenings+1] = {delay = beginTimes[1], unitID = unitID, action = guardSameRole} 
 	if random() < 0.5 then
-		delayedHappenings.patrolAroundSame[unitID] = {delay = random(actionSpan/4,actionSpan/2), action = patrolAroundSame}
-		delayedHappenings.guardSameRole[unitID] = {delay = random(actionSpan/2, actionSpan * 3/4), action = guardSameRole}
+		delayedHappenings[#delayedHappenings+1] = {delay = beginTimes[2], unitID = unitID, action = patrolAroundSame} 
+		delayedHappenings[#delayedHappenings+1] = {delay = beginTimes[3], unitID = unitID, action = patrolAroundSame} -- repeating to follow the unit
+		delayedHappenings[#delayedHappenings+1] = {delay = beginTimes[4], unitID = unitID, action = guardSameRole}
 	else
-		delayedHappenings.moveToDinner[unitID] = {delay = random(actionSpan/4,actionSpan/2), action = moveToDinner}
-		delayedHappenings.patrolAroundDinner[unitID] = {delay = random(actionSpan/2, actionSpan * 3/4), action = patrolAroundDinner}
+		delayedHappenings[#delayedHappenings+1] = {delay = beginTimes[2], unitID = unitID, action = patrolAroundSame} 
+		delayedHappenings[#delayedHappenings+1] = {delay = beginTimes[3], unitID = unitID, action = patrolAroundSame} -- repeating to follow the unit
+		delayedHappenings[#delayedHappenings+1] = {delay = beginTimes[4], unitID = unitID, action = moveToSame}
 	end
-	delayedHappenings.patrolAroundSame[unitID] = {delay = random(actionSpan * 3/4,actionSpan), action = patrolAroundSame}
+	delayedHappenings[#delayedHappenings+1] = {delay = beginTimes[5], unitID = unitID, action = patrolAroundSame}
+	delayedHappenings[#delayedHappenings+1] = {delay = beginTimes[6],unitID = unitID, action = randomPatrol}							-- make them not stay at same spot to much
 end
 
-
+-- all species
 function fight(unitID, data)
-	delayedHappenings.guardSameRole[unitID] = {delay = random(1,actionSpan/4), action = guardSameRole}
+	beginTimes = timeSequence(10)
+	delayedHappenings[#delayedHappenings+1] = {delay = beginTimes[1], unitID = unitID, action = guardSameRole}
 	if random() < 0.5 then
-		delayedHappenings.attackSame[unitID] = {delay = random(actionSpan/4,actionSpan/2), action = attackSame}
-		delayedHappenings.guardSameRole[unitID] = {delay = random(actionSpan/2, actionSpan * 3/4), action = guardSameRole}
+		delayedHappenings[#delayedHappenings+1] = {delay = beginTimes[2], unitID = unitID, action = moveToSame}
+		delayedHappenings[#delayedHappenings+1] = {delay = beginTimes[3], unitID = unitID, action = patrolAroundSame}
+		delayedHappenings[#delayedHappenings+1] = {delay = beginTimes[4], unitID = unitID, action = moveToSame}
+		delayedHappenings[#delayedHappenings+1] = {delay = beginTimes[5], unitID = unitID, action = moveToSame}
+		delayedHappenings[#delayedHappenings+1] = {delay = beginTimes[6], unitID = unitID, action = patrolAroundSame}
+		delayedHappenings[#delayedHappenings+1] = {delay = beginTimes[7], unitID = unitID, action = moveToSame}
+		delayedHappenings[#delayedHappenings+1] = {delay = beginTimes[8], unitID = unitID, action = patrolAroundSame}
+		delayedHappenings[#delayedHappenings+1] = {delay = beginTimes[9], unitID = unitID, action = moveToSame}
 	else
-		delayedHappenings.attackDinner[unitID] = {delay = random(actionSpan/4,actionSpan/2), action = attackDinner}
-		delayedHappenings.patrolAroundDinner[unitID] = {delay = random(actionSpan/2, actionSpan * 3/4), action = patrolAroundDinner}
+		delayedHappenings[#delayedHappenings+1] = {delay = beginTimes[2], unitID = unitID, action = patrolAroundSame}
+		delayedHappenings[#delayedHappenings+1] = {delay = beginTimes[3], unitID = unitID, action = attackDinner}
+		delayedHappenings[#delayedHappenings+1] = {delay = beginTimes[4], unitID = unitID, action = patrolAroundSame}
+		delayedHappenings[#delayedHappenings+1] = {delay = beginTimes[5], unitID = unitID, action = attackDinner}
+		delayedHappenings[#delayedHappenings+1] = {delay = beginTimes[6], unitID = unitID, action = patrolAroundSame}
+		delayedHappenings[#delayedHappenings+1] = {delay = beginTimes[7], unitID = unitID, action = attackDinner}
+		delayedHappenings[#delayedHappenings+1] = {delay = beginTimes[8], unitID = unitID, action = patrolAroundDinner}
+		delayedHappenings[#delayedHappenings+1] = {delay = beginTimes[9], unitID = unitID, action = patrolAroundSame}
 	end
-	delayedHappenings.patrolAroundSame[unitID] = {delay = random(actionSpan * 3/4,actionSpan), action = patrolAroundSame}
+	delayedHappenings[#delayedHappenings+1] = {delay = beginTimes[10], unitID = unitID, action = randomPatrol} -- make them not stay at same spot to much
 end
 
-
+-- prey and predator only
 function hunt(unitID, data)
-	delayedHappenings.attackDinner[unitID] = {delay = random(1,actionSpan/4), action = attackDinner}
+	beginTimes = timeSequence(10)
+	delayedHappenings[#delayedHappenings+1] = {delay = beginTimes[1], unitID = unitID, action = attackDinner}
 	if random() < 0.5 then
-		delayedHappenings.patrolAroundDinner[unitID] = {delay = random(actionSpan/4,actionSpan/2), action = patrolAroundDinner}
-		delayedHappenings.moveToDinner[unitID] = {delay = random(actionSpan/2, actionSpan * 3/4), action = moveToDinner}
+		delayedHappenings[#delayedHappenings+1] = {delay = beginTimes[2], unitID = unitID, action = moveToDinner}
+		delayedHappenings[#delayedHappenings+1] = {delay = beginTimes[3], unitID = unitID, action = patrolAroundDinner}
+		delayedHappenings[#delayedHappenings+1] = {delay = beginTimes[4], unitID = unitID, action = moveToDinner}
+		delayedHappenings[#delayedHappenings+1] = {delay = beginTimes[5], unitID = unitID, action = moveToDinner}
+		delayedHappenings[#delayedHappenings+1] = {delay = beginTimes[6], unitID = unitID, action = patrolAroundDinner}
+		delayedHappenings[#delayedHappenings+1] = {delay = beginTimes[7], unitID = unitID, action = moveToDinner}
+		delayedHappenings[#delayedHappenings+1] = {delay = beginTimes[8], unitID = unitID, action = patrolAroundDinner}
+		delayedHappenings[#delayedHappenings+1] = {delay = beginTimes[9], unitID = unitID, action = moveToDinner}
 	else
-		delayedHappenings.attackDinner[unitID] = {delay = random(actionSpan/4,actionSpan/2), action = attackDinner}
-		delayedHappenings.moveToDinner[unitID] = {delay = random(actionSpan/2, actionSpan * 3/4), action = moveToDinner}
+		delayedHappenings[#delayedHappenings+1] = {delay = beginTimes[2], unitID = unitID, action = patrolAroundDinner}
+		delayedHappenings[#delayedHappenings+1] = {delay = beginTimes[3], unitID = unitID, action = attackDinner}
+		delayedHappenings[#delayedHappenings+1] = {delay = beginTimes[4], unitID = unitID, action = patrolAroundDinner}
+		delayedHappenings[#delayedHappenings+1] = {delay = beginTimes[5], unitID = unitID, action = attackDinner}
+		delayedHappenings[#delayedHappenings+1] = {delay = beginTimes[6], unitID = unitID, action = patrolAroundDinner}
+		delayedHappenings[#delayedHappenings+1] = {delay = beginTimes[7], unitID = unitID, action = attackDinner}
+		delayedHappenings[#delayedHappenings+1] = {delay = beginTimes[8], unitID = unitID, action = patrolAroundDinner}
+		delayedHappenings[#delayedHappenings+1] = {delay = beginTimes[9], unitID = unitID, action = attackDinner}
 	end
-	delayedHappenings.patrolAroundDinner[unitID] = {delay = random(actionSpan * 3/4,actionSpan), action = patrolAroundDinner}
+	delayedHappenings[#delayedHappenings+1] = {delay = beginTimes[10], unitID = unitID, action = randomPatrol} -- make them not stay at same spot to much
 end
 
 
+-- pred and prey
 function wanderAroundDinner(unitID, data)
-	delayedHappenings.moveToDinner[unitID] = {delay = random(1,actionSpan/4), action = moveToDinner}
+	beginTimes = timeSequence(5)
+	delayedHappenings[#delayedHappenings+1] = {delay = beginTimes[1], unitID = unitID, action = patrolAroundDinner}
 	if random() < 0.5 then
-		delayedHappenings.patrolAroundDinner[unitID] = {delay = random(actionSpan/4,actionSpan/2), action = patrolAroundDinner}
-		delayedHappenings.patrol[unitID] = {delay = random(actionSpan/2, actionSpan * 3/4), action = patrol}
+		delayedHappenings[#delayedHappenings+1] = {delay = beginTimes[2], unitID = unitID, action = moveToDinner}
+		delayedHappenings[#delayedHappenings+1] = {delay = beginTimes[3], unitID = unitID, action = randomPatrol}
+		delayedHappenings[#delayedHappenings+1] = {delay = beginTimes[4], unitID = unitID, action = moveToDinner}
 	else
-		delayedHappenings.guardDinner[unitID] = {delay = random(actionSpan/4,actionSpan/2), action = guardDinner}
-		delayedHappenings.patrol[unitID] = {delay = random(actionSpan/2, actionSpan * 3/4), action = patrol}
+		delayedHappenings[#delayedHappenings+1] = {delay = beginTimes[2], unitID = unitID, action = patrolAroundDinner}
+		delayedHappenings[#delayedHappenings+1] = {delay = beginTimes[3], unitID = unitID, action = randomPatrol}
+		delayedHappenings[#delayedHappenings+1] = {delay = beginTimes[4], unitID = unitID, action = patrolAroundDinner}
 	end
-	delayedHappenings.patrolAroundDinner[unitID] = {delay = random(actionSpan * 3/4,actionSpan), action = patrolAroundDinner}
+	delayedHappenings[#delayedHappenings+1] = {delay = beginTimes[5], unitID = unitID, action = randomPatrol} -- make them not stay at same spot to much
 end
 
 
-function behave(unitID, data)
-	if showBehaviors == true then
-		local behaviors = {}
-		behaviors[1] = socialise
-		behaviors[2] = hunt
-		behaviors[3] = fight
-		behaviors[4] = wanderAroundDinner
-		behaviors[5] = "empty"
-		behaviors[6] = "empty"
-		local index = random(1,4)
-		behaviors[index](unitID, data)
-	end
-end
-	
-	
-function agingAndBehavior(unitID, data)
-	if data.lifespan > 0 then
-		delayedHappenings.behave[unitID] = {delay = random(1,actionSpan/4), action = behave}
-	else
-		DestroyUnit(unitID)
-		wildlifeUnits[unitID] = nil
-	end
-end
 
 
-function oneDelayRecur() 
-	eating(prey1EatsFood)
-	prey1EatsFood = {}
-	eating(pred1EatsPrey)
-	pred1EatsPrey = {}
-	eating(prey2EatsFood)
-	prey2EatsFood = {}
-	eating(pred2EatsPrey)
-	pred2EatsPrey = {}
-	for unitID, data in pairs(wildlifeUnits) do
-		wildlifeUnits[unitID].lifespan = data.lifespan - (0.5 * evolveTimePace + ExtraLifeLost * random(1, evolveTimePace))
-		if data.role == "food1" then
-			agingAndBehavior(unitID, data)
-		elseif data.role == "food2" then
-			agingAndBehavior(unitID, data)
-		elseif data.role == "prey1" then
-			agingAndBehavior(unitID, data)
-		elseif data.role == "prey2" then
-			agingAndBehavior(unitID, data)
-		elseif data.role == "pred1" then
-			agingAndBehavior(unitID, data)
-		elseif data.role == "pred2" then
-			agingAndBehavior(unitID, data)
-		else
-			Echo("roleless wildlife?")
-		end
-	end
-	local critters = GetTeamUnits(GaiaTeamID)
-	for index, unitID in pairs(critters) do
-		if wildlifeUnits[unitID] == nil then
-			DestroyUnit(unitID)
-		end
-	end
-end
- 
-
-function firstTwoDelayrecur()
-	for unitID, data in pairs(wildlifeUnits) do
-		wildlifeUnits[unitID].lifespan = data.lifespan - (0.5 * evolveTimePace + ExtraLifeLost * random(1, evolveTimePace))
-		if data.role == "food1" then
-			if (data.lifespan > 0) then	
-				if (data.lifespan < 20 * evolveTimePace) then
-					delayedHappenings.procreate[unitID] = {delay = random(1,actionSpan), action = procreateFood}
-				end
-				if data.lifespan < 20 * evolveTimePace and data.noGrowing == nil then  
-					delayedHappenings.growing[unitID] = {delay = random(1,actionSpan), action = growingFood}
-				end
-			else
-				delayedHappenings.destroy[unitID] = {delay = random(1,actionSpan), action = DestroyUnit}
-			end
-		end
-		if data.role == "prey1" then					
-			if data.lifespan > 0 then
-				delayedHappenings.forage[unitID] = {delay = random(1,actionSpan), action = foragingAndProcreation}
-			else
-				delayedHappenings.destroy[unitID] = {delay = random(1,actionSpan), action = DestroyUnit}
-			end
-		end
-		if data.role == "pred1" then
-			if data.lifespan > 0 then
-				if (data.lifespan < 20 * evolveTimePace) then
-					delayedHappenings.predate[unitID] = {delay = random(1,actionSpan), action = predationAndProcreation}
-				end
-			else
-				delayedHappenings.destroy[unitID] = {delay = random(1,actionSpan), action = DestroyUnit}
-			end
-		end
-	end
-end
+-------------------------
 
 
-function secondTwoDelayRecur()
-	for unitID, data in pairs(wildlifeUnits) do
-		wildlifeUnits[unitID].lifespan = data.lifespan - (0.5 * evolveTimePace + ExtraLifeLost * random(1, evolveTimePace))
-		if data.role == "food2" then
-			if (data.lifespan > 0) then	
-				if (data.lifespan < 20 * evolveTimePace) then
-					delayedHappenings.procreate[unitID] = {delay = random(1,actionSpan), action = procreateFood}
-				end
-				if data.lifespan < 20 * evolveTimePace and data.noGrowing == nil then  
-					delayedHappenings.growing[unitID] = {delay = random(1,actionSpan), action = growingFood}
-				end
-			else
-				delayedHappenings.destroy[unitID] = {delay = random(1,actionSpan), action = DestroyUnit}
-			end
-		end
-		if data.role == "prey2" then					
-			if data.lifespan > 0 then
-				delayedHappenings.forage[unitID] = {delay = random(1,actionSpan), action = foragingAndProcreation}
-			else
-				delayedHappenings.destroy[unitID] = {delay = random(1,actionSpan), action = DestroyUnit}
-			end
-		end
-		if data.role == "pred2" then
-			if data.lifespan > 0 then
-				if (data.lifespan < 20 * evolveTimePace) then
-					delayedHappenings.predate[unitID] = {delay = random(1,actionSpan), action = predationAndProcreation}
-				end
-			else
-				delayedHappenings.destroy[unitID] = {delay = random(1,actionSpan), action = DestroyUnit}
-			end
-		end
-	end
-end
-
-
-function updateDelayedHappenings(delayedHappenings) 
-	for i, DelayedAction in ipairs(actions) do 
-		for unitID, happening in pairs(delayedHappenings[DelayedAction]) do
-			if wildlifeUnits[unitID] ~= nil then
-				if happening.delay > 0 then
-					delayedHappenings[DelayedAction][unitID].delay = happening.delay - 1
-				else
-					if DelayedAction == "destroy" then
-						happening.action(unitID)
-						wildlifeUnits[unitID] = nil
-					elseif DelayedAction == "patrol" then
-						randomPatrol(unitID, wildlifeUnits[unitID].spawn.dim, wildlifeUnits[unitID].spawn.shape)
-					else
-						happening.action(unitID, wildlifeUnits[unitID])
-					end
-					delayedHappenings[DelayedAction][unitID] = nil
-				end
-			end
-		end	
-	end
-end
-
-
-function gadget:GameFrame(f)
+function gadget:GameFrame(f) 
 	updateDelayedHappenings(delayedHappenings)
 	if f%(makeUnitWildlifeTime) == 0 then
 		addNewWildlife(addingAfterExtinction)
