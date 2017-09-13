@@ -40,12 +40,6 @@ Description:
 	other behaviors. There are some behaviors between the above evolution as hunting, socialising etc... . These 
 	behaviors can be easy made from the functions given in the gadget. (see there for an example)(use candy function)
 
-	The function behave below list all the behaviors you can give wildlife in "update period". (bookkeeping time)
-	These behaviors are set in the luarules/gadgets/gaia_wildlife_behavior_functions.lua file which uses the functions
-	from luarules/gadgets/gaia_wildlife_action_functions.lua. To make new behaviors make sure you only use functions
-	that dont interfere with gameplay (dont make new changes like predate, forage, etc... ) so by doing so the gadget
-	will not mistakenly apply behaviors for eaten wildlife. 
-	
 	TODO
 	- setting new circle/box for wildlife babies. 
 	- above implementation set through to ofspring if succesfull
@@ -71,17 +65,18 @@ local showBehaviors				= true
 -- Global stuff
 mapX = Game.mapX
 mapY = Game.mapY
+
+
+-- locals
 local numberOfAreas 			= 0
 local totalWildlife				= 0
 local wildlifeUnits 			= {}						-- wildlife that are currently alive
-local prey1EatsFood			= {}
-local prey2EatsFood			= {}
-local pred1EatsPrey			= {}
-local pred2EatsPrey			= {}
-
--- locals
+local prey1EatsFood				= {}
+local prey2EatsFood				= {}
+local pred1EatsPrey				= {}
+local pred2EatsPrey				= {}
 local defaultMaxLifespan = {
-	food1 = 25 * evolveTimePace, 					-- begin lifespan food1
+	food1 = 25 * evolveTimePace, 							-- begin lifespan food1
 	prey1 = 20 * evolveTimePace,		
 	pred1 = 15 * evolveTimePace,		
 	food2 = 25 * evolveTimePace, 		
@@ -89,7 +84,7 @@ local defaultMaxLifespan = {
 	pred2 = 15 * evolveTimePace			
 }
 local defaultProcreateLifespan = {
-	food1 = 20 * evolveTimePace, 					-- only used and tested	
+	food1 = 20 * evolveTimePace, 							-- only used and tested	
 	prey1 = 20 * evolveTimePace,	
 	pred1 = 20 * evolveTimePace,	
 	food2 = 20 * evolveTimePace, 	
@@ -547,12 +542,9 @@ function updateDelayedHappenings(delayedHappenings)
 	end
 end
 
-------------------------------
-
-
 --[[
 		
-
+	Below the functions that make up behaviors (if added more care for not let them greate delete new units)
 ]]
 
 function randomPatrol(unitID, dim, shape)
@@ -790,16 +782,9 @@ function destroyUnit()
 
 end
 
-
-----------------------------
-
 --[[
-	This file contains all the behaviors that last one evolvetime (on average) that can be called during
-	update time with the function behave. Its better to avoid thesebehaviors in function from the the file
-	gaia_wildlife_action_functions.lua since its notsure if these units still are alife and might give 
-	weird behavior of the gadget. 
-	
-	The allowed used functions (which can be extended) which make up behaviors are:
+	This section contains all the behaviors that last one evolvetime (on average) that can be called during
+	update time. The allowed used functions (which can be extended) which make up behaviors are:
 	
 	for all (food, prey, pred)
 	-- guardSameRole				looks for a similar unit in range and guard it
@@ -814,8 +799,8 @@ end
 	-- attackDinner					attack dinner in range
 	-- guardDinner					guard dinner in range
 	
-	range is set to 1000 for all these functions . Not that it is important that the behaviors dont span over
-	the actionspan time because otherwise theotherfunctions in other time span (procreate.. etc) mightbehave
+	range is set to 1000 for all these functions. Note that it is important that the behaviors dont span over
+	the actionspan time because otherwise the other functions in other time span (procreate.. etc) might behave
 	wrongly. Here the time span is around 10 seconds to perform the behaviors. (set to evolvetime)
 ]]--
 
@@ -840,15 +825,15 @@ function socialise(unitID, data)
 	delayedHappenings[#delayedHappenings+1] = {delay = beginTimes[1], unitID = unitID, action = guardSameRole} 
 	if random() < 0.5 then
 		delayedHappenings[#delayedHappenings+1] = {delay = beginTimes[2], unitID = unitID, action = patrolAroundSame} 
-		delayedHappenings[#delayedHappenings+1] = {delay = beginTimes[3], unitID = unitID, action = patrolAroundSame} -- repeating to follow the unit
+		delayedHappenings[#delayedHappenings+1] = {delay = beginTimes[3], unitID = unitID, action = patrolAroundSame} 	-- repeating to follow the unit
 		delayedHappenings[#delayedHappenings+1] = {delay = beginTimes[4], unitID = unitID, action = guardSameRole}
 	else
 		delayedHappenings[#delayedHappenings+1] = {delay = beginTimes[2], unitID = unitID, action = patrolAroundSame} 
-		delayedHappenings[#delayedHappenings+1] = {delay = beginTimes[3], unitID = unitID, action = patrolAroundSame} -- repeating to follow the unit
+		delayedHappenings[#delayedHappenings+1] = {delay = beginTimes[3], unitID = unitID, action = patrolAroundSame} 	-- repeating to follow the unit
 		delayedHappenings[#delayedHappenings+1] = {delay = beginTimes[4], unitID = unitID, action = moveToSame}
 	end
 	delayedHappenings[#delayedHappenings+1] = {delay = beginTimes[5], unitID = unitID, action = patrolAroundSame}
-	delayedHappenings[#delayedHappenings+1] = {delay = beginTimes[6],unitID = unitID, action = randomPatrol}							-- make them not stay at same spot to much
+	delayedHappenings[#delayedHappenings+1] = {delay = beginTimes[6],unitID = unitID, action = randomPatrol}			-- make them not stay at same spot to much
 end
 
 -- all species
@@ -874,7 +859,7 @@ function fight(unitID, data)
 		delayedHappenings[#delayedHappenings+1] = {delay = beginTimes[8], unitID = unitID, action = patrolAroundDinner}
 		delayedHappenings[#delayedHappenings+1] = {delay = beginTimes[9], unitID = unitID, action = patrolAroundSame}
 	end
-	delayedHappenings[#delayedHappenings+1] = {delay = beginTimes[10], unitID = unitID, action = randomPatrol} -- make them not stay at same spot to much
+	delayedHappenings[#delayedHappenings+1] = {delay = beginTimes[10], unitID = unitID, action = randomPatrol} 			-- make them not stay at same spot to much
 end
 
 -- prey and predator only
@@ -900,7 +885,7 @@ function hunt(unitID, data)
 		delayedHappenings[#delayedHappenings+1] = {delay = beginTimes[8], unitID = unitID, action = patrolAroundDinner}
 		delayedHappenings[#delayedHappenings+1] = {delay = beginTimes[9], unitID = unitID, action = attackDinner}
 	end
-	delayedHappenings[#delayedHappenings+1] = {delay = beginTimes[10], unitID = unitID, action = randomPatrol} -- make them not stay at same spot to much
+	delayedHappenings[#delayedHappenings+1] = {delay = beginTimes[10], unitID = unitID, action = randomPatrol} 			-- make them not stay at same spot to much
 end
 
 
@@ -917,7 +902,7 @@ function wanderAroundDinner(unitID, data)
 		delayedHappenings[#delayedHappenings+1] = {delay = beginTimes[3], unitID = unitID, action = randomPatrol}
 		delayedHappenings[#delayedHappenings+1] = {delay = beginTimes[4], unitID = unitID, action = patrolAroundDinner}
 	end
-	delayedHappenings[#delayedHappenings+1] = {delay = beginTimes[5], unitID = unitID, action = randomPatrol} -- make them not stay at same spot to much
+	delayedHappenings[#delayedHappenings+1] = {delay = beginTimes[5], unitID = unitID, action = randomPatrol} 			-- make them not stay at same spot to much
 end
 
 
