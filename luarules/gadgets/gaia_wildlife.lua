@@ -12,8 +12,6 @@ end
 
 --[[
 
-See for map configuration documentation the config file.
-
 Description:
 
 	The map gets populated with species (roles) that grow, procreate, forage, predate and die (of age and by eaten)
