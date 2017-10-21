@@ -41,6 +41,7 @@ Description:
 	TODO
 	- setting new circle/box for wildlife babies. 
 	- above implementation set through to ofspring if succesfull
+	- nearest friend function now doesnt look at young individuals
 ]]--
 
 	
