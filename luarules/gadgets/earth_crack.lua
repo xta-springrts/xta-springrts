@@ -13,6 +13,7 @@ end
 --[[
 
 	After a random period parts of the map will experience crack's in surface and rumbling and tunmbling noises
+	TODO - add damage
 	
 --]]
 
@@ -26,11 +27,12 @@ local GaiaTeamID  				= Spring.GetGaiaTeamID()
 local random					= math.random
 local mapX 						= Game.mapX
 local mapY 						= Game.mapY
-local crackChange 				= 0.5
-local duration					= 0.7
 local GetGroundHeight			= Spring.GetGroundHeight
+local GetGroundOrigHeight		= Spring.GetGroundOrigHeight
+local SetHeightMapFunc			= Spring.SetHeightMapFunc
 local PlaySoundFile				= Spring.PlaySoundFile
-local img 						= include("LuaRules/gadgets/img.lua")
+local SetHeightMap 				= Spring.SetHeightMap
+local images 					= include("LuaRules/gadgets/img.lua")
 local crushCEG 					= "dirtballtrail"
 local crushCEG2					= "FLAKFLARE"
 local crushCEG3					= "Sparks"
@@ -43,23 +45,29 @@ local crushsnd					= "sounds/battle/crush3.wav"
 local positionCrackX 			= 0
 local positionCrackZ 			= 0
 local crack 					= false
-local noCracks 					= true
-local crackAreaX				= math.floor(mapX*512*1/10)
+local noCrack 					= true
+local fx_placement 				= {}
+local img_used 					= {}
+local image						= {}
+local size						= {}
+
+-- settings
+local timeDelayFirstCrack		= 3000							-- one and half minute delay
+local crackInterval 			= 1800							-- one minute time delay new crack
+local crackChange 				= 0.7
+local duration					= 30 * 60 * 5					-- 5 min crack
+local crackAreaX				= math.floor(mapX*512*1/10)		-- defines middle of the map
 local crackAreaZ				= math.floor(mapY*512*1/10)
-local maps 						= {
-	["TheColdPlace"] = true,
-	["The Cold Place Remake V3c"] = true,
-	["The Cold Place Remake"] =  true,
-	["Geyser_Plains_TNM04-V3"] = true,
+local middle 					= false							-- is middle only cracked?
+local damage 					= false
+local maps 						= {								-- maps
+	["TheColdPlace"] 				= true,
+	["The Cold Place Remake V3c"] 	= true,
+	["The Cold Place Remake"] 		= true,
+	["Geyser_Plains_TNM04-V3"] 		= true,
+	["hotstepper_lm"] 				= true,
 }
 
-local fx_placement = {}
-for key, value in pairs(img) do
-	if value ~= 0 and random() < 0.01 then
-		fx_placement[key] = value
-	 end
-end 	
-	
 
 function gadget:Initialize()
 	local mo = Spring.GetModOptions()
@@ -81,105 +89,119 @@ end
 
 function gadget:GameFrame(f)
 	
-	if (f%120 == 0) and crack == false then
- 
-		if random() < crackChange and noCracks == true then  -- for now this always works		
-			positionCrackX = math.floor(random(mapX*512/4,mapX*512*3/4))
-			positionCrackZ = math.floor(random(mapY*512/4,mapY*512*3/4))
-			crack = true
-		end
-	end
-	
-	if (crack == true) then
+	if (f > timeDelayFirstCrack) then
+		-- check every minute 
+		if (f%crackInterval == 0) and crack == false then
+			
+			-- after some time load the crack
+			if random() < crackChange and noCrack == true then  
 
-		if (f%100 == 0) then
-			if (random() < 0.5) then
-				local x = math.floor(positionCrackX)
-				local z = math.floor(positionCrackZ)
-				local y = Spring.GetGroundHeight(x,z)
+				-- valid are 1, 2, 3, 4 and 5
+				img_used = images[math.random(1,5)]
+				img = img_used[2]
+				size = img_used[1]
+			
+				-- get some points to emit fx from
+				fx_placement = {}
+				for key, value in pairs(img) do
+					if value ~= 0 and random() < 0.005 then
+						fx_placement[key] = value
+					end
+				end 
+			
+				-- all over map
+				if middle == false then
+					positionCrackX = math.floor(random(0,(mapX*512-size["x"])))
+					positionCrackZ = math.floor(random(0, (mapY*512-size["z"])))
 				
+				-- just in middle
+				else
+					positionCrackX = math.floor(random(crackAreaX,  mapX*512-crackAreaX-size["x"]))
+					positionCrackZ = math.floor(random(crackAreaZ,  mapY*512-crackAreaX-size["z"]))
+				end
+				Echo(positionCrackX)
+				Echo(positionCrackZ)
+				crack = true
+			end
+		end
+		
+		if (crack == true) then
+
+			-- after another minute emit-fx and show some warning message
+			if (f%300 == 0) and noCrack == true then
+				if (random() < 0.5) then
+				
+					-- emit fx on points
+					for key, value in pairs(fx_placement) do
+						for k, v in string.gmatch(key,"(%w+),(%w+)") do
+							if random() < 0.1 then
+								local y = GetGroundHeight(k,v)
+								SpawnCEG(metalcloud2,tonumber(v)+positionCrackX, y+10, tonumber(k)+positionCrackZ)
+								if random() < 0.1 then
+									PlaySoundFile (crushsnd, 2.0, positionCrackX,y,positionCrackZ, 0,0,0,'battle')
+								end
+							end
+						end
+					end
+					
+					if random() < 0.5 then
+						Echo("WARNING seismic activity detected!")
+					end
+				end
+			end
+			
+			if (f%(crackInterval-1) == 0) and noCrack == true then
+		
+				-- create the crack
+				local func1 = function()
+					for key, value in pairs(img) do
+						for k, v in string.gmatch(key,"(%w+),(%w+)") do
+							local height = GetGroundOrigHeight(v+positionCrackX,k+positionCrackZ)
+							if value ~= 0 then
+								SetHeightMap(tonumber(v)+positionCrackX,tonumber(k)+positionCrackZ, height - value)
+							end
+						 end
+					end
+				end
+				SetHeightMapFunc(func1)
+				
+				-- play some sound and emit fx
+				for key, value in pairs(img) do
+					for k, v in string.gmatch(key,"(%w+),(%w+)") do
+						local height = Spring.GetGroundOrigHeight(v+positionCrackX,k+positionCrackZ)
+						if value ~= 0 and random()< 0.2 then
+							SpawnCEG(metalcloud2,tonumber(v)+positionCrackX, height + 10, tonumber(k)+positionCrackZ)
+							PlaySoundFile (crushsnd, 2.0, positionCrackX,height,positionCrackZ, 0,0,0,'battle')
+						end
+					 end
+				end 
+				noCrack = false
+			end
+			
+			if (f%(crackInterval+duration)== 0 and (noCrack == false)) then	
+			
+				-- undo crack
+				local func2 = function()
+					for key, value in pairs(img) do
+						for k, v in string.gmatch(key,"(%w+),(%w+)") do
+							SetHeightMap(tonumber(v)+positionCrackX,tonumber(k)+positionCrackZ, GetGroundOrigHeight(v+positionCrackX,k+positionCrackZ))
+						 end
+					end
+				end
+				SetHeightMapFunc(func2)
+	
+				-- emit some fx
 				for key, value in pairs(fx_placement) do
 					for k, v in string.gmatch(key,"(%w+),(%w+)") do
-						--tonumber(k)
-						--tonumber(v)
-						SpawnCEG(metalcloud2,tonumber(v)+x, y+10, tonumber(k)+z)
-					 end
-				end
-				
-				--for key, value in pairs(img) do
-				--	for k, v in string.gmatch(key,"(%w+),(%w+)") do
-						--tonumber(k)
-						--tonumber(v)
-				--		if value ~= 0 and random() < 0.1 then
-				--			SpawnCEG(metalcloud2,tonumber(v)+x, y+10, tonumber(k)+z)
-				--		end
-				--	 end
-				--end 
-			end
-			
-			if (random() < 0.1) then
-				Echo("WARNING seismic activity detected!")
-			end
-		end
-		
-		if (f%1000 == 0) and noCracks == true then
-			
-			local x = math.floor(positionCrackX)
-			local z = math.floor(positionCrackZ)
-			local y = Spring.GetGroundHeight(x,z)
-			SpawnCEG(metalcloud2,x, y+10, z)
-			PlaySoundFile (crushsnd, 2.0, x,y,z, 0,0,0,'battle')
-			
-			local func = function()
-				for key, value in pairs(img) do
-					for k, v in string.gmatch(key,"(%w+),(%w+)") do
-						local height = Spring.GetGroundOrigHeight(v+x,k+z)
-						if value ~= 0 then
-							Spring.SetHeightMap(tonumber(v)+x,tonumber(k)+z, height - value)
+						if random() < 0.1 then
+							local y = GetGroundHeight(k,v)
+							SpawnCEG(metalcloud2,tonumber(v)+positionCrackX, y+10, tonumber(k)+positionCrackZ)
 						end
-					 end
-				end
-			end
-			Spring.SetHeightMapFunc(func)
-			for key, value in pairs(img) do
-				for k, v in string.gmatch(key,"(%w+),(%w+)") do
-					local height = Spring.GetGroundOrigHeight(v+x,k+z)
-					if value ~= 0 and random()< 0.2 then
-						SpawnCEG(metalcloud2,tonumber(v)+x, y+10, tonumber(k)+z)
 					end
-				 end
-			end 
-			noCracks = false
-		end
-		
-		if (f%1700 == 0) and duration > random() then	
-		
-			local x = math.floor(positionCrackX)
-			local z = math.floor(positionCrackZ)
-			local y = Spring.GetGroundHeight(x,z)
-			SpawnCEG(metalcloud2,x, y+10, z)
-			PlaySoundFile (crushsnd, 2.0, x,y,z, 0,0,0,'battle')
-			
-			local func = function()
-				for key, value in pairs(img) do
-					for k, v in string.gmatch(key,"(%w+),(%w+)") do
-						if value ~= 0 then
-							Spring.SetHeightMap(tonumber(v)+x,tonumber(k)+z, Spring.GetGroundOrigHeight(v+x,k+z))
-						end
-					 end
 				end
+				crack = false
+				noCrack = true
 			end
-			Spring.SetHeightMapFunc(func)
-			for key, value in pairs(img) do
-				for k, v in string.gmatch(key,"(%w+),(%w+)") do
-					local height = Spring.GetGroundOrigHeight(v+x,k+z)
-					if value ~= 0 and random()< 0.2 then
-						SpawnCEG(metalcloud2,tonumber(v)+x, y+10, tonumber(k)+z)
-					end
-				 end
-			end 
-			crack = false
-			noCracks = true
 		end
 	end
 end
