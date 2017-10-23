@@ -13,7 +13,8 @@ end
 --[[
 
 	After a random period parts of the map will experience crack's in surface and rumbling and tunmbling noises
-	TODO - add damage
+	TODO 	- add damage
+			- make more cracks at same time
 	
 --]]
 
@@ -33,6 +34,7 @@ local SetHeightMapFunc			= Spring.SetHeightMapFunc
 local PlaySoundFile				= Spring.PlaySoundFile
 local SetHeightMap 				= Spring.SetHeightMap
 local images 					= include("LuaRules/gadgets/img.lua")
+local images2 					= include("LuaRules/gadgets/img2.lua")
 local crushCEG 					= "dirtballtrail"
 local crushCEG2					= "FLAKFLARE"
 local crushCEG3					= "Sparks"
@@ -53,9 +55,11 @@ local size						= {}
 
 -- settings
 local timeDelayFirstCrack		= 3000							-- one and half minute delay
+--local timeDelayFirstCrack		= 30 -- for testing
 local crackInterval 			= 1800							-- one minute time delay new crack
+--local crackInterval 			= 600 -- testing	
 local crackChange 				= 0.7
-local duration					= 30 * 60 * 5					-- 5 min crack
+local duration					= 30 * 60 * 5 					-- 5 min crack
 local crackAreaX				= math.floor(mapX*512*1/10)		-- defines middle of the map
 local crackAreaZ				= math.floor(mapY*512*1/10)
 local middle 					= false							-- is middle only cracked?
@@ -96,8 +100,13 @@ function gadget:GameFrame(f)
 			-- after some time load the crack
 			if random() < crackChange and noCrack == true then  
 
-				-- valid are 1, 2, 3, 4 and 5
-				img_used = images[math.random(1,5)]
+				if random() < 0.5 then
+					-- valid are 1, 2, 3, 4 and 5
+					img_used = images[math.random(1,5)]
+				else
+					-- valid are 1, 2, 3, 4 and 5
+					img_used = images2[math.random(1,5)]
+				end
 				img = img_used[2]
 				size = img_used[1]
 			
@@ -231,3 +240,10 @@ end
 			--Spring.SetHeightMapFunc 
 			--Spring.AddHeightMap 
 			--Spring.SetHeightMap 
+			
+			--t = {[1] = { images = 2, number =1}, [2] = { images = 2, number =1}}
+			--print(t[1].images)
+			--print(#t)
+			--t[#t+1] = {images = 3, number = 3}
+			--print(t[3].images) 
+			
