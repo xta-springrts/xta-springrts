@@ -38,9 +38,6 @@ SmokeUnit(healthpercent, sleeptime, smoketype)
 Go()
 {
 	OPERATING = 1;
-	dont-cache engine;
-	dont-cache lights;
-	dont-cache rotor;
 	set ARMORED to 0;
 	turn door3 to y-axis <180.000000> speed <300.000000>;
 	wait-for-turn door3 around y-axis;
@@ -137,11 +134,14 @@ Standby()
 		if (mmState == 1)
 		{
 		emit-sfx 1025 from glow;
+		sleep 200;
+		emit-sfx 1025 from glow;
+		sleep 200;
+		emit-sfx 1026 from glow;
 		}
-		sleep 450;
+		sleep 200;
 	}
 }
-
 ImAMetalMaker()
 {
 	mmState = -1;
@@ -168,12 +168,7 @@ Create()
 	move engine to y-axis [-12.500000] now;
 	hide engine;
 	hide rotor;
-	dont-shade body;
-	dont-shade engine;
-	dont-shade lights;
-	dont-cache door1;
-	dont-cache door2;
-	dont-cache door3;
+	hide glow;
 	while( get BUILD_PERCENT_LEFT )
 	{
 		sleep 500;

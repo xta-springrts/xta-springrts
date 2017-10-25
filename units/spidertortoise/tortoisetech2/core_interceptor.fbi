@@ -1,0 +1,132 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Core;
+	name=Interceptor;
+	description=Mobile Missile Defense;
+
+	//************************************************************
+	//  Categories
+	//**************
+	Category=CORE DEFENSIVE WEAPON NOTAIR NOTSUB;
+	tedclass=TANK;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=core_interceptor;
+	unitnumber=322;
+	objectname=core_interceptor.3do;
+	corpse=core_interceptor_dead;
+	buildpic=core_interceptor.png;
+	soundcategory=CORE_TANK;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=4177;
+	healtime=30;
+	buildcostmetal=2108;
+	buildcostenergy=82321;
+	buildtime=106450;
+	footprintx=4;
+	footprintz=4;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energyuse=0;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canguard=1;
+	canmove=1;
+	canattack=0;
+	canpatrol=1;
+	canstop=1;
+	canfight=0;
+	canrepeat=0;
+	
+	//************************************************************
+	//  Movement
+	//************
+	MovementClass=KBOTUW3;
+	turnrate=430;
+	acceleration=0.15;
+	brakerate=0.27;
+	maxvelocity=0.65;
+	maxslope=10;
+	maxwaterdepth=0;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=432.5;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=CORMABM_WEAPON;
+	nochasecategory=VTOL;
+	badtargetcategory=VTOL;
+	wpri_badtargetcategory=VTOL;
+	explodeas=ATOMIC_BLASTSML;
+	selfdestructas=ATOMIC_BLAST;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=1;
+	firestandorders=1;
+	mobilestandorders=1;
+	standingfireorder=2;
+	standingmoveorder=1;
+	defaultmissiontype=Standby;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	antiweapons=1;
+	bmcode=1;
+	designation=COR-AMD1;
+	downloadable=1;
+	leavetracks=1;
+	maneuverleashlength=640;
+	shootme=1;
+	steeringmode=1;
+	threed=1;
+	trackoffset=7;
+	trackstrength=8;
+	trackstretch=1;
+	tracktype=StdTank;
+	trackwidth=34;
+	version=3.1;
+	zbuffer=1;
+	collisionVolumeType = box;
+	collisionVolumeScales =50 35 60;
+	collisionVolumeOffsets = 0 -1 0;
+	collisionVolumeTest = 1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+}

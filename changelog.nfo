@@ -32,6 +32,10 @@ The Talon race is the property of The Registered One, or TRO for short, which ha
 Changes:
 *Krogoth Gantry now has 9880 hitpoints or 1.5hp per 1m instead of 5727 for a 70% in hitpoints to promote reliability for krogoth gantry vs. buzzsaw.
 * Reduced range of VULCAN and BUZZSAW to match INTIMIDATOR and BIG BERTHA and with small range advantage of 400-600, or roughly 10 percent.
+* Reduced Fire Arc of Land Mobile Anti Air to reduce effective clumping damage per second potential reducing horde effectiveness. 
+* Fixed a few hitboxes pertaining to boats, towers, and other misc. units on ARM and CORE, so that they may take reliable damage.
+* Tightened the hitbox on the missile projectile, so that flares are closer to base of missile and has to land on target.
+* Add 100 (2400hp to 2500hp) Hitpoints to Core Pillager, and gave it its proper name from TA.
 
 --- The Lost Legacy:
 * Lost Legacy level 1 Missile Kbot Firestarter now has appropriate missile behavior and deals on par proper missile damage with arm and core.

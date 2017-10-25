@@ -73,7 +73,7 @@
 		group_invincible=1;
 	}
 }
-[LOSTKBOT_MISSILE]
+[LOSTKBOT_MISSILE] //panther, boa
 {
 	name=Missiles;
 	explosiongenerator=custom:KBOTMISSILEHIT;
@@ -82,36 +82,35 @@
 	turret=1;
 	model=missile.s3o;
 	Texture1=null;
-	range=700;
+	range=704;
 	reloadtime=2;
 	weapontimer=5;
-	weaponvelocity=860;
-	startvelocity=470;
-	weaponacceleration=154;
-	turnrate=41660;
+	weaponvelocity=750;
+	startvelocity=350;
+	weaponacceleration=201;
+	turnrate=50000;
+	//trajectoryHeight=0.08;
+	dance=30;
 	areaofeffect=48;
-	cylindertargeting = 1;
 	soundstart=rocklit1;
 	soundhitdry=xplosml2;
 	firestarter=70;
-	flighttime=2.5;
 	smokedelay=0.1;
 	tracks=1;
 	smoketrail=0;
-	tolerance=10000;
+	tolerance=9000;
 	startsmoke=1;
-	trajectoryHeight=0.85;
-	dance=30;
+	collidefriendly=0;
+	avoidfriendly=1;
 	[DAMAGE]
 	{
-		default=34;
-		lost_commanders=30;
-		group_landair=115;
-		group_skyair=115;
+		default=32;
+		lost_commanders=27;
+		group_landair=101;
+		group_skyair=101;
 		group_invincible=1;
 	}
 }
-
 [THUMP_GUN]
 {
 	name=Pop POP Cannon;
@@ -371,6 +370,8 @@
 	smoketrail=0;
 	tolerance=9000;
 	startsmoke=1;
+	collidefriendly=0;
+	avoidfriendly=1;
 	[DAMAGE]
 	{
 		default=93;
@@ -407,6 +408,8 @@
 	smoketrail=0;
 	tolerance=9000;
 	startsmoke=1;
+	collidefriendly=0;
+	avoidfriendly=1;
 	[DAMAGE]
 	{
 		default=88;
@@ -1226,9 +1229,9 @@
 	Weapontype=MissileLauncher;
 	tolerance=9000;
 	startsmoke=1;
-	Trajectoryheight=1;
+	//Trajectoryheight=0.2;
 	collidefriendly=0;
-	avoidfriendly=0;
+	avoidfriendly=1;
 	[DAMAGE]
 	{
 		default=33;
@@ -1664,6 +1667,7 @@
 	tracks=1;
 	tolerance=4000;
 	startsmoke=1;
+	CollideFriendly=0;
 	[DAMAGE]
 	{
 		default=500;
@@ -2380,7 +2384,7 @@
 	Dance=100;
 	Trajectoryheight=1;
 	energypershot=400;
-	metalpershot=50;
+	metalpershot=40;
 	edgeeffectiveness=0.5;
 	[DAMAGE]
 	{

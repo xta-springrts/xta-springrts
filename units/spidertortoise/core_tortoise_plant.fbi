@@ -39,4 +39,5 @@
 	canmove=1;
 	canpatrol=1;
 	canstop=1;
+	usePieceCollisionVolumes=1;
 	}

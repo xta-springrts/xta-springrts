@@ -4,7 +4,7 @@
 	//  Unit Description
 	//********************
 	side=Core;
-	name=Mobile Artillery;
+	name=Pillager;
 	description=Mobile Artillery;
 
 	//************************************************************
@@ -27,7 +27,7 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=2413;//increased hp from 1810 by 33 percent increase
+	maxdamage=2513;//increased hp from 1810 by 33 percent increase
 	healtime=30;
 	buildcostmetal=2008;
 	buildcostenergy=12280;

@@ -1956,7 +1956,7 @@
 		canbuild11=core_sub_pen;
 		canbuild12=core_light_laser_tower;
 		canbuild13=core_radar_tower;
-		canbuild14=core_adv_vehicle_plant;
+		canbuild14=core_adv_tortoise_plant;
 		canbuild15=core_geothermal_powerplant;
 		canbuild16=core_gaat_gun;
 		canbuild17=core_pulverizer;
@@ -1980,13 +1980,14 @@
 		canbuild35=core_seaplane_platform;
 		canbuild36=core_adv_shipyard;
 		canbuild37=core_adv_kbot_lab;
-		canbuild38=core_adv_aircraft_plant;
-		canbuild39=core_air_repair_pad;
-		canbuild40=CORE_Underwater_moho_mine;
-		canbuild41=core_moho_mine;
-		canbuild42=core_fortitude_missile_defense;
-		canbuild43=Core_Resistor;
-		canbuild44=core_nano_tower;
+		canbuild38=core_adv_vehicle_plant;
+		canbuild39=core_adv_aircraft_plant;
+		canbuild40=core_air_repair_pad;
+		canbuild41=CORE_Underwater_moho_mine;
+		canbuild42=core_moho_mine;
+		canbuild43=core_fortitude_missile_defense;
+		canbuild44=Core_Resistor;
+		canbuild45=core_nano_tower;
 	}
 
 	[core_construction_tortoise_XTrA]
@@ -2004,7 +2005,7 @@
 		canbuild11=core_sub_pen;
 		canbuild12=core_light_laser_tower;
 		canbuild13=core_radar_tower;
-		canbuild14=core_adv_vehicle_plant;
+		canbuild14=core_adv_tortoise_plant;
 		canbuild15=core_geothermal_powerplant;
 		canbuild16=core_eradicator;
 		canbuild17=core_pulverizer;
@@ -2028,11 +2029,14 @@
 		canbuild35=core_seaplane_platform;
 		canbuild36=core_adv_shipyard;
 		canbuild37=core_adv_kbot_lab;
-		canbuild38=core_adv_aircraft_plant;
-		canbuild39=core_air_repair_pad;
-		canbuild40=core_fortitude_missile_defense;
-		canbuild41=Core_Resistor;
-		canbuild42=core_nano_tower;
+		canbuild38=core_adv_vehicle_plant;
+		canbuild39=core_adv_aircraft_plant;
+		canbuild40=core_air_repair_pad;
+		canbuild41=CORE_Underwater_moho_mine;
+		canbuild42=core_moho_mine;
+		canbuild43=core_fortitude_missile_defense;
+		canbuild44=Core_Resistor;
+		canbuild45=core_nano_tower;
 	}
 	[core_base]
 	{
@@ -2830,6 +2834,84 @@
 		canbuild8=core_snake;
 	}
 
+	[core_adv_tortoise_plant]
+	{
+		canbuild1=core_adv_construction_tortoise;
+		canbuild2=core_riptide;
+		canbuild3=core_popcorn;
+		canbuild4=core_ambassador;
+		canbuild5=core_boss;
+		canbuild6=core_onslaught;
+		canbuild7=core_ignition;
+		canbuild8=core_verifier;
+		canbuild9=core_faraday;
+		canbuild10=core_copperback;
+		canbuild11=core_brute;
+		canbuild12=core_rampage;//xtaids
+		canbuild13=core_interceptor;
+	}
+
+	[core_adv_construction_tortoise]
+	{
+		canbuild1=core_fortification_wall;
+		canbuild2=core_moho_mine;
+		canbuild3=core_moho_metal_maker;
+		canbuild4=core_geothermal_powerplant;
+		canbuild5=core_light_fusion_power_plant;
+		canbuild6=core_cloakable_fusion_power_plant;
+		canbuild7=core_fusion_power_plant;
+		canbuild8=core_advanced_radar_tower;
+		canbuild9=core_radar_jamming_tower;
+		canbuild10=core_light_laser_tower;
+		canbuild11=core_gaat_gun;
+		canbuild12=core_cobra;
+		canbuild13=core_punisher;
+		canbuild14=core_energy_storage;
+		canbuild15=core_metal_storage;
+		canbuild16=core_targeting_facility;
+		canbuild17=core_air_repair_pad;
+		canbuild18=core_fortitude_missile_defense;
+		canbuild19=core_viper;
+		canbuild20=core_immolator;
+		canbuild21=core_doomsday_machine;
+		canbuild22=core_intimidator;
+		canbuild23=core_kbot_lab;
+		canbuild24=core_adv_kbot_lab;
+		canbuild25=core_vehicle_plant;
+		canbuild26=core_adv_vehicle_plant;
+		canbuild27=core_aircraft_plant;
+		canbuild28=core_adv_aircraft_plant;
+		canbuild29=core_shipyard;
+		canbuild30=core_sub_pen;
+		canbuild31=core_adv_shipyard;
+		canbuild32=core_tortoise_plant_Xtra;//spiders vs. tortoise
+		canbuild33=core_tortoise_plant;//spiders vs. tortoise
+		canbuild34=core_hovercraft_platform;
+		canbuild35=core_neutron;
+		canbuild36=core_silencer;
+		canbuild37=core_krogoth_gantry;
+		//canbuild38=corfff;//xtaids
+		//canbuild39=screamer;//xtaids
+		canbuild40=core_buzzsaw; 
+		canbuild41=core_nano_tower;
+		canbuild42=COREBFORTNS;//xtaids
+		canbuild43=core_adv_tortoise_plant;
+		canbuild44=core_floating_dragons_teeth;
+		canbuild45=core_underwater_metal_extractor;
+		canbuild46=core_underwater_moho_mine;
+		canbuild47=core_floating_metal_maker;
+		canbuild48=core_underwater_fusion_power_plant;
+		canbuild49=core_underwater_energy_storage;
+		canbuild50=core_underwater_metal_storage;		
+		canbuild51=core_floating_radar;
+		canbuild52=core_advanced_sonar_station;
+		canbuild53=Core_Resistor;
+		canbuild54=core_stinger;
+		canbuild55=core_thunderbolt;
+		canbuild56=core_naval_cobra;
+		canbuild57=core_torpedo_launcher;
+		canbuild58=core_advanced_torpedo_launcher;  
+	}
 	[core_tortoise_plant]
 	{
 		canbuild1=core_construction_tortoise;

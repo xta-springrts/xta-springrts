@@ -1,0 +1,119 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Core;
+	name=Tortoise Gantry;
+	description=Tortoise Tech 2.5;
+	icontype=plant;
+
+	//************************************************************
+	//  Categories
+	//**************
+	Category=CORE PLANT NOWEAPON NOTAIR NOTSUB;
+	tedclass=PLANT;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=core_adv_tortoise_plant;
+	unitnumber=253;
+	objectname=core_adv_tortoise_plant.3do;
+	corpse=core_adv_tortoise_plant_dead;
+	buildpic=core_adv_tortoise_plant.png;
+	soundcategory=CORE_GANTRY;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=7685;//5726
+	healtime=30;
+	buildcostmetal=3787;
+	buildcostenergy=8574;
+	buildtime=41937;
+	footprintx=9;
+	footprintz=8;
+	usePieceCollisionVolumes=1;
+	//collisionVolumeType = Box;
+	//collisionVolumeScales =96 53 76;
+	//collisionVolumeOffsets = 0 0 0;
+	//collisionVolumeTest = 1;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=800;
+	energyuse=0;
+	energystorage=1400;
+
+	//************************************************************
+	//  Building
+	//************
+	yardmap=ooooooooo ooooooooo oocccccoo oocccccoo oocccccoo oocccccoo oocccccoo oocccccoo;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=1;
+	workertime=400;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+	canguard=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	maxslope=10;
+	maxwaterdepth=1889;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=367.5;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeas=LARGE_BUILDINGEX;
+	selfdestructas=LARGE_BUILDING;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	firestandorders=1;
+	mobilestandorders=1;
+	standingfireorder=2;
+	standingmoveorder=2;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=0;
+	designation=GKA-DML;
+	downloadable=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+	[SFXTypes]
+	{
+	explosiongenerator0=custom:Nano;
+	explosiongenerator1=custom:WhiteLight;
+	explosiongenerator2=custom:YellowLight;
+	explosiongenerator3=custom:YellowLight1;
+	}
+
+}

@@ -860,8 +860,8 @@
 	noautorange=1;
 	weapontimer=7;
 	flighttime=120;
-	weaponvelocity=1500;
-	weaponacceleration=100;
+	weaponvelocity=800;
+	weaponacceleration=500;
 	turnrate=28000;
 	areaofeffect=1150;
 	energypershot=110000;

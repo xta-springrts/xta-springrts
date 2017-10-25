@@ -101,13 +101,16 @@ Standby()
 	while( TRUE )
 	{
 		if (mmState == 1)
-		{		
+		{
 		emit-sfx 1025 from glow;
+		sleep 200;
+		emit-sfx 1025 from glow;
+		sleep 200;
+		emit-sfx 1026 from glow;
 		}
-		sleep 450;
+		sleep 200;
 	}
 }
-
 
 MMStatus(State)
 {
@@ -166,14 +169,7 @@ SmokeUnit(healthpercent, sleeptime, smoketype)
 
 Create()
 {
-	dont-shade glowingthing;
-	dont-cache glowingthing;
-	dont-shade base;
-	dont-shade flap1;
-	dont-shade flap2;
-	dont-shade flap3;
-	dont-shade flap4;
-	dont-shade topcap;
+	hide glow;
 	start-script SmokeUnit();
 	start-script Standby();
 }
