@@ -1595,6 +1595,7 @@
 		canbuild35=core_neutron;
 		canbuild36=core_silencer;
 		canbuild37=core_krogoth_gantry;
+		canbuild38=core_adv_tortoise_plant;
 		//canbuild38=corfff;//xtaids
 		//canbuild39=screamer;//xtaids
 		canbuild40=core_buzzsaw; 
@@ -1640,6 +1641,7 @@
 		canbuild35=core_neutron;
 		canbuild36=core_silencer;
 		canbuild37=core_krogoth_gantry;
+		canbuild38=core_adv_tortoise_plant;
 		//canbuild38=corfff;//xtaids
 		//canbuild39=screamer;//xtaids
 		canbuild40=core_buzzsaw; 
@@ -1675,6 +1677,7 @@
 		canbuild25=core_hovercraft_platform;
 		canbuild26=core_nano_tower;
 		canbuild27=core_krogoth_gantry;
+		canbuild28=core_adv_tortoise_plant;
 	}
 	[core_adv_construction_vehicle]
 	{
@@ -1715,11 +1718,12 @@
 		canbuild35=core_neutron;
 		canbuild36=core_silencer;
 		canbuild37=core_krogoth_gantry;
+		canbuild38=core_adv_tortoise_plant;
 		//canbuild38=corfff;//xtaids
 		//canbuild39=screamer;//xtaids
 		canbuild40=core_buzzsaw; 
 		canbuild41=core_nano_tower;
-		canbuild42=COREBFORTNS;//xtaids     
+		canbuild42=COREBFORTNS;//xtaids    
 	}
 	[core_adv_kbot_lab]
 	{
@@ -2890,6 +2894,7 @@
 		canbuild35=core_neutron;
 		canbuild36=core_silencer;
 		canbuild37=core_krogoth_gantry;
+		canbuild38=core_adv_tortoise_plant;
 		//canbuild38=corfff;//xtaids
 		//canbuild39=screamer;//xtaids
 		canbuild40=core_buzzsaw; 

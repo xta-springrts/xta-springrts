@@ -1,4 +1,43 @@
 
+[BOSS_FIRE]
+{
+	name=Gauss Cannon;
+	rgbcolor=1 0.8 0.5;
+	stages=15;
+	separation=0.45;
+	alphadecay=0.3;
+	sizedecay=-0.15;
+	nogap=1;
+	size=3;
+	explosiongenerator=custom:EnergyStorageExplosion;;
+	cegTag=VULCANFX;
+	//cegTag=DEBREE1;
+	GroundBounce=0;
+	WaterBounce=0;
+	NumBounce=1;
+	BounceSlip=1.01;
+	BounceRebound=0.8;
+	turret=1;
+	//minbarrelangle=-15;
+	//color=3;
+	range=575;
+	reloadtime=1.5;
+	weaponvelocity=700;
+	areaofeffect=80;
+	soundstart=krogun1;
+	soundhitdry=xplomed1;
+	energypershot=200;
+	tolerance=3000;
+	startsmoke=1;
+	w=46.1;
+	//explosiongenerator=custom:raven;
+	myGravity=0.8;
+	[DAMAGE]
+	{
+		default=500;
+		group_invincible=1;
+	}
+}
 [CORE_BRUTLASER]
 {
 	name=Light Laser;
@@ -141,8 +180,8 @@
 	name=PewPew;
 	noselfdamage=1;
 	pulsespeed=7.0;
-	range=380;
-	reloadtime=1;
+	range=350;
+	reloadtime=1.25;
 	rgbcolor=0.7 0.2 1;
 	//soundhitdry=xplolrg;
 	soundstart=corhatch_laser;
@@ -281,10 +320,10 @@
 	energypershot=50;
 	Burst=1;
 	Burstrate=0.1666;
-	Trajectoryheight=0.75;
+	Trajectoryheight=0.5;
 	Wobble=1900; //14000
 	Dance=30;
-	flighttime=5;
+	flighttime=7.5;
 	//turnrate=5000;	//4000
 	//edgeeffectiveness=0.75;
 	soundstart=Rockhvy1;

@@ -41,7 +41,7 @@
 	//activatewhenbuilt=1;
 	//onoffable=1;
 	DamageModifier=0.333;
-	MaxVelocity=0.625;
+	MaxVelocity=0.675;
 	BrakeRate=0.152;
 	Acceleration=0.152;
 	TurnRate=356;

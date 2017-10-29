@@ -11,8 +11,8 @@
 	FootprintX=4;
 	FootprintZ=4;
 	BuildCostEnergy=17754;
-	BuildCostMetal=3688;
-	MaxDamage=19553;
+	BuildCostMetal=3717;
+	MaxDamage=19904;
 	MaxSlope=12;
 	MaxWaterDepth=100;
 	EnergyUse=2;
@@ -48,7 +48,7 @@
 	DefaultMissionType=Standby;
 	maneuverleashlength=640;
 	MovementClass=KBOTUW3;
-	Weapon1=CORKROG_FIRE;
+	Weapon1=BOSS_FIRE;
 	wpri_badTargetCategory=VTOL;
 	BadTargetCategory=VTOL;
 	canattack=1;
@@ -63,7 +63,7 @@
 	smoothanim=1;
 	[SFXTypes]
 	{
-	explosiongenerator0=custom:berthaflare;
-	explosiongenerator1=custom:berthaflare;
+	explosiongenerator0=custom:vulcanflare;
+	explosiongenerator1=custom:vulcanflare;
 	}
 	}

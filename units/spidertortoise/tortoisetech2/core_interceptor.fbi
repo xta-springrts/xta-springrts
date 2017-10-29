@@ -114,8 +114,8 @@
 	trackoffset=7;
 	trackstrength=8;
 	trackstretch=1;
-	tracktype=StdTank;
-	trackwidth=34;
+	tracktype=ComTrack;
+	trackwidth=40;
 	version=3.1;
 	zbuffer=1;
 	collisionVolumeType = box;

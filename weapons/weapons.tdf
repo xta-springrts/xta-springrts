@@ -1306,7 +1306,7 @@
 	reloadtime=9;
 	noautorange=1;
 	weapontimer=4;
-	flighttime=7.5;
+	flighttime=10;
 	weaponvelocity=600;
 	weaponacceleration=100;
 	turnrate=24384;
@@ -4242,7 +4242,7 @@
 	reloadtime=8;
 	noautorange=1;
 	weapontimer=4;
-	flighttime=7.5;
+	flighttime=10;
 	weaponvelocity=600;
 	weaponacceleration=100;
 	turnrate=20000;

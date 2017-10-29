@@ -11,7 +11,7 @@
 	FootprintX=3;
 	FootprintZ=3;
 	BuildCostEnergy=7276;
-	BuildCostMetal=511;
+	BuildCostMetal=411;
 	MaxDamage=1554;
 	damagemodifier=0.5;
 	MaxSlope=12;
