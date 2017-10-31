@@ -743,7 +743,7 @@
 	smartshield=1;
 	visibleshieldrepulse=1;
 	shieldenergyuse=400;
-	shieldforce=2;
+	shieldforce=2.5;
 	shieldmaxspeed=4400;
 	shieldradius=425;
 	shieldpower=15000;

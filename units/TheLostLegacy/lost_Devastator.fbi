@@ -87,8 +87,8 @@
 	weapon5=Flare_Lightning;
 	wpri_badtargetcategory=VTOL;
 	onlytargetcategory1=NOTAIR;
-	explodeas=ATOMIC_BLAST;
-	selfdestructas=ATOMIC_BLAST;
+	explodeas=deathsaucer;
+	selfdestructas=deathsaucer;
 
 	//************************************************************
 	//  Orders

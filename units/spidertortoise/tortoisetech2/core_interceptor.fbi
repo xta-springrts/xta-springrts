@@ -111,11 +111,11 @@
 	shootme=1;
 	steeringmode=1;
 	threed=1;
-	trackoffset=7;
+	trackoffset=30;
 	trackstrength=8;
-	trackstretch=1;
+	trackstretch=2;
 	tracktype=ComTrack;
-	trackwidth=40;
+	trackwidth=60;
 	version=3.1;
 	zbuffer=1;
 	collisionVolumeType = box;

@@ -1312,3 +1312,192 @@ Seqnamereclamate=tree1reclamate;
 	collisionVolumeScales=28 7 24;//#AUTO#
 	collisionVolumeOffsets=0 0 0;//#AUTO#
 }
+
+[Core_turbulence_dead]
+	{
+	world=All Worlds;
+	description=Wreckage;
+	category=arm_corpses;
+	object=Core_turbulence_dead;
+	footprintx=4;
+	footprintz=4;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	metal=2724;
+	damage=12000;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=40 36 111;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+	}
+
+[core_haboob_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=core_corpses;
+	object=core_haboob_dead;
+	featuredead=core_haboob_heap;
+	footprintx=4;
+	footprintz=4;
+	height=20;
+	blocking=1;
+	hitdensity=100;
+	metal=12558;
+	damage=12276;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=59 30 59;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+[core_haboob_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=4x4c;
+	footprintx=4;
+	footprintz=4;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	metal=6279;
+	damage=2276;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=59 7 59;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+
+[core_judgement_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=core_corpses;
+	object=core_judgement_dead;
+	featuredead=core_judgement_heap;
+	footprintx=4;
+	footprintz=4;
+	height=20;
+	blocking=1;
+	hitdensity=100;
+	metal=15558;
+	damage=22276;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=59 30 59;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+[core_judgement_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=4x4c;
+	footprintx=4;
+	footprintz=4;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	metal=11279;
+	damage=12276;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=59 7 59;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+
+[core_bamisher_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=core_corpses;
+	object=core_bamisher_dead;
+	featuredead=core_bamisher_heap;
+	footprintx=4;
+	footprintz=4;
+	height=20;
+	blocking=1;
+	hitdensity=100;
+	metal=6558;
+	damage=6276;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=59 30 59;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+[core_bamisher_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=4x4c;
+	footprintx=4;
+	footprintz=4;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	metal=3279;
+	damage=12276;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=59 7 59;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+
+[core_singularity_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=core_corpses;
+	object=core_singularity_dead;
+	featuredead=core_singularity_heap;
+	footprintx=4;
+	footprintz=4;
+	height=20;
+	blocking=1;
+	hitdensity=100;
+	metal=5558;
+	damage=6276;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=59 30 59;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+[core_singularity_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=4x4c;
+	footprintx=4;
+	footprintz=4;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	metal=3279;
+	damage=5276;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=59 7 59;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}

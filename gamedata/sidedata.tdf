@@ -2853,6 +2853,11 @@
 		canbuild11=core_brute;
 		canbuild12=core_rampage;//xtaids
 		canbuild13=core_interceptor;
+		canbuild14=core_singularity;
+		canbuild15=core_turbulence;
+		canbuild16=core_bamisher;
+		canbuild17=core_judgement;
+		canbuild18=core_haboob;
 	}
 
 	[core_adv_construction_tortoise]

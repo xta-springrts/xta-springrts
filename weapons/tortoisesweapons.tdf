@@ -1,4 +1,245 @@
 
+[CORE_EQUAL_Shield]
+{
+	name=PlasmaRepulsor;
+	WeaponType="Shield";
+	shieldrepulser=1;
+	smartshield=1;
+	visibleshieldrepulse=0;
+	shieldenergyuse=0;
+	shieldforce=1.0;
+	shieldmaxspeed=50;
+	shieldradius=325;
+	shieldpower=10000;
+	//shieldintercepttype=1;
+	shieldintercepttype=3;
+	shieldgoodcolor=0.1 0.1 0.1;
+	shieldbadcolor=1.0 1.0 1.0;
+	shieldalpha=0.1;
+	VisibleShieldHitFrames=70;
+        ShieldPowerRegen=250;
+        ShieldPowerRegenEnergy=0.0;
+        VisibleShield=1;
+        range=425;	
+	[DAMAGE]
+	{
+		default=100;
+	}
+}
+[CORE_BLACK_Shield]
+{
+	name=PlasmaRepulsor;
+	WeaponType="Shield";
+	shieldrepulser=1;
+	smartshield=1;
+	visibleshieldrepulse=1;
+	shieldenergyuse=200;
+	shieldforce=-2.0;
+	shieldmaxspeed=100;
+	shieldradius=325;
+	shieldpower=15000;
+	//shieldintercepttype=1;
+	shieldintercepttype=3;
+	shieldgoodcolor=0.1 0.1 0.1;
+	shieldbadcolor=1.0 1.0 1.0;
+	shieldalpha=0.7;
+	VisibleShieldHitFrames=70;
+        ShieldPowerRegen=200;
+        ShieldPowerRegenEnergy=200.0;
+        VisibleShield=1;
+        range=425;	
+	[DAMAGE]
+	{
+		default=100;
+	}
+}
+[turbotron] //defender, pulverizer
+{
+	name=Missiles;
+	turret=1;
+	model=weapon_exphvyrock;
+	explosiongenerator=custom:T1_2X2_UNIT_EXPLOSION;
+	Texture1=null;
+	range=850;
+	reloadtime=1;
+	weapontimer=3;
+	weaponvelocity=1000;
+	startvelocity=100;
+	weaponacceleration=900;
+	turnrate=41660;
+	areaofeffect=64;
+	cylindertargeting=1;
+	soundstart=mislhvy3;
+	soundhitdry=xplomed2;
+	firestarter=70;
+	smokedelay=0.1;
+	tracks=1;
+	smoketrail=0;
+	dance=20;
+	trajectoryHeight=0.2;
+	cegTag=RAVENTRAIL;
+	Weapontype=MissileLauncher;
+	tolerance=10000;
+	startsmoke=1;
+	flighttime=3;
+	collidefriendly=0;
+	avoidfriendly=1;
+	[DAMAGE]
+	{
+		default=200;
+		//lost_commanders=41;
+		group_invincible=1;
+		group_landair=350;
+		group_skyair=350;
+	}
+}
+[TURBULENCE_FLAK]
+{
+	name=FLAK Cannon;
+	explosiongenerator=custom:RedPlasma;
+	energypershot=50;
+	rgbcolor=1.0 0.9 0.5;
+	stages=8;
+  	separation=0.45;
+  	alphadecay=0.1;
+  	sizedecay=-0.10;
+  	nogap=1;
+	size=3.5;
+	weaponType=Cannon;
+	turret=1;
+	range=850;
+	reloadtime=0.75;
+	weaponvelocity=1550; //550
+	areaofeffect=175;
+	startsmoke=1;
+	accuracy=600;
+	SoundStart=Cannon3;
+	SoundHit=SabotHit;
+	burnblow=1;
+	mygravity=0.001;
+	[DAMAGE]
+	{
+		default=125;
+		//group_ships=275;
+		//group_large_ships=355;
+		//group_invincible=1;
+		group_landair=575;
+		group_skyair=575;
+	}
+}
+
+[Judgement_FIRE]
+{
+	name=Judge Cannon;
+	rgbcolor=1 0.9 0.8;
+	stages=15;
+	separation=0.45;
+	alphadecay=0.3;
+	sizedecay=-0.15;
+	nogap=1;
+	size=4;
+	//explosiongenerator=custom:BERTHASHOT;
+	explosiongenerator=custom:PUFFY;
+	//cegTag=VULCANFX;
+	//cegTag=DEBREE1;
+	GroundBounce=0;
+	WaterBounce=0;
+	NumBounce=1;
+	BounceSlip=1.01;
+	BounceRebound=0.8;
+	turret=1;
+	//minbarrelangle=-15;
+	//color=3;
+	range=1100;
+	reloadtime=1.0;
+	weaponvelocity=700;
+	areaofeffect=90;
+	soundstart=CORBOSS_FIRE;
+	soundhitdry=CORBOSS_IMPACT;
+	energypershot=800;
+	tolerance=3000;
+	startsmoke=1;
+	w=46.1;
+	//explosiongenerator=custom:raven;
+	//myGravity=0.8;
+	accuracy=750;
+	[DAMAGE]
+	{
+		default=600;
+		group_invincible=1;
+	}
+}
+[CORE_BaMLaSeR]
+{
+	name=Doomsday Weapon;
+	Weapontype=BeamLaser;
+	turret=1;
+	beamdecay=0.5;
+	beamtime=0.375;
+	beamttl=5;
+	range=700;
+	reloadtime=3;
+	energypershot=400;
+	weaponvelocity=1000;
+	areaofeffect=16;
+	targetMoveError=0.5;
+	soundstart=CORSNIPE_laser;
+	soundhitdry=xplosml4;
+	SoundTrigger=1;
+	firestarter=90;
+	rgbcolor=0.1 0.9 1.000;
+	explosiongenerator=custom:PURPLELASER;
+	pulseSpeed=0.5;
+	thickness=3.5;
+	[DAMAGE]
+	{
+		default=1900;
+		group_commanders=1020;
+		lost_commanders=820;
+		group_invincible=1;
+	}
+}
+
+[HABOOB_WEAPON]
+{
+	name=Bertha Cannon;
+	rgbcolor=1 0.8 0.5;
+	stages=20;
+	separation=0.45;
+	alphadecay=0.3;
+	sizedecay=-0.15;
+	nogap=1;
+	size=3;
+	GroundBounce=0;
+	WaterBounce=0;
+	NumBounce=2;
+	BounceSlip=1.01;
+	BounceRebound=0.25;
+	weaponType=Cannon;
+	turret=1;
+	//color=3;
+	range=2500;
+	reloadtime=0.75;
+	weaponvelocity=620;
+	energypershot=2000;
+	areaofeffect=108;
+	soundstart=xplonuk3;
+	soundhitdry=xplonuk1;
+	firestarter=50;
+	accuracy=500;
+	aimrate=2500;
+	tolerance=8000;
+	explosiongenerator=custom:BERTHASHOT;
+	cegTag=VULCANFX;
+	startsmoke=1;
+	soundtrigger=1;
+	weapontimer=20;
+	[DAMAGE]
+	{
+		default=1003;
+		group_invincible=1;
+	}
+}
 [BOSS_FIRE]
 {
 	name=Gauss Cannon;
@@ -9,7 +250,7 @@
 	sizedecay=-0.15;
 	nogap=1;
 	size=3;
-	explosiongenerator=custom:EnergyStorageExplosion;;
+	explosiongenerator=custom:BERTHASHOT;
 	cegTag=VULCANFX;
 	//cegTag=DEBREE1;
 	GroundBounce=0;
