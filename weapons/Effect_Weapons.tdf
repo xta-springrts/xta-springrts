@@ -1,4 +1,40 @@
 
+[NULL]
+{
+	Name=Lightning Beam;
+	rendertype=0;
+	lineofsight=1;
+	turret=1;
+	beamlaser=1;
+	LargeBeamLaser=1;
+	pulseSpeed=4.0;
+	thickness=6;
+	beamtime=0.0001;
+	range=1; 
+	reloadtime=0.1;
+	energypershot=100000000000000000000000;
+	weaponvelocity=400;
+  	texture1=testlightning;
+  	laserflaresize=3;
+	minbarrelangle=-55;
+  //texture2=flare;
+  //texture3=flare;
+  //texture4=smallflare;
+	areaofeffect=16;
+	//SoundStart=tllelechit;
+	soundhitdry=lashit2;
+	firestarter=90;
+	beamweapon=1;
+	rgbcolor=0.3 0.5 1.0;
+	tolerance=5000;
+	explosiongenerator=custom:null;  //Noruas's FX added v8//
+	guidance=1;
+	[DAMAGE]
+	{
+		default=1;
+	}
+}
+
 [Thor_hammer_Lightning]
 {
 	Name=Lightning Beam;
@@ -65,6 +101,7 @@
 	tolerance=5000;
 	explosiongenerator=custom:null;  
 	guidance=1;
+	CollideFriendly=0;
 	[DAMAGE]
 	{
 		default=1;
@@ -101,6 +138,7 @@
 	tolerance=5000;
 	explosiongenerator=custom:null;  
 	guidance=1;
+	CollideFriendly=0;
 	[DAMAGE]
 	{
 		default=1;
@@ -139,6 +177,7 @@
 	tolerance=5000;
 	explosiongenerator=custom:null;  
 	guidance=1;
+	CollideFriendly=0;
 	[DAMAGE]
 	{
 		default=1;
@@ -182,6 +221,7 @@
 	tolerance=5000;
 	explosiongenerator=custom:ONESPARK;  //Noruas's FX added v8//
 	guidance=1;
+	CollideFriendly=0;
 	[DAMAGE]
 	{
 		default=1;
@@ -223,6 +263,7 @@
 	explosionart=explode5;
 	explosiongenerator=custom:null;  
 	guidance=1;
+	CollideFriendly=0;
 	[DAMAGE]
 	{
 		default=1;
@@ -264,6 +305,7 @@
 	explosionart=explode5;
 	explosiongenerator=custom:null;  
 	guidance=1;
+	CollideFriendly=0;
 	[DAMAGE]
 	{
 		default=1;
@@ -305,6 +347,7 @@
 	tolerance=5000;
 	explosiongenerator=custom:null;  
 	guidance=1;
+	CollideFriendly=0;
 	[DAMAGE]
 	{
 		default=1;
@@ -348,8 +391,53 @@
 	tolerance=5000;
 	explosiongenerator=custom:null;  //Noruas's FX added v8//
 	guidance=1;
+	CollideFriendly=0;
 	[DAMAGE]
 	{
 		default=1;
+	}
+}
+
+[BLACK_Lightning]
+{
+	Name=Lightning Beam;
+	rendertype=0;
+	lineofsight=1;
+	turret=1;
+	beamlaser=1;
+	LargeBeamLaser=1;
+	beamdecay=0.9;
+	beamttl=10;
+	pulseSpeed=1.0;
+	thickness=2;
+	beamtime=0.0001;
+	range=225;
+	projectiles=1;
+	burst=1;
+	burstrate=0;
+	//accuracy=1500;
+	sprayangle=100; 
+	reloadtime=0.1;
+	energypershot=0;
+	weaponvelocity=400;
+  	//texture1=testlightning;
+  	laserflaresize=2;
+	minbarrelangle=-55;
+  texture2=null;
+  texture3=null;
+  //texture4=null;
+	areaofeffect=16;
+	//SoundStart=tllelechit;
+	soundhitdry=lashit2;
+	firestarter=90;
+	beamweapon=1;
+	rgbcolor=1.0 0.8 0.8;
+	tolerance=5000;
+	explosiongenerator=custom:ONESPARK;  //Noruas's FX added v8//
+	guidance=1;
+	CollideFriendly=0;
+	[DAMAGE]
+	{
+		default=100;
 	}
 }

@@ -371,60 +371,53 @@ open()
 	move rcannon to z-axis [0.000000] now;
 	move locase to y-axis [0.000000] now;
 	move locase to z-axis [0.000000] now;
-	move locase to z-axis [-1.874985] speed [2.382446];
-	move rfirept to y-axis [-0.099930] now;
-	move rfirept to z-axis [0.549957] now;
-	move lfirept to y-axis [-0.099930] now;
-	move lfirept to z-axis [0.549957] now;
+	move locase to z-axis [-0.749994] speed [0.952972];
+	move rfirept to y-axis [-0.039972] now;
+	move rfirept to z-axis [0.219977] now;
+	move lfirept to y-axis [-0.039972] now;
+	move lfirept to z-axis [0.219977] now;
 	turn upcase2 to x-axis <0.000000> now;
 	turn upcase2 to x-axis <-43.945055> speed <55.846154>;
 	turn locase to x-axis <0.000000> now;
 	turn locase to x-axis <61.538462> speed <78.192308>;
 	sleep 787;
-
-	RackClosed=0;
-	move upcase2 to z-axis [-10.999985] speed [111.111084];
+	RackClosed = 0;
+	move upcase2 to z-axis [-4.399994] speed [44.444434];
 	turn upcase2 to x-axis <-47.115385> speed <31.967033>;
 	sleep 99;
-
 	turn upcase2 to x-axis <-122.016484> speed <687.159341>;
 	sleep 109;
-
 	turn upcase2 to x-axis <-45.714286> speed <451.516484>;
 	sleep 169;
-
 	turn upcase2 to x-axis <-19.692308> speed <377.126374>;
 	sleep 69;
-
 	turn upcase2 to x-axis <-47.115385> speed <1443.604396>;
 	sleep 19;
 }
 
 close()
 {
-	RackClosed=1;
+	RackClosed = 1;
 	move lcannon to y-axis [0.000000] now;
 	move lcannon to z-axis [0.000000] now;
 	move rcannon to y-axis [0.000000] now;
 	move rcannon to z-axis [0.000000] now;
-	move upcase2 to z-axis [-10.999985] now;
-	move upcase2 to z-axis [2.375000] speed [29.266937];
+	move upcase2 to z-axis [-4.399994] now;
+	move upcase2 to z-axis [0.950000] speed [11.706769];
 	move locase to y-axis [0.000000] now;
-	move locase to z-axis [-1.874985] now;
-	move rfirept to y-axis [-0.099930] now;
-	move rfirept to z-axis [0.549957] now;
-	move lfirept to y-axis [-0.099930] now;
-	move lfirept to z-axis [0.549957] now;
+	move locase to z-axis [-0.749994] now;
+	move rfirept to y-axis [-0.039972] now;
+	move rfirept to z-axis [0.219977] now;
+	move lfirept to y-axis [-0.039972] now;
+	move lfirept to z-axis [0.219977] now;
 	turn upcase2 to x-axis <-47.115385> now;
 	turn locase to x-axis <61.538462> now;
 	sleep 457;
-
-	move upcase2 to z-axis [4.250000] speed [17.523407];
+	move upcase2 to z-axis [1.700000] speed [7.009363];
 	turn upcase2 to x-axis <-41.137363> speed <55.868132>;
 	sleep 107;
-
-	move upcase2 to z-axis [0.000000] speed [250.000427];
-	move locase to z-axis [0.000000] speed [110.293777];
+	move upcase2 to z-axis [0.000000] speed [100.000165];
+	move locase to z-axis [0.000000] speed [44.117505];
 	turn upcase2 to x-axis <0.000000> speed <2420.159341>;
 	turn locase to x-axis <0.000000> speed <3619.901099>;
 	sleep 17;
@@ -614,7 +607,7 @@ AimFromPrimary(piecenum)
 
 QueryPrimary(piecenum)
 {
-	if( gun )
+	if( gun_1 )
 	{
 		piecenum = rfirept;
 	}
@@ -626,21 +619,24 @@ QueryPrimary(piecenum)
 
 FirePrimary()
 {
-	if( gun )
+	if ( gun_1 == 0 )
 	{
 		emit-sfx UNIT_SFX1 from lfirept;
-		move lcannon to z-axis [-5.000000] speed [62.500000];
+		move lcannon to z-axis [-2.000000] speed [25.000000];
 		sleep 100;
-		move lcannon to z-axis [0.000000] speed [1.875000];
+		move lcannon to z-axis [0.000000] speed [0.750000];
+		gun_1 = 1;
+		return (0);
 	}
-	else
+	if ( gun_1 == 1 )
 	{
 		emit-sfx UNIT_SFX1 from rfirept;
-		move rcannon to z-axis [-5.000000] speed [62.500000];
+		move rcannon to z-axis [-2.000000] speed [25.000000];
 		sleep 100;
-		move rcannon to z-axis [0.000000] speed [1.875000];
+		move rcannon to z-axis [0.000000] speed [0.750000];
+		gun_1 = 0;
+		return (0);
 	}
-	gun = !gun;
 }
 
 AimWeapon2(heading, pitch)
@@ -665,26 +661,29 @@ AimWeapon2(heading, pitch)
 
 FireWeapon2()
 {
-	if( gun)
+	if ( gun_1 == 0 )
 	{
 		emit-sfx UNIT_SFX1 from lfirept;
-		move lcannon to z-axis [-5.000000] speed [62.500000];
+		move lcannon to z-axis [-2.000000] speed [25.000000];
 		sleep 100;
-		move lcannon to z-axis [0.000000] speed [1.875000];
+		move lcannon to z-axis [0.000000] speed [0.750000];
+		gun_1 = 1;
+		return (0);
 	}
-	else
+	if ( gun_1 == 1 )
 	{
 		emit-sfx UNIT_SFX1 from rfirept;
-		move rcannon to z-axis [-5.000000] speed [62.500000];
+		move rcannon to z-axis [-2.000000] speed [25.000000];
 		sleep 100;
-		move rcannon to z-axis [0.000000] speed [1.875000];
+		move rcannon to z-axis [0.000000] speed [0.750000];
+		gun_1 = 0;
+		return (0);
 	}
-	gun = !gun;
 }
 
 QueryWeapon2(piecenum)
 {
-	if( gun )
+	if( gun_1 )
 	{
 		piecenum = lfirept;
 	}

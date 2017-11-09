@@ -10,13 +10,13 @@
 	Description=Artillery Tortoise;
 	FootprintX=4;
 	FootprintZ=4;
-	BuildCostEnergy=8988;
+	BuildCostEnergy=6988;
 	BuildCostMetal=754;
 	MaxDamage=2553;
 	MaxSlope=12;
 	MaxWaterDepth=100;
 	EnergyUse=2;
-	BuildTime=11229;
+	BuildTime=9229;
 	BMcode=1;
 	Builder=0;
 	ThreeD=1;

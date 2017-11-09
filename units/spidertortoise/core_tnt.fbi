@@ -9,9 +9,9 @@
 	Description=Inevitably Slow Walking Bomb;
 	FootprintX=3;
 	FootprintZ=3;
-	BuildCostEnergy=2065;
+	BuildCostEnergy=1365;
 	BuildCostMetal=181;
-	BuildTime=5472;
+	BuildTime=3472;
 	MaxDamage=2002;
 	EnergyUse=0.1;
 	WorkerTime=0;

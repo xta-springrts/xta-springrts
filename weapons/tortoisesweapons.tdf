@@ -1,0 +1,798 @@
+
+[CORE_EQUAL_Shield]
+{
+	name=PlasmaRepulsor;
+	WeaponType="Shield";
+	shieldrepulser=1;
+	smartshield=1;
+	visibleshieldrepulse=0;
+	shieldenergyuse=0;
+	shieldforce=1.0;
+	shieldmaxspeed=50;
+	shieldradius=325;
+	shieldpower=10000;
+	//shieldintercepttype=1;
+	shieldintercepttype=3;
+	shieldgoodcolor=0.1 0.1 0.1;
+	shieldbadcolor=1.0 1.0 1.0;
+	shieldalpha=0.1;
+	VisibleShieldHitFrames=70;
+        ShieldPowerRegen=250;
+        ShieldPowerRegenEnergy=0.0;
+        VisibleShield=1;
+        range=425;	
+	[DAMAGE]
+	{
+		default=100;
+	}
+}
+[CORE_BLACK_Shield]
+{
+	name=PlasmaRepulsor;
+	WeaponType="Shield";
+	shieldrepulser=1;
+	smartshield=1;
+	visibleshieldrepulse=1;
+	shieldenergyuse=200;
+	shieldforce=-2.0;
+	shieldmaxspeed=100;
+	shieldradius=325;
+	shieldpower=15000;
+	//shieldintercepttype=1;
+	shieldintercepttype=3;
+	shieldgoodcolor=0.1 0.1 0.1;
+	shieldbadcolor=1.0 1.0 1.0;
+	shieldalpha=0.7;
+	VisibleShieldHitFrames=70;
+        ShieldPowerRegen=200;
+        ShieldPowerRegenEnergy=200.0;
+        VisibleShield=1;
+        range=425;	
+	[DAMAGE]
+	{
+		default=100;
+	}
+}
+[turbotron] //defender, pulverizer
+{
+	name=Missiles;
+	turret=1;
+	model=weapon_exphvyrock;
+	explosiongenerator=custom:T1_2X2_UNIT_EXPLOSION;
+	Texture1=null;
+	range=850;
+	reloadtime=1;
+	weapontimer=3;
+	weaponvelocity=1000;
+	startvelocity=100;
+	weaponacceleration=900;
+	turnrate=41660;
+	areaofeffect=64;
+	cylindertargeting=1;
+	soundstart=mislhvy3;
+	soundhitdry=xplomed2;
+	firestarter=70;
+	smokedelay=0.1;
+	tracks=1;
+	smoketrail=0;
+	dance=20;
+	trajectoryHeight=0.2;
+	cegTag=RAVENTRAIL;
+	Weapontype=MissileLauncher;
+	tolerance=10000;
+	startsmoke=1;
+	flighttime=3;
+	collidefriendly=0;
+	avoidfriendly=1;
+	[DAMAGE]
+	{
+		default=200;
+		//lost_commanders=41;
+		group_invincible=1;
+		group_landair=350;
+		group_skyair=350;
+	}
+}
+[TURBULENCE_FLAK]
+{
+	name=FLAK Cannon;
+	explosiongenerator=custom:RedPlasma;
+	energypershot=50;
+	rgbcolor=1.0 0.9 0.5;
+	stages=8;
+  	separation=0.45;
+  	alphadecay=0.1;
+  	sizedecay=-0.10;
+  	nogap=1;
+	size=3.5;
+	weaponType=Cannon;
+	turret=1;
+	range=850;
+	reloadtime=0.75;
+	weaponvelocity=1550; //550
+	areaofeffect=175;
+	startsmoke=1;
+	accuracy=600;
+	SoundStart=Cannon3;
+	SoundHit=SabotHit;
+	burnblow=1;
+	mygravity=0.001;
+	[DAMAGE]
+	{
+		default=125;
+		//group_ships=275;
+		//group_large_ships=355;
+		//group_invincible=1;
+		group_landair=575;
+		group_skyair=575;
+	}
+}
+
+[Judgement_FIRE]
+{
+	name=Judge Cannon;
+	rgbcolor=1 0.9 0.8;
+	stages=15;
+	separation=0.45;
+	alphadecay=0.3;
+	sizedecay=-0.15;
+	nogap=1;
+	size=4;
+	//explosiongenerator=custom:BERTHASHOT;
+	explosiongenerator=custom:PUFFY;
+	//cegTag=VULCANFX;
+	//cegTag=DEBREE1;
+	GroundBounce=0;
+	WaterBounce=0;
+	NumBounce=1;
+	BounceSlip=1.01;
+	BounceRebound=0.8;
+	turret=1;
+	//minbarrelangle=-15;
+	//color=3;
+	range=1100;
+	reloadtime=1.0;
+	weaponvelocity=700;
+	areaofeffect=90;
+	soundstart=CORBOSS_FIRE;
+	soundhitdry=CORBOSS_IMPACT;
+	energypershot=800;
+	tolerance=3000;
+	startsmoke=1;
+	w=46.1;
+	//explosiongenerator=custom:raven;
+	//myGravity=0.8;
+	accuracy=750;
+	[DAMAGE]
+	{
+		default=600;
+		group_invincible=1;
+	}
+}
+[CORE_BaMLaSeR]
+{
+	name=Doomsday Weapon;
+	Weapontype=BeamLaser;
+	turret=1;
+	beamdecay=0.5;
+	beamtime=0.375;
+	beamttl=5;
+	range=700;
+	reloadtime=3;
+	energypershot=400;
+	weaponvelocity=1000;
+	areaofeffect=16;
+	targetMoveError=0.5;
+	soundstart=CORSNIPE_laser;
+	soundhitdry=xplosml4;
+	SoundTrigger=1;
+	firestarter=90;
+	rgbcolor=0.1 0.9 1.000;
+	explosiongenerator=custom:PURPLELASER;
+	pulseSpeed=0.5;
+	thickness=3.5;
+	[DAMAGE]
+	{
+		default=1900;
+		group_commanders=1020;
+		lost_commanders=820;
+		group_invincible=1;
+	}
+}
+
+[HABOOB_WEAPON]
+{
+	name=Bertha Cannon;
+	rgbcolor=1 0.8 0.5;
+	stages=20;
+	separation=0.45;
+	alphadecay=0.3;
+	sizedecay=-0.15;
+	nogap=1;
+	size=3;
+	GroundBounce=0;
+	WaterBounce=0;
+	NumBounce=2;
+	BounceSlip=1.01;
+	BounceRebound=0.25;
+	weaponType=Cannon;
+	turret=1;
+	//color=3;
+	range=2500;
+	reloadtime=0.75;
+	weaponvelocity=620;
+	energypershot=2000;
+	areaofeffect=108;
+	soundstart=xplonuk3;
+	soundhitdry=xplonuk1;
+	firestarter=50;
+	accuracy=500;
+	aimrate=2500;
+	tolerance=8000;
+	explosiongenerator=custom:BERTHASHOT;
+	cegTag=VULCANFX;
+	startsmoke=1;
+	soundtrigger=1;
+	weapontimer=20;
+	[DAMAGE]
+	{
+		default=1003;
+		group_invincible=1;
+	}
+}
+[BOSS_FIRE]
+{
+	name=Gauss Cannon;
+	rgbcolor=1 0.8 0.5;
+	stages=15;
+	separation=0.45;
+	alphadecay=0.3;
+	sizedecay=-0.15;
+	nogap=1;
+	size=3;
+	explosiongenerator=custom:BERTHASHOT;
+	cegTag=VULCANFX;
+	//cegTag=DEBREE1;
+	GroundBounce=0;
+	WaterBounce=0;
+	NumBounce=1;
+	BounceSlip=1.01;
+	BounceRebound=0.8;
+	turret=1;
+	//minbarrelangle=-15;
+	//color=3;
+	range=575;
+	reloadtime=1.5;
+	weaponvelocity=700;
+	areaofeffect=80;
+	soundstart=krogun1;
+	soundhitdry=xplomed1;
+	energypershot=200;
+	tolerance=3000;
+	startsmoke=1;
+	w=46.1;
+	//explosiongenerator=custom:raven;
+	myGravity=0.8;
+	[DAMAGE]
+	{
+		default=500;
+		group_invincible=1;
+	}
+}
+[CORE_BRUTLASER]
+{
+	name=Light Laser;
+	Weapontype=LaserCannon;
+	explosiongenerator=custom:Gator;
+	cegTag=REDCRAP;
+	duration=0.08;
+	thickness=1.2;
+	Intensity=0.9;
+	turret=1;
+	range=400;
+	reloadtime=0.8;
+	weaponvelocity=1200;
+	areaofeffect=8;
+	soundtrigger=1;
+	soundstart=lasrfir3;
+	soundhitdry=lasrhit2;
+	firestarter=30;
+	rgbcolor=1.000 0.059 0.000;
+	tolerance=700;
+	[DAMAGE]
+	{
+		default=76;
+		group_invincible=1;
+	}
+}
+[CORBRUTE_WEAPON]
+{
+	name=High Energy Laser;
+	explosiongenerator=custom:GreenLaser;
+	cegTag=GREENCRAP;
+	Weapontype=LaserCannon;
+	duration=0.06;
+	thickness=1.6;
+	Intensity=0.9;
+	turret=1;
+	range=650;
+	reloadtime=1;
+	energypershot=192;
+	weaponvelocity=1400;
+	areaofeffect=12;
+	soundstart=lasrhvy3;
+	soundhitdry=lasrhit1;
+	firestarter=90;
+	rgbcolor=0.000 1.000 0.259;
+	tolerance=500;
+	[DAMAGE]
+	{
+		default=161;
+		group_invincible=1;
+		group_landair=60;
+		group_skyair=60;
+	}
+}
+[TORTOISE_RAPIDBEAM]
+{
+	areaofeffect=8;
+	beamdecay=0.8;
+	beamtime=0.1;
+	beamttl=5;
+	corethickness=0.3;
+	energypershot=40;
+	explosiongenerator=custom:REDHEAVYLASER;
+	hardstop=false;
+	intensity=0.001;
+	largebeamlaser=1;
+	laserflaresize=1;
+	name=PewPew;
+	noselfdamage=1;
+	pulsespeed=7.0;
+	range=300;
+	reloadtime=0.5;
+	Burst=1;
+	//projectiles=2;
+	Burstrate=0.1;
+	rgbcolor=0.9 0.6 0.5;
+	//soundhitdry=xplolrg;
+	soundstart=gatlinglaser;
+	targetmoveerror=0.30000001192093;
+	thickness=1;
+	tolerance=10000;
+	turret=1;
+	weapontype=BeamLaser;
+	weaponvelocity=1500;
+	accuracy=100;
+	[DAMAGE]
+	{
+		default=100;//50
+	}
+}
+[Ambassador_MISSILE]
+{
+	name=Missiles;
+	explosiongenerator=custom:KBOTROCKETHIT;
+	cegTag=KBOTROCKETTRAIL;
+	Weapontype=MissileLauncher;
+	turret=1;
+	model=missile.s3o;
+	Texture1=null;
+	range=733;
+	reloadtime=1.333;
+	weapontimer=5;
+	weaponvelocity=950;
+	startvelocity=750;
+	weaponacceleration=101;
+	turnrate=50000;
+	trajectoryHeight=0.08;
+	dance=30;
+	areaofeffect=32;
+	soundstart=CORSLING_fire;
+	soundhitdry=xplosml2;
+	firestarter=70;
+	smokedelay=0.1;
+	tracks=1;
+	smoketrail=0;
+	tolerance=9000;
+	startsmoke=1;
+	[DAMAGE]
+	{
+		default=75;
+		group_landair=173;
+		group_skyair=173;
+		group_invincible=1;
+	}
+}
+
+[TORTOISE_HATCHBEAM]
+{
+	areaofeffect=8;
+	beamdecay=0.8;
+	beamtime=0.2;
+	beamttl=5;
+	corethickness=0.3;
+	energypershot=0;
+	explosiongenerator=custom:PINKFLASH;
+	hardstop=false;
+	intensity=0.001;
+	largebeamlaser=1;
+	laserflaresize=5;
+	name=PewPew;
+	noselfdamage=1;
+	pulsespeed=7.0;
+	range=350;
+	reloadtime=1.25;
+	rgbcolor=0.7 0.2 1;
+	//soundhitdry=xplolrg;
+	soundstart=corhatch_laser;
+	targetmoveerror=0.30000001192093;
+	thickness=3;
+	tolerance=10000;
+	turret=1;
+	weapontype=BeamLaser;
+	weaponvelocity=1500;
+	[DAMAGE]
+	{
+		default=75;//50
+	}
+}
+[SLINGSHOT_MISSILE]
+{
+	name=Missiles;
+	explosiongenerator=custom:KBOTROCKETHIT;
+	cegTag=KBOTROCKETTRAIL;
+	Weapontype=MissileLauncher;
+	turret=1;
+	model=missile.s3o;
+	Texture1=null;
+	range=695;
+	reloadtime=2.7;
+	weapontimer=5;
+	weaponvelocity=750;
+	startvelocity=550;
+	weaponacceleration=101;
+	turnrate=50000;
+	trajectoryHeight=0.08;
+	dance=30;
+	areaofeffect=32;
+	soundstart=CORSLING_fire;
+	soundhitdry=xplosml2;
+	firestarter=70;
+	smokedelay=0.1;
+	tracks=1;
+	smoketrail=0;
+	tolerance=9000;
+	startsmoke=1;
+	[DAMAGE]
+	{
+		default=75;
+		group_landair=173;
+		group_skyair=173;
+		group_invincible=1;
+	}
+}
+
+[CORE_OUTBACKDAY]
+{
+	name=Doomsday Weapon;
+	Weapontype=BeamLaser;
+	turret=1;
+	beamdecay=0.5;
+	beamtime=0.375;
+	beamttl=5;
+	range=1050;
+	reloadtime=12;
+	energypershot=400;
+	weaponvelocity=1000;
+	areaofeffect=16;
+	targetMoveError=0.5;
+	soundstart=CORSNIPE_laser;
+	soundhitdry=xplosml4;
+	SoundTrigger=1;
+	firestarter=90;
+	rgbcolor=0.1 0.9 1.000;
+	explosiongenerator=custom:PURPLELASER;
+	pulseSpeed=0.5;
+	thickness=3.5;
+	[DAMAGE]
+	{
+		default=1900;
+		group_commanders=1020;
+		lost_commanders=820;
+		group_invincible=1;
+	}
+}
+
+[CORE_WRECKER]
+{
+	name=Heavy Cannon;
+	weaponType=Cannon;
+	turret=1;
+	//minbarrelangle=-25;
+	range=900;
+	reloadtime=4;
+	weaponvelocity=700;
+	areaofeffect=96;
+	energypershot=226;
+	explosiongenerator=custom:popupcannon;
+	soundstart=cannhvy1;
+	soundhitdry=xplomed2;
+	accuracy=1100;
+	movingaccuracy=1400;
+	tolerance=500;
+	startsmoke=1;
+	size=3.45;
+	rgbcolor=1 0.50 0.1;
+	stages=7;
+	separation=0.66;
+	alphadecay=0.8;
+	sizedecay=-0.11;
+	[DAMAGE]
+	{
+		default=365;
+		group_ships=584;
+		group_large_ships=624;
+		group_invincible=1;
+	}
+}
+
+[CORE_AVAROCKET]
+{
+	name=Heavy Multi-Launch Rockets;
+	Weapontype=MissileLauncher;
+	explosiongenerator=custom:PUFFY;
+	cegTag=RAVENTRAIL;
+	Texture1=null;
+	Texture2=null;
+	Texture3=null;
+	Texture4=null;
+	CollideFriendly=0;
+	impulsefactor=0.6;
+	turret=1;
+	model=weapon_exphvyrock;
+	range=590;
+	reloadtime=6;
+	weapontimer=0.33; //6
+	weaponvelocity=300;
+	startvelocity=100;
+	weaponacceleration=100;
+	areaofeffect=48;  //80
+	energypershot=50;
+	Burst=1;
+	Burstrate=0.1666;
+	Trajectoryheight=0.5;
+	Wobble=1900; //14000
+	Dance=30;
+	flighttime=7.5;
+	//turnrate=5000;	//4000
+	//edgeeffectiveness=0.75;
+	soundstart=Rockhvy1;
+	soundhitdry=xplomed4;
+	firestarter=70;
+	smokedelay=0.1;
+	smoketrail=0;
+	startsmoke=0;
+	[DAMAGE]
+	{
+		default=450;	//800
+		group_invincible=1;
+	}
+}
+[CORE_AVAROCKETOLD]
+{
+	name=Rockets;
+	Weapontype=MissileLauncher;
+	turret=1;
+	model=missile.s3o;
+	explosiongenerator=custom:PUFFY;
+	cegTag=RAVENTRAIL;
+	Texture1=null;
+	Texture2=null;
+	Texture3=null;
+	Texture4=null;
+	range=560;
+	reloadtime=6.2;
+	weapontimer=5;
+	flighttime=2;
+	Trajectoryheight=0.2;
+	weaponvelocity=500;
+	startvelocity=100;
+	weaponacceleration=200;
+	turnrate=5000;
+	areaofeffect=48;
+	soundstart=Rockhvy1;
+	soundhitdry=xplomed4;
+	firestarter=70;
+	smoketrail=0;
+	startsmoke=0;
+	[DAMAGE]
+	{
+		default=466;
+		group_invincible=1;
+	}
+}
+
+[CHELCHELIONLASER]
+{
+	name=RX3Laser;
+	Weapontype=BeamLaser;
+	areaofeffect=12;
+	energypershot=200;
+	beamtime=0.40;
+	corethickness=0.57;
+	craterboost=1;
+	cratermult=1;
+	duration=0.31;
+	edgeeffectiveness=0.99;
+	explosiongenerator=custom:ZIPPERDICKER_EFFECT;
+	firestarter=70;
+	interceptedbyshieldtype=0;
+	laserflaresize=8;
+	noselfdamage=1;
+	range=330;
+	reloadtime=2.5;
+	rgbcolor=0.7 0.2 0.2;
+	soundhitdry=ionbeam;
+	soundstart=ionbeam;
+	soundtrigger=1;
+	targetmoveerror=0.05;
+	thickness=6.5;
+	tolerance=10000;
+	turret=1;
+	weaponvelocity=900;
+	dyndamageexp=1;
+	dyndamageinverted=0;
+	[DAMAGE]
+	{
+		default=800;
+		group_invincible=1;
+	}
+}
+
+[CHELCHELSTEAMTHROWER]
+{
+	name=Flame Thrower;
+	//Weapontype=LaserCannon;
+	Weapontype=Cannon;
+	explosiongenerator=custom:WhiteSteam;
+	cegTag=WhiteSteam;
+	NoSelfDamage=1;	
+	SoundTrigger=1;
+	stages=1;
+	Texture1=laglesssmoke;
+	Texture2=null;
+	Texture3=null;
+	Texture4=null;
+	duration=0.05;
+	myGravity=0.01;
+	thickness=3.5;
+	Intensity=0.1;
+	turret=1;
+	range=250;
+	burnblow=1;
+	waterweapon=1;
+	fireSubmersed=1;
+	reloadtime=1.6;
+	weapontimer=4.5;
+	weaponvelocity=280;
+	areaofeffect=20;
+	rgbcolor=1 1 1;
+	//flamegfxtime=1.3;
+	//sizegrowth=0.2;
+	burst=15;
+	burstrate=0.075;
+	sprayangle=1524;
+	randomdecay=0;
+	soundstart=steamturtle;
+	soundhitdry=;
+	firestarter=100;
+	groundbounce=1;
+	smokedelay=1;
+	startsmoke=0;
+	endsmoke=1;
+	tolerance=8000;
+	//minbarrelangle=-90;
+	[DAMAGE]
+	{
+		default=8;
+		group_invincible=1;
+	}
+}
+[CHELCHELFLAMETHROWER]
+{
+	name=Flame Thrower;
+	Weapontype=LaserCannon;
+	explosiongenerator=custom:FLAMETHROWER;
+	NoSelfDamage=1;	
+	SoundTrigger=1;
+	Texture1=flamer;
+	Texture2=null;
+	Texture3=null;
+	Texture4=null;
+	turret=1;
+	range=290;
+	reloadtime=0.5;
+	weapontimer=4.5;
+	weaponvelocity=260;
+	areaofeffect=40;
+	flamegfxtime=1.3;
+	sizegrowth=0.7;
+	burst=15;
+	burstrate=0.01;
+	sprayangle=1024;
+	randomdecay=0;
+	soundstart=Flamhvy1;
+	soundhitdry=;
+	firestarter=100;
+	groundbounce=1;
+	smokedelay=1;
+	startsmoke=0;
+	endsmoke=1;
+	tolerance=8000;
+	//minbarrelangle=-90;
+	[DAMAGE]
+	{
+		default=5;
+		group_invincible=1;
+	}
+}
+[BioElectric_WEAPON]
+{
+	name=Electro Weapon;
+	Weapontype=LaserCannon;
+	turret=1;
+	range=500;
+	duration=0.2;
+	reloadtime=2.5;
+	energypershot=300;
+	weaponvelocity=650;
+	areaofeffect=8;
+	soundstart=LNGPARA;
+	soundhitdry=lasrhit1;
+	firestarter=90;
+	rgbcolor=0.6 1.0 0.6;
+	explosiongenerator=custom:GREENLASER;
+  	texture1=testlightning;
+	Texture2=null;
+	Texture3=null;
+	Texture4=null;
+	thickness=12;
+	noexplode=1;
+	burnblow=1;
+	//paralyzer=1;
+	//paralyzetime=40;
+	[DAMAGE]
+	{
+		default=66.6;
+		group_invincible=1;
+		//group_commanders=75;
+		//group_landair=191;
+
+	}
+}
+
+[TortoiseAngryBomb]
+{
+	name=Boom Mine;
+	weaponType=Cannon;
+	range=1;
+	turret=1;
+	range=200;
+	reloadtime=3.6;
+	weaponvelocity=250;
+	areaofeffect=305;
+	soundstart=largegun;
+	soundhitdry=exmine3;
+	edgeeffectiveness=0.5;
+	shakemagnitude=0;
+	shakeduration=0;
+	explosiongenerator=custom:LaunchNuke;
+	[DAMAGE]
+	{
+		default=2500;
+		group_commanders=1575;
+		group_mines=0.5;
+		group_invincible=1;
+	}
+}

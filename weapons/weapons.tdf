@@ -340,6 +340,8 @@
 	tolerance=8000;
 	startsmoke=1;
 	cegTag=KBOTMISSILETRAIL;
+	collidefriendly=0;
+	avoidfriendly=1;
 	[DAMAGE]
 	{
 		default=28;
@@ -445,6 +447,8 @@
 	smoketrail=0;
 	tolerance=10000;
 	startsmoke=1;
+	collidefriendly=0;
+	avoidfriendly=1;
 	[DAMAGE]
 	{
 		default=60;
@@ -574,6 +578,8 @@
 	GroundBounce=1;
 	BounceSlip=1.01;
 	BounceRebound=0.8;
+	collidefriendly=0;
+	avoidfriendly=1;
 	[DAMAGE]
 	{
 		default=46;
@@ -942,6 +948,8 @@
 	GroundBounce=1;
 	BounceSlip=1.01;
 	BounceRebound=0.8;
+	collidefriendly=0;
+	avoidfriendly=1;
 	[DAMAGE]
 	{
 		default=46;
@@ -967,7 +975,7 @@
 	startvelocity=550;
 	weaponacceleration=101;
 	turnrate=50000;
-	trajectoryHeight=0.08;
+	//trajectoryHeight=0.08;
 	dance=30;
 	areaofeffect=48;
 	soundstart=rocklit1;
@@ -978,6 +986,8 @@
 	smoketrail=0;
 	tolerance=9000;
 	startsmoke=1;
+	collidefriendly=0;
+	avoidfriendly=1;
 	[DAMAGE]
 	{
 		default=31;
@@ -1296,7 +1306,7 @@
 	reloadtime=9;
 	noautorange=1;
 	weapontimer=4;
-	flighttime=7.5;
+	flighttime=10;
 	weaponvelocity=600;
 	weaponacceleration=100;
 	turnrate=24384;
@@ -1344,8 +1354,10 @@
 	smoketrail=0;
 	tolerance=10000;
 	startsmoke=1;
-	trajectoryHeight=0.20;
+	//trajectoryHeight=0.20;
 	dance=30;
+	collidefriendly=0;
+	avoidfriendly=1;
 	[DAMAGE]
 	{
 		default=36;
@@ -1391,6 +1403,7 @@
 	tracks=1;
 	tolerance=4000;
 	startsmoke=0;
+	CollideFriendly=0;
 	[DAMAGE]
 	{
 		default=500;
@@ -1647,6 +1660,8 @@
 	GroundBounce=1;
 	BounceSlip=1.01;
 	BounceRebound=0.8;
+	collidefriendly=0;
+	avoidfriendly=1;
 	[DAMAGE]
 	{
 		default=42;
@@ -1768,7 +1783,7 @@
 	startvelocity=550;
 	weaponacceleration=141;
 	turnrate=41660;
-	trajectoryHeight=0.16;
+	//trajectoryHeight=0.16;
 	dance=30;
 	areaofeffect=48;
 	cylindertargeting = 1;
@@ -1783,6 +1798,8 @@
 	Weapontype=MissileLauncher;
 	tolerance=8000;
 	startsmoke=1;
+	collidefriendly=0;
+	avoidfriendly=1;
 	[DAMAGE]
 	{
 		default=41;
@@ -2795,7 +2812,7 @@
 	startvelocity=470;
 	weaponacceleration=154;
 	turnrate=50000;
-	trajectoryHeight=0.08;
+	//trajectoryHeight=0.08;
 	dance=30;
 	areaofeffect=48;
 	cylindertargeting = 1;
@@ -2809,6 +2826,8 @@
 	Weapontype=MissileLauncher;
 	tolerance=10000;
 	startsmoke=1;
+	collidefriendly=0;
+	avoidfriendly=1;
 	[DAMAGE]
 	{
 		default=51;
@@ -3997,6 +4016,7 @@
 	tracks=1;
 	tolerance=4000;
 	startsmoke=0;
+	CollideFriendly=0;
 	[DAMAGE]
 	{
 		default=500;
@@ -4222,7 +4242,7 @@
 	reloadtime=8;
 	noautorange=1;
 	weapontimer=4;
-	flighttime=7.5;
+	flighttime=10;
 	weaponvelocity=600;
 	weaponacceleration=100;
 	turnrate=20000;
@@ -4330,8 +4350,10 @@
 	Weapontype=MissileLauncher;
 	tolerance=10000;
 	startsmoke=1;
-	trajectoryHeight=0.20;
+	//trajectoryHeight=0.20;
 	dance=30;
+	collidefriendly=0;
+	avoidfriendly=1;
 	[DAMAGE]
 	{
 		default=35;
@@ -4451,6 +4473,8 @@
 	GroundBounce=1;
 	BounceSlip=1.01;
 	BounceRebound=0.8;
+	collidefriendly=0;
+	avoidfriendly=1;
 	[DAMAGE]
 	{
 		default=68;
@@ -4696,7 +4720,7 @@
 	weaponacceleration=136;
 	explosiongenerator=custom:KBOTMISSILEHIT;
 	turnrate=41660;
-	trajectoryHeight=0.16;
+	//trajectoryHeight=0.16;
 	dance=30;
 	flighttime=2.5;
 	areaofeffect=48;
@@ -4711,6 +4735,8 @@
 	Weapontype=MissileLauncher;
 	tolerance=8000;
 	startsmoke=1;
+	collidefriendly=0;
+	avoidfriendly=1;
 	[DAMAGE]
 	{
 		default=40;
@@ -5271,6 +5297,7 @@
 	tracks=1;
 	tolerance=4000;
 	startsmoke=1;
+	CollideFriendly=0;
 	[DAMAGE]
 	{
 		default=500;
@@ -5990,6 +6017,8 @@
 	tolerance=10000;
 	startsmoke=1;
 	flighttime=5;
+	collidefriendly=0;
+	avoidfriendly=1;
 	[DAMAGE]
 	{
 		default=46;
@@ -6478,9 +6507,9 @@
 	Weapontype=MissileLauncher;
 	tolerance=9000;
 	startsmoke=1;
-	Trajectoryheight=0.25;
+	Trajectoryheight=0.1;
 	collidefriendly=0;
-	avoidfriendly=0;
+	avoidfriendly=1;
 	[DAMAGE]
 	{
 		default=28;
@@ -6518,7 +6547,7 @@
 	startsmoke=1;
 	Trajectoryheight=0.50;
 	collidefriendly=0;
-	avoidfriendly=0;
+	avoidfriendly=1;
 	[DAMAGE]
 	{
 		default=33;

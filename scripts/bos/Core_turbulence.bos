@@ -1,0 +1,640 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+piece  base, body, leg1, foot1, leg2, foot2, leg3, foot3, leg4, foot4, turret, door1,
+	   door2, gun1a, gun1b, barrel1a, barrel1b, flare1a, flare1b, turret2, gun2,
+	   barrel2a, barrel2b, barrel2c, barrel2d, flare2a, flare2b, flare2c, flare2d, radar;
+
+static-var  bMoving, gun_1, gun_2, S_Var_4, S_Var_5, restore_delay;
+
+// Signal definitions
+#define SIG_AIM 		2
+#define SIG_AIM_2		4
+
+SmokeUnit(healthpercent, sleeptime, smoketype)
+{
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 400;
+	}
+	while( TRUE )
+	{
+		healthpercent = get HEALTH;
+		if( healthpercent < 66 )
+		{
+			smoketype = 256 | 2;
+			if( Rand( 1, 66 ) < healthpercent )
+			{
+				smoketype = 256 | 1;
+			}
+			emit-sfx smoketype from turret;
+		}
+		sleeptime = healthpercent * 50;
+		if( sleeptime < 200 )
+		{
+			sleeptime = 200;
+		}
+		sleep sleeptime;
+	}
+}
+
+MotionControl()
+{
+	while( TRUE )
+	{
+		if( bMoving )
+		{
+			turn Leg1 to y-axis <15.000000> speed <72.000000>;
+			move Leg1 to x-axis [0.075000] now;
+			move Leg1 to z-axis [-0.075000] now;
+			turn Leg2 to y-axis <-25.000000> speed <144.000000>;
+			turn Leg2 to z-axis <50.000000> speed <144.000000>;
+			turn Foot2 to z-axis <-50.000000> speed <144.000000>;
+			turn Leg3 to y-axis <-35.000000> speed <72.000000>;
+			turn Leg4 to y-axis <25.000000> speed <72.000000>;
+			turn Foot1 to y-axis <-15.000000> speed <72.000000>;
+			turn Foot2 to y-axis <25.000000> speed <144.000000>;
+			turn Foot3 to y-axis <35.000000> speed <72.000000>;
+			turn Foot4 to y-axis <-25.000000> speed <72.000000>;
+			sleep 80;
+			turn Leg1 to y-axis <10.000000> speed <72.000000>;
+			move Leg1 to x-axis [0.150000] now;
+			move Leg1 to z-axis [-0.150000] now;
+			turn Leg2 to y-axis <-10.000000> speed <144.000000>;
+			turn Leg3 to y-axis <-30.000000> speed <72.000000>;
+			turn Leg4 to y-axis <30.000000> speed <72.000000>;
+			turn Foot1 to y-axis <-10.000000> speed <72.000000>;
+			turn Foot2 to y-axis <10.000000> speed <144.000000>;
+			turn Foot3 to y-axis <30.000000> speed <72.000000>;
+			turn Foot4 to y-axis <-30.000000> speed <72.000000>;
+			sleep 80;
+			turn Leg1 to y-axis <5.000000> speed <72.000000>;
+			move Leg1 to x-axis [0.225000] now;
+			move Leg1 to z-axis [-0.225000] now;
+			turn Leg2 to y-axis <5.000000> speed <144.000000>;
+			move Leg2 to x-axis [0.300000] now;
+			move Leg2 to z-axis [0.300000] now;
+			turn Leg3 to y-axis <-25.000000> speed <72.000000>;
+			turn Leg4 to y-axis <35.000000> speed <72.000000>;
+			turn Foot1 to y-axis <-5.000000> speed <72.000000>;
+			turn Foot2 to y-axis <-5.000000> speed <144.000000>;
+			turn Foot3 to y-axis <25.000000> speed <72.000000>;
+			turn Foot4 to y-axis <-35.000000> speed <72.000000>;
+			sleep 80;
+			turn Leg1 to y-axis <0.000000> speed <72.000000>;
+			move Leg1 to x-axis [0.300000] now;
+			move Leg1 to z-axis [-0.300000] now;
+			turn Leg2 to y-axis <20.000000> speed <144.000000>;
+			turn Leg2 to z-axis <0.000000> speed <144.000000>;
+			move Leg2 to x-axis [0.900000] speed [14.000000];
+			move Leg2 to z-axis [0.900000] speed [14.000000];
+			turn Foot2 to z-axis <0.000000> speed <144.000000>;
+			turn Leg3 to y-axis <-20.000000> speed <72.000000>;
+			turn Leg4 to y-axis <40.000000> speed <72.000000>;
+			turn Foot1 to y-axis <0.000000> speed <72.000000>;
+			turn Foot2 to y-axis <0.000000> speed <144.000000>;
+			turn Foot3 to y-axis <20.000000> speed <72.000000>;
+			turn Foot4 to y-axis <-40.000000> speed <72.000000>;
+			sleep 80;
+		}
+		if( bMoving )
+		{
+			turn Leg1 to y-axis <-5.000000> speed <72.000000>;
+			move Leg1 to x-axis [0.450000] now;
+			move Leg1 to z-axis [-0.450000] now;
+			turn Leg2 to y-axis <15.000000> speed <72.000000>;
+			move Leg2 to x-axis [0.750000] now;
+			move Leg2 to z-axis [0.750000] now;
+			turn Leg3 to y-axis <-15.000000> speed <72.000000>;
+			move Leg3 to x-axis [-0.075000] now;
+			move Leg3 to z-axis [-0.075000] now;
+			turn Leg4 to y-axis <25.000000> speed <144.000000>;
+			turn Leg4 to z-axis <-50.000000> speed <144.000000>;
+			turn Foot4 to z-axis <50.000000> speed <144.000000>;
+			turn Foot1 to y-axis <5.000000> speed <72.000000>;
+			turn Foot2 to y-axis <-15.000000> speed <72.000000>;
+			turn Foot3 to y-axis <15.000000> speed <72.000000>;
+			turn Foot4 to y-axis <-25.000000> speed <144.000000>;
+			sleep 80;
+			turn Leg1 to y-axis <-10.000000> speed <72.000000>;
+			move Leg1 to x-axis [0.600000] now;
+			move Leg1 to z-axis [-0.600000] now;
+			turn Leg2 to y-axis <10.000000> speed <72.000000>;
+			move Leg2 to x-axis [0.600000] now;
+			move Leg2 to z-axis [0.600000] now;
+			turn Leg3 to y-axis <-10.000000> speed <72.000000>;
+			move Leg3 to x-axis [-0.150000] now;
+			move Leg3 to z-axis [-0.150000] now;
+			turn Leg4 to y-axis <10.000000> speed <144.000000>;
+			turn Foot1 to y-axis <10.000000> speed <72.000000>;
+			turn Foot2 to y-axis <-10.000000> speed <72.000000>;
+			turn Foot3 to y-axis <10.000000> speed <72.000000>;
+			turn Foot4 to y-axis <-10.000000> speed <144.000000>;
+			sleep 80;
+			turn Leg1 to y-axis <-15.000000> speed <72.000000>;
+			move Leg1 to x-axis [0.750000] now;
+			move Leg1 to z-axis [-0.750000] now;
+			turn Leg2 to y-axis <5.000000> speed <72.000000>;
+			move Leg2 to x-axis [0.450000] now;
+			move Leg2 to z-axis [0.450000] now;
+			turn Leg3 to y-axis <-5.000000> speed <72.000000>;
+			move Leg3 to x-axis [-0.225000] now;
+			move Leg3 to z-axis [-0.225000] now;
+			turn Leg4 to y-axis <-5.000000> speed <144.000000>;
+			move Leg4 to x-axis [-0.300000] now;
+			move Leg4 to z-axis [0.300000] now;
+			turn Foot1 to y-axis <15.000000> speed <72.000000>;
+			turn Foot2 to y-axis <-5.000000> speed <72.000000>;
+			turn Foot3 to y-axis <5.000000> speed <72.000000>;
+			turn Foot4 to y-axis <5.000000> speed <144.000000>;
+			sleep 80;
+			turn Leg1 to y-axis <-20.000000> speed <72.000000>;
+			move Leg1 to x-axis [0.900000] now;
+			move Leg1 to z-axis [-0.900000] now;
+			turn Leg2 to y-axis <0.000000> speed <72.000000>;
+			move Leg2 to x-axis [0.300000] now;
+			move Leg2 to z-axis [0.300000] now;
+			turn Leg3 to y-axis <0.000000> speed <72.000000>;
+			move Leg3 to x-axis [-0.300000] now;
+			move Leg3 to z-axis [-0.300000] now;
+			turn Leg4 to y-axis <-20.000000> speed <144.000000>;
+			turn Leg4 to z-axis <0.000000> speed <144.000000>;
+			move Leg4 to x-axis [-0.900000] speed [14.000000];
+			move Leg4 to z-axis [0.900000] speed [14.000000];
+			turn Foot4 to z-axis <0.000000> speed <144.000000>;
+			turn Foot1 to y-axis <20.000000> speed <72.000000>;
+			turn Foot2 to y-axis <0.000000> speed <72.000000>;
+			turn Foot3 to y-axis <0.000000> speed <72.000000>;
+			turn Foot4 to y-axis <20.000000> speed <144.000000>;
+			sleep 80;
+		}
+		if( bMoving )
+		{
+			turn Leg1 to y-axis <-5.000000> speed <144.000000>;
+			turn Leg1 to z-axis <50.000000> speed <144.000000>;
+			move Leg1 to x-axis [0.300000] speed [14.000000];
+			move Leg1 to z-axis [-0.300000] speed [14.000000];
+			turn Foot1 to z-axis <-50.000000> speed <144.000000>;
+			turn Leg2 to y-axis <-5.000000> speed <72.000000>;
+			move Leg2 to x-axis [0.225000] now;
+			move Leg2 to z-axis [0.225000] now;
+			turn Leg3 to y-axis <5.000000> speed <72.000000>;
+			move Leg3 to x-axis [-0.450000] now;
+			move Leg3 to z-axis [-0.450000] now;
+			turn Leg4 to y-axis <-15.000000> speed <72.000000>;
+			move Leg4 to x-axis [-0.750000] now;
+			move Leg4 to z-axis [0.750000] now;
+			turn Foot1 to y-axis <5.000000> speed <144.000000>;
+			turn Foot2 to y-axis <5.000000> speed <72.000000>;
+			turn Foot3 to y-axis <-5.000000> speed <72.000000>;
+			turn Foot4 to y-axis <15.000000> speed <72.000000>;
+			sleep 80;
+			turn Leg1 to y-axis <10.000000> speed <144.000000>;
+			move Leg1 to x-axis [0.000000] now;
+			move Leg1 to z-axis [0.000000] now;
+			turn Leg2 to y-axis <-10.000000> speed <72.000000>;
+			move Leg2 to x-axis [0.150000] now;
+			move Leg2 to z-axis [0.150000] now;
+			turn Leg3 to y-axis <10.000000> speed <72.000000>;
+			move Leg3 to x-axis [-0.600000] now;
+			move Leg3 to z-axis [-0.600000] now;
+			turn Leg4 to y-axis <-10.000000> speed <72.000000>;
+			move Leg4 to x-axis [-0.600000] now;
+			move Leg4 to z-axis [0.600000] now;
+			turn Foot1 to y-axis <-10.000000> speed <144.000000>;
+			turn Foot2 to y-axis <10.000000> speed <72.000000>;
+			turn Foot3 to y-axis <-10.000000> speed <72.000000>;
+			turn Foot4 to y-axis <10.000000> speed <72.000000>;
+			sleep 80;
+			turn Leg1 to y-axis <25.000000> speed <144.000000>;
+			turn Leg2 to y-axis <-15.000000> speed <72.000000>;
+			move Leg2 to x-axis [0.075000] now;
+			move Leg2 to z-axis [0.075000] now;
+			turn Leg3 to y-axis <15.000000> speed <72.000000>;
+			move Leg3 to x-axis [-0.750000] now;
+			move Leg3 to z-axis [-0.750000] now;
+			turn Leg4 to y-axis <-5.000000> speed <72.000000>;
+			move Leg4 to x-axis [-0.450000] now;
+			move Leg4 to z-axis [0.450000] now;
+			turn Foot1 to y-axis <-25.000000> speed <144.000000>;
+			turn Foot2 to y-axis <15.000000> speed <72.000000>;
+			turn Foot3 to y-axis <-15.000000> speed <72.000000>;
+			turn Foot4 to y-axis <5.000000> speed <72.000000>;
+			sleep 80;
+			turn Leg1 to y-axis <40.000000> speed <144.000000>;
+			turn Leg1 to z-axis <0.000000> speed <144.000000>;
+			turn Foot1 to z-axis <0.000000> speed <144.000000>;
+			turn Leg2 to y-axis <-20.000000> speed <72.000000>;
+			move Leg2 to x-axis [0.000000] now;
+			move Leg2 to z-axis [0.000000] now;
+			turn Leg3 to y-axis <20.000000> speed <72.000000>;
+			move Leg3 to x-axis [-0.900000] now;
+			move Leg3 to z-axis [-0.900000] now;
+			turn Leg4 to y-axis <0.000000> speed <72.000000>;
+			move Leg4 to x-axis [-0.300000] now;
+			move Leg4 to z-axis [0.300000] now;
+			turn Foot1 to y-axis <-40.000000> speed <144.000000>;
+			turn Foot2 to y-axis <20.000000> speed <72.000000>;
+			turn Foot3 to y-axis <-20.000000> speed <72.000000>;
+			turn Foot4 to y-axis <0.000000> speed <72.000000>;
+			sleep 80;
+		}
+		if( bMoving )
+		{
+			turn Leg1 to y-axis <35.000000> speed <72.000000>;
+			turn Leg2 to y-axis <-25.000000> speed <72.000000>;
+			turn Leg3 to y-axis <5.000000> speed <144.000000>;
+			turn Leg3 to z-axis <-50.000000> speed <144.000000>;
+			move Leg3 to x-axis [-0.300000] speed [14.000000];
+			move Leg3 to z-axis [-0.300000] speed [14.000000];
+			turn Foot3 to z-axis <50.000000> speed <144.000000>;
+			turn Leg4 to y-axis <5.000000> speed <72.000000>;
+			move Leg4 to x-axis [-0.225000] now;
+			move Leg4 to z-axis [0.225000] now;
+			turn Foot1 to y-axis <-35.000000> speed <72.000000>;
+			turn Foot2 to y-axis <25.000000> speed <72.000000>;
+			turn Foot3 to y-axis <-5.000000> speed <144.000000>;
+			turn Foot4 to y-axis <-5.000000> speed <72.000000>;
+			sleep 80;
+			turn Leg1 to y-axis <30.000000> speed <72.000000>;
+			turn Leg2 to y-axis <-30.000000> speed <72.000000>;
+			turn Leg3 to y-axis <-10.000000> speed <144.000000>;
+			move Leg3 to x-axis [0.000000] now;
+			move Leg3 to z-axis [0.000000] now;
+			turn Leg4 to y-axis <10.000000> speed <72.000000>;
+			move Leg4 to x-axis [-0.150000] now;
+			move Leg4 to z-axis [0.150000] now;
+			turn Foot1 to y-axis <-30.000000> speed <72.000000>;
+			turn Foot2 to y-axis <30.000000> speed <72.000000>;
+			turn Foot3 to y-axis <10.000000> speed <144.000000>;
+			turn Foot4 to y-axis <-10.000000> speed <72.000000>;
+			sleep 80;
+			turn Leg1 to y-axis <25.000000> speed <72.000000>;
+			turn Leg2 to y-axis <-35.000000> speed <72.000000>;
+			turn Leg3 to y-axis <-25.000000> speed <144.000000>;
+			turn Leg4 to y-axis <15.000000> speed <72.000000>;
+			move Leg4 to x-axis [-0.075000] now;
+			move Leg4 to z-axis [0.075000] now;
+			turn Foot1 to y-axis <-25.000000> speed <72.000000>;
+			turn Foot2 to y-axis <35.000000> speed <72.000000>;
+			turn Foot3 to y-axis <25.000000> speed <144.000000>;
+			turn Foot4 to y-axis <-15.000000> speed <72.000000>;
+			sleep 80;
+			turn Leg1 to y-axis <20.000000> speed <72.000000>;
+			turn Leg2 to y-axis <-40.000000> speed <72.000000>;
+			turn Leg3 to y-axis <-40.000000> speed <144.000000>;
+			turn Leg3 to z-axis <0.000000> speed <144.000000>;
+			turn Foot3 to z-axis <0.000000> speed <144.000000>;
+			turn Leg4 to y-axis <20.000000> speed <72.000000>;
+			move Leg4 to x-axis [0.000000] now;
+			move Leg4 to z-axis [0.000000] now;
+			turn Foot1 to y-axis <-20.000000> speed <72.000000>;
+			turn Foot2 to y-axis <40.000000> speed <72.000000>;
+			turn Foot3 to y-axis <40.000000> speed <144.000000>;
+			turn Foot4 to y-axis <-20.000000> speed <72.000000>;
+			sleep 80;
+		}
+		if( !bMoving )
+		{
+			turn Leg1 to y-axis <0.000000> speed <144.000000>;
+			move Leg1 to x-axis [0.000000] now;
+			move Leg1 to z-axis [0.000000] now;
+			turn Leg2 to y-axis <0.000000> speed <144.000000>;
+			move Leg2 to x-axis [0.000000] now;
+			move Leg2 to z-axis [0.000000] now;
+			turn Leg3 to y-axis <0.000000> speed <144.000000>;
+			move Leg3 to x-axis [0.000000] now;
+			move Leg3 to z-axis [0.000000] now;
+			turn Leg4 to y-axis <0.000000> speed <144.000000>;
+			move Leg4 to x-axis [0.000000] now;
+			move Leg4 to z-axis [0.000000] now;
+			turn Foot1 to y-axis <0.000000> speed <144.000000>;
+			turn Foot2 to y-axis <0.000000> speed <144.000000>;
+			turn Foot3 to y-axis <0.000000> speed <144.000000>;
+			turn Foot4 to y-axis <0.000000> speed <144.000000>;
+			sleep 80;
+		}
+	}
+}
+
+open()
+{
+	if( TRUE )
+	{
+		move door1 to x-axis [0] now;
+		move door2 to x-axis [0] now;
+		move door1 to x-axis [2.704] speed [20];
+		move door2 to x-axis [-2.704] speed [20];
+		wait-for-move door1 along x-axis;
+		move gun1a to z-axis [-1.3] speed [7];
+		move gun1b to z-axis [-1.3] speed [7];
+		move barrel1a to z-axis [4.68] speed [25.2];
+		move barrel1b to z-axis [4.68] speed [25.2];
+		wait-for-move barrel1a along z-axis;
+	}
+}
+
+close()
+{
+	if( TRUE )
+	{
+		move barrel1a to z-axis [4.68] now;
+		move barrel1b to z-axis [4.68] now;
+		move barrel1a to z-axis [0] speed [12.6];
+		move barrel1b to z-axis [0] speed [12.6];
+		move gun1a to z-axis [0] speed [3.5];
+		move gun1b to z-axis [0] speed [3.5];
+		wait-for-move barrel1a along z-axis;
+		move door1 to x-axis [0] speed [10];
+		move door2 to x-axis [0] speed [10];
+		wait-for-move door1 along x-axis;
+	}
+}
+
+Create()
+{
+	hide flare2a;
+	hide flare2b;
+	hide flare2c;
+	hide flare2d;
+	hide flare1a;		
+	hide flare1b;
+	S_Var_4 = 1;
+	S_Var_5 = 0;
+	bMoving = FALSE;
+	gun_1 = 0;
+	gun_2 = 0;
+	restore_delay = 3000;
+	start-script SmokeUnit();
+	start-script MotionControl();
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 10;
+	}
+	spin radar around y-axis speed <150>;
+}
+
+SweetSpot(piecenum)
+{
+	piecenum = base;
+}
+
+StartMoving()
+{
+	bMoving = TRUE;
+}
+
+StopMoving()
+{
+	bMoving = FALSE;
+}
+
+RestoreAfterDelay()
+{
+	sleep restore_delay;
+	turn turret to y-axis <0> speed <100>;
+	set-signal-mask 0;
+	S_Var_5 = 1;
+	call-script close();
+	sleep 1000;
+	S_Var_4 = 1;
+	S_Var_5 = 0;
+	wait-for-turn turret around y-axis;
+}
+
+RestoreAfterDelay2()
+{
+	sleep restore_delay;
+	turn turret2 to y-axis <0> speed <575>;
+	turn gun2 to x-axis <0> speed <525>;
+}
+
+QueryPrimary(piecenum)
+{
+	if( gun_1 == 0 )
+	{
+		piecenum = flare1a;
+	}
+	if( gun_1 == 1 )
+	{
+		piecenum = flare1b;
+	}
+}
+
+AimFromPrimary(piecenum)
+{
+	piecenum = turret;
+}
+
+AimPrimary(heading, pitch)
+{
+	var Func_Var_3;
+	Func_Var_3 = 0;
+	signal SIG_AIM;
+	set-signal-mask SIG_AIM;
+	while( S_Var_5 )
+	{
+		if( S_Var_5 )
+		{
+			Func_Var_3 = 1;
+		}
+		sleep 100;
+	}
+	if( Func_Var_3 )
+	{
+		set-signal-mask 0;
+		signal SIG_AIM;
+		set-signal-mask SIG_AIM;
+	}
+	turn turret to y-axis heading speed <250>;
+	if( S_Var_4 )
+	{
+		set-signal-mask 0;
+		S_Var_5 = 1;
+		call-script open();
+		S_Var_4 = 0;
+		S_Var_5 = 0;
+		set-signal-mask SIG_AIM;
+	}
+	wait-for-turn turret around y-axis;
+	start-script RestoreAfterDelay();
+	return (1);
+}
+
+FirePrimary()
+{
+	if( gun_1 == 0 )
+	{
+		move barrel1a to z-axis [2.08] speed [100];
+		sleep 50;
+		gun_1 = 1;
+		wait-for-move barrel1a along z-axis;
+		move barrel1a to z-axis [4.68] speed [2];
+		sleep 50;
+		return (0);
+	}
+	if( gun_1 == 1 )
+	{
+		move barrel1b to z-axis [2.08] speed [100];
+		sleep 50;
+		gun_1 = 0;
+		wait-for-move barrel1b along z-axis;
+		move barrel1b to z-axis [4.68] speed [2];
+		sleep 50;
+	}
+}
+
+QueryTertiary(piecenum)
+{
+	if( gun_2 == 0 )
+	{
+		piecenum = flare2a;
+	}
+	if( gun_2 == 1 )
+	{
+		piecenum = flare2b;
+	}
+	if( gun_2 == 2 )
+	{
+		piecenum = flare2c;
+	}
+	if( gun_2 == 3 )
+	{
+		piecenum = flare2d;
+	}
+}
+
+AimFromTertiary(piecenum)
+{
+	piecenum = gun2;
+}
+
+AimTertiary(heading,pitch)
+{
+	signal SIG_AIM_2;
+	set-signal-mask SIG_AIM_2;
+	turn turret2 to y-axis heading speed <575>;
+	turn gun2 to x-axis <0> - pitch speed <525>;
+	wait-for-turn turret2 around y-axis;
+	wait-for-turn gun2 around x-axis;
+	start-script RestoreAfterDelay2();
+	return (1);
+}
+
+FireTertiary()
+{
+	if( gun_2 == 0 )
+	{
+		emit-sfx UNIT_SFX1 from flare2a;
+		move barrel2a to z-axis [-3.5] now;
+		sleep 150;
+		move barrel2a to z-axis [0] speed [10];
+		gun_2 = 1;
+		return (0);
+	}
+	if( gun_2 == 1 )
+	{
+		emit-sfx UNIT_SFX1 from flare2b;
+		move barrel2b to z-axis [-3.5] now;
+		sleep 150;
+		move barrel2b to z-axis [0] speed [10];
+		gun_2 = 2;
+		return (0);
+	}
+	if( gun_2 == 2 )
+	{
+		emit-sfx UNIT_SFX1 from flare2c;
+		move barrel2c to z-axis [-3.5] now;
+		sleep 150;
+		move barrel2c to z-axis [0] speed [10];
+		gun_2 = 3;
+		return (0);
+	}
+	if( gun_2 == 3 )
+	{
+		emit-sfx UNIT_SFX1 from flare2d;
+		move barrel2d to z-axis [-3.5] now;
+		sleep 150;
+		move barrel2d to z-axis [0] speed [10];
+		gun_2 = 0;
+		return (0);
+	}
+}
+
+Killed(severity, corpsetype)
+{
+	hide flare2a;
+	hide flare2b;
+	hide flare2c;
+	hide flare2d;
+	if( severity <= 25 )
+	{
+		corpsetype = 1;
+		explode body type BITMAPONLY | BITMAP1;
+		explode foot1 type BITMAPONLY | BITMAP2;
+		explode foot2 type BITMAPONLY | BITMAP2;
+		explode foot3 type BITMAPONLY | BITMAP2;
+		explode foot4 type BITMAPONLY | BITMAP2;
+		explode door1 type BITMAPONLY | BITMAP3;
+		explode door2 type BITMAPONLY | BITMAP3;
+		explode turret2 type BITMAPONLY | BITMAP2;
+		explode gun2 type BITMAPONLY | BITMAP3;
+		explode barrel2a type BITMAPONLY | BITMAP3;
+		explode barrel2b type BITMAPONLY | BITMAP3;
+		explode barrel2c type BITMAPONLY | BITMAP2;
+		explode barrel2d type BITMAPONLY | BITMAP2;
+		return (0);
+	}
+	if( severity <= 50 )
+	{
+		corpsetype = 2;
+		explode body type BITMAPONLY | BITMAP1;
+		explode foot1 type BITMAPONLY | BITMAP2;
+		explode foot2 type FALL | BITMAP2;
+		explode foot3 type FALL | BITMAP2;
+		explode foot4 type BITMAPONLY | BITMAP2;
+		explode door1 type FALL | BITMAP3;
+		explode door2 type BITMAPONLY | BITMAP3;
+		explode turret2 type BITMAPONLY | BITMAP2;
+		explode gun2 type BITMAPONLY | BITMAP3;
+		explode barrel2a type FALL | BITMAP3;
+		explode barrel2b type BITMAPONLY | BITMAP3;
+		explode barrel2c type BITMAPONLY | BITMAP2;
+		explode barrel2d type FALL | BITMAP2;
+		return (0);
+	}
+	if( severity <= 99 )
+	{
+		corpsetype = 3;
+		explode body type BITMAPONLY | BITMAP1;
+		explode foot1 type FALL | BITMAP2;
+		explode foot2 type FALL | EXPLODE_ON_HIT | BITMAP2;
+		explode foot3 type FALL | EXPLODE_ON_HIT | BITMAP2;
+		explode foot4 type FALL | BITMAP2;
+		explode door1 type FALL | EXPLODE_ON_HIT | BITMAP3;
+		explode door2 type FALL | BITMAP3;
+		explode turret2 type SHATTER | BITMAP2;
+		explode gun2 type BITMAPONLY | BITMAP3;
+		explode barrel2a type FALL | EXPLODE_ON_HIT | BITMAP3;
+		explode barrel2b type FALL | BITMAP3;
+		explode barrel2c type FALL | BITMAP2;
+		explode barrel2d type FALL | EXPLODE_ON_HIT | BITMAP2;
+		return (0);
+	}
+	corpsetype = 3;
+	explode body type BITMAPONLY | BITMAP1;
+	explode foot1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode foot2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode foot3 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode foot4 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode door1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+	explode door2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+	explode turret2 type SHATTER | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode gun2 type BITMAPONLY | BITMAP3;
+	explode barrel2a type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+	explode barrel2b type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+	explode barrel2c type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode barrel2d type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+}

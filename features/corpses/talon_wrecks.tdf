@@ -2009,7 +2009,7 @@
 	hitdensity=20;
 	metal=6;
 	energy=86;
-	damage=20000;
+	damage=2000;
 	reclaimable=1;
 	featurereclamate=smudge01;
 	seqnamereclamate=tree1reclamate;
@@ -2031,7 +2031,7 @@
 	hitdensity=20;
 	metal=22;
 	energy=86;
-	damage=20000;
+	damage=2000;
 	reclaimable=1;
 	featurereclamate=smudge01;
 	seqnamereclamate=tree1reclamate;
@@ -2053,7 +2053,7 @@
 	hitdensity=20;
 	metal=32;
 	energy=86;
-	damage=20000;
+	damage=2000;
 	reclaimable=1;
 	featurereclamate=smudge01;
 	seqnamereclamate=tree1reclamate;
@@ -2075,7 +2075,7 @@
 	hitdensity=20;
 	metal=22;
 	energy=86;
-	damage=20000;
+	damage=2000;
 	reclaimable=1;
 	featurereclamate=smudge01;
 	seqnamereclamate=tree1reclamate;

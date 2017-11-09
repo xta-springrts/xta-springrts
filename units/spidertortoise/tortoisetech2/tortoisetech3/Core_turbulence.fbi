@@ -1,0 +1,71 @@
+[UNITINFO]
+	{
+	UnitName=Core_turbulence;
+	Version=1.4;
+	Side=CORE;
+	Objectname=Core_turbulence;
+	Designation=CORE-DR5;
+	Name=Turbulence;
+	buildpic=Core_turbulence.png;
+	Description=Adv. Flak Tortoise;
+	FootprintX=5;
+	FootprintZ=5;
+	BuildCostEnergy=43401;
+	BuildCostMetal=5254;
+	MaxDamage=16500;
+	MaxSlope=12;
+	MaxWaterDepth=100;
+	EnergyUse=2;
+	BuildTime=59558;
+	BMcode=1;
+	Builder=0;
+	ThreeD=1;
+	ZBuffer=1;
+	NoAutoFire=0;
+	SightDistance=479;
+	airsightdistance=920;
+	SoundCategory=COR_TOR;
+	ExplodeAs=T1_3X3_UNIT_TURTLE_NORMAL;
+	SelfDestructAs=T1_3X3_UNIT_TURTLE_SELF;
+	Category=CORE TANK WEAPON NOTAIR NOTSUB;
+	TEDClass=TANK;
+	Copyright=Copyright 1997 Humongous Entertainment. All rights reserved.;
+	Corpse=Core_turbulence_dead;
+	firestandorders=1;
+	StandingFireOrder=2;
+	mobilestandorders=1;
+	StandingMoveOrder=1;
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+	canguard=1;
+	MaxVelocity=0.65;
+	BrakeRate=0.152;
+	Acceleration=0.152;
+	TurnRate=376;
+	SteeringMode=1;
+	ShootMe=1;
+	EnergyMake=2;
+	DefaultMissionType=Standby;
+	maneuverleashlength=640;
+	MovementClass=KBOTUW3;
+	weapon1=turbotron;
+	weapon3=TURBULENCE_FLAK;
+	wpri_badTargetCategory=VTOL;
+	BadTargetCategory=VTOL;
+	canattack=1;
+	NoChaseCategory=VTOL;
+	collisionVolumeType = box;
+	collisionVolumeScales =80 55 80;
+	collisionVolumeOffsets = 0 -5 0;
+	collisionVolumeTest = 1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+
+	smoothanim=1;
+	[SFXTypes]
+	{
+	explosiongenerator0=custom:dgunflare;
+	explosiongenerator1=custom:dgunflare;
+	}
+	}

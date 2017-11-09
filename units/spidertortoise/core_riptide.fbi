@@ -10,7 +10,7 @@
 	Description=Torpedo/Cannon Tortoise;
 	FootprintX=4;
 	FootprintZ=4;
-	BuildCostEnergy=4463;
+	BuildCostEnergy=3963;
 	BuildCostMetal=505;
 	MaxDamage=4062;
 	MaxSlope=12;

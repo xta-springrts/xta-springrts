@@ -10,13 +10,13 @@
 	buildpic=core_hatchling.png;
 	FootprintX=3;
 	FootprintZ=3;
-	BuildCostEnergy=2142;//4242
+	BuildCostEnergy=1942;//4242
 	BuildCostMetal=203;
 	MaxDamage=1832;
 	MaxSlope=13;
 	MaxWaterDepth=100;
 	EnergyUse=1;
-	BuildTime=5125;
+	BuildTime=4125;
 	BMcode=1;
 	Builder=0;
 	ThreeD=1;

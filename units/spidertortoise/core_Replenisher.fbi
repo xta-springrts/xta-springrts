@@ -63,6 +63,10 @@
 	maneuverleashlength=640;
 	MovementClass=KBOTUW3;
 	Ovradjust=1;
+	collisionVolumeType = box;
+	collisionVolumeScales =50 35 50;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
 	pieceTrailCEGTag=Debree;//bleh
 	pieceTrailCEGRange = 4;
 

@@ -1,0 +1,79 @@
+[UNITINFO]
+	{
+	UnitName=core_brute;
+	Version=1.5;
+	Side=CORE;
+	Objectname=core_brute;
+	Designation=CORE-DR5;
+	Name=Brute;
+	Description=Cloaking Tortoise;
+	buildpic=core_brute.png;
+	FootprintX=4;
+	FootprintZ=4;
+	BuildCostEnergy=15142;//4242
+	BuildCostMetal=1603;
+	MaxDamage=8132;
+	MaxSlope=13;
+	MaxWaterDepth=100;
+	EnergyUse=1;
+	BuildTime=30125;
+	BMcode=1;
+	Builder=0;
+	ThreeD=1;
+	ZBuffer=1;
+	NoAutoFire=0;
+	SightDistance=470;
+	SoundCategory=COR_TOR;
+	explodeas=ENERGY_STORAGE_NORMAL;
+	selfdestructas=CRAWL_BLASTSML;
+	Category=CORE TANK WEAPON NOTAIR NOTSUB;
+	TEDClass=TANK;
+	Copyright=Copyright 1997 Humongous Entertainment. All rights reserved.;
+	Corpse=core_brute_dead;
+	UnitNumber=9746646;
+	firestandorders=1;
+	StandingFireOrder=2;
+	mobilestandorders=1;
+	StandingMoveOrder=1;
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+	canguard=1;
+	MaxVelocity=0.80;
+	BrakeRate=0.162;
+	Acceleration=0.162;
+	TurnRate=450;
+	SteeringMode=1;
+	ShootMe=1;
+	EnergyMake=1;
+	DefaultMissionType=Standby;
+	maneuverleashlength=640;
+	MovementClass=KBOTUW3;
+	Weapon1=CORBRUTE_WEAPON;//can
+	Weapon3=CORE_BRUTLASER;//sumo
+	wpri_badTargetCategory=VTOL;
+	BadTargetCategory=VTOL;
+	canattack=1;
+	NoChaseCategory=VTOL;
+	collisionVolumeType = box;
+	collisionVolumeScales =57 24 57;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
+
+	cancloak=1;
+	cloakcost=150;
+	cloakcostmoving=200;
+	mincloakdistance=200;
+	DecloakOnFire=1;
+	smoothanim=1;
+
+
+	[SFXTypes]
+	{
+	explosiongenerator0=custom:greenflare;
+	explosiongenerator1=custom:greenflare;
+	explosiongenerator2=custom:redflare;
+	}
+	}

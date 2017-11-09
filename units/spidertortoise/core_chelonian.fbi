@@ -10,7 +10,7 @@
 	Description=Steamer/Bubbler Tortoise;
 	FootprintX=4;
 	FootprintZ=4;
-	BuildCostEnergy=3063;
+	BuildCostEnergy=2763;
 	BuildCostMetal=344;
 	MaxDamage=3432;
 	MaxSlope=12;
