@@ -18,7 +18,6 @@ end
 	
 --]]
 
-
 -- synced
 if (gadgetHandler:IsSyncedCode()) then
 
@@ -44,20 +43,11 @@ local SpawnCEG					= Spring.SpawnCEG
 local eceg 						= "gplasmaballbloom"
 local mceg 						= "bplasmaballbloom"
 local crushsnd					= "sounds/battle/crush3.wav"
-local positionCrackX 			= 0
-local positionCrackZ 			= 0
-local crack 					= false
-local noCrack 					= true
 local fx_placement 				= {}
-local img_used 					= {}
-local image						= {}
-local size						= {}
 
 -- settings
-local timeDelayFirstCrack		= 3000							-- one and half minute delay
---local timeDelayFirstCrack		= 30 -- for testing
+local timeDelay					= 301							-- one and half minute delay
 local crackInterval 			= 1800							-- one minute time delay new crack
---local crackInterval 			= 600 -- testing	
 local crackChange 				= 0.7
 local duration					= 30 * 60 * 5 					-- 5 min crack
 local crackAreaX				= math.floor(mapX*512*1/10)		-- defines middle of the map
@@ -71,6 +61,29 @@ local maps 						= {								-- maps
 	["Geyser_Plains_TNM04-V3"] 		= true,
 	["hotstepper_lm"] 				= true,
 }
+local cracks					= {}
+local remove_cracks				= {}
+local add_cracks				= {}
+local max_cracks				= 10
+local fx = { 
+[1] = {[1]={}, [2]={}, [3]={}, [4]={}, [5]={}},
+[2] = {[1]={}, [2]={}, [3]={}, [4]={}, [5]={}}
+}
+
+for k,v in pairs(images) do
+	for key, value in pairs(v[2]) do
+		if value ~= 0 and random() < 0.001 then
+			fx[1][k][key] = value
+		end
+	end
+end
+for k,v in pairs(images2) do
+	for key, value in pairs(v[2]) do
+		if value ~= 0 and random() < 0.001 then
+			fx[2][k][key] = value
+		end
+	end
+end
 
 
 function gadget:Initialize()
@@ -91,126 +104,163 @@ function gadget:Initialize()
 end
 
 
-function gadget:GameFrame(f)
-	
-	if (f > timeDelayFirstCrack) then
-		-- check every minute 
-		if (f%crackInterval == 0) and crack == false then
-			
-			-- after some time load the crack
-			if random() < crackChange and noCrack == true then  
+function emit(data)
+	if data ~= nil then
+		local file = data.file
+		local img = data.image
+		local x = data.X
+		local z = data.Z
 
-				if random() < 0.5 then
-					-- valid are 1, 2, 3, 4 and 5
-					img_used = images[math.random(1,5)]
-				else
-					-- valid are 1, 2, 3, 4 and 5
-					img_used = images2[math.random(1,5)]
-				end
-				img = img_used[2]
-				size = img_used[1]
-			
-				-- get some points to emit fx from
-				fx_placement = {}
-				for key, value in pairs(img) do
-					if value ~= 0 and random() < 0.005 then
-						fx_placement[key] = value
+		-- emit fx on points
+		for key, value in pairs(fx[file][img]) do
+			for k, v in string.gmatch(key,"(%w+),(%w+)") do
+				if random() < 0.1 then
+					local y = GetGroundHeight(k,v)
+					SpawnCEG(metalcloud2,tonumber(v)+x, y+10, tonumber(k)+z)
+					if random() < 0.1 then
+						PlaySoundFile (crushsnd, 2.0, x,y,z, 0,0,0,'battle')
 					end
-				end 
-			
-				-- all over map
-				if middle == false then
-					positionCrackX = math.floor(random(0,(mapX*512-size["x"])))
-					positionCrackZ = math.floor(random(0, (mapY*512-size["z"])))
-				
-				-- just in middle
-				else
-					positionCrackX = math.floor(random(crackAreaX,  mapX*512-crackAreaX-size["x"]))
-					positionCrackZ = math.floor(random(crackAreaZ,  mapY*512-crackAreaX-size["z"]))
 				end
-				Echo(positionCrackX)
-				Echo(positionCrackZ)
-				crack = true
 			end
 		end
-		
-		if (crack == true) then
+	end
+end
 
-			-- after another minute emit-fx and show some warning message
-			if (f%300 == 0) and noCrack == true then
-				if (random() < 0.5) then
-				
-					-- emit fx on points
-					for key, value in pairs(fx_placement) do
-						for k, v in string.gmatch(key,"(%w+),(%w+)") do
-							if random() < 0.1 then
-								local y = GetGroundHeight(k,v)
-								SpawnCEG(metalcloud2,tonumber(v)+positionCrackX, y+10, tonumber(k)+positionCrackZ)
-								if random() < 0.1 then
-									PlaySoundFile (crushsnd, 2.0, positionCrackX,y,positionCrackZ, 0,0,0,'battle')
-								end
-							end
-						end
-					end
-					
-					if random() < 0.5 then
-						Echo("WARNING seismic activity detected!")
-					end
+
+function remove_crack(data)
+	local image = data.image
+	local img
+	if data.file == 1 then
+		img = images[image]
+	else
+		img = images2[image]
+	end
+	local x = data.X
+	local z = data.Z
+
+	local func = function()
+		for key, value in pairs(img[2]) do
+			for k, v in string.gmatch(key,"(%w+),(%w+)") do
+				SetHeightMap(tonumber(v)+data.X,tonumber(k)+data.Z, GetGroundOrigHeight(v+data.X,k+data.Z))
+			 end
+		end
+	end
+	SetHeightMapFunc(func)
+end
+
+
+function create_crack(data)
+	local image = data.image
+	local img
+	if data.file == 1 then
+		img = images[image]
+	else
+		img = images2[image]
+	end
+	local x = data.X
+	local z = data.Z
+	local func = function()
+		for key, value in pairs(img[2]) do
+			for k, v in string.gmatch(key,"(%w+),(%w+)") do
+				local height = GetGroundOrigHeight(v+x,k+z)
+				if value ~= 0 then
+					SetHeightMap(tonumber(v)+x,tonumber(k)+z, height - value)
 				end
-			end
-			
-			if (f%(crackInterval-1) == 0) and noCrack == true then
-		
-				-- create the crack
-				local func1 = function()
-					for key, value in pairs(img) do
-						for k, v in string.gmatch(key,"(%w+),(%w+)") do
-							local height = GetGroundOrigHeight(v+positionCrackX,k+positionCrackZ)
-							if value ~= 0 then
-								SetHeightMap(tonumber(v)+positionCrackX,tonumber(k)+positionCrackZ, height - value)
-							end
-						 end
-					end
-				end
-				SetHeightMapFunc(func1)
-				
-				-- play some sound and emit fx
-				for key, value in pairs(img) do
-					for k, v in string.gmatch(key,"(%w+),(%w+)") do
-						local height = Spring.GetGroundOrigHeight(v+positionCrackX,k+positionCrackZ)
-						if value ~= 0 and random()< 0.2 then
-							SpawnCEG(metalcloud2,tonumber(v)+positionCrackX, height + 10, tonumber(k)+positionCrackZ)
-							PlaySoundFile (crushsnd, 2.0, positionCrackX,height,positionCrackZ, 0,0,0,'battle')
-						end
-					 end
-				end 
-				noCrack = false
-			end
-			
-			if (f%(crackInterval+duration)== 0 and (noCrack == false)) then	
-			
-				-- undo crack
-				local func2 = function()
-					for key, value in pairs(img) do
-						for k, v in string.gmatch(key,"(%w+),(%w+)") do
-							SetHeightMap(tonumber(v)+positionCrackX,tonumber(k)+positionCrackZ, GetGroundOrigHeight(v+positionCrackX,k+positionCrackZ))
-						 end
-					end
-				end
-				SetHeightMapFunc(func2)
+			 end
+		end
+	end
+	SetHeightMapFunc(func)	
+end
+
+
+function add_crack()
+	local file = random(1, 2)
+	local image = random(1, 5)
+	local X 
+	local Z
+	local img
+	if file == 1 then
+		img = images[image]
+	else
+		img = images2[image]
+	end
+	if middle == false then					
+		X = math.floor(random(0,(mapX*512-img[1]["x"])))
+		Z = math.floor(random(0, (mapY*512-img[1]["z"])))
+	else
+		X = math.floor(random(crackAreaX,  mapX*512-crackAreaX-img[1]["x"]))
+		Z = math.floor(random(crackAreaZ,  mapY*512-crackAreaX-img[1]["z"]))
+	end
+	local crack = {file = file, duration = duration, image = image, X = X, Z = Z}
+	cracks[#cracks+1] = crack
+	emit(crack)
+	return crack
+end
+
+
+-- update cracks
+function update()
+
+	-- remove
+	for i=#cracks,1,-1 do 
+		local v = cracks[i]
+		if v.duration - timeDelay < 0 then
+			--emit(cracks[k])
+			remove_cracks[#remove_cracks+1] = cracks[i]
+			table.remove(cracks, i) 
+		else
+			cracks[i].duration = v.duration - 2*timeDelay
+		end
+	end 
 	
-				-- emit some fx
-				for key, value in pairs(fx_placement) do
-					for k, v in string.gmatch(key,"(%w+),(%w+)") do
-						if random() < 0.1 then
-							local y = GetGroundHeight(k,v)
-							SpawnCEG(metalcloud2,tonumber(v)+positionCrackX, y+10, tonumber(k)+positionCrackZ)
-						end
-					end
+	-- add
+	if #add_cracks > 0 then
+		for k,v in pairs(add_cracks) do
+			-- todo add crack
+			create_crack(v)
+		end
+		add_cracks = {}
+	end
+	
+end 
+
+
+function gadget:GameFrame(f)
+	
+	if (f%100*timeDelay ==0) then
+		number_of_cracks = random(0, max_cracks)
+	end 
+	
+	if (f%timeDelay == 0) then
+		
+		if (f%2 ==0) then
+			
+			-- check if there is room for more cracks
+			if #cracks < max_cracks then
+
+				-- add new cracks
+				add_cracks[#add_cracks+1] = add_crack()
+				
+				if random() < 0.5 then
+					Echo("WARNING seismic activity detected!")
 				end
-				crack = false
-				noCrack = true
+
 			end
+			
+			if #remove_cracks > 0 then
+
+				for k,v in pairs(remove_cracks) do
+					-- todo add crack
+					remove_crack(v)
+				end
+				remove_cracks = {}
+			end
+
+		else 
+		
+			-- update the crack times
+			update()
+
 		end
 	end
 end
