@@ -34,6 +34,7 @@ local PlaySoundFile				= Spring.PlaySoundFile
 local SetHeightMap 				= Spring.SetHeightMap
 local images 					= include("LuaRules/gadgets/img.lua")
 local images2 					= include("LuaRules/gadgets/img2.lua")
+local images3 					= include("LuaRules/gadgets/img3.lua")
 local crushCEG 					= "dirtballtrail"
 local crushCEG2					= "FLAKFLARE"
 local crushCEG3					= "Sparks"
@@ -65,6 +66,8 @@ local cracks					= {}
 local remove_cracks				= {}
 local add_cracks				= {}
 local max_cracks				= 10
+
+
 local fx = { 
 [1] = {[1]={}, [2]={}, [3]={}, [4]={}, [5]={}},
 [2] = {[1]={}, [2]={}, [3]={}, [4]={}, [5]={}}
@@ -82,6 +85,20 @@ for k,v in pairs(images2) do
 		if value ~= 0 and random() < 0.001 then
 			fx[2][k][key] = value
 		end
+	end
+end
+
+-- comet
+local cometx = nil
+local cometz = nil
+local cometheight = 3000
+local ast_size 					= images3[1]
+local ast_image					= images3[2]
+local comet = false
+local fx_comit = {}
+for k,v in pairs(ast_image) do
+	if v ~= 0 and random() < 0.001 then
+		fx_comit[k] = v
 	end
 end
 
@@ -230,6 +247,77 @@ function gadget:GameFrame(f)
 	if (f%100*timeDelay ==0) then
 		number_of_cracks = random(0, max_cracks)
 	end 
+	
+	if (f%5 == 0) then
+		if comet == false and random() < 0.05 then
+			comitx = math.floor(random(0,  mapX*512-ast_size["x"]))
+			comitz = math.floor(random(0,  mapY*512-ast_size["z"]))
+			comet = true
+		elseif comet == false then
+			if comitx ~= nil then
+				for key, value in pairs(fx_comit) do
+					for k, v in string.gmatch(key,"(%w+),(%w+)") do
+						if random() < 0.2 then
+							local y = GetGroundHeight(k+comitx,v+comitz)
+							if random() < 0.5 then
+								SpawnCEG(metalcloud2,tonumber(v)+comitx+ math.floor(random(0,100)), y, tonumber(k)+comitz + math.floor(random(0,100)))
+								SpawnCEG(eceg,tonumber(v)+comitx+ math.floor(random(0,100)), y+10, tonumber(k)+comitz + math.floor(random(0,100)))
+								if random() < 0.1 then
+									PlaySoundFile (crushsnd, 2.0,tonumber(v)+ comitx,y,tonumber(k)+comitz, 0,0,0,'battle')
+								end
+							else
+								SpawnCEG(metalcloud2,tonumber(v)+comitx - math.floor(random(0,100)), y, tonumber(k)+comitz - math.floor(random(0,100)))
+								SpawnCEG(eceg,tonumber(v)+comitx - math.floor(random(0,100)), y+10, tonumber(k)+comitz - math.floor(random(0,100)))
+								if random() < 0.1 then
+									PlaySoundFile (crushsnd, 2.0, tonumber(v)+comitx,y,tonumber(k)+comitz, 0,0,0,'battle')
+								end
+							
+							end
+						end
+					end
+				end
+			end
+		else
+			local x = math.floor(ast_size["x"]/2)
+			local z = math.floor(ast_size["z"]/2)
+			local height = GetGroundOrigHeight(comitx,comitz) + cometheight
+			SpawnCEG(eceg,comitx+x, height, comitz+z)
+			SpawnCEG(eceg,comitx+x, height-1, comitz+z)
+			SpawnCEG(eceg,comitx+x, height+1, comitz+z)
+			SpawnCEG(eceg,comitx+x-1, height-1, comitz-1+z)
+			SpawnCEG(eceg,comitx+x+1, height-1, comitz+1+z)
+			SpawnCEG(eceg,comitx+x-1, height+1, comitz+1+z)
+			SpawnCEG(eceg,comitx+x+1, height+1, comitz-1+z)
+			SpawnCEG(metalcloud2,comitx+x, height, comitz+z)
+			SpawnCEG(metalcloud2,comitx+x, height-1, comitz+z)
+			SpawnCEG(metalcloud2,comitx+x, height+1, comitz+z)
+			SpawnCEG(metalcloud2,comitx+x-1, height-1, comitz-1+z)
+			SpawnCEG(metalcloud2,comitx+x+1, height-1, comitz+1+z)
+			SpawnCEG(metalcloud2,comitx+x-1, height+1, comitz+1+z)
+			SpawnCEG(metalcloud2,comitx+x+1, height+1, comitz-1+z)
+			if GetGroundOrigHeight(comitx,comitz) + cometheight < 0 then
+				--comitx = math.floor(random(0,  mapX*512))
+				--comitz = math.floor(random(0,  mapY*512))
+				local func = function()
+					for key, value in pairs(ast_image) do
+						for k, v in string.gmatch(key,"(%w+),(%w+)") do
+							local height = GetGroundOrigHeight(v+comitx,k+comitz)
+							if value ~= 0 then
+								SetHeightMap(tonumber(v)+comitx,tonumber(k)+comitz, height + value -21)
+							end
+						 end
+					end
+				end
+				SetHeightMapFunc(func)	
+
+				comet = false
+				cometheight = 4000
+			else
+				cometheight = cometheight - 60
+			end
+		end
+		
+	end
 	
 	if (f%timeDelay == 0) then
 		
