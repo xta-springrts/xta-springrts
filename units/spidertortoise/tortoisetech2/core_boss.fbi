@@ -66,4 +66,10 @@
 	explosiongenerator0=custom:vulcanflare;
 	explosiongenerator1=custom:vulcanflare;
 	}
+	leavetracks=1;
+	trackoffset=30;
+	trackstrength=9;
+	trackstretch=2;
+	tracktype=ComTrack;
+	trackwidth=65;
 	}

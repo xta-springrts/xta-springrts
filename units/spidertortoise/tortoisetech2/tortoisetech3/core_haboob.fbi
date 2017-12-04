@@ -68,4 +68,10 @@
 	explosiongenerator1=custom:BERTHAFLARE;
 	//explosiongenerator1=custom:vulcanflare;
 	}
+	leavetracks=1;
+	trackoffset=30;
+	trackstrength=10;
+	trackstretch=2;
+	tracktype=ComTrack;
+	trackwidth=80;
 	}

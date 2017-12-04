@@ -10,13 +10,13 @@
 	Description=Adv. Flak Tortoise;
 	FootprintX=5;
 	FootprintZ=5;
-	BuildCostEnergy=43401;
-	BuildCostMetal=5254;
-	MaxDamage=16500;
+	BuildCostEnergy=53401;
+	BuildCostMetal=7254;
+	MaxDamage=22500;
 	MaxSlope=12;
 	MaxWaterDepth=100;
 	EnergyUse=2;
-	BuildTime=59558;
+	BuildTime=79558;
 	BMcode=1;
 	Builder=0;
 	ThreeD=1;
@@ -68,4 +68,10 @@
 	explosiongenerator0=custom:dgunflare;
 	explosiongenerator1=custom:dgunflare;
 	}
+	leavetracks=1;
+	trackoffset=30;
+	trackstrength=10;
+	trackstretch=2;
+	tracktype=ComTrack;
+	trackwidth=80;
 	}

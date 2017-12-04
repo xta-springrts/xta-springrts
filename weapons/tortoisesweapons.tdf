@@ -86,7 +86,7 @@
 	avoidfriendly=1;
 	[DAMAGE]
 	{
-		default=200;
+		default=125;
 		//lost_commanders=41;
 		group_invincible=1;
 		group_landair=350;

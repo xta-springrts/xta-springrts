@@ -31,7 +31,7 @@
 	healtime=30;
 	buildcostmetal=3387;
 	buildcostenergy=8574;
-	buildtime=41937;
+	buildtime=28888;
 	footprintx=9;
 	footprintz=8;
 	usePieceCollisionVolumes=1;
