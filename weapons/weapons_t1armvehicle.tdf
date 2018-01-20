@@ -1,0 +1,40 @@
+
+[EMG_FLASH]
+{
+	name=E.M.G.;
+	explosiongenerator=custom:EMGFLASH;
+	Weapontype=EmgCannon;
+	cegTag=PEEWEESHINE;
+	Texture1=emg;
+	Texture2=null;
+	Texture3=null;
+	Texture4=null;
+	stages=1;
+	separation=0.5;
+	alphadecay=0.0;
+	sizedecay=-0.01;
+	nogap=1;
+	rgbcolor=1 0.9 0.2;
+	size=3.0;
+	intensity=0.9;
+	turret=1;
+	range=180;
+	reloadtime=0.1;
+	weapontimer=1;
+	weaponvelocity=600;
+	sprayangle=1648;
+	areaofeffect=8;
+	burst=1;
+	burstrate=0.1;
+	soundstart=armsml2;
+	soundhitdry=lasrhit1;
+	soundtrigger=1;
+	tolerance=3000;
+	startsmoke=0;
+	endsmoke=0;
+	[DAMAGE]
+	{
+		default=5.5;
+		group_invincible=1;
+	}
+}

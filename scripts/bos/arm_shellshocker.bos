@@ -51,92 +51,92 @@ StartMoving()
 	{
 		if( bMoving )
 		{
-			move rupleg1 to y-axis [0.000000] speed [6.000000];
-			move rupleg3 to y-axis [0.000000] speed [6.000000];
-			move lupleg2 to y-axis [0.000000] speed [6.000000];
-			turn head to x-axis <-8.000000> speed <18.000000>;
-			turn lupleg1 to y-axis <15.000000> speed <72.000000>;
-			turn lupleg2 to y-axis <-15.000000> speed <115.000000>;
-			turn lupleg3 to y-axis <15.000000> speed <72.000000>;
-			turn rupleg1 to y-axis <15.000000> speed <115.000000>;
-			turn rupleg2 to y-axis <-15.000000> speed <76.000000>;
-			turn rupleg3 to y-axis <15.000000> speed <115.000000>;
-			turn lleg2 to x-axis <0.000000> speed <154.000000>;
-			turn rleg1 to x-axis <0.000000> speed <154.000000>;
-			turn rleg3 to x-axis <0.000000> speed <154.000000>;
-			sleep 260;
+			move rupleg1 to y-axis [0.000000] speed [12.000000];
+			move rupleg3 to y-axis [0.000000] speed [12.000000];
+			move lupleg2 to y-axis [0.000000] speed [12.000000];
+			turn head to x-axis <-8.000000> speed <36.000000>;
+			turn lupleg1 to y-axis <15.000000> speed <144.000000>;
+			turn lupleg2 to y-axis <-15.000000> speed <230.000000>;
+			turn lupleg3 to y-axis <15.000000> speed <144.000000>;
+			turn rupleg1 to y-axis <15.000000> speed <230.000000>;
+			turn rupleg2 to y-axis <-15.000000> speed <1428.000000>;
+			turn rupleg3 to y-axis <15.000000> speed <230.000000>;
+			turn lleg2 to x-axis <0.000000> speed <308.000000>;
+			turn rleg1 to x-axis <0.000000> speed <308.000000>;
+			turn rleg3 to x-axis <0.000000> speed <308.000000>;
+			sleep 110;
 		}
 		if( bMoving )
 		{
-			move rupleg2 to y-axis [1.000000] speed [3.000000];
-			move lupleg1 to y-axis [1.000000] speed [3.000000];
-			move lupleg3 to y-axis [1.000000] speed [3.000000];
-			turn head to x-axis <8.000000> speed <18.000000>;
-			turn lupleg1 to y-axis <-10.000000> speed <96.000000>;
-			turn lupleg2 to y-axis <5.000000> speed <42.000000>;
-			turn lupleg3 to y-axis <-10.000000> speed <96.000000>;
-			turn rupleg1 to y-axis <-5.000000> speed <42.000000>;
-			turn rupleg2 to y-axis <10.000000> speed <96.000000>;
-			turn rupleg3 to y-axis <-5.000000> speed <42.000000>;
-			turn lleg1 to x-axis <-15.000000> speed <72.000000>;
-			turn lleg3 to x-axis <-15.000000> speed <72.000000>;
-			turn rleg2 to x-axis <15.000000> speed <72.000000>;
-			sleep 330;
+			move rupleg2 to y-axis [1.000000] speed [6.000000];
+			move lupleg1 to y-axis [1.000000] speed [6.000000];
+			move lupleg3 to y-axis [1.000000] speed [6.000000];
+			turn head to x-axis <8.000000> speed <36.000000>;
+			turn lupleg1 to y-axis <-10.000000> speed <192.000000>;
+			turn lupleg2 to y-axis <5.000000> speed <84.000000>;
+			turn lupleg3 to y-axis <-10.000000> speed <192.000000>;
+			turn rupleg1 to y-axis <-5.000000> speed <84.000000>;
+			turn rupleg2 to y-axis <10.000000> speed <192.000000>;
+			turn rupleg3 to y-axis <-5.000000> speed <84.000000>;
+			turn lleg1 to x-axis <-15.000000> speed <144.000000>;
+			turn lleg3 to x-axis <-15.000000> speed <144.000000>;
+			turn rleg2 to x-axis <15.000000> speed <144.000000>;
+			sleep 33;
 		}
 		if( bMoving )
 		{
-			move rupleg2 to y-axis [0.000000] speed [6.000000];
-			move lupleg1 to y-axis [0.000000] speed [6.000000];
-			move lupleg3 to y-axis [0.000000] speed [6.000000];
-			turn head to x-axis <-8.000000> speed <18.000000>;
-			turn lupleg1 to y-axis <-15.000000> speed <115.000000>;
-			turn lupleg2 to y-axis <15.000000> speed <72.000000>;
-			turn lupleg3 to y-axis <-15.000000> speed <115.000000>;
-			turn rupleg1 to y-axis <-15.000000> speed <72.000000>;
-			turn rupleg2 to y-axis <15.000000> speed <115.000000>;
-			turn rupleg3 to y-axis <-15.000000> speed <72.000000>;
-			turn lleg1 to x-axis <0.000000> speed <154.000000>;
-			turn lleg3 to x-axis <0.000000> speed <154.000000>;
-			turn rleg2 to x-axis <0.000000> speed <154.000000>;
-			sleep 260;
+			move rupleg2 to y-axis [0.000000] speed [12.000000];
+			move lupleg1 to y-axis [0.000000] speed [12.000000];
+			move lupleg3 to y-axis [0.000000] speed [12.000000];
+			turn head to x-axis <-8.000000> speed <36.000000>;
+			turn lupleg1 to y-axis <-15.000000> speed <230.000000>;
+			turn lupleg2 to y-axis <15.000000> speed <144.000000>;
+			turn lupleg3 to y-axis <-15.000000> speed <230.000000>;
+			turn rupleg1 to y-axis <-15.000000> speed <144.000000>;
+			turn rupleg2 to y-axis <15.000000> speed <230.000000>;
+			turn rupleg3 to y-axis <-15.000000> speed <144.000000>;
+			turn lleg1 to x-axis <0.000000> speed <308.000000>;
+			turn lleg3 to x-axis <0.000000> speed <308.000000>;
+			turn rleg2 to x-axis <0.000000> speed <308.000000>;
+			sleep 110;
 		}
 		if( bMoving )
 		{
-			move rupleg1 to y-axis [1.000000] speed [3.000000];
-			move rupleg2 to y-axis [1.000000] speed [3.000000];
-			move rupleg1 to y-axis [1.000000] speed [3.000000];
-			turn head to x-axis <8.000000> speed <18.000000>;
-			turn lupleg1 to y-axis <5.000000> speed <42.000000>;
-			turn lupleg2 to y-axis <-10.000000> speed <96.000000>;
-			turn lupleg3 to y-axis <5.000000> speed <42.000000>;
-			turn rupleg1 to y-axis <10.000000> speed <96.000000>;
-			turn rupleg2 to y-axis <-5.000000> speed <42.000000>;
-			turn rupleg3 to y-axis <10.000000> speed <96.000000>;
-			turn lleg2 to x-axis <15.000000> speed <72.000000>;
-			turn rleg1 to x-axis <-15.000000> speed <72.000000>;
-			turn rleg3 to x-axis <-15.000000> speed <72.000000>;
-			sleep 330;
+			move rupleg1 to y-axis [1.000000] speed [6.000000];
+			move rupleg2 to y-axis [1.000000] speed [6.000000];
+			move rupleg1 to y-axis [1.000000] speed [6.000000];
+			turn head to x-axis <8.000000> speed <36.000000>;
+			turn lupleg1 to y-axis <5.000000> speed <84.000000>;
+			turn lupleg2 to y-axis <-10.000000> speed <192.000000>;
+			turn lupleg3 to y-axis <5.000000> speed <84.000000>;
+			turn rupleg1 to y-axis <10.000000> speed <192.000000>;
+			turn rupleg2 to y-axis <-5.000000> speed <84.000000>;
+			turn rupleg3 to y-axis <10.000000> speed <192.000000>;
+			turn lleg2 to x-axis <15.000000> speed <144.000000>;
+			turn rleg1 to x-axis <-15.000000> speed <144.000000>;
+			turn rleg3 to x-axis <-15.000000> speed <144.000000>;
+			sleep 160;
 		}
 	}
-	move lupleg1 to y-axis [0.000000] speed [2.500000];
-	move lupleg2 to y-axis [0.000000] speed [2.500000];
-	move lupleg3 to y-axis [0.000000] speed [2.500000];
-	move rupleg1 to y-axis [0.000000] speed [2.500000];
-	move rupleg2 to y-axis [0.000000] speed [2.500000];
-	move rupleg3 to y-axis [0.000000] speed [2.500000];
-	turn head to x-axis <0.000000> speed <50.000000>;
-	turn lupleg1 to y-axis <0.000000> speed <50.000000>;
-	turn lupleg2 to y-axis <0.000000> speed <50.000000>;
-	turn lupleg3 to y-axis <0.000000> speed <50.000000>;
-	turn rupleg1 to y-axis <0.000000> speed <50.000000>;
-	turn rupleg2 to y-axis <0.000000> speed <50.000000>;
-	turn rupleg3 to y-axis <0.000000> speed <50.000000>;
-	turn rleg1 to x-axis <0.000000> speed <50.000000>;
-	turn rleg2 to x-axis <0.000000> speed <50.000000>;
-	turn rleg3 to x-axis <0.000000> speed <50.000000>;
-	turn lleg1 to x-axis <0.000000> speed <50.000000>;
-	turn lleg2 to x-axis <0.000000> speed <50.000000>;
-	turn lleg3 to x-axis <0.000000> speed <50.000000>;
+	move lupleg1 to y-axis [0.000000] speed [5.000000];
+	move lupleg2 to y-axis [0.000000] speed [5.000000];
+	move lupleg3 to y-axis [0.000000] speed [5.000000];
+	move rupleg1 to y-axis [0.000000] speed [5.000000];
+	move rupleg2 to y-axis [0.000000] speed [5.000000];
+	move rupleg3 to y-axis [0.000000] speed [5.000000];
+	turn head to x-axis <0.000000> speed <100.000000>;
+	turn lupleg1 to y-axis <0.000000> speed <100.000000>;
+	turn lupleg2 to y-axis <0.000000> speed <100.000000>;
+	turn lupleg3 to y-axis <0.000000> speed <100.000000>;
+	turn rupleg1 to y-axis <0.000000> speed <100.000000>;
+	turn rupleg2 to y-axis <0.000000> speed <100.000000>;
+	turn rupleg3 to y-axis <0.000000> speed <100.000000>;
+	turn rleg1 to x-axis <0.000000> speed <100.000000>;
+	turn rleg2 to x-axis <0.000000> speed <100.000000>;
+	turn rleg3 to x-axis <0.000000> speed <100.000000>;
+	turn lleg1 to x-axis <0.000000> speed <100.000000>;
+	turn lleg2 to x-axis <0.000000> speed <100.000000>;
+	turn lleg3 to x-axis <0.000000> speed <100.000000>;
 }
 
 StopMoving()
@@ -172,8 +172,8 @@ AimPrimary(heading, pitch)
 	signal SIG_AIM;
 	set-signal-mask 0;
 	set-signal-mask SIG_AIM;
-	turn turret to y-axis heading speed <70.000000>;
-	turn sleeve to x-axis <0.000000> - pitch speed <45.000000>;
+	turn turret to y-axis heading speed <90.000000>;
+	turn sleeve to x-axis <0.000000> - pitch speed <65.000000>;
 	while( gun_1 )
 	{
 		sleep 250;

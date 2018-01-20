@@ -5,7 +5,7 @@
 	//********************
 	side=Arm;
 	name=Peewee;
-	description=Infantry Kbot;
+	description=Raider Kbot;
 
 	//************************************************************
 	//  Categories
@@ -20,7 +20,7 @@
 	unitnumber=55;
 	objectname=arm_peewee.3do;
 	corpse=arm_peewee_dead;
-	buildpic=arm_peewee.DDS;
+	buildpic=arm_peewee.png;
 	soundcategory=ARMPW;
 
 	//************************************************************
@@ -61,7 +61,7 @@
 	sightdistance=420;
 	radardistance=0;
 
-	weapon1=PEEWEE_EMG;
+	weapon1=PEEWEE_EMG_2018;
 	nochasecategory=VTOL;
 	badtargetcategory=VTOL;
 	wpri_badtargetcategory=VTOL;

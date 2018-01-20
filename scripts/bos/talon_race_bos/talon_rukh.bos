@@ -1,0 +1,178 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+piece  base, link, jet1, jet2, jet3,
+       jet4;
+
+static-var  Static_Var_1, unitviewer, Static_Var_5;
+
+#define SMOKEPIECE1 base
+
+#include "StateChg.h"
+
+lua_UnitStoppedMoving()
+{
+}
+
+lua_UnitStartedMoving()
+{
+}
+
+MorphPassenger(Func_Var_1, Func_Var_2)
+{
+	drop-unit Func_Var_1;
+	emit-sfx 1026 from link;
+	emit-sfx 1026 from link;
+	sleep 10;
+	attach-unit Func_Var_2 to link;
+}
+
+ProcessFlames()
+{
+	while( TRUE )
+	{
+		if( Static_Var_1 == 1 OR Static_Var_1 == 2 )
+		{
+			emit-sfx 1024 + 0 from jet1;
+			emit-sfx 1024 + 0 from jet2;
+			emit-sfx 1024 + 0 from jet3;
+			emit-sfx 1024 + 0 from jet4;
+		}
+		sleep 10;
+	}
+}
+
+loadscr()
+{
+	if( TRUE )
+	{
+		sleep 998;
+	}
+	sleep 44;
+}
+
+unloadscr()
+{
+	if( TRUE )
+	{
+		sleep 998;
+	}
+	sleep 44;
+}
+#include "SmokeUnit.h"
+
+RestoreAfterDelay()
+{
+	sleep 3000;
+}
+#define ACTIVATECMD			call-script loadscr();
+#define DEACTIVATECMD		call-script unloadscr();
+#include "StateChg.h"
+
+Create()
+{
+	Static_Var_1 = 0;
+	Static_Var_5 = 0;
+	call-script InitState();
+	start-script SmokeUnit();
+}
+
+Demo()
+{
+	unitviewer = TRUE;
+}
+
+SweetSpot(piecenum)
+{
+	piecenum = base;
+}
+
+QueryTransport(Func_Var_1)
+{
+	Func_Var_1 = 1;
+}
+
+BeginTransport(Func_Var_1)
+{
+	move link to y-axis [0.000000] - Func_Var_1 now;
+	start-script RequestState(0);
+}
+
+EndTransport()
+{
+	start-script RequestState(1);
+}
+
+StopMoving()
+{
+	signal 2;
+	Static_Var_1 = 0;
+	call-script lua_UnitStoppedMoving();
+}
+
+MoveRate1()
+{
+	signal 2;
+	set-signal-mask 2;
+	start-script ProcessFlames();
+	Static_Var_1 = 1;
+	call-script lua_UnitStartedMoving();
+}
+
+MoveRate2()
+{
+	signal 2;
+	set-signal-mask 2;
+	start-script ProcessFlames();
+	Static_Var_1 = 2;
+}
+
+MoveRate3()
+{
+	signal 2;
+	set-signal-mask 2;
+	start-script ProcessFlames();
+	Static_Var_1 = 3;
+}
+
+Killed(severity, corpsetype)
+{
+	if( severity <= 25 )
+	{
+		corpsetype = 1;
+		explode base type BITMAPONLY | BITMAP4;
+		explode jet1 type BITMAPONLY | BITMAP5;
+		explode jet2 type BITMAPONLY | BITMAP1;
+		explode jet3 type BITMAPONLY | BITMAP2;
+		explode link type BITMAPONLY | BITMAP3;
+		return (0);
+	}
+	if( severity <= 50 )
+	{
+		corpsetype = 2;
+		explode base type BITMAPONLY | BITMAP4;
+		explode jet1 type FALL | BITMAP5;
+		explode jet2 type FALL | BITMAP1;
+		explode jet3 type FALL | BITMAP2;
+		explode link type FALL | BITMAP3;
+		return (0);
+	}
+	if( severity <= 99 )
+	{
+		corpsetype = 3;
+		explode base type BITMAPONLY | BITMAP4;
+		explode jet1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+		explode jet2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+		explode jet3 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+		explode link type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+		return (0);
+	}
+	corpsetype = 3;
+	explode base type BITMAPONLY | BITMAP4;
+	explode jet1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+	explode jet2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+	explode jet3 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode link type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+}

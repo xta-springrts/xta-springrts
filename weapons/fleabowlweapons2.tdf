@@ -512,7 +512,7 @@
 	soundhitdry=lasrhit2;
 	firestarter=30;
 	beamweapon=1;
-	rgbcolor=1.000 0.059 0.000;
+	rgbcolor=1.000 0.2 0.3;
 	tolerance=500;
 	guidance=1;
 	[DAMAGE]

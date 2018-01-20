@@ -164,13 +164,13 @@ local morphDefs = {
 		cmdname = 'Shift',
 		text = 'Disguise as Core Level 2 Commander',
 	},
-	arm_spidey = {
-		into = 'arm_fart_spidey',
-		time = 5,
-		cmdname = 'Transform',
-		text = 'Transform into a Fart Mine',
+--	arm_spidey = {
+--		into = 'arm_fart_spidey',
+--		time = 5,
+--		cmdname = 'Transform',
+--		text = 'Transform into a Fart Mine',
 		--tech = 2
-	}, 
+--	}, 
 	core_tic = {
 		into = 'core_nugget_tic',
 		time = 5,

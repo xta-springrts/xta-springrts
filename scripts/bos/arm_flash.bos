@@ -5,10 +5,13 @@
 
 piece  flare1, flare2, turret, base, sleeves, barrel1, barrel2;
 
-static-var  restore_delay, gun_1;
+static-var  restore_delay, gun_1, currentHeading, currentPitch;
 
 // Signal definitions
 #define SIG_AIM				2
+
+#define HEADING_TOLERANCE	<15.000000>
+#define PITCH_TOLERANCE		<25.000000>
 
 
 SmokeUnit(healthpercent, sleeptime, smoketype)
@@ -75,8 +78,13 @@ AimPrimary(heading, pitch)
 	set-signal-mask SIG_AIM;
 	turn turret to y-axis heading speed <240.000000>;
 	turn sleeves to x-axis <0.000000> - pitch speed <160.005495>;
+	if ( get ABS(heading - currentHeading)  > HEADING_TOLERANCE || get ABS(pitch - currentPitch) > PITCH_TOLERANCE )
+	{
 	wait-for-turn turret around y-axis;
 	wait-for-turn sleeves around x-axis;
+	currentHeading = heading;
+	currentPitch = pitch;
+	}
 	start-script RestoreAfterDelay();
 	return (1);
 }
