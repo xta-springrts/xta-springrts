@@ -554,10 +554,12 @@ FirePrimary()
 	if( gun_1 )
 	{
 		emit-sfx UNIT_SFX1 from lfire;
+		sleep 50;
 	}
 	else
 	{
 		emit-sfx UNIT_SFX1 from rfire;
+		sleep 50;
 	}
 	gun_1 = !gun_1;
 }

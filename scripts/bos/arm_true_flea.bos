@@ -1,0 +1,476 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+#define SPEEDUP_FACTOR 200
+
+piece  body, turret, flare, barrel, lfupleg, lrupleg, rrupleg, head,
+       rfupleg, rrleg, rfleg, lrleg, lfleg;
+
+static-var  bMoving, bAiming, Static_Var_3, restore_delay, Static_Var_5,
+            Static_Var_6, moveSpeed, currentSpeed;
+
+// Signal definitions
+#define SIG_AIM				2
+
+
+walk()
+{
+	if( bMoving )
+	{
+		move lfupleg to y-axis [0.000000] now;
+		move lfupleg to y-axis [0.000000] speed [10];
+		move lrupleg to y-axis [0.000000] now;
+		move lrupleg to y-axis [1.250000] speed [40];
+		move rrupleg to y-axis [0.000000] now;
+		move rrupleg to y-axis [1.250000] speed [35];
+		turn body to x-axis <12.000000> now;
+		turn body to x-axis <22.000000> speed <190>;
+		turn head to x-axis <9.000000> now;
+		turn head to x-axis <20.000000> speed <216>;
+		turn lfupleg to x-axis <-50.000000> now;
+		turn lfupleg to x-axis <-22.000000> speed <508>;
+		turn lrupleg to x-axis <23.000000> now;
+		turn lrupleg to x-axis <-29.000000> speed <948>;
+		turn rfupleg to x-axis <-49.000000> now;
+		turn rfupleg to x-axis <-33.000000> speed <302>;
+		turn rrupleg to x-axis <28.000000> now;
+		turn rrupleg to x-axis <-21.000000> speed <878>;
+		turn rrleg to x-axis <42.500000> now;
+		turn rrleg to x-axis <-22.500000> speed <1266>;
+		turn rfleg to x-axis <0.000000> now;
+		turn rfleg to x-axis <12.000000> speed <224>;
+		turn lrleg to x-axis <42.500000> now;
+		turn lrleg to x-axis <-10.000000> speed <990>;
+		sleep 5500 / currentSpeed;
+	set ARMORED to 0;
+	set CLOAKED to 0;
+	set STEALTH to 0;
+	}
+	if( bMoving )
+	{
+		move lfupleg to y-axis [1.250000] speed [20];
+		move lrupleg to y-axis [2.500000] speed [30];
+		move rfupleg to y-axis [1.250000] speed [40];
+		move rrupleg to y-axis [2.500000] speed [30];
+		turn body to x-axis <1.000000> speed <378>;
+		turn lfupleg to x-axis <54.000000> speed <1342>;
+		turn lrupleg to x-axis <-40.000000> speed <192>;
+		turn rfupleg to x-axis <51.000000> speed <1484>;
+		turn rrupleg to x-axis <-32.000000> speed <202>;
+		turn rrleg to x-axis <12.500000> speed <696>;
+		turn rfleg to x-axis <-52.000000> speed <1140>;
+		turn lrleg to x-axis <26.000000> speed <630>;
+		turn lfleg to x-axis <-53.000000> speed <930>;
+		sleep 5600 / currentSpeed;
+	set ARMORED to 0;
+	set CLOAKED to 0;
+	set STEALTH to 0;
+	}
+	if( bMoving )
+	{
+		move lrupleg to y-axis [2.500000] speed [20];
+		move rrupleg to y-axis [2.500000] speed [25];
+		turn body to x-axis <-13.000000> speed <482>;
+		turn lfupleg to x-axis <87.000000> speed <1210>;
+		turn lrupleg to x-axis <-61.000000> speed <762>;
+		turn rfupleg to x-axis <83.000000> speed <1126>;
+		turn rrupleg to x-axis <-62.000000> speed <1058>;
+		turn rrleg to x-axis <73.000000> speed <2072>;
+		turn rfleg to x-axis <-58.000000> speed <212>;
+		turn lrleg to x-axis <72.000000> speed <1642>;
+		sleep 2800 / currentSpeed;
+	set ARMORED to 0;
+	set CLOAKED to 0;
+	set STEALTH to 0;
+	}
+	if( bMoving )
+	{
+		move lrupleg to y-axis [2.500000] speed [15];
+		move rrupleg to y-axis [2.500000] speed [0];
+		turn body to x-axis <-26.000000> speed <466>;
+		turn lfupleg to x-axis <121.000000> speed <1168>;
+		turn lrupleg to x-axis <-32.000000> speed <996>;
+		turn rfupleg to x-axis <114.000000> speed <1086>;
+		turn rrupleg to x-axis <-31.000000> speed <1054>;
+		turn rrleg to x-axis <52.500000> speed <612>;
+		turn rfleg to x-axis <-64.000000> speed <204>;
+		turn lrleg to x-axis <57.000000> speed <490>;
+		sleep 2900 / currentSpeed;
+	set ARMORED to 0;
+	set CLOAKED to 0;
+	set STEALTH to 0;
+	}
+	if( bMoving )
+	{
+		move lrupleg to y-axis [1.250000] speed [30];
+		move rrupleg to y-axis [1.250000] speed [25];
+		turn body to x-axis <0.000000> speed <466>;
+		turn head to x-axis <0.000000> speed <364>;
+		turn lfupleg to x-axis <60.000000> speed <1092>;
+		turn lrupleg to x-axis <4.000000> speed <644>;
+		turn rfupleg to x-axis <53.000000> speed <1092>;
+		turn rrupleg to x-axis <-3.000000> speed <500>;
+		turn rrleg to x-axis <30.000000> speed <440>;
+		turn rfleg to x-axis <27.000000> speed <1616>;
+		turn lrleg to x-axis <23.000000> speed <618>;
+		turn lfleg to x-axis <13.000000> speed <1176>;
+		sleep 5600 / currentSpeed;
+	set ARMORED to 0;
+	set CLOAKED to 0;
+	set STEALTH to 0;
+	}
+}
+
+walklegs()
+{
+	if( bMoving )
+	{
+		move lrupleg to y-axis [1.250000] now;
+		move lrupleg to y-axis [1.250000] speed [15];
+		move rfupleg to y-axis [1.250000] now;
+		move rfupleg to y-axis [1.250000] speed [20];
+		move rrupleg to y-axis [1.250000] now;
+		move rrupleg to y-axis [1.250000] speed [10];
+		turn head to x-axis <1.000000> now;
+		turn head to x-axis <9.000000> speed <106>;
+		turn lfupleg to x-axis <-12.000000> now;
+		turn lfupleg to x-axis <0.000000> speed <182>;
+		turn lrupleg to x-axis <-56.000000> now;
+		turn lrupleg to x-axis <-42.500000> speed <176>;
+		turn rfupleg to x-axis <56.000000> now;
+		turn rfupleg to x-axis <88.000000> speed <464>;
+		turn rrupleg to x-axis <-47.000000> now;
+		turn rrupleg to x-axis <-66.000000> speed <280>;
+		turn rrleg to x-axis <13.000000> now;
+		turn rrleg to x-axis <40.000000> speed <400>;
+		turn rfleg to x-axis <-39.000000> now;
+		turn lrleg to x-axis <76.000000> now;
+		turn lrleg to x-axis <70.000000> speed <84>;
+		turn lfleg to x-axis <1.000000> now;
+		sleep 6800 / currentSpeed;
+	set ARMORED to 0;
+	set CLOAKED to 0;
+	set STEALTH to 0;
+	}
+	if( bMoving )
+	{
+		move lfupleg to y-axis [1.250000] speed [30];
+		move lrupleg to y-axis [1.250000] speed [10];
+		turn head to x-axis <-7.000000> speed <224>;
+		turn lfupleg to x-axis <50.000000> speed <732>;
+		turn lrupleg to x-axis <-9.000000> speed <522>;
+		turn rfupleg to x-axis <29.000000> speed <858>;
+		turn rrupleg to x-axis <-50.000000> speed <244>;
+		turn rrleg to x-axis <48.000000> speed <126>;
+		turn rfleg to x-axis <22.000000> speed <898>;
+		turn lrleg to x-axis <71.000000> speed <8>;
+		turn lfleg to x-axis <-47.000000> speed <696>;
+		sleep 6800 / currentSpeed;
+	set ARMORED to 0;
+	set CLOAKED to 0;
+	set STEALTH to 0;
+	}
+	if( bMoving )
+	{
+		move lrupleg to y-axis [1.250000] speed [30];
+		move rfupleg to y-axis [1.250000] speed [35];
+		move rrupleg to y-axis [1.250000] speed [15];
+		turn head to x-axis <1.000000> speed <116>;
+		turn lfupleg to x-axis <57.000000> speed <104>;
+		turn lrupleg to x-axis <-46.000000> speed <528>;
+		turn rfupleg to x-axis <-22.000000> speed <742>;
+		turn rrupleg to x-axis <-40.000000> speed <138>;
+		turn rrleg to x-axis <46.000000> speed <34>;
+		turn rfleg to x-axis <2.500000> speed <254>;
+		turn lrleg to x-axis <51.000000> speed <282>;
+		turn lfleg to x-axis <-50.000000> speed <42>;
+		sleep 6900 / currentSpeed;
+	set ARMORED to 0;
+	set CLOAKED to 0;
+	set STEALTH to 0;
+	}
+	if( bMoving )
+	{
+		move lfupleg to y-axis [1.250000] speed [5];
+		move rrupleg to y-axis [1.250000] speed [5];
+		turn head to x-axis <4.000000> speed <42>;
+		turn lfupleg to x-axis <82.000000> speed <362>;
+		turn lrupleg to x-axis <-61.000000> speed <230>;
+		turn rfupleg to x-axis <12.500000> speed <544>;
+		turn rrupleg to x-axis <-38.000000> speed <28>;
+		turn rrleg to x-axis <49.000000> speed <48>;
+		turn rfleg to x-axis <-33.000000> speed <558>;
+		turn lrleg to x-axis <26.000000> speed <370>;
+		turn lfleg to x-axis <-80.000000> speed <446>;
+		sleep 6800 / currentSpeed;
+	set ARMORED to 0;
+	set CLOAKED to 0;
+	set STEALTH to 0;
+	}
+	if( bMoving )
+	{
+		move lrupleg to y-axis [2.500000] speed [10];
+		move rrupleg to y-axis [1.250000] speed [10];
+		turn head to x-axis <8.000000> speed <48>;
+		turn lfupleg to x-axis <87.000000> speed <84>;
+		turn lrupleg to x-axis <-78.000000> speed <250>;
+		turn rfupleg to x-axis <32.000000> speed <244>;
+		turn rrupleg to x-axis <-32.000000> speed <98>;
+		turn rrleg to x-axis <56.000000> speed <98>;
+		turn lrleg to x-axis <78.000000> speed <766>;
+		turn lfleg to x-axis <-29.000000> speed <752>;
+		sleep 6800 / currentSpeed;
+	set ARMORED to 0;
+	set CLOAKED to 0;
+	set STEALTH to 0;
+	}
+	if( bMoving )
+	{
+		move lfupleg to y-axis [1.250000] speed [10];
+		move lrupleg to y-axis [1.250000] speed [10];
+		move rfupleg to y-axis [1.250000] speed [15];
+		move rrupleg to y-axis [1.250000] speed [15];
+		turn head to x-axis <2.500000> speed <34>;
+		turn lfupleg to x-axis <44.000000> speed <636>;
+		turn lrupleg to x-axis <-71.000000> speed <110>;
+		turn rfupleg to x-axis <52.000000> speed <290>;
+		turn rrupleg to x-axis <-24.000000> speed <118>;
+		turn rrleg to x-axis <59.000000> speed <48>;
+		turn rfleg to x-axis <-52.000000> speed <270>;
+		turn lfleg to x-axis <1.000000> speed <442>;
+		sleep 6800 / currentSpeed;
+	set ARMORED to 0;
+	set CLOAKED to 0;
+	set STEALTH to 0;
+	}
+	if( bMoving )
+	{
+		move lfupleg to y-axis [1.250000] speed [20];
+		move lrupleg to y-axis [1.250000] speed [10];
+		turn head to x-axis <0.000000> speed <76>;
+		turn lfupleg to x-axis <16.000000> speed <404>;
+		turn lrupleg to x-axis <-66.000000> speed <70>;
+		turn rfupleg to x-axis <78.000000> speed <390>;
+		turn rrupleg to x-axis <-4.000000> speed <286>;
+		turn rrleg to x-axis <-20.000000> speed <1170>;
+		turn rfleg to x-axis <-74.000000> speed <328>;
+		turn lrleg to x-axis <72.500000> speed <42>;
+		turn lfleg to x-axis <-42.000000> speed <634>;
+		sleep 6800 / currentSpeed;
+	set ARMORED to 0;
+	set CLOAKED to 0;
+	set STEALTH to 0;
+	}
+}
+
+MotionControl(moving, aiming, justmoved)
+{
+	justmoved = TRUE;
+	while( TRUE )
+	{
+		moving = bMoving;
+		aiming = bAiming;
+		if( moving )
+		{
+			if( aiming )
+			{
+				Static_Var_3 = 1;
+				call-script walklegs();
+			}
+			else
+			{
+				Static_Var_3 = 0;
+				call-script walk();
+			}
+			justmoved = TRUE;
+		}
+		else
+		{
+			Static_Var_3 = 1;
+			if( justmoved )
+			{
+				move lrupleg to y-axis [0.000000] speed [12.500000];
+				move rfupleg to y-axis [0.000000] speed [12.500000];
+				move rrupleg to y-axis [0.000000] speed [12.500000];
+				turn head to x-axis <0.000000> speed <200.000000>;
+				turn lfupleg to x-axis <0.000000> speed <200.000000>;
+				turn lrupleg to x-axis <0.000000> speed <200.000000>;
+				turn rfupleg to x-axis <0.000000> speed <200.000000>;
+				turn rrupleg to x-axis <0.000000> speed <200.000000>;
+				turn rrleg to x-axis <0.000000> speed <200.000000>;
+				turn lrleg to x-axis <0.000000> speed <200.000000>;
+				justmoved = FALSE;
+			}
+			sleep 100;
+		}
+	}
+}
+
+UnitSpeed()
+{
+	while(TRUE)
+	{
+		currentSpeed = (get CURRENT_SPEED)*100/moveSpeed;
+		if (currentSpeed<20) currentSpeed=20;
+		sleep 142;
+	}
+}
+
+SmokeUnit(healthpercent, sleeptime, smoketype)
+{
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 500;
+	}
+	start-script UnitSpeed();
+	start-script MotionControl();
+	while( TRUE )
+	{
+		healthpercent = get HEALTH;
+		if( healthpercent < 66 )
+		{
+			smoketype = SFXTYPE_BLACKSMOKE;
+			if( Rand( 1, 66 ) < healthpercent )
+			{
+				smoketype = SFXTYPE_WHITESMOKE;
+			}
+			emit-sfx smoketype from turret;
+		}
+		sleeptime = healthpercent * 50;
+		if( sleeptime < 200 )
+		{
+			sleeptime = 200;
+		}
+		sleep sleeptime;
+	}
+}
+
+Create()
+{
+	hide flare;
+	bMoving = FALSE;
+	bAiming = FALSE;
+	Static_Var_3 = 1;
+	restore_delay = 3000;
+	moveSpeed = get MAX_SPEED;
+	currentSpeed = 100;
+	start-script SmokeUnit();
+}
+
+SetMaxReloadTime(Func_Var_1)
+{
+	restore_delay = Func_Var_1 * 2;
+}
+
+StartMoving()
+{
+	bMoving = TRUE;
+	set ARMORED to 0;
+	set CLOAKED to 0;
+	set STEALTH to 0;
+	//sleep 200;
+	emit-sfx UNIT_SFX1 from body;
+}
+
+StopMoving()
+{
+	bMoving = FALSE;
+	sleep 1000;
+	emit-sfx UNIT_SFX1 from body;
+	emit-sfx UNIT_SFX1 from body;
+	set ARMORED to 1;
+	set CLOAKED to 1;
+	set STEALTH to 1;
+}
+
+SweetSpot(piecenum)
+{
+	piecenum = body;
+}
+
+RestoreAfterDelay()
+{
+	sleep restore_delay;
+	turn turret to y-axis <0.000000> speed <150.000000>;
+	wait-for-turn turret around y-axis;
+	bAiming = FALSE;
+}
+
+AimFromPrimary(piecenum)
+{
+	piecenum = turret;
+}
+
+QueryPrimary(piecenum)
+{
+	piecenum = flare;
+}
+
+AimPrimary(heading, pitch)
+{
+	signal SIG_AIM;
+	set-signal-mask SIG_AIM;
+	bAiming = TRUE;
+	turn turret to y-axis heading speed <300.000000>;
+	wait-for-turn turret around y-axis;
+	start-script RestoreAfterDelay();
+	return (1);
+}
+
+FirePrimary()
+{
+	emit-sfx UNIT_SFX2 from flare;
+	sleep 10;
+}
+
+Killed(severity, corpsetype)
+{
+	hide flare;
+	if( severity <= 25 )
+	{
+		corpsetype = 1;
+		explode turret type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+		explode barrel type BITMAPONLY | BITMAP4;
+		explode rrleg type BITMAPONLY | BITMAP5;
+		explode rfleg type BITMAPONLY | BITMAP4;
+		explode lrleg type BITMAPONLY | BITMAP4;
+		explode lfleg type BITMAPONLY | BITMAP4;
+		explode body type BITMAPONLY | BITMAP5;
+		return (0);
+	}
+	if( severity <= 50 )
+	{
+		corpsetype = 2;
+		explode turret type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+		explode barrel type FALL | BITMAP3;
+		explode rrleg type FALL | BITMAP4;
+		explode rfleg type FALL | BITMAP5;
+		explode lrleg type FALL | BITMAP3;
+		explode lfleg type FALL | BITMAP4;
+		explode body type FALL | BITMAP4;
+		return (0);
+	}
+	if( severity <= 99 )
+	{
+		corpsetype = 3;
+		explode turret type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+		explode barrel type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+		explode rrleg type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+		explode rfleg type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+		explode lrleg type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+		explode lfleg type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+		explode body type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+		return (0);
+	}
+	corpsetype = 3;
+	explode turret type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+	explode barrel type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+	explode rrleg type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+	explode rfleg type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+	explode lrleg type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+	explode lfleg type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+	explode body type SHATTER | EXPLODE_ON_HIT | BITMAP4;
+	return (0);
+}

@@ -43,6 +43,8 @@ walk2()
 		turn leg6 to y-axis <0.000000> now;
 		turn leg6 to y-axis <-52.010989> speed <320>;
 		turn leg6 to x-axis <-30.005495> now;
+	set ARMORED to 0;
+	set CLOAKED to 0;
 		sleep 50;
 	}
 	if( bMoving )
@@ -55,6 +57,8 @@ walk2()
 		turn leg4 to y-axis <0.000000> speed <800>;
 		turn leg5 to z-axis <-31.005495> speed <620>;
 		turn leg6 to x-axis <4.000000> speed <560>;
+	set ARMORED to 0;
+	set CLOAKED to 0;
 		sleep 50;
 	}
 	if( bMoving )
@@ -69,6 +73,8 @@ walk2()
 		turn leg5 to y-axis <-34.000000> speed <632>;
 		turn leg5 to z-axis <-31.005495> speed <4>;
 		turn leg6 to y-axis <12.000000> speed <532>;
+	set ARMORED to 0;
+	set CLOAKED to 0;
 		sleep 50;
 	}
 	turn leg1 to y-axis <43.000000> speed <240>;
@@ -83,6 +89,8 @@ walk2()
 	turn leg5 to z-axis <0.000000> speed <620>;
 	turn leg6 to y-axis <0.000000> speed <28>;
 	turn leg6 to x-axis <-30.005495> speed <640>;
+	set ARMORED to 0;
+	set CLOAKED to 0;
 	sleep 50;
 }
 
@@ -175,12 +183,21 @@ Create()
 StartMoving()
 {
 	bMoving = TRUE;
+	set ARMORED to 0;
+	set CLOAKED to 0;
+	//sleep 200;
+	emit-sfx UNIT_SFX1 from body;
 }
 
 StopMoving()
 {
 	bMoving = FALSE;
 	justMoved = TRUE;
+	sleep 2000;
+	emit-sfx UNIT_SFX1 from body;
+	emit-sfx UNIT_SFX1 from body;
+	set ARMORED to 1;
+	set CLOAKED to 1;
 }
 
 SweetSpot(piecenum)

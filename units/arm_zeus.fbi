@@ -26,8 +26,8 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=3800;//4200 // 3100; // same as latest patch
-	damagemodifier=0.88;//3472 with gun closed
+	maxdamage=3500;//4200 // 3100; // same as latest patch
+	damagemodifier=0.9;//3472 with gun closed
 	healtime=30;
 	buildcostmetal=534; //OTA: 267
 	buildcostenergy=3342; //OTA: 2228

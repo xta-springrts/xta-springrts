@@ -1392,7 +1392,7 @@
 		canbuild7=arm_jethro_rt; //mod option
 		canbuild8=arm_zipper;
 		canbuild9=paci;//xtaids
-		canbuild10=arm_spidey;
+		canbuild10=arm_true_flea;
 		canbuild11=walker;//xtaids
 	}
 	[arm_noruas]

@@ -81,7 +81,7 @@
 	//************************************************************
 	//  Weapons
 	//***********
-	weapon1=EMG;
+	weapon1=EMG_FLASH;
 	nochasecategory=VTOL;
 	badtargetcategory=VTOL;
 	wpri_badtargetcategory=VTOL;

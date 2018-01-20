@@ -62,6 +62,8 @@
 	wpri_badTargetCategory=VTOL;
 	BadTargetCategory=VTOL;
 	NoChaseCategory=VTOL;
+	damagemodifier=0.5; //was 1.0 (100% increase in health when not moving) now 200%//
+	mincloakdistance=125;
 	Stealth=1;
 	sonarStealth=1;
 	MinCollisionSpeed=10;//weight
@@ -71,4 +73,9 @@
 	collisionVolumeTest = 1;
 	pieceTrailCEGTag=Debree;//bleh
 	pieceTrailCEGRange = 4;
+		[SFXTypes]
+	{
+	explosiongenerator0=custom:krogstomp;
+	explosiongenerator1=custom:krogstomp;
+	}
 }

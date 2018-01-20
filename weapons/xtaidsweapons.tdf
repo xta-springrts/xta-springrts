@@ -665,9 +665,9 @@
 	//color=3;
 	[DAMAGE]
 	{
-		default=6500;
-		group_ships=7200;
-		group_large_ships=8400;
+		default=9500;
+		group_ships=11200;
+		group_large_ships=13400;
 		group_invincible=1;
 		group_commanders=1400;
 	}
@@ -742,7 +742,7 @@
 	shieldrepulser=1;
 	smartshield=1;
 	visibleshieldrepulse=1;
-	shieldenergyuse=400;
+	shieldenergyuse=800;
 	shieldforce=2.5;
 	shieldmaxspeed=4400;
 	shieldradius=425;
@@ -754,9 +754,10 @@
 	shieldalpha=0.4;
 	VisibleShieldHitFrames=70;
         ShieldPowerRegen=250;
-        ShieldPowerRegenEnergy=300.0;
+        ShieldPowerRegenEnergy=500.0;
         VisibleShield=1;
-        range=425;	
+        range=425;
+		shieldRechargeDelay=0.25;
 	[DAMAGE]
 	{
 		default=100;
@@ -1103,7 +1104,7 @@
 	smartshield=1;
 	visibleshieldrepulse=1;
 	shieldenergyuse=300;
-	shieldforce=2;
+	shieldforce=2.5;
 	shieldmaxspeed=4000;
 	shieldradius=350;
 	shieldpower=10000;
@@ -1117,6 +1118,7 @@
         ShieldPowerRegenEnergy=250.0;
         VisibleShield=1;
         range=350;	
+		shieldRechargeDelay=0.50;
 	[DAMAGE]
 	{
 		default=100;
