@@ -20,7 +20,7 @@
 	unitnumber=250;
 	objectname=arm_shooter.3do;
 	corpse=arm_shooter_dead;
-	buildpic=arm_shooter.DDS;
+	buildpic=arm_shooter.png;
 	soundcategory=ARM_KBOT;
 
 	//************************************************************

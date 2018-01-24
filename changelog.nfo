@@ -30,9 +30,13 @@ The Talon race is the property of The Registered One, or TRO for short, which ha
 --- Do not remove
 --- Changelog processing starts here
 Changes:
+*Arm Headhunter now takes role of Old XTA style Warrior with advanced T2 EMG, with matching cost and dps.
+*Arm Flea restored to Arm T1 Kbot Lab as an sneaky unit but not fast.
+*Arm Warrior restored to original OTA T1 kbot lab role.
 *Arm Peewee and Arm Flash EMG aiming more consistent and effect more visual.
 *Arm Spidey Removed, Replaced with OTA Arm Flea as an experiment.
 *Arm Zeus now has 300 less hp to 3,500 hp, with 3,850 not in firing combat rather than 4256.
+*Updated Some ARM Kbot Buildpictures with actual models in the game.
 *Krogoth Gantry now has 9880 hitpoints or 1.5hp per 1m instead of 5727 for a 70% in hitpoints to promote reliability for krogoth gantry vs. buzzsaw.
 * Reduced range of VULCAN and BUZZSAW to match INTIMIDATOR and BIG BERTHA and with small range advantage of 400-600, or roughly 10 percent.
 * Reduced Fire Arc of Land Mobile Anti Air to reduce effective clumping damage per second potential reducing horde effectiveness. 

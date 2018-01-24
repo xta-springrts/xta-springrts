@@ -21,7 +21,7 @@
 	unitname=arm_decoy_commander;
 	unitnumber=232;
 	objectname=arm_commander.3do;
-	buildpic=arm_decoy_commander.DDS;
+	buildpic=arm_decoy_commander.png;
 	soundcategory=ARM_CKBOT;
 	script=arm_u0commander.cob;
 

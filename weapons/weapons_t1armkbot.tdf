@@ -1,4 +1,115 @@
 
+[WARLONGEMG]
+{
+	name=E.M.G.;
+	Weapontype=Cannon;
+	explosiongenerator=custom:KBOTMISSILEHIT;
+	cegTag=PEEWEESHINE;
+	//Texture1=emg;
+	Texture2=null;
+	Texture3=null;
+	Texture4=null;
+	stages=3;
+	separation=1.25;
+	alphadecay=0.3;
+	sizedecay=-0.1;
+	nogap=1;
+	rgbcolor=0.9 0.8 0.6;
+	size=2.0;
+	intensity=1.0;
+	turret=1;
+	range=330;
+	reloadtime=1.0;
+	weapontimer=2;
+	mygravity=0.05;
+	weaponvelocity=500;
+	sprayangle=256;
+	areaofeffect=16;
+	burst=2;
+	burstrate=0.1;
+	soundstart=Reccygun;
+	soundhitdry=lasrhit1;
+	soundtrigger=0;
+	tolerance=4500;//helps with rapid fire weapons
+	[DAMAGE]
+	{
+		default=15;//30
+		group_invincible=1;
+	}
+}
+
+[WAR_LIGHTCANNON]
+{
+	name=Light Cannon;
+	weaponType=Cannon;
+	turret=1;
+	range=400;
+	explosiongenerator=custom:WindkbotMissle;
+	reloadtime=2.0;
+	weaponvelocity=328;
+	//mygravity=0.24;
+	areaofeffect=48;
+	soundstart=canlite3;
+	soundhitdry=xplosml3;
+	tolerance=500;
+	startsmoke=1;
+	//minbarrelangle=-40;
+	size=1.5;
+	rgbcolor=0.9 0.6 0.35;
+	stages=5;
+	separation=0.25;
+	alphadecay=0.75;
+	sizedecay=-0.4;
+	nogap=1;
+	[DAMAGE]
+	{
+		default=50;//25
+		group_commanders=50;
+		lost_commanders=45;
+		group_invincible=1;
+	}
+}
+[SHORTLONGEMG]
+{
+	name=E.M.G.;
+	Weapontype=EmgCannon;
+	explosiongenerator=custom:EMGFLASH;
+	cegTag=PEEWEESHINE;
+	Texture1=emg;
+	Texture2=null;
+	Texture3=null;
+	Texture4=null;
+	stages=1;
+	separation=0.5;
+	alphadecay=0.0;
+	sizedecay=-0.01;
+	nogap=1;
+	rgbcolor=1 0.9 0.2;
+	size=3.0;
+	intensity=0.9;
+	turret=1;
+	range=215;
+	reloadtime=0.2;
+	weapontimer=1;
+	weaponvelocity=600;
+	sprayangle=948;
+	areaofeffect=8;
+	burst=1;
+	burstrate=0.1;
+	soundstart=armsml2;
+	soundhitdry=lasrhit1;
+	soundtrigger=1;
+	tolerance=3000;
+	startsmoke=0;
+	endsmoke=0;
+	tolerance=1500;//helps with rapid fire weapons
+	[DAMAGE]
+	{
+		default=6;//30
+		group_invincible=1;
+	}
+}
+
 [PEEWEE_EMG_2018]
 {
 	name=E.M.G.;
@@ -35,7 +146,7 @@
 	tolerance=1500;//helps with rapid fire weapons
 	[DAMAGE]
 	{
-		default=5.5;//reduce damage due to more stable damage from sometimes 60 to reliable 50
+		default=5.5;//reduce damage due to more stable damage from sometimes 60 to reliable 55
 		group_invincible=1;
 	}
 }

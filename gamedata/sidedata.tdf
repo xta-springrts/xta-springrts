@@ -210,7 +210,7 @@
 		canbuild6=arm_eraser;
 		canbuild7=arm_zipper;
 		canbuild8=arm_maverick;
-		canbuild9=arm_warrior;
+		canbuild9=arm_headhunter;//arm warrior
 		canbuild10=arm_marky;
 		canbuild11=arm_flea;
 		canbuild12=arm_pelican;
@@ -680,7 +680,7 @@
 		canbuild9=arm_skynite;
 		canbuild10=arm_possum;
 		canbuild11=arm_odin;
-		canbuild12=arm_fatboy;
+		//canbuild12=arm_fatboy;
 		canbuild13=arm_archangel;
 		canbuild14=arm_noruas;
 	}
@@ -1392,8 +1392,8 @@
 		canbuild7=arm_jethro_rt; //mod option
 		canbuild8=arm_zipper;
 		canbuild9=paci;//xtaids
-		canbuild10=arm_true_flea;
-		canbuild11=walker;//xtaids
+		canbuild10=arm_ota_warrior;
+		canbuild11=arm_true_flea;
 	}
 	[arm_noruas]
 	{

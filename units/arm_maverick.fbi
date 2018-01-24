@@ -20,7 +20,7 @@
 	unitnumber=235;
 	objectname=arm_maverick.3do;
 	corpse=arm_maverick_dead;
-	buildpic=arm_maverick.DDS;
+	buildpic=arm_maverick.png;
 	soundcategory=MAVERICK;
 
 	//************************************************************

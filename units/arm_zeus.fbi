@@ -20,7 +20,7 @@
 	unitnumber=77;
 	objectname=arm_zeus.3do;
 	corpse=arm_zeus_dead;
-	buildpic=arm_zeus.DDS;
+	buildpic=arm_zeus.png;
 	soundcategory=ARM_KBOT;
 
 	//************************************************************

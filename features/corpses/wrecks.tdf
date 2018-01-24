@@ -4155,6 +4155,48 @@
 	collisionVolumeScales=28 7 24;//#AUTO#
 	collisionVolumeOffsets=0 0 0;//#AUTO#
 }
+
+[arm_headhunter_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=core_corpses;
+	object=arm_headhunter_dead;
+	featuredead=arm_headhunter_heap;
+	footprintx=2;
+	footprintz=2;
+	height=20;
+	blocking=1;
+	hitdensity=100;
+	metal=357;
+	damage=680;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=28 30 24;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+[arm_headhunter_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=2x2a;
+	footprintx=2;
+	footprintz=2;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	metal=179;
+	damage=340;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=28 7 24;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
 [arm_wind_generator_dead]
 {
 	world=All Worlds;
