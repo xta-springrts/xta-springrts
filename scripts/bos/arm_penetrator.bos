@@ -4,9 +4,13 @@
 #include "sfxtype.h"
 #include "exptype.h"
 
+#define HEADING_TOLERANCE	<15.000000>
+#define PITCH_TOLERANCE		<25.000000>
+
+
 piece  base, flash, turret, sensor, barrel, sleeve, exhaust1, exhaust2;
 
-static-var  restore_delay, firing;
+static-var  restore_delay, firing, currentHeading, currentPitch;
 
 // Signal definitions
 #define SIG_AIM				2
@@ -55,6 +59,8 @@ Create()
 	hide flash;
 	restore_delay = 3000;
 	start-script SmokeUnit();
+	currentHeading = <0>;
+	currentPitch = <0>;
 	firing = 0;
 }
 
@@ -79,8 +85,13 @@ AimPrimary(heading, pitch)
 	set-signal-mask SIG_AIM;
 	turn turret to y-axis heading speed <180.000000>;
 	turn sleeve to x-axis <0.000000> - pitch speed <140.000000>;
+	if ( get ABS(heading - currentHeading)  > HEADING_TOLERANCE || get ABS(pitch - currentPitch) > PITCH_TOLERANCE )
+	{
 	wait-for-turn turret around y-axis;
 	wait-for-turn sleeve around x-axis;
+		currentHeading = heading;
+		currentPitch = pitch;
+	}
 	start-script RestoreAfterDelay();
 	return (1);
 }

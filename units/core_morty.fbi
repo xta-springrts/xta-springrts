@@ -76,14 +76,14 @@
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=337.5;
+	sightdistance=425.5;
 	radardistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
-	weapon1=CORE_MORT;
-	weapon2=CORE_MORT_HIGH;
+	weapon1=CORE_MORT_2018;
+	weapon2=CORE_MORT_HIGH_2018;
 	nochasecategory=VTOL;
 	badtargetcategory=VTOL;
 	wpri_badtargetcategory=VTOL;

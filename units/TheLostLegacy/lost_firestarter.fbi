@@ -83,7 +83,7 @@
 	//************************************************************
 	//  Weapons
 	//***********
-	Weapon1=LOSTKBOT_MISSILE;
+	Weapon1=ARMRL_MISSILE;
 	badtargetcategory=NOTAIR;
 	wpri_badtargetcategory=NOTAIR;
 	explodeas=T1_2X2_UNIT_STRONG_NORMAL;

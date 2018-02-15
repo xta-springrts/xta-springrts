@@ -81,7 +81,7 @@
 	//************************************************************
 	//  Weapons
 	//***********
-	weapon1=ARMMANNI_WEAPON;
+	weapon1=ARM_PENETRATOR_WEAPON;
 	nochasecategory=VTOL;
 	badtargetcategory=VTOL;
 	wpri_badtargetcategory=VTOL;

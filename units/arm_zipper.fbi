@@ -82,7 +82,7 @@
 	//************************************************************
 	//  Weapons
 	//***********
-	weapon1=ARM_FAST;
+	weapon1=ZIPPER_EMG_2018;
 	nochasecategory=VTOL;
 	badtargetcategory=VTOL;
 	wpri_badtargetcategory=VTOL;
@@ -121,7 +121,7 @@
 	pieceTrailCEGRange = 4;
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:redflare;
+		explosiongenerator0=custom:EmgFlare;
 	}
 
 }

@@ -3348,6 +3348,7 @@
 	explosiongenerator=custom:PURPLELASER;
 	pulseSpeed=4.0;
 	thickness=3.5;
+ 	tolerance=1500;
 	[DAMAGE]
 	{
 		default=40;

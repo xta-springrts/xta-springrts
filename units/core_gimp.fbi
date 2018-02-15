@@ -82,7 +82,7 @@
 	//************************************************************
 	//  Weapons
 	//***********
-	weapon1=CORAMPH_WEAPON1;
+	weapon1=CORE_GIMP_WEAPON;
 	nochasecategory=VTOL;
 	badtargetcategory=VTOL;
 	wpri_badtargetcategory=VTOL;

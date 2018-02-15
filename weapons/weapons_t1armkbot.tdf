@@ -38,6 +38,44 @@
 	}
 }
 
+[ZIPPER_EMG_2018]
+{
+	name=E.M.G.;
+	Weapontype=Cannon;
+	explosiongenerator=custom:KBOTMISSILEHIT;
+	cegTag=PEEWEESHINE;
+	//Texture1=emg;
+	Texture2=null;
+	Texture3=null;
+	Texture4=null;
+	stages=3;
+	separation=1.25;
+	alphadecay=0.3;
+	sizedecay=-0.1;
+	nogap=1;
+	rgbcolor=0.9 0.8 0.6;
+	size=2.0;
+	intensity=1.0;
+	turret=1;
+	range=315;
+	reloadtime=0.75;
+	weapontimer=2;
+	mygravity=0.05;
+	weaponvelocity=900;
+	sprayangle=128;
+	areaofeffect=16;
+	burst=1;
+	burstrate=0.1;
+	soundstart=Reccygun;
+	soundhitdry=lasrhit1;
+	soundtrigger=0;
+	tolerance=4500;//helps with rapid fire weapons
+	[DAMAGE]
+	{
+		default=24;//30
+		group_invincible=1;
+	}
+}
 [WAR_LIGHTCANNON]
 {
 	name=Light Cannon;

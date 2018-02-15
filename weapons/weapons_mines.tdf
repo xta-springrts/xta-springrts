@@ -1,0 +1,101 @@
+//Here we are, what to do, amplify differences and modulate.
+
+[BasicMine]
+{
+	name=Nuclear Mine;
+	weaponType=Cannon;
+	range=480;
+	reloadtime=3.6;
+	weaponvelocity=250;
+	areaofeffect=160;
+	soundstart=largegun;
+	soundhitdry=xplonuk3;
+	edgeeffectiveness=0.5;
+	shakemagnitude=10;
+	shakeduration=1;
+	explosiongenerator=custom:PUFFY;
+	[DAMAGE]
+	{
+		default=1400;
+		group_mines=0.5;
+		group_invincible=1;
+	}
+}
+
+[Bunk_Mine]
+{
+	name=Nuclear Mine;
+	weaponType=Cannon;
+	range=480;
+	reloadtime=3.6;
+	weaponvelocity=250;
+	areaofeffect=120;
+	soundstart=largegun;
+	soundhitdry=rockhit;
+	edgeeffectiveness=0.5;
+	shakemagnitude=10;
+	shakeduration=1;
+	explosiongenerator=custom:raven;
+	[DAMAGE]
+	{
+		default=800;
+		group_mines=0.5;
+		group_invincible=1;
+	}
+}
+
+[Arm_EMP_Mine]
+{
+	ID=139;
+	name=Atomic Blast Weapon;
+	rendertype=1;
+	lineofsight=1;
+	vlaunch=1;
+	model=egun;
+	cegTag=GIGAGREEN;
+	Texture1=null;
+	Texture2=null;
+	Texture3=null;
+	Texture4=null;
+	range=7630;//5120
+	//Weapontype=MissileLauncher;
+	reloadtime=33;
+	noautorange=1;
+	weapontimer=5;
+	flighttime=30;
+	weaponvelocity=1000;
+	weaponacceleration=10;
+	startvelocity=450;
+	turnrate=32768;
+	areaofeffect=384;//was 384
+	edgeeffectiveness=0.75;
+	energypershot=1;
+	targetable=3;
+	soundstart=misicbm1;
+	soundhitdry=TigerRailgun2;
+	firestarter=100;
+	smokedelay=0.01;
+	selfprop=1;
+	smoketrail=0;
+	propeller=0;
+	twophase=1;
+	guidance=1;
+	tolerance=4000;
+	explosiongenerator=custom:EMPPUFFYROCKET;//GREEN_EMP_SHOT
+	startsmoke=0;
+	impulsefactor=0.00;
+	impulseboost=0.00;
+	cratermult=0;
+	paralyzer=1;
+	paralyzetime=30;
+	craterboost=0;
+	tracks=0;
+	[DAMAGE]
+	{
+		default=10000;//dmg increase by 800
+		group_commanders=4000;
+		lost_commanders=4000;
+		group_mines=0.5;
+    group_invincible=1;
+	}
+}

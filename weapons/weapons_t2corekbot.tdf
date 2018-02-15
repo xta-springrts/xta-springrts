@@ -1,0 +1,89 @@
+[CORE_GIMP_WEAPON]
+{
+	name=Plasma Cannon;
+	weaponType=Cannon;
+	turret=1;
+	//minbarrelangle=-35;
+	range=450;
+	reloadtime=1.5;
+	weaponvelocity=370;
+	areaofeffect=64;
+	soundstart=cannon1;
+	soundhitdry=xplomed3;
+	startsmoke=1;
+	explosiongenerator=custom:WindkbotRocket;
+	size=4.0;
+	rgbcolor=1 0.30 0.0;
+	stages=4;
+	separation=0.45;
+	alphadecay=0.5;
+	sizedecay=-0.1;
+	nogap=1;
+	[DAMAGE]
+	{
+		default=166;
+		group_invincible=1;
+	}
+}
+
+[CORE_MORT_2018]
+{
+	name=Plasma Cannon;
+	weaponType=Cannon;
+	turret=1;
+	//minbarrelangle=-35;
+	range=875;
+	explosiongenerator=custom:WindkbotRocket;
+	reloadtime=1.45;
+	weaponvelocity=512;
+	//mygravity=0.24;
+	areaofeffect=48;
+	soundstart=cannon1;
+	soundhitdry=xplomed3;
+	//minbarrelangle=-55;
+	stages=4;
+	separation=1.0;
+	alphadecay=0.3;
+	sizedecay=-0.15;
+	nogap=1;
+	rgbcolor=1.0 0.4 0.0;
+	size=3.0;
+	//intensity=1.0;
+	[DAMAGE]
+	{
+		default=84;
+		group_invincible=1;
+	}
+}
+
+[CORE_MORT_HIGH_2018]
+{
+	name=Plasma Cannon;
+	weaponType=Cannon;
+	turret=1;
+	//minbarrelangle=-35;
+	range=875;
+	reloadtime=2.2;
+	weaponvelocity=412;
+	areaofeffect=96;
+	soundstart=cannon1;
+	explosiongenerator=custom:WindkbotRocket;
+	soundhitdry=xplomed3;
+	//minbarrelangle=-55;
+	startsmoke=1;
+	accuracy=300;
+	movingaccuracy=600;
+	stages=3;
+	separation=0.75;
+	alphadecay=0.3;
+	sizedecay=-0.2;
+	nogap=1;
+	rgbcolor=1.0 0.4 0.0;
+	size=3.5;
+	//intensity=1.0;
+	[DAMAGE]
+	{
+		default=115;
+		group_invincible=1;
+	}
+}

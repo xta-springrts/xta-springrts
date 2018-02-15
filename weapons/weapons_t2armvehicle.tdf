@@ -1,0 +1,33 @@
+
+[ARM_PENETRATOR_WEAPON]
+{
+	name=Annihilator Weapon;
+	Weapontype=BeamLaser;
+	explosiongenerator=custom:PURPLELASER;
+	turret=1;
+	thickness=1.2;
+	laserflaresize=6;
+	beamtime=0.1;
+	range=1000;
+	reloadtime=0.1;
+	energypershot=30;
+	weaponvelocity=900;
+	areaofeffect=8;
+	targetMoveError=0.5;
+	soundstart=annigun1beamlaser;// was annigun1
+	SoundTrigger=1;
+	soundhitdry=xplolrg1;
+	firestarter=90;
+	rgbcolor=0.000 0.012 1.000;
+	pulseSpeed=4.0;
+	thickness=3.5;
+	avoidFeature=0;
+	tolerance=3000;
+	[DAMAGE]
+	{
+		default=40;
+		group_commanders=30;
+		lost_commanders=27;
+		group_invincible=1;
+	}
+}

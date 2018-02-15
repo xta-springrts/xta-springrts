@@ -44,7 +44,7 @@
 	canguard=1;
 	MaxVelocity=4;
 	BrakeRate=0.0001;
-	Acceleration=0.9;
+	Acceleration=4;
 	TurnRate=1300;
 	SteeringMode=2;
 	ShootMe=1;
