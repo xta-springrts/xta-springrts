@@ -318,11 +318,11 @@ MotionControl(moving, aiming, justmoved)
 			if( aiming )
 			{
 				Static_Var_3 = 1;
-		turn torso to y-axis <0.000000> speed <90.000000>;
-		turn rloarm to x-axis <20.016484> speed <45.000000>;
-		turn lloarm to x-axis <20.016484> speed <45.000000>;
-		turn ruparm to x-axis <0.000000> speed <45.000000>;
-		turn luparm to x-axis <0.000000> speed <45.000000>;
+		//turn torso to y-axis <0.000000> speed <90.000000>;
+		//turn rloarm to x-axis <20.016484> speed <45.000000>;
+		//turn lloarm to x-axis <20.016484> speed <45.000000>;
+		//turn ruparm to x-axis <0.000000> speed <45.000000>;
+		//turn luparm to x-axis <0.000000> speed <45.000000>;
 				call-script walklegs();
 			}
 			else

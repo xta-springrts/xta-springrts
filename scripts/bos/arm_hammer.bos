@@ -685,11 +685,11 @@ QueryWeapon2(piecenum)
 {
 	if( gun_1 )
 	{
-		piecenum = lfirept;
+		piecenum = rfirept;
 	}
 	else
 	{
-		piecenum = rfirept;
+		piecenum = lfirept;
 	}
 }
 

@@ -509,7 +509,7 @@
 	range=325; 
 	cylindertargeting = 1;
 	reloadtime=2.5;
-	energypershot=10;
+	energypershot=5;
 	weaponvelocity=400;
   	texture1=testlightning;
   	laserflaresize=1;
