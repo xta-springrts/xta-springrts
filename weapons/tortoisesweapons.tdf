@@ -178,8 +178,8 @@
 	beamtime=0.375;
 	beamttl=5;
 	range=700;
-	reloadtime=3;
-	energypershot=400;
+	reloadtime=4;
+	energypershot=500;
 	weaponvelocity=1000;
 	areaofeffect=16;
 	targetMoveError=0.5;

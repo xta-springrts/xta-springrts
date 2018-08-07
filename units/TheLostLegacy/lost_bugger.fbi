@@ -26,11 +26,11 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=562; // was 645
+	maxdamage=450; // was 645
 	healtime=30;
-	buildcostmetal=94; //was 99(5%)//was 88
-	buildcostenergy=1186;
-	buildtime=2423;//
+	buildcostmetal=71; //was 99(5%)//was 88
+	buildcostenergy=897;
+	buildtime=2023;//
 	footprintx=1;
 	footprintz=1;
 
@@ -60,7 +60,7 @@
 	canmove=1;
 	canpatrol=1;
 	canstop=1;
-	upright=1;
+	upright=0;
 
 	//************************************************************
 	//  Movement
@@ -69,14 +69,14 @@
 	turnrate=1210; // was 1100
 	acceleration=1.415527;
 	brakerate=1.23105;
-	maxvelocity=2.1; // was 1.72
+	maxvelocity=2.3; // was 1.72
 	maxslope=17;
 	maxwaterdepth=25;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=412.5;
+	sightdistance=372.5;
 	radardistance=0;
 	
 	//    Tracks/Flares

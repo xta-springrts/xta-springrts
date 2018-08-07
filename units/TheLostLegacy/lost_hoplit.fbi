@@ -5,7 +5,7 @@
 	//********************
 	side=Lost;
 	name=Hoplit;
-	description=Builds Mineclearer Warhead;
+	description=Mine Sweeper - Clears Mines;
 
 	//************************************************************
 	//  Categories

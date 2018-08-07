@@ -1500,6 +1500,7 @@
 		canbuild8=arm_spider;
 		canbuild9=arm_huntsman;
 		canbuild10=arm_widow;
+		canbuild11=arm_spidey;
 	}
 
 	[arm_spidernest_Xtra]
@@ -1514,6 +1515,7 @@
 		canbuild8=arm_spider;
 		canbuild9=arm_huntsman;
 		canbuild10=arm_widow;
+		canbuild11=arm_spidey;
 	}
 
 	[arm_sub_pen]
@@ -4049,7 +4051,9 @@
 	{
 		canbuild1=lost_charged_nail;
 		canbuild2=lost_dragons_teeth;
-		canbuild3=neutral_eyes;//xtaids
+		canbuild3=lost_fortification_wall;
+		canbuild4=lost_recon_pod;//xtaids
+		canbuild5=lost_radar_tower;
 	}
 
 	[lost_construction_kbot]
@@ -4323,10 +4327,10 @@
 	{
 		canbuild1=lost_ht_construction_builder;
 		canbuild2=Lost_shaman;
-		canbuild3=Lost_troll;
+		//canbuild3=Lost_troll;
 		canbuild4=Lost_binder;
 		canbuild5=Lost_roaster;
-		canbuild6=Lost_thumper;
+		//canbuild6=Lost_thumper;
 		canbuild7=Lost_spatha;
 		canbuild8=Lost_dreadnought;
 		canbuild9=Lost_titan;

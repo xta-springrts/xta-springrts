@@ -1,0 +1,69 @@
+[UNITINFO]
+{
+	Name=Recon Pod;
+	UnitName=lost_recon_pod;
+	BUILDPIC=lost_recon_pod.png;
+	script=lost_watch_tower.cob;
+	
+	//    Required Tags
+	BuildCostEnergy=343;
+	BuildCostMetal=23;
+	BuildTime=587;
+	Category=ARM NOWEAPON NOTAIR NOTSUB NOTSEA NOTLAND;
+	Description=Submersible Spy Camera;
+	FootprintX=1;
+	FootprintZ=1;
+	MaxDamage=198;
+	ObjectName=lost_recon_pod;
+	Side=Neutral;
+	SoundCategory=MINE;
+	TEDClass=DEFENSIVE;
+	
+	//    Movement
+	BrakeRate=0;
+	Acceleration=0;
+	MaxVelocity=0;
+	MaxSlope=20;
+	TurnRate=0;
+	
+	//    Airplane Moventment
+	
+	//    Buildings
+	YardMap=y;
+	levelground=0;
+	upright=0;
+	collisionVolumeType=CylY;
+	collisionVolumeScales=15 15 15;
+	collisionVolumeOffsets=0 2 0;
+	collisionVolumeTest = 0;
+	
+	//    Construction
+	Builder=0;
+	WorkerTime=0;
+	
+	//    Resources
+	EnergyMake=0;
+	EnergyStorage=5;
+	EnergyUse=0;
+	MetalStorage=0;
+	
+	//    Abilities
+	
+	//    Sight/Radar
+	RadarDistance=0;
+	SightDistance=500;
+	Stealth=1;
+	Init_Cloaked=1;
+	cancloak=1;
+	CloakCost=5;
+	MinCloakDistance=2;
+	
+	//    Weapons
+	
+	//    Tracks/Flares
+	
+	//    Watersettings
+	MaxWaterDepth=9999;
+	
+	//    Misc
+}

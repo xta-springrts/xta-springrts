@@ -7,7 +7,7 @@
 	Designation=CORE-DR5;
 	Name=Rampage;
 	buildpic=core_rampage.png;
-	Description=Turbo Tortoise;
+	Description=Fast Tortoise;
 	FootprintX=4;
 	FootprintZ=4;
 	BuildCostEnergy=15564;

@@ -31,6 +31,7 @@ walk()
 		turn RUArm to x-axis <-9.846154> now;
 		turn RLArm to x-axis <-9.137363> now;
 		turn LLArm to x-axis <-36.571429> now;
+	emit-sfx 1025 from Thrust;
 		sleep 4100/currentSpeed;
 	}
 	if( bMoving )
@@ -78,6 +79,7 @@ walk()
 		turn RUArm to x-axis <-14.934066> now;
 		turn RLArm to x-axis <-29.005495> now;
 		turn LLArm to x-axis <-12.824176> now;
+	emit-sfx 1025 from Thrust;
 		sleep 2700/currentSpeed;
 	}
 	if( bMoving )
@@ -147,6 +149,7 @@ walk()
 		turn LUArm to x-axis <48.868132> now;
 		turn RLArm to x-axis <-74.192308> now;
 		turn LLArm to x-axis <-23.736264> now;
+	emit-sfx 1025 from Thrust;
 		sleep 1500/currentSpeed;
 	}
 	if( bMoving )
@@ -235,6 +238,7 @@ walk()
 		turn RUArm to x-axis <-8.791209> now;
 		turn RLArm to x-axis <-33.758242> now;
 		turn LLArm to x-axis <-10.549451> now;
+	emit-sfx 1025 from Thrust;
 		sleep 4300/currentSpeed;
 	}
 	if( bMoving )
@@ -338,6 +342,7 @@ walk()
 		turn RUArm to x-axis <47.467033> now;
 		turn RLArm to x-axis <-29.181319> now;
 		turn LLArm to x-axis <-65.758242> now;
+	emit-sfx 1025 from Thrust;
 		sleep 1500/currentSpeed;
 	}
 	if( bMoving )
@@ -441,6 +446,7 @@ walklegs()
 		turn RULeg to x-axis <4.214286> now;
 		turn RLLeg to x-axis <19.335165> now;
 		turn LLLeg to x-axis <43.604396> now;
+	emit-sfx 1025 from Thrust;
 		sleep 4100/currentSpeed;
 	}
 	if( bMoving )
@@ -646,6 +652,7 @@ walklegs()
 		turn RULeg to x-axis <-54.857143> now;
 		turn RLLeg to x-axis <21.093407> now;
 		turn LLLeg to x-axis <23.203297> now;
+	emit-sfx 1025 from Thrust;
 		sleep 1500/currentSpeed;
 	}
 	if( bMoving )
@@ -955,6 +962,7 @@ FirePrimary()
 {
 	turn RLArm to x-axis <-50.005495> now;
 	emit-sfx 1024 from flare;
+	emit-sfx 1025 from Thrust;
 }
 
 Killed(severity, corpsetype)

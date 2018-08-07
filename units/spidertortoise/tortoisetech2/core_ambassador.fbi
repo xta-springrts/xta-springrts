@@ -23,7 +23,7 @@
 	ZBuffer=1;
 	NoAutoFire=0;
 	SightDistance=460;
-	radardistance=1100; //was 0//
+	//radardistance=1100; //was 0//
 	SoundCategory=COR_TOR;
 	ExplodeAs=T1_3X3_UNIT_TURTLE_NORMAL;
 	SelfDestructAs=T1_3X3_UNIT_TURTLE_SELF;
@@ -40,8 +40,8 @@
 	canpatrol=1;
 	canstop=1;
 	canguard=1;
-	activatewhenbuilt=1;
-	onoffable=1;
+	//activatewhenbuilt=1;
+	//onoffable=1;
 	MaxVelocity=0.75;
 	BrakeRate=0.152;
 	Acceleration=0.152;
