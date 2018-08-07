@@ -54,7 +54,7 @@
 	startvelocity=200;
 	weaponacceleration=200;
 	areaofeffect=60;  //80
-	//energypershot=20;
+	energypershot=25;
 	Burst=1;
 	Burstrate=0.1666;
 	Trajectoryheight=0.75;
@@ -1824,7 +1824,7 @@
 	range=550;
 	sprayangle=1024;
 	reloadtime=0.2;
-	explosiongenerator=custom:tllDgunTRAIL;
+	explosiongenerator=custom:tllTRAIL;
 	weaponvelocity=1100;
 	myGravity=0.01;
 	areaofeffect=16;
@@ -2113,26 +2113,32 @@
 	LineOfSight=1;
 	Turret=1;
 
-	range=450;
+	range=525;
 	reloadtime=4.0;
-	energypershot=150;
+	energypershot=200;
 	weaponvelocity=1000;
 	areaofeffect=8;
 	
+	beamtime=0.05;
+	burst=4;
+	burstrate=0.01;
+	
 
-	soundstart==xplomas2;//xplolrg1;
-	soundhitdry=xplomas2;
+	soundtrigger=1;
+	soundstart=xplomas2;//xplolrg1;
+	soundhitdry=lostdgunhit;
 
 	firestarter=90;
 	beamweapon=1;
-	rgbcolor=0.01 0.01 0.02;
+	rgbcolor=1.0 0.5 0.3;
+	//rgbcolor=0.01 0.01 0.02;
 	explosiongenerator=custom:DGUNTRACE;
 
 
 	[DAMAGE]
 		{
-		default=400;
-		group_landair=125;
+		default=100;
+		group_landair=15;
 		}
 	}
 
@@ -2143,26 +2149,32 @@
 	LineOfSight=1;
 	Turret=1;
 
-	range=375;
-	reloadtime=5.0;
-	energypershot=250;
+	range=425;
+	reloadtime=4.5;
+	energypershot=350;
 	weaponvelocity=1000;
 	areaofeffect=8;
+
+	beamtime=0.05;
+	burst=6;
+	burstrate=0.01;
 	
 
+	soundtrigger=1;
 	soundstart=xplomas2;//xplolrg1;
-	soundhitdry=xplomas2;
+	soundhitdry=lostdgunhit;
 
 	firestarter=90;
 	beamweapon=1;
-	rgbcolor=0.01 0.01 0.02;
+	//rgbcolor=0.01 0.01 0.02;
+	rgbcolor=1.0 0.5 0.3;
 	explosiongenerator=custom:DGUNTRACE;
 
 
 	[DAMAGE]
 		{
-		default=625;
-		group_landair=225;
+		default=125;
+		group_landair=25;
 		}
 	}
 

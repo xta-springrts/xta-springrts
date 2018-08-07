@@ -5,7 +5,7 @@
 	//********************
 	side=Arm;
 	name=Shinobi;
-	Description=Invisible Skirmish Kbot;
+	Description=Invisible Anti-Armor Kbot;
 
 	//************************************************************
 	//  Categories
@@ -26,12 +26,12 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=2100;//
+	maxdamage=2000;//
 	//damagemodifier=0.88;//3472 with gun closed
 	healtime=30;
-	buildcostmetal=675; //OTA: 267
-	buildcostenergy=14342; //OTA: 2228
-	buildtime=18478; //OTA: 5478
+	buildcostmetal=593; //OTA: 267
+	buildcostenergy=10342; //OTA: 2228
+	buildtime=15478; //OTA: 5478
 	footprintx=2;
 	footprintz=2;
 
@@ -130,7 +130,6 @@
 
 	[SFXTypes]
 	{
-	explosiongenerator0=custom:ElectricFlare;
-	explosiongenerator1=custom:ElectricSTOMP;
+		explosiongenerator0=custom:dgunflare;
 	}
 }

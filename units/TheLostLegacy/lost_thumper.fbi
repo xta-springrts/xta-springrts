@@ -72,7 +72,6 @@
 	pieceTrailCEGRange = 4;
 	[SFXTypes]
 	{
-	explosiongenerator0=custom:POPUPFLARE;
-	explosiongenerator1=custom:UNITFIRE;
+		explosiongenerator0=custom:dgunflare;
 	}
 }

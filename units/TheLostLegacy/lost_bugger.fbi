@@ -21,7 +21,7 @@
 	objectname=Lost_Bugger.3do;
 	corpse=Lost_Bugger_dead;
 	buildpic=Lost_Bugger.png;
-	soundcategory=CORAK;
+	SoundCategory=VADER;
 
 	//************************************************************
 	//  Health/Cost/Size
