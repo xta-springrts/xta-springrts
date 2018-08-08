@@ -128,6 +128,11 @@
 	//  To be removed
 	//*****************
 
+	[customparams] 	
+	{
+	tip=With ample energy or jammers, unit can shoot without revealing its total location to all.;
+	}
+
 	[SFXTypes]
 	{
 		explosiongenerator0=custom:dgunflare;

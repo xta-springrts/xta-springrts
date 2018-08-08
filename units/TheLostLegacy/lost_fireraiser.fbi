@@ -123,6 +123,11 @@
 	//  To be removed
 	//*****************
 
+	[customparams] 	
+	{
+	tip=Low durability for speed, very effective at entering combat and leaving.;
+	}
+
 	[SFXTypes]
 	{
 	explosiongenerator0=custom:KBOTrocketflare;

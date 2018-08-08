@@ -128,4 +128,9 @@
     canAreaAttack=1;
   }
 
+	[customparams] 	
+	{
+	tip=Affordable range from a rocket, combine with other units on the backline.;
+	}
+
 }

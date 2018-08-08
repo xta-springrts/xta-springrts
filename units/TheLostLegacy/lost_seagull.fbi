@@ -127,6 +127,11 @@
 	//************************************************************
 	//  To be removed
 	//*****************
+	[customparams] 	
+	{
+	tip=Great for aircraft, anywhere, as well as taking down light land units from a safe distance.;
+	}
+
 
 	[SFXTypes]
 	{

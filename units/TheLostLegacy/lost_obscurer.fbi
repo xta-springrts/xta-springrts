@@ -125,5 +125,9 @@
 	//************************************************************
 	//  To be removed
 	//*****************
+	[customparams] 	
+	{
+	tip=In ranged frontlines, or flanks, the element of surprise is cost efficent.;
+	}
 
 }

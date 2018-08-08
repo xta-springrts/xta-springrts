@@ -2228,10 +2228,10 @@
 }
 [ARM_LASER]
 {
+	name=Scout Pink Laser;
 	explosiongenerator=custom:PINKFLASH;
 	cegTag=PINKCRAP;
 	Weapontype=LaserCannon;
-	name=Laser;
 	turret=1;
 	duration=0.12;
 	thickness=1.0;
@@ -6031,7 +6031,7 @@
 }
 [CORE_MORT_HIGH]
 {
-	name=Plasma Cannon;
+	name=High-Trajectory;
 	weaponType=Cannon;
 	turret=1;
 	//minbarrelangle=-35;
@@ -6054,7 +6054,7 @@
 }
 [CORE_THUD_High]
 {
-	name=Plasma Cannon;
+	name=High-Trajectory;
 	weaponType=Cannon;
 	turret=1;
 	//minbarrelangle=-40;
@@ -6064,7 +6064,7 @@
 	reloadtime=3.0;
 	weaponvelocity=235;
 	explosiongenerator=custom:WindkbotRocket;
-	areaofeffect=68;
+	areaofeffect=72;
 	soundstart=cannon1;
 	soundhitdry=xplomed3;
 	tolerance=500;
@@ -6076,13 +6076,13 @@
 	sizedecay=-0.55;
 	[DAMAGE]
 	{
-		default=123;
+		default=130;
 		group_invincible=1;
 	}
 }
 [ARM_HAM_HIGH]
 {
-	name=Plasma Cannon;
+	name=High-Trajectory;
 	weaponType=Cannon;
 	turret=1;
 	explosiongenerator=custom:WindkbotRocket;

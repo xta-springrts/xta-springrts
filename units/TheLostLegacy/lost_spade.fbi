@@ -125,6 +125,11 @@
 	//************************************************************
 	//  To be removed
 	//*****************
+	[customparams] 	
+	{
+	tip=Brutally fast, crushing dragon teeth and potential midgame raider.;
+	}
+
 
 	[SFXTypes]
 	{

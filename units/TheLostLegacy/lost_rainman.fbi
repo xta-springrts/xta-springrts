@@ -127,5 +127,10 @@
 	{
 	explosiongenerator0=custom:FLAKFLARE;
 	}
+	[customparams] 	
+	{
+	tip=Powerful kbot, supieror to most early game units once it reaches firing range.;
+	}
+
 
 }

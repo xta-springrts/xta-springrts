@@ -124,6 +124,11 @@
 	pieceTrailCEGTag=Debree;//bleh
 	pieceTrailCEGRange = 4;
 
+	[customparams] 	
+	{
+	tip=AntiStationary, excellent offensive on a budget with accuracy, with jammers.;
+	}
+
 	//************************************************************
 	//  To be removed
 	//*****************

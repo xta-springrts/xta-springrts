@@ -5,7 +5,7 @@
 	//********************
 	side=lost;
 	name=Private;
-	description=Infantry Kbot;
+	description=Combat Kbot;
 
 	//************************************************************
 	//  Categories
@@ -118,6 +118,10 @@
 	[SFXTypes]
 	{
 		explosiongenerator0=custom:redflare;
+	}
+	[customparams] 	
+	{
+	tip=Affordable kbot, great for attacking or defending.;
 	}
 
 	//************************************************************

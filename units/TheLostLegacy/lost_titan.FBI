@@ -74,6 +74,11 @@
 	Upright=1;
 	idletime=1200;
 	idleautoheal=5;
+	[customparams] 	
+	{
+	tip=Lost Legacy's Trump Card, speed, range, riot, much better at dealing with later game bases.;
+	}
+
 
 	[SFXTypes]
 	{

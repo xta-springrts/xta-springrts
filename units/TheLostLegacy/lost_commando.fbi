@@ -75,4 +75,10 @@
 	collisionVolumeTest = 1;
 	pieceTrailCEGTag=Debree;//bleh
 	pieceTrailCEGRange = 4;
+
+	[customparams] 	
+	{
+	tip=Sabotage with mines, capture paralyzed targets, or just spy.;
+	}
+
 }

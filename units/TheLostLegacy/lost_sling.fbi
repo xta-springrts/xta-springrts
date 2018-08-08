@@ -110,6 +110,10 @@
 	//************************************************************
 	//  To be removed
 	//*****************
+	[customparams] 	
+	{
+	tip=Great range with durabillity, but only over time does it pay itself off.;
+	}
 
 	[SFXTypes]
 	{

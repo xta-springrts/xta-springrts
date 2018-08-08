@@ -122,6 +122,10 @@
 	//************************************************************
 	//  To be removed
 	//*****************
+	[customparams] 	
+	{
+	tip=Deals more damage the closer it gets to the target.;
+	}
 
 	[SFXTypes]
 	{

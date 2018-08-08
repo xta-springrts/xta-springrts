@@ -26,7 +26,7 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=321.33; // 410; in 9.725 //reduced by 45 hp 
+	maxdamage=321; // 410; in 9.725 //reduced by 45 hp 
 	healtime=30;
 	buildcostmetal=81; // OTA: 37
 	buildcostenergy=1043; // OTA:  564
@@ -124,6 +124,11 @@
 	pieceTrailCEGTag=Debree;//bleh
 	pieceTrailCEGTag=Debree;//bleh
 	pieceTrailCEGRange = 4;
+
+	[customparams] 	
+	{
+	tip=Fast land unit, great close range damage with good vision.;
+	}
 
 	//************************************************************
 	//  To be removed

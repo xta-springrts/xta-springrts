@@ -5,7 +5,7 @@
 	//********************
 	side=Lost;
 	name=Hoplit;
-	description=Mine Sweeper - Clears Mines;
+	description=Minefield Removal Tank;
 
 	//************************************************************
 	//  Categories
@@ -38,8 +38,8 @@
 	//  Resources
 	//*************
 	metalstorage=0;
-	energymake=0.6;
-	energyuse=0.6;
+	energymake=1;
+	energyuse=1;
 	energystorage=0;
 
 	//************************************************************
@@ -65,7 +65,7 @@
 	//  Movement
 	//************
 	movementclass=TANKSH2;
-	turnrate=628; // was 450
+	turnrate=528; // was 450
 	acceleration=0.24; 
 	brakerate=0.1;
 	maxvelocity=1.25;//was 2.05
@@ -126,6 +126,10 @@
 	//************************************************************
 	//  To be removed
 	//*****************
+	[customparams] 	
+	{
+	tip=30M 400E per rocket, 20s buildtime. Clear mines effectively, with huge area of effect.;
+	}
 	[SFXTypes]
 	{
 	explosiongenerator0=custom:rocketflare;

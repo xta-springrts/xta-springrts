@@ -114,6 +114,11 @@
 	//  To be removed
 	//*****************
 
+	[customparams] 	
+	{
+	tip=With the abillity to fortify, it can dominate with its great range in odd locations.;
+	}
+
 	[SFXTypes]
 	{
 	explosiongenerator0=custom:POPUPFLARE;

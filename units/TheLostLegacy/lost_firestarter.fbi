@@ -119,6 +119,10 @@
 	pieceTrailCEGTag=Debree;//bleh
 	pieceTrailCEGRange = 4;
 
+	[customparams] 	
+	{
+	tip=Great for outranging other land units, and controlling the skies.;
+	}
 	//************************************************************
 	//  To be removed
 	//*****************

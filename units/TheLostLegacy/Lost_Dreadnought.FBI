@@ -80,4 +80,10 @@
 	explosiongenerator0=custom:Giga;
 	explosiongenerator1=custom:TinyBlue;
 	}
+
+	[customparams] 	
+	{
+	tip=Heavily equiped to brawl and riot, its great on lower tech.;
+	}
+
 }

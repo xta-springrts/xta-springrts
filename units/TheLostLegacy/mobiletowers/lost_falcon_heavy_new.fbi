@@ -82,4 +82,9 @@
 	{
 		canAreaAttack=1;
 	}
+	[customparams] 	
+	{
+	tip=Use Plateforms to carry unblockable rockets, to launch press D, then the location.;
+	}
+
 }

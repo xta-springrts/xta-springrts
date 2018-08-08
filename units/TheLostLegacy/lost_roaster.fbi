@@ -80,4 +80,9 @@
 	collisionVolumeTest = 1;
 	pieceTrailCEGTag=Debree;//bleh
 	pieceTrailCEGRange = 4;
+	[customparams] 	
+	{
+	tip=Convert Energy to damage, mobile defense turret that deals with close range.;
+	}
+
 }

@@ -74,4 +74,10 @@
 	{
 		explosiongenerator0=custom:dgunflare;
 	}
+
+	[customparams] 	
+	{
+	tip=Incredibly slow, but deals well with other tanks of similiar caliber.;
+	}
+
 }

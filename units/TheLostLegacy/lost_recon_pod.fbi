@@ -65,5 +65,10 @@
 	//    Watersettings
 	MaxWaterDepth=9999;
 	
+	[customparams] 	
+	{
+	tip=5 energy per second for invisibility, excellent hidden vision.;
+	}
+
 	//    Misc
 }

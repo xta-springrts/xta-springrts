@@ -33,7 +33,7 @@
 }
 [LAUNCH_FALCON_ROCKET]
 {
-	name=Rocket;
+	//name=Rocket;
 	vlaunch=1;
 	Weapontype=StarburstLauncher;
 	model=lost_falcon_heavy_projectile;
@@ -89,7 +89,7 @@
 	Texture4=null;
 	range=1400;
 	commandfire=1;
-	reloadtime=5;
+	reloadtime=10;
 	noautorange=1;
 	weapontimer=3;
 	flighttime=15;

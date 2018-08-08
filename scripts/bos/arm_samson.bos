@@ -66,21 +66,6 @@ QueryPrimary(piecenum)
 
 AimPrimary(heading, pitch)
 {
-	return (0);
-}
-
-AimFromTertiary(piecenum)
-{
-	piecenum = launcher;
-}
-
-QueryTertiary(piecenum)
-{
-	piecenum = gun_1;
-}
-
-AimTertiary(heading, pitch)
-{
 	signal SIG_AIM;
 	set-signal-mask SIG_AIM;
 	turn turret to y-axis heading speed <250.093407>;
@@ -91,7 +76,7 @@ AimTertiary(heading, pitch)
 	return (1);
 }
 
-FireTertiary()
+FirePrimary()
 {
 	if( gun_1 )
 	{

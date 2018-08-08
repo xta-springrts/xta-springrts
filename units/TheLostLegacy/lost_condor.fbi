@@ -4,7 +4,7 @@
 	//  Unit Description
 	//********************
 	side=Core;
-	name=Vulture;
+	name=Condor;
 	description=Radar Plane;
 	icontype=air;
 

@@ -58,4 +58,9 @@
 	collisionVolumeScales=43 51 43;
 	collisionVolumeOffsets=0 0 0;
 	collisionVolumeTest = 1;
+	[customparams] 	
+	{
+	tip=Build Adjacent to labs, pay attention to the green ring for max range.;
+	}
+
 }

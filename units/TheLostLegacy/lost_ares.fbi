@@ -125,6 +125,11 @@
 	//************************************************************
 	//  To be removed
 	//*****************
+
+	[customparams] 	
+	{
+	tip=Great grouper with the abillity to arc shot over each other.;
+	}
 	[SFXTypes]
 	{
 	explosiongenerator0=custom:TinyBlue;

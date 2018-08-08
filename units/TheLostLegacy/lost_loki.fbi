@@ -129,6 +129,10 @@
 	//************************************************************
 	//  To be removed
 	//*****************
+	[customparams] 	
+	{
+	tip=Outranging other land units with mild speed, so pay attention due its light armor.;
+	}
 
 	[SFXTypes]
 	{

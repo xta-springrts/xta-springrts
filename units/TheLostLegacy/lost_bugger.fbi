@@ -134,7 +134,13 @@
 	{
 		explosiongenerator0=custom:redflare;
 	}
-
+	//  Custom params
+	//*****************
+	[customparams] 	
+	{
+	tip=Can paralyze targets, use groups to get close to explode and destroy light targets.;
+	}
+	
 	//************************************************************
 	//  To be removed
 	//*****************

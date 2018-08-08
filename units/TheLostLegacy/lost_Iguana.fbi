@@ -5,7 +5,7 @@
 	//********************
 	side=Arm;
 	name=Iguana;
-	description=Fast Attack Kbot;
+	description=Fast Hunting Kbot;
 
 	//************************************************************
 	//  Categories
@@ -126,6 +126,10 @@
 	[SFXTypes]
 	{
 	explosiongenerator0=custom:TinyBlue;
+	}
+	[customparams] 	
+	{
+	tip=Great for picking off single targets that prefer range.;
 	}
 
 }

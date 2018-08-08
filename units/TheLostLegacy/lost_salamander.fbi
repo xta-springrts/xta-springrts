@@ -131,4 +131,9 @@
 	explosiongenerator0=custom:rocketflare;
 	}
 
+	[customparams] 	
+	{
+	tip=Well built for traversing the sea, can take a beating while returning average damage.;
+	}
+
 }

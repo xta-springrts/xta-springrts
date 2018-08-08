@@ -101,6 +101,11 @@
 	zbuffer=1;
 	pieceTrailCEGTag=NanoDebree;//bleh
 	pieceTrailCEGRange = 1;
+	[customparams] 	
+	{
+	tip=Unique Energy Generation that is a must with Windy maps.;
+	}
+
 
 	//************************************************************
 	//  To be removed

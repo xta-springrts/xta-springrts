@@ -128,7 +128,10 @@
 	//************************************************************
 	//  To be removed
 	//*****************
-
+	[customparams] 	
+	{
+	tip=Can build the Cold Fusion Reactor Plant, as well as other top-tier goodies.;
+	}
 	[SFXTypes]
 	{
 	explosiongenerator0=custom:Nano;

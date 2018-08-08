@@ -120,21 +120,6 @@ QueryWeapon1(piecenum)
 
 AimWeapon1(heading, pitch)
 {
-	return (0);
-}
-
-AimFromWeapon3(piecenum)
-{
-	piecenum = gun;
-}
-
-QueryWeapon3(piecenum)
-{
-	piecenum = firepoint1 + Static_Var_4;
-}
-
-AimWeapon3(heading, pitch)
-{
 	signal 1;
 	set-signal-mask 1;
 	turn turret to y-axis heading speed <240.000000>;
@@ -151,7 +136,7 @@ AimWeapon3(heading, pitch)
 	return (1);
 }
 
-Shot3()
+Shot1()
 {
 	if( Static_Var_4 )
 	{

@@ -10,14 +10,14 @@
 	Description=Fortress Vehicle Tech 1.5;
 	FootprintX=4;
 	FootprintZ=4;
-	BuildCostEnergy=3876;//4121
+	BuildCostEnergy=2876;//4121
 	BuildCostMetal=613;//434
 	MaxDamage=3000;
 	autoheal=4;//just like ota
 	MaxWaterDepth=100;
 	MaxSlope=12;
 	EnergyUse=2;
-	BuildTime=15732;
+	BuildTime=8732;
 	workertime=225;
 	RepairSpeed=225;
 	ReclaimSpeed=225;

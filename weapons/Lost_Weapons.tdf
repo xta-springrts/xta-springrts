@@ -1,7 +1,7 @@
 
 [BUGGER_blast]
 {
-	name=Plasma Cannon;
+	name=Bugger Juice;
 	explosiongenerator=custom:RedPlasma;
 	energypershot=5;
 	rgbcolor=1 0.33 0.0;
@@ -469,7 +469,7 @@
 
 [Green_Lightning]
 {
-	Name=Lightning Beam;
+	Name=Nano-Distrupter Beam;
 	rendertype=0;
 	lineofsight=1;
 	turret=1;
@@ -518,7 +518,7 @@
 
 [Bugger_Lightning]
 {
-	Name=Lightning Beam;
+	Name=Nano-Distrupter Beam;
 	rendertype=0;
 	lineofsight=1;
 	turret=1;
@@ -1703,7 +1703,7 @@
 [FREEZERMP]
 {
 	ID=139;
-	name=Atomic Blast Weapon;
+	name=Nano-Distrupter Pulse;
 	rendertype=1;
 	lineofsight=1;
 	vlaunch=1;
@@ -2199,7 +2199,7 @@
 
 	[DAMAGE]
 		{
-		default=125;
+		default=150;
 		group_landair=25;
 		}
 	}
@@ -2392,7 +2392,7 @@
 }
 [MINING_ROCKET]
 {
-	name=Strategic Rockets;
+	name=Strategic Rocket;
 	Weapontype=MissileLauncher;
 	turret=1;
 	model=missile.s3o;
@@ -2422,7 +2422,7 @@
 	Dance=100;
 	Trajectoryheight=1;
 	energypershot=400;
-	metalpershot=40;
+	metalpershot=30;
 	edgeeffectiveness=0.5;
 	[DAMAGE]
 	{

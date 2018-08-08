@@ -74,6 +74,10 @@
 	collisionVolumeTest = 1;
 	pieceTrailCEGTag=Debree;//bleh
 	pieceTrailCEGRange = 4;
+	[customparams] 	
+	{
+	tip=Takes a beating and will never go down without a fight.;
+	}
 
 	[SFXTypes]
 	{

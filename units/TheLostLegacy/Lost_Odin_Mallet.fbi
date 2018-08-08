@@ -112,6 +112,11 @@
 	//************************************************************
 	//  To be removed
 	//*****************
+	[customparams] 	
+	{
+	tip=Great range, at a risk, build in safe locations.;
+	}
+
 	[SFXTypes]
 	{
 	explosiongenerator0=custom:BLUEPOPUPFLARE;

@@ -29,8 +29,8 @@
 	maxdamage=1400;
 	healtime=30;
 	buildcostmetal=407; //OTA: 267
-	buildcostenergy=3742; //OTA: 2228
-	buildtime=9478; //OTA: 5478
+	buildcostenergy=2642; //OTA: 2228
+	buildtime=6478; //OTA: 5478
 	footprintx=2;
 	footprintz=2;
 
@@ -134,4 +134,9 @@
 	{
 		explosiongenerator0=custom:redflare;
 	}
+	[customparams] 	
+	{
+	tip=Defensive plateform, with abillity to move and take down most weak units on its own.;
+	}
+
 }

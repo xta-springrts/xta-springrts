@@ -199,42 +199,13 @@ SweetSpot(piecenum)
 	piecenum = pelvis;
 }
 
+
 AimFromPrimary(piecenum)
 {
 	piecenum = turret;
 }
 
 QueryPrimary(piecenum)
-{
-	piecenum = gun1;
-}
-
-AimPrimary(heading, pitch)
-{
-	return (0);
-}
-
-AimFromSecondary(piecenum)
-{
-	piecenum = turret;
-}
-
-QuerySecondary(piecenum)
-{
-	piecenum = gun2;
-}
-
-AimSecondary(heading, pitch)
-{
-	return (0);
-}
-
-AimFromTertiary(piecenum)
-{
-	piecenum = turret;
-}
-
-QueryTertiary(piecenum)
 {
 	piecenum = gun_3;
 }
@@ -245,7 +216,7 @@ RestoreAfterDelay()
 	turn turret to y-axis <0.000000> speed <90.000000>;
 }
 
-AimTertiary(heading, pitch)
+AimPrimary(heading, pitch)
 {
 	signal SIG_AIM_3;
 	set-signal-mask SIG_AIM_3;
@@ -255,7 +226,7 @@ AimTertiary(heading, pitch)
 	return (1);
 }
 
-FireTertiary()
+FirePrimary()
 {
 	if( gun_3 )
 	{

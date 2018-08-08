@@ -83,7 +83,7 @@
 	//  Weapons
 	//***********
 	weapon1=CORTRUCK_MISSILE;
-	weapon3=CORTRUCK_MISSILE;
+	//weapon3=CORTRUCK_MISSILE;
 	badtargetcategory=NOTAIR;
 	wpri_badtargetcategory=NOTAIR;
 	explodeas=BIG_UNITEX;

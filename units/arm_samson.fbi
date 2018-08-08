@@ -83,7 +83,7 @@
 	//  Weapons
 	//***********
 	weapon1=ARMTRUCK_MISSILE;
-	weapon3=ARMTRUCK_MISSILE;
+	//weapon3=ARMTRUCK_MISSILE;
 	badtargetcategory=NOTAIR;
 	wpri_badtargetcategory=NOTAIR;
 	explodeas=BIG_UNITEX;

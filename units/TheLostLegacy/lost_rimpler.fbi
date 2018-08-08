@@ -119,6 +119,11 @@
 	pieceTrailCEGTag=Debree;//bleh
 	pieceTrailCEGRange = 4;
 
+	[customparams] 	
+	{
+	tip=Heavy hovercraft that does great in the frontline or rushing weak flanks.;
+	}
+
 	//************************************************************
 	//  To be removed
 	//*****************

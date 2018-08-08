@@ -124,4 +124,9 @@
 	//  To be removed
 	//*****************
 
+	[customparams] 	
+	{
+	tip=Destructive Power great for running short-ranged units with low armor.;
+	}
+
 }

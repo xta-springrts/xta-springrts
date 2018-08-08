@@ -119,6 +119,10 @@
 	collisionVolumeTest = 1;
 	pieceTrailCEGTag=Debree;//bleh
 	pieceTrailCEGRange = 4;
+	[customparams] 	
+	{
+	tip=Fast surprise attack, quicky deal with the undefended across the shore.;
+	}
 
 	//************************************************************
 	//  To be removed

@@ -123,6 +123,11 @@
 	pieceTrailCEGTag=Debree;//bleh
 	pieceTrailCEGRange = 4;
 
+	[customparams] 	
+	{
+	tip=Combat tank that fights best on the frontline with above-average range.;
+	}
+
 	//************************************************************
 	//  To be removed
 	//*****************

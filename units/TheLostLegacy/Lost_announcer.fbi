@@ -127,6 +127,10 @@
 	//  To be removed
 	//*****************
 
+	[customparams] 	
+	{
+	tip=Great for outranging other land units, and controlling the skies.;
+	}
 	[SFXTypes]
 	{
 	explosiongenerator0=custom:rocketflare;
