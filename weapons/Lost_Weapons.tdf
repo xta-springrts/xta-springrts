@@ -20,7 +20,7 @@
 	edgeeffectiveness=1.00;
 	[DAMAGE]
 	{
-		default=250;
+		default=333;
 		group_buggers=25;
 		group_invincible=1;
 	}
