@@ -5,7 +5,7 @@
 	//********************
 	side=Lost;
 	name=Bugger;
-	description=Paralyzer Explosive Scout;
+	description=Paralyzer/Kamikaze Scout (250);
 
 	//************************************************************
 	//  Categories
@@ -67,9 +67,9 @@
 	//************
 	movementclass=CRAWLBOMB;
 	turnrate=1210; // was 1100
-	acceleration=1.415527;
-	brakerate=1.23105;
-	maxvelocity=2.3; // was 1.72
+	acceleration=1.815527;
+	brakerate=0.53105;
+	maxvelocity=2.5; // was 1.72
 	maxslope=17;
 	maxwaterdepth=25;
 
@@ -91,9 +91,12 @@
 	//************************************************************
 	//  Weapons
 	//***********
+	kamikaze=1;
+	selfdestructcountdown=0;
+	kamikazedistance=30;
 	Weapon1=Bugger_Lightning;
-	explodeas=DECOY_COMMANDER_BLAST;
-	selfdestructas=DECOY_BLAST;
+	explodeas=BUGGER_blast;
+	selfdestructas=BUGGER_blast;
 
 	//************************************************************
 	//  Orders

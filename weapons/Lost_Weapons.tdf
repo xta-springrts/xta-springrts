@@ -1,4 +1,30 @@
 
+[BUGGER_blast]
+{
+	name=Plasma Cannon;
+	explosiongenerator=custom:RedPlasma;
+	energypershot=5;
+	rgbcolor=1 0.33 0.0;
+	size=4;
+	weaponType=Cannon;
+	turret=1;
+	range=1;
+	reloadtime=3;
+	weaponvelocity=650; //550
+	areaofeffect=128;
+	soundstart=cannhvy5;
+	soundhitdry=xplomed2;
+	startsmoke=1;
+	accuracy=600;
+	impulsefactor=2.5;
+	edgeeffectiveness=1.00;
+	[DAMAGE]
+	{
+		default=250;
+		group_buggers=25;
+		group_invincible=1;
+	}
+}
 [LOSTKBOTO_ROCKET]
 {
 	name=Rockets;
@@ -506,7 +532,7 @@
 	beamttl=1;
 	accuracy=30;
 	sprayangle=500;
-	range=325; 
+	range=330; 
 	cylindertargeting = 1;
 	reloadtime=2.5;
 	energypershot=5;
@@ -529,7 +555,7 @@
 	impulseboost=0.00;
 	cratermult=0;
 	paralyzer=1;
-	paralyzetime=5;
+	paralyzetime=8;
 	craterboost=0;
 	[DAMAGE]
 	{

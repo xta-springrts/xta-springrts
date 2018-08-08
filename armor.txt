@@ -1,5 +1,10 @@
 //The numbers do not mean anything! It is just for the parser!
 
+[group_buggers]
+{
+	lost_bugger=99;
+}
+
 [group_commanders]
 {
 	arm_commander=99;
