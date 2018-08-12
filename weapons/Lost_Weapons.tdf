@@ -53,7 +53,7 @@
 	[DAMAGE]
 	{
 		lost_commanders=130;
-		default=152;
+		default=132;
 		group_invincible=1;
 	}
 }
@@ -532,9 +532,9 @@
 	beamttl=1;
 	accuracy=30;
 	sprayangle=500;
-	range=330; 
+	range=300; 
 	cylindertargeting = 1;
-	reloadtime=2.5;
+	reloadtime=2;
 	energypershot=5;
 	weaponvelocity=400;
   	texture1=testlightning;
@@ -559,7 +559,7 @@
 	craterboost=0;
 	[DAMAGE]
 	{
-		default=400.6;//122
+		default=150.6;//122
 		group_landair=361;
 		group_skyair=361;
 	}
@@ -2611,7 +2611,7 @@
   	texture1=testlightning;
 	LineOfSight=1;
 	Turret=1;
-	Range=245;
+	Range=235;
 	ReloadTime=1.50;
 	WeaponTimer=1;
 	WeaponVelocity=860;

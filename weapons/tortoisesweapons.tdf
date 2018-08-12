@@ -511,9 +511,9 @@
 	turret=1;
 	//minbarrelangle=-25;
 	range=900;
-	reloadtime=4;
+	reloadtime=5;
 	weaponvelocity=700;
-	areaofeffect=96;
+	areaofeffect=86;
 	energypershot=226;
 	explosiongenerator=custom:popupcannon;
 	soundstart=cannhvy1;

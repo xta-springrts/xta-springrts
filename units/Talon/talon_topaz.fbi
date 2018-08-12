@@ -26,7 +26,7 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=775.33; // 410; in 9.725 //reduced by 45 hp 
+	maxdamage=775; // 410; in 9.725 //reduced by 45 hp 
 	healtime=30;
 	buildcostmetal=174; // OTA: 37
 	buildcostenergy=2128; // OTA:  564

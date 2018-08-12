@@ -1554,7 +1554,7 @@
 	turret=1;
 	//minbarrelangle=-45;
 	//cylindertargeting = 1;
-	range=300;
+	range=400;
 	reloadtime=3.0;
 	weaponvelocity=700;
 	myGravity=0.01;
