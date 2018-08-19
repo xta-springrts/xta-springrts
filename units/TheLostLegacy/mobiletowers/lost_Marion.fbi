@@ -31,7 +31,7 @@
 	healtime=30;
 	buildcostmetal=453;//+300 metal
 	buildcostenergy=3432;//+2000 Energy
-	buildtime=13280;
+	buildtime=8280;
 	footprintx=4;
 	footprintz=4;
 
@@ -68,10 +68,10 @@
 	//  Movement
 	//************
 	MovementClass=TANKBH3;
-	turnrate=150;
+	turnrate=220;
 	acceleration=0.05;
 	brakerate=0.01;
-	maxvelocity=1.2;
+	maxvelocity=1.4;
 	minwaterdepth=12;
 	trackoffset=8;
 	trackstrength=8;
@@ -83,7 +83,7 @@
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=305;
+	sightdistance=385;
 	radardistance=0;
 	losemitheight=44;
 	radaremitheight=44;
@@ -137,5 +137,9 @@
 	[SFXTypes]
 	{
 	explosiongenerator0=custom:UNITFIRE;
+	}
+	[customparams] 	
+	{
+	tip=Excellent for moving turrets, slower units or rockets quickly into range.;
 	}
 }

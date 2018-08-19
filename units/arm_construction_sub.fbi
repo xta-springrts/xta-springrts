@@ -24,10 +24,10 @@
 	builddistance=200;
 	builder=1;
 	workertime=110;
-	energymake=7;
+	energymake=6.6;
 	energystorage=50;
 	energyuse=0.5;
-	metalstorage=50;
+	metalstorage=75;
 	metalmake=0.1;
 	canstop=1;
 	floater=1;

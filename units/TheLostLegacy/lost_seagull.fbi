@@ -71,7 +71,7 @@
 	turnrate=600;
 	acceleration=1.0;
 	brakerate=1.5;
-	maxvelocity=1.75;
+	maxvelocity=1.65;
 	maxslope=14;
 
 	//************************************************************

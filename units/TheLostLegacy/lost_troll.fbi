@@ -133,9 +133,6 @@
 	[customParams] 
 	{
     canAreaAttack=1;
-	}
-	[customparams] 	
-	{
 	tip=Great on frontline kbot, dealing damage safely from the distance, and even better against rushes.;
 	}
 

@@ -127,4 +127,9 @@
 	{
 	explosiongenerator0=custom:KBOTrocketflare;
 	}
+	[customparams] 	
+	{
+	tip=Decent range with good burst, great at taking structures down.;
+	}
+
 }

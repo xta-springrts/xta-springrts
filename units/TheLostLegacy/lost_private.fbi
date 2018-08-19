@@ -115,10 +115,6 @@
 	collisionVolumeTest = 1;
 	pieceTrailCEGTag=Debree;//bleh
 	pieceTrailCEGRange = 4;
-	[SFXTypes]
-	{
-		explosiongenerator0=custom:redflare;
-	}
 	[customparams] 	
 	{
 	tip=Affordable kbot, great for attacking or defending.;
@@ -127,5 +123,9 @@
 	//************************************************************
 	//  To be removed
 	//*****************
+	[SFXTypes]
+	{
+	explosiongenerator0=custom:NanoNecro;
+	}
 
 }

@@ -66,4 +66,8 @@
 	collisionVolumeScales=65 40 65;
 	collisionVolumeOffsets=0 -2 0;
 	//collisionVolumeTest = 1;
+	[customparams] 	
+	{
+	tip=Transport or build in area that requires large sight of coverage.;
+	}
 }

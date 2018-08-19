@@ -39,9 +39,9 @@
 	//  Resources
 	//*************
 	metalmake=1;
-	metalstorage=900;
+	metalstorage=150;
 	energyuse=0;
-	energystorage=200;
+	energystorage=375;
 	windgenerator=0.001;
 
 	//************************************************************

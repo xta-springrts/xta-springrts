@@ -37,11 +37,11 @@
 	//************************************************************
 	//  Resources
 	//*************
-	metalmake=0.2;
-	metalstorage=100;
-	energymake=10;
+	metalmake=0.15;
+	metalstorage=75;
+	energymake=13;
 	energyuse=0.1;
-	energystorage=100;
+	energystorage=150;
 
 	//************************************************************
 	//  Building
@@ -75,7 +75,7 @@
 	turnrate=1010;
 	acceleration=1.8;
 	brakerate=14.0;
-	maxvelocity=1.4;
+	maxvelocity=1.5;
 	maxslope=20;
 	maxwaterdepth=25;
 

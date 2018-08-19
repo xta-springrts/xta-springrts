@@ -1,4 +1,46 @@
 
+[lost_tessera_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=lost_corpses;
+	object=lost_tessera_dead;
+	featuredead=lost_tessera_heap;
+	footprintx=2;
+	footprintz=2;
+	height=40;
+	blocking=1;
+	hitdensity=100;
+	metal=121;
+	damage=640;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=23 24 21;//#AUTO#
+	collisionVolumeOffsets=0 -1 0;//#AUTO#
+}
+[lost_tessera_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=2x2e;
+	footprintx=2;
+	footprintz=2;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	metal=60;
+	damage=640;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=23 6 21;//#AUTO#
+	collisionVolumeOffsets=0 -1 0;//#AUTO#
+}
+
 [lost_spade_dead]
 {
 	world=All Worlds;

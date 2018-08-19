@@ -185,7 +185,7 @@
 }
 [BASERAIL_WEAPON]
 	{
-	name=Railgun Weapon;
+	name=Ultra lightning Weapon;
 	RenderType=7;
 	LineOfSight=1;
 	Turret=1;
@@ -195,14 +195,19 @@
 	energypershot=250;
 	weaponvelocity=1000;
 	areaofeffect=8;
+
+	beamtime=0.05;
+	burst=6;
+	burstrate=0.01;
 	
 
+	soundtrigger=1;
 	soundstart=xplomas2;//xplolrg1;
-	soundhitdry=xplomas2;
+	soundhitdry=lostdgunhit;
 
 	firestarter=90;
 	beamweapon=1;
-	rgbcolor=0.01 0.01 0.02;
+	rgbcolor=1.0 0.5 0.3;
 	explosiongenerator=custom:DGUNTRACE;
 	collidefriendly=0;
 	avoidfriendly=1;
@@ -210,10 +215,10 @@
 
 	[DAMAGE]
 		{
-		default=600;
-		group_commanders=300;
-		lost_commanders=250;
-		group_landair=200;
+		default=100;
+		group_commanders=50;
+		lost_commanders=33;
+		group_landair=25;
 		}
 	}
 

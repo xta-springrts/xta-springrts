@@ -28,7 +28,7 @@ walk()
 			turn pelvis to x-axis <6.000000> now;
 			turn lleg to x-axis <-6.000000> now;
 			turn rleg to x-axis <0.000000> now;
-			sleep 60;
+			sleep 20;
 		}
 		if( TRUE )
 		{
@@ -38,7 +38,7 @@ walk()
 			turn pelvis to x-axis <4.895604> now;
 			turn lleg to x-axis <-4.895604> now;
 			turn rleg to x-axis <1.098901> now;
-			sleep 30;
+			sleep 10;
 		}
 		if( TRUE )
 		{
@@ -48,7 +48,7 @@ walk()
 			turn pelvis to x-axis <2.098901> now;
 			turn lleg to x-axis <-2.098901> now;
 			turn rleg to x-axis <2.796703> now;
-			sleep 20;
+			sleep 5;
 		}
 		if( TRUE )
 		{
@@ -58,7 +58,7 @@ walk()
 			turn pelvis to x-axis <1.098901> now;
 			turn lleg to x-axis <-1.000000> now;
 			turn rleg to x-axis <3.197802> now;
-			sleep 10;
+			sleep 3;
 		}
 		if( TRUE )
 		{
@@ -69,13 +69,13 @@ walk()
 			turn pelvis to x-axis <0.000000> now;
 			turn lleg to x-axis <0.000000> now;
 			turn rleg to x-axis <0.000000> now;
-			sleep 60;
+			sleep 20;
 		}
 		if( TRUE )
 		{
 			move lleg to z-axis [1.000000] now;
 			move rleg to z-axis [-0.300000] now;
-			sleep 60;
+			sleep 20;
 		}
 		if( TRUE )
 		{
@@ -85,14 +85,14 @@ walk()
 			turn pelvis to x-axis <0.000000> now;
 			turn lleg to x-axis <0.000000> now;
 			turn rleg to x-axis <0.000000> now;
-			sleep 60;
+			sleep 20;
 		}
 		if( TRUE )
 		{
 			move lleg to z-axis [-0.600000] now;
 			move rleg to z-axis [0.800000] now;
 			turn rleg to x-axis <-9.098901> now;
-			sleep 100;
+			sleep 30;
 		}
 		if( TRUE )
 		{
@@ -100,7 +100,7 @@ walk()
 			move rleg to y-axis [0.000000] now;
 			turn pelvis to x-axis <6.000000> now;
 			turn rleg to x-axis <-6.000000> now;
-			sleep 60;
+			sleep 20;
 		}
 		if( TRUE )
 		{
@@ -110,7 +110,7 @@ walk()
 			turn pelvis to x-axis <4.598901> now;
 			turn lleg to x-axis <0.697802> now;
 			turn rleg to x-axis <-4.895604> now;
-			sleep 30;
+			sleep 10;
 		}
 		if( TRUE )
 		{
@@ -120,7 +120,7 @@ walk()
 			turn pelvis to x-axis <2.098901> now;
 			turn lleg to x-axis <2.796703> now;
 			turn rleg to x-axis <-2.098901> now;
-			sleep 20;
+			sleep 5;
 		}
 		if( TRUE )
 		{
@@ -130,7 +130,7 @@ walk()
 			turn pelvis to x-axis <1.098901> now;
 			turn lleg to x-axis <2.500000> now;
 			turn rleg to x-axis <-1.000000> now;
-			sleep 10;
+			sleep 5;
 		}
 		if( TRUE )
 		{
@@ -140,13 +140,13 @@ walk()
 			turn pelvis to x-axis <0.000000> now;
 			turn lleg to x-axis <0.000000> now;
 			turn rleg to x-axis <0.000000> now;
-			sleep 60;
+			sleep 20;
 		}
 		if( TRUE )
 		{
 			move lleg to z-axis [-0.700000] now;
 			move rleg to z-axis [0.200000] now;
-			sleep 60;
+			sleep 20;
 		}
 		if( TRUE )
 		{
@@ -154,14 +154,14 @@ walk()
 			move rleg to y-axis [0.000000] now;
 			move rleg to z-axis [-0.300000] now;
 			turn rleg to x-axis <0.000000> now;
-			sleep 60;
+			sleep 20;
 		}
 		move lleg to z-axis [1.000000] now;
 		move rleg to y-axis [0.000000] now;
 		move rleg to z-axis [-1.300000] now;
 		turn lleg to x-axis <-10.197802> now;
 		turn rleg to x-axis <0.000000> now;
-		sleep 100;
+		sleep 30;
 	}
 }
 #include "SmokeUnit.h"

@@ -69,10 +69,10 @@
 	//  Movement
 	//************
 	movementclass=TANKSH4;
-	turnrate=150;
+	turnrate=175;
 	acceleration=0.05;
 	brakerate=0.01;
-	maxvelocity=0.7;
+	maxvelocity=1.0;
 	minwaterdepth=12;
 	trackoffset=8;
 	trackstrength=9;
@@ -84,7 +84,7 @@
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=425;
+	sightdistance=455;
 	radardistance=0;
 	losemitheight=44;
 	radaremitheight=44;
@@ -138,5 +138,9 @@
 	[SFXTypes]
 	{
 	explosiongenerator0=custom:UNITFIRE;
+	}
+	[customparams] 	
+	{
+	tip=Load with strong turrets, for heavy assaults, can be powerful with support units.;
 	}
 }

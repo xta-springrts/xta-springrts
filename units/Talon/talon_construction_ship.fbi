@@ -38,11 +38,11 @@
 	//************************************************************
 	//  Resources
 	//*************
-	metalmake=0.2;
-	metalstorage=50;
-	energymake=6;
+	metalmake=0.1;
+	metalstorage=60;
+	energymake=9;
 	energyuse=0.1;
-	energystorage=50;
+	energystorage=130;
 	windgenerator=0.001;
 
 	//************************************************************

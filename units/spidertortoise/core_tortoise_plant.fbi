@@ -24,8 +24,8 @@
 	NoAutoFire=0;
 	SightDistance=525;
 	SoundCategory=Core_HOVER_PLANT;
-	EnergyStorage=600;
-	MetalStorage=600;
+	EnergyStorage=150;
+	MetalStorage=375;
 	ExplodeAs=LARGE_BUILDINGEX;
 	SelfDestructAs=LARGE_BUILDING;
 	Category=CORE PLANT NOWEAPON NOTAIR NOTSUB;

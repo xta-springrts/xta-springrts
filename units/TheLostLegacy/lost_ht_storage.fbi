@@ -5,7 +5,7 @@
 	//********************
 	side=lost;
 	name=High-Tech Storage;
-	description=Huge Storage Increase;
+	description=Storage Increase (75000M)(1000000E);
 	icontype=building;
 
 	//************************************************************
@@ -27,7 +27,7 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=12436;
+	maxdamage=7436;
 	buildcostmetal=1876;
 	buildcostenergy=4356;
 	buildtime=26710;

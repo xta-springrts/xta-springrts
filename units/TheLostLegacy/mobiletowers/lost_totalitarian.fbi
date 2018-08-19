@@ -83,4 +83,8 @@
 	explosiongenerator1=custom:TinyBlue;
 	explosiongenerator2=custom:POPUPFLARE;
 	}
+	[customparams] 	
+	{
+	tip=Strong transportable turret, great for dealing with light units.;
+	}
 }

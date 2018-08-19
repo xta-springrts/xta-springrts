@@ -26,11 +26,11 @@
 	collisionVolumeTest = 1;
 	builder=1;
 	workertime=110;
-	energystorage=160;
+	energystorage=250;
 	energyuse=0;
 	energymake=0;
 	metalmake=0.5;
-	metalstorage=160;
+	metalstorage=100;
 	idletime=1800;
 	idleautoheal=5;
 	sightdistance=240;

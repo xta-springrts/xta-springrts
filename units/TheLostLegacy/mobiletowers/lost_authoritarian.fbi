@@ -41,7 +41,7 @@
 	idletime=1800;
 	idleautoheal=5;
 
-	sightdistance=450;
+	sightdistance=500;
 
 	weapon1=BASE_LOSTLIGHTROCKET;
 	weapon2=BASEGreen_Lightning;
@@ -77,4 +77,8 @@
 	collisionVolumeScales=43 51 43;
 	collisionVolumeOffsets=0 0 0;
 	collisionVolumeTest = 1;
+	[customparams] 	
+	{
+	tip=Great range and consistent damage, with close range nano-distrupter as backup.;
+	}
 }

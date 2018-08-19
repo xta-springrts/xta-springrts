@@ -29,6 +29,35 @@ The Talon race is the property of The Registered One, or TRO for short, which ha
 
 --- Do not remove
 --- Changelog processing starts here
+
+Big Economy Changes:
+You have a base income, of two metal, and fifty energy per second, regardless of you having your commander. 
+Construction units make vastly less metal, so spamming them is less rewarding, particually level 2 construction units.
+Labs and nanolathe towers make no resources, however have adequate storage. 
+100 Metal and 250 Energy For Tech 1 labs.
+150 Metal and 375 Energy for Tech 1.5 labs.
+300 Metal and 500 Energy for Tech 2 labs.
+
+Core construction units make 10% more metal, Arm construction units make 10% more energy. As standard Ota rule.
+Lost Legacy units have 10% storage. Talon Receives no bonuses.
+
+Tech 1 Construction Aircrafts make 0.1 metal, and 5 energy. 50 Metal Storage and 75 Energy Storage.
+Tech 1 Construction Kbots make 0.1 metal, and 7 energy. 50 Metal Storage and 100 Energy Storage.
+Tech 1 Construction Vehicle make 0.1 metal and 8 energy. 60 Metal Storage and 125 Energy Storage.
+Tech 1 Construction Ships make 0.1 metal and 9 energy. 60 Metal Storage and 130 Energy Storage.
+Tech 1 Construction Subs make 0.1 metal and 6 energy. 50 Metal Storage and 75 Energy Storage.
+
+Tech 1.5 Construction Units. Unique Race 1.5 gets bonuses amplified by 33%. Spider, Tortoise, Fortresses, Xbots, are Uniques.
+Tech 1.5 Construction Hovercraft make 0.15 metal and 12 Energy. 75 Metal Storage and 150 Energy Storage.
+Tech 1.5 Construction Seaplane make 0.15 metal and 10 Energy. 60 Metal Storage and 130 Energy Storage.
+Tech 1.5 Construction Uniques make 0.15 metal and 13 Energy. 75 Metal Storage and 150 Energy Storage.
+
+
+Tech 2 Construction Aircrafts make 0.2 metal, and 15 energy. 90 Metal Storage and 180 Energy Storage.
+Tech 2 Construction Kbots make 0.2 metal, and 18 energy. 100 Metal Storage and 200 Energy Storage.
+Tech 2 Construction Vehicle make 0.2 metal and 20 energy. 125 Metal Storage and 250 Energy Storage.
+Tech 2 Construction Subs make 0.2 metal and 25 energy. 100 Metal Storage and 200 Energy Storage.
+
 Changes:
 *Arm Headhunter now takes role of Old XTA style Warrior with advanced T2 EMG, with matching cost and dps.
 *Arm Flea restored to Arm T1 Kbot Lab as an sneaky unit but not fast.

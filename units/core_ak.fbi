@@ -123,5 +123,9 @@
 	//************************************************************
 	//  To be removed
 	//*****************
+	[customparams] 	
+	{
+	tip=Attack Kbot, great at dispatching un-armoured units in mass group.;
+	}
 
 }

@@ -28,8 +28,8 @@
 	NoAutoFire=0;
 	SightDistance=440;
 	SoundCategory=COR_TOR;
-	EnergyStorage=200;
-	MetalStorage=200;
+	EnergyStorage=75;
+	MetalStorage=150;
 	explodeas=NANO_UNITEX;
 	selfdestructas=NANO_UNIT;
 	Category=CORE TANK CONSTR NOWEAPON NOTAIR NOTSUB;
@@ -52,7 +52,7 @@
 	SteeringMode=1;
 	ShootMe=1;
 	EnergyMake=13;
-	MetalMake=0.22;
+	MetalMake=0.2;
 	DefaultMissionType=Standby;
 	maneuverleashlength=640;
 	MovementClass=KBOTUW3;

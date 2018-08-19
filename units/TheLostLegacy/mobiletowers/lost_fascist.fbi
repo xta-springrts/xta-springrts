@@ -79,4 +79,8 @@
 	explosiongenerator1=custom:TinyBlue;
 	explosiongenerator2=custom:POPUPFLARE;
 	}
+	[customparams] 	
+	{
+	tip=Fortified Missile tower, great for overall defense, with added bonus of being able to picked up.;
+	}
 }

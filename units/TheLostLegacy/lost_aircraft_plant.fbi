@@ -41,7 +41,7 @@
 	//*************
 	metalstorage=100;
 	energyuse=5;
-	energystorage=100;
+	energystorage=250;
 
 	//************************************************************
 	//  Building

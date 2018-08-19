@@ -5,7 +5,7 @@
 	//********************
 	side=Arm;
 	name=Convincer;
-	description=Mobile Vertical Pulse Launcher;
+	description=Energy Vertical Pulse Launcher;
 
 	//************************************************************
 	//  Categories
@@ -26,7 +26,7 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=808;
+	maxdamage=1000;
 	healtime=30;
 	buildcostmetal=723;
 	buildcostenergy=5213;
@@ -127,14 +127,14 @@
 	[customparams] 	
 	{
 	tip=AntiStationary, excellent offensive on a budget with accuracy, with jammers.;
+   	canAreaAttack=1;
 	}
 
 	//************************************************************
 	//  To be removed
 	//*****************
-	[customParams] 
+	[SFXTypes]
 	{
-    canAreaAttack=1;
+	explosiongenerator0=custom:bluedgunflare;
 	}
-
 }

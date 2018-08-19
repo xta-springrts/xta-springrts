@@ -128,4 +128,8 @@
 	{
 	explosiongenerator0=custom:rocketflare;
 	}
+	[customparams] 	
+	{
+	tip=Great for outranging other land units, and controlling the skies.;
+	}
 }

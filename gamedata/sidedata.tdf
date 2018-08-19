@@ -4127,7 +4127,7 @@
 		canbuild1=Lost_Construction_kbot;
 		canbuild2=Lost_private;
 		canbuild3=Lost_FIRERAISER;
-		canbuild4=Lost_rainman;
+		canbuild4=Lost_tessera;
 		canbuild5=Lost_firestarter;
 		canbuild6=Lost_bugger;
 	}
@@ -4475,11 +4475,12 @@
 		canbuild28=lost_air_repair_pad;
 		canbuild29=lost_peacemaker;
 		canbuild30=lost_nano_tower;
-		canbuild31=lost_watch_tower;
-		//canbuild6=lost_watch_tower;//jumping flame tower
-		canbuild32=lost_fascist;
-		canbuild33=lost_authoritarian;
-		canbuild34=lost_totalitarian;
+		canbuild31=lost_ht_plant;
+		canbuild32=lost_watch_tower;
+		//canbuild32=lost_watch_tower;//jumping flame tower
+		canbuild33=lost_fascist;
+		canbuild34=lost_authoritarian;
+		canbuild35=lost_totalitarian;
 
 	}
 	[lost_construction_seaplane]

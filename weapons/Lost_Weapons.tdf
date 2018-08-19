@@ -1,4 +1,89 @@
 
+[Komodo_MissilePack]
+{
+	ID=151;
+	name=Heavy Rockets;
+	//Weapontype=MissileLauncher;
+	rendertype=1;
+	lineofsight=1;
+	vlaunch=1;
+	turret=0;
+	model=missile.s3o;
+	cegTag=TinyBlue;//KBOTMISSILETRAIL
+	explosiongenerator=custom:tllDgunTRAIL;//WindkbotRocket
+	range=675;
+	reloadtime=3;
+	weapontimer=0.25;
+	flighttime=2;
+	weaponvelocity=750;
+	startvelocity=225;
+	weaponacceleration=225;
+	turnrate=43000;
+	areaofeffect=24;
+	metalpershot=0;
+	soundstart=bluemis;
+	soundhitdry=bluemishit;
+	smoketrail=0;
+	firestarter=70;
+	smokedelay=0.1;
+	guidance=1;
+	tracks=1;
+	selfprop=1;
+	smoketrail=0;
+	Texture1=null; //testing//
+	Texture2=null;
+	Texture3=null;
+	Texture4=null;
+	tolerance=9000;
+	startsmoke=0;
+	[DAMAGE]
+	{
+		default=31;
+		group_landair=89;
+		group_skyair=89;
+		group_invincible=1;
+	}
+}
+
+[Komodo_BOLT]
+{
+	name=BoltBlast;
+	rendertype=4;
+	ballistic=0;
+	turret=1;
+	range=200;
+	reloadtime=10.0;
+	weaponvelocity=111;
+	areaofeffect=48;
+	rgbcolor=1 0.33 0.0;
+	explosiongenerator=custom:DREADPlasma;
+	cegTag=blueBALLTRAIL;
+	soundstart=Altfire;
+	soundhitdry=PSaHit00;
+	startsmoke=1;
+	tolerance=500;
+	startsmoke=1;
+	burnblow=0;
+	myGravity=0.01;
+	GroundBounce=1;
+	BounceSlip=1.01;
+	BounceRebound=0.2;
+	NumBounce=2;
+	accuracy=200; //1840//
+	movingaccuracy=400; //3220//
+	//impulsefactor=2;
+	impulseboost=3;
+	cratermult=0.1;
+	craterboost=0.1;
+	noselfdamage=1;
+	energypershot=1000;
+	[DAMAGE]
+	{
+		default=3000;
+		group_commanders=1111;
+		lost_commanders=1000;
+	}
+}
 [BUGGER_blast]
 {
 	name=Bugger Juice;
@@ -37,8 +122,8 @@
 	Texture2=null;
 	Texture3=null;
 	Texture4=null;
-	range=395;
-	reloadtime=4.2;
+	range=390;
+	reloadtime=4.0;
 	weapontimer=2;
 	flighttime=2.5;
 	weaponvelocity=400;
@@ -53,7 +138,7 @@
 	[DAMAGE]
 	{
 		lost_commanders=130;
-		default=132;
+		default=140;
 		group_invincible=1;
 	}
 }
@@ -534,7 +619,7 @@
 	sprayangle=500;
 	range=300; 
 	cylindertargeting = 1;
-	reloadtime=2;
+	reloadtime=1;
 	energypershot=5;
 	weaponvelocity=400;
   	texture1=testlightning;
@@ -1083,12 +1168,12 @@
 	cegTag=BLUEVERTICALPULSE;
 	explosiongenerator=custom:BLUEPUFFYVERTICALROCKET;
 	model=egun;
-	range=1300;
+	range=1250;
 	Texture1=null;
 	Texture2=null;
 	Texture3=null;
 	Texture4=null;
-	reloadtime=10;
+	reloadtime=5.5;
 	noautorange=1;
 	weapontimer=2;
 	flighttime=6;
@@ -1104,9 +1189,10 @@
 	smoketrail=0;
 	tolerance=4000;
 	startsmoke=0;
+	energypershot=100;
 	[DAMAGE]
 	{
-		default=411;
+		default=350;
 		group_invincible=1;
 	}
 }
@@ -1850,7 +1936,7 @@
 	range=550;
 	sprayangle=1024;
 	reloadtime=0.2;
-	explosiongenerator=custom:tllTRAIL;
+	explosiongenerator=custom:tllDgunTRAIL;
 	weaponvelocity=1100;
 	myGravity=0.01;
 	areaofeffect=16;
@@ -2170,7 +2256,7 @@
 
 [THUMPRAIL_WEAPON]
 	{
-	name=Railgun Weapon;
+	name=Ultra lightning Weapon;
 	RenderType=7;
 	LineOfSight=1;
 	Turret=1;
@@ -2540,6 +2626,7 @@
 	tolerance=500;
 	soundstart=canlite3;
 	soundhitdry=xplosml3;
+	accuracy=250;
 
 	startsmoke=1;
 	size=1.5;

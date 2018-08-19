@@ -41,7 +41,7 @@
 	metalstorage=50;
 	energymake=5.5;//11
 	energyuse=0.1;
-	energystorage=50;
+	energystorage=75;
 
 	//************************************************************
 	//  Building

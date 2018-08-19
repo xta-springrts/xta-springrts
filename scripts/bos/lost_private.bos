@@ -374,12 +374,14 @@ FirePrimary()
 {
 	if( gun_1 == 0 )
 	{
+		emit-sfx UNIT_SFX1 from rflare;
 		sleep 500;
 		gun_1 = pelvis;
 		return (0);
 	}
 	if( gun_1 == 1 )
 	{
+		emit-sfx UNIT_SFX1 from lflare;
 		sleep 500;
 		gun_1 = base;
 		return (0);
@@ -395,7 +397,7 @@ AimPrimary(heading, pitch)
 	{
 		sleep 100;
 	}
-	turn body to y-axis heading speed <350.000000>;
+	turn body to y-axis heading speed <250.000000>;
 	turn larm to x-axis <-45.000000> speed <200.000000>;
 	turn rarm to x-axis <-45.000000> speed <200.000000>;
 	turn llowarm to x-axis <-15.000000> speed <200.000000>;

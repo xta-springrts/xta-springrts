@@ -24,8 +24,8 @@
 	NoAutoFire=0;
 	SightDistance=525;
 	soundcategory=CORE_GANTRY;
-	EnergyStorage=400;
-	MetalStorage=400;
+	EnergyStorage=375;
+	MetalStorage=150;
 	ExplodeAs=LARGE_BUILDINGEX;
 	SelfDestructAs=LARGE_BUILDING;
 	Category=CORE PLANT NOWEAPON NOTAIR NOTSUB;
@@ -42,4 +42,8 @@
 	Weapon1=LOSTFALCON_WEAPON;
 	pieceTrailCEGTag=Debree;//bleh
 	pieceTrailCEGRange = 4;
+	[customparams] 	
+	{
+	tip=Early Access to mohos, and unique units: can be built on the frontline for direct rocket use.;
+	}
 	}

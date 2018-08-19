@@ -38,11 +38,11 @@
 	//************************************************************
 	//  Resources
 	//*************
-	metalmake=0.27;
-	metalstorage=50;
-	energymake=18;
+	metalmake=0.15;
+	metalstorage=83;
+	energymake=12;
 	energyuse=1;
-	energystorage=80;
+	energystorage=165;
 
 	//************************************************************
 	//  Building

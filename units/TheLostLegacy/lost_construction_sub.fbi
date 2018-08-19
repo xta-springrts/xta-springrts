@@ -25,11 +25,11 @@
 	builddistance=200;
 	builder=1;
 	workertime=110;
-	energymake=9;
-	energystorage=50;
+	energymake=6;
+	energystorage=55;
 	energyuse=0.5;
-	metalstorage=50;
-	metalmake=0.11;
+	metalstorage=83;
+	metalmake=0.1;
 	canstop=1;
 	floater=1;
 	sightdistance=160;

@@ -96,4 +96,10 @@
 	{
 	explosiongenerator0=custom:EmgFlare;
 	}
+
+	[customparams] 	
+	{
+	tip=Fast, with devastating close range damage, ideal for raids, even greater when outnumbering.;
+	}
+
 }
