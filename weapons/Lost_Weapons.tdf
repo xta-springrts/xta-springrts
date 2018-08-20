@@ -122,13 +122,13 @@
 	Texture2=null;
 	Texture3=null;
 	Texture4=null;
-	range=390;
+	range=385;
 	reloadtime=4.0;
 	weapontimer=2;
 	flighttime=2.5;
-	weaponvelocity=400;
-	startvelocity=200;
-	weaponacceleration=200;
+	weaponvelocity=350;
+	startvelocity=250;
+	weaponacceleration=100;
 	areaofeffect=65;
 	soundstart=rocklit1;
 	soundhitdry=rocklgthit;
@@ -2626,7 +2626,8 @@
 	tolerance=500;
 	soundstart=canlite3;
 	soundhitdry=xplosml3;
-	accuracy=250;
+	accuracy=250; //1840//
+	movingaccuracy=333; //3220//
 
 	startsmoke=1;
 	size=1.5;

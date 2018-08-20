@@ -126,7 +126,7 @@
 	size=3.0;
 	intensity=0.9;
 	turret=1;
-	range=215;
+	range=225;
 	reloadtime=0.2;
 	weapontimer=1;
 	weaponvelocity=600;

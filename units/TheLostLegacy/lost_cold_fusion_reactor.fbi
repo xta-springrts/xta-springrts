@@ -31,11 +31,11 @@
 	buildcostmetal=12123;
 	buildcostenergy=174662;
 	buildtime=236275;
-	footprintx=6;
-	footprintz=6;
+	footprintx=7;
+	footprintz=7;
 	collisionVolumeType = CylY;
-	collisionVolumeScales =61 61 61;
-	collisionVolumeOffsets = 0 10 0;
+	collisionVolumeScales =91 71 91;
+	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
 
 	//************************************************************

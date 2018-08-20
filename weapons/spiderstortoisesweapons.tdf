@@ -10,6 +10,7 @@
 	range=704;
 	reloadtime=2.0;
 	weapontimer=5;
+	flighttime=2.5;
 	weaponvelocity=750;
 	startvelocity=550;
 	weaponacceleration=101;
@@ -45,6 +46,7 @@
 	range=704;
 	reloadtime=2.2;
 	weapontimer=5;
+	flighttime=2.5;
 	weaponvelocity=750;
 	startvelocity=550;
 	weaponacceleration=101;
@@ -115,23 +117,23 @@
 	separation=0.5;
 	alphadecay=0.3;
 	sizedecay=-0.08;
-	energypershot=150;
-	reloadtime=2.15;
+	energypershot=100;
+	reloadtime=1.7;
 	weaponvelocity=600;
 	//mygravity=0.24;
-	areaofeffect=64;
+	areaofeffect=72;
 	explosiongenerator=custom:WindkbotRocket;
 	soundstart=cannhvy2;
 	soundhitdry=xplomed4;
-	accuracy=900;
-	movingaccuracy=1700;
+	accuracy=600;
+	movingaccuracy=1000;
 	tolerance=500;
 	//minbarrelangle=-40;
 	startsmoke=1;
 	startsmoke=1;
 	[DAMAGE]
 	{
-		default=258;
+		default=187;
 		group_invincible=1;
 		group_ships=376;
 	}
@@ -245,7 +247,7 @@
 	turret=1;
 	range=280;
 	explosiongenerator=custom:LightFlylaser;
-	reloadtime=0.2;
+	reloadtime=0.333;
 	weaponvelocity=1200;
 	areaofeffect=12;
 	soundstart=LASRLIT1;
@@ -254,7 +256,7 @@
 	tolerance=500;
 	[DAMAGE]
 	{
-		default=11;
+		default=15;
 	 	group_invincible=1;
 		group_landair=23;
 		group_skyair=23;

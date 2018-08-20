@@ -40,10 +40,10 @@
 	//************************************************************
 	//  Resources
 	//*************
-	metalmake=2.7;
+	metalmake=0.7;
 	//metaluse=-2;
 	metalstorage=2050;
-	energymake=67.5;
+	energymake=17.5;
 	//energyuse=-50;
 	energystorage=2050;
 
