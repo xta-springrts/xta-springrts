@@ -1,4 +1,4 @@
-f lightning effects on commander, infantry kbots and some other units are too intense, making the weapons look more powerful than they are
+ff lightning effects on commander, infantry kbots and some other units are too intense, making the weapons look more powerful than they are
  
 - TLL RainMan has a typo in the description, it also has its arm branches made too thin horizontally, looks weird. Should also be classified as "medium" instead of heavy
  
