@@ -14,7 +14,7 @@ end
 
 	After a random period parts of the map will experience crack's in surface and rumbling and tunmbling noises
 	TODO 	- add damage
-			- make more cracks at same time
+		- make more cracks at same time
 	
 --]]
 
@@ -22,14 +22,14 @@ end
 if (gadgetHandler:IsSyncedCode()) then
 
 -- locals
-local Echo						= Spring.Echo
+local Echo					= Spring.Echo
 local GaiaTeamID  				= Spring.GetGaiaTeamID()
 local random					= math.random
-local mapX 						= Game.mapX
-local mapY 						= Game.mapY
-local GetGroundHeight			= Spring.GetGroundHeight
-local GetGroundOrigHeight		= Spring.GetGroundOrigHeight
-local SetHeightMapFunc			= Spring.SetHeightMapFunc
+local mapX 					= Game.mapX
+local mapY 					= Game.mapY
+local GetGroundHeight				= Spring.GetGroundHeight
+local GetGroundOrigHeight			= Spring.GetGroundOrigHeight
+local SetHeightMapFunc				= Spring.SetHeightMapFunc
 local PlaySoundFile				= Spring.PlaySoundFile
 local SetHeightMap 				= Spring.SetHeightMap
 local images 					= include("LuaRules/gadgets/img.lua")
@@ -41,26 +41,26 @@ local crushCEG3					= "Sparks"
 local metalcloud1				= "buttsmoke"
 local metalcloud2				= "smokeshell_medium"
 local SpawnCEG					= Spring.SpawnCEG
-local eceg 						= "gplasmaballbloom"
-local mceg 						= "bplasmaballbloom"
+local eceg 					= "gplasmaballbloom"
+local mceg 					= "bplasmaballbloom"
 local crushsnd					= "sounds/battle/crush3.wav"
 local fx_placement 				= {}
 
 -- settings
-local timeDelay					= 301							-- one and half minute delay
-local crackInterval 			= 1800							-- one minute time delay new crack
+local timeDelay					= 301				-- one and half minute delay
+local crackInterval 				= 1800				-- one minute time delay new crack
 local crackChange 				= 0.7
-local duration					= 30 * 60 * 5 					-- 5 min crack
-local crackAreaX				= math.floor(mapX*512*1/10)		-- defines middle of the map
+local duration					= 30 * 60 * 5 			-- 5 min crack
+local crackAreaX				= math.floor(mapX*512*1/10)	-- defines middle of the map
 local crackAreaZ				= math.floor(mapY*512*1/10)
-local middle 					= false							-- is middle only cracked?
+local middle 					= false				-- is middle only cracked?
 local damage 					= false
-local maps 						= {								-- maps
-	["TheColdPlace"] 				= true,
-	["The Cold Place Remake V3c"] 	= true,
+local maps 					= {				-- maps
+	["TheColdPlace"] 			= true,
+	["The Cold Place Remake V3c"] 		= true,
 	["The Cold Place Remake"] 		= true,
 	["Geyser_Plains_TNM04-V3"] 		= true,
-	["hotstepper_lm"] 				= true,
+	["hotstepper_lm"] 			= true,
 }
 local cracks					= {}
 local remove_cracks				= {}
@@ -69,8 +69,8 @@ local max_cracks				= 10
 
 
 local fx = { 
-[1] = {[1]={}, [2]={}, [3]={}, [4]={}, [5]={}},
-[2] = {[1]={}, [2]={}, [3]={}, [4]={}, [5]={}}
+	[1] = {[1]={}, [2]={}, [3]={}, [4]={}, [5]={}},
+	[2] = {[1]={}, [2]={}, [3]={}, [4]={}, [5]={}}
 }
 
 for k,v in pairs(images) do
@@ -89,13 +89,13 @@ for k,v in pairs(images2) do
 end
 
 -- comet
-local cometx = nil
-local cometz = nil
-local cometheight = 3000
-local ast_size 					= images3[1]
-local ast_image					= images3[2]
+local cometx 			= nil
+local cometz 			= nil
+local cometheight 		= 3000
+local ast_size 			= images3[1]
+local ast_image			= images3[2]
 local comet = false
-local fx_comit = {}
+local fx_comit 			= {}
 for k,v in pairs(ast_image) do
 	if v ~= 0 and random() < 0.001 then
 		fx_comit[k] = v
