@@ -61,6 +61,10 @@ local maps 					= {				-- maps
 	["The Cold Place Remake"] 		= true,
 	["Geyser_Plains_TNM04-V3"] 		= true,
 	["hotstepper_lm"] 			= true,
+	["DeltaSiegeDry"] 			= true,
+	["small_supreme_battlefield_v2"] 	= true,
+	["FolsomDamFinal"] 			= true,
+	["Tabula v2"] 				= true
 }
 local cracks					= {}
 local remove_cracks				= {}
