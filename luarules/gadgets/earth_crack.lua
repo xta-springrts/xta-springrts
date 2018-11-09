@@ -10,28 +10,29 @@ function gadget:GetInfo()
 	}
 end
 
+
 --[[
 
 		After a random period parts of the map will experience crack's in surface.
 		Incomming comets might need to beavoided to prevend damage.
 
-		-parameters:
-			- max cracks (at same time) (default = 10)
-			- area of cracks (in the middle only) (default is middle = False)
+		-parameters options:
 
-		-make more logic in comet spawn loop
-		-add explotions to destroyed units and features
-		-balance the damage doen by comets
 
 		# TODO
-		Implement options:
-			- max_cracks [0-40]
+		-further optimize ground hitting effects
+			-precalcualte the random numbers maybe?
+		Implement mod options:
+			- maxCracks
+			- maxComets
+			- maxCometDamage
+			- maxCrackDamage
 			- crackInterval
-			- comet interval
-			- tweak parameters (that might be set map specific)
-			- damage comets parameter
-			- damage crack parameter
+			- cometInterval
+			- middleCrack (only add cracks in middle)
+			- rename some constant
 --]]
+
 
 -- synced only
 if (not gadgetHandler:IsSyncedCode()) then
@@ -41,13 +42,13 @@ end
 
 -- LOCALS --
 
+
 local floor 						= math.floor
 local random					    = math.random
 local sqrt							= math.sqrt
 
 local gmatch						= string.gmatch
 local remove						= table.remove
-
 
 local SetFeatureHealth				= Spring.SetFeatureHealth
 local DestroyFeature				= Spring.DestroyFeature
@@ -81,18 +82,16 @@ local crushsnd					  	= "sounds/battle/crush3.wav"
 local mapX 					      	= Game.mapX
 local mapY 					      	= Game.mapY
 
+
 -- SETTINGS --
 
 
 local timeDelay						= 301						-- one and half minute delay
-local timeDelayComet 				= 201
-local crackInterval 				= 1800						-- one minute time delay new crack
-local crackChange 					= 0.7
-local duration						= 30 * 60 * 5 				-- 5 min crack
+local timeDelayComet 				= 201						-- one minute delay new comets
+local duration						= 30 * 60 * 5 				-- 5 min crack duration
 local crackAreaX					= floor(mapX*512*1/10)		-- defines middle of the map
 local crackAreaZ					= floor(mapY*512*1/10)
 local middle 					  	= false						-- is middle only cracked?
-local damage 					  	= false
 local maps 					    	= {							-- maps
 	["TheColdPlace"] 			        = true,
 	["The Cold Place Remake V3c"] 		= true,
@@ -162,8 +161,6 @@ function gadget:Initialize()
 	end
 
 	Echo("earth_crack.lua: gadget:Initialize() Game.mapName=" .. Game.mapName)
-
-	-- uncommand this to add map specificity (see table: maps earlier defined)
 
 	--if (maps[Game.mapName] == nil or maps[Game.mapName] == maps[Game.mapName] == false) then
 	--  Echo("no earth_crack setup for this map found.")
@@ -363,7 +360,7 @@ function emit_hit_ground(comet)
 	local x = comet.X
 	local y = comet.groundHeight
 	local z = comet.Z
-	-- optimaze by getting random values in advange
+	-- optimize by getting random values in advange
 	for key, value in pairs(fx_comit) do
 		for k, v in string.gmatch(key,"(%w+),(%w+)") do
 			if random() < 0.2 then  -- if k+v%5 == 0  (same but faster?)
@@ -371,7 +368,7 @@ function emit_hit_ground(comet)
 					SpawnCEG(metalcloud2,tonumber(v)+x+ random(0,100), y, tonumber(k)+z + random(0,100))
 					SpawnCEG(eceg,tonumber(v)+x+ random(0,100), y+10, tonumber(k)+z + random(0,100))
 					if random() < 0.05 then -- alternative -> if %k+v == 5 (SPEED UP?)
- 						PlaySoundFile (crushsnd, 2.0,tonumber(v)+ x,y,tonumber(k)+z, 0,0,0,'battle')
+						PlaySoundFile (crushsnd, 2.0,tonumber(v)+ x,y,tonumber(k)+z, 0,0,0,'battle')
 					end
 				else
 					SpawnCEG(metalcloud2,tonumber(v)+x -random(0,100), y, tonumber(k)+z - random(0,100))
@@ -428,7 +425,7 @@ function deform_ground(comet)
 	local func = function()
 		for key, value in pairs(ast_image) do
 			for k, v in gmatch(key,"(%w+),(%w+)") do
-				local height = GetGroundOrigHeight(v+xc,k+zc) --THIS MIGHT BE EXPENNSIVE (but cant consider straingt ground)
+				local height = GetGroundOrigHeight(v+xc,k+zc) --THIS MIGHT BE EXPENNSIVE (but cant consider flat ground)
 				if value ~= 0 then
 					SetHeightMap(tonumber(v)+xc,tonumber(k)+zc, height + value -21)
 				end
@@ -446,19 +443,15 @@ function gadget:GameFrame(f)
 
 	-- RANDOMIZE --
 
-	-- randomize number of comets
 	if (f%100*timeDelay ==0) then
 		number_of_cracks = random(0, max_cracks)
 	end
 
-	-- randomize number of cracks
 	if (f%100*timeDelayComet ==0) then
 		number_of_comets = random(0, max_comets)
 	end
 
 	-- COMET PART --
-
-	--  new part begin
 
 	if (f%5 == 0) then
 
@@ -468,8 +461,6 @@ function gadget:GameFrame(f)
 
 		else
 
-			-- this should be f%5==0 aswell !!!!! (bad programming)
-			--if (f%timeDelayComet == 0) then
 			if f%timeDelayComet == 0 then
 
 				Echo("WARNING observatory station detects", number_of_comets,"incoming meteorites!")
@@ -513,37 +504,9 @@ function gadget:GameFrame(f)
 				remove_cracks = {}
 			end
 		else
-
-			-- update the crack times
 			update()
 		end
 	end
 end
 
---local y = Spring.GetGroundHeight(xx,zz)
---Spring.LevelHeightMap(xx,zz,y+100)
-
---[[
-Spring.GetGroundHeight
-Spring.GetGroundOrigHeight
-Spring.GetGroundNormal
-Spring.GetGroundInfo
-Spring.GetGroundBlocked
-Spring.GetGroundExtremes
-]]--
-
---spGetGroundHeight
---spGetGroundOrigHeight
---Spring.LevelHeightMap
---Spring.AdjustHeightMap
---Spring.RevertHeightMap
---Spring.SetHeightMapFunc
---Spring.AddHeightMap
---Spring.SetHeightMap
-
---t = {[1] = { images = 2, number =1}, [2] = { images = 2, number =1}}
---print(t[1].images)
---print(#t)
---t[#t+1] = {images = 3, number = 3}
---print(t[3].images)
 
