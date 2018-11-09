@@ -70,7 +70,14 @@ local options = {
 		desc = 'Other non-homologated stuff',
 		type = "section",
 	},
-	
+
+		{
+		key  = 'environment',
+		name = 'Environment options',
+		desc = 'World properties',
+		type = "section",
+		},
+
 	--Removed till spawner is fixed
 	{
 		key  = 'Fleabowl',
@@ -402,6 +409,29 @@ local options = {
 --		type   = "bool",
 --		def    = true,
 --      },
+
+	{
+		key    = "maxComets",
+		name   = "maximum comets in rain",
+		desc   = "Set how many comets can maximal drop at a time.\nkey: maxComets",
+		type   = "number",
+		section= 'environment',
+		def    = 10,
+		min    = 0,
+		max    = 50,
+		step   = 1,
+	},
+		{
+		key    = "maxDamage",
+		name   = "maximum comet damage",
+		desc   = "Set how many damage comets give.\nkey: maxComets",
+		type   = "number",
+		section= 'environment',
+		def    = 500,
+		min    = 0,
+		max    = 100000,
+		step   = 100,
+	},
 	{
 		key    = "koth",
 		name   = "King of the Hill Mode",

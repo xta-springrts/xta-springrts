@@ -50,6 +50,7 @@ local sqrt							= math.sqrt
 local gmatch						= string.gmatch
 local remove						= table.remove
 
+local modOptions 					= Spring.GetModOptions()
 local SetFeatureHealth				= Spring.SetFeatureHealth
 local DestroyFeature				= Spring.DestroyFeature
 local GetFeatureHealth				= Spring.GetFeatureHealth
@@ -108,9 +109,9 @@ local cracks						= {}
 local remove_cracks					= {}
 local add_cracks					= {}
 local max_cracks					= 10
-local max_comets					= 10
+local max_comets					= modOptions.maxComets or 10
 local damage_radius					= 500
-local damage_value            		= 500
+local damage_value            		= modOptions.maxDamage or 500
 
 
 local fx = {
