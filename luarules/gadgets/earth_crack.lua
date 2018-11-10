@@ -87,13 +87,13 @@ local mapY 					      	= Game.mapY
 -- SETTINGS --
 
 
-local timeDelay						= 301						-- one and half minute delay
-local timeDelayComet 				= 201						-- one minute delay new comets
-local duration						= 30 * 60 * 5 				-- 5 min crack duration
-local crackAreaX					= floor(mapX*512*1/10)		-- defines middle of the map
+local timeDelay						= 301		-- 1 min??
+local timeDelayComet 				= tonumber(modOptions.time_delay_comet) * 30 * 60 or 30 * 60 + 1 -- 2.5 min
+local duration						= tonumber(modOptions.duration_crack) *30 *60 + 1 or 9000 +1 		-- 5 min crack duration
+local crackAreaX					= floor(mapX*512*1/10)								-- defines middle of the map
 local crackAreaZ					= floor(mapY*512*1/10)
-local middle 					  	= false						-- is middle only cracked?
-local maps 					    	= {							-- maps
+local middle 					  	= false												-- is middle only cracked?
+local maps 					    	= {													-- maps
 	["TheColdPlace"] 			        = true,
 	["The Cold Place Remake V3c"] 		= true,
 	["The Cold Place Remake"] 		    = true,
@@ -108,10 +108,16 @@ local maps 					    	= {							-- maps
 local cracks						= {}
 local remove_cracks					= {}
 local add_cracks					= {}
-local max_cracks					= 10
-local max_comets					= modOptions.maxComets or 10
-local damage_radius					= 500
-local damage_value            		= modOptions.maxDamage or 500
+local max_cracks					= tonumber(modOptions.max_cracks) or 10
+local max_comets					= tonumber(modOptions.max_comets) or 10
+local damage_radius					= tonumber(modOptions.max_radius_damage_comets) or 500
+local damage_value            		= tonumber(modOptions.max_damage_comets) or 500
+local randomize_number_of_cracks	= 150 -- same as below but for cracks
+local randomize_number_of_comets	= 100 -- how often number of comets in rain are randomized (higher is less ofthen)
+local cometRainRadius 				= tonumber(modOptions.comet_rain_radius) or 500 -- comet spreading
+
+
+-- READ IN IMAGES
 
 
 local fx = {
@@ -134,12 +140,7 @@ for k,v in pairs(images2) do
 	end
 end
 
-
--- COMET STUFF --
-
-local cometRainRadius 				= 500
 local comets						= {}
-local cometheight 					= 3000
 local ast_size 						= images3[1]
 local ast_image						= images3[2]
 local cometold          				= false
@@ -392,7 +393,14 @@ function add_comet(x,y)
 	local impact = random(0,20)
 	local height = GetGroundOrigHeight(X,Z)
 	local originalHeight = GetGroundOrigHeight(X,Z)
-	local comet = {hit = false, groundHeight = height, impact = impact, X = X, Y = Y, Z = Z}
+	local explode = random(-1000, 1000)
+	local comet = {explode = explode,
+		hit = false,
+		groundHeight = height,
+		impact = impact,
+		X = X,
+		Y = Y,
+		Z = Z}
 	return comet
 end
 
@@ -406,7 +414,12 @@ function update_comet()
 			table.remove(comets, i)
 		elseif v.groundHeight-v.Y < 0 then
 			emit_comit(v)
-			comets[i].Y = v.Y - 30
+			comets[i].Y = v.Y - 60
+			-- NOT TESTED
+			if comets[i].Y - comets[i].explode < 0 then
+				--end explode TODO
+				table.remove(comets, i)
+			end
 		else
 			emit_hit_ground(v)
 			deform_ground(v)
@@ -444,11 +457,11 @@ function gadget:GameFrame(f)
 
 	-- RANDOMIZE --
 
-	if (f%100*timeDelay ==0) then
+	if (f%randomize_number_of_cracks*timeDelay ==0) then
 		number_of_cracks = random(0, max_cracks)
 	end
 
-	if (f%100*timeDelayComet ==0) then
+	if (f%randomize_number_of_comets*timeDelayComet ==0) then
 		number_of_comets = random(0, max_comets)
 	end
 
@@ -464,15 +477,19 @@ function gadget:GameFrame(f)
 
 			if f%timeDelayComet == 0 then
 
-				Echo("WARNING observatory station detects", number_of_comets,"incoming meteorites!")
+				if not (number_of_comets==0) then
+					Echo("WARNING observatory station detects", number_of_comets,"incoming meteorites!")
 
-				--make some comets
-				local x = math.floor(random(0,  mapX*512-ast_size["x"]))
-				local z = math.floor(random(0,  mapY*512-ast_size["z"]))
+					--make some comets
+					local x = math.floor(random(0,  mapX*512-ast_size["x"]))
+					local z = math.floor(random(0,  mapY*512-ast_size["z"]))
 
-				for i=1,number_of_comets do
-					comets[#comets+1] = add_comet(x,z)
+					for i=1,number_of_comets do
+						comets[#comets+1] = add_comet(x,z)
+					end
+
 				end
+
 			end
 
 		end
