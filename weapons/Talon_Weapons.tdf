@@ -1344,7 +1344,7 @@
 	vlaunch=1;
 	Weapontype=StarburstLauncher;
 	model=weapon_fmdmisl;
-	cegTag=RAVENTRAIL;
+	cegTag=GUARDIANRocketTRAIL;
 	range=800;
 	reloadtime=1.5;
 	weapontimer=0.75;
@@ -1353,7 +1353,7 @@
 	startvelocity=200;
 	weaponacceleration=100;
 	turnrate=63000;
-	areaofeffect=64;
+	areaofeffect=48;
 	soundstart=rocklit1;
 	soundhitdry=xplosml2;
 	firestarter=70;
@@ -1370,8 +1370,8 @@
 	[DAMAGE]
 	{
 		default=120;
-		group_landair=321;
-		group_skyair=321;
+		group_landair=241;
+		group_skyair=241;
 		group_invincible=1;
 	}
 }

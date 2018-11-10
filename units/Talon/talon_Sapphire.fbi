@@ -26,7 +26,7 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=7743;
+	maxdamage=8243;
 	healtime=30;
 	buildcostmetal=1254;
 	buildcostenergy=10383;
@@ -68,7 +68,7 @@
 	turnrate=400;
 	acceleration=0.2625;
 	brakerate=0.0762939;
-	maxvelocity=1.5;
+	maxvelocity=1.45;
 	maxslope=12;
 	maxwaterdepth=100;
 

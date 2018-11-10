@@ -5,7 +5,7 @@
 	//********************
 	side=Core;
 	name=Binder;
-	description=Armored Fireball Kbot;
+	description=Armored Lightning Kbot;
 
 	//************************************************************
 	//  Categories
@@ -82,9 +82,11 @@
 	//************************************************************
 	//  Weapons
 	//***********
-	Weapon1=OtherFireball;//binderbeamTLL_ADVFLAME
-	nochasecategory=VTOL;
-	wpri_badtargetcategory=VTOL;
+	Weapon1=Bind_LIGHTNING_Negative;//binderbeamTLL_ADVFLAME
+	Weapon3=Bind_LIGHTNING_Positive;//binderbeamTLL_ADVFLAME
+	3slaveTo=1;
+	//nochasecategory=VTOL;
+	//wpri_badtargetcategory=VTOL;
 	explodeas=BIG_UNITEX;
 	selfdestructas=BIG_UNIT;
 
@@ -124,12 +126,12 @@
 	//*****************
 	[customparams] 	
 	{
-	tip=Sloppy weapon, deals more damage to larger targets.;
+	tip=Converts Energy to Raw Consistent Damage.;
 	}
 
 	[SFXTypes]
 	{
-	explosiongenerator0=custom:Napalam;
-	explosiongenerator1=custom:unitfire;
+	explosiongenerator0=custom:unitfire;//unitfire
+	explosiongenerator1=custom:unitfire;//napalam
 	}
 }

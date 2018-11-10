@@ -1,0 +1,373 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+piece  torso, head, arms, belly, lthigh, lleg, rleg, flare1,
+       flare2, pelvis, rthigh, lfoot, rfoot, ground, aimpoint;
+
+static-var  restore_delay, gun_1, Static_Var_3, Static_Var_4;
+
+// Signal definitions
+#define SIG_MOVE			2
+#define SIG_AIM				4
+
+
+walk()
+{
+	while( TRUE )
+	{
+		move belly to y-axis [0.000000] now;
+		move lthigh to y-axis [0.000000] now;
+		move lleg to y-axis [1.000000] now;
+		move rleg to y-axis [0.000000] now;
+		move torso to y-axis [0.000000] now;
+		turn pelvis to z-axis <3.000000> now;
+		turn belly to x-axis <-6.000000> now;
+		turn rthigh to x-axis <14.000000> now;
+		turn lthigh to x-axis <-45.000000> now;
+		turn lleg to x-axis <-1.000000> now;
+		turn lfoot to x-axis <11.000000> now;
+		turn rleg to x-axis <6.000000> now;
+		turn rfoot to x-axis <-14.000000> now;
+		turn torso to x-axis <0.000000> now;
+		sleep 4300 / Static_Var_4;
+		move lthigh to y-axis [1.000000] now;
+		move lleg to y-axis [0.000000] now;
+		move torso to y-axis [0.000000] now;
+		turn pelvis to z-axis <7.000000> now;
+		turn belly to x-axis <-5.000000> now;
+		turn rthigh to x-axis <22.000000> now;
+		turn lthigh to x-axis <-24.000000> now;
+		turn lleg to x-axis <7.000000> now;
+		turn lfoot to x-axis <17.000000> now;
+		turn rleg to x-axis <13.000000> now;
+		turn rfoot to x-axis <-4.000000> now;
+		turn torso to x-axis <3.000000> now;
+		sleep 4300 / Static_Var_4;
+		turn belly to x-axis <3.000000> now;
+		sleep 4300 / Static_Var_4;
+		turn belly to x-axis <2.000000> now;
+		turn torso to x-axis <12.000000> now;
+		sleep 4300 / Static_Var_4;
+		move rthigh to y-axis [0.000000] now;
+		move lthigh to y-axis [0.000000] now;
+		move rleg to y-axis [0.000000] now;
+		move torso to y-axis [0.000000] now;
+		turn pelvis to z-axis <5.000000> now;
+		turn belly to x-axis <0.000000> now;
+		turn rthigh to x-axis <14.000000> now;
+		turn lthigh to x-axis <-14.000000> now;
+		turn lfoot to x-axis <6.000000> now;
+		turn rleg to x-axis <8.000000> now;
+		turn rfoot to x-axis <-2.000000> now;
+		turn torso to x-axis <5.000000> now;
+		sleep 4300 / Static_Var_4;
+		move lthigh to y-axis [0.000000] now;
+		move rleg to y-axis [1.000000] now;
+		move torso to y-axis [0.000000] now;
+		turn pelvis to z-axis <4.000000> now;
+		turn belly to x-axis <5.000000> now;
+		turn rthigh to x-axis <4.000000> now;
+		turn lthigh to x-axis <-1.000000> now;
+		turn lfoot to x-axis <-6.000000> now;
+		turn torso to x-axis <3.000000> now;
+		sleep 4000 / Static_Var_4;
+		move lthigh to y-axis [0.000000] now;
+		move torso to y-axis [0.000000] now;
+		turn pelvis to z-axis <0.000000> now;
+		turn belly to x-axis <3.000000> now;
+		turn rthigh to x-axis <-7.000000> now;
+		turn lthigh to x-axis <4.000000> now;
+		turn lfoot to x-axis <-12.000000> now;
+		turn torso to x-axis <8.000000> now;
+		sleep 3700 / Static_Var_4;
+		move rleg to y-axis [1.000000] now;
+		move torso to y-axis [0.000000] now;
+		turn pelvis to z-axis <-1.000000> now;
+		turn belly to x-axis <-4.000000> now;
+		turn rthigh to x-axis <-18.000000> now;
+		turn lthigh to x-axis <9.000000> now;
+		turn torso to x-axis <7.000000> now;
+		sleep 3700 / Static_Var_4;
+		move rleg to y-axis [0.000000] now;
+		turn pelvis to z-axis <-3.000000> now;
+		turn belly to x-axis <-7.000000> now;
+		turn rthigh to x-axis <-37.000000> now;
+		turn lthigh to x-axis <16.000000> now;
+		turn lfoot to x-axis <-6.000000> now;
+		turn rleg to x-axis <-10.000000> now;
+		turn torso to x-axis <2.000000> now;
+		sleep 3700 / Static_Var_4;
+		move rthigh to y-axis [1.000000] now;
+		move lleg to y-axis [0.000000] now;
+		move torso to y-axis [-1.000000] now;
+		turn pelvis to z-axis <-7.000000> now;
+		turn belly to x-axis <1.000000> now;
+		turn lthigh to x-axis <23.000000> now;
+		turn lfoot to x-axis <-3.000000> now;
+		turn rleg to x-axis <10.000000> now;
+		turn rfoot to x-axis <28.000000> now;
+		turn torso to x-axis <-2.000000> now;
+		sleep 4300 / Static_Var_4;
+		turn belly to x-axis <13.000000> now;
+		sleep 4300 / Static_Var_4;
+		turn belly to x-axis <9.000000> now;
+		turn torso to x-axis <8.000000> now;
+		sleep 4300 / Static_Var_4;
+		move rthigh to y-axis [0.000000] now;
+		move lleg to y-axis [1.000000] now;
+		move torso to y-axis [0.000000] now;
+		turn pelvis to z-axis <-5.000000> now;
+		turn belly to x-axis <7.000000> now;
+		turn rthigh to x-axis <-23.000000> now;
+		turn lthigh to x-axis <16.000000> now;
+		turn lfoot to x-axis <0.000000> now;
+		turn rfoot to x-axis <12.000000> now;
+		turn torso to x-axis <2.000000> now;
+		sleep 4000 / Static_Var_4;
+		move rthigh to y-axis [0.000000] now;
+		move lleg to y-axis [1.000000] now;
+		move torso to y-axis [0.000000] now;
+		turn pelvis to z-axis <-4.000000> now;
+		turn belly to x-axis <-3.000000> now;
+		turn rthigh to x-axis <-10.000000> now;
+		turn lthigh to x-axis <5.000000> now;
+		turn lfoot to x-axis <-1.000000> now;
+		turn rfoot to x-axis <0.000000> now;
+		turn torso to x-axis <-4.000000> now;
+		sleep 4300 / Static_Var_4;
+		move rthigh to y-axis [0.000000] now;
+		move torso to y-axis [0.000000] now;
+		turn pelvis to z-axis <0.000000> now;
+		turn belly to x-axis <-4.000000> now;
+		turn rthigh to x-axis <1.000000> now;
+		turn lthigh to x-axis <-12.000000> now;
+		turn rfoot to x-axis <-12.000000> now;
+		turn torso to x-axis <-1.000000> now;
+		sleep 4300 / Static_Var_4;
+		move lleg to y-axis [1.000000] now;
+		move torso to y-axis [0.000000] now;
+		turn pelvis to z-axis <1.000000> now;
+		turn belly to x-axis <-5.000000> now;
+		turn rthigh to x-axis <4.000000> now;
+		turn lthigh to x-axis <-23.000000> now;
+		turn torso to x-axis <1.000000> now;
+		sleep 4300 / Static_Var_4;
+	}
+}
+
+UnitSpeed()
+{
+	while( TRUE )
+	{
+		Static_Var_4 = get 29 * 100 / Static_Var_3;
+		if( Static_Var_4 == 0 )
+		{
+			Static_Var_4 = 100;
+		}
+		sleep 142;
+	}
+}
+
+StartMoving()
+{
+	signal SIG_MOVE;
+	set-signal-mask SIG_MOVE;
+	call-script walk();
+}
+
+StopMoving()
+{
+	signal SIG_MOVE;
+	set-signal-mask SIG_MOVE;
+	turn pelvis to z-axis <0.000000> speed <150.000000>;
+	turn belly to x-axis <0.000000> speed <150.000000>;
+	move torso to y-axis [0.000000] speed [1.000000];
+	turn torso to x-axis <0.000000> speed <150.000000>;
+	turn rthigh to x-axis <0.000000> speed <150.000000>;
+	turn rleg to x-axis <0.000000> speed <150.000000>;
+	turn rfoot to x-axis <0.000000> speed <150.000000>;
+	turn lthigh to x-axis <0.000000> speed <150.000000>;
+	turn lleg to x-axis <0.000000> speed <150.000000>;
+	turn lfoot to x-axis <0.000000> speed <150.000000>;
+}
+
+flames(Func_Var_1)
+{
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 500;
+	}
+	while( TRUE )
+	{
+		Func_Var_1 = 300 + Rand( 50, 1000 );
+		sleep Func_Var_1;
+		emit-sfx 0 from flare1;
+		sleep 150;
+		emit-sfx 0 from flare2;
+		sleep 100;
+		emit-sfx 0 from flare2;
+		sleep 150;
+		emit-sfx 0 from flare1;
+	}
+}
+
+Create()
+{
+	gun_1 = head;
+	hide flare1;
+	hide flare2;
+	restore_delay = 3000;
+	Static_Var_3 = get MAX_SPEED;
+	Static_Var_4 = 100;
+	start-script StopMoving();
+}
+
+SetMaxReloadTime(Func_Var_1)
+{
+	restore_delay = Func_Var_1 * 2;
+}
+
+SweetSpot(piecenum)
+{
+	piecenum = torso;
+}
+
+AimFromPrimary(piecenum)
+{
+	piecenum = aimpoint;
+}
+
+QueryPrimary(piecenum)
+{
+	if( gun_1 == 0 )
+	{
+		piecenum = flare1;
+	}
+	if( gun_1 == 1 )
+	{
+		piecenum = flare2;
+	}
+}
+
+RestoreAfterDelay()
+{
+	sleep restore_delay;
+	turn torso to y-axis <0.000000> speed <90.000000>;
+}
+
+AimPrimary(heading, pitch)
+{
+	signal SIG_AIM;
+	set-signal-mask SIG_AIM;
+	turn torso to y-axis heading speed <90.000000>;
+	turn arms to x-axis <0.000000> speed <45.000000>;
+	wait-for-turn torso around y-axis;
+	start-script RestoreAfterDelay();
+	return (1);
+}
+
+FirePrimary()
+{
+	if( gun_1 == 0 )
+	{
+		emit-sfx 1024 from flare1;
+		sleep 100;
+	}
+	if( gun_1 == 1 )
+	{
+		emit-sfx 1024 from flare2;
+		sleep 100;
+	}
+	gun_1 = !gun_1;
+}
+
+AimTertiary(heading, pitch)
+{
+	return (1);
+}
+
+FireTertiary()
+{
+	sleep 150;
+}
+
+AimFromTertiary(piecenum)
+{
+	piecenum = pelvis;
+}
+
+QueryTertiary(piecenum)
+{
+	piecenum = pelvis;
+}
+
+Killed(severity, corpsetype)
+{
+	if( severity <= 25 )
+	{
+		corpsetype = 1;
+		explode belly type BITMAPONLY | BITMAP1;
+		explode flare1 type BITMAPONLY | BITMAP2;
+		explode ground type BITMAPONLY | BITMAP3;
+		explode arms type BITMAPONLY | BITMAP4;
+		explode head type BITMAPONLY | BITMAP5;
+		explode lfoot type BITMAPONLY | BITMAP1;
+		explode lleg type BITMAPONLY | BITMAP2;
+		explode lthigh type BITMAPONLY | BITMAP3;
+		explode pelvis type BITMAPONLY | BITMAP4;
+		explode rfoot type BITMAPONLY | BITMAP5;
+		explode rleg type BITMAPONLY | BITMAP1;
+		explode rthigh type BITMAPONLY | BITMAP2;
+		explode torso type BITMAPONLY | BITMAP3;
+		return (0);
+	}
+	if( severity <= 50 )
+	{
+		corpsetype = 2;
+		explode belly type BITMAPONLY | BITMAP1;
+		explode ground type FALL | BITMAP3;
+		explode arms type FALL | BITMAP4;
+		explode head type FALL | BITMAP5;
+		explode lfoot type FALL | BITMAP1;
+		explode lleg type FALL | BITMAP2;
+		explode lthigh type SHATTER | BITMAP3;
+		explode pelvis type FALL | BITMAP4;
+		explode rfoot type FALL | BITMAP5;
+		explode rleg type FALL | BITMAP1;
+		explode rthigh type SHATTER | BITMAP2;
+		explode torso type BITMAPONLY | BITMAP3;
+		return (0);
+	}
+	if( severity <= 99 )
+	{
+		corpsetype = 3;
+		explode belly type BITMAPONLY | BITMAP1;
+		explode ground type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+		explode arms type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+		explode head type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+		explode lfoot type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+		explode lleg type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+		explode lthigh type SHATTER | BITMAP3;
+		explode pelvis type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+		explode rfoot type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+		explode rleg type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+		explode rthigh type SHATTER | BITMAP2;
+		explode torso type BITMAPONLY | BITMAP3;
+		return (0);
+	}
+	corpsetype = 3;
+	explode belly type BITMAPONLY | BITMAP1;
+	explode ground type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+	explode arms type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+	explode head type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+	explode lfoot type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+	explode lleg type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode lthigh type SHATTER | EXPLODE_ON_HIT | BITMAP3;
+	explode pelvis type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+	explode rfoot type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+	explode rleg type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+	explode rthigh type SHATTER | EXPLODE_ON_HIT | BITMAP2;
+	explode torso type BITMAPONLY | BITMAP3;
+}

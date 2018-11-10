@@ -1916,7 +1916,7 @@
 	height=20;
 	blocking=1;
 	hitdensity=100;
-	metal=35;
+	metal=15;
 	damage=440;
 	reclaimable=1;
 	featurereclamate=smudge01;
