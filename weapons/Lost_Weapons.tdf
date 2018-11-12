@@ -3174,11 +3174,11 @@
 	tolerance=3000;
 	explosiongenerator=custom:ONESPARK;  //Noruas's FX added v8//
 	guidance=1;
-	beamdecay=0.5;
-	beamttl=1;
+	//beamdecay=0.5;
+	//beamttl=1;
 	[DAMAGE]
 	{
-		default=20;
+		default=17;
 	}
 }
 
@@ -3214,10 +3214,10 @@
 	tolerance=5000;
 	explosiongenerator=custom:ONESPARK;  //Noruas's FX added v8//
 	guidance=1;
-	beamdecay=0.5;
-	beamttl=1;
+	//beamdecay=0.5;
+	//beamttl=1;
 	[DAMAGE]
 	{
-		default=20;
+		default=17;
 	}
 }
