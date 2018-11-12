@@ -1,0 +1,20 @@
+This file consist of a list gadgeds and their status. This file will help update broken gadgets
+and allow others to contribute to this project.
+
+
+
+gaia_wildlife:
+	status: 	experimental
+	problems: 	build up order list 
+	fix: 		allow a maximum of orders for a unit
+	difficulty:	not hard
+	others:		add animal models and make more standard setup
+	priority:	0
+
+earth_crack:	
+	status: 	working
+	problems:	some fancy fx
+	fix:		add comet model, fx, explosion and non hitting ground comets
+	difficulty:	easy
+	others:		might need some less busy schedule (less comets)
+	priority:	0
