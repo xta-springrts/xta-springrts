@@ -17,20 +17,22 @@ end
 		Incomming comets might need to beavoided to prevend damage.
 
 		-parameters options:
-
+			- time_delay_comet
+			- duration_crack
+			- max_cracks
+			- max_comets
+			- max_radius_damage_comets
+			- max_damage_comets
+			- comet_rain_radius
 
 		# TODO
 		-further optimize ground hitting effects
-			-precalcualte the random numbers maybe?
+			-pre calcualte the random numbers maybe?
 		Implement mod options:
-			- maxCracks
-			- maxComets
-			- maxCometDamage
-			- maxCrackDamage
-			- crackInterval
-			- cometInterval
 			- middleCrack (only add cracks in middle)
 			- rename some constant
+			- add unit
+			- fix invisible CEG (probably because of dependence)
 --]]
 
 
@@ -71,14 +73,11 @@ local SpawnCEG					  	= Spring.SpawnCEG
 local images 					    = include("LuaRules/gadgets/img.lua")
 local images2 					  	= include("LuaRules/gadgets/img2.lua")
 local images3 					  	= include("LuaRules/gadgets/img3.lua")
-local crushCEG 					  	= "dirtballtrail"
-local crushCEG2					  	= "FLAKFLARE"
-local crushCEG3					  	= "Sparks"
-local metalcloud1				  	= "buttsmoke"
-local metalcloud2				  	= "smokeshell_medium"
-local eceg 					      	= "gplasmaballbloom"
-local mceg 					      	= "bplasmaballbloom"
+local COMET_FIRE				  	= "RedPlasmaComet"
+local COMET_HIT_GROUND				  	= "SMALL_NUKE_EXPLOSION_INIATE_COMET"
+local PUFFY						= "PUFFY_COMET"
 local crushsnd					  	= "sounds/battle/crush3.wav"
+
 
 local mapX 					      	= Game.mapX
 local mapY 					      	= Game.mapY
@@ -229,9 +228,9 @@ function emit(data)
 		-- emit fx on points
 		for key, value in pairs(fx[file][img]) do
 			for k, v in gmatch(key,"(%w+),(%w+)") do
-				if random() < 0.1 then
+				if random() < 0.05 then
 					local y = GetGroundHeight(k,v)
-					SpawnCEG(metalcloud2,tonumber(v)+x, y+10, tonumber(k)+z)
+					SpawnCEG(PUFFY,tonumber(v)+x, y+10, tonumber(k)+z) 
 					if random() < 0.1 then
 						PlaySoundFile (crushsnd, 2.0, x,y,z, 0,0,0,'battle')
 					end
@@ -263,6 +262,7 @@ function remove_crack(data)
 			end
 		end
 	end
+	emit(data)
 	SetHeightMapFunc(func)
 end
 
@@ -287,6 +287,7 @@ function create_crack(data)
 			end
 		end
 	end
+	emit(data)
 	SetHeightMapFunc(func)
 	--local xmid = x + math.floor(0.5*img[1]["x"])
 	--local zmid = z + math.floor(0.5*img[1]["z"])
@@ -352,8 +353,7 @@ end
 
 
 function emit_comit(comet)
-	SpawnCEG(eceg, comet.X, comet.Y, comet.Z)
-	SpawnCEG(metalcloud2,comet.X, comet.Y, comet.Z)
+	SpawnCEG(COMET_FIRE, comet.X, comet.Y, comet.Z)
 end
 
 
@@ -362,27 +362,8 @@ function emit_hit_ground(comet)
 	local x = comet.X
 	local y = comet.groundHeight
 	local z = comet.Z
-	-- optimize by getting random values in advange
-	for key, value in pairs(fx_comit) do
-		for k, v in string.gmatch(key,"(%w+),(%w+)") do
-			if random() < 0.2 then  -- if k+v%5 == 0  (same but faster?)
-				if random() < 0.5 then -- if k+v%2==0 (same)
-					SpawnCEG(metalcloud2,tonumber(v)+x+ random(0,100), y, tonumber(k)+z + random(0,100))
-					SpawnCEG(eceg,tonumber(v)+x+ random(0,100), y+10, tonumber(k)+z + random(0,100))
-					if random() < 0.05 then -- alternative -> if %k+v == 5 (SPEED UP?)
-						PlaySoundFile (crushsnd, 2.0,tonumber(v)+ x,y,tonumber(k)+z, 0,0,0,'battle')
-					end
-				else
-					SpawnCEG(metalcloud2,tonumber(v)+x -random(0,100), y, tonumber(k)+z - random(0,100))
-					SpawnCEG(eceg,tonumber(v)+x - random(0,100), y+10, tonumber(k)+z - random(0,100))
-					if random() < 0.05 then
-						PlaySoundFile (crushsnd, 2.0, tonumber(v)+x,y,tonumber(k)+z, 0,0,0,'battle')
-					end
-
-				end
-			end
-		end
-	end
+	SpawnCEG(COMET_HIT_GROUND,x, y, z)  
+	SpawnCEG(PUFFY,x, y, z)
 end
 
 
@@ -393,7 +374,10 @@ function add_comet(x,y)
 	local impact = random(0,20)
 	local height = GetGroundOrigHeight(X,Z)
 	local originalHeight = GetGroundOrigHeight(X,Z)
-	local explode = random(-1000, 1000)
+	local explode = random(500, 2000)
+	if random() < 0.5 then
+		explode = -explode
+	end
 	local comet = {explode = explode,
 		hit = false,
 		groundHeight = height,
@@ -415,9 +399,8 @@ function update_comet()
 		elseif v.groundHeight-v.Y < 0 then
 			emit_comit(v)
 			comets[i].Y = v.Y - 60
-			-- NOT TESTED
 			if comets[i].Y - comets[i].explode < 0 then
-				--end explode TODO
+				SpawnCEG(PUFFY,v.X, v.Y, v.Z)
 				table.remove(comets, i)
 			end
 		else
@@ -434,8 +417,8 @@ end
 function deform_ground(comet)
 	local x =floor(ast_size["x"]/2)
 	local z = floor(ast_size["z"]/2)
-	local xc = comet.X
-	local zc = comet.Z
+	local xc = comet.X - x
+	local zc = comet.Z - z
 	local func = function()
 		for key, value in pairs(ast_image) do
 			for k, v in gmatch(key,"(%w+),(%w+)") do

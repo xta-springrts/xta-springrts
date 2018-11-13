@@ -1,0 +1,279 @@
+[SMALL_NUKE_EXPLOSION_INIATE_COMET]
+{
+	[spikes_comets]
+	{
+		class=explspike;
+		[properties]
+		{
+			dir=-75 r150,-75 r150,-75 r150;
+			width=300;
+			length=1; //60;
+			alpha=0.75;
+			alphadecay=0.1333;
+			color=0.99, 0.88, 0.7;
+			alwaysvisible=1;
+
+		}
+		air=1;
+		water=1;
+		ground=1;
+  		count=25; 
+	}
+	usedefaultexplosions=1;
+	[G_blast_comets]//base explo// 
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+		sizeGrowth=0.14;
+		sizeMod=1.0;
+		pos=3 r-3, 1 r-2, 3 r-3;  
+		gravity=0, 0, 0;
+	
+		colorMap=1 0.25 0 0.01		0.01 0.01 0.01 0.01 	0 0 0 0.01	 0 0 0 0.01;
+
+		Texture=splash;
+		airdrag=0.87;
+		
+		particleLifeSpread=30; 
+		particleSpeedSpread=18;  
+		particleSizeSpread=10;   
+		
+		particleLife=60; //75;
+		numParticles=135; //150; 
+		particleSpeed=17; 
+		particleSize=32;
+		
+		
+		emitVector=0, 1, 0; 
+		emitRot=80;
+		emitRotSpread=5; 
+		directional=1; 
+		alwaysvisible=1;
+
+		}
+	air=1;
+	water=1;
+	ground=1;
+	count=1;
+	}
+	[G_blast2_comets]//half sphere explo// 
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+		sizeGrowth=0.14;
+		sizeMod=1.0;
+		pos=3 r-3, 1 r-2, 3 r-3;  
+		gravity=0, 0, 0;
+	
+		colorMap=1 0.25 0 0.01 		0.01 0.01 0.01 0.01 	0 0 0 0.01 	0 0 0 0.01;
+
+		Texture=splash;
+		airdrag=0.87;
+		
+		particleLifeSpread=30; 
+		particleSpeedSpread=15;  
+		particleSizeSpread=13;   
+		
+		particleLife=60; //75;
+		numParticles=150; //200; 
+		particleSpeed=17; 
+		particleSize=32;
+		
+		
+		emitVector=0, 1, 0; 
+		emitRot=0;
+		emitRotSpread=80; 
+		directional=1; 
+		alwaysvisible=1;
+
+		}
+	air=1;
+	water=1;
+	ground=1;
+	count=1;
+	}
+}
+
+
+[PUFFY_COMET]//In works of experiemtsn//script released under GPL by !Noruas! & Luke Cieron Fahy -XTA mod-
+{
+	usedefaultexplosions=0;
+	[PILLIAR_comets] 
+	{
+	    class=CExpGenSpawner;
+		[properties]
+		{
+		pos=5 r-10, 25, 5 r-10;  
+		delay=19;				  
+		explosionGenerator=custom:PILLILARTIMECOMET;
+		alwaysvisible=1;
+		}
+	air=0;
+	water=0;
+	ground=1;
+	count=1;
+	}
+	[PILLIAR2_comets] 
+	{
+	    class=CExpGenSpawner;
+		[properties]
+		{
+		pos=5 r-10, 0, 5 r-10;  
+		delay=15;				  
+		explosionGenerator=custom:PILLILARTIMECOMET;
+		alwaysvisible=1;
+		}
+	air=0;
+	water=1;
+	ground=1;
+	count=2;
+	}
+	[PILLIAR3_comets] 
+	{
+	    class=CExpGenSpawner;
+		[properties]
+		{
+		pos=5 r-10, -15 r5, 5 r-10;  
+		delay=15;				  
+		explosionGenerator=custom:PILLILARTIMECOMET;
+		alwaysvisible=1;
+		}
+	air=1;
+	water=0;
+	ground=1;
+	count=1;
+	}
+	[spikesofhell_comets]
+	{
+		class=explspike;
+		[properties]
+		{
+			dir=-15 r30,-15 r30,-15 r30;
+			width=40;
+			length=1; //60;
+			alpha=1;
+			alphadecay=0.05;
+			color=1.0, 0.8, 0.5;
+			alwaysvisible=1;
+
+		}
+		air=1;
+		water=1;
+		ground=1;
+  		count=15; 
+	}
+	[dirtsplash_comets]
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+			sizeGrowth=3;
+			sizeMod=1.0;
+			pos=0, 1, 0;
+			emitVector=0, 1, 0;
+			gravity=0, 0.125, 0;
+			colorMap=0.5 0.35 0.1 0.1  0.5 0.35 0.1 .01  0.1 0.1 0.1 .01	 0 0 0 0.01;
+			Texture=splash;
+			airdrag=0.8;
+			particleLife=37.0;
+			particleLifeSpread=5;
+			numParticles=5;
+			particleSpeed=0;
+			particleSpeedSpread=19;
+			particleSize=4.0;
+			particleSizeSpread=1;
+			emitRot=0;
+			emitRotSpread=25;
+			directional=1;
+			alwaysvisible=1;
+		}
+		air=0;
+		water=0;
+		ground=1;
+		count=1;
+	}
+}
+[PILLILARTIMECOMET]
+{
+	usedefaultexplosions=1;
+	[G_blast_comets]//base explo// 
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+		sizeGrowth=0.14;
+		sizeMod=1.0;
+		pos=3 r-3, 1 r-2, 3 r-3;  
+		gravity=0, 0.05, 0;
+	
+		colorMap=0.6 0.5 0.4 0.01 0.1 0.1 0.1 0.2 0.1 0.1 0.1 0.2 0 0 0 0.01;
+
+
+
+
+		Texture=smokesmall;
+		airdrag=0.5;
+		
+		particleLifeSpread=30; 
+		particleSpeedSpread=18;  
+		particleSizeSpread=10;   
+		
+		particleLife=220; //75;
+		numParticles=6; 
+		particleSpeed=17; 
+		particleSize=32;
+		
+		
+		emitVector=0, 1, 0; 
+		emitRot=80;
+		emitRotSpread=5; 
+		directional=1; 
+		alwaysvisible=1;
+		}
+	air=1;
+	water=1;
+	ground=1;
+	count=1;
+	}
+	[G_blast2_comets]//half sphere explo// 
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+		sizeGrowth=0.14;
+		sizeMod=1.0;
+		pos=3 r-3, 1 r-2, 3 r-3;  
+		gravity=0, 0.05, 0;
+	
+	
+		colorMap=0.6 0.5 0.4 0.01 0.1 0.1 0.1 0.2 0.1 0.1 0.1 0.2 0 0 0 0.01;
+  
+		Texture=smokesmall;
+		airdrag=0.5;
+		
+		particleLifeSpread=30; 
+		particleSpeedSpread=15;  
+		particleSizeSpread=13;   
+		
+		particleLife=220; //75;
+		numParticles=6; 
+		particleSpeed=17; 
+		particleSize=32;
+		
+		
+		emitVector=0, 1, 0; 
+		emitRot=0;
+		emitRotSpread=80; 
+		directional=1; 
+		alwaysvisible=1;
+		}
+	air=1;
+	water=1;
+	ground=1;
+	count=1;
+	}
+}
+
+
