@@ -324,7 +324,7 @@ local options = {
 		name   = 'earth_crack',
 		desc   = "When the gods are angry the earth rumbles!",
 		type   = "bool",
-		def    = true,
+		def    = false,
 		section= "xtagame",
 	},
 		{

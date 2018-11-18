@@ -27,12 +27,11 @@ end
 
 		# TODO
 		-further optimize ground hitting effects
-			-pre calcualte the random numbers maybe?
+			-pre calcucalate the random numbers maybe?
 		Implement mod options:
 			- middleCrack (only add cracks in middle)
 			- rename some constant
 			- add unit
-			- fix invisible CEG (probably because of dependence)
 --]]
 
 
@@ -69,6 +68,16 @@ local SetHeightMapFunc				= Spring.SetHeightMapFunc
 local PlaySoundFile					= Spring.PlaySoundFile
 local SetHeightMap 					= Spring.SetHeightMap
 local SpawnCEG					  	= Spring.SpawnCEG
+local GaiaTeamID  			= Spring.GetGaiaTeamID()
+local SetUnitNeutral		= Spring.SetUnitNeutral
+local SetUnitNoSelect		= Spring.SetUnitNoSelect
+local CreateUnit			= Spring.CreateUnit
+local DestroyUnit			= Spring.DestroyUnit
+local SetUnitAlwaysVisible	=Spring.SetUnitAlwaysVisible
+local SetUnitPosition 			= Spring.SetUnitPosition
+local SetUnitStealth			= Spring.SetUnitStealth
+local TransferUnit			= Spring.TransferUnit
+local GetTeamList 			= Spring.GetTeamList()
 
 local images 					    = include("LuaRules/gadgets/img.lua")
 local images2 					  	= include("LuaRules/gadgets/img2.lua")
@@ -80,17 +89,22 @@ local crushsnd					  	= "sounds/battle/crush3.wav"
 
 
 local mapX 					      	= Game.mapX
-local mapY 					      	= Game.mapY
+local mapZ 					      	= Game.mapY
 
 
 -- SETTINGS --
+local TeamIDsComets 					= GetTeamList  --maybe remove gaia from list?
+local randomUnits 					= true
 
+local unitNameComet 					= "arm_peewee"
+local FALL_SPEED					= 60  -- 60 every 5th timeframe
+local transfer	 					= true
 
-local timeDelay						= 301		-- 1 min??
+local timeDelayCrack						= 30 * 60 + 1 -- 1 min
 local timeDelayComet 				= tonumber(modOptions.time_delay_comet) * 30 * 60 or 30 * 60 + 1 -- 2.5 min
 local duration						= tonumber(modOptions.duration_crack) *30 *60 + 1 or 9000 +1 		-- 5 min crack duration
 local crackAreaX					= floor(mapX*512*1/10)								-- defines middle of the map
-local crackAreaZ					= floor(mapY*512*1/10)
+local crackAreaZ					= floor(mapZ*512*1/10)
 local middle 					  	= false												-- is middle only cracked?
 local maps 					    	= {													-- maps
 	["TheColdPlace"] 			        = true,
@@ -126,26 +140,27 @@ local fx = {
 
 for k,v in pairs(images) do
 	for key, value in pairs(v[2]) do
-		if value ~= 0 and random() < 0.01 then
+		if value ~= 0 and random() < 0.02 then
 			fx[1][k][key] = value
 		end
 	end
 end
 for k,v in pairs(images2) do
 	for key, value in pairs(v[2]) do
-		if value ~= 0 and random() < 0.01 then
+		if value ~= 0 and random() < 0.02 then
 			fx[2][k][key] = value
 		end
 	end
 end
 
 local comets						= {}
+local cometUnits 					= {}
 local ast_size 						= images3[1]
 local ast_image						= images3[2]
 local cometold          				= false
 local fx_comit 						= {}
 for k,v in pairs(ast_image) do
-	if v ~= 0 and random() < 0.01 then
+	if v ~= 0 and random() < 0.02 then
 		fx_comit[k] = v
 	end
 end
@@ -308,10 +323,10 @@ function add_crack()
 	end
 	if middle == false then
 		X = floor(random(0,(mapX*512-img[1]["x"])))
-		Z = floor(random(0, (mapY*512-img[1]["z"])))
+		Z = floor(random(0, (mapZ*512-img[1]["z"])))
 	else
 		X = floor(random(crackAreaX,  mapX*512-crackAreaX-img[1]["x"]))
-		Z = floor(random(crackAreaZ,  mapY*512-crackAreaX-img[1]["z"]))
+		Z = floor(random(crackAreaZ,  mapZ*512-crackAreaX-img[1]["z"]))
 	end
 	local crack = {file = file, duration = duration, image = image, X = X, Z = Z}
 	cracks[#cracks+1] = crack
@@ -325,16 +340,16 @@ end
 
 -- update cracks
 function update()
-
+		
 	-- remove
 	for i=#cracks,1,-1 do
 		local v = cracks[i]
-		if v.duration - timeDelay < 0 then
+		if v.duration - timeDelayCrack < 0 then
 			emit(v)
 			remove_cracks[#remove_cracks+1] = cracks[i]
 			remove(cracks, i)
 		else
-			cracks[i].duration = v.duration - 2*timeDelay
+			cracks[i].duration = v.duration - 2*timeDelayCrack
 		end
 	end
 
@@ -352,29 +367,28 @@ end
 -- COMET FUNCTIONS
 
 
-function emit_comit(comet)
-	SpawnCEG(COMET_FIRE, comet.X, comet.Y, comet.Z)
-end
-
-
-
-function emit_hit_ground(comet)
-	local x = comet.X
-	local y = comet.groundHeight
-	local z = comet.Z
-	SpawnCEG(COMET_HIT_GROUND,x, y, z)  
-	SpawnCEG(PUFFY,x, y, z)
-end
-
-
 function add_comet(x,y)
 	local X = random(x-cometRainRadius, x+cometRainRadius)
 	local Z = random(y-cometRainRadius, y+cometRainRadius)
+	
+	local map_x_out = X > mapX*512 or X < 0
+	local map_y_out = Z > mapZ*512 or Z < 0
+
+	if map_x_out or map_y_out then return nil end
+
 	local Y = random(3000, 6000)
 	local impact = random(0,20)
 	local height = GetGroundOrigHeight(X,Z)
 	local originalHeight = GetGroundOrigHeight(X,Z)
 	local explode = random(500, 2000)
+
+	local unitID = CreateUnit(unitNameComet, X, Y, Z, 0, GaiaTeamID)
+	SetUnitNeutral(unitID, true)
+	SetUnitStealth(unitID, true)
+	SetUnitNoSelect(unitID, true)
+	SetUnitAlwaysVisible(unitID, true)
+	cometUnits[unitID] = true --this could be replaced with some specific unit data later
+
 	if random() < 0.5 then
 		explode = -explode
 	end
@@ -384,27 +398,51 @@ function add_comet(x,y)
 		impact = impact,
 		X = X,
 		Y = Y,
-		Z = Z}
+		Z = Z,
+		unitID = unitID}
 	return comet
 end
 
 
--- update comet
 function update_comet()
 
 	for i=#comets,1,-1 do
+
 		local v = comets[i]
+		
+		--remove killed comets (by for instance a nuclear blast)
+		if GetUnitDefID(v.unitID) == nil then
+			table.remove(comets, i)
+			cometUnits[v.unitID] = nil
+ 			return nil
+		end
+
 		if v.hit == true then
 			table.remove(comets, i)
+			cometUnits[v.unitID] = nil
+			if transfer == true then
+				TransferUnit(v.unitID, random(0,#TeamIDsComets))	
+			else			
+				DestroyUnit(v.unitID)
+			end
+			
 		elseif v.groundHeight-v.Y < 0 then
-			emit_comit(v)
-			comets[i].Y = v.Y - 60
+			SpawnCEG(COMET_FIRE, v.X, v.Y, v.Z)
+			SetUnitPosition(v.X, v.z, v.Y)
+
+
+			Spring.SetUnitVelocity(v.unitID, 0, 0, 0)
+			comets[i].Y = v.Y - FALL_SPEED
+
 			if comets[i].Y - comets[i].explode < 0 then
 				SpawnCEG(PUFFY,v.X, v.Y, v.Z)
 				table.remove(comets, i)
+				cometUnits[v.unitID] = nil
+				DestroyUnit(v.unitID)
 			end
 		else
-			emit_hit_ground(v)
+			SpawnCEG(COMET_HIT_GROUND,v.X, v.groundHeight, v.Z)  
+			SpawnCEG(PUFFY,v.X, v.groundHeight, v.Z)			
 			deform_ground(v)
 			damage_near_units(v.X,v.Z, damage_radius*1)
 			comets[i].hit = true
@@ -422,7 +460,7 @@ function deform_ground(comet)
 	local func = function()
 		for key, value in pairs(ast_image) do
 			for k, v in gmatch(key,"(%w+),(%w+)") do
-				local height = GetGroundOrigHeight(v+xc,k+zc) --THIS MIGHT BE EXPENNSIVE (but cant consider flat ground)
+				local height = GetGroundOrigHeight(v+xc,k+zc) 
 				if value ~= 0 then
 					SetHeightMap(tonumber(v)+xc,tonumber(k)+zc, height + value -21)
 				end
@@ -440,7 +478,7 @@ function gadget:GameFrame(f)
 
 	-- RANDOMIZE --
 
-	if (f%randomize_number_of_cracks*timeDelay ==0) then
+	if (f%randomize_number_of_cracks*timeDelayCrack ==0) then
 		number_of_cracks = random(0, max_cracks)
 	end
 
@@ -461,14 +499,33 @@ function gadget:GameFrame(f)
 			if f%timeDelayComet == 0 then
 
 				if not (number_of_comets==0) then
-					Echo("WARNING observatory station detects", number_of_comets,"incoming meteorites!")
+					
+					Echo("WARNING observatory station detects ".. tostring(number_of_comets) .. " incoming meteorites!")
+					
+					if randomUnits == true then
+						local units = Spring.GetAllUnits()
+						local can_move = {}
+						for index, unitID in pairs(units) do
+							move = UnitDefs[GetUnitDefID(unitID)].canMove
+							is_not_com = GetUnitDefID(unitID) ~= 44
+							if move and is_not_com then
+								table.insert(can_move, GetUnitDefID(unitID))
+							end
+						end
+
+						if #can_move > 0 then
+							unitNameComet = UnitDefs[can_move[random(1,#can_move+1)]].name
+						end
+
+					end						
 
 					--make some comets
-					local x = math.floor(random(0,  mapX*512-ast_size["x"]))
-					local z = math.floor(random(0,  mapY*512-ast_size["z"]))
+					local x = math.floor(random(0,  mapX*512))
+					local z = math.floor(random(0,  mapZ*512))
 
 					for i=1,number_of_comets do
 						comets[#comets+1] = add_comet(x,z)
+						
 					end
 
 				end
@@ -481,7 +538,7 @@ function gadget:GameFrame(f)
 
 	-- CRACK PART
 
-	if (f%timeDelay == 0) then
+	if (f%timeDelayCrack == 0) then
 
 		if (f%2 ==0) then
 
