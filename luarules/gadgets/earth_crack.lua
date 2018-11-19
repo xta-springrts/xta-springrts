@@ -31,7 +31,6 @@ end
 		Implement mod options:
 			- middleCrack (only add cracks in middle)
 			- rename some constant
-			- add unit
 --]]
 
 
@@ -93,31 +92,47 @@ local mapZ 					      	= Game.mapY
 
 
 -- SETTINGS --
-local TeamIDsComets 					= GetTeamList  --maybe remove gaia from list?
-local randomUnits 					= true
 
+local moving = {
+	["kbotsf2"] 	= true, 
+	["kbotsf3"] 	= true,					
+	["kbotss2"] 	= true,						
+	["kbotuw3"] 	= true,						-- gimp, spiders, moved land pelican to this
+	--["kbotds2"] 	= true,	 					-- commanders
+	["tankbh3"] 	= true,	 					
+	["tankdh3"] 	= true,	 					-- beaver, crab, triton, crock, garpike, muskrat, zulu
+	["tanksh2"] 	= true,	 					
+	["tanksh2"] 	= true,	 					
+	["tanksh4"] 	= true,	 					
+	["tankdtcrush"] = true,	 					-- Bulldog/Reaper/Goliath can crush DT's
+	["spid3"] 	= true,						
+	["krogoth"] 	= true,						
+	["crawlbomb"] 	= true,						-- crawling bombs
+	["tankdh4"] 	= true,						-- beaver, crab, triton, crock, garpike, muskrat, zulu -- land
+	["hover1"] 	= true,
+	["hover2"]	= true,
+	["hover3"]	= true,
+	["hover4"]	= true,
+	["hover9"]	= true,
+	["hover10"]	= true,	
+}
+
+local TeamIDsComets 					= {} 
+for _,teamID in pairs(GetTeamList) do
+	if GaiaTeamID ~= teamID then
+		table.insert(TeamIDsComets, teamID) 
+	end
+end
+local randomUnits 					= true
 local unitNameComet 					= "arm_peewee"
 local FALL_SPEED					= 60  -- 60 every 5th timeframe
 local transfer	 					= true
-
 local timeDelayCrack						= 30 * 60 + 1 -- 1 min
 local timeDelayComet 				= tonumber(modOptions.time_delay_comet) * 30 * 60 or 30 * 60 + 1 -- 2.5 min
 local duration						= tonumber(modOptions.duration_crack) *30 *60 + 1 or 9000 +1 		-- 5 min crack duration
-local crackAreaX					= floor(mapX*512*1/10)								-- defines middle of the map
+local crackAreaX					= floor(mapX*512*1/10)								-- defines middle 
 local crackAreaZ					= floor(mapZ*512*1/10)
-local middle 					  	= false												-- is middle only cracked?
-local maps 					    	= {													-- maps
-	["TheColdPlace"] 			        = true,
-	["The Cold Place Remake V3c"] 		= true,
-	["The Cold Place Remake"] 		    = true,
-	["Geyser_Plains_TNM04-V3"] 		    = true,
-	["hotstepper_lm"] 			        = true,
-	["DeltaSiegeDry"] 			        = true,
-	["small_supreme_battlefield_v2"] 	= true,
-	["FolsomDamFinal"] 			        = true,
-	["Tabula v2"] 				        = true,
-	["Small Supreme Battlefield V2"]	= true
-}
+local middle 					  	= false					-- is middle only cracked?
 local cracks						= {}
 local remove_cracks					= {}
 local add_cracks					= {}
@@ -177,11 +192,7 @@ function gadget:Initialize()
 	end
 
 	Echo("earth_crack.lua: gadget:Initialize() Game.mapName=" .. Game.mapName)
-
-	--if (maps[Game.mapName] == nil or maps[Game.mapName] == maps[Game.mapName] == false) then
-	--  Echo("no earth_crack setup for this map found.")
-	--  gadgetHandler:RemoveGadget(self)
-	--else
+	DisableMapDamage=1
 	Echo("Seismic activity predicted in forecast models, be aware!")
 	Echo("Good afternoon the weather predicts meteor showers, have a nice day!")
 	--end
@@ -356,7 +367,6 @@ function update()
 	-- add
 	if #add_cracks > 0 then
 		for k,v in pairs(add_cracks) do
-			-- todo add crack
 			create_crack(v)
 		end
 		add_cracks = {}
@@ -381,13 +391,7 @@ function add_comet(x,y)
 	local height = GetGroundOrigHeight(X,Z)
 	local originalHeight = GetGroundOrigHeight(X,Z)
 	local explode = random(500, 2000)
-
-	local unitID = CreateUnit(unitNameComet, X, Y, Z, 0, GaiaTeamID)
-	SetUnitNeutral(unitID, true)
-	SetUnitStealth(unitID, true)
-	SetUnitNoSelect(unitID, true)
-	SetUnitAlwaysVisible(unitID, true)
-	cometUnits[unitID] = true --this could be replaced with some specific unit data later
+	local unitName = unitNameComet
 
 	if random() < 0.5 then
 		explode = -explode
@@ -399,7 +403,7 @@ function add_comet(x,y)
 		X = X,
 		Y = Y,
 		Z = Z,
-		unitID = unitID}
+		unitName = unitName}
 	return comet
 end
 
@@ -410,35 +414,26 @@ function update_comet()
 
 		local v = comets[i]
 		
-		--remove killed comets (by for instance a nuclear blast)
-		if GetUnitDefID(v.unitID) == nil then
-			table.remove(comets, i)
-			cometUnits[v.unitID] = nil
- 			return nil
-		end
-
 		if v.hit == true then
-			table.remove(comets, i)
-			cometUnits[v.unitID] = nil
-			if transfer == true then
-				TransferUnit(v.unitID, random(0,#TeamIDsComets))	
-			else			
-				DestroyUnit(v.unitID)
-			end
 			
+			local height = GetGroundOrigHeight(v.X,v.Z)
+			local team = random(0,#TeamIDsComets-1)
+			local unitID = CreateUnit(v.unitName, v.X, height, v.Z, 0, team)
+			if transfer ~= true then
+				DestroyUnit(unitID)
+			end
+			table.remove(comets, i)
+
 		elseif v.groundHeight-v.Y < 0 then
 			SpawnCEG(COMET_FIRE, v.X, v.Y, v.Z)
-			SetUnitPosition(v.X, v.z, v.Y)
-
-
-			Spring.SetUnitVelocity(v.unitID, 0, 0, 0)
 			comets[i].Y = v.Y - FALL_SPEED
 
 			if comets[i].Y - comets[i].explode < 0 then
 				SpawnCEG(PUFFY,v.X, v.Y, v.Z)
+				local team = random(0,#TeamIDsComets-1)
+				local unitID = CreateUnit(v.unitName, v.X, v.Y, v.Z, 0, team)
 				table.remove(comets, i)
-				cometUnits[v.unitID] = nil
-				DestroyUnit(v.unitID)
+				DestroyUnit(unitID)
 			end
 		else
 			SpawnCEG(COMET_HIT_GROUND,v.X, v.groundHeight, v.Z)  
@@ -451,6 +446,22 @@ function update_comet()
 
 end
 
+
+function getUnitName()
+	if randomUnits == true then
+		local units = Spring.GetAllUnits()
+		local can_move = {}
+		for index, unitID in pairs(units) do
+			does_move = moving[tostring(UnitDefs[GetUnitDefID(unitID)].moveDef.name)] ~= nil
+			if does_move == true then 
+				table.insert(can_move, GetUnitDefID(unitID))
+			end
+		end
+		if #can_move > 0 then
+			unitNameComet = UnitDefs[can_move[random(1,#can_move)]].name
+		end
+	end	
+end
 
 function deform_ground(comet)
 	local x =floor(ast_size["x"]/2)
@@ -469,6 +480,7 @@ function deform_ground(comet)
 	end
 	SetHeightMapFunc(func)
 end
+
 
 
 -- LOOP --
@@ -502,22 +514,8 @@ function gadget:GameFrame(f)
 					
 					Echo("WARNING observatory station detects ".. tostring(number_of_comets) .. " incoming meteorites!")
 					
-					if randomUnits == true then
-						local units = Spring.GetAllUnits()
-						local can_move = {}
-						for index, unitID in pairs(units) do
-							move = UnitDefs[GetUnitDefID(unitID)].canMove
-							is_not_com = GetUnitDefID(unitID) ~= 44
-							if move and is_not_com then
-								table.insert(can_move, GetUnitDefID(unitID))
-							end
-						end
-
-						if #can_move > 0 then
-							unitNameComet = UnitDefs[can_move[random(1,#can_move+1)]].name
-						end
-
-					end						
+					-- set new unitname for units from dropping comet
+					getUnitName()
 
 					--make some comets
 					local x = math.floor(random(0,  mapX*512))
