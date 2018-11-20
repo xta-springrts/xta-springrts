@@ -51,15 +51,15 @@ function widget:Update()
 		end
 		local x, y, z = Spring.GetUnitPosition(unitList[1])
 		local camState = Spring.GetCameraState()
-		local currentHeight = camState["height"]
+		local currentHeight = camState["dist"]
 		camState["px"] = x
 		camState["py"] = y
-		camState["pz"] = z
-		camState["height"] = ZOOMHEIGHT
+		camState["pz"] = z	
+		camState["dist"] = ZOOMHEIGHT
 		if currentHeight > ZOOMHEIGHT then
 			Spring.SetCameraState(camState,0.5)
 		end
-		
+
 		center = false
 	end
 	if select and t > 0 then
