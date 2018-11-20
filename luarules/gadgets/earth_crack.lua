@@ -91,6 +91,7 @@ local mapX 					      	= Game.mapX
 local mapZ 					      	= Game.mapY
 
 
+
 -- SETTINGS --
 
 local moving = {
@@ -190,9 +191,8 @@ function gadget:Initialize()
 		Echo("earth_crack.lua: turned off via modoptions")
 		gadgetHandler:RemoveGadget(self)
 	end
-
 	Echo("earth_crack.lua: gadget:Initialize() Game.mapName=" .. Game.mapName)
-	DisableMapDamage=1
+	DisableMapDamage=0
 	Echo("Seismic activity predicted in forecast models, be aware!")
 	Echo("Good afternoon the weather predicts meteor showers, have a nice day!")
 	--end
@@ -227,15 +227,17 @@ function damage_near_units(x,z, radius)
 
 	if not (near_features == nil) then
 		for i in pairs(near_features) do
-			xf, yf, zf = GetFeaturePosition(near_features[i])
-			local multiplier = 1-sqrt( (x-xf)*(x-xf) + (z-zf)*(z-zf) )/radius
-			local damage = damage_value*multiplier
-			local feature_health = GetFeatureHealth(near_features[i])
-			if (math.abs(yf - y) < radius) then
-				if feature_health - damage < 0 then
-					DestroyFeature(near_features[i])
-				else
-					SetFeatureHealth(near_features[i],feature_health-damage)
+			if not FeatureDefs[Spring.GetFeatureDefID(near_features[i])].geoThermal then  
+				xf, yf, zf = GetFeaturePosition(near_features[i])
+				local multiplier = 1-sqrt( (x-xf)*(x-xf) + (z-zf)*(z-zf) )/radius
+				local damage = damage_value*multiplier
+				local feature_health = GetFeatureHealth(near_features[i])
+				if (math.abs(yf - y) < radius) then
+					if feature_health - damage < 0 then
+						DestroyFeature(near_features[i])
+					else
+						SetFeatureHealth(near_features[i],feature_health-damage)
+					end
 				end
 			end
 		end
