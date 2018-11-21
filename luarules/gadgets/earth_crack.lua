@@ -16,6 +16,8 @@ end
 		After a random period parts of the map will experience crack's in surface.
 		Incomming comets might need to beavoided to prevend damage.
 
+		Also the gadget specifies some units that do damage to other units (like radiation of powerp
+
 		-parameters options:
 			- time_delay_comet
 			- duration_crack
@@ -26,12 +28,17 @@ end
 			- comet_rain_radius
 
 		# TODO
-		-further optimize ground hitting effects
-			-pre calcucalate the random numbers maybe?
-		Implement mod options:
+		
+	 
+		1. Implement mod options:
 			- middleCrack (only add cracks in middle)
-			- rename some constant
---]]
+			- teamID of comets (only gaia, random, only players)
+		2. Add map damage area fx 
+		3. Draw texture on the ground for comets and map damage area
+		4. Add more units that do damage to neighborhood
+		5. Maybe split up map damage gadget to keep stuff clean? 
+
+--]]	
 
 
 -- synced only
@@ -46,6 +53,7 @@ end
 local floor 						= math.floor
 local random					    = math.random
 local sqrt							= math.sqrt
+local max						= math.max
 
 local gmatch						= string.gmatch
 local remove						= table.remove
@@ -57,8 +65,10 @@ local GetFeatureHealth				= Spring.GetFeatureHealth
 local GetFeaturePosition			= Spring.GetFeaturePosition
 local AddUnitDamage 				= Spring.AddUnitDamage
 local GetFeaturesInSphere			= Spring.GetFeaturesInSphere
+local GetUnitsInSphere				= Spring.GetUnitsInSphere
 local GetUnitPosition				= Spring.GetUnitPosition
 local GetUnitDefID					= Spring.GetUnitDefID
+local GetFeatureDefID				= Spring.GetFeatureDefID
 local Echo					      	= Spring.Echo
 local GetUnitsInCylinder			= Spring.GetUnitsInCylinder
 local GetGroundHeight				= Spring.GetGroundHeight
@@ -77,6 +87,9 @@ local SetUnitPosition 			= Spring.SetUnitPosition
 local SetUnitStealth			= Spring.SetUnitStealth
 local TransferUnit			= Spring.TransferUnit
 local GetTeamList 			= Spring.GetTeamList()
+local GetAllUnits 			= Spring.GetAllUnits
+local ValidFeatureID 			= Spring.ValidFeatureID
+local ValidUnitID 			= Spring.ValidUnitID
 
 local images 					    = include("LuaRules/gadgets/img.lua")
 local images2 					  	= include("LuaRules/gadgets/img2.lua")
@@ -124,12 +137,16 @@ for _,teamID in pairs(GetTeamList) do
 		table.insert(TeamIDsComets, teamID) 
 	end
 end
+local damageToUnits 					= {}
+local damageToFeatures 					= {}
+local unitsDoDamage					= {}
 local randomUnits 					= true
 local unitNameComet 					= "arm_peewee"
 local FALL_SPEED					= 60  -- 60 every 5th timeframe
 local transfer	 					= true
-local timeDelayCrack						= 30 * 60 + 1 -- 1 min
-local timeDelayComet 				= tonumber(modOptions.time_delay_comet) * 30 * 60 or 30 * 60 + 1 -- 2.5 min
+local timeDelayCrack					= 30 * 60 + 1 -- 1 min
+local timeDelayComet 					= tonumber(modOptions.time_delay_comet) * 30 * 60 or 30 * 60 + 1 -- 2.5 min
+local timeDelayDamage					= 61 -- every second (either update or do damage)
 local duration						= tonumber(modOptions.duration_crack) *30 *60 + 1 or 9000 +1 		-- 5 min crack duration
 local crackAreaX					= floor(mapX*512*1/10)								-- defines middle 
 local crackAreaZ					= floor(mapZ*512*1/10)
@@ -146,25 +163,47 @@ local randomize_number_of_comets	= 100 -- how often number of comets in rain are
 local cometRainRadius 				= tonumber(modOptions.comet_rain_radius) or 500 -- comet spreading
 
 
--- READ IN IMAGES
+-- DAMAGE PARAMETERS
+
+local damageValues = {
+	["arm_peewee"] 		= {["value"] = 200, ["radius"] = 500, ["dDamage"] = 1, ["dRadius"] = 1, ["duration"] = 300, ["self"] = 20},
+  	["some_other_unit"] 	= {["value"] = 20, ["radius"] = 500, ["dDamage"] = 1, ["dRadius"] = 1, ["duration"] = 300, ["self"] = 0.1}
+}
+
+
+-- READ IN IMAGES AN AUDIO
 
 
 local fx = {
 	[1] = {[1]={}, [2]={}, [3]={}, [4]={}, [5]={}},
 	[2] = {[1]={}, [2]={}, [3]={}, [4]={}, [5]={}}
 }
+local audio = {
+	[1] = {[1]={}, [2]={}, [3]={}, [4]={}, [5]={}},
+	[2] = {[1]={}, [2]={}, [3]={}, [4]={}, [5]={}}
+}
 
 for k,v in pairs(images) do
 	for key, value in pairs(v[2]) do
-		if value ~= 0 and random() < 0.02 then
+		if value ~= 0 and random() < 0.02*0.01 then
 			fx[1][k][key] = value
+			if random() < 0.01 then
+				audio[1][k][key] = true
+			else
+				audio[1][k][key] = false
+			end
 		end
 	end
 end
 for k,v in pairs(images2) do
 	for key, value in pairs(v[2]) do
-		if value ~= 0 and random() < 0.02 then
+		if value ~= 0 and random() < 0.02*0.01 then
 			fx[2][k][key] = value
+			if random() < 0.01 then
+				audio[2][k][key] = true
+			else
+				audio[2][k][key] = false
+			end
 		end
 	end
 end
@@ -205,9 +244,9 @@ end
 
 function damage_near_units(x,z, radius)
 
-	near_units = GetUnitsInCylinder(x,z, radius)
+	local near_units = GetUnitsInCylinder(x,z, radius)
 	local y = GetGroundHeight(x,z)
-	near_features = GetFeaturesInSphere(x,y,z, radius)
+	local near_features = GetFeaturesInSphere(x,y,z, radius)
 
 	if (near_units == nil) and (near== nil) then return nil end
 
@@ -227,8 +266,8 @@ function damage_near_units(x,z, radius)
 
 	if not (near_features == nil) then
 		for i in pairs(near_features) do
-			if not FeatureDefs[Spring.GetFeatureDefID(near_features[i])].geoThermal then  
-				xf, yf, zf = GetFeaturePosition(near_features[i])
+			if not FeatureDefs[GetFeatureDefID(near_features[i])].geoThermal then  
+				local xf, yf, zf = GetFeaturePosition(near_features[i])
 				local multiplier = 1-sqrt( (x-xf)*(x-xf) + (z-zf)*(z-zf) )/radius
 				local damage = damage_value*multiplier
 				local feature_health = GetFeatureHealth(near_features[i])
@@ -256,12 +295,10 @@ function emit(data)
 		-- emit fx on points
 		for key, value in pairs(fx[file][img]) do
 			for k, v in gmatch(key,"(%w+),(%w+)") do
-				if random() < 0.05 then
-					local y = GetGroundHeight(k,v)
-					SpawnCEG(PUFFY,tonumber(v)+x, y+10, tonumber(k)+z) 
-					if random() < 0.1 then
-						PlaySoundFile (crushsnd, 2.0, x,y,z, 0,0,0,'battle')
-					end
+				local y = GetGroundHeight(k,v)
+				SpawnCEG(PUFFY,tonumber(v)+x, y+10, tonumber(k)+z) 
+				if audio[file][img][key] == true then 
+					PlaySoundFile (crushsnd, 2.0, x,y,z, 0,0,0,'battle')
 				end
 			end
 		end
@@ -307,7 +344,7 @@ function create_crack(data)
 	local z = data.Z
 	local func = function()
 		for key, value in pairs(img[2]) do
-			for k, v in string.gmatch(key,"(%w+),(%w+)") do
+			for k, v in gmatch(key,"(%w+),(%w+)") do
 				local height = GetGroundOrigHeight(v+x,k+z)
 				if value ~= 0 then
 					SetHeightMap(tonumber(v)+x,tonumber(k)+z, height - value)
@@ -451,7 +488,7 @@ end
 
 function getUnitName()
 	if randomUnits == true then
-		local units = Spring.GetAllUnits()
+		local units = GetAllUnits()
 		local can_move = {}
 		for index, unitID in pairs(units) do
 			does_move = moving[tostring(UnitDefs[GetUnitDefID(unitID)].moveDef.name)] ~= nil
@@ -483,6 +520,98 @@ function deform_ground(comet)
 	SetHeightMapFunc(func)
 end
 
+
+-- DAMAGE FUNCTIONS
+
+
+function update_damage()
+	
+	-- updating units causing damage
+	for k,v in pairs(unitsDoDamage) do
+		if ValidUnitID(k) == true then
+			unitsDoDamage[k].damage = v.damage + damageValues[v.unitName].dDamage	
+			unitsDoDamage[k].radius = v.radius + damageValues[v.unitName].dRadius
+			local x, y, z = GetUnitPosition(k)
+			unitsDoDamage[k].x = x
+			unitsDoDamage[k].y = y
+			unitsDoDamage[k].z = z
+		elseif v.duration > 0 then
+			unitsDoDamage[k].damage = v.damage - damageValues[v.unitName].dDamage
+			unitsDoDamage[k].radius = v.radius - damageValues[v.unitName].dRadius
+			local effectiveRadius = v.radius - damageValues[v.unitName].dRadius
+			local effectiveDamage = v.damage - damageValues[v.unitName].dDamage
+			unitsDoDamage[k].duration = v.duration - timeDelayDamage*2 
+			if  effectiveRadius < 0 or effectiveDamage < 0 then
+				unitsDoDamage[k] = nil
+			end
+			 
+		else
+			unitsDoDamage[k] = nil
+		end
+	end	
+	
+
+	-- update damaged to units/features
+	for k,v in pairs(unitsDoDamage) do
+		local near_units = GetUnitsInSphere(v.x,v.y,v.z, v.radius)
+		local near_features = GetFeaturesInSphere(v.x,v.y,v.z, v.radius)
+
+		if not (near_units == nil) then
+			for i in pairs(near_units) do
+				local unitID = near_units[i]
+				local xu,yu,zu = GetUnitPosition(unitID)
+				local multiplier = 1-sqrt( (v.x-xu)*(v.x-xu) + (v.y-yu)*(v.y-yu) + (v.z-zu)*(v.z-zu) )/v.radius
+				local damage = damageToUnits[unitID] or 0
+				if unitsDoDamage[unitID] == nil then
+					damageToUnits[unitID] = max(v.damage *multiplier,damage)
+				else 
+					damageToUnits[unitID] = max(damageValues[v.unitName].self,damage)
+					if k ~= unitID then
+						damageToUnits[unitID] = max(damageToUnits[unitID],v.damage *multiplier)
+					end 
+				end
+			end
+		end
+		if not (near_features == nil) then
+			for i in pairs(near_features) do
+				if not FeatureDefs[GetFeatureDefID(near_features[i])].geoThermal then 
+					local featureID = near_features[i]
+					local unitDefID = GetUnitDefID(featureID)
+					local xf,yf,zf = GetFeaturePosition(featureID)
+					local multiplier = 1-sqrt( (v.x-xf)*(v.x-xf) + (v.y-yf)*(v.y-yf) + (v.z-zf)*(v.z-zf) )/v.radius
+					local damage = damageToFeatures[featureID] or 0
+					damageToFeatures[featureID] = max(v.damage*multiplier,damage)
+					-- remove also grass?
+					-- show fx?
+				end
+			end
+		end
+		
+	end
+	
+end
+
+
+function apply_damage()
+	for k,v in pairs(damageToUnits) do
+		if ValidUnitID(k) == true then
+			AddUnitDamage(k, v)
+			damageToUnits[k] = 0
+		else
+			damageToUnits[k] = nil
+		end			
+	end
+	for k,v in pairs(damageToFeatures) do
+		-- test if unit exists
+		if ValidFeatureID(k) then
+			local feature_health = GetFeatureHealth(k)
+			SetFeatureHealth(k,feature_health-v)
+			damageToFeatures[k] = 0
+		else
+			damageToFeatures[k] = nil
+		end			
+	end
+end
 
 
 -- LOOP --
@@ -520,8 +649,8 @@ function gadget:GameFrame(f)
 					getUnitName()
 
 					--make some comets
-					local x = math.floor(random(0,  mapX*512))
-					local z = math.floor(random(0,  mapZ*512))
+					local x = floor(random(0,  mapX*512))
+					local z = floor(random(0,  mapZ*512))
 
 					for i=1,number_of_comets do
 						comets[#comets+1] = add_comet(x,z)
@@ -565,6 +694,48 @@ function gadget:GameFrame(f)
 			update()
 		end
 	end
+
+
+
+	-- MAP DAMAGE TO UNITS/FEATURES PART
+
+	if (f%timeDelayDamage == 0) then
+
+		if (f%2 ==0) then
+			
+			update_damage()
+
+		else
+
+			apply_damage()
+
+		end
+	end
+
 end
+
+
+-- ADDITIONAL FUNCTIONS
+
+
+function gadget:UnitCreated(unitID, unitDefID, unitTeam, builderID)
+	local name = UnitDefs[unitDefID].name
+	if damageValues[name] ~= nil then
+		local damage = damageValues[name].value
+		local radius = damageValues[name].radius
+		local x, y, z = GetUnitPosition(unitID)
+		local duration = damageValues[name].duration
+		unitsDoDamage[unitID] = {
+			["damage"] = damage,
+			["radius"] = radius,
+			["unitName"] = name,
+			["x"] = x,
+			["y"] = y,
+			["z"] = z,
+			["duration"] = duration
+		}
+	end 
+end 
+
 
 
