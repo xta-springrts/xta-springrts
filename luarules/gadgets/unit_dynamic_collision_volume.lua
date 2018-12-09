@@ -193,7 +193,7 @@ if (gadgetHandler:IsSyncedCode()) then
 
 	-- Same as for 3DO units, but for features
 	function gadget:FeatureCreated(featureID, allyTeam)
-		local featureModel = spring101 and 	FeatureDefs[Spring.GetFeatureDefID(featureID)].modelpath:lower() or 
+		local featureModel = spring101 and 	FeatureDefs[Spring.GetFeatureDefID(featureID)].model.path:lower() or 
 											FeatureDefs[Spring.GetFeatureDefID(featureID)].modelname:lower()
 		
 		if featureModel == "" then return end	--geovents or engine trees have no models		

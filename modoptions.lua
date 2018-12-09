@@ -409,6 +409,40 @@ local options = {
 --		type   = "bool",
 --		def    = true,
 --      },
+
+	{
+		key    = "earthquake",
+		name   = 'earthquake',
+		desc   = "The earth splits open!",
+		type   = "bool",
+		def    = false,
+		section= "xtagame",
+	},
+	{
+		key    = "comets",
+		name   = 'comets',
+		desc   = "Comets fall from the sky!",
+		type   = "bool",
+		def    = false,
+		section= "xtagame",
+	},
+	{
+		key    = "radiation",
+		name   = 'radiation',
+		desc   = "Units or terrein can do damage by radiation!",
+		type   = "bool",
+		def    = false,
+		section= "xtagame",
+	},
+	--{
+	--	key    = "tornado",
+	--	name   = 'tornado',
+	--	desc   = "Tornedo's cross the map!",
+	--	type   = "bool",
+	--	def    = false,
+	--	section= "xtagame",
+	--},
+
 	{
 		key    = "max_cracks",
 		name   = "maximum cracks on the map at a given time",

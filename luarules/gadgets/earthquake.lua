@@ -1,6 +1,6 @@
 function gadget:GetInfo()
 	return {
-		name      	= "earth_crack",
+		name      	= "earthquake",
 		desc      	= "When the gods get angry",
 		author    	= "res",
 		date      	= "8-10-2018",
@@ -11,12 +11,10 @@ function gadget:GetInfo()
 end
 
 
---[[
+	--[[
 
 		After a random period parts of the map will experience crack's in surface.
-		Incomming comets might need to beavoided to prevend damage.
-
-		Also the gadget specifies some units that do damage to other units (like radiation of powerp
+			-optional is a do damage parameter
 
 		-parameters options:
 			- time_delay_comet
@@ -28,7 +26,8 @@ end
 			- comet_rain_radius
 
 		# TODO
-		
+		1. update modoptions
+		1. MAKE THIS FILE CRACK ONLY
 	 
 		1. Implement mod options:
 			- middleCrack (only add cracks in middle)
@@ -38,7 +37,7 @@ end
 		4. Add more units that do damage to neighborhood
 		5. Maybe split up map damage gadget to keep stuff clean? 
 
---]]	
+	--]]	
 
 
 -- synced only
@@ -50,15 +49,15 @@ end
 -- LOCALS --
 
 
-local floor 						= math.floor
-local random					    = math.random
-local sqrt							= math.sqrt
-local max						= math.max
+local floor 					= math.floor
+local random					= math.random
+local sqrt					= math.sqrt
+local max					= math.max
 
-local gmatch						= string.gmatch
-local remove						= table.remove
+local gmatch					= string.gmatch
+local remove					= table.remove
 
-local modOptions 					= Spring.GetModOptions()
+local modOptions 				= Spring.GetModOptions()
 local SetFeatureHealth				= Spring.SetFeatureHealth
 local DestroyFeature				= Spring.DestroyFeature
 local GetFeatureHealth				= Spring.GetFeatureHealth
@@ -74,15 +73,15 @@ local GetUnitsInCylinder			= Spring.GetUnitsInCylinder
 local GetGroundHeight				= Spring.GetGroundHeight
 local GetGroundOrigHeight			= Spring.GetGroundOrigHeight
 local SetHeightMapFunc				= Spring.SetHeightMapFunc
-local PlaySoundFile					= Spring.PlaySoundFile
-local SetHeightMap 					= Spring.SetHeightMap
-local SpawnCEG					  	= Spring.SpawnCEG
-local GaiaTeamID  			= Spring.GetGaiaTeamID()
-local SetUnitNeutral		= Spring.SetUnitNeutral
-local SetUnitNoSelect		= Spring.SetUnitNoSelect
+local PlaySoundFile				= Spring.PlaySoundFile
+local SetHeightMap 				= Spring.SetHeightMap
+local SpawnCEG					  = Spring.SpawnCEG
+local GaiaTeamID  				= Spring.GetGaiaTeamID()
+local SetUnitNeutral			= Spring.SetUnitNeutral
+local SetUnitNoSelect			= Spring.SetUnitNoSelect
 local CreateUnit			= Spring.CreateUnit
 local DestroyUnit			= Spring.DestroyUnit
-local SetUnitAlwaysVisible	=Spring.SetUnitAlwaysVisible
+local SetUnitAlwaysVisible		=Spring.SetUnitAlwaysVisible
 local SetUnitPosition 			= Spring.SetUnitPosition
 local SetUnitStealth			= Spring.SetUnitStealth
 local TransferUnit			= Spring.TransferUnit
@@ -91,7 +90,7 @@ local GetAllUnits 			= Spring.GetAllUnits
 local ValidFeatureID 			= Spring.ValidFeatureID
 local ValidUnitID 			= Spring.ValidUnitID
 
-local images 					    = include("LuaRules/gadgets/img.lua")
+local images 					    	= include("LuaRules/gadgets/img.lua")
 local images2 					  	= include("LuaRules/gadgets/img2.lua")
 local images3 					  	= include("LuaRules/gadgets/img3.lua")
 local COMET_FIRE				  	= "RedPlasmaComet"
@@ -131,22 +130,11 @@ local moving = {
 	["hover10"]	= true,	
 }
 
-local TeamIDsComets 					= {} 
-for _,teamID in pairs(GetTeamList) do
-	if GaiaTeamID ~= teamID then
-		table.insert(TeamIDsComets, teamID) 
-	end
-end
+
 local damageToUnits 					= {}
 local damageToFeatures 					= {}
 local unitsDoDamage					= {}
-local randomUnits 					= true
-local unitNameComet 					= "arm_peewee"
-local FALL_SPEED					= 60  -- 60 every 5th timeframe
-local transfer	 					= true
 local timeDelayCrack					= 30 * 60 + 1 -- 1 min
-local timeDelayComet 					= tonumber(modOptions.time_delay_comet) * 30 * 60 or 30 * 60 + 1 -- 2.5 min
-local timeDelayDamage					= 61 -- every second (either update or do damage)
 local duration						= tonumber(modOptions.duration_crack) *30 *60 + 1 or 9000 +1 		-- 5 min crack duration
 local crackAreaX					= floor(mapX*512*1/10)								-- defines middle 
 local crackAreaZ					= floor(mapZ*512*1/10)
@@ -155,12 +143,7 @@ local cracks						= {}
 local remove_cracks					= {}
 local add_cracks					= {}
 local max_cracks					= tonumber(modOptions.max_cracks) or 10
-local max_comets					= tonumber(modOptions.max_comets) or 10
-local damage_radius					= tonumber(modOptions.max_radius_damage_comets) or 500
-local damage_value            		= tonumber(modOptions.max_damage_comets) or 500
 local randomize_number_of_cracks	= 150 -- same as below but for cracks
-local randomize_number_of_comets	= 100 -- how often number of comets in rain are randomized (higher is less ofthen)
-local cometRainRadius 				= tonumber(modOptions.comet_rain_radius) or 500 -- comet spreading
 
 
 -- DAMAGE PARAMETERS
@@ -208,32 +191,19 @@ for k,v in pairs(images2) do
 	end
 end
 
-local comets						= {}
-local cometUnits 					= {}
-local ast_size 						= images3[1]
-local ast_image						= images3[2]
-local cometold          				= false
-local fx_comit 						= {}
-for k,v in pairs(ast_image) do
-	if v ~= 0 and random() < 0.02 then
-		fx_comit[k] = v
-	end
-end
-
 
 -- INITIALISE --
 
 
 function gadget:Initialize()
 	local mo = Spring.GetModOptions()
-	if mo and tonumber(mo.earth_crack)== 0 then
-		Echo("earth_crack.lua: turned off via modoptions")
+	if mo and tonumber(mo.earthquake)== 0 then
+		Echo("earthquake.lua: turned off via modoptions")
 		gadgetHandler:RemoveGadget(self)
 	end
-	Echo("earth_crack.lua: gadget:Initialize() Game.mapName=" .. Game.mapName)
+	Echo("earthquake.lua: gadget:Initialize() Game.mapName=" .. Game.mapName)
 	DisableMapDamage=0
 	Echo("Seismic activity predicted in forecast models, be aware!")
-	Echo("Good afternoon the weather predicts meteor showers, have a nice day!")
 	--end
 
 end
@@ -304,9 +274,6 @@ function emit(data)
 		end
 	end
 end
-
-
--- CRACK FUNCTIONS
 
 
 function remove_crack(data)
@@ -413,207 +380,6 @@ function update()
 end
 
 
--- COMET FUNCTIONS
-
-
-function add_comet(x,y)
-	local X = random(x-cometRainRadius, x+cometRainRadius)
-	local Z = random(y-cometRainRadius, y+cometRainRadius)
-	
-	local map_x_out = X > mapX*512 or X < 0
-	local map_y_out = Z > mapZ*512 or Z < 0
-
-	if map_x_out or map_y_out then return nil end
-
-	local Y = random(3000, 6000)
-	local impact = random(0,20)
-	local height = GetGroundOrigHeight(X,Z)
-	local originalHeight = GetGroundOrigHeight(X,Z)
-	local explode = random(500, 2000)
-	local unitName = unitNameComet
-
-	if random() < 0.5 then
-		explode = -explode
-	end
-	local comet = {explode = explode,
-		hit = false,
-		groundHeight = height,
-		impact = impact,
-		X = X,
-		Y = Y,
-		Z = Z,
-		unitName = unitName}
-	return comet
-end
-
-
-function update_comet()
-
-	for i=#comets,1,-1 do
-
-		local v = comets[i]
-		
-		if v.hit == true then
-			
-			local height = GetGroundOrigHeight(v.X,v.Z)
-			local team = random(0,#TeamIDsComets-1)
-			local unitID = CreateUnit(v.unitName, v.X, height, v.Z, 0, team)
-			if transfer ~= true then
-				DestroyUnit(unitID)
-			end
-			table.remove(comets, i)
-
-		elseif v.groundHeight-v.Y < 0 then
-			SpawnCEG(COMET_FIRE, v.X, v.Y, v.Z)
-			comets[i].Y = v.Y - FALL_SPEED
-
-			if comets[i].Y - comets[i].explode < 0 then
-				SpawnCEG(PUFFY,v.X, v.Y, v.Z)
-				local team = random(0,#TeamIDsComets-1)
-				local unitID = CreateUnit(v.unitName, v.X, v.Y, v.Z, 0, team)
-				table.remove(comets, i)
-				DestroyUnit(unitID)
-			end
-		else
-			SpawnCEG(COMET_HIT_GROUND,v.X, v.groundHeight, v.Z)  
-			SpawnCEG(PUFFY,v.X, v.groundHeight, v.Z)			
-			deform_ground(v)
-			damage_near_units(v.X,v.Z, damage_radius*1)
-			comets[i].hit = true
-		end
-	end
-
-end
-
-
-function getUnitName()
-	if randomUnits == true then
-		local units = GetAllUnits()
-		local can_move = {}
-		for index, unitID in pairs(units) do
-			does_move = moving[tostring(UnitDefs[GetUnitDefID(unitID)].moveDef.name)] ~= nil
-			if does_move == true then 
-				table.insert(can_move, GetUnitDefID(unitID))
-			end
-		end
-		if #can_move > 0 then
-			unitNameComet = UnitDefs[can_move[random(1,#can_move)]].name
-		end
-	end	
-end
-
-function deform_ground(comet)
-	local x =floor(ast_size["x"]/2)
-	local z = floor(ast_size["z"]/2)
-	local xc = comet.X - x
-	local zc = comet.Z - z
-	local func = function()
-		for key, value in pairs(ast_image) do
-			for k, v in gmatch(key,"(%w+),(%w+)") do
-				local height = GetGroundOrigHeight(v+xc,k+zc) 
-				if value ~= 0 then
-					SetHeightMap(tonumber(v)+xc,tonumber(k)+zc, height + value -21)
-				end
-			end
-		end
-	end
-	SetHeightMapFunc(func)
-end
-
-
--- DAMAGE FUNCTIONS
-
-
-function update_damage()
-	
-	-- updating units causing damage
-	for k,v in pairs(unitsDoDamage) do
-		if ValidUnitID(k) == true then
-			unitsDoDamage[k].damage = v.damage + damageValues[v.unitName].dDamage	
-			unitsDoDamage[k].radius = v.radius + damageValues[v.unitName].dRadius
-			local x, y, z = GetUnitPosition(k)
-			unitsDoDamage[k].x = x
-			unitsDoDamage[k].y = y
-			unitsDoDamage[k].z = z
-		elseif v.duration > 0 then
-			unitsDoDamage[k].damage = v.damage - damageValues[v.unitName].dDamage
-			unitsDoDamage[k].radius = v.radius - damageValues[v.unitName].dRadius
-			local effectiveRadius = v.radius - damageValues[v.unitName].dRadius
-			local effectiveDamage = v.damage - damageValues[v.unitName].dDamage
-			unitsDoDamage[k].duration = v.duration - timeDelayDamage*2 
-			if  effectiveRadius < 0 or effectiveDamage < 0 then
-				unitsDoDamage[k] = nil
-			end
-			 
-		else
-			unitsDoDamage[k] = nil
-		end
-	end	
-	
-
-	-- update damaged to units/features
-	for k,v in pairs(unitsDoDamage) do
-		local near_units = GetUnitsInSphere(v.x,v.y,v.z, v.radius)
-		local near_features = GetFeaturesInSphere(v.x,v.y,v.z, v.radius)
-
-		if not (near_units == nil) then
-			for i in pairs(near_units) do
-				local unitID = near_units[i]
-				local xu,yu,zu = GetUnitPosition(unitID)
-				local multiplier = 1-sqrt( (v.x-xu)*(v.x-xu) + (v.y-yu)*(v.y-yu) + (v.z-zu)*(v.z-zu) )/v.radius
-				local damage = damageToUnits[unitID] or 0
-				if unitsDoDamage[unitID] == nil then
-					damageToUnits[unitID] = max(v.damage *multiplier,damage)
-				else 
-					damageToUnits[unitID] = max(damageValues[v.unitName].self,damage)
-					if k ~= unitID then
-						damageToUnits[unitID] = max(damageToUnits[unitID],v.damage *multiplier)
-					end 
-				end
-			end
-		end
-		if not (near_features == nil) then
-			for i in pairs(near_features) do
-				if not FeatureDefs[GetFeatureDefID(near_features[i])].geoThermal then 
-					local featureID = near_features[i]
-					local unitDefID = GetUnitDefID(featureID)
-					local xf,yf,zf = GetFeaturePosition(featureID)
-					local multiplier = 1-sqrt( (v.x-xf)*(v.x-xf) + (v.y-yf)*(v.y-yf) + (v.z-zf)*(v.z-zf) )/v.radius
-					local damage = damageToFeatures[featureID] or 0
-					damageToFeatures[featureID] = max(v.damage*multiplier,damage)
-					-- remove also grass?
-					-- show fx?
-				end
-			end
-		end
-		
-	end
-	
-end
-
-
-function apply_damage()
-	for k,v in pairs(damageToUnits) do
-		if ValidUnitID(k) == true then
-			AddUnitDamage(k, v)
-			damageToUnits[k] = 0
-		else
-			damageToUnits[k] = nil
-		end			
-	end
-	for k,v in pairs(damageToFeatures) do
-		-- test if unit exists
-		if ValidFeatureID(k) then
-			local feature_health = GetFeatureHealth(k)
-			SetFeatureHealth(k,feature_health-v)
-			damageToFeatures[k] = 0
-		else
-			damageToFeatures[k] = nil
-		end			
-	end
-end
-
-
 -- LOOP --
 
 
@@ -624,48 +390,6 @@ function gadget:GameFrame(f)
 	if (f%randomize_number_of_cracks*timeDelayCrack ==0) then
 		number_of_cracks = random(0, max_cracks)
 	end
-
-	if (f%randomize_number_of_comets*timeDelayComet ==0) then
-		number_of_comets = random(0, max_comets)
-	end
-
-	-- COMET PART --
-
-	if (f%5 == 0) then
-
-		if not (#comets == 0) then
-
-			update_comet()
-
-		else
-
-			if f%timeDelayComet == 0 then
-
-				if not (number_of_comets==0) then
-					
-					Echo("WARNING observatory station detects ".. tostring(number_of_comets) .. " incoming meteorites!")
-					
-					-- set new unitname for units from dropping comet
-					getUnitName()
-
-					--make some comets
-					local x = floor(random(0,  mapX*512))
-					local z = floor(random(0,  mapZ*512))
-
-					for i=1,number_of_comets do
-						comets[#comets+1] = add_comet(x,z)
-						
-					end
-
-				end
-
-			end
-
-		end
-
-	end
-
-	-- CRACK PART
 
 	if (f%timeDelayCrack == 0) then
 
@@ -695,47 +419,4 @@ function gadget:GameFrame(f)
 		end
 	end
 
-
-
-	-- MAP DAMAGE TO UNITS/FEATURES PART
-
-	if (f%timeDelayDamage == 0) then
-
-		if (f%2 ==0) then
-			
-			update_damage()
-
-		else
-
-			apply_damage()
-
-		end
-	end
-
 end
-
-
--- ADDITIONAL FUNCTIONS
-
-
-function gadget:UnitCreated(unitID, unitDefID, unitTeam, builderID)
-	local name = UnitDefs[unitDefID].name
-	if damageValues[name] ~= nil then
-		local damage = damageValues[name].value
-		local radius = damageValues[name].radius
-		local x, y, z = GetUnitPosition(unitID)
-		local duration = damageValues[name].duration
-		unitsDoDamage[unitID] = {
-			["damage"] = damage,
-			["radius"] = radius,
-			["unitName"] = name,
-			["x"] = x,
-			["y"] = y,
-			["z"] = z,
-			["duration"] = duration
-		}
-	end 
-end 
-
-
-
