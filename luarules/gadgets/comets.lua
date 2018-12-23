@@ -44,15 +44,15 @@ end
 -- LOCALS --
 
 
-local floor 			= math.floor
-local random			= math.random
-local sqrt			= math.sqrt
-local max			= math.max
+local floor 				= math.floor
+local random				= math.random
+local sqrt					= math.sqrt
+local max					= math.max
 
-local gmatch			= string.gmatch
-local remove			= table.remove
+local gmatch				= string.gmatch
+local remove				= table.remove
 
-local modOptions 		= Spring.GetModOptions()
+local modOptions 			= Spring.GetModOptions()
 local SetFeatureHealth		= Spring.SetFeatureHealth
 local DestroyFeature		= Spring.DestroyFeature
 local GetFeatureHealth		= Spring.GetFeatureHealth
@@ -61,41 +61,48 @@ local AddUnitDamage 		= Spring.AddUnitDamage
 local GetFeaturesInSphere	= Spring.GetFeaturesInSphere
 local GetUnitsInSphere		= Spring.GetUnitsInSphere
 local GetUnitPosition		= Spring.GetUnitPosition
-local GetUnitDefID		= Spring.GetUnitDefID
+local GetUnitDefID			= Spring.GetUnitDefID
 local GetFeatureDefID		= Spring.GetFeatureDefID
-local Echo			= Spring.Echo
+local Echo					= Spring.Echo
 local GetUnitsInCylinder	= Spring.GetUnitsInCylinder
 local GetGroundHeight		= Spring.GetGroundHeight
 local GetGroundOrigHeight	= Spring.GetGroundOrigHeight
 local SetHeightMapFunc		= Spring.SetHeightMapFunc
-local PlaySoundFile		= Spring.PlaySoundFile
-local SetHeightMap 		= Spring.SetHeightMap
-local SpawnCEG			= Spring.SpawnCEG
-local GaiaTeamID  		= Spring.GetGaiaTeamID()
+local PlaySoundFile			= Spring.PlaySoundFile
+local SetHeightMap 			= Spring.SetHeightMap
+local SpawnCEG				= Spring.SpawnCEG
+local GaiaTeamID  			= Spring.GetGaiaTeamID()
 local SetUnitNeutral		= Spring.SetUnitNeutral
 local SetUnitNoSelect		= Spring.SetUnitNoSelect
-local CreateUnit		= Spring.CreateUnit
-local DestroyUnit		= Spring.DestroyUnit
+local CreateUnit			= Spring.CreateUnit
+local DestroyUnit			= Spring.DestroyUnit
 local SetUnitAlwaysVisible	= Spring.SetUnitAlwaysVisible
 local SetUnitPosition 		= Spring.SetUnitPosition
 local SetUnitStealth		= Spring.SetUnitStealth
-local TransferUnit		= Spring.TransferUnit
-local GetTeamList 		= Spring.GetTeamList()
-local GetAllUnits 		= Spring.GetAllUnits
+local TransferUnit			= Spring.TransferUnit
+local GetTeamList 			= Spring.GetTeamList()
+local GetAllUnits 			= Spring.GetAllUnits
 local ValidFeatureID 		= Spring.ValidFeatureID
-local ValidUnitID 		= Spring.ValidUnitID
-local GetTeamUnits 		= Spring.GetTeamUnits
+local ValidUnitID 			= Spring.ValidUnitID
+local GetTeamUnits 			= Spring.GetTeamUnits
+local SpawnExplosion 		= Spring.SpawnExplosion
+local SetGameRulesParam 	= Spring.SetGameRulesParam
 
-local images 			= include("LuaRules/gadgets/img.lua")
-local images2 			= include("LuaRules/gadgets/img2.lua")
-local images3 			= include("LuaRules/gadgets/img3.lua")
-local COMET_FIRE		= "RedPlasmaComet"
+local images 				= include("LuaRules/gadgets/img.lua")
+local images2 				= include("LuaRules/gadgets/img2.lua")
+local images3 				= include("LuaRules/gadgets/img3.lua")
+local COMET_FIRE			= "RedPlasmaComet"
 local COMET_HIT_GROUND		= "SMALL_NUKE_EXPLOSION_INIATE_COMET"
-local PUFFY			= "PUFFY_COMET"
-local crushsnd			= "sounds/battle/crush3.wav"
+local PUFFY					= "PUFFY_COMET"
+local crushsnd				= "sounds/battle/crush3.wav"
 
-local mapX 			= Game.mapX
-local mapZ 			= Game.mapY
+local mapX 					= Game.mapX
+local mapZ 					= Game.mapY
+
+
+if not GG.radiation then
+	GG['radiation'] = {}
+end
 
 
 -- SETTINGS --
@@ -112,16 +119,16 @@ local moving = {
 	["tanksh2"] 	= true,	 					
 	["tanksh4"] 	= true,	 					
 	["tankdtcrush"] = true,	-- Bulldog/Reaper/Goliath can crush DT's
-	["spid3"] 	= true,						
+	["spid3"] 		= true,
 	["krogoth"] 	= true,						
 	["crawlbomb"] 	= true,	-- crawling bombs
 	["tankdh4"] 	= true,	-- beaver, crab, triton, crock, garpike, muskrat, zulu -- land
-	["hover1"] 	= true,
-	["hover2"]	= true,
-	["hover3"]	= true,
-	["hover4"]	= true,
-	["hover9"]	= true,
-	["hover10"]	= true,	
+	["hover1"] 		= true,
+	["hover2"]		= true,
+	["hover3"]		= true,
+	["hover4"]		= true,
+	["hover9"]		= true,
+	["hover10"]		= true,
 }
 
 local TeamIDsComets 		= {} 
@@ -145,6 +152,21 @@ local cometRainRadius 		= tonumber(modOptions.comet_rain_radius) or 500 -- comet
 local max_comets					= tonumber(modOptions.max_comets) or 10
 
 -- READ IN IMAGES AN AUDIO
+
+local explosionParams = {
+	weaponDef = 'SMALL_NUKE_EXPLOSION_INIATE_COMET',
+   	--owner = 1,
+   	--hitUnit = 1,
+   	--hitFeature = 1,
+   	--craterAreaOfEffect = 1,
+   	--damageAreaOfEffect = 1,
+   	--edgeEffectiveness = 0.15,
+   	--explosionSpeed = 3,
+   	--gfxMod = 1,
+   	--impactOnly = 1,
+   	--ignoreOwner = 1,
+   	--damageGround = 1
+}
 
 
 local comets			= {}
@@ -189,7 +211,6 @@ function damage_near_units(x,z, radius)
 	if not (near_units == nil) then
 		for i in pairs(near_units) do
 			local unitID = near_units[i]
-			local unitDefID = GetUnitDefID(unitID)
 			local xu,yu,zu = GetUnitPosition(unitID)
 			local multiplier = 1-sqrt( (x-xu)*(x-xu) + (z-zu)*(z-zu) )/radius
 			local damage = damage_value *multiplier
@@ -235,7 +256,6 @@ function add_comet(x,y)
 	local Y = random(3000, 6000)
 	local impact = random(0,20)
 	local height = GetGroundOrigHeight(X,Z)
-	local originalHeight = GetGroundOrigHeight(X,Z)
 	local explode = random(500, 2000)
 	local unitName = unitNameComet
 
@@ -259,15 +279,22 @@ function update_comet()
 	for i=#comets,1,-1 do
 
 		local v = comets[i]
-		
+
 		if v.hit == true then
-			
+
 			local height = GetGroundOrigHeight(v.X,v.Z)
 			local team = random(0,#TeamIDsComets-1)
+			local y = GetGroundHeight(v.X,v.Z)
+			SpawnCEG(COMET_HIT_GROUND,v.X, y, v.Z)
 			local unitID = CreateUnit(v.unitName, v.X, height, v.Z, 0, team)
-			if transfer ~= true then
-				DestroyUnit(unitID)
-			end
+			GG.radiation[unitID] = {
+				['radius'] = 500,
+				['damage'] = 0.1,
+				['dRadius'] = 0.1,
+				['dDamage'] = 0.001,
+				['duration'] = 50,
+				['self'] = 0.05
+			}
 			table.remove(comets, i)
 
 		elseif v.groundHeight-v.Y < 0 then
@@ -276,14 +303,14 @@ function update_comet()
 
 			if comets[i].Y - comets[i].explode < 0 then
 				SpawnCEG(PUFFY,v.X, v.Y, v.Z)
+				--SpawnExplosion(v.X,v.Y,v.Z, 0,0,0,explosionParams)
 				local team = random(0,#TeamIDsComets-1)
 				local unitID = CreateUnit(v.unitName, v.X, v.Y, v.Z, 0, team)
 				table.remove(comets, i)
 				DestroyUnit(unitID)
 			end
 		else
-			SpawnCEG(COMET_HIT_GROUND,v.X, v.groundHeight, v.Z)  
-			SpawnCEG(PUFFY,v.X, v.groundHeight, v.Z)			
+			SpawnCEG(PUFFY,v.X, v.groundHeight, v.Z)
 			deform_ground(v)
 			damage_near_units(v.X,v.Z, damage_radius*1)
 			comets[i].hit = true
@@ -297,13 +324,14 @@ function getUnitName()
 	if randomUnits == true then
 		local can_move = {}
 		for teamCount = 1, #TeamIDsComets do
-			Echo(TeamIDsComets[teamCount])
 			local teamID = TeamIDsComets[teamCount]
 			local units = GetTeamUnits(teamID)
 			for index, unitID in pairs(units) do
-				does_move = moving[tostring(UnitDefs[GetUnitDefID(unitID)].moveDef.name)] ~= nil
-				if does_move == true then 
-					table.insert(can_move, GetUnitDefID(unitID))
+				UDID = GetUnitDefID(unitID)
+				if UnitDefs[UDID].isBuilder ~= true then
+					if moving[tostring(UnitDefs[UDID].moveDef.name)] ~= nil then
+						table.insert(can_move, GetUnitDefID(unitID)) -- this is slow!!! use other method (TODO)
+					end
 				end
 			end
 		end
@@ -337,6 +365,9 @@ end
 
 
 function gadget:GameFrame(f)
+
+	if f<100 then return nil end
+
 	if (f%randomize_number_of_comets*timeDelayComet ==0) then
 		number_of_comets = random(0, max_comets)
 	end

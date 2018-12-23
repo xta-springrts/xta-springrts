@@ -55,12 +55,12 @@ function widget:Update()
 		camState["px"] = x
 		camState["py"] = y
 		camState["pz"] = z
-		camState["py"] = ZOOMHEIGHT
+		camState["py"] = ZOOMHEIGHT/2
 		camState["name"] = 'ta'
 		camState["mode"] = 1
-		if currentHeight > ZOOMHEIGHT then
-			Spring.SetCameraState(camState,0.5)
-		end
+		--if currentHeight > ZOOMHEIGHT then
+		Spring.SetCameraState(camState,0.5)
+		--end
 
 		center = false
 	end
