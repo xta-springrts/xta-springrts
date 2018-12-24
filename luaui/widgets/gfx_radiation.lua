@@ -12,17 +12,24 @@ function widget:GetInfo()
 	}
 end
 
--- locals and speed ups
+
+-- LOCALS
+
+
 local Echo								= Spring.Echo
 local radiation_units					= {}
 local GetUnitPosition 					= Spring.GetUnitPosition
 local GetVisibleUnits					= Spring.GetVisibleUnits
 local GetGameRulesParam 				= Spring.GetGameRulesParam
+local smoothPolys						= (gl.Smoothing ~= nil) and false
+local texName 							= LUAUI_DIRNAME .. 'Images/highlight_strip.png'
 
+
+-- FUNCTIONS
 
 
 local function add_radiation_unit(unitID)
-	if GetGameRulesParam('radiation_radius' .. unitID) ~= nil then
+	if GetGameRulesParam('radiation_radius' .. unitID) ~= nil or GetGameRulesParam('radiation_radius' .. unitID) == 0 then
 		if radiation_units[unitID] ~= nil then
 			radiation_units[unitID]["radius"] = GetGameRulesParam('radiation_radius' .. unitID)
 			radiation_units[unitID]["damage"] = GetGameRulesParam('radiation_damage' .. unitID)
@@ -51,31 +58,30 @@ function widget:Initialize()
 	end
 end
 
-function widget:UnitEnteredLos(unitID, teamID)
+
+function widget:UnitEnteredLos(unitID)
 	add_radiation_unit(unitID)
 end
+
 
 function widget:UnitLeftLos(unitID)
 	radiation_units[unitID] = nil
 end
 
-function widget:UnitCreated(unitID, unitDefID, teamID)
+
+function widget:UnitCreated(unitID)
 	add_radiation_unit(unitID)
 end
 
-function widget:UnitDestroyed(unitID, unitDefID, teamID)
+
+function widget:UnitDestroyed(unitID)
 	radiation_units[unitID] = nil
 end
 
-function widget:UnitGiven(unitID, unitDefID, teamID)
+
+function widget:UnitGiven(unitID)
 	radiation_units[unitID] = nil
 end
-
-
-local smoothPolys				= (gl.Smoothing ~= nil) and false
-local texName 					= LUAUI_DIRNAME .. 'Images/highlight_strip.png'
-local outlineWidth 				= 1
-local Echo						= Spring.Echo
 
 
 local function update_radiation()
@@ -98,11 +104,8 @@ function widget:DrawWorld()
 	gl.DepthTest(true)
 	gl.PolygonOffset(-2, -2)
 
-
-	local r,g,b,a
 	gl.Blending(GL.DST_COLOR, GL.ZERO)
-	r,g,b, a = 0.3,0.9,0.1, 0.5 --green?
-
+	local r,g,b, a = 0.3,0.9,0.1, 0.5 --green?
 
 	if (smoothPolys) then
 		gl.Smoothing(nil, nil, true)
@@ -115,8 +118,8 @@ function widget:DrawWorld()
 
 	for index, unitID in pairs(GetVisibleUnits()) do
 		if radiation_units[unitID] then
-			if GetGameRulesParam('radiation_damage' .. unitID) ~= nil then
-				local a = 1 - GetGameRulesParam('radiation_damage' .. unitID)
+			if GetGameRulesParam('radiation_damage' .. unitID) ~= nil or GetGameRulesParam('radiation_damage' .. unitID) ~= 0 then
+				a = 1 - GetGameRulesParam('radiation_damage' .. unitID)
 				gl.Color(r,g,b,a)
 				gl.Unit(unitID,true)
 			end
