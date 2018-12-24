@@ -52,11 +52,12 @@ local Echo					      	= Spring.Echo
 local ValidUnitID 					= Spring.ValidUnitID
 local ValidFeatureID 				= Spring.ValidFeatureID
 local SetGameRulesParam 			= Spring.SetGameRulesParam
+local GetGameRulesParam				= Spring.GetGameRulesParam
 
 local damageToUnits 				= {}
 local damageToFeatures 				= {}
 local unitsDoDamage					= {}
-local timeDelayDamage				= 61 -- every second (either update or do damage)
+local timeDelayDamage				= 13 -- 1/4 second every second (either update or do damage)
 local MAXDAMAGERADIUS				= 1000
 local damageValues 					= {}
 
@@ -67,7 +68,7 @@ local damageValues 					= {}
 if not GG.radiation then
 	GG['radiation'] = {}
 end
-
+SetGameRulesParam('radiation_update_number', 0)
 
 
 -- INITIALISE --
@@ -85,7 +86,7 @@ function gadget:Initialize()
 end
 
 
--- HELP FUCNTION --
+-- HELP FUNCTION --
 
 
 function update_damage()
@@ -98,25 +99,41 @@ function update_damage()
 			unitsDoDamage[k].radius = min(v.radius +  damageValues[k].dRadius,MAXDAMAGERADIUS)
 			SetGameRulesParam('radiation_radius' .. k, unitsDoDamage[k].radius)
 			SetGameRulesParam('radiation_damage' .. k, unitsDoDamage[k].damage)
+			if (unitsDoDamage[k].damage <= 0 or unitsDoDamage[k].radius <= 0) then
+				unitsDoDamage[k] = nil
+				SetGameRulesParam('radiation_radius' .. k, 0)
+				SetGameRulesParam('radiation_damage' .. k, 0)
+				if GG.radiation[k] then
+					GG.radiation[k] = nil
+				end
+				local update_number = GetGameRulesParam('radiation_update_number')
+				SetGameRulesParam('radiation_update_number', update_number + 1)
+			end
 		elseif v.duration > 0 then
 			unitsDoDamage[k].damage = max(v.damage - abs(damageValues[k].dDamage),0)
 			unitsDoDamage[k].radius = max(v.radius - abs(damageValues[k].dRadius),0)
 			unitsDoDamage[k].duration = v.duration - timeDelayDamage*2
 			SetGameRulesParam('radiation_radius' .. k, unitsDoDamage[k].radius)
 			SetGameRulesParam('radiation_damage' .. k, unitsDoDamage[k].damage)
-			if not ((unitsDoDamage[k].damage > 0) and (unitsDoDamage[k].radius > 0)) then
+			if (unitsDoDamage[k].damage <= 0 or unitsDoDamage[k].radius <= 0) then
 				unitsDoDamage[k] = nil
 				SetGameRulesParam('radiation_radius' .. k, 0)
 				SetGameRulesParam('radiation_damage' .. k, 0)
-				if GG.radiation[unitID] then
-					GG.radiation[unitID] = nil
+				if GG.radiation[k] then
+					GG.radiation[k] = nil
 				end
+				local update_number = GetGameRulesParam('radiation_update_number')
+				SetGameRulesParam('radiation_update_number', update_number + 1)
 			end
 		else
 			unitsDoDamage[k] = nil
-			if GG.radiation[unitID] then
-					GG.radiation[unitID] = nil
+			if GG.radiation[k] then
+				GG.radiation[k] = nil
 			end
+			SetGameRulesParam('radiation_radius' .. k, 0)
+			SetGameRulesParam('radiation_damage' .. k, 0)
+			local update_number = GetGameRulesParam('radiation_update_number')
+			SetGameRulesParam('radiation_update_number', update_number + 1)
 		end
 	end
 
@@ -174,6 +191,8 @@ local function update_radiation_unit()
 					}
 					SetGameRulesParam('radiation_radius' .. unitID, GG.radiation[unitID].radius)
 					SetGameRulesParam('radiation_damage' .. unitID, GG.radiation[unitID].damage)
+					local update_number = GetGameRulesParam('radiation_update_number')
+					SetGameRulesParam('radiation_update_number', update_number + 1)
 				end
 			end
 		end

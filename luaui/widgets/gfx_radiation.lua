@@ -20,23 +20,20 @@ local Echo								= Spring.Echo
 local radiation_units					= {}
 local GetUnitPosition 					= Spring.GetUnitPosition
 local GetVisibleUnits					= Spring.GetVisibleUnits
+local getAllUnits						= Spring.GetAllUnits
 local GetGameRulesParam 				= Spring.GetGameRulesParam
 local smoothPolys						= (gl.Smoothing ~= nil) and false
 local texName 							= LUAUI_DIRNAME .. 'Images/highlight_strip.png'
+local update_number						= GetGameRulesParam('radiation_update_number') or 0
 
 
 -- FUNCTIONS
 
 
 local function add_radiation_unit(unitID)
-	if GetGameRulesParam('radiation_radius' .. unitID) ~= nil or GetGameRulesParam('radiation_radius' .. unitID) == 0 then
-		if radiation_units[unitID] ~= nil then
-			radiation_units[unitID]["radius"] = GetGameRulesParam('radiation_radius' .. unitID)
-			radiation_units[unitID]["damage"] = GetGameRulesParam('radiation_damage' .. unitID)
-		else
-			radiation_units[unitID] = {["radius"] = GetGameRulesParam('radiation_radius' .. unitID),
+	if GetGameRulesParam('radiation_radius' .. unitID) ~= nil or GetGameRulesParam('radiation_radius' .. unitID) ~= 0 then
+		radiation_units[unitID] = {["radius"] = GetGameRulesParam('radiation_radius' .. unitID),
 									   ["damage"] = GetGameRulesParam('radiation_damage' .. unitID)}
-		end
 	end
 end
 
@@ -47,7 +44,7 @@ function widget:Initialize()
 		widgetHandler:RemoveWidget()
 		return
 	elseif gl.CreateShader then
-		local visibleUnits = GetVisibleUnits()
+		local visibleUnits = getAllUnits()
 		for index, unitID in pairs(visibleUnits) do
 			add_radiation_unit(unitID)
 		end
@@ -59,19 +56,19 @@ function widget:Initialize()
 end
 
 
-function widget:UnitEnteredLos(unitID)
-	add_radiation_unit(unitID)
-end
+--function widget:UnitEnteredLos(unitID)
+--	add_radiation_unit(unitID)
+--end
 
 
-function widget:UnitLeftLos(unitID)
-	radiation_units[unitID] = nil
-end
+--function widget:UnitLeftLos(unitID)
+--	radiation_units[unitID] = nil
+--end
 
 
-function widget:UnitCreated(unitID)
-	add_radiation_unit(unitID)
-end
+--function widget:UnitCreated(unitID)
+--	add_radiation_unit(unitID)
+--end
 
 
 function widget:UnitDestroyed(unitID)
@@ -79,13 +76,13 @@ function widget:UnitDestroyed(unitID)
 end
 
 
-function widget:UnitGiven(unitID)
-	radiation_units[unitID] = nil
-end
+--function widget:UnitGiven(unitID)
+--	radiation_units[unitID] = nil
+--end
 
 
 local function update_radiation()
-	local visibleUnits = GetVisibleUnits()
+	local visibleUnits = getAllUnits()
 	radiation_units = {}
 	for index, unitID in pairs(visibleUnits) do
 		add_radiation_unit(unitID)
@@ -94,9 +91,14 @@ end
 
 
 function widget:GameFrame(dt)
-	if (dt%3 == 0) then
+	if GetGameRulesParam('radiation_update_number') ~= update_number then
 		update_radiation()
-		widgetHandler:UpdateWidgetCallIn("DrawWorld", self)
+		--widgetHandler:UpdateWidgetCallIn("DrawWorld", self)
+		update_number = update_number + 1 --GetGameRulesParam('radiation_update_number')
+	--else
+		--if (dt%30 == 0) then
+			--widgetHandler:UpdateWidgetCallIn("DrawWorld", self)
+		--end
 	end
 end
 
@@ -116,12 +118,15 @@ function widget:DrawWorld()
 	gl.TexGen(GL.T, GL.EYE_PLANE, 0, 1 , 0, 1)
 	gl.Texture(texName)
 
-	for index, unitID in pairs(GetVisibleUnits()) do
+	for index, unitID in pairs(getAllUnits()) do
 		if radiation_units[unitID] then
-			if GetGameRulesParam('radiation_damage' .. unitID) ~= nil or GetGameRulesParam('radiation_damage' .. unitID) ~= 0 then
+			if GetGameRulesParam('radiation_damage' .. unitID) ~= nil and GetGameRulesParam('radiation_damage' .. unitID) ~= 0 then
 				a = 1 - GetGameRulesParam('radiation_damage' .. unitID)
+				local radius = GetGameRulesParam('radiation_radius' .. unitID)
 				gl.Color(r,g,b,a)
 				gl.Unit(unitID,true)
+				local x,y,z = GetUnitPosition(unitID)
+				gl.DrawGroundCircle(x, y, z, radius, 25)
 			end
 		end
 	end

@@ -118,18 +118,18 @@ for _,teamID in pairs(GetTeamList) do
 		table.insert(TeamIDsComets, teamID) 
 	end
 end
-local randomUnits 		= true
-local unitNameComet 	= "arm_peewee"
-local FALLSPEED			= 60  -- 60 every 5th timeframe
+local randomUnits 				= true
+local unitNameComet 			= "arm_peewee"
+local FALLSPEED					= 60  -- 60 every 5th timeframe
 local timeDelayComet 			= tonumber(modOptions.time_delay_comet) * 30 * 60 or 30 * 60 + 1 -- 2.5 min
 local damage_radius				= tonumber(modOptions.max_radius_damage_comets) or 500
 local damage_value            	= tonumber(modOptions.max_damage_comets) or 500
 local randomize_number_of_comets= 100 -- how often number of comets in rain are randomized (higher is less ofthen)
 local cometRainRadius 			= tonumber(modOptions.comet_rain_radius) or 500 -- comet spreading
 local max_comets				= tonumber(modOptions.max_comets) or 10
-local comets			= {}
-local ast_size 			= images3[1]
-local ast_image			= images3[2]
+local comets					= {}
+local ast_size 					= images3[1]
+local ast_image					= images3[2]
 
 
 -- INITIALISE --
@@ -140,10 +140,11 @@ function gadget:Initialize()
 	if mo and tonumber(mo.comets)== 0 then
 		Echo("comets.lua: turned off via modoptions")
 		gadgetHandler:RemoveGadget(self)
+	else
+		Echo("comets.lua: gadget:Initialize() Game.mapName=" .. Game.mapName)
+		DisableMapDamage=0
+		Echo("Good afternoon the weather predicts meteor showers, have a nice day!")
 	end
-	Echo("comets.lua: gadget:Initialize() Game.mapName=" .. Game.mapName)
-	DisableMapDamage=0
-	Echo("Good afternoon the weather predicts meteor showers, have a nice day!")
 end
 
 
@@ -238,10 +239,10 @@ function update_comet()
 			SpawnCEG(COMET_HIT_GROUND,v.X, y, v.Z)
 			local unitID = CreateUnit(v.unitName, v.X, height, v.Z, 0, team)
 			GG.radiation[unitID] = {
-				['radius'] = 500,
-				['damage'] = 0.1,
-				['dRadius'] = 0.1,
-				['dDamage'] = -0.01,
+				['radius'] = 300,
+				['damage'] = 0.05,
+				['dRadius'] = -2,
+				['dDamage'] = -0.001,
 				['duration'] = 50,
 				['self'] = 0.05
 			}
