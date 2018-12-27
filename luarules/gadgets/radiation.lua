@@ -33,7 +33,7 @@ end
 
 -- LOCALS --
 
-
+local config 						= include("LuaRules/Configs/radiation_config.lua")
 local sqrt							= math.sqrt
 local max							= math.max
 local min							= math.min
@@ -48,6 +48,7 @@ local GetFeaturesInSphere			= Spring.GetFeaturesInSphere
 local GetUnitsInSphere				= Spring.GetUnitsInSphere
 local GetUnitPosition				= Spring.GetUnitPosition
 local GetFeatureDefID				= Spring.GetFeatureDefID
+local GetUnitDefID					= Spring.GetUnitDefID
 local Echo					      	= Spring.Echo
 local ValidUnitID 					= Spring.ValidUnitID
 local ValidFeatureID 				= Spring.ValidFeatureID
@@ -220,6 +221,24 @@ function apply_damage()
 		end
 	end
 end
+
+
+-- CALL-INS
+
+
+function gadget:UnitFinished(unitID, unitDefID, unitTeam)
+	local UDID = GetUnitDefID(unitID)
+	if config[UnitDefs[UDID].name] then
+		damageValues[unitID] = config[UnitDefs[UDID].name]
+		GG.radiation[unitID] = damageValues[unitID]
+		SetGameRulesParam('radiation_radius' .. unitID, GG.radiation[unitID].radius)
+		SetGameRulesParam('radiation_damage' .. unitID, GG.radiation[unitID].damage)
+		local update_number = GetGameRulesParam('radiation_update_number')
+		SetGameRulesParam('radiation_update_number', update_number + 1)
+	end
+end
+
+
 
 
 -- LOOP --
