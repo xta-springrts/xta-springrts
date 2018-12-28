@@ -15,11 +15,34 @@ For now only a few of the mechanics work
 
 --]]
 
+local radiationWeapons = {}
 
---local lib =  include("luarules/configs/gaia_wildlife_config_lib.lua") 								-- functions used for setups
+local weapons = {}
+--	["peewee_emg_2018"] = { radius = 300, damage = 0.05, dRadius = 2, dDamage = 0.001, duration = 50,  protection = 0}
+--}
 
 
-local radiationConfig = {
+for name,data in pairs(WeaponDefNames) do
+	local weaponDefID = WeaponDefNames[name].id
+	local cp = WeaponDefs[weaponDefID].customParams
+	if cp ~= nil then
+		if cp.radiation_radius then
+			weapons[name] = {
+				['radius'] = WeaponDefs[weaponDefID].customParams.radiation_radius,
+				['damage'] = WeaponDefs[weaponDefID].customParams.radiation_damage,
+				['dRadius'] = WeaponDefs[weaponDefID].customParams.radiation_dradius,
+				['dDamage'] = WeaponDefs[weaponDefID].customParams.radiation_ddamage,
+				['duration'] = WeaponDefs[weaponDefID].customParams.radiation_duration,
+				['protection'] = WeaponDefs[weaponDefID].customParams.radiation_protection
+			}
+		end
+	end
+	if weapons[name] then
+		radiationWeapons[data.id] = weapons[name]
+	end
+end
+
+local radiationUnits = {
 
 	-- 1. thermal power units
 
@@ -29,7 +52,7 @@ local radiationConfig = {
 				['dRadius'] = 2,
 				['dDamage'] = 0.001,
 				['duration'] = 50,
-				['self'] = 0.05
+				['protection'] = 0.05
 	},
 	["core_geothermal_powerplant"] = {
 			['radius'] = 300,
@@ -37,7 +60,7 @@ local radiationConfig = {
 			['dRadius'] = 2,
 			['dDamage'] = 0.001,
 			['duration'] = 50,
-			['self'] = 0.05
+			['protection'] = 0.05
 	},
 
 	-- 2. fusion
@@ -48,7 +71,7 @@ local radiationConfig = {
 				['dRadius'] = 2,
 				['dDamage'] = 0.001,
 				['duration'] = 50,
-				['self'] = 0.05
+				['protection'] = 0.05
 	},
 	["arm_mobile_fusion"] = {
 				['radius'] = 300,
@@ -56,7 +79,7 @@ local radiationConfig = {
 				['dRadius'] = 2,
 				['dDamage'] = 0.001,
 				['duration'] = 50,
-				['self'] = 0.05
+				['protection'] = 0.05
 	},
 	["arm_underwater_fusion_reactor"] = {
 				['radius'] = 300,
@@ -64,7 +87,7 @@ local radiationConfig = {
 				['dRadius'] = 2,
 				['dDamage'] = 0.001,
 				['duration'] = 50,
-				['self'] = 0.05
+				['protection'] = 0.05
 	},
 	["arm_cloakable_fusion_reactor"] = {
 				['radius'] = 300,
@@ -72,7 +95,7 @@ local radiationConfig = {
 				['dRadius'] = 2,
 				['dDamage'] = 0.001,
 				['duration'] = 50,
-				['self'] = 0.05
+				['protection'] = 0.05
 	},
 	["core_light_fusion_power_plant"] = {
 				['radius'] = 300,
@@ -80,7 +103,7 @@ local radiationConfig = {
 				['dRadius'] = 2,
 				['dDamage'] = 0.001,
 				['duration'] = 50,
-				['self'] = 0.05
+				['protection'] = 0.05
 	},
 	["core_cloakable_fusion_power_plant"] = {
 				['radius'] = 300,
@@ -88,7 +111,7 @@ local radiationConfig = {
 				['dRadius'] = 2,
 				['dDamage'] = 0.001,
 				['duration'] = 50,
-				['self'] = 0.05
+				['protection'] = 0.05
 	},
 	["core_fusion_power_plant"] = {
 			['radius'] = 300,
@@ -96,7 +119,7 @@ local radiationConfig = {
 			['dRadius'] = 2,
 			['dDamage'] = 0.001,
 			['duration'] = 50,
-			['self'] = 0.05
+			['protection'] = 0.05
 	},
 	["core_underwater_fusion_power_plant"] = {
 			['radius'] = 300,
@@ -104,12 +127,11 @@ local radiationConfig = {
 			['dRadius'] = 2,
 			['dDamage'] = 0.001,
 			['duration'] = 50,
-			['self'] = 0.05
+			['protection'] = 0.05
 	},
 
 	--2. ??
 
 }
 
-return radiationConfig
-
+return radiationWeapons, radiationUnits

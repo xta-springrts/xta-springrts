@@ -187,6 +187,15 @@
 		default=5.5;//reduce damage due to more stable damage from sometimes 60 to reliable 55
 		group_invincible=1;
 	}
+	[customparams]
+	{
+		radiation_radius = 100;
+		radiation_damage = 0.05;
+		radiation_dradius = 2;
+		radiation_ddamage = 0.001;
+		radiation_duration = 50;
+		radiation_protection = 0.05;
+	}
 }
 
 [ARMTRUEFLEA_WEAPON]

@@ -33,34 +33,34 @@ end
 
 -- LOCALS --
 
-local config 						= include("LuaRules/Configs/radiation_config.lua")
-local sqrt							= math.sqrt
-local max							= math.max
-local min							= math.min
-local abs							= math.abs
+local radiationWeapons, radiationUnits	= include("LuaRules/Configs/radiation_config.lua")
+local sqrt								= math.sqrt
+local max								= math.max
+local min								= math.min
+local abs								= math.abs
 
-local modOptions 					= Spring.GetModOptions()
-local SetFeatureHealth				= Spring.SetFeatureHealth
-local GetFeatureHealth				= Spring.GetFeatureHealth
-local GetFeaturePosition			= Spring.GetFeaturePosition
-local AddUnitDamage 				= Spring.AddUnitDamage
-local GetFeaturesInSphere			= Spring.GetFeaturesInSphere
-local GetUnitsInSphere				= Spring.GetUnitsInSphere
-local GetUnitPosition				= Spring.GetUnitPosition
-local GetFeatureDefID				= Spring.GetFeatureDefID
-local GetUnitDefID					= Spring.GetUnitDefID
-local Echo					      	= Spring.Echo
-local ValidUnitID 					= Spring.ValidUnitID
-local ValidFeatureID 				= Spring.ValidFeatureID
-local SetGameRulesParam 			= Spring.SetGameRulesParam
-local GetGameRulesParam				= Spring.GetGameRulesParam
+local modOptions 						= Spring.GetModOptions()
+local SetFeatureHealth					= Spring.SetFeatureHealth
+local GetFeatureHealth					= Spring.GetFeatureHealth
+local GetFeaturePosition				= Spring.GetFeaturePosition
+local AddUnitDamage 					= Spring.AddUnitDamage
+local GetFeaturesInSphere				= Spring.GetFeaturesInSphere
+local GetUnitsInSphere					= Spring.GetUnitsInSphere
+local GetUnitPosition					= Spring.GetUnitPosition
+local GetFeatureDefID					= Spring.GetFeatureDefID
+local GetUnitDefID						= Spring.GetUnitDefID
+local Echo					      		= Spring.Echo
+local ValidUnitID 						= Spring.ValidUnitID
+local ValidFeatureID 					= Spring.ValidFeatureID
+local SetGameRulesParam 				= Spring.SetGameRulesParam
+local GetGameRulesParam					= Spring.GetGameRulesParam
 
-local damageToUnits 				= {}
-local damageToFeatures 				= {}
-local unitsDoDamage					= {}
-local timeDelayDamage				= 13 -- 1/4 second every second (either update or do damage)
-local MAXDAMAGERADIUS				= 1000
-local damageValues 					= {}
+local damageToUnits 					= {}
+local damageToFeatures 					= {}
+local unitsDoDamage						= {}
+local timeDelayDamage					= 13 -- 1/4 second every second (either update or do damage)
+local MAXDAMAGERADIUS					= 1000
+local damageValues 						= {}
 
 
 -- GLOBALS --
@@ -83,6 +83,9 @@ function gadget:Initialize()
 	else
 		Echo("radiation.lua: gadget:Initialize() Game.mapName=" .. Game.mapName)
 		Echo("Warning some units deal damage because of radiation!")
+		for w,_ in pairs(radiationWeapons) do
+			Script.SetWatchWeapon(w, true)
+		end
 	end
 end
 
@@ -179,7 +182,7 @@ local function update_radiation_unit()
 						['dRadius'] = GG.radiation[unitID].dRadius,
 						['dDamage'] = GG.radiation[unitID].dDamage,
 						['duration'] = GG.radiation[unitID].duration,
-						['self'] = GG.radiation[unitID].self
+						['protection'] = GG.radiation[unitID].protection
 					}
 					local x, y, z = GetUnitPosition(unitID)
 					unitsDoDamage[unitID] = {
@@ -228,8 +231,8 @@ end
 
 function gadget:UnitFinished(unitID, unitDefID, unitTeam)
 	local UDID = GetUnitDefID(unitID)
-	if config[UnitDefs[UDID].name] then
-		damageValues[unitID] = config[UnitDefs[UDID].name]
+	if radiationUnits[UnitDefs[UDID].name] then
+		damageValues[unitID] = radiationUnits[UnitDefs[UDID].name]
 		GG.radiation[unitID] = damageValues[unitID]
 		SetGameRulesParam('radiation_radius' .. unitID, GG.radiation[unitID].radius)
 		SetGameRulesParam('radiation_damage' .. unitID, GG.radiation[unitID].damage)
@@ -239,6 +242,26 @@ function gadget:UnitFinished(unitID, unitDefID, unitTeam)
 end
 
 
+function gadget:Explosion(weaponID, px, py, pz, ownerID)
+	if (radiationWeapons[weaponID]) then
+		if damageValues[ownerID] == nil then
+			damageValues[ownerID] = {
+				['radius'] = radiationWeapons[weaponID].radius,
+				['damage'] = radiationWeapons[weaponID].damage,
+				['dRadius'] = radiationWeapons[weaponID].dRadius,
+				['dDamage'] = radiationWeapons[weaponID].dDamage,
+				['duration'] = radiationWeapons[weaponID].duration,
+				['protection'] = radiationWeapons[weaponID].protection
+			}
+			GG.radiation[ownerID] = damageValues[ownerID]
+			SetGameRulesParam('radiation_radius' .. ownerID, GG.radiation[ownerID].radius)
+			SetGameRulesParam('radiation_damage' .. ownerID, GG.radiation[ownerID].damage)
+			local update_number = GetGameRulesParam('radiation_update_number')
+			SetGameRulesParam('radiation_update_number', update_number + 1)
+		end
+	end
+	return false
+end
 
 
 -- LOOP --

@@ -244,7 +244,7 @@ function update_comet()
 				['dRadius'] = -2,
 				['dDamage'] = -0.001,
 				['duration'] = 50,
-				['self'] = 0.05
+				['protection'] = 0.05
 			}
 			remove(comets, i)
 
