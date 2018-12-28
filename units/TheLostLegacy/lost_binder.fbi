@@ -87,8 +87,8 @@
 	3slaveTo=1;
 	//nochasecategory=VTOL;
 	//wpri_badtargetcategory=VTOL;
-	explodeas=BIG_UNITEX;
-	selfdestructas=BIG_UNIT;
+	explodeas=ENERGY_STORAGE_NORMAL;
+	selfdestructas=CRAWL_BLASTSML;
 
 	//************************************************************
 	//  Orders
