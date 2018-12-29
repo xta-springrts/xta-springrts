@@ -189,11 +189,11 @@
 	}
 	[customparams]
 	{
-		radiation_radius = 100;
+		radiation_radius = 300;
 		radiation_damage = 0.05;
-		radiation_dradius = 2;
-		radiation_ddamage = 0.001;
-		radiation_duration = 50;
+		radiation_dradius = -2;
+		radiation_ddamage = -0.001;
+		radiation_duration = 1000;
 		radiation_protection = 0.05;
 	}
 }
