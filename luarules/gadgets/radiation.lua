@@ -13,8 +13,7 @@ end
 
 	--[[
 
-		1. Specifies some units do damage to other units (radiation)
-		2. Allows units to spell radiation to enemy units (weapon)
+		Specifies some units do damage to other units (radiation)
 
 		-parameters options:
 			- 
@@ -94,62 +93,55 @@ end
 -- HELP FUNCTION --
 
 
-local function removeUnitDoDamage(unitID)
-	unitsDoDamage[unitID] = nil
-	damageValues[unitID] = nil
-	SetGameRulesParam('radiation_radius' .. unitID, 0)
-	SetGameRulesParam('radiation_damage' .. unitID, 0)
-	if GG.radiation[unitID] then
-		GG.radiation[unitID] = nil
-	end
-	local update_number = GetGameRulesParam('radiation_update_number')
-	SetGameRulesParam('radiation_update_number', update_number + 1)
-end
-
-
-
-local function update_damage()
+function update_damage()
 
 	-- updating units causing damage
 	for k,v in pairs(unitsDoDamage) do
+		-- WANDGLOW, PORTALGLOW
 		if ValidUnitID(k) == true then
-
-			-- damage or radius increases or decreases
-			unitsDoDamage[k].damage = max(0,min(v.damage + damageValues[k].dDamage,1))
-			unitsDoDamage[k].radius = max(0,min(v.radius +  damageValues[k].dRadius,MAXDAMAGERADIUS))
+			unitsDoDamage[k].damage = min(v.damage + damageValues[k].dDamage,1)
+			unitsDoDamage[k].radius = min(v.radius +  damageValues[k].dRadius,MAXDAMAGERADIUS)
 			SetGameRulesParam('radiation_radius' .. k, unitsDoDamage[k].radius)
 			SetGameRulesParam('radiation_damage' .. k, unitsDoDamage[k].damage)
-
-
-			-- remove unit from radiation list if i doesnt deliver radiation anymore
 			if (unitsDoDamage[k].damage <= 0 or unitsDoDamage[k].radius <= 0) then
-				removeUnitDoDamage(k)
+				unitsDoDamage[k] = nil
+				SetGameRulesParam('radiation_radius' .. k, 0)
+				SetGameRulesParam('radiation_damage' .. k, 0)
+				if GG.radiation[k] then
+					GG.radiation[k] = nil
+				end
+				local update_number = GetGameRulesParam('radiation_update_number')
+				SetGameRulesParam('radiation_update_number', update_number + 1)
 			end
-
-		elseif tonumber(v.duration) > 0 then
-
-			-- damage radius and value only decreases
+		elseif v.duration > 0 then
 			unitsDoDamage[k].damage = max(v.damage - abs(damageValues[k].dDamage),0)
 			unitsDoDamage[k].radius = max(v.radius - abs(damageValues[k].dRadius),0)
 			unitsDoDamage[k].duration = v.duration - timeDelayDamage*2
 			SetGameRulesParam('radiation_radius' .. k, unitsDoDamage[k].radius)
 			SetGameRulesParam('radiation_damage' .. k, unitsDoDamage[k].damage)
-
-			-- remove area from radiation list if it doesnt deliver radiation anymore
 			if (unitsDoDamage[k].damage <= 0 or unitsDoDamage[k].radius <= 0) then
-				removeUnitDoDamage(k)
+				unitsDoDamage[k] = nil
+				SetGameRulesParam('radiation_radius' .. k, 0)
+				SetGameRulesParam('radiation_damage' .. k, 0)
+				if GG.radiation[k] then
+					GG.radiation[k] = nil
+				end
+				local update_number = GetGameRulesParam('radiation_update_number')
+				SetGameRulesParam('radiation_update_number', update_number + 1)
 			end
-
 		else
-			removeUnitDoDamage(k)
-
+			unitsDoDamage[k] = nil
+			if GG.radiation[k] then
+				GG.radiation[k] = nil
+			end
+			SetGameRulesParam('radiation_radius' .. k, 0)
+			SetGameRulesParam('radiation_damage' .. k, 0)
+			local update_number = GetGameRulesParam('radiation_update_number')
+			SetGameRulesParam('radiation_update_number', update_number + 1)
 		end
 	end
 
 	-- update damaged to units/features
-	damageToUnits = {}
-	damageToFeatures = {}
-
 	for k,v in pairs(unitsDoDamage) do
 		local near_units = GetUnitsInSphere(v.x,v.y,v.z, v.radius)
 		local near_features = GetFeaturesInSphere(v.x,v.y,v.z, v.radius)
@@ -174,8 +166,8 @@ local function update_damage()
 				end
 			end
 		end
-	end
 
+	end
 end
 
 
@@ -212,7 +204,7 @@ local function update_radiation_unit()
 end
 
 
-local function apply_damage()
+function apply_damage()
 	for k,v in pairs(damageToUnits) do
 		if ValidUnitID(k) == true then
 			AddUnitDamage(k, v)
@@ -246,47 +238,12 @@ function gadget:UnitFinished(unitID, unitDefID, unitTeam)
 		SetGameRulesParam('radiation_damage' .. unitID, GG.radiation[unitID].damage)
 		local update_number = GetGameRulesParam('radiation_update_number')
 		SetGameRulesParam('radiation_update_number', update_number + 1)
-		local x,y,z = GetUnitPosition(unitID)
-		unitsDoDamage[unitID] = {
-						["damage"] = GG.radiation[unitID].damage,
-						["radius"] = GG.radiation[unitID].radius,
-						["x"] = x,
-						["y"] = y,
-						["z"] = z,
-						["duration"] = GG.radiation[unitID].duration
-		}
 	end
 end
 
 
 function gadget:Explosion(weaponID, px, py, pz, ownerID)
 	if (radiationWeapons[weaponID]) then
-
-		--local AOE = WeaponDefs[weaponID].damageAreaOfEffect * 2 --to small i guess
-		local AOE = 50
-		local hit_units = GetUnitsInSphere(px,py,pz, AOE)
-		for index, unitID in pairs(hit_units) do
-			if not (ownerID == unitID) then
-				if damageValues[unitID] == nil then  -- only add non already hit unit to the radiation units
-					damageValues[unitID] = radiationWeapons[weaponID]
-					GG.radiation[unitID] = damageValues[unitID]
-					SetGameRulesParam('radiation_radius' .. unitID, GG.radiation[unitID].radius)
-					SetGameRulesParam('radiation_damage' .. unitID, GG.radiation[unitID].damage)
-					local update_number = GetGameRulesParam('radiation_update_number')
-					SetGameRulesParam('radiation_update_number', update_number + 1)
-					unitsDoDamage[unitID] = {
-						["damage"] = GG.radiation[unitID].damage,
-						["radius"] = GG.radiation[unitID].radius,
-						["x"] = px,
-						["y"] = py,
-						["z"] = pz,
-						["duration"] = GG.radiation[unitID].duration
-					}
-				end
-			end
-		end
-		--old stuff (that does damage to the shooter of the weapon)
-		--[[
 		if damageValues[ownerID] == nil then
 			damageValues[ownerID] = {
 				['radius'] = radiationWeapons[weaponID].radius,
@@ -302,7 +259,6 @@ function gadget:Explosion(weaponID, px, py, pz, ownerID)
 			local update_number = GetGameRulesParam('radiation_update_number')
 			SetGameRulesParam('radiation_update_number', update_number + 1)
 		end
-		--]]
 	end
 	return false
 end
