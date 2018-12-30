@@ -60,8 +60,7 @@ local radiationUnits = {
 				['dRadius'] = 0.1,
 				['dDamage'] = 0.00001,
 				['duration'] = 5000,
-				['protection'] = 0.05
-			['protection'] = 0.05
+				['protection'] = 0.05,
 	},
 
 	-- 2. fusion
