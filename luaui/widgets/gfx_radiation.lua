@@ -33,7 +33,7 @@ local ValidUnitID 						= Spring.ValidUnitID
 
 
 local function add_radiation_unit(unitID)
-	if GetGameRulesParam('radiation_radius' .. unitID) ~= nil or GetGameRulesParam('radiation_radius' .. unitID) ~= 0 then
+	if GetGameRulesParam('radiation_radius' .. unitID) ~= nil and GetGameRulesParam('radiation_radius' .. unitID) ~= 0 then
 		radiation_units[unitID] = {["radius"] = GetGameRulesParam('radiation_radius' .. unitID),
 									   ["damage"] = GetGameRulesParam('radiation_damage' .. unitID)}
 		radiation_areas[unitID] = radiation_units[unitID]
@@ -128,19 +128,20 @@ function widget:DrawWorld()
 	end
 
 	for unitID, v in pairs(radiation_areas) do
-		if not radiation_units[unitID] then
+		if radiation_units[unitID] == nil then
 			if GetGameRulesParam('radiation_damage' .. unitID) ~= nil and GetGameRulesParam('radiation_damage' .. unitID) ~= 0 then
 				local radius = GetGameRulesParam('radiation_radius' .. unitID)
+				gl.Color(r,g,b,a)
 				gl.DrawGroundCircle(v.x, v.y, v.z, radius, 25)
 			end
 		end
 	end
 
-
 	gl.Blending("default")
 	gl.Color(1,1,1,1)
 	gl.Texture(false)
-	gl.TexGen(GL.T, false)
+	local glt = GL.T
+	gl.TexGen(glt, false)
 
 	if (smoothPolys) then
 		gl.Smoothing(nil, nil, false)
