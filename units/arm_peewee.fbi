@@ -100,6 +100,7 @@
 	[customparams] 	
 	{
 	tip=Fast, with devastating close range damage, ideal for raids, even greater when outnumbering.;
+	radiationinpact = 0;
 	}
 
 }

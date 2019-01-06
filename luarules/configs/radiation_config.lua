@@ -1,17 +1,10 @@
 --[[
 
 
-For now only a few of the mechanics work
+	For parameter description see radiation gadget
 
-	working:
-	1. radiation increase/decrease in radius and damage levels (dDamage, dRadius)
-
-	TODO: (not working)
-	2. add option for self damage = true/false
-	3. fix funcitonality of radiation after unit has died (area on map)(maybe it works-duration param)
-	4. add unit to a radiation table when an event happens (unit get nuked ot unit fires or ...)
-	5. add unit list that are not effected by the radiation
-	6. add some kind of cleaning unit that can remove radiation (reduce it)
+	- radiationWeapons: weapons that deal radiation
+	- radiationUnits: units that have radiation
 
 --]]
 
@@ -48,89 +41,88 @@ local radiationUnits = {
 
 	["arm_geothermal_powerplant"] = {
 				['radius'] = 100,
-				['damage'] = 0.00001,
+				['damage'] = 0.05,
 				['dRadius'] = 0.1,
-				['dDamage'] = 0.00001,
-				['duration'] = 5000,
-				['protection'] = 0.05
+				['dDamage'] = 0.001,
+				['duration'] = 500,
+				['protection'] = 0
 	},
 	["core_geothermal_powerplant"] = {
 			['radius'] = 100,
-				['damage'] = 0.00001,
-				['dRadius'] = 0.1,
-				['dDamage'] = 0.00001,
-				['duration'] = 5000,
-				['protection'] = 0.05,
+			['damage'] = 0.05,
+			['dRadius'] = 0.1,
+			['dDamage'] = 0.001,
+			['duration'] = 500,
+			['protection'] = 0
 	},
 
 	-- 2. fusion
 
 	["arm_fusion_reactor"] = {
 				['radius'] = 100,
-				['damage'] = 0.00001,
+				['damage'] = 0.01,
 				['dRadius'] = 0.1,
-				['dDamage'] = 0.00001,
-				['duration'] = 5000,
-				['protection'] = 0.05
+				['dDamage'] = 0.001,
+				['duration'] = 500,
+				['protection'] = 0.0001
 	},
 	["arm_mobile_fusion"] = {
 				['radius'] = 100,
-				['damage'] = 0.00001,
+				['damage'] = 0.05,
 				['dRadius'] = 0.1,
-				['dDamage'] = 0.00001,
-				['duration'] = 5000,
-				['protection'] = 0.05
+				['dDamage'] = 0.001,
+				['duration'] = 500,
+				['protection'] = 0.0001
 	},
 	["arm_underwater_fusion_reactor"] = {
 				['radius'] = 100,
-				['damage'] = 0.00001,
+				['damage'] = 0.05,
 				['dRadius'] = 0.1,
-				['dDamage'] = 0.00001,
-				['duration'] = 5000,
-				['protection'] = 0.05
+				['dDamage'] = 0.001,
+				['duration'] = 500,
+				['protection'] = 0.0001
 	},
 	["arm_cloakable_fusion_reactor"] = {
 				['radius'] = 100,
-				['damage'] = 0.00001,
+				['damage'] = 0.05,
 				['dRadius'] = 0.1,
-				['dDamage'] = 0.00001,
-				['duration'] = 5000,
-				['protection'] = 0.05
+				['dDamage'] = 0.001,
+				['duration'] = 500,
+				['protection'] = 0.0001
 	},
 	["core_light_fusion_power_plant"] = {
 				['radius'] = 100,
-				['damage'] = 0.00001,
+				['damage'] = 0.05,
 				['dRadius'] = 0.1,
-				['dDamage'] = 0.00001,
-				['duration'] = 5000,
-				['protection'] = 0.05
+				['dDamage'] = 0.001,
+				['duration'] = 500,
+				['protection'] = 0.0001
 	},
 	["core_cloakable_fusion_power_plant"] = {
 				['radius'] = 100,
-				['damage'] = 0.00001,
+				['damage'] = 0.05,
 				['dRadius'] = 0.1,
-				['dDamage'] = 0.00001,
-				['duration'] = 5000,
-				['protection'] = 0.05
+				['dDamage'] = 0.001,
+				['duration'] = 500,
+				['protection'] = 0.0001
 	},
 	["core_fusion_power_plant"] = {
 			['radius'] = 100,
-				['damage'] = 0.00001,
-				['dRadius'] = 0.1,
-				['dDamage'] = 0.00001,
-				['duration'] = 5000,
-				['protection'] = 0.05
+			['damage'] = 0.05,
+			['dRadius'] = 0.1,
+			['dDamage'] = 0.001,
+			['duration'] = 500,
+			['protection'] = 0.0001
 	},
 	["core_underwater_fusion_power_plant"] = {
 			['radius'] = 100,
-				['damage'] = 0.00001,
-				['dRadius'] = 0.1,
-				['dDamage'] = 0.00001,
-				['duration'] = 5000,
-				['protection'] = 0.05
+			['damage'] = 0.05,
+			['dRadius'] = 0.1,
+			['dDamage'] = 0.001,
+			['duration'] = 500,
+			['protection'] = 0.0001
 	},
 
-	--2. ??
 
 }
 

@@ -13,8 +13,20 @@ function widget:GetInfo()
 end
 
 
+--[[
+
+	Colors 	- radiation units green
+			- units that obain radiation yellow
+			- and circles the area/units that have radiation
+
+	--]]
+
+
 -- LOCALS
 
+local random							= math.random
+local max								= math.max
+local min								= math.min
 
 local Echo								= Spring.Echo
 local radiation_units					= {}
@@ -27,6 +39,8 @@ local smoothPolys						= (gl.Smoothing ~= nil) and false
 local texName 							= LUAUI_DIRNAME .. 'Images/highlight_strip.png'
 local update_number						= GetGameRulesParam('radiation_update_number') or 0
 local ValidUnitID 						= Spring.ValidUnitID
+local GetUnitsInSphere					= Spring.GetUnitsInSphere
+local ValidUnitID						= Spring.ValidUnitID
 
 
 -- FUNCTIONS
@@ -81,9 +95,9 @@ local function update_radiation()
 		else
 			if ValidUnitID(k) == true then
 				local x,y,z = GetUnitPosition(unitID)
-				radiation_areas[unitID].x = x
-				radiation_areas[unitID].y = y
-				radiation_areas[unitID].z = z
+				--radiation_areas[unitID].x = x
+				--radiation_areas[unitID].y = y
+				--radiation_areas[unitID].z = z
 			end
 		end
 	end
@@ -113,40 +127,57 @@ function widget:DrawWorld()
 	gl.TexGen(GL.T, GL.TEXTURE_GEN_MODE, GL.EYE_LINEAR)
 	gl.TexGen(GL.T, GL.EYE_PLANE, 0, 1 , 0, 1)
 	gl.Texture(texName)
-
-	for index, unitID in pairs(getAllUnits()) do
-		if radiation_units[unitID] then
-			if GetGameRulesParam('radiation_damage' .. unitID) ~= nil and GetGameRulesParam('radiation_damage' .. unitID) ~= 0 then
-				a = 1 - GetGameRulesParam('radiation_damage' .. unitID)
-				local radius = GetGameRulesParam('radiation_radius' .. unitID)
-				gl.Color(r,g,b,a)
-				gl.Unit(unitID,true)
-				local x,y,z = GetUnitPosition(unitID)
-				gl.DrawGroundCircle(x, y, z, radius, 25)
-			end
-		end
-	end
+	local a = 0.5
 
 	for unitID, v in pairs(radiation_areas) do
+
+		-- radiation areas
 		if radiation_units[unitID] == nil then
+
 			if GetGameRulesParam('radiation_damage' .. unitID) ~= nil and GetGameRulesParam('radiation_damage' .. unitID) ~= 0 then
 				local radius = GetGameRulesParam('radiation_radius' .. unitID)
-				gl.Color(r,g,b,a)
+
+				local intensity = min(max(0,GetGameRulesParam('radiation_damage' .. unitID)),1)
+				gl.Color(intensity,1,intensity,a)
 				gl.DrawGroundCircle(v.x, v.y, v.z, radius, 25)
+				local temp = GetGameRulesParam('radiation_damage' .. unitID)
+				local effectedUnits = GetUnitsInSphere(v.x,v.y,v.z, radius)
+				for index, uID in pairs(effectedUnits) do
+					if uID ~= unitID and radiation_units[uID] == nil then
+						gl.Color(1, 1, intensity, a) --yellow
+						gl.Unit(uID,true)
+					end
+				end
+			else
+				radiation_areas[unitID] = nil
+			end
+
+		-- radiation units
+		else
+
+			if ValidUnitID(unitID) then
+				if GetGameRulesParam('radiation_damage' .. unitID) ~= nil and GetGameRulesParam('radiation_damage' .. unitID) ~= 0 then
+					local intensity = min(max(0,GetGameRulesParam('radiation_damage' .. unitID)),1)
+					local radius = GetGameRulesParam('radiation_radius' .. unitID)
+					gl.Color(intensity,1,intensity,a) --green
+					gl.Unit(unitID,true)
+					local x,y,z = GetUnitPosition(unitID)
+					radiation_areas[unitID].x = x
+					radiation_areas[unitID].y = y
+					radiation_areas[unitID].z = z
+					gl.DrawGroundCircle(x, y, z, radius, 25)
+					local effectedUnits = GetUnitsInSphere(x,y,z, radius)
+					for index, uID in pairs(effectedUnits) do
+						if uID ~= unitID and radiation_units[uID] == nil then
+							gl.Color(1, 1, intensity, a) --yellow
+							gl.Unit(uID,true)
+						end
+					end
+				end
+			else
+				radiation_units[unitID] = nil
 			end
 		end
 	end
 
-	gl.Blending("default")
-	gl.Color(1,1,1,1)
-	gl.Texture(false)
-	local glt = GL.T
-	gl.TexGen(glt, false)
-
-	if (smoothPolys) then
-		gl.Smoothing(nil, nil, false)
-	end
-	gl.Blending(GL.SRC_ALPHA, GL.ONE_MINUS_SRC_ALPHA)
-	gl.PolygonOffset(false)
-	gl.DepthTest(false)
 end

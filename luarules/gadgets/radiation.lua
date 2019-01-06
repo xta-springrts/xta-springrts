@@ -13,15 +13,39 @@ end
 
 	--[[
 
-		1. Specifies some units do damage to other units (radiation)
-		2. Allows units to spell radiation to enemy units (weapon)
+		-Dependencies: 	-radiation_config
+						-widget: fx_radiation
+
+		-What it does:
+			1. Specifies some units do damage to area/units by radiation
+			2. Allows units to spell radiation to enemy units (weapon)
 
 		-parameters options:
-			- 
+			1. set by unitDefs (customParams) how much units are effected:
+				radiationinpact = [0,1]
 
-		# TODO
-		1. Add map damage area fx
-		2. Add list with damage areas (without units)
+			2. 	values in weaponDef.customParams (for weapon that have radiation):
+				['radius'] =  300, 		natural number,		radius of radiation impact
+				['damage'] = 0.1,		[0,1],				damage value
+				['dRadius'] = -2,		integer,			change over time
+				['dDamage'] = -0.001,	[0,1],				change over time
+				['duration'] = 50,		natural number,		radiation after unit die on map
+				['protection'] = 0.05   [0,1],				multiplier for damage (higher is more damage dealt)
+
+			2. 	values in radiation_config (for unit that have radiation):
+				['radius'] =  300, 		natural number,		radius of radiation impact
+				['damage'] = 0.1,		[0,1],				damage value
+				['dRadius'] = -2,		integer,			change over time
+				['dDamage'] = -0.001,	[0,1],				change over time
+				['duration'] = 50,		natural number,		radiation after unit die on map
+				['protection'] = 0.05   [0,1],				multiplier for damage (higher is more damage dealt)
+
+			3. DAMAGELEVEL = 100, 		natural number, 	Multiplier for applied damage
+
+			4. MAXDAMAGERADIUS = 1000,	natural number,		Maximum distance radiation is applied to
+
+		TODO: 1. maybe add functionality for units that do selfdamage by shooting stuff (half implemented)
+		TODO: 2. maybe make some units susceptible for radiation?
 
 	--]]	
 
@@ -62,6 +86,7 @@ local unitsDoDamage						= {}
 local timeDelayDamage					= 13 -- 1/4 second every second (either update or do damage)
 local MAXDAMAGERADIUS					= 1000
 local damageValues 						= {}
+local DAMAGELEVEL 						= 100
 
 
 -- GLOBALS --
@@ -114,6 +139,13 @@ local function update_damage()
 	for k,v in pairs(unitsDoDamage) do
 		if ValidUnitID(k) == true then
 
+
+			-- update coordinates
+			local x,y,z = GetUnitPosition(k)
+			unitsDoDamage[k].x = x
+			unitsDoDamage[k].y = y
+			unitsDoDamage[k].z = z
+
 			-- damage or radius increases or decreases
 			unitsDoDamage[k].damage = max(0,min(v.damage + damageValues[k].dDamage,1))
 			unitsDoDamage[k].radius = max(0,min(v.radius +  damageValues[k].dRadius,MAXDAMAGERADIUS))
@@ -146,6 +178,7 @@ local function update_damage()
 		end
 	end
 
+
 	-- update damaged to units/features
 	damageToUnits = {}
 	damageToFeatures = {}
@@ -157,10 +190,32 @@ local function update_damage()
 		if not (near_units == nil) then
 			for i in pairs(near_units) do
 				local unitID = near_units[i]
-				local xu,yu,zu = GetUnitPosition(unitID)
-				local multiplier = 1-sqrt( (v.x-xu)*(v.x-xu) + (v.y-yu)*(v.y-yu) + (v.z-zu)*(v.z-zu) )/v.radius
 				local damage = damageToUnits[unitID] or 0
-				damageToUnits[unitID] = max(v.damage *multiplier*1000,damage)
+				local multiplier
+				local custom = UnitDefs[GetUnitDefID(unitID)].customParams
+				local protection
+				if custom ~= nil then
+					protection = custom.radiationinpact
+				else
+					protection = nil
+				end
+
+				-- radiation unit
+				if k == unitID then
+					multiplier = damageValues[k].protection
+
+				-- unit with defined protection
+				elseif protection ~= nil then
+					local xu,yu,zu = GetUnitPosition(unitID)
+					multiplier = protection * 1-sqrt( (v.x-xu)*(v.x-xu) + (v.y-yu)*(v.y-yu) + (v.z-zu)*(v.z-zu) )/v.radius
+
+				-- non radiation unit whitout protection
+				else
+					local xu,yu,zu = GetUnitPosition(unitID)
+					multiplier = 1-sqrt( (v.x-xu)*(v.x-xu) + (v.y-yu)*(v.y-yu) + (v.z-zu)*(v.z-zu) )/v.radius
+				end
+
+				damageToUnits[unitID] = max(v.damage *multiplier*DAMAGELEVEL,damage)
 			end
 		end
 		if not (near_features == nil) then
@@ -170,7 +225,7 @@ local function update_damage()
 					local xf,yf,zf = GetFeaturePosition(featureID)
 					local multiplier = 1-sqrt( (v.x-xf)*(v.x-xf) + (v.y-yf)*(v.y-yf) + (v.z-zf)*(v.z-zf) )/v.radius
 					local damage = damageToFeatures[featureID] or 0
-					damageToFeatures[featureID] = max(v.damage*multiplier*1000,damage)
+					damageToFeatures[featureID] = max(v.damage*multiplier*DAMAGELEVEL,damage)
 				end
 			end
 		end
