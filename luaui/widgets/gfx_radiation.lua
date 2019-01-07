@@ -138,8 +138,14 @@ function widget:DrawWorld()
 				local radius = GetGameRulesParam('radiation_radius' .. unitID)
 
 				local intensity = 1-min(max(0,GetGameRulesParam('radiation_damage' .. unitID)),1)
+
 				gl.Color(intensity,1,intensity,a) 	--green
 				gl.DrawGroundCircle(v.x, v.y, v.z, radius, 25)
+				gl.Color(0.5,0.5,0.5,a) 	--black/gray
+				gl.DrawGroundCircle(v.x, v.y, v.z, radius+1, 25)
+
+				gl.Color(intensity,1,intensity,a) 	--green
+
 				local temp = GetGameRulesParam('radiation_damage' .. unitID)
 				local effectedUnits = GetUnitsInSphere(v.x,v.y,v.z, radius)
 				for index, uID in pairs(effectedUnits) do
@@ -165,7 +171,12 @@ function widget:DrawWorld()
 					radiation_areas[unitID].x = x
 					radiation_areas[unitID].y = y
 					radiation_areas[unitID].z = z
-					gl.DrawGroundCircle(x, y, z, radius, 25)
+
+					gl.Color(intensity,1,intensity,a) 	--green
+					gl.DrawGroundCircle(v.x, v.y, v.z, radius, 25)
+					gl.Color(0.5,0.5,0.5,a) 	--black
+					gl.DrawGroundCircle(v.x, v.y, v.z, radius+1, 25)
+
 					local effectedUnits = GetUnitsInSphere(x,y,z, radius)
 					for index, uID in pairs(effectedUnits) do
 						if uID ~= unitID and radiation_units[uID] == nil then

@@ -79,6 +79,7 @@ local ValidUnitID 						= Spring.ValidUnitID
 local ValidFeatureID 					= Spring.ValidFeatureID
 local SetGameRulesParam 				= Spring.SetGameRulesParam
 local GetGameRulesParam					= Spring.GetGameRulesParam
+local DestroyFeature					= Spring.DestroyFeature
 
 local damageToUnits 					= {}
 local damageToFeatures 					= {}
@@ -280,7 +281,11 @@ local function apply_damage()
 	for k,v in pairs(damageToFeatures) do
 		if ValidFeatureID(k) then
 			local feature_health = GetFeatureHealth(k)
-			SetFeatureHealth(k,feature_health-v)
+			if feature_health-v <= 0 then
+				DestroyFeature(k)
+			else
+				SetFeatureHealth(k,feature_health-v)
+			end
 			damageToFeatures[k] = 0
 		else
 			damageToFeatures[k] = nil
