@@ -41,6 +41,7 @@ local update_number						= GetGameRulesParam('radiation_update_number') or 0
 local ValidUnitID 						= Spring.ValidUnitID
 local GetUnitsInSphere					= Spring.GetUnitsInSphere
 local ValidUnitID						= Spring.ValidUnitID
+local IsUnitInView						= Spring.IsUnitInView
 
 
 -- FUNCTIONS
@@ -84,6 +85,7 @@ end
 
 local function update_radiation()
 	local visibleUnits = getAllUnits()
+	--local visibleUnits = GetVisibleUnits()
 	radiation_units = {}
 	for index, unitID in pairs(visibleUnits) do
 		add_radiation_unit(unitID)
@@ -134,6 +136,7 @@ function widget:DrawWorld()
 		-- radiation areas
 		if radiation_units[unitID] == nil then
 
+
 			if GetGameRulesParam('radiation_damage' .. unitID) ~= nil and GetGameRulesParam('radiation_damage' .. unitID) ~= 0 then
 				local radius = GetGameRulesParam('radiation_radius' .. unitID)
 
@@ -162,28 +165,35 @@ function widget:DrawWorld()
 		else
 
 			if ValidUnitID(unitID) then
+
 				if GetGameRulesParam('radiation_damage' .. unitID) ~= nil and GetGameRulesParam('radiation_damage' .. unitID) ~= 0 then
-					local intensity = 1-min(max(0,GetGameRulesParam('radiation_damage' .. unitID)),1)
-					local radius = GetGameRulesParam('radiation_radius' .. unitID)
-					gl.Color(intensity,1,intensity,a) --green
-					gl.Unit(unitID,true)
-					local x,y,z = GetUnitPosition(unitID)
-					radiation_areas[unitID].x = x
-					radiation_areas[unitID].y = y
-					radiation_areas[unitID].z = z
 
-					gl.Color(intensity,1,intensity,a) 	--green
-					gl.DrawGroundCircle(v.x, v.y, v.z, radius, 25)
-					gl.Color(0.5,0.5,0.5,a) 	--black
-					gl.DrawGroundCircle(v.x, v.y, v.z, radius+1, 25)
+					if IsUnitInView(unitID) then
 
-					local effectedUnits = GetUnitsInSphere(x,y,z, radius)
-					for index, uID in pairs(effectedUnits) do
-						if uID ~= unitID and radiation_units[uID] == nil then
-							gl.Color(1, 1, intensity, a) --yellow
-							gl.Unit(uID,true)
+						local intensity = 1-min(max(0,GetGameRulesParam('radiation_damage' .. unitID)),1)
+						local radius = GetGameRulesParam('radiation_radius' .. unitID)
+						gl.Color(intensity,1,intensity,a) --green
+						gl.Unit(unitID,true)
+						local x,y,z = GetUnitPosition(unitID)
+						radiation_areas[unitID].x = x
+						radiation_areas[unitID].y = y
+						radiation_areas[unitID].z = z
+
+						gl.Color(intensity,1,intensity,a) 	--green
+						gl.DrawGroundCircle(v.x, v.y, v.z, radius, 25)
+						gl.Color(0.5,0.5,0.5,a) 	--black
+						gl.DrawGroundCircle(v.x, v.y, v.z, radius+1, 25)
+
+						local effectedUnits = GetUnitsInSphere(x,y,z, radius)
+						for index, uID in pairs(effectedUnits) do
+							if uID ~= unitID and radiation_units[uID] == nil then
+								gl.Color(1, 1, intensity, a) --yellow
+								gl.Unit(uID,true)
+							end
 						end
+
 					end
+
 				end
 			else
 				radiation_units[unitID] = nil

@@ -4746,15 +4746,6 @@
 		group_landair=110;
 		group_skyair=110;
 	}
-	[customparams]
-	{
-		radiation_radius = 300;
-		radiation_damage = 0.005;
-		radiation_dradius = -2;
-		radiation_ddamage = -0.001;
-		radiation_duration = 200;
-		radiation_protection = 0.05;
-	}
 }
 [CORTRUCK_ROCKET]
 {
@@ -5390,15 +5381,6 @@
 		default=41;
 		group_invincible=1;
 	}
-	[customparams]
-	{
-		radiation_radius = 300;
-		radiation_damage = 0.005;
-		radiation_dradius = -2;
-		radiation_ddamage = -0.001;
-		radiation_duration = 200;
-		radiation_protection = 0.05;
-	}
 }
 [GAUSS]
 {
@@ -5479,15 +5461,6 @@
 		default=145;
 		lost_commanders=120;
 		group_invincible=1;
-	}
-	[customparams]
-	{
-		radiation_radius = 300;
-		radiation_damage = 0.005;
-		radiation_dradius = -2;
-		radiation_ddamage = -0.001;
-		radiation_duration = 200;
-		radiation_protection = 0.05;
 	}
 }
 [LARGE_BUILDING]
@@ -7111,15 +7084,6 @@
 	{
 		default=400;
 		group_invincible=1;
-	}
-	[customparams]
-	{
-		radiation_radius = 300;
-		radiation_damage = 0.005;
-		radiation_dradius = -2;
-		radiation_ddamage = -0.001;
-		radiation_duration = 200;
-		radiation_protection = 0.05;
 	}
 }
 [KROGOTH_ARTILLERY]

@@ -238,14 +238,15 @@ function update_comet()
 			local y = GetGroundHeight(v.X,v.Z)
 			SpawnCEG(COMET_HIT_GROUND,v.X, y, v.Z)
 			local unitID = CreateUnit(v.unitName, v.X, height, v.Z, 0, team)
-			local damage = random()
+			local damage = 0.1 --random()
 			GG.radiation[unitID] = {
-				['radius'] = 300,		-- number
+				['radius'] = 100,		-- number
 				['damage'] = damage,		-- number between 0,1
-				['dRadius'] = -2,		-- number
-				['dDamage'] = -0.001,	-- number between 0,1
+				['dRadius'] = 2,		-- number
+				['dDamage'] = 0.01,	-- number between 0,1
 				['duration'] = 50,		-- number
-				['protection'] = 0.05   -- maybe rename to somthing?
+				['protection'] = 0.5,   -- maybe rename to somthing?
+				['maxradius'] = 500
 			}
 			remove(comets, i)
 

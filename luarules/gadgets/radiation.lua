@@ -31,6 +31,8 @@ end
 				['dDamage'] = -0.001,	[0,1],				change over time
 				['duration'] = 50,		natural number,		radiation after unit die on map
 				['protection'] = 0.05   [0,1],				multiplier for damage (higher is more damage dealt)
+				['maxradius'] = 500   	natural number,		max radius of radiation
+				['hitradius'] = 100,	natural number,		hit area of radiation weapon
 
 			2. 	values in radiation_config (for unit that have radiation):
 				['radius'] =  300, 		natural number,		radius of radiation impact
@@ -39,10 +41,9 @@ end
 				['dDamage'] = -0.001,	[0,1],				change over time
 				['duration'] = 50,		natural number,		radiation after unit die on map
 				['protection'] = 0.05   [0,1],				multiplier for damage (higher is more damage dealt)
+				['maxradius'] = 500   	natural number,		max radius of radiation
 
 			3. DAMAGELEVEL = 100, 		natural number, 	Multiplier for applied damage
-
-			4. MAXDAMAGERADIUS = 1000,	natural number,		Maximum distance radiation is applied to
 
 		TODO: 1. maybe add functionality for units that do selfdamage by shooting stuff (half implemented)
 		TODO: 2. maybe make some units susceptible for radiation?
@@ -80,12 +81,14 @@ local ValidFeatureID 					= Spring.ValidFeatureID
 local SetGameRulesParam 				= Spring.SetGameRulesParam
 local GetGameRulesParam					= Spring.GetGameRulesParam
 local DestroyFeature					= Spring.DestroyFeature
+local GetUnitTeam						= Spring.GetUnitTeam
+local AreTeamsAllied					= Spring.AreTeamsAllied
+
 
 local damageToUnits 					= {}
 local damageToFeatures 					= {}
 local unitsDoDamage						= {}
 local timeDelayDamage					= 13 -- 1/4 second every second (either update or do damage)
-local MAXDAMAGERADIUS					= 1000
 local damageValues 						= {}
 local DAMAGELEVEL 						= 100
 
@@ -149,7 +152,7 @@ local function update_damage()
 
 			-- damage or radius increases or decreases
 			unitsDoDamage[k].damage = max(0,min(v.damage + damageValues[k].dDamage,1))
-			unitsDoDamage[k].radius = max(0,min(v.radius +  damageValues[k].dRadius,MAXDAMAGERADIUS))
+			unitsDoDamage[k].radius = max(0,min(v.radius +  damageValues[k].dRadius,damageValues[k].maxradius))
 			SetGameRulesParam('radiation_radius' .. k, unitsDoDamage[k].radius)
 			SetGameRulesParam('radiation_damage' .. k, unitsDoDamage[k].damage)
 
@@ -246,7 +249,8 @@ local function update_radiation_unit()
 						['dRadius'] = GG.radiation[unitID].dRadius,
 						['dDamage'] = GG.radiation[unitID].dDamage,
 						['duration'] = GG.radiation[unitID].duration,
-						['protection'] = GG.radiation[unitID].protection
+						['protection'] = GG.radiation[unitID].protection,
+						['maxradius'] = GG.radiation[unitID].maxradius
 					}
 					local x, y, z = GetUnitPosition(unitID)
 					unitsDoDamage[unitID] = {
@@ -320,13 +324,19 @@ end
 
 
 function gadget:Explosion(weaponID, px, py, pz, ownerID)
-	if (radiationWeapons[weaponID]) then
+	if (radiationWeapons[weaponID]) and ownerID~= nil then -- if selfradiation undo the onwner~=nil check
 
 		--local AOE = WeaponDefs[weaponID].damageAreaOfEffect * 2 --to small i guess
-		local AOE = 50
+		local AOE = radiationWeapons[weaponID].hitradius or 50
+		Echo("hitradius", AOE)
 		local hit_units = GetUnitsInSphere(px,py,pz, AOE)
 		for index, unitID in pairs(hit_units) do
-			if not (ownerID == unitID) then
+
+			local teama = GetUnitTeam(ownerID)
+			local teamb = GetUnitTeam(unitID)
+			local allied = AreTeamsAllied(teama, teamb)
+
+			if not (ownerID == unitID) and not allied then
 				if damageValues[unitID] == nil then  -- only add non already hit unit to the radiation units
 					damageValues[unitID] = radiationWeapons[weaponID]
 					GG.radiation[unitID] = damageValues[unitID]

@@ -2172,8 +2172,7 @@
 	ballistic=1;
 	turret=1;
 	range=400;
-	reloadtime=3.0;
-	accuracy=250;
+	reloadtime=3.25;
 	weaponvelocity=499;
 	areaofeffect=64;
    explosiongenerator=custom:WindkbotRocket;
@@ -2199,9 +2198,8 @@
 	ballistic=1;
 	turret=1;
 	minbarrelangle=-90;
-	range=800;
-	reloadtime=2.25;
-	accuracy=350;
+	range=790;
+	reloadtime=3.0;
 	weaponvelocity=480;
 	areaofeffect=48;
    explosiongenerator=custom:WindkbotRocket;
@@ -2517,15 +2515,6 @@
 		default=76;
 		group_mines=35;
 		group_invincible=1;
-	}
-	[customparams]
-	{
-		radiation_radius = 300;
-		radiation_damage = 0.005;
-		radiation_dradius = -2;
-		radiation_ddamage = -0.001;
-		radiation_duration = 200;
-		radiation_protection = 0.05;
 	}
 }
 
@@ -3150,85 +3139,5 @@
 	default=88;
     	group_invincible=1;
 	group_landair=22;
-	}
-}
-
-[Bind_LIGHTNING_Negative]
-{
-	Name=Lightning Beam;
-	rendertype=0;
-	lineofsight=1;
-	turret=1;
-	beamlaser=1;
-	LargeBeamLaser=1;
-	pulseSpeed=4.0;
-	thickness=8;
-	beamtime=0.1;
-	range=500; 
-	accuracy=150; //1840//
-	movingaccuracy=750; //3220//
-	reloadtime=0.1;
-	energypershot=6;
-	weaponvelocity=400;
-  	texture1=testlightning;
-  	laserflaresize=3;
-	minbarrelangle=-55;
-  //texture2=flare;
-  //texture3=flare;
-  //texture4=smallflare;
-	areaofeffect=16;
-	SoundStart=tllelechit;
-	soundhitdry=lashit2;
-	firestarter=90;
-	beamweapon=1;
-	rgbcolor=0.3 0.5 1.0;
-	tolerance=3000;
-	explosiongenerator=custom:ONESPARK;  //Noruas's FX added v8//
-	guidance=1;
-	//beamdecay=0.5;
-	//beamttl=1;
-	[DAMAGE]
-	{
-		default=17;
-	}
-}
-
-[Bind_LIGHTNING_Positive]
-{
-	Name=Lightning Beam;
-	rendertype=0;
-	lineofsight=1;
-	turret=1;
-	beamlaser=1;
-	LargeBeamLaser=1;
-	pulseSpeed=4.0;
-	thickness=8;
-	beamtime=0.1;
-	range=500; 
-	accuracy=150; //1840//
-	movingaccuracy=750; //3220//
-	reloadtime=0.1;
-	energypershot=6;
-	weaponvelocity=400;
-  	texture1=testlightning;
-  	laserflaresize=3;
-	minbarrelangle=-55;
-  //texture2=flare;
-  //texture3=flare;
-  //texture4=smallflare;
-	areaofeffect=16;
-	SoundStart=tllelechit;
-	soundhitdry=lashit2;
-	firestarter=90;
-	beamweapon=1;
-	rgbcolor=1.0 0.5 0.3;
-	tolerance=5000;
-	explosiongenerator=custom:ONESPARK;  //Noruas's FX added v8//
-	guidance=1;
-	//beamdecay=0.5;
-	//beamttl=1;
-	[DAMAGE]
-	{
-		default=17;
 	}
 }
