@@ -328,7 +328,6 @@ function gadget:Explosion(weaponID, px, py, pz, ownerID)
 
 		--local AOE = WeaponDefs[weaponID].damageAreaOfEffect * 2 --to small i guess
 		local AOE = radiationWeapons[weaponID].hitradius or 50
-		Echo("hitradius", AOE)
 		local hit_units = GetUnitsInSphere(px,py,pz, AOE)
 		for index, unitID in pairs(hit_units) do
 

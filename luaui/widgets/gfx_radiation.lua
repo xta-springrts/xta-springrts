@@ -41,8 +41,11 @@ local update_number						= GetGameRulesParam('radiation_update_number') or 0
 local ValidUnitID 						= Spring.ValidUnitID
 local GetUnitsInSphere					= Spring.GetUnitsInSphere
 local ValidUnitID						= Spring.ValidUnitID
-local IsUnitInView						= Spring.IsUnitInView
+local IsUnitVisible						= Spring.IsUnitInView
 
+
+-- test to make units better drawn
+local visibleUnits						= {}
 
 -- FUNCTIONS
 
@@ -69,6 +72,9 @@ function widget:Initialize()
 		local visibleUnits = getAllUnits()
 		for index, unitID in pairs(visibleUnits) do
 			add_radiation_unit(unitID)
+			--if IsUnitInView(unidID) then
+			--	visibleUnits[unitID] = true
+			--end
 		end
 	else
 		Spring.Log("widget", LOG.INFO, 'no glsl')
@@ -84,8 +90,8 @@ end
 
 
 local function update_radiation()
-	local visibleUnits = getAllUnits()
-	--local visibleUnits = GetVisibleUnits()
+	--local visibleUnits = getAllUnits()
+	local visibleUnits = GetVisibleUnits()
 	radiation_units = {}
 	for index, unitID in pairs(visibleUnits) do
 		add_radiation_unit(unitID)
@@ -133,33 +139,39 @@ function widget:DrawWorld()
 
 	for unitID, v in pairs(radiation_areas) do
 
-		-- radiation areas
+		-- radiation areas (and units not seen)
 		if radiation_units[unitID] == nil then
 
+			-- only areas
+			if not ValidUnitID(unitID) then
 
-			if GetGameRulesParam('radiation_damage' .. unitID) ~= nil and GetGameRulesParam('radiation_damage' .. unitID) ~= 0 then
-				local radius = GetGameRulesParam('radiation_radius' .. unitID)
+				if GetGameRulesParam('radiation_damage' .. unitID) ~= nil and GetGameRulesParam('radiation_damage' .. unitID) ~= 0 then
+					local radius = GetGameRulesParam('radiation_radius' .. unitID)
 
-				local intensity = 1-min(max(0,GetGameRulesParam('radiation_damage' .. unitID)),1)
+						local intensity = 1-min(max(0,GetGameRulesParam('radiation_damage' .. unitID)),1)
 
-				gl.Color(intensity,1,intensity,a) 	--green
-				gl.DrawGroundCircle(v.x, v.y, v.z, radius, 25)
-				gl.Color(0.5,0.5,0.5,a) 	--black/gray
-				gl.DrawGroundCircle(v.x, v.y, v.z, radius+1, 25)
+						gl.Color(intensity,1,intensity,a) 	--green
+						gl.DrawGroundCircle(v.x, v.y, v.z, radius, 25)
+						gl.Color(0.5,0.5,0.5,a) 	--black/gray
+						gl.DrawGroundCircle(v.x, v.y, v.z, radius+1, 25)
 
-				gl.Color(intensity,1,intensity,a) 	--green
+						gl.Color(intensity,1,intensity,a) 	--green
 
-				local temp = GetGameRulesParam('radiation_damage' .. unitID)
-				local effectedUnits = GetUnitsInSphere(v.x,v.y,v.z, radius)
-				for index, uID in pairs(effectedUnits) do
-					if uID ~= unitID and radiation_units[uID] == nil then
-						gl.Color(1, 1, intensity, a) --yellow
-						gl.Unit(uID,true)
-					end
+						local temp = GetGameRulesParam('radiation_damage' .. unitID)
+						local effectedUnits = GetUnitsInSphere(v.x,v.y,v.z, radius)
+						for index, uID in pairs(effectedUnits) do
+							if uID ~= unitID and radiation_units[uID] == nil then
+								gl.Color(1, 1, intensity, a) --yellow
+								gl.Unit(uID,true)
+							end
+						end
+				else
+					radiation_areas[unitID] = nil
 				end
-			else
-				radiation_areas[unitID] = nil
+
 			end
+
+
 
 		-- radiation units
 		else
@@ -168,7 +180,9 @@ function widget:DrawWorld()
 
 				if GetGameRulesParam('radiation_damage' .. unitID) ~= nil and GetGameRulesParam('radiation_damage' .. unitID) ~= 0 then
 
-					if IsUnitInView(unitID) then
+					if IsUnitVisible(unitID) then-- THIS DOEST WORK AT ALL (circles remain if unit gets out of view/ (loss?)
+
+						--Spring.IsUnitIcon
 
 						local intensity = 1-min(max(0,GetGameRulesParam('radiation_damage' .. unitID)),1)
 						local radius = GetGameRulesParam('radiation_radius' .. unitID)
@@ -180,9 +194,9 @@ function widget:DrawWorld()
 						radiation_areas[unitID].z = z
 
 						gl.Color(intensity,1,intensity,a) 	--green
-						gl.DrawGroundCircle(v.x, v.y, v.z, radius, 25)
+						gl.DrawGroundCircle(x, y, z, radius, 25)
 						gl.Color(0.5,0.5,0.5,a) 	--black
-						gl.DrawGroundCircle(v.x, v.y, v.z, radius+1, 25)
+						gl.DrawGroundCircle(x, y, z, radius+1, 25)
 
 						local effectedUnits = GetUnitsInSphere(x,y,z, radius)
 						for index, uID in pairs(effectedUnits) do
@@ -202,3 +216,30 @@ function widget:DrawWorld()
 	end
 
 end
+
+
+-- this needs a test!
+
+
+
+--function widget:UnitCloaked(unitID, unitDefID, unitTeam)
+--	update_radiation()
+
+--end
+--
+--
+--function widget:UnitDecloaked(unitID, unitDefID, unitTeam)
+--	update_radiation()
+
+--end
+--
+--
+--function widget:UnitEnteredLos(unitID, unitTeam, allyTeam, unitDefID)
+--	update_radiation()
+
+--end
+--
+--function widget:UnitLeftLos(unitID, unitTeam, allyTeam, unitDefID)
+--	update_radiation()
+
+--end
