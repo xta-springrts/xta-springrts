@@ -434,14 +434,14 @@ local options = {
 		def    = false,
 		section= "xtagame",
 	},
-	--{
-	--	key    = "tornado",
-	--	name   = 'tornado',
-	--	desc   = "Tornedo's cross the map!",
-	--	type   = "bool",
-	--	def    = false,
-	--	section= "xtagame",
-	--},
+	{
+		key    = "tornado",
+		name   = 'tornado',
+		desc   = "Tornedo's cross the map!",
+		type   = "bool",
+		def    = false,
+		section= "xtagame",
+	},
 
 	{
 		key    = "max_cracks",

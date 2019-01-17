@@ -16,7 +16,7 @@ end
 --[[
 
 	Colors 	- radiation units green
-			- units that obain radiation yellow
+			- units that obtain radiation yellow
 			- and circles the area/units that have radiation
 
 	--]]
@@ -53,12 +53,14 @@ local cloakedUnits						= {}
 local function add_radiation_unit(unitID)
 	if GetGameRulesParam('radiation_radius' .. unitID) ~= nil and GetGameRulesParam('radiation_radius' .. unitID) ~= 0 then
 		radiation_units[unitID] = {["radius"] = GetGameRulesParam('radiation_radius' .. unitID),
-									   ["damage"] = GetGameRulesParam('radiation_damage' .. unitID)}
+								   ["damage"] = GetGameRulesParam('radiation_damage' .. unitID)}
 		radiation_areas[unitID] = radiation_units[unitID]
 		local x,y,z = GetUnitPosition(unitID)
 		radiation_areas[unitID].x = x
 		radiation_areas[unitID].y = y
 		radiation_areas[unitID].z = z
+	else
+		return false
 	end
 end
 
@@ -70,7 +72,7 @@ function widget:Initialize()
 		return
 	elseif gl.CreateShader then
 		--local visibleUnits = getAllUnits()
-		local visibleUnits = GetVisibleUnits()
+		local visibleUnits = GetVisibleUnits(-1,nil,true)
 		for index, unitID in pairs(visibleUnits) do
 			add_radiation_unit(unitID)
 			--if IsUnitInView(unidID) then
@@ -93,7 +95,7 @@ end
 
 local function update_radiation()
 	--local visibleUnits = getAllUnits()
-	local visibleUnits = GetVisibleUnits()
+	local visibleUnits = GetVisibleUnits(-1,nil,true)
 	radiation_units = {}
 	for index, unitID in pairs(visibleUnits) do
 		add_radiation_unit(unitID)
@@ -183,6 +185,8 @@ function widget:DrawWorld()
 
 				if GetGameRulesParam('radiation_damage' .. unitID) ~= nil and GetGameRulesParam('radiation_damage' .. unitID) ~= 0 then
 
+					-- maybe: local los = Spring.GetUnitLosState(targetID,allyTeam,false)
+					-- if los and los.los then
 					if not (cloakedUnits[unitID] and not IsUnitAllied(unitID)) then
 
 						--Spring.IsUnitIcon
@@ -233,13 +237,18 @@ end
 function widget:UnitDecloaked(unitID, unitDefID, unitTeam)
 	cloakedUnits[unitID] = nil
 end
---
---function widget:UnitEnteredLos(unitID, unitTeam, allyTeam, unitDefID)
---	update_radiation()
---
---end
---
---function widget:UnitLeftLos(unitID, unitTeam, allyTeam, unitDefID)
---	update_radiation()
---
---end
+
+function widget:UnitEnteredLos(unitID, unitTeam, allyTeam, unitDefID)
+	local update = add_radiation_unit(unitID)
+	if update then
+		update_radiation()
+	end
+end
+
+function widget:UnitLeftLos(unitID, unitTeam, allyTeam, unitDefID)
+	if radiation_areas[unitID] ~= nil or radiation_units[unitID] ~= nil then
+		radiation_areas[unitID] = nil
+		radiation_units[unitID] = nil
+		update_radiation()
+	end
+end
