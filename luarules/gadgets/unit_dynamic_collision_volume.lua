@@ -37,7 +37,7 @@ local spGetGameFrame = Spring.GetGameFrame
 
 local spArmor = Spring.GetUnitArmored
 local spActive = Spring.GetUnitIsActive
-local pairs = pairs	
+local pairs = pairs
 local min = math.min
 local Echo = Spring.Echo
 local startIndex
@@ -54,9 +54,9 @@ if (gadgetHandler:IsSyncedCode()) then
 				local featureModel = FeatureDefs[Spring.GetFeatureDefID(featID)].modelname:lower()
 				if featureModel:len() > 4 then
 					local featureModelTrim
-					
+
 					featureModelTrim = featureModel:match("/.*%."):sub(2,-2)
-					
+
 					if mapFeatures[featureModelTrim] then
 						local p = mapFeatures[featureModelTrim]
 						spSetFeatureCollisionData(featID, p[1], p[2], p[3], p[4], p[5], p[6], p[7], p[8], p[9])
@@ -68,7 +68,7 @@ if (gadgetHandler:IsSyncedCode()) then
 						end
 					end
 				end
-			end			
+			end
 		else
 			for _, featID in pairs(Spring.GetAllFeatures()) do
 				local featureModel = FeatureDefs[Spring.GetFeatureDefID(featID)].modelname:lower()
@@ -77,13 +77,13 @@ if (gadgetHandler:IsSyncedCode()) then
 					if (spGetFeatureRadius(featID)>47) then
 						rs, hs = 0.68, 0.60
 					else
-						rs, hs = 0.75, 0.67  
+						rs, hs = 0.75, 0.67
 					end
 					local xs, ys, zs, xo, yo, zo, vtype, htype, axis, _ = spGetFeatureCollisionData(featID)
 					if (vtype>=3 and xs==ys and ys==zs) then
 						spSetFeatureCollisionData(featID, xs*rs, ys*hs, zs*rs,  xo, yo-ys*0.1323529*rs, zo,  vtype, htype, axis)
 					end
-					spSetFeatureRadiusAndHeight(featID, spGetFeatureRadius(featID)*rs, spGetFeatureHeight(featID)*hs)			
+					spSetFeatureRadiusAndHeight(featID, spGetFeatureRadius(featID)*rs, spGetFeatureHeight(featID)*hs)
 				elseif featureModel:find(".s3o") then
 					local xs, ys, zs, xo, yo, zo, vtype, htype, axis, _ = spGetFeatureCollisionData(featID)
 					if (vtype>=3 and xs==ys and ys==zs) then
@@ -95,7 +95,7 @@ if (gadgetHandler:IsSyncedCode()) then
 		startIndex = Script.IsEngineMinVersion(101) and 1 or 0
 	end
 
-	
+
 	--Reduces the diameter of default (unspecified) collision volume for 3DO models,
 	--for S3O models it's not needed and will in fact result in wrong collision volume
 	--also handles per piece collision volume definitions
@@ -124,7 +124,7 @@ if (gadgetHandler:IsSyncedCode()) then
 				if p then
 					spSetPieceCollisionData(unitID, pieceIndex, true, p[1], p[2], p[3], p[4], p[5], p[6], p[7], p[8])
 				else
-					
+
 					spSetPieceCollisionData(unitID, pieceIndex, false, 1, 1, 1, 0, 0, 0, 1, 1)
 				end
 			end
@@ -159,21 +159,21 @@ if (gadgetHandler:IsSyncedCode()) then
 		--if UnitDefs[unitDefID].canFly and UnitDefs[unitDefID].transportCapacity>0 then
 		--	spSetUnitRadiusAndHeight(unitID, 16, 16)
 		--end
-		
+
 		-- adjust commander's radiuses to match their visible height
 		local ud = UnitDefs[unitDefID]
-		
+
 		if ud.customParams and ud.customParams.iscommander then
 			local radius = spGetUnitRadius(unitID)
 			local height = spGetUnitHeight(unitID)
-			
-			if ud.customParams.side == "arm" then			
+
+			if ud.customParams.side == "arm" then
 				spSetUnitRadiusAndHeight(unitID, radius-5, height)
 			else
 				spSetUnitRadiusAndHeight(unitID, radius-1, height)
 			end
 		end
-		
+
 		-- adjust units that are floating below water to have smaller radius (applies mostly to submarines but also to subpen e.g.)
 		local ud = UnitDefs[unitDefID]
 		if ud.waterline > 15 and ud.moveDef then
@@ -181,7 +181,7 @@ if (gadgetHandler:IsSyncedCode()) then
 			local height = spGetUnitHeight(unitID)
 			spSetUnitRadiusAndHeight(unitID, min(radius,height*1.5), height)
 		end
-		
+
 		-- adjust arm adv.torpedo launcher some extra
 		if ud.name == "arm_advanced_torpedo_launcher" then
 			local radius = spGetUnitRadius(unitID)
@@ -193,18 +193,32 @@ if (gadgetHandler:IsSyncedCode()) then
 
 	-- Same as for 3DO units, but for features
 	function gadget:FeatureCreated(featureID, allyTeam)
-		local featureModel = spring101 and 	FeatureDefs[Spring.GetFeatureDefID(featureID)].model.path:lower() or 
-											FeatureDefs[Spring.GetFeatureDefID(featureID)].modelname:lower()
-		
-		if featureModel == "" then return end	--geovents or engine trees have no models		
+
+		-- this ugly fixes the error message (a band-aid)
+		local path
+		local name
+		if FeatureDefs[Spring.GetFeatureDefID(featureID)].model.path ~= nil then
+			path = FeatureDefs[Spring.GetFeatureDefID(featureID)].model.path:lower()
+		else
+			path = ""
+		end
+		if FeatureDefs[Spring.GetFeatureDefID(featureID)].model.name ~= nil then
+			name = FeatureDefs[Spring.GetFeatureDefID(featureID)].model.name:lower()
+		else
+			name = ""
+		end
+
+		local featureModel = spring101 and 	path or name
+
+		if featureModel == "" then return end	--geovents or engine trees have no models
 		local featureModelTrim
-		
+
 		featureModelTrim = featureModel:match("/.*%."):sub(2,-2)
-		
+
 		if mapFeatures[featureModelTrim] then	-- it just might happen that some map features can have corpses
 			local p = mapFeatures[featureModelTrim]
 			spSetFeatureCollisionData(featureID, p[1], p[2], p[3], p[4], p[5], p[6], p[7], p[8], p[9])
-			spSetFeatureRadiusAndHeight(featureID, min(p[1], p[3])*0.5, p[2])		
+			spSetFeatureRadiusAndHeight(featureID, min(p[1], p[3])*0.5, p[2])
 		elseif featureModelTrim:find(".3do",-1) then
 			local rs, hs
 			if (spGetFeatureRadius(featureID)>47) then
@@ -235,13 +249,13 @@ if (gadgetHandler:IsSyncedCode()) then
 	--check if a pop-up type unit was destroyed
 	function gadget:UnitDestroyed(unitID, unitDefID, unitTeam, _, _, _)
 
-		
+
 		if popupUnits[unitID] then
 			popupUnits[unitID] = nil
 		end
 	end
 
-	
+
 	--Dynamic adjustment of pop-up style of units' collision volumes based on unit's ARMORED status, runs twice per second
 	function gadget:GameFrame(n)
 		if (n%15 ~= 0) then
@@ -305,8 +319,8 @@ if (gadgetHandler:IsSyncedCode()) then
 					end
 					popupUnits[unitID].state = 1
 				end
-			end			
+			end
 		end
 	end
-	
+
 end

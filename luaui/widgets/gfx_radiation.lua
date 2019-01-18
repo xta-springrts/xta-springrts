@@ -42,6 +42,7 @@ local GetUnitsInSphere					= Spring.GetUnitsInSphere
 local ValidUnitID						= Spring.ValidUnitID
 local IsUnitVisible						= Spring.IsUnitVisible
 local IsUnitAllied						= Spring.IsUnitAllied
+local myTeam 							= Spring.GetLocalAllyTeamID()
 
 
 -- test to make units better drawn
@@ -71,8 +72,8 @@ function widget:Initialize()
 		widgetHandler:RemoveWidget()
 		return
 	elseif gl.CreateShader then
-		--local visibleUnits = getAllUnits()
-		local visibleUnits = GetVisibleUnits(-1,nil,true)
+		local visibleUnits = getAllUnits()
+		--local visibleUnits = GetVisibleUnits(-1,nil,true)
 		for index, unitID in pairs(visibleUnits) do
 			add_radiation_unit(unitID)
 			--if IsUnitInView(unidID) then
@@ -94,8 +95,8 @@ end
 
 
 local function update_radiation()
-	--local visibleUnits = getAllUnits()
-	local visibleUnits = GetVisibleUnits(-1,nil,true)
+	local visibleUnits = getAllUnits()
+	--local visibleUnits = GetVisibleUnits(-1,nil,true)
 	radiation_units = {}
 	for index, unitID in pairs(visibleUnits) do
 		add_radiation_unit(unitID)
@@ -187,30 +188,36 @@ function widget:DrawWorld()
 
 					-- maybe: local los = Spring.GetUnitLosState(targetID,allyTeam,false)
 					-- if los and los.los then
-					if not (cloakedUnits[unitID] and not IsUnitAllied(unitID)) then
+					if not (cloakedUnits[unitID] ~= nil and not IsUnitAllied(unitID)) then
 
-						--Spring.IsUnitIcon
+						--maybe this works
+						local visible = Spring.IsUnitVisible(unitID, nil, true)
+						local state = Spring.GetUnitLosState(unitID, myTeam, false)
 
-						local intensity = 1-min(max(0,GetGameRulesParam('radiation_damage' .. unitID)),1)
-						local radius = GetGameRulesParam('radiation_radius' .. unitID)
-						gl.Color(intensity,1,intensity,a) --green
-						gl.Unit(unitID,true)
-						local x,y,z = GetUnitPosition(unitID)
-						radiation_areas[unitID].x = x
-						radiation_areas[unitID].y = y
-						radiation_areas[unitID].z = z
+						if state and state.los and visible then
 
-						gl.Color(intensity,1,intensity,a) 	--green
-						gl.DrawGroundCircle(x, y, z, radius, 25)
-						gl.Color(0.5,0.5,0.5,a) 	--black
-						gl.DrawGroundCircle(x, y, z, radius+1, 25)
+							local intensity = 1-min(max(0,GetGameRulesParam('radiation_damage' .. unitID)),1)
+							local radius = GetGameRulesParam('radiation_radius' .. unitID)
+							gl.Color(intensity,1,intensity,a) --green
+							gl.Unit(unitID,true)
+							local x,y,z = GetUnitPosition(unitID)
+							radiation_areas[unitID].x = x
+							radiation_areas[unitID].y = y
+							radiation_areas[unitID].z = z
 
-						local effectedUnits = GetUnitsInSphere(x,y,z, radius)
-						for index, uID in pairs(effectedUnits) do
-							if uID ~= unitID and radiation_units[uID] == nil then
-								gl.Color(1, 1, intensity, a) --yellow
-								gl.Unit(uID,true)
+							gl.Color(intensity,1,intensity,a) 	--green
+							gl.DrawGroundCircle(x, y, z, radius, 25)
+							gl.Color(0.5,0.5,0.5,a) 	--black
+							gl.DrawGroundCircle(x, y, z, radius+1, 25)
+
+							local effectedUnits = GetUnitsInSphere(x,y,z, radius)
+							for index, uID in pairs(effectedUnits) do
+								if uID ~= unitID and radiation_units[uID] == nil then
+									gl.Color(1, 1, intensity, a) --yellow
+									gl.Unit(uID,true)
+								end
 							end
+
 						end
 
 					end

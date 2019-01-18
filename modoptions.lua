@@ -442,7 +442,17 @@ local options = {
 		def    = false,
 		section= "xtagame",
 	},
-
+	{
+		key    = "max_tornados",
+		name   = "maximum tornados on the map",
+		desc   = "Set how many tornados are on the map at a time.\nkey: maxComets",
+		type   = "number",
+		section= 'environment',
+		def    = 10,
+		min    = 0,
+		max    = 50,
+		step   = 1,
+	},
 	{
 		key    = "max_cracks",
 		name   = "maximum cracks on the map at a given time",

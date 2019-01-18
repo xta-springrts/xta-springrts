@@ -6,7 +6,7 @@ function gadget:GetInfo()
 		date      	= "24-11-2018",
 		license 	= "GNU GPL, v3 or later",
 		layer     	= -99,
-		enabled   	= true,
+		enabled   	= false,
 	}
 end
 
@@ -18,23 +18,18 @@ end
 	Does:
 		1. spawns tornado's that picks up units and buildings
 		2. lift them up and trow them away after some time
+		3. tornado's move around the map (appear and disappear)
+		4. units outside the map get destroyed (buildings)
+
+		unintended(bug):
+		5. do strange things to projectiles (nuke dysfunctional, dgun stuff)
+		6. tornado's walk off map
 
 	TODO:
-		1. moving tornado's
-		2. appearing and disappearing tornado's
 		3. wobbling tornado's (not straight angle)
 		4. different sizes of tornado's (this should be calculated: angle,speed,updatetime)
 		5. add feature support (flying features?)
 		6. fix projectile properties (speed, model randomness)
-		7. make projectiles, fying units and tornado's classes?
-
-		for instance
-
-		unitFlying[unitID].move(dx,dy.dz)
-		unitFlying[unitID].explode
-		unitFlying[unitID].isValid
-		unitFlying[unitID].rotate
-
 
 ]]--
 
@@ -47,17 +42,22 @@ end
 
 
 -- LOCALS --
-
-
 local floor 				= math.floor
 local random				= math.random
 local sqrt					= math.sqrt
 local max					= math.max
-
+local cos					= math.cos
+local sin					= math.sin
+local pi 					= math.pi
 local gmatch				= string.gmatch
 local remove				= table.remove
+local pairs					= pairs
+local abs					= math.abs
 
 local modOptions 			= Spring.GetModOptions()
+local maxTornados          	= tonumber(modOptions.max_tornados) or 10
+local number_of_tornados 	= random(0, maxTornados)
+
 local SetFeatureHealth		= Spring.SetFeatureHealth
 local DestroyFeature		= Spring.DestroyFeature
 local GetFeatureHealth		= Spring.GetFeatureHealth
@@ -89,64 +89,44 @@ local GetTeamList 			= Spring.GetTeamList()
 local GetAllUnits 			= Spring.GetAllUnits
 local ValidFeatureID 		= Spring.ValidFeatureID
 local ValidUnitID 			= Spring.ValidUnitID
-
 local GetUnitsInCylinder 	= Spring.GetUnitsInCylinder
-
-local crushsnd				= "sounds/battle/crush3.wav"
-
+local MoveCtrlEnable		= Spring.MoveCtrl.Enable
+local MoveCtrlSetGravity 	= Spring.MoveCtrl.SetGravity
+local MoveCtrlSetVelocity 	= Spring.MoveCtrl.SetVelocity
+local MoveCtrlSetPhysics	= Spring.MoveCtrl.SetPhysics
+local MoveCtrlDisable 		= Spring.MoveCtrl.Disable
+local DeleteProjectile		= Spring.DeleteProjectile
+local GetProjectilePosition = Spring.GetProjectilePosition
+local GetProjectileVelocity = Spring.GetProjectileVelocity
+local SpawnProjectile 		= Spring.SpawnProjectile
+local SetProjectileVelocity = Spring.SetProjectileVelocity
+local GetUnitVelocity		= Spring.GetUnitVelocity
+local GetGroundOrigHeight 	= Spring.GetGroundOrigHeight
+local GetUnitRotation		= Spring.GetUnitRotation
+local SetUnitCrashing		= Spring.SetUnitCrashing
+local SetProjectilePosition = Spring.SetProjectilePosition
 local mapX 					= Game.mapX
 local mapZ 					= Game.mapY
-
-
 local projectiles 			= {}
 local flyingUnits 			= {}
-local SpawnProjectile 		= Spring.SpawnProjectile
 local projectilesFlying		= 0
 local tornados				= {}
 local tornadoData			= {}  	-- data of all alive tornado's
 local tornadoNumber			= 0		-- index for tornado list
 local tornadoNumberUnit		= {}	-- stored which unit belong to which tornado
 local tornadoNumberProj		= {}	-- stored which projectile belong to which tornado
-
--- SETTINGS --
-
-local moving = {
-	["kbotsf2"] 	= true, 
-	["kbotsf3"] 	= true,					
-	["kbotss2"] 	= true,						
-	["kbotuw3"] 	= true,	-- gimp, spiders, moved land pelican to this
-	--["kbotds2"] 	= true,	 		-- commanders
-	["tankbh3"] 	= true,	 					
-	["tankdh3"] 	= true,	-- beaver, crab, triton, crock, garpike, muskrat, zulu
-	["tanksh2"] 	= true,	 					
-	["tanksh2"] 	= true,	 					
-	["tanksh4"] 	= true,	 					
-	["tankdtcrush"] = true,	-- Bulldog/Reaper/Goliath can crush DT's
-	["spid3"] 		= true,
-	["krogoth"] 	= true,						
-	["crawlbomb"] 	= true,	-- crawling bombs
-	["tankdh4"] 	= true,	-- beaver, crab, triton, crock, garpike, muskrat, zulu -- land
-	["hover1"] 		= true,
-	["hover2"]		= true,
-	["hover3"]		= true,
-	["hover4"]		= true,
-	["hover9"]		= true,
-	["hover10"]		= true,
-}
-
-
-
+local buildings				= {}
+local eceg 						= "gplasmaballbloom"
+local metalcloud3				= "smokeshell_medium_tornado" -- nice raining efx
+local metalcloud2				= "smokeshell_medium"
 local p
 for name,data in pairs(WeaponDefNames) do
 	local weaponDefID = WeaponDefNames[name].id
 	local cp = WeaponDefs[weaponDefID].customParams
-	if cp ~= nil and name == 'kbot_rocket' then
+	if cp ~= nil and name == 'kbot_rocket_tornado' then
 		p = weaponDefID
 	end
 end
-
-
--- INITIALISE --
 
 
 function gadget:Initialize()
@@ -156,6 +136,7 @@ function gadget:Initialize()
 		gadgetHandler:RemoveGadget(self)
 	end
 	Echo("tornedo.lua: gadget:Initialize() Game.mapName=" .. Game.mapName)
+	DisableMapDamage=0
 end
 
 
@@ -186,31 +167,24 @@ end
 
 
 local function addProjectile(number)
-
 	local pos = tornadoData[number].pos
 	local x, y, z = pos.x, pos.y, pos.z
 	local radius = tornadoData[number].radius
-
 	local xx = random(x-radius, x+radius)
 	local zz = random(z-radius, z+radius)
-
 	local d = sqrt( (x-xx)*(x-xx)+(z-zz)*(z-zz))/radius
 	local velo = 2 + 1*(d) -- distance from center
-
 	local a_x = xx-x
 	local a_z = zz-z
-
 	local norm = sqrt(a_x * a_x + a_z * a_z)
 	a_x = a_x/norm
 	a_z = a_z/norm
 	local angle = 90
-	local vx = a_x * math.cos(math.pi*angle/180) + a_z * math.sin(math.pi*angle/180)
-	local vz = -a_x * math.sin(math.pi*angle/180) + a_z * math.cos(math.pi*angle/180)
-
-	local height = random(y+10, y + 200)
-	local params = projectileParams(xx,y+height,zz,xx+10,y+height,zz+10,vx,0.1,vz)
+	local vx = a_x * cos(pi*angle/180) + a_z * sin(pi*angle/180)
+	local vz = -a_x * sin(pi*angle/180) + a_z * cos(pi*angle/180)
+	local height = random(y+10, y + 400)
+	local params = projectileParams(xx,y+height,zz,xx+10,0,zz+10,vx,0,vz)
 	local projID = SpawnProjectile(p, params)
-
 	params["projID"] = projID
 	params["velo"] = velo
 	tornadoNumberProj[projID] = number
@@ -223,28 +197,19 @@ local function addUnit(unitID,ux , uy, uz, number)
 
 		local pos = tornadoData[number].pos
 		local x, y, z = pos.x, pos.y, pos.z
-
 		local a_x = ux-x
 		local a_z = uz-z
 		local norm = sqrt(a_x * a_x + a_z * a_z)
-
 		a_x = a_x/norm
 		a_z = a_z/norm
-
 		local angle = 90
-		local vx = a_x * math.cos(math.pi*angle/180) + a_z * math.sin(math.pi*angle/180)
-		local vz = -a_x * math.sin(math.pi*angle/180) + a_z * math.cos(math.pi*angle/180)
+		local vx = a_x * cos(pi*angle/180) + a_z * sin(pi*angle/180)
+		local vz = -a_x * sin(pi*angle/180) + a_z * cos(pi*angle/180)
 		local params = unitParams(unitID, x,y,z)
-		local rotx = 0
-		local roty = 0
-		local rotz = 0
-		local dragx = 0
-		local dragy = 0
-		local dragz = 0
-		Spring.MoveCtrl.Enable(unitID)
-		Spring.MoveCtrl.SetGravity(unitID, 0)
-		--Spring.SetUnitPhysics(unitID, x, y+100, z, 2, 0, 2, rotx, roty , rotz,  dragx, dragy, dragz)
-		Spring.MoveCtrl.SetVelocity(unitID, vx, params.vy, vz)
+
+		MoveCtrlEnable(unitID)
+		MoveCtrlSetGravity(unitID, 0)
+		MoveCtrlSetVelocity(unitID, vx, params.vy, vz)
 		return params
 	else
 		return nil
@@ -272,22 +237,18 @@ local function spinProjectiles(number)
 
 		local projID = v.projID
 		local velo = v.velo
-		local x, y, z = Spring.GetProjectilePosition(projID)
+		local x, y, z = GetProjectilePosition(projID)
 
-		-- still exists
 		if x ~= nil then
-
-			local vx, vy, vz = Spring.GetProjectileVelocity(projID)
-			local norm = math.sqrt(vx*vx+vy*vy+vz*vz)
-
+			local vx, vy, vz = GetProjectileVelocity(projID)
+			local norm = sqrt(vx*vx+vy*vy+vz*vz)
 			local angle = 40
-			local xx = vx * math.cos(math.pi*angle/180) + vz * math.sin(math.pi*angle/180)
-			local zz = -vx * math.sin(math.pi*angle/180) + vz * math.cos(math.pi*angle/180)
-
-			local norm = math.sqrt(xx*xx + zz*zz)
+			local xx = vx * cos(pi*angle/180) + vz * sin(pi*angle/180)
+			local zz = -vx * sin(pi*angle/180) + vz * cos(pi*angle/180)
+			local norm = sqrt(xx*xx + zz*zz)
 			xx = xx/norm*velo
 			zz = zz/norm*velo
-			Spring.SetProjectileVelocity(projID,xx, vy, zz)
+			SetProjectileVelocity(projID,xx, 0, zz)
 		end
 	end
 end
@@ -300,35 +261,46 @@ local function spinUnits(number)
 
 		if ValidUnitID(unitID) then
 
-			local vx, vy, vz, velLen =  Spring.GetUnitVelocity(unitID)
+			local vx, vy, vz, velLen =  GetUnitVelocity(unitID)
 			local x,y,z = GetUnitPosition(unitID)
 
-			-- spinning
-			if y < Spring.GetGroundOrigHeight(x,z) + 400 then
+			if y < GetGroundOrigHeight(x,z) + 400 then
 
 				local angle = 35
-				local xx = vx * math.cos(math.pi*angle/180) + vz * math.sin(math.pi*angle/180)
-				local zz = -vx * math.sin(math.pi*angle/180) + vz * math.cos(math.pi*angle/180)
-
-				local norm = math.sqrt(xx*xx + zz*zz)
+				local xx = vx * cos(pi*angle/180) + vz * sin(pi*angle/180)
+				local zz = -vx * sin(pi*angle/180) + vz * cos(pi*angle/180)
+				local norm = sqrt(xx*xx + zz*zz)
 				xx = xx/norm*3
 				zz = zz/norm*3
-				Spring.MoveCtrl.SetVelocity(unitID, xx, v.vy, zz)
 
+				local rx,ry,rz = GetUnitRotation(unitID)
+				if random() < 0.2 then
+					rx = rx + random()*0.2
+					ry = ry + random()*0.2
+					rz = rz + random()*0.2
+				end
+				MoveCtrlSetPhysics(v.unitID, x, y, z, xx, v.vy, zz, rx, ry , rz,  0, 0, 0)
 
-			elseif y < Spring.GetGroundOrigHeight(x,z) + 500 then
+			elseif y < GetGroundOrigHeight(x,z) + 500 then
 
 				local angle = 35
-				local xx = vx * math.cos(math.pi*angle/180) + vz * math.sin(math.pi*angle/180)
-				local zz = -vx * math.sin(math.pi*angle/180) + vz * math.cos(math.pi*angle/180)
-				Spring.MoveCtrl.SetVelocity(unitID, 1.1*xx, 1, 1.1*zz)
+				local xx = vx * cos(pi*angle/180) + vz * sin(pi*angle/180)
+				local zz = -vx * sin(pi*angle/180) + vz * cos(pi*angle/180)
+				MoveCtrlSetVelocity(unitID, 1.1*xx, 1, 1.1*zz)
 
 			else
 
-				Spring.MoveCtrl.Disable(unitID)
-				Spring.SetUnitCrashing(unitID, true)
+				MoveCtrlSetGravity(unitID, 1)
+				SetUnitCrashing(unitID, true)
+				local UDID = GetUnitDefID(unitID)
+				if UnitDefs[UDID].isBuilding then
+					buildings[unitID] = 300 -- remove after 300 seconds from list
+				else
+					MoveCtrlDisable(unitID)
+				end
 				tornadoNumberUnit[unitID] = nil
 				tornadoData[number].units[unitID] = nil
+
 			end
 		end
 
@@ -338,36 +310,70 @@ end
 
 
 local function removeTornado(number)
-
-	-- makeall units fall
 	for unitID, v in pairs(tornadoData[number].units) do
-		Spring.MoveCtrl.Disable(unitID)
-		Spring.SetUnitCrashing(unitID, true)
-		tornadoNumberUnit[unitID] = nil
-		tornadoData[number].units[unitID] = nil
+		if ValidUnitID(unitID) then
+			MoveCtrlSetGravity(unitID, 1)
+			SetUnitCrashing(unitID, true)
+			local UDID = GetUnitDefID(unitID)
+			if UnitDefs[UDID].isBuilding then
+				buildings[unitID] = 300
+			else
+				MoveCtrlDisable(unitID)
+			end
+			tornadoNumberUnit[unitID] = nil
+			tornadoData[number].units[unitID] = nil
+		end
 	end
 
 	for index, v in pairs(tornadoData[number].projectiles) do
-		Spring.DeleteProjectile(v.projID)
-
+		DeleteProjectile(v.projID)
+		tornadoNumberProj[v.projID] = nil
 	end
+end
 
+
+local function updateHeading(number)
+	local heading = tornadoData[number].heading[1]
+	local x,y,z = heading.x,heading.y,heading.z
+
+	local newx1 = -1
+    while newx1 < 0 or newx1 > mapX*512 or abs(newx1 - x) < 100 do
+     	newx1 = x + floor(random(-800,  800))
+    end
+	local newz1 = -1
+	while newz1 < 0 or newz1 > mapZ*512 or abs(newz1 - z) < 100 do
+     	newz1 = z + floor(random(-800,  800))
+    end
+
+	local newx2 = -1
+    while newx2 < 0 or newx2 > mapX*512 or abs(newx1 - newx2) < 100 do
+     	newx2 = newx1 + floor(random(-800,  800))
+    end
+
+	local newz2 = -1
+	while newz2 < 0 or newz2 > mapZ*512 or abs(newz1 - newz2) < 100 do
+     	newz2 = newz1 + floor(random(-800,  800))
+    end
+
+	tornadoData[number].heading = {
+	[1] = {['x'] = x,
+		   ['y'] = y,
+		   ['z'] = z},
+	[2] = {['x'] = newx1,
+		   ['y'] = GetGroundOrigHeight(newx1, newz1),
+		   ['z'] = newz1},
+	[3] = {['x'] = newx2,
+		   ['y'] = GetGroundOrigHeight(newx2, newz2),
+		   ['z'] = newz2},
+	}
 end
 
 
 local function addTornado()
 
-
 	local x = floor(random(0,  mapX*512))
 	local z = floor(random(0,  mapZ*512))
-
-	local randx = random(-300,300)
-	local randz = random(-300,300)
-	local randx2 = random(x+randx-300,x+randx+300)
-	local randz2 = random(z+randz-300,z+randz+300)
-
-	local y = Spring.GetGroundOrigHeight(x,z)
-	local test_radius = 100
+	local y = GetGroundOrigHeight(x,z)
 	tornadoNumber = tornadoNumber + 1
 	tornadoData[tornadoNumber] = {
 		['pos'] = {
@@ -376,15 +382,9 @@ local function addTornado()
 			['z'] = z
 		},
 		['heading']	= {
-			[1] = {['x'] = x,
-				   ['y'] = y,
-				   ['z'] = z},
-			[2] = {['x'] = x + randx,
-				   ['y'] = GetGroundOrigHeight(x + randx, randz),
-				   ['z'] = z + randz},
-			[3] = {['x'] = x + randx2,
-				   ['y'] = GetGroundOrigHeight(randx2, randz2),
-				   ['z'] = z + randz2},
+		[1] = {['x'] = x,
+			   ['y'] = y,
+			   ['z'] = z},
 		},
 		['radius'] 		= 100,
 		['duration'] 	= 4000,
@@ -394,6 +394,7 @@ local function addTornado()
 		['projectiles'] = {}, --projectiles
 		['units'] 		= {} --units in tornado
 	}
+	updateHeading(tornadoNumber)
 	return tornadoNumber
 end
 
@@ -402,20 +403,17 @@ end
 local function tornadoFX(number)
 	local pos = tornadoData[number].pos
 	local x, y, z = pos.x, pos.y, pos.z
-	local metalcloud2 = "smokeshell_medium"
-	local height = random(y,700)
+	local height = random(y,600)
 	SpawnCEG(metalcloud2,x, height, z)
 end
 
 
 local function updateTornados()
 
-	-- check if there are enough tornado's (if not make a new one)
 	if #tornados < 5 then
 		tornados[#tornados+1] = addTornado()
 	end
 
-	--add projectiles
 	for i=#tornados,1,-1 do
 
 		if tornadoData[tornados[i]].duration < 0 then
@@ -428,7 +426,6 @@ local function updateTornados()
 
 		end
 
-		-- add posibly more projectiles
 		if tornadoData[tornados[i]].n_proj < 100 then
 
 			addProjectile(tornados[i])
@@ -436,50 +433,23 @@ local function updateTornados()
 
 		end
 
-		-- scan area to lift more units if necessary
 		scanTorpedoArea(tornados[i])
 
-		-- add some fx
-		tornadoFX(tornados[i])
-
+		if random() < 0.1 then
+			tornadoFX(tornados[i])
+		end
 	end
 
 end
 
-
-local function updateHeading(number)
-	local heading = tornadoData[number].heading[1]
-	local x,y,z = heading.x,heading.y,heading.z
-	local randx = random(-300,300)
-	local randz = random(-300,300)
-	local randx2 = random(x+randx-300,x+randx+300)
-	local randz2 = random(z+randz-300,z+randz+300)
-	-- this should account for map coordinates
-	tornadoData[number].heading = {
-		[1] = {['x'] = x,
-			   ['y'] = y,
-			   ['z'] = z},
-		[2] = {['x'] = x + randx,
-			   ['y'] = GetGroundOrigHeight(x + randx, randz),
-			   ['z'] = z + randz},
-		[3] = {['x'] = x + randx2,
-			   ['y'] = GetGroundOrigHeight(randx2, randz2),
-			   ['z'] = z + randz2},
-	}
-end
-
-
-
 local function moveUnits(number, dx, dy, dz)
-
 	for unitID, v in pairs(tornadoData[number].units) do
 		if ValidUnitID(unitID) then
-
 			local x,y,z = GetUnitPosition(unitID)
-			if y < Spring.GetGroundOrigHeight(x,z) + 500 then
-				local vx,vy,vz = Spring.GetUnitVelocity(unitID)
-				local rx,ry,rz = Spring.GetUnitRotation(unitID)
-				Spring.MoveCtrl.SetPhysics(unitID, x+dx,y+dy,z+dz, vx,vy,vz, rx,ry,rz)
+			if y < GetGroundOrigHeight(x,z) + 500 then
+				local vx,vy,vz = GetUnitVelocity(unitID)
+				local rx,ry,rz = GetUnitRotation(unitID)
+				MoveCtrlSetPhysics(unitID, x+dx,y+dy,z+dz, vx,vy,vz, rx,ry,rz)
 			end
 		end
 	end
@@ -487,74 +457,56 @@ end
 
 
 local function moveProjectiles(number, dx, dy, dz)
-
 	for index, v in pairs(tornadoData[number].projectiles) do
-
 		local projID = v.projID
 		local velo = v.velo
-		local x, y, z = Spring.GetProjectilePosition(projID)
-
-		-- still exists
+		local x, y, z = GetProjectilePosition(projID)
 		if x ~= nil then
-
-			Spring.SetProjectilePosition(projID, x+dx,y+dy,z+dz)
-
+			SetProjectilePosition(projID, x+dx,y+dy,z+dz)
 		end
-
 	end
-
 end
 
 
 local function updateLocation(number)
 
-	-- make new heading
 	local heading =  tornadoData[number].heading
 	if #heading == 1 then
 		updateHeading(number)
 	end
 	local heading =  tornadoData[number].heading
 
-	-- change position
 	local pos = tornadoData[number].pos
 	local x, y, z = pos.x, pos.y, pos.z
 	local heading = tornadoData[number].heading
 	local hx, hy, hz = heading[1].x, heading[1].y, heading[1].z
-	if sqrt((hx-x)*(hx-x)+(hy-y)*(hy-y)+(hz-z)*(hz-z)) < 20 then
+	if sqrt((hx-x)*(hx-x)+(hy-y)*(hy-y)+(hz-z)*(hz-z)) < 30 then
 		hx, hy, hz = heading[2].x, heading[2].y, heading[2].z
 		remove(heading, 1)
 		tornadoData[number].heading = heading
 	end
-	local dx = hx-x
-	local dy = hy-y
-	local dz = hz-z
-	dx = dx/sqrt((hx-x)*(hx-x)+(hy-y)*(hy-y)+(hz-z)*(hz-z))*10
-	dy = dy/sqrt((hx-x)*(hx-x)+(hy-y)*(hy-y)+(hz-z)*(hz-z))*10
-	dz = dz/sqrt((hx-x)*(hx-x)+(hy-y)*(hy-y)+(hz-z)*(hz-z))*10
+
+	local dx = (hx-x)/sqrt((hx-x)*(hx-x)+(hy-y)*(hy-y)+(hz-z)*(hz-z))*10
+	local dy = (hy-y)/sqrt((hx-x)*(hx-x)+(hy-y)*(hy-y)+(hz-z)*(hz-z))*10
+	local dz = (hz-z)/sqrt((hx-x)*(hx-x)+(hy-y)*(hy-y)+(hz-z)*(hz-z))*10
 	tornadoData[number].pos = {
 		['x'] = x + dx,
 		['y'] = y + dy,
 		['z'] = z + dz
 	}
-
-	-- change unit/projectile
 	moveUnits(number, dx, dy, dz)
 	moveProjectiles(number, dx, dy, dz)
 
 end
 
 
-
 local function spinTornados()
-
 	for i=#tornados,1,-1 do
 
-		-- do the spinning & moving?
-		local number = tornados[i]		-- number that links to the tornado data
+		local number = tornados[i]
 		spinProjectiles(number)
 		spinUnits(number)
 
-		-- do moving
 		if random() <0.5 then
 			updateLocation(number)
 		end
@@ -562,7 +514,48 @@ local function spinTornados()
 end
 
 
+local function updateFlyingBuildings()
+	for unitID, duration  in pairs(buildings) do
+		if ValidUnitID(unitID) then
+			local x,y,z = GetUnitPosition(unitID)
+
+			if x < mapX*512 and x > 0 and z < mapZ*512 and z > 0 then
+
+				if duration < 0 then
+					MoveCtrlSetVelocity(unitID, 0, 0, 0)
+					MoveCtrlDisable(unitID)
+				else
+					buildings[unitID] = duration - 1
+				end
+
+				if y < GetGroundOrigHeight(x,z) + 50 then
+					MoveCtrlSetVelocity(unitID, 0, 0, 0)
+					MoveCtrlDisable(unitID)
+					buildings[unitID] = nil
+				end
+
+			else
+
+				if y < GetGroundOrigHeight(x,z) + 50 then
+					MoveCtrlSetVelocity(unitID, 0, 0, 0)
+					MoveCtrlDisable(unitID)
+					buildings[unitID] = nil
+					DestroyUnit(unitID)
+				end
+
+			end
+		end
+	end
+end
+
+
 function gadget:GameFrame(f)
+
+	if (f%10000==0) then
+		number_of_tornados = random(0, maxTornados)
+	end
+
+	updateFlyingBuildings()
 
 	if (f%11 == 0) then
 
@@ -588,12 +581,10 @@ function gadget:ProjectileDestroyed(projID)
 end
 
 
--- HELP FUNCTIONS
-
-
-function gadget:UnitDestroyed(unitID, unitDefID, unitTeam, attackerID, attackerDefID, attackerTeam)
+function gadget:UnitDestroyed(unitID)
 	if tornadoNumberUnit[unitID] ~= nil then
 		tornadoData[tornadoNumberUnit[unitID]].units[unitID] = nil
 		tornadoNumberUnit[unitID] = nil
 	end
 end
+
