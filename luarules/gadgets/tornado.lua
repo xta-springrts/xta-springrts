@@ -131,7 +131,7 @@ end
 
 function gadget:Initialize()
 	local mo = Spring.GetModOptions()
-	if mo and tonumber(mo.tornedo)== 0 then
+	if mo and tonumber(mo.tornado)== 0 then
 		Echo("tornedo.lua: turned off via modoptions")
 		gadgetHandler:RemoveGadget(self)
 	end
@@ -426,7 +426,7 @@ local function updateTornados()
 
 		end
 
-		if tornadoData[tornados[i]].n_proj < 100 then
+		if tornadoData[tornados[i]].n_proj < 50 then
 
 			addProjectile(tornados[i])
 			tornadoData[tornados[i]].n_proj = tornadoData[tornados[i]].n_proj + 1
@@ -435,7 +435,7 @@ local function updateTornados()
 
 		scanTorpedoArea(tornados[i])
 
-		if random() < 0.1 then
+		if random() < 0.05 then
 			tornadoFX(tornados[i])
 		end
 	end

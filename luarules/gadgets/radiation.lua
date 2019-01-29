@@ -106,7 +106,7 @@ SetGameRulesParam('radiation_update_number', 0)
 
 
 function gadget:Initialize()
-	local mo = modOptions
+	local mo = Spring.GetModOptions()
 	if mo and tonumber(mo.radiation)== 0 then
 		Echo("radiation.lua: turned off via modoptions")
 		gadgetHandler:RemoveGadget(self)

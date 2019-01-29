@@ -319,15 +319,7 @@ local options = {
 		def    = true,
 		section= "xtagame",
 	},
-		{
-		key    = "earth_crack",
-		name   = 'earth_crack',
-		desc   = "When the gods are angry the earth rumbles!",
-		type   = "bool",
-		def    = false,
-		section= "xtagame",
-	},
-		{
+	{
 		key    = "buildspeed",
 		name   = 'Enable variable production rate',
 		desc   = "Enable variable production rate button to be added to build menu (may be expensive)\nkey: buildspeed",
