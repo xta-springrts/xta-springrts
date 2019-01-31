@@ -1,3 +1,36 @@
+
+[TALON_GUNTOWER]
+{
+	//explosiongenerator=custom:KBOTMISSILEHIT;//Smokeupward
+	explosiongenerator=custom:KBOTMISSILEHIT;
+	duration=0.04;
+	intensity=0.85;
+	name=Laser;
+	Weapontype=LaserCannon;
+	thickness=0.5;
+	turret=1;
+	range=480;
+	accuracy=300;
+	movingaccuracy=400;
+	reloadtime=1.5;
+	weaponvelocity=1000;
+	areaofeffect=8;
+	soundtrigger=1;
+	soundstart=talongunfire;
+	soundhitdry=talongunhit;
+	firestarter=50;
+	rgbcolor=1.0 0.8 0.25;
+	rgbcolor2=1.0 1.0 1.00;
+	tolerance=1000;
+	collidefriendly=0;
+	avoidfriendly=0;
+	[DAMAGE]
+	{
+		default=40;
+		group_invincible=1;
+	}
+}
+
 [Infantry_MISSILE] //skeeter, searcher, otter
 {
 	name=Missiles;
@@ -20,7 +53,7 @@
 	smokedelay=0.1;
 	tracks=1;
 	smoketrail=0;
-	cegTag=TINYRED;
+	cegTag=TINYRED;//TINYRED
 	Weapontype=MissileLauncher;
 	tolerance=9000;
 	startsmoke=1;
@@ -29,7 +62,7 @@
 	avoidfriendly=1;
 	[DAMAGE]
 	{
-		default=20;
+		default=25;
 		lost_commanders=17;
 		group_landair=50;
 		group_skyair=50;

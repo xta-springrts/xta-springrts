@@ -5244,12 +5244,13 @@
 		canbuild12=talon_light_laser_tower;
 		canbuild13=talon_radar_tower;
 		canbuild14=talon_dragons_teeth;
-		canbuild15=talon_sentry;
-		//canbuild16=talon_Barada_mine;
-		//canbuild17=talon_Klaatu_mine;
-		//canbuild18=talon_Nikto_mine;
-		canbuild19=talon_nano_tower;
-		canbuild20=talon_xbot_box;
+		canbuild15=talon_gunpost;
+		canbuild16=talon_sentry;
+		canbuild17=talon_nano_tower;
+		canbuild18=talon_xbot_box;
+		canbuild19=talon_Barada_mine;
+		canbuild20=talon_Klaatu_mine;
+		canbuild21=talon_Nikto_mine;
 	}
 
 	[talon_seaplane_platform]

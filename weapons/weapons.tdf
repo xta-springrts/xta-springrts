@@ -5463,40 +5463,6 @@
 		group_invincible=1;
 	}
 }
-[KBOT_ROCKET_TORNADO]
-{
-	name=Tornado;
-	dance=1;
-	//explosiongenerator=custom:KBOTROCKETHIT;
-	Weapontype=MissileLauncher;
-	cegTag=KBOTROCKETTRAIL;
-	Texture1=null;
-	Texture2=null;
-	Texture3=null;
-	Texture4=null;
-	turret=1;
-	//model=missile.s3o;
-	range=400;
-	reloadtime=3.7;
-	weapontimer=2;
-	weaponvelocity=300;
-	startvelocity=300;
-	weaponacceleration=0;
-	areaofeffect=65;
-	//soundstart=rocklit1;
-	//soundhitdry=xplosml2;
-	firestarter=70;
-	smokedelay=0.1;
-	smoketrail=0;
-	tolerance=1000;
-	startsmoke=0;
-	[DAMAGE]
-	{
-		default=145;
-		lost_commanders=120;
-		group_invincible=1;
-	}
-}
 [LARGE_BUILDING]
 {
 	name=Large building;

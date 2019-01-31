@@ -1996,6 +1996,28 @@
 	collisionVolumeOffsets=0 0 -5;//#AUTO#
 }
 
+[talon_gunpost_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=talon_gunpost_dead;
+	footprintx=1;
+	footprintz=1;
+	height=1;
+	blocking=0;
+	hitdensity=20;
+	metal=22;
+	energy=0;
+	damage=200;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=18 6 15;//#AUTO#
+	collisionVolumeOffsets=0 -1 0;//#AUTO#
+}
+
 [talon_infantry_dead]
 {
 	world=All Worlds;
