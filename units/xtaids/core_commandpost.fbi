@@ -1,9 +1,9 @@
 [UNITINFO]
 {
-	Name=Arm Command Center;
-	UnitName=arm_commandpost;
+	Name=Core Command Center;
+	UnitName=core_commandpost;
 	UnitRestricted=1;
-	BUILDPIC=arm_commandpost.png;
+	BUILDPIC=core_commandpost.png;
 	
 	//    Required Tags
 	BuildCostEnergy=122021;
@@ -14,7 +14,7 @@
 	FootprintX=8;
 	FootprintZ=8;
 	MaxDamage=100000;//10050
-	ObjectName=arm_commandpost;
+	ObjectName=core_commandpost;
 	Side=ARM;
 	SoundCategory=ARM_COM;
 	TEDClass=CNSTR;
@@ -75,11 +75,11 @@
 	//    Misc
 	SmoothAnim=1;
 	//Upright=1;
-	Corpse=arm_commandpost_dead;
+	Corpse=core_commandpost_dead;
 	HideDamage=1;
 	Mass=10000;
 	pushResistant=1;
-	iconType=arm_commandpost;
+	iconType=core_commandpost;
 	// resistant to weapons from above
 	//flankingBonusMode=3;
 	//flankingBonusDir= 0 1 0 ;

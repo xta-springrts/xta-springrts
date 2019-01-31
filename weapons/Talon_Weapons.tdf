@@ -1,3 +1,41 @@
+[Infantry_MISSILE] //skeeter, searcher, otter
+{
+	name=Missiles;
+	turret=1;
+	model=missile.s3o;
+	Texture1=null;
+	range=690;
+	explosiongenerator=custom:KBOTMISSILEHIT;
+	reloadtime=4;
+	weapontimer=6;
+	flighttime=4;
+	weaponvelocity=750;
+	startvelocity=525;
+	weaponacceleration=225;
+	turnrate=50000;
+	areaofeffect=16;
+	soundstart=bluemis;
+	soundhitdry=bluemishit;
+	firestarter=70;
+	smokedelay=0.1;
+	tracks=1;
+	smoketrail=0;
+	cegTag=TINYRED;
+	Weapontype=MissileLauncher;
+	tolerance=9000;
+	startsmoke=1;
+	Trajectoryheight=0.333;
+	collidefriendly=0;
+	avoidfriendly=1;
+	[DAMAGE]
+	{
+		default=20;
+		lost_commanders=17;
+		group_landair=50;
+		group_skyair=50;
+		group_invincible=1;
+	}
+}
 
 [TALON_TRUEBEAM]
 {

@@ -3,121 +3,100 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	side=Arm;
-	name=High Tech Construction Kbot;
-	description=Tech Level 3;
+	side=core;
+	name=Adv. Energy Storage;
+	description=Increases Energy Storage by 1,000,000;
+	icontype=building;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=ARM KBOT CONSTR MOBILE NOWEAPON STORAGE NOTAIR NOTSEA NOTSUB;
-	tedclass=CONSTR;
+	category=core ENERGY  NOWEAPON  NOTAIR NOTSUB STORAGE;
+	tedclass=ENERGY;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=arm_ht_construction_kbot;
-	unitnumber=3;
-	objectname=arm_ht_construction_kbot.3do;
-	corpse=arm_ht_construction_kbot_dead;
-	buildpic=arm_ht_construction_kbot.png;
-	soundcategory=ARM_CKBOT;
+	unitname=core_adv_energy_storage;
+	unitnumber=27;
+	objectname=core_adv_energy_storage.3do;
+	corpse=core_adv_energy_storage_dead;
+	buildpic=core_adv_energy_storage.DDS;
+	soundcategory=core_ESTOR;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=3693;
-	healtime=53;
-	buildcostmetal=2143;
-	buildcostenergy=15784;
-	buildtime=30074;
-	footprintx=3;
-	footprintz=3;
+	maxdamage=8000;
+	buildcostmetal=1076;
+	buildcostenergy=14430;
+	buildtime=21710;
+	footprintx=8;
+	footprintz=8;
+	collisionVolumeType=CylY;
+	collisionVolumeScales=117 65 117;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalmake=1.3;
-	metalstorage=500;
-	energymake=23;
-	energyuse=0.1;
-	energystorage=500;
+	metalstorage=0;
+	energyuse=0;
+	energystorage=1000000;
 
 	//************************************************************
 	//  Building
 	//************
+	buildangle=65535;
+	//yardmap=yooy oooo oooo yooy;
+	activatewhenbuilt=1;
 
 	//************************************************************
 	//  Constructor
 	//***************
-	builder=1;
-	builddistance=170;//130, edited by Noruas
-	workertime=320;
-	RepairSpeed=320;
-	ReclaimSpeed=320;
-	TerraformSpeed=640;//speed up terraforming
+	builder=0;
+	workertime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canguard=1;
-	canmove=1;
-	canpatrol=1;
-	canreclamate=1;
-	canFight=1;
-	canstop=1;
-	upright=0;
-
+	canRepeat=0;
+	canMove=0;
+	canGuard=0;
+	canAttack=0;
 	//************************************************************
 	//  Movement
 	//************
-	movementclass=KBOTSS2;
-	turnrate=1010;
-	acceleration=1.8;
-	brakerate=14.0;
-	maxvelocity=1.4;
-	maxslope=20;
-	maxwaterdepth=25;
+	maxslope=10;
+	maxwaterdepth=22;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=373.5;
+	sightdistance=367.5;
 	radardistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
-	explodeas=ATOMIC_SMALLNANO;
-	selfdestructas=ATOMIC_SMALLNANO;
+	explodeas=ENERGY_STORAGE_NORMAL;
+	selfdestructas=CRAWL_BLASTSML;
 
 	//************************************************************
 	//  Orders
 	//**********
 	noautofire=0;
-	mobilestandorders=1;
-	standingmoveorder=1;
-	defaultmissiontype=Standby;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=1;
-	designation=ARM-ACK1;
+	bmcode=0;
+	designation=AE-ESF;
 	downloadable=1;
-	maneuverleashlength=640;
-	shootme=1;
-	smoothanim=1;
-	steeringmode=1;
 	threed=1;
 	version=1.2;
 	zbuffer=1;
-	pieceTrailCEGTag=NanoDebree;//bleh
-	pieceTrailCEGRange = 2;
-	collisionVolumeType = box;
-	collisionVolumeScales =35 26 35;
-	collisionVolumeOffsets = 0 -1 0;
-	collisionVolumeTest = 1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
 
 	//************************************************************
 	//  To be removed
@@ -125,6 +104,6 @@
 
 	[SFXTypes]
 	{
-	explosiongenerator0=custom:Nano;
+	explosiongenerator0=custom:Glow;
 	}
 }

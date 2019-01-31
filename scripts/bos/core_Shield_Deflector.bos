@@ -1,0 +1,157 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+piece  base, beam, arms, disha, dishb, gun, legs, platform;
+
+static-var  Static_Var_1, statechg_DesiredState, statechg_StateChanging;
+
+
+SmokeUnit(healthpercent, sleeptime, smoketype)
+{
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 400;
+	}
+	while( TRUE )
+	{
+		healthpercent = get HEALTH;
+		if( healthpercent < 66 )
+		{
+			smoketype = 256 | 2;
+			if( Rand( 1, 66 ) < healthpercent )
+			{
+				smoketype = 256 | 1;
+			}
+			emit-sfx smoketype from base;
+		}
+		sleeptime = healthpercent * 50;
+		if( sleeptime < 200 )
+		{
+			sleeptime = 200;
+		}
+		sleep sleeptime;
+	}
+}
+
+Shield()
+{
+	Static_Var_1 = !Static_Var_1;
+}
+
+Create()
+{
+	hide beam;
+	dont-shade arms;
+	dont-shade beam;
+	dont-shade disha;
+	dont-shade dishb;
+	dont-shade gun;
+	dont-shade legs;
+	dont-shade platform;
+	Static_Var_1 = 1;
+	start-script SmokeUnit();
+}
+
+AimPrimary(heading, pitch)
+{
+	sleep 100;
+	return (Static_Var_1);
+}
+
+FirePrimary()
+{
+	explode gun type SHATTER | FALL;
+	sleep 100;
+}
+
+QueryPrimary(piecenum)
+{
+	piecenum = base;
+}
+
+AimFromPrimary(piecenum)
+{
+	piecenum = base;
+}
+
+SweetSpot(piecenum)
+{
+	piecenum = base;
+}
+
+AimSecondary(heading, pitch)
+{
+	sleep 100;
+	return (Static_Var_1);
+}
+
+FireSecondary()
+{
+	explode gun type SHATTER | FALL;
+	sleep 100;
+}
+
+QuerySecondary(piecenum)
+{
+	piecenum = base;
+}
+
+AimFromSecondary(piecenum)
+{
+	piecenum = base;
+}
+
+Killed(severity, corpsetype)
+{
+	if( severity <= 25 )
+	{
+		corpsetype = 1;
+		explode arms type SHATTER;
+		explode base type SHATTER;
+		explode beam type SHATTER;
+		explode disha type SHATTER;
+		explode dishb type SHATTER;
+		explode gun type SHATTER;
+		explode legs type SHATTER;
+		explode platform type SHATTER;
+		return (corpsetype);
+	}
+	if( severity <= 50 )
+	{
+		corpsetype = 2;
+		explode arms type SHATTER | SHATTER;
+		explode base type SHATTER;
+		explode beam type SHATTER | FALL;
+		explode disha type SHATTER | FALL;
+		explode dishb type SHATTER | FALL;
+		explode gun type SHATTER;
+		explode legs type SHATTER;
+		explode platform type SHATTER | FALL;
+		return (corpsetype);
+	}
+	if( severity <= 99 )
+	{
+		corpsetype = 3;
+		explode arms type SHATTER | SHATTER;
+		explode base type SHATTER;
+		explode beam type SHATTER | FALL | SMOKE | FIRE | EXPLODE_ON_HIT;
+		explode disha type SHATTER | FALL | SMOKE | FIRE | EXPLODE_ON_HIT;
+		explode dishb type SHATTER | FALL | SMOKE | FIRE | EXPLODE_ON_HIT;
+		explode gun type SHATTER;
+		explode legs type SHATTER;
+		explode platform type SHATTER | FALL | SMOKE | FIRE | EXPLODE_ON_HIT;
+		return (corpsetype);
+	}
+	corpsetype = 3;
+	explode arms type SHATTER | SHATTER | EXPLODE_ON_HIT;
+	explode base type SHATTER;
+	explode beam type SHATTER | FALL | SMOKE | FIRE | EXPLODE_ON_HIT;
+	explode disha type SHATTER | FALL | SMOKE | FIRE | EXPLODE_ON_HIT;
+	explode dishb type SHATTER | FALL | SMOKE | FIRE | EXPLODE_ON_HIT;
+	explode gun type SHATTER;
+	explode legs type SHATTER;
+	explode platform type SHATTER | FALL | SMOKE | FIRE | EXPLODE_ON_HIT;
+	return (corpsetype);
+}

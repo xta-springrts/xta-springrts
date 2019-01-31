@@ -50,19 +50,25 @@ Smoke()
 Go()
 {
 	smoking=1;
-//	spin circle1 around x-axis speed Static_Var_1 accelerate <1>;
-//	spin circle2 around x-axis speed Static_Var_2 accelerate <-2>;
-//	spin drill around x-axis speed Static_Var_1 accelerate <1>;
+	spin circle1 around z-axis speed <75.0>;
+	spin circle2 around z-axis speed <-150.0>;
+	spin drill around z-axis speed <75.0>;
+	//spin drill around z-axis speed Static_Var_1 accelerate <1>;
+	//spin spinner around z-axis speed Static_Var_1 accelerate <-1>;
 	start-script Smoke();
 }
 
 Stop()
 {
 	smoking=0;
-//	stop-spin circle1 around x-axis decelerate <1>;
-//	stop-spin circle2 around x-axis decelerate <-2>;
-//	stop-spin drill around x-axis decelerate <1>;
-//	wait-for-turn drill around y-axis;
+	turn circle1 to z-axis <0.000000> speed <75.0>;
+	turn circle2 to z-axis <0.000000> speed <-150.0>;
+	turn drill to z-axis <0.000000> speed <75.0>;
+	//stop-spin circle1 around z-axis decelerate <1>;
+	//stop-spin circle2 around z-axis decelerate <-1>;
+	//stop-spin drill around z-axis decelerate <1>;
+	//stop-spin spinner around z-axis decelerate <-1>;
+	wait-for-turn circle2 around z-axis;
 }
 
 InitState()

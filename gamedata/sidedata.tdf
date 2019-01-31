@@ -2728,7 +2728,8 @@
 	
 	[core_krogoth_gantry]
 	{
-		canbuild1=core_krogoth;
+		canbuild1=core_ht_construction_kbot;
+		canbuild2=core_krogoth;
 	}
 	[core_hovercraft_platform]
 	{
@@ -2952,6 +2953,38 @@
 		canbuild10=core_riptide;
 	}
 
+	[core_ht_construction_kbot]
+	{
+	 	canbuild1=core_fortification_wall;
+	 	canbuild2=COREBFORTNS;//xtaids
+		canbuild3=core_mantle_extractor;
+	 	canbuild4=core_moho_metal_maker;
+		canbuild5=core_geothermal_powerplant;
+		canbuild6=core_fusion_power_plant;
+		canbuild7=core_Quantum_reactor;
+		canbuild8=core_advanced_radar_tower;
+		canbuild9=core_radar_jamming_tower;
+		canbuild10=core_impounder;
+		canbuild11=core_viper;
+		canbuild12=core_cobra;
+		canbuild13=core_punisher;
+		canbuild14=core_adv_energy_storage;
+		canbuild15=core_adv_metal_storage;
+		canbuild16=core_shield_deflector;
+		canbuild18=core_doomsday_machine;
+		canbuild19=core_immolator;//xtaids
+		canbuild20=core_influence;
+		canbuild21=core_fortitude_missile_defense;
+		canbuild22=core_kbot_lab;
+		canbuild23=core_adv_kbot_lab;
+		canbuild24=core_krogoth_gantry; //xtaids
+		canbuild25=core_neutron;
+		canbuild26=core_silencer;
+	 	canbuild27=screamer;//xtaids
+		canbuild28=core_buzzsaw;
+		canbuild30=core_adv_nano_tower;
+		canbuild31=core_commandpost;
+	}
 	[core_vehicle_plant]
 	{
 		canbuild1=core_construction_vehicle;
@@ -4770,8 +4803,7 @@
 		canbuild3=talon_sniper;
 		canbuild4=talon_infantry; 
 		canbuild5=talon_mercenary;
-		canbuild6=talon_sphere;
-		//canbuild7=talon_medic;
+		canbuild6=talon_rocketman;
 	}
 	[talon_commander]
 	{
@@ -5263,10 +5295,8 @@
 		canbuild3=talon_emerald;
 		canbuild4=talon_whinestone;
 		canbuild5=talon_quartz;
-		//canbuild6=arm_samson_rt; //mod option
-		//canbuild7=armsparkle;//xtaids
-		//canbuild8=armjanus;//xtaids
-		canbuild9=talon_obsidian;
+		canbuild6=talon_obsidian;
+		canbuild7=talon_sphere;
 	}
 
 	[talon_construction_xbot]

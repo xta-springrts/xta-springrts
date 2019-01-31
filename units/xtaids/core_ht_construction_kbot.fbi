@@ -3,33 +3,33 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	side=Arm;
+	side=Core;
 	name=High Tech Construction Kbot;
 	description=Tech Level 3;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=ARM KBOT CONSTR MOBILE NOWEAPON STORAGE NOTAIR NOTSEA NOTSUB;
+	category=core KBOT CONSTR MOBILE NOWEAPON STORAGE NOTAIR NOTSEA NOTSUB;
 	tedclass=CONSTR;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=arm_ht_construction_kbot;
+	unitname=core_ht_construction_kbot;
 	unitnumber=3;
-	objectname=arm_ht_construction_kbot.3do;
-	corpse=arm_ht_construction_kbot_dead;
-	buildpic=arm_ht_construction_kbot.png;
-	soundcategory=ARM_CKBOT;
+	objectname=core_ht_construction_kbot.3do;
+	corpse=core_ht_construction_kbot_dead;
+	buildpic=core_ht_construction_kbot.png;
+	soundcategory=core_CKBOT;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=3693;
+	maxdamage=3993;
 	healtime=53;
-	buildcostmetal=2143;
-	buildcostenergy=15784;
+	buildcostmetal=2043;
+	buildcostenergy=14784;
 	buildtime=30074;
 	footprintx=3;
 	footprintz=3;
@@ -75,7 +75,7 @@
 	turnrate=1010;
 	acceleration=1.8;
 	brakerate=14.0;
-	maxvelocity=1.4;
+	maxvelocity=1.33;
 	maxslope=20;
 	maxwaterdepth=25;
 
@@ -103,7 +103,7 @@
 	//  Miscellaneous
 	//*****************
 	bmcode=1;
-	designation=ARM-ACK1;
+	designation=core-ACK1;
 	downloadable=1;
 	maneuverleashlength=640;
 	shootme=1;

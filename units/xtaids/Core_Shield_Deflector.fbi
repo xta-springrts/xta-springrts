@@ -3,128 +3,120 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	side=Arm;
-	name=High Tech Construction Kbot;
-	description=Tech Level 3;
+	side=Core;
+	name=Shield Deflector;
+	description=Deflects Plasma and Energy Weapons;
+	icontype=building;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=ARM KBOT CONSTR MOBILE NOWEAPON STORAGE NOTAIR NOTSEA NOTSUB;
-	tedclass=CONSTR;
+	category=Core DEFENSIVE STATIC WEAPON RADAR NOTAIR NOTSEA NOTSUB;
+	tedclass=DEFENSIVE;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=arm_ht_construction_kbot;
-	unitnumber=3;
-	objectname=arm_ht_construction_kbot.3do;
-	corpse=arm_ht_construction_kbot_dead;
-	buildpic=arm_ht_construction_kbot.png;
-	soundcategory=ARM_CKBOT;
+	unitname=Core_Shield_Deflector;
+	unitnumber=7;
+	objectname=Core_Shield_Deflector.3do;
+	corpse=Arm_Shield_Deflector_dead;
+	buildpic=Core_Shield_Deflector.png;
+	soundcategory=Core_ANNI;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=3693;
-	healtime=53;
-	buildcostmetal=2143;
-	buildcostenergy=15784;
-	buildtime=30074;
-	footprintx=3;
-	footprintz=3;
+	maxdamage=7546;
+	healtime=11;
+	buildcostmetal=10433;
+	buildcostenergy=78742;
+	buildtime=134322;
+	footprintx=4;
+	footprintz=4;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalmake=1.3;
-	metalstorage=500;
-	energymake=23;
-	energyuse=0.1;
-	energystorage=500;
+	metalstorage=0;
+	energymake=0;
+	energyuse=0;
+	energystorage=2500;
 
 	//************************************************************
 	//  Building
 	//************
+	buildangle=40000;
+	yardmap=oooo oooo oooo oooo;
+	activatewhenbuilt=0;
+	collisionVolumeType = box;
+	collisionVolumeScales =50 35 50;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
 
 	//************************************************************
 	//  Constructor
 	//***************
-	builder=1;
-	builddistance=170;//130, edited by Noruas
-	workertime=320;
-	RepairSpeed=320;
-	ReclaimSpeed=320;
-	TerraformSpeed=640;//speed up terraforming
+	builder=0;
+	workertime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
+	canattack=1;
 	canguard=1;
-	canmove=1;
-	canpatrol=1;
-	canreclamate=1;
-	canFight=1;
 	canstop=1;
-	upright=0;
 
 	//************************************************************
 	//  Movement
 	//************
-	movementclass=KBOTSS2;
-	turnrate=1010;
-	acceleration=1.8;
-	brakerate=14.0;
-	maxvelocity=1.4;
-	maxslope=20;
-	maxwaterdepth=25;
+	maxslope=10;
+	maxwaterdepth=33;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=373.5;
-	radardistance=0;
+	sightdistance=920;
+	radardistance=1850;
+	//losemitheight=48;
+	//radaremitheight=48;
 
 	//************************************************************
 	//  Weapons
 	//***********
-	explodeas=ATOMIC_SMALLNANO;
-	selfdestructas=ATOMIC_SMALLNANO;
+	weapon1=Arm_Stationary_Shield;
+	wpri_badtargetcategory=VTOL;
+	badtargetcategory=VTOL;
+	explodeas=ATOMIC_BLASTSML;
+	selfdestructas=ATOMIC_BLAST;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
-	mobilestandorders=1;
-	standingmoveorder=1;
-	defaultmissiontype=Standby;
+	firestandorders=1;
+	standingfireorder=2;
+	defaultmissiontype=GUARD_NOMOVE;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=1;
-	designation=ARM-ACK1;
+	bmcode=0;
+	damagemodifier=0.5;
+	designation=Core-ANN1;
 	downloadable=1;
-	maneuverleashlength=640;
 	shootme=1;
-	smoothanim=1;
-	steeringmode=1;
 	threed=1;
 	version=1.2;
 	zbuffer=1;
-	pieceTrailCEGTag=NanoDebree;//bleh
-	pieceTrailCEGRange = 2;
-	collisionVolumeType = box;
-	collisionVolumeScales =35 26 35;
-	collisionVolumeOffsets = 0 -1 0;
-	collisionVolumeTest = 1;
+	pieceTrailCEGTag=Debree;//bleh
+	pieceTrailCEGRange = 4;
 
 	//************************************************************
 	//  To be removed
 	//*****************
-
-	[SFXTypes]
+	[customParams] 
 	{
-	explosiongenerator0=custom:Nano;
+		canAreaAttack=1;
 	}
+
 }

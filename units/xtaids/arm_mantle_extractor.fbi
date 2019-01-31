@@ -40,7 +40,7 @@
 	metalstorage=1000;
 	energyuse=900;
 	energystorage=0;
-	extractsmetal=0.012;
+	extractsmetal=0.018;
 
 	//************************************************************
 	//  Building

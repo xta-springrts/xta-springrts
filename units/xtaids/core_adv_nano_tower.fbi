@@ -1,8 +1,8 @@
 [UNITINFO]
 {
 	Name=Advanced Nano Tower;
-	UnitName=arm_adv_nano_tower;
-	buildpic=arm_adv_nano_tower.png;
+	UnitName=core_adv_nano_tower;
+	buildpic=core_adv_nano_tower.png;
 	corpse=arm_adv_nano_tower_dead;
 	
 	//    Required Tags
@@ -14,9 +14,9 @@
 	FootprintX=4;
 	FootprintZ=4;
 	MaxDamage=2020;
-	ObjectName=arm_adv_nano_tower;
-	Side=ARM;
-	SoundCategory=ARM_COM;
+	ObjectName=core_adv_nano_tower;
+	Side=core;
+	SoundCategory=core_COM;
 	TEDClass=CNSTR;
 	Commander=0;
 	
