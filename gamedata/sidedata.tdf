@@ -2149,6 +2149,39 @@
 		canbuild31=core_tortoise_plant;//spiders vs. tortoise
 		canbuild32=core_hovercraft_platform;
 	}
+
+	[core_jools]
+	{
+		canbuild1=core_solar_collector;
+		canbuild2=core_wind_generator;
+		canbuild3=core_energy_storage;
+		canbuild4=core_metal_storage;
+		canbuild5=core_metal_extractor;
+		canbuild6=core_metal_maker;
+		canbuild7=core_kbot_lab;
+		canbuild8=core_vehicle_plant;
+		canbuild9=core_aircraft_plant;
+		canbuild10=core_shipyard;
+		canbuild11=core_sub_pen;
+		canbuild12=core_nano_tower;
+		canbuild13=core_light_laser_tower;
+		canbuild14=core_radar_tower;
+		canbuild15=core_torpedo_launcher; //added v9beta
+		canbuild16=core_adv_kbot_lab;
+		canbuild17=core_geothermal_powerplant;
+		canbuild18=core_gaat_gun;
+		canbuild19=core_pulverizer;
+		canbuild20=core_dragons_teeth;
+		canbuild21=core_toaster;
+		canbuild22=core_tortoise_plant_Xtra;//spiders vs. tortoise
+		canbuild23=core_tortoise_plant;//spiders vs. tortoise
+		canbuild24=core_hovercraft_platform;
+		canbuild25=core_seaplane_platform;
+		canbuild26=core_adv_vehicle_plant;
+		canbuild27=core_adv_aircraft_plant;
+		canbuild28=core_adv_shipyard;
+	}
+
 	[core_nincommander]
 	{
 		canbuild1=core_solar_collector;
@@ -2730,6 +2763,9 @@
 	{
 		canbuild1=core_ht_construction_kbot;
 		canbuild2=core_krogoth;
+		canbuild3=core_archdemon;
+		canbuild4=core_fluxor;
+		canbuild5=core_jools;
 	}
 	[core_hovercraft_platform]
 	{

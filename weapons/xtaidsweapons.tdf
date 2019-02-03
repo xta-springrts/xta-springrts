@@ -380,7 +380,7 @@
 	burnblow=1;
 	[DAMAGE]
 	{
-		default=450;
+		default=900;
 		group_invincible=1;
 	}
 }
@@ -1436,12 +1436,6 @@
 	firestarter=50;
 	beamweapon=1;
 	rgbcolor=1.000 0.059 0.000;
-	explosiongaf=fx;
-	explosionart=explode5;
-	waterexplosiongaf=fx;
-	waterexplosionart=h2oboom1;
-	lavaexplosiongaf=fx;
-	lavaexplosionart=lavasplashsm;
 	tolerance=1000;
 	guidance=1;
 	[DAMAGE]
@@ -2922,7 +2916,7 @@
 	commandfire=1;
 	[DAMAGE]
 	{
-		default=15000;
+		default=150000;
 		group_invincible=1;
 	}
 }

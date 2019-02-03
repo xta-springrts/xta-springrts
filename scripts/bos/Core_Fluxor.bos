@@ -1,0 +1,706 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+piece  base, pelvis, rthigh, rleg, rfoot, rrtoe, rftoe, rltoe,
+       rrttoe, lthigh, lleg, lfoot, lrtoe, lftoe, lltoe, lrttoe,
+       body, ruparm, rlowarm, barrel1, flare1, barrel2, flare2, luparm,
+       llowarm, barrel3, flare3, barrel4, flare4, t1, turret, mflare,
+       dgun, dbarrel, dflare, pack, bodysupport;
+
+static-var  bMoving, Static_Var_2, bAiming, gun_1, Static_Var_5,
+            Static_Var_6, Static_Var_7, Static_Var_8, Static_Var_9, moveSpeed, currentSpeed;
+            
+
+// Signal definitions
+#define SIG_AIM				2
+#define SIG_AIM_2			4
+#define SIG_AIM_3			8
+#define SIG_MOVE			16
+
+UnitSpeed()
+{
+	while(TRUE)
+	{
+		currentSpeed = (get CURRENT_SPEED)*100/moveSpeed;
+		if (currentSpeed<20) currentSpeed=20;
+		sleep 142;
+	}
+}
+
+
+SmokeUnit(healthpercent, sleeptime, smoketype)
+{
+	var Func_Var_4;
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 400;
+	}
+	while( TRUE )
+	{
+		healthpercent = get HEALTH;
+		if( healthpercent < 66 )
+		{
+			smoketype = 256 | 2;
+			if( Rand( 1, 66 ) < healthpercent )
+			{
+				smoketype = 256 | 1;
+			}
+			Func_Var_4 = Rand( 1, 4 );
+			if( Func_Var_4 == 1 )
+			{
+				emit-sfx smoketype from body;
+			}
+			if( Func_Var_4 == 2 )
+			{
+				emit-sfx smoketype from ruparm;
+			}
+			if( Func_Var_4 == 3 )
+			{
+				emit-sfx smoketype from lfoot;
+			}
+			if( Func_Var_4 == 4 )
+			{
+				emit-sfx smoketype from dgun;
+			}
+		}
+		sleeptime = healthpercent * 50;
+		if( sleeptime < 200 )
+		{
+			sleeptime = 200;
+		}
+		sleep sleeptime;
+	}
+}
+
+Walk()
+{
+	while( bMoving )
+	{
+		if( Static_Var_2 )
+		{
+			turn rthigh to x-axis <-30.000000> speed <54.000000>;
+			turn rleg to x-axis <-10.000000> speed <18.000000>;
+			turn rfoot to x-axis <20.000000> speed <36.000000>;
+			turn rftoe to x-axis <40.000000> speed <48.000000>;
+			turn rltoe to x-axis <30.000000> speed <54.000000>;
+			turn rrttoe to x-axis <30.000000> speed <54.000000>;
+			turn rltoe to y-axis <-10.000000> speed <18.000000>;
+			turn rrttoe to y-axis <10.000000> speed <18.000000>;
+			turn rrtoe to x-axis <-40.000000> speed <72.000000>;
+			turn lthigh to x-axis <20.000000> speed <36.000000>;
+			turn lleg to x-axis <20.000000> speed <36.000000>;
+			turn lfoot to x-axis <-30.000000> speed <54.000000>;
+			turn lltoe to x-axis <-10.000000> speed <18.000000>;
+			turn lrttoe to x-axis <-10.000000> speed <18.000000>;
+			turn lftoe to x-axis <-10.000000> speed <18.000000>;
+			if( !bAiming )
+			{
+				turn ruparm to x-axis <-12.000000> speed <21.395604>;
+				turn luparm to x-axis <10.000000> speed <18.000000>;
+				turn rlowarm to y-axis <10.000000> speed <18.000000>;
+				turn bodysupport to y-axis <4.000000> speed <7.796703>;
+				turn bodysupport to z-axis <-3.000000> speed <5.197802>;
+				move bodysupport to y-axis [1.200000] speed [3.439996];
+			}
+		}
+		if( !Static_Var_2 )
+		{
+			turn rthigh to x-axis <-30.000000> speed <120.598901>;
+			turn rleg to x-axis <-10.000000> speed <80.000000>;
+			turn rfoot to x-axis <40.000000> speed <158.000000>;
+			turn rftoe to x-axis <40.000000> speed <282.000000>;
+			turn rltoe to x-axis <30.000000> speed <248.000000>;
+			turn rrttoe to x-axis <30.000000> speed <248.000000>;
+			turn rltoe to y-axis <-10.000000> speed <36.000000>;
+			turn rrttoe to y-axis <10.000000> speed <36.000000>;
+			turn lthigh to x-axis <20.000000> speed <45.000000>;
+			turn lleg to x-axis <20.000000> speed <45.000000>;
+			turn lfoot to x-axis <-40.000000> speed <72.000000>;
+			turn lftoe to x-axis <-10.000000> speed <18.000000>;
+			turn lltoe to x-axis <-10.000000> speed <18.000000>;
+			turn lrttoe to x-axis <-10.000000> speed <18.000000>;
+			if( !bAiming )
+			{
+				turn ruparm to x-axis <-12.000000> speed <68.598901>;
+				turn luparm to x-axis <10.000000> speed <68.598901>;
+				turn rlowarm to y-axis <10.000000> speed <18.000000>;
+				turn llowarm to y-axis <0.000000> speed <36.000000>;
+				turn bodysupport to y-axis <4.000000> speed <16.796703>;
+				turn bodysupport to z-axis <-3.000000> speed <12.395604>;
+				move bodysupport to y-axis [1.200000] speed [2.439996];
+			}
+		}
+		sleep 48000 / currentSpeed;
+		if( Static_Var_2 )
+		{
+			turn rthigh to x-axis <-5.000000> speed <90.000000>;
+			turn rleg to x-axis <-5.000000> speed <18.000000>;
+			turn rfoot to x-axis <10.000000> speed <36.000000>;
+			turn rftoe to x-axis <0.000000> speed <140.000000>;
+			turn rrttoe to x-axis <0.000000> speed <106.000000>;
+			turn rltoe to x-axis <0.000000> speed <106.000000>;
+			turn rltoe to y-axis <0.000000> speed <36.000000>;
+			turn rrttoe to y-axis <0.000000> speed <36.000000>;
+			turn rrtoe to x-axis <0.000000> speed <140.000000>;
+			turn lthigh to x-axis <34.000000> speed <50.598901>;
+			turn lleg to x-axis <35.000000> speed <52.000000>;
+			turn lrtoe to x-axis <-40.000000> speed <50.598901>;
+			turn lfoot to x-axis <-37.000000> speed <26.247253>;
+			turn lftoe to x-axis <-40.000000> speed <110.000000>;
+			turn lltoe to x-axis <-40.000000> speed <110.000000>;
+			turn lrttoe to x-axis <-40.000000> speed <110.000000>;
+			turn lltoe to y-axis <10.000000> speed <18.000000>;
+			turn lrttoe to y-axis <-10.000000> speed <18.000000>;
+			if( !bAiming )
+			{
+				turn ruparm to x-axis <-28.000000> speed <27.796703>;
+				turn luparm to x-axis <24.000000> speed <15.598901>;
+				turn rlowarm to y-axis <13.000000> speed <11.197802>;
+				turn bodysupport to y-axis <5.000000> speed <3.395604>;
+				turn bodysupport to z-axis <-4.000000> speed <3.395604>;
+				move bodysupport to y-axis [0.000000] speed [3.879999];
+			}
+		}
+		if( !Static_Var_2 )
+		{
+			turn rthigh to x-axis <-5.000000> speed <90.000000>;
+			turn rleg to x-axis <-5.000000> speed <18.000000>;
+			turn rfoot to x-axis <10.000000> speed <110.000000>;
+			turn rftoe to x-axis <0.000000> speed <150.000000>;
+			turn rrttoe to x-axis <0.000000> speed <110.000000>;
+			turn rltoe to x-axis <0.000000> speed <110.000000>;
+			turn rltoe to y-axis <0.000000> speed <36.000000>;
+			turn rrttoe to y-axis <0.000000> speed <36.000000>;
+			turn rrtoe to x-axis <0.000000> speed <140.000000>;
+			turn lthigh to x-axis <38.000000> speed <68.197802>;
+			turn lleg to x-axis <40.000000> speed <74.000000>;
+			turn lrtoe to x-axis <-40.000000> speed <46.598901>;
+			turn lfoot to x-axis <-37.000000> speed <32.796703>;
+			turn lftoe to x-axis <40.000000> speed <190.000000>;
+			turn lltoe to x-axis <30.000000> speed <180.000000>;
+			turn lrttoe to x-axis <30.000000> speed <180.000000>;
+			turn lltoe to y-axis <10.000000> speed <18.000000>;
+			turn lrttoe to y-axis <-10.000000> speed <18.000000>;
+			if( !bAiming )
+			{
+				turn ruparm to x-axis <-16.000000> speed <15.598901>;
+				turn luparm to x-axis <13.000000> speed <11.197802>;
+				turn rlowarm to y-axis <13.000000> speed <11.197802>;
+				turn llowarm to y-axis <0.000000> speed <36.000000>;
+				turn bodysupport to y-axis <5.000000> speed <3.395604>;
+				turn bodysupport to z-axis <-4.000000> speed <3.395604>;
+				move bodysupport to y-axis [0.000000] speed [3.879999];
+			}
+		}
+		sleep 32000 / currentSpeed;
+		turn lthigh to x-axis <-30.000000> speed <120.598901>;
+		turn lleg to x-axis <-10.000000> speed <90.000000>;
+		turn lfoot to x-axis <40.000000> speed <150.000000>;
+		turn lftoe to x-axis <40.000000> speed <280.000000>;
+		turn lltoe to x-axis <30.000000> speed <240.000000>;
+		turn lrttoe to x-axis <30.000000> speed <240.000000>;
+		turn lltoe to y-axis <-10.000000> speed <36.000000>;
+		turn lrttoe to y-axis <10.000000> speed <36.000000>;
+		turn rthigh to x-axis <20.000000> speed <45.000000>;
+		turn rleg to x-axis <20.000000> speed <45.000000>;
+		turn rfoot to x-axis <-40.000000> speed <72.000000>;
+		turn rftoe to x-axis <-10.000000> speed <18.000000>;
+		turn rltoe to x-axis <-10.000000> speed <18.000000>;
+		turn rrttoe to x-axis <-10.000000> speed <18.000000>;
+		if( !bAiming )
+		{
+			turn ruparm to x-axis <12.000000> speed <68.598901>;
+			turn luparm to x-axis <-10.000000> speed <40.895604>;
+			turn llowarm to y-axis <-10.000000> speed <18.000000>;
+			turn rlowarm to y-axis <0.000000> speed <36.000000>;
+			turn bodysupport to y-axis <-4.000000> speed <15.796703>;
+			turn bodysupport to z-axis <3.000000> speed <12.395604>;
+			move bodysupport to y-axis [1.200000] speed [2.439996];
+		}
+		sleep 48000 / currentSpeed;
+		turn lthigh to x-axis <-5.000000> speed <90.000000>;
+		turn lleg to x-axis <-5.000000> speed <18.000000>;
+		turn lfoot to x-axis <10.000000> speed <110.000000>;
+		turn lftoe to x-axis <0.000000> speed <144.000000>;
+		turn lrttoe to x-axis <0.000000> speed <106.000000>;
+		turn lltoe to x-axis <0.000000> speed <106.000000>;
+		turn lltoe to y-axis <0.000000> speed <36.000000>;
+		turn lrttoe to y-axis <0.000000> speed <36.000000>;
+		turn lrtoe to x-axis <0.000000> speed <144.000000>;
+		turn rthigh to x-axis <38.000000> speed <61.197802>;
+		turn rleg to x-axis <40.000000> speed <72.000000>;
+		turn rrtoe to x-axis <-40.000000> speed <49.598901>;
+		turn rfoot to x-axis <-37.000000> speed <24.796703>;
+		turn rftoe to x-axis <40.000000> speed <200.000000>;
+		turn rltoe to x-axis <30.000000> speed <180.000000>;
+		turn rrttoe to x-axis <30.000000> speed <180.000000>;
+		turn rltoe to y-axis <10.000000> speed <18.000000>;
+		turn rrttoe to y-axis <-10.000000> speed <18.000000>;
+		if( !bAiming )
+		{
+			turn ruparm to x-axis <16.000000> speed <14.598901>;
+			turn luparm to x-axis <-13.000000> speed <11.197802>;
+			turn llowarm to y-axis <-13.000000> speed <11.197802>;
+			turn rlowarm to y-axis <0.000000> speed <36.000000>;
+			turn bodysupport to y-axis <-5.000000> speed <3.395604>;
+			turn bodysupport to z-axis <4.000000> speed <3.395604>;
+			move bodysupport to y-axis [0.000000] speed [3.879999];
+		}
+		sleep 32000 / currentSpeed;
+		if( Static_Var_2 )
+		{
+			Static_Var_2 = 0;
+		}
+	}
+}
+
+StartMoving()
+{
+	signal SIG_MOVE;
+	set-signal-mask SIG_MOVE;
+	bMoving = TRUE;
+	Static_Var_2 = 1;
+	start-script Walk();
+}
+
+StopMoving()
+{
+	signal SIG_MOVE;
+	set-signal-mask SIG_MOVE;
+	turn lthigh to x-axis <0.000000> speed <80.000000>;
+	turn lleg to x-axis <0.000000> speed <70.000000>;
+	turn lfoot to x-axis <0.000000> speed <110.000000>;
+	turn lftoe to x-axis <0.000000> speed <120.000000>;
+	turn lltoe to x-axis <0.000000> speed <120.000000>;
+	turn lrttoe to x-axis <0.000000> speed <120.000000>;
+	turn lltoe to y-axis <0.000000> speed <30.000000>;
+	turn lrttoe to y-axis <0.000000> speed <30.000000>;
+	turn lrtoe to x-axis <0.000000> speed <120.000000>;
+	turn rthigh to x-axis <0.000000> speed <80.000000>;
+	turn rleg to x-axis <0.000000> speed <70.000000>;
+	turn rfoot to x-axis <0.000000> speed <110.000000>;
+	turn rftoe to x-axis <0.000000> speed <120.000000>;
+	turn rltoe to x-axis <0.000000> speed <120.000000>;
+	turn rrttoe to x-axis <0.000000> speed <120.000000>;
+	turn rltoe to y-axis <0.000000> speed <30.000000>;
+	turn rrttoe to y-axis <0.000000> speed <30.000000>;
+	turn rrtoe to x-axis <0.000000> speed <120.000000>;
+	turn bodysupport to z-axis <0.000000> speed <20.000000>;
+	turn bodysupport to y-axis <0.000000> speed <20.000000>;
+	move bodysupport to y-axis [0.000000] speed [2.000000];
+	if( !bAiming )
+	{
+		turn luparm to x-axis <0.000000> speed <50.000000>;
+		turn llowarm to y-axis <0.000000> speed <40.000000>;
+		turn ruparm to x-axis <0.000000> speed <50.000000>;
+		turn rlowarm to y-axis <0.000000> speed <40.000000>;
+	}
+}
+
+Create()
+{
+	bMoving = FALSE;
+	Static_Var_2 = 0;
+	bAiming = FALSE;
+	gun_1 = pelvis;
+	Static_Var_5 = 0;
+	Static_Var_6 = 0;
+	Static_Var_7 = 0;
+	Static_Var_8 = 0;
+	Static_Var_9 = 1;
+	hide flare1;
+	hide flare2;
+	hide flare3;
+	hide flare4;
+	hide mflare;
+	hide dflare;
+	moveSpeed = get MAX_SPEED;
+	currentSpeed = 100;
+	start-script SmokeUnit();
+}
+
+RestoreAfterDelay()
+{
+	sleep 7000;
+	if( Static_Var_7 )
+	{
+		turn body to y-axis <0.000000> speed <55.000000>;
+		turn luparm to x-axis <0.000000> speed <40.000000>;
+		turn llowarm to y-axis <0.000000> speed <30.000000>;
+		turn ruparm to x-axis <0.000000> speed <40.000000>;
+		turn rlowarm to y-axis <0.000000> speed <30.000000>;
+	}
+	turn dgun to y-axis <0.000000> speed <90.000000>;
+	turn turret to y-axis <0.000000> speed <100.000000>;
+	wait-for-turn body around y-axis;
+	wait-for-turn luparm around x-axis;
+	wait-for-turn llowarm around y-axis;
+	wait-for-turn ruparm around x-axis;
+	wait-for-turn rlowarm around y-axis;
+	bAiming = FALSE;
+	Static_Var_7 = 0;
+	Static_Var_9 = 1;
+}
+
+SweetSpot(piecenum)
+{
+	piecenum = base;
+}
+
+QueryPrimary(piecenum)
+{
+	if( gun_1 == 1 )
+	{
+		piecenum = flare1;
+		return (0);
+	}
+	if( gun_1 == 2 )
+	{
+		piecenum = flare3;
+		return (0);
+	}
+	if( gun_1 == 3 )
+	{
+		piecenum = flare2;
+		return (0);
+	}
+	if( gun_1 == 4 )
+	{
+		piecenum = flare4;
+		return (0);
+	}
+}
+
+AimFromPrimary(piecenum)
+{
+	piecenum = body;
+}
+
+AimPrimary(heading, pitch)
+{
+	signal SIG_AIM;
+	set-signal-mask SIG_AIM;
+	bAiming = TRUE;
+	Static_Var_7 = 1;
+	Static_Var_8 = heading;
+	if( !Static_Var_6 )
+	{
+		turn dgun to y-axis heading speed <150.000000>;
+	}
+	if( Static_Var_9 )
+	{
+		turn bodysupport to z-axis <0.000000> speed <20.000000>;
+		turn bodysupport to y-axis <0.000000> speed <20.000000>;
+		move bodysupport to y-axis [0.000000] speed [2.000000];
+		Static_Var_9 = 0;
+	}
+	turn body to y-axis heading speed <150.000000>;
+	turn luparm to x-axis <0.000000> - pitch speed <50.000000>;
+	turn ruparm to x-axis <0.000000> - pitch speed <50.000000>;
+	Static_Var_5 = 0 - pitch;
+	if( Static_Var_5 <= -32768 )
+	{
+		turn rlowarm to y-axis Static_Var_5 speed <55.000000>;
+		turn llowarm to y-axis <0.000000> - Static_Var_5 speed <55.000000>;
+	}
+	if( Static_Var_5 > -32768 )
+	{
+		turn rlowarm to y-axis <0.000000> speed <55.000000>;
+		turn llowarm to y-axis <0.000000> speed <55.000000>;
+	}
+	wait-for-turn body around y-axis;
+	wait-for-turn luparm around x-axis;
+	wait-for-turn ruparm around x-axis;
+	wait-for-turn rlowarm around y-axis;
+	wait-for-turn llowarm around y-axis;
+	start-script RestoreAfterDelay();
+	return (1);
+}
+
+FirePrimary()
+{
+	if( gun_1 == 1 )
+	{
+		emit-sfx UNIT_SFX1 from flare1;
+		show flare1;
+		move barrel1 to z-axis [-4.000000] speed [200.000000];
+		sleep 150;
+		hide flare1;
+		move barrel1 to z-axis [0.000000] speed [3.000000];
+		gun_1 = rthigh;
+		return (0);
+	}
+	if( gun_1 == 2 )
+	{
+		emit-sfx UNIT_SFX1 from flare3;
+		show flare3;
+		move barrel3 to z-axis [-4.000000] speed [200.000000];
+		sleep 150;
+		hide flare3;
+		move barrel3 to z-axis [0.000000] speed [3.000000];
+		gun_1 = rleg;
+		return (0);
+	}
+	if( gun_1 == 3 )
+	{
+		emit-sfx UNIT_SFX1 from flare2;
+		show flare2;
+		move barrel2 to z-axis [-4.000000] speed [200.000000];
+		sleep 150;
+		hide flare2;
+		move barrel2 to z-axis [0.000000] speed [3.000000];
+		gun_1 = rfoot;
+		return (0);
+	}
+	if( gun_1 == 4 )
+	{
+		emit-sfx UNIT_SFX1 from flare4;
+		show flare4;
+		move barrel4 to z-axis [-4.000000] speed [200.000000];
+		sleep 150;
+		hide flare4;
+		move barrel4 to z-axis [0.000000] speed [3.000000];
+		gun_1 = pelvis;
+		return (0);
+	}
+}
+
+QuerySecondary(piecenum)
+{
+	piecenum = dflare;
+}
+
+AimFromSecondary(piecenum)
+{
+	piecenum = dgun;
+}
+
+AimSecondary(heading, pitch)
+{
+	signal SIG_AIM_2;
+	set-signal-mask SIG_AIM_2;
+	Static_Var_6 = 1;
+	if( Static_Var_9 )
+	{
+		turn bodysupport to z-axis <0.000000> speed <20.000000>;
+		turn bodysupport to y-axis <0.000000> speed <20.000000>;
+		move bodysupport to y-axis [0.000000] speed [2.000000];
+		wait-for-turn bodysupport around y-axis;
+		wait-for-turn bodysupport around z-axis;
+		Static_Var_9 = 0;
+	}
+	turn dgun to y-axis heading speed <120.000000>;
+	wait-for-turn dgun around y-axis;
+	start-script RestoreAfterDelay();
+	return (1);
+}
+
+FireSecondary()
+{
+	emit-sfx UNIT_SFX2 from dflare;
+	//show dflare;
+	move dbarrel to z-axis [-1.500000] speed [40.000000];
+	sleep 180;
+	move dbarrel to z-axis [0.000000] speed [1.000000];
+	//hide dflare;
+}
+
+QueryTertiary(piecenum)
+{
+	piecenum = mflare;
+}
+
+AimFromTertiary(piecenum)
+{
+	piecenum = t1;
+}
+
+AimTertiary(heading, pitch)
+{
+	signal SIG_AIM_3;
+	set-signal-mask SIG_AIM_3;
+	if( Static_Var_7 )
+	{
+		turn turret to y-axis heading - Static_Var_8 speed <160.000000>;
+		turn turret to x-axis <0.000000> - pitch speed <85.000000>;
+	}
+	if( !Static_Var_7 )
+	{
+		turn turret to y-axis heading speed <160.000000>;
+		turn turret to x-axis <0.000000> - pitch speed <85.000000>;
+	}
+	wait-for-turn turret around y-axis;
+	wait-for-turn turret around x-axis;
+	start-script RestoreAfterDelay();
+	return (1);
+}
+
+FireTertiary()
+{
+}
+
+Killed(severity, corpsetype)
+{
+	if( severity <= 25 )
+	{
+		corpsetype = 1;
+		explode base type BITMAPONLY | BITMAP1;
+		explode pelvis type BITMAPONLY | BITMAP1;
+		explode rthigh type BITMAPONLY | BITMAP1;
+		explode rleg type BITMAPONLY | BITMAP1;
+		explode rfoot type BITMAPONLY | BITMAP1;
+		explode rrtoe type BITMAPONLY | BITMAP1;
+		explode rftoe type BITMAPONLY | BITMAP1;
+		explode rltoe type BITMAPONLY | BITMAP1;
+		explode rrttoe type BITMAPONLY | BITMAP1;
+		explode lthigh type BITMAPONLY | BITMAP1;
+		explode lleg type BITMAPONLY | BITMAP1;
+		explode lfoot type BITMAPONLY | BITMAP1;
+		explode lrtoe type BITMAPONLY | BITMAP1;
+		explode lftoe type BITMAPONLY | BITMAP1;
+		explode lltoe type BITMAPONLY | BITMAP1;
+		explode lrttoe type BITMAPONLY | BITMAP1;
+		explode body type BITMAPONLY | BITMAP1;
+		explode ruparm type BITMAPONLY | BITMAP1;
+		explode rlowarm type BITMAPONLY | BITMAP1;
+		explode barrel1 type BITMAPONLY | BITMAP1;
+		explode flare1 type BITMAPONLY | BITMAP1;
+		explode barrel2 type BITMAPONLY | BITMAP1;
+		explode flare2 type BITMAPONLY | BITMAP1;
+		explode luparm type BITMAPONLY | BITMAP1;
+		explode llowarm type BITMAPONLY | BITMAP1;
+		explode barrel3 type BITMAPONLY | BITMAP1;
+		explode flare3 type BITMAPONLY | BITMAP1;
+		explode barrel4 type BITMAPONLY | BITMAP1;
+		explode flare4 type BITMAPONLY | BITMAP1;
+		explode t1 type BITMAPONLY | BITMAP1;
+		explode turret type BITMAPONLY | BITMAP1;
+		explode mflare type BITMAPONLY | BITMAP1;
+		explode dgun type BITMAPONLY | BITMAP1;
+		explode dbarrel type BITMAPONLY | BITMAP1;
+		explode dflare type BITMAPONLY | BITMAP1;
+		explode pack type BITMAPONLY | BITMAP1;
+		return (0);
+	}
+	if( severity <= 50 )
+	{
+		corpsetype = 2;
+		explode base type SHATTER | BITMAP4;
+		explode pelvis type SHATTER | BITMAP4;
+		explode rthigh type SHATTER | BITMAP4;
+		explode rleg type SHATTER | BITMAP4;
+		explode rfoot type SHATTER | BITMAP4;
+		explode rrtoe type SHATTER | BITMAP4;
+		explode rftoe type SHATTER | BITMAP4;
+		explode rltoe type SHATTER | BITMAP4;
+		explode rrttoe type SHATTER | BITMAP4;
+		explode lthigh type SHATTER | BITMAP4;
+		explode lleg type SHATTER | BITMAP4;
+		explode lfoot type SHATTER | BITMAP4;
+		explode lrtoe type SHATTER | BITMAP4;
+		explode lftoe type SHATTER | BITMAP4;
+		explode lltoe type SHATTER | BITMAP4;
+		explode lrttoe type SHATTER | BITMAP4;
+		explode body type SHATTER | BITMAP4;
+		explode ruparm type SHATTER | BITMAP4;
+		explode rlowarm type SHATTER | BITMAP4;
+		explode barrel1 type SHATTER | BITMAP4;
+		explode flare1 type SHATTER | BITMAP4;
+		explode barrel2 type SHATTER | BITMAP4;
+		explode flare2 type SHATTER | BITMAP4;
+		explode luparm type SHATTER | BITMAP4;
+		explode llowarm type SHATTER | BITMAP4;
+		explode barrel3 type SHATTER | BITMAP4;
+		explode flare3 type SHATTER | BITMAP4;
+		explode barrel4 type SHATTER | BITMAP4;
+		explode flare4 type SHATTER | BITMAP4;
+		explode t1 type SHATTER | BITMAP4;
+		explode turret type SHATTER | BITMAP4;
+		explode mflare type SHATTER | BITMAP4;
+		explode dgun type SHATTER | BITMAP4;
+		explode dbarrel type SHATTER | BITMAP4;
+		explode dflare type SHATTER | BITMAP4;
+		explode pack type SHATTER | BITMAP4;
+		return (0);
+	}
+	if( severity <= 99 )
+	{
+		corpsetype = 3;
+		explode base type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+		explode pelvis type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+		explode rthigh type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+		explode rleg type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+		explode rfoot type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+		explode rrtoe type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+		explode rftoe type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+		explode rltoe type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+		explode rrttoe type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+		explode lthigh type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+		explode lleg type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+		explode lfoot type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+		explode lrtoe type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+		explode lftoe type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+		explode lltoe type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+		explode lrttoe type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+		explode body type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+		explode ruparm type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+		explode rlowarm type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+		explode barrel1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+		explode flare1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+		explode barrel2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+		explode flare2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+		explode luparm type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+		explode llowarm type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+		explode barrel3 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+		explode flare3 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+		explode barrel4 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+		explode flare4 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+		explode t1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+		explode turret type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+		explode mflare type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+		explode dgun type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+		explode dbarrel type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+		explode dflare type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+		explode pack type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+		return (0);
+	}
+	corpsetype = 3;
+	explode base type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode pelvis type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode rthigh type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode rleg type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode rfoot type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode rrtoe type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode rftoe type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode rltoe type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode rrttoe type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode lthigh type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode lleg type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode lfoot type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode lrtoe type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode lftoe type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode lltoe type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode lrttoe type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode body type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode ruparm type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode rlowarm type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode barrel1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode flare1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode barrel2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode flare2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode luparm type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode llowarm type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode barrel3 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode flare3 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode barrel4 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode flare4 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode t1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode turret type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode mflare type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode dgun type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode dbarrel type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode dflare type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode pack type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+}

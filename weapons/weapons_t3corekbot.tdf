@@ -1,0 +1,180 @@
+
+[JOOLS_WEAPON]
+{
+	name=Annihilator Weapon;
+	Weapontype=BeamLaser;
+	explosiongenerator=custom:PURPLELASER;
+	turret=1;
+	thickness=1.2;
+	laserflaresize=6;
+	beamtime=0.1;
+	range=500;
+	reloadtime=0.1;
+	energypershot=30;
+	weaponvelocity=900;
+	areaofeffect=8;
+	targetMoveError=0.1;
+	soundstart=annigun1beamlaser;// was annigun1
+	SoundTrigger=1;
+	soundhitdry=xplolrg1;
+	firestarter=90;
+	rgbcolor=0.000 0.012 1.000;
+	pulseSpeed=4.0;
+	thickness=3.5;
+	avoidFeature=0;
+	tolerance=2000;
+	[DAMAGE]
+	{
+		default=40;
+		group_commanders=30;
+		lost_commanders=27;
+		group_invincible=1;
+	}
+}
+
+[Fluxor_missile] //archer, ranger
+{
+	name=Missiles;
+	Weapontype=MissileLauncher;
+	turret=1;
+	explosiongenerator=custom:KBOTMISSILEHIT;
+	model=missile.s3o;
+	Texture1=null;
+	Texture2=null;
+	Texture3=null;
+	Texture4=null;
+	range=800;
+	reloadtime=2;
+	weapontimer=5;
+	weaponvelocity=650;
+	startvelocity=530;
+	weaponacceleration=121;
+	turnrate=60000;
+	trajectoryHeight=0.08;
+	dance=30;
+	areaofeffect=32;
+	burst=3;
+	burstrate=0.1;
+	soundstart=rockhvy2;
+	soundhitdry=xplomed2;
+	firestarter=70;
+	smokedelay=0.1;
+	tracks=1;
+	smoketrail=0;
+	tolerance=8000;
+	startsmoke=1;
+	cegTag=KBOTMISSILETRAIL;
+	collidefriendly=0;
+	avoidfriendly=1;
+	[DAMAGE]
+	{
+		default=30;
+		group_invincible=1;
+		group_landair=75;
+		group_skyair=75;
+	}
+}
+
+[Fluxor_Gun]
+{
+	name=Plasma Cannon;
+	weaponType=Cannon;
+	turret=1;
+	//minbarrelangle=-35;
+	range=425;
+	explosiongenerator=custom:WindkbotRocket;
+	reloadtime=0.5;
+	weaponvelocity=612;
+	mygravity=0.1;
+	areaofeffect=48;
+	soundstart=cannon1;
+	soundhitdry=xplomed3;
+	//minbarrelangle=-55;
+	stages=4;
+	separation=1.0;
+	alphadecay=0.3;
+	sizedecay=-0.15;
+	nogap=1;
+	rgbcolor=1.0 0.4 0.0;
+	size=3.0;
+	//intensity=1.0;
+	[DAMAGE]
+	{
+		default=125;
+		group_invincible=1;
+	}
+}
+
+[CORE_FLUXOR_ANNIHILATOR]
+{
+	name=Plasma Cannon;
+	explosiongenerator=custom:Flame1;
+	energypershot=700;
+	rgbcolor=1 0.5 0.2;
+	stages=20;
+	separation=0.45;
+	alphadecay=0.3;
+	sizedecay=-0.15;
+	nogap=1;
+	size=3;
+	cegTag=UnitFire;
+	weaponType=Cannon;
+	turret=1;
+	range=900;
+	reloadtime=8;
+	weaponvelocity=825;
+	areaofeffect=97;
+	soundstart=coastalarty;
+	soundhitdry=impact;
+	startsmoke=1;
+	accuracy=50;
+	movingaccuracy=100;
+	myGravity=0.1;
+	[DAMAGE]
+	{
+		default=888;
+		group_invincible=1;
+		group_ships=1000;
+		group_large_ships=1000;
+	}
+}
+
+[ARCHDEMONCOMIONLASER]
+{
+	name=RX3Laser;
+	Weapontype=BeamLaser;
+	areaofeffect=12;
+	energypershot=1500;
+	beamtime=0.40;
+	corethickness=0.57;
+	craterboost=1;
+	cratermult=1;
+	duration=0.31;
+	edgeeffectiveness=0.99;
+	explosiongenerator=custom:ZIPPERDICKER_EFFECT;
+	firestarter=70;
+	interceptedbyshieldtype=0;
+	laserflaresize=8;
+	noselfdamage=1;
+	range=610;
+	sprayangle=900;
+	reloadtime=1.5;
+	rgbcolor=0.7 0.2 0.2;
+	beamdecay=0.9;
+	beamttl=3;
+	soundhitdry=ionbeam;
+	soundstart=ionbeam;
+	soundtrigger=1;
+	targetmoveerror=0.05;
+	thickness=6.5;
+	tolerance=10000;
+	turret=1;
+	weaponvelocity=900;
+	dyndamageexp=1;
+	dyndamageinverted=0;
+	[DAMAGE]
+	{
+		default=2000;
+		group_invincible=1;
+	}
+}

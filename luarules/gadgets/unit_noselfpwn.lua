@@ -47,6 +47,7 @@ local exceptionList = {
   "core_goliath",
   "core_immolator",
   "core_intimidator",
+  "core_jools",
   "core_krogoth",
   "core_pillager",
   "core_missile_frigate",
