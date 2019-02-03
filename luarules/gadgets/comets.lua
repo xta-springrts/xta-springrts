@@ -2,7 +2,7 @@ function gadget:GetInfo()
 	return {
 		name      	= "comets",
 		desc      	= "Comets from the sky",
-		author    	= "res (inspired by Jools astroids map gadget",
+		author    	= "res (inspired by Jools asteroids map gadget",
 		date      	= "24-11-2018",
 		license 	= "GNU GPL, v3 or later",
 		layer     	= -99,
@@ -13,7 +13,7 @@ end
 
 	--[[
 
-	Incomming comets that do damage 
+	Incoming comets that do damage
 		-specifies comet units (fall from the sky)
 		-comet units optional do damage (by radiation)
 
@@ -26,6 +26,9 @@ end
 
 	# TODO
 	1. Draw texture on the ground for comets (or some fx, by spawning an explosion)
+	2. Add a heatmap for commit hits
+	3. Add model of a comet
+	4. remove a lot of bad global decelerations
 
 	--]]	
 

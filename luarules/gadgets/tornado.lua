@@ -1,7 +1,7 @@
 function gadget:GetInfo()
 	return {
-		name      	= "tornedo",
-		desc      	= "tornedo are spawned",
+		name      	= "tornado",
+		desc      	= "tornado are spawned",
 		author    	= "res",
 		date      	= "24-11-2018",
 		license 	= "GNU GPL, v3 or later",
@@ -21,15 +21,12 @@ end
 		3. tornado's move around the map (appear and disappear)
 		4. units outside the map get destroyed (buildings)
 
-		unintended(bug):
-		5. do strange things to projectiles (nuke dysfunctional, dgun stuff)
-		6. tornado's walk off map
-
 	TODO:
 		3. wobbling tornado's (not straight angle)
 		4. different sizes of tornado's (this should be calculated: angle,speed,updatetime)
 		5. add feature support (flying features?)
 		6. fix projectile properties (speed, model randomness)
+		7. sounds/units/windgen2.wav
 
 ]]--
 
@@ -400,12 +397,12 @@ end
 
 
 
-local function tornadoFX(number)
-	local pos = tornadoData[number].pos
-	local x, y, z = pos.x, pos.y, pos.z
-	local height = random(y,600)
-	SpawnCEG(metalcloud2,x, height, z)
-end
+--local function tornadoFX(number)
+--	local pos = tornadoData[number].pos
+--	local x, y, z = pos.x, pos.y, pos.z
+--	local height = random(y,600)
+--	SpawnCEG(metalcloud2,x, height, z)
+--end
 
 
 local function updateTornados()
@@ -435,9 +432,9 @@ local function updateTornados()
 
 		scanTorpedoArea(tornados[i])
 
-		if random() < 0.05 then
-			tornadoFX(tornados[i])
-		end
+		--if random() < 0.05 then
+		--	tornadoFX(tornados[i])
+		--end
 	end
 
 end
