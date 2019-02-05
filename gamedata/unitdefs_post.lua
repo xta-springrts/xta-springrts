@@ -446,7 +446,7 @@ if (modOptions and not tobool(modOptions.xtaidunits)) then
 	"corscrew", "corcrw", "corfff", "screamer", "corebfortns", "corhback",
 	"commando", "corevashp", "core_emperor", "cor_jumbo", "scorp3g",
 	"nsaclash", "tadg06", "core_tortoise_plant_xtra", "core_gizmo", "core_ht_construction_kbot",
-	"core_archdemon", "core_jools", "core_fluxor"
+	"core_archdemon", "core_jools", "core_fluxor", "core_jupiter", "core_manticore", "core_nibiru"
   })
 end
 

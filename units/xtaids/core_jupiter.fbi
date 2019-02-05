@@ -3,44 +3,44 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	side=Arm;
-	name=Archangel;
-	description=Flak & Missile Kbot;
+	side=Core;
+	name=Jupiter;
+	description=Radar Tracking Rocket Crawler;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=ARM KBOT WEAPON NOTAIR NOTSUB;
+	Category=CORE KBOT WEAPON NOTAIR NOTSUB;
 	tedclass=KBOT;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=arm_archangel;
-	unitnumber=41;
-	objectname=arm_archangel.3do;
-	corpse=arm_archangel_dead;
-	buildpic=arm_archangel.DDS;
-	soundcategory=ARM_KBOT;
+	unitname=core_jupiter;
+	unitnumber=269;
+	objectname=core_jupiter.3do;
+	corpse=core_jupiter_dead;
+	buildpic=core_jupiter.png;
+	soundcategory=COR_KBOT;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=3720;
+	maxdamage=27764;
 	healtime=30;
-	buildcostmetal=2428;
-	buildcostenergy=42219;
-	buildtime=62631;
-	footprintx=3;
-	footprintz=3;
+	buildcostmetal=6865;
+	buildcostenergy=46464;
+	buildtime=73190;
+	footprintx=4;
+	footprintz=4;
 
 	//************************************************************
 	//  Resources
 	//*************
 	metalstorage=0;
-	energymake=0.4;
-	energyuse=0.4;
-	energystorage=0;
+	energymake=5;
+	energyuse=25;
+	energystorage=1000;
 
 	//************************************************************
 	//  Building
@@ -60,37 +60,36 @@
 	canmove=1;
 	canpatrol=1;
 	canstop=1;
-	upright=1;
+	upright=0;
 
 	//************************************************************
 	//  Movement
 	//************
-	movementclass=KBOTSS2;
-	turnrate=1016;
-	acceleration=1.0;
-	brakerate=1.2;
-	maxvelocity=1.2;
+	movementclass=KBOTSf3;
+	turnrate=300;
+	acceleration=0.333;
+	brakerate=0.5;
+	maxvelocity=0.9;
 	maxslope=14;
 	maxwaterdepth=12;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=560;
-	airsightdistance=1000;
-	radardistance=0;
+	sightdistance=680;
+	radardistance=1600;
+	onoffable=1;
+	activatewhenbuilt=1;
 
 	//************************************************************
 	//  Weapons
 	//***********
-	weapon1=ARCHANGEL_FLAK;
-	weapon2=ARMRL_MISSILE;
-	weapon3=ARMRL_MISSILE;
-	weapon4=ARMRL_MISSILE;
-	badtargetcategory=NOTAIR;
-	wpri_badtargetcategory=NOTAIR;
-	explodeas=BIG_UNITEX;
-	selfdestructas=BIG_UNIT;
+	weapon1=JUPITER_ROCKET;
+	nochasecategory=VTOL;
+	wpri_badtargetcategory=VTOL;
+	weapon3=CORE_JUEP;
+	explodeas=CRAWL_BLASTSML;
+	selfdestructas=CRAWL_BLASTSML;
 
 	//************************************************************
 	//  Orders
@@ -106,7 +105,8 @@
 	//  Miscellaneous
 	//*****************
 	bmcode=1;
-	designation=ARM-KML;
+	cantbetransported=0;
+	designation=KG-EHL;
 	downloadable=1;
 	maneuverleashlength=640;
 	shootme=1;
@@ -116,8 +116,8 @@
 	version=1.2;
 	zbuffer=1;
 	collisionVolumeType = box;
-	collisionVolumeScales =44 39 38;
-	collisionVolumeOffsets = 0 -1 0;
+	collisionVolumeScales =70 40 70;
+	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
 	pieceTrailCEGTag=Debree;//bleh
 	pieceTrailCEGRange = 4;
@@ -128,6 +128,8 @@
 
 	[SFXTypes]
 	{
-	explosiongenerator0=custom:POPUPFLAREFAST;
+	explosiongenerator0=custom:dgunflare;
+	explosiongenerator1=custom:POPUPFLAREFAST;
+	explosiongenerator2=custom:unitfire;
 	}
 }

@@ -2733,7 +2733,7 @@
 	shieldintercepttype=-1;
 	shieldpower=40666;
 	shieldpowerregen=300;
-	shieldpowerregenenergy=400;
+	shieldpowerregenenergy=600;
 	shieldradius=107;
 	shieldrepulser=0;
 	shieldstartingpower=40666;
@@ -2742,6 +2742,7 @@
 	visibleshieldhitframes=70;
 	visibleshieldrepulse=1;
 	weapontype=Shield;
+	ShieldRechargeDelay=0.25;
 	[DAMAGE]
 	{
 		default=100;

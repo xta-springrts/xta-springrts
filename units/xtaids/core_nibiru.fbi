@@ -3,44 +3,44 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	side=Arm;
-	name=Archangel;
-	description=Flak & Missile Kbot;
+	side=Core;
+	name=Nibiru;
+	description=Close-Range Combat Crawler;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=ARM KBOT WEAPON NOTAIR NOTSUB;
+	Category=CORE KBOT WEAPON NOTAIR NOTSUB;
 	tedclass=KBOT;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=arm_archangel;
-	unitnumber=41;
-	objectname=arm_archangel.3do;
-	corpse=arm_archangel_dead;
-	buildpic=arm_archangel.DDS;
-	soundcategory=ARM_KBOT;
+	unitname=core_nibiru;
+	unitnumber=269;
+	objectname=core_nibiru.3do;
+	corpse=core_nibiru_dead;
+	buildpic=core_nibiru.png;
+	soundcategory=COR_KBOT;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=3720;
+	maxdamage=100000;
 	healtime=30;
-	buildcostmetal=2428;
-	buildcostenergy=42219;
-	buildtime=62631;
-	footprintx=3;
-	footprintz=3;
+	buildcostmetal=18865;
+	buildcostenergy=65734;
+	buildtime=100000;
+	footprintx=4;
+	footprintz=4;
 
 	//************************************************************
 	//  Resources
 	//*************
 	metalstorage=0;
-	energymake=0.4;
-	energyuse=0.4;
-	energystorage=0;
+	energymake=5;
+	energyuse=5;
+	energystorage=4000;
 
 	//************************************************************
 	//  Building
@@ -60,37 +60,34 @@
 	canmove=1;
 	canpatrol=1;
 	canstop=1;
-	upright=1;
+	upright=0;
 
 	//************************************************************
 	//  Movement
 	//************
-	movementclass=KBOTSS2;
-	turnrate=1016;
-	acceleration=1.0;
-	brakerate=1.2;
-	maxvelocity=1.2;
+	movementclass=KBOTSf3;
+	turnrate=300;
+	acceleration=0.333;
+	brakerate=0.5;
+	maxvelocity=0.666;
 	maxslope=14;
 	maxwaterdepth=12;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=560;
-	airsightdistance=1000;
+	sightdistance=480;
 	radardistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
-	weapon1=ARCHANGEL_FLAK;
-	weapon2=ARMRL_MISSILE;
-	weapon3=ARMRL_MISSILE;
-	weapon4=ARMRL_MISSILE;
-	badtargetcategory=NOTAIR;
-	wpri_badtargetcategory=NOTAIR;
-	explodeas=BIG_UNITEX;
-	selfdestructas=BIG_UNIT;
+	weapon1=NIBIRU_LASER;
+	nochasecategory=VTOL;
+	wpri_badtargetcategory=VTOL;
+	weapon2=CORE_DOOMSNIB;
+	explodeas=ATOMIC_BLAST;
+	selfdestructas=ATOMIC_BLAST;
 
 	//************************************************************
 	//  Orders
@@ -106,7 +103,8 @@
 	//  Miscellaneous
 	//*****************
 	bmcode=1;
-	designation=ARM-KML;
+	cantbetransported=0;
+	designation=KG-EHL;
 	downloadable=1;
 	maneuverleashlength=640;
 	shootme=1;
@@ -116,8 +114,8 @@
 	version=1.2;
 	zbuffer=1;
 	collisionVolumeType = box;
-	collisionVolumeScales =44 39 38;
-	collisionVolumeOffsets = 0 -1 0;
+	collisionVolumeScales =70 40 70;
+	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
 	pieceTrailCEGTag=Debree;//bleh
 	pieceTrailCEGRange = 4;
@@ -128,6 +126,7 @@
 
 	[SFXTypes]
 	{
-	explosiongenerator0=custom:POPUPFLAREFAST;
+	explosiongenerator0=custom:snipeflare;
+	explosiongenerator1=custom:unitfire;
 	}
 }

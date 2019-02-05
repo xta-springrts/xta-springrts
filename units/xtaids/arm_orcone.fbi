@@ -25,7 +25,7 @@
 	idletime=900;
 	maxdamage=66666;
 	maxslope=17;
-	maxvelocity=1.426;
+	maxvelocity=1.333;
 	maxwaterdepth=12;
 	movementclass=Krogoth;
 	name=Orcone;

@@ -13,7 +13,7 @@
           	size=3;
           	length=17;
           	sizeGrowth=0.75;
-          	ttl=10;
+          	ttl=7;
           	frontOffset=0;
           	sideTexture=muzzleside;
           	frontTexture=muzzlefront;
@@ -69,7 +69,7 @@
           	size=-6;
           	length=-33;
           	sizeGrowth=0.75;
-          	ttl=10;
+          	ttl=5;
           	frontOffset=0;
           	sideTexture=muzzleside;
           	frontTexture=muzzlefront;
@@ -112,7 +112,7 @@
 			colorMap=1.0 0.6 0.2 0.01 0.1 0.1 0.1 0.2 0.0 0.0 0.0 0.01;
 			Texture=smoke;
 			airdrag=0.8;
-			particleLife=50;
+			particleLife=30;
 			particleLifeSpread=0;
 			numParticles=5;
 			particleSpeed=0;
@@ -142,7 +142,7 @@
 			colorMap=1.0 0.6 0.2 0.01 0.1 0.1 0.1 0.2 0.0 0.0 0.0 0.01;
 			Texture=smoke;
 			airdrag=0.8;
-			particleLife=60;
+			particleLife=40;
 			particleLifeSpread=5;
 			numParticles=5;
 			particleSpeed=-2;

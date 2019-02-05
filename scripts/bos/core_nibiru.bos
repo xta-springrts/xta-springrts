@@ -1,0 +1,525 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+#define HEADING_TOLERANCE	<15.000000>
+#define PITCH_TOLERANCE		<25.000000>
+
+piece  rflare, lflare, body, hat, feetparent, FLFoot, FRFoot, RLFoot,
+       RRFoot, rightchunk, leftchunk, Lgun, Rgun, Rbarrel, Lbarrel, hips,
+       newhip, head, doom, fire;
+#define SIG_AIM				4
+
+
+static-var  Moving_1, Aiming_2, busy_3, gun_4, reset_5, restore_6, moveSpeed, currentSpeed, currentHeading, currentPitch;
+
+UnitSpeed()
+{
+	while(TRUE)
+	{
+		currentSpeed = (get CURRENT_SPEED)*100/moveSpeed;
+		if (currentSpeed<20) currentSpeed=20;
+		sleep 142;
+	}
+}
+
+RestoreAfterDelay()
+{
+	Sleep 6000;
+	reset_5 = 0;
+	if( !restore_6 )
+	{
+	signal 2;
+	signal 4;
+	turn head to y-axis <0> speed <60>;
+	turn hat to y-axis <0> speed <90>;
+	turn Rgun to x-axis <0> speed <55>;
+	turn Lgun to x-axis <0> speed <55>;
+	move hat to y-axis [0] speed [3];
+	move head to y-axis [0] speed [2];
+	move body to y-axis [0] speed [1];
+	aiming_2 = 0;
+	}
+	return(0);
+}
+
+SmokeUnit(healthpercent, sleeptime, smoketype)
+{
+	/*set GRANT_UNITINFO to 1;
+	get SET_UNITINFO(uiHealTime,20);*/
+	while( TRUE )
+	{
+		start-script UnitSpeed();
+		healthpercent = get HEALTH;
+		if( healthpercent < 66 )
+		{
+			smoketype = 256 | 2;
+			if( Rand( 1, 66 ) < healthpercent )
+			{
+				smoketype = 256 | 1;
+			}
+			emit-sfx smoketype from body;
+		}
+		sleeptime = healthpercent * 50;
+		if( sleeptime < 200 )
+		{
+			sleeptime = 200;
+		}
+		if( restore_6 )
+		{
+			reset_5 = 1;
+		}
+		sleep sleeptime;
+		if( restore_6 AND reset_5 )
+		{
+			restore_6 = 0;
+			start-script RestoreAfterDelay();
+		}
+	}
+}
+
+/*Cloak(cloakdist, shieldID)
+{
+	//if the shield is cloaked and this unit hasn't run this bit yet, then go
+	if( cloakdist )
+	{
+		if ((get GET_CLOAKED) == 0)
+		{
+			get SET_CLOAKED(1);
+		}
+		while( (get DISTANCE (get MY_ID, shieldID)) <= cloakdist AND get GET_CLOAKED(shieldID) )
+		{
+			sleep 133;
+		}
+		get SET_CLOAKED(0);
+	}
+}*/
+
+Create()
+{
+	Moving_1 = 0;
+	Aiming_2 = 0;
+	busy_3 = 0;
+	gun_4 = 0;
+	hide rflare;
+	hide lflare;
+	hide feetparent;
+	hide hips;
+	hide fire;
+	currentHeading = <0>;
+	currentPitch = <0>;
+	moveSpeed = get MAX_SPEED;
+	currentSpeed = 100;
+	set ARMORED to 1;
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 400;
+	}
+	start-script SmokeUnit();
+	/*if (get PLAYER_TYPE(get UNIT_TEAM(get MY_ID)) == 2)
+	{
+		var target,lasttarget;
+		lasttarget=0;
+		while (1)
+		{
+			if ((get CURRENT_ORDER_TYPE) == 6)
+			{
+				target=get CURRENT_ORDER_TARGET_ID;
+				while ((get CURRENT_ORDER_TYPE) == 6)
+				{
+					target=get CURRENT_ORDER_TARGET_ID;
+					if (target != lasttarget)
+					{
+						get LOCAL_SHARED_DATA(1,20 + (get UNIT_TEAM(get MY_ID)),target);
+					}
+					lasttarget=target;
+					sleep 500;
+				}
+				if ((get CURRENT_ORDER_TYPE) == 41)
+				{
+					target=get LOCAL_SHARED_DATA(0,20 + (get UNIT_TEAM(get MY_ID)));
+					while (!(get UNIT_XZ(target)))
+					{
+						sleep 500;
+						target=get LOCAL_SHARED_DATA(0,20 + (get UNIT_TEAM(get MY_ID)));
+					}
+					get ORDER_UNIT_UNIT(6,get MY_ID,target,0);
+				}
+			}
+			sleep 500;
+		}
+	}*/
+}
+
+walk()
+{
+	busy_3 = 1;
+	while( Moving_1 )
+	{
+		if( Moving_1 )
+		{
+			move feetparent to z-axis [-0.90] now;
+			move FLFoot to y-axis [0.36] now;
+			move FLFoot to z-axis [0.03] now;
+			move FLFoot to z-axis [-0.37] speed [10.44];
+			move FRFoot to y-axis [0.36] now;
+			move FRFoot to z-axis [2.28] now;
+			move FRFoot to z-axis [3.53] speed [21.62];
+			move RLFoot to y-axis [0.36] now;
+			move RLFoot to z-axis [-0.68] now;
+			move RLFoot to z-axis [-1.33] speed [9.96];
+			move RRFoot to y-axis [0.36] now;
+			move RRFoot to z-axis [-1.38] now;
+			move RRFoot to z-axis [-1.73] speed [8.13];
+			move rightchunk to y-axis [1.29] now;
+			move rightchunk to z-axis [-0.30] now;
+			move leftchunk to y-axis [1.29] now;
+			move leftchunk to z-axis [-0.30] now;
+			turn FRFoot to x-axis <-17.85> now;
+			turn FRFoot to x-axis <-14.81> speed <36.53>;
+			turn rightchunk to x-axis <-7.97> now;
+			turn rightchunk to x-axis <-11.39> speed <40.84>;
+			if( !Aiming_2 )
+			{
+				move body to y-axis [1.29] speed [2.20];
+				move hat to y-axis [0.39] speed [2.10];
+				move hat to z-axis [-0.06] speed [2.10];
+				move Rbarrel to z-axis [0.30] speed [2.10];
+				move Lbarrel to z-axis [0.30] speed [2.10];
+				turn hips to y-axis <-1.52> now;
+				turn hips to y-axis <3.79> speed <92.42>;
+			}
+			sleep 3500 / currentSpeed;
+			move FLFoot to z-axis [1.48] speed [41.21];
+			move FRFoot to z-axis [3.48] speed [30.30];
+			move RLFoot to z-axis [-1.63] speed [32.82];
+			move RRFoot to z-axis [-1.63] speed [25.61];
+			turn FLFoot to x-axis <-12.91> speed <78.27>;
+			turn FRFoot to x-axis <0.76> speed <94.38>;
+			turn RRFoot to x-axis <9.87> speed <59.85>;
+			turn rightchunk to x-axis <-0.38> speed <66.76>;
+			turn leftchunk to x-axis <-5.69> speed <54.53>;
+			if( !Aiming_2 )
+			{
+				turn hips to y-axis <2.27> speed <9.20>;
+				turn body to x-axis <9.49> speed <57.55>;
+				turn hat to y-axis <-4.55> speed <11.51>;
+			}
+			sleep 3500 / currentSpeed;
+		}
+		if( Moving_1 )
+		{
+			move FLFoot to z-axis [2.83] speed [48.13];
+			move FRFoot to z-axis [2.53] speed [35.72];
+			move RLFoot to z-axis [-2.08] speed [22.71];
+			move RRFoot to z-axis [-1.58] speed [21.30];
+			turn FLFoot to x-axis <-30.38> speed <105.25>;
+			turn RRFoot to x-axis <15.57> speed <54.31>;
+			turn rightchunk to x-axis <7.97> speed <50.34>;
+			turn leftchunk to x-axis <-11.39> speed <34.31>;
+			if( !Aiming_2 )
+			{
+				turn hips to y-axis <-1.89> speed <55.16>;
+				turn body to x-axis <14.42> speed <49.74>;
+				turn hat to y-axis <2.27> speed <41.18>;
+			}
+			sleep 3500 / currentSpeed;
+			move FRFoot to z-axis [2.33] speed [32.21];
+			move RLFoot to z-axis [-2.48] speed [32.42];
+			move RRFoot to z-axis [-0.58] speed [68.06];
+			turn FLFoot to x-axis <-18.99> speed <109.06>;
+			turn RRFoot to x-axis <19.75> speed <65.31>;
+			turn rightchunk to x-axis <1.89> speed <56.82>;
+			turn leftchunk to x-axis <-6.84> speed <57.62>;
+			if( !Aiming_2 )
+			{
+				turn hips to y-axis <-2.27> speed <25.29>;
+				turn body to x-axis <2.27> speed <73.66>;
+				turn hat to y-axis <3.04> speed <23.59>;
+			}
+			sleep 3500 / currentSpeed;
+		}
+		if( Moving_1 )
+		{
+			move FRFoot to z-axis [1.73] speed [33.61];
+			move RLFoot to z-axis [-3.23] speed [44.52];
+			move RRFoot to z-axis [0.62] speed [57.23];
+			turn FLFoot to x-axis <-0.76> speed <109.82>;
+			turn RRFoot to x-axis <7.59> speed <73.21>;
+			turn leftchunk to x-axis <0> speed <41.18>;
+			if( !Aiming_2 )
+			{
+				turn hips to y-axis <-1.52> speed <34.57>;
+				turn body to x-axis <0> speed <43.73>;
+				turn hat to y-axis <1.14> speed <31.43>;
+			}
+			sleep 3500 / currentSpeed;
+			move FLFoot to z-axis [1.98] speed [45.18];
+			move FRFoot to z-axis [0.68] speed [56.40];
+			move RRFoot to z-axis [0.27] speed [32.13];
+			turn FLFoot to x-axis <0> speed <44.63>;
+			turn RLFoot to x-axis <22.40> speed <136.65>;
+			turn RRFoot to x-axis <0.76> speed <71.68>;
+			turn leftchunk to x-axis <9.12> speed <55.58>;
+			if( !Aiming_2 )
+			{
+				turn hips to y-axis <0> speed <49.26>;
+				turn body to x-axis <-2.27> speed <43.89>;
+				turn hat to y-axis <0> speed <46.95>;
+			}
+			sleep 3500 / currentSpeed;
+		}
+		if( Moving_1 )
+		{
+			move FLFoot to z-axis [1.53] speed [32.71];
+			move FRFoot to z-axis [0.08] speed [43.61];
+			move RLFoot to z-axis [-1.78] speed [58.73];
+			move RRFoot to z-axis [-0.18] speed [32.71];
+			turn RLFoot to x-axis <28.86> speed <58.89>;
+			turn leftchunk to x-axis <10.25> speed <46.86>;
+			if( !Aiming_2 )
+			{
+				turn hips to y-axis <1.14> speed <36.86>;
+				turn body to x-axis <-1.14> speed <36.86>;
+			}
+			sleep 3500 / currentSpeed;
+			move FLFoot to z-axis [0.98] speed [33.33];
+			move FRFoot to z-axis [-0.27] speed [32.12];
+			move RLFoot to z-axis [-0.53] speed [57.58];
+			move RRFoot to z-axis [-0.73] speed [33.33];
+			turn RLFoot to x-axis <10.25> speed <112.79>;
+			turn leftchunk to x-axis <2.65> speed <46.04>;
+			if( !Aiming_2 )
+			{
+				turn hips to y-axis <-1.52> speed <46.10>;
+				turn body to x-axis <0> speed <36.90>;
+			}
+			sleep 3500 / currentSpeed;
+		}
+		if( Moving_1 )
+		{
+			move FLFoot to z-axis [0.83] speed [22.90];
+			move FRFoot to z-axis [0.03] speed [23.81];
+			move RLFoot to z-axis [0.37] speed [45.42];
+			move RRFoot to z-axis [-0.93] speed [21.20];
+			turn FRFoot to x-axis <-10.25> speed <66.36>;
+			turn RLFoot to x-axis <-0.38> speed <64.06>;
+			turn rightchunk to x-axis <-1.14> speed <48.30>;
+			turn leftchunk to x-axis <-2.65> speed <62.03>;
+			if( !Aiming_2 )
+			{
+				turn hips to y-axis <-1.89> speed <32.28>;
+			}
+			sleep 3500 / currentSpeed;
+			move FLFoot to z-axis [0.38] speed [32.73];
+			move FRFoot to z-axis [1.23] speed [67.27];
+			move RLFoot to z-axis [-0.43] speed [44.85];
+			move RRFoot to z-axis [-1.38] speed [32.73];
+			turn FRFoot to x-axis <-12.53> speed <33.80>;
+			turn rightchunk to x-axis <-4.17> speed <58.41>;
+			if( !Aiming_2 )
+			{
+				turn hips to y-axis <-2.27> speed <32.29>;
+			}
+			sleep 3500 / currentSpeed;
+		}
+			sleep 3500 / currentSpeed;
+	}
+	busy_3 = 0;
+	turn rightchunk to x-axis <0> speed <150.03>;
+	turn RRFoot to x-axis <0> speed <150.03>;
+	turn FRFoot to x-axis <0> speed <150.03>;
+	turn leftchunk to x-axis <0> speed <150.03>;
+	turn RLFoot to x-axis <0> speed <150.03>;
+	turn FLFoot to x-axis <0> speed <150.03>;
+	move body to y-axis [0] speed [0.20];
+	if( !Aiming_2 )
+	{
+		move hat to y-axis [0] speed [0.10];
+		move hat to z-axis [0] speed [0.10];
+		move Rbarrel to z-axis [0] speed [0.10];
+		move Lbarrel to z-axis [0] speed [0.10];
+	}
+}
+
+StartMoving()
+{
+	Moving_1 = 1;
+	if( !busy_3 )
+	{
+		start-script walk();
+	}
+}
+
+StopMoving()
+{
+	Moving_1 = 0;
+}
+
+SweetSpot(piecenum)
+{
+	piecenum = body;
+}
+
+AimFromPrimary(piecenum)
+{
+	piecenum = hat;
+}
+
+QueryPrimary(piecenum)
+{
+	piecenum = gun_4;
+}
+
+AimFromSecondary(piecenum)
+{
+	piecenum = head;
+}
+
+QuerySecondary(piecenum)
+{
+	piecenum = fire;
+}
+
+AimPrimary(heading, pitch)
+{
+	Aiming_2 = 1;
+	turn hips to y-axis <0> speed <32.42>;
+	move hat to z-axis [0] speed [1];
+	move hat to y-axis [1.5] speed [6];
+	move head to y-axis [1] speed [4];
+	move body to y-axis [2] speed [2];
+	signal 2;
+	set-signal-mask 0;
+	set-signal-mask 2;
+	turn hat to y-axis heading speed <40>;
+	turn Rgun to x-axis <0> - pitch speed <30>;
+	turn Lgun to x-axis <0> - pitch speed <30>;
+	wait-for-turn hat around y-axis;
+	wait-for-turn Rgun around x-axis;
+	wait-for-turn Lgun around x-axis;
+	Restore_6 = 1;
+	return (1);
+}
+
+FirePrimary()
+{
+	if( !gun_4 )
+	{
+		emit-sfx UNIT_SFX0 from rflare;
+		move Rbarrel to z-axis [-1] speed [500];
+		sleep 150;
+		move Rbarrel to z-axis [0] speed [2];
+	}
+	if( gun_4 )
+	{
+		emit-sfx UNIT_SFX0 from lflare;
+		move Lbarrel to z-axis [-1] speed [500];
+		sleep 150;
+		move Lbarrel to z-axis [0] speed [2];
+	}
+	gun_4 = !gun_4;
+}
+
+AimSecondary(heading, pitch)
+{
+	Aiming_2 = 1;
+	turn hips to y-axis <0> speed <32.42>;
+	move hat to z-axis [0] speed [1];
+	move hat to y-axis [1.5] speed [6];
+	move head to y-axis [1] speed [4];
+	move body to y-axis [2] speed [2];
+	signal SIG_AIM;
+	set-signal-mask SIG_AIM;
+	turn head to y-axis heading speed <120.000000>;
+	turn fire to x-axis <0.000000> - pitch speed <140.000000>;
+	if ( get ABS(heading - currentHeading)  > HEADING_TOLERANCE || get ABS(pitch - currentPitch) > PITCH_TOLERANCE )
+	{
+	wait-for-turn head around y-axis;
+	wait-for-turn fire around x-axis;
+		currentHeading = heading;
+		currentPitch = pitch;
+	}
+	start-script RestoreAfterDelay();
+	return (1);
+}
+
+FireWeapon2()
+{
+		emit-sfx UNIT_SFX1 from fire;
+}
+
+Killed(severity, corpsetype)
+{
+	hide lflare;
+	hide rflare;
+	if( severity <= 25 )
+	{
+		corpsetype = 1;
+		explode body type BITMAPONLY | BITMAP1;
+		explode FLFoot type BITMAPONLY | BITMAP1;
+		explode FRFoot type BITMAPONLY | BITMAP2;
+		explode newhip type BITMAPONLY | BITMAP3;
+		explode Lbarrel type BITMAPONLY | BITMAP4;
+		explode leftchunk type BITMAPONLY | BITMAP5;
+		explode Lgun type BITMAPONLY | BITMAP2;
+		explode Rbarrel type BITMAPONLY | BITMAP3;
+		explode Rgun type BITMAPONLY | BITMAP5;
+		explode rightchunk type BITMAPONLY | BITMAP1;
+		explode RLFoot type BITMAPONLY | BITMAP2;
+		explode RRFoot type BITMAPONLY | BITMAP3;
+		explode hat type BITMAPONLY | BITMAP4;
+		return (0);
+	}
+	if( severity <= 50 )
+	{
+		corpsetype = 2;
+		explode body type BITMAPONLY | BITMAP1;
+		explode FLFoot type BITMAPONLY | BITMAP1;
+		explode FRFoot type BITMAPONLY | BITMAP2;
+		explode newhip type FALL | BITMAP3;
+		explode Lbarrel type FALL | BITMAP4;
+		explode leftchunk type BITMAPONLY | BITMAP5;
+		explode Lgun type FALL | BITMAP2;
+		explode Rbarrel type FALL | BITMAP3;
+		explode Rgun type FALL | BITMAP5;
+		explode rightchunk type BITMAPONLY | BITMAP1;
+		explode RLFoot type BITMAPONLY | BITMAP2;
+		explode RRFoot type BITMAPONLY | BITMAP3;
+		explode hat type FALL | BITMAP4;
+		return (0);
+	}
+	if( severity <= 99 )
+	{
+		corpsetype = 3;
+		explode body type BITMAPONLY | BITMAP1;
+		explode FLFoot type BITMAPONLY | BITMAP1;
+		explode FRFoot type BITMAPONLY | BITMAP2;
+		explode newhip type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+		explode Lbarrel type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+		explode leftchunk type BITMAPONLY | BITMAP5;
+		explode Lgun type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+		explode Rbarrel type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+		explode Rgun type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+		explode rightchunk type BITMAPONLY | BITMAP1;
+		explode RLFoot type BITMAPONLY | BITMAP2;
+		explode RRFoot type BITMAPONLY | BITMAP3;
+		explode hat type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+		return (0);
+	}
+	corpsetype = 3;
+	explode body type BITMAPONLY | EXPLODE_ON_HIT | BITMAP1;
+	explode FLFoot type BITMAPONLY | BITMAP1;
+	explode FRFoot type BITMAPONLY | BITMAP2;
+	explode newhip type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+	explode Lbarrel type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+	explode leftchunk type BITMAPONLY | BITMAP5;
+	explode Lgun type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode Rbarrel type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+	explode Rgun type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+	explode rightchunk type BITMAPONLY | BITMAP1;
+	explode RLFoot type BITMAPONLY | BITMAP2;
+	explode RRFoot type BITMAPONLY | BITMAP3;
+	explode hat type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+}

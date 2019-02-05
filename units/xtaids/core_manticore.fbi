@@ -4,7 +4,7 @@
 	//  Unit Description
 	//********************
 	side=Arm;
-	name=Archangel;
+	name=Manticore;
 	description=Flak & Missile Kbot;
 
 	//************************************************************
@@ -16,11 +16,11 @@
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=arm_archangel;
+	unitname=core_manticore;
 	unitnumber=41;
-	objectname=arm_archangel.3do;
-	corpse=arm_archangel_dead;
-	buildpic=arm_archangel.DDS;
+	objectname=core_manticore.3do;
+	corpse=core_manticore_dead;
+	buildpic=core_manticore.DDS;
 	soundcategory=ARM_KBOT;
 
 	//************************************************************
@@ -84,9 +84,14 @@
 	//  Weapons
 	//***********
 	weapon1=ARCHANGEL_FLAK;
-	weapon2=ARMRL_MISSILE;
-	weapon3=ARMRL_MISSILE;
-	weapon4=ARMRL_MISSILE;
+	weapon2=BARRAGE_MISSILE;
+	weapon3=BARRAGE_MISSILE;
+	weapon4=BARRAGE_MISSILE;
+	weapon5=BARRAGE_MISSILE;
+	weapon6=BARRAGE_MISSILE;
+	weapon7=BARRAGE_MISSILE;
+	weapon8=BARRAGE_MISSILE;
+	weapon9=BARRAGE_MISSILE;
 	badtargetcategory=NOTAIR;
 	wpri_badtargetcategory=NOTAIR;
 	explodeas=BIG_UNITEX;

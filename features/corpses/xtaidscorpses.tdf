@@ -1,4 +1,280 @@
 
+[core_ht_construction_kbot_DEAD]{
+	world=All Worlds;
+	description=Wreckage;
+	category=corpses;
+	object=core_ht_construction_kbot_DEAD;
+	featuredead=core_ht_construction_kbot_HEAP;
+	footprintx=3;
+	footprintz=3;
+	height=20;
+	blocking=1;
+	hitdensity=100;
+	metal=1245;
+	damage=3142;
+	reclaimable=1;
+	featurereclamate=SMUDGE01;
+	seqnamereclamate=TREE1RECLAMATE;
+	energy=0;
+}
+
+[core_ht_construction_kbot_HEAP]{
+	world=All Worlds;
+	description=Metal Shards;
+	category=heaps;
+	object=4X4A;
+	footprintx=3;
+	footprintz=3;
+	blocking=0;
+	hitdensity=100;
+	metal=758;
+	damage=1471;
+	reclaimable=1;
+	featurereclamate=SMUDGE01;
+	seqnamereclamate=TREE1RECLAMATE;
+	energy=0;
+}
+
+[core_manticore_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=arm_corpses;
+	object=core_manticore_dead;
+	featuredead=core_manticore_heap;
+	footprintx=3;
+	footprintz=3;
+	height=20;
+	blocking=1;
+	hitdensity=100;
+	metal=1355;
+	damage=2219;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=cyly;//#AUTO#
+	collisionVolumeScales=35 62 35;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+[core_manticore_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=2x2c;
+	footprintx=2;
+	footprintz=2;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	metal=928;
+	damage=1609;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=cyly;//#AUTO#
+	collisionVolumeScales=35 16 35;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+
+[core_archdemon_dead]
+	{
+	World=All Worlds;
+	Description=Wreckage;
+	Category=arm_Rhino_corpses;
+	Object=core_archdemon_dead;
+	FeatureDead=core_archdemon_heap;
+	FootPrintx=3;
+	FootPrintz=3;
+	Height=21;
+	Blocking=1;
+	HitDensity=105;
+	Metal=6895;
+	Damage=95352;
+	Reclaimable=1;
+	FeatureReclamate=smudge01;
+	SeqNameReclamate=tree1reclamate;
+	}
+
+[core_archdemon_heap]
+	{
+	World=All Worlds;
+	Description=Wreckage;
+	Category=heaps;
+	Object=3x3b;
+	FootPrintx=3;
+	FootPrintz=3;
+	Height=2;
+	Blocking=0;
+	HitDensity=105;
+	Metal=3408;
+	Damage=6145;
+	Reclaimable=1;
+	FeatureReclamate=smudge01;
+	SeqNameReclamate=tree1reclamate;
+	}
+
+[core_fluxor_DEAD]{
+	world=All Worlds;
+	description=Wreckage;
+	category=corpses;
+	object=core_fluxor_DEAD;
+	featuredead=core_fluxor_HEAP;
+	footprintx=3;
+	footprintz=3;
+	height=20;
+	blocking=1;
+	hitdensity=100;
+	metal=2645;
+	damage=3142;
+	reclaimable=1;
+	featurereclamate=SMUDGE01;
+	seqnamereclamate=TREE1RECLAMATE;
+	energy=0;
+}
+
+[core_fluxor_HEAP]{
+	world=All Worlds;
+	description=Metal Shards;
+	category=heaps;
+	object=4X4A;
+	footprintx=3;
+	footprintz=3;
+	blocking=0;
+	hitdensity=100;
+	metal=1458;
+	damage=1471;
+	reclaimable=1;
+	featurereclamate=SMUDGE01;
+	seqnamereclamate=TREE1RECLAMATE;
+	energy=0;
+}
+
+[core_jupiter_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=core_corpses;
+	object=core_jupiter_dead;
+	featuredead=core_jupiter_heap;
+	footprintx=3;
+	footprintz=3;
+	height=20;
+	blocking=1;
+	hitdensity=100;
+	metal=4558;
+	damage=16276;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=39 30 39;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+[core_jupiter_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=4x4c;
+	footprintx=4;
+	footprintz=4;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	metal=2279;
+	damage=5276;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=19 7 19;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+
+[core_nibiru_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=core_corpses;
+	object=core_nibiru_dead;
+	featuredead=core_nibiru_heap;
+	footprintx=3;
+	footprintz=3;
+	height=20;
+	blocking=1;
+	hitdensity=100;
+	metal=14558;
+	damage=16276;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=39 30 39;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+[core_nibiru_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=4x4c;
+	footprintx=4;
+	footprintz=4;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	metal=5279;
+	damage=5276;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=19 7 19;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+
+[core_singularity_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=core_corpses;
+	object=core_nibiru_dead;
+	featuredead=core_nibiru_heap;
+	footprintx=4;
+	footprintz=4;
+	height=20;
+	blocking=1;
+	hitdensity=100;
+	metal=9558;
+	damage=16276;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=59 30 59;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+[core_nibiru_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=4x4c;
+	footprintx=4;
+	footprintz=4;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	metal=6279;
+	damage=5276;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=59 7 59;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
 [arm_ht_aircraft_plant_dead]
 {
 	world=All Worlds;

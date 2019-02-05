@@ -1,0 +1,521 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+piece  launch1, launch2, launch3, launch4, flare1, flare2, flare3, barrel1,
+       barrel2, barrel3, sleeve, turret, radar, dish, FLFoot, FRFoot,
+       RLFoot, RRFoot, rightchunk, leftchunk, RRTube, RLTube, FRTube, FLTube, 
+       hips, body, base;
+
+static-var  gun_1, gun_2, moving_3, busy_4, restore_5, reset_6, aiming_7, moveSpeed, currentSpeed;;
+
+
+UnitSpeed()
+{
+	while(TRUE)
+	{
+		currentSpeed = (get CURRENT_SPEED)*100/moveSpeed;
+		if (currentSpeed<20) currentSpeed=20;
+		sleep 142;
+	}
+}
+
+RestoreAfterDelay()
+{
+	sleep 4000;
+	if( !restore_5 )
+	{
+		signal 2;
+		signal 4;
+		set-signal-mask 0;
+		aiming_7 = 0;
+		turn turret to y-axis <0.00> speed <30.00>;
+		turn sleeve to x-axis <0.00> speed <15.00>;
+		move FRTube to y-axis [0] speed [1];
+		move RRTube to y-axis [0] speed [1];
+		move FLTube to y-axis [0] speed [1];
+		move RLTube to y-axis [0] speed [1];
+		turn FRTube to x-axis <0> speed <2.5>;
+		turn RRTube to x-axis <0> speed <2.5>;
+		turn FLTube to x-axis <0> speed <2.5>;
+		turn RLTube to x-axis <0> speed <2.5>;
+	}
+	reset_6 = 0;
+}
+
+SmokeUnit(healthpercent, sleeptime, smoketype)
+{
+	while( TRUE )
+	{
+		healthpercent = get HEALTH;
+		if( healthpercent < 66 )
+		{
+			smoketype = 256 | 2;
+			if( Rand( 1, 66 ) < healthpercent )
+			{
+				smoketype = 256 | 1;
+			}
+			emit-sfx smoketype from hips;
+		}
+		sleeptime = healthpercent * 50;
+		if( sleeptime < 200 )
+		{
+			sleeptime = 200;
+		}
+		if( restore_5 AND !reset_6 )
+		{
+			restore_5 = 0;
+			reset_6 = 1;
+			start-script RestoreAfterDelay();
+		}
+		sleep sleeptime;
+	}
+}
+
+MotionControl(moving, aiming, justmoved)
+{
+	while( TRUE )
+	{
+		if( moving_3 )
+		{
+			justmoved = TRUE;
+			move body to y-axis [0.5] speed [12];
+			move FLFoot to z-axis [0.3] now;
+			move FLFoot to z-axis [-1.36] speed [3.75];
+			move FRFoot to z-axis [1.27] now;
+			move FRFoot to z-axis [3.53] speed [12.5];
+			move RLFoot to z-axis [-0.48] now;
+			move RLFoot to z-axis [-1.32] speed [5];
+			move RRFoot to z-axis [-1.38] now;
+			move RRFoot to z-axis [-1.73] speed [3.75];
+			turn FRFoot to x-axis <-12.84> now;
+			turn FRFoot to x-axis <-14> speed <33.75>;
+			turn rightchunk to x-axis <-6> now;
+			turn rightchunk to x-axis <-11> speed <31>;
+			move rightchunk to z-axis [2] speed [5];
+		sleep 5000 / currentSpeed;
+		}
+		if( moving_3 )
+		{
+			move FLFoot to z-axis [1.48] speed [15];
+			move FRFoot to z-axis [3.48] speed [0.25];
+			move RLFoot to z-axis [-1.63] speed [1.25];
+			move RRFoot to z-axis [-1.63] speed [0.25];
+			turn FLFoot to x-axis <-12> speed <126>;
+			turn FRFoot to x-axis <0> speed <146>;
+			turn RRFoot to x-axis <9> speed <101>;
+			turn rightchunk to x-axis <0> speed <75>;
+			move rightchunk to z-axis [0] speed [5];
+		sleep 5000 / currentSpeed;
+		}
+		if( moving_3 )
+		{
+			move FLFoot to z-axis [2.83] speed [12];
+			move FRFoot to z-axis [2.52] speed [8.75];
+			move RLFoot to z-axis [-2.06] speed [3.75];
+			move RRFoot to z-axis [-1.58] speed [0.25];
+			turn FLFoot to x-axis <-30> speed <176>;
+			turn RRFoot to x-axis <15> speed <64>;
+			turn rightchunk to x-axis <7> speed <75>;
+			turn leftchunk to x-axis <-11> speed <31>;
+			move rightchunk to z-axis [-2] speed [5];
+			move leftchunk to z-axis [2] speed [5];
+		sleep 5000 / currentSpeed;
+		}
+		if( moving_3 )
+		{
+			move FRFoot to z-axis [2.33] speed [1.25];
+			move RLFoot to z-axis [-2.47] speed [3.75];
+			move RRFoot to z-axis [-0.57] speed [11.25];
+			turn FLFoot to x-axis <-18> speed <128.75>;
+			turn RRFoot to x-axis <19> speed <46>;
+			turn rightchunk to x-axis <1> speed <65>;
+			turn leftchunk to x-axis <-6> speed <41>;
+			move rightchunk to z-axis [-1] speed [5];
+			move leftchunk to z-axis [1] speed [5];
+		sleep 5000 / currentSpeed;
+		}
+		if( moving_3 )
+		{
+			move FRFoot to z-axis [1.72] speed [5];
+			move RLFoot to z-axis [-3.23] speed [7.5];
+			move RRFoot to z-axis [0.61] speed [10];
+			turn FLFoot to x-axis <0> speed <185>;
+			turn RRFoot to x-axis <7> speed <121.4>;
+			turn leftchunk to x-axis <0> speed <25>;
+			move leftchunk to z-axis [1] speed [5];
+		sleep 5000 / currentSpeed;
+		}
+		if( moving_3 )
+		{
+			move FLFoot to z-axis [1.97] speed [8.75];
+			move FRFoot to z-axis [0.68] speed [11.25];
+			move RRFoot to z-axis [1.26] speed [3.75];
+			turn FLFoot to x-axis <0> speed <7.5>;
+			turn RLFoot to x-axis <22> speed <225>;
+			turn RRFoot to x-axis <0> speed <77.5>;
+			turn leftchunk to x-axis <7> speed <33>;
+			move leftchunk to z-axis [0] speed [5];
+		sleep 5000 / currentSpeed;
+		}
+		if( moving_3 )
+		{
+			move FLFoot to z-axis [1.52] speed [3.75];
+			move FRFoot to z-axis [0.7] speed [5];
+			move RLFoot to z-axis [-1.78] speed [15];
+			move RRFoot to z-axis [-0.18] speed [3.75];
+			turn RLFoot to x-axis <28> speed <72.5>;
+		sleep 5000 / currentSpeed;
+		}
+		if( moving_3 )
+		{
+			move FLFoot to z-axis [0.97] speed [5];
+			move FRFoot to z-axis [-1.26] speed [3.75];
+			move RLFoot to z-axis [-0.53] speed [12.5];
+			move RRFoot to z-axis [-0.73] speed [5];
+			turn RLFoot to x-axis <10> speed <191.25>;
+			turn leftchunk to x-axis <2> speed <39>;
+			move leftchunk to z-axis [0] speed [5];
+		sleep 5000 / currentSpeed;
+		}
+		if( moving_3 )
+		{
+			move FLFoot to z-axis [0.82] speed [0.25];
+			move FRFoot to z-axis [0.3] speed [1.25];
+			move RLFoot to z-axis [1.36] speed [9.25];
+			move RRFoot to z-axis [-0.92] speed [1.25];
+			turn FRFoot to x-axis <-10> speed <124>;
+			turn RLFoot to x-axis <0> speed <120>;
+			turn rightchunk to x-axis <-1> speed <27>;
+			turn leftchunk to x-axis <-2> speed <33>;
+		sleep 5000 / currentSpeed;
+		}
+		if( moving_3 )
+		{
+			move FLFoot to z-axis [0.37] speed [3.75];
+			move FRFoot to z-axis [1.22] speed [12.5];
+			move RLFoot to z-axis [-0.43] speed [7.5];
+			move RRFoot to z-axis [-1.37] speed [3.75];
+			turn FRFoot to x-axis <-12> speed <20>;
+			turn rightchunk to x-axis <-6> speed <27>;
+		sleep 5000 / currentSpeed;
+		}
+		if( !moving_3 )
+		{
+			if( justmoved )
+			{
+				move body to y-axis [0] speed [5];
+				move FLFoot to z-axis [0] speed [8];
+				move FRFoot to z-axis [0] speed [8];
+				move RLFoot to z-axis [0] speed [8];
+				move RRFoot to z-axis [0] speed [8];
+				turn rightchunk to x-axis <0> speed <90>;
+				turn RRFoot to x-axis <0> speed <90>;
+				turn FRFoot to x-axis <0> speed <90>;
+				turn leftchunk to x-axis <0> speed <90>;
+				turn RLFoot to x-axis <0> speed <90>;
+				turn FLFoot to x-axis <0> speed <90>;
+				move rightchunk to z-axis [0] speed [5];
+				move leftchunk to z-axis [0] speed [5];
+				justmoved = FALSE;
+			}
+			sleep 200;
+		}
+	}
+	return (0);
+}
+
+/*Cloak(cloakdist, shieldID)
+{
+	//if the shield is cloaked and this unit hasn't run this bit yet, then go
+	if( cloakdist )
+	{
+		if ((get GET_CLOAKED) == 0)
+		{
+			get SET_CLOAKED(1);
+		}
+		while( (get DISTANCE (get MY_ID, shieldID)) <= cloakdist AND get GET_CLOAKED(shieldID) )
+		{
+			sleep 133;
+		}
+		get SET_CLOAKED(0);
+	}
+}*/
+
+Create()
+{
+	hide launch1;
+	hide launch2;
+	hide launch3;
+	hide launch4;
+	hide flare1;
+	hide flare2;
+	hide flare3;
+	gun_1 = 0;
+	gun_2 = 0;
+	moving_3 = 0;
+	busy_4 = 0;
+	restore_5 = 0;
+	reset_6 = 0;
+	aiming_7 = 0;
+	set ARMORED to 1;
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 400;
+	}
+	start-script SmokeUnit();
+	start-script MotionControl();
+	moveSpeed = get MAX_SPEED;
+	currentSpeed = 100;
+}
+
+Activate()
+{
+	spin radar around y-axis speed <50>;
+	spin dish around x-axis speed <130>;
+}
+
+Deactivate()
+{
+	spin radar around y-axis speed <0>;
+	spin dish around x-axis speed <0>;
+	turn radar to y-axis <0> speed <240>;
+	turn dish to x-axis <0> speed <100>;
+}
+
+StartMoving()
+{
+	moving_3 = 1;
+}
+
+StopMoving()
+{
+	moving_3 = 0;
+}
+
+SweetSpot(piecenum)
+{
+	piecenum = hips;
+}
+
+AimTertiary(heading, pitch)
+{
+	signal 2;
+	set-signal-mask 0;
+	set-signal-mask 2;
+	turn turret to y-axis heading speed <80>;
+	turn sleeve to x-axis <0.00> - pitch speed <55.00>;
+	wait-for-turn turret around y-axis;
+	wait-for-turn sleeve around x-axis;
+	restore_5 = 1;
+	return (1);
+}
+
+FireTertiary()
+{
+	if( !gun_1 )
+	{
+		emit-sfx UNIT_SFX1 from flare1;
+		move barrel1 to z-axis [-1] speed [500];
+		sleep 150;
+		move barrel1 to z-axis [0] speed [2];
+	}
+	if( gun_1 == 1 )
+	{
+		emit-sfx UNIT_SFX1 from flare2;
+		move barrel2 to z-axis [-1] speed [500];
+		sleep 150;
+		move barrel2 to z-axis [0] speed [2];
+	}
+	++gun_1;
+	if( gun_1 > 2 )
+	{
+		emit-sfx UNIT_SFX1 from flare3;
+		move barrel3 to z-axis [-1] speed [500];
+		sleep 150;
+		move barrel3 to z-axis [0] speed [2];
+		gun_1 = 0;
+	}
+	return (0);
+}
+
+QueryTertiary(piecenum)
+{
+	if( !gun_1 )
+	{
+		piecenum = flare1;
+	}
+	if( gun_1 == 1 )
+	{
+		piecenum = flare2;
+	}
+	if( gun_1 >= 2 )
+	{
+		piecenum = flare3;
+	}
+}
+
+AimFromTertiary(piecenum)
+{
+	piecenum = body;
+}
+
+AimPrimary(heading, pitch)
+{
+	if( !aiming_7 )
+	{
+		move FRTube to y-axis [2] speed [2];
+		move RRTube to y-axis [2] speed [2];
+		move FLTube to y-axis [2] speed [2];
+		move RLTube to y-axis [2] speed [2];
+		turn FRTube to x-axis <5> speed <5>;
+		turn RRTube to x-axis <-5> speed <5>;
+		turn FLTube to x-axis <5> speed <5>;
+		turn RLTube to x-axis <-5> speed <5>;
+		aiming_7 = 1;
+	}
+	signal 4;
+	set-signal-mask 0;
+	set-signal-mask 4;
+	wait-for-move FRTube along y-axis;
+	restore_5 = 1;
+	return (1);
+}
+
+FirePrimary()
+{
+	if( gun_2 == 0 )
+	{
+	emit-sfx UNIT_SFX0 from launch1;
+		sleep 200;
+	gun_2 = 1;
+	}
+	
+	else if( gun_2 == 1 )
+	{
+	emit-sfx UNIT_SFX0 from launch2;
+		sleep 200;
+	gun_2 = 2;
+	}
+	
+	else if( gun_2 == 2 )
+	{
+	emit-sfx UNIT_SFX0 from launch3;
+		sleep 200;
+	gun_2 = 3;
+	}
+	
+	else if( gun_2 == 3 )
+	{
+	emit-sfx UNIT_SFX0 from launch4;
+		sleep 200;
+	gun_2 = 0;
+	}
+	
+}
+
+QueryPrimary(piecenum)
+{
+	piecenum = gun_2;
+}
+
+AimFromPrimary(piecenum)
+{
+	piecenum = body;
+}
+
+Killed(severity, corpsetype)
+{
+	hide flare1;
+	hide flare2;
+	hide flare3;
+	if( severity <= 25 )
+	{
+		corpsetype = 1;
+		explode hips type BITMAPONLY | BITMAP1;
+		explode leftchunk type BITMAPONLY | BITMAP2;
+		explode RLFoot type BITMAPONLY | BITMAP3;
+		explode FLFoot type BITMAPONLY | BITMAP4;
+		explode RLTube type BITMAPONLY | BITMAP5;
+		explode FLTube type BITMAPONLY | BITMAP1;
+		explode sleeve type BITMAPONLY | BITMAP2;
+		explode rightchunk type BITMAPONLY | BITMAP3;
+		explode RRFoot type BITMAPONLY | BITMAP4;
+		explode FRFoot type BITMAPONLY | BITMAP5;
+		explode RRTube type BITMAPONLY | BITMAP1;
+		explode FRTube type BITMAPONLY | BITMAP2;
+		explode body type BITMAPONLY | BITMAP4;
+		explode radar type BITMAPONLY | BITMAP5;
+		explode dish type BITMAPONLY | BITMAP2;
+		explode barrel1 type BITMAPONLY | BITMAP3;
+		explode barrel2 type BITMAPONLY | BITMAP1;
+		explode barrel3 type BITMAPONLY | BITMAP5;
+		return (0);
+	}
+	if( severity <= 50 )
+	{
+		corpsetype = 2;
+		explode hips type BITMAPONLY | BITMAP1;
+		explode leftchunk type FALL | BITMAP2;
+		explode RLFoot type FALL | BITMAP3;
+		explode FLFoot type FALL | BITMAP4;
+		explode RLTube type FALL | BITMAP5;
+		explode FLTube type FALL | BITMAP1;
+		explode sleeve type FALL | BITMAP2;
+		explode rightchunk type FALL | BITMAP3;
+		explode RRFoot type FALL | BITMAP4;
+		explode FRFoot type FALL | BITMAP5;
+		explode RRTube type FALL | BITMAP1;
+		explode FRTube type FALL | BITMAP2;
+		explode body type BITMAPONLY | BITMAP4;
+		explode radar type FALL | BITMAP5;
+		explode dish type FALL | BITMAP2;
+		explode barrel1 type FALL | BITMAP3;
+		explode barrel2 type FALL | BITMAP1;
+		explode barrel3 type FALL | BITMAP5;
+		return (0);
+	}
+	if( severity <= 99 )
+	{
+		corpsetype = 3;
+		explode hips type SHATTER | BITMAP1;
+		explode leftchunk type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+		explode RLFoot type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+		explode FLFoot type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+		explode RLTube type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+		explode FLTube type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+		explode sleeve type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+		explode rightchunk type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+		explode RRFoot type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+		explode FRFoot type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+		explode RRTube type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+		explode FRTube type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+		explode body type BITMAPONLY | BITMAP4;
+		explode radar type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+		explode dish type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+		explode barrel1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+		explode barrel2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+		explode barrel3 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+		return (0);
+	}
+	corpsetype = 3;
+	explode hips type SHATTER | EXPLODE_ON_HIT | BITMAP1;
+	explode leftchunk type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode RLFoot type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+	explode FLFoot type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+	explode RLTube type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+	explode FLTube type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+	explode sleeve type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode rightchunk type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+	explode RRFoot type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+	explode FRFoot type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+	explode RRTube type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+	explode FRTube type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode body type BITMAPONLY | BITMAP4;
+	explode radar type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+	explode dish type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode barrel1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+	explode barrel2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+	explode barrel3 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+}

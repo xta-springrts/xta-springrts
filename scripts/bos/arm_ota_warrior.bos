@@ -624,8 +624,8 @@ UnitSpeed()
 {
 	while(TRUE)
 	{
-		currentSpeed = (get CURRENT_SPEED)*400/moveSpeed;
-		if (currentSpeed<10) currentSpeed=70;
+		currentSpeed = (get CURRENT_SPEED)*100/moveSpeed;
+		if (currentSpeed<10) currentSpeed=10;
 		sleep 142;
 	}
 }
@@ -643,6 +643,7 @@ Create()
 	gun_2 = torso;
 	moveSpeed = get MAX_SPEED;
 	currentSpeed = 100;
+	start-script SmokeUnit();
 }
 
 SetMaxReloadTime(Func_Var_1)
