@@ -98,22 +98,23 @@
 [JUPITER_ROCKET]
 {
 	name=Heavy Rockets;
-	explosiongenerator=custom:PUFFY;
+	explosiongenerator=custom:EnergyStorageExplosion;
 	vlaunch=1;
 	Weapontype=StarburstLauncher;
 	model=weapon_corvrocket;
 	cegTag=HEAVYTRACKERTRAIL;
 	range=1600;
 	reloadtime=3;
+	energypershot=900;
 	weapontimer=2;
 	flighttime=6;
 	weaponvelocity=1000;
 	startvelocity=100;
 	weaponacceleration=200;
 	turnrate=20000;
-	areaofeffect=96;
+	areaofeffect=64;
 	soundstart=Rockhvy1;
-	soundhitdry=xplomed4;
+	soundhitdry=xplonuk1;
 	firestarter=70;
 	smokedelay=0.1;
 	tracks=1;
