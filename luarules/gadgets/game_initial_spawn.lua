@@ -15,9 +15,10 @@ end
 ----------------------------------------------------------------
 -- Synced only
 ----------------------------------------------------------------
-if not gadgetHandler:IsSyncedCode() then
-    return false
-end
+--if not gadgetHandler:IsSyncedCode() then
+--   return false
+--end
+if gadgetHandler:IsSyncedCode() then
 
 ----------------------------------------------------------------
 -- Config
@@ -128,24 +129,66 @@ function gadget:GameStart()
 	--gadgetHandler:RemoveCallIn("RecvLuaMsg")	
 end
 
--------------------------------------------------------------------------
--- communicate player ready states (in addition to statebroadcast gadget)
--------------------------------------------------------------------------
-function gadget:AllowStartPosition(x,y,z,playerID,readyState)
-	-- communicate readyState to all
-	-- 0: unready, 1: ready, 2: game forcestarted & player not ready, 3: game forcestarted & player absent
-	-- for some reason 2 is sometimes used in place of 1 and is always used for the last player to become ready
-	-- we also add (only used in Initialize) the following
+----------------------------------------------------------------
+-- Startpoints
+----------------------------------------------------------------
+
+function gadget:AllowStartPosition(playerID,teamID,readyState,x,y,z)
+	-- readyState:
+	-- 0: player did not place startpoint, is unready
+	-- 1: game starting, player is ready
+	-- 2: player pressed ready OR game is starting and player is forcibly readied (note: if the player chose a startpoint, reconnected and pressed ready without re-placing, this case will have the wrong x,z)
+	-- 3: game forcestarted & player absent
+
+	-- we also add the following
 	-- -1: players will not be allowed to place startpoints; automatically readied once ingame
-	--  4: player has placed a startpoint but is not yet ready == xta marked state (sent from statebroadcast gadget)
-	
-	if Game.startPosType == 2 then -- choose in game mode
-		Spring.SetGameRulesParam("player_" .. playerID .. "_readyState" , readyState)
-	end
-	
+	--  4: player has placed a startpoint but is not yet ready
+
+	-- communicate readyState to all
+	Spring.SetGameRulesParam("player_" .. playerID .. "_readyState" , readyState)
+
+	--[[
+	-- for debugging
+	local name,_,_,tID = Spring.GetPlayerInfo(playerID)
+	Spring.Echo(name,tID,x,z,readyState, (startPointTable[tID]~=nil))
+	Spring.MarkerAddPoint(x,y,z,name .. " " .. readyState)
+	]]
+
+	if Game.startPosType ~= 2 then return true end -- accept blindly unless we are in choose-in-game mode
+	--if useFFAStartPoints then return true end
+
 	local _,_,_,teamID,allyTeamID,_,_,_,_,_ = Spring.GetPlayerInfo(playerID)
 	if not teamID or not allyTeamID then return false end --fail
-	
+
+	-- don't allow player to place startpoint unless its inside the startbox, if we have a startbox
+	if allyTeamID == nil then return false end
+	local xmin, zmin, xmax, zmax = spGetAllyTeamStartBox(allyTeamID)
+	if xmin>=xmax or zmin>=zmax then
+		return true
+	else
+		local isOutsideStartbox = (xmin+1 >= x) or (x >= xmax-1) or (zmin+1 >= z) or (z >= zmax-1) -- the engine rounds startpoints to integers but does not round the startbox (wtf)
+		if isOutsideStartbox then
+			return false
+		end
+	end
+
+
+	-- record table of starting points for startpoint assist to use
+	if readyState == 2 then
+		-- player pressed ready (we have already recorded their startpoint when they placed it) OR game was force started and player is forcibly readied
+		--if not startPointTable[teamID] then
+		--	startPointTable[teamID]={-5000,-5000} -- if the player was forcibly readied without having placed a startpoint, place an invalid one far away (thats what the StartPointGuesser wants)
+		--end
+	else
+		-- player placed startpoint OR game is starting and player is ready
+		--startPointTable[teamID]={x,z}
+		if readyState ~= 1 then
+			-- game is not starting (therefore, player cannot yet have pressed ready)
+			Spring.SetGameRulesParam("player_" .. playerID .. "_readyState" , 4)
+			SendToUnsynced("StartPointChosen", playerID)
+		end
+	end
+
 	return true
 end
 
@@ -194,4 +237,48 @@ function gadget:RecvLuaMsg(msg, playerID)
 	end
 end
 
+--		gl.PushMatrix()
+--			gl.Translate(readyX+(readyW/2),readyY+(readyH/2),0)
+--			gl.Scale(uiScale, uiScale, 1)
 
+			if not readied and readyButton and Game.startPosType == 2 and gameStarting==nil and not spec and not isReplay then
+			--if not readied and readyButton and not spec and not isReplay then
+
+				-- draw ready button and text
+				local x,y = Spring.GetMouseState()
+				x,y = correctMouseForScaling(x,y)
+				if x > readyX-bgMargin and x < readyX+readyW+bgMargin and y > readyY-bgMargin and y < readyY+readyH+bgMargin then
+					gl.CallList(readyButtonHover)
+					colorString = "\255\255\222\0"
+				else
+					gl.CallList(readyButton)
+			  		timer2 = timer2 + Spring.GetLastUpdateSeconds()
+					if timer2 % 0.75 <= 0.375 then
+						colorString = "\255\233\215\20"
+					else
+						colorString = "\255\255\255\255"
+					end
+				end
+				gl.Text(colorString .. "Ready", -((readyW/2)-12.5), -((readyH/2)-9.5), 25, "o")
+				gl.Color(1,1,1,1)
+			end
+
+			if gameStarting and not isReplay then
+				timer = timer + Spring.GetLastUpdateSeconds()
+				if timer % 0.75 <= 0.375 then
+					colorString = "\255\233\233\20"
+				else
+					colorString = "\255\255\255\255"
+				end
+				local text = colorString .. "Game starting in " .. math.max(1,3-math.floor(timer)) .. " seconds..."
+				gl.Text(text, vsx*0.5 - gl.GetTextWidth(text)/2*17, vsy*0.75, 17, "o")
+			end
+	--	gl.PopMatrix()
+
+		--remove if after gamestart
+		if Spring.GetGameFrame() > 0 then
+			gadgetHandler:RemoveGadget(self)
+			return
+		end
+
+end
