@@ -134,7 +134,7 @@ for _,teamID in pairs(GetTeamList) do
 end
 local randomUnits 				= true
 local FALLSPEED					= 60  -- 60 every 5th timeframe
-local timeDelayComet 			= 100 --tonumber(modOptions.time_delay_comet) * 30 * 60 or 30 * 60 + 1 -- 2.5 min
+local timeDelayComet 			= tonumber(modOptions.time_delay_comet) * 30 * 60 or 30 * 60 + 1 -- 2.5 min
 local damage_radius				= tonumber(modOptions.max_radius_damage_comets) or 500
 local damage_value            	= tonumber(modOptions.max_damage_comets) or 500
 local randomize_number_of_comets= 100 -- how often number of comets in rain are randomized (higher is less ofthen)
@@ -403,7 +403,7 @@ end
 
 function gadget:GameFrame(f)
 
-	if f<10 then return nil end
+	if f<100 then return nil end
 
 	if (f%randomize_number_of_comets*timeDelayComet ==0) then
 		number_of_comets = random(0, max_comets)
