@@ -46,6 +46,7 @@ local floor 				= math.floor
 local random				= math.random
 local sqrt					= math.sqrt
 local max					= math.max
+local abs					= math.abs
 
 local gmatch				= string.gmatch
 local remove				= table.remove
@@ -73,6 +74,10 @@ local CreateUnit			= Spring.CreateUnit
 local DestroyUnit			= Spring.DestroyUnit
 local GetTeamList 			= Spring.GetTeamList()
 local GetTeamUnits 			= Spring.GetTeamUnits
+local SetUnitNeutral		= Spring.SetUnitNeutral
+local SetUnitAlwaysVisible	= Spring.SetUnitAlwaysVisible
+local SetUnitStealth		= Spring.SetUnitStealth
+local SetUnitSonarStealth	= Spring.SetUnitSonarStealth
 
 
 -- GLOBALS
@@ -85,7 +90,13 @@ end
 
 -- SETTINGS
 
+--TODO: fix these 3 (add)
+local comet_metal			= tonumber(modOptions.comet_metal) or 30
+local comet_energy			= tonumber(modOptions.comet_energy) or 30
+local comet_mode			= modOptions.comet_mode or "rock"
+local unitNameComet 		= comet_mode == "unit" and "arm_peewee" or "meteor"
 
+local number_of_comets		= 1
 local images3 				= include("LuaRules/gadgets/img3.lua")
 local COMET_FIRE			= "RedPlasmaComet"
 local COMET_HIT_GROUND		= "SMALL_NUKE_EXPLOSION_INIATE_COMET"
@@ -122,9 +133,8 @@ for _,teamID in pairs(GetTeamList) do
 	end
 end
 local randomUnits 				= true
-local unitNameComet 			= "arm_peewee"
 local FALLSPEED					= 60  -- 60 every 5th timeframe
-local timeDelayComet 			= tonumber(modOptions.time_delay_comet) * 30 * 60 or 30 * 60 + 1 -- 2.5 min
+local timeDelayComet 			= 100 --tonumber(modOptions.time_delay_comet) * 30 * 60 or 30 * 60 + 1 -- 2.5 min
 local damage_radius				= tonumber(modOptions.max_radius_damage_comets) or 500
 local damage_value            	= tonumber(modOptions.max_damage_comets) or 500
 local randomize_number_of_comets= 100 -- how often number of comets in rain are randomized (higher is less ofthen)
@@ -133,6 +143,38 @@ local max_comets				= tonumber(modOptions.max_comets) or 10
 local comets					= {}
 local ast_size 					= images3[1]
 local ast_image					= images3[2]
+local random_map				= {}
+local evenx 					= mapX%2==0 and 2 or 1 -- only make 1024x1024 sectors if possible
+local evenz 					= mapZ%2==0 and 2 or 1
+
+
+local function random_coordinate()
+
+	--make a new heatmap
+	if #random_map == 0 then
+
+		-- get points in all sectors (512x512) squares
+		for i=0,mapX*512, evenx*512 do
+			for j=0,mapZ*512, evenz*512 do
+				random_map[#random_map+1] = {random(i, i+512*evenx),random(j, j+512*evenz)}
+			end
+		end
+
+		-- randomize them
+		for i = 1, #random_map do
+			local r1 = random(#random_map)
+			local r2 = random(#random_map)
+			random_map[r1], random_map[r2] = random_map[r2], random_map[r1]
+		end
+
+	end
+
+	-- return points from heatmap
+	local coord = random_map[#random_map]
+	random_map[#random_map] = nil
+	return coord[1], coord[2]
+
+end
 
 
 -- INITIALISE --
@@ -154,7 +196,7 @@ end
 -- HELP FUCNTION --
 
 
-function damage_near_units(x,z, radius)
+local function damage_near_units(x,z, radius)
 
 	local near_units = GetUnitsInCylinder(x,z, radius)
 	local y = GetGroundHeight(x,z)
@@ -169,7 +211,7 @@ function damage_near_units(x,z, radius)
 			local multiplier = 1-sqrt( (x-xu)*(x-xu) + (z-zu)*(z-zu) )/radius
 			local damage = damage_value *multiplier
 
-			if (math.abs(yu - y) < radius) then
+			if (abs(yu - y) < radius) then
 				AddUnitDamage(unitID, damage)
 			end
 		end
@@ -182,7 +224,7 @@ function damage_near_units(x,z, radius)
 				local multiplier = 1-sqrt( (x-xf)*(x-xf) + (z-zf)*(z-zf) )/radius
 				local damage = damage_value*multiplier
 				local feature_health = GetFeatureHealth(near_features[i])
-				if (math.abs(yf - y) < radius) then
+				if (abs(yf - y) < radius) then
 					if feature_health - damage < 0 then
 						DestroyFeature(near_features[i])
 					else
@@ -198,7 +240,7 @@ end
 -- COMET FUNCTIONS
 
 
-function add_comet(x,y)
+local function add_comet(x,y)
 	local X = random(x-cometRainRadius, x+cometRainRadius)
 	local Z = random(y-cometRainRadius, y+cometRainRadius)
 	
@@ -228,7 +270,26 @@ function add_comet(x,y)
 end
 
 
-function update_comet()
+local function deform_ground(comet)
+	local x = floor(ast_size["x"]/2)
+	local z = floor(ast_size["z"]/2)
+	local xc = comet.X - x
+	local zc = comet.Z - z
+	local func = function()
+		for key, value in pairs(ast_image) do
+			for k, v in gmatch(key,"(%w+),(%w+)") do
+				local height = GetGroundOrigHeight(v+xc,k+zc)
+				if value ~= 0 then
+					SetHeightMap(tonumber(v)+xc,tonumber(k)+zc, height + value -21)
+				end
+			end
+		end
+	end
+	SetHeightMapFunc(func)
+end
+
+
+local function update_comet()
 
 	for i=#comets,1,-1 do
 
@@ -237,12 +298,37 @@ function update_comet()
 		if v.hit == true then
 
 			local height = GetGroundOrigHeight(v.X,v.Z)
-			local team = random(0,#TeamIDsComets-1)
+			local team
+			if comet_mode == "rock" then
+				team = GaiaTeamID
+			else
+				team = random(0,#TeamIDsComets-1)
+			end
+
 			local y = GetGroundHeight(v.X,v.Z)
 			SpawnCEG(COMET_HIT_GROUND,v.X, y, v.Z)
+
+
 			local unitID = CreateUnit(v.unitName, v.X, height, v.Z, 0, team)
+			if comet_mode == "rock" then
+				SetUnitNeutral(unitID, true)
+				SetUnitAlwaysVisible(unitID, true)
+				SetUnitStealth(unitID, true)
+				SetUnitSonarStealth(unitID,true)
+			end
 			local damage = 0.1 --random()
-			GG.radiation[unitID] = {
+			if comet_mode == "rock" then
+				GG.radiation[unitID] = {
+				['radius'] = 500,		-- number
+				['damage'] = 0.2,		-- number between 0,1
+				['dRadius'] = -10,		-- number
+				['dDamage'] = -0.001,	-- number between 0,1
+				['duration'] = 50,		-- number
+				['protection'] = 0.0,   -- maybe rename to somthing?
+				['maxradius'] = 500
+				}
+			else
+				GG.radiation[unitID] = {
 				['radius'] = 100,		-- number
 				['damage'] = damage,		-- number between 0,1
 				['dRadius'] = 2,		-- number
@@ -250,7 +336,8 @@ function update_comet()
 				['duration'] = 50,		-- number
 				['protection'] = 0.5,   -- maybe rename to somthing?
 				['maxradius'] = 500
-			}
+				}
+			end
 			remove(comets, i)
 
 		elseif v.groundHeight-v.Y < 0 then
@@ -259,8 +346,19 @@ function update_comet()
 
 			if comets[i].Y - comets[i].explode < 0 then
 				SpawnCEG(PUFFY,v.X, v.Y, v.Z)
-				local team = random(0,#TeamIDsComets-1)
+				local team
+				if comet_mode == "rock" then
+					team = GaiaTeamID
+				else
+					team = random(0,#TeamIDsComets-1)
+				end
 				local unitID = CreateUnit(v.unitName, v.X, v.Y, v.Z, 0, team)
+				if comet_mode == "rock" then
+					SetUnitNeutral(unitID, true)
+					SetUnitAlwaysVisible(unitID, true)
+					SetUnitStealth(unitID, true)
+					SetUnitSonarStealth(unitID,true)
+				end
 				remove(comets, i)
 				DestroyUnit(unitID)
 			end
@@ -275,17 +373,17 @@ function update_comet()
 end
 
 
-function getUnitName()
+local function getUnitName()
 	if randomUnits == true then
 		local can_move = {}
 		for teamCount = 1, #TeamIDsComets do
 			local teamID = TeamIDsComets[teamCount]
 			local units = GetTeamUnits(teamID)
 			for index, unitID in pairs(units) do
-				UDID = GetUnitDefID(unitID)
+				local UDID = GetUnitDefID(unitID)
 				if UnitDefs[UDID].isBuilder ~= true then
 					if moving[tostring(UnitDefs[UDID].moveDef.name)] ~= nil then
-						insert(can_move, GetUnitDefID(unitID)) -- this is slow!!! use other method (TODO)
+						insert(can_move, GetUnitDefID(unitID))
 					end
 				end
 			end
@@ -297,23 +395,7 @@ function getUnitName()
 end
 
 
-function deform_ground(comet)
-	local x = floor(ast_size["x"]/2)
-	local z = floor(ast_size["z"]/2)
-	local xc = comet.X - x
-	local zc = comet.Z - z
-	local func = function()
-		for key, value in pairs(ast_image) do
-			for k, v in gmatch(key,"(%w+),(%w+)") do
-				local height = GetGroundOrigHeight(v+xc,k+zc) 
-				if value ~= 0 then
-					SetHeightMap(tonumber(v)+xc,tonumber(k)+zc, height + value -21)
-				end
-			end
-		end
-	end
-	SetHeightMapFunc(func)
-end
+
 
 
 -- LOOP --
@@ -321,7 +403,7 @@ end
 
 function gadget:GameFrame(f)
 
-	if f<100 then return nil end
+	if f<10 then return nil end
 
 	if (f%randomize_number_of_comets*timeDelayComet ==0) then
 		number_of_comets = random(0, max_comets)
@@ -332,10 +414,14 @@ function gadget:GameFrame(f)
 		else
 			if f%timeDelayComet == 0 then
 				if not (number_of_comets==0) then
+
 					Echo("WARNING observatory station detects ".. tostring(number_of_comets) .. " incoming meteorites!")
-					getUnitName()
-					local x = floor(random(0,  mapX*512))
-					local z = floor(random(0,  mapZ*512))
+
+					if comet_mode == "unit" then
+						getUnitName()
+					end
+					local x, z = random_coordinate()
+
 					for i=1,number_of_comets do
 						comets[#comets+1] = add_comet(x,z)
 					end
