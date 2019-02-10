@@ -247,7 +247,7 @@ local function addUnit(unitID,ux , uy, uz, number)
 end
 
 
-local function scanTorpedoArea(number)
+local function scanTornadoArea(number)
 	local tornado = tornadoData[number]
 	local units = GetUnitsInCylinder(tornado.pos.x, tornado.pos.z, tornado.radius)
 	for index, unitID in pairs(units) do
@@ -436,24 +436,28 @@ local function updateTornados()
 
 	for i=#tornados,1,-1 do
 
+		local remove_tornado = false
 		if tornadoData[tornados[i]].duration < 0 then
 
 			removeTornado(tornados[i])
 			remove(tornados, i)
+			remove_tornado = true
 		else
 
 			tornadoData[tornados[i]].duration = tornadoData[tornados[i]].duration - 22
 
 		end
 
-		if tornadoData[tornados[i]].n_proj < 50 then
+		if not remove_tornado then
+			if tornadoData[tornados[i]].n_proj < 50 then
 
-			addProjectile(tornados[i])
-			tornadoData[tornados[i]].n_proj = tornadoData[tornados[i]].n_proj + 1
+				addProjectile(tornados[i])
+				tornadoData[tornados[i]].n_proj = tornadoData[tornados[i]].n_proj + 1
 
+			end
+
+			scanTornadoArea(tornados[i])
 		end
-
-		scanTorpedoArea(tornados[i])
 
 	end
 
