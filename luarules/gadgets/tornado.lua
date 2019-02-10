@@ -130,40 +130,34 @@ local evenx 					= mapX%2==0 and 2 or 1 -- only make 1024x1024 sectors if possib
 local evenz 					= mapZ%2==0 and 2 or 1
 
 
-local counter = 0
 local function random_coordinate()
- 
-		--make a new heatmap
-		if counter  == 0 then
-		random_map = {}
-				-- get points in all sectors (512x512) squares
-				for i=0,mapX*512, evenx*512 do
-						for j=0,mapZ*512, evenz*512 do
-								random_map[#random_map+1] = {random(i, i+512*evenx),random(j, j+512*evenz)}
-								counter= counter +1
-						end
-				end
- 
-				-- randomize them
-				for i = 1, #random_map do
-						local r1 = random(#random_map)
-						local r2 = random(#random_map)
-						random_map[r1], random_map[r2] = random_map[r2], random_map[r1]
-				end
- 
+
+	--make a new heatmap
+	if #random_map == 0 then
+
+		-- get points in all sectors (512x512) squares
+		for i=0,mapX*512, evenx*512 do
+			for j=0,mapZ*512, evenz*512 do
+				random_map[#random_map+1] = {random(i, i+512*evenx),random(j, j+512*evenz)}
+			end
 		end
- 
-		-- return points from heatmap
-		local coord = random_map[counter]
-		counter= counter -1
-		
-		return coord[1], coord[2]
- 
+
+		-- randomize them
+		for i = 1, #random_map do
+			local r1 = random(#random_map)
+			local r2 = random(#random_map)
+			random_map[r1], random_map[r2] = random_map[r2], random_map[r1]
+		end
+
+	end
+
+	-- return points from heatmap
+	local coord = random_map[#random_map]
+	--random_map[#random_map] = nil
+	table.remove(random_map,#random_map)
+	return coord[1], coord[2]
+
 end
- 
-local x,z = random_coordinate()
-
-
 
 
 function gadget:Initialize()
