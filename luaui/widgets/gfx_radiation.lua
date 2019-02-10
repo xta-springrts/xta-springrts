@@ -2,7 +2,7 @@ function widget:GetInfo()
 	return {
 		name = "FX radiation",
 		desc = "Make radioactive units greenish, can be fps expensive",
-		author = "Jools, reworked by res",
+		author = "Jools & Floris, reworked by res",
 		date = "Nov, 2018",
 		license = "GPLv2",
 		version = "0.1",
@@ -27,6 +27,11 @@ end
 local random							= math.random
 local max								= math.max
 local min								= math.min
+local pairs								= pairs
+local sin								= math.sin
+local cos 								= math.cos
+local pi								= math.pi
+local floor                     		= math.floor
 
 local Echo								= Spring.Echo
 local radiation_units					= {}
@@ -43,6 +48,15 @@ local ValidUnitID						= Spring.ValidUnitID
 local IsUnitVisible						= Spring.IsUnitVisible
 local IsUnitAllied						= Spring.IsUnitAllied
 local myTeam 							= Spring.GetLocalAllyTeamID()
+local glDrawListAtUnit        			= gl.DrawListAtUnit
+
+local IsUnitVisible						= Spring.IsUnitVisible
+local GetUnitLosState 					= Spring.GetUnitLosState
+local baseParts                       	= 50      -- how many sided circle?
+local baseOuterSize                   	= 1.30    -- outer fade size compared to circle scale (1 = no outer fade)
+local intensity
+local fxParts                         = 50
+local fxWidth                         = 0.2    -- 1 = 100%
 
 
 -- test to make units better drawn
@@ -125,6 +139,57 @@ function widget:GameFrame(dt)
 	end
 end
 
+
+
+
+
+local function drawSpottersBaseOuter()
+   local radstep = (2.0 * pi) / baseParts
+   for i = 1, baseParts do
+       local a1 = (i * radstep)
+       local a2 = ((i+1) * radstep)
+       --(colorSet)
+       gl.Color(intensity, 1, intensity, 0.5) -- baseOpacity)
+       gl.Vertex(sin(a1), 0, cos(a1))
+       gl.Vertex(sin(a2), 0, cos(a2))
+       --(fadeto)
+       gl.Color(intensity, 1, intensity, 0.5)
+       gl.Vertex(sin(a2)*baseOuterSize, 0, cos(a2)*baseOuterSize)
+       gl.Vertex(sin(a1)*baseOuterSize, 0, cos(a1)*baseOuterSize)
+   end
+end
+
+
+local function round(num, idp)
+    local mult = 10^(idp or 0)
+    return floor(num * mult + 0.5) / mult
+end
+
+
+
+
+
+local function drawSpotters()
+
+   if true then
+
+       if baseOuterSize ~= 1 then
+           gl.BeginEnd(GL.QUADS, drawSpottersBaseOuter)
+       end
+   end
+
+   if true then --FX?
+       local parts = round(fxParts * 0.2, 0) -- 0.2 == fx multiplier
+       local width = fxWidth
+       if true then     --fxDetailOffset
+           parts = round(parts / 1.5), 0
+           width = width / 1.5
+       end
+   end
+end
+
+
+
 function widget:DrawWorld()
 	gl.DepthTest(true)
 	gl.PolygonOffset(-2, -2)
@@ -153,12 +218,12 @@ function widget:DrawWorld()
 				if GetGameRulesParam('radiation_damage' .. unitID) ~= nil and GetGameRulesParam('radiation_damage' .. unitID) ~= 0 then
 
 					local radius = GetGameRulesParam('radiation_radius' .. unitID)
-					local intensity = 1-min(max(0,GetGameRulesParam('radiation_damage' .. unitID)),1)
+					intensity = 1-min(max(0,GetGameRulesParam('radiation_damage' .. unitID)),1)
 
 					gl.Color(intensity,1,intensity,a) 	--green
-					gl.DrawGroundCircle(v.x, v.y, v.z, radius, 25)
+					gl.DrawGroundCircle(v.x, v.y, v.z, radius, 50)
 					gl.Color(0.5,0.5,0.5,a) 	--black/gray
-					gl.DrawGroundCircle(v.x, v.y, v.z, radius+1, 25)
+					gl.DrawGroundCircle(v.x, v.y, v.z, radius+1, 50)
 
 					gl.Color(intensity,1,intensity,a) 	--green
 
@@ -166,7 +231,7 @@ function widget:DrawWorld()
 					local effectedUnits = GetUnitsInSphere(v.x,v.y,v.z, radius)
 					for index, uID in pairs(effectedUnits) do
 						if uID ~= unitID and radiation_units[uID] == nil then
-							gl.Color(1, 1, intensity, a) --yellow
+							gl.Color(1, 1, max(intensity-0.2,0), a) --yellow
 							gl.Unit(uID,true)
 						end
 					end
@@ -191,29 +256,30 @@ function widget:DrawWorld()
 					if not (cloakedUnits[unitID] ~= nil and not IsUnitAllied(unitID)) then
 
 						--maybe this works
-						local visible = Spring.IsUnitVisible(unitID, nil, true)
-						local state = Spring.GetUnitLosState(unitID, myTeam, false)
+						local visible = IsUnitVisible(unitID, nil, true)
+						local state = GetUnitLosState(unitID, myTeam, false)
 
 						if state and state.los and visible then
 
-							local intensity = 1-min(max(0,GetGameRulesParam('radiation_damage' .. unitID)),1)
+							intensity = 1-min(max(0,GetGameRulesParam('radiation_damage' .. unitID)),1)
 							local radius = GetGameRulesParam('radiation_radius' .. unitID)
-							gl.Color(intensity,1,intensity,a) --green
+							gl.Color(max(intensity-0.1,0),1,max(intensity-0.1,0),a) --green
 							gl.Unit(unitID,true)
 							local x,y,z = GetUnitPosition(unitID)
 							radiation_areas[unitID].x = x
 							radiation_areas[unitID].y = y
 							radiation_areas[unitID].z = z
 
-							gl.Color(intensity,1,intensity,a) 	--green
-							gl.DrawGroundCircle(x, y, z, radius, 25)
 							gl.Color(0.5,0.5,0.5,a) 	--black
-							gl.DrawGroundCircle(x, y, z, radius+1, 25)
+							gl.DrawGroundCircle(x, y, z, radius+1, 50)
+
+							local temp = gl.CreateList(drawSpotters)
+							glDrawListAtUnit(unitID, temp, false, radius, 1.0, radius, 45, 0,1,0)
 
 							local effectedUnits = GetUnitsInSphere(x,y,z, radius)
 							for index, uID in pairs(effectedUnits) do
 								if uID ~= unitID and radiation_units[uID] == nil then
-									gl.Color(1, 1, intensity, a) --yellow
+									gl.Color(1, 1, max(intensity-0.2,0), a) --yellow
 									gl.Unit(uID,true)
 								end
 							end
@@ -229,6 +295,8 @@ function widget:DrawWorld()
 			end
 		end
 	end
+	gl.DepthTest(false)
+    gl.Color(1, 1, 1, 1)
 
 end
 

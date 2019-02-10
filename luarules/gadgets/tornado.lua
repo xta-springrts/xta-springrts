@@ -22,7 +22,7 @@ end
 		4. units outside the map get destroyed (buildings)
 
 	TODO:
-		3. wobbling tornado's (not straight angle)
+
 		4. different sizes of tornado's (this should be calculated: angle,speed,updatetime)
 		5. add feature support (flying features?)
 		6. fix projectile properties (speed, model randomness)
@@ -125,14 +125,47 @@ for name,data in pairs(WeaponDefNames) do
 	end
 end
 
+local random_map				= {}
+local evenx 					= mapX%2==0 and 2 or 1 -- only make 1024x1024 sectors if possible
+local evenz 					= mapZ%2==0 and 2 or 1
+
+
+local function random_coordinate()
+
+	--make a new heatmap
+	if #random_map == 0 then
+
+		-- get points in all sectors (512x512) squares
+		for i=0,mapX*512, evenx*512 do
+			for j=0,mapZ*512, evenz*512 do
+				random_map[#random_map+1] = {random(i, i+512*evenx),random(j, j+512*evenz)}
+			end
+		end
+
+		-- randomize them
+		for i = 1, #random_map do
+			local r1 = random(#random_map)
+			local r2 = random(#random_map)
+			random_map[r1], random_map[r2] = random_map[r2], random_map[r1]
+		end
+
+	end
+
+	-- return points from heatmap
+	local coord = random_map[#random_map]
+	random_map[#random_map] = nil
+	return coord[1], coord[2]
+
+end
+
 
 function gadget:Initialize()
 	local mo = Spring.GetModOptions()
 	if mo and tonumber(mo.tornado)== 0 then
-		Echo("tornedo.lua: turned off via modoptions")
+		Echo("tornado.lua: turned off via modoptions")
 		gadgetHandler:RemoveGadget(self)
 	end
-	Echo("tornedo.lua: gadget:Initialize() Game.mapName=" .. Game.mapName)
+	Echo("tornado.lua: gadget:Initialize() Game.mapName=" .. Game.mapName)
 	DisableMapDamage=0
 end
 
@@ -368,8 +401,7 @@ end
 
 local function addTornado()
 
-	local x = floor(random(0,  mapX*512))
-	local z = floor(random(0,  mapZ*512))
+    local x, z = random_coordinate()
 	local y = GetGroundOrigHeight(x,z)
 	tornadoNumber = tornadoNumber + 1
 	tornadoData[tornadoNumber] = {
@@ -396,18 +428,9 @@ local function addTornado()
 end
 
 
-
---local function tornadoFX(number)
---	local pos = tornadoData[number].pos
---	local x, y, z = pos.x, pos.y, pos.z
---	local height = random(y,600)
---	SpawnCEG(metalcloud2,x, height, z)
---end
-
-
 local function updateTornados()
 
-	if #tornados < 5 then
+	if #tornados < number_of_tornados then
 		tornados[#tornados+1] = addTornado()
 	end
 
@@ -432,9 +455,6 @@ local function updateTornados()
 
 		scanTorpedoArea(tornados[i])
 
-		--if random() < 0.05 then
-		--	tornadoFX(tornados[i])
-		--end
 	end
 
 end
