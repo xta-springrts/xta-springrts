@@ -142,6 +142,7 @@ local nheatmap = #random_map
 local counter = 0
 
 local function remake_heatmap()
+	Echo("updatemap")
 	local temp = {}
 	for i=0,mapX*512, evenx*512 do
 		for j=0,mapZ*512, evenz*512 do
@@ -160,6 +161,7 @@ end
 
 local function random_coordinate()
 
+	Echo("random coord")
 	counter = counter == 0 and nheatmap or counter -1
 	return random_map[counter][1], random_map[counter][2]
 
