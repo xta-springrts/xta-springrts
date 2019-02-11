@@ -436,7 +436,7 @@ function gadget:GameFrame(f)
 						getUnitName()
 					end
 					local x = random(0,mapX*512)
-					local y = random(0,mapZ*512)
+					local z = random(0,mapZ*512)
 					--local x, z = random_coordinate()
 
 					for i=1,number_of_comets do
