@@ -125,47 +125,47 @@ for name,data in pairs(WeaponDefNames) do
 	end
 end
 
-local random_map				= {}
-local evenx 					= mapX%2==0 and 2 or 1 -- only make 1024x1024 sectors if possible
-local evenz 					= mapZ%2==0 and 2 or 1
-for i=0,mapX*512, evenx*512 do
-	for j=0,mapZ*512, evenz*512 do
-		random_map[#random_map+1] = {random(i, i+512*evenx),random(j, j+512*evenz)}
-	end
-end
-for i=0,mapX*512, evenx*512 do
-	for j=0,mapZ*512, evenz*512 do
-		random_map[#random_map+1] = {random(i, i+512*evenx),random(j, j+512*evenz)}
-	end
-end
-local nheatmap = #random_map
-local counter = 0
-
-local function remake_heatmap()
-	Echo("updatemap")
-	local temp = {}
-	for i=0,mapX*512, evenx*512 do
-		for j=0,mapZ*512, evenz*512 do
-			random_map[#random_map+1] = {random(i, i+512*evenx),random(j, j+512*evenz)}
-		end
-	end
-	for i=0,mapX*512, evenx*512 do
-		for j=0,mapZ*512, evenz*512 do
-			random_map[#random_map+1] = {random(i, i+512*evenx),random(j, j+512*evenz)}
-		end
-	end
-	random_map = temp
-	Echo("updatemap")
-end
-
-
-local function random_coordinate()
-
-	Echo("random coord")
-	counter = counter == 0 and nheatmap or counter -1
-	return random_map[counter][1], random_map[counter][2]
-
-end
+--local random_map				= {}
+--local evenx 					= mapX%2==0 and 2 or 1 -- only make 1024x1024 sectors if possible
+--local evenz 					= mapZ%2==0 and 2 or 1
+--for i=0,mapX*512, evenx*512 do
+--	for j=0,mapZ*512, evenz*512 do
+--		random_map[#random_map+1] = {random(i, i+512*evenx),random(j, j+512*evenz)}
+--	end
+--end
+--for i=0,mapX*512, evenx*512 do
+--	for j=0,mapZ*512, evenz*512 do
+--		random_map[#random_map+1] = {random(i, i+512*evenx),random(j, j+512*evenz)}
+--	end
+--end
+--local nheatmap = #random_map
+--local counter = 0
+--
+--local function remake_heatmap()
+--	Echo("updatemap")
+--	local temp = {}
+--	for i=0,mapX*512, evenx*512 do
+--		for j=0,mapZ*512, evenz*512 do
+--			random_map[#random_map+1] = {random(i, i+512*evenx),random(j, j+512*evenz)}
+--		end
+--	end
+--	for i=0,mapX*512, evenx*512 do
+--		for j=0,mapZ*512, evenz*512 do
+--			random_map[#random_map+1] = {random(i, i+512*evenx),random(j, j+512*evenz)}
+--		end
+--	end
+--	random_map = temp
+--	Echo("updatemap")
+--end
+--
+--
+--local function random_coordinate()
+--
+--	Echo("random coord")
+--	counter = counter == 0 and nheatmap or counter -1
+--	return random_map[counter][1], random_map[counter][2]
+--
+--end
 
 
 
@@ -414,7 +414,9 @@ end
 
 local function addTornado()
 
-    local x, z = random_coordinate()
+    --local x, z = random_coordinate()
+	local x = random(0,mapX*512)
+	local y = random(0,mapZ*512)
 	local y = GetGroundOrigHeight(x,z)
 	tornadoNumber = tornadoNumber + 1
 	tornadoData[tornadoNumber] = {
