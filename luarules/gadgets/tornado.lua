@@ -20,13 +20,14 @@ end
 		2. lift them up and trow them away after some time
 		3. tornado's move around the map (appear and disappear)
 		4. units outside the map get destroyed (buildings)
+		5. tornados are spawned according to a heatmap
 
 	TODO:
 
 		4. different sizes of tornado's (this should be calculated: angle,speed,updatetime)
 		5. add feature support (flying features?)
-		6. fix projectile properties (speed, model randomness)
-		7. sounds/units/windgen2.wav
+		7. sounds/units/windgen2.wav (by widget)
+		8. add weapon that can fire tornado
 
 ]]--
 
@@ -113,9 +114,7 @@ local tornadoNumber			= 0		-- index for tornado list
 local tornadoNumberUnit		= {}	-- stored which unit belong to which tornado
 local tornadoNumberProj		= {}	-- stored which projectile belong to which tornado
 local buildings				= {}
-local eceg 						= "gplasmaballbloom"
 local metalcloud3				= "smokeshell_medium_tornado" -- nice raining efx
-local metalcloud2				= "smokeshell_medium"
 local p
 for name,data in pairs(WeaponDefNames) do
 	local weaponDefID = WeaponDefNames[name].id
@@ -125,51 +124,73 @@ for name,data in pairs(WeaponDefNames) do
 	end
 end
 
---local random_map				= {}
---local evenx 					= mapX%2==0 and 2 or 1 -- only make 1024x1024 sectors if possible
---local evenz 					= mapZ%2==0 and 2 or 1
---for i=0,mapX*512, evenx*512 do
---	for j=0,mapZ*512, evenz*512 do
---		random_map[#random_map+1] = {random(i, i+512*evenx),random(j, j+512*evenz)}
---	end
---end
---for i=0,mapX*512, evenx*512 do
---	for j=0,mapZ*512, evenz*512 do
---		random_map[#random_map+1] = {random(i, i+512*evenx),random(j, j+512*evenz)}
---	end
---end
---local nheatmap = #random_map
---local counter = 0
---
---local function remake_heatmap()
---	Echo("updatemap")
---	local temp = {}
---	for i=0,mapX*512, evenx*512 do
---		for j=0,mapZ*512, evenz*512 do
---			random_map[#random_map+1] = {random(i, i+512*evenx),random(j, j+512*evenz)}
---		end
---	end
---	for i=0,mapX*512, evenx*512 do
---		for j=0,mapZ*512, evenz*512 do
---			random_map[#random_map+1] = {random(i, i+512*evenx),random(j, j+512*evenz)}
---		end
---	end
---	random_map = temp
---	Echo("updatemap")
---end
---
---
---local function random_coordinate()
---
---	Echo("random coord")
---	counter = counter == 0 and nheatmap or counter -1
---	return random_map[counter][1], random_map[counter][2]
---
---end
+
+-- RANDOM HEATMAP
+
+
+local random_map				= {}
+local evenx 					= mapX%2==0 and 2 or 1 -- only make 1024x1024 sectors if possible
+local evenz 					= mapZ%2==0 and 2 or 1
+local NX						= floor(mapX/evenx)
+local NZ						= floor(mapZ/evenz)
+local Nrandom_map               = 0
+local Nrandom_map_counter		= 0
 
 
 
+local count = 1
+for i = 1, NX do
+	for j = 1, NZ do
+		random_map[count]= {
+		x = random((i-1)*512*evenx, i*512*evenx),
+		z = random((j-1)*512*evenz, j*512*evenz)}
+		Nrandom_map = Nrandom_map + 1
+		count = count + 1
+	end
+end
 
+
+local function shuffle(t)
+  for i = #t, 2, -1 do
+    local j = random(i)
+    t[i], t[j] = t[j], t[i]
+  end
+  return t
+end
+
+
+random_map = shuffle(random_map)
+
+
+local function remake_heatmap()
+	local count = 1
+	for i = 1, NX do
+		for j = 1, NZ do
+			random_map[count]= {
+			x = random((i-1)*512*evenx, i*512*evenx),
+			z = random((j-1)*512*evenz, j*512*evenz)}
+			count = count + 1
+		end
+	end
+	random_map = shuffle(random_map)
+end
+
+
+local function random_coordinate()
+	Nrandom_map_counter = Nrandom_map_counter + 1
+	if Nrandom_map_counter >= Nrandom_map then
+
+		Nrandom_map_counter = 1
+		remake_heatmap()
+	end
+	local x = random_map[Nrandom_map_counter]['x']
+	local z = random_map[Nrandom_map_counter]['z']
+	return x, z
+
+end
+
+
+-- INITIALISE --
 
 
 function gadget:Initialize()
@@ -415,8 +436,9 @@ end
 local function addTornado()
 
     --local x, z = random_coordinate()
-	local x = random(0,mapX*512)
-	local z = random(0,mapZ*512)
+	--local x = random(0,mapX*512)
+	--local z = random(0,mapZ*512)
+	local x, z = random_coordinate()
 	local y = GetGroundOrigHeight(x,z)
 	tornadoNumber = tornadoNumber + 1
 	tornadoData[tornadoNumber] = {

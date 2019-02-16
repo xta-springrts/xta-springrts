@@ -144,46 +144,72 @@ local comets					= {}
 local ast_size 					= images3[1]
 local ast_image					= images3[2]
 
---local random_map				= {}
---local evenx 					= mapX%2==0 and 2 or 1 -- only make 1024x1024 sectors if possible
---local evenz 					= mapZ%2==0 and 2 or 1
---for i=0,mapX*512, evenx*512 do
---	for j=0,mapZ*512, evenz*512 do
---		random_map[#random_map+1] = {random(i, i+512*evenx),random(j, j+512*evenz)}
---	end
---end
---for i=0,mapX*512, evenx*512 do
---	for j=0,mapZ*512, evenz*512 do
---		random_map[#random_map+1] = {random(i, i+512*evenx),random(j, j+512*evenz)}
---	end
---end
---local nheatmap = #random_map
---local counter = 0
---
---local function remake_heatmap()
---	local temp = {}
---	Echo("updatemap")
---	for i=0,mapX*512, evenx*512 do
---		for j=0,mapZ*512, evenz*512 do
---			random_map[#random_map+1] = {random(i, i+512*evenx),random(j, j+512*evenz)}
---		end
---	end
---	for i=0,mapX*512, evenx*512 do
---		for j=0,mapZ*512, evenz*512 do
---			random_map[#random_map+1] = {random(i, i+512*evenx),random(j, j+512*evenz)}
---		end
---	end
---	random_map = temp
---	Echo("updatemap")
---end
---
---
---local function random_coordinate()
---
---	counter = counter == 0 and nheatmap or counter -1
---	return random_map[counter][1], random_map[counter][2]
---
---end
+
+-- RANDOM HEATMAP
+
+
+local random_map				= {}
+local evenx 					= mapX%2==0 and 2 or 1 -- only make 1024x1024 sectors if possible
+local evenz 					= mapZ%2==0 and 2 or 1
+local NX						= floor(mapX/evenx)
+local NZ						= floor(mapZ/evenz)
+local Nrandom_map               = 0
+local Nrandom_map_counter		= 0
+
+
+
+local count = 1
+for i = 1, NX do
+	for j = 1, NZ do
+		random_map[count]= {
+		x = random((i-1)*512*evenx, i*512*evenx),
+		z = random((j-1)*512*evenz, j*512*evenz)}
+		Nrandom_map = Nrandom_map + 1
+		count = count + 1
+	end
+end
+
+
+local function shuffle(t)
+  for i = #t, 2, -1 do
+    local j = random(i)
+    t[i], t[j] = t[j], t[i]
+  end
+  return t
+end
+
+
+random_map = shuffle(random_map)
+
+
+local function remake_heatmap()
+	local count = 1
+	for i = 1, NX do
+		for j = 1, NZ do
+			random_map[count]= {
+			x = random((i-1)*512*evenx, i*512*evenx),
+			z = random((j-1)*512*evenz, j*512*evenz)}
+			count = count + 1
+		end
+	end
+	random_map = shuffle(random_map)
+end
+
+
+local function random_coordinate()
+	Nrandom_map_counter = Nrandom_map_counter + 1
+	if Nrandom_map_counter >= Nrandom_map then
+
+		Nrandom_map_counter = 1
+		remake_heatmap()
+	end
+	local x = random_map[Nrandom_map_counter]['x']
+	local z = random_map[Nrandom_map_counter]['z']
+	Echo(evenx)
+	Echo(evenz)
+	return x, z
+
+end
 
 
 -- INITIALISE --
@@ -202,7 +228,7 @@ function gadget:Initialize()
 end
 
 
--- HELP FUCNTION --
+-- HELP FUNCTION --
 
 
 local function damage_near_units(x,z, radius)
@@ -324,6 +350,13 @@ local function update_comet()
 				SetUnitAlwaysVisible(unitID, true)
 				SetUnitStealth(unitID, true)
 				SetUnitSonarStealth(unitID,true)
+                --Spring.GetMetalExtraction
+                --Spring.GetMetalAmount
+                --Spring.SetMetalAmount(floor(v.X/16),floor(v.Z)/16, 2*255)
+                --Spring.SetMetalAmount(floor(v.X/16)+1,floor(v.Z/16)+1, 2*255)
+                --Spring.SetMetalAmount(floor(v.X/16)-1,floor(v.Z/16)-1, 2*255)
+                --Spring.SetMetalAmount(floor(v.X/16)+1,floor(v.Z/16)-1, 2*255)
+                --Spring.SetMetalAmount(floor(v.X/16)-1,floor(v.Z/16)+1, 2*255)
 			end
 			local damage = 0.1 --random()
 			if comet_mode == "rock" then
@@ -333,7 +366,7 @@ local function update_comet()
 				['dRadius'] = -10,		-- number
 				['dDamage'] = -0.001,	-- number between 0,1
 				['duration'] = 50,		-- number
-				['protection'] = 0.0,   -- maybe rename to somthing?
+				['protection'] = 0.0,   -- maybe rename to something?
 				['maxradius'] = 500
 				}
 			else
@@ -343,7 +376,7 @@ local function update_comet()
 				['dRadius'] = 2,		-- number
 				['dDamage'] = 0.01,	-- number between 0,1
 				['duration'] = 50,		-- number
-				['protection'] = 0.5,   -- maybe rename to somthing?
+				['protection'] = 0.5,   -- maybe rename to something?
 				['maxradius'] = 500
 				}
 			end
@@ -412,7 +445,7 @@ end
 
 function gadget:GameFrame(f)
 
-	if f<100 then return nil end
+	if f<10 then return nil end
 
 	if (f%randomize_number_of_comets*timeDelayComet ==0) then
 		number_of_comets = random(0, max_comets)
@@ -435,9 +468,7 @@ function gadget:GameFrame(f)
 					if comet_mode == "unit" then
 						getUnitName()
 					end
-					local x = random(0,mapX*512)
-					local z = random(0,mapZ*512)
-					--local x, z = random_coordinate()
+					local x, z = random_coordinate()
 
 					for i=1,number_of_comets do
 						comets[#comets+1] = add_comet(x,z)
