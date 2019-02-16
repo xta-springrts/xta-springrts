@@ -29,6 +29,10 @@ local degrot = {}
 
 local rad_con						= 180 / math.pi
 local math_acos						= math.acos
+local cos							= math.cos
+local sin 							= math.sin
+local pi 							= math.pi
+local clock 						= os.clock
 
 local UNITCONF						= {}
 
@@ -210,7 +214,7 @@ local function DrawCircleLine(innersize, outersize)
 		local width = OPTIONS[currentOption].circleSpaceUsage
 		local detail = OPTIONS[currentOption].circlePieceDetail
 
-		local radstep = (2.0 * math.pi) / OPTIONS[currentOption].circlePieces
+		local radstep = (2.0 * pi) / OPTIONS[currentOption].circlePieces
 		for i = 1, OPTIONS[currentOption].circlePieces do
 			for d = 1, detail do
 
@@ -221,11 +225,11 @@ local function DrawCircleLine(innersize, outersize)
 				a4 = ((i+OPTIONS[currentOption].circleInnerOffset+detailPartWidth) * radstep)
 
 				--outer (fadein)
-				gl.Vertex(math.sin(a4)*innersize, 1, math.cos(a4)*innersize)
-				gl.Vertex(math.sin(a3)*innersize, 1, math.cos(a3)*innersize)
+				gl.Vertex(sin(a4)*innersize, 1, cos(a4)*innersize)
+				gl.Vertex(sin(a3)*innersize, 1, cos(a3)*innersize)
 				--outer (fadeout)
-				gl.Vertex(math.sin(a1)*outersize, 1, math.cos(a1)*outersize)
-				gl.Vertex(math.sin(a2)*outersize, 1, math.cos(a2)*outersize)
+				gl.Vertex(sin(a1)*outersize, 1, cos(a1)*outersize)
+				gl.Vertex(sin(a2)*outersize, 1, cos(a2)*outersize)
 			end
 		end
 	end)
@@ -234,7 +238,7 @@ end
 local function DrawCircleSolid(size)
 	gl.BeginEnd(GL.TRIANGLE_FAN, function()
 		local pieces = OPTIONS[currentOption].solidCirclePieces
-		local radstep = (2.0 * math.pi) / pieces
+		local radstep = (2.0 * pi) / pieces
 		local a1
 		if (color) then
 			gl.Color(color)
@@ -242,7 +246,7 @@ local function DrawCircleSolid(size)
 		gl.Vertex(0, 1, 0)
 		for i = 0, pieces do
 			a1 = (i * radstep)
-			gl.Vertex(math.sin(a1)*size, 1, math.cos(a1)*size)
+			gl.Vertex(sin(a1)*size, 1, cos(a1)*size)
 		end
 	end)
 end
@@ -266,7 +270,7 @@ end
 local function DrawSquareLine(innersize, outersize)
 
 	gl.BeginEnd(GL.QUADS, function()
-		local radstep = (2.0 * math.pi) / 4
+		local radstep = (2.0 * pi) / 4
 		local width, a1,a2,a2_2
 		for i = 1, 4 do
 			-- straight piece
@@ -275,11 +279,11 @@ local function DrawSquareLine(innersize, outersize)
 			a1 = (i * radstep)
 			a2 = ((i+width) * radstep)
 
-			gl.Vertex(math.sin(a2)*innersize, 1, math.cos(a2)*innersize)
-			gl.Vertex(math.sin(a1)*innersize, 1, math.cos(a1)*innersize)
+			gl.Vertex(sin(a2)*innersize, 1, cos(a2)*innersize)
+			gl.Vertex(sin(a1)*innersize, 1, cos(a1)*innersize)
 
-			gl.Vertex(math.sin(a1)*outersize, 1, math.cos(a1)*outersize)
-			gl.Vertex(math.sin(a2)*outersize, 1, math.cos(a2)*outersize)
+			gl.Vertex(sin(a1)*outersize, 1, cos(a1)*outersize)
+			gl.Vertex(sin(a2)*outersize, 1, cos(a2)*outersize)
 
 			-- corner piece
 			width = 0.3
@@ -289,11 +293,11 @@ local function DrawSquareLine(innersize, outersize)
 			i = i -0.6
 			a2_2 = ((i+width) * radstep)
 
-			gl.Vertex(math.sin(a2_2)*innersize, 1, math.cos(a2_2)*innersize)
-			gl.Vertex(math.sin(a1)*innersize, 1, math.cos(a1)*innersize)
+			gl.Vertex(sin(a2_2)*innersize, 1, cos(a2_2)*innersize)
+			gl.Vertex(sin(a1)*innersize, 1, cos(a1)*innersize)
 
-			gl.Vertex(math.sin(a1)*outersize, 1, math.cos(a1)*outersize)
-			gl.Vertex(math.sin(a2_2)*outersize, 1, math.cos(a2_2)*outersize)
+			gl.Vertex(sin(a1)*outersize, 1, cos(a1)*outersize)
+			gl.Vertex(sin(a2_2)*outersize, 1, cos(a2_2)*outersize)
 		end
 	end)
 end
@@ -301,7 +305,7 @@ end
 local function DrawSquareSolid(size)
 	gl.BeginEnd(GL.TRIANGLE_FAN, function()
 		local width, a1,a2,a2_2
-		local radstep = (2.0 * math.pi) / 4
+		local radstep = (2.0 * pi) / 4
 
 		for i = 1, 4 do
 			--straight piece
@@ -311,8 +315,8 @@ local function DrawSquareSolid(size)
 			a2 = ((i+width) * radstep)
 
 			gl.Vertex(0, 0, 0)
-			gl.Vertex(math.sin(a2)*size, 1, math.cos(a2)*size)
-			gl.Vertex(math.sin(a1)*size, 1, math.cos(a1)*size)
+			gl.Vertex(sin(a2)*size, 1, cos(a2)*size)
+			gl.Vertex(sin(a1)*size, 1, cos(a1)*size)
 
 			--corner piece
 			width = 0.3
@@ -323,8 +327,8 @@ local function DrawSquareSolid(size)
 			a2_2 = ((i+width) * radstep)
 
 			gl.Vertex(0, 0, 0)
-			gl.Vertex(math.sin(a2_2)*size, 1, math.cos(a2_2)*size)
-			gl.Vertex(math.sin(a1)*size, 1, math.cos(a1)*size)
+			gl.Vertex(sin(a2_2)*size, 1, cos(a2_2)*size)
+			gl.Vertex(sin(a1)*size, 1, cos(a1)*size)
 		end
 
 	end)
@@ -349,7 +353,7 @@ end
 local function DrawTriangleLine(innersize, outersize)
 	gl.BeginEnd(GL.QUADS, function()
 		local width, a1,a2,a2_2
-		local radstep = (2.0 * math.pi) / 3
+		local radstep = (2.0 * pi) / 3
 
 		for i = 1, 3 do
 			--straight piece
@@ -358,11 +362,11 @@ local function DrawTriangleLine(innersize, outersize)
 			a1 = (i * radstep)
 			a2 = ((i+width) * radstep)
 
-			gl.Vertex(math.sin(a2)*innersize, 1, math.cos(a2)*innersize)
-			gl.Vertex(math.sin(a1)*innersize, 1, math.cos(a1)*innersize)
+			gl.Vertex(sin(a2)*innersize, 1, cos(a2)*innersize)
+			gl.Vertex(sin(a1)*innersize, 1, cos(a1)*innersize)
 
-			gl.Vertex(math.sin(a1)*outersize, 1, math.cos(a1)*outersize)
-			gl.Vertex(math.sin(a2)*outersize, 1, math.cos(a2)*outersize)
+			gl.Vertex(sin(a1)*outersize, 1, cos(a1)*outersize)
+			gl.Vertex(sin(a2)*outersize, 1, cos(a2)*outersize)
 
 			-- corner piece
 			width = 0.35
@@ -372,11 +376,11 @@ local function DrawTriangleLine(innersize, outersize)
 			i = i -0.6
 			a2_2 = ((i+width) * radstep)
 
-			gl.Vertex(math.sin(a2_2)*innersize, 1, math.cos(a2_2)*innersize)
-			gl.Vertex(math.sin(a1)*innersize, 1, math.cos(a1)*innersize)
+			gl.Vertex(sin(a2_2)*innersize, 1, cos(a2_2)*innersize)
+			gl.Vertex(sin(a1)*innersize, 1, cos(a1)*innersize)
 
-			gl.Vertex(math.sin(a1)*outersize, 1, math.cos(a1)*outersize)
-			gl.Vertex(math.sin(a2_2)*outersize, 1, math.cos(a2_2)*outersize)
+			gl.Vertex(sin(a1)*outersize, 1, cos(a1)*outersize)
+			gl.Vertex(sin(a2_2)*outersize, 1, cos(a2_2)*outersize)
 		end
 
 	end)
@@ -387,7 +391,7 @@ local function DrawTriangleSolid(size)
 	gl.BeginEnd(GL.TRIANGLE_FAN, function()
 
 		local width, a1,a2,a2_2
-		local radstep = (2.0 * math.pi) / 3
+		local radstep = (2.0 * pi) / 3
 
 		for i = 1, 3 do
 			-- straight piece
@@ -397,8 +401,8 @@ local function DrawTriangleSolid(size)
 			a2 = ((i+width) * radstep)
 
 			gl.Vertex(0, 0, 0)
-			gl.Vertex(math.sin(a2)*size, 1, math.cos(a2)*size)
-			gl.Vertex(math.sin(a1)*size, 1, math.cos(a1)*size)
+			gl.Vertex(sin(a2)*size, 1, cos(a2)*size)
+			gl.Vertex(sin(a1)*size, 1, cos(a1)*size)
 
 			-- corner piece
 			width = 0.35
@@ -409,8 +413,8 @@ local function DrawTriangleSolid(size)
 			a2_2 = ((i+width) * radstep)
 
 			gl.Vertex(0, 0, 0)
-			gl.Vertex(math.sin(a2_2)*size, 1, math.cos(a2_2)*size)
-			gl.Vertex(math.sin(a1)*size, 1, math.cos(a1)*size)
+			gl.Vertex(sin(a2_2)*size, 1, cos(a2_2)*size)
+			gl.Vertex(sin(a1)*size, 1, cos(a1)*size)
 		end
 
 	end)
@@ -454,7 +458,7 @@ function widget:Initialize()
 		end)
 	end)
 
-	currentClock = os.clock()
+	currentClock = clock()
 
 	WG['fancyselectedunits'] = {}
 	WG['fancyselectedunits'].getOpacity = function()
@@ -701,7 +705,7 @@ end
 
 
 function widget:Update()
-	currentClock = os.clock()
+	currentClock = clock()
 	maxSelectTime = currentClock - OPTIONS[currentOption].selectionStartAnimationTime
 	maxDeselectedTime = currentClock - OPTIONS[currentOption].selectionEndAnimationTime
 
@@ -818,8 +822,8 @@ end --// end do
 function widget:DrawWorldPreUnit()
 	if spIsGUIHidden() then return end
 
-	local clockDifference = (os.clock() - previousOsClock)
-	previousOsClock = os.clock()
+	local clockDifference = (clock() - previousOsClock)
+	previousOsClock = clock()
 
 	-- animate rotation
 	if OPTIONS[currentOption].rotationSpeed > 0 then
