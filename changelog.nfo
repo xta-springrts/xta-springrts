@@ -30,6 +30,12 @@ The Talon race is the property of The Registered One, or TRO for short, which ha
 --- Do not remove
 --- Changelog processing starts here
 
+
+XTA 9.753 (Git 11xx)
+|jls,nor,res
+1/3/2019
+
+Changes:
 Big Economy Changes:
 You have a base income, of two metal, and fifty energy per second, regardless of you having your commander. 
 Construction units make vastly less metal, so spamming them is less rewarding, particually level 2 construction units.
@@ -101,13 +107,6 @@ Changes:
 Enhancements:
 Fixes:
 * Make some gadgets compatible with changed engine nomenclature (compatibility for later engine 103)
-
-XTA 9.753 (Git 11xx)
-|jls,nor
-31/12/2017
-
-Changes:
-* TBA
 
 XTA 9.752 (Git 1055)
 |jls,nor
