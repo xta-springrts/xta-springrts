@@ -82,7 +82,7 @@ local radiationUnits = {
 	},
 	["lost_cold_fusion_reactor"] = {
 				['radius'] = 100,
-				['damage'] = 0.05,
+				['damage'] = 0.01,
 				['dRadius'] = 0.1,
 				['dDamage'] = 0.001,
 				['duration'] = 5000,
@@ -91,7 +91,7 @@ local radiationUnits = {
 	},
 	["talon_fusion_power_plant"] = {
 				['radius'] = 100,
-				['damage'] = 0.05,
+				['damage'] = 0.01,
 				['dRadius'] = 0.1,
 				['dDamage'] = 0.001,
 				['duration'] = 5000,
