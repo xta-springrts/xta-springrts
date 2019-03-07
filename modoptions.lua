@@ -421,9 +421,9 @@ local options = {
 	{
 		key    = "radiation",
 		name   = 'radiation',
-		desc   = "Units or terrein can do damage by radiation!",
+		desc   = "Units or terrain can do damage by radiation!",
 		type   = "bool",
-		def    = false,
+		def    = true,
 		section= "xtagame",
 	},
 	{

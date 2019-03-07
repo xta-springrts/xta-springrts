@@ -187,17 +187,17 @@
 		default=5.5;//reduce damage due to more stable damage from sometimes 60 to reliable 55
 		group_invincible=1;
 	}
-	[customparams]
-	{
-		radiation_radius = 300;
-		radiation_damage = 0.1;
-		radiation_dradius = -2;
-		radiation_ddamage = -0.01;
-		radiation_duration = 1000;
-		radiation_protection = 0.01;
-		radiation_maxradius = 300;
-		radiation_hitradius = 30;
-	}
+	//[customparams] // EXAMPLE RADIATION WEAPON
+	//{
+	//	radiation_radius = 300;
+	//	radiation_damage = 0.1;
+	//	radiation_dradius = -2;
+	//	radiation_ddamage = -0.01;
+	//	radiation_duration = 1000;
+	//	radiation_protection = 0.01;
+	//	radiation_maxradius = 300;
+	//	radiation_hitradius = 30;
+	//}
 }
 
 [ARMTRUEFLEA_WEAPON]

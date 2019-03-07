@@ -41,99 +41,102 @@ local radiationUnits = {
 
 	-- 1. thermal power units
 
-	["arm_geothermal_powerplant"] = {
-				['radius'] = 100,
-				['damage'] = 0.05,
-				['dRadius'] = 0.1,
-				['dDamage'] = 0.001,
-				['duration'] = 500,
-				['protection'] = 0,
-				['maxradius'] = 500
-	},
-	["core_geothermal_powerplant"] = {
-			['radius'] = 100,
-			['damage'] = 0.05,
-			['dRadius'] = 0.1,
-			['dDamage'] = 0.001,
-			['duration'] = 500,
-			['protection'] = 0,
-			['maxradius'] = 500
-	},
+	--["arm_geothermal_powerplant"] = {
+	--			['radius'] = 100,
+	--			['damage'] = 0.05,
+	--			['dRadius'] = 0.1,
+	--			['dDamage'] = 0.001,
+	--			['duration'] = 500,
+	--			['protection'] = 0,
+	--			['maxradius'] = 500
+	--},
+	--["core_geothermal_powerplant"] = {
+	--		['radius'] = 100,
+	--		['damage'] = 0.05,
+	--		['dRadius'] = 0.1,
+	--		['dDamage'] = 0.001,
+	--		['duration'] = 500,
+	--		['protection'] = 0,
+	--		['maxradius'] = 500
+	--},
 
-	-- 2. fusion
+	-- 2. heavy fusion
 
 	["arm_fusion_reactor"] = {
 				['radius'] = 100,
 				['damage'] = 0.01,
 				['dRadius'] = 0.1,
 				['dDamage'] = 0.001,
-				['duration'] = 500,
-				['protection'] = 0.0001,
-				['maxradius'] = 1000
-	},
-	["arm_mobile_fusion"] = {
-				['radius'] = 100,
-				['damage'] = 0.05,
-				['dRadius'] = 0.1,
-				['dDamage'] = 0.001,
-				['duration'] = 500,
-				['protection'] = 0.0001,
-				['maxradius'] = 1000
-	},
-	["arm_underwater_fusion_reactor"] = {
-				['radius'] = 100,
-				['damage'] = 0.05,
-				['dRadius'] = 0.1,
-				['dDamage'] = 0.001,
-				['duration'] = 500,
-				['protection'] = 0.0001,
-				['maxradius'] = 1000
-	},
-	["arm_cloakable_fusion_reactor"] = {
-				['radius'] = 100,
-				['damage'] = 0.05,
-				['dRadius'] = 0.1,
-				['dDamage'] = 0.001,
-				['duration'] = 500,
-				['protection'] = 0.0001,
-				['maxradius'] = 1000
-	},
-	["core_light_fusion_power_plant"] = {
-				['radius'] = 100,
-				['damage'] = 0.05,
-				['dRadius'] = 0.1,
-				['dDamage'] = 0.001,
-				['duration'] = 500,
-				['protection'] = 0.0001,
-				['maxradius'] = 1000
-	},
-	["core_cloakable_fusion_power_plant"] = {
-				['radius'] = 100,
-				['damage'] = 0.05,
-				['dRadius'] = 0.1,
-				['dDamage'] = 0.001,
-				['duration'] = 500,
+				['duration'] = 5000,
 				['protection'] = 0.0001,
 				['maxradius'] = 1000
 	},
 	["core_fusion_power_plant"] = {
-			['radius'] = 100,
-			['damage'] = 0.05,
-			['dRadius'] = 0.1,
-			['dDamage'] = 0.001,
-			['duration'] = 500,
-			['protection'] = 0.0001,
-			['maxradius'] = 1000
+				['radius'] = 100,
+				['damage'] = 0.05,
+				['dRadius'] = 0.1,
+				['dDamage'] = 0.001,
+				['duration'] = 5000,
+				['protection'] = 0.0001,
+				['maxradius'] = 1000
 	},
-	["core_underwater_fusion_power_plant"] = {
-			['radius'] = 100,
-			['damage'] = 0.05,
-			['dRadius'] = 0.1,
-			['dDamage'] = 0.001,
-			['duration'] = 500,
-			['protection'] = 0.0001,
-			['maxradius'] = 1000
+	["lost_cold_fusion_reactor"] = {
+				['radius'] = 100,
+				['damage'] = 0.05,
+				['dRadius'] = 0.1,
+				['dDamage'] = 0.001,
+				['duration'] = 5000,
+				['protection'] = 0.0001,
+				['maxradius'] = 1000
 	},
+	["talon_fusion_power_plant"] = {
+				['radius'] = 100,
+				['damage'] = 0.05,
+				['dRadius'] = 0.1,
+				['dDamage'] = 0.001,
+				['duration'] = 5000,
+				['protection'] = 0.0001,
+				['maxradius'] = 1000
+	},
+
+	-- 3. some other light units
+
+	--["core_light_fusion_power_plant"] = {
+	--			['radius'] = 100,
+	--			['damage'] = 0.05,
+	--			['dRadius'] = 0.1,
+	--			['dDamage'] = 0.001,
+	--			['duration'] = 500,
+	--			['protection'] = 0.0001,
+	--			['maxradius'] = 1000
+	--},
+	--["core_cloakable_fusion_power_plant"] = {
+	--			['radius'] = 100,
+	--			['damage'] = 0.05,
+	--			['dRadius'] = 0.1,
+	--			['dDamage'] = 0.001,
+	--			['duration'] = 500,
+	--			['protection'] = 0.0001,
+	--			['maxradius'] = 1000
+	--},
+	--["core_fusion_power_plant"] = {
+	--		['radius'] = 100,
+	--		['damage'] = 0.05,
+	--		['dRadius'] = 0.1,
+	--		['dDamage'] = 0.001,
+	--		['duration'] = 500,
+	--		['protection'] = 0.0001,
+	--		['maxradius'] = 1000
+	--},
+	--["core_underwater_fusion_power_plant"] = {
+	--		['radius'] = 100,
+	--		['damage'] = 0.05,
+	--		['dRadius'] = 0.1,
+	--		['dDamage'] = 0.001,
+	--		['duration'] = 500,
+	--		['protection'] = 0.0001,
+	--		['maxradius'] = 1000
+	--},
 
 
 }
