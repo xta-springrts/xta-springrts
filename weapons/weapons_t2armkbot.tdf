@@ -4,7 +4,8 @@
 	name=ADV. E.M.G.;
 	Weapontype=Cannon;
 	explosiongenerator=custom:KBOTMISSILEHIT;
-	cegTag=PEEWEESHINE;
+	//cegTag=PEEWEESHINE;
+	cegTag=ArmLargeEmg;
 	//Texture1=emg;
 	Texture2=null;
 	Texture3=null;

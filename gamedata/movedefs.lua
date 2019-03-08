@@ -293,6 +293,13 @@ local moveDefs = {
 		maxSlope = 18.0,
 		slopeMod = (enableSlopeMods and EngineDefaultSlopeMod(18.0)) or 0.0,
 		crushStrength = 30.0,
+		
+		depthModParams = 	{
+							minHeight = 8,
+							linearCoeff = 0.03,
+							maxScale = 2.0,
+							},
+							
 		speedModClass = 0, -- 0 = tank, 1 = kbot, 2 = hover, 3 = ship 
 	},
 }
