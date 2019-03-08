@@ -122,9 +122,29 @@ Deactivate()
 	start-script RequestState(1);
 }
 
+AimFromPrimary(piecenum)
+{
+	piecenum = flare1;
+}
+
+AimPrimary(piecenum)
+{
+	return (1);
+}
+
 QueryPrimary(piecenum)
 {
 	piecenum = flare1;
+}
+
+AimFromSecondary(piecenum)
+{
+	piecenum = flare1;
+}
+
+AimSecondary(piecenum)
+{
+	return (1);
 }
 
 QuerySecondary(piecenum)

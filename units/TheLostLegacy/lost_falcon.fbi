@@ -64,11 +64,11 @@
 	//************************************************************
 	//  Movement
 	//************
-	acceleration=0.6;
-	brakerate=0.9;
-	maxvelocity=16;// OTA: 144.0 m/s
+	acceleration=3;
+	brakerate=2;
+	maxvelocity=10.5;// OTA: 144.0 m/s
 	maxwaterdepth=255;
-	cruisealt=200;
+	cruisealt=150;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
@@ -79,12 +79,12 @@
 	//************************************************************
 	//  Weapons
 	//***********
-	weapon1=LOSTVTOL_ADVMISSILE;
-	weapon2=LOSTVTOL_ADVMISSILE;
+	weapon1=Hawk_MISSILE;
+	weapon2=Hawk_MISSILE;
 	WeaponMainDir1= 0 0 1;
 	WeaponMainDir2= 0 0 1;
-	MaxAngleDif1=90;
-	MaxAngleDif2=90;
+	MaxAngleDif1=145;
+	MaxAngleDif2=145;
 	badtargetcategory=NOTAIR;
 	wpri_badtargetcategory=NOTAIR;
 	wsec_badtargetcategory=NOTAIR;
@@ -142,6 +142,12 @@
 	collide=0;
 	pieceTrailCEGTag=Debree;//bleh
 	pieceTrailCEGRange = 4;
+
+
+	collisionVolumeType = box;
+	collisionVolumeScales =30 10 23;
+	collisionVolumeOffsets = 0 1 0;
+	//collisionVolumeTest = 1;
 	//[SFXTypes]
 	//{
 	//explosiongenerator0=custom:ElectricSTOMP;

@@ -67,12 +67,12 @@
 	//  Movement
 	//************
 	turnrate=356;
-	acceleration=0.2;
-	brakerate=0.05;
-	maxvelocity=7.75; // OTA: 108.0 m/s
+	acceleration=0.5;
+	brakerate=0.1;
+	maxvelocity=7.00; // OTA: 108.0 m/s
 	maxslope=10;
 	maxwaterdepth=255;
-	cruisealt=95;
+	cruisealt=175;//95
 	//Flight Behavior
 	drag=0.006;
 	maxaileron=0.006;
@@ -94,11 +94,11 @@
 	//************************************************************
 	//  Weapons
 	//***********
-	weapon1=ARMBOMB;
+	weapon1=Thunder_Bomb;
 	weapon3=ARM_THUNDERANOMALY;
 	nochasecategory=SUB;
-	explodeas=LIGHTNING;
-	selfdestructas=BIG_UNIT;
+	explodeas=SMALL_UNITEX;
+	selfdestructas=SMALL_UNIT;
 
 	//************************************************************
 	//  Orders
@@ -130,6 +130,10 @@
 	pieceTrailCEGTag=NanoDebree;//bleh
 	pieceTrailCEGRange = 1;
 
+	collisionVolumeType = box;
+	collisionVolumeScales =50 15 35;
+	collisionVolumeOffsets = 0 1 0;
+	//collisionVolumeTest = 1;
 	//************************************************************
 	//  To be removed
 	//*****************

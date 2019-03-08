@@ -92,8 +92,8 @@
 	//************************************************************
 	//  Weapons
 	//***********
-	weapon1=CORSENT_GUN_NOWEAPON;
-	weapon2=CORSENT_GUN;
+	//weapon1=CORSENT_GUN_NOWEAPON;
+	weapon2=T2MobileVehicle_Flak;
 	nochasecategory=vtol;
 	wpri_badtargetcategory=NOTAIR;
 	wsec_badtargetcategory=NOTAIR;

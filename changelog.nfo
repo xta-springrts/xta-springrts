@@ -35,7 +35,14 @@ XTA 9.753 (Git 11xx)
 |jls,nor,res
 1/3/2019
 
-Changes:
+Big Air Changes:
+Tech 1 Bombers have their area of effect increased by 400 percent%.
+Tech 1 Fighter Planes can now target ground targets while flying from above.
+All Aircraft have had their movespeeds and braking normalized.
+Arm Tech 2 Fighter Aircraft no longer have warpspeed.
+Aircraft now have tighter hitboxes that require more accurate weapons to hit them.
+Flak Weapons have had weapon range increases on average by 20% and increased accuracy. They might be effective as ground riotposts now.
+
 Big Economy Changes:
 You have a base income, of two metal, and fifty energy per second, regardless of you having your commander. 
 Construction units make vastly less metal, so spamming them is less rewarding, particually level 2 construction units.
@@ -72,6 +79,7 @@ Changes:
 *Arm Spidey Removed, Replaced with OTA Arm Flea as an experiment.
 *Arm Zeus now has 300 less hp to 3,500 hp, with 3,850 not in firing combat rather than 4256.
 *Core Morty Projectile now more red, and easier to see, high trajectory now has 100% more AOE then standard trajectory.
+*Core Morty Metal cost reduced by 10% from 550 metal to 500 metal to be more in line with its distant competitor Fido.
 *Fixed Aiming Script of Arm Penetrator to fire more consistently. 
 *Updated Some ARM Kbot Buildpictures with actual models in the game.
 *Krogoth Gantry now has 9880 hitpoints or 1.5hp per 1m instead of 5727 for a 70% in hitpoints to promote reliability for krogoth gantry vs. buzzsaw.
@@ -107,6 +115,13 @@ Changes:
 Enhancements:
 Fixes:
 * Make some gadgets compatible with changed engine nomenclature (compatibility for later engine 103)
+
+XTA 9.753 (Git 11xx)
+|jls,nor
+31/12/2017
+
+Changes:
+* TBA
 
 XTA 9.752 (Git 1055)
 |jls,nor

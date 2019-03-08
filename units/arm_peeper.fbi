@@ -67,19 +67,19 @@
 	//************************************************************
 	//  Movement
 	//************
-	turnrate=800;
-	acceleration=0.5;
+	turnrate=1400;
+	acceleration=2;
 	brakerate=0.5;
-	maxvelocity=10; //was 12//
+	maxvelocity=7.7; //was 12//
 	maxslope=10;
 	maxwaterdepth=255;
-	cruisealt=180;
+	cruisealt=95;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
 	sightdistance=525;
-	radardistance=1400;
+	radardistance=1100;
 
 	//************************************************************
 	//  Weapons
@@ -113,6 +113,10 @@
 	pieceTrailCEGRange = 4;
    
 
+	collisionVolumeType = box;
+	collisionVolumeScales =30 10 23;
+	collisionVolumeOffsets = 0 1 0;
+	//collisionVolumeTest = 1;
 	//************************************************************
 	//  To be removed
 	//*****************

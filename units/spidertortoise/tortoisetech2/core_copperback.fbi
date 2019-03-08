@@ -49,7 +49,7 @@
 	DefaultMissionType=Standby;
 	maneuverleashlength=640;
 	MovementClass=KBOTUW3;
-	weapon1=CORSENT_GUN;
+	weapon1=T2MobileVehicle_Flak;
 	wpri_badTargetCategory=VTOL;
 	BadTargetCategory=VTOL;
 	canattack=1;

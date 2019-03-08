@@ -108,10 +108,10 @@
 	energypershot=900;
 	weapontimer=2;
 	flighttime=6;
-	weaponvelocity=1000;
+	weaponvelocity=700;
 	startvelocity=100;
 	weaponacceleration=200;
-	turnrate=20000;
+	turnrate=10000;
 	areaofeffect=64;
 	soundstart=Rockhvy1;
 	soundhitdry=xplonuk1;

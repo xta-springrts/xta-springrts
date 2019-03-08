@@ -1,0 +1,72 @@
+
+[Thunder_Bomb]
+{
+	name=Bombs;
+	weapontype=AircraftBomb;
+	//minbarrelangle=-90;
+	projectiles=1;
+	sprayangle=750;
+	burst=6;
+	burstrate=.15;
+	dropped=1;
+	manualBombSettings=1;
+	//accuracy=1000;
+	model=weapon_bomb;
+	cegTag=REDLIGHTBOMB;
+	range=700;
+	explosiongenerator=custom:ThunderBomb;
+	reloadtime=6;
+	areaofeffect=132;//overlap aoe to hit smaller targets for more damage
+	soundstart=bombrel;
+	soundhitdry=xplomed2;
+	impulsefactor=2;
+	myGravity=0.1;
+	collidefriendly=0;
+	avoidfriendly=0;
+	[DAMAGE]
+	{
+		default=112;//672
+		group_commanders=86;
+		lost_commanders=76;
+		group_invincible=1;
+	}
+}
+
+[Freedom_MISSILE]
+{
+	name=Guided Missiles;
+	explosiongenerator=custom:KBOTMISSILEHIT;
+	turret=1;
+	model=missile.s3o;
+	Texture1=null;
+	range=510;
+	reloadtime=1.0;
+	weapontimer=3;
+	weaponvelocity=600;
+	startvelocity=450;
+	weaponacceleration=150;
+	turnrate=24384;
+	areaofeffect=32;
+	soundstart=Rocklit3;
+	soundhitdry=xplosml2;
+	firestarter=70;
+	smokedelay=0.1;
+	tracks=1;
+	smoketrail=0;
+	cegTag=KBOTMISSILETRAIL;
+	Weapontype=MissileLauncher;
+	tolerance=8000;
+	collidefriendly=0;
+	avoidfriendly=0;
+	WaterBounce=0;
+	fixedLauncher=1;
+	[DAMAGE]
+	{
+		group_commanders=17;
+		lost_commanders=16;
+		default=33;
+		group_invincible=1;
+		group_landair=110;
+		group_skyair=110;
+	}
+}

@@ -1,0 +1,38 @@
+
+[T2MobileBuilding_Flak]
+{
+	name=Flak Cannon;
+	weaponType=Cannon;
+	turret=1;
+	range=850;
+	reloadtime=0.75;
+	weapontimer=0.78;
+	weaponvelocity=1500;
+	areaofeffect=150;
+	edgeeffectiveness=0;
+	cylindertargeting = 1;
+	soundstart=canlite2;
+	soundhitdry=xplomed2;
+	//minbarrelangle=-24;
+	tolerance=767;
+	burnblow=1;
+	explosiongenerator=custom:FlakCloud;
+	size=1;
+	rgbcolor=1 0.6 0.6;
+	rgbColor2=0.1 0.1 0.1;
+	stages=20;
+	separation=0.35;
+	alphadecay=0.2;
+	sizedecay=-0.2;
+	//color=1;
+	startsmoke=1;
+	craterboost=0.25;
+	cratermult=0.25;
+	[DAMAGE]
+	{
+		default=40;
+		group_landair=333;
+		group_skyair=333;
+		group_invincible=1;
+	}
+}

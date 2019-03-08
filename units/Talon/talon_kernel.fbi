@@ -4,7 +4,7 @@
 	//  Unit Description
 	//********************
 	side=Arm;
-	name=Naval Flakker;
+	name=Kernel;
 	description=Floating Anti-Air Flak Gun;
 	icontype=sea;
 
@@ -87,7 +87,7 @@
 	//************************************************************
 	//  Weapons
 	//***********
-	weapon1=ARMFLAK_GUN;
+	weapon1=T2MobileBuilding_Flak;
 	badtargetcategory=NOTAIR;
 	wpri_badtargetcategory=NOTAIR;
 	explodeas=LARGE_BUILDINGEX;

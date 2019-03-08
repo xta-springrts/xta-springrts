@@ -26,7 +26,7 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=986;
+	maxdamage=1186;
 	healtime=30;
 	buildcostmetal=347; // OTA: 254
 	buildcostenergy=6793;// OTA: 6893
@@ -75,16 +75,14 @@
 	//*********************
 	sightdistance=525;
 	radardistance=0;
+	airsightdistance=800;
 
 	//************************************************************
 	//  Weapons
 	//***********
 	weapon1=LOSTVTOL_ADVMISSILE;
-	//weapon2=ARMVTOL_ADVMISSILE;
 	WeaponMainDir1= 0 0 1;
-	//WeaponMainDir2= 0 0 1;
-	MaxAngleDif1=90;
-	//MaxAngleDif2=90;
+	MaxAngleDif1=145;
 	badtargetcategory=NOTAIR;
 	wpri_badtargetcategory=NOTAIR;
 	wsec_badtargetcategory=NOTAIR;
@@ -124,6 +122,10 @@
 	//************************************************************
 	//  To be removed
 	//*****************
+	collisionVolumeType = box;
+	collisionVolumeScales =30 10 23;
+	collisionVolumeOffsets = 0 1 0;
+	//collisionVolumeTest = 1;
 
 	//************************************************************
 	//  Out of Category

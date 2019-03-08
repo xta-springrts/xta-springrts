@@ -30,8 +30,8 @@
 	maxdamage=585;
 	healtime=30;
 	buildcostmetal=134;
-	buildcostenergy=1877;
-	buildtime=3932;
+	buildcostenergy=3877;
+	buildtime=6932;
 	footprintx=2;
 	footprintz=2;
 	ModelCenterOffset=0 -1 0;
@@ -128,6 +128,11 @@
 	pieceTrailCEGRange = 4;
 	AirStrafe=0;
 	airhoverfactor=0;
+
+	collisionVolumeType = box;
+	collisionVolumeScales =30 10 23;
+	collisionVolumeOffsets = 0 1 0;
+	//collisionVolumeTest = 1;
 
 	//************************************************************
 	//  To be removed

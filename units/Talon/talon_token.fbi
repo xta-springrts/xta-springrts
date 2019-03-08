@@ -67,7 +67,7 @@
 	turnrate=1280;
 	acceleration=0.5;
 	brakerate=0.6;
-	maxvelocity=9.1; // OTA: 120.0
+	maxvelocity=8.1; // OTA: 120.0
 	maxslope=10;
 	maxwaterdepth=255;
 	cruisealt=175;
@@ -76,15 +76,16 @@
 	//  Sight/Radar/Sonar
 	//*********************
 	sightdistance=525;
+	airsightdistance=800;
 	radardistance=0;
 	sonardistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
-	weapon1=LOSTVTOL_ADVMISSILE;
+	weapon1=Freedom_MISSILE;
 	WeaponMainDir1= 0 0 1;
-	MaxAngleDif1=70;
+	MaxAngleDif1=145;
 	badtargetcategory=NOTAIR;
 	wpri_badtargetcategory=NOTAIR;
 	explodeas=SMALL_UNITEX;
@@ -119,6 +120,10 @@
 	pieceTrailCEGTag=Debree;//bleh
 	pieceTrailCEGRange = 4;
 
+	collisionVolumeType = box;
+	collisionVolumeScales =30 10 23;
+	collisionVolumeOffsets = 0 1 0;
+	//collisionVolumeTest = 1;
 	//************************************************************
 	//  To be removed
 	//*****************

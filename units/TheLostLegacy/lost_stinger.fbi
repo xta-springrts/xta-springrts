@@ -20,7 +20,7 @@
 	unitname=lost_stinger;
 	unitnumber=272;
 	objectname=lost_stinger.3do;
-	corpse=lost_stinger_dead;
+	corpse=arm_archer_dead;
 	buildpic=lost_stinger.png;
 	soundcategory=ARM_SHIP;
 
@@ -85,9 +85,9 @@
 	//************************************************************
 	//  Weapons
 	//***********
-	weapon1=ARMAAS_WEAPON3;
+	weapon1=ARMSHIP_MISSILE;
 	weapon2=ARMSHIP_MISSILE;
-	weapon3=ARMSHIP_MISSILE;
+	weapon3=T2MobileVehicle_Flak;
 	nochasecategory=VTOL;
 	badtargetcategory=NOTAIR;
 	wpri_badtargetcategory=NOTAIR;

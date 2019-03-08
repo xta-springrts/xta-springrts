@@ -67,9 +67,9 @@
 	//  Movement
 	//************
 	turnrate=580;
-	acceleration=0.08;
-	brakerate=0.02;
-	maxvelocity=7;
+	acceleration=0.8;
+	brakerate=0.2;
+	maxvelocity=5;
 	maxslope=10;
 	maxwaterdepth=255;
 	cruisealt=90;

@@ -166,7 +166,7 @@ SweetSpot(piecenum)
 Killed(severity, corpsetype)
 {
 	start-script RolltheDice();
-	sleep 1000;
+	sleep 1;
 	if( severity <= 25 )
 	{
 		corpsetype = 1;

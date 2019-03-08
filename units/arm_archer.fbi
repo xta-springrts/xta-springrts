@@ -85,7 +85,7 @@
 	//************************************************************
 	//  Weapons
 	//***********
-	weapon1=ARMFLAK_GUN;
+	weapon1=T2MobileVehicle_Flak;
 	weapon2=ARMAAS_WEAPON1;
 	weapon3=ARMAAS_WEAPON1;
 	nochasecategory=VTOL;

@@ -85,7 +85,7 @@
 	//************************************************************
 	//  Weapons
 	//***********
-	weapon1=CORFLAK_GUN;
+	weapon1=T2MobileBuilding_Flak;
 	badtargetcategory=NOTAIR;
 	wpri_badtargetcategory=NOTAIR;
 	explodeas=LARGE_BUILDINGEX;

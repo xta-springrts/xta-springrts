@@ -94,7 +94,7 @@
 	//************************************************************
 	//  Weapons
 	//***********
-	weapon1=ARMBOMB;
+	weapon1=Shadow_Bomb;
 	nochasecategory=SUB;
 	explodeas=LIGHTNING;
 	selfdestructas=BIG_UNIT;
@@ -129,6 +129,10 @@
 	pieceTrailCEGTag=NanoDebree;//bleh
 	pieceTrailCEGRange = 1;
 
+	collisionVolumeType = box;
+	collisionVolumeScales =50 15 35;
+	collisionVolumeOffsets = 0 1 0;
+	//collisionVolumeTest = 1;
 	//************************************************************
 	//  To be removed
 	//*****************

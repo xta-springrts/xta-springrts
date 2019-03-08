@@ -125,6 +125,10 @@
 	collide=0;
 	pieceTrailCEGTag=Debree;//bleh
 	pieceTrailCEGRange = 4;
+	collisionVolumeType = box;
+	collisionVolumeScales =45 15 35;
+	collisionVolumeOffsets = 0 1 0;
+	//collisionVolumeTest = 1;
 
 	//************************************************************
 	//  To be removed

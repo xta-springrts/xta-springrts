@@ -85,7 +85,7 @@
 	//************************************************************
 	//  Weapons
 	//***********
-	weapon1=ARMAAS_WEAPON3;
+	weapon1=T2MobileVehicle_Flak;
 	//weapon2=ARMSHIP_MISSILE;
 	weapon3=ARMADILLO_ROCKET;
 	nochasecategory=VTOL;

@@ -94,7 +94,7 @@
 	//************************************************************
 	//  Weapons
 	//***********
-	weapon1=ARMBOMB;
+	weapon1=Shadow_Bomb;
 	//weapon3=talon_shadeANOMALY;
 	nochasecategory=SUB;
 	explodeas=LIGHTNING;
@@ -134,6 +134,11 @@
 	//  To be removed
 	//*****************
 
+
+	collisionVolumeType = box;
+	collisionVolumeScales =50 15 35;
+	collisionVolumeOffsets = 0 1 0;
+	//collisionVolumeTest = 1;
 	//[SFXTypes]
 	//{
 	//explosiongenerator0=custom:ElectricSTOMP;

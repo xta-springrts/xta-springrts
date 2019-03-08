@@ -85,7 +85,7 @@
 	//***********
 	//weapon1=AIR2AIRLASER;
 	weapon2=AIR2AIRLASER;
-	weapon3=ARMyork_GUN;
+	weapon3=T2MobileVehicle_Flak;
 	badtargetcategory=NOTAIR;
 	wpri_badtargetcategory=NOTAIR;
 	explodeas=BIG_UNITEX;

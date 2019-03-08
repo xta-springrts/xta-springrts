@@ -85,7 +85,8 @@
 	//************************************************************
 	//  Weapons
 	//***********
-	weapon1=VTOL_EMG;
+	//weapon1=VTOL_EMG;
+	weapon1=Brawler_Emg;
 	WeaponMainDir1= 0 0 1;
 	MaxAngleDif1=56;//140 in 9.725
 	nochasecategory=VTOL;
@@ -126,6 +127,11 @@
 	pieceTrailCEGTag=Debree;//bleh
 	pieceTrailCEGRange = 4;
 
+
+	collisionVolumeType = box;
+	collisionVolumeScales =45 15 35;
+	collisionVolumeOffsets = 0 1 0;
+	//collisionVolumeTest = 1;
 	//************************************************************
 	//  To be removed
 	//*****************

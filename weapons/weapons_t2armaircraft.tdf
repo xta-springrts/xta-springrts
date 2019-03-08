@@ -1,0 +1,145 @@
+
+[Brawler_Emg]
+{
+	name=ADV. E.M.G.;
+	Weapontype=Cannon;
+	explosiongenerator=custom:EMGFLASH;
+	cegTag=ArmLargeEmg;
+	//Texture1=emg;
+	Texture2=null;
+	Texture3=null;
+	Texture4=null;
+	stages=3;
+	separation=1.25;
+	alphadecay=0.3;
+	sizedecay=-0.1;
+	nogap=1;
+	rgbcolor=0.9 0.8 0.4;
+	size=2.0;
+	intensity=1.0;
+	turret=1;
+	range=450;
+	reloadtime=0.1;
+	weapontimer=2;
+	mygravity=0.05;
+	weaponvelocity=600;
+	sprayangle=546;
+	areaofeffect=16;
+	burst=1;
+	burstrate=0.1;
+	soundstart=armsml3;
+	soundhitdry=lasrhit1;
+	soundtrigger=0;
+	tolerance=4500;//helps with rapid fire weapons
+	[DAMAGE]
+	{
+		default=11;//reduce damage due to more stable damage from sometimes 60 to reliable 50
+		group_invincible=1;
+	}
+}
+[Pheonix_Bomb]
+{
+	name=Bombs;
+	weapontype=AircraftBomb;
+	//minbarrelangle=-90;
+	projectiles=1;
+	sprayangle=1000;
+	burst=6;
+	burstrate=0.2;
+	dropped=1;
+	manualBombSettings=1;
+	//accuracy=1000;
+	model=weapon_bomb;
+	cegTag=REDLIGHTBOMB;
+	range=700;
+	explosiongenerator=custom:ThunderBomb;
+	reloadtime=6;
+	areaofeffect=190;//overlap aoe to hit smaller targets for more damage
+	soundstart=bombrel;
+	soundhitdry=xplomed2;
+	impulsefactor=2;
+	myGravity=0.1;
+	collidefriendly=0;
+	avoidfriendly=0;
+	[DAMAGE]
+	{
+		default=200;//1200
+		group_commanders=86;
+		lost_commanders=76;
+		group_invincible=1;
+	}
+}
+
+[Stray_Pheonix]
+{
+	name=Seperate 2 bombs;
+	weaponType=AircraftBomb;
+	turret=1;
+	tolerance=5000;
+	pitchtolerance=5000;
+	Noselfdamage=1;
+	explosiongenerator=custom:ThunderBomb;
+	collidefriendly=0;
+	burst=2;
+	burstrate=0.2;
+	sprayangle=1000;
+	model=weapon_bomb;
+	cegTag=REDLIGHTBOMB;
+	range=500;
+	reloadtime=2;
+	accuracy=500;
+	weapontimer=15;
+	weaponvelocity=200;
+	areaofeffect=111;
+	edgeeffectiveness=0.25;
+	soundstart=bombrel;
+	soundhitdry=xplomed2;
+	soundtrigger=0;
+	firestarter=50;
+	myGravity=0.1;
+	[DAMAGE]
+	{
+		default=200.5;
+		group_invincible=1;
+		group_commanders=76;
+		lost_commanders=67;
+	}
+}
+[Hawk_MISSILE]
+{
+	name=Guided Missiles;
+	explosiongenerator=custom:KBOTMISSILEHIT;
+	turret=1;
+	model=missile.s3o;
+	Texture1=null;
+	range=510;
+	reloadtime=0.8;
+	weapontimer=3;
+	weaponvelocity=750;
+	startvelocity=600;
+	weaponacceleration=150;
+	turnrate=24384;
+	areaofeffect=32;
+	soundstart=Rocklit3;
+	soundhitdry=xplosml2;
+	firestarter=70;
+	smokedelay=0.1;
+	tracks=1;
+	smoketrail=0;
+	cegTag=KBOTMISSILETRAIL;
+	Weapontype=MissileLauncher;
+	tolerance=8000;
+	collidefriendly=0;
+	avoidfriendly=0;
+	WaterBounce=0;
+	fixedLauncher=1;
+	[DAMAGE]
+	{
+		group_commanders=17;
+		lost_commanders=16;
+		default=25;
+		group_invincible=1;
+		group_landair=110;
+		group_skyair=110;
+	}
+}

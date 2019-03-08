@@ -1,0 +1,69 @@
+
+[Hurricane_Bomb]
+{
+	name=Bombs;
+	weapontype=AircraftBomb;
+	//minbarrelangle=-90;
+	projectiles=1;
+	sprayangle=1000;
+	burst=6;
+	burstrate=0.2;
+	dropped=1;
+	manualBombSettings=1;
+	//accuracy=1000;
+	model=weapon_bomb;
+	cegTag=REDLIGHTBOMB;
+	range=700;
+	explosiongenerator=custom:ShadowBomb;
+	reloadtime=6;
+	areaofeffect=190;//overlap aoe to hit smaller targets for more damage
+	soundstart=bombrel;
+	soundhitdry=xplomed2;
+	impulsefactor=2;
+	myGravity=0.1;
+	collidefriendly=0;
+	avoidfriendly=0;
+	[DAMAGE]
+	{
+		default=200;//1200
+		group_commanders=86;
+		lost_commanders=76;
+		group_invincible=1;
+	}
+}
+
+[Stray_Hurricane]
+{
+	name=Seperate 2 bombs;
+	weaponType=AircraftBomb;
+	turret=1;
+	tolerance=5000;
+	pitchtolerance=5000;
+	Noselfdamage=1;
+	explosiongenerator=custom:ShadowBomb;
+	collidefriendly=0;
+	burst=2;
+	burstrate=0.2;
+	sprayangle=1000;
+	model=weapon_bomb;
+	cegTag=REDLIGHTBOMB;
+	range=500;
+	reloadtime=2;
+	accuracy=500;
+	weapontimer=15;
+	weaponvelocity=200;
+	areaofeffect=111;
+	edgeeffectiveness=0.25;
+	soundstart=bombrel;
+	soundhitdry=xplomed2;
+	soundtrigger=0;
+	firestarter=50;
+	myGravity=0.1;
+	[DAMAGE]
+	{
+		default=200.5;
+		group_invincible=1;
+		group_commanders=76;
+		lost_commanders=67;
+	}
+}

@@ -67,9 +67,9 @@
 	//  Movement
 	//************
 	turnrate=580;
-	acceleration=0.08;
-	brakerate=0.02;
-	maxvelocity=7;
+	acceleration=0.35;
+	brakerate=0.2;
+	maxvelocity=6;
 	maxslope=10;
 	maxwaterdepth=255;
 	cruisealt=90;
@@ -116,6 +116,10 @@
 	pieceTrailCEGTag=Debree;//bleh
 	pieceTrailCEGRange = 4;
 
+	collisionVolumeType = box;
+	collisionVolumeScales =40 15 35;
+	collisionVolumeOffsets = 0 1 0;
+	//collisionVolumeTest = 1;
 	[SFXTypes]
 	{
 	explosiongenerator0=custom:TRANSPORTTRAIL;

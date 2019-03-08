@@ -4424,20 +4424,22 @@
 	Weapontype=LaserCannon;
 	explosiongenerator=custom:Gator;
 	cegTag=REDCRAP;
-	duration=0.11;
+	duration=0.08;
 	thickness=1.0;
 	range=400;
 	reloadtime=1;
 	weaponvelocity=900;
 	areaofeffect=8;
 	soundtrigger=1;
-	weapontimer=1;
+	weapontimer=5;
 	soundstart=lasrfir3;
 	soundhitdry=lasrhit2;
 	firestarter=30;
 	rgbcolor=1.000 0.059 0.000;
 	tolerance=5000;
 	pitchtolerance=15000;
+	weapontimer=5;
+	fallOffRate=2;
 	[DAMAGE]
 	{
 		default=42;

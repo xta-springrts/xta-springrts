@@ -67,29 +67,30 @@
 	//  Movement
 	//************
 	turnrate=1024;
-	acceleration=0.8;
+	acceleration=1;
 	brakerate=0.6;
-	maxvelocity=10.2; //OTA 132.0 m/s
+	maxvelocity=8; //OTA 132.0 m/s
 	maxslope=10;
 	maxwaterdepth=255;
-	cruisealt=185;
+	cruisealt=165;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
 	sightdistance=525;
+	airsightdistance=800;
 	radardistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
-	weapon1=CORVTOL_ADVMISSILE;
+	weapon1=Freedom_MISSILE;
 	WeaponMainDir1= 0 0 1;
-	MaxAngleDif1=70;
+	MaxAngleDif1=145;
 	badtargetcategory=NOTAIR;
 	wpri_badtargetcategory=NOTAIR;
-	explodeas=BIG_UNITEX;
-	selfdestructas=BIG_UNIT;
+	explodeas=SMALL_UNITEX;
+	selfdestructas=SMALL_UNIT;
 
 	//************************************************************
 	//  Orders
@@ -120,6 +121,10 @@
 	pieceTrailCEGTag=Debree;//bleh
 	pieceTrailCEGRange = 4;
 
+	collisionVolumeType = box;
+	collisionVolumeScales =30 10 23;
+	collisionVolumeOffsets = 0 1 0;
+	//collisionVolumeTest = 1;
 	//************************************************************
 	//  To be removed
 	//*****************

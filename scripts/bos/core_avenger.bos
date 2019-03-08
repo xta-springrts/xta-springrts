@@ -150,6 +150,8 @@ Create()
 	//start-script Flamers();
 	//start-script Crashing();
 	start-script SmokeUnit();
+	hide missle1;
+	hide missle2;
 }
 
 Activate()

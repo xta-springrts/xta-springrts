@@ -5,7 +5,7 @@
 	//********************
 	side=Core;
 	name=Hurricane;
-	description=Strategic Bomber;
+	description=Area Bomber;
 	icontype=air;
 
 	//************************************************************
@@ -84,9 +84,9 @@
 	//************************************************************
 	//  Weapons
 	//***********
-	weapon1=CORADVBOMB;
+	weapon1=Hurricane_Bomb;
 	weapon2=AIR2AIRLASER;
-	weapon3=STRAYADVBOMB;
+	weapon3=Stray_Hurricane;
    	WeaponMainDir3=0 0 1;
    	MaxAngleDif3=120;
    	WeaponSlaveto3=1;
@@ -127,6 +127,10 @@
 	pieceTrailCEGTag=Debree;//bleh
 	pieceTrailCEGRange = 4;
 
+	collisionVolumeType = box;
+	collisionVolumeScales =55 15 40;
+	collisionVolumeOffsets = 0 1 0;
+	//collisionVolumeTest = 1;
 	//************************************************************
 	//  To be removed
 	//*****************

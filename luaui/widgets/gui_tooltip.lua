@@ -260,6 +260,7 @@ function GenerateNewTooltip()
 			NewTooltip=NewTooltip.."\n\nAltitude "..floor(h).."\n\nAir Mesh Altitude "..floor(airMeshH)
 		end
 		FoundTooltipType="terrain"
+		NewTooltip = NewTooltip.."\n\255\200\200\200 \n" --blank
 	end
  
 	local buildpower = 1
@@ -328,7 +329,7 @@ function GenerateNewTooltip()
 			if fud.windGenerator > 1 then
 			   	local minWindE = FormatNbr((fud.windGenerator/25)*Game.windMin,0)
 				local maxWindE = FormatNbr((fud.windGenerator/25)*Game.windMax,0)
-				NewTooltip = NewTooltip.."Generates \255\255\255\0"..minWindE.."-"..maxWindE.." E/s\255\255\255\255 (up to +20% on higher ground) \n"
+				NewTooltip = NewTooltip.."Generates \255\255\255\0"..minWindE.."-"..maxWindE.." E/s\255\255\255\255 \n"
 			elseif fud.tidalGenerator == 1 then
 				NewTooltip = NewTooltip.."Generates \255\255\255\0"..Game.tidal.." E/s\255\255\255\255\n"
 			end
@@ -452,6 +453,7 @@ function GenerateNewTooltip()
 			health = health * hpMod
 			maxHealth = maxHealth * hpMod
 			-- experience
+
 			local xp = spGetUnitExperience(u)
 			local xpMod = 1
 			if xp and xp>0 then

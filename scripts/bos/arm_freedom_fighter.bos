@@ -167,6 +167,8 @@ Create()
 	statechg_DesiredState = TRUE;
 	statechg_StateChanging = FALSE;
 	start-script SmokeUnit();
+	hide flare1;
+	hide flare2;
 	//start-script Flamers();
 	//start-script Crashing();
 }
