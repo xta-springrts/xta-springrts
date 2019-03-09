@@ -415,7 +415,7 @@ local options = {
 		name   = 'comets',
 		desc   = "Comets fall from the sky!",
 		type   = "bool",
-		def    = false,
+		def    = true,
 		section= "xtagame",
 	},
 	{
@@ -462,7 +462,7 @@ local options = {
 		desc   = "Set how many comets can maximal drop at a time.\nkey: maxComets",
 		type   = "number",
 		section= 'environment',
-		def    = 10,
+		def    = 0,
 		min    = 0,
 		max    = 50,
 		step   = 1,

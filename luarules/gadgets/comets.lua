@@ -26,9 +26,7 @@ end
 
 	# TODO
 	1. Draw texture on the ground for comets (or some fx, by spawning an explosion)
-	2. Add a heatmap for commit hits
-	3. Add model of a comet
-	4. remove a lot of bad global decelerations
+	2. Let reclaim metal/energy for comets be set inlobby
 
 	--]]	
 
@@ -139,10 +137,11 @@ local damage_radius				= tonumber(modOptions.max_radius_damage_comets) or 500
 local damage_value            	= tonumber(modOptions.max_damage_comets) or 500
 local randomize_number_of_comets= 100 -- how often number of comets in rain are randomized (higher is less ofthen)
 local cometRainRadius 			= tonumber(modOptions.comet_rain_radius) or 500 -- comet spreading
-local max_comets				= tonumber(modOptions.max_comets) or 10
+local max_comets				= tonumber(modOptions.max_comets) or 0
 local comets					= {}
 local ast_size 					= images3[1]
 local ast_image					= images3[2]
+local armmageddon_frame			= 30 * 60 * 60 -- one hour then hell breaks lose
 
 
 -- RANDOM HEATMAP
@@ -205,8 +204,6 @@ local function random_coordinate()
 	end
 	local x = random_map[Nrandom_map_counter]['x']
 	local z = random_map[Nrandom_map_counter]['z']
-	Echo(evenx)
-	Echo(evenz)
 	return x, z
 
 end
@@ -445,6 +442,14 @@ end
 
 function gadget:GameFrame(f)
 
+	if f == armmageddon_frame then
+		Echo("WARNING observatory station detects a huge comet rain!")
+		max_comets = 50
+		cometRainRadius = 2000
+		number_of_comets = 20
+		timeDelayComet = 30 * 10 --ten seconds reimpact
+	end
+
 	if f<10 then return nil end
 
 	if (f%randomize_number_of_comets*timeDelayComet ==0) then
@@ -452,19 +457,17 @@ function gadget:GameFrame(f)
 	end
 	if (f%5 == 0) then
 		if not (#comets == 0) then
+			
 			update_comet()
-
-			--if (f%1000==0) then
-			--	remake_heatmap()
-			--end
-
 
 		else
 			if f%timeDelayComet == 0 then
 				if not (number_of_comets==0) then
 
-					Echo("WARNING observatory station detects ".. tostring(number_of_comets) .. " incoming meteorites!")
-
+					if f < armmageddon_frame then
+						Echo("WARNING observatory station detects ".. tostring(number_of_comets) .. " incoming meteorites!")
+					end 
+					
 					if comet_mode == "unit" then
 						getUnitName()
 					end
