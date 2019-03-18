@@ -158,7 +158,7 @@
 	zbuffer=1;
 	MinCollisionSpeed=2.5;//weight
 	collisionVolumeType = box;
-	collisionVolumeScales =28 45 20;
+	collisionVolumeScales =33 45 24;
 	collisionVolumeOffsets = 0 -2 -20;
 	collisionVolumeTest = 1;
 

@@ -178,10 +178,10 @@ local dynamicPieceCollisionVolume = {}	--dynamic per piece collision volume defi
 	--pieceCollisionVolume["arm_commander"] = {
 	--	["0"]={true,28,74,28,0,34,0,1,1},
 	--}	
-	pieceCollisionVolume["arm_vulcan"] = {
-		["base"]={60,94,60,0,47,-1,1,1},
-		["spindle"]={36,36,106,0,0,27,1,2},
-	}
+--	pieceCollisionVolume["arm_vulcan"] = {
+--		["base"]={60,94,60,0,47,-1,1,1},
+--		["spindle"]={36,36,106,0,0,27,1,2},
+--	}
 
 	dynamicPieceCollisionVolume["arm_advanced_radar_tower"] = {
 		on = {

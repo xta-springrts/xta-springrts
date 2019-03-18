@@ -4439,7 +4439,8 @@
 	tolerance=5000;
 	pitchtolerance=15000;
 	weapontimer=5;
-	fallOffRate=2;
+	//fallOffRate=0.5;
+	burnblow=1;
 	[DAMAGE]
 	{
 		default=42;

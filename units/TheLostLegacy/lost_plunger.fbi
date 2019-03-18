@@ -113,10 +113,10 @@
 	steeringmode=1;
 	threed=1;
 	version=1.2;
-	waterline=36;// set to equal minWaterDepth, was 30
+	waterline=40;// set to equal minWaterDepth, was 30
 	zbuffer=1;
 	collisionVolumeType = box;
-	collisionVolumeScales =35 18 38;
+	collisionVolumeScales =35 16 38;
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
 	pieceTrailCEGTag=Debree;//bleh

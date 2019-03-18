@@ -1,68 +1,113 @@
-if (gadgetHandler:IsSyncedCode()) then
-	local RandNumGen = math.random 
-	local crashingUnits = {}
+   function gadget:GetInfo()
+      return {
+        name      = "Crashing Aircraft",
+        desc      = "Make aircraft crash-land instead of exploding",
+        author    = "Beherith",
+        date      = "aug 2012",
+        license   = "PD",
+        layer     = 1000,
+        enabled   = true,
+      }
+    end
+     
+if (not gadgetHandler:IsSyncedCode()) then
+  return
+end
 
-	local CRASHRISK = 0.33
-	local DAMAGELIMIT = 1.0
+local random			= math.random 
+local GetUnitHealth 	= Spring.GetUnitHealth
+local SetUnitCOBValue 	= Spring.SetUnitCOBValue
+local SetUnitNoSelect	= Spring.SetUnitNoSelect
+local SetUnitNoMinimap	= Spring.SetUnitNoMinimap
+local SetUnitSensorRadius = Spring.SetUnitSensorRadius
+local SetUnitWeaponState = Spring.SetUnitWeaponState
+local DestroyUnit = Spring.DestroyUnit
 
-	local SetUnitCrashing 		= Spring.SetUnitCrashing
-	local SetUnitNoSelect 		= Spring.SetUnitNoSelect
-	local SetUnitNeutral 		= Spring.SetUnitNeutral
-	local SetUnitSensorRadius 	= Spring.SetUnitSensorRadius
-	local SetUnitCOBValue 		= Spring.SetUnitCOBValue
-	local GiveOrderToUnit 		= Spring.GiveOrderToUnit
-	local CMD_FIRE_STATE 		= CMD.FIRE_STATE
-	local CMD_ATTACK 			= CMD.ATTACK
+local COB_CRASHING = COB.CRASHING
+local COM_BLAST = WeaponDefNames['commanderexplosion'].id
 
-	function gadget:GetInfo()
-		return {
-			name    = "unit_crashing_aircraft",
-			layer   = 0,
-			enabled = true,
-		}
+local crashable  = {}
+local crashing = {}
+local crashingCount = 0
+
+local totalUnitsTime = 0
+local percentage = 0.5	-- is reset somewhere else
+
+function gadget:Initialize()
+	--set up table to check against
+	for _,UnitDef in pairs(UnitDefs) do
+		if UnitDef.canFly == true and UnitDef.transportSize == 0 and string.sub(UnitDef.name, 1, 7) ~= "critter" and string.sub(UnitDef.name, 1, 7) ~= "chicken" then
+			crashable[UnitDef.id] = true
+		end
+	end
+	crashable[UnitDefNames['arm_peeper'].id] = false
+	crashable[UnitDefNames['core_fink'].id] = false
+	crashable[UnitDefNames['talon_recon'].id] = false
+	crashable[UnitDefNames['lost_probe'].id] = false
+	
+	crashable[UnitDefNames['arm_atlas'].id] = false
+	crashable[UnitDefNames['arm_freedom_fighter'].id] = false
+	crashable[UnitDefNames['arm_ornith'].id] = false
+	crashable[UnitDefNames['core_valkyrie'].id] = false
+	crashable[UnitDefNames['core_zeppelin'].id] = false
+	crashable[UnitDefNames['core_avenger'].id] = false
+
+	crashable[UnitDefNames['lost_pelican'].id] = false
+	crashable[UnitDefNames['lost_sparrow'].id] = false
+	crashable[UnitDefNames['talon_token'].id] = false
+	crashable[UnitDefNames['talon_rukh'].id] = false
+	crashable[UnitDefNames['talon_wyvern'].id] = false
+	crashable[UnitDefNames['lost_robber'].id] = false
+end
+
+function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weaponDefID, projectileID, attackerID, attackerDefID, attackerTeam)
+	if paralyzer then return damage,1 end
+	if crashing[unitID] then
+		return 0,0
 	end
 
-	function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weaponDefID, projectileID, attackerID, attackerDefID, attackerTeam)
-		if (not UnitDefs[unitDefID].canFly) then
-			-- not an airplane
-			return damage, 1.0
+	if crashable[unitDefID] and (damage>GetUnitHealth(unitID)) and weaponDefID ~= COM_BLAST then
+		if Spring.GetGameSeconds() - totalUnitsTime > 5 then
+			totalUnitsTime = Spring.GetGameSeconds()
+			local totalUnits = #Spring.GetAllUnits()
+			percentage = 0.7 * (1 - (totalUnits/5000))
+			if percentage < 0.25 then
+				percentage = 0.25
+			end
 		end
-		if (crashingUnits[unitID]) then
-			-- airplane and already crashing
-			return 0.0, 0.0
+		if random() < percentage then
+			-- make it crash
+			crashingCount = crashingCount + 1
+			crashing[unitID] = Spring.GetGameFrame() + 300
+			SetUnitCOBValue(unitID, COB_CRASHING, 1)
+			SetUnitNoSelect(unitID,true)
+			SetUnitNoMinimap(unitID,true)
+			for weaponID, weapon in pairs(UnitDefs[unitDefID].weapons) do
+				SetUnitWeaponState(unitID, weaponID, "reloadTime", 9999)
+			end
+			-- remove sensors
+			SetUnitSensorRadius(unitID, "los", 0)
+			SetUnitSensorRadius(unitID, "airLos", 0)
+			SetUnitSensorRadius(unitID, "radar", 0)
+			SetUnitSensorRadius(unitID, "sonar", 0)
 		end
-		if (paralyzer) then
-			-- paralysis damage cannot trigger a crash <--- wonder why not
-			return damage, 1.0
-		end
-
-		if ((damage > DAMAGELIMIT * Spring.GetUnitHealth(unitID)) and (RandNumGen() < CRASHRISK)) then
-			SetUnitCrashing(unitID, true)
-			SetUnitNoSelect(unitID, true)
-			SetUnitNeutral(unitID, true)
-			SetUnitSensorRadius (unitID, "los", 0)
-			SetUnitSensorRadius (unitID, "airLos", 0)
-			SetUnitSensorRadius (unitID, "radar", 0)
-			SetUnitSensorRadius (unitID, "sonar", 0)
-			SetUnitSensorRadius (unitID, "seismic", 0)
-			SetUnitSensorRadius (unitID, "radarJammer", 0)
-			SetUnitSensorRadius (unitID, "sonarJammer", 0)
-			-- hold fire and prevent unit from continuing to attack.
-			-- must be the last order before crashing state, or the
-			-- engine will find a new target.
-			GiveOrderToUnit(unitID, CMD_FIRE_STATE, {0}, {})
-			GiveOrderToUnit(unitID, CMD_ATTACK, {0.0, 0.0, 0.0}, {""})
-			SetUnitCOBValue(unitID, COB.CRASHING, 1)
-
-			crashingUnits[unitID] = true
-		end
-
-		return damage, 1.0
 	end
+	return damage,1
+end
 
-	function gadget:UnitDestroyed(unitID, unitDefID, teamID, attackerID, attackerDefID, attackerTeamID)
-
-		crashingUnits[unitID] = nil
+function gadget:GameFrame(gf)
+	if crashingCount > 0 and gf % 44 == 1 then
+		for unitID,deathGameFrame in pairs(crashing) do
+			if gf >= deathGameFrame then
+				DestroyUnit(unitID, false, false)
+			end
+		end
 	end
 end
 
+function gadget:UnitDestroyed(unitID, unitDefID, teamID, attackerID, attackerDefID, attackerTeamID)
+	if crashing[unitID] then
+		crashingCount = crashingCount - 1
+		crashing[unitID]=nil
+	end
+end

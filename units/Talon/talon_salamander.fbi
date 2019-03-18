@@ -70,7 +70,7 @@
 	turnrate=300;
 	acceleration=0.7;
 	brakerate=0.8;
-	maxvelocity=1.0;
+	maxvelocity=1.25;
 	maxslope=16;
 	maxwaterdepth=0;
 

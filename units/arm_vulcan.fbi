@@ -33,11 +33,11 @@
 	buildtime=465589;
 	footprintx=5;
 	footprintz=5;
-	usePieceCollisionVolumes=1;
-	//collisionVolumeType = CylY;
-	//collisionVolumeScales =84 109 84;
-	//collisionVolumeOffsets = 0 1 0;
-	//collisionVolumeTest = 1;
+	//usePieceCollisionVolumes=1;
+	collisionVolumeType = CylY;
+	collisionVolumeScales =84 109 84;
+	collisionVolumeOffsets = 0 1 0;
+	collisionVolumeTest = 1;
 
 	//************************************************************
 	//  Resources
