@@ -197,6 +197,7 @@
 	//	radiation_protection = 0.01;
 	//	radiation_maxradius = 300;
 	//	radiation_hitradius = 30;
+	//	comet_radius = 1000; //EXAMPLE FOR COMETS
 	//}
 }
 

@@ -5,7 +5,7 @@ function gadget:GetInfo()
 		author    	= "res (inspired by Jools asteroids map gadget",
 		date      	= "24-11-2018",
 		license 	= "GNU GPL, v3 or later",
-		layer     	= -99,
+		layer     	= 1,
 		enabled   	= true,
 	}
 end
@@ -50,6 +50,8 @@ local gmatch				= string.gmatch
 local remove				= table.remove
 local insert				= table.insert
 
+local Echo					= Spring.Echo
+local cometWeapons, ul 			= include("LuaRules/Configs/comet_config.lua")
 local modOptions 			= Spring.GetModOptions()
 local SetFeatureHealth		= Spring.SetFeatureHealth
 local DestroyFeature		= Spring.DestroyFeature
@@ -86,15 +88,34 @@ if not GG.radiation then
 end
 
 
+-- INITIALISE --
+
+
+function gadget:Initialize()
+	local mo = Spring.GetModOptions()
+	if mo and tonumber(mo.comets)== 0 then
+		Echo("comets.lua: turned off via modoptions")
+		gadgetHandler:RemoveGadget(self)
+	else
+		Echo("comets.lua: gadget:Initialize() Game.mapName=" .. Game.mapName)
+		DisableMapDamage=0
+		Echo("Good afternoon the weather predicts meteor showers, have a nice day!")
+		for w,_ in pairs(cometWeapons) do
+			Script.SetWatchWeapon(w, true)
+		end
+	end
+end
+
+
 -- SETTINGS
 
---TODO: fix these 3 (add)
+--TODO: fix these 3 (add metal and energy paramters)
 local comet_metal			= tonumber(modOptions.comet_metal) or 30
 local comet_energy			= tonumber(modOptions.comet_energy) or 30
 local comet_mode			= modOptions.comet_mode or "rock"
 local unitNameComet 		= comet_mode == "unit" and "arm_peewee" or "meteor"
 
-local number_of_comets		= 1
+local number_of_comets		= 0
 local images3 				= include("LuaRules/gadgets/img3.lua")
 local COMET_FIRE			= "RedPlasmaComet"
 local COMET_HIT_GROUND		= "SMALL_NUKE_EXPLOSION_INIATE_COMET"
@@ -209,20 +230,7 @@ local function random_coordinate()
 end
 
 
--- INITIALISE --
 
-
-function gadget:Initialize()
-	local mo = Spring.GetModOptions()
-	if mo and tonumber(mo.comets)== 0 then
-		Echo("comets.lua: turned off via modoptions")
-		gadgetHandler:RemoveGadget(self)
-	else
-		Echo("comets.lua: gadget:Initialize() Game.mapName=" .. Game.mapName)
-		DisableMapDamage=0
-		Echo("Good afternoon the weather predicts meteor showers, have a nice day!")
-	end
-end
 
 
 -- HELP FUNCTION --
@@ -272,9 +280,9 @@ end
 -- COMET FUNCTIONS
 
 
-local function add_comet(x,y)
-	local X = random(x-cometRainRadius, x+cometRainRadius)
-	local Z = random(y-cometRainRadius, y+cometRainRadius)
+local function add_comet(x,y,radius)
+	local X = random(x-radius, x+radius)
+	local Z = random(y-radius, y+radius)
 	
 	local map_x_out = X > mapX*512 or X < 0
 	local map_y_out = Z > mapZ*512 or Z < 0
@@ -434,7 +442,14 @@ local function getUnitName()
 end
 
 
-
+function gadget:Explosion(weaponID, px, py, pz, ownerID, ProjectileID)
+	if (cometWeapons[weaponID]) then -- if selfradiation undo the onwner~=nil check
+		local rainradius = cometWeapons[weaponID].radius or 500
+		for i=1, 2 do --number_of_comets do
+			comets[#comets+1] = add_comet(px,pz, rainradius)
+		end
+	end
+end
 
 
 -- LOOP --
@@ -474,7 +489,7 @@ function gadget:GameFrame(f)
 					local x, z = random_coordinate()
 
 					for i=1,number_of_comets do
-						comets[#comets+1] = add_comet(x,z)
+						comets[#comets+1] = add_comet(x,z, cometRainRadius)
 					end
 				end
 			end
