@@ -431,7 +431,7 @@ local options = {
 		name   = 'tornado',
 		desc   = "Tornado's cross the map!",
 		type   = "bool",
-		def    = false,
+		def    = true,
 		section= "xtagame",
 	},
 	{
@@ -440,7 +440,7 @@ local options = {
 		desc   = "Set how many tornados are on the map at a time.\nkey: maxComets",
 		type   = "number",
 		section= 'environment',
-		def    = 10,
+		def    = 0,
 		min    = 0,
 		max    = 50,
 		step   = 1,

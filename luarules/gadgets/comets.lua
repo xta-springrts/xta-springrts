@@ -14,15 +14,21 @@ end
 	--[[
 
 	Incoming comets that do damage
-		-specifies comet units (fall from the sky)
-		-comet units optional do damage (by radiation)
+		- specifies comet units (fall from the sky)
+		- comet units optional do damage (by radiation)
+		- comets can be activated by a weapon (see comet_config.lua)
+		- after an hour shit storm breaks loose
 
-	-parameters options:
+	-parameter options:
 		- time_delay_comet
 		- max_comets
 		- max_radius_damage_comets
 		- max_damage_comets
 		- comet_rain_radius
+		
+	- parameter options weapon:
+		- comet_radius (radius in which comets fall)
+		- comet_number (number of comets that fall each shot fired)
 
 	# TODO
 	1. Draw texture on the ground for comets (or some fx, by spawning an explosion)
@@ -51,7 +57,7 @@ local remove				= table.remove
 local insert				= table.insert
 
 local Echo					= Spring.Echo
-local cometWeapons, ul 			= include("LuaRules/Configs/comet_config.lua")
+local cometWeapons			= include("LuaRules/Configs/comet_config.lua")
 local modOptions 			= Spring.GetModOptions()
 local SetFeatureHealth		= Spring.SetFeatureHealth
 local DestroyFeature		= Spring.DestroyFeature
@@ -445,7 +451,7 @@ end
 function gadget:Explosion(weaponID, px, py, pz, ownerID, ProjectileID)
 	if (cometWeapons[weaponID]) then -- if selfradiation undo the onwner~=nil check
 		local rainradius = cometWeapons[weaponID].radius or 500
-		for i=1, 2 do --number_of_comets do
+		for i=1, cometWeapons[weaponID].number do --number_of_comets do
 			comets[#comets+1] = add_comet(px,pz, rainradius)
 		end
 	end

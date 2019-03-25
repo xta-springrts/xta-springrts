@@ -5,7 +5,7 @@ function gadget:GetInfo()
 		author    	= "res",
 		date      	= "24-11-2018",
 		license 	= "GNU GPL, v3 or later",
-		layer     	= -99,
+		layer     	= 1,
 		enabled   	= true,
 	}
 end
@@ -21,6 +21,16 @@ end
 		3. tornado's move around the map (appear and disappear)
 		4. units outside the map get destroyed (buildings)
 		5. tornados are spawned according to a heatmap
+		6. weapon can nowfire a tornado (see tornado_config.lua)
+		7. after an hour shit storm breaks loose
+		
+	- parameter options:
+		- max_tornados
+		- 
+	
+	- parameter options weapon:
+		- tornado_radius (radius in which tornados get spawned)
+		- tornado_number (number of tornados for each shot fired)
 
 	TODO:
 
@@ -53,8 +63,10 @@ local pairs					= pairs
 local abs					= math.abs
 
 local modOptions 			= Spring.GetModOptions()
-local maxTornados          	= tonumber(modOptions.max_tornados) or 10
+local maxTornados          	= tonumber(modOptions.max_tornados) or 0
 local number_of_tornados 	= random(0, maxTornados)
+local armmageddon_frame		= 30 * 60 * 60 -- one hour then hell breaks lose
+local tornadoWeapons 		= include("LuaRules/Configs/tornado_config.lua")
 
 local SetFeatureHealth		= Spring.SetFeatureHealth
 local DestroyFeature		= Spring.DestroyFeature
@@ -198,9 +210,10 @@ function gadget:Initialize()
 	if mo and tonumber(mo.tornado)== 0 then
 		Echo("tornado.lua: turned off via modoptions")
 		gadgetHandler:RemoveGadget(self)
+	else
+		Echo("tornado.lua: gadget:Initialize() Game.mapName=" .. Game.mapName)
+		DisableMapDamage=0
 	end
-	Echo("tornado.lua: gadget:Initialize() Game.mapName=" .. Game.mapName)
-	DisableMapDamage=0
 end
 
 
@@ -304,15 +317,69 @@ local function spinProjectiles(number)
 		local x, y, z = GetProjectilePosition(projID)
 
 		if x ~= nil then
-			local vx, vy, vz = GetProjectileVelocity(projID)
-			local norm = sqrt(vx*vx+vy*vy+vz*vz)
-			local angle = 40
-			local xx = vx * cos(pi*angle/180) + vz * sin(pi*angle/180)
-			local zz = -vx * sin(pi*angle/180) + vz * cos(pi*angle/180)
-			local norm = sqrt(xx*xx + zz*zz)
-			xx = xx/norm*velo
-			zz = zz/norm*velo
-			SetProjectileVelocity(projID,xx, 0, zz)
+		
+			if y < GetGroundOrigHeight(x,z) + 300 then
+			
+				local vx, vy, vz = GetProjectileVelocity(projID)
+				local norm = sqrt(vx*vx+vy*vy+vz*vz)
+				local angle = 40
+				local xx = vx * cos(pi*angle/180) + vz * sin(pi*angle/180)
+				local zz = -vx * sin(pi*angle/180) + vz * cos(pi*angle/180)
+				local norm = sqrt(xx*xx + zz*zz)
+				xx = xx/norm*velo*0.5
+				zz = zz/norm*velo*0.5
+				SetProjectileVelocity(projID,xx, 0, zz)
+		
+			elseif y < GetGroundOrigHeight(x,z) + 400 then
+			
+				local vx, vy, vz = GetProjectileVelocity(projID)
+				local norm = sqrt(vx*vx+vy*vy+vz*vz)
+				local angle = 40
+				local xx = vx * cos(pi*angle/180) + vz * sin(pi*angle/180)
+				local zz = -vx * sin(pi*angle/180) + vz * cos(pi*angle/180)
+				local norm = sqrt(xx*xx + zz*zz)
+				xx = xx/norm*velo
+				zz = zz/norm*velo
+				SetProjectileVelocity(projID,xx, 0, zz)
+			
+			elseif y < GetGroundOrigHeight(x,z) + 500 then
+			
+				local vx, vy, vz = GetProjectileVelocity(projID)
+				local norm = sqrt(vx*vx+vy*vy+vz*vz)
+				local angle = 40
+				local xx = vx * cos(pi*angle/180) + vz * sin(pi*angle/180)
+				local zz = -vx * sin(pi*angle/180) + vz * cos(pi*angle/180)
+				local norm = sqrt(xx*xx + zz*zz)
+				xx = xx/norm*velo*1.5
+				zz = zz/norm*velo*1.5
+				SetProjectileVelocity(projID,xx, 0, zz)
+				
+			elseif y < GetGroundOrigHeight(x,z) + 600 then
+			
+				local vx, vy, vz = GetProjectileVelocity(projID)
+				local norm = sqrt(vx*vx+vy*vy+vz*vz)
+				local angle = 40
+				local xx = vx * cos(pi*angle/180) + vz * sin(pi*angle/180)
+				local zz = -vx * sin(pi*angle/180) + vz * cos(pi*angle/180)
+				local norm = sqrt(xx*xx + zz*zz)
+				xx = xx/norm*velo*2.5
+				zz = zz/norm*velo*2.5
+				SetProjectileVelocity(projID,xx, 0, zz)
+			
+			elseif y > GetGroundOrigHeight(x,z) + 600 then
+			
+				local vx, vy, vz = GetProjectileVelocity(projID)
+				local norm = sqrt(vx*vx+vy*vy+vz*vz)
+				local angle = 40
+				local xx = vx * cos(pi*angle/180) + vz * sin(pi*angle/180)
+				local zz = -vx * sin(pi*angle/180) + vz * cos(pi*angle/180)
+				local norm = sqrt(xx*xx + zz*zz)
+				xx = xx/norm*velo*3
+				zz = zz/norm*velo*3
+				SetProjectileVelocity(projID,xx, 0, zz)
+			
+			end
+
 		end
 	end
 end
@@ -387,6 +454,7 @@ local function removeTornado(number)
 			tornadoNumberUnit[unitID] = nil
 			tornadoData[number].units[unitID] = nil
 		end
+		-- remove the tornado also? => tornadoData[number] = nil ?
 	end
 
 	for index, v in pairs(tornadoData[number].projectiles) do
@@ -433,13 +501,8 @@ local function updateHeading(number)
 end
 
 
-local function addTornado()
+local function addTornado(x, y, z)
 
-    --local x, z = random_coordinate()
-	--local x = random(0,mapX*512)
-	--local z = random(0,mapZ*512)
-	local x, z = random_coordinate()
-	local y = GetGroundOrigHeight(x,z)
 	tornadoNumber = tornadoNumber + 1
 	tornadoData[tornadoNumber] = {
 		['pos'] = {
@@ -468,7 +531,9 @@ end
 local function updateTornados()
 
 	if #tornados < number_of_tornados then
-		tornados[#tornados+1] = addTornado()
+		local x, z = random_coordinate()
+		local y = GetGroundOrigHeight(x,z)
+		tornados[#tornados+1] = addTornado(x,y,z)
 	end
 
 	for i=#tornados,1,-1 do
@@ -479,6 +544,7 @@ local function updateTornados()
 			removeTornado(tornados[i])
 			remove(tornados, i)
 			remove_tornado = true
+			
 		else
 
 			tornadoData[tornados[i]].duration = tornadoData[tornados[i]].duration - 22
@@ -607,10 +673,29 @@ local function updateFlyingBuildings()
 end
 
 
+function gadget:Explosion(weaponID, px, py, pz, ownerID, ProjectileID)
+	if (tornadoWeapons[weaponID]) then -- if selfradiation undo the onwner~=nil check
+		local tornadoRadius = tornadoWeapons[weaponID].radius or 500
+		for i=1, tornadoWeapons[weaponID].number do --number_of_comets do
+			local x = random(px-tornadoRadius,px+tornadoRadius)
+			local z = random(pz-tornadoRadius,pz+tornadoRadius)
+			local y = GetGroundOrigHeight(x,z)
+			tornados[#tornados+1] = addTornado(x,y,z)
+		end
+	end
+end
+
+
 function gadget:GameFrame(f)
 
 	if (f%10000==0) then
 		number_of_tornados = random(0, maxTornados)
+	end
+	
+	if f == armmageddon_frame then
+		Echo("WARNING observatory station detects a storm!")
+		maxTornados = 50
+		number_of_tornados = 20
 	end
 
 	updateFlyingBuildings()
@@ -624,11 +709,6 @@ function gadget:GameFrame(f)
 		else
 
 			spinTornados()
-
-
-			if (f%1000==0) then
-				remake_heatmap()
-			end
 
 		end
 

@@ -198,6 +198,9 @@
 	//	radiation_maxradius = 300;
 	//	radiation_hitradius = 30;
 	//	comet_radius = 1000; //EXAMPLE FOR COMETS
+	//	comet_number = 2;
+	//	tornado_radius = 1000; //TORNADO EXAMPLE
+	//	tornado_number = 2;
 	//}
 }
 
