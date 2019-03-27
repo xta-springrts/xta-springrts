@@ -126,7 +126,7 @@ local tornadoNumber			= 0		-- index for tornado list
 local tornadoNumberUnit		= {}	-- stored which unit belong to which tornado
 local tornadoNumberProj		= {}	-- stored which projectile belong to which tornado
 local buildings				= {}
-local metalcloud3				= "smokeshell_medium_tornado" -- nice raining efx
+local metalcloud3			= "smokeshell_medium_tornado" -- nice raining efx
 local p
 for name,data in pairs(WeaponDefNames) do
 	local weaponDefID = WeaponDefNames[name].id
@@ -147,7 +147,6 @@ local NX						= floor(mapX/evenx)
 local NZ						= floor(mapZ/evenz)
 local Nrandom_map               = 0
 local Nrandom_map_counter		= 0
-
 
 
 local count = 1

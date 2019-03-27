@@ -1,11 +1,11 @@
 function gadget:GetInfo()
 	return {
 		name      	= "earthquake",
-		desc      	= "When the gods get angry",
+		desc      	= "Cracks appear in the map",
 		author    	= "res",
 		date      	= "8-10-2018",
 		license 	= "GNU GPL, v3 or later",
-		layer     	= -99,
+		layer     	= 1,
 		enabled   	= true,
 	}
 end
@@ -13,29 +13,16 @@ end
 
 	--[[
 
-		After a random period parts of the map will experience crack's in surface.
-			-optional is a do damage parameter
+		Does: 
+			- after a random period parts of the map will experience crack's in surface.
+			- after an hour the surface cracks
 
-		-parameters options:
-			- time_delay_comet
+		parameters options:
 			- duration_crack
 			- max_cracks
-			- max_comets
-			- max_radius_damage_comets
-			- max_damage_comets
-			- comet_rain_radius
 
-		# TODO
-		1. update modoptions
-		1. MAKE THIS FILE CRACK ONLY
-	 
-		1. Implement mod options:
-			- middleCrack (only add cracks in middle)
-			- teamID of comets (only gaia, random, only players)
-		2. Add map damage area fx 
-		3. Draw texture on the ground for comets and map damage area
-		4. Add more units that do damage to neighborhood
-		5. Maybe split up map damage gadget to keep stuff clean? 
+		# TODO:
+			- maybe make units deal damage near an appearing crack?
 
 	--]]	
 
@@ -49,15 +36,15 @@ end
 -- LOCALS --
 
 
-local floor 					= math.floor
-local random					= math.random
-local sqrt					= math.sqrt
-local max					= math.max
+local floor 						= math.floor
+local random						= math.random
+local sqrt							= math.sqrt
+local max							= math.max
 
-local gmatch					= string.gmatch
-local remove					= table.remove
+local gmatch						= string.gmatch
+local remove						= table.remove
 
-local modOptions 				= Spring.GetModOptions()
+local modOptions 					= Spring.GetModOptions()
 local SetFeatureHealth				= Spring.SetFeatureHealth
 local DestroyFeature				= Spring.DestroyFeature
 local GetFeatureHealth				= Spring.GetFeatureHealth
@@ -73,88 +60,55 @@ local GetUnitsInCylinder			= Spring.GetUnitsInCylinder
 local GetGroundHeight				= Spring.GetGroundHeight
 local GetGroundOrigHeight			= Spring.GetGroundOrigHeight
 local SetHeightMapFunc				= Spring.SetHeightMapFunc
-local PlaySoundFile				= Spring.PlaySoundFile
-local SetHeightMap 				= Spring.SetHeightMap
-local SpawnCEG					  = Spring.SpawnCEG
-local GaiaTeamID  				= Spring.GetGaiaTeamID()
-local SetUnitNeutral			= Spring.SetUnitNeutral
-local SetUnitNoSelect			= Spring.SetUnitNoSelect
-local CreateUnit			= Spring.CreateUnit
-local DestroyUnit			= Spring.DestroyUnit
-local SetUnitAlwaysVisible		=Spring.SetUnitAlwaysVisible
-local SetUnitPosition 			= Spring.SetUnitPosition
-local SetUnitStealth			= Spring.SetUnitStealth
-local TransferUnit			= Spring.TransferUnit
-local GetTeamList 			= Spring.GetTeamList()
-local GetAllUnits 			= Spring.GetAllUnits
-local ValidFeatureID 			= Spring.ValidFeatureID
-local ValidUnitID 			= Spring.ValidUnitID
+local PlaySoundFile					= Spring.PlaySoundFile
+local SetHeightMap 					= Spring.SetHeightMap
+local SpawnCEG					  	= Spring.SpawnCEG
+local GaiaTeamID  					= Spring.GetGaiaTeamID()
+local SetUnitNeutral				= Spring.SetUnitNeutral
+local SetUnitNoSelect				= Spring.SetUnitNoSelect
+local CreateUnit					= Spring.CreateUnit
+local DestroyUnit					= Spring.DestroyUnit
+local SetUnitAlwaysVisible			= Spring.SetUnitAlwaysVisible
+local SetUnitPosition 				= Spring.SetUnitPosition
+local SetUnitStealth				= Spring.SetUnitStealth
+local TransferUnit					= Spring.TransferUnit
+local GetTeamList 					= Spring.GetTeamList()
+local GetAllUnits 					= Spring.GetAllUnits
+local ValidFeatureID 				= Spring.ValidFeatureID
+local ValidUnitID 					= Spring.ValidUnitID
 
-local images 					    	= include("LuaRules/gadgets/img.lua")
+local earthquakeWeapons 			= include("LuaRules/Configs/earthquake_config.lua")
+local images 					    = include("LuaRules/gadgets/img.lua")
 local images2 					  	= include("LuaRules/gadgets/img2.lua")
 local images3 					  	= include("LuaRules/gadgets/img3.lua")
 local COMET_FIRE				  	= "RedPlasmaComet"
-local COMET_HIT_GROUND				  	= "SMALL_NUKE_EXPLOSION_INIATE_COMET"
-local PUFFY						= "PUFFY_COMET"
+local COMET_HIT_GROUND				= "SMALL_NUKE_EXPLOSION_INIATE_COMET"
+local PUFFY							= "PUFFY_COMET"
 local crushsnd					  	= "sounds/battle/crush3.wav"
-
-
 local mapX 					      	= Game.mapX
 local mapZ 					      	= Game.mapY
 
 
-
 -- SETTINGS --
 
-local moving = {
-	["kbotsf2"] 	= true, 
-	["kbotsf3"] 	= true,					
-	["kbotss2"] 	= true,						
-	["kbotuw3"] 	= true,						-- gimp, spiders, moved land pelican to this
-	--["kbotds2"] 	= true,	 					-- commanders
-	["tankbh3"] 	= true,	 					
-	["tankdh3"] 	= true,	 					-- beaver, crab, triton, crock, garpike, muskrat, zulu
-	["tanksh2"] 	= true,	 					
-	["tanksh2"] 	= true,	 					
-	["tanksh4"] 	= true,	 					
-	["tankdtcrush"] = true,	 					-- Bulldog/Reaper/Goliath can crush DT's
-	["spid3"] 	= true,						
-	["krogoth"] 	= true,						
-	["crawlbomb"] 	= true,						-- crawling bombs
-	["tankdh4"] 	= true,						-- beaver, crab, triton, crock, garpike, muskrat, zulu -- land
-	["hover1"] 	= true,
-	["hover2"]	= true,
-	["hover3"]	= true,
-	["hover4"]	= true,
-	["hover9"]	= true,
-	["hover10"]	= true,	
-}
 
-
-local damageToUnits 					= {}
-local damageToFeatures 					= {}
+local damageToUnits 				= {}
+local damageToFeatures 				= {}
 local unitsDoDamage					= {}
-local timeDelayCrack					= 30 * 60 + 1 -- 1 min
-local duration						= tonumber(modOptions.duration_crack) *30 *60 + 1 or 9000 +1 		-- 5 min crack duration
-local crackAreaX					= floor(mapX*512*1/10)								-- defines middle 
+local timeDelayCrack				= 30 * 60 + 1 -- 1 min  (should be uneven)
+local duration						= tonumber(modOptions.duration_crack) *30 *60 + 1 or 9000 +1 	-- 5 min crack duration
+local crackAreaX					= floor(mapX*512*1/10)											-- defines middle 
 local crackAreaZ					= floor(mapZ*512*1/10)
-local middle 					  	= false					-- is middle only cracked?
+local middle 					  	= tonumber(modOptions.middle_crack) or false					-- is middle only cracked?
 local cracks						= {}
 local remove_cracks					= {}
 local add_cracks					= {}
 local max_cracks					= tonumber(modOptions.max_cracks) or 10
 local randomize_number_of_cracks	= 150 -- same as below but for cracks
+local armmageddon_frame				= 30 * 60 * 60 --60
 
 
--- DAMAGE PARAMETERS
-
-local damageValues = {
-	["arm_peewee"] 		= {["value"] = 200, ["radius"] = 500, ["dDamage"] = 1, ["dRadius"] = 1, ["duration"] = 300, ["self"] = 20},
-  	["some_other_unit"] 	= {["value"] = 20, ["radius"] = 500, ["dDamage"] = 1, ["dRadius"] = 1, ["duration"] = 300, ["self"] = 0.1}
-}
-
-
--- READ IN IMAGES AN AUDIO
+-- READ IN IMAGES AND AUDIO
 
 
 local fx = {
@@ -200,12 +154,14 @@ function gadget:Initialize()
 	if mo and tonumber(mo.earthquake)== 0 then
 		Echo("earthquake.lua: turned off via modoptions")
 		gadgetHandler:RemoveGadget(self)
+	else
+		Echo("earthquake.lua: gadget:Initialize() Game.mapName=" .. Game.mapName)
+		DisableMapDamage=0
+		Echo("Seismic activity predicted in forecast models, be aware!")
+		for w,_ in pairs(earthquakeWeapons) do
+			Script.SetWatchWeapon(w, true)
+		end
 	end
-	Echo("earthquake.lua: gadget:Initialize() Game.mapName=" .. Game.mapName)
-	DisableMapDamage=0
-	Echo("Seismic activity predicted in forecast models, be aware!")
-	--end
-
 end
 
 
@@ -228,7 +184,7 @@ function damage_near_units(x,z, radius)
 			local multiplier = 1-sqrt( (x-xu)*(x-xu) + (z-zu)*(z-zu) )/radius
 			local damage = damage_value *multiplier
 
-			if (math.abs(yu - y) < radius) then
+			if (abs(yu - y) < radius) then
 				AddUnitDamage(unitID, damage)
 			end
 		end
@@ -241,7 +197,7 @@ function damage_near_units(x,z, radius)
 				local multiplier = 1-sqrt( (x-xf)*(x-xf) + (z-zf)*(z-zf) )/radius
 				local damage = damage_value*multiplier
 				local feature_health = GetFeatureHealth(near_features[i])
-				if (math.abs(yf - y) < radius) then
+				if (abs(yf - y) < radius) then
 					if feature_health - damage < 0 then
 						DestroyFeature(near_features[i])
 					else
@@ -252,7 +208,6 @@ function damage_near_units(x,z, radius)
 		end
 	end
 end
-
 
 
 function emit(data)
@@ -321,9 +276,6 @@ function create_crack(data)
 	end
 	emit(data)
 	SetHeightMapFunc(func)
-	--local xmid = x + math.floor(0.5*img[1]["x"])
-	--local zmid = z + math.floor(0.5*img[1]["z"])
-	--damage_near_units(xmid,zmid , damage_radius*4)
 end
 
 
@@ -355,6 +307,23 @@ function add_crack()
 end
 
 
+function add_crack_weapon(x,z)
+	local file = random(1, 2)
+	local image = random(1, 5)
+	local img
+	if file == 1 then
+		img = images[image]
+	else
+		img = images2[image]
+	end
+	local X = floor(x-img[1]["x"]*0.5)
+	local Z = floor(z-img[1]["z"]*0.5)
+	local crack = {file = file, duration = duration, image = image, X = X, Z = Z}
+	cracks[#cracks+1] = crack
+	emit(crack)
+	return crack
+end
+
 -- update cracks
 function update()
 		
@@ -380,17 +349,34 @@ function update()
 end
 
 
+function gadget:Explosion(weaponID, px, py, pz, ownerID, ProjectileID)
+	if (earthquakeWeapons[weaponID]) then -- if selfradiation undo the onwner~=nil check
+		local radius = earthquakeWeapons[weaponID].radius or 500
+		local x = random(px-radius, px+radius)
+		local z = random(pz-radius, pz+radius)
+		add_cracks[#add_cracks+1] = add_crack_weapon(x,z)
+	end
+end
+
+
 -- LOOP --
 
 
 function gadget:GameFrame(f)
 
 	-- RANDOMIZE --
-
 	if (f%randomize_number_of_cracks*timeDelayCrack ==0) then
 		number_of_cracks = random(0, max_cracks)
 	end
 
+	if f == armmageddon_frame then
+		Echo("WARNING observatory station detects a huge seismic activity!")
+		max_cracks = 20
+		number_of_cracks = 10
+		duration = 30 * 60 * 10 + 1 -- 10 min
+		timeDelayCrack = 30 * 10 + 1 -- 1 min  (should be uneven)
+	end
+	
 	if (f%timeDelayCrack == 0) then
 
 		if (f%2 ==0) then
