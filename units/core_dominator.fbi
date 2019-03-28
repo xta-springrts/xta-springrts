@@ -21,7 +21,7 @@
 	//objectname=core_dominator.3do;core_dominator_smoth
 	objectname=core_dominator_smoth.s3o;
 	corpse=core_dominator_dead;
-	buildpic=core_dominator.DDS;
+	buildpic=core_dominator.png;
 	soundcategory=COR_KBOT;
 
 	//************************************************************

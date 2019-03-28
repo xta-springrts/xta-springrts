@@ -20,7 +20,7 @@
 	unitnumber=217;
 	objectname=core_morty_smoth.s3o;
 	corpse=core_morty_dead;
-	buildpic=core_morty.DDS;
+	buildpic=core_morty.png;
 	soundcategory=COR_KBOT;
 
 	//************************************************************
