@@ -81,9 +81,6 @@ local earthquakeWeapons 			= include("LuaRules/Configs/earthquake_config.lua")
 local images 					    = include("LuaRules/gadgets/img.lua")
 local images2 					  	= include("LuaRules/gadgets/img2.lua")
 local images3 					  	= include("LuaRules/gadgets/img3.lua")
-local COMET_FIRE				  	= "RedPlasmaComet"
-local COMET_HIT_GROUND				= "SMALL_NUKE_EXPLOSION_INIATE_COMET"
-local PUFFY							= "PUFFY_COMET"
 local crushsnd					  	= "sounds/battle/crush3.wav"
 local mapX 					      	= Game.mapX
 local mapZ 					      	= Game.mapY
@@ -221,7 +218,7 @@ function emit(data)
 		for key, value in pairs(fx[file][img]) do
 			for k, v in gmatch(key,"(%w+),(%w+)") do
 				local y = GetGroundHeight(k,v)
-				SpawnCEG(PUFFY,tonumber(v)+x, y+10, tonumber(k)+z) 
+				SpawnCEG("Smokeupward2",tonumber(v)+x, y+10, tonumber(k)+z) 
 				if audio[file][img][key] == true then 
 					PlaySoundFile (crushsnd, 2.0, x,y,z, 0,0,0,'battle')
 				end
