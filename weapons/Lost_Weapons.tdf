@@ -1820,6 +1820,18 @@
 		group_commanders=2000;
 		lost_commanders=1666;
 	}
+	[customparams] 
+	{
+		radiation_radius = 300; // how much units radiate in space
+		radiation_damage = 0.1;
+		radiation_dradius = -1;
+		radiation_ddamage = -0.01;
+		radiation_duration = 2000;
+		radiation_protection = 0.01;
+		radiation_maxradius = 300;
+		radiation_hitradius = 1000;
+		earthquake_radius = 100; //where it will fall
+	}
 }
 
 [PEACEMAKER_ROCKET]

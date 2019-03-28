@@ -964,6 +964,18 @@
 		group_commanders=2700;
 		lost_commanders=2400;
 	}
+	[customparams] 
+	{
+		radiation_radius = 300; // RADIATION EXAMPLE
+		radiation_damage = 0.1;
+		radiation_dradius = -1;
+		radiation_ddamage = -0.01;
+		radiation_duration = 2000;
+		radiation_protection = 0.01;
+		radiation_maxradius = 300;
+		radiation_hitradius = 1000;
+		earthquake_radius = 100; //EARTHQUAKE EXAMPLE
+	}
 }
 
 [TALON_LANGER_MAX]
