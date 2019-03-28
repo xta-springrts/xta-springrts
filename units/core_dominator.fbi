@@ -18,7 +18,8 @@
 	//******************
 	unitname=core_dominator;
 	unitnumber=216;
-	objectname=core_dominator.3do;
+	//objectname=core_dominator.3do;core_dominator_smoth
+	objectname=core_dominator_smoth.s3o;
 	corpse=core_dominator_dead;
 	buildpic=core_dominator.DDS;
 	soundcategory=COR_KBOT;
@@ -114,8 +115,8 @@
 	version=1.2;
 	zbuffer=1;
 	collisionVolumeType = box;
-	collisionVolumeScales =27 31 27;
-	collisionVolumeOffsets = 0 -1 0;
+	collisionVolumeScales =27 38 27;
+	collisionVolumeOffsets = 0 6 0;
 	collisionVolumeTest = 1;
 	pieceTrailCEGTag=Debree;//bleh
 	pieceTrailCEGRange = 4;

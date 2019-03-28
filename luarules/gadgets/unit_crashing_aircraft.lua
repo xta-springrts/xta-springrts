@@ -86,8 +86,8 @@ function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, w
 				SetUnitWeaponState(unitID, weaponID, "reloadTime", 9999)
 			end
 			-- remove sensors
-			SetUnitSensorRadius(unitID, "los", 0)
-			SetUnitSensorRadius(unitID, "airLos", 0)
+			--SetUnitSensorRadius(unitID, "los", 0)
+			--SetUnitSensorRadius(unitID, "airLos", 0)
 			SetUnitSensorRadius(unitID, "radar", 0)
 			SetUnitSensorRadius(unitID, "sonar", 0)
 		end
