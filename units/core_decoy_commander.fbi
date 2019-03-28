@@ -20,7 +20,7 @@
 	unitname=core_decoy_commander;
 	unitnumber=232;
 	objectname=core_commander_mrd.s3o;
-	buildpic=core_decoy_commander.DDS;
+	buildpic=core_decoy_commander.png;
 	soundcategory=COR_CKBOT;
 	script=core_u0commander.cob;
 
