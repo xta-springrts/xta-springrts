@@ -611,6 +611,8 @@ Create()
 	Static_Var_5 = 0;
 	hide gunflare;
 	hide gunflare2;
+	hide gunfp;
+	hide gunfp2;
 	restore_delay = 3000;
 	gun_1 = body;
 	Static_Var_9 = 0;
@@ -693,6 +695,7 @@ FirePrimary()
 		sleep 200;
 		move gun to z-axis [0.000000] speed [2.500000];
 	}
+		sleep 200;
 	gun_1 = !gun_1;
 }
 
