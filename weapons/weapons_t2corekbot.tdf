@@ -87,3 +87,38 @@
 		group_invincible=1;
 	}
 }
+
+[parasiteblaster]
+{
+	name=Laser;
+	Weapontype=LaserCannon;
+	turret=1;
+	duration=0.15;
+	intensity=1;
+	thickness=1.0;
+	range=150;
+	reloadtime=30;
+	energypershot=1000;
+	weaponvelocity=425;
+	areaofeffect=8;
+	soundstart=annigun1;
+	soundhitdry=lasrhit2;
+	firestarter=80;
+	rgbcolor=0.000 0.012 1.000;
+	tolerance=1300;
+	explosiongenerator=custom:SNIPELASER;
+	Texture1=purplelaser;
+	Texture2=null;
+	Texture3=null;
+	Texture4=null;
+	thickness=9;
+	[DAMAGE]
+	{
+		default=1054;
+		group_invincible=1;
+		group_landair=786;
+		group_skyair=786;
+		group_commanders=650;
+		lost_commanders=560;
+	}
+}

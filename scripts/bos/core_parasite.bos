@@ -4,10 +4,11 @@
 #include "exptype.h"
 
 piece  head, rthigh, lthigh, rfoot, lleg, lfoot, ltoes, lheel,
-       rleg, rtoes, rheel;
+       rleg, rtoes, rheel, surprisegun, barrel, flare1;
 
-static-var  bMoving, moveSpeed, currentSpeed;
+static-var  bMoving, bAiming, moveSpeed, currentSpeed;
 
+#define SIG_AIM				4
 
 walk()
 {
@@ -585,6 +586,29 @@ StopMoving()
 SweetSpot(piecenum)
 {
 	piecenum = head;
+}
+
+AimFromPrimary(piecenum)
+{
+	piecenum = head;
+}
+
+QueryPrimary(piecenum)
+{
+	piecenum = flare1;
+}
+
+AimPrimary(heading, pitch)
+{
+	signal SIG_AIM;
+	set-signal-mask SIG_AIM;
+	bAiming = TRUE;
+	return (1);
+}
+
+FirePrimary()
+{
+	emit-sfx 1024 from flare1;
 }
 
 Killed(severity, corpsetype)

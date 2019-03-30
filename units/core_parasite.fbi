@@ -5,7 +5,7 @@
 	//********************
 	side=Core;
 	name=Parasite;
-	description=Invisible Spy Kbot;
+	description=Invisible Spy Kbot/Assassin;
 
 	//************************************************************
 	//  Categories
@@ -18,9 +18,10 @@
 	//******************
 	unitname=core_parasite;
 	unitnumber=300;
-	objectname=core_parasite.3do;
+	//objectname=core_parasite.3do;
+	objectname=core_parasite_smoth.s3o;
 	corpse=core_parasite_dead;
-	buildpic=core_parasite.DDS;
+	buildpic=core_parasite.png;
 	soundcategory=;
 
 	//************************************************************
@@ -60,7 +61,7 @@
 	canpatrol=1;
 	canstop=1;
 	upright=1;
-	canfight=0;
+	canfight=1;
 	canrepeat=0;
 	
 	//************************************************************
@@ -82,8 +83,15 @@
 	//************************************************************
 	//  Weapons
 	//***********
+	weapon1=parasiteblaster;
+	WeaponMainDir1= 0 0 1;
+	MaxAngleDif1=70;
+	nochasecategory=VTOL;
+	badtargetcategory=VTOL;
+	wpri_badtargetcategory=VTOL;
 	explodeas=BIG_UNITEX;
 	selfdestructas=BIG_UNIT;
+	onlytargetcategory1=NOTAIR; //Added 9 By Gizmo
 
 	//************************************************************
 	//  Orders
@@ -117,6 +125,10 @@
 	collisionVolumeOffsets = 0 -1 0;
 	collisionVolumeTest = 1;
 
+	[SFXTypes]
+	{
+	explosiongenerator0=custom:snipeflare;
+	}
 	//************************************************************
 	//  To be removed
 	//*****************
