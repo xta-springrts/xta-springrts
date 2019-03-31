@@ -18,9 +18,9 @@
 	//******************
 	unitname=core_freaker;
 	unitnumber=252;
-	objectname=core_freaker.3do;
+	objectname=core_freaker_smoth.s3o;
 	corpse=core_freaker_dead;
-	buildpic=core_freaker.DDS;
+	buildpic=core_freaker.png;
 	soundcategory=COR_KBOT;
 
 	//************************************************************
@@ -114,8 +114,8 @@
 	version=1.2;
 	zbuffer=1;
 	collisionVolumeType = CylY;
-	collisionVolumeScales =21 34 19;
-	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeScales =21 29 19;
+	collisionVolumeOffsets = 0 -5 0;
 	collisionVolumeTest = 1;
 	pieceTrailCEGTag=Debree;//bleh
 	pieceTrailCEGRange = 4;

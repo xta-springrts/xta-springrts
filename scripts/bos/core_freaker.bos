@@ -809,8 +809,10 @@ MotionControl(moving, aiming, justmoved)
 				turn RLLeg to x-axis <0.000000> speed <200.038462>;
 				turn LULeg to x-axis <0.000000> speed <200.038462>;
 				turn LLLeg to x-axis <0.000000> speed <200.038462>;
+				move LLLeg to y-axis [0.000000] now;
 				if( !aiming )
 				{
+				move Hip to y-axis [0.000000] speed [2.500000];
 					turn torso to y-axis <0.000000> speed <90.016484>;
 					turn RLArm to x-axis <0.000000> speed <200.038462>;
 					turn RUArm to x-axis <0.000000> speed <200.038462>;
