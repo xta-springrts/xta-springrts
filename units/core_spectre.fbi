@@ -18,9 +18,10 @@
 	//******************
 	unitname=core_spectre;
 	unitnumber=138;
-	objectname=core_spectre.3do;
+	objectname=core_spectre_smoth.s3o;
+	//objectname=core_spectre.3do;
 	corpse=core_spectre_dead;
-	buildpic=core_spectre.DDS;
+	buildpic=core_spectre.png;
 	soundcategory=CORE_JAM;
 
 	//************************************************************
@@ -31,8 +32,8 @@
 	buildcostmetal=158;
 	buildcostenergy=3269;
 	buildtime=12238;
-	footprintx=1;
-	footprintz=1;
+	footprintx=2;
+	footprintz=2;
 
 	//************************************************************
 	//  Resources
