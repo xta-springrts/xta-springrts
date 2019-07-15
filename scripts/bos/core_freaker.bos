@@ -810,6 +810,7 @@ MotionControl(moving, aiming, justmoved)
 				turn LULeg to x-axis <0.000000> speed <200.038462>;
 				turn LLLeg to x-axis <0.000000> speed <200.038462>;
 				move LLLeg to y-axis [0.000000] now;
+				move RLLeg to y-axis [0.000000] now;
 				if( !aiming )
 				{
 				move Hip to y-axis [0.000000] speed [2.500000];
@@ -931,6 +932,10 @@ RestoreAfterDelay()
 	start-script RequestState(1);
 	turn torso to y-axis <0.000000> speed <150.027473>;
 	wait-for-turn torso around y-axis;
+	turn luarm to x-axis <0.000000> speed <45.005495>;
+	turn llarm to x-axis <0.000000> speed <45.005495>;
+	wait-for-turn luarm around x-axis;
+	wait-for-turn llarm around x-axis;
 	bAiming = FALSE;
 }
 
@@ -954,8 +959,12 @@ AimPrimary(heading, pitch)
 	{
 		sleep 100;
 	}
-	turn torso to y-axis heading speed <300.000000>;
+	turn torso to y-axis heading speed <260.000000>;
+	turn luarm to x-axis <-50.016484> - pitch speed <200.038462>;
+	turn llarm to x-axis <-30.000000> speed <100.016484>;
 	wait-for-turn torso around y-axis;
+	wait-for-turn luarm around x-axis;
+	wait-for-turn llarm around x-axis;
 	start-script RestoreAfterDelay();
 	return (1);
 }

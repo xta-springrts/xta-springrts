@@ -18,9 +18,9 @@
 	//******************
 	unitname=core_voyeur;
 	unitnumber=171;
-	objectname=core_voyeur.3do;
+	objectname=core_voyeur_smoth.s3o;
 	corpse=core_voyeur_dead;
-	buildpic=core_voyeur.DDS;
+	buildpic=core_voyeur.png;
 	soundcategory=COR_KBOT;
 
 	//************************************************************

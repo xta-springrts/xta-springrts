@@ -106,8 +106,8 @@
 	range=1600;
 	reloadtime=3;
 	energypershot=900;
-	weapontimer=2;
-	flighttime=6;
+	weapontimer=1;
+	flighttime=12;
 	weaponvelocity=700;
 	startvelocity=100;
 	weaponacceleration=200;
