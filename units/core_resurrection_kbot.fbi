@@ -18,9 +18,9 @@
 	//******************
 	unitname=core_resurrection_kbot;
 	unitnumber=256;
-	objectname=core_resurrection_kbot.3do;
+	objectname=core_resurrection_kbot_smoth.s3o;
 	corpse=core_resurrection_kbot_dead;
-	buildpic=core_resurrection_kbot.DDS;
+	buildpic=core_resurrection_kbot.png;
 	soundcategory=CORE_NECRO;
 
 	//************************************************************

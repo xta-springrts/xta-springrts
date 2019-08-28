@@ -6,7 +6,7 @@
 #define SIG_BUILD		4	
 
 piece  lathe, torso, nanopoint, hip, lleg, rleg, rfoot, lfoot,
-       finger2, luparm, ruparm, head, rarm, larm, finger1, thumb;
+       finger2, luparm, ruparm, head, rarm, larm, finger1, nanotube;
 
 static-var  bMoving, statechg_DesiredState, statechg_StateChanging,
 			moveSpeed, currentSpeed, notBuilding;
@@ -17,7 +17,7 @@ Build()
 	set-signal-mask SIG_BUILD;
 	while( TRUE )
 	{
-		emit-sfx UNIT_SFX1 from lathe;
+		emit-sfx UNIT_SFX1 from nanopoint;
 		sleep 100;
 	}
 }
@@ -26,352 +26,325 @@ walk()
 {
 	if( bMoving )
 	{
-		move hip to z-axis [3.875000] now;
-		move hip to z-axis [4.062500] speed [3.252532];
-		move torso to y-axis [0.499985] now;
-		move torso to y-axis [1.124985] speed [10.84181];
-		move lleg to y-axis [-1.125000] now;
-		move lleg to y-axis [-1.749985] speed [10.84178];
-		move rleg to y-axis [1.875000] now;
-		move rleg to y-axis [0.937500] speed [16.26274];
-		move rfoot to y-axis [2.375000] now;
+		move hip to z-axis [1.550000] now;
+		move hip to z-axis [1.625000] speed [1.301007];
+		move torso to y-axis [0.199994] now;
+		move torso to y-axis [0.449994] speed [4.336719];
+		move lleg to y-axis [-0.450000] now;
+		move lleg to y-axis [-0.699994] speed [4.336707];
+		move rleg to y-axis [0.750000] now;
+		move rleg to y-axis [0.375000] speed [6.505090];
+		move rfoot to y-axis [0.950000] now;
 		move lfoot to y-axis [0.000000] now;
-		move lfoot to y-axis [0.562500] speed [9.757647];
+		move lfoot to y-axis [0.225000] speed [3.903058];
 		move finger2 to x-axis [0.000000] now;
 		turn hip to x-axis <27.368132> now;
-		turn hip to x-axis <19.159341> speed <142.4264>;
+		turn hip to x-axis <19.159341> speed <142.423077>;
 		turn luparm to x-axis <7.901099> now;
-		turn luparm to x-axis <-15.505495> speed <406.2253>;
+		turn luparm to x-axis <-15.505495> speed <406.225275>;
 		turn ruparm to x-axis <-21.280220> now;
-		turn ruparm to x-axis <-6.989011> speed <247.9572>;
+		turn ruparm to x-axis <-6.989011> speed <247.956044>;
 		turn lleg to x-axis <-12.159341> now;
-		turn lleg to x-axis <2.126374> speed <247.9572>;
+		turn lleg to x-axis <2.126374> speed <247.956044>;
 		turn rleg to x-axis <-7.901099> now;
-		turn rleg to x-axis <-19.159341> speed <195.1824>;
+		turn rleg to x-axis <-19.159341> speed <195.181319>;
 		turn head to x-axis <0.000000> now;
-		turn head to x-axis <6.945055> speed <120.4945>;
+		turn head to x-axis <6.945055> speed <120.489011>;
 		turn rfoot to x-axis <16.505495> now;
-		turn rfoot to x-axis <18.549451> speed <35.36374>;
+		turn rfoot to x-axis <18.549451> speed <35.362637>;
 		turn lfoot to x-axis <-13.989011> now;
-		turn lfoot to x-axis <-20.071429> speed <105.5028>;
+		turn lfoot to x-axis <-20.071429> speed <105.500000>;
 		turn rarm to x-axis <-35.879121> now;
-		turn rarm to x-axis <-33.148352> speed <47.46923>;
+		turn rarm to x-axis <-33.148352> speed <47.467033>;
 		turn lathe to x-axis <10.890110> now;
-		turn lathe to x-axis <-1.412088> speed <213.6769>;
+		turn lathe to x-axis <-1.412088> speed <213.675824>;
 		turn larm to x-axis <-10.945055> now;
-		turn larm to x-axis <6.082418> speed <295.4264>;
-		turn finger1 to x-axis <0.000000> now;
-		turn finger1 to x-axis <28.890110> speed <501.1824>;
-		turn finger2 to x-axis <27.368132> now;
-		turn finger2 to x-axis <43.181319> speed <274.3258>;
-		turn thumb to x-axis <0.000000> now;
-		turn thumb to x-axis <-10.335165> speed <179.3593>;
-		sleep 5800/currentSpeed;
+		turn larm to x-axis <6.082418> speed <295.423077>;
+		sleep 5800 / currentspeed;
 	}
 	if( bMoving )
 	{
-		move hip to z-axis [2.625000] speed [25.19326];
-		move torso to y-axis [1.749985] speed [10.95358];
-		move lleg to y-axis [-2.374985] speed [10.95356];
-		move rleg to y-axis [0.000000] speed [16.43039];
-		move lfoot to y-axis [1.125000] speed [9.858215];
-		turn hip to x-axis <10.945055> speed <143.9022>;
-		turn torso to y-axis <-2.423077> speed <42.64011>;
-		turn luparm to x-axis <-38.923077> speed <410.4006>;
-		turn ruparm to x-axis <7.291209> speed <250.5072>;
-		turn lleg to x-axis <16.412088> speed <250.5072>;
-		turn rleg to x-axis <-30.412088> speed <197.2094>;
-		turn head to x-axis <9.725275> speed <48.7956>;
-		turn rfoot to x-axis <-9.725275> speed <495.6901>;
-		turn lfoot to x-axis <-26.148352> speed <106.5956>;
-		turn rarm to x-axis <-30.412088> speed <47.96429>;
-		turn lathe to x-axis <-18.000000> speed <290.6253>;
-		turn larm to x-axis <23.104396> speed <298.4714>;
-		turn finger1 to x-axis <57.780220> speed <506.3571>;
-		turn finger2 to x-axis <59.000000> speed <277.1467>;
-		turn thumb to x-axis <-20.670330> speed <181.2088>;
-		sleep 5700/currentSpeed;
+		move hip to z-axis [1.050000] speed [10.077301];
+		move torso to y-axis [0.699994] speed [4.381427];
+		move lleg to y-axis [-0.949994] speed [4.381421];
+		move rleg to y-axis [0.000000] speed [6.572156];
+		move lfoot to y-axis [0.450000] speed [3.943280];
+		turn hip to x-axis <10.945055> speed <143.901099>;
+		turn torso to y-axis <-2.423077> speed <42.637363>;
+		turn luparm to x-axis <-38.923077> speed <410.395604>;
+		turn ruparm to x-axis <7.291209> speed <250.505495>;
+		turn lleg to x-axis <16.412088> speed <250.505495>;
+		turn rleg to x-axis <-30.412088> speed <197.208791>;
+		turn head to x-axis <9.725275> speed <48.791209>;
+		turn rfoot to x-axis <-9.725275> speed <495.686813>;
+		turn lfoot to x-axis <-26.148352> speed <106.593407>;
+		turn rarm to x-axis <-30.412088> speed <47.961538>;
+		turn lathe to x-axis <-18.000000> speed <290.620879>;
+		turn larm to x-axis <23.104396> speed <298.467033>;
+		sleep 5700 / currentspeed;
 	}
 	if( bMoving )
 	{
-		move hip to z-axis [0.875000] speed [26.5625];
-		move torso to y-axis [1.249985] speed [7.589274];
-		move lleg to y-axis [-2.249985] speed [1.897273];
-		move rleg to y-axis [0.000000] speed [0];
-		turn hip to x-axis <3.038462> speed <120.0088>;
-		turn torso to y-axis <-3.648352> speed <18.45714>;
-		turn ruparm to x-axis <20.071429> speed <193.8654>;
-		turn lleg to x-axis <38.923077> speed <341.5879>;
-		turn rleg to x-axis <-17.027473> speed <203.1126>;
-		turn head to x-axis <0.000000> speed <147.7132>;
-		turn rfoot to x-axis <-40.137363> speed <461.6154>;
-		turn lfoot to x-axis <-40.137363> speed <212.3319>;
-		turn rarm to x-axis <-48.049451> speed <267.7313>;
-		turn lathe to x-axis <-6.159341> speed <179.789>;
-		turn finger2 to x-axis <48.049451> speed <166.1703>;
-		sleep 6600/currentSpeed;
+		move hip to z-axis [0.350000] speed [10.625000];
+		move torso to y-axis [0.499994] speed [3.035706];
+		move lleg to y-axis [-0.899994] speed [0.758905];
+		move rleg to y-axis [0.000000] speed [0.000000];
+		turn hip to x-axis <3.038462> speed <120.005495>;
+		turn torso to y-axis <-3.648352> speed <18.456044>;
+		turn ruparm to x-axis <20.071429> speed <193.862637>;
+		turn lleg to x-axis <38.923077> speed <341.582418>;
+		turn rleg to x-axis <-17.027473> speed <203.109890>;
+		turn head to x-axis <0.000000> speed <147.708791>;
+		turn rfoot to x-axis <-40.137363> speed <461.615385>;
+		turn lfoot to x-axis <-40.137363> speed <212.329670>;
+		turn rarm to x-axis <-48.049451> speed <267.730769>;
+		turn lathe to x-axis <-6.159341> speed <179.785714>;
+		turn finger2 to x-axis <48.049451> speed <166.164835>;
+		sleep 6600 / currentspeed;
 	}
 	if( bMoving )
 	{
-		move hip to z-axis [0.437500] speed [5.634467];
-		move torso to y-axis [0.062485] speed [15.29352];
-		move lleg to y-axis [-0.875000] speed [17.70831];
-		move rleg to y-axis [0.312485] speed [4.024607];
-		move rfoot to y-axis [1.187500] speed [15.29352];
-		turn hip to x-axis <1.516484> speed <19.57802>;
-		turn luparm to x-axis <-50.780220> speed <152.7385>;
-		turn ruparm to x-axis <39.527473> speed <250.6753>;
-		turn lleg to x-axis <50.478022> speed <148.8341>;
-		turn rleg to x-axis <-6.989011> speed <129.2467>;
-		turn head to x-axis <-17.637363> speed <227.1648>;
-		turn rfoot to x-axis <-35.879121> speed <54.82033>;
-		turn lfoot to x-axis <-44.401099> speed <54.82033>;
-		turn rarm to x-axis <-69.335165> speed <274.1577>;
-		turn lathe to x-axis <0.000000> speed <79.32088>;
-		turn finger2 to x-axis <58.390110> speed <133.1698>;
-		sleep 7800/currentSpeed;
+		move hip to z-axis [0.175000] speed [2.253784];
+		move torso to y-axis [0.024994] speed [6.117407];
+		move lleg to y-axis [-0.350000] speed [7.083319];
+		move rleg to y-axis [0.124994] speed [1.609839];
+		move rfoot to y-axis [0.475000] speed [6.117407];
+		turn hip to x-axis <1.516484> speed <19.576923>;
+		turn luparm to x-axis <-50.780220> speed <152.736264>;
+		turn ruparm to x-axis <39.527473> speed <250.670330>;
+		turn lleg to x-axis <50.478022> speed <148.829670>;
+		turn rleg to x-axis <-6.989011> speed <129.241758>;
+		turn head to x-axis <-17.637363> speed <227.159341>;
+		turn rfoot to x-axis <-35.879121> speed <54.818681>;
+		turn lfoot to x-axis <-44.401099> speed <54.818681>;
+		turn rarm to x-axis <-69.335165> speed <274.153846>;
+		turn lathe to x-axis <0.000000> speed <79.318681>;
+		turn finger2 to x-axis <58.390110> speed <133.164835>;
+		sleep 7800 / currentspeed;
 	}
 	if( bMoving )
 	{
-		move hip to z-axis [0.000000] speed [5.509229];
-		move torso to y-axis [-1.125000] speed [14.95368];
-		move lleg to y-axis [0.500000] speed [17.31478];
-		move rleg to y-axis [0.624985] speed [3.935167];
-		move rfoot to y-axis [0.000000] speed [14.95368];
-		turn hip to x-axis <0.000000> speed <19.13901>;
-		turn torso to y-axis <-6.082418> speed <30.62802>;
-		turn luparm to x-axis <-62.648352> speed <149.3571>;
-		turn ruparm to x-axis <59.000000> speed <245.0896>;
-		turn lleg to x-axis <62.038462> speed <145.5275>;
-		turn rleg to x-axis <3.038462> speed <126.3698>;
-		turn head to x-axis <-5.467033> speed <153.1775>;
-		turn rfoot to x-axis <-31.626374> speed <53.61539>;
-		turn lfoot to x-axis <-48.659341> speed <53.61539>;
-		turn rarm to x-axis <-90.626374> speed <268.0769>;
-		turn lathe to x-axis <13.258242> speed <167.0577>;
-		turn finger2 to x-axis <68.725275> speed <130.2088>;
-		sleep 7900/currentSpeed;
+		move hip to z-axis [0.000000] speed [2.203687];
+		move torso to y-axis [-0.450000] speed [5.981470];
+		move lleg to y-axis [0.200000] speed [6.925909];
+		move rleg to y-axis [0.249994] speed [1.574066];
+		move rfoot to y-axis [0.000000] speed [5.981470];
+		turn hip to x-axis <0.000000> speed <19.137363>;
+		turn torso to y-axis <-6.082418> speed <30.626374>;
+		turn luparm to x-axis <-62.648352> speed <149.351648>;
+		turn ruparm to x-axis <59.000000> speed <245.087912>;
+		turn lleg to x-axis <62.038462> speed <145.527473>;
+		turn rleg to x-axis <3.038462> speed <126.368132>;
+		turn head to x-axis <-5.467033> speed <153.175824>;
+		turn rfoot to x-axis <-31.626374> speed <53.615385>;
+		turn lfoot to x-axis <-48.659341> speed <53.615385>;
+		turn rarm to x-axis <-90.626374> speed <268.071429>;
+		turn lathe to x-axis <13.258242> speed <167.054945>;
+		turn finger2 to x-axis <68.725275> speed <130.208791>;
+		sleep 7900 / currentspeed;
 	}
 	if( bMoving )
 	{
-		move hip to z-axis [1.437500] speed [24.19551];
-		move torso to y-axis [-0.562500] speed [9.467768];
-		move lleg to y-axis [0.000000] speed [8.415799];
-		move rleg to y-axis [0.312485] speed [5.259868];
-		turn hip to x-axis <5.159341> speed <87.00825>;
-		turn torso to y-axis <-2.423077> speed <61.41484>;
-		turn luparm to x-axis <-65.082418> speed <40.94011>;
-		turn ruparm to x-axis <63.857143> speed <81.88956>;
-		turn lleg to x-axis <70.857143> speed <148.4324>;
-		turn rleg to x-axis <6.681319> speed <61.41484>;
-		turn head to x-axis <0.000000> speed <92.12692>;
-		turn rfoot to x-axis <-12.038462> speed <329.7066>;
-		turn lfoot to x-axis <-25.538462> speed <389.0385>;
-		turn rarm to x-axis <-101.879121> speed <189.4006>;
-		turn lathe to x-axis <19.423077> speed <103.6626>;
-		turn larm to x-axis <11.857143> speed <189.4006>;
-		turn finger1 to x-axis <26.456044> speed <527.2522>;
-		turn finger2 to x-axis <31.324176> speed <629.6259>;
-		turn thumb to x-axis <-36.489011> speed <266.1714>;
-		sleep 5900/currentSpeed;
+		move hip to z-axis [0.575000] speed [9.678198];
+		move torso to y-axis [-0.225000] speed [3.787103];
+		move lleg to y-axis [0.000000] speed [3.366315];
+		move rleg to y-axis [0.124994] speed [2.103943];
+		turn hip to x-axis <5.159341> speed <87.005495>;
+		turn torso to y-axis <-2.423077> speed <61.412088>;
+		turn luparm to x-axis <-65.082418> speed <40.939560>;
+		turn ruparm to x-axis <63.857143> speed <81.884615>;
+		turn lleg to x-axis <70.857143> speed <148.428571>;
+		turn rleg to x-axis <6.681319> speed <61.412088>;
+		turn head to x-axis <0.000000> speed <92.126374>;
+		turn rfoot to x-axis <-12.038462> speed <329.703297>;
+		turn lfoot to x-axis <-25.538462> speed <389.038462>;
+		turn rarm to x-axis <-101.879121> speed <189.395604>;
+		turn lathe to x-axis <19.423077> speed <103.659341>;
+		turn larm to x-axis <11.857143> speed <189.395604>;
+		sleep 5900 / currentspeed;
 	}
 	if( bMoving )
 	{
-		move hip to z-axis [3.562500] speed [35.07277];
-		move torso to y-axis [0.874985] speed [23.72571];
-		move lleg to y-axis [1.312500] speed [21.6626];
-		move rleg to y-axis [-1.062500] speed [22.69413];
-		turn hip to x-axis <16.115385> speed <180.6951>;
-		turn torso to y-axis <0.000000> speed <40.14616>;
-		turn luparm to x-axis <-57.170330> speed <130.5077>;
-		turn ruparm to x-axis <56.560440> speed <120.4571>;
-		turn lleg to x-axis <36.945055> speed <559.7017>;
-		turn rleg to x-axis <10.335165> speed <60.21923>;
-		turn head to x-axis <8.500000> speed <140.3341>;
-		turn rfoot to x-axis <-28.280220> speed <268.0956>;
-		turn lfoot to x-axis <17.335165> speed <707.7511>;
-		turn lfoot to y-axis <0.000000> speed <0>;
-		turn rarm to x-axis <-98.225275> speed <60.21923>;
-		turn lathe to x-axis <23.214286> speed <62.54506>;
-		turn larm to x-axis <11.549451> speed <5.006594>;
-		turn finger1 to x-axis <-23.714286> speed <828.2269>;
-		turn finger2 to x-axis <-24.934066> speed <928.6204>;
-		turn thumb to x-axis <-52.302198> speed <261.0154>;
-		sleep 6100/currentSpeed;
+		move hip to z-axis [1.425000] speed [14.029108];
+		move torso to y-axis [0.349994] speed [9.490283];
+		move lleg to y-axis [0.525000] speed [8.665039];
+		move rleg to y-axis [-0.425000] speed [9.077649];
+		turn hip to x-axis <16.115385> speed <180.692308>;
+		turn torso to y-axis <0.000000> speed <40.142857>;
+		turn luparm to x-axis <-57.170330> speed <130.505495>;
+		turn ruparm to x-axis <56.560440> speed <120.456044>;
+		turn lleg to x-axis <36.945055> speed <559.697802>;
+		turn rleg to x-axis <10.335165> speed <60.214286>;
+		turn head to x-axis <8.500000> speed <140.329670>;
+		turn rfoot to x-axis <-28.280220> speed <268.093407>;
+		turn lfoot to x-axis <17.335165> speed <707.747253>;
+		turn lfoot to y-axis <0.000000> speed <0.000000>;
+		turn rarm to x-axis <-98.225275> speed <60.214286>;
+		turn lathe to x-axis <23.214286> speed <62.543956>;
+		turn larm to x-axis <11.549451> speed <5.005495>;
+		sleep 6100 / currentspeed;
 	}
 	if( bMoving )
 	{
-		move hip to z-axis [4.250000] speed [11.23794];
-		move torso to y-axis [1.749985] speed [14.30287];
-		move lleg to y-axis [3.125000] speed [29.62738];
-		move rleg to y-axis [-2.125000] speed [17.36778];
-		turn hip to x-axis <21.890110> speed <94.45275>;
-		turn luparm to x-axis <-46.835165> speed <169.0192>;
-		turn ruparm to x-axis <44.401099> speed <198.844>;
-		turn lleg to x-axis <18.846154> speed <295.7626>;
-		turn head to x-axis <7.901099> speed <9.732967>;
-		turn rfoot to x-axis <-32.835165> speed <74.55714>;
-		turn lfoot to x-axis <37.093407> speed <323.1214>;
-		turn lfoot to y-axis <0.000000> speed <0>;
-		turn rarm to x-axis <-83.324176> speed <243.5951>;
-		turn lathe to x-axis <18.945055> speed <69.7>;
-		turn larm to x-axis <22.505495> speed <178.9577>;
-		turn finger1 to x-axis <-42.571429> speed <308.2137>;
-		turn finger2 to x-axis <-43.791209> speed <308.2137>;
-		sleep 6100/currentSpeed;
+		move hip to z-axis [1.700000] speed [4.495172];
+		move torso to y-axis [0.699994] speed [5.721143];
+		move lleg to y-axis [1.250000] speed [11.850946];
+		move rleg to y-axis [-0.850000] speed [6.947107];
+		turn hip to x-axis <21.890110> speed <94.450549>;
+		turn luparm to x-axis <-46.835165> speed <169.016484>;
+		turn ruparm to x-axis <44.401099> speed <198.840659>;
+		turn lleg to x-axis <18.846154> speed <295.758242>;
+		turn head to x-axis <7.901099> speed <9.730769>;
+		turn rfoot to x-axis <-32.835165> speed <74.554945>;
+		turn lfoot to x-axis <37.093407> speed <323.120879>;
+		turn lfoot to y-axis <0.000000> speed <0.000000>;
+		turn rarm to x-axis <-83.324176> speed <243.593407>;
+		turn lathe to x-axis <18.945055> speed <69.697802>;
+		turn larm to x-axis <22.505495> speed <178.956044>;
+		turn finger1 to x-axis <-42.571429> speed <308.208791>;
+		turn finger2 to x-axis <-43.791209> speed <308.208791>;
+		sleep 6100 / currentspeed;
 	}
 	if( bMoving )
 	{
-		move hip to z-axis [3.250000] speed [14.65516];
-		move torso to y-axis [1.374985] speed [5.495662];
-		move rleg to y-axis [-1.625000] speed [7.327541];
-		turn hip to x-axis <16.115385> speed <84.68242>;
-		turn luparm to x-axis <-18.247253> speed <418.9566>;
-		turn ruparm to x-axis <19.758242> speed <361.0071>;
-		turn lleg to x-axis <4.247253> speed <213.9385>;
-		turn rleg to x-axis <21.582418> speed <164.9093>;
-		turn head to x-axis <-7.758242> speed <229.6962>;
-		turn rfoot to x-axis <-37.703297> speed <71.30659>;
-		turn lfoot to x-axis <-4.560440> speed <610.6083>;
-		turn rarm to x-axis <-61.736264> speed <316.4335>;
-		turn lathe to x-axis <32.214286> speed <194.4072>;
-		turn larm to x-axis <8.813187> speed <200.5626>;
-		turn finger1 to x-axis <-18.549451> speed <352.0962>;
-		turn finger2 to x-axis <-17.335165> speed <387.7588>;
-		turn thumb to x-axis <-33.445055> speed <276.3341>;
-		sleep 6800/currentSpeed;
+		move hip to z-axis [1.300000] speed [5.862061];
+		move torso to y-axis [0.549994] speed [2.198260];
+		move rleg to y-axis [-0.650000] speed [2.931012];
+		turn hip to x-axis <16.115385> speed <84.681319>;
+		turn luparm to x-axis <-18.247253> speed <418.956044>;
+		turn ruparm to x-axis <19.758242> speed <361.005495>;
+		turn lleg to x-axis <4.247253> speed <213.934066>;
+		turn rleg to x-axis <21.582418> speed <164.906593>;
+		turn head to x-axis <-7.758242> speed <229.692308>;
+		turn rfoot to x-axis <-37.703297> speed <71.302198>;
+		turn lfoot to x-axis <-4.560440> speed <610.604396>;
+		turn rarm to x-axis <-61.736264> speed <316.428571>;
+		turn lathe to x-axis <32.214286> speed <194.406593>;
+		turn larm to x-axis <8.813187> speed <200.560440>;
+		sleep 6800 / currentspeed;
 	}
 	if( bMoving )
 	{
-		move hip to z-axis [2.250000] speed [16.03773];
-		move torso to y-axis [0.999985] speed [6.01415];
-		move rleg to y-axis [-1.125000] speed [8.018867];
-		turn hip to x-axis <10.335165> speed <92.65935>;
-		turn torso to y-axis <1.824176> speed <29.26429>;
-		turn luparm to x-axis <10.335165> speed <458.4769>;
-		turn ruparm to x-axis <-4.857143> speed <395.0632>;
-		turn lleg to x-axis <-10.335165> speed <234.1143>;
-		turn rleg to x-axis <32.835165> speed <180.4522>;
-		turn head to x-axis <-10.945055> speed <51.02802>;
-		turn rfoot to x-axis <-42.571429> speed <78.03187>;
-		turn lfoot to x-axis <-46.225275> speed <668.2214>;
-		turn rarm to x-axis <-40.137363> speed <346.2956>;
-		turn lathe to x-axis <49.269231> speed <273.5506>;
-		turn larm to x-axis <-4.857143> speed <219.4775>;
-		turn finger1 to x-axis <5.467033> speed <385.3209>;
-		turn finger2 to x-axis <9.115385> speed <424.3275>;
-		turn thumb to x-axis <-14.593407> speed <302.3945>;
-		sleep 6200/currentSpeed;
+		move hip to z-axis [0.900000] speed [6.415088];
+		move torso to y-axis [0.399994] speed [2.405658];
+		move rleg to y-axis [-0.450000] speed [3.207544];
+		turn hip to x-axis <10.335165> speed <92.659341>;
+		turn torso to y-axis <1.824176> speed <29.263736>;
+		turn luparm to x-axis <10.335165> speed <458.472527>;
+		turn ruparm to x-axis <-4.857143> speed <395.060440>;
+		turn lleg to x-axis <-10.335165> speed <234.109890>;
+		turn rleg to x-axis <32.835165> speed <180.450549>;
+		turn head to x-axis <-10.945055> speed <51.027473>;
+		turn rfoot to x-axis <-42.571429> speed <78.027473>;
+		turn lfoot to x-axis <-46.225275> speed <668.219780>;
+		turn rarm to x-axis <-40.137363> speed <346.291209>;
+		turn lathe to x-axis <49.269231> speed <273.549451>;
+		turn larm to x-axis <-4.857143> speed <219.472527>;
+		sleep 6200 / currentspeed;
 	}
 	if( bMoving )
 	{
-		move hip to z-axis [1.125000] speed [14.37965];
-		move torso to y-axis [-0.125000] speed [14.37965];
-		move lleg to y-axis [1.562500] speed [19.97176];
-		move rleg to y-axis [0.124985] speed [15.97742];
-		move rfoot to y-axis [1.187500] speed [15.17852];
-		move lfoot to y-axis [0.562500] speed [7.189851];
-		turn hip to x-axis <5.159341> speed <66.07583>;
-		turn torso to y-axis <2.423077> speed <7.77143>;
-		turn luparm to x-axis <23.714286> speed <171.0275>;
-		turn ruparm to x-axis <-24.324176> speed <248.7885>;
-		turn lleg to x-axis <-12.769231> speed <31.09506>;
-		turn rleg to x-axis <35.269231> speed <31.09506>;
-		turn head to x-axis <-6.082418> speed <62.19011>;
-		turn rfoot to x-axis <-23.714286> speed <241.0077>;
-		turn lfoot to x-axis <-31.923077> speed <182.694>;
-		turn lfoot to y-axis <0.000000> speed <0>;
-		turn rarm to x-axis <-23.412088> speed <213.789>;
-		turn lathe to x-axis <61.593407> speed <157.4462>;
-		turn larm to x-axis <4.857143> speed <124.3896>;
-		turn finger1 to x-axis <2.736264> speed <34.97143>;
-		turn finger2 to x-axis <4.560440> speed <58.29506>;
-		turn thumb to x-axis <-7.291209> speed <93.29451>;
-		sleep 7800/currentSpeed;
+		move hip to z-axis [0.450000] speed [5.751855];
+		move torso to y-axis [-0.050000] speed [5.751855];
+		move lleg to y-axis [0.625000] speed [7.988702];
+		move rleg to y-axis [0.049994] speed [6.390967];
+		move rfoot to y-axis [0.475000] speed [6.071405];
+		move lfoot to y-axis [0.225000] speed [2.875940];
+		turn hip to x-axis <5.159341> speed <66.071429>;
+		turn torso to y-axis <2.423077> speed <7.769231>;
+		turn luparm to x-axis <23.714286> speed <171.027473>;
+		turn ruparm to x-axis <-24.324176> speed <248.785714>;
+		turn lleg to x-axis <-12.769231> speed <31.093407>;
+		turn rleg to x-axis <35.269231> speed <31.093407>;
+		turn head to x-axis <-6.082418> speed <62.186813>;
+		turn rfoot to x-axis <-23.714286> speed <241.005495>;
+		turn lfoot to x-axis <-31.923077> speed <182.692308>;
+		turn lfoot to y-axis <0.000000> speed <0.000000>;
+		turn rarm to x-axis <-23.412088> speed <213.785714>;
+		turn lathe to x-axis <61.593407> speed <157.445055>;
+		turn larm to x-axis <4.857143> speed <124.384615>;
+		sleep 7800 / currentspeed;
 	}
 	if( bMoving )
 	{
-		move hip to z-axis [1.172470] speed [.6071244];
-		move torso to y-axis [-1.250000] speed [14.37965];
-		move lleg to y-axis [0.000000] speed [19.97178];
-		move rleg to y-axis [0.914352] speed [10.08973];
-		move rfoot to y-axis [2.375000] speed [15.17852];
-		move lfoot to y-axis [0.000000] speed [7.189826];
-		turn hip to x-axis <4.071429> speed <13.98297>;
-		turn torso to y-axis <2.824176> speed <5.043956>;
-		turn luparm to x-axis <38.725275> speed <191.8758>;
-		turn ruparm to x-axis <-30.335165> speed <76.88297>;
-		turn lleg to x-axis <-10.104396> speed <34.00934>;
-		turn rleg to x-axis <46.269231> speed <140.4835>;
-		turn head to x-axis <0.000000> speed <77.73297>;
-		turn rfoot to x-axis <2.670330> speed <337.3753>;
-		turn lfoot to x-axis <-27.615385> speed <55.08187>;
-		turn lfoot to y-axis <0.000000> speed <0>;
-		turn rarm to x-axis <-22.989011> speed <5.426924>;
-		turn lathe to x-axis <54.478022> speed <90.83791>;
-		turn larm to x-axis <18.258242> speed <171.2703>;
-		turn finger1 to x-axis <0.000000> speed <34.97143>;
-		turn finger2 to x-axis <6.923077> speed <30.22638>;
-		turn thumb to x-axis <0.000000> speed <93.29451>;
-		sleep 7800/currentSpeed;
+		move hip to z-axis [0.468982] speed [0.242847];
+		move torso to y-axis [-0.500000] speed [5.751855];
+		move lleg to y-axis [0.000000] speed [7.988708];
+		move rleg to y-axis [0.365735] speed [4.035889];
+		move rfoot to y-axis [0.950000] speed [6.071405];
+		move lfoot to y-axis [0.000000] speed [2.875928];
+		turn hip to x-axis <4.071429> speed <13.978022>;
+		turn torso to y-axis <2.824176> speed <5.038462>;
+		turn luparm to x-axis <38.725275> speed <191.873626>;
+		turn ruparm to x-axis <-30.335165> speed <76.879121>;
+		turn lleg to x-axis <-10.104396> speed <34.005495>;
+		turn rleg to x-axis <46.269231> speed <140.478022>;
+		turn head to x-axis <0.000000> speed <77.730769>;
+		turn rfoot to x-axis <2.670330> speed <337.373626>;
+		turn lfoot to x-axis <-27.615385> speed <55.076923>;
+		turn lfoot to y-axis <0.000000> speed <0.000000>;
+		turn rarm to x-axis <-22.989011> speed <5.423077>;
+		turn lathe to x-axis <54.478022> speed <90.835165>;
+		turn larm to x-axis <18.258242> speed <171.269231>;
+		sleep 7800 / currentspeed;
 	}
 	if( bMoving )
 	{
-		move hip to z-axis [3.500000] speed [29.75];
-		move rleg to y-axis [0.000000] speed [11.68748];
-		turn hip to x-axis <12.159341> speed <103.4011>;
-		turn torso to y-axis <0.000000> speed <36.13901>;
-		turn luparm to x-axis <41.967033> speed <41.3511>;
-		turn ruparm to x-axis <-3.648352> speed <341.2143>;
-		turn lleg to x-axis <5.467033> speed <199.2083>;
-		turn rleg to x-axis <41.456044> speed <61.41484>;
-		turn rfoot to x-axis <27.582418> speed <318.4698>;
-		turn lfoot to x-axis <-47.434066> speed <253.328>;
-		turn rarm to x-axis <-55.346154> speed <413.6137>;
-		turn lathe to x-axis <39.791209> speed <187.7379>;
-		turn larm to x-axis <25.538462> speed <93.05165>;
-		turn finger2 to x-axis <20.670330> speed <175.7819>;
-		sleep 7800/currentSpeed;
+		move hip to z-axis [1.400000] speed [11.900000];
+		move rleg to y-axis [0.000000] speed [4.674988];
+		turn hip to x-axis <12.159341> speed <103.401099>;
+		turn torso to y-axis <0.000000> speed <36.137363>;
+		turn luparm to x-axis <41.967033> speed <41.346154>;
+		turn ruparm to x-axis <-3.648352> speed <341.214286>;
+		turn lleg to x-axis <5.467033> speed <199.203297>;
+		turn rleg to x-axis <41.456044> speed <61.412088>;
+		turn rfoot to x-axis <27.582418> speed <318.467033>;
+		turn lfoot to x-axis <-47.434066> speed <253.324176>;
+		turn rarm to x-axis <-55.346154> speed <413.609890>;
+		turn lathe to x-axis <39.791209> speed <187.736264>;
+		turn larm to x-axis <25.538462> speed <93.049451>;
+		turn finger2 to x-axis <20.670330> speed <175.780220>;
+		sleep 7800 / currentspeed;
 	}
 	if( bMoving )
 	{
-		move hip to z-axis [4.500000] speed [12.78191];
-		move torso to y-axis [-0.375000] speed [11.18416];
-		move lleg to y-axis [-0.562500] speed [7.189826];
-		move rleg to y-axis [0.937500] speed [11.98303];
-		move lfoot to y-axis [0.625000] speed [7.988698];
-		turn hip to x-axis <19.758242> speed <97.17088>;
-		turn luparm to x-axis <24.934066> speed <217.6841>;
-		turn ruparm to x-axis <-12.467033> speed <112.7324>;
-		turn lleg to x-axis <-3.038462> speed <108.828>;
-		turn rleg to x-axis <27.670330> speed <176.2396>;
-		turn rfoot to x-axis <32.236264> speed <59.40659>;
-		turn lfoot to x-axis <-16.500000> speed <395.4835>;
-		turn rarm to x-axis <-45.615385> speed <124.3896>;
-		turn lathe to x-axis <25.104396> speed <187.7379>;
-		turn larm to x-axis <7.291209> speed <233.2269>;
-		turn finger2 to x-axis <24.016484> speed <42.7522>;
-		sleep 7800/currentSpeed;
+		move hip to z-axis [1.800000] speed [5.112762];
+		move torso to y-axis [-0.150000] speed [4.473663];
+		move lleg to y-axis [-0.225000] speed [2.875928];
+		move rleg to y-axis [0.375000] speed [4.793207];
+		move lfoot to y-axis [0.250000] speed [3.195477];
+		turn hip to x-axis <19.758242> speed <97.170330>;
+		turn luparm to x-axis <24.934066> speed <217.681319>;
+		turn ruparm to x-axis <-12.467033> speed <112.730769>;
+		turn lleg to x-axis <-3.038462> speed <108.824176>;
+		turn rleg to x-axis <27.670330> speed <176.236264>;
+		turn rfoot to x-axis <32.236264> speed <59.401099>;
+		turn lfoot to x-axis <-16.500000> speed <395.478022>;
+		turn rarm to x-axis <-45.615385> speed <124.384615>;
+		turn lathe to x-axis <25.104396> speed <187.736264>;
+		turn larm to x-axis <7.291209> speed <233.225275>;
+		turn finger2 to x-axis <24.016484> speed <42.747253>;
+		sleep 7800 / currentspeed;
 	}
 	if( bMoving )
 	{
-		move hip to z-axis [4.187500] speed [5.712338];
-		move torso to y-axis [0.062485] speed [7.99731];
-		move lleg to y-axis [-0.843750] speed [5.141089];
-		move rleg to y-axis [1.406250] speed [8.568507];
-		move lfoot to y-axis [0.312500] speed [5.712338];
-		turn hip to x-axis <23.560440> speed <69.47583>;
-		turn luparm to x-axis <16.412088> speed <155.6528>;
-		turn ruparm to x-axis <-16.879121> speed <80.60056>;
-		turn lleg to x-axis <-7.593407> speed <83.38407>;
-		turn rleg to x-axis <9.879121> speed <325.2137>;
-		turn rfoot to x-axis <24.368132> speed <143.7154>;
-		turn lfoot to x-axis <-15.236264> speed <22.95934>;
-		turn rarm to x-axis <-40.747253> speed <88.93242>;
-		turn lathe to x-axis <13.736264> speed <207.8577>;
-		turn larm to x-axis <-1.824176> speed <166.7775>;
-		turn finger2 to x-axis <25.692308> speed <30.56264>;
-		sleep 5500/currentSpeed;
+		move hip to z-axis [1.675000] speed [2.284930];
+		move torso to y-axis [0.024994] speed [3.198920];
+		move lleg to y-axis [-0.337500] speed [2.056433];
+		move rleg to y-axis [0.562500] speed [3.427399];
+		move lfoot to y-axis [0.125000] speed [2.284930];
+		turn hip to x-axis <23.560440> speed <69.472527>;
+		turn luparm to x-axis <16.412088> speed <155.648352>;
+		turn ruparm to x-axis <-16.879121> speed <80.598901>;
+		turn lleg to x-axis <-7.593407> speed <83.379121>;
+		turn rleg to x-axis <9.879121> speed <325.208791>;
+		turn rfoot to x-axis <24.368132> speed <143.714286>;
+		turn lfoot to x-axis <-15.236264> speed <22.956044>;
+		turn rarm to x-axis <-40.747253> speed <88.928571>;
+		turn lathe to x-axis <13.736264> speed <207.857143>;
+		turn larm to x-axis <-1.824176> speed <166.774725>;
+		turn finger2 to x-axis <25.692308> speed <30.560440>;
+		sleep 5500 / currentspeed;
 	}
 }
 
@@ -380,228 +353,214 @@ walklegs()
 	if( bMoving )
 	{
 		move torso to y-axis [0.000000] now;
-		move rleg to y-axis [1.375000] now;
-		move rfoot to y-axis [2.375000] now;
+		move rleg to y-axis [0.550000] now;
+		move rfoot to y-axis [0.950000] now;
 		move finger2 to x-axis [0.000000] now;
 		turn lleg to x-axis <-15.203297> now;
 		turn rleg to x-axis <37.703297> now;
 		turn rfoot to x-axis <-4.857143> now;
 		turn lfoot to x-axis <-17.637363> now;
-		sleep 8600/currentSpeed;
+		sleep 8600 / currentspeed;
 	}
 	if( bMoving )
 	{
-		move hip to z-axis [1.750000] now;
-		move rleg to y-axis [0.687500] now;
+		move hip to z-axis [0.700000] now;
+		move rleg to y-axis [0.275000] now;
 		turn hip to x-axis <6.082418> now;
 		turn lleg to x-axis <-7.593407> now;
 		turn rleg to x-axis <50.478022> now;
 		turn rfoot to x-axis <6.379121> now;
 		turn lfoot to x-axis <-32.538462> now;
-		sleep 8600/currentSpeed;
+		sleep 8600 / currentspeed;
 	}
 	if( bMoving )
 	{
-		move hip to z-axis [3.500000] now;
+		move hip to z-axis [1.400000] now;
 		move rleg to y-axis [0.000000] now;
 		turn hip to x-axis <12.159341> now;
 		turn lleg to x-axis <5.467033> now;
 		turn rleg to x-axis <63.258242> now;
 		turn rfoot to x-axis <17.637363> now;
 		turn lfoot to x-axis <-47.434066> now;
-		sleep 7200/currentSpeed;
+		sleep 7200 / currentspeed;
 	}
 	if( bMoving )
 	{
-		move hip to z-axis [4.500000] now;
-		move lleg to y-axis [-0.562500] now;
-		move rleg to y-axis [0.937500] now;
+		move hip to z-axis [1.800000] now;
+		move lleg to y-axis [-0.225000] now;
+		move rleg to y-axis [0.375000] now;
 		turn hip to x-axis <19.758242> now;
 		turn lleg to x-axis <-3.038462> now;
 		turn rleg to x-axis <27.670330> now;
 		turn rfoot to x-axis <32.236264> now;
 		turn lfoot to x-axis <-30.714286> now;
-		sleep 6500/currentSpeed;
+		sleep 6500 / currentspeed;
 	}
 	if( bMoving )
 	{
-		move hip to z-axis [5.500000] now;
-		move lleg to y-axis [-1.125000] now;
-		move rleg to y-axis [1.875000] now;
+		move hip to z-axis [2.200000] now;
+		move lleg to y-axis [-0.450000] now;
+		move rleg to y-axis [0.750000] now;
 		turn hip to x-axis <27.368132> now;
 		turn lleg to x-axis <-12.159341> now;
 		turn rleg to x-axis <-7.901099> now;
 		turn rfoot to x-axis <46.835165> now;
 		turn lfoot to x-axis <-13.989011> now;
-		sleep 4800/currentSpeed;
+		sleep 4800 / currentspeed;
 	}
 	if( bMoving )
 	{
-		move hip to z-axis [4.062500] now;
-		move lleg to y-axis [-1.749985] now;
-		move rleg to y-axis [0.937500] now;
-		move lfoot to y-axis [0.562500] now;
+		move hip to z-axis [1.625000] now;
+		move lleg to y-axis [-0.699994] now;
+		move rleg to y-axis [0.375000] now;
+		move lfoot to y-axis [0.225000] now;
 		turn hip to x-axis <19.159341> now;
 		turn lleg to x-axis <2.126374> now;
 		turn rleg to x-axis <-19.159341> now;
 		turn rfoot to x-axis <18.549451> now;
 		turn lfoot to x-axis <-20.071429> now;
-		turn finger1 to x-axis <28.890110> now;
-		turn thumb to x-axis <-10.335165> now;
-		sleep 3900/currentSpeed;
+		sleep 3900 / currentspeed;
 	}
 	if( bMoving )
 	{
-		move hip to z-axis [2.625000] now;
-		move lleg to y-axis [-2.374985] now;
+		move hip to z-axis [1.050000] now;
+		move lleg to y-axis [-0.949994] now;
 		move rleg to y-axis [0.000000] now;
-		move lfoot to y-axis [1.125000] now;
+		move lfoot to y-axis [0.450000] now;
 		turn hip to x-axis <10.945055> now;
 		turn lleg to x-axis <16.412088> now;
 		turn rleg to x-axis <-30.412088> now;
 		turn rfoot to x-axis <-9.725275> now;
 		turn lfoot to x-axis <-26.148352> now;
-		turn finger1 to x-axis <57.780220> now;
-		turn thumb to x-axis <-20.670330> now;
-		sleep 7200/currentSpeed;
+		sleep 7200 / currentspeed;
 	}
 	if( bMoving )
 	{
-		move hip to z-axis [0.875000] now;
-		move lleg to y-axis [-2.249985] now;
+		move hip to z-axis [0.350000] now;
+		move lleg to y-axis [-0.899994] now;
 		move rleg to y-axis [0.000000] now;
 		turn hip to x-axis <3.038462> now;
 		turn lleg to x-axis <38.923077> now;
 		turn rleg to x-axis <-17.027473> now;
 		turn rfoot to x-axis <-40.137363> now;
 		turn lfoot to x-axis <-40.137363> now;
-		sleep 8600/currentSpeed;
+		sleep 8600 / currentspeed;
 	}
 	if( bMoving )
 	{
-		move hip to z-axis [0.437500] now;
-		move lleg to y-axis [-0.875000] now;
-		move rleg to y-axis [0.312485] now;
-		move rfoot to y-axis [1.187500] now;
+		move hip to z-axis [0.175000] now;
+		move lleg to y-axis [-0.350000] now;
+		move rleg to y-axis [0.124994] now;
+		move rfoot to y-axis [0.475000] now;
 		turn hip to x-axis <1.516484> now;
 		turn lleg to x-axis <50.478022> now;
 		turn rleg to x-axis <-6.989011> now;
 		turn rfoot to x-axis <-35.879121> now;
 		turn lfoot to x-axis <-44.401099> now;
-		sleep 8700/currentSpeed;
+		sleep 8700 / currentspeed;
 	}
 	if( bMoving )
 	{
 		move hip to z-axis [0.000000] now;
-		move lleg to y-axis [0.500000] now;
-		move rleg to y-axis [0.624985] now;
+		move lleg to y-axis [0.200000] now;
+		move rleg to y-axis [0.249994] now;
 		move rfoot to y-axis [0.000000] now;
 		turn hip to x-axis <0.000000> now;
 		turn lleg to x-axis <62.038462> now;
 		turn rleg to x-axis <3.038462> now;
 		turn rfoot to x-axis <-31.626374> now;
 		turn lfoot to x-axis <-48.659341> now;
-		sleep 6500/currentSpeed;
+		sleep 6500 / currentspeed;
 	}
 	if( bMoving )
 	{
-		move hip to z-axis [1.437500] now;
+		move hip to z-axis [0.575000] now;
 		move lleg to y-axis [0.000000] now;
-		move rleg to y-axis [0.312485] now;
+		move rleg to y-axis [0.124994] now;
 		turn hip to x-axis <5.159341> now;
 		turn lleg to x-axis <70.857143> now;
 		turn rleg to x-axis <6.681319> now;
 		turn rfoot to x-axis <-27.670330> now;
 		turn lfoot to x-axis <-25.538462> now;
-		turn finger1 to x-axis <26.456044> now;
-		turn thumb to x-axis <-36.489011> now;
-		sleep 5500/currentSpeed;
+		sleep 5500 / currentspeed;
 	}
 	if( bMoving )
 	{
-		move hip to z-axis [2.875000] now;
-		move lleg to y-axis [-0.500000] now;
+		move hip to z-axis [1.150000] now;
+		move lleg to y-axis [-0.200000] now;
 		move rleg to y-axis [0.000000] now;
 		turn hip to x-axis <10.335165> now;
 		turn lleg to x-axis <79.681319> now;
 		turn rleg to x-axis <10.335165> now;
 		turn rfoot to x-axis <-23.714286> now;
 		turn lfoot to x-axis <-2.423077> now;
-		turn finger1 to x-axis <-4.857143> now;
-		turn thumb to x-axis <-52.302198> now;
-		sleep 5100/currentSpeed;
+		sleep 5100 / currentspeed;
 	}
 	if( bMoving )
 	{
-		move hip to z-axis [3.562500] now;
-		move lleg to y-axis [1.312500] now;
-		move rleg to y-axis [-1.062500] now;
+		move hip to z-axis [1.425000] now;
+		move lleg to y-axis [0.525000] now;
+		move rleg to y-axis [-0.425000] now;
 		turn hip to x-axis <16.115385> now;
 		turn lleg to x-axis <49.258242> now;
 		turn rfoot to x-axis <-28.280220> now;
 		turn lfoot to x-axis <17.335165> now;
 		turn lfoot to y-axis <0.000000> now;
 		turn finger1 to x-axis <-23.714286> now;
-		sleep 4400/currentSpeed;
+		sleep 4400 / currentspeed;
 	}
 	if( bMoving )
 	{
-		move hip to z-axis [4.250000] now;
-		move lleg to y-axis [3.125000] now;
-		move rleg to y-axis [-2.125000] now;
+		move hip to z-axis [1.700000] now;
+		move lleg to y-axis [1.250000] now;
+		move rleg to y-axis [-0.850000] now;
 		turn hip to x-axis <21.890110> now;
 		turn lleg to x-axis <18.846154> now;
 		turn rfoot to x-axis <-32.835165> now;
 		turn lfoot to x-axis <37.093407> now;
 		turn lfoot to y-axis <0.000000> now;
 		turn finger1 to x-axis <-42.571429> now;
-		sleep 5200/currentSpeed;
+		sleep 5200 / currentspeed;
 	}
 	if( bMoving )
 	{
-		move hip to z-axis [3.250000] now;
-		move rleg to y-axis [-1.625000] now;
+		move hip to z-axis [1.300000] now;
+		move rleg to y-axis [-0.650000] now;
 		turn hip to x-axis <16.115385> now;
 		turn lleg to x-axis <4.247253> now;
 		turn rleg to x-axis <21.582418> now;
 		turn rfoot to x-axis <-37.703297> now;
 		turn lfoot to x-axis <-4.560440> now;
-		turn finger1 to x-axis <-18.549451> now;
-		turn thumb to x-axis <-33.445055> now;
-		sleep 6800/currentSpeed;
+		sleep 6800 / currentspeed;
 	}
 	if( bMoving )
 	{
-		move hip to z-axis [2.250000] now;
-		move rleg to y-axis [-1.125000] now;
+		move hip to z-axis [0.900000] now;
+		move rleg to y-axis [-0.450000] now;
 		turn hip to x-axis <10.335165> now;
 		turn lleg to x-axis <-10.335165> now;
 		turn rleg to x-axis <32.835165> now;
 		turn rfoot to x-axis <-42.571429> now;
 		turn lfoot to x-axis <-46.225275> now;
-		turn finger1 to x-axis <5.467033> now;
-		turn thumb to x-axis <-14.593407> now;
-		sleep 8600/currentSpeed;
+		sleep 8600 / currentspeed;
 	}
-	move hip to z-axis [1.125000] now;
-	move lleg to y-axis [1.562500] now;
-	move rleg to y-axis [0.124985] now;
-	move rfoot to y-axis [1.187500] now;
-	move lfoot to y-axis [0.562500] now;
+	move hip to z-axis [0.450000] now;
+	move lleg to y-axis [0.625000] now;
+	move rleg to y-axis [0.049994] now;
+	move rfoot to y-axis [0.475000] now;
+	move lfoot to y-axis [0.225000] now;
 	turn hip to x-axis <5.159341> now;
 	turn lleg to x-axis <-12.769231> now;
 	turn rleg to x-axis <35.269231> now;
 	turn rfoot to x-axis <-23.714286> now;
 	turn lfoot to x-axis <-31.923077> now;
 	turn lfoot to y-axis <0.000000> now;
-	turn finger1 to x-axis <2.736264> now;
-	turn thumb to x-axis <-7.291209> now;
-	sleep 8600/currentSpeed;
+	sleep 8600 / currentspeed;
 }
 
 activatescr()
 {
-	move head to y-axis [1.250000] now;
+	move head to y-axis [0.500000] now;
 	turn luparm to x-axis <13.681319> now;
 	turn ruparm to x-axis <13.681319> now;
 	turn head to x-axis <-15.505495> now;
@@ -609,10 +568,8 @@ activatescr()
 	turn lathe to x-axis <7.291209> now;
 	turn larm to x-axis <-22.505495> now;
 	turn finger2 to x-axis <13.681319> now;
-	turn thumb to x-axis <-12.467033> now;
-	sleep 100;
-
-	move head to y-axis [1.500000] now;
+	sleep 25;
+	move head to y-axis [0.600000] now;
 	turn luparm to x-axis <27.368132> now;
 	turn ruparm to x-axis <27.368132> now;
 	turn head to x-axis <-31.016484> now;
@@ -620,42 +577,36 @@ activatescr()
 	turn lathe to x-axis <14.593407> now;
 	turn larm to x-axis <-45.005495> now;
 	turn finger2 to x-axis <27.368132> now;
-	turn thumb to x-axis <-24.934066> now;
-	sleep 100;
-
-	move head to y-axis [1.375000] now;
+	sleep 25;
+	move head to y-axis [0.550000] now;
 	turn luparm to x-axis <7.291209> now;
 	turn ruparm to x-axis <16.115385> now;
 	turn head to x-axis <-33.758242> now;
 	turn rarm to x-axis <-64.769231> now;
 	turn lathe to x-axis <18.846154> now;
-	sleep 100;
-
-	move head to y-axis [1.250000] now;
+	sleep 25;
+	move head to y-axis [0.500000] now;
 	turn luparm to x-axis <-12.769231> now;
 	turn ruparm to x-axis <4.857143> now;
 	turn head to x-axis <-36.489011> now;
 	turn rarm to x-axis <-72.989011> now;
 	turn lathe to x-axis <23.104396> now;
-	sleep 100;
-
-	move head to y-axis [1.500000] now;
+	sleep 25;
+	move head to y-axis [0.600000] now;
 	turn luparm to x-axis <-31.923077> now;
 	turn ruparm to x-axis <-15.203297> now;
 	turn rarm to x-axis <-61.423077> now;
 	turn lathe to x-axis <12.769231> now;
 	turn larm to x-axis <-25.538462> now;
-	sleep 100;
-
-	move head to y-axis [1.375000] now;
+	sleep 25;
+	move head to y-axis [0.550000] now;
 	turn luparm to x-axis <-51.093407> now;
 	turn ruparm to x-axis <-35.269231> now;
 	turn rarm to x-axis <-49.868132> now;
 	turn lathe to x-axis <2.423077> now;
 	turn larm to x-axis <-6.082418> now;
-	sleep 100;
-
-	move head to y-axis [1.000000] now;
+	sleep 25;
+	move head to y-axis [0.400000] now;
 	turn luparm to x-axis <-69.027473> now;
 	turn ruparm to x-axis <-52.912088> now;
 	turn rarm to x-axis <-26.456044> now;
@@ -663,11 +614,8 @@ activatescr()
 	turn larm to x-axis <11.549451> now;
 	turn finger1 to x-axis <-8.813187> now;
 	turn finger2 to x-axis <12.467033> now;
-	turn thumb to y-axis <0.000000> now;
-	turn thumb to z-axis <18.846154> now;
-	sleep 100;
-
-	move head to y-axis [0.250000] now;
+	sleep 25;
+	move head to y-axis [0.100000] now;
 	turn luparm to x-axis <-86.978022> now;
 	turn ruparm to x-axis <-70.549451> now;
 	turn rarm to x-axis <-3.038462> now;
@@ -675,10 +623,7 @@ activatescr()
 	turn larm to x-axis <29.192308> now;
 	turn finger1 to x-axis <-17.637363> now;
 	turn finger2 to x-axis <-2.423077> now;
-	turn thumb to y-axis <0.000000> now;
-	turn thumb to z-axis <37.703297> now;
-	sleep 100;
-
+	sleep 25;
 	move head to y-axis [0.000000] now;
 	turn luparm to x-axis <-84.236264> now;
 	turn ruparm to x-axis <-72.379121> now;
@@ -687,9 +632,7 @@ activatescr()
 	turn larm to x-axis <32.538462> now;
 	turn finger1 to z-axis <12.159341> now;
 	turn finger2 to z-axis <-10.027473> now;
-	turn thumb to z-axis <51.390110> now;
-	sleep 100;
-
+	sleep 25;
 	turn luparm to x-axis <-81.505495> now;
 	turn ruparm to x-axis <-74.203297> now;
 	turn rarm to x-axis <7.291209> now;
@@ -697,9 +640,7 @@ activatescr()
 	turn larm to x-axis <35.879121> now;
 	turn finger1 to z-axis <24.324176> now;
 	turn finger2 to z-axis <-20.071429> now;
-	turn thumb to z-axis <65.082418> now;
-	sleep 100;
-	
+	sleep 25;
 	set INBUILDSTANCE to 1;
 }
 
@@ -707,7 +648,6 @@ deactivatescr()
 {
 	set INBUILDSTANCE to 0;
 	turn torso to y-axis <0.000000> speed <160.038462>;
-
 	turn luparm to x-axis <-81.505495> now;
 	turn ruparm to x-axis <-74.203297> now;
 	turn head to x-axis <-36.489011> now;
@@ -718,11 +658,7 @@ deactivatescr()
 	turn finger1 to z-axis <24.324176> now;
 	turn finger2 to x-axis <-2.423077> now;
 	turn finger2 to z-axis <-20.071429> now;
-	turn thumb to x-axis <-24.934066> now;
-	turn thumb to y-axis <0.000000> now;
-	turn thumb to z-axis <65.082418> now;
-	sleep 100;
-
+	sleep 25;
 	turn luparm to x-axis <-84.236264> now;
 	turn ruparm to x-axis <-72.379121> now;
 	turn rarm to x-axis <2.126374> now;
@@ -730,10 +666,8 @@ deactivatescr()
 	turn larm to x-axis <32.538462> now;
 	turn finger1 to z-axis <12.159341> now;
 	turn finger2 to z-axis <-10.027473> now;
-	turn thumb to z-axis <51.390110> now;
-	sleep 100;
-
-	move head to y-axis [0.250000] now;
+	sleep 25;
+	move head to y-axis [0.100000] now;
 	turn luparm to x-axis <-86.978022> now;
 	turn ruparm to x-axis <-70.549451> now;
 	turn rarm to x-axis <-3.038462> now;
@@ -741,10 +675,8 @@ deactivatescr()
 	turn larm to x-axis <29.192308> now;
 	turn finger1 to z-axis <0.000000> now;
 	turn finger2 to z-axis <0.000000> now;
-	turn thumb to z-axis <37.703297> now;
-	sleep 100;
-
-	move head to y-axis [1.000000] now;
+	sleep 25;
+	move head to y-axis [0.400000] now;
 	turn luparm to x-axis <-69.027473> now;
 	turn ruparm to x-axis <-52.912088> now;
 	turn rarm to x-axis <-26.456044> now;
@@ -752,11 +684,8 @@ deactivatescr()
 	turn larm to x-axis <11.549451> now;
 	turn finger1 to x-axis <-8.813187> now;
 	turn finger2 to x-axis <12.467033> now;
-	turn thumb to y-axis <0.000000> now;
-	turn thumb to z-axis <18.846154> now;
-	sleep 100;
-
-	move head to y-axis [1.375000] now;
+	sleep 25;
+	move head to y-axis [0.550000] now;
 	turn luparm to x-axis <-51.093407> now;
 	turn ruparm to x-axis <-35.269231> now;
 	turn rarm to x-axis <-49.868132> now;
@@ -764,43 +693,36 @@ deactivatescr()
 	turn larm to x-axis <-6.082418> now;
 	turn finger1 to x-axis <0.000000> now;
 	turn finger2 to x-axis <27.368132> now;
-	turn thumb to y-axis <0.000000> now;
-	turn thumb to z-axis <0.000000> now;
-	sleep 100;
-
-	move head to y-axis [1.500000] now;
+	sleep 25;
+	move head to y-axis [0.600000] now;
 	turn luparm to x-axis <-31.923077> now;
 	turn ruparm to x-axis <-15.203297> now;
 	turn rarm to x-axis <-61.423077> now;
 	turn lathe to x-axis <12.769231> now;
 	turn larm to x-axis <-25.538462> now;
-	sleep 100;
-
-	move head to y-axis [1.250000] now;
+	sleep 25;
+	move head to y-axis [0.500000] now;
 	turn luparm to x-axis <-12.769231> now;
 	turn ruparm to x-axis <4.857143> now;
 	turn rarm to x-axis <-72.989011> now;
 	turn lathe to x-axis <23.104396> now;
 	turn larm to x-axis <-45.005495> now;
-	sleep 100;
-
-	move head to y-axis [1.375000] now;
+	sleep 25;
+	move head to y-axis [0.550000] now;
 	turn luparm to x-axis <7.291209> now;
 	turn ruparm to x-axis <16.115385> now;
 	turn head to x-axis <-33.758242> now;
 	turn rarm to x-axis <-64.769231> now;
 	turn lathe to x-axis <18.846154> now;
-	sleep 100;
-
-	move head to y-axis [1.500000] now;
+	sleep 25;
+	move head to y-axis [0.600000] now;
 	turn luparm to x-axis <27.368132> now;
 	turn ruparm to x-axis <27.368132> now;
 	turn head to x-axis <-31.016484> now;
 	turn rarm to x-axis <-56.560440> now;
 	turn lathe to x-axis <14.593407> now;
-	sleep 100;
-
-	move head to y-axis [1.250000] now;
+	sleep 25;
+	move head to y-axis [0.500000] now;
 	turn luparm to x-axis <13.681319> now;
 	turn ruparm to x-axis <13.681319> now;
 	turn head to x-axis <-15.505495> now;
@@ -808,9 +730,7 @@ deactivatescr()
 	turn lathe to x-axis <7.291209> now;
 	turn larm to x-axis <-22.505495> now;
 	turn finger2 to x-axis <13.681319> now;
-	turn thumb to x-axis <-12.467033> now;
-	sleep 100;
-
+	sleep 25;
 	move head to y-axis [0.000000] now;
 	turn luparm to x-axis <0.000000> now;
 	turn ruparm to x-axis <0.000000> now;
@@ -819,8 +739,7 @@ deactivatescr()
 	turn lathe to x-axis <0.000000> now;
 	turn larm to x-axis <0.000000> now;
 	turn finger2 to x-axis <0.000000> now;
-	turn thumb to x-axis <0.000000> now;
-	sleep 100;
+	sleep 25;
 }
 
 MotionControl(moving, aiming, justmoved)
@@ -902,26 +821,6 @@ SmokeUnit(healthpercent, sleeptime, smoketype)
 	}
 }
 
-/*
-Go()
-{
-	Static_Var_3 = 1;
-	call-script activatescr();
-	turn torso to y-axis Static_Var_1 speed <160.038462>;
-	wait-for-turn torso around y-axis;
-	set INBUILDSTANCE to 1;
-}
-
-Stop()
-{
-	set INBUILDSTANCE to 0;
-	turn torso to y-axis <0.000000> speed <160.038462>;
-	wait-for-turn torso around y-axis;
-	call-script deactivatescr();
-	Static_Var_3 = 0;
-}
-*/
-
 RequestState(requestedstate, currentstate)
 {
 	if( statechg_StateChanging )
@@ -976,6 +875,7 @@ StartBuilding(heading, pitch)
 	start-script RequestState(0);
 	while( notBuilding ) sleep 100;
 	signal SIG_BUILD;
+	spin nanotube around y-axis speed <150>;
 	turn torso to y-axis heading speed <250.000000>;
 	wait-for-turn torso around y-axis;
 	start-script Build();
@@ -985,7 +885,8 @@ StopBuilding()
 {
 	signal SIG_BUILD;	
 	set-signal-mask SIG_BUILD;
-	sleep 6000;
+	stop-spin nanotube around y-axis;
+	sleep 500;
 	set-signal-mask 0;
 	signal SIG_BUILD;	
 	start-script RequestState(1);
@@ -1005,13 +906,6 @@ QueryNanoPiece(piecenum)
 {
 	piecenum = nanopoint;
 }
-
-/*
-TargetHeading(Func_Var_1)
-{
-	Static_Var_1 = 0 - Func_Var_1;
-}
-*/
 
 SweetSpot(piecenum)
 {
@@ -1036,7 +930,6 @@ Killed(severity, corpsetype)
 		explode rfoot type BITMAPONLY | BITMAP1;
 		explode rleg type BITMAPONLY | BITMAP2;
 		explode ruparm type BITMAPONLY | BITMAP3;
-		explode thumb type BITMAPONLY | BITMAP4;
 		explode torso type BITMAPONLY | BITMAP5;
 		return (0);
 	}
@@ -1056,7 +949,6 @@ Killed(severity, corpsetype)
 		explode rfoot type FALL | BITMAP1;
 		explode rleg type FALL | BITMAP2;
 		explode ruparm type FALL | BITMAP3;
-		explode thumb type FALL | BITMAP4;
 		explode torso type SHATTER | BITMAP5;
 		return (0);
 	}
@@ -1076,7 +968,6 @@ Killed(severity, corpsetype)
 		explode rfoot type FALL | FIRE | SMOKE | EXPLODE_ON_HIT | BITMAP1;
 		explode rleg type FALL | FIRE | SMOKE | EXPLODE_ON_HIT | BITMAP2;
 		explode ruparm type FALL | FIRE | SMOKE | EXPLODE_ON_HIT | BITMAP3;
-		explode thumb type FALL | FIRE | SMOKE | EXPLODE_ON_HIT | BITMAP4;
 		explode torso type SHATTER | BITMAP5;
 		return (0);
 	}
@@ -1094,7 +985,5 @@ Killed(severity, corpsetype)
 	explode rfoot type FALL | FIRE | SMOKE | EXPLODE_ON_HIT | BITMAP1;
 	explode rleg type FALL | FIRE | SMOKE | EXPLODE_ON_HIT | BITMAP2;
 	explode ruparm type FALL | FIRE | SMOKE | EXPLODE_ON_HIT | BITMAP3;
-	explode thumb type FALL | FIRE | SMOKE | EXPLODE_ON_HIT | BITMAP4;
 	explode torso type SHATTER | EXPLODE_ON_HIT | BITMAP5;
-	return (0);
 }
