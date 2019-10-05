@@ -18,9 +18,9 @@
 	//******************
 	unitname=core_sumo;
 	unitnumber=269;
-	objectname=core_sumo.3do;
+	objectname=core_sumo_smoth.s3o;
 	corpse=core_sumo_dead;
-	buildpic=core_sumo.DDS;
+	buildpic=core_sumo.png;
 	soundcategory=COR_KBOT;
 
 	//************************************************************
@@ -31,8 +31,8 @@
 	buildcostmetal=2321;
 	buildcostenergy=16464;
 	buildtime=30190;
-	footprintx=2;
-	footprintz=2;
+	footprintx=3;
+	footprintz=3;
 
 	//************************************************************
 	//  Resources
@@ -113,7 +113,7 @@
 	version=1.2;
 	zbuffer=1;
 	collisionVolumeType = box;
-	collisionVolumeScales =40 20 40;
+	collisionVolumeScales =40 35 40;
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
 	pieceTrailCEGTag=Debree;//bleh
